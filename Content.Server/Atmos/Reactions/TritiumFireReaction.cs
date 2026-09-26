@@ -1,4 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Radiation.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Reactions;
 using JetBrains.Annotations;
@@ -42,7 +43,9 @@ namespace Content.Server.Atmos.Reactions
             {
                 energyReleased += (Atmospherics.FireHydrogenEnergyReleased * burnedFuel);
 
-                // TODO ATMOS Radiation pulse here!
+                // Radiation pulse
+                if (location != null)
+                    atmosphereSystem.QueueTritiumFireRadiation(location, burnedFuel);
 
                 // Conservation of mass is important.
                 mixture.AdjustMoles(Gas.WaterVapor, burnedFuel);

@@ -259,6 +259,37 @@ namespace Content.Shared.Atmos
         public const float TritiumBurnTritFactor = 10f;
         public const float TritiumBurnFuelRatio = 2f;
 
+        /// <summary>
+        ///     The baseline radiation multiplier for optimal tritium fires
+        /// </summary>
+        public const float TritiumFireRadMultiplier = 10f;
+
+        /// <summary>
+        ///     The burned fuel threshold where maximum radiation efficiency ends
+        /// </summary>
+        public const float TritiumFireRadThreshold = 0.1f;
+
+        /// <summary>
+        ///     Controls how aggressively the radiation multiplier drops off past the threshold
+        /// </summary>
+        public const float TritiumFireRadDropoff = 4f;
+
+        /// <summary>
+        ///     Radiation slope for a tritium fire
+        ///     Tritium emits very weak beta radiation
+        /// </summary>
+        public const float TritiumFireSlope = 0.75f;
+
+        /// <summary>
+        ///     The half-life duration in seconds for tritium fire radiation
+        /// </summary>
+        public const float TritiumFireHalfLife = 3f;
+
+        /// <summary>
+        ///     Identifier for tritium fire radiation sources
+        /// </summary>
+        public const ushort TritiumFireSourceId = 1;
+
         public const float FrezonCoolLowerTemperature = 23.15f;
 
         /// <summary>

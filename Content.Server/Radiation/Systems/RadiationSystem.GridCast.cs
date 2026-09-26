@@ -17,13 +17,18 @@ public partial class RadiationSystem
 
     private readonly record struct SourceData(
         float Intensity,
-        Entity<RadiationSourceComponent, TransformComponent> Entity,
-        Vector2 WorldPosition)
+        float Slope,
+        TransformComponent Transform,
+        Vector2 WorldPosition,
+        EntityUid? SourceUid, // Nullable for tile sources,
+        ushort SourceId = 0,
+        RadiationSourceComponent? SourceComponent = null)
     {
-        public EntityUid? GridUid => Entity.Comp2.GridUid;
-        public float Slope => Entity.Comp1.Slope;
-        public TransformComponent Transform => Entity.Comp2;
+        public EntityUid? GridUid => Transform.GridUid;
+        public bool IsTileSource => SourceId != 0;
     }
+
+    private Vector2 _halfTileOffset = new(0.5f, 0.5f);
 
     private void UpdateGridcast()
     {
@@ -55,7 +60,64 @@ public partial class RadiationSystem
             // I.e., a source & receiver in the same blocking container will get double-blocked, when no blocking should be applied.
             intensity = GetAdjustedRadiationIntensity(uid, intensity);
 
-            _sources.Add(new(intensity, (uid, source, xform), worldPos));
+            _sources.Add(new SourceData(
+                intensity,
+                source.Slope,
+                xform,
+                worldPos,
+                uid,
+                0,
+                source
+            ));
+        }
+
+        var lastGridUid = EntityUid.Invalid;
+        TransformComponent? lastXform = null;
+        var lastMatrix = Matrix3x2.Identity;
+        var currentGridValid = false;
+
+        // Add tile radiation sources to the main sources list
+        foreach (var (spatialKey, tileSources) in _tileRadiationSources)
+        {
+            if (spatialKey.GridUid != lastGridUid)
+            {
+                lastGridUid = spatialKey.GridUid;
+
+                if (TryComp(lastGridUid, typeof(TransformComponent), out var gridComp) &&
+                    gridComp is TransformComponent gridXform &&
+                    gridXform.MapUid is { } mapUid &&
+                    TryComp(mapUid, typeof(TransformComponent), out var mapComp) &&
+                    mapComp is TransformComponent mapXform)
+                {
+                    lastXform = mapXform;
+                    lastMatrix = gridXform.LocalMatrix;
+                    currentGridValid = true;
+                }
+                else
+                {
+                    lastXform = null;
+                    currentGridValid = false;
+                }
+            }
+
+            if (!currentGridValid || lastXform == null)
+                continue;
+
+            var localTileCenter = new Vector2(spatialKey.Tile.X, spatialKey.Tile.Y) + _halfTileOffset;
+            var worldPos = Vector2.Transform(localTileCenter, lastMatrix);
+
+            foreach (var (_, tileSource) in tileSources)
+            {
+                _sources.Add(new SourceData(
+                    tileSource.Intensity,
+                    tileSource.Slope,
+                    lastXform,
+                    worldPos,
+                    null,
+                    tileSource.SourceId,
+                    null
+                ));
+            }
         }
 
         var debugRays = debug ? new List<DebugRadiationRay>() : null;
@@ -86,7 +148,8 @@ public partial class RadiationSystem
 
                 debugRays!.Add(new DebugRadiationRay(
                     ray.MapId,
-                    GetNetEntity(ray.SourceUid),
+                    ray.SourceUid.HasValue ? GetNetEntity(ray.SourceUid.Value) : null,
+                    ray.SourceId,
                     ray.Source,
                     GetNetEntity(ray.DestinationUid),
                     ray.Destination,
@@ -151,7 +214,15 @@ public partial class RadiationSystem
         // create a new radiation ray from source to destination
         // at first we assume that it doesn't hit any radiation blockers
         // and has only distance penalty
-        var ray = new RadiationRay(mapId, source.Entity, source.WorldPosition, destUid, destWorld, rads);
+        var ray = new RadiationRay(
+            mapId,
+            source.SourceUid,
+            source.SourceId,
+            source.WorldPosition,
+            destUid,
+            destWorld,
+            rads
+        );
 
         // if source and destination on the same grid it's possible that
         // between them can be another grid (ie. shuttle in center of donut station)
