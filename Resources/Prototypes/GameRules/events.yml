@@ -154,7 +154,7 @@
   - type: BreakerFlipRule
     blacklist:
       components:
-        - ProtectedGrid
+      - ProtectedGrid
 
 
 - type: entity
