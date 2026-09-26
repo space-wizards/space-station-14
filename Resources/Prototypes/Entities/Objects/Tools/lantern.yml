@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: lantern
   parent: BaseItem
   id: Lantern

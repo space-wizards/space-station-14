@@ -161,6 +161,14 @@
     stateDoorOpen: generic_open
     stateDoorClosed: generic_door
 
+- type: entity
+  parent: ClosetMaintenance
+  id: ClosetMaintenanceWelded
+  suffix: Welded
+  components:
+  - type: Weldable
+    isWelded: true
+
 # Syndicate
 - type: entity
   id: LockerSyndicate
