@@ -31,6 +31,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private MapSystem _map = default!;
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
 
     private const string MeleeLungeKey = "melee-lunge";
 
@@ -148,6 +149,39 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         // Light attack
         if (useDown == BoundKeyState.Down)
             ClientLightAttack(entity, mousePos, coordinates, weaponUid, weapon);
+    }
+
+    /// <summary>
+    /// Orders entities on top of each other in a similar way clicking on them does, so a wide swing hits
+    /// the right entity. See GameplayStateBase.ClickableEntityComparer.
+    /// </summary>
+    protected override bool IsDrawnAbove(EntityUid uid, EntityUid other)
+    {
+        if (!_spriteQuery.TryComp(uid, out var sprite) || !_spriteQuery.TryComp(other, out var otherSprite))
+            return false;
+
+        if (sprite.DrawDepth != otherSprite.DrawDepth)
+            return sprite.DrawDepth > otherSprite.DrawDepth;
+
+        if (sprite.RenderOrder != otherSprite.RenderOrder)
+            return sprite.RenderOrder > otherSprite.RenderOrder;
+
+        var eyeRotation = _eyeManager.CurrentEye.Rotation;
+        var bottom = GetSortBottom(uid, sprite, eyeRotation);
+        var otherBottom = GetSortBottom(other, otherSprite, eyeRotation);
+
+        if (!bottom.Equals(otherBottom))
+            return bottom < otherBottom;
+
+        return uid.CompareTo(other) > 0;
+    }
+
+    private float GetSortBottom(EntityUid uid, SpriteComponent sprite, Angle eyeRotation)
+    {
+        var (spritePos, spriteRot) = TransformSystem.GetWorldPositionRotation(uid);
+        var bounds = _sprite.CalculateBounds((uid, sprite), spritePos, spriteRot, eyeRotation);
+
+        return Matrix3Helpers.CreateRotation(eyeRotation).TransformBox(bounds).Bottom;
     }
 
     protected override bool InRange(EntityUid user, EntityUid target, float range, ICommonSession? session)
