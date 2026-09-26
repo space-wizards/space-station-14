@@ -7,7 +7,7 @@ namespace Content.Shared.Pinpointer;
 /// This is used for a <see cref="NavMapBeaconComponent"/> that can be configured with a UI.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedNavMapSystem))]
+[Access(typeof(NavMapSystem))]
 public sealed partial class ConfigurableNavMapBeaconComponent : Component;
 
 [Serializable, NetSerializable]
