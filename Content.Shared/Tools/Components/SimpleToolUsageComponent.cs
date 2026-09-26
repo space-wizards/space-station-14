@@ -10,6 +10,7 @@ namespace Content.Shared.Tools.Components;
 /// Component responsible for simple tool interactions.
 /// Using a tool with the correct quality on an entity with this component will start a DoAfter and raise the <see cref="SimpleToolDoAfterEvent"/> other systems can subscribe to.
 /// </summary>
+/// <seealso cref="SimpleToolInteractionComponent"/>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SimpleToolUsageSystem))]
 public sealed partial class SimpleToolUsageComponent : Component
