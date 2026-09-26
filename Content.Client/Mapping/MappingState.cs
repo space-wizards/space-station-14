@@ -154,7 +154,7 @@ public sealed partial class MappingState : GameplayStateBase
 
         var coords = _transform.ToMapCoordinates(args.Coordinates);
         if (_verbs.TryGetEntityMenuEntities(coords, out var entities))
-            _entityMenuController.OpenRootMenu(entities);
+            _entityMenuController.OpenRootMenu(entities, args.EntityUid);
 
         return true;
     }
