@@ -194,6 +194,8 @@ public sealed class StatusEffectNewTest : InteractionTest
     public async Task TestAddEffectTime_TryAddStatusEffectDuration()
     {
         var curTime = TimeSpan.Zero;
+        var twentyTicks = TenTicks + TenTicks;
+        var thirtyTicks = twentyTicks + TenTicks;
         await Server.WaitPost(() =>
         {
             _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks);
@@ -201,16 +203,15 @@ public sealed class StatusEffectNewTest : InteractionTest
         });
 
         Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var time), Is.True, "Could not get time info for effect A");
-
         Assert.That(time.EndEffectTime, Is.EqualTo(curTime + TenTicks), "Status effect A did not have expected end time of 10 ticks after current time");
 
-        Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusA, TenTicks), Is.True, "TryAddStatusEffectDuration adding ten ticks to duration did not return true");
-        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePlusTen);
-        Assert.That(timePlusTen.EndEffectTime, Is.EqualTo(curTime + (TenTicks * 2)), "Status effect A did not have expected updated end time of 20 ticks after current time");
+        Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusA, twentyTicks), Is.True, "TryAddStatusEffectDuration adding 20 ticks to duration did not return true");
+        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePlusTenPlusTwenty);
+        Assert.That(timePlusTenPlusTwenty.EndEffectTime, Is.EqualTo(curTime + thirtyTicks), "Status effect A did not have expected updated end time of 30 ticks after current time (was 10, 20 added)");
 
-        Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusA, -TenTicks), Is.True, "TryAddStatusEffectDuration subtracting ten ticks from duration did not return true");
-        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePlusTenMinusTen);
-        Assert.That(timePlusTenMinusTen.EndEffectTime, Is.EqualTo(curTime + TenTicks), "Status effect A did not have expected updated end time of 10 ticks after current time");
+        Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusA, -TenTicks), Is.True, "TryAddStatusEffectDuration removing ten ticks from duration did not return true");
+        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePlusTenPlusTwentyMinusTen);
+        Assert.That(timePlusTenPlusTwentyMinusTen.EndEffectTime, Is.EqualTo(curTime + twentyTicks), "Status effect A did not have expected updated end time of 20 ticks after current time (was 30, 10 removed)");
     }
     
     [Test, Description("Testing TryAddStatusEffectDuration to adjust status effect duration with null duration args")]
@@ -237,7 +238,8 @@ public sealed class StatusEffectNewTest : InteractionTest
     public async Task TestAddEffectTime_TrySetDuration()
     {
         var curTime = TimeSpan.Zero;
-        var twentyTicks = TenTicks * 2;
+        var twentyTicks = TenTicks + TenTicks;
+        var thirtyTicks = twentyTicks + TenTicks;
         await Server.WaitPost(() =>
         {
             _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks);
@@ -245,16 +247,15 @@ public sealed class StatusEffectNewTest : InteractionTest
         });
 
         Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var time), Is.True, "Could not get time info for effect A");
-
         Assert.That(time.EndEffectTime, Is.EqualTo(curTime + TenTicks), "Status effect A did not have expected end time of 10 ticks after current time");
 
-        Assert.That(_sStatusSystem.TrySetDuration(SPlayer, StatusA, twentyTicks), Is.True, "TrySetDuration setting to 20 ticks did not return true");
-        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePlusTen);
-        Assert.That(timePlusTen.EndEffectTime, Is.EqualTo(curTime + twentyTicks), "Status effect A did not have expected updated end time of 20 ticks after current time");
+        Assert.That(_sStatusSystem.TrySetDuration(SPlayer, StatusA, thirtyTicks), Is.True, "TrySetDuration setting to 30 ticks did not return true");
+        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePlusThirty);
+        Assert.That(timePlusThirty.EndEffectTime, Is.EqualTo(curTime + thirtyTicks), "Status effect A did not have expected updated end time of 30 ticks after current time");
 
-        Assert.That(_sStatusSystem.TrySetDuration(SPlayer, StatusA, TenTicks), Is.True, "TrySetDuration setting to 10 ticks did not return true");
-        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePlusTenMinusTen);
-        Assert.That(timePlusTenMinusTen.EndEffectTime, Is.EqualTo(curTime + TenTicks), "Status effect A did not have expected updated end time of 10 ticks after current time");
+        Assert.That(_sStatusSystem.TrySetDuration(SPlayer, StatusA, twentyTicks), Is.True, "TrySetDuration setting to 20 ticks did not return true");
+        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePlusTwenty);
+        Assert.That(timePlusTwenty.EndEffectTime, Is.EqualTo(curTime + twentyTicks), "Status effect A did not have expected updated end time of 20 ticks after current time");
     }
     
     [Test, Description("Testing TrySetDuration to adjust status effect duration to null")]
@@ -280,7 +281,7 @@ public sealed class StatusEffectNewTest : InteractionTest
     {
         var effectQuery = SEntMan.GetEntityQuery<StatusEffectComponent>();
         var curTime = TimeSpan.Zero;
-        var twentyTicks = TenTicks * 2;
+        var twentyTicks = TenTicks + TenTicks;
         await Server.WaitPost(() =>
         {
             _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks, twentyTicks);
@@ -319,6 +320,8 @@ public sealed class StatusEffectNewTest : InteractionTest
     public async Task TestIncreaseStatusEffectDelay_TrySetStatusEffectDuration()
     {
         var curTime = TimeSpan.Zero;
+        var twentyTicks = TenTicks + TenTicks;
+        var thirtyTicks = twentyTicks + TenTicks;
         await Server.WaitPost(() =>
         {
             _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks, TenTicks);
@@ -327,17 +330,17 @@ public sealed class StatusEffectNewTest : InteractionTest
 
         Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var time1), Is.True, "Could not get time info for effect A");
         Assert.That(time1.StartEffectTime, Is.EqualTo(curTime + TenTicks), "Status effect A did not have expected start time 10 ticks after current time");
-        Assert.That(time1.EndEffectTime, Is.EqualTo(curTime + (TenTicks * 2)), "Status effect A did not have expected end time of 20 ticks after current time");
+        Assert.That(time1.EndEffectTime, Is.EqualTo(curTime + twentyTicks), "Status effect A did not have expected end time of 20 ticks after current time");
 
         // TODO: do we still want this method to return true when a longer (invalid) delay has been given?
         //  * if delay is given, current implementation calculates new end time as (current time + delay + duration)
         //  * underlying `UpdateStatusEffectDelay` method rejects any delays longer than existing delay
         //  * however, this isn't factored in when calculating new effect end time - diff between current delay and desired delay is added to duration.
         //   is this intended behaviour? test has been written based on current implementation, please adjust if implementation changes 
-        _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks, TenTicks + TenTicks);
+        _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks, twentyTicks);
 
         Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var time2), Is.True, "Could not get time info for effect A after trying to increase delay");
         Assert.That(time2.StartEffectTime, Is.EqualTo(time1.StartEffectTime), "Unsupported attempt at increasing delay of status effect A somehow increased the delay");
-        Assert.That(time2.EndEffectTime, Is.EqualTo(curTime + (TenTicks * 3)), "Attempt at increasing delay of status effect A did not postpone start time - see TODO in this test");
+        Assert.That(time2.EndEffectTime, Is.EqualTo(curTime + thirtyTicks), "Attempt at increasing delay of status effect A did not postpone start time - see TODO in this test");
     }
 }
