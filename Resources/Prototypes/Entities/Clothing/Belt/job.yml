@@ -30,6 +30,7 @@
       - WeldingMask
       - RemoteSignaller
       - UtilityKnife
+      - FoamGrenade
       components:
       - StationMap
       - SprayPainter
@@ -140,6 +141,13 @@
       - WireBrush
       - LightReplacer
       - CleanerGrenade
+      - Screwdriver
+      - Crowbar
+      - Powerdrill
+      components:
+      - TrayScanner
+      - SprayPainter
+      - SprayPainterAmmo
   - type: ItemMapper
     sprite: *BeltOverlay
     mapLayers:
@@ -216,7 +224,6 @@
       - Tourniquet
       - CigPack
       - PillCanister
-      - Radio
       - DiscreteHealthAnalyzer
       - SurgeryTool
       - Dropper
@@ -269,6 +276,26 @@
     sprite: Clothing/Belt/emt.rsi
   - type: Clothing
     sprite: Clothing/Belt/emt.rsi
+  - type: Storage
+    whitelist:
+      tags:
+      - Bottle
+      - Brutepack
+      - Bloodpack
+      - Gauze
+      - Ointment
+      - Tourniquet
+      - CigPack
+      - PillCanister
+      - Radio
+      - DiscreteHealthAnalyzer
+      - SurgeryTool
+      - Dropper
+      components:
+      - Injector
+      - Pill
+      - Prying
+      - SpraySafety
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -285,7 +312,6 @@
       tags:
       - BotanyShovel
       - BotanyHatchet
-      - PlantBGone
       - Bottle
       - Syringe
       - CigPack
@@ -296,6 +322,7 @@
       - Seed
       - Smokable
       - HandLabeler
+      - Spray
   - type: ItemMapper
     sprite: *BeltOverlay
     mapLayers:
