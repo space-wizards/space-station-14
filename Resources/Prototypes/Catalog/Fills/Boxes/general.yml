@@ -269,9 +269,9 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        - id: ClothingShoesBootsPerformer
-        - id: ClothingUniformJumpskirtPerformer
-        - id: ClothingHeadPerformerWig
+        - id: ClothingUniformJumpskirtVirtualSinger
+        - id: ClothingShoesBootsVirtualSinger
+        - id: ClothingHeadVirtualSingerWig
         - id: FoodMealMemoryleek
           amount: 2
 
