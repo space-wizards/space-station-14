@@ -1,8 +1,8 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-            SetSize="340 110" MinSize="340 110" Title="Pressure Pump">
-    <BoxContainer Orientation="Vertical" Margin="5 5 5 5" SeparationOverride="10">
+            MinSize="340 110" Title="Pressure Pump">
+    <BoxContainer Orientation="Vertical" Margin="10" SeparationOverride="10">
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <controls:SwitchButton
                 Name="ToggleStatusButton"
