@@ -61,7 +61,7 @@ public abstract partial class SharedGunSystem
         if (args.Handled)
             return;
 
-        if (TryBallisticInsert(ent, args.Used, args.User))
+        if (TryBallisticInsert(ent, args.Used, args.User, checkInsertionSpeed: true))
             args.Handled = true;
     }
 
@@ -116,6 +116,12 @@ public abstract partial class SharedGunSystem
                 args.User);
             return;
         }
+
+        // Final check before insertion
+        var providerEv = new AmmoInsertAttemptEvent();
+        RaiseLocalEvent(args.Target.Value, ref providerEv);
+        if (providerEv.Cancelled)
+            return;
 
         void SimulateInsertAmmo(EntityUid ammo, EntityUid ammoProvider, EntityCoordinates coordinates)
         {
@@ -324,7 +330,8 @@ public abstract partial class SharedGunSystem
         Entity<BallisticAmmoProviderComponent> entity,
         EntityUid inserted,
         EntityUid? user,
-        bool suppressInsertionSound = false
+        bool suppressInsertionSound = false,
+        bool checkInsertionSpeed = false
     )
     {
         inserted = _stack.GetOne(inserted);
@@ -338,6 +345,14 @@ public abstract partial class SharedGunSystem
 
         if (!CanInsertBallistic(entity, ammo))
             return false;
+
+        var canInsertEv = new AmmoInsertAttemptEvent();
+        RaiseLocalEvent(entity, ref canInsertEv);
+        if (canInsertEv.Cancelled)
+            return false;
+
+        var providerEv = new AmmoInsertionEvent();
+        RaiseLocalEvent(entity, ref providerEv);
 
         entity.Comp.Entities.Add(ammo);
         Containers.Insert(ammo, entity.Comp.Container);
@@ -442,7 +457,7 @@ public abstract partial class SharedGunSystem
         {
             // Can't use unspawned ammo, so spawn an entity and try to insert it.
             var ammoEntity = PredictedSpawnAttachedTo(refiller.AmmoProto, Transform(entity).Coordinates);
-            if (!TryBallisticInsert(entity, ammoEntity, null, suppressInsertionSound: true))
+            if (!TryBallisticInsert(entity, ammoEntity, null, suppressInsertionSound: true, checkInsertionSpeed: false))
             {
                 PredictedQueueDel(ammoEntity);
                 Log.Error(
