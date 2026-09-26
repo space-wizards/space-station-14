@@ -79,7 +79,6 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     private const int CharWidth = 4;
 
     #region Inherited
-    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
@@ -89,10 +88,12 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
 
     /// <summary>
     /// Appearance data handler - drives the actual text/timer.
+    /// </summary>
+    /// <remarks>
     /// Sets <see cref="TextScreenVisualsComponent.NewTextToDisplay"/> on any change,
     /// which will be picked up in the next Update.
     /// Color data, being simpler, is updated on the layers in the call directly.
-    /// </summary>
+    /// </remarks>
     protected override void OnAppearanceChange(EntityUid uid, TextScreenVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         bool anyChange;
@@ -230,8 +231,9 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
 
     #region Public API
     /// <summary>
-    /// Converts a duration into a <see cref="TimerDisplay"/>.
+    /// Converts <paramref name="duration"/> into a <see cref="TimerDisplay"/> for display.
     /// </summary>
+    /// <param name="showCentiseconds">If true, enables sub-second precision for small durations.</param>
     public static TimerDisplay ConvertTimeToDisplayValue(TimeSpan duration, bool showCentiseconds)
     {
         if (duration < TimeSpan.Zero)
@@ -250,7 +252,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     }
 
     /// <summary>
-    /// Converts the difference between two timespans into a value between 0 and 9999.
+    /// Updates the text to display for a text screen, flags an update on the next Update.
     /// </summary>
     public void SetTextToDisplay(Entity<TextScreenVisualsComponent?> ent, string? text)
     {
@@ -265,7 +267,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     }
 
     /// <summary>
-    /// Returns the Effects/text.rsi state string based on <paramref name="character"/>, or null if none available.
+    /// Returns the <c>Effects/text.rsi</c> state to draw for <paramref name="character"/>, or null if none available.
     /// </summary>
     public static string? GetStateFromChar(char? character)
     {
@@ -320,7 +322,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
 
     #region Internal
     /// <summary>
-    /// Returns the string (\n row-separated) that should be displayed on a screen for a particular timer value.
+    /// Returns the string (newline separated rows) that should be displayed on a screen for a particular timer value.
     /// </summary>
     private string GetTimerString(Entity<TextScreenTimerVisualsComponent> ent, TimerDisplay newScreenValue)
     {
@@ -464,7 +466,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
         var textIsScrolling = rowData.Text.Length > screen.RowLength;
         var scrollOffset = textIsScrolling ? screen.HorizontalScrollOffset : 0;
 
-        // The horizontal shift, in pixels, that each character is drawn at.  For non-scrolling text, ScrollPosition must be 0.
+        // The horizontal shift, in pixels, that each character is drawn at. For non-scrolling text, ScrollPosition must be 0.
         var subCharOffset = rowData.ScrollPosition % CharWidth;
 
         // Draw all of the characters in our row's text.
@@ -488,7 +490,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             rowData.Layers[j] = new(layerTuple.Key, newState);
         }
 
-        // Hide the remaining layers (fill with a null state).
+        // Hide the remaining layers (fill with null state).
         for (var j = maxCharIndex; j < rowData.Layers.Count; j++)
         {
             var layerTuple = rowData.Layers[j];

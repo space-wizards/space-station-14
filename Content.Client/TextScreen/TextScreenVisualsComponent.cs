@@ -6,7 +6,7 @@ namespace Content.Client.TextScreen;
 
 /// <summary>
 /// A component for rendering text on a screen.
-/// Can show scrolling text, timers, or other specific-use information (e.g. arrivals timer)
+/// Can show scrolling text, timers, or other specific-use information (e.g. arrivals timer).
 /// </summary>
 /// <remarks>
 /// Pausing handled manually due to manual TextScreenRow logic.
@@ -23,7 +23,7 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// The color of the text drawn.
     /// </summary>
     /// <remarks>
-    /// 15,151,251 is the old ss13 color, from tg
+    /// 15,151,251 is the old SS13 color used on tgstation.
     /// </remarks>
     [DataField]
     public Color Color = new(15, 151, 251);
@@ -74,15 +74,19 @@ public sealed partial class TextScreenVisualsComponent : Component
     public int MaxScrollingCharacters = 32;
 
     /// <summary>
-    /// When scrolling, a horizontal offset for the scrolling, in pixels
+    /// When scrolling, a horizontal offset for the scrolling, in pixels.
     /// </summary>
+    /// <remarks>
+    /// Needed for finer adjustments of scroll bounds, along with
+    /// <see cref="LeftInvisiblePixels"/> and <see cref="RightInvisiblePixels"/>
+    /// </remarks>
     /// <seealso cref="TextScreenSystem.CharWidth"/>
     [DataField]
     public int HorizontalScrollOffset;
 
     /// <summary>
     /// When scrolling, the number of pixels that the leftmost letters should be invisible for.
-    /// Value should be between [0,CharWidth)
+    /// Value should be between [0,CharWidth).
     /// </summary>
     /// <seealso cref="TextScreenSystem.CharWidth"/>
     [DataField]
@@ -90,7 +94,7 @@ public sealed partial class TextScreenVisualsComponent : Component
 
     /// <summary>
     /// When scrolling, the number of pixels that the rightmost letters should be invisible for.
-    /// Value should be between [0,CharWidth)
+    /// Value should be between [0,CharWidth).
     /// </summary>
     /// <seealso cref="TextScreenSystem.CharWidth"/>
     [DataField]
@@ -158,9 +162,11 @@ public partial struct TextScreenRow()
 
     /// <summary>
     /// The current position of the row in the string, in pixels.
-    /// Increases monotonically, should be taken modulo the text length.
-    /// Each character is a fixed size (assumed 4 pixels wide)
     /// </summary>
+    /// <remarks>
+    /// Increases monotonically, should be taken modulo the text length.
+    /// Each character is a fixed size (pixel width defined in <see cref="TextScreenSystem.CharWidth"/>).
+    /// </remarks>
     public int ScrollPosition;
 
     /// <summary>
@@ -169,7 +175,7 @@ public partial struct TextScreenRow()
     public List<(string Key, string? State)> Layers = new();
 
     /// <summary>
-    /// The full text currently being drawn on the row.
+    /// The full text currently being drawn on the row. May not all fit on the screen at once.
     /// </summary>
     public string Text = string.Empty;
 }
