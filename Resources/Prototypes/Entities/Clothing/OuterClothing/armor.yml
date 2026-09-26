@@ -448,7 +448,7 @@
     slots: WITHOUT_POCKET
 
 - type: entity
-  parent: [ ClothingOuterBaseLarge, BaseMajorContraband, AllowSuitStorageClothing ]
+  parent: [ ClothingOuterEVASuitBase, BaseMajorContraband, AllowSuitStorageClothing ]
   id: ClothingOuterArmorPodWars
   name: ironclad II armor
   description: A repurposed suit of ironclad II armor, a relic of the pod wars.
