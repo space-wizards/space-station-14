@@ -1,0 +1,11 @@
+palette-advanced = Advanced Departments
+palette-chat-names = Chat Names
+palette-departmental = Departments
+palette-emagged = Emagged
+palette-kobold-scales = Kobold Scales
+palette-kobold-horns = Kobold Horns
+palette-material = Material
+palette-paper = Paper
+palette-rainbow = Rainbow
+palette-scurret-fur = Scurret Fur
+palette-sixteen = Sixteen
