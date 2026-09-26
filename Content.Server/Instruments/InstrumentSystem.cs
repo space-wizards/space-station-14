@@ -164,32 +164,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         if (args.SenderSession.AttachedEntity != GetInstrumentPlayer(uid))
             return;
 
-        if (msg.Tracks.Length > RobustMidiEvent.MaxChannels)
-        {
-            Log.Warning($"{args.SenderSession.UserId.ToString()} - Tried to send tracks over the limit! Received: {msg.Tracks.Length}; Limit: {RobustMidiEvent.MaxChannels}");
-            return;
-        }
-
-
-        foreach (var t in msg.Tracks)
-        {
-            // Remove any control characters that may be part of the midi file so they don't end up in the admin logs.
-            t?.SanitizeFields();
-            // Truncate any track names too long.
-            t?.TruncateFields(_cfg.GetCVar(CCVars.MidiMaxChannelNameLength));
-        }
-
-        var tracksString = string.Join("\n",
-            msg.Tracks
-            .Where(t => t != null)
-            .Select(t => t!.ToString()));
-
-        _adminLogSystem.Add(
-            LogType.Instrument,
-            LogImpact.Low,
-            $"{ToPrettyString(args.SenderSession.AttachedEntity)} set the midi channels for {ToPrettyString(uid)} to {tracksString}");
-
-        activeInstrument.Tracks = msg.Tracks;
+        activeInstrument.UsedChannels = msg.Channels;
 
         Dirty(uid, activeInstrument);
     }
