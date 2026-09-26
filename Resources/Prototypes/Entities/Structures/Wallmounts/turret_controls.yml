@@ -1,5 +1,5 @@
 - type: entity
-  parent: StructureHealthMachine
+  parent: [ BaseWallmountMetallic, StructureHealthMachine ]
   id: WeaponEnergyTurretControlPanelFrame
   name: sentry turret control panel assembly
   description: An incomplete wall-mounted assembly for a sentry turret control panel.
@@ -28,11 +28,6 @@
           collection: MetalGlassBreak
           params:
             volume: -4
-  - type: Transform
-    anchored: true
-  - type: WallMount
-  - type: Clickable
-  - type: InteractionOutline
   - type: ContainerContainer
     containers:
       board: !type:Container

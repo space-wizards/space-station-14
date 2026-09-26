@@ -5,16 +5,11 @@
   components:
   - type: WallMount
     arc: 360
-  - type: Rotatable
   - type: Sprite
     sprite: Structures/Wallmounts/signs.rsi
     snapCardinals: true
   - type: StaticPrice
     price: 20
-  # Hacky wacky - It inherit anchorable from "BaseWallmount", none of the BaseSign children are designed to be anchorable
-  - type: Anchorable
-    flags:
-    - None
 
 - type: entity
   abstract: true
@@ -24,8 +19,7 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 40
       behaviors:
       - !type:PlaySoundBehavior
@@ -41,8 +35,7 @@
     damageModifierSet: CardboardMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:PlaySoundBehavior
