@@ -70,6 +70,7 @@
         types:
           Blunt: 5
           Slash: 7
+          Structural: 8
     - type: TypingIndicator
       proto: alien
     - type: Tag
