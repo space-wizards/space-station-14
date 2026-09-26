@@ -95,3 +95,50 @@
       ArmRight: [HandRight]
       LegLeft: [FootLeft]
       LegRight: [FootRight]
+  - type: AttachedVisuals
+    attachments:
+      - attachment: InhandLeft
+        container: left
+        order: 100
+      - attachment: InhandRight
+        container: right
+        order: 100
+      - attachment: EquippedBack
+        container: back
+        order: 70
+      - attachment: EquippedBelt
+        container: belt
+        order: 65
+      - attachment: EquippedBelt
+        container: id
+        order: 60
+      - attachment: EquippedSuitStorage
+        container: suitstorage
+        order: 55
+      - attachment: EquippedHead
+        container: head
+        order: 50
+      - attachment: EquippedEars
+        container: ears
+        order: 45
+      - attachment: EquippedEyes
+        container: eyes
+        order: 40
+      - attachment: EquippedMask
+        container: mask
+        order: 35
+      - attachment: EquippedNeck
+        container: neck
+        order: 30
+      - attachment: EquippedGloves
+        container: gloves
+        order: 25
+      - attachment: EquippedOuterClothing
+        container: outerclothing
+        order: 20
+      - attachment: EquippedJumpsuit
+        container: jumpsuit
+        order: 15
+      - attachment: EquippedShoes
+        container: shoes
+        order: 10

@@ -59,15 +59,21 @@
     - type: IgniteOnMeleeHit
     - type: DisarmMalus
       malus: 0.6
-  - type: ToggleableVisuals
-    spriteLayer: flame
-    inhandVisuals:
-      left:
-      - state: inhand-left-flame
-        shader: unshaded
-      right:
-      - state: inhand-right-flame
-        shader: unshaded
+  - type: AttachedVisuals
+    sprite: Objects/Tools/welder.rsi
+    attachedVisuals:
+      InhandLeft:
+        layers:
+        - state: inhand-left-flame
+          map: [ "enum.ToggleableVisuals.Layer" ]
+          shader: unshaded
+          visible: false
+      InhandRight:
+        layers:
+        - state: inhand-right-flame
+          map: [ "enum.ToggleableVisuals.Layer" ]
+          shader: unshaded
+          visible: false
   - type: UseDelay
   - type: MeleeWeapon
     wideAnimationRotation: -90
