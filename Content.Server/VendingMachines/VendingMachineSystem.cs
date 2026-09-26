@@ -109,6 +109,9 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         args.Price += price;
     }
 
+    /// <remarks>
+    /// NOTE: Repairing only raises DamageChangedEvent, not DamageDealt.
+    /// </remarks>
     [SubscribeLocalEvent]
     private void OnDamageChanged(Entity<VendingMachineComponent> entity, ref DamageChangedEvent args)
     {
