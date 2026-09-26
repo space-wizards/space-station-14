@@ -13,6 +13,7 @@ using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.FixedPoint;
 using Content.Shared.Lathe;
+using Content.Shared.Lathe.Components;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.Stacks;
@@ -49,7 +50,7 @@ public sealed class MaterialArbitrageTest : GameTest
         var pricing = entManager.System<PricingSystem>();
         var stackSys = entManager.System<StackSystem>();
         var mapSystem = server.System<SharedMapSystem>();
-        var latheSys = server.System<LatheSystem>();
+        var latheSys = server.System<Server.Lathe.LatheSystem>();
         var compFact = server.ResolveDependency<IComponentFactory>();
 
         Assert.That(mapSystem.IsInitialized(testMap.MapId));
@@ -260,7 +261,7 @@ public sealed class MaterialArbitrageTest : GameTest
                         }
                         foreach (var (matId, amount) in recipe.Materials)
                         {
-                            var actualAmount = SharedLatheSystem.AdjustMaterial(amount, recipe.ApplyMaterialDiscount, multiplier);
+                            var actualAmount = Shared.Lathe.LatheSystem.AdjustMaterial(amount, recipe.ApplyMaterialDiscount, multiplier);
                             if (spawnedMats.TryGetValue(matId, out var numSpawned))
                                 Assert.That(numSpawned, Is.LessThanOrEqualTo(actualAmount), $"destroying a {id} spawns more {matId} than required to produce via an (upgraded) lathe.");
                         }
@@ -347,7 +348,7 @@ public sealed class MaterialArbitrageTest : GameTest
                         }
                         foreach (var (matId, amount) in recipe.Materials)
                         {
-                            var actualAmount = SharedLatheSystem.AdjustMaterial(amount, recipe.ApplyMaterialDiscount, multiplier);
+                            var actualAmount = Shared.Lathe.LatheSystem.AdjustMaterial(amount, recipe.ApplyMaterialDiscount, multiplier);
                             if (deconstructedMats.TryGetValue(matId, out var numSpawned))
                                 Assert.That(numSpawned, Is.LessThanOrEqualTo(actualAmount), $"deconstructing {id} spawns more {matId} than required to produce via an (upgraded) lathe.");
                         }
@@ -409,7 +410,7 @@ public sealed class MaterialArbitrageTest : GameTest
                         }
                         foreach (var (matId, amount) in recipe.Materials)
                         {
-                            var actualAmount = SharedLatheSystem.AdjustMaterial(amount, recipe.ApplyMaterialDiscount, multiplier);
+                            var actualAmount = Shared.Lathe.LatheSystem.AdjustMaterial(amount, recipe.ApplyMaterialDiscount, multiplier);
                             if (compositionComponent.MaterialComposition.TryGetValue(matId, out var numSpawned))
                                 Assert.That(numSpawned, Is.LessThanOrEqualTo(actualAmount), $"The physical composition of {id} has more {matId} than required to produce via an (upgraded) lathe.");
                         }
