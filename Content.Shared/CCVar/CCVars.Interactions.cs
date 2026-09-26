@@ -83,4 +83,9 @@ public sealed partial class CCVars
     public static readonly CVarDef<bool> ControlHoldToAttackRanged =
         CVarDef.Create("control.hold_to_attack_ranged", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
+    /// <summary>
+    ///     If enabled, radial menus will open at the mouse location, rather than on the character.
+    /// </summary>
+    public static readonly CVarDef<bool> ControlRadialLocation =
+        CVarDef.Create("control.radial_menu_location", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 }

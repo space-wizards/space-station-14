@@ -5,12 +5,16 @@ using Content.Shared.Changeling.Systems;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Shared.Utility;
+using Robust.Shared.Configuration;
+using Content.Shared.CCVar;
 
 namespace Content.Client.Changeling.UI;
 
 [UsedImplicitly]
 public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
+    [Dependency] private IConfigurationManager _cfg = default!;
+
     private SimpleRadialMenu? _menu;
     private static readonly Color SelectedOptionBackground = Palettes.Green.Element.WithAlpha(128);
     private static readonly Color DisabledOptionBackground = Palettes.Slate.Element.WithAlpha(128);
@@ -22,6 +26,8 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
         base.Open();
 
         _menu = this.CreateWindow<SimpleRadialMenu>();
+        if (!_cfg.GetCVar(CCVars.ControlRadialLocation))
+            _menu.Track(Owner);
         Update();
         _menu.OpenOverMouseScreenPosition();
     }
