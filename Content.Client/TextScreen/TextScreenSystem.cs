@@ -449,7 +449,13 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     private void ScrollRow(ref TextScreenRow rowData)
     {
         var difference = (_timing.CurTime - rowData.NextScroll).TotalSeconds;
-        var increments = (int)Math.Truncate(difference / rowData.ScrollDelay.TotalSeconds) + 1;
+        if (!double.IsPositive(difference))
+            difference = 0.0;
+
+        var increments = 1;
+        if (rowData.ScrollDelay.TotalSeconds > 0.0)
+            increments += (int)Math.Truncate(difference / rowData.ScrollDelay.TotalSeconds);
+
         rowData.ScrollPosition += increments;
         rowData.NextScroll += increments * rowData.ScrollDelay;
     }
