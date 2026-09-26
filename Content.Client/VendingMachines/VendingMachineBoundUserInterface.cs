@@ -6,7 +6,7 @@ using Robust.Shared.Input;
 
 namespace Content.Client.VendingMachines;
 
-public sealed partial class VendingMachineBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed class VendingMachineBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private VendingMachineMenu? _menu;

@@ -8,7 +8,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
 
 namespace Content.Client.VendingMachines.UI;
@@ -21,12 +20,10 @@ public sealed partial class VendingMachineMenu : FancyWindow
     [Dependency] private ILocalizationManager _loc = default!;
     [Dependency] private IPrototypeManager _prototypeManager = default!;
 
+    private readonly SpriteSystem _spriteSystem;
     private readonly Dictionary<VendorItemKey, (ListContainerButton Button, VendingMachineItem Item)> _listItems = new();
     private readonly Dictionary<VendorItemKey, uint> _amounts = new();
     private VendingMachineInventoryCategory? _selectedCategory;
-
-    private static readonly SpriteSpecifier AllCategoryIcon =
-        new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/grid.svg.96dpi.png"));
 
     /// <summary>
     /// Whether the vending machine is able to be interacted with or not.
@@ -39,6 +36,7 @@ public sealed partial class VendingMachineMenu : FancyWindow
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+        _spriteSystem = _entityManager.System<SpriteSystem>();
 
         VendingContents.SearchBar = SearchBar;
         VendingContents.DataFilterCondition += DataFilterCondition;
@@ -138,36 +136,33 @@ public sealed partial class VendingMachineMenu : FancyWindow
         if (!showCategories)
         {
             _selectedCategory = null;
-            CategorySelector.SetCategories([], 0);
+            CategoryTabs.SetTabs([], 0);
             return;
         }
 
         if (_selectedCategory != null && !visibleCategories.Contains(_selectedCategory))
             _selectedCategory = null;
 
-        var spriteSystem = _entityManager.System<SpriteSystem>();
-        var allCategory = new CategorySelectorEntry(
+        var allCategory = new TabBarEntry(
             _loc.GetString("vending-machine-category-all"),
             () => SelectCategory(null),
-            spriteSystem.Frame0(AllCategoryIcon),
-            new Vector2(32));
-        var choices = new List<CategorySelectorEntry> { allCategory };
+            new TabBarIcon(Size: new Vector2(32), StyleClass: "VendingAllCategoryIcon"));
+        var choices = new List<TabBarEntry> { allCategory };
         var selectedIndex = 0;
 
         foreach (var category in visibleCategories)
         {
-            var choice = new CategorySelectorEntry(
+            var choice = new TabBarEntry(
                 _loc.GetString(category.Name),
                 () => SelectCategory(category),
-                spriteSystem.Frame0(category.Icon),
-                new Vector2(48));
+                new TabBarIcon(_spriteSystem.Frame0(category.Icon), new Vector2(48)));
             choices.Add(choice);
 
             if (_selectedCategory == category)
                 selectedIndex = choices.Count - 1;
         }
 
-        CategorySelector.SetCategories(choices, selectedIndex);
+        CategoryTabs.SetTabs(choices, selectedIndex);
     }
 
     private void SelectCategory(VendingMachineInventoryCategory? category)
