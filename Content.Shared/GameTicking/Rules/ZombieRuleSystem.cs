@@ -86,8 +86,7 @@ public abstract partial class ZombieRuleSystem : GameRuleSystem<ZombieRuleCompon
         {
             var meta = MetaData(survivor);
             var username = string.Empty;
-            if (_mindSystem.TryGetMind(survivor, out _, out var mind) &&
-                _player.TryGetSessionById(mind.UserId, out var session))
+            if (_mindSystem.TryGetAttachedSession(survivor, out var session))
             {
                 username = session.Name;
             }

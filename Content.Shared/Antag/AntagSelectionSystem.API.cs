@@ -314,10 +314,7 @@ public abstract partial class AntagSelectionSystem
     [PublicAPI]
     public void SendBriefing(EntityUid entity, string briefing, Color? briefingColor, SoundSpecifier? briefingSound)
     {
-        if (!Mind.TryGetMind(entity, out _, out var mindComponent))
-            return;
-
-        if (!PlayerManager.TryGetSessionById(mindComponent.UserId, out var session))
+        if (!Mind.TryGetAttachedSession(entity, out var session))
             return;
 
         SendBriefing((ICommonSession?)session, briefing, briefingColor, briefingSound);

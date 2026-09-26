@@ -214,12 +214,11 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
                 failedRevive = false;
             }
 
-            if (_mind.TryGetMind(target, out var mindUid, out var mindComp) &&
-                _player.TryGetSessionById(mindComp.UserId, out var playerSession))
+            if (_mind.TryGetAttachedSession(target, out var mind, out var session))
             {
                 // notify them they're being revived.
-                if (mindComp.CurrentEntity != target)
-                    OpenReturnToBodyEui((mindUid, mindComp), playerSession);
+                if (mind.Value.Comp.CurrentEntity != target)
+                    OpenReturnToBodyEui(mind.Value, session);
             }
             else
             {

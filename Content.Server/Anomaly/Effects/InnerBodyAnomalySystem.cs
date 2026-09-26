@@ -100,8 +100,7 @@ public sealed partial class InnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
             _audio.PlayPvs(ent.Comp.StartSound, ent);
 
         if (ent.Comp.StartMessage is not null &&
-            _mind.TryGetMind(ent, out _, out var mindComponent) &&
-            _player.TryGetSessionById(mindComponent.UserId, out var session))
+            _player.TryGetSessionByEntity(ent, out var session))
         {
             var message = Loc.GetString(ent.Comp.StartMessage);
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
@@ -133,8 +132,7 @@ public sealed partial class InnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
 
     private void OnSeverityChanged(Entity<InnerBodyAnomalyComponent> ent, ref AnomalySeverityChangedEvent args)
     {
-        if (!_mind.TryGetMind(ent, out _, out var mindComponent) ||
-            !_player.TryGetSessionById(mindComponent.UserId, out var session))
+        if (!_player.TryGetSessionByEntity(ent, out var session))
             return;
 
         var message = string.Empty;
@@ -210,8 +208,7 @@ public sealed partial class InnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
         _stun.TryUpdateParalyzeDuration(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration));
 
         if (ent.Comp.EndMessage is not null &&
-            _mind.TryGetMind(ent, out _, out var mindComponent) &&
-            _player.TryGetSessionById(mindComponent.UserId, out var session))
+            _player.TryGetSessionByEntity(ent, out var session))
         {
             var message = Loc.GetString(ent.Comp.EndMessage);
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));

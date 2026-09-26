@@ -306,11 +306,10 @@ public sealed partial class ZombieSystem
         _npc.SleepNPC(target, htn);
 
         //He's gotta have a mind
-        var hasMind = _mind.TryGetMind(target, out var mindId, out var mind);
-        if (hasMind && mind != null && _player.TryGetSessionById(mind.UserId, out var session))
+        if (_mind.TryGetAttachedSession(target, out var mind, out var session))
         {
             //Zombie role for player manifest
-            _role.MindAddRole(mindId, MindRoleZombie, mind: null, silent: true);
+            _role.MindAddRole(mind.Value.Owner, MindRoleZombie, mind: mind.Value.Comp, silent: true);
 
             //Greeting message for new bebe zombers
             _chatMan.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));
@@ -321,11 +320,10 @@ public sealed partial class ZombieSystem
         else
         {
             _npc.WakeNPC(target, htn);
-        }
-
-        if (!HasComp<GhostRoleMobSpawnerComponent>(target) && !hasMind) //this specific component gives build test trouble so pop off, ig
-        {
-            MakeGhostRole(target);
+            if (!HasComp<GhostRoleMobSpawnerComponent>(target)) //this specific component gives build test trouble so pop off, ig
+            {
+                MakeGhostRole(target);
+            }
         }
 
         if (TryComp<HandsComponent>(target, out var handsComp))
