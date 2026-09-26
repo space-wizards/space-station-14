@@ -75,6 +75,14 @@
         icon:
           sprite: "Objects/Specific/Robotics/mmi.rsi"
           state: "mmi_icon"
+    - to: frameWithBrain
+      steps:
+      - component: PAI
+        name: construction-graph-component-borg-brain
+        store: station_ai_brain_slot
+        icon:
+          sprite: "Objects/Specific/Robotics/mmi.rsi"
+          state: "mmi_icon"
     - to: frameWithoutBrainFinished
       steps:
       - material: ReinforcedGlass
