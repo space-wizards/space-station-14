@@ -1,0 +1,46 @@
+- type: adminAnnouncementPreset
+  id: CentralCommand
+  name: admin-announce-preset-centcomm
+  color: "#1d8bad"
+  announcer: admin-announce-preset-centcomm-announcer
+  signature: admin-announce-preset-centcomm-signature
+  sound:
+    path: /Audio/Announcements/announce.ogg
+
+- type: adminAnnouncementPreset
+  id: Station
+  name: admin-announce-preset-station
+  color: "#ffd700"
+  announcer: admin-announce-preset-station-announcer
+  signature: admin-announce-preset-station-signature
+  sound:
+    path: /Audio/Announcements/announce.ogg
+
+- type: adminAnnouncementPreset
+  id: StationAI
+  name: admin-announce-preset-station-ai
+  color: "#5ed7aa"
+  announcer: admin-announce-preset-station-ai-announcer
+  sound:
+    path: /Audio/Announcements/announce.ogg
+
+- type: adminAnnouncementPreset
+  id: NuclearOperatives
+  name: admin-announce-preset-nukeops
+  color: "#ff0000"
+  announcer: admin-announce-preset-nukeops-announcer
+
+- type: adminAnnouncementPreset
+  id: Wizard
+  name: admin-announce-preset-wizard
+  color: "#ff00ff"
+  announcer: admin-announce-preset-wizard-announcer
+
+- type: adminAnnouncementPreset
+  id: WarningAliens
+  name: admin-announce-preset-warning-aliens
+  color: "#7BC043"
+  announcer: admin-announce-preset-warning-aliens-announcer
+  message: admin-announce-preset-warning-aliens-message
+  sound:
+    path: /Audio/Announcements/aliens.ogg
