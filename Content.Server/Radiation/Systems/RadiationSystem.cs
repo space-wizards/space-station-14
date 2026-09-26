@@ -56,6 +56,7 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
             return;
 
         entity.Comp.Enabled = val;
+        Dirty(entity);
     }
 
     /// <summary>
