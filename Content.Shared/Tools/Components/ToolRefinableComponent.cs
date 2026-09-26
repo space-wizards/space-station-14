@@ -19,7 +19,7 @@ public sealed partial class ToolRefinableComponent : Component
     /// The items created when the item is refined.
     /// </summary>
     [DataField(required: true)]
-    public List<EntitySpawnEntry> RefineResult = new();
+    public List<EntitySpawnEntry> RefineResult;
 
     /// <summary>
     /// The amount of time it takes to refine a given item.
