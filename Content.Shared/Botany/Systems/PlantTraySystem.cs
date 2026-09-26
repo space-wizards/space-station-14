@@ -4,6 +4,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.Interaction;
 using Content.Shared.Random.Helpers;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
@@ -23,6 +24,7 @@ public sealed partial class PlantTraySystem : EntitySystem
     [Dependency] private PlantSystem _plant = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
@@ -91,6 +93,13 @@ public sealed partial class PlantTraySystem : EntitySystem
             ent.Comp.SoilSolution = null;
     }
 
+    [SubscribeLocalEvent]
+    private void OnRelayInteractUsing(Entity<PlantTrayComponent> ent,
+        ref PlantHolderRelayedEvent<InteractUsingEvent> args)
+    {
+        args.Args.Handled = _interaction.InteractUsing(args.Args.User, args.Args.Used, ent, args.Args.ClickLocation);
+    }
+
     /// <summary>
     /// Updates trays whose periodic processing is due.
     /// </summary>
@@ -135,11 +144,16 @@ public sealed partial class PlantTraySystem : EntitySystem
         var contents = trayComp.SoilSolution.Value.Comp.Solution.Contents.ToArray();
         foreach (var entry in contents)
         {
-            var reagentProto = ProtoMan.Index(entry.Reagent.Prototype);
-            _entityEffects.ApplyEffects(trayUid, [.. reagentProto.PlantMetabolisms], entry.Quantity.Float());
+            if (entry.Quantity.Float() >= 1f)
+            {
+                var reagentProto = ProtoMan.Index(entry.Reagent.Prototype);
+                _entityEffects.ApplyEffects(trayUid, [.. reagentProto.PlantMetabolisms], entry.Quantity.Float());
 
-            if (plantUid != null)
-                _entityEffects.ApplyEffects(plantUid.Value, [.. reagentProto.PlantMetabolisms], entry.Quantity.Float());
+                if (plantUid != null)
+                {
+                    _entityEffects.ApplyEffects(plantUid.Value, [.. reagentProto.PlantMetabolisms], entry.Quantity.Float());
+                }
+            }
         }
 
         _solutionContainer.RemoveEachReagent(trayComp.SoilSolution.Value, FixedPoint2.New(1));
@@ -260,6 +274,14 @@ public sealed partial class PlantTraySystem : EntitySystem
     }
 
     /// <summary>
+    /// Checks whether the tray contains a plant entity.
+    /// </summary>
+    public bool HasPlant(Entity<PlantTrayComponent?> ent)
+    {
+        return TryGetPlant(ent, out _);
+    }
+
+    /// <summary>
     /// Tries to get the plant entity in the tray.
     /// </summary>
     [PublicAPI]
@@ -276,7 +298,10 @@ public sealed partial class PlantTraySystem : EntitySystem
         return true;
     }
 
-    public bool TryGetAlivePlant(Entity<PlantTrayComponent?> ent)
+    /// <summary>
+    /// Checks whether the tray contains a living plant entity.
+    /// </summary>
+    public bool HasAlivePlant(Entity<PlantTrayComponent?> ent)
     {
         return TryGetAlivePlant(ent, out _);
     }

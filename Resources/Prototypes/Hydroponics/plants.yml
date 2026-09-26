@@ -1195,6 +1195,8 @@
     yield: 2
     potency: 20
     growthStages: 3
+  - type: PlantHarvest
+    harvestRepeat: Repeat
   - type: PlantGrowth
     waterConsumption: 0.4
   - type: PlantAtmospheric
@@ -1225,6 +1227,8 @@
     production: 12
     yield: 2
     potency: 20
+  - type: PlantHarvest
+    harvestRepeat: Repeat
   - type: PlantGrowth
     nutrientConsumption: 0.5
   - type: PlantAtmospheric

@@ -22,7 +22,7 @@ public sealed partial class EmergencyLightSystem : SharedEmergencyLightSystem
     [Dependency] private BatterySystem _battery = default!;
     [Dependency] private PointLightSystem _pointLight = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private StationSystem _station = default!;
+    [Dependency] private ServerStationSystem _station = default!;
 
     public override void Initialize()
     {
