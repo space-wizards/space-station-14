@@ -239,8 +239,7 @@ public sealed class StatusEffectNewTest : InteractionTest
         _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePermanent);
         Assert.That(timePermanent.EndEffectTime, Is.Null, "TryAddStatusEffectDuration setting to null did not set the duration to null");
     }
-    
-    
+
     [Test, Description("Testing TrySetDuration to adjust status effect duration.")]
     public async Task TestAddEffectTime_TrySetDuration()
     {
