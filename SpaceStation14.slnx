@@ -36,6 +36,10 @@
   <Project Path="Content.Server.Database/Content.Server.Database.csproj" />
   <Project Path="Content.Server/Content.Server.csproj" />
   <Project Path="Content.Shared.Database/Content.Shared.Database.csproj" />
+  <Project Path="Content.Shared.GuidebookGenerator/Content.Shared.GuidebookGenerator.csproj">
+    <BuildType Solution="DebugOpt|*" Project="Debug" />
+    <BuildType Solution="Tools|*" Project="Debug" />
+  </Project>
   <Project Path="Content.Shared/Content.Shared.csproj" />
   <Project Path="Content.Tests/Content.Tests.csproj" />
   <Project Path="Content.Tools/Content.Tools.csproj" />
