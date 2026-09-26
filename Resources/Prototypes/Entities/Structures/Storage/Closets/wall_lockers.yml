@@ -242,8 +242,8 @@
   parent: BaseWallLocker
   id: LockerWallSyndicate
   name: blood-red wall locker
-  description: It's a wall storage unit with a blood-red design.
   suffix: "Locked"
+  description: It's a wall storage unit with a blood-red design.
   components:
   - type: Appearance
   - type: EntityStorageVisuals

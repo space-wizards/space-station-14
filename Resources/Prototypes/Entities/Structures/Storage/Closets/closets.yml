@@ -80,9 +80,9 @@
 - type: entity
   parent: ClosetSteelBase
   id: ClosetJanitorBomb
+  categories: [ DoNotMap ]
   name: janitorial bomb suit closet
   description: It's a storage unit for janitorial explosion-protective suits.
-  categories: [ DoNotMap ]
   components:
   - type: Appearance
   - type: EntityStorageVisuals
@@ -162,9 +162,9 @@
     stateDoorClosed: generic_door
 
 - type: entity
-  suffix: Welded
   parent: ClosetMaintenance
   id: ClosetMaintenanceWelded
+  suffix: Welded
   components:
   - type: Weldable
     isWelded: true
