@@ -766,13 +766,13 @@
       - !type:HealthChange
         damage:
           types:
-            Bloodloss: 2
+            Poison: 1.5
       - !type:ModifyBleed
         amount: 1
       - !type:ModifyBloodLevel
         amount: -5
       - !type:ModifyBloodLevel
-        amount: -3
+        amount: -5
         conditions:
         - !type:BloodLevelCondition
           min: 0.5 # Stronger when at least 50% blood

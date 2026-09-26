@@ -86,7 +86,7 @@ reagent-name-toxintrash = reprocessed material
 reagent-desc-toxintrash = An awful-smelling slurry efficiently refined from discarded matter. It represents a perfect, zero-waste conversion of salvage into Vox sustenance, though it is a violent poison to others.
 
 reagent-name-hemorrhinol = hemorrhinol
-reagent-desc-hemorrhinol = A toxin that causes severe damage to blood vessels, causing rapid bleeding.
+reagent-desc-hemorrhinol = A close cousin of Lexorin. Specifically targets and destroys blood cells, causing rapid blood loss.
 
 reagent-name-hivarol = hivarol
 reagent-desc-hivarol = A toxin that attacks specific types of cells in the body, damaging hivemind communication and causing severe pain if one is present.
@@ -96,6 +96,3 @@ reagent-desc-phosphoric-acid = An acidic chemical often used in agriculture. Kee
 
 reagent-name-hardlight-toxin = hardlight toxin
 reagent-desc-hardlight-toxin = A highly advanced toxin which inundates a victim's nervous system with ionizing radiation when metabolized.
-
-reagent-name-hemotoxin = hemotoxin
-reagent-desc-hemotoxin = A close cousin of Hemorrhinol. Specifically targets and destroys red blood cells, causing rapid blood loss.
