@@ -86,6 +86,28 @@
 
 - type: entity
   parent: LaserHitscanBase
+  id: RedLaserMakeshift
+  categories: [ HideSpawnMenu ]
+  name: weak red laser ray
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 10
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_laser_makeshift
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: beam_laser_makeshift
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_laser_makeshift
+
+
+- type: entity
+  parent: LaserHitscanBase
   id: RedMediumLaser
   name: red amplified laser ray
   categories: [ HideSpawnMenu ]

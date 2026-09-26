@@ -1,0 +1,106 @@
+- type: constructionGraph
+  id: MakeshiftLaserGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: mslaserframe
+      steps:
+      - tag: ModularReceiver
+        icon:
+          sprite: Objects/Misc/modular_receiver.rsi
+          state: icon
+        name: construction-graph-tag-modular-receiver
+      - material: Steel
+        amount: 2
+      - material: CableMV
+        amount: 5
+        doAfter: 5
+
+  - node: mslaserframe
+    entity: WeaponMakeshiftLaserFrame
+    edges:
+    - to: mslaserframescrewed
+      steps:
+      - tool: Screwing
+        doAfter: 2
+    - to: start
+      steps:
+      - tool: Cutting
+        doAfter: 1
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: CableMVStack1
+        amount: 5
+      - !type:SpawnPrototype
+        prototype: ModularReceiver
+      - !type:DeleteEntity
+
+  - node: mslaserframescrewed
+    entity: WeaponMakeshiftLaserFrame
+    edges:
+    - to: mslaserframeglasses
+      steps:
+      - tag: Glasses
+        store: glasses
+        name: construction-graph-tag-glasses
+        icon:
+          sprite: Clothing/Eyes/Glasses/jamjar.rsi
+          state: icon
+        doAfter: 2
+    - to: mslaserframe
+      steps:
+      - tool: Prying
+        doAfter: 1
+
+  - node: mslaserframeglasses
+    entity: WeaponMakeshiftLaserFrame
+    edges:
+    - to: mslaserwelded
+      steps:
+      - tool: Welding
+        doAfter: 2
+    - to: mslaserframescrewed
+      steps:
+      - tool: Cutting
+        doAfter: 1
+      completed:
+      - !type:EmptyContainer
+        container: glasses
+        pickup: true
+
+  - node: mslaserwelded
+    entity: WeaponMakeshiftLaserFrame
+    edges:
+    - to: mslaser
+      completed:
+      - !type:AdminLog
+        message: "Construction"
+        impact: High
+      steps:
+      - tag: PowerCell
+        store: cell_slot
+        name: construction-graph-tag-power-cell
+        icon:
+          sprite: Objects/Power/power_cells.rsi
+          state: medium
+        doAfter: 1
+    - to: mslaserframeglasses
+      steps:
+      - tool: Cutting
+        doAfter: 1
+
+  - node: mslaser
+    entity: WeaponMakeshiftLaserNoCell
+    edges:
+    - to: mslaserwelded
+      completed:
+      - !type:EmptyContainer
+        container: cell_slot
+        pickup: true
+      steps:
+      - tool: Welding
+        doAfter: 1

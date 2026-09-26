@@ -48,7 +48,7 @@ construction-graph-tag-payload = payload
 construction-graph-tag-empty-can = an empty can
 construction-graph-tag-igniter = an igniter
 construction-graph-tag-modular-receiver = modular receiver
-construction-graph-tag-power-cell-small = power cell small
+construction-graph-tag-power-cell-small = small power cell
 construction-graph-tag-power-cell = power cell
 construction-graph-tag-potato-battery = a potato battery
 construction-graph-tag-super-compact-ai-chip = a super-compact AI chip
@@ -75,6 +75,7 @@ soil-construction-graph-any-mushroom = any mushroom
 construction-graph-tag-mop-basic = mop
 construction-graph-tag-paper = office paper
 construction-graph-tag-core-pinpointer-piece = piece of core pinpointer
+construction-graph-tag-glasses = transparent glasses
 
 # toys
 construction-graph-tag-rubber-ducky = a rubber ducky

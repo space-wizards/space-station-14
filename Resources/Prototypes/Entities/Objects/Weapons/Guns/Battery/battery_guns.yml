@@ -209,10 +209,29 @@
 
 - type: entity
   name: makeshift laser pistol
-  parent: [BaseWeaponBatterySmall, BaseMinorContraband]
-  id: WeaponMakeshiftLaser
+  parent: [BaseWeaponPowerCell, BaseMinorContraband]
+  id: WeaponMakeshiftLaserNoCell
   description: Better pray it won't burn your hands off.
+  suffix: No Cell
+  categories: [ HideSpawnMenu ]
   components:
+  - type: ContainerContainer
+    containers:
+      glasses: !type:ContainerSlot
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      glasses:
+        locked: true
+        whitelist:
+          tags:
+          - Glasses
+      cell_slot:
+        locked: true
+        name: Magazine
+        whitelist:
+          tags:
+          - PowerCell
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
     layers:
@@ -230,16 +249,59 @@
   - type: Appearance
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
+    quickEquip: false
+    slots:
+    - Belt
+    - suitStorage
   - type: BatteryAmmoProvider
-    proto: RedLaser
+    proto: RedLaserMakeshift
     fireCost: 62.5
-  - type: Battery
-    maxCharge: 500
-    startingCharge: 500
   - type: Tag
     tags:
     - Sidearm
     - LaserWeapon
+  - type: Construction
+    graph: MakeshiftLaserGraph
+    node: mslaser
+    containers:
+    - cell_slot
+    - glasses
+
+- type: entity # for salv loot & co
+  parent: WeaponMakeshiftLaserNoCell
+  id: WeaponMakeshiftLaser
+  suffix: Medium Cell
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        startingItem: PowerCellMedium
+        locked: true
+        whitelist:
+          tags:
+          - PowerCell
+      glasses:
+        startingItem: ClothingEyesGlassesJamjar
+        locked: true
+        whitelist:
+          tags:
+          - Glasses
+
+- type: entity
+  parent: [BaseItem, BaseMinorContraband]
+  name: makeshift laser pistol frame
+  id: WeaponMakeshiftLaserFrame
+  description: Only needs a bit more screwing and a doctorate in practical bluespace technology.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
+    state: frame
+  - type: Construction
+    graph: MakeshiftLaserGraph
+    node: mslaserframe
+    defaultTarget: mslaser
+    containers:
+    - cell_slot
 
 - type: entity
   name: tesla gun
