@@ -77,7 +77,6 @@ public partial class RadiationSystem
                 continue;
 
             var mapXform = Transform(mapUid);
-            var mapComponent = EnsureComp<RadiationSourceComponent>(mapUid);
 
             var localTileCenter = new Vector2(spatialKey.Tile.X + 0.5f, spatialKey.Tile.Y + 0.5f);
             var worldCenter = Vector2.Transform(localTileCenter, gridXform.LocalMatrix);
