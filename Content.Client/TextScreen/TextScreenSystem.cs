@@ -341,7 +341,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             return ent.Comp.RunningText;
 
         var strings = ent.Comp.RunningText.Split("\n");
-        var timerString = $"{newScreenValue.HighValue:D2}:{newScreenValue.LowValue:D2}";
+        var timerString = newScreenValue.ToString();
 
         if (ent.Comp.TimerRow < strings.Length)
         {
