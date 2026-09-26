@@ -78,37 +78,22 @@ public sealed partial class InstrumentMenu : FancyWindow
     /// </summary>
     /// <param name="name">The string to display on the tab header for this configuration.</param>
     /// <param name="ctrl">The control used for this configuration.</param>
-    public void AddConfigurationControl(string name, Control ctrl)
+    /// <returns>The new control.</param>
+    public MidiConfigurationControl AddConfigurationControl(string name, Control ctrl)
     {
         var formatted = new FormattedMessage();
-        var styleBox = new StyleBoxFlat
-        {
-            BorderColor = Color.FromHex("#3D4059"),
-            BorderThickness = new Thickness(2),
-        };
-
-        var panel = new PanelContainer
-        {
-            PanelOverride = styleBox,
-            Margin = new Thickness(0, 0, 0, 10),
-        };
-
-        var header = new RichTextLabel
-        {
-            StyleClasses = { StyleClass.LabelKeyText },
-            Margin = new Thickness(10, 0, 0, 0),
-        };
+        var cfgCtrl = new MidiConfigurationControl();
 
         ctrl.VerticalExpand = true;
         ctrl.Margin = new Thickness(5);
 
         formatted.AddMarkupOrThrow($"[bold]{name}[/bold]");
-        header.SetMessage(formatted, Color.FromHex("#A88B5E"));
+        cfgCtrl.Header.SetMessage(formatted, Color.FromHex("#A88B5E"));
 
-        panel.AddChild(ctrl);
+        cfgCtrl.Panel.AddChild(ctrl);
 
-        ConfigurationItemsContainer.AddChild(header);
-        ConfigurationItemsContainer.AddChild(panel);
+        ConfigurationItemsContainer.AddChild(cfgCtrl);
+        return cfgCtrl;
     }
 
     /// <summary>

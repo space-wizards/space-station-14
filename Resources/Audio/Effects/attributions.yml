@@ -276,3 +276,8 @@
   copyright: "by petercornell (Freesound), sampled and sped up to 400% by whatston3 (GitHub)"
   license: "CC0-1.0"
   source: https://freesound.org/people/petercornell/sounds/837240/
+
+- files: ["grind.ogg"]
+  copyright: 'modified by SlamBamActionman (Github) from "01-1 Angle Grinder.wav" by domiscz of Freesound.org'
+  license: "CC-BY-SA-3.0"
+  source: https://freesound.org/people/domiscz/sounds/461728/
