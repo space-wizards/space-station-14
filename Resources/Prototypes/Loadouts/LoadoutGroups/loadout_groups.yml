@@ -733,6 +733,19 @@
 #  loadouts:
 
 - type: loadoutGroup
+  id: SupplyAssistantJumpsuit
+  name: loadout-group-supply-assistant-jumpsuit
+  loadouts:
+  - BrownJumpsuit
+  - BrownJumpskirt
+
+#- type: loadoutGroup
+#  id: SupplyAssistantJobTrinkets
+#  name: loadout-group-jobtrinkets
+#  minLimit: 0
+#  loadouts:
+
+- type: loadoutGroup
   id: CargoTechnicianHead
   name: loadout-group-cargo-technician-head
   minLimit: 0
