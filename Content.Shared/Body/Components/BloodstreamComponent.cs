@@ -142,7 +142,7 @@ public sealed partial class BloodstreamComponent : Component
     /// Modifier applied to <see cref="BloodstreamComponent.BloodReferenceSolution.Volume"/> to determine maximum volume for bloodstream.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float MaxVolumeModifier = 2f;
+    public float MaxVolumeModifier = 1.2f;
 
     /// <summary>
     /// Defines which reagents are considered as 'blood' and how much of it is normal.
