@@ -94,7 +94,7 @@
   - type: StaticPrice
     price: 30
   - type: DnaSubstanceTrace
-
+  
 - type: entity
   parent: [SolutionBeaker, SolutionSmall, BaseItem]
   id: BaseBeakerMetallic

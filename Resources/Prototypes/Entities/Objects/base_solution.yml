@@ -4,7 +4,7 @@
   name: solution
   components:
   - type: Solution
-
+  
 - type: entity
   id: SolutionCryo
   categories: [ HideSpawnMenu ]
@@ -23,6 +23,7 @@
   components:
   - type: Solution
     id: beaker
+  - type: SolutionAppearance
 
 - type: entity
   abstract: true
@@ -55,6 +56,7 @@
   components:
   - type: Solution
     id: drink
+  - type: SolutionAppearance
 
 - type: entity
   abstract: true
