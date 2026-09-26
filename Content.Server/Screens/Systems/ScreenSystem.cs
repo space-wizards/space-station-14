@@ -1,4 +1,5 @@
 using Content.Server.Screens.Components;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.RoundEnd;
 using Content.Shared.Screens;
@@ -13,7 +14,7 @@ namespace Content.Server.Screens.Systems;
 public sealed partial class ScreenSystem : EntitySystem
 {
     [Dependency] private IGameTiming _gameTiming = default!;
-    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
 
@@ -32,7 +33,7 @@ public sealed partial class ScreenSystem : EntitySystem
 
         // don't allow text updates if there's an active timer
         // (and just check here so the server doesn't have to track them)
-        if (_appearanceSystem.TryGetData(ent, TextScreenVisuals.TargetTime, out TimeSpan target, appearance)
+        if (_appearance.TryGetData(ent, TextScreenVisuals.TargetTime, out TimeSpan target)
             && target > _gameTiming.CurTime)
             return;
 
@@ -40,8 +41,8 @@ public sealed partial class ScreenSystem : EntitySystem
         if (screenMap == null)
             return;
 
-        _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenText, text, appearance);
-        _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenTextTime, _gameTiming.CurTime, appearance);
+        _appearance.SetData(ent, TextScreenVisuals.ScreenText, text, appearance);
+        _appearance.SetData(ent, TextScreenVisuals.ScreenTextTime, _gameTiming.CurTime, appearance);
     }
 
     /// <summary>
@@ -66,7 +67,7 @@ public sealed partial class ScreenSystem : EntitySystem
         if (!_appearanceQuery.TryComp(ent, out var appearance))
             return;
 
-        string? text = payload.OverrideText;
+        var text = payload.OverrideText;
         TimeSpan time;
 
         switch (timerXform.MapUid)
@@ -88,13 +89,12 @@ public sealed partial class ScreenSystem : EntitySystem
                 return;
         }
 
-        _appearanceSystem.SetData(ent, TextScreenVisuals.TargetTime, _gameTiming.CurTime + time, appearance);
-        _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenTextTime, _gameTiming.CurTime, appearance);
-        if (text != null)
-            _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenText, text, appearance);
+        _appearance.SetData(ent, TextScreenVisuals.TargetTime, _gameTiming.CurTime + time, appearance);
+        _appearance.SetData(ent, TextScreenVisuals.ScreenTextTime, _gameTiming.CurTime, appearance);
+        _appearance.SetData(ent, TextScreenVisuals.ScreenText, text, appearance);
 
         if (payload.OverrideColor != null)
-            _appearanceSystem.SetData(ent, TextScreenVisuals.Color, payload.OverrideColor, appearance);
+            _appearance.SetData(ent, TextScreenVisuals.Color, payload.OverrideColor, appearance);
     }
 
     /// <summary>
