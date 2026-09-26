@@ -337,9 +337,9 @@ public sealed partial class ZombieSystem
         }
 
         // Uncuffing the zombie
-        while (_cuffable.TryGetLastCuff(target, out var cuff))
+        foreach (var cuff in _cuffable.GetAllCuffs(target))
         {
-            _cuffable.Uncuff(target, null, cuff.Value);
+            _cuffable.Uncuff(target, null, cuff);
         }
 
         // forcibly empties hands (even if they contain something sticky/unremovable)
