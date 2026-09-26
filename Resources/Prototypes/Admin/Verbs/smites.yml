@@ -390,8 +390,8 @@
   name: admin-smite-locker-stuff-name
   description: admin-smite-locker-stuff-description
   icon:
-    sprite: Structures/Storage/closet.rsi
-    state: generic
+    sprite: Structures/Storage/Closets/generic.rsi
+    state: closed
   effects:
   - !type:TrapInContainer
     entity: ClosetMaintenanceWelded
