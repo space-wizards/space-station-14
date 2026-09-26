@@ -5,7 +5,6 @@ namespace Content.Client.Materials;
 
 public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
 {
-    [Dependency] private AppearanceSystem _appearance = default!;
     [Dependency] private TransformSystem _transform = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
@@ -24,7 +23,7 @@ public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
         if (!_sprite.LayerMapTryGet((uid, args.Sprite), MaterialStorageVisualLayers.Inserting, out var layer, false))
             return;
 
-        if (!_appearance.TryGetData<bool>(uid, MaterialStorageVisuals.Inserting, out var inserting, args.Component))
+        if (!args.TryGetData<bool>(MaterialStorageVisuals.Inserting, out var inserting))
             return;
 
         if (inserting && TryComp<InsertingMaterialStorageComponent>(uid, out var insertingComp))

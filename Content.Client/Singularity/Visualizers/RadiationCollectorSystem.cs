@@ -90,6 +90,7 @@ public sealed partial class RadiationCollectorSystem : VisualizerSystem<Radiatio
         UpdateVisuals(uid, targetState, comp, sprite, animPlayer);
     }
 
+    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, RadiationCollectorComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -97,7 +98,7 @@ public sealed partial class RadiationCollectorSystem : VisualizerSystem<Radiatio
         if (!TryComp<AnimationPlayerComponent>(uid, out var animPlayer))
             return;
 
-        if (!AppearanceSystem.TryGetData<RadiationCollectorVisualState>(uid, RadiationCollectorVisuals.VisualState, out var state, args.Component))
+        if (!args.TryGetData<RadiationCollectorVisualState>(RadiationCollectorVisuals.VisualState, out var state))
             state = RadiationCollectorVisualState.Deactive;
 
         UpdateVisuals(uid, state, comp, args.Sprite, animPlayer);
