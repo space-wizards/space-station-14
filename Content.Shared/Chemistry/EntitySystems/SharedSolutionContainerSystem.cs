@@ -86,7 +86,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         base.Initialize();
 
         InitializeRelays();
-        InitializeContainerManager();
 
         SubscribeLocalEvent<SolutionComponent, ComponentGetState>(OnSolutionGetState);
         SubscribeLocalEvent<SolutionComponent, ComponentHandleState>(OnSolutionHandleState);
