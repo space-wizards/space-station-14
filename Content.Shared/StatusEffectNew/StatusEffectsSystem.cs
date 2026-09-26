@@ -274,16 +274,10 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         if (effect.Comp.EndEffectTime is null)
             return;
 
-        if (delta is null)
-        {
-            SetStatusEffectEndTime((effect, effect.Comp), delta);
-        }
-        else
-        {
-            // Add to the current end effect time, if we're here we should have one set already, and if it's null it's probably infinite.
-            SetStatusEffectEndTime((effect, effect.Comp), effect.Comp.EndEffectTime.Value + delta);
-        }
-        
+        // set the end time to null if delta is null. Otherwise, add delta to the current end time.
+        SetStatusEffectEndTime((effect, effect.Comp),
+            delta is null ? null : effect.Comp.EndEffectTime.Value + delta.Value
+        );
     }
 
     /// <summary>
