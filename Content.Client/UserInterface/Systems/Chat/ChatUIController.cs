@@ -166,7 +166,7 @@ public sealed partial class ChatUIController : UIController
     private readonly Dictionary<ChatChannel, int> _unreadMessages = new();
 
     // TODO add a cap for this for non-replays
-    public readonly List<(TimeSpan sentTime, ChatMessage Msg)> History = new();
+    public readonly List<(TimeSpan timeSent, ChatMessage Msg)> History = new();
 
     // Maintains which channels a client should be able to filter (for showing in the chatbox)
     // and select (for attempting to send on).
