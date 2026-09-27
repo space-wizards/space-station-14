@@ -2,20 +2,28 @@
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                Title="{Loc 'late-join-gui-title'}"
                SetSize="685 560">
-    <BoxContainer Orientation="Horizontal"
-                  HorizontalExpand="True"
-                  VerticalExpand="True">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True"
+                      VerticalExpand="True">
 
-        <!-- Left side, we stuff CharacterSelectorButtons in here -->
-        <ScrollContainer VerticalExpand="True" HorizontalExpand="True" SizeFlagsStretchRatio="3">
-            <BoxContainer Name="CharacterList" Orientation="Vertical" Margin="10"/>
-        </ScrollContainer>
+            <!-- Left side, we stuff CharacterSelectorButtons in here -->
+            <ScrollContainer VerticalExpand="True" HorizontalExpand="True" SizeFlagsStretchRatio="3">
+                <BoxContainer Name="CharacterList" Orientation="Vertical" Margin="10"/>
+            </ScrollContainer>
 
-        <!-- Vertical rule -->
-        <PanelContainer MinSize="2 0" StyleClasses="HighDivider"/>
+            <!-- Vertical rule -->
+            <PanelContainer MinSize="2 0" StyleClasses="HighDivider"/>
 
-        <!-- We stuff the job/join buttons in here -->
-        <BoxContainer Name="JobList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True"
-                      SizeFlagsStretchRatio="4"/>
+            <!-- We stuff the job/join buttons in here -->
+            <BoxContainer Name="JobList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True"
+                          SizeFlagsStretchRatio="4"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" Align="Center" Margin="10">
+            <Button Name="JoinButton"
+                    HorizontalExpand="True"
+                    MaxWidth="250"
+                    Text="{Loc 'late-join-gui-join-button'}"/>
+        </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

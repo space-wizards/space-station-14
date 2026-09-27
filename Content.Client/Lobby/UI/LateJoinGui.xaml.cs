@@ -34,8 +34,6 @@ namespace Content.Client.Lobby.UI
         [Dependency] private ILogManager _logManager = default!;
         [Dependency] private ISharedPlayerManager _playerManager = default!;
 
-        public event Action<(NetEntity, string)> SelectedId;
-
         private readonly ClientGameTicker _gameTicker;
         private readonly SpriteSystem _sprites;
         private readonly CrewManifestSystem _crewManifest;
@@ -45,6 +43,9 @@ namespace Content.Client.Lobby.UI
         private readonly Dictionary<NetEntity, Dictionary<string, List<JobButton>>> _jobButtons = new();
         private readonly Dictionary<NetEntity, Dictionary<string, BoxContainer>> _jobCategories = new();
         private readonly List<ScrollContainer> _jobLists = new();
+
+        private NetEntity? _selectedStation;
+        private string? _selectedJobId;
 
         public LateJoinGui()
         {
@@ -58,19 +59,15 @@ namespace Content.Client.Lobby.UI
 
             Title = Loc.GetString("late-join-gui-title");
 
-            _jobRequirements.Updated += RebuildUI;
-            _lobbyController.CharacterSetupChanged += RebuildUI;
-            RebuildUI();
+            _jobRequirements.Updated += UpdateJobList;
+            _lobbyController.CharacterSetupChanged += UpdateUI;
+            UpdateUI();
+            RebuildJobList();
 
-            SelectedId += x =>
-            {
-                var (station, jobId) = x;
-                _sawmill.Info($"Late joining as ID: {jobId}");
-                _consoleHost.ExecuteCommand($"joingame {CommandParsing.Escape(jobId)} {station}");
-                Close();
-            };
+            JoinButton.Disabled = true;
+            JoinButton.OnPressed += _ => JoinButtonPressed();
 
-            _gameTicker.LobbyJobsAvailableUpdated += JobsAvailableUpdated;
+            _gameTicker.LobbyJobsAvailableUpdated += UpdateJobList;
         }
 
         /// <summary>
@@ -288,32 +285,10 @@ namespace Content.Client.Lobby.UI
                         jobButton.AddChild(jobSelector);
                         category.AddChild(jobButton);
 
-                        jobButton.OnPressed += _ => SelectedId.Invoke((id, jobButton.JobId));
+                        jobButton.OnPressed += _ => JobButtonPressed(id, jobButton.JobId);
 
-                        if (!_jobRequirements.IsAllowed(prototype, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
-                        {
-                            jobButton.Disabled = true;
-
-                            if (!reason.IsEmpty)
-                            {
-                                var tooltip = new Tooltip();
-                                tooltip.SetMessage(reason);
-                                jobButton.TooltipSupplier = _ => tooltip;
-                            }
-
-                            jobSelector.AddChild(new TextureRect
-                            {
-                                TextureScale = new Vector2(0.4f, 0.4f),
-                                Stretch = TextureRect.StretchMode.KeepCentered,
-                                Texture = _sprites.Frame0(new SpriteSpecifier.Texture(new ("/Textures/Interface/Nano/lock.svg.192dpi.png"))),
-                                HorizontalExpand = true,
-                                HorizontalAlignment = HAlignment.Right,
-                            });
-                        }
-                        else if (value == 0)
-                        {
-                            jobButton.Disabled = true;
-                        }
+                        var allowed = _jobRequirements.IsAllowed(prototype, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason);
+                        UpdateJobButtonAllowed(jobButton, allowed, reason);
 
                         if (!_jobButtons[id].ContainsKey(prototype.ID))
                         {
@@ -326,52 +301,121 @@ namespace Content.Client.Lobby.UI
             }
         }
 
-        private void RebuildUI()
+        private void UpdateUI()
         {
             RebuildCharacterList();
-            RebuildJobList();
+            UpdateJobList();
         }
 
-        private void JobsAvailableUpdated(IReadOnlyDictionary<NetEntity, Dictionary<ProtoId<JobPrototype>, int?>> updatedJobs)
+        private void UpdateJobList()
         {
-            foreach (var stationEntries in updatedJobs)
+            // these will be re-set below if there's a job button pressed that isn't disabled after this update
+            _selectedStation = null;
+            _selectedJobId = null;
+            foreach (var (stationId, buttonsByJob) in _jobButtons)
             {
-                if (_jobButtons.ContainsKey(stationEntries.Key))
+                var stationJobsAvailable = _gameTicker.JobsAvailable[stationId];
+                foreach (var (jobId, buttons) in buttonsByJob)
                 {
-                    var jobsAvailable = stationEntries.Value;
-
-                    var existingJobEntries = _jobButtons[stationEntries.Key];
-                    foreach (var existingJobEntry in existingJobEntries)
+                    var updatedSlots = stationJobsAvailable[jobId];
+                    var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
+                    var allowed = _jobRequirements.IsAllowed(jobPrototype,
+                        _preferencesManager.Preferences?.SelectedCharacter,
+                        out var reason);
+                    foreach (var button in buttons)
                     {
-                        if (jobsAvailable.ContainsKey(existingJobEntry.Key))
-                        {
-                            var updatedJobValue = jobsAvailable[existingJobEntry.Key];
-                            foreach (var matchingJobButton in existingJobEntry.Value)
-                            {
-                                if (matchingJobButton.Amount != updatedJobValue)
-                                {
-                                    matchingJobButton.RefreshLabel(updatedJobValue);
-                                    matchingJobButton.Disabled |= matchingJobButton.Amount == 0;
-                                }
-                            }
-                        }
+                        button.RefreshLabel(updatedSlots);
+                        UpdateJobButtonAllowed(button, allowed, reason);
+                    }
+
+                    if (!buttons[0].Disabled && buttons[0].Pressed)
+                    {
+                        _selectedStation = stationId;
+                        _selectedJobId = jobId;
+                    }
+                }
+            }
+
+            JoinButton.Disabled = _selectedStation == null;
+        }
+
+        private void UpdateJobButtonAllowed(JobButton button, bool allowed, FormattedMessage? reason)
+        {
+            if (!allowed)
+            {
+                button.Disabled = true;
+
+                button.Lock = new TextureRect
+                {
+                    TextureScale = new Vector2(0.4f, 0.4f),
+                    Stretch = TextureRect.StretchMode.KeepCentered,
+                    Texture = _sprites.Frame0(new SpriteSpecifier.Texture(new ("/Textures/Interface/Nano/lock.svg.192dpi.png"))),
+                    HorizontalExpand = true,
+                    HorizontalAlignment = HAlignment.Right,
+                };
+                button.AddChild(button.Lock);
+            }
+            else
+            {
+                if (button.Lock != null)
+                {
+                    button.RemoveChild(button.Lock);
+                    button.Lock = null;
+                }
+
+                button.Disabled = button.Amount == 0;
+            }
+
+            if (reason != null && !reason.IsEmpty)
+            {
+                var tooltip = new Tooltip();
+                tooltip.SetMessage(reason);
+                button.TooltipSupplier = _ => tooltip;
+            }
+            else
+            {
+                button.TooltipSupplier = null;
+            }
+        }
+
+        private void JobButtonPressed(NetEntity station, string jobId)
+        {
+            _selectedStation = station;
+            _selectedJobId = jobId;
+            JoinButton.Disabled = false;
+
+            foreach (var (buttonsStationId, buttonsByJob) in _jobButtons)
+            {
+                foreach (var (buttonsJobId, buttons) in buttonsByJob)
+                {
+                    var sameJob = buttonsStationId == station && buttonsJobId == jobId;
+                    foreach (var button in buttons)
+                    {
+                        button.Pressed = sameJob;
                     }
                 }
             }
         }
 
-        protected override void Dispose(bool disposing)
+        private void JoinButtonPressed()
         {
-            base.Dispose(disposing);
-
-            if (disposing)
+            if (_selectedStation == null || _selectedJobId == null)
             {
-                _jobRequirements.Updated -= RebuildUI;
-                _lobbyController.CharacterSetupChanged -= RebuildUI;
-                _gameTicker.LobbyJobsAvailableUpdated -= JobsAvailableUpdated;
-                _jobButtons.Clear();
-                _jobCategories.Clear();
+                JoinButton.Disabled = true;
+                return;
             }
+            _sawmill.Info($"Late joining as ID: {_selectedJobId}");
+            _consoleHost.ExecuteCommand($"joingame {CommandParsing.Escape(_selectedJobId)} {_selectedStation}");
+            Close();
+        }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+
+            _jobRequirements.Updated -= UpdateUI;
+            _lobbyController.CharacterSetupChanged -= UpdateUI;
+            _gameTicker.LobbyJobsAvailableUpdated -= UpdateJobList;
         }
     }
 
@@ -381,9 +425,10 @@ namespace Content.Client.Lobby.UI
         public string JobId { get; }
         public string JobLocalisedName { get; }
         public int? Amount { get; private set; }
+        public TextureRect? Lock { get; set; }
         private bool _initialised = false;
 
-        public JobButton(Label jobLabel, ProtoId<JobPrototype> jobId, string jobLocalisedName, int? amount)
+        public JobButton(Label jobLabel, ProtoId<JobPrototype> jobId, string jobLocalisedName, int? amount = null)
         {
             JobLabel = jobLabel;
             JobId = jobId;
