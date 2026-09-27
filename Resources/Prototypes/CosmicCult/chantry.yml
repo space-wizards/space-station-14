@@ -42,7 +42,7 @@
         sound:
           path: "/Audio/Cosmic/stigma-destroyed.ogg"
   - type: Sprite
-    sprite: Structures/Specific/cosmic-chantry.rsi
+    sprite: Structures/Cosmic/cosmic-chantry.rsi
     layers:
       - state: spawn
         map: ["base"]

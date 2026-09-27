@@ -7,7 +7,7 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
-    sprite: Structures/Specific/cosmic-stigma.rsi
+    sprite: Structures/Cosmic/cosmic-stigma.rsi
     drawdepth: Mobs
     snapCardinals: true
     offset: 0,0.27

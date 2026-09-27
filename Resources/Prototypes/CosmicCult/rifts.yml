@@ -22,7 +22,7 @@
         layer:
         - FlyingMobLayer
   - type: Sprite
-    sprite: Structures/Specific/cosmic-rift.rsi
+    sprite: Structures/Cosmic/cosmic-rift.rsi
     drawdepth: Mobs
     snapCardinals: true
     offset: 0,0.27
@@ -69,7 +69,7 @@
   components:
   - type: InteractionOutline
   - type: Sprite
-    sprite: Structures/Specific/cosmic-gateway.rsi
+    sprite: Structures/Cosmic/cosmic-gateway.rsi
     drawdepth: FloorObjects
     snapCardinals: true
     offset: 0, 0

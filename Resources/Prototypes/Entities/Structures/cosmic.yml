@@ -28,7 +28,7 @@
         layer:
         - WallLayer
   - type: Sprite
-    sprite: Structures/Specific/cosmic-monument.rsi
+    sprite: Structures/Cosmic/cosmic-monument.rsi
     offset: 0, 1.155
     drawdepth: Mobs
     layers:
@@ -98,7 +98,7 @@
     loop: false
     noRot: true
     drawdepth: Mobs
-    sprite: Structures/Specific/cosmic-font.rsi
+    sprite: Structures/Cosmic/cosmic-font.rsi
     layers:
     - state: base
       map: [ "enum.CosmicFontVisualLayers.Base" ]
@@ -174,7 +174,7 @@
   - type: Climbable
   - type: Sprite
     noRot: true
-    sprite: Structures/Specific/cosmic-plinth.rsi
+    sprite: Structures/Cosmic/cosmic-plinth.rsi
     layers:
     - state: icon
   - type: Fixtures
@@ -205,7 +205,7 @@
   components:
   - type: Transform
   - type: Sprite
-    sprite: Structures/Specific/cosmic-pillar.rsi
+    sprite: Structures/Cosmic/cosmic-pillar.rsi
     offset: 0, 0.5
     layers:
     - state: icon
@@ -238,7 +238,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
-    sprite: Structures/Specific/cosmic-light.rsi
+    sprite: Structures/Cosmic/cosmic-light.rsi
     drawdepth: Mobs
     layers:
     - state: base
