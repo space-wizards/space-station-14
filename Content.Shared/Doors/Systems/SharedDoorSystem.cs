@@ -165,6 +165,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
                     state = DoorState.Closed;
                     goto case DoorState.Closed;
                 }
+
                 _activeDoors.Add((uid, door));
                 door.NextStateChange = GameTiming.CurTime + door.OpenTimeOne;
                 break;
@@ -187,10 +188,12 @@ public abstract partial class SharedDoorSystem : EntitySystem
             case DoorState.Open:
                 if (_weldSystem.IsWelded(uid))
                     return false;
+
                 door.Partial = false;
                 if (door.NextStateChange == null)
                     _activeDoors.Remove((uid, door));
                 break;
+
             case DoorState.Closed:
                 // May want to keep the door around to re-check for opening if we got a contact during closing.
                 door.Partial = false;
@@ -367,12 +370,16 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!SetState(uid, DoorState.Opening, door))
             return;
 
-        var audioParams = door.OpenSound?.Params ?? AudioParams.Default;
-        audioParams = audioParams.AddVolume(-5);
-        if (predicted)
-            Audio.PlayPredicted(door.OpenSound, uid, user, audioParams);
-        else if (_net.IsServer)
-            Audio.PlayPvs(door.OpenSound, uid, audioParams);
+        // Only play the sound if the door actually started opening.
+        if (door.State == DoorState.Opening)
+        {
+            var audioParams = door.OpenSound?.Params ?? AudioParams.Default;
+            audioParams = audioParams.AddVolume(-5);
+            if (predicted)
+                Audio.PlayPredicted(door.OpenSound, uid, user, audioParams);
+            else if (_net.IsServer)
+                Audio.PlayPvs(door.OpenSound, uid, audioParams);
+        }
 
         if (lastState == DoorState.Emagging && TryComp<DoorBoltComponent>(uid, out var doorBoltComponent))
             SetBoltsDown((uid, doorBoltComponent), true, user, true);

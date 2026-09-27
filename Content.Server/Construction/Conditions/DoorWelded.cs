@@ -15,7 +15,7 @@ namespace Content.Server.Construction.Conditions
 
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
-            if (!(entityManager.TryGetComponent(uid, out DoorComponent? doorComponent) && entityManager.TryGetComponent(uid, out WeldableComponent? weldComp)))
+            if (!(entityManager.HasComponent<DoorComponent>(uid) && entityManager.TryGetComponent<WeldableComponent>(uid, out var weldComp)))
                 return false;
 
             return weldComp.IsWelded;
@@ -27,7 +27,8 @@ namespace Content.Server.Construction.Conditions
 
             var entMan = IoCManager.Resolve<IEntityManager>();
 
-            if (!entMan.TryGetComponent(entity, out WeldableComponent? weld)) return false;
+            if (!entMan.TryGetComponent<WeldableComponent>(entity, out var weld))
+                return false;
 
             var isWelded = weld.IsWelded;
             if (isWelded != Welded)
