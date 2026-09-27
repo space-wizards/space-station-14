@@ -15,16 +15,16 @@ public sealed partial class CargoTelepadComponent : Component
     public List<CargoOrderData> CurrentOrders = new();
 
     /// <summary>
-    /// The actual amount of time it takes to teleport from the telepad
+    /// The delay between each teleport in seconds
     /// </summary>
     [DataField]
-    public float Delay = 5f;
+    public TimeSpan Delay = TimeSpan.FromSeconds(5);
 
     /// <summary>
-    /// How much time we've accumulated until next teleport.
+    /// The next time the teleporter can teleport.
     /// </summary>
     [DataField]
-    public float Accumulator;
+    public TimeSpan NextTeleport;
 
     [DataField]
     public CargoTelepadState CurrentState = CargoTelepadState.Unpowered;

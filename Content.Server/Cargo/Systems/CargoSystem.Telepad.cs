@@ -76,8 +76,6 @@ public sealed partial class CargoSystem
                 continue;
 
             tele.CurrentOrders.Add(args.Order);
-
-            tele.Accumulator = tele.Delay;
             args.Handled = true;
             args.FulfillmentEntity = uid;
             return;
@@ -92,16 +90,8 @@ public sealed partial class CargoSystem
             // Don't EntityQuery for it as it's not required.
             TryComp<AppearanceComponent>(uid, out var appearance);
 
-            if (comp.CurrentState == CargoTelepadState.Unpowered)
-            {
-                comp.Accumulator = comp.Delay;
-                continue;
-            }
-
-            comp.Accumulator -= frameTime;
-
             // Uhh listen teleporting takes time and I just want the 1 float.
-            if (comp.Accumulator > 0f)
+            if (Timing.CurTime < comp.NextTeleport)
             {
                 comp.CurrentState = CargoTelepadState.Idle;
                 _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Idle, appearance);
@@ -109,10 +99,9 @@ public sealed partial class CargoSystem
             }
 
             if (comp.CurrentOrders.Count == 0)
-            {
-                comp.Accumulator += comp.Delay;
                 continue;
-            }
+
+            comp.NextTeleport = Timing.CurTime + comp.Delay;
 
             var currentOrder = comp.CurrentOrders.First();
             if (currentOrder.NumDispatched >= currentOrder.OrderQuantity)
@@ -136,8 +125,6 @@ public sealed partial class CargoSystem
                 comp.CurrentState = CargoTelepadState.Teleporting;
                 _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Teleporting, appearance);
             }
-
-            comp.Accumulator += comp.Delay;
         }
     }
 
