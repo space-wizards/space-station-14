@@ -36,10 +36,8 @@ public sealed partial class CargoSystem
     [SubscribeLocalEvent]
     private void OnShutdown(Entity<CargoTelepadComponent> ent, ref ComponentShutdown args)
     {
-        if (ent.Comp.CurrentOrders.Count == 0)
-            return;
-
-        if (_station.GetStations().Count == 0)
+        if (ent.Comp.CurrentOrders.Count == 0
+            || _station.GetStations().Count == 0)
             return;
 
         if (_station.GetOwningStation(ent) is not { } station)
@@ -47,8 +45,8 @@ public sealed partial class CargoSystem
             station = _random.Pick(_station.GetStations().Where(x => HasComp<StationCargoOrderDatabaseComponent>(x.Owner)).ToList());
         }
 
-        if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDataBase) ||
-            !TryComp<StationDataComponent>(station, out var data))
+        if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDataBase)
+            || !TryComp<StationDataComponent>(station, out var data))
             return;
 
         foreach (var order in ent.Comp.CurrentOrders)
@@ -63,16 +61,10 @@ public sealed partial class CargoSystem
         var query = EntityQueryEnumerator<CargoTelepadComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var telepad, out var xform))
         {
-            if (telepad.CurrentState != CargoTelepadState.Idle)
-                continue;
-
-            if (!this.IsPowered(uid, EntityManager))
-                continue;
-
-            if (_station.GetOwningStation(uid, xform) != args.Station)
-                continue;
-
-            if (!IsLinkedToConsole(uid, GetEntity(args.Order.ApprovingConsole)))
+            if (telepad.CurrentState != CargoTelepadState.Idle
+                || !this.IsPowered(uid, EntityManager)
+                || _station.GetOwningStation(uid, xform) != args.Station
+                || !IsLinkedToConsole(uid, GetEntity(args.Order.ApprovingConsole)))
                 continue;
 
             telepad.CurrentOrders.Add(args.Order);
@@ -133,10 +125,8 @@ public sealed partial class CargoSystem
         EntityUid? approvingConsole
     )
     {
-        if (approvingConsole is null)
-            return false;
-
-        if (!TryComp<DeviceLinkSinkComponent>(uid, out var sinkComponent))
+        if (approvingConsole is null
+            || !TryComp<DeviceLinkSinkComponent>(uid, out var sinkComponent))
             return false;
 
         return sinkComponent.LinkedSources.Any(ent => ent == approvingConsole.Value);
