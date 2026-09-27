@@ -46,6 +46,12 @@
           - !type:MaxRuleOccurenceCondition
           - !type:PlayerCountCondition
             min: 10
+        - id: Xenoborgs
+          weight: 5
+          - !type:HasBudgetCondition
+          - !type:MaxRuleOccurenceCondition
+          - !type:PlayerCountCondition
+            min: 35
       # Roundstart Minor Rules
       - !type:GroupSelector
         conditions:
