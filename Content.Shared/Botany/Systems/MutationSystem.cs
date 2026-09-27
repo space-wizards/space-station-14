@@ -127,6 +127,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
     /// </summary>
     /// <remarks>
     /// <see cref="PlantComponent.GrowthStages"/> must stay true for the given plant.
+    /// TODO: better support excluding fields depending on clone context.
     /// </remarks>
     private void PlantSpeciesChange(EntityUid plantUid, EntProtoId plantProto)
     {
