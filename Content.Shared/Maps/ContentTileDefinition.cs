@@ -1,4 +1,5 @@
 using Content.Shared.Atmos;
+using Content.Shared.Materials;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.Tools;
@@ -131,6 +132,12 @@ public sealed partial class ContentTileDefinition : IPrototype, IInheritingProto
     /// Hide this tile in the tile placement editor.
     /// </summary>
     [DataField] public bool EditorHidden { get; private set; } = false;
+
+    /// <summary>
+    /// If this tile is reclaimed, what materials would come out of it?
+    /// </summary>
+    [DataField]
+    public Dictionary<ProtoId<MaterialPrototype>, int> MaterialComposition = new();
 
     public void AssignTileId(ushort id)
     {

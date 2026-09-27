@@ -3,12 +3,37 @@ using Content.Shared.EntityTable.EntitySelectors;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.EntityTable;
 
 public sealed partial class EntityTableSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;
+
+    /// <summary>
+    /// Iterates once through Entities that EntitySelector in EntityTableProto provides and picks first one.
+    /// </summary>
+    public EntProtoId? GetFirstOrNull(
+        EntityTablePrototype entTableProto,
+        IRobustRandom? rand = null,
+        EntityTableContext? ctx = null
+    )
+    {
+        return GetSpawns(entTableProto, rand, ctx).FirstOrNull();
+    }
+
+    /// <summary>
+    /// Iterates once through Entities that EntitySelector provides and picks first one.
+    /// </summary>
+    public EntProtoId? GetFirstOrNull(
+        EntityTableSelector? entTableProto,
+        IRobustRandom? rand = null,
+        EntityTableContext? ctx = null
+    )
+    {
+        return GetSpawns(entTableProto, rand, ctx).FirstOrNull();
+    }
 
     /// <summary>
     /// Compiles a random list of entity prototypes using constraints.
@@ -109,5 +134,23 @@ public sealed class EntityTableContext
 
         value = castValueData;
         return true;
+    }
+
+    /// <summary>
+    /// Sets data into context using provided key.
+    /// </summary>
+    [PublicAPI]
+    public void SetData<T>([ForbidLiteral] string key, T data) where T : notnull
+    {
+        _data[key] = data;
+    }
+
+    /// <summary>
+    /// Removes data from the context, if the key exists.
+    /// </summary>
+    [PublicAPI]
+    public void RemoveData([ForbidLiteral] string key)
+    {
+        _data.Remove(key);
     }
 }
