@@ -243,10 +243,10 @@ public sealed partial class CreditsWindow : DefaultWindow
                         m.AddMarkupPermissive(_loc.GetString("credits-window-attributions-copyright",
                             ("copyright", copyright)));
                         m.AddText("\n");
-                        m.AddMarkupPermissive(_loc.GetString("credits-window-attributions-source", ("source", source)));
+                        m.AddMarkupPermissive(
+                            _loc.GetString("credits-window-attributions-license", ("license", license)));
                         m.AddText("\n");
-                        m.AddMarkupPermissive(_loc.GetString("credits-window-attributions-source",
-                            ("source", string.Join(", ", source))));
+                        m.AddMarkupPermissive(_loc.GetString("credits-window-attributions-source", ("source", source)));
                         m.AddText("\n");
 
                         attrs.Add(m);
