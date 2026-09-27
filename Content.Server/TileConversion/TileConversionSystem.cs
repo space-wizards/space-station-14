@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Maps;
+using Content.Shared.TileConversion;
 using Content.Shared.Trigger;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
@@ -36,12 +37,8 @@ public sealed partial class TileConversionSystem : EntitySystem
     ///     this system is a mostly generic way of replacing tiles around an entity. the only hardcoded behaviour is secret
     ///     walls -> malign doors, but that shouldn't be too hard to fix if this is needed for smth else later.
     /// </remarks>
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<TileConversionComponent, TriggerEvent>(OnTrigger);
-        SubscribeLocalEvent<TileConversionComponent, MapInitEvent>(OnMapInit);
-    }
 
+    [SubscribeLocalEvent]
     private void OnTrigger(Entity<TileConversionComponent> ent, ref TriggerEvent args)
     {
         ent.Comp.ConversionMaxTicks++;
@@ -50,6 +47,7 @@ public sealed partial class TileConversionSystem : EntitySystem
     }
 
     //when the entity spawns, add all neighbouring tiles to the convertable list
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<TileConversionComponent> ent, ref MapInitEvent args)
     {
         RecalculateStartingTiles(ent);
