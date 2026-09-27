@@ -130,7 +130,7 @@ public sealed partial class TileConversionSystem : EntitySystem
                 }
 
                 //spawn the vfx if we should
-                if (ent.Comp.UseVfx)
+                if (ent.Comp.TileConvertVfx != null)
                     Spawn(ent.Comp.TileConvertVfx, _turfs.GetTileCenter(tileRef));
 
                 ent.Comp.ConvertableTiles.Remove(pos);
