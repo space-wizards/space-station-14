@@ -232,7 +232,7 @@ public sealed partial class CreditsWindow : DefaultWindow
                         var files = _serialization.Read<string[]>(filesNode, notNullableOverride: true);
                         var copyright = copyrightNode.ToString();
                         var license = licenseNode.ToString();
-                        var source = _serialization.Read<string[]>(sourceNode, notNullableOverride: true);
+                        var source = sourceNode.ToString();
 
                         m.AddMarkupPermissive(_loc.GetString("credits-window-attributions-directory",
                             ("directory", stream.Directory.ToString())));
@@ -243,8 +243,7 @@ public sealed partial class CreditsWindow : DefaultWindow
                         m.AddMarkupPermissive(_loc.GetString("credits-window-attributions-copyright",
                             ("copyright", copyright)));
                         m.AddText("\n");
-                        m.AddMarkupPermissive(
-                            _loc.GetString("credits-window-attributions-license", ("license", license)));
+                        m.AddMarkupPermissive(_loc.GetString("credits-window-attributions-source", ("source", source)));
                         m.AddText("\n");
                         m.AddMarkupPermissive(_loc.GetString("credits-window-attributions-source",
                             ("source", string.Join(", ", source))));
