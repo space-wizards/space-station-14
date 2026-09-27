@@ -14,6 +14,7 @@ public sealed partial class EmitterSystem : SharedEmitterSystem
             && TryComp<NetworkPoweredAmmoProviderComponent>(ent, out var ammoProvider))
         {
             ammoProvider.Prototype = boltType;
+            Dirty(ent, ammoProvider);
         }
     }
 }

@@ -20,7 +20,7 @@ public sealed partial class NetworkPoweredAmmoProviderComponent : AmmoProviderCo
     /// <summary>
     /// The projectile or hitscan entity to spawn when firing.
     /// </summary>
-    [DataField(required: true)]
+    [DataField(required: true), AutoNetworkedField]
     public EntProtoId Prototype;
 
     /// <summary>

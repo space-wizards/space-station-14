@@ -7,7 +7,7 @@ namespace Content.Server.Power.EntitySystems;
 /// <inheritdoc/>>
 public sealed partial class PowerStateSystem : SharedPowerStateSystem
 {
-    [Dependency] EntityQuery<PowerConsumerComponent> _powerConsumerQuery = default!;
+    [Dependency] private EntityQuery<PowerConsumerComponent> _powerConsumerQuery;
 
     /// <summary> Init IsWorking and power values on startup. </summary>
     [SubscribeLocalEvent]
@@ -39,6 +39,7 @@ public sealed partial class PowerStateSystem : SharedPowerStateSystem
             return isPowered;
 
         if (_powerConsumerQuery.TryComp(ent, out var powerConsumer))
+        {
             powerConsumer.DrawRate = isWorking ? ent.Comp.WorkingPowerDraw : ent.Comp.IdlePowerDraw;
             return powerConsumer.DrawRate <= powerConsumer.ReceivedPower;
         }
