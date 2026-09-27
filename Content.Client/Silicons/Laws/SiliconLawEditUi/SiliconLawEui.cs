@@ -17,7 +17,7 @@ public sealed class SiliconLawEui : BaseEui
 
         _siliconLawUi = new SiliconLawUi();
         _siliconLawUi.OnClose += () => SendMessage(new CloseEuiMessage());
-        _siliconLawUi.Save.OnPressed += _ => SendMessage(new SiliconLawsSaveMessage(_siliconLawUi.GetLaws(), _entityManager.GetNetEntity(_target)));
+        _siliconLawUi.Save.OnPressed += _ => SendMessage(new SiliconLawsSaveMessage(_siliconLawUi.GetLaws(), _entityManager.GetNetEntity(_target), _siliconLawUi.OverrideProviderButton.Pressed));
     }
 
     public override void HandleState(EuiStateBase state)

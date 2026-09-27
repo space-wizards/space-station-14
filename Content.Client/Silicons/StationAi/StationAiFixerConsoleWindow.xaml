@@ -8,10 +8,13 @@
         <BoxContainer VerticalExpand="True" HorizontalExpand="True" Orientation="Horizontal">
 
             <!-- Left side - AI display -->
-            <BoxContainer VerticalExpand="True" HorizontalExpand="True" Orientation="Vertical" MinWidth="225" Margin="20 15 20 20">
+            <BoxContainer VerticalExpand="True" VerticalAlignment="Center" HorizontalExpand="True" Orientation="Vertical" MinWidth="225" Margin="20 15 20 20">
 
                 <!-- AI panel -->
-                <PanelContainer StyleClasses="PanelDeep">
+                <PanelContainer>
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                    </PanelContainer.PanelOverride>
 
                     <BoxContainer Orientation="Vertical">
                         <!-- AI name -->
@@ -22,6 +25,7 @@
 
                         <!-- AI portrait -->
                         <AnimatedTextureRect Name="StationAiPortraitTexture" VerticalAlignment="Center" SetSize="128 128" />
+                        <SpriteView Name="StationAiPortraitView" VerticalAlignment="Center" SetSize="128 128" Visible="False" />
                     </BoxContainer>
                 </PanelContainer>
 
@@ -39,7 +43,7 @@
             </BoxContainer>
 
             <!-- Central divider -->
-            <controls:Separator StyleClasses="LowDivider" VerticalExpand="True" SetWidth="2" Orientation="Vertical" MinHeight="2"/>
+            <PanelContainer StyleClasses="LowDivider" VerticalExpand="True" Margin="0 0 0 0" SetWidth="2"/>
 
             <!-- Right side - control panel -->
             <BoxContainer VerticalExpand="True" HorizontalExpand="True" Orientation="Vertical" MinWidth="225" Margin="10 10 10 10">
@@ -111,7 +115,7 @@
 
                     <controls:StripeBack>
                         <PanelContainer>
-                            <Label Text="{Loc 'station-ai-fixer-console-window-controls'}"
+                            <Label Text="{Loc 'Controls'}"
                                    HorizontalExpand="True"
                                    HorizontalAlignment="Center"/>
                         </PanelContainer>
@@ -131,6 +135,17 @@
                     <!-- Repair button -->
                     <Button Name="RepairButton" HorizontalExpand="True" Margin="0 10 0 0" SetHeight="40"
                             Text="{Loc 'station-ai-fixer-console-window-station-ai-repair'}">
+                        <TextureRect HorizontalAlignment="Left"
+                                     VerticalAlignment="Center"
+                                     SetSize="32 32"
+                                     Stretch="KeepAspectCentered"
+                                     TexturePath="/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png">
+                        </TextureRect>
+                    </Button>
+
+                    <!-- Law Reset button -->
+                    <Button Name="LawResetButton" HorizontalExpand="True" Margin="0 10 0 0" SetHeight="40"
+                            Text="{Loc 'station-ai-fixer-console-window-station-law-reset'}">
                         <TextureRect HorizontalAlignment="Left"
                                      VerticalAlignment="Center"
                                      SetSize="32 32"
@@ -156,7 +171,7 @@
 
         <!-- Footer -->
         <BoxContainer Orientation="Vertical">
-            <controls:Separator StyleClasses="LowDivider"/>
+            <PanelContainer StyleClasses="LowDivider" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
                 <Label Text="{Loc 'station-ai-fixer-console-window-flavor-left'}" StyleClasses="WindowFooterText" />
                 <Label Text="{Loc 'station-ai-fixer-console-window-flavor-right'}" StyleClasses="WindowFooterText"

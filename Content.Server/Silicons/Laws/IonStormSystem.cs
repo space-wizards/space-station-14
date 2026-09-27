@@ -1,36 +1,41 @@
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
 using Robust.Shared.Random;
-using Content.Shared.Random;
+using System.Linq;
 using Content.Shared.Random.Helpers;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Silicons.Laws;
 
-public sealed partial class IonStormSystem : EntitySystem
+public sealed class IonStormSystem : EntitySystem
 {
-    [Dependency] private SiliconLawSystem _siliconLaw = default!;
-    [Dependency] private IRobustRandom _robustRandom = default!;
-    [Dependency] private IonLawSystem _ionLaw = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SiliconLawSystem _siliconLaw = default!;
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly IonLawSystem _ionLaw = default!;
 
     /// <summary>
     /// Randomly alters the laws of an individual silicon.
     /// </summary>
-    public void IonStormTarget(Entity<SiliconLawBoundComponent, IonStormTargetComponent> ent)
+    public void IonStormTarget(Entity<SiliconLawProviderComponent, IonStormTargetComponent> ent, bool adminlog = true)
     {
-        var lawBound = ent.Comp1;
         var target = ent.Comp2;
+
         if (!_robustRandom.Prob(target.Chance))
             return;
 
-        var laws = _siliconLaw.GetLaws(ent, lawBound);
+        var laws = _siliconLaw.GetProviderLaws(ent.Owner);
         if (laws.Laws.Count == 0)
             return;
 
         // try to swap it out with a random lawset
         if (_robustRandom.Prob(target.RandomLawsetChance))
         {
-            var lawsets = ProtoMan.Index<WeightedRandomPrototype>(target.RandomLawsets);
+            var lawsets = _proto.Index(target.RandomLawsets);
             var lawset = lawsets.Pick(_robustRandom);
             laws = _siliconLaw.GetLawset(lawset);
         }
@@ -82,29 +87,37 @@ public sealed partial class IonStormSystem : EntitySystem
         }
         else
         {
-            var glitchedLaw = new SiliconLaw
+            laws.Laws.Insert(0,
+                new SiliconLaw
             {
                 LawString = newLaw,
                 Order = -1,
-                LawIdentifierOverride = Loc.GetString(
-                    "ion-storm-law-scrambled-number",
-                    (
-                        "length",
-                        _robustRandom.Next(
-                            SharedSiliconLawSystem.IonStormIdentifierMinLength,
-                            SharedSiliconLawSystem.IonStormIdentifierMaxLength
-                        )
-                    )
-                ),
-                Corrupted = true
-            };
-            laws.Laws.Insert(0, glitchedLaw);
+                LawIdentifierOverride = Loc.GetString("ion-storm-law-scrambled-number", ("length", _robustRandom.Next(5, 10)))
+            });
         }
 
-        SiliconLawSystem.RankLaws(laws.Laws);
+        // sets all unobfuscated laws' indentifier in order from highest to lowest priority
+        // This could technically override the Obfuscation from the code above, but it seems unlikely enough to basically never happen
+        int orderDeduction = -1;
 
-        // laws unique to this silicon, dont use station laws anymore
-        EnsureComp<SiliconLawProviderComponent>(ent);
+        for (int i = 0; i < laws.Laws.Count; i++)
+        {
+            var notNullIdentifier = laws.Laws[i].LawIdentifierOverride ?? (i - orderDeduction).ToString();
+
+            if (notNullIdentifier.Any(char.IsSymbol))
+            {
+                orderDeduction += 1;
+            }
+            else
+            {
+                laws.Laws[i].LawIdentifierOverride = (i - orderDeduction).ToString();
+            }
+        }
+
+        // adminlog is used to prevent adminlog spam.
+        if (adminlog)
+            _adminLogger.Add(LogType.Mind, LogImpact.High, $"{ToPrettyString(ent):silicon} had its laws changed by an ion storm to {laws.LoggingString()}");
+
         var ev = new IonStormLawsEvent(laws);
         RaiseLocalEvent(ent, ref ev);
     }

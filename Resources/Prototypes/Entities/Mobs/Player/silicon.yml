@@ -35,6 +35,7 @@
     removeOnShutdown: false
     actions:
     - ActionJumpToCore
+    - ActionSurvCameraLights
     - ActionAIViewLaws
   - type: UserInterface
     interfaces:
@@ -413,7 +414,7 @@
 # The actual brain inside the core
 - type: entity
   id: StationAiBrain
-  parent: PositronicBrain
+  parent: PositronicBrainNotIonStormable # One day
   categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: Sprite
@@ -557,7 +558,7 @@
   - type: ContainerFill
     containers:
       borg_brain:
-        - PositronicBrain
+        - PositronicBrainSyndicate
       borg_module:
         - BorgModuleOperative
         - BorgModuleL6C
@@ -641,7 +642,7 @@
   - type: ContainerFill
     containers:
       borg_brain:
-      - PositronicBrain
+      - PositronicBrainIonStormed
       borg_module:
       - BorgModulePrying
       - BorgModuleTool
@@ -680,7 +681,7 @@
   - type: ContainerFill
     containers:
       borg_brain:
-        - PositronicBrain
+        - PositronicBrainIonStormed
       borg_module:
         - BorgModulePrying
         - BorgModuleTool
@@ -716,7 +717,7 @@
   - type: ContainerFill
     containers:
       borg_brain:
-      - PositronicBrain
+      - PositronicBrainIonStormed
       borg_module:
       - BorgModulePrying
       - BorgModuleTool
@@ -754,7 +755,7 @@
   - type: ContainerFill
     containers:
       borg_brain:
-      - PositronicBrain
+      - PositronicBrainIonStormed
       borg_module:
       - BorgModulePrying
       - BorgModuleTool
@@ -793,7 +794,7 @@
   - type: ContainerFill
     containers:
       borg_brain:
-      - PositronicBrain
+      - PositronicBrainIonStormed
       borg_module:
       - BorgModulePrying
       - BorgModuleTool #No fire extinguisher, traversal is better
@@ -831,7 +832,7 @@
   - type: ContainerFill
     containers:
       borg_brain:
-      - PositronicBrain
+      - PositronicBrainSyndicateIonStormed
       borg_module:
       - BorgModuleOperative
       - BorgModuleC20r
