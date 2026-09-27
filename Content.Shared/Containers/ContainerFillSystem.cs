@@ -3,8 +3,6 @@ using Content.Shared.EntityTable.Conditions;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
-using System;
 using System.Linq;
 using System.Numerics;
 
