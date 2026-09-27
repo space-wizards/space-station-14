@@ -41,7 +41,7 @@
 
   Robust harvest (an especially potent fertilizer) will [color=lightgreen]heal a diona's injuries[/color], but overdosing will cause
   them to [color=palevioletred]grow out of control[/color], turning into an immobile tree (and dropping all their equipment). Cutting down the tree will
-  "restore" the Diona to their regular, mobile state.
+  "restore" the diona to their regular, mobile state.
 
   ## Nymphs
   <Box>
@@ -49,10 +49,10 @@
     <GuideEntityEmbed Entity="MobDionaNymph" Caption=""/>
     <GuideEntityEmbed Entity="MobDionaNymph" Caption=""/>
   </Box>
-  After death, a Diona can voluntarily destroy their own body, releasing their internal organs as three "nymphs",
+  After death, a diona can voluntarily destroy their own body, releasing their internal organs as three "nymphs",
   with the player taking control of the nymph containing the brain. The brain nymph can speak, but has no hands or inventory.
 
-  After 10 minutes, the brain nymph can regrow into a "full" Diona. This will be a brand-new body with a new name, appearance, fingerprints, and even DNA,
+  After 10 minutes, the brain nymph can regrow into a "full" diona. This will be a brand-new body with a new name, appearance, fingerprints, and even DNA,
   leaving little definitive evidence about who they were before.
 
 </Document>
