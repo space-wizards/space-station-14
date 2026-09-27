@@ -36,36 +36,35 @@ public sealed partial class MalignRiftSpawnRule : GameRuleSystem<MalignRiftSpawn
         if (_ticker.IsGameRuleActive<CosmicCultRuleComponent>())
         {
             _ticker.EndGameRule((rule, rule.Comp2)); // Cosmic cult's active! Don't actually proceed to the contents of the gamerule!
+            return;
         }
-        else
+
+        var totalCrew = _playerMan.Sessions.Count(session => session.Status == SessionStatus.InGame && HasComp<HumanoidProfileComponent>(session.AttachedEntity));
+        var sender = Loc.GetString("cosmiccult-announcement-sender");
+
+        _chatSystem.DispatchStationAnnouncement(chosenStation.Value, Loc.GetString("cosmiccult-announce-tier2-progress"), sender, false, null, Color.FromHex("#4cabb3"));
+        _chatSystem.DispatchStationAnnouncement(chosenStation.Value, Loc.GetString("cosmiccult-announce-tier2-warning"), null, false, null, Color.FromHex("#cae8e8"));
+        _audio.PlayGlobal(rule.Comp1.Tier2Sound, Filter.Broadcast(), false, AudioParams.Default);
+
+        #if DEBUG
+        if (totalCrew < 25)
         {
-            var totalCrew = _playerMan.Sessions.Count(session => session.Status == SessionStatus.InGame && HasComp<HumanoidProfileComponent>(session.AttachedEntity));
-            var sender = Loc.GetString("cosmiccult-announcement-sender");
+            totalCrew = 25;
+            Log.Debug("Debug mode. Malign Rifts spawning as if Player Count is 25.");
+        }
+        #endif
 
-            _chatSystem.DispatchStationAnnouncement(chosenStation.Value, Loc.GetString("cosmiccult-announce-tier2-progress"), sender, false, null, Color.FromHex("#4cabb3"));
-            _chatSystem.DispatchStationAnnouncement(chosenStation.Value, Loc.GetString("cosmiccult-announce-tier2-warning"), null, false, null, Color.FromHex("#cae8e8"));
-            _audio.PlayGlobal(rule.Comp1.Tier2Sound, Filter.Broadcast(), false, AudioParams.Default);
+        for (var i = 0; i < (short) totalCrew / 6; i++) // spawn # malign rifts equal to 16.67% of the playercount
+        {
+            if (_station.TryFindRandomTileOnStation((chosenStation.Value.Owner, chosenStation.Value.Comp1), out var _, out var _, out var coords))
+                Spawn(MalignRiftEntity, coords);
+        }
 
-            #if DEBUG
-            if (totalCrew < 25)
-            {
-                totalCrew = 25;
-                Log.Debug("Debug mode. Malign Rifts spawning as if Player Count is 25.");
-            }
-            #endif
-
-            for (var i = 0; i < (short) totalCrew / 6; i++) // spawn # malign rifts equal to 16.67% of the playercount
-            {
-                if (_station.TryFindRandomTileOnStation((chosenStation.Value.Owner, chosenStation.Value.Comp1), out var _, out var _, out var coords))
-                    Spawn(MalignRiftEntity, coords);
-            }
-
-            var devices = EntityQueryEnumerator<CosmicLambdaDeviceComponent>();
-            while (devices.MoveNext(out var uid, out _))
-            {
-                var evt = new CosmicDeviceUpgradeEvent();
-                RaiseLocalEvent(uid, ref evt);
-            }
+        var devices = EntityQueryEnumerator<CosmicLambdaDeviceComponent>();
+        while (devices.MoveNext(out var uid, out _))
+        {
+            var evt = new CosmicDeviceUpgradeEvent();
+            RaiseLocalEvent(uid, ref evt);
         }
     }
 }
