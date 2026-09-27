@@ -323,7 +323,7 @@
       proto: Xenoborg
       count: 4
   - type: DynamicRuleCost
-    cost: 200
+    cost: 100
 
 - type: entity
   parent: [ BaseXenoborgsRule, BaseRoundstartAntagRule]
