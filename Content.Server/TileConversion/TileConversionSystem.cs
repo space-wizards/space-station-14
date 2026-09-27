@@ -5,7 +5,6 @@ using Content.Shared.Trigger;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -17,7 +16,6 @@ namespace Content.Server.TileConversion;
 public sealed partial class TileConversionSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private INetManager _net = default!;
     [Dependency] private IRobustRandom _rand = default!;
     [Dependency] private ITileDefinitionManager _tileDefinition = default!;
 
@@ -130,13 +128,13 @@ public sealed partial class TileConversionSystem : EntitySystem
                     var proto = Prototype(convertedEnt);
                     if (ent.Comp.EntityConversionDict.TryGetValue(proto?.ID!, out var conversion))
                     {
-                        PredictedSpawnAtPosition(conversion, Transform(convertedEnt).Coordinates);
-                        PredictedQueueDel(convertedEnt);
+                        SpawnAtPosition(conversion, Transform(convertedEnt).Coordinates);
+                        QueueDel(convertedEnt);
                     }
                 }
 
                 //spawn vfx
-                if (_timing.IsFirstTimePredicted && _net.IsClient && ent.Comp.TileConvertVfx != null)
+                if (ent.Comp.TileConvertVfx != null)
                     SpawnAttachedTo(ent.Comp.TileConvertVfx, _turfs.GetTileCenter(tileRef));
 
                 ent.Comp.ConvertableTiles.Remove(pos);
