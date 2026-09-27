@@ -327,7 +327,7 @@ public sealed class StatusEffectNewTest : InteractionTest
         Assert.That(compStatusA!.Applied, Is.True, "Status effect A was not applied to the player after delay was reduced to zero");
     }
 
-    [Test, Description("Testing trying to increase delays to status effects")]
+    [Test, Description("Testing trying to increase delays to status effects (unsupported operation)")]
     public async Task TestIncreaseStatusEffectDelay_TrySetStatusEffectDuration()
     {
         var curTime = TimeSpan.Zero;
@@ -345,14 +345,15 @@ public sealed class StatusEffectNewTest : InteractionTest
         //  * if delay is given, current implementation calculates new end time as (current time + delay + duration)
         //  * underlying `UpdateStatusEffectDelay` method rejects any delays longer than existing delay
         //  * however, this isn't factored in when calculating new effect end time - diff between current delay and desired delay is added to duration.
-        //   is this intended behaviour? test has been written based on current implementation, please adjust if implementation changes 
+        //  is this intended behaviour?
+        //  this test has been written based on current implementation (in case any systems rely on this weird behaviour), please adjust if implementation changes 
         _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks, TwentyTicks);
 
         Assume.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var time2), Is.True, "Could not get time info for effect A after trying to increase delay");
         using (Assert.EnterMultipleScope())
         {
             Assert.That(time2.StartEffectTime, Is.EqualTo(time1.StartEffectTime), "Unsupported attempt at increasing delay of status effect A somehow increased the delay");
-            Assert.That(time2.EndEffectTime, Is.EqualTo(curTime + ThirtyTicks), "Attempt at increasing delay of status effect A did not postpone start time - see TODO in this test");
+            Assert.That(time2.EndEffectTime, Is.EqualTo(curTime + ThirtyTicks), "Unsupported attempt at increasing delay of status effect A did not postpone effect end time - see TODO in this test method");
         }
     }
 }
