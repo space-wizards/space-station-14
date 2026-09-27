@@ -1,8 +1,5 @@
 using Content.Shared.CosmicCult.Components;
-using Content.Shared.DoAfter;
 using Content.Shared.GameTicking;
-using Content.Shared.GameTicking.Components;
-using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.Popups;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Audio;
@@ -15,7 +12,6 @@ public sealed partial class CosmicLambdaDeviceSystem : EntitySystem
 {
     [Dependency] private GameTicker _ticker = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPopupSystem _popUp = default!;
 
     private static readonly EntProtoId LambdaParticles = "CosmicAnomalousParticleLambda";
@@ -27,12 +23,12 @@ public sealed partial class CosmicLambdaDeviceSystem : EntitySystem
         if (_ticker.IsGameRuleActive<MalignRiftSpawnRuleComponent>())
             doUpgrade = true;
 
-        var query = EntityQueryEnumerator<CosmicCultRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var comp, out var gameRule))
-        {
-            if (!ent.Comp.Upgraded && _ticker.IsGameRuleActive((uid, gameRule)) && comp.Tier >= 2)
-                doUpgrade = true;
-        }
+        // var query = EntityQueryEnumerator<CosmicCultRuleComponent, GameRuleComponent>();
+        // while (query.MoveNext(out var uid, out var comp, out var gameRule))
+        // {
+        //     if (!ent.Comp.Upgraded && _ticker.IsGameRuleActive((uid, gameRule)) && comp.Tier >= 2)
+        //         doUpgrade = true;
+        // }
 
         if (!doUpgrade)
             return;

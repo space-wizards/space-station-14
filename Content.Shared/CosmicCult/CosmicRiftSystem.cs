@@ -1,14 +1,9 @@
-using Content.Shared.Actions;
 using Content.Shared.CosmicCult.Components;
 using Content.Shared.Dataset;
-using Content.Shared.DoAfter;
 using Content.Shared.Effects;
-using Content.Shared.IdentityManagement;
-using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Random.Helpers;
-using Content.Shared.StatusEffectNew;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Events;
@@ -27,14 +22,10 @@ public abstract partial class CosmicRiftSystem : EntitySystem
     [Dependency] protected IGameTiming Timing = default!;
     [Dependency] private INetManager _net = default!;
 
-    [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedColorFlashEffectSystem _color = default!;
-    [Dependency] private SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private StatusEffectsSystem _statusEffects = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    private static readonly EntProtoId PressureImmunityEffect = "StatusEffectPressureImmunity";
 
     [SubscribeLocalEvent]
     private void OnCollide(Entity<CosmicRiftComponent> ent, ref EndCollideEvent args)
@@ -60,7 +51,7 @@ public abstract partial class CosmicRiftSystem : EntitySystem
 
         if (_net.IsServer)
         {
-            var vfx = Spawn(CosmicCultSystem.GenericVfx, Transform(ent).Coordinates);
+            var vfx = Spawn(ent.Comp.ExpungeVfx, Transform(ent).Coordinates);
             _audio.PlayPvs(ent.Comp.ExpungeSound, vfx);
         }
 
@@ -78,59 +69,6 @@ public abstract partial class CosmicRiftSystem : EntitySystem
             return;
 
         ent.Comp.GridUid = grid;
-    }
-
-    [SubscribeLocalEvent]
-    private void OnInteract(Entity<CosmicRiftComponent> ent, ref ActivateInWorldEvent args)
-    {
-        if (!TryComp<CosmicCultistComponent>(args.User, out var cultist) || args.Handled)
-            return;
-
-        if (ent.Comp.Occupied)
-        {
-            _popup.PopupEntity(Loc.GetString("cosmiccult-rift-inuse"), args.User, args.User);
-            return;
-        }
-
-        if (cultist.WasEmpowered)
-        {
-            _popup.PopupEntity(Loc.GetString("cosmiccult-rift-cannotabsorb"), args.User, args.User);
-            return;
-        }
-
-        args.Handled = true;
-        ent.Comp.Occupied = true;
-        _popup.PopupEntity(Loc.GetString("cosmiccult-rift-beginabsorb"), args.User, args.User);
-        var doargs = new DoAfterArgs(EntityManager, args.User, ent.Comp.AbsorbTime, new EventAbsorbRiftDoAfter(), args.User, ent)
-        {
-            MovementThreshold = 0.5f, DistanceThreshold = 1.5f, Hidden = true, BreakOnDamage = true, BreakOnHandChange = true, BreakOnMove = true,
-        };
-        _doAfter.TryStartDoAfter(doargs);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnAbsorbDoAfter(Entity<CosmicCultistComponent> ent, ref EventAbsorbRiftDoAfter args)
-    {
-        var comp = ent.Comp;
-        if (args.Cancelled || args.Handled || args.Args.Target is not { } target)
-        {
-            if (TryComp<CosmicRiftComponent>(args.Args.Target, out var rift))
-                rift.Occupied = false;
-            return;
-        }
-        args.Handled = true;
-
-        _actions.AddAction(ent, ent.Comp.CosmicFragmentationAction);
-        if (Timing.IsFirstTimePredicted)
-            Spawn(CosmicCultSystem.GenericVfx, Transform(target).Coordinates);
-
-        var ev = new CosmicCultistEmpowerChangedEvent(ent, true);
-        RaiseLocalEvent(ent, ref ev);
-
-        comp.WasEmpowered = true;
-        _statusEffects.TrySetStatusEffectDuration(ent, PressureImmunityEffect);
-        _popup.PopupCoordinates(Loc.GetString("cosmiccult-rift-absorb", ("NAME", Identity.Entity(args.Args.User, EntityManager))), Transform(args.Args.User).Coordinates, PopupType.MediumCaution);
-        QueueDel(target);
     }
 
     private string? GetText(ProtoId<LocalizedDatasetPrototype> dialogue, IRobustRandom random)

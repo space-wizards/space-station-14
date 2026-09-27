@@ -43,5 +43,8 @@ public sealed partial class CosmicRiftComponent : Component
     public ProtoId<LocalizedDatasetPrototype> PopUpDataset = "DatasetCosmicRiftPopups";
 
     [DataField]
+    public EntProtoId ExpungeVfx = "";
+
+    [DataField]
     public SoundSpecifier ExpungeSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/laser_cannon2.ogg");
 }
