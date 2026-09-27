@@ -1,5 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Content.Client.Stylesheets;
+using System.Diagnostics.CodeAnalysis;
+using Content.Client.Stylesheets.Palette;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Power;
 using Content.Shared.Rounding;
@@ -29,10 +29,10 @@ public sealed partial class BatteryMenu : FancyWindow
     // Colors used for the storage cell bar graphic.
     private static readonly Color[] StorageColors =
     [
-        StyleNano.DangerousRedFore,
+        Palettes.Status.Critical,
         Color.FromHex("#C49438"),
         Color.FromHex("#B3BF28"),
-        StyleNano.GoodGreenFore,
+        Palettes.Status.Good
     ];
 
     // StorageColors but dimmed for "off" bars.

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: RandomAnomalySpawner
   name: random anomaly spawner
   parent: MarkerBase

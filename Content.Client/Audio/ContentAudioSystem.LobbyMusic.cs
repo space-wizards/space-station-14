@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Client.GameTicking;
 using Content.Client.GameTicking.Managers;
 using Content.Client.Lobby;
 using Content.Shared.Audio.Events;

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: MobStatusEffectBase
   id: BloodstreamStatusEffectBase
   abstract: true
