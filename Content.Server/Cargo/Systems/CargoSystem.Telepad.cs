@@ -67,6 +67,7 @@ public sealed partial class CargoSystem
                 || !IsLinkedToConsole(uid, GetEntity(args.Order.ApprovingConsole)))
                 continue;
 
+            telepad.NextTeleport = Timing.CurTime + telepad.Delay;
             telepad.CurrentOrders.Add(args.Order);
             args.Handled = true;
             args.FulfillmentEntity = uid;
