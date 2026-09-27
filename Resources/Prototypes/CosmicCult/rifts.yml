@@ -1,0 +1,59 @@
+- type: entity
+  id: CosmicMalignRift
+  name: malign rift
+  description: A malign light pours forth from within.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    bodyStatus: InAir
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: Sprite
+    sprite: Structures/Specific/cosmic-rift.rsi
+    drawdepth: Mobs
+    snapCardinals: true
+    offset: 0,0.27
+    layers:
+    - state: base
+    - state: vfx
+      shader: unshaded
+  - type: Clickable
+#  - type: CosmicExamine
+#    cultistText: cosmic-examine-text-rift
+#    othersText: cosmic-examine-text-crew-rift
+  - type: CosmicRift
+#  - type: TileConversion
+#    conversionMaxTicks: 6
+#    conversionTime: 8
+#    conversionChance: 1
+#    chanceReduction: 0.16
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 2.5
+    energy: 6
+    castShadows: false
+    netsync: false
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 4
+      maxDuration: 4
+      startValue: 3
+      endValue: 9
+      property: Energy
+      enabled: true
+      isLooped: true
+      reverseWhenFinished: true

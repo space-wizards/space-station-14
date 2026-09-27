@@ -1,0 +1,5 @@
+- type: entity
+  id: CosmicMalignRiftSpawn
+  parent: [ BaseGameRule ]
+  components:
+  - type: MalignRiftSpawnRule
