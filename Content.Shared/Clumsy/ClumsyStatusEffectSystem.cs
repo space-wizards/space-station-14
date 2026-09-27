@@ -106,9 +106,7 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
         _popup.PopupEntity(selfMessage, othersMessage, args.AppliedTo, args.AppliedTo);
     }
 
-    /// <summary>
-    /// Clumsy people can't be trusted with guns!
-    /// </summary>
+    /// <summary> Clumsy people can't be trusted with guns! </summary>
     [SubscribeLocalEvent]
     private void OnBeforeGunShotEvent(Entity<ClumsyGunStatusEffectComponent> status, ref StatusEffectRelayedEvent<SelfBeforeGunShotEvent> args)
     {
