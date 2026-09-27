@@ -1,0 +1,11 @@
+- files:
+  - floor_void.png
+  - tile_glyph.png
+  - tile_half.png
+  - tile_malign.png
+  - tile_notched.png
+  - tile_smooth.png
+  - tile_split.png
+  license: "CC-BY-SA-4.0"
+  copyright: "By AftrLite (GitHub)."
+  source: "https://github.com/space-wizards/space-station-14"
