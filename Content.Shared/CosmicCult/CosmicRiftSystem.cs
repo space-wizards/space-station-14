@@ -19,6 +19,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.CosmicCult;
 
+/// <summary>
+/// System for Cosmic Cult's Malign Rifts. Handles cultist interact/absorb and lambda-particle expunging.
+/// </summary>
 public abstract partial class CosmicRiftSystem : EntitySystem
 {
     [Dependency] protected IGameTiming Timing = default!;
@@ -64,6 +67,10 @@ public abstract partial class CosmicRiftSystem : EntitySystem
         PredictedQueueDel(ent);
     }
 
+    /// <summary>
+    /// Used to store the Grid into the Rift Component so that it can be referenced during ComponentShutdown.
+    /// We do this because our on-server ComponentShutdown may not be able to locate the TransformComponent at the time of shutdown.
+    /// </summary>
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<CosmicRiftComponent> ent, ref MapInitEvent args)
     {

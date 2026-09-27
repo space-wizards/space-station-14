@@ -2,10 +2,10 @@ using Content.Server.Research.Systems;
 using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Components;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Physics.Events;
 
 namespace Content.Server.CosmicCult;
 
+/// <inheritdoc/>
 public sealed partial class ServerCosmicRiftSystem : CosmicRiftSystem
 {
     [Dependency] private ResearchSystem _research = default!;
