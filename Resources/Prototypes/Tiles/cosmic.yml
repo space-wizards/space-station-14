@@ -66,7 +66,6 @@
     West: /Textures/Tiles/CosmicRough/double_edge_W.png
 
 - type: tile
-  editorHidden: true
   id: FloorCosmicVoid
   parent: BaseCosmicFloor
   name: tiles-cosmiccult-floor-void
