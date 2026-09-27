@@ -3,6 +3,7 @@ using Content.Shared.Maps;
 using Content.Shared.Trigger;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -13,6 +14,11 @@ namespace Content.Shared.TileConversion;
 /// </remarks>
 public sealed partial class TileConversionSystem : EntitySystem
 {
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private IRobustRandom _rand = default!;
+    [Dependency] private ITileDefinitionManager _tileDefinition = default!;
+
     [Dependency] private SharedMapSystem _map = default!;
 
     private readonly HashSet<Vector2i> _neighbourPositions =
@@ -28,10 +34,7 @@ public sealed partial class TileConversionSystem : EntitySystem
         new(1, -1),
     ];
 
-    [Dependency] private IRobustRandom _rand = default!;
     [Dependency] private TileSystem _tile = default!;
-    [Dependency] private ITileDefinitionManager _tileDefinition = default!;
-    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private TurfSystem _turfs = default!;
 
     public override void Initialize()
@@ -124,13 +127,13 @@ public sealed partial class TileConversionSystem : EntitySystem
                     var proto = Prototype(convertedEnt);
                     if (ent.Comp.EntityConversionDict.TryGetValue(proto?.ID!, out var conversion))
                     {
-                        Spawn(conversion, Transform(convertedEnt).Coordinates);
-                        QueueDel(convertedEnt);
+                        PredictedSpawnAtPosition(conversion, Transform(convertedEnt).Coordinates);
+                        PredictedQueueDel(convertedEnt);
                     }
                 }
 
-                //spawn the vfx if we should
-                if (ent.Comp.UseVfx)
+                //spawn vfx
+                if (_timing.IsFirstTimePredicted && _net.IsClient && ent.Comp.TileConvertVfx != null)
                     Spawn(ent.Comp.TileConvertVfx, _turfs.GetTileCenter(tileRef));
 
                 ent.Comp.ConvertableTiles.Remove(pos);

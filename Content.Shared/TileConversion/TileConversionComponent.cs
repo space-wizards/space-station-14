@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.TileConversion;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(TileConversionSystem))]
-[AutoGenerateComponentPause]
+[AutoGenerateComponentPause, AutoGenerateComponentState]
 public sealed partial class TileConversionComponent : Component
 {
     /// <summary>
@@ -65,12 +65,6 @@ public sealed partial class TileConversionComponent : Component
     public bool Enabled = true;
 
     /// <summary>
-    /// Wether or not the TileConversionSystem should spawn VFX when converting tiles and walls.
-    /// </summary>
-    [DataField]
-    public bool UseVfx = true;
-
-    /// <summary>
     /// Wether or not the TileConversionSystem should ignore this component when it reaches max growth. Saves performance.
     /// </summary>
     [DataField]
@@ -88,7 +82,7 @@ public sealed partial class TileConversionComponent : Component
     [DataField] //not a dict like the entity conversion below because there's too many fucking tiles
     public List<ProtoId<ContentTileDefinition>> ConversionTiles =
     [
-        "FloorCosmicCorruption",
+        "FloorExoViscera", // "FloorCosmicCorruption",
     ];
 
     /// <summary>
@@ -117,6 +111,6 @@ public sealed partial class TileConversionComponent : Component
     /// The VFX entity we spawn when corruption occurs.
     /// </summary>
     [DataField]
-    public EntProtoId TileConvertVfx = "EffectCosmicTileSpawn";
+    public EntProtoId? TileConvertVfx = "EffectCosmicTileSpawn";
 
 }
