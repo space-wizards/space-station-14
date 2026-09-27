@@ -15,16 +15,7 @@ namespace Content.Server.Cargo.Systems;
 
 public sealed partial class CargoSystem
 {
-    private void InitializeTelepad()
-    {
-        SubscribeLocalEvent<CargoTelepadComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<CargoTelepadComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<CargoTelepadComponent, PowerChangedEvent>(OnTelepadPowerChange);
-        // Shouldn't need re-anchored event
-        SubscribeLocalEvent<CargoTelepadComponent, AnchorStateChangedEvent>(OnTelepadAnchorChange);
-        SubscribeLocalEvent<FulfillCargoOrderEvent>(OnTelepadFulfillCargoOrder);
-    }
-
+    [SubscribeLocalEvent]
     private void OnTelepadFulfillCargoOrder(ref FulfillCargoOrderEvent args)
     {
         var query = EntityQueryEnumerator<CargoTelepadComponent, TransformComponent>();
@@ -122,11 +113,13 @@ public sealed partial class CargoSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnInit(EntityUid uid, CargoTelepadComponent telepad, ComponentInit args)
     {
         _linker.EnsureSinkPorts(uid, telepad.ReceiverPort);
     }
 
+    [SubscribeLocalEvent]
     private void OnShutdown(Entity<CargoTelepadComponent> ent, ref ComponentShutdown args)
     {
         if (ent.Comp.CurrentOrders.Count == 0)
@@ -170,11 +163,13 @@ public sealed partial class CargoSystem
         _appearance.SetData(uid, CargoTelepadVisuals.State, component.CurrentState);
     }
 
+    [SubscribeLocalEvent]
     private void OnTelepadPowerChange(EntityUid uid, CargoTelepadComponent component, ref PowerChangedEvent args)
     {
         SetEnabled(uid, component);
     }
 
+    [SubscribeLocalEvent]
     private void OnTelepadAnchorChange(EntityUid uid, CargoTelepadComponent component, ref AnchorStateChangedEvent args)
     {
         SetEnabled(uid, component);
