@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseHandheldInstrument
   id: MusicalLungInstrument
   name: musical lung

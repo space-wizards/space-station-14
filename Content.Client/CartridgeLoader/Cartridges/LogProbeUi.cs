@@ -1,4 +1,4 @@
-﻿using Content.Client.UserInterface.Fragments;
+using Content.Client.UserInterface.Fragments;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Robust.Client.UserInterface;
@@ -22,7 +22,7 @@ public sealed partial class LogProbeUi : UIFragment
         {
             var ev = new LogProbePrintMessage();
             var message = new CartridgeUiMessage(ev);
-            ui.SendMessage(message);
+            ui.SendPredictedMessage(message);
         };
     }
 

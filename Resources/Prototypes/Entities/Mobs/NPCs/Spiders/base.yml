@@ -1,0 +1,141 @@
+# Code unique spider prototypes or combine them all into one spider and get a
+# random sprite state when you spawn it.
+- type: entity
+  abstract: true
+  parent: [ SimpleMobBase, BaseMobHemocyanin, MobCombat, BaseSlicingRefinable, MobNightVision, BaseMobDestructible ]
+  id: MobSpiderBase
+  components:
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 130
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatSpider
+      amount: 2
+  - type: CombatMode
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      90: Dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: idle
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: SolutionManager
+    solutions:
+    - SolutionVenomSpider
+  - type: MeleeChemicalInjector
+    transferAmount: 0.75
+    solution: melee
+  - type: ReplacementAccent
+    accent: xeno
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-tarantula
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/snake_hiss.ogg
+  - type: Puller
+    needsHands: false
+  - type: NoSlip
+  - type: Spider
+  - type: IgnoreSpiderWeb
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: CopperBlood
+        Quantity: 150
+  - type: Speech
+    speechVerb: Arachnid
+    speechSounds: Arachnid
+    allowedEmotes: ['Click', 'Chitter']
+  - type: Vocal
+    emoteSounds: UnisexArachnid
+  - type: TypingIndicator
+    proto: spider
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
+  - type: Prying # Open door from xeno.yml.
+    pryPowered: true
+    force: true
+    speedModifier: 1.5
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: PassiveDamage # Slight passive regen. Assuming one damage type, comes out to about 4 damage a minute from base.yml.
+    intervalHaltOnDamageTaken: 5s
+    allowedStates:
+    - Alive
+    damage:
+      types:
+        Poison: -0.07
+        Blunt: -0.03
+        Slash: -0.03
+        Piercing: -0.03
+        Heat: -0.03
+        Cold: -0.03
+        Shock: -0.03
+
+- type: entity
+  abstract: true
+  parent: MobSpiderBase
+  id: MobSpiderAnimated
+  components:
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: moving
+    noMovementLayers:
+      movement:
+        state: idle
+
+- type: entity
+  parent: [SolutionWeapon, SolutionTiny]
+  id: SolutionVenomSpider
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SolutionRegeneration
+    generated:
+      reagents:
+      - ReagentId: Mechanotoxin
+        Quantity: 1
+
+# Angry MobSpiderAngryBase; should not be used
+- type: entity
+  abstract: true
+  parent: MobSpiderBase
+  id: MobSpiderAngryBase
+  components:
+  - type: NpcFactionMember
+    factions:
+    - Xeno
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-giant-spider-name
+    description: ghost-role-information-giant-spider-description
+    rules: ghost-role-information-giant-spider-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+    raffle:
+      settings: short
+  - type: GhostTakeoverAvailable

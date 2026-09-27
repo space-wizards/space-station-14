@@ -3,13 +3,13 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Shared.Database;
+using Content.Shared.GameTicking;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Respawn;
 using Content.Shared.Station.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Respawn;
@@ -23,7 +23,6 @@ public sealed partial class SpecialRespawnSystem : SharedSpecialRespawnSystem
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private IChatManager _chat = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
 
     public override void Initialize()
     {
@@ -89,7 +88,7 @@ public sealed partial class SpecialRespawnSystem : SharedSpecialRespawnSystem
             return;
 
         //Invalid prototype
-        if (!_proto.HasIndex(component.Prototype))
+        if (!ProtoMan.HasIndex(component.Prototype))
             return;
 
         if (TryFindRandomTile(entityGridUid.Value, entityMapUid.Value, 10, out var coords))
