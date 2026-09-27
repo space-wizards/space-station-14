@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Clumsy.Components;
 
 /// <summary>
-/// Afflicted entity will occasionally fail to pick up items/hold on to any items they are given
+/// Afflicted entity will occasionally fail to pick up items or receive items into their hands.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(ClumsyStatusEffectSystem))]
