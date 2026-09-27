@@ -11,17 +11,17 @@
   - ability-sunder.ogg
   license: "CC-BY-SA-3.0"
   copyright: "By AftrLite(GitHub) for Cosmic Cult. Made using a combination of CC0 samples from freesound.org and personally-recorded foley."
-  source: "https://freesound.org/"
+  source: "https://github.com/space-wizards/space-station-14/pull/46202"
 
 - files:
   - ability-shift-in.ogg
   - ability-shift-out.ogg
   license: "CC-BY-SA-3.0"
   copyright: "By Darklyac for Cosmic Cult."
-  source: "https://github.com/space-wizards/space-station-14"
+  source: "https://github.com/space-wizards/space-station-14/pull/46202"
 
 - files:
   - ability-gained.ogg
   license: "CC-BY-SA-3.0"
   copyright: "By Octofoss for Cosmic Cult."
-  source: "https://github.com/space-wizards/space-station-14"
+  source: "https://github.com/space-wizards/space-station-14/pull/46202"
