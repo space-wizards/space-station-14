@@ -54,6 +54,7 @@ public abstract partial class GameTicker : EntitySystem
     // Probably most useful for replays, round end info, and probably things like lobby menus.
     [ViewVariables]
     public int RoundId { get; protected set; }
+
     [ViewVariables] public TimeSpan RoundStartTimeSpan { get; protected set; }
 
     public override void Initialize()
@@ -78,7 +79,7 @@ public abstract partial class GameTicker : EntitySystem
 
     public TimeSpan RoundDuration()
     {
-        return Timing.CurTime.Subtract(RoundStartTimeSpan);
+        return RunLevel < GameRunLevel.InRound ? TimeSpan.Zero : Timing.CurTime.Subtract(RoundStartTimeSpan);
     }
 }
 
