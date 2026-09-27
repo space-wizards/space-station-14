@@ -12,6 +12,12 @@
   - /Audio/Construction/place_glass_3.ogg
 
 - type: soundCollection
+  id: PlaceItem
+  files:
+  - /Audio/Construction/place_item_1.ogg
+  - /Audio/Construction/place_item_2.ogg
+
+- type: soundCollection
   id: PlaceMetal
   files:
   - /Audio/Construction/place_metal_1.ogg
