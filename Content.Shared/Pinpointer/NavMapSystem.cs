@@ -290,6 +290,7 @@ public abstract partial class NavMapSystem : EntitySystem
             return;
 
         comp.Enabled = enabled;
+        Dirty(uid, comp);
         UpdateBeaconEnabledVisuals((uid, comp));
     }
 
