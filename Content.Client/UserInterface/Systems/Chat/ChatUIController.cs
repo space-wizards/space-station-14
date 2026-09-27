@@ -825,14 +825,7 @@ public sealed partial class ChatUIController : UIController
     private void OnChatMessage(MsgChatMessage message)
     {
         var msg = message.Message;
-        ProcessChatMessage(msg, true, out var sendToReplay);
-
-        if (((msg.Channel & ChatChannel.AdminRelated) == 0
-             || _config.GetCVar(CCVars.ReplayRecordAdminChat))
-            && sendToReplay)
-        {
-            _replayRecording.RecordClientMessage(msg);
-        }
+        ProcessChatMessage(msg, true, out _);
     }
 
     public void ProcessChatMessage(ChatMessage msg, bool speechBubble, out bool sendToReplay)
@@ -887,6 +880,13 @@ public sealed partial class ChatUIController : UIController
             {
                 _recentSameMessageCounts[msg.WrappedMessage] = 0;
             }
+        }
+
+        if (((msg.Channel & ChatChannel.AdminRelated) == 0
+             || _config.GetCVar(CCVars.ReplayRecordAdminChat))
+            && sendToReplay)
+        {
+            _replayRecording.RecordClientMessage(msg);
         }
 
         // color the name unless it's something like "the old man"
