@@ -47,13 +47,13 @@ public sealed partial class CargoSystem
             station = _random.Pick(_station.GetStations().Where(x => HasComp<StationCargoOrderDatabaseComponent>(x.Owner)).ToList());
         }
 
-        if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var db) ||
+        if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDataBase) ||
             !TryComp<StationDataComponent>(station, out var data))
             return;
 
         foreach (var order in ent.Comp.CurrentOrders)
         {
-            TryFulfillOrder((station, data), order.Account, order, db);
+            TryFulfillOrder((station, data), order.Account, order, orderDataBase);
         }
     }
 
@@ -61,9 +61,9 @@ public sealed partial class CargoSystem
     private void OnTelepadFulfillCargoOrder(ref FulfillCargoOrderEvent args)
     {
         var query = EntityQueryEnumerator<CargoTelepadComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var tele, out var xform))
+        while (query.MoveNext(out var uid, out var telepad, out var xform))
         {
-            if (tele.CurrentState != CargoTelepadState.Idle)
+            if (telepad.CurrentState != CargoTelepadState.Idle)
                 continue;
 
             if (!this.IsPowered(uid, EntityManager))
@@ -75,7 +75,7 @@ public sealed partial class CargoSystem
             if (!IsLinkedToConsole(uid, GetEntity(args.Order.ApprovingConsole)))
                 continue;
 
-            tele.CurrentOrders.Add(args.Order);
+            telepad.CurrentOrders.Add(args.Order);
             args.Handled = true;
             args.FulfillmentEntity = uid;
             return;
@@ -85,44 +85,44 @@ public sealed partial class CargoSystem
     private void UpdateTelepad(float frameTime)
     {
         var query = EntityQueryEnumerator<CargoTelepadComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var comp, out var xform))
+        while (query.MoveNext(out var uid, out var telepad, out var xform))
         {
             // Don't EntityQuery for it as it's not required.
             TryComp<AppearanceComponent>(uid, out var appearance);
 
             // Uhh listen teleporting takes time and I just want the 1 float.
-            if (Timing.CurTime < comp.NextTeleport)
+            if (Timing.CurTime < telepad.NextTeleport)
             {
-                comp.CurrentState = CargoTelepadState.Idle;
+                telepad.CurrentState = CargoTelepadState.Idle;
                 _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Idle, appearance);
                 continue;
             }
 
-            if (comp.CurrentOrders.Count == 0)
+            if (telepad.CurrentOrders.Count == 0)
                 continue;
 
-            comp.NextTeleport = Timing.CurTime + comp.Delay;
+            telepad.NextTeleport = Timing.CurTime + telepad.Delay;
 
-            var currentOrder = comp.CurrentOrders.First();
+            var currentOrder = telepad.CurrentOrders.First();
             if (currentOrder.NumDispatched >= currentOrder.OrderQuantity)
             {
-                comp.CurrentOrders.Remove(currentOrder);
+                telepad.CurrentOrders.Remove(currentOrder);
             }
-            else if (FulfillOrder(currentOrder, currentOrder.Account, xform.Coordinates, comp.PrinterOutput))
+            else if (FulfillOrder(currentOrder, currentOrder.Account, xform.Coordinates, telepad.PrinterOutput))
             {
                 currentOrder.NumDispatched++;
                 if (currentOrder.NumDispatched >= currentOrder.OrderQuantity)
-                    comp.CurrentOrders.Remove(currentOrder);
+                    telepad.CurrentOrders.Remove(currentOrder);
 
-                var teleportSound = comp.TeleportSound;
+                var teleportSound = telepad.TeleportSound;
                 var audioParams = teleportSound?.Params ?? AudioParams.Default;
                 audioParams = audioParams.AddVolume(-8f);
-                _audio.PlayPvs(_audio.ResolveSound(comp.TeleportSound), uid, audioParams);
+                _audio.PlayPvs(_audio.ResolveSound(telepad.TeleportSound), uid, audioParams);
 
                 if (_station.GetOwningStation(uid) is { } station)
                     UpdateOrders(station);
 
-                comp.CurrentState = CargoTelepadState.Teleporting;
+                telepad.CurrentState = CargoTelepadState.Teleporting;
                 _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Teleporting, appearance);
             }
         }
