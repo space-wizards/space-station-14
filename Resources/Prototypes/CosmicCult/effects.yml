@@ -1,0 +1,45 @@
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: EffectCosmicBase
+  components:
+  - type: TimedDespawn
+    lifetime: 1.75
+  - type: Transform
+    noRot: true
+    anchored: false
+  - type: Sprite
+    netsync: false
+    drawdepth: Effects
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: EffectCosmicBase
+  id: EffectCosmicGeneric
+  components:
+  - type: TimedDespawn
+    lifetime: 1.4
+  - type: Sprite
+    layers:
+    - sprite: Effects/Cosmic/effect-generic.rsi
+      state: vfx
+      shader: unshaded
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 1.5
+    energy: 2.5
+    castShadows: false
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 0.675
+      maxDuration: 0.675
+      startValue: 0.1
+      endValue: 2
+      property: Energy
+      enabled: true
+      isLooped: true
+      reverseWhenFinished: true

@@ -1,0 +1,6 @@
+## MALIGN RIFT POPUPS
+- type: localizedDataset
+  id: DatasetCosmicRiftPopups
+  values:
+    prefix: cosmic-rift-popup-
+    count: 5
