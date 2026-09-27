@@ -87,10 +87,10 @@ public sealed partial class CargoSystem
                 continue;
             }
 
+            telepad.NextTeleport = Timing.CurTime + telepad.Delay;
+
             if (telepad.CurrentOrders.Count == 0)
                 continue;
-
-            telepad.NextTeleport = Timing.CurTime + telepad.Delay;
 
             var currentOrder = telepad.CurrentOrders.First();
             if (currentOrder.NumDispatched >= currentOrder.OrderQuantity)
