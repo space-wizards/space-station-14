@@ -80,10 +80,10 @@ public sealed partial class TileConversionComponent : Component
     /// The tile we spawn when replacing a normal tile.
     /// </summary>
     [DataField] //not a dict like the entity conversion below because there's too many fucking tiles
-    public List<ProtoId<ContentTileDefinition>> ConversionTiles { get; private set; } =
-    [
-        "FloorExoViscera", // "FloorCosmicCorruption",
-    ];
+    public List<ProtoId<ContentTileDefinition>> ConversionTiles { get; private set; } = new List<ProtoId<ContentTileDefinition>>()
+    {
+        "FloorExoViscera" // "FloorCosmicCorruption",
+    };
 
     /// <summary>
     /// Dictionary for what entities to convert to which prototypes.
