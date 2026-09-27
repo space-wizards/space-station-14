@@ -25,24 +25,13 @@ public sealed partial class ServerCosmicRiftSystem : CosmicRiftSystem
         }
     }
 
-    protected override void OnCollide(Entity<CosmicRiftComponent> ent, ref EndCollideEvent args)
+    [SubscribeLocalEvent]
+    private void OnShutdown(Entity<CosmicRiftComponent> ent, ref ComponentShutdown args)
     {
-        base.OnCollide(ent, ref args);
-
-        if (ent.Comp.CurrentHits >= ent.Comp.MaxHits)
+        var servers = _research.GetServers(ent.Comp.GridUid);
+        foreach (var server in servers)
         {
-            if (Transform(ent).GridUid is not { } grid)
-                return;
-
-            var vfx = Spawn(CosmicCultSystem.GenericVfx, Transform(ent).Coordinates);
-            _audio.PlayPredicted(ent.Comp.ExpungeSound, vfx, vfx);
-            QueueDel(ent);
-
-            var servers = _research.GetServers(grid);
-            foreach (var server in servers)
-            {
-                _research.ModifyServerPoints(server, 1200);
-            }
+            _research.ModifyServerPoints(server, ent.Comp.ResearchPoints);
         }
     }
 }

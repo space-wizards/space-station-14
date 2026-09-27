@@ -169,7 +169,6 @@
   parent: EffectCosmicBase
   id: EffectCosmicGeneric
   components:
-  - type: EffectVisuals
   - type: TimedDespawn
     lifetime: 1.4
   - type: Sprite

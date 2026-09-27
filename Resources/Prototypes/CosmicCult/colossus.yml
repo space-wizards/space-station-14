@@ -71,13 +71,18 @@
   - type: WarpPoint
     follow: true
   - type: Body
+  - type: Vocal
+    wilhelmProbability: 0
+    emoteAction: null
   - type: Emoting
   - type: Speech
     speechSounds: ColossusSpeech
-    speechVerb: Robotic
-    allowedEmotes: []
-#  - type: TypingIndicator
-#    proto: CosmicTyping
+    speechVerb: ColossusVerb
+    allowedEmotes: ['ColossusAccent']
+  - type: ReplacementAccent
+    accent: ColossusAccent
+  - type: TypingIndicator
+    proto: CosmicTyping
   - type: Grammar
     attributes:
       proper: true
@@ -234,6 +239,26 @@
     path: /Audio/Cosmic/colossus-ask.ogg
   exclaimSound:
     path: /Audio/Cosmic/colossus-exclaim.ogg
+
+- type: speechVerb
+  id: ColossusVerb
+  name: chat-speech-verb-name-colossus
+  speechVerbStrings:
+  - chat-speech-verb-colossus-1
+  - chat-speech-verb-colossus-2
+  - chat-speech-verb-colossus-3
+  - chat-speech-verb-colossus-4
+  - chat-speech-verb-colossus-5
+
+- type: accent
+  id: ColossusAccent
+  fullReplacements:
+  - accent-words-colossus-1
+  - accent-words-colossus-2
+  - accent-words-colossus-3
+  - accent-words-colossus-4
+  - accent-words-colossus-5
+  - accent-words-colossus-6
 
 - type: entity
   categories: [ HideSpawnMenu ]

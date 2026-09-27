@@ -3,6 +3,8 @@ using Content.Shared.CosmicCult.Components.Actions;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands;
 using Content.Shared.Interaction.Components;
+using Content.Shared.StatusEffectNew;
+using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -17,6 +19,7 @@ public abstract partial class CosmicShiftSystem : EntitySystem
     [Dependency] protected SharedContainerSystem Container = default!;
     [Dependency] protected SharedDoAfterSystem DoAfter = default!;
     [Dependency] protected SharedTransformSystem TransformSystem = default!;
+    [Dependency] protected StatusEffectsSystem Status = default!;
 
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
@@ -84,8 +87,11 @@ public abstract partial class CosmicShiftSystem : EntitySystem
     public void ShiftToDestination(EntityUid ent, MapCoordinates destination)
     {
         OnShiftStart(ent);
-        _audio.PlayPvs(ShiftInSfx, Transform(ent).Coordinates);
         EnsureComp<CosmicShiftingComponent>(ent, out var shiftComp);
+
+        _audio.PlayPvs(ShiftInSfx, Transform(ent).Coordinates);
+        Status.TryAddStatusEffectDuration(ent, SharedStunSystem.StunId, TimeSpan.FromSeconds(5f));
+
         shiftComp.DestinationCoordinates = destination;
         shiftComp.ShiftMoveTimer = _timing.CurTime + TimeSpan.FromSeconds(2.5f);
         shiftComp.ShiftEndTimer = _timing.CurTime + TimeSpan.FromSeconds(4.6f);

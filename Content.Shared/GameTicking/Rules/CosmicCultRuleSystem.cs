@@ -17,6 +17,7 @@ using System.Linq;
 using Content.Server.CosmicCult.Components;
 using Content.Shared.Actions;
 using Content.Shared.Antag;
+using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Coordinates;
 using Content.Shared.CosmicCult;
@@ -27,15 +28,22 @@ using Content.Shared.DoAfter;
 using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Pinpointer;
+using Content.Shared.Random.Helpers;
 using Content.Shared.RoundEnd;
 using Content.Shared.Station.Components;
 using Content.Shared.Station.Systems;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 
 namespace Content.Shared.GameTicking.Rules;
 
 public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponent>
 {
+    [Dependency] private IConfigurationManager _config = default!; // TODO: COSMIC CULT - COMMENTED OUT FOR DEBUGGING. UNCOMMENT BEFORE MERGE.
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ISharedPlayerManager _playerMan = default!;
+    [Dependency] private IPrototypeManager _protoMan = default!;
+
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private AntagSelectionSystem _antag = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
@@ -45,11 +53,6 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
     [Dependency] private CosmicShiftSystem _cultShift = default!;
     // [Dependency] private EuiManager _euiMan = default!; // TODO: COSMIC CULT - EUI
     [Dependency] private EntityLookupSystem _lookup = default!;
-    // [Dependency] private IConfigurationManager _config = default!; // TODO: COSMIC CULT - COMMENTED OUT FOR DEBUGGING. UNCOMMENT BEFORE MERGE.
-    [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private ISharedPlayerManager _playerMan = default!;
-    [Dependency] private IPrototypeManager _protoMan = default!;
-    [Dependency] private IRobustRandom _random = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     // [Dependency] private NavMapSystem _navMap = default!; // TODO: COSMIC CULT - NAVMAP
     // [Dependency] private RoundEndSystem _roundEnd = default!; // TODO: COSMIC CULT - ROUNDEND
@@ -74,8 +77,9 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
     private HashSet<Entity<NavMapBeaconComponent>> _beaconSet = new();
     private HashSet<Entity<CosmicBreachComponent, TransformComponent>> _breachSet = new();
 
+    private IRobustRandom _random = default!;
     private ISawmill _sawmill = default!;
-    private TimeSpan _finaleTimeMax = TimeSpan.FromMinutes(5); // TODO: COSMIC CULT - DEBUG. Set to five minutes for debug testing. Remove the hardcoded timespan when not debugging.
+    private TimeSpan _finaleTimeMax;
 
     public override void Initialize()
     {
@@ -89,6 +93,12 @@ public sealed partial class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRule
     #region Starting Events
     protected override void Added(Entity<CosmicCultRuleComponent, GameRuleComponent> rule, ref GameRuleAddedEvent args)
     {
+        _random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(rule));
+
+        TimeSpan time = TimeSpan.FromMinutes(5); // TODO COSMIC CULT - DEBUG
+        // Subs.CVar(_config, CCVars.EmergencyShuttleAutoCallTime, value => time = TimeSpan.FromMinutes(value), true); // TODO COSMIC CULT - DEBUG
+        _finaleTimeMax = time + _timing.CurTime; // TODO COSMIC CULT - DEBUG
+
         // component.GoalsContainer = _goals.SpawnContainer("Cosmic Cult");
         // var ok = _goals.TryAddGoals(component.GoalsContainer.Value, component.Goals);
         // Debug.Assert(ok);

@@ -5,12 +5,15 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.CosmicCult.Abilities;
 
 public sealed partial class CosmicIngressSystem : EntitySystem
 {
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private INetManager _net = default!;
+
     [Dependency] private CosmicCultSystem _cult = default!;
     [Dependency] private SharedDoorSystem _door = default!;
     [Dependency] private WeldableSystem _weld = default!;
@@ -28,6 +31,7 @@ public sealed partial class CosmicIngressSystem : EntitySystem
 
         if (action.Empowered || ent.Comp.AlwaysOpen)
         {
+            args.Handled = true;
             if (TryComp<DoorBoltComponent>(target, out var doorBolt))
                 _door.SetBoltsDown((target, doorBolt), false);
 
@@ -38,12 +42,10 @@ public sealed partial class CosmicIngressSystem : EntitySystem
         if (_door.TryOpen(target, user: args.Performer, checkAccess: false, predicted: true))
         {
             args.Handled = true;
-
-            if (_net.IsServer)
-            {
-                _audio.PlayPvs(action.Sfx, target);
-                Spawn(action.Vfx, Transform(target).Coordinates);
-            }
+            _audio.PlayPredicted(action.Sfx, target, args.Performer);
         }
+
+        if (_net.IsClient && _timing.IsFirstTimePredicted)
+            Spawn(action.Vfx, Transform(target).Coordinates);
     }
 }

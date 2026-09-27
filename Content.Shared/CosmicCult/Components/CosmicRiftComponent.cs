@@ -24,6 +24,12 @@ public sealed partial class CosmicRiftComponent : Component
     [DataField]
     public int CurrentHits;
 
+    [DataField]
+    public int ResearchPoints = 15000;
+
+    [DataField]
+    public EntityUid GridUid;
+
     /// <summary>
     /// The probability of the text PopUp when hit by a Lambda Particle.
     /// </summary>

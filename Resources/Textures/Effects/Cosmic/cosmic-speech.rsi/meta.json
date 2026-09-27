@@ -1,0 +1,60 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "A custom item by AftrLite(Github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "malign0",
+            "delays": [
+                [
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.4,
+                    0.3
+                ]
+            ]
+        },
+        {
+            "name": "malign1",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "malign2",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "malign3",
+            "delays": [
+                [
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.4
+                ]
+            ]
+        }
+    ]
+}

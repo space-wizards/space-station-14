@@ -21,10 +21,10 @@ public sealed partial class ServerCosmicShiftSystem : CosmicShiftSystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
+
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private StatusEffectsSystem _status = default!;
 
     public override void Update(float frameTime)
     {
@@ -36,7 +36,6 @@ public sealed partial class ServerCosmicShiftSystem : CosmicShiftSystem
             if (comp.ReadyToReturn && !comp.Occupied)
             {
                 _actions.RemoveAction(uid, comp.CosmicReturnActionActionEntity);
-                _status.TryAddStatusEffectDuration(uid, SharedStunSystem.StunId, TimeSpan.FromSeconds(5f));
                 RemComp<CosmicShiftedComponent>(uid);
 
                 ShiftToDestination(uid, comp.DepartureCoordinates);
@@ -68,7 +67,6 @@ public sealed partial class ServerCosmicShiftSystem : CosmicShiftSystem
 
         var destination = TransformSystem.GetMapCoordinates(_random.Pick(spawnPoints).Uid);
         _popup.PopupCoordinates(Loc.GetString("cosmicability-shift-start", ("target", Identity.Entity(args.Performer, EntityManager))), Transform(args.Performer).Coordinates, PopupType.MediumCaution);
-        _status.TryAddStatusEffectDuration(args.Performer, SharedStunSystem.StunId, TimeSpan.FromSeconds(5f));
 
         EnsureComp<CosmicShiftedComponent>(args.Performer, out var shiftedComp);
         EnsureComp<CosmicShiftingComponent>(args.Performer, out var shiftingComp);

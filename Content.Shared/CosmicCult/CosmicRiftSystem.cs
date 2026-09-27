@@ -9,6 +9,8 @@ using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Random.Helpers;
 using Content.Shared.StatusEffectNew;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -20,8 +22,10 @@ namespace Content.Shared.CosmicCult;
 public abstract partial class CosmicRiftSystem : EntitySystem
 {
     [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] private INetManager _net = default!;
 
     [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedColorFlashEffectSystem _color = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
@@ -30,7 +34,7 @@ public abstract partial class CosmicRiftSystem : EntitySystem
     private static readonly EntProtoId PressureImmunityEffect = "StatusEffectPressureImmunity";
 
     [SubscribeLocalEvent]
-    protected virtual void OnCollide(Entity<CosmicRiftComponent> ent, ref EndCollideEvent args)
+    private void OnCollide(Entity<CosmicRiftComponent> ent, ref EndCollideEvent args)
     {
         if (ent.Comp.HitTimer != null)
             return;
@@ -47,6 +51,26 @@ public abstract partial class CosmicRiftSystem : EntitySystem
 
         ent.Comp.CurrentHits++;
         ent.Comp.HitTimer = Timing.CurTime + TimeSpan.FromSeconds(0.5f);
+
+        if (ent.Comp.CurrentHits < ent.Comp.MaxHits)
+            return;
+
+        if (_net.IsServer)
+        {
+            var vfx = Spawn(CosmicCultSystem.GenericVfx, Transform(ent).Coordinates);
+            _audio.PlayPvs(ent.Comp.ExpungeSound, vfx);
+        }
+
+        PredictedQueueDel(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnMapInit(Entity<CosmicRiftComponent> ent, ref MapInitEvent args)
+    {
+        if (Transform(ent).GridUid is not { } grid)
+            return;
+
+        ent.Comp.GridUid = grid;
     }
 
     [SubscribeLocalEvent]
@@ -81,7 +105,7 @@ public abstract partial class CosmicRiftSystem : EntitySystem
     private void OnAbsorbDoAfter(Entity<CosmicCultistComponent> ent, ref EventAbsorbRiftDoAfter args)
     {
         var comp = ent.Comp;
-        if (args.Args.Target is not { } target || args.Cancelled || args.Handled)
+        if (args.Cancelled || args.Handled || args.Args.Target is not { } target)
         {
             if (TryComp<CosmicRiftComponent>(args.Args.Target, out var rift))
                 rift.Occupied = false;
@@ -90,7 +114,8 @@ public abstract partial class CosmicRiftSystem : EntitySystem
         args.Handled = true;
 
         _actions.AddAction(ent, ent.Comp.CosmicFragmentationAction);
-        Spawn(CosmicCultSystem.GenericVfx, Transform(target).Coordinates);
+        if (Timing.IsFirstTimePredicted)
+            Spawn(CosmicCultSystem.GenericVfx, Transform(target).Coordinates);
 
         var ev = new CosmicCultistEmpowerChangedEvent(ent, true);
         RaiseLocalEvent(ent, ref ev);
@@ -109,6 +134,3 @@ public abstract partial class CosmicRiftSystem : EntitySystem
         return random.Pick(proto.Values);
     }
 }
-
-[ByRefEvent]
-public record struct CosmicRiftPurgeEvent(bool Cancelled = false);
