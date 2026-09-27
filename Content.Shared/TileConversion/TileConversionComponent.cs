@@ -82,7 +82,7 @@ public sealed partial class TileConversionComponent : Component
     [DataField] //not a dict like the entity conversion below because there's too many fucking tiles
     public List<ProtoId<ContentTileDefinition>> ConversionTiles =
     [
-        "FloorCosmicCorruption",
+        "FloorExoViscera", // "FloorCosmicCorruption",
     ];
 
     /// <summary>
