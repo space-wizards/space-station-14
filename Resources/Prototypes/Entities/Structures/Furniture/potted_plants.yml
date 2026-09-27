@@ -1,6 +1,6 @@
 - type: entity
+  parent: [ BaseStructureDynamic, StructureHealthFurniture ]
   id: PottedPlantBase
-  parent: BaseStructureDynamic
   name: potted plant
   description: A little bit of nature contained in a pot.
   abstract: true
@@ -40,19 +40,21 @@
     sprite: Structures/Furniture/potted_plants.rsi
     size: Huge
   - type: Damageable
-  - type: Injurable
-    damageContainer: StructuralInorganic # The pot. Not the plant. Or is it plastic?
+    damageModifierSet: RockMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 40
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/plant_rustle.ogg
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -6
 
 - type: entity
   id: PottedPlant0

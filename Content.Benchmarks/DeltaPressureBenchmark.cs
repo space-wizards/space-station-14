@@ -32,7 +32,7 @@ public class DeltaPressureBenchmark
     /// <summary>
     /// Number of entities (windows, really) to spawn with a <see cref="DeltaPressureComponent"/>.
     /// </summary>
-    [Params(1, 10, 100, 1000, 5000, 10000, 50000, 100000)]
+    [Params(100, 1000, 5000, 10000)]
     public int EntityCount;
 
     /// <summary>
