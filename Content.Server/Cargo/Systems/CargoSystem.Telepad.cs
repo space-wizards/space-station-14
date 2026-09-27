@@ -75,12 +75,11 @@ public sealed partial class CargoSystem
         }
     }
 
-    private void UpdateTelepad(float frameTime)
+    private void UpdateTelepad()
     {
         var query = EntityQueryEnumerator<CargoTelepadComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var telepad, out var xform))
         {
-            // Uhh listen teleporting takes time and I just want the 1 float.
             if (Timing.CurTime < telepad.NextTeleport)
             {
                 telepad.CurrentState = CargoTelepadState.Idle;
