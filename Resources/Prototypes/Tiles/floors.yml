@@ -22,6 +22,8 @@
   - FloorDirt
   - PlatingRCD
   - FloorHullReinforced
+  materialComposition:
+    Steel: 100 # 0.5 for lattice, 0.25 for plating, 0.25 for tile
 
 - type: tile
   id: FloorSteelCheckerLight
