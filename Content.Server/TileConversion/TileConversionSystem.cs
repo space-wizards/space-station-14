@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Maps;
 using Content.Shared.TileConversion;
 using Content.Shared.Trigger;
+using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
@@ -38,12 +39,7 @@ public sealed partial class TileConversionSystem : EntitySystem
     [Dependency] private TileSystem _tile = default!;
     [Dependency] private TurfSystem _turfs = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<TileConversionComponent, TriggerEvent>(OnTrigger);
-        SubscribeLocalEvent<TileConversionComponent, MapInitEvent>(OnMapInit);
-    }
-
+    [SubscribeLocalEvent]
     private void OnTrigger(Entity<TileConversionComponent> ent, ref TriggerEvent args)
     {
         ent.Comp.ConversionMaxTicks++;
@@ -52,6 +48,7 @@ public sealed partial class TileConversionSystem : EntitySystem
     }
 
     //when the entity spawns, add all neighbouring tiles to the convertable list
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<TileConversionComponent> ent, ref MapInitEvent args)
     {
         RecalculateStartingTiles(ent);
@@ -74,8 +71,7 @@ public sealed partial class TileConversionSystem : EntitySystem
                 }
 
                 if (comp.ConversionTicks >= comp.ConversionMaxTicks && comp.AutoDisable)
-                    comp.Enabled =
-                        false; //maybe just remComp this? atm nothing re-enables a converter so that should be safe to do?
+                    comp.Enabled = false; //maybe just remComp this? atm nothing re-enables a converter so that should be safe to do?
             }
         }
     }
@@ -83,8 +79,14 @@ public sealed partial class TileConversionSystem : EntitySystem
     private void ConvertTiles(Entity<TileConversionComponent> ent)
     {
         var xform = Transform(ent);
-        if (xform.GridUid is not { } gridUid || !TryComp<MapGridComponent>(gridUid, out var mapGrid))
+        if (xform.GridUid is not { } gridUid)
             return;
+
+        if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
+        {
+            Log.Error("TileConversion was unable to find a MapGridComponent tile conversion. Conversion cancelled.");
+            return;
+        }
 
         var convertTile = (ContentTileDefinition)_tileDefinition[_rand.Pick(ent.Comp.ConversionTiles)];
 
@@ -135,7 +137,7 @@ public sealed partial class TileConversionSystem : EntitySystem
 
                 //spawn vfx
                 if (_timing.IsFirstTimePredicted && _net.IsClient && ent.Comp.TileConvertVfx != null)
-                    Spawn(ent.Comp.TileConvertVfx, _turfs.GetTileCenter(tileRef));
+                    SpawnAttachedTo(ent.Comp.TileConvertVfx, _turfs.GetTileCenter(tileRef));
 
                 ent.Comp.ConvertableTiles.Remove(pos);
             }
@@ -143,11 +145,20 @@ public sealed partial class TileConversionSystem : EntitySystem
     }
 
     #region API
+
+    /// <summary>
+    /// Set or change the amount of time between tile conversions.
+    /// </summary>
+    [PublicAPI]
     public void SetConversionTime(Entity<TileConversionComponent> ent, TimeSpan time)
     {
         ent.Comp.ConversionTime = time;
     }
 
+    /// <summary>
+    /// Enable a non-enabled TileConversionComponent.
+    /// </summary>
+    [PublicAPI]
     public void Enable(Entity<TileConversionComponent> ent, bool recalculate = true)
     {
         ent.Comp.Enabled = true;
@@ -156,14 +167,24 @@ public sealed partial class TileConversionSystem : EntitySystem
             RecalculateStartingTiles(ent);
     }
 
+    /// <summary>
+    /// Recalculate the tile conversion.
+    /// </summary>
+    [PublicAPI]
     public void RecalculateStartingTiles(Entity<TileConversionComponent> ent)
     {
         ent.Comp.ConvertableTiles.Clear();
 
         var xform = Transform(ent);
 
-        if (xform.GridUid is not { } gridUid || !TryComp<MapGridComponent>(gridUid, out var mapGrid))
+        if (xform.GridUid is not { } gridUid)
             return;
+
+        if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
+        {
+            Log.Error("TileConversion was unable to find a MapGridComponent during recalculation. Recalculation cancelled.");
+            return;
+        }
 
         var grid = (gridUid, mapGrid);
         var tile = _map.GetTileRef(grid, xform.Coordinates);
