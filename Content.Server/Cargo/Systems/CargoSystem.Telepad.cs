@@ -16,21 +16,21 @@ namespace Content.Server.Cargo.Systems;
 public sealed partial class CargoSystem
 {
     [SubscribeLocalEvent]
-    private void OnInit(EntityUid uid, CargoTelepadComponent telepad, ComponentInit args)
+    private void OnInit(Entity<CargoTelepadComponent> ent, ref ComponentInit args)
     {
-        _linker.EnsureSinkPorts(uid, telepad.ReceiverPort);
+        _linker.EnsureSinkPorts(ent.Owner, ent.Comp.ReceiverPort);
     }
 
     [SubscribeLocalEvent]
-    private void OnTelepadPowerChange(EntityUid uid, CargoTelepadComponent component, ref PowerChangedEvent args)
+    private void OnTelepadPowerChange(Entity<CargoTelepadComponent> ent, ref PowerChangedEvent args)
     {
-        SetEnabled(uid, component);
+        SetEnabled(ent);
     }
 
     [SubscribeLocalEvent]
-    private void OnTelepadAnchorChange(EntityUid uid, CargoTelepadComponent component, ref AnchorStateChangedEvent args)
+    private void OnTelepadAnchorChange(Entity<CargoTelepadComponent> ent, ref AnchorStateChangedEvent args)
     {
-        SetEnabled(uid, component);
+        SetEnabled(ent);
     }
 
     [SubscribeLocalEvent]
@@ -155,11 +155,11 @@ public sealed partial class CargoSystem
         return sinkComponent.LinkedSources.Any(ent => ent == approvingConsole.Value);
     }
 
-    private void SetEnabled(EntityUid uid, CargoTelepadComponent component, ApcPowerReceiverComponent? receiver = null,
+    private void SetEnabled(Entity<CargoTelepadComponent> ent, ApcPowerReceiverComponent? receiver = null,
         TransformComponent? xform = null)
     {
         // False due to AllCompsOneEntity test where they may not have the powerreceiver.
-        if (!Resolve(uid, ref receiver, ref xform, false))
+        if (!Resolve(ent.Owner, ref receiver, ref xform, false))
             return;
 
         var disabled = !receiver.Powered || !xform.Anchored;
@@ -168,10 +168,10 @@ public sealed partial class CargoSystem
         // Only change to Idle if off
         // don't overwrite teleporting state
         if (disabled)
-            component.CurrentState = CargoTelepadState.Unpowered;
-        else if (component.CurrentState == CargoTelepadState.Unpowered)
-            component.CurrentState = CargoTelepadState.Idle;
+            ent.Comp.CurrentState = CargoTelepadState.Unpowered;
+        else if (ent.Comp.CurrentState == CargoTelepadState.Unpowered)
+            ent.Comp.CurrentState = CargoTelepadState.Idle;
 
-        _appearance.SetData(uid, CargoTelepadVisuals.State, component.CurrentState);
+        _appearance.SetData(ent.Owner, CargoTelepadVisuals.State, ent.Comp.CurrentState);
     }
 }
