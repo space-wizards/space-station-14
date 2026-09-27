@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Maps;
+using Content.Shared.TileConversion;
 using Content.Shared.Trigger;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -7,7 +8,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.TileConversion;
+namespace Content.Server.TileConversion;
 
 /// <remarks>
 /// This system is a mostly generic way of replacing tiles and entities around an entity.

@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.TileConversion;
 
-[RegisterComponent, NetworkedComponent, Access(typeof(TileConversionSystem))]
+[RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentPause, AutoGenerateComponentState]
 public sealed partial class TileConversionComponent : Component
 {
