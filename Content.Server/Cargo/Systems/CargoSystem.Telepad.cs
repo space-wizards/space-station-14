@@ -80,14 +80,11 @@ public sealed partial class CargoSystem
         var query = EntityQueryEnumerator<CargoTelepadComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var telepad, out var xform))
         {
-            // Don't EntityQuery for it as it's not required.
-            TryComp<AppearanceComponent>(uid, out var appearance);
-
             // Uhh listen teleporting takes time and I just want the 1 float.
             if (Timing.CurTime < telepad.NextTeleport)
             {
                 telepad.CurrentState = CargoTelepadState.Idle;
-                _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Idle, appearance);
+                _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Idle);
                 continue;
             }
 
@@ -116,7 +113,7 @@ public sealed partial class CargoSystem
                     UpdateOrders(station);
 
                 telepad.CurrentState = CargoTelepadState.Teleporting;
-                _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Teleporting, appearance);
+                _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Teleporting);
             }
         }
     }
