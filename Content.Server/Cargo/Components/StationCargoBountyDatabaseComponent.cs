@@ -68,7 +68,7 @@ public sealed partial class StationCargoBountyDatabaseComponent : Component
     public TimeSpan NextSkipTime = TimeSpan.Zero;
 
     /// <summary>
-    /// The time between skipping bounties.
+    /// The minimum time between skipping bounties.
     /// </summary>
     [DataField]
     public TimeSpan SkipDelay = TimeSpan.FromMinutes(15);
@@ -80,7 +80,7 @@ public sealed partial class StationCargoBountyDatabaseComponent : Component
     public TimeSpan NextClaimTime = TimeSpan.Zero;
 
     /// <summary>
-    /// The time between claims.
+    /// The minimum time between claims.
     /// </summary>
     [DataField("claimDelay")]
     public TimeSpan ClaimDelay = TimeSpan.FromSeconds(0.1);
@@ -92,7 +92,7 @@ public sealed partial class StationCargoBountyDatabaseComponent : Component
     public TimeSpan NextStatusUpdateTime = TimeSpan.Zero;
 
     /// <summary>
-    /// The time between status updates.
+    /// The minimum time between status changes.
     /// </summary>
     [DataField("statusUpdateDelay")]
     public TimeSpan StatusUpdateDelay = TimeSpan.FromSeconds(1);

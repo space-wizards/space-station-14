@@ -117,9 +117,10 @@ public sealed partial class CargoSystem
 
         if (!TryGetBountyIndexFromId(station, args.BountyId, out var index, bountyDbComp))
             return;
+
         var bounty = bountyDbComp.Bounties[index];
         var targetStatus = args.Status;
-        var status = _protoMan.EnumeratePrototypes<CargoBountyStatusPrototype>().FirstOrDefault(s => s.Index == targetStatus);
+        var status = ProtoMan.EnumeratePrototypes<CargoBountyStatusPrototype>().FirstOrDefault(s => s.Index == targetStatus);
         bountyDbComp.Bounties[index] = bounty with { Status = status!.ID };
 
         UpdateBountyConsoles();
@@ -130,10 +131,8 @@ public sealed partial class CargoSystem
         if (args.Actor is not { Valid: true } actor)
             return;
 
-        if (
-            _station.GetOwningStation(ent.Owner) is not { } station
-            || !TryComp<StationCargoBountyDatabaseComponent>(station, out var bountyDbComp)
-        )
+        if (_station.GetOwningStation(ent.Owner) is not { } station
+            || !TryComp<StationCargoBountyDatabaseComponent>(station, out var bountyDbComp))
             return;
 
         if (Timing.CurTime < bountyDbComp.NextClaimTime || !args.Actor.Valid)
@@ -255,10 +254,6 @@ public sealed partial class CargoSystem
             FillBountyDatabase(station);
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"Bounty \"{bounty.Value.Bounty}\" (id:{bounty.Value.Id}) was fulfilled");
         }
-    }
-    private TimeSpan TimeUntilNextSkip(TimeSpan nextSkipTime)
-    {
-        return nextSkipTime - Timing.CurTime;
     }
 
     private bool TryGetBountyLabel(EntityUid uid,
@@ -514,11 +509,7 @@ public sealed partial class CargoSystem
             return false;
         }
         component.Bounties.Add(newBounty);
-        _adminLogger.Add(
-            LogType.Action,
-            LogImpact.Low,
-            $"Added bounty \"{bounty.ID}\" (id:{component.TotalBounties}) to station {ToPrettyString(uid)}"
-        );
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"Added bounty \"{bounty.ID}\" (id:{component.TotalBounties}) to station {ToPrettyString(uid)}");
         component.TotalBounties++;
         return true;
     }
@@ -544,6 +535,7 @@ public sealed partial class CargoSystem
 
         if (!TryGetBountyIndexFromId(ent, bountyId, out var index, ent.Comp))
             return false;
+
         string? actorName = null;
         if (actor != null)
             actorName = _identity.GetIdentityShortInfo(actor.Value, ent.Owner);
@@ -574,6 +566,7 @@ public sealed partial class CargoSystem
         index = component.Bounties.FindIndex(b => b.Id == id);
         if (index < 0)
             return false;
+
         return true;
     }
 
@@ -586,8 +579,10 @@ public sealed partial class CargoSystem
         bounty = null;
         if (!Resolve(uid, ref component))
             return false;
+
         if (!TryGetBountyIndexFromId(uid, id, out var index, component))
             return false;
+
         bounty = component.Bounties[index];
         return true;
     }
@@ -603,7 +598,8 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            _uiSystem.SetUiState((uid, ui), CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(db.Bounties, db.History, TimeUntilNextSkip(db.NextSkipTime)));
+            var untilNextSkip = db.NextSkipTime - Timing.CurTime;
+            _uiSystem.SetUiState((uid, ui), CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(db.Bounties, db.History, untilNextSkip));
         }
     }
 
