@@ -16,6 +16,48 @@ namespace Content.Server.Cargo.Systems;
 public sealed partial class CargoSystem
 {
     [SubscribeLocalEvent]
+    private void OnInit(EntityUid uid, CargoTelepadComponent telepad, ComponentInit args)
+    {
+        _linker.EnsureSinkPorts(uid, telepad.ReceiverPort);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnTelepadPowerChange(EntityUid uid, CargoTelepadComponent component, ref PowerChangedEvent args)
+    {
+        SetEnabled(uid, component);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnTelepadAnchorChange(EntityUid uid, CargoTelepadComponent component, ref AnchorStateChangedEvent args)
+    {
+        SetEnabled(uid, component);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnShutdown(Entity<CargoTelepadComponent> ent, ref ComponentShutdown args)
+    {
+        if (ent.Comp.CurrentOrders.Count == 0)
+            return;
+
+        if (_station.GetStations().Count == 0)
+            return;
+
+        if (_station.GetOwningStation(ent) is not { } station)
+        {
+            station = _random.Pick(_station.GetStations().Where(x => HasComp<StationCargoOrderDatabaseComponent>(x.Owner)).ToList());
+        }
+
+        if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var db) ||
+            !TryComp<StationDataComponent>(station, out var data))
+            return;
+
+        foreach (var order in ent.Comp.CurrentOrders)
+        {
+            TryFulfillOrder((station, data), order.Account, order, db);
+        }
+    }
+
+    [SubscribeLocalEvent]
     private void OnTelepadFulfillCargoOrder(ref FulfillCargoOrderEvent args)
     {
         var query = EntityQueryEnumerator<CargoTelepadComponent, TransformComponent>();
@@ -40,20 +82,6 @@ public sealed partial class CargoSystem
             args.FulfillmentEntity = uid;
             return;
         }
-    }
-
-    private bool IsLinkedToConsole(
-        EntityUid uid,
-        EntityUid? approvingConsole
-    )
-    {
-        if (approvingConsole is null)
-            return false;
-
-        if (!TryComp<DeviceLinkSinkComponent>(uid, out var sinkComponent))
-            return false;
-
-        return sinkComponent.LinkedSources.Any(ent => ent == approvingConsole.Value);
     }
 
     private void UpdateTelepad(float frameTime)
@@ -113,34 +141,18 @@ public sealed partial class CargoSystem
         }
     }
 
-    [SubscribeLocalEvent]
-    private void OnInit(EntityUid uid, CargoTelepadComponent telepad, ComponentInit args)
+    private bool IsLinkedToConsole(
+        EntityUid uid,
+        EntityUid? approvingConsole
+    )
     {
-        _linker.EnsureSinkPorts(uid, telepad.ReceiverPort);
-    }
+        if (approvingConsole is null)
+            return false;
 
-    [SubscribeLocalEvent]
-    private void OnShutdown(Entity<CargoTelepadComponent> ent, ref ComponentShutdown args)
-    {
-        if (ent.Comp.CurrentOrders.Count == 0)
-            return;
+        if (!TryComp<DeviceLinkSinkComponent>(uid, out var sinkComponent))
+            return false;
 
-        if (_station.GetStations().Count == 0)
-            return;
-
-        if (_station.GetOwningStation(ent) is not { } station)
-        {
-            station = _random.Pick(_station.GetStations().Where(x => HasComp<StationCargoOrderDatabaseComponent>(x.Owner)).ToList());
-        }
-
-        if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var db) ||
-            !TryComp<StationDataComponent>(station, out var data))
-            return;
-
-        foreach (var order in ent.Comp.CurrentOrders)
-        {
-            TryFulfillOrder((station, data), order.Account, order, db);
-        }
+        return sinkComponent.LinkedSources.Any(ent => ent == approvingConsole.Value);
     }
 
     private void SetEnabled(EntityUid uid, CargoTelepadComponent component, ApcPowerReceiverComponent? receiver = null,
@@ -161,17 +173,5 @@ public sealed partial class CargoSystem
             component.CurrentState = CargoTelepadState.Idle;
 
         _appearance.SetData(uid, CargoTelepadVisuals.State, component.CurrentState);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnTelepadPowerChange(EntityUid uid, CargoTelepadComponent component, ref PowerChangedEvent args)
-    {
-        SetEnabled(uid, component);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnTelepadAnchorChange(EntityUid uid, CargoTelepadComponent component, ref AnchorStateChangedEvent args)
-    {
-        SetEnabled(uid, component);
     }
 }
