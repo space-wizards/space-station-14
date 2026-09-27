@@ -26,7 +26,7 @@ public sealed partial class CargoSystem
     private void OnWithdrawFunds(Entity<CargoOrderConsoleComponent> ent, ref CargoConsoleWithdrawFundsMessage args)
     {
         if (_station.GetOwningStation(ent) is not { } station ||
-            !TryComp<StationBankAccountComponent>(station, out var bank))
+            !_bankQuery.TryComp(station, out var bank))
             return;
 
         if (args.Account == ent.Comp.Account ||
@@ -104,7 +104,7 @@ public sealed partial class CargoSystem
     private void OnSetFundingAllocation(Entity<FundingAllocationConsoleComponent> ent, ref SetFundingAllocationBuiMessage args)
     {
         if (_station.GetOwningStation(ent) is not { } station ||
-            !TryComp<StationBankAccountComponent>(station, out var bank))
+            !_bankQuery.TryComp(station, out var bank))
             return;
 
         var expectedCount = _allowPrimaryAccountAllocation ? bank.RevenueDistribution.Count : bank.RevenueDistribution.Count - 1;

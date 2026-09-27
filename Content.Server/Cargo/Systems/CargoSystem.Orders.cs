@@ -36,12 +36,12 @@ public sealed partial class CargoSystem
     [SubscribeLocalEvent]
     private void OnInteractUsing(Entity<CargoOrderConsoleComponent> ent, ref InteractUsingEvent args)
     {
-        if (HasComp<CashComponent>(args.Used))
+        if (_cashQuery.HasComp(args.Used))
         {
             OnInteractUsingCash(ent, ref args);
         }
         else if (
-            TryComp<CargoSlipComponent>(args.Used, out var slip)
+            _slipQuery.TryComp(args.Used, out var slip)
             && ent.Comp.Mode == CargoOrderConsoleMode.DirectOrder
         )
         {
@@ -72,7 +72,7 @@ public sealed partial class CargoSystem
         if (!TryGetOrderDatabase(station, out var orderDatabase))
             return;
 
-        if (!TryComp<StationBankAccountComponent>(station, out var bank))
+        if (!_bankQuery.TryComp(station, out var bank))
             return;
 
         var targetAccount =
@@ -102,7 +102,7 @@ public sealed partial class CargoSystem
         if (!TryGetOrderDatabase(stationUid, out var orderDatabase))
             return;
 
-        if (!TryComp<StationBankAccountComponent>(stationUid, out var bank))
+        if (!_bankQuery.TryComp(stationUid, out var bank))
             return;
 
         if (!ProtoMan.TryIndex<CargoProductPrototype>(args.CargoProductId, out var product))
@@ -159,8 +159,8 @@ public sealed partial class CargoSystem
 
         // No station to deduct from.
         if (
-            !TryComp(station, out StationBankAccountComponent? bank)
-            || !TryComp(station, out StationDataComponent? stationData)
+            !_bankQuery.TryComp(station, out StationBankAccountComponent? bank)
+            || !_stationQuery.TryComp(station, out StationDataComponent? stationData)
             || !TryGetOrderDatabase(station, out var orderDatabase)
         )
         {
@@ -336,7 +336,7 @@ public sealed partial class CargoSystem
     {
         var amount = 0;
 
-        if (!TryComp<StationBankAccountComponent>(station, out var bank))
+        if (!_bankQuery.TryComp(station, out var bank))
             return amount;
 
         foreach (var order in station.Comp.Orders[account])
@@ -363,7 +363,7 @@ public sealed partial class CargoSystem
     {
         if (
             _station.GetOwningStation(ent) is not { } station
-            || !TryComp<StationCargoOrderDatabaseComponent>(station, out var db)
+            || !_orderQuery.TryComp(station, out var db)
         )
         {
             return new List<ProtoId<CargoProductPrototype>>();
@@ -468,7 +468,7 @@ public sealed partial class CargoSystem
 
         var stationUid = _station.GetOwningStation(args.Used);
 
-        if (!TryComp(stationUid, out StationBankAccountComponent? bank))
+        if (!_bankQuery.TryComp(stationUid, out StationBankAccountComponent? bank))
             return;
 
         _audio.PlayPvs(ApproveSound, ent.Owner);
@@ -724,10 +724,10 @@ public sealed partial class CargoSystem
 
     private void UpdateOrderState(EntityUid consoleUid, EntityUid? station)
     {
-        if (!TryComp<CargoOrderConsoleComponent>(consoleUid, out var console))
+        if (!_consoleQuery.TryComp(consoleUid, out var console))
             return;
 
-        if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase))
+        if (!_orderQuery.TryComp(station, out var orderDatabase))
             return;
 
         if (!_uiSystem.HasUi(consoleUid, CargoConsoleUiKey.Orders))
@@ -753,7 +753,7 @@ public sealed partial class CargoSystem
         Entity<CargoOrderConsoleComponent> console
     )
     {
-        if (!TryComp<StationBankAccountComponent>(station, out var bank))
+        if (!_bankQuery.TryComp(station, out var bank))
             return [];
 
         var ourOrders = station.Comp.Orders[console.Comp.Account];
@@ -773,7 +773,7 @@ public sealed partial class CargoSystem
         [MaybeNullWhen(false)] out StationCargoOrderDatabaseComponent dbComp
     )
     {
-        return TryComp(stationUid, out dbComp);
+        return _orderQuery.TryComp(stationUid, out dbComp);
     }
 
     private void GetTradeStations(StationDataComponent data, ref List<EntityUid> ents)
