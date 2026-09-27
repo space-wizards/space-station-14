@@ -35,19 +35,19 @@ public sealed partial class CargoBountyConsoleComponent : Component
     /// <summary>
     /// The sound made when the bounty is claimed.
     /// </summary>
-    [DataField("claimAddSound")]
+    [DataField]
     public SoundSpecifier ClaimAddSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping2.ogg");
 
     /// <summary>
     /// The sound made when the bounty claim is removed.
     /// </summary>
-    [DataField("claimRemoveSound")]
+    [DataField]
     public SoundSpecifier ClaimRemoveSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping3.ogg");
 
     /// <summary>
     /// The sound made when the bounty claim is added then removed in one press.
     /// </summary>
-    [DataField("claimAddRemoveSound")]
+    [DataField]
     public SoundSpecifier ClaimAddRemoveSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping4.ogg");
 
     /// <summary>
@@ -79,12 +79,14 @@ public sealed partial class CargoBountyConsoleComponent : Component
 public sealed class CargoBountyConsoleState : BoundUserInterfaceState
 {
     public List<CargoBountyData> Bounties;
+    public List<string> Statuses;
     public List<CargoBountyHistoryData> History;
     public TimeSpan UntilNextSkip;
 
-    public CargoBountyConsoleState(List<CargoBountyData> bounties, List<CargoBountyHistoryData> history, TimeSpan untilNextSkip)
+    public CargoBountyConsoleState(List<CargoBountyData> bounties, List<string> statuses, List<CargoBountyHistoryData> history, TimeSpan untilNextSkip)
     {
         Bounties = bounties;
+        Statuses = statuses;
         History = history;
         UntilNextSkip = untilNextSkip;
     }

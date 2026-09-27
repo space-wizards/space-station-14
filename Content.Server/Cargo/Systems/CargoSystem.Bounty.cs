@@ -119,10 +119,11 @@ public sealed partial class CargoSystem
             return;
 
         var bounty = bountyDbComp.Bounties[index];
-        var targetStatus = args.Status;
-        var status = ProtoMan.EnumeratePrototypes<CargoBountyStatusPrototype>().FirstOrDefault(s => s.Index == targetStatus);
-        bountyDbComp.Bounties[index] = bounty with { Status = status!.ID };
-
+        if (bountyDbComp.Statuses.Count > 0)
+        {
+            var status = bountyDbComp.Statuses[args.Status];
+            bountyDbComp.Bounties[index] = bounty with { Status = status };
+        }
         UpdateBountyConsoles();
     }
 
@@ -500,7 +501,11 @@ public sealed partial class CargoSystem
             return false;
 
         _nameIdentifier.GenerateUniqueNameModifier(BountyNameIdentifierGroup, out var randomVal);
-        var defaultStatus = ProtoMan.Index<CargoBountyStatusPrototype>(component.DefaultStatus);
+
+        var defaultStatus = string.Empty;
+        if (component.Statuses.Count > 0)
+            defaultStatus = component.Statuses[0];
+
         var newBounty = new CargoBountyData(bounty, defaultStatus, randomVal);
         // This bounty id already exists! Probably because NameIdentifierSystem ran out of ids.
         if (component.Bounties.Any(b => b.Id == newBounty.Id))
@@ -599,7 +604,7 @@ public sealed partial class CargoSystem
             }
 
             var untilNextSkip = db.NextSkipTime - Timing.CurTime;
-            _uiSystem.SetUiState((uid, ui), CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(db.Bounties, db.History, untilNextSkip));
+            _uiSystem.SetUiState((uid, ui), CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(db.Bounties, db.Statuses, db.History, untilNextSkip));
         }
     }
 

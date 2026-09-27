@@ -30,10 +30,12 @@ public sealed partial class StationCargoBountyDatabaseComponent : Component
     public int MaxClaimants = 1;
 
     /// <summary>
-    /// Default status of a new bounty.
+    /// Statuses which bounty can be
+    /// Will show in the UI in the order here
+    /// The first item is the initial status
     /// </summary>
     [DataField]
-    public ProtoId<CargoBountyStatusPrototype> DefaultStatus = "Undelivered";
+    public List<string> Statuses = new();
 
     /// <summary>
     /// A list of all the bounties that have been completed or
@@ -76,24 +78,24 @@ public sealed partial class StationCargoBountyDatabaseComponent : Component
     /// <summary>
     /// The time at which players will be able to register a claimant on a bounty again.
     /// </summary>
-    [DataField("nextClaimTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextClaimTime = TimeSpan.Zero;
 
     /// <summary>
     /// The minimum time between claims.
     /// </summary>
-    [DataField("claimDelay")]
+    [DataField]
     public TimeSpan ClaimDelay = TimeSpan.FromSeconds(0.1);
 
     /// <summary>
     /// The time at which players will be able to update the status of a bounty again..
     /// </summary>
-    [DataField("nextStatusUpdateTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextStatusUpdateTime = TimeSpan.Zero;
 
     /// <summary>
     /// The minimum time between status changes.
     /// </summary>
-    [DataField("statusUpdateDelay")]
+    [DataField]
     public TimeSpan StatusUpdateDelay = TimeSpan.FromSeconds(1);
 }

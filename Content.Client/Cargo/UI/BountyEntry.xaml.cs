@@ -24,7 +24,7 @@ public sealed partial class BountyEntry : BoxContainer
     public TimeSpan EndTime;
     public TimeSpan UntilNextSkip;
 
-    public BountyEntry(CargoBountyData bounty, TimeSpan untilNextSkip)
+    public BountyEntry(CargoBountyData bounty, List<string> statuses, TimeSpan untilNextSkip)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
@@ -51,21 +51,23 @@ public sealed partial class BountyEntry : BoxContainer
         ClaimButton.OnPressed += _ => OnClaimButtonPressed?.Invoke();
 
 
-        var allStates = _prototype.EnumeratePrototypes<CargoBountyStatusPrototype>().OrderBy(s => s.Index);
-        foreach (var status in allStates)
+        var count = 0;
+        foreach (var status in statuses)
         {
-            BountyStatusSelector.AddItem(Loc.GetString("bounty-console-status", ("status", status.ID)), status.Index);
+            BountyStatusSelector.AddItem(Loc.GetString("bounty-console-status", ("status", status)), count);
+            count++;
         }
 
-        CargoBountyStatusPrototype bountyStatusPrototype = allStates.FirstOrDefault(status => bounty.Status == status.ID) ?? allStates.First();
-        BountyStatusSelector.Select(BountyStatusSelector.GetIdx(bountyStatusPrototype.Index));
-        BountyStatusSelector.ToolTip = Loc.GetString("bounty-console-status-tooltip", ("status", bountyStatusPrototype.ID));
+        var bountyStatusIndex = statuses.IndexOf(bounty.Status);
+        var bountyStatus = statuses[bountyStatusIndex];
+        BountyStatusSelector.Select(BountyStatusSelector.GetIdx(bountyStatusIndex));
+        BountyStatusSelector.ToolTip = Loc.GetString("bounty-console-status-tooltip", ("status", bountyStatus));
 
         string claimers = bounty.ClaimedBy.Count() == 0
             ? Loc.GetString("bounty-console-claimed-by-none")
             : string.Join(", ", bounty.ClaimedBy);
         ClaimedByLabel.SetMarkup(Loc.GetString("bounty-console-claimed-by-label", ("claimers", claimers)));
-        StatusLabel.SetMarkup(Loc.GetString("bounty-console-status-label", ("status", bountyStatusPrototype.ID)));
+        StatusLabel.SetMarkup(Loc.GetString("bounty-console-status-label", ("status", bountyStatus)));
     }
 
     private void UpdateSkipButton(float deltaSeconds)

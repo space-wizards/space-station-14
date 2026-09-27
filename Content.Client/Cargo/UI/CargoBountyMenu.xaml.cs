@@ -22,12 +22,12 @@ public sealed partial class CargoBountyMenu : FancyWindow
         MasterTabContainer.SetTabTitle(1, Loc.GetString("bounty-console-tab-history-label"));
     }
 
-    public void UpdateEntries(List<CargoBountyData> bounties, List<CargoBountyHistoryData> history, TimeSpan untilNextSkip)
+    public void UpdateEntries(List<CargoBountyData> bounties, List<string> statuses, List<CargoBountyHistoryData> history, TimeSpan untilNextSkip)
     {
         BountyEntriesContainer.Children.Clear();
         foreach (var b in bounties)
         {
-            var entry = new BountyEntry(b, untilNextSkip);
+            var entry = new BountyEntry(b, statuses, untilNextSkip);
             entry.OnLabelButtonPressed += () => OnLabelButtonPressed?.Invoke(b.Id);
             entry.OnSkipButtonPressed += () => OnSkipButtonPressed?.Invoke(b.Id);
             entry.OnClaimButtonPressed += () => OnClaimButtonPressed?.Invoke(b.Id);

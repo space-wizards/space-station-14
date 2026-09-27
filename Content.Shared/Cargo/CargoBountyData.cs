@@ -29,13 +29,16 @@ public readonly partial record struct CargoBountyData
     [DataField]
     public List<string> ClaimedBy { get; init; } = new();
 
+    /// <summary>
+    /// Current status of the bounty on the bounty computer.
+    /// </summary>
     [DataField]
-    public ProtoId<CargoBountyStatusPrototype> Status { get; init; } = string.Empty;
+    public string Status { get; init; } = string.Empty;
 
-    public CargoBountyData(CargoBountyPrototype bounty, CargoBountyStatusPrototype bountyStatus, int uniqueIdentifier)
+    public CargoBountyData(CargoBountyPrototype bounty, string bountyStatus, int uniqueIdentifier)
     {
         Bounty = bounty.ID;
         Id = $"{bounty.IdPrefix}{uniqueIdentifier:D3}";
-        Status = bountyStatus.ID;
+        Status = bountyStatus;
     }
 }
