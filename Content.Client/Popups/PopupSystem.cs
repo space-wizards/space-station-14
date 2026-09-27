@@ -85,7 +85,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
         return type switch
         {
             PopupType.SmallCaution or PopupType.MediumCaution or PopupType.LargeCaution => Color.Red,
-            _ => Color.LightGray,
+            _ => Color.LightSlateGray,
         };
     }
 
