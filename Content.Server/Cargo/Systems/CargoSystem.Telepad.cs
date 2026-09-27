@@ -45,13 +45,13 @@ public sealed partial class CargoSystem
             station = _random.Pick(_station.GetStations().Where(x => HasComp<StationCargoOrderDatabaseComponent>(x.Owner)).ToList());
         }
 
-        if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDataBase)
+        if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase)
             || !TryComp<StationDataComponent>(station, out var data))
             return;
 
         foreach (var order in ent.Comp.CurrentOrders)
         {
-            TryFulfillOrder((station, data), order.Account, order, orderDataBase);
+            TryFulfillOrder((station, data), order.Account, order, orderDatabase);
         }
     }
 
