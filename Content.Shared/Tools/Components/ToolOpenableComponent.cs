@@ -15,7 +15,7 @@ public sealed partial class ToolOpenableComponent : Component
     /// Is the openable part open or closed?
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool IsOpen = false;
+    public bool IsOpen;
 
     /// <summary>
     /// If a tool is needed to open the entity, the time needed to open the entity in seconds.
@@ -67,9 +67,7 @@ public sealed partial class ToolOpenableComponent : Component
 /// Simple do after event for opening or closing.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class ToolOpenableDoAfterEventToggleOpen : SimpleDoAfterEvent
-{
-}
+public sealed partial class ToolOpenableDoAfterEventToggleOpen : SimpleDoAfterEvent;
 
 /// <summary>
 /// AppearanceData keys for use with <see cref="ToolOpenableComponent"/>.
