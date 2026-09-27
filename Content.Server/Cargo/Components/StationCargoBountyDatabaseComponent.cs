@@ -70,7 +70,7 @@ public sealed partial class StationCargoBountyDatabaseComponent : Component
     public TimeSpan NextSkipTime = TimeSpan.Zero;
 
     /// <summary>
-    /// The minimum time between skipping bounties.
+    /// The time between skipping bounties.
     /// </summary>
     [DataField]
     public TimeSpan SkipDelay = TimeSpan.FromMinutes(15);
