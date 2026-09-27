@@ -44,7 +44,7 @@ public abstract partial class SharedEmitterSystem : EntitySystem
                 Act = () =>
                 {
                     ammoProvider.Prototype = type;
-                    Dirty(ent);
+                    Dirty(ent, ammoProvider);
                     _popup.PopupEntity(Loc.GetString("emitter-component-type-set", ("type", proto.Name)), ent.Owner, ent.Owner);
                 },
             };
