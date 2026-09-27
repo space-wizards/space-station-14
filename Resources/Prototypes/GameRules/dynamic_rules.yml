@@ -48,6 +48,7 @@
             min: 10
         - id: Xenoborgs
           weight: 5
+          conditions:
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
           - !type:PlayerCountCondition
