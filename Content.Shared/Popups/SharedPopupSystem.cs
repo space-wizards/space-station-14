@@ -75,7 +75,7 @@ public abstract partial class SharedPopupSystem : EntitySystem
 
     /// <summary>
     /// Filtered variant of <see cref="PopupCoordinates(string, EntityCoordinates, PopupType)"/>, which should only be used
-    /// if the filtering has to be more specific than simply PVS range based.
+    /// if the filtering has to be more specific than simply range-based.
     /// </summary>
     /// <param name="message">The message to display.</param>
     /// <param name="coordinates">The coordinates where to display the message.</param>
@@ -113,7 +113,7 @@ public abstract partial class SharedPopupSystem : EntitySystem
 
     /// <summary>
     /// Filtered variant of <see cref="PopupEntity(string, EntityUid, PopupType)"/>, which should only be used
-    /// if the filtering has to be more specific than simply PVS range based.
+    /// if the filtering has to be more specific than simply range-based.
     /// </summary>
     /// <param name="message">The message to display.</param>
     /// <param name="uid">The entity above which to display the popup.</param>
