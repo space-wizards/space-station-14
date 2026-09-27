@@ -94,7 +94,9 @@ public sealed partial class TileConversionComponent : Component
         // Walls
         {"WallWood", "WallMalign"},
         {"WallSolid", "WallMalign"},
+        {"WallSolidRust", "WallMalign"},
         {"WallReinforced", "WallMalign"},
+        {"WallReinforcedRust", "WallMalign"},
         {"WallShuttle", "WallMalign"},
 
         // Windows
