@@ -61,10 +61,7 @@ public sealed partial class ToolRefinableSystem : EntitySystem
         var hint = Loc.GetString(ent.Comp.TooltipQualityHint,
             ("target", ent),
             ("quality", qualityName));
-        var message = new FormattedMessage();
-        message.AddMarkupPermissive(hint);
-
-        args.PushMessage(message);
+        args.PushMarkup(hint);
     }
 
     /// <summary> Normal interactions. </summary>
