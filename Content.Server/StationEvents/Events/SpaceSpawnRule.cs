@@ -48,13 +48,6 @@ public sealed partial class SpaceSpawnRule : StationEventSystem<SpaceSpawnRuleCo
 
         var spaceSpawn = ent.Comp1;
 
-        if (spaceSpawn.MaxAttempts <= 0)
-        {
-            Sawmill.Warning($"Non-positive MaxAttempts ({spaceSpawn.MaxAttempts}) for {ToPrettyString(ent):rule}");
-            ForceEndSelf((ent.Owner, ent.Comp2));
-            return;
-        }
-
         if (!Station.TryGetRandomStation<StationEventEligibleComponent>(out var station))
         {
             Sawmill.Warning($"No eligible stations, cannot pick location for {ToPrettyString(ent):rule}");
@@ -77,7 +70,7 @@ public sealed partial class SpaceSpawnRule : StationEventSystem<SpaceSpawnRuleCo
 
         // Pick a random angle, find our angles per index (0-MaxAttempts).
         var angleOffset = RobustRandom.NextAngle();
-        var arcPerIndex = Math.Tau / spaceSpawn.MaxAttempts;
+        var arcPerIndex = Math.Tau / int.Max(1, spaceSpawn.MaxAttempts);
 
         var gridCenter = _transform.ToMapCoordinates(new EntityCoordinates(gridUid.Value, grid.LocalAABB.Center));
 
