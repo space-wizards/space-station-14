@@ -100,7 +100,8 @@ public sealed partial class SpaceSpawnRule : StationEventSystem<SpaceSpawnRuleCo
             if (grids.Count > 0)
                 continue;
 
-            // TODO: raycast towards the grid's center (colliding only with grids - AFAIK not currently possible), move closer if nothing hit.
+            // TODO: raycast towards the grid's center (colliding only with grids - AFAIK not currently possible),
+            //       move towards the first collision, stopping SpawnDistance away.
 
             // create the spawner!
             spaceSpawn.Coords = spawnLocation;
