@@ -367,7 +367,6 @@
               reagent: Fungalin
               min: 0.7
         
-        
 # Test can, ill shrimply remove this bit when pr is ready
 - type: entity
   parent: DrinkCanBaseFull
@@ -384,3 +383,4 @@
       sprite: Objects/Consumable/Drinks/rootbeer.rsi
     - type: Item
       sprite: Objects/Consumable/Drinks/rootbeer.rsi
+      

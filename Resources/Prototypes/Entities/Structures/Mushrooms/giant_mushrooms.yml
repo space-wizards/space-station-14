@@ -44,7 +44,7 @@
     maxExternalPressure: 200
     spawnAmount: 0.25
     spawnGas: Fungalin
-    showStateOnExamine: false
+    showExamineText: false
 
 - type: entity
   id: MomMushroom

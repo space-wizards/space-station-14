@@ -39,16 +39,8 @@ public abstract partial class SharedPlantConsumeExudeGasSystem : EntitySystem
             return;
 
         var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
-
-        Gas gas;
-        if (spawnGas != null)  // Get gas, otherwise randomly pick one
-        { 
-            gas = spawnGas.Value;
-        }
-        else
-        {
-            gas = random.Pick(Enum.GetValues<Gas>());
-        }
+        
+        var gas = spawnGas ?? random.Pick(Enum.GetValues<Gas>());
 
         var gasses = ent.Comp.ExudeGasses;
         if (!gasses.TryAdd(gas, amount))
