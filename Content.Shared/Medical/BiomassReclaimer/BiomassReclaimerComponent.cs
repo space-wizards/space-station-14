@@ -71,7 +71,7 @@ public sealed partial class BiomassReclaimerComponent : Component
     public FixedPoint2 BloodSpillVolume = 50;
 
     /// <summary>
-    /// Non-integer biomass left over from processing a mob, added to the next mob's yield.
+    /// Non-integer biomass left over from processing, added to the next yield.
     /// </summary>
     [DataField]
     public float YieldRemainder;
