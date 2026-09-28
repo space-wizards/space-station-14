@@ -266,7 +266,7 @@ public sealed partial class CargoSystem
         ProtoId<CargoAccountPrototype> account
     )
     {
-        return RelevantOrders(station, account, approved: true).Sum(order => order.OrderQuantity - order.NumDispatched);
+        return RelevantOrders(station, account, approved: true, onlyShowThisAccount: false).Sum(order => order.OrderQuantity - order.NumDispatched);
     }
 
     public List<ProtoId<CargoProductPrototype>> GetAvailableProducts(Entity<CargoOrderConsoleComponent> ent)
@@ -623,7 +623,8 @@ public sealed partial class CargoSystem
     private List<CargoOrderData> RelevantOrders(
         Entity<StationCargoOrderDatabaseComponent> station,
         ProtoId<CargoAccountPrototype> account,
-        bool? approved = null
+        bool? approved = null,
+        bool onlyShowThisAccount = false
     )
     {
         if (!_bankQuery.TryComp(station, out var bank))
@@ -631,7 +632,7 @@ public sealed partial class CargoSystem
 
         IEnumerable<CargoOrderData> orders;
 
-        if (account != bank.PrimaryAccount)
+        if (onlyShowThisAccount || account != bank.PrimaryAccount)
             orders = station.Comp.Orders.Where(order => order.Account == account);
         else
             orders = station.Comp.Orders;
