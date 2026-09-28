@@ -7,13 +7,13 @@
   - type: CosmicLambaParticle
   - type: PointLight
     enabled: true
-    color: "#42a4ae"
+    color: "#c656ff"
     radius: 2.0
     energy: 7.0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
-    - state: magicm_red
+    - state: magicm
       shader: unshaded
   - type: Ammo
     muzzleFlash: null

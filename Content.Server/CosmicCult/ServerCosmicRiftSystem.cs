@@ -1,7 +1,6 @@
 using Content.Server.Research.Systems;
 using Content.Shared.CosmicCult;
 using Content.Shared.CosmicCult.Components;
-using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.CosmicCult;
 
@@ -9,14 +8,13 @@ namespace Content.Server.CosmicCult;
 public sealed partial class ServerCosmicRiftSystem : CosmicRiftSystem
 {
     [Dependency] private ResearchSystem _research = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var shiftingQuery = EntityQueryEnumerator<CosmicRiftComponent>();
-        while (shiftingQuery.MoveNext(out var uid, out var comp))
+        var riftQuery = EntityQueryEnumerator<CosmicRiftComponent>();
+        while (riftQuery.MoveNext(out var uid, out var comp))
         {
             if (comp.HitTimer is { } timer && Timing.CurTime >= timer)
             {
@@ -31,7 +29,7 @@ public sealed partial class ServerCosmicRiftSystem : CosmicRiftSystem
         if (!HasComp<TransformComponent>(ent.Comp.GridUid))
             return;
 
-        var servers = _research.GetServers(ent.Comp.GridUid);
+        var servers = _research.GetServers(ent.Comp.GridUid.Value);
         foreach (var server in servers)
         {
             _research.ModifyServerPoints(server, ent.Comp.ResearchPoints);
