@@ -53,12 +53,6 @@ public sealed partial class BiomassReclaimerComponent : Component
     public float ItemThrowMaxSpeed = 10f;
 
     /// <summary>
-    /// Throw speed for climbers that cannot be processed.
-    /// </summary>
-    [DataField]
-    public float ClimberThrowSpeed = 0.5f;
-
-    /// <summary>
     /// Jitter amplitude while processing is running.
     /// </summary>
     [DataField]

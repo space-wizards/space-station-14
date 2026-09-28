@@ -5,10 +5,10 @@ using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Climbing.Events;
 using Content.Shared.Construction.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.DragDrop;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
@@ -55,7 +55,6 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
 
     [Dependency] private EntityQuery<BiomassReclaimerComponent> _reclaimerQuery;
     [Dependency] private EntityQuery<ActiveBiomassReclaimerComponent> _activeQuery;
-    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery;
 
     public override void Update(float frameTime)
     {
@@ -89,7 +88,7 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         {
             var thrown = Spawn(
                 _robustRandom.Pick(active.SpawnedEntities),
-                TransformQuery.GetComponent(uid).Coordinates);
+                _transformQuery.GetComponent(uid).Coordinates);
 
             var direction = _robustRandom.NextVector2(30f);
 
@@ -108,7 +107,7 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         if (_activeQuery.HasComp(ent))
             return;
 
-        if (!IsPowered(ent))
+        if (!_powerReceiver.IsPowered(ent.Owner))
             return;
 
         _popup.PopupEntity(Loc.GetString("biomass-reclaimer-suicide-others", ("victim", Identity.Entity(args.Victim, EntityManager))),
@@ -188,32 +187,29 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         if (!args.CanReach || args.Target == null)
             return;
 
-        if (!CanProcess(reclaimer, args.Used))
-            return;
-
-        if (!_physicsQuery.TryComp(args.Used, out var physics))
-            return;
-
-        var delay = reclaimer.Comp.BaseInsertionDelay * physics.FixturesMass;
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, delay, new ReclaimerDoAfterEvent(), reclaimer, target: args.Target, used: args.Used)
-        {
-            NeedHand = true,
-            BreakOnMove = true,
-        });
+        TryStartInsertion(reclaimer, args.User, args.Used, needHand: true);
     }
 
     [SubscribeLocalEvent]
-    private void OnClimbedOn(Entity<BiomassReclaimerComponent> reclaimer, ref ClimbedOnEvent args)
+    private void OnDragDrop(Entity<BiomassReclaimerComponent> reclaimer, ref DragDropTargetEvent args)
     {
-        if (!CanProcess(reclaimer, args.Climber))
-        {
-            var direction = _robustRandom.NextVector2(2f);
-            _throwing.TryThrow(args.Climber, direction, reclaimer.Comp.ClimberThrowSpeed);
+        if (args.Handled)
             return;
-        }
-        _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.Instigator):player} used a biomass reclaimer to gib {ToPrettyString(args.Climber):target} in {ToPrettyString(reclaimer):reclaimer}");
 
-        StartProcessing(args.Climber, reclaimer);
+        args.Handled = TryStartInsertion(reclaimer, args.User, args.Dragged, needHand: false);
+    }
+
+    private bool TryStartInsertion(Entity<BiomassReclaimerComponent> reclaimer, EntityUid user, EntityUid toProcess, bool needHand)
+    {
+        if (!CanInsert(reclaimer, toProcess) || !_physicsQuery.TryComp(toProcess, out var physics))
+            return false;
+
+        var delay = reclaimer.Comp.BaseInsertionDelay * physics.FixturesMass;
+        return _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, delay, new ReclaimerDoAfterEvent(), reclaimer, target: reclaimer, used: toProcess)
+        {
+            NeedHand = needHand,
+            BreakOnMove = true,
+        });
     }
 
     [SubscribeLocalEvent]
@@ -222,11 +218,14 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         if (args.Handled || args.Cancelled)
             return;
 
-        if (args.Args.Used == null || args.Args.Target == null || !_reclaimerQuery.HasComp(args.Args.Target.Value))
+        if (args.Args.Target != reclaimer.Owner || args.Args.Used is not { } toProcess)
             return;
 
-        _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.Args.User):player} used a biomass reclaimer to gib {ToPrettyString(args.Args.Target.Value):target} in {ToPrettyString(reclaimer):reclaimer}");
-        StartProcessing(args.Args.Used.Value, reclaimer);
+        if (!CanInsert(reclaimer, toProcess) || !_physicsQuery.TryComp(toProcess, out var physics))
+            return;
+
+        _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.Args.User):player} used a biomass reclaimer to gib {ToPrettyString(toProcess):target} in {ToPrettyString(reclaimer):reclaimer}");
+        StartProcessing((toProcess, physics), reclaimer);
 
         args.Handled = true;
     }
@@ -264,7 +263,7 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
     private float CalculateYield(Entity<PhysicsComponent> toProcess, Entity<BiomassReclaimerComponent> reclaimer)
     {
         var expectedYield = toProcess.Comp.FixturesMass * reclaimer.Comp.YieldPerUnitMass;
-        if (ProduceQuery.HasComp(toProcess))
+        if (_produceQuery.HasComp(toProcess))
             expectedYield *= reclaimer.Comp.ProduceYieldMultiplier;
         return expectedYield;
     }
@@ -282,16 +281,16 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         var expectedYield = ent.Comp2.ExpectedYield + ent.Comp1.YieldRemainder;
         var actualYield = (int) expectedYield;
         ent.Comp1.YieldRemainder = expectedYield - actualYield;
-        _material.SpawnMultipleFromMaterial(actualYield, ent.Comp1.OutputMaterial, TransformQuery.GetComponent(ent).Coordinates);
+        _material.SpawnMultipleFromMaterial(actualYield, ent.Comp1.OutputMaterial, _transformQuery.GetComponent(ent).Coordinates);
         RemCompDeferred<ActiveBiomassReclaimerComponent>(ent);
     }
 
-    protected override bool CanProcess(Entity<BiomassReclaimerComponent> reclaimer, EntityUid dragged)
+    protected override bool CanInsert(Entity<BiomassReclaimerComponent> reclaimer, EntityUid dragged)
     {
         if (_activeQuery.HasComp(reclaimer))
             return false;
 
-        if (!base.CanProcess(reclaimer, dragged))
+        if (!base.CanInsert(reclaimer, dragged))
             return false;
 
         // Reject souled bodies in easy mode.
