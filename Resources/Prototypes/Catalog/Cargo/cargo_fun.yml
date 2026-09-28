@@ -195,7 +195,7 @@
   id: FunSpaceLube
   icon:
     sprite: Objects/Consumable/Drinks/lube-tube.rsi
-    state: icon_open
+    state: icon_empty
   product: DrinkSpaceLube
   container:
     entity: WrappedParcel
@@ -208,7 +208,7 @@
   id: FunSpaceGlue
   icon:
     sprite: Objects/Consumable/Drinks/glue-tube.rsi
-    state: icon_open
+    state: icon_empty
   product: DrinkSpaceGlue
   container:
     entity: WrappedParcel
