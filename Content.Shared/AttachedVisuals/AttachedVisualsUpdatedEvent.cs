@@ -15,10 +15,13 @@ public record struct AttachedVisualsUpdatedEvent
     /// </summary>
     public Dictionary<object, string> LayerMap;
 
-    public AttachedVisualsUpdatedEvent(EntityUid attachedTo, Dictionary<object, string> layerMap)
+    public List<string> Layers;
+
+    public AttachedVisualsUpdatedEvent(EntityUid attachedTo, Dictionary<object, string> layerMap, List<string> layers)
     {
         AttachedTo = attachedTo;
         LayerMap = layerMap;
+        Layers = layers;
     }
 
     public bool TryGetLayerKey(Enum key, [NotNullWhen(true)] out string? layerKey)

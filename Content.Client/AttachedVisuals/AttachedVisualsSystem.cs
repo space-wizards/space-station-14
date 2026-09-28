@@ -250,7 +250,10 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
                 displacementData = sexedDisplacementData;
             }
 
+            var origins = new List<EntityUid>();
             var updated = new Dictionary<EntityUid, Dictionary<object, string>>();
+            var layers = new List<string>();
+
             foreach (var attachedLayer in results)
             {
                 var index = _sprite.LayerMapReserve((ent.Owner, sprite), attachedLayer.Key);
@@ -266,6 +269,9 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
                         out _);
                 }
 
+                layers.Add(attachedLayer.Key);
+                origins.Add(attachedLayer.Origin);
+
                 foreach (var mapkey in attachedLayer.MapKeys)
                 {
                     var obj = ParseKey(mapkey);
@@ -273,9 +279,9 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
                 }
             }
 
-            foreach (var (origin, map) in updated)
+            foreach (var origin in origins)
             {
-                var ev = new AttachedVisualsUpdatedEvent(ent, map);
+                var ev = new AttachedVisualsUpdatedEvent(ent, updated.GetOrNew(origin), layers);
                 RaiseLocalEvent(origin, ref ev);
             }
         }
