@@ -21,7 +21,7 @@
         layer:
         - FlyingMobLayer
   - type: Sprite
-    sprite: Structures/Specific/cosmic-rift.rsi
+    sprite: Structures/Cosmic/cosmic-rift.rsi
     drawdepth: Mobs
     snapCardinals: true
     offset: 0,0.27
@@ -30,15 +30,15 @@
     - state: vfx
       shader: unshaded
   - type: Clickable
-#  - type: CosmicExamine
-#    cultistText: cosmic-examine-text-rift
-#    othersText: cosmic-examine-text-crew-rift
+  #  - type: CosmicExamine
+  #    cultistText: cosmic-examine-text-rift
+  #    othersText: cosmic-examine-text-crew-rift
   - type: CosmicRift
-#  - type: TileConversion
-#    conversionMaxTicks: 6
-#    conversionTime: 8
-#    conversionChance: 1
-#    chanceReduction: 0.16
+  #  - type: TileConversion
+  #    conversionMaxTicks: 6
+  #    conversionTime: 8
+  #    conversionChance: 1
+  #    chanceReduction: 0.16
   - type: PointLight
     color: "#42a4ae"
     radius: 2.5

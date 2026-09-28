@@ -26,6 +26,7 @@ public abstract partial class CosmicRiftSystem : EntitySystem
     [Dependency] private SharedColorFlashEffectSystem _color = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
+    public static readonly EntProtoId CosmicVfxGeneric = "EffectCosmicGeneric"; // TODO: COSMIC CULT - This EntProtoId will move elsewhere in the future and be accessed differently.
 
     [SubscribeLocalEvent]
     private void OnCollide(Entity<CosmicRiftComponent> ent, ref EndCollideEvent args)
@@ -51,7 +52,7 @@ public abstract partial class CosmicRiftSystem : EntitySystem
 
         if (_net.IsServer)
         {
-            var vfx = Spawn(ent.Comp.ExpungeVfx, Transform(ent).Coordinates);
+            var vfx = Spawn(CosmicVfxGeneric, Transform(ent).Coordinates);
             _audio.PlayPvs(ent.Comp.ExpungeSound, vfx);
         }
 

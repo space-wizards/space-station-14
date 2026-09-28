@@ -6,6 +6,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.CosmicCult.Components;
 
+/// <summary>
+/// Component for Malign Rifts, a station event entity prevalent in the Cosmic Cult gamemode.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class CosmicRiftComponent : Component
 {
@@ -41,9 +44,6 @@ public sealed partial class CosmicRiftComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public ProtoId<LocalizedDatasetPrototype> PopUpDataset = "DatasetCosmicRiftPopups";
-
-    [DataField]
-    public EntProtoId ExpungeVfx = "";
 
     [DataField]
     public SoundSpecifier ExpungeSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/laser_cannon2.ogg");

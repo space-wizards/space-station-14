@@ -14,6 +14,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.CosmicCult;
 
+/// <summary>
+/// GameRule for spawning Malign Rifts across the entirety of the station.
+/// </summary>
 public sealed partial class MalignRiftSpawnRule : GameRuleSystem<MalignRiftSpawnRuleComponent>
 {
     // [Dependency] private GameTicker _ticker = default!; // TODO: COSMIC CULT - GameRule Implementation
@@ -40,8 +43,8 @@ public sealed partial class MalignRiftSpawnRule : GameRuleSystem<MalignRiftSpawn
         var totalCrew = _playerMan.Sessions.Count(session => session.Status == SessionStatus.InGame && HasComp<HumanoidProfileComponent>(session.AttachedEntity));
         var sender = Loc.GetString("cosmiccult-announcement-sender");
 
-        _chatSystem.DispatchStationAnnouncement(chosenStation.Value, Loc.GetString("cosmiccult-announce-tier2-progress"), sender, false, null, Color.FromHex("#4cabb3"));
-        _chatSystem.DispatchStationAnnouncement(chosenStation.Value, Loc.GetString("cosmiccult-announce-tier2-warning"), null, false, null, Color.FromHex("#cae8e8"));
+        _chatSystem.DispatchStationAnnouncement(chosenStation.Value, Loc.GetString("cosmiccult-announce-rift-fluff"), sender, false, null, Color.FromHex("#4cabb3"));
+        _chatSystem.DispatchStationAnnouncement(chosenStation.Value, Loc.GetString("cosmiccult-announce-rift-warning"), null, false, null, Color.FromHex("#cae8e8"));
         _audio.PlayGlobal(rule.Comp1.Tier2Sound, Filter.Broadcast(), false, AudioParams.Default);
 
         #if DEBUG
