@@ -40,40 +40,16 @@ public sealed partial class BiomassReclaimerComponent : Component
     public float ItemThrowChance = 0.03f;
 
     /// <summary>
-    /// Minimum item throw direction coordinate, inclusive.
-    /// </summary>
-    [DataField]
-    public int ItemThrowDirectionMin = -30;
-
-    /// <summary>
-    /// Maximum item throw direction coordinate, exclusive.
-    /// </summary>
-    [DataField]
-    public int ItemThrowDirectionMax = 30;
-
-    /// <summary>
     /// Minimum item throw speed, inclusive.
     /// </summary>
     [DataField]
-    public int ItemThrowMinSpeed = 1;
+    public float ItemThrowMinSpeed = 1f;
 
     /// <summary>
     /// Maximum item throw speed, exclusive.
     /// </summary>
     [DataField]
-    public int ItemThrowMaxSpeed = 10;
-
-    /// <summary>
-    /// Minimum rejected climber throw direction coordinate, inclusive.
-    /// </summary>
-    [DataField]
-    public int ClimberThrowDirectionMin = -2;
-
-    /// <summary>
-    /// Maximum rejected climber throw direction coordinate, exclusive.
-    /// </summary>
-    [DataField]
-    public int ClimberThrowDirectionMax = 2;
+    public float ItemThrowMaxSpeed = 10f;
 
     /// <summary>
     /// Throw speed for climbers that cannot be processed.

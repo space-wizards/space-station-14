@@ -1,5 +1,4 @@
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Storage;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Medical.BiomassReclaimer;
@@ -24,7 +23,7 @@ public sealed partial class ActiveBiomassReclaimerComponent : Component
     /// Entities that can be thrown during this job.
     /// </summary>
     [ViewVariables]
-    public List<EntitySpawnEntry> SpawnedEntities = [];
+    public List<string> SpawnedEntities = [];
 
     /// <summary>
     /// When processing completes and biomass is produced.

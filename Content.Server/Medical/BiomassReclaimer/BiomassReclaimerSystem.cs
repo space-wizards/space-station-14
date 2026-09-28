@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Materials;
 using Content.Server.Power.Components;
@@ -25,6 +24,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Power;
+using Content.Shared.Storage;
 using Content.Shared.Throwing;
 using Content.Shared.Tools.Components;
 using Robust.Server.Player;
@@ -95,14 +95,12 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
         if (_robustRandom.Prob(reclaimer.ItemThrowChance) && active.SpawnedEntities.Count > 0)
         {
             var thrown = Spawn(
-                _robustRandom.Pick(active.SpawnedEntities).PrototypeId,
+                _robustRandom.Pick(active.SpawnedEntities),
                 _transformQuery.GetComponent(uid).Coordinates);
 
-            var direction = new Vector2(
-                _robustRandom.Next(reclaimer.ItemThrowDirectionMin, reclaimer.ItemThrowDirectionMax),
-                _robustRandom.Next(reclaimer.ItemThrowDirectionMin, reclaimer.ItemThrowDirectionMax));
+            var direction = _robustRandom.NextVector2(30f);
 
-            _throwing.TryThrow(thrown, direction, _robustRandom.Next(reclaimer.ItemThrowMinSpeed, reclaimer.ItemThrowMaxSpeed));
+            _throwing.TryThrow(thrown, direction, _robustRandom.NextFloat(reclaimer.ItemThrowMinSpeed, reclaimer.ItemThrowMaxSpeed));
         }
 
         active.NextMessTime += reclaimer.RandomMessInterval;
@@ -216,9 +214,7 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
     {
         if (!CanProcess(reclaimer, args.Climber))
         {
-            var direction = new Vector2(
-                _robustRandom.Next(reclaimer.Comp.ClimberThrowDirectionMin, reclaimer.Comp.ClimberThrowDirectionMax),
-                _robustRandom.Next(reclaimer.Comp.ClimberThrowDirectionMin, reclaimer.Comp.ClimberThrowDirectionMax));
+            var direction = _robustRandom.NextVector2(2f);
             _throwing.TryThrow(args.Climber, direction, reclaimer.Comp.ClimberThrowSpeed);
             return;
         }
@@ -268,7 +264,7 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
         }
         if (TryComp<ToolRefinableComponent>(toProcess, out var refinable))
         {
-            active.SpawnedEntities = new(refinable.RefineResult);
+            active.SpawnedEntities = EntitySpawnCollection.GetSpawns(refinable.RefineResult, _robustRandom);
         }
     }
 
