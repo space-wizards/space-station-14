@@ -2,7 +2,7 @@
 
 [game]
 hostname = "[EN][LRP] Wizard's Den Raptor [NA East]"
-desc = "Official English server for Space Station 14. Low-roleplay ruleset."
+desc = "Official English server for Space Station 14. Low roleplay ruleset."
 panic_bunker.enabled = false
 panic_bunker.disable_with_admins = false
 panic_bunker.enable_without_admins = false

@@ -2,7 +2,7 @@
 
 [game]
 hostname = "[EN][MRP] Wizard's Den Salamander [NA West]"
-desc = "Official English Space Station 14 servers. Medium-roleplay ruleset. Open to anyone with at least 20 hours of playtime on any Wizard's Den server, or freely joinable if the player count is under 15 players."
+desc = "Official English Space Station 14 servers. Medium roleplay ruleset. Open to anyone with at least 20 hours of playtime on any Wizard's Den server, or freely joinable if the player count is under 15 players."
 round_restart_time = 300
 
 [server]
@@ -15,7 +15,7 @@ enabled = true
 prototype_list = "salamanderMrpWhitelist"
 
 [chat]
-motd = "Wizard's Den Salamander is an MRP (Medium Roleplay) server. Please read and abide by the MRP rule amendments."
+motd = "Wizard's Den Salamander is a medium roleplay (MRP) server. Please read and abide by the MRP rule amendments."
 
 [hub]
 tags = "lang:en,region:am_n_w,rp:med"
