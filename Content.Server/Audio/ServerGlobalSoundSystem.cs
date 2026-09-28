@@ -6,10 +6,12 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Audio;
 
+/// <inheritdoc/>
 public sealed partial class ServerGlobalSoundSystem : GlobalSoundSystem
 {
     [Dependency] private IConsoleHost _conHost = default!;
 
+    /// <inheritdoc/>
     public override void Shutdown()
     {
         base.Shutdown();
