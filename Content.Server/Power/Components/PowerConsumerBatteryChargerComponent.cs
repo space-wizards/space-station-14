@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Power.Components;
+namespace Content.Server.Power.Components;
 
 /// <summary>
 /// Used to charge a battery with <see cref="PowerConsumerComponent"/>

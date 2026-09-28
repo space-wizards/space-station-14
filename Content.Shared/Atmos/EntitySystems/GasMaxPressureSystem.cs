@@ -1,4 +1,4 @@
-﻿using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Destructible;
 using Content.Shared.Explosion.EntitySystems;

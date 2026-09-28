@@ -46,14 +46,13 @@
   parent: BaseBullet
   id: BulletGrenadeBaton
   categories: [ HideSpawnMenu ]
-  name: baton grenade
+  name: baton grenade round
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
     - state: grenade
   - type: Projectile
-    deleteOnCollide: false
     damage:
       types:
         Blunt: 1
@@ -74,10 +73,10 @@
     - state: grenade
   - type: ExplodeOnTrigger
   - type: Explosive
-    explosionType: Default
-    totalIntensity: 150 # a ~2 tile radius
+    explosionType: Clake
+    totalIntensity: 150 # a ~3 tile radius
     intensitySlope: 5
-    maxIntensity: 10
+    maxIntensity: 20
     canCreateVacuum: false
 
 - type: entity
@@ -109,9 +108,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    totalIntensity: 50
-    intensitySlope: 1
-    maxIntensity: 5
+    totalIntensity: 120
+    intensitySlope: 5
+    maxIntensity: 9
     canCreateVacuum: false
   - type: ContainerContainer
     containers:
@@ -234,3 +233,41 @@
     impulseInterval: 0.1
     maxAngleVectorChangePerImpulse: 10
     rotateWithImpulse: true
+
+- type: entity
+  parent: BaseBulletTrigger
+  id: BulletXenoborgMechadermisRocket
+  name: mechadermis rocket
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: mechadermis-missile-base
+    - state: mechadermis-missile-unshaded
+      shader: unshaded
+  - type: TriggerOnSpawn
+    keyOut: timerTrigger
+  - type: TimerTrigger
+    delay: 9.9 # so it explodes before it despawns
+    keysIn:
+    - timerTrigger
+  - type: ExplodeOnTrigger
+    keysIn:
+    - trigger
+    - timer
+  - type: Explosive
+    explosionType: XenoborgAntiStructureExplosion
+    totalIntensity: 15.0
+    intensitySlope: 1.6
+    maxIntensity: 1.8
+    maxTileBreak: 0
+  - type: SineWaveAnimation
+    xWave:
+      amplitude: 0.4
+      frequency: 17
+      phaseOffset: null
+  - type: PointLight
+    radius: 2.5
+    color: magenta
+    energy: 0.4
