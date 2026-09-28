@@ -28,6 +28,9 @@ public sealed partial class ServerCosmicRiftSystem : CosmicRiftSystem
     [SubscribeLocalEvent]
     private void OnShutdown(Entity<CosmicRiftComponent> ent, ref ComponentShutdown args)
     {
+        if (!HasComp<TransformComponent>(ent.Comp.GridUid))
+            return;
+
         var servers = _research.GetServers(ent.Comp.GridUid);
         foreach (var server in servers)
         {
