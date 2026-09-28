@@ -1,10 +1,8 @@
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Materials;
-using Content.Server.Power.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
-using Content.Shared.Botany.Items.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Climbing.Events;
@@ -19,9 +17,8 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Jittering;
 using Content.Shared.Medical;
+using Content.Shared.Medical.BiomassReclaimer;
 using Content.Shared.Mind;
-using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Storage;
@@ -36,11 +33,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Medical.BiomassReclaimer;
 
-public sealed partial class BiomassReclaimerSystem : EntitySystem
+public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSystem
 {
     [Dependency] private IConfigurationManager _configManager = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedJitteringSystem _jitteringSystem = default!;
     [Dependency] private SharedAudioSystem _sharedAudioSystem = default!;
     [Dependency] private SharedAmbientSoundSystem _ambientSoundSystem = default!;
@@ -59,10 +55,7 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
 
     [Dependency] private EntityQuery<BiomassReclaimerComponent> _reclaimerQuery;
     [Dependency] private EntityQuery<ActiveBiomassReclaimerComponent> _activeQuery;
-    [Dependency] private EntityQuery<ApcPowerReceiverComponent> _powerQuery;
     [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery;
-    [Dependency] private EntityQuery<TransformComponent> _transformQuery;
-    [Dependency] private EntityQuery<ProduceComponent> _produceQuery;
 
     public override void Update(float frameTime)
     {
@@ -96,7 +89,7 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
         {
             var thrown = Spawn(
                 _robustRandom.Pick(active.SpawnedEntities),
-                _transformQuery.GetComponent(uid).Coordinates);
+                TransformQuery.GetComponent(uid).Coordinates);
 
             var direction = _robustRandom.NextVector2(30f);
 
@@ -115,7 +108,7 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
         if (_activeQuery.HasComp(ent))
             return;
 
-        if (_powerQuery.TryComp(ent, out var power) && !power.Powered)
+        if (!IsPowered(ent))
             return;
 
         _popup.PopupEntity(Loc.GetString("biomass-reclaimer-suicide-others", ("victim", Identity.Entity(args.Victim, EntityManager))),
@@ -271,7 +264,7 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
     private float CalculateYield(Entity<PhysicsComponent> toProcess, Entity<BiomassReclaimerComponent> reclaimer)
     {
         var expectedYield = toProcess.Comp.FixturesMass * reclaimer.Comp.YieldPerUnitMass;
-        if (_produceQuery.HasComp(toProcess))
+        if (ProduceQuery.HasComp(toProcess))
             expectedYield *= reclaimer.Comp.ProduceYieldMultiplier;
         return expectedYield;
     }
@@ -289,26 +282,16 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
         var expectedYield = ent.Comp2.ExpectedYield + ent.Comp1.YieldRemainder;
         var actualYield = (int) expectedYield;
         ent.Comp1.YieldRemainder = expectedYield - actualYield;
-        _material.SpawnMultipleFromMaterial(actualYield, ent.Comp1.OutputMaterial, _transformQuery.GetComponent(ent).Coordinates);
+        _material.SpawnMultipleFromMaterial(actualYield, ent.Comp1.OutputMaterial, TransformQuery.GetComponent(ent).Coordinates);
         RemCompDeferred<ActiveBiomassReclaimerComponent>(ent);
     }
 
-    private bool CanProcess(Entity<BiomassReclaimerComponent> reclaimer, EntityUid dragged)
+    protected override bool CanProcess(Entity<BiomassReclaimerComponent> reclaimer, EntityUid dragged)
     {
         if (_activeQuery.HasComp(reclaimer))
             return false;
 
-        var isPlant = _produceQuery.HasComp(dragged);
-        if (!isPlant && !HasComp<MobStateComponent>(dragged))
-            return false;
-
-        if (!_transformQuery.GetComponent(reclaimer).Anchored)
-            return false;
-
-        if (_powerQuery.TryComp(reclaimer, out var power) && !power.Powered)
-            return false;
-
-        if (!isPlant && reclaimer.Comp.SafetyEnabled && !_mobState.IsDead(dragged))
+        if (!base.CanProcess(reclaimer, dragged))
             return false;
 
         // Reject souled bodies in easy mode.

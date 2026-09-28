@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Server.Medical.BiomassReclaimer;
 
 [RegisterComponent, AutoGenerateComponentPause]
-[Access(typeof(BiomassReclaimerSystem))]
+[Access(typeof(ServerBiomassReclaimerSystem))]
 public sealed partial class ActiveBiomassReclaimerComponent : Component
 {
     /// <summary>

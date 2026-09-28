@@ -1,11 +1,12 @@
 using Content.Shared.FixedPoint;
 using Content.Shared.Materials;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Medical.BiomassReclaimer;
+namespace Content.Shared.Medical.BiomassReclaimer;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 [Access(typeof(BiomassReclaimerSystem))]
 public sealed partial class BiomassReclaimerComponent : Component
 {
