@@ -97,8 +97,9 @@ public sealed partial class CargoSystem
             return;
         }
 
-        var data = GetOrderData(args, product, GenerateOrderId(orderDatabase), ent.Comp.Account);
-        if (!TryAddOrder(stationUid.Value, data, orderDatabase))
+        var id = GenerateOrderId(orderDatabase);
+        var order = new CargoOrderData(id, product, args.Amount, args.Requester, args.Reason, ent.Comp.Account);
+        if (!TryAddOrder(stationUid.Value, order, orderDatabase))
         {
             PlayDenySound(ent);
             return;
@@ -108,7 +109,7 @@ public sealed partial class CargoSystem
         _adminLogger.Add(
             LogType.Action,
             LogImpact.Low,
-            $"{ToPrettyString(player):user} added order [orderId:{data.OrderId}, quantity:{data.OrderQuantity}, product:{data.Product}, requester:{data.Requester}, reason:{data.Reason}]"
+            $"{ToPrettyString(player):user} added order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.Product}, requester:{order.Requester}, reason:{order.Reason}]"
         );
     }
 
@@ -665,16 +666,6 @@ public sealed partial class CargoSystem
 
             yield return gridUid;
         }
-    }
-
-    private static CargoOrderData GetOrderData(
-        CargoConsoleAddOrderMessage args,
-        CargoProductPrototype cargoProduct,
-        int id,
-        ProtoId<CargoAccountPrototype> account
-    )
-    {
-        return new CargoOrderData(id, cargoProduct, args.Amount, args.Requester, args.Reason, account);
     }
 
     private void PlayDenySound(Entity<CargoOrderConsoleComponent> ent)
