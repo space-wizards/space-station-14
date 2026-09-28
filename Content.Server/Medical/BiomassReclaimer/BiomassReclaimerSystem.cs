@@ -71,33 +71,37 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
             if (active.PowerLossTime != null)
                 continue;
 
-            if (_timing.CurTime >= active.NextMessTime)
-            {
-                if (_robustRandom.Prob(0.2f) && active.BloodReagents is { } blood)
-                {
-                    _puddleSystem.TrySpillAt(uid, blood, out _);
-                }
-                if (_robustRandom.Prob(0.03f) && active.SpawnedEntities.Count > 0)
-                {
-                    var thrown = Spawn(_robustRandom.Pick(active.SpawnedEntities).PrototypeId, Transform(uid).Coordinates);
-                    var direction = new Vector2(_robustRandom.Next(-30, 30), _robustRandom.Next(-30, 30));
-                    _throwing.TryThrow(thrown, direction, _robustRandom.Next(1, 10));
-                }
-                active.NextMessTime += reclaimer.RandomMessInterval;
-            }
+            UpdateMess(uid, reclaimer, active);
 
             if (_timing.CurTime < active.ProcessingEndTime)
-            {
                 continue;
-            }
 
-            var expectedYield = active.ExpectedYield + reclaimer.YieldRemainder;
-            var actualYield = (int) expectedYield;
-            reclaimer.YieldRemainder = expectedYield - actualYield;
-            _material.SpawnMultipleFromMaterial(actualYield, BiomassPrototype, Transform(uid).Coordinates);
-
-            RemCompDeferred<ActiveBiomassReclaimerComponent>(uid);
+            FinishProcessing((uid, reclaimer), active);
         }
+    }
+
+    private void UpdateMess(EntityUid uid, BiomassReclaimerComponent reclaimer, ActiveBiomassReclaimerComponent active)
+    {
+        if (_timing.CurTime < active.NextMessTime)
+            return;
+
+        if (_robustRandom.Prob(0.2f) && active.BloodReagents is { } blood)
+            _puddleSystem.TrySpillAt(uid, blood, out _);
+
+        if (_robustRandom.Prob(0.03f) && active.SpawnedEntities.Count > 0)
+        {
+            var thrown = Spawn(
+                _robustRandom.Pick(active.SpawnedEntities).PrototypeId,
+                Transform(uid).Coordinates);
+
+            var direction = new Vector2(
+                _robustRandom.Next(-30, 30),
+                _robustRandom.Next(-30, 30));
+
+            _throwing.TryThrow(thrown, direction, _robustRandom.Next(1, 10));
+        }
+
+        active.NextMessTime += reclaimer.RandomMessInterval;
     }
 
     [SubscribeLocalEvent]
@@ -122,16 +126,13 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnInit(EntityUid uid, ActiveBiomassReclaimerComponent component, ComponentInit args)
     {
-        _jitteringSystem.AddJitter(uid, -10, 100);
-        _sharedAudioSystem.PlayPvs("/Audio/Machines/reclaimer_startup.ogg", uid);
-        _ambientSoundSystem.SetAmbience(uid, true);
+        StartRunningEffects(uid);
     }
 
     [SubscribeLocalEvent]
     private void OnShutdown(EntityUid uid, ActiveBiomassReclaimerComponent component, ComponentShutdown args)
     {
-        RemComp<JitteringComponent>(uid);
-        _ambientSoundSystem.SetAmbience(uid, false);
+        StopRunningEffects(uid);
     }
 
     [SubscribeLocalEvent]
@@ -141,24 +142,40 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
             return;
 
         if (args.Powered)
-        {
-            if (active.PowerLossTime is not { } PowerLossTime)
-                return;
-
-            var pauseDuration = _timing.CurTime - PowerLossTime;
-            active.ProcessingEndTime += pauseDuration;
-            active.NextMessTime += pauseDuration;
-            active.PowerLossTime = null;
-            _jitteringSystem.AddJitter(uid, -10, 100);
-            _sharedAudioSystem.PlayPvs("/Audio/Machines/reclaimer_startup.ogg", uid);
-            _ambientSoundSystem.SetAmbience(uid, true);
-        }
+            ResumeProcessing(uid, active);
         else
-        {
-            active.PowerLossTime ??= _timing.CurTime;
-            RemComp<JitteringComponent>(uid);
-            _ambientSoundSystem.SetAmbience(uid, false);
-        }
+            PauseProcessing(uid, active);
+    }
+
+    private void PauseProcessing(EntityUid uid, ActiveBiomassReclaimerComponent active)
+    {
+        active.PowerLossTime ??= _timing.CurTime;
+        StopRunningEffects(uid);
+    }
+
+    private void ResumeProcessing(EntityUid uid, ActiveBiomassReclaimerComponent active)
+    {
+        if (active.PowerLossTime is not { } powerLossTime)
+            return;
+
+        var pauseDuration = _timing.CurTime - powerLossTime;
+        active.ProcessingEndTime += pauseDuration;
+        active.NextMessTime += pauseDuration;
+        active.PowerLossTime = null;
+        StartRunningEffects(uid);
+    }
+
+    private void StartRunningEffects(EntityUid uid)
+    {
+        _jitteringSystem.AddJitter(uid, -10, 100);
+        _sharedAudioSystem.PlayPvs("/Audio/Machines/reclaimer_startup.ogg", uid);
+        _ambientSoundSystem.SetAmbience(uid, true);
+    }
+
+    private void StopRunningEffects(EntityUid uid)
+    {
+        RemComp<JitteringComponent>(uid);
+        _ambientSoundSystem.SetAmbience(uid, false);
     }
 
     [SubscribeLocalEvent]
@@ -174,7 +191,7 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
         if (!args.CanReach || args.Target == null)
             return;
 
-        if (!CanGib(reclaimer, args.Used))
+        if (!CanProcess(reclaimer, args.Used))
             return;
 
         if (!TryComp<PhysicsComponent>(args.Used, out var physics))
@@ -191,7 +208,7 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnClimbedOn(Entity<BiomassReclaimerComponent> reclaimer, ref ClimbedOnEvent args)
     {
-        if (!CanGib(reclaimer, args.Climber))
+        if (!CanProcess(reclaimer, args.Climber))
         {
             var direction = new Vector2(_robustRandom.Next(-2, 2), _robustRandom.Next(-2, 2));
             _throwing.TryThrow(args.Climber, direction, 0.5f);
@@ -224,7 +241,16 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
 
         var component = ent.Comp;
         var active = AddComp<ActiveBiomassReclaimerComponent>(ent);
+        CollectMessData(toProcess, active);
+        active.ExpectedYield = CalculateYield(toProcess, component, physics.FixturesMass);
+        active.ProcessingEndTime = _timing.CurTime + TimeSpan.FromSeconds(physics.FixturesMass * component.ProcessingTimePerUnitMass);
+        active.NextMessTime = _timing.CurTime;
+        EjectInventory(toProcess, ent.Owner);
+        QueueDel(toProcess);
+    }
 
+    private void CollectMessData(EntityUid toProcess, ActiveBiomassReclaimerComponent active)
+    {
         if (TryComp<BloodstreamComponent>(toProcess, out var stream) &&
             _solution.ResolveSolution(toProcess, stream.BloodSolutionName, ref stream.BloodSolution, out var solution))
         {
@@ -236,30 +262,39 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
         {
             active.SpawnedEntities = new(refinable.RefineResult);
         }
-
-        var expectedYield = physics.FixturesMass * component.YieldPerUnitMass;
-        if (HasComp<ProduceComponent>(toProcess))
-            expectedYield *= component.ProduceYieldMultiplier;
-        active.ExpectedYield = expectedYield;
-
-        active.ProcessingEndTime = _timing.CurTime + TimeSpan.FromSeconds(physics.FixturesMass * component.ProcessingTimePerUnitMass);
-        active.NextMessTime = _timing.CurTime;
-
-        var inventory = _inventory.GetHandOrInventoryEntities(toProcess);
-        foreach (var item in inventory)
-        {
-            _transform.DropNextTo(item, ent.Owner);
-        }
-
-        QueueDel(toProcess);
     }
 
-    private bool CanGib(Entity<BiomassReclaimerComponent> reclaimer, EntityUid dragged)
+    private float CalculateYield(EntityUid toProcess, BiomassReclaimerComponent reclaimer, float mass)
+    {
+        var expectedYield = mass * reclaimer.YieldPerUnitMass;
+        if (HasComp<ProduceComponent>(toProcess))
+            expectedYield *= reclaimer.ProduceYieldMultiplier;
+        return expectedYield;
+    }
+
+    private void EjectInventory(EntityUid toProcess, EntityUid reclaimer)
+    {
+        foreach (var item in _inventory.GetHandOrInventoryEntities(toProcess))
+        {
+            _transform.DropNextTo(item, reclaimer);
+        }
+    }
+
+    private void FinishProcessing(Entity<BiomassReclaimerComponent> reclaimer, ActiveBiomassReclaimerComponent active)
+    {
+        var expectedYield = active.ExpectedYield + reclaimer.Comp.YieldRemainder;
+        var actualYield = (int) expectedYield;
+        reclaimer.Comp.YieldRemainder = expectedYield - actualYield;
+        _material.SpawnMultipleFromMaterial(actualYield, BiomassPrototype, Transform(reclaimer).Coordinates);
+        RemCompDeferred<ActiveBiomassReclaimerComponent>(reclaimer);
+    }
+
+    private bool CanProcess(Entity<BiomassReclaimerComponent> reclaimer, EntityUid dragged)
     {
         if (HasComp<ActiveBiomassReclaimerComponent>(reclaimer))
             return false;
 
-        bool isPlant = HasComp<ProduceComponent>(dragged);
+        var isPlant = HasComp<ProduceComponent>(dragged);
         if (!isPlant && !HasComp<MobStateComponent>(dragged))
             return false;
 
@@ -273,14 +308,11 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
             return false;
 
         // Reject souled bodies in easy mode.
-        if (_configManager.GetCVar(CCVars.BiomassEasyMode) &&
-            HasComp<HumanoidProfileComponent>(dragged) &&
-            _minds.TryGetMind(dragged, out _, out var mind))
-        {
-            if (mind.UserId != null && _playerManager.TryGetSessionById(mind.UserId.Value, out _))
-                return false;
-        }
+        if (!_configManager.GetCVar(CCVars.BiomassEasyMode) ||
+            !HasComp<HumanoidProfileComponent>(dragged) ||
+            !_minds.TryGetMind(dragged, out _, out var mind))
+            return true;
 
-        return true;
+        return mind.UserId == null || !_playerManager.TryGetSessionById(mind.UserId.Value, out _);
     }
 }
