@@ -1,49 +1,19 @@
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Storage;
-
 namespace Content.Server.Medical.BiomassReclaimer;
 
 [RegisterComponent]
 public sealed partial class BiomassReclaimerComponent : Component
 {
     /// <summary>
-    /// This gets set for each mob it processes.
-    /// When it hits 0, there is a chance for the reclaimer to either spill blood or throw an item.
-    /// </summary>
-    [ViewVariables]
-    public float RandomMessTimer = 0f;
-
-    /// <summary>
-    /// The interval for <see cref="RandomMessTimer"/>.
+    /// The interval between chances to spill blood or throw an item while processing.
     /// </summary>
     [DataField]
     public TimeSpan RandomMessInterval = TimeSpan.FromSeconds(5);
 
     /// <summary>
-    /// This gets set for each mob it processes.
-    /// When it hits 0, spit out biomass.
+    /// Fractional biomass left over from completed jobs, carried into the next job.
     /// </summary>
-    [ViewVariables]
-    public float ProcessingTimer = default;
-
-    /// <summary>
-    /// Amount of biomass that the mob being processed will yield.
-    /// This is calculated from the YieldPerUnitMass.
-    /// Also stores non-integer leftovers.
-    /// </summary>
-    [ViewVariables]
-    public float CurrentExpectedYield = 0f;
-
-    /// <summary>
-    /// The reagents that will be spilled while processing a mob.
-    /// </summary>
-    [ViewVariables]
-    public Solution? BloodReagents = null;
-
-    /// <summary>
-    /// Entities that can be randomly spawned while processing a mob.
-    /// </summary>
-    public List<EntitySpawnEntry> SpawnedEntities = new();
+    [DataField]
+    public float YieldRemainder;
 
     /// <summary>
     /// How many units of biomass it produces for each unit of mass.

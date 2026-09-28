@@ -34,6 +34,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Medical.BiomassReclaimer;
 
@@ -56,6 +57,7 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
     [Dependency] private MaterialStorageSystem _material = default!;
     [Dependency] private SharedMindSystem _minds = default!;
     [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public static readonly ProtoId<MaterialPrototype> BiomassPrototype = "Biomass";
 
@@ -64,37 +66,36 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
         base.Update(frameTime);
 
         var query = EntityQueryEnumerator<ActiveBiomassReclaimerComponent, BiomassReclaimerComponent>();
-        while (query.MoveNext(out var uid, out var _, out var reclaimer))
+        while (query.MoveNext(out var uid, out var active, out var reclaimer))
         {
-            reclaimer.ProcessingTimer -= frameTime;
-            reclaimer.RandomMessTimer -= frameTime;
+            if (active.PowerLossTime != null)
+                continue;
 
-            if (reclaimer.RandomMessTimer <= 0)
+            if (_timing.CurTime >= active.NextMessTime)
             {
-                if (_robustRandom.Prob(0.2f) && reclaimer.BloodReagents is { } blood)
+                if (_robustRandom.Prob(0.2f) && active.BloodReagents is { } blood)
                 {
                     _puddleSystem.TrySpillAt(uid, blood, out _);
                 }
-                if (_robustRandom.Prob(0.03f) && reclaimer.SpawnedEntities.Count > 0)
+                if (_robustRandom.Prob(0.03f) && active.SpawnedEntities.Count > 0)
                 {
-                    var thrown = Spawn(_robustRandom.Pick(reclaimer.SpawnedEntities).PrototypeId, Transform(uid).Coordinates);
+                    var thrown = Spawn(_robustRandom.Pick(active.SpawnedEntities).PrototypeId, Transform(uid).Coordinates);
                     var direction = new Vector2(_robustRandom.Next(-30, 30), _robustRandom.Next(-30, 30));
                     _throwing.TryThrow(thrown, direction, _robustRandom.Next(1, 10));
                 }
-                reclaimer.RandomMessTimer += (float) reclaimer.RandomMessInterval.TotalSeconds;
+                active.NextMessTime += reclaimer.RandomMessInterval;
             }
 
-            if (reclaimer.ProcessingTimer > 0)
+            if (_timing.CurTime < active.ProcessingEndTime)
             {
                 continue;
             }
 
-            var actualYield = (int) (reclaimer.CurrentExpectedYield); // can only have integer biomass
-            reclaimer.CurrentExpectedYield = reclaimer.CurrentExpectedYield - actualYield; // store non-integer leftovers
+            var expectedYield = active.ExpectedYield + reclaimer.YieldRemainder;
+            var actualYield = (int) expectedYield;
+            reclaimer.YieldRemainder = expectedYield - actualYield;
             _material.SpawnMultipleFromMaterial(actualYield, BiomassPrototype, Transform(uid).Coordinates);
 
-            reclaimer.BloodReagents = null;
-            reclaimer.SpawnedEntities.Clear();
             RemCompDeferred<ActiveBiomassReclaimerComponent>(uid);
         }
     }
@@ -136,19 +137,35 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnPowerChanged(EntityUid uid, BiomassReclaimerComponent component, ref PowerChangedEvent args)
     {
+        if (!TryComp<ActiveBiomassReclaimerComponent>(uid, out var active))
+            return;
+
         if (args.Powered)
         {
-            if (component.ProcessingTimer > 0)
-                EnsureComp<ActiveBiomassReclaimerComponent>(uid);
+            if (active.PowerLossTime is not { } PowerLossTime)
+                return;
+
+            var pauseDuration = _timing.CurTime - PowerLossTime;
+            active.ProcessingEndTime += pauseDuration;
+            active.NextMessTime += pauseDuration;
+            active.PowerLossTime = null;
+            _jitteringSystem.AddJitter(uid, -10, 100);
+            _sharedAudioSystem.PlayPvs("/Audio/Machines/reclaimer_startup.ogg", uid);
+            _ambientSoundSystem.SetAmbience(uid, true);
         }
         else
-            RemComp<ActiveBiomassReclaimerComponent>(uid);
+        {
+            active.PowerLossTime ??= _timing.CurTime;
+            RemComp<JitteringComponent>(uid);
+            _ambientSoundSystem.SetAmbience(uid, false);
+        }
     }
 
     [SubscribeLocalEvent]
     private void OnUnanchorAttempt(EntityUid uid, ActiveBiomassReclaimerComponent component, UnanchorAttemptEvent args)
     {
-        args.Cancel();
+        if (component.PowerLossTime == null)
+            args.Cancel();
     }
 
     [SubscribeLocalEvent]
@@ -206,30 +223,27 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
             return;
 
         var component = ent.Comp;
-        AddComp<ActiveBiomassReclaimerComponent>(ent);
+        var active = AddComp<ActiveBiomassReclaimerComponent>(ent);
 
         if (TryComp<BloodstreamComponent>(toProcess, out var stream) &&
             _solution.ResolveSolution(toProcess, stream.BloodSolutionName, ref stream.BloodSolution, out var solution))
         {
-            component.BloodReagents = solution.Clone();
-            var scale = component.BloodReagents.Volume <= FixedPoint2.Zero ? 0 : 50 / component.BloodReagents.Volume;
-            component.BloodReagents.ScaleSolution(scale);
+            active.BloodReagents = solution.Clone();
+            var scale = active.BloodReagents.Volume <= FixedPoint2.Zero ? 0 : 50 / active.BloodReagents.Volume;
+            active.BloodReagents.ScaleSolution(scale);
         }
         if (TryComp<ToolRefinableComponent>(toProcess, out var refinable))
         {
-            component.SpawnedEntities = refinable.RefineResult;
-        }
-        else
-        {
-            component.SpawnedEntities = new();
+            active.SpawnedEntities = new(refinable.RefineResult);
         }
 
         var expectedYield = physics.FixturesMass * component.YieldPerUnitMass;
         if (HasComp<ProduceComponent>(toProcess))
             expectedYield *= component.ProduceYieldMultiplier;
-        component.CurrentExpectedYield += expectedYield;
+        active.ExpectedYield = expectedYield;
 
-        component.ProcessingTimer = physics.FixturesMass * component.ProcessingTimePerUnitMass;
+        active.ProcessingEndTime = _timing.CurTime + TimeSpan.FromSeconds(physics.FixturesMass * component.ProcessingTimePerUnitMass);
+        active.NextMessTime = _timing.CurTime;
 
         var inventory = _inventory.GetHandOrInventoryEntities(toProcess);
         foreach (var item in inventory)
