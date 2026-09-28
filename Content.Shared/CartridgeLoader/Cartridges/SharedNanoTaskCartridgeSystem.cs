@@ -8,7 +8,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
-public sealed partial class NanoTaskCartridgeSystem : EntitySystem
+public abstract partial class SharedNanoTaskCartridgeSystem : EntitySystem
 {
     [Dependency] private CartridgeLoaderSystem _cartridgeLoader = default!;
     [Dependency] private IGameTiming _timing = default!;
