@@ -141,7 +141,7 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: dwarfism
-    - attachment: EquippedBelt
+    - attachment: EquippedId
       container: id
       order: 60
       displacementData:

@@ -75,7 +75,8 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
     private void GetAttachedVisuals(Entity<AttachedVisualsComponent> ent,
         VisualAttachmentPrototype attachmentPrototype,
         string prefix,
-        List<AttachedLayer> layers)
+        List<AttachedLayer> layers,
+        string? speciesSuffix = null)
     {
         foreach (var visuals in ent.Comp.AttachedVisuals)
         {
@@ -102,6 +103,8 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
                 if (!rsi.TryGetState(state, out var _))
                     return;
 
+                TryGetSpeciesState(state, speciesSuffix, rsi, out state);
+
                 var layer = new PrototypeLayerData();
                 layer.RsiPath = rsi.Path.ToString();
                 layer.State = state;
@@ -119,9 +122,14 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
                 if (layer.RsiPath == null && layer.TexturePath == null)
                 {
                     layer.RsiPath = ent.Comp.RsiPath;
-                    if (layer.RsiPath == null)
-                        continue;
                 }
+
+                if (layer.RsiPath == null || layer.State == null)
+                    continue;
+
+                var rsi = _resCache.GetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / layer.RsiPath).RSI;
+
+                TryGetSpeciesState(layer.State, speciesSuffix, rsi, out layer.State);
 
                 var keys = new HashSet<string>();
 
@@ -147,6 +155,21 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
                 GetAttachmentLayers(ent, childAttachment, layers, prefix);
             }
         }
+    }
+
+    private void TryGetSpeciesState(string state, string? speciesSuffix, RSI currentRsi, out string newState)
+    {
+        newState = state;
+
+        if (speciesSuffix == null)
+            return;
+
+        newState = $"{state}-{speciesSuffix}";
+
+        if (!currentRsi.TryGetState(newState, out var _))
+            newState = state;
+
+        return;
     }
 
     private void ApplyVisualizer(EntityUid uid,
@@ -276,7 +299,7 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
 
             var childPrefix = $"{keyPrefix}-{attachment.Container}-{child.Id}";
 
-            GetAttachedVisuals((child, childComp), attachmentPrototype, childPrefix, results);
+            GetAttachedVisuals((child, childComp), attachmentPrototype, childPrefix, results, attachment.SpeciesOverride);
         }
     }
 

@@ -100,7 +100,7 @@
     - attachment: EquippedBelt
       container: belt
       order: 65
-    - attachment: EquippedBelt
+    - attachment: EquippedId
       container: id
       order: 60
     - attachment: EquippedSuitStorage

@@ -95,6 +95,13 @@ public sealed partial class AttachmentDefinition : IComparable<AttachmentDefinit
     public Dictionary<Sex, DisplacementData>? SexedDisplacementData;
 
     /// <summary>
+    /// Species override suffix.
+    /// if set to "human" will check if there is an RSI state for statename-human.
+    /// </summary>
+    [DataField]
+    public string? SpeciesOverride;
+
+    /// <summary>
     /// Sorting order for sprite layering.
     /// 0 is the lowest/bottom layer (eg: jumpsuit).
     /// </summary>
