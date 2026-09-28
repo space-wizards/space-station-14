@@ -104,7 +104,6 @@
     - state: top
       shader: unshaded
 
-
 - type: entity
   id: GreenMushroom
   parent: BaseGiantMushroom
