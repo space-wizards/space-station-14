@@ -1,10 +1,8 @@
 # Configuration preset used on Wizard's Den Lizard
 
-# Nothing specific yet
-
 [game]
 hostname = "[EN][LRP][Nightly] Wizard's Den Lizard [NA West]"
-desc = "Official English Space Station 14 servers. Low roleplay ruleset. This server uses a nightly build containing the newest changes to the game; these changes may be experimental or unstable, and may be reverted before the next stable release. Please report bugs on our GitHub, forum, or community Discord."
+desc = "Official English server for Space Station 14. Low roleplay ruleset. This server uses a nightly build containing the newest changes to the game; these changes may be experimental or unstable, and may be reverted before the next stable release. Please report bugs on our GitHub, forum, or community Discord."
 panic_bunker.enabled = false
 panic_bunker.disable_with_admins = false
 panic_bunker.enable_without_admins = false
