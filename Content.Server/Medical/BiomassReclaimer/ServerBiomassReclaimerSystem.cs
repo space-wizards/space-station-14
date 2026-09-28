@@ -31,24 +31,24 @@ namespace Content.Server.Medical.BiomassReclaimer;
 
 public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSystem
 {
-    [Dependency] private IConfigurationManager _configManager = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private SharedJitteringSystem _jitteringSystem = default!;
-    [Dependency] private SharedAudioSystem _sharedAudioSystem = default!;
-    [Dependency] private SharedAmbientSoundSystem _ambientSoundSystem = default!;
-    [Dependency] private PuddleSystem _puddleSystem = default!;
-    [Dependency] private SharedSolutionContainerSystem _solution = default!;
-    [Dependency] private ThrowingSystem _throwing = default!;
-    [Dependency] private IRobustRandom _robustRandom = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private SharedAmbientSoundSystem _ambientSoundSystem = default!;
+    [Dependency] private IConfigurationManager _configManager = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedJitteringSystem _jitteringSystem = default!;
     [Dependency] private MaterialStorageSystem _material = default!;
     [Dependency] private SharedMindSystem _minds = default!;
-    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private PuddleSystem _puddleSystem = default!;
+    [Dependency] private IRobustRandom _robustRandom = default!;
+    [Dependency] private SharedAudioSystem _sharedAudioSystem = default!;
+    [Dependency] private SharedSolutionContainerSystem _solution = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
-    [Dependency] private EntityQuery<BiomassReclaimerComponent> _reclaimerQuery;
     [Dependency] private EntityQuery<ActiveBiomassReclaimerComponent> _activeQuery;
+    [Dependency] private EntityQuery<BiomassReclaimerComponent> _reclaimerQuery;
 
     public override void Update(float frameTime)
     {
@@ -217,10 +217,9 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
             var scale = active.BloodReagents.Volume <= FixedPoint2.Zero ? 0 : ent.Comp1.BloodSpillVolume / active.BloodReagents.Volume;
             active.BloodReagents.ScaleSolution(scale);
         }
+
         if (TryComp<ToolRefinableComponent>(toProcess, out var refinable))
-        {
             active.SpawnedEntities = EntitySpawnCollection.GetSpawns(refinable.RefineResult, _robustRandom);
-        }
     }
 
     private float CalculateYield(Entity<PhysicsComponent> toProcess, Entity<BiomassReclaimerComponent> reclaimer)
@@ -242,7 +241,7 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
     private void FinishProcessing(Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent)
     {
         var expectedYield = ent.Comp2.ExpectedYield + ent.Comp1.YieldRemainder;
-        var actualYield = (int) expectedYield;
+        var actualYield = (int)expectedYield;
         ent.Comp1.YieldRemainder = expectedYield - actualYield;
         _material.SpawnMultipleFromMaterial(actualYield, ent.Comp1.OutputMaterial, _transformQuery.GetComponent(ent).Coordinates);
         RemCompDeferred<ActiveBiomassReclaimerComponent>(ent);

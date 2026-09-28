@@ -13,13 +13,13 @@ namespace Content.Shared.Medical.BiomassReclaimer;
 public abstract partial class BiomassReclaimerSystem : EntitySystem
 {
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] protected SharedPopupSystem _popup = default!;
     [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] protected SharedPopupSystem _popup = default!;
     [Dependency] protected SharedPowerReceiverSystem _powerReceiver = default!;
 
+    [Dependency] protected EntityQuery<PhysicsComponent> _physicsQuery;
     [Dependency] protected EntityQuery<TransformComponent> _transformQuery;
     [Dependency] protected EntityQuery<ProduceComponent> _produceQuery;
-    [Dependency] protected EntityQuery<PhysicsComponent> _physicsQuery;
 
     [SubscribeLocalEvent]
     private void OnCanDrop(Entity<BiomassReclaimerComponent> ent, ref CanDropTargetEvent args)
@@ -37,7 +37,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
         if (!args.CanReach || args.Target == null)
             return;
 
-        TryStartInsertion(reclaimer, args.User, args.Used, needHand: true);
+        TryStartInsertion(reclaimer, args.User, args.Used, true);
     }
 
     [SubscribeLocalEvent]
@@ -46,20 +46,22 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.Handled = TryStartInsertion(reclaimer, args.User, args.Dragged, needHand: false);
+        args.Handled = TryStartInsertion(reclaimer, args.User, args.Dragged, false);
     }
 
     private bool TryStartInsertion(Entity<BiomassReclaimerComponent> reclaimer, EntityUid user, EntityUid toProcess, bool needHand)
     {
-        if (!TryValidateInsertionAndPopup(reclaimer, toProcess, user) || !_physicsQuery.TryComp(toProcess, out var physics))
+        if (!TryValidateInsertionAndPopup(reclaimer, toProcess, user) ||
+            !_physicsQuery.TryComp(toProcess, out var physics))
             return false;
 
         var delay = reclaimer.Comp.BaseInsertionDelay * physics.FixturesMass;
-        return _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, delay, new ReclaimerDoAfterEvent(), reclaimer, target: reclaimer, used: toProcess)
-        {
-            NeedHand = needHand,
-            BreakOnMove = true
-        });
+        return _doAfterSystem.TryStartDoAfter(
+            new DoAfterArgs(EntityManager, user, delay, new ReclaimerDoAfterEvent(), reclaimer, reclaimer, toProcess)
+            {
+                NeedHand = needHand,
+                BreakOnMove = true
+            });
     }
 
     protected bool TryValidateInsertionAndPopup(Entity<BiomassReclaimerComponent> reclaimer, EntityUid target, EntityUid user)

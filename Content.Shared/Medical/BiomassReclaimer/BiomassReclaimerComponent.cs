@@ -6,6 +6,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Medical.BiomassReclaimer;
 
+/// <summary>
+/// Configuration and persistent state of a biomass reclaimer.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(BiomassReclaimerSystem))]
 public sealed partial class BiomassReclaimerComponent : Component
