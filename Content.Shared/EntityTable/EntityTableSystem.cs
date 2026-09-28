@@ -149,7 +149,7 @@ public sealed class EntityTableContext : IEnumerable
     /// Removes data from the context, if the key exists.
     /// </summary>
     [PublicAPI]
-    public void RemoveData<T>([ForbidLiteral] EntityTableContextKey<T> key)
+    public void RemoveData<T>(EntityTableContextKey<T> key)
     {
         _data.Remove(key.Key);
     }
@@ -169,4 +169,4 @@ public sealed class EntityTableContext : IEnumerable
 /// <param name="Key">
 /// String value under which data will be stored inside. They should not have collisions, otherwise data will be rewritten.
 /// </param>
-public readonly record struct EntityTableContextKey<T>([ForbidLiteral] string Key);
+public readonly record struct EntityTableContextKey<T>(string Key);
