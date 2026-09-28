@@ -766,7 +766,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 1.5
+            Poison: 1.5 # TODO: Remove when bloodloss is more interesting. This is basically meant to give a bit more strength short-term before bloodloss damage kicks in.
       - !type:ModifyBleed
         amount: 1
       - !type:ModifyBloodLevel
