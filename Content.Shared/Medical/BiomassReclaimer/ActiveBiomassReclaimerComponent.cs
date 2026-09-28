@@ -16,14 +16,13 @@ public sealed partial class ActiveBiomassReclaimerComponent : Component
     public Solution? BloodReagents;
 
     /// <summary>
-    /// Amount of biomass that the mob being processed will yield.
-    /// This is calculated from the YieldPerUnitMass.
+    /// Amount of biomass that the entity being processed will yield.
+    /// This is calculated from YieldPerUnitMass.
     /// </summary>
     [ViewVariables]
     public float ExpectedYield;
 
     /// <summary>
-    /// This gets set for each mob it processes.
     /// When this time is reached, there is a chance for the reclaimer to either spill blood or throw an item.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
@@ -36,14 +35,13 @@ public sealed partial class ActiveBiomassReclaimerComponent : Component
     public TimeSpan? PowerLossTime;
 
     /// <summary>
-    /// This gets set for each mob it processes.
-    /// When this time is reached, spit out biomass.
+    /// When this time is reached, processing is completed and biomass is produced.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan ProcessingEndTime;
 
     /// <summary>
-    /// Entities that can be randomly spawned while processing a mob.
+    /// Entities that can be randomly spawned while processing.
     /// </summary>
     [ViewVariables]
     public List<EntitySpawnEntry> SpawnedEntities = [];

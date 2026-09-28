@@ -17,7 +17,7 @@ public sealed partial class BiomassReclaimerComponent : Component
     public SoundSpecifier? StartupSound = new SoundPathSpecifier("/Audio/Machines/reclaimer_startup.ogg");
 
     /// <summary>
-    /// The material produced when processing a mob.
+    /// The material produced when processing an entity.
     /// </summary>
     [DataField]
     public ProtoId<MaterialPrototype> OutputMaterial = "Biomass";
@@ -53,13 +53,13 @@ public sealed partial class BiomassReclaimerComponent : Component
     public float ItemThrowMaxSpeed = 10f;
 
     /// <summary>
-    /// The jitter amplitude while processing a mob.
+    /// The jitter amplitude while processing.
     /// </summary>
     [DataField]
     public float JitterAmplitude = -10f;
 
     /// <summary>
-    /// The jitter frequency while processing a mob.
+    /// The jitter frequency while processing.
     /// </summary>
     [DataField]
     public float JitterFrequency = 100f;
