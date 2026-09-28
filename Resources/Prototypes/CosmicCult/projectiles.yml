@@ -7,7 +7,7 @@
   - type: CosmicLambaParticle
   - type: PointLight
     enabled: true
-    color: "#c2385d"
+    color: "#42a4ae"
     radius: 2.0
     energy: 7.0
   - type: Sprite

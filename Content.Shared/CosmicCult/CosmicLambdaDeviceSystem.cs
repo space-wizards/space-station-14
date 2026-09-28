@@ -8,6 +8,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.CosmicCult;
 
+/// <summary>
+/// System for allowing devices to have additional functionality when Cosmic Cult-adjacent GameRules are active.
+/// This could be more genericized but there is neither need nor such a use-case elsewhere in the game.
+/// </summary>
 public sealed partial class CosmicLambdaDeviceSystem : EntitySystem
 {
     [Dependency] private GameTicker _ticker = default!;
