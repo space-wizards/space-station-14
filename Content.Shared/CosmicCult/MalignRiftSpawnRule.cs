@@ -1,10 +1,8 @@
 using System.Linq;
 using Content.Shared.Chat;
 using Content.Shared.CosmicCult.Components;
-using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.GameTicking.Rules;
-using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Station.Components;
 using Content.Shared.Station.Systems;
@@ -18,7 +16,7 @@ namespace Content.Shared.CosmicCult;
 
 public sealed partial class MalignRiftSpawnRule : GameRuleSystem<MalignRiftSpawnRuleComponent>
 {
-    [Dependency] private GameTicker _ticker = default!;
+    // [Dependency] private GameTicker _ticker = default!; // TODO: COSMIC CULT - GameRule Implementation
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedChatSystem _chatSystem = default!;
     [Dependency] private StationSystem _station = default!;
@@ -33,11 +31,11 @@ public sealed partial class MalignRiftSpawnRule : GameRuleSystem<MalignRiftSpawn
         if (!_station.TryGetRandomStation<StationEventEligibleComponent>(out var chosenStation))
             return;
 
-        if (_ticker.IsGameRuleActive<CosmicCultRuleComponent>())
-        {
-            _ticker.EndGameRule((rule, rule.Comp2)); // Cosmic cult's active! Don't actually proceed to the contents of the gamerule!
-            return;
-        }
+        // if (_ticker.IsGameRuleActive<CosmicCultRuleComponent>()) // TODO: COSMIC CULT - GameRule Implementation
+        // {
+        //     _ticker.EndGameRule((rule, rule.Comp2)); // Cosmic cult's active! Don't actually proceed to the contents of the gamerule!
+        //     return;
+        // }
 
         var totalCrew = _playerMan.Sessions.Count(session => session.Status == SessionStatus.InGame && HasComp<HumanoidProfileComponent>(session.AttachedEntity));
         var sender = Loc.GetString("cosmiccult-announcement-sender");
