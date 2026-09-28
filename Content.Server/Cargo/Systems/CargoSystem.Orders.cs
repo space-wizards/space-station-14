@@ -11,7 +11,6 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Paper;
 using Content.Shared.Station.Components;
-using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -65,9 +64,9 @@ public sealed partial class CargoSystem
     {
         var station = _station.GetOwningStation(ent.Owner);
 
+        // PrintSlip consoles can't remove orders as they can't add orders manually.
         if (ent.Comp.Mode == CargoOrderConsoleMode.PrintSlip
-            || !TryGetOrderDatabase(station, out var orderDatabase)
-            || !_bankQuery.TryComp(station, out var bank))
+            || !TryGetOrderDatabase(station, out var orderDatabase))
             return;
 
         RemoveOrder(station.Value, args.OrderId, orderDatabase);
@@ -88,7 +87,6 @@ public sealed partial class CargoSystem
 
         var stationUid = _station.GetOwningStation(ent.Owner);
         if (!TryGetOrderDatabase(stationUid, out var orderDatabase)
-            || !_bankQuery.TryComp(stationUid, out var bank)
             || !ProtoMan.Resolve<CargoProductPrototype>(args.CargoProductId, out var product)
             || !GetAvailableProducts(ent).Contains(args.CargoProductId))
             return;
@@ -256,11 +254,11 @@ public sealed partial class CargoSystem
         StationCargoOrderDatabaseComponent orderDb
     )
     {
+        // Every OrderId is unique
         var sequenceIdx = orderDb.Orders.FindIndex(order => order.OrderId == index);
         if (sequenceIdx != -1)
-        {
             orderDb.Orders.RemoveAt(sequenceIdx);
-        }
+
         UpdateOrders(dbUid);
     }
 
@@ -309,10 +307,10 @@ public sealed partial class CargoSystem
     public bool AddAndApproveOrder(
         EntityUid dbUid,
         CargoProductPrototype product,
-        int qty,
+        int quantity,
         string sender,
         string description,
-        string dest,
+        string destination,
         StationCargoOrderDatabaseComponent component,
         ProtoId<CargoAccountPrototype> account,
         Entity<StationDataComponent> stationData
@@ -320,10 +318,10 @@ public sealed partial class CargoSystem
     {
         // Make an order
         var id = GenerateOrderId(component);
-        var order = new CargoOrderData(id, product, qty, sender, description, account);
+        var order = new CargoOrderData(id, product, quantity, sender, description, account);
 
         // Approve it now
-        order.SetApproverData(dest, sender);
+        order.SetApproverData(destination, sender);
         order.Approved = true;
 
         // Log order addition
@@ -349,16 +347,14 @@ public sealed partial class CargoSystem
 
         var stationUid = _station.GetOwningStation(ent);
 
-        if (!TryGetOrderDatabase(stationUid, out var orderDatabase))
-            return;
-
         if (!ProtoMan.TryIndex(slip.Product, out var product))
         {
             Log.Error($"Tried to add invalid cargo product {slip.Product} as order!");
             return;
         }
 
-        if (!ent.Comp.AllowedGroups.Contains(product.Group))
+        if (!TryGetOrderDatabase(stationUid, out var orderDatabase)
+            || !ent.Comp.AllowedGroups.Contains(product.Group))
             return;
 
         var orderId = GenerateOrderId(orderDatabase);
@@ -584,6 +580,7 @@ public sealed partial class CargoSystem
         {
             if (Timing.CurTime < bank.NextIncomeTime)
                 continue;
+
             bank.NextIncomeTime += bank.IncomeDelay;
 
             var balanceToAdd = (int)Math.Round(bank.IncreasePerSecond * bank.IncomeDelay.TotalSeconds);
@@ -647,6 +644,7 @@ public sealed partial class CargoSystem
             orders = station.Comp.Orders.Where(order => order.Account == account);
         else
             orders = station.Comp.Orders;
+
         return orders.Where(order => approved == null || order.Approved == approved).ToList();
     }
 
