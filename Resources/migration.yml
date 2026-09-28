@@ -1136,6 +1136,10 @@ DrinkWaterJug: JugWater
 #2026-09-05
 AsimovCircuitBoard: CrewsimovCircuitBoard
 
-#2026-09-21
+# 2026-09-24
+ClothingShoesTourist: ClothingShoesSandalsBlack
+ClothingShoesWizard: ClothingShoesSandalsBrown
+
+#2026-09-27
 BorgModuleGardening: BorgModuleBotany
 BorgModuleHarvesting: BorgModuleBotany

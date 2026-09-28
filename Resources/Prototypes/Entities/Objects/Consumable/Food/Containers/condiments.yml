@@ -21,7 +21,8 @@
   - type: StaticPrice
     price: 0
   - type: Tag
-    tags: [ Ingredient ]
+    tags:
+      - Ingredient
 
 # Packets
 
@@ -387,7 +388,9 @@
   - type: Icon
     state: bottle-coldsauce
   - type: Tag
-    tags: [ Coldsauce, Ingredient ]
+    tags:
+      - Coldsauce
+      - Ingredient
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -411,7 +414,9 @@
   - type: Icon
     state: bottle-enzyme
   - type: Tag
-    tags: [ Enzyme, Ingredient ]
+    tags:
+    - Enzyme
+    - Ingredient
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -457,7 +462,9 @@
   - type: Icon
     state: bottle-hotsauce
   - type: Tag
-    tags: [ Hotsauce, Ingredient ]
+    tags:
+    - Hotsauce
+    - Ingredient
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -481,7 +488,9 @@
   - type: Icon
     state: bottle-ketchup
   - type: Tag
-    tags: [ Ingredient, Ketchup ]
+    tags:
+    - Ingredient
+    - Ketchup
 
 - type: entity
   parent: BaseFoodCondimentBottle
