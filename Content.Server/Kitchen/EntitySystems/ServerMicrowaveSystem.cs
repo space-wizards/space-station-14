@@ -27,11 +27,11 @@ public sealed partial class ServerMicrowaveSystem : MicrowaveSystem
     [Dependency] private EntityQuery<MachineComponent> _machineQuery;
 
     /// <summary>
-    ///     Kills the user by microwaving their head.
+    /// Kills the user by microwaving their head.
     /// </summary>
     /// <remarks>
-    ///     TODO: Make this not awful, it keeps any items attached to your head still on and you can
-    ///     revive someone and cogni them so you have some dumb headless fuck running around. I've seen it happen.
+    /// TODO: Make this not awful, it keeps any items attached to your head still on and you can
+    /// revive someone and cogni them so you have some dumb headless fuck running around. I've seen it happen.
     /// </remarks>
     [SubscribeLocalEvent]
     private void OnSuicideByEnvironment(Entity<MicrowaveComponent> ent, ref SuicideByEnvironmentEvent args)
@@ -64,10 +64,10 @@ public sealed partial class ServerMicrowaveSystem : MicrowaveSystem
     }
 
     /// <summary>
-    ///     Prevents construction graph operations as a result of temperature changes.
+    /// Prevents construction graph operations as a result of temperature changes.
     /// </summary>
     /// <remarks>
-    ///     For example: raw meat will not turn into steak while it is actively being microwaved.
+    /// For example: raw meat will not turn into steak while it is actively being microwaved.
     /// </remarks>
     [SubscribeLocalEvent]
     private void OnConstructionTemp(Entity<ActivelyMicrowavedComponent> ent, ref OnConstructionTemperatureEvent args)

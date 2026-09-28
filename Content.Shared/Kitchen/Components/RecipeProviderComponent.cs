@@ -3,8 +3,8 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Kitchen.Components;
 
 /// <summary>
-///     Applied to entities that have access to secret microwave recipes.
-///     See: <see cref="MicrowaveMealRecipePrototype.SecretRecipe"/>
+/// Applied to entities that have access to secret microwave recipes.
+/// See: <see cref="MicrowaveMealRecipePrototype.SecretRecipe"/>
 /// </summary>
 [RegisterComponent]
 public sealed partial class FoodRecipeProviderComponent : Component

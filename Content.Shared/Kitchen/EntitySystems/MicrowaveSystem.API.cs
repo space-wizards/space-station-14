@@ -8,7 +8,7 @@ namespace Content.Shared.Kitchen.EntitySystems;
 public abstract partial class MicrowaveSystem
 {
     /// <summary>
-    ///     Helper function to get if an entity is an active microwave.
+    /// Helper function to get if an entity is an active microwave.
     /// </summary>
     /// <param name="microwave">The microwave entity.</param>
     /// <returns>Whether or not this entity is an active microwave.</returns>
@@ -20,7 +20,7 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Helper function to get the contents of a microwave.
+    /// Helper function to get the contents of a microwave.
     /// </summary>
     /// <param name="microwave">The microwave entity.</param>
     /// <returns>A list of microwave contents.</returns>
@@ -34,7 +34,7 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Helper function to check if a microwave has ingredient contents.
+    /// Helper function to check if a microwave has ingredient contents.
     /// </summary>
     /// <param name="microwave">The microwave entity.</param>
     /// <returns>Whether or not this microwave contains anything.</returns>
@@ -45,15 +45,15 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Gets a complete ordered list of usable recipes for this appliance.
+    /// Gets a complete ordered list of usable recipes for this appliance.
     /// </summary>
     /// <remarks>
-    ///     Note that the order of recipes is meaningful. When a valid recipe is chosen, the first item
-    ///     in the list that satisfies the conditions of the recipe is selected.
+    /// Note that the order of recipes is meaningful. When a valid recipe is chosen, the first item
+    /// in the list that satisfies the conditions of the recipe is selected.
     ///
-    ///     Recipe prototypes in the recipe manager are pre-sorted based on complexity, so more "specific"
-    ///     recipes will be selected first. Secret recipes come before all non-secret prototype recipes.
-    ///     Do not sort the result of this function!
+    /// Recipe prototypes in the recipe manager are pre-sorted based on complexity, so more "specific"
+    /// recipes will be selected first. Secret recipes come before all non-secret prototype recipes.
+    /// Do not sort the result of this function!
     /// </remarks>
     /// <param name="uid">The appliance to get recipes for.</param>
     /// <returns>A complete list of usable recipe prototypes.</returns>
@@ -73,8 +73,8 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Given a recipe, a list of available ingredients, and a cooking time, this functions
-    ///     gets how many times we can make this given recipe.
+    /// Given a recipe, a list of available ingredients, and a cooking time, this functions
+    /// gets how many times we can make this given recipe.
     /// </summary>
     /// <param name="recipe">A cooking recipe.</param>
     /// <param name="ingredients">The ingredients we have available.</param>
@@ -105,17 +105,17 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Given an appliance entity and a list of available ingredients, this function gets the first valid
-    ///     usable recipe for cooking.
+    /// Given an appliance entity and a list of available ingredients, this function gets the first valid
+    /// usable recipe for cooking.
     /// </summary>
     /// <remarks>
-    ///     The appliance entity itself is used to get secret recipes.
+    /// The appliance entity itself is used to get secret recipes.
     /// </remarks>
     /// <param name="uid">An appliance to fetch a recipe for.</param>
     /// <param name="ingredients">A list of available ingredients.</param>
     /// <param name="cookTime">How long we plan to cook for.</param>
     /// <returns>
-    ///     The first valid recipe we can use. If there is none, this is (null, 0).
+    /// The first valid recipe we can use. If there is none, this is (null, 0).
     /// </returns>
     [PublicAPI]
     public PortionedRecipe? GetRecipe(EntityUid uid,
@@ -134,8 +134,8 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Gets a complete list of recipe-usable ingredients from a list of items, including solids,
-    ///     stacks, and reagents.
+    /// Gets a complete list of recipe-usable ingredients from a list of items, including solids,
+    /// stacks, and reagents.
     /// </summary>
     /// <param name="items">The list of items to use as ingredients.</param>
     /// <returns>Cooking ingredient quantities representing the total usable ingredient list.</returns>

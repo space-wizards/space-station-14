@@ -12,7 +12,6 @@ public sealed partial class ActivelyMicrowavedComponent : Component
     /// <summary>
     /// The microwave this entity is actively being microwaved by.
     /// </summary>
-    [DataField]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public EntityUid? Microwave;
 }

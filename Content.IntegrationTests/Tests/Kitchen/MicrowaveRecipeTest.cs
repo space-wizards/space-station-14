@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.Kitchen;
 
 /// <summary>
-///     Integration tests related to microwaves and microwave recipes.
+/// Integration tests related to microwaves and microwave recipes.
 /// </summary>
 public sealed class MicrowaveRecipeTest : GameTest
 {

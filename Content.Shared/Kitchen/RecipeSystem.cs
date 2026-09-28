@@ -4,18 +4,18 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Kitchen;
 
 /// <summary>
-///     A system that caches all available non-secret microwave recipes.
+/// A system that caches all available non-secret microwave recipes.
 /// </summary>
 public sealed partial class RecipeSystem : EntitySystem
 {
     /// <summary>
-    ///     A list of all recipes available to the recipe manager.
+    /// A list of all recipes available to the recipe manager.
     /// </summary>
     /// <remarks>
-    ///     Order matters! The microwave system will use the *first* valid recipe.
-    ///     For this reason, this list gets sorted by "complexity" - recipes with more ingredients
-    ///     are sorted first. We make the assumption that more complex recipes are more "specific"
-    ///     than less complex recipes whose requirements are also fulfilled.
+    /// Order matters! The microwave system will use the *first* valid recipe.
+    /// For this reason, this list gets sorted by "complexity" - recipes with more ingredients
+    /// are sorted first. We make the assumption that more complex recipes are more "specific"
+    /// than less complex recipes whose requirements are also fulfilled.
     /// </remarks>
     public List<MicrowaveMealRecipePrototype> Recipes { get; private set; } = new();
 

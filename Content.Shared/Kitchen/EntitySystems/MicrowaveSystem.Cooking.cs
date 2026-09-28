@@ -7,7 +7,7 @@ namespace Content.Shared.Kitchen.EntitySystems;
 public abstract partial class MicrowaveSystem
 {
     /// <summary>
-    ///     Adds temperature to every item in the microwave based on the time it took to microwave.
+    /// Adds temperature to every item in the microwave based on the time it took to microwave.
     /// </summary>
     /// <param name="ent">The microwave entity.</param>
     /// <param name="time">The heating time that has elapsed, in seconds.</param>
@@ -34,7 +34,7 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Attempts to roll random "malfunction" events on a malfunctioning microwave.
+    /// Attempts to roll random "malfunction" events on a malfunctioning microwave.
     /// </summary>
     protected virtual void RollMalfunction(Entity<MicrowaveComponent> ent)
     {
@@ -52,9 +52,9 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Start up the microwave. This processes each item in the microwave to experience microwave "on-cooking"
-    ///     effects, attempts to retrieve a microwave recipe with its valid ingredients, and activates the
-    ///     microwave visually.
+    /// Start up the microwave. This processes each item in the microwave to experience microwave "on-cooking"
+    /// effects, attempts to retrieve a microwave recipe with its valid ingredients, and activates the
+    /// microwave visually.
     /// </summary>
     public void StartCooking(Entity<MicrowaveComponent> microwave, EntityUid? user)
     {
@@ -82,7 +82,7 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Starts up the microwave cooking operation, setting the starting time and recipe of the microwave.
+    /// Starts up the microwave cooking operation, setting the starting time and recipe of the microwave.
     /// </summary>
     /// <param name="microwave">The microwave entity.</param>
     /// <param name="recipe">The recipe and portion count associated with this operaton.</param>
@@ -116,16 +116,16 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Iterates over the contents of a microwave and performs some on-microwaved effects.
-    ///     Plastic items will melt and turn into burned messes.
-    ///     Metal items will cause the microwave to malfunction.
+    /// Iterates over the contents of a microwave and performs some on-microwaved effects.
+    /// Plastic items will melt and turn into burned messes.
+    /// Metal items will cause the microwave to malfunction.
     /// </summary>
     /// <remarks>
-    ///     This also raises a BeingMicrowavedEvent on each item in the microwave. The result of
-    ///     this event may cause us to exit early and proceed with cooking - for example, an
-    ///     entity that causes the microwave to explode when microwaved.
+    /// This also raises a BeingMicrowavedEvent on each item in the microwave. The result of
+    /// this event may cause us to exit early and proceed with cooking - for example, an
+    /// entity that causes the microwave to explode when microwaved.
     ///
-    ///     If cooking is not cancelled, the items inside will gain `ActiveMicrowaveComponent.`.
+    /// If cooking is not cancelled, the items inside will gain `ActiveMicrowaveComponent.`.
     /// </remarks>
     /// <param name="microwave">The microwave entity.</param>
     /// <param name="contents">The contents of the microwave.</param>
@@ -165,9 +165,9 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Processes a single entity in the microwave. This modifies / results in three
-    ///     different parameters related to the operation: if the microwave should malfunction,
-    ///     if the microwave should stop, and if the entity is still usable as an ingredient.
+    /// Processes a single entity in the microwave. This modifies / results in three
+    /// different parameters related to the operation: if the microwave should malfunction,
+    /// if the microwave should stop, and if the entity is still usable as an ingredient.
     /// </summary>
     /// <param name="microwave">The microwave entity.</param>
     /// <param name="item">The entity being microwaved.</param>
@@ -208,11 +208,11 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Turns a single entity in the microwave into a failed "burned mess" recipe.
+    /// Turns a single entity in the microwave into a failed "burned mess" recipe.
     /// </summary>
     /// <remarks>
-    ///     This happens to entities that pass <see cref="MicrowaveComponent.BurnWhenCookedWhitelist"/>
-    ///     when microwaved.
+    /// This happens to entities that pass <see cref="MicrowaveComponent.BurnWhenCookedWhitelist"/>
+    /// when microwaved.
     /// </remarks>
     /// <param name="microwave">The microwave entity.</param>
     /// <param name="item">The entity to burn.</param>
@@ -227,8 +227,8 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Completes a recipe in a microwave, removing its relevant ingredient contents
-    ///     from the microwave and producing finished dish entities in their place.
+    /// Completes a recipe in a microwave, removing its relevant ingredient contents
+    /// from the microwave and producing finished dish entities in their place.
     /// </summary>
     /// <param name="microwave">The microwave entity.</param>
     /// <param name="portionedRecipe">The recipe we are using.</param>
@@ -247,8 +247,8 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Finishes a cooking operation in the microwave, resulting in a finished food recipe,
-    ///     the ejection of all remaining ingredients, and a sound cue.
+    /// Finishes a cooking operation in the microwave, resulting in a finished food recipe,
+    /// the ejection of all remaining ingredients, and a sound cue.
     /// </summary>
     /// <param name="ent">The micorawve entity.</param>
     private void CompleteCooking(Entity<ActiveMicrowaveComponent, MicrowaveComponent> ent)
@@ -272,10 +272,10 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Removes components from a microwave and its contents related to active microwave use.
+    /// Removes components from a microwave and its contents related to active microwave use.
     /// </summary>
     /// <remarks>
-    ///     When the ActiveMicrowaveComponent is removed, it will trigger <see cref="OnCookEnd"/> on shutdown.
+    /// When the ActiveMicrowaveComponent is removed, it will trigger <see cref="OnCookEnd"/> on shutdown.
     /// </remarks>
     /// <param name="ent">The microwave entity.</param>
     private void StopCooking(Entity<MicrowaveComponent> ent)

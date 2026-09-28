@@ -65,7 +65,7 @@ public sealed partial class MicrowaveBoundUserInterface(EntityUid owner, Enum ui
     }
 
     /// <summary>
-    ///     Update the state of various controls in this menu based on the active / empty status of the microwave.
+    /// Update the state of various controls in this menu based on the active / empty status of the microwave.
     /// </summary>
     private void UpdateActiveDisplay(MicrowaveComponent? comp)
     {
@@ -88,7 +88,7 @@ public sealed partial class MicrowaveBoundUserInterface(EntityUid owner, Enum ui
     }
 
     /// <summary>
-    ///     Update the panel containing all of the microwave's contents.
+    /// Update the panel containing all of the microwave's contents.
     /// </summary>
     private void RefreshContentsDisplay()
     {
@@ -112,7 +112,7 @@ public sealed partial class MicrowaveBoundUserInterface(EntityUid owner, Enum ui
     }
 
     /// <summary>
-    ///     Get the texture associated with an ingredient.
+    /// Get the texture associated with an ingredient.
     /// </summary>
     /// <param name="uid">The ingredient entity.</param>
     private Texture? GetEntityIcon(EntityUid uid)

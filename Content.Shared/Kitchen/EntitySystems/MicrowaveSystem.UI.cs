@@ -6,7 +6,7 @@ namespace Content.Shared.Kitchen.EntitySystems;
 public abstract partial class MicrowaveSystem
 {
     /// <summary>
-    ///     Subscribe to UI-related events for microwaves.
+    /// Subscribe to UI-related events for microwaves.
     /// </summary>
     private void InitializeUI()
     {
@@ -14,7 +14,7 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Ejects all ingredients from the microwave.
+    /// Ejects all ingredients from the microwave.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnEjectAll(Entity<MicrowaveComponent> ent, ref MicrowaveEjectMessage args)
@@ -30,7 +30,7 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Ejects an ingredient entity from the microwave.
+    /// Ejects an ingredient entity from the microwave.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnEjectSolidIndexed(Entity<MicrowaveComponent> ent, ref MicrowaveEjectSolidIndexedMessage args)
@@ -45,7 +45,7 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Change the cook time of the microwave by selecting a new button index.
+    /// Change the cook time of the microwave by selecting a new button index.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnSelectCookTime(Entity<MicrowaveComponent> ent, ref MicrowaveSelectCookTimeMessage args)
@@ -68,8 +68,8 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Update the UI state of the microwave, including the microwave's current contents, cook time,
-    ///     and whether or not it is actively cooking.
+    /// Update the UI state of the microwave, including the microwave's current contents, cook time,
+    /// and whether or not it is actively cooking.
     /// </summary>
     /// <param name="microwave">The microwave to update.</param>
     public virtual void UpdateUI(Entity<MicrowaveComponent?> microwave)
@@ -79,42 +79,42 @@ public abstract partial class MicrowaveSystem
 }
 
 /// <summary>
-///     Sent from client to server to request the microwave to start cooking.
+/// Sent from client to server to request the microwave to start cooking.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class MicrowaveStartCookMessage : BoundUserInterfaceMessage;
 
 /// <summary>
-///     Sent from client to server to request ejecting all contents of the microwave.
+/// Sent from client to server to request ejecting all contents of the microwave.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class MicrowaveEjectMessage : BoundUserInterfaceMessage;
 
 /// <summary>
-///     Sent from client to server to request ejecting an entity from the microwave.
+/// Sent from client to server to request ejecting an entity from the microwave.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class MicrowaveEjectSolidIndexedMessage(NetEntity entityId) : BoundUserInterfaceMessage
 {
     /// <summary>
-    ///     The entity to eject from the microwave.
+    /// The entity to eject from the microwave.
     /// </summary>
     public NetEntity EntityId = entityId;
 }
 
 /// <summary>
-///     Sent from client to server to request changing the selected cook time button of the microwave.
+/// Sent from client to server to request changing the selected cook time button of the microwave.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class MicrowaveSelectCookTimeMessage(int buttonIndex, uint inputTime) : BoundUserInterfaceMessage
 {
     /// <summary>
-    ///     The index of the cook time button to select.
+    /// The index of the cook time button to select.
     /// </summary>
     public int ButtonIndex = buttonIndex;
 
     /// <summary>
-    ///     The cooking time associated with the newly-selected button.
+    /// The cooking time associated with the newly-selected button.
     /// </summary>
     public uint NewCookTime = inputTime;
 }

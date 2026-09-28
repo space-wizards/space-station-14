@@ -20,8 +20,8 @@ using Robust.Shared.Timing;
 namespace Content.Shared.Kitchen.EntitySystems;
 
 /// <summary>
-///     A system that handles microwave logic, such as activation, malfunctions, and producing cooked recipes.
-///     TODO: Replace with a more sophisticated(?) cooking system.
+/// A system that handles microwave logic, such as activation, malfunctions, and producing cooked recipes.
+/// TODO: Replace with a more sophisticated(?) cooking system.
 /// </summary>
 public abstract partial class MicrowaveSystem : EntitySystem
 {
@@ -56,7 +56,7 @@ public abstract partial class MicrowaveSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Processes every active microwave's ongoing cooking operation.
+    /// Processes every active microwave's ongoing cooking operation.
     /// </summary>
     public override void Update(float frameTime)
     {
@@ -98,7 +98,7 @@ public abstract partial class MicrowaveSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Adds an "on" port to this microwave.
+    /// Adds an "on" port to this microwave.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<MicrowaveComponent> ent, ref MapInitEvent args)
@@ -107,8 +107,8 @@ public abstract partial class MicrowaveSystem : EntitySystem
     }
 
     /// <summary>
-    ///     When a microwave is broken, its appearance changes and it stops being usable for cooking.
-    ///     It will stop any ongoing cooking operations and empty its contents.
+    /// When a microwave is broken, its appearance changes and it stops being usable for cooking.
+    /// It will stop any ongoing cooking operations and empty its contents.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnBreak(Entity<MicrowaveComponent> ent, ref BreakageEventArgs args)
@@ -123,7 +123,7 @@ public abstract partial class MicrowaveSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Stop cooking if the microwave loses power.
+    /// Stop cooking if the microwave loses power.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnPowerChanged(Entity<MicrowaveComponent> ent, ref PowerChangedEvent args)
@@ -138,7 +138,7 @@ public abstract partial class MicrowaveSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Empty the microwave if it is unanchored.
+    /// Empty the microwave if it is unanchored.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnAnchorChanged(Entity<MicrowaveComponent> ent, ref AnchorStateChangedEvent args)
@@ -148,7 +148,7 @@ public abstract partial class MicrowaveSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Turns the microwave on if its "on" port is activated.
+    /// Turns the microwave on if its "on" port is activated.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnSignalReceived(Entity<MicrowaveComponent> ent, ref SignalReceivedEvent args)
@@ -161,7 +161,7 @@ public abstract partial class MicrowaveSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Updates the microwave's appearance state.
+    /// Updates the microwave's appearance state.
     /// </summary>
     /// <param name="ent">The microwave entity.</param>
     /// <param name="state">The visual state of the microwave.</param>

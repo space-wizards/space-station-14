@@ -52,9 +52,9 @@ public sealed partial class MicrowaveMenu : FancyWindow
     }
 
     /// <summary>
-    ///     Set the visibility of the "busy overlay panel" over the microwave's ingredients,
-    ///     indicating to the player that the ingredients list cannot be interacted with
-    ///     (namely while the microwave is active.)
+    /// Set the visibility of the "busy overlay panel" over the microwave's ingredients,
+    /// indicating to the player that the ingredients list cannot be interacted with
+    /// (namely while the microwave is active.)
     /// </summary>
     /// <param name="shouldDisable">Whether or not this microwave is "busy".</param>
     public void ToggleBusyDisableOverlayPanel(bool shouldDisable)
@@ -78,7 +78,7 @@ public sealed partial class MicrowaveMenu : FancyWindow
     }
 
     /// <summary>
-    ///     Set the "color light" state of the ingredient panel's ingredient box.
+    /// Set the "color light" state of the ingredient panel's ingredient box.
     /// </summary>
     /// <param name="value">Wheether or not the panel is "lit" (yellow) or "unlit" (gray).</param>
     public void SetIngredientPanelLight(bool value)
@@ -91,7 +91,7 @@ public sealed partial class MicrowaveMenu : FancyWindow
     }
 
     /// <summary>
-    ///     Attempt to get the cook time button at the given index.
+    /// Attempt to get the cook time button at the given index.
     /// </summary>
     /// <param name="index">The index to select.</param>
     /// <param name="button">The cook time button, if found.</param>

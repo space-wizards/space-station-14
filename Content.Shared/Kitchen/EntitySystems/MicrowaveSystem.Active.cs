@@ -8,7 +8,7 @@ namespace Content.Shared.Kitchen.EntitySystems;
 public abstract partial class MicrowaveSystem
 {
     /// <summary>
-    ///     Adjusts a microwave's visuals, audio, and power draw when activated.
+    /// Adjusts a microwave's visuals, audio, and power draw when activated.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnCookStart(Entity<ActiveMicrowaveComponent> ent, ref ComponentStartup args)
@@ -23,7 +23,7 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Adjusts a microwave's visuals, audio, and power draw when activated.
+    /// Adjusts a microwave's visuals, audio, and power draw when activated.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnCookEnd(Entity<ActiveMicrowaveComponent> ent, ref ComponentShutdown args)
@@ -35,7 +35,7 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Adds ActivelyMicrowavedComponent to entities inserted into an active microwave.
+    /// Adds ActivelyMicrowavedComponent to entities inserted into an active microwave.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnActiveMicrowaveInsert(Entity<ActiveMicrowaveComponent> ent, ref EntInsertedIntoContainerMessage args)
@@ -47,7 +47,7 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Removes ActivelyMicrowavedComponent from entities removed from an active microwave.
+    /// Removes ActivelyMicrowavedComponent from entities removed from an active microwave.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnActiveMicrowaveRemove(Entity<ActiveMicrowaveComponent> ent, ref EntRemovedFromContainerMessage args)
@@ -59,11 +59,11 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Prevents reagent reactions in entitites that are actively being microwaved.
+    /// Prevents reagent reactions in entitites that are actively being microwaved.
     /// </summary>
     /// <remarks>
-    ///     For example, raw egg would otherwise turn into cooked egg during the process, preventing it from being
-    ///     "spent" when the microwave is finished cooking.
+    /// For example, raw egg would otherwise turn into cooked egg during the process, preventing it from being
+    /// "spent" when the microwave is finished cooking.
     /// </remarks>
     [SubscribeLocalEvent]
     private void OnReactionAttempt(Entity<ActivelyMicrowavedComponent> ent, ref SolutionRelayEvent<ReactionAttemptEvent> args)
@@ -89,7 +89,7 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Adjusts a microwave's visuals, audio, and power draw when activated.
+    /// Adjusts a microwave's visuals, audio, and power draw when activated.
     /// </summary>
     protected virtual void ActivateMicrowaveCycle(Entity<MicrowaveComponent> ent)
     {
@@ -98,7 +98,7 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Adjusts a microwave's visuals, audio, and power draw when deactivated.
+    /// Adjusts a microwave's visuals, audio, and power draw when deactivated.
     /// </summary>
     protected virtual void DeactivateMicrowaveCycle(Entity<MicrowaveComponent> ent)
     {
@@ -111,7 +111,7 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Add ActivelyMicrowavedComponent to items that are being actively microwaved.
+    /// Add ActivelyMicrowavedComponent to items that are being actively microwaved.
     /// </summary>
     /// <param name="uid">The entity being microwaved.</param>
     /// <param name="microwave">That dastardly microwave</param>

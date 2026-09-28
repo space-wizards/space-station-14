@@ -27,12 +27,12 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Adds all usable ingredients from a given entity to an ingredient list.
+    /// Adds all usable ingredients from a given entity to an ingredient list.
     /// </summary>
     /// <remarks>
-    ///     The entity itself is a "solid".
-    ///     If it's a stack, then that stack is its "stacks".
-    ///     If it has a usable ingredient solution, then the solution's contents are "reagents".
+    /// The entity itself is a "solid".
+    /// If it's a stack, then that stack is its "stacks".
+    /// If it has a usable ingredient solution, then the solution's contents are "reagents".
     /// </remarks>
     /// <param name="item">The entity to use as ingredients.</param>
     /// <param name="ingredients">A dictionary of available ingredients to add to.</param>
@@ -54,10 +54,10 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Attempts to get a solution from an entity that can be used as viable ingredients in a recipe.
+    /// Attempts to get a solution from an entity that can be used as viable ingredients in a recipe.
     /// </summary>
     /// <remarks>
-    ///     For example, a beaker's contents will work, but not the contents of an uncracked egg.
+    /// For example, a beaker's contents will work, but not the contents of an uncracked egg.
     /// </remarks>
     /// <param name="uid">The entity to attempt to get a usable ingredient solution for.</param>
     /// <param name="solutionEntity">A usable solution entity, if available.</param>
@@ -71,9 +71,9 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Given a dictionary of stacks that need to be spent in a recipe, and the amount of stacks
-    ///     of a stack we have available, this function gets the number of stacks we need to remove
-    ///     from the stack entity. It also removes this amount from the remaining stacks dictionary.
+    /// Given a dictionary of stacks that need to be spent in a recipe, and the amount of stacks
+    /// of a stack we have available, this function gets the number of stacks we need to remove
+    /// from the stack entity. It also removes this amount from the remaining stacks dictionary.
     /// </summary>
     /// <param name="availableStacks">How many stacks we have available.</param>
     /// <param name="stackId">The stack ID associated with the stack.</param>
@@ -93,9 +93,9 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Given a dictionary of reagents that need to be spent in a recipe, and a quantity of a reagent
-    ///     that we have available in a solution, this function gets the amount of reagents we need to
-    ///     remove from the solution. This also removes that amount from the "reagents to spend" dictionary.
+    /// Given a dictionary of reagents that need to be spent in a recipe, and a quantity of a reagent
+    /// that we have available in a solution, this function gets the amount of reagents we need to
+    /// remove from the solution. This also removes that amount from the "reagents to spend" dictionary.
     /// </summary>
     /// <param name="availableQuantity">How much reagent we have available.</param>
     /// <param name="reagent">The ID of the reagent we are spending.</param>
@@ -115,8 +115,8 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Removes a solid ingredient that is used in a recipe, removing it from the dictionary of
-    ///     remaining solids that still need to be spent in the recipe.
+    /// Removes a solid ingredient that is used in a recipe, removing it from the dictionary of
+    /// remaining solids that still need to be spent in the recipe.
     /// </summary>
     /// <param name="item">The entity to remove.</param>
     /// <param name="itemProto">The solid ID of the ingredient.</param>
@@ -136,14 +136,14 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Given a dictionary of remaining stacks that need to be spent in a recipe, this function
-    ///     reduces a stack entity's count by however many stacks need to be spent. This also removes the
-    ///     stack count from our remaining ingredients.
+    /// Given a dictionary of remaining stacks that need to be spent in a recipe, this function
+    /// reduces a stack entity's count by however many stacks need to be spent. This also removes the
+    /// stack count from our remaining ingredients.
     /// </summary>
     /// <remarks>
-    ///     If a recipe calls for two stacks of plasma sheets, and you put 5 sheets in the microwave, then
-    ///     the plasma sheet stack would reduce by 2 (leaving you with 3 remaining), and plasma will
-    ///     be removed from the remaining stacks dictionary.
+    /// If a recipe calls for two stacks of plasma sheets, and you put 5 sheets in the microwave, then
+    /// the plasma sheet stack would reduce by 2 (leaving you with 3 remaining), and plasma will
+    /// be removed from the remaining stacks dictionary.
     /// </remarks>
     /// <param name="ent">The stack entity.</param>
     /// <param name="ingredientsToSpend">The struct representing ingredients we still need to spend.</param>
@@ -162,14 +162,14 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Given a dictionary of remaining reagents that still need to be spent in a recipe, this function iterates
-    ///     over a solution's contents and subtracts reagents according to the reagents to spend. This also removes
-    ///     it from our remaining ingredients.
+    /// Given a dictionary of remaining reagents that still need to be spent in a recipe, this function iterates
+    /// over a solution's contents and subtracts reagents according to the reagents to spend. This also removes
+    /// it from our remaining ingredients.
     /// </summary>
     /// <remarks>
-    ///     Say you still have 6u mayonnaise remaining, and the solution has 10u mayonnaise, then 6u of
-    ///     mayonnaise would be removed from the solution, leaving you with 4u left over. Then, mayonnaise
-    ///     is removed from the dictionary of remaining reagents.
+    /// Say you still have 6u mayonnaise remaining, and the solution has 10u mayonnaise, then 6u of
+    /// mayonnaise would be removed from the solution, leaving you with 4u left over. Then, mayonnaise
+    /// is removed from the dictionary of remaining reagents.
     /// </remarks>
     /// <param name="solutionEntity">The solution entity.</param>
     /// <param name="solution">The solution itself.</param>
@@ -192,12 +192,12 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Attempt to get the solid ID of a given entity.
+    /// Attempt to get the solid ID of a given entity.
     /// </summary>
     /// <param name="item">The entity to retrieve a solid ID for.</param>
     /// <param name="solidId">The solid ID of the entity, if any.</param>
     /// <returns>
-    ///     Whether or not the solid ID was successfully retrieved. False if entity lacks an entity prototype ID.
+    /// Whether or not the solid ID was successfully retrieved. False if entity lacks an entity prototype ID.
     /// </returns>
     // TODO: Solids should be tag-based, or something like that. Not prototype-based.
     private bool TryGetSolidId(EntityUid item,
@@ -208,12 +208,12 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Attempt to get the stack ID of a given entity.
+    /// Attempt to get the stack ID of a given entity.
     /// </summary>
     /// <param name="ent">The stack entity.</param>
     /// <param name="stack">The stack prototype associated with this entity, if any.</param>
     /// <returns>
-    ///     Whether or not a stack ID is successfully retrieved. False if this entity is not a stack.
+    /// Whether or not a stack ID is successfully retrieved. False if this entity is not a stack.
     /// </returns>
     private bool TryGetStackId(Entity<StackComponent?> ent,
         [NotNullWhen(true)] out ProtoId<StackPrototype>? stack)
@@ -228,12 +228,12 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Spend ingredients in the microwave based on a given recipe. This deletes ingredient entities (solids),
-    ///     subtracts respective stack counts, and removes reagents from ingredient containers (reagents).
+    /// Spend ingredients in the microwave based on a given recipe. This deletes ingredient entities (solids),
+    /// subtracts respective stack counts, and removes reagents from ingredient containers (reagents).
     /// </summary>
     /// <remarks>
-    ///     This function does not check whether or not the contents have *enough* ingredients to
-    ///     subtract - it simply performs the subtraction.
+    /// This function does not check whether or not the contents have *enough* ingredients to
+    /// subtract - it simply performs the subtraction.
     /// </remarks>
     /// <param name="ent">The microwave entity.</param>
     /// <param name="portionedRecipe">The recipe used to spend ingredients.</param>

@@ -9,7 +9,7 @@ namespace Content.Shared.Kitchen.EntitySystems;
 public abstract partial class MicrowaveSystem
 {
     /// <summary>
-    ///     Initializes the microwave's storage container.
+    /// Initializes the microwave's storage container.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnComponentInit(Entity<MicrowaveComponent> ent, ref ComponentInit args)
@@ -19,8 +19,8 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Prevents inserting entities into the microwave if the microwave is broken, active,
-    ///     or the item is invalid.
+    /// Prevents inserting entities into the microwave if the microwave is broken, active,
+    /// or the item is invalid.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnInsertAttempt(Entity<MicrowaveComponent> ent, ref ContainerIsInsertingAttemptEvent args)
@@ -40,7 +40,7 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Attempt to insert an entity into the microwave, resulting in a pop-up message if this is not possible.
+    /// Attempt to insert an entity into the microwave, resulting in a pop-up message if this is not possible.
     /// </summary>
     [SubscribeLocalEvent(after:[typeof(AnchorableSystem)])]
     private void OnInteractUsing(Entity<MicrowaveComponent> ent, ref InteractUsingEvent args)
@@ -100,7 +100,7 @@ public abstract partial class MicrowaveSystem
         => OnContentsUpdated(entity, ref args);
 
     /// <summary>
-    ///     Updates the microwave UI when entities are added/removed from the microwave.
+    /// Updates the microwave UI when entities are added/removed from the microwave.
     /// </summary>
     // For some reason ContainerModifiedMessage just can't be used at all with Entity<T>.
     private void OnContentsUpdated<T>(Entity<MicrowaveComponent> entity, ref T args) where T : ContainerModifiedMessage
@@ -112,7 +112,7 @@ public abstract partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Check whether or not this microwave has space for the item, in both capacity and item size.
+    /// Check whether or not this microwave has space for the item, in both capacity and item size.
     /// </summary>
     /// <param name="ent">The microwave entity.</param>
     /// <param name="item">The item to attempt to insert.</param>
