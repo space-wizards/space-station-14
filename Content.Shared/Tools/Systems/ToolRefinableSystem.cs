@@ -39,8 +39,8 @@ public sealed partial class ToolRefinableSystem : EntitySystem
     #region Subscriptions
 
     /// <summary>
-    ///     Adds an examine tooltip to a refinable entity if one is specified, hinting at what
-    ///     tool quality is needed to refine this entity.
+    ///  Adds an examine tooltip to a refinable entity if one is specified, hinting at what
+    ///  tool quality is needed to refine this entity.
     /// </summary>
     /// <param name="ent">The refinable entity.</param>
     [SubscribeLocalEvent]
