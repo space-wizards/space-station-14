@@ -356,7 +356,14 @@
   priority: 10
   text: "/ServerInfo/Guidebook/ServerRules/MRPRules/RuleM0.xml"
   children:
+  - RuleMA
   - RuleM1
+
+- type: guideEntry
+  id: RuleMA
+  name: guide-entry-rules-mA
+  ruleEntry: true
+  text: "/ServerInfo/Guidebook/ServerRules/MRPRules/RuleMAMRPAmendments.xml"
 
 - type: guideEntry
   id: RuleM1

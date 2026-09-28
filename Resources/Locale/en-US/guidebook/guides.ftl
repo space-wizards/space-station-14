@@ -196,6 +196,7 @@ guide-entry-rules-s8 = S8
 guide-entry-rules-s9 = S9
 guide-entry-rules-s10 = S10
 guide-entry-rules-mrp-m0 = MRP Rules
+guide-entry-rules-mA = MRP Amendments
 guide-entry-rules-m1 = M1
 guide-entry-rules-space-law = Space Law
 guide-entry-rules-sl-crime-list = Crime List
