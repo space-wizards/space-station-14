@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Player;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Players.RateLimiting;
 

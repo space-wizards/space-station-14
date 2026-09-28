@@ -1,35 +1,51 @@
 - type: entity
+  abstract: true
   parent: [ BaseItem, BaseItemDestructible ]
   id: BaseHandheldStationMap
   name: station map
   description: Displays a readout of the current station.
-  abstract: true
   components:
-    - type: StationMap
-    - type: Sprite
-      sprite: Objects/Devices/tablets.rsi
-      layers:
-        - state: tablet
-        - state: generic
-          shader: unshaded
-    - type: ActivatableUI
-      inHandsOnly: true
-      singleUser: true
-      key: enum.StationMapUiKey.Key
-    - type: Damageable
-    - type: Injurable
-      damageContainer: Inorganic
-    - type: UserInterface
-      interfaces:
-        enum.StationMapUiKey.Key:
-          type: StationMapBoundUserInterface
+  - type: StationMap
+  - type: Sprite
+    sprite: Objects/Devices/tablets.rsi
+    layers:
+    - state: tablet
+    - state: generic
+      shader: unshaded
+  - type: ActivatableUI
+    inHandsOnly: true
+    singleUser: true
+    key: enum.StationMapUiKey.Key
+  - type: Damageable
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: UserInterface
+    interfaces:
+      enum.StationMapUiKey.Key:
+        type: StationMapBoundUserInterface
 
 - type: entity
+  parent: [ BaseHandheldStationMap, BaseHandheldComputer ]
   id: HandheldStationMap
-  parent:
-  - BaseHandheldStationMap
-  - BaseHandheldComputer
   suffix: Handheld
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/tablets.rsi
+    layers:
+    - state: tablet
+    - state: generic
+      shader: unshaded
+      visible: false
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: Appearance
+  - type: BatteryVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.BatteryVisuals.State:
+        enum.PowerDeviceVisualLayers.Powered:
+          Full: { visible: true }
+          Neither: { visible: true }
+          Empty: { visible: false }
 
 - type: entity
   id: HandheldStationMapEmpty
@@ -67,6 +83,8 @@
     - state: tablet
     - state: syndie
       shader: unshaded
+      visible: false
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: Item
     sprite: Objects/Devices/tablets.rsi
     inhandVisuals:

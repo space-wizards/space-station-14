@@ -1,4 +1,4 @@
-﻿using Content.Shared.Sprite;
+using Content.Shared.Sprite;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Sprite;

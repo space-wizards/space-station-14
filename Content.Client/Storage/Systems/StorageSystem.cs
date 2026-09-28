@@ -78,8 +78,8 @@ public sealed partial class StorageSystem : SharedStorageSystem
             // Make sure nesting still updated.
             var player = _player.LocalEntity;
 
-            if (NestedStorage && player != null && ContainerSystem.TryGetContainingContainer((uid, null, null), out var container) &&
-                UI.TryGetOpenUi<StorageBoundUserInterface>(container.Owner, StorageComponent.StorageUiKey.Key, out var containerBui))
+            if (NestedStorage && player != null && TryGetContainingStorage(uid, out var parentStorage) &&
+                UI.TryGetOpenUi<StorageBoundUserInterface>(parentStorage.Value.Owner, StorageComponent.StorageUiKey.Key, out var containerBui))
             {
                 _queuedBuis.Add((containerBui, false));
             }

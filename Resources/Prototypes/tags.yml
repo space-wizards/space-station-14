@@ -757,9 +757,6 @@
   id: HiViz # CargoBounty: BountyHiVizVest
 
 - type: Tag
-  id: Hoe # Used by PlantHolderSystem to make tagged entities a pseudo-tool for weeding plants. TODO this sucks!
-
-- type: Tag
   id: HolofanProjector # Storage whitelist: BaseClothingBeltEngineering
 
 - type: Tag
@@ -1288,6 +1285,9 @@
 
 - type: Tag
   id: Shiv # CargoBounty: BountyShiv
+
+- type: Tag
+  id: SmeltingImmune # for entities that should not be deleted industrial smelter's MaterialReclaimer
 
 - type: Tag
   id: Sidearm # Storage whitelist: ClothingBeltSecurity, ClothingShoesMilitaryBase

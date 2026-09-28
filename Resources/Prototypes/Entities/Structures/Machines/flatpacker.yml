@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: MachineFlatpacker
   parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   name: Flatpacker 1001
