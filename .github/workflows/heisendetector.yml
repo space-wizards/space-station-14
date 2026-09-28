@@ -84,4 +84,4 @@ jobs:
         with:
           filename: .github/ISSUE_TEMPLATE/heisentest_template.md
           update_existing: true
-          search_existing: all
+          search_existing: open

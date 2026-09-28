@@ -3,7 +3,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.Equipment.Components;
-using Content.Shared.Vehicle;
+using Content.Shared.Vehicle.Systems;
 using Content.Shared.Whitelist;
 
 namespace Content.Server.Mech.Systems;

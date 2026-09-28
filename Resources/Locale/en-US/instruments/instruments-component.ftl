@@ -36,6 +36,7 @@ instruments-component-channels-menu = MIDI Channel Selection
 instruments-component-channels-all-button = On
 instruments-component-channels-clear-button = Off
 instruments-component-channels-all-channels-label = All Channels
+instruments-component-channels-percussion-channel-name = [Percussion]
 instruments-component-channels-name-display-selector-label = Display Name
 instruments-component-channels-name-display-selector-track-button = Track
 instruments-component-channels-name-display-selector-program-button = Program

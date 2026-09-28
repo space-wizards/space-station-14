@@ -131,7 +131,10 @@
     sprite: Mobs/Aliens/Asteroid/goliath.rsi
     layers:
     - state: goliath_tentacle_wiggle
-  - type: StunOnContact
+  - type: StunOnCollide
+    stunAmount: 1
+    knockdownAmount: 5
+    fixture: fix
     blacklist:
       tags:
       - Goliath

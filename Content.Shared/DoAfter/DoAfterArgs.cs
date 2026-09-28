@@ -46,6 +46,12 @@ public sealed partial class DoAfterArgs
     [DataField]
     public bool Hidden;
 
+    /// <summary>
+    ///     String that will be added to the examine window of the entity.
+    /// </summary>
+    [DataField]
+    public string? ExamineText;
+
     #region Event options
     /// <summary>
     ///     The event that will get raised when the DoAfter has finished. If null, this will simply raise a <see cref="SimpleDoAfterEvent"/>
@@ -89,6 +95,12 @@ public sealed partial class DoAfterArgs
     /// </summary>
     [DataField]
     public bool NeedFreeHand;
+
+    /// <summary>
+    /// Whether or not this do after requires you to have any empty hand,
+    /// </summary>
+    [DataField]
+    public bool NeedAnyFreeHand;
 
     /// <summary>
     ///     Whether we need to keep our active hand as is (i.e. can't change hand or change item). This also covers
@@ -254,10 +266,12 @@ public sealed partial class DoAfterArgs
         Target = other.Target;
         Used = other.Used;
         Hidden = other.Hidden;
+        ExamineText = other.ExamineText;
         EventTarget = other.EventTarget;
         Broadcast = other.Broadcast;
         NeedHand = other.NeedHand;
         NeedFreeHand = other.NeedFreeHand;
+        NeedAnyFreeHand = other.NeedAnyFreeHand;
         BreakOnHandChange = other.BreakOnHandChange;
         BreakOnDropItem = other.BreakOnDropItem;
         BreakOnMove = other.BreakOnMove;
