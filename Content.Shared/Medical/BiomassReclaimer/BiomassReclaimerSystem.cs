@@ -35,7 +35,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnAfterInteractUsing(Entity<BiomassReclaimerComponent> reclaimer, ref AfterInteractUsingEvent args)
     {
-        if (args.Handled || !args.CanReach || args.Target == null)
+        if (args.Handled || !args.CanReach)
             return;
 
         args.Handled = TryStartInsertion(reclaimer, args.User, args.Used, true);
@@ -58,10 +58,11 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
 
         var delay = reclaimer.Comp.BaseInsertionDelay * physics.FixturesMass;
         return _doAfterSystem.TryStartDoAfter(
-            new DoAfterArgs(EntityManager, user, delay, new ReclaimerDoAfterEvent(), reclaimer, reclaimer, toProcess)
+            new DoAfterArgs(EntityManager, user, delay, new ReclaimerDoAfterEvent(), reclaimer, target: toProcess, used: reclaimer)
             {
                 NeedHand = needHand,
-                BreakOnMove = true
+                BreakOnMove = true,
+                BreakOnDamage = user != toProcess
             });
     }
 

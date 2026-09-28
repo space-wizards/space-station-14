@@ -84,9 +84,7 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
                 _robustRandom.Pick(active.SpawnedEntities),
                 _transformQuery.GetComponent(uid).Coordinates);
 
-            var direction = _robustRandom.NextVector2(30f);
-
-            _throwing.TryThrow(thrown, direction, _robustRandom.NextFloat(reclaimer.ItemThrowMinSpeed, reclaimer.ItemThrowMaxSpeed));
+            _throwing.TryThrow(thrown, _robustRandom.NextVector2Box(30f, 30f), _robustRandom.NextFloat(reclaimer.ItemThrowMinSpeed, reclaimer.ItemThrowMaxSpeed));
         }
 
         active.NextMessTime += reclaimer.RandomMessInterval;
@@ -147,7 +145,7 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
 
     private void ResumeProcessing(Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent)
     {
-        var active = ent.Comp2;
+        var (uid, reclaimer, active) = ent;
         if (active.PowerLossTime is not { } powerLossTime)
             return;
 
@@ -155,7 +153,7 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         active.ProcessingEndTime += pauseDuration;
         active.NextMessTime += pauseDuration;
         active.PowerLossTime = null;
-        StartRunningEffects((ent.Owner, ent.Comp1));
+        StartRunningEffects((uid, reclaimer));
     }
 
     private void StartRunningEffects(Entity<BiomassReclaimerComponent> ent)
@@ -184,7 +182,7 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         if (args.Handled || args.Cancelled)
             return;
 
-        if (args.Args.Target != reclaimer.Owner || args.Args.Used is not { } toProcess)
+        if (args.Args.Used != reclaimer.Owner || args.Args.Target is not { } toProcess)
             return;
 
         if (!TryValidateInsertionAndPopup(reclaimer, toProcess, args.Args.User) || !_physicsQuery.TryComp(toProcess, out var physics))
@@ -203,18 +201,22 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         active.ExpectedYield = CalculateYield(toProcess, ent);
         active.ProcessingEndTime = _timing.CurTime + TimeSpan.FromSeconds(toProcess.Comp.FixturesMass * ent.Comp.ProcessingTimePerUnitMass);
         active.NextMessTime = _timing.CurTime;
-        EjectInventory(toProcess, ent.Owner);
+        foreach (var item in _inventory.GetHandOrInventoryEntities(toProcess.Owner))
+        {
+            _transform.DropNextTo(item, ent.Owner);
+        }
+
         QueueDel(toProcess);
     }
 
     private void CollectMessData(EntityUid toProcess, Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent)
     {
-        var active = ent.Comp2;
+        var (_, reclaimer, active) = ent;
         if (TryComp<BloodstreamComponent>(toProcess, out var stream) &&
             _solution.ResolveSolution(toProcess, stream.BloodSolutionName, ref stream.BloodSolution, out var solution))
         {
             active.BloodReagents = solution.Clone();
-            var scale = active.BloodReagents.Volume <= FixedPoint2.Zero ? 0 : ent.Comp1.BloodSpillVolume / active.BloodReagents.Volume;
+            var scale = active.BloodReagents.Volume <= FixedPoint2.Zero ? 0 : reclaimer.BloodSpillVolume / active.BloodReagents.Volume;
             active.BloodReagents.ScaleSolution(scale);
         }
 
@@ -230,21 +232,14 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         return expectedYield;
     }
 
-    private void EjectInventory(EntityUid toProcess, EntityUid reclaimer)
-    {
-        foreach (var item in _inventory.GetHandOrInventoryEntities(toProcess))
-        {
-            _transform.DropNextTo(item, reclaimer);
-        }
-    }
-
     private void FinishProcessing(Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent)
     {
-        var expectedYield = ent.Comp2.ExpectedYield + ent.Comp1.YieldRemainder;
+        var (uid, reclaimer, active) = ent;
+        var expectedYield = active.ExpectedYield + reclaimer.YieldRemainder;
         var actualYield = (int)expectedYield;
-        ent.Comp1.YieldRemainder = expectedYield - actualYield;
-        _material.SpawnMultipleFromMaterial(actualYield, ent.Comp1.OutputMaterial, _transformQuery.GetComponent(ent).Coordinates);
-        RemCompDeferred<ActiveBiomassReclaimerComponent>(ent);
+        reclaimer.YieldRemainder = expectedYield - actualYield;
+        _material.SpawnMultipleFromMaterial(actualYield, reclaimer.OutputMaterial, _transformQuery.GetComponent(uid).Coordinates);
+        RemCompDeferred<ActiveBiomassReclaimerComponent>(uid);
     }
 
     protected override BiomassReclaimerInsertResult ValidateInsertion(Entity<BiomassReclaimerComponent> reclaimer, EntityUid dragged)
