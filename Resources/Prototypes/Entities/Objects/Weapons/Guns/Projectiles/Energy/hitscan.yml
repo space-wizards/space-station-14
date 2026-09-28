@@ -105,7 +105,6 @@
       sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
       state: impact_laser_makeshift
 
-
 - type: entity
   parent: LaserHitscanBase
   id: RedMediumLaser

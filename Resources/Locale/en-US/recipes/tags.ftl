@@ -75,7 +75,7 @@ soil-construction-graph-any-mushroom = any mushroom
 construction-graph-tag-mop-basic = mop
 construction-graph-tag-paper = office paper
 construction-graph-tag-core-pinpointer-piece = piece of core pinpointer
-construction-graph-tag-glasses = transparent glasses
+construction-graph-tag-glasses = glasses
 
 # toys
 construction-graph-tag-rubber-ducky = a rubber ducky

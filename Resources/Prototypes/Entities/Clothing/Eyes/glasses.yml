@@ -78,6 +78,7 @@
     tags:
     - PetWearable
     - WhitelistChameleon
+    - Glasses
 
 - type: entity
   parent: ClothingEyesBase
@@ -165,7 +166,6 @@
   - type: IdentityBlocker
     coverage: EYES
 
-
 - type: entity
   parent: ClothingEyesGlassesCheapSunglasses
   id: ClothingEyesGlassesSunglasses
@@ -181,6 +181,7 @@
     - PetWearable
     - HamsterWearable
     - WhitelistChameleon
+    - Glasses
 
 - type: entity
   parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband]
@@ -203,6 +204,7 @@
     - HamsterWearable
     - PetWearable
     - WhitelistChameleon
+    - Glasses
   - type: GuideHelp
     guides:
     - Security
@@ -228,6 +230,7 @@
     - HamsterWearable
     - PetWearable
     - WhitelistChameleon
+    - Glasses
   - type: IdentityBlocker
     coverage: EYES
   - type: ShowJobIcons
@@ -247,6 +250,9 @@
     protectionTime: 5
   - type: IdentityBlocker
     coverage: EYES
+  - type: Tag
+    tags:
+    - Glasses
 
 #Make a scanner category when these actually function and we get the trayson
 - type: entity
@@ -267,6 +273,9 @@
   - type: IdentityBlocker
     coverage: EYES
   - type: ThermalSight
+  - type: Tag
+    tags:
+    - Glasses
 
 - type: entity
   parent: ClothingEyesBase
@@ -285,6 +294,7 @@
       tags:
       - PetWearable
       - WhitelistChameleon
+      - Glasses
 
 - type: entity
   parent: [ClothingEyesBase, BaseHighlyIllegalContraband]
@@ -318,3 +328,4 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
+    - Glasses
