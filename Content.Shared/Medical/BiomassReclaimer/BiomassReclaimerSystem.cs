@@ -22,19 +22,24 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.CanDrop = CanInsert(ent, args.Dragged) && _physicsQuery.HasComp(args.Dragged);
+        args.CanDrop = ValidateInsertion(ent, args.Dragged) == BiomassReclaimerInsertResult.Success;
         args.Handled = true;
     }
 
-    protected virtual bool CanInsert(Entity<BiomassReclaimerComponent> reclaimer, EntityUid target)
+    protected virtual BiomassReclaimerInsertResult ValidateInsertion(Entity<BiomassReclaimerComponent> reclaimer, EntityUid target)
     {
         var isPlant = _produceQuery.HasComp(target);
-        if (!isPlant && !HasComp<MobStateComponent>(target))
-            return false;
+        if ((!isPlant && !HasComp<MobStateComponent>(target)) || !_physicsQuery.HasComp(target))
+            return BiomassReclaimerInsertResult.InvalidTarget;
 
-        if (!_transformQuery.GetComponent(reclaimer).Anchored || !_powerReceiver.IsPowered(reclaimer.Owner))
-            return false;
+        if (!_transformQuery.GetComponent(reclaimer).Anchored)
+            return BiomassReclaimerInsertResult.Unanchored;
 
-        return isPlant || !reclaimer.Comp.SafetyEnabled || _mobState.IsDead(target);
+        if (!_powerReceiver.IsPowered(reclaimer.Owner))
+            return BiomassReclaimerInsertResult.Unpowered;
+
+        return isPlant || !reclaimer.Comp.SafetyEnabled || _mobState.IsDead(target)
+            ? BiomassReclaimerInsertResult.Success
+            : BiomassReclaimerInsertResult.TargetAlive;
     }
 }

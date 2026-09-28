@@ -110,10 +110,13 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         if (!_powerReceiver.IsPowered(ent.Owner))
             return;
 
+        if (!_physicsQuery.TryComp(args.Victim, out var physics))
+            return;
+
         _popup.PopupEntity(Loc.GetString("biomass-reclaimer-suicide-others", ("victim", Identity.Entity(args.Victim, EntityManager))),
             ent,
             PopupType.LargeCaution);
-        StartProcessing(args.Victim, ent);
+        StartProcessing((args.Victim, physics), ent);
         args.Handled = true;
     }
 
@@ -201,14 +204,14 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
 
     private bool TryStartInsertion(Entity<BiomassReclaimerComponent> reclaimer, EntityUid user, EntityUid toProcess, bool needHand)
     {
-        if (!CanInsert(reclaimer, toProcess) || !_physicsQuery.TryComp(toProcess, out var physics))
+        if (!TryValidateInsertionAndPopup(reclaimer, toProcess, user) || !_physicsQuery.TryComp(toProcess, out var physics))
             return false;
 
         var delay = reclaimer.Comp.BaseInsertionDelay * physics.FixturesMass;
         return _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, delay, new ReclaimerDoAfterEvent(), reclaimer, target: reclaimer, used: toProcess)
         {
             NeedHand = needHand,
-            BreakOnMove = true,
+            BreakOnMove = true
         });
     }
 
@@ -221,7 +224,7 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         if (args.Args.Target != reclaimer.Owner || args.Args.Used is not { } toProcess)
             return;
 
-        if (!CanInsert(reclaimer, toProcess) || !_physicsQuery.TryComp(toProcess, out var physics))
+        if (!TryValidateInsertionAndPopup(reclaimer, toProcess, args.Args.User) || !_physicsQuery.TryComp(toProcess, out var physics))
             return;
 
         _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.Args.User):player} used a biomass reclaimer to gib {ToPrettyString(toProcess):target} in {ToPrettyString(reclaimer):reclaimer}");
@@ -230,11 +233,8 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         args.Handled = true;
     }
 
-    private void StartProcessing(Entity<PhysicsComponent?> toProcess, Entity<BiomassReclaimerComponent> ent)
+    private void StartProcessing(Entity<PhysicsComponent> toProcess, Entity<BiomassReclaimerComponent> ent)
     {
-        if (!_physicsQuery.Resolve(toProcess, ref toProcess.Comp))
-            return;
-
         var active = AddComp<ActiveBiomassReclaimerComponent>(ent);
         CollectMessData(toProcess, (ent.Owner, ent.Comp, active));
         active.ExpectedYield = CalculateYield((toProcess.Owner, toProcess.Comp), ent);
@@ -285,20 +285,48 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         RemCompDeferred<ActiveBiomassReclaimerComponent>(ent);
     }
 
-    protected override bool CanInsert(Entity<BiomassReclaimerComponent> reclaimer, EntityUid dragged)
+    private bool TryValidateInsertionAndPopup(Entity<BiomassReclaimerComponent> reclaimer, EntityUid target, EntityUid user)
+    {
+        var result = ValidateInsertion(reclaimer, target);
+        if (GetInsertionFailureLoc(result) is not { } message)
+            return true;
+
+        _popup.PopupEntity(Loc.GetString(message), reclaimer, user);
+        return false;
+    }
+
+    private static LocId? GetInsertionFailureLoc(BiomassReclaimerInsertResult result)
+    {
+        return result switch
+        {
+            BiomassReclaimerInsertResult.Success => null,
+            BiomassReclaimerInsertResult.InvalidTarget => "biomass-reclaimer-invalid-target",
+            BiomassReclaimerInsertResult.Unanchored => "biomass-reclaimer-unanchored",
+            BiomassReclaimerInsertResult.Unpowered => "biomass-reclaimer-unpowered",
+            BiomassReclaimerInsertResult.TargetAlive => "biomass-reclaimer-safety-enabled",
+            BiomassReclaimerInsertResult.Busy => "biomass-reclaimer-busy",
+            BiomassReclaimerInsertResult.SoulPresent => "biomass-reclaimer-soul-present",
+            _ => throw new ArgumentOutOfRangeException(nameof(result), result, null)
+        };
+    }
+
+    protected override BiomassReclaimerInsertResult ValidateInsertion(Entity<BiomassReclaimerComponent> reclaimer, EntityUid dragged)
     {
         if (_activeQuery.HasComp(reclaimer))
-            return false;
+            return BiomassReclaimerInsertResult.Busy;
 
-        if (!base.CanInsert(reclaimer, dragged))
-            return false;
+        var result = base.ValidateInsertion(reclaimer, dragged);
+        if (result != BiomassReclaimerInsertResult.Success)
+            return result;
 
         // Reject souled bodies in easy mode.
         if (!_configManager.GetCVar(CCVars.BiomassEasyMode) ||
             !HasComp<HumanoidProfileComponent>(dragged) ||
             !_minds.TryGetMind(dragged, out _, out var mind))
-            return true;
+            return BiomassReclaimerInsertResult.Success;
 
-        return mind.UserId == null || !_playerManager.TryGetSessionById(mind.UserId.Value, out _);
+        return mind.UserId == null || !_playerManager.TryGetSessionById(mind.UserId.Value, out _)
+            ? BiomassReclaimerInsertResult.Success
+            : BiomassReclaimerInsertResult.SoulPresent;
     }
 }
