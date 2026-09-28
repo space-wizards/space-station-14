@@ -6,6 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Medical.BiomassReclaimer;
 
 [RegisterComponent]
+[Access(typeof(BiomassReclaimerSystem))]
 public sealed partial class BiomassReclaimerComponent : Component
 {
     /// <summary>
