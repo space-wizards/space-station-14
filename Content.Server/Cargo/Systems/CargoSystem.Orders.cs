@@ -192,9 +192,7 @@ public sealed partial class CargoSystem
 
         if (!ev.Handled)
         {
-            ev.FulfillmentEntity = TryFulfillOrder((station.Value, stationData), order, orderDatabase);
-
-            if (ev.FulfillmentEntity == null)
+            if (!TryFulfillOrder((station.Value, stationData), order, orderDatabase))
             {
                 _popup.PopupCursor(Loc.GetString("cargo-console-unfulfilled"), args.Actor);
                 PlayDenySound(ent);
@@ -228,14 +226,6 @@ public sealed partial class CargoSystem
                 );
             }
         }
-
-        _popup.PopupCursor(
-            Loc.GetString(
-                "cargo-console-trade-station",
-                ("destination", MetaData(ev.FulfillmentEntity.Value).EntityName)
-            ),
-            args.Actor
-        );
 
         // Log order approval
         _adminLogger.Add(
@@ -334,7 +324,7 @@ public sealed partial class CargoSystem
 
         // Add it to the list
         return TryAddOrder(dbUid, order, component)
-            && TryFulfillOrder(stationData, order, component).HasValue;
+            && TryFulfillOrder(stationData, order, component);
     }
 
     private void OnInteractUsingSlip(
@@ -434,14 +424,14 @@ public sealed partial class CargoSystem
         slip.Account = ent.Comp.Account;
     }
 
-    private EntityUid? TryFulfillOrder(
+    private bool TryFulfillOrder(
         Entity<StationDataComponent> stationData,
         CargoOrderData order,
         StationCargoOrderDatabaseComponent orderDatabase
     )
     {
         // No slots at the trade station
-        EntityUid? tradeDestination = null;
+        bool allDelivered = false;
 
         // Try to fulfill from any station where possible, if the pad is not occupied.
         foreach (var trade in GetTradeStations(stationData))
@@ -460,17 +450,18 @@ public sealed partial class CargoSystem
                 if (!FulfillOrder(order, coordinates, orderDatabase.PrinterOutput))
                     continue;
 
-                tradeDestination = trade;
                 order.NumDispatched++;
-                if (order.OrderQuantity <= order.NumDispatched) //Spawn a crate on free pellets until the order is fulfilled.
+
+                allDelivered = order.OrderQuantity <= order.NumDispatched;
+                if (allDelivered) //Spawn a crate on free pellets until the order is fulfilled.
                     break;
             }
 
-            if (tradeDestination != null)
+            if (allDelivered)
                 break;
         }
 
-        return tradeDestination;
+        return allDelivered;
     }
 
     /// <summary>
