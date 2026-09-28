@@ -15,7 +15,7 @@ namespace Content.Shared.Kitchen.Components;
 ///     and produce microwave recipes.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(SharedMicrowaveSystem))]
+[Access(typeof(MicrowaveSystem))]
 [NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true, raiseAfterAutoHandleState: true)]
 public sealed partial class MicrowaveComponent : Component
 {
@@ -38,12 +38,10 @@ public sealed partial class MicrowaveComponent : Component
     ///     A multiplier for heat added to the contents of a microwave every cook cycle.
     /// </summary>
     /// <remarks>
-    ///     The formula is (elapsed time between cycles * BaseHeatMultiplier).
-    ///     This is multiplied by <see cref="ObjectHeatMultiplier"/> when applied to entities
-    ///     that have a <see cref="TemperatureComponent"/> (as opposed to solutions).
+    ///     The formula is (elapsed time between dt * <see cref="DeltaHeat"/>).
     /// </remarks>
     [DataField]
-    public float BaseHeatMultiplier = 100;
+    public float DeltaHeat = 100;
 
     /// <summary>
     ///     A multiplier for added heat on entities with a <see cref="TemperatureComponent"/>.
@@ -123,7 +121,7 @@ public sealed partial class MicrowaveComponent : Component
     /// </remarks>
     [DataField]
     [AutoNetworkedField]
-    [Access(typeof(SharedMicrowaveSystem), Other = AccessPermissions.ReadExecute)]
+    [Access(typeof(MicrowaveSystem), Other = AccessPermissions.ReadExecute)]
     public uint CurrentCookTimerTime;
 
     /// <summary>

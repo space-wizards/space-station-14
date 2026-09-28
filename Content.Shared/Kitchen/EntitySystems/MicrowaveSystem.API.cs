@@ -5,7 +5,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Kitchen.EntitySystems;
 
-public abstract partial class SharedMicrowaveSystem
+public abstract partial class MicrowaveSystem
 {
     /// <summary>
     ///     Helper function to get if an entity is an active microwave.
@@ -15,7 +15,7 @@ public abstract partial class SharedMicrowaveSystem
     [PublicAPI]
     public bool IsActiveMicrowave(Entity<MicrowaveComponent?> microwave)
     {
-        return Resolve(microwave.Owner, ref microwave.Comp)
+        return MicrowaveQuery.Resolve(microwave.Owner, ref microwave.Comp)
             && HasComp<ActiveMicrowaveComponent>(microwave.Owner);
     }
 
@@ -27,7 +27,7 @@ public abstract partial class SharedMicrowaveSystem
     [PublicAPI]
     public IReadOnlyList<EntityUid> GetMicrowaveContents(Entity<MicrowaveComponent?> microwave)
     {
-        if (!Resolve(microwave.Owner, ref microwave.Comp))
+        if (!MicrowaveQuery.Resolve(microwave.Owner, ref microwave.Comp))
             return new List<EntityUid>();
 
         return microwave.Comp.Storage.ContainedEntities;

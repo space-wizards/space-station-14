@@ -9,6 +9,7 @@ using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Stacks;
+using Content.Shared.Temperature.Systems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -22,31 +23,33 @@ namespace Content.Shared.Kitchen.EntitySystems;
 ///     A system that handles microwave logic, such as activation, malfunctions, and producing cooked recipes.
 ///     TODO: Replace with a more sophisticated(?) cooking system.
 /// </summary>
-public abstract partial class SharedMicrowaveSystem : EntitySystem
+public abstract partial class MicrowaveSystem : EntitySystem
 {
-    [Dependency] protected SharedAppearanceSystem AppearanceSys = default!;
-    [Dependency] protected SharedAudioSystem AudioSys = default!;
-    [Dependency] protected SharedContainerSystem ContainerSys = default!;
-    [Dependency] protected SharedPopupSystem PopupSys = default!;
-    [Dependency] protected SharedSolutionContainerSystem SolutionSys = default!;
-    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] protected SharedAppearanceSystem Appearance = default!;
+    [Dependency] protected SharedAudioSystem Audio = default!;
+    [Dependency] protected SharedContainerSystem Container = default!;
+    [Dependency] protected SharedPopupSystem Popup = default!;
+    [Dependency] protected SharedSolutionContainerSystem Solution = default!;
+
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private RecipeSystem _recipes = default!;
     [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedItemSystem _item = default!;
-    [Dependency] private INetManager _net = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
     [Dependency] private SharedPowerStateSystem _powerState = default!;
-    [Dependency] private RecipeSystem _recipes = default!;
     [Dependency] private SharedStackSystem _stack = default!;
-    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private SharedTemperatureSystem _temperature = default!;
 
-    [Dependency] private EntityQuery<MicrowaveComponent> _microwaveQuery;
+    [Dependency] protected EntityQuery<MicrowaveComponent> MicrowaveQuery;
+    [Dependency] protected EntityQuery<ActiveMicrowaveComponent> ActiveMicrowaveQuery;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        InitializeContainer();
         InitializeUI();
     }
 
@@ -56,15 +59,11 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        var curTime = _timing.CurTime;
+        var curTime = Timing.CurTime;
 
         var query = EntityQueryEnumerator<ActiveMicrowaveComponent, MicrowaveComponent>();
         while (query.MoveNext(out var uid, out var active, out var microwave))
         {
-            var lastUpdated = active.NextCookUpdate - microwave.UpdateInterval;
-            var timeSinceUpdate = curTime - lastUpdated;
-            var timeElapsed = (float)timeSinceUpdate.TotalSeconds;
-
             // Roll malfunctions
             if (active.Malfunctioning && active.NextMalfunction < curTime)
             {
@@ -73,6 +72,10 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
 
                 RollMalfunction((uid, microwave));
             }
+
+            var lastUpdated = active.NextCookUpdate - microwave.UpdateInterval;
+            var timeSinceUpdate = curTime - lastUpdated;
+            var timeElapsed = (float)timeSinceUpdate.TotalSeconds;
 
             // Finish cooking
             if (active.CookTimeEnd < curTime)
@@ -83,12 +86,12 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
             }
 
             // Otherwise, process the cooking cycle
-            if (active.NextCookUpdate < curTime)
-            {
-                active.NextCookUpdate += microwave.UpdateInterval;
-                DirtyField(uid, active, nameof(ActiveMicrowaveComponent.NextCookUpdate));
-                AddTemperature((uid, microwave), timeElapsed);
-            }
+            if (active.NextCookUpdate > curTime)
+                continue;
+
+            active.NextCookUpdate += microwave.UpdateInterval;
+            DirtyField(uid, active, nameof(ActiveMicrowaveComponent.NextCookUpdate));
+            AddTemperature((uid, microwave), timeElapsed);
         }
     }
 
@@ -110,10 +113,10 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     {
         ent.Comp.Broken = true;
         DirtyField(ent.AsNullable(), nameof(MicrowaveComponent.Broken));
-        SetAppearance(ent.AsNullable(), MicrowaveVisualState.Broken);
+        SetAppearance(ent, MicrowaveVisualState.Broken);
 
         StopCooking(ent);
-        ContainerSys.EmptyContainer(ent.Comp.Storage);
+        Container.EmptyContainer(ent.Comp.Storage);
         UpdateUI(ent.AsNullable());
     }
 
@@ -125,7 +128,7 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     {
         if (!args.Powered)
         {
-            SetAppearance(ent.AsNullable(), MicrowaveVisualState.Idle);
+            SetAppearance(ent, MicrowaveVisualState.Idle);
             StopCooking(ent);
         }
 
@@ -139,7 +142,7 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     private void OnAnchorChanged(Entity<MicrowaveComponent> ent, ref AnchorStateChangedEvent args)
     {
         if (!args.Anchored)
-            ContainerSys.EmptyContainer(ent.Comp.Storage);
+            Container.EmptyContainer(ent.Comp.Storage);
     }
 
     /// <summary>
@@ -160,17 +163,13 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The microwave entity.</param>
     /// <param name="state">The visual state of the microwave.</param>
-    private void SetAppearance(Entity<MicrowaveComponent?, AppearanceComponent?> ent,
+    private void SetAppearance(Entity<MicrowaveComponent> ent,
         MicrowaveVisualState state)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp1, ref ent.Comp2, logMissing: false))
-            return;
-
-        var display = ent.Comp1.Broken ? MicrowaveVisualState.Broken : state;
-        AppearanceSys.SetData(ent.Owner,
+        var display = ent.Comp.Broken ? MicrowaveVisualState.Broken : state;
+        Appearance.SetData(ent.Owner,
             PowerDeviceVisuals.VisualState,
-            display,
-            ent.Comp2);
+            display);
     }
 }
 

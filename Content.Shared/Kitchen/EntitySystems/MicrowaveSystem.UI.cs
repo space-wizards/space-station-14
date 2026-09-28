@@ -1,10 +1,9 @@
 using Content.Shared.Kitchen.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Kitchen.EntitySystems;
 
-public abstract partial class SharedMicrowaveSystem
+public abstract partial class MicrowaveSystem
 {
     /// <summary>
     ///     Subscribe to UI-related events for microwaves.
@@ -23,11 +22,11 @@ public abstract partial class SharedMicrowaveSystem
         if (!HasContents(ent.AsNullable()) || IsActiveMicrowave(ent.AsNullable()))
             return;
 
-        ContainerSys.EmptyContainer(ent.Comp.Storage);
+        Container.EmptyContainer(ent.Comp.Storage);
 
-        var audioParams = ent.Comp.ClickSound?.Params ?? AudioParams.Default;
+        var audioParams = ent.Comp.ClickSound.Params;
         audioParams = audioParams.AddVolume(-2);
-        AudioSys.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, audioParams);
+        Audio.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, audioParams);
     }
 
     /// <summary>
@@ -39,10 +38,10 @@ public abstract partial class SharedMicrowaveSystem
         if (!HasContents(ent.AsNullable()) || IsActiveMicrowave(ent.AsNullable()))
             return;
 
-        ContainerSys.Remove(GetEntity(args.EntityId), ent.Comp.Storage);
+        Container.Remove(GetEntity(args.EntityId), ent.Comp.Storage);
 
-        var audioParams = ent.Comp.ClickSound?.Params ?? AudioParams.Default;
-        AudioSys.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, audioParams);
+        var audioParams = ent.Comp.ClickSound.Params;
+        Audio.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, audioParams);
     }
 
     /// <summary>
@@ -63,8 +62,8 @@ public abstract partial class SharedMicrowaveSystem
         ent.Comp.CurrentCookTimerTime = args.NewCookTime;
         Dirty(ent);
 
-        var audioParams = ent.Comp.ClickSound?.Params ?? AudioParams.Default;
-        AudioSys.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, audioParams);
+        var audioParams = ent.Comp.ClickSound.Params;
+        Audio.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, audioParams);
         UpdateUI(ent.AsNullable());
     }
 

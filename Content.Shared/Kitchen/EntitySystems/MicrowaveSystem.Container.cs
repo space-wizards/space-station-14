@@ -6,18 +6,8 @@ using Robust.Shared.Containers;
 
 namespace Content.Shared.Kitchen.EntitySystems;
 
-public abstract partial class SharedMicrowaveSystem
+public abstract partial class MicrowaveSystem
 {
-    /// <summary>
-    ///     Initialize container-related events for microwaves.
-    /// </summary>
-    private void InitializeContainer()
-    {
-        SubscribeLocalEvent<MicrowaveComponent, EntInsertedIntoContainerMessage>(OnContentsUpdated);
-        SubscribeLocalEvent<MicrowaveComponent, EntRemovedFromContainerMessage>(OnContentsUpdated);
-        SubscribeLocalEvent<MicrowaveComponent, InteractUsingEvent>(OnInteractUsing, after: [typeof(AnchorableSystem)]);
-    }
-
     /// <summary>
     ///     Initializes the microwave's storage container.
     /// </summary>
@@ -25,7 +15,7 @@ public abstract partial class SharedMicrowaveSystem
     private void OnComponentInit(Entity<MicrowaveComponent> ent, ref ComponentInit args)
     {
         // this really does have to be in ComponentInit
-        ent.Comp.Storage = ContainerSys.EnsureContainer<Container>(ent, ent.Comp.ContainerId);
+        ent.Comp.Storage = Container.EnsureContainer<Container>(ent, ent.Comp.ContainerId);
     }
 
     /// <summary>
@@ -35,7 +25,7 @@ public abstract partial class SharedMicrowaveSystem
     [SubscribeLocalEvent]
     private void OnInsertAttempt(Entity<MicrowaveComponent> ent, ref ContainerIsInsertingAttemptEvent args)
     {
-        if (_timing.ApplyingState)
+        if (Timing.ApplyingState)
             return;
 
         if (args.Container.ID != ent.Comp.ContainerId)
@@ -52,6 +42,7 @@ public abstract partial class SharedMicrowaveSystem
     /// <summary>
     ///     Attempt to insert an entity into the microwave, resulting in a pop-up message if this is not possible.
     /// </summary>
+    [SubscribeLocalEvent(after:[typeof(AnchorableSystem)])]
     private void OnInteractUsing(Entity<MicrowaveComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
@@ -61,7 +52,7 @@ public abstract partial class SharedMicrowaveSystem
         if (!_power.IsPowered(ent.Owner))
         {
             var message = Loc.GetString("microwave-component-interact-using-no-power");
-            PopupSys.PopupEntity(message, ent, args.User);
+            Popup.PopupEntity(message, ent, args.User);
             return;
         }
 
@@ -69,7 +60,7 @@ public abstract partial class SharedMicrowaveSystem
         if (ent.Comp.Broken)
         {
             var message = Loc.GetString("microwave-component-interact-using-broken");
-            PopupSys.PopupEntity(message, ent, args.User);
+            Popup.PopupEntity(message, ent, args.User);
             return;
         }
 
@@ -77,7 +68,7 @@ public abstract partial class SharedMicrowaveSystem
         if (!TryComp<ItemComponent>(args.Used, out var item))
         {
             var message = Loc.GetString("microwave-component-interact-using-transfer-fail");
-            PopupSys.PopupEntity(message, ent, args.User);
+            Popup.PopupEntity(message, ent, args.User);
             return;
         }
 
@@ -85,7 +76,7 @@ public abstract partial class SharedMicrowaveSystem
         if (_item.GetSizePrototype(item.Size) > _item.GetSizePrototype(ent.Comp.MaxItemSize))
         {
             var message = Loc.GetString("microwave-component-interact-item-too-big", ("item", args.Used));
-            PopupSys.PopupEntity(message, ent, args.User);
+            Popup.PopupEntity(message, ent, args.User);
             return;
         }
 
@@ -93,25 +84,31 @@ public abstract partial class SharedMicrowaveSystem
         if (ent.Comp.Storage.Count >= ent.Comp.Capacity)
         {
             var message = Loc.GetString("microwave-component-interact-full");
-            PopupSys.PopupEntity(message, ent, args.User);
+            Popup.PopupEntity(message, ent, args.User);
             return;
         }
 
         _hands.TryDropIntoContainer(args.User, args.Used, ent.Comp.Storage);
         args.Handled = true;
     }
+    [SubscribeLocalEvent]
+    private void OnContentsAdded(Entity<MicrowaveComponent> entity, ref EntInsertedIntoContainerMessage args)
+        => OnContentsUpdated(entity, ref args);
+
+    [SubscribeLocalEvent]
+    private void OnContentsRemoved(Entity<MicrowaveComponent> entity, ref EntRemovedFromContainerMessage args)
+        => OnContentsUpdated(entity, ref args);
 
     /// <summary>
     ///     Updates the microwave UI when entities are added/removed from the microwave.
     /// </summary>
     // For some reason ContainerModifiedMessage just can't be used at all with Entity<T>.
-    // TODO: replace with Entity<T> syntax once that's possible
-    private void OnContentsUpdated(EntityUid uid, MicrowaveComponent component, ContainerModifiedMessage args)
+    private void OnContentsUpdated<T>(Entity<MicrowaveComponent> entity, ref T args) where T : ContainerModifiedMessage
     {
-        if (component.Storage != args.Container)
+        if (entity.Comp.Storage != args.Container)
             return;
 
-        UpdateUI((uid, component));
+        UpdateUI(entity.AsNullable());
     }
 
     /// <summary>

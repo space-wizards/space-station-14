@@ -4,16 +4,33 @@ using Content.Shared.Random.Helpers;
 
 namespace Content.Shared.Kitchen.EntitySystems;
 
-public abstract partial class SharedMicrowaveSystem
+public abstract partial class MicrowaveSystem
 {
     /// <summary>
     ///     Adds temperature to every item in the microwave based on the time it took to microwave.
     /// </summary>
     /// <param name="ent">The microwave entity.</param>
     /// <param name="time">The heating time that has elapsed, in seconds.</param>
-    protected virtual void AddTemperature(Entity<MicrowaveComponent> ent, float time)
+    private void AddTemperature(Entity<MicrowaveComponent> ent, float time)
     {
+        var component = ent.Comp;
+        var heatToAdd = time * component.DeltaHeat;
+        var objHeatToAdd = heatToAdd * component.ObjectHeatMultiplier;
 
+        // TODO: Divide heat amongst contents?
+        foreach (var entity in GetMicrowaveContents(ent.AsNullable()))
+        {
+            _temperature.ChangeHeat(entity, objHeatToAdd);
+
+            foreach (var (_, soln) in Solution.EnumerateSolutions(entity))
+            {
+                var solution = soln.Comp.Solution;
+                if (solution.Temperature > component.TemperatureUpperThreshold)
+                    continue;
+
+                Solution.AddThermalEnergy(soln, heatToAdd);
+            }
+        }
     }
 
     /// <summary>
@@ -21,13 +38,13 @@ public abstract partial class SharedMicrowaveSystem
     /// </summary>
     protected virtual void RollMalfunction(Entity<MicrowaveComponent> ent)
     {
-        if (SharedRandomExtensions.PredictedProb(_timing, ent.Comp.ExplosionChance, GetNetEntity(ent)))
+        if (SharedRandomExtensions.PredictedProb(Timing, ent.Comp.ExplosionChance, GetNetEntity(ent)))
             Explode(ent.AsNullable());
     }
 
     public virtual void Explode(Entity<MicrowaveComponent?> ent)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp))
+        if (!MicrowaveQuery.Resolve(ent.Owner, ref ent.Comp))
             return;
 
         ent.Comp.Broken = true;
@@ -78,14 +95,13 @@ public abstract partial class SharedMicrowaveSystem
     {
         var uid = microwave.Owner;
         var component = microwave.Comp;
-        var curTime = _timing.CurTime;
+        var curTime = Timing.CurTime;
         var cookTime = component.CurrentCookTimerTime * component.CookTimeMultiplier;
 
-        AudioSys.PlayPredicted(component.BeginCookingSound, uid, user);
+        Audio.PlayPredicted(component.BeginCookingSound, uid, user);
 
         var activeComp = new ActiveMicrowaveComponent
         {
-            User = user,
             PortionedRecipe = recipe,
             TotalTime = component.CurrentCookTimerTime,
             CookTimeEnd = curTime + TimeSpan.FromSeconds(cookTime),
@@ -141,7 +157,9 @@ public abstract partial class SharedMicrowaveSystem
         }
 
         foreach (var item in ingredientContents)
+        {
             BeginActivelyMicrowaving(item, microwave.Owner);
+        }
 
         return true;
     }
@@ -203,7 +221,7 @@ public abstract partial class SharedMicrowaveSystem
         var entProto = microwave.Comp.FailureResult;
         var coords = Transform(microwave).Coordinates;
         var junk = PredictedSpawnAtPosition(entProto, coords);
-        ContainerSys.Insert(junk, microwave.Comp.Storage);
+        Container.Insert(junk, microwave.Comp.Storage);
 
         PredictedDel(item);
     }
@@ -246,10 +264,10 @@ public abstract partial class SharedMicrowaveSystem
         // TODO: Audio prediction sucks. Predict this properly when audio prediction is less broken
         // https://github.com/space-wizards/RobustToolbox/issues/6436
         if (_net.IsServer)
-            AudioSys.PlayPvs(microwave.FoodDoneSound, ent); // beep... beep... beep
+            Audio.PlayPvs(microwave.FoodDoneSound, ent); // beep... beep... beep
 
         // Clean up the microwave.
-        ContainerSys.EmptyContainer(microwave.Storage);
+        Container.EmptyContainer(microwave.Storage);
         StopCooking(microwaveEnt);
     }
 
@@ -257,14 +275,11 @@ public abstract partial class SharedMicrowaveSystem
     ///     Removes components from a microwave and its contents related to active microwave use.
     /// </summary>
     /// <remarks>
-    ///     When the ActiveMicrowaveComponent is removed, it will trigger <see cref="OnCookStop"/> on shutdown.
+    ///     When the ActiveMicrowaveComponent is removed, it will trigger <see cref="OnCookEnd"/> on shutdown.
     /// </remarks>
     /// <param name="ent">The microwave entity.</param>
     private void StopCooking(Entity<MicrowaveComponent> ent)
     {
-        // TODO: There's a RemCompDeferred mispredict
-        // https://github.com/space-wizards/RobustToolbox/issues/6404
         RemComp<ActiveMicrowaveComponent>(ent);
-        //DeactivateMicrowaveCycle(ent);
     }
 }

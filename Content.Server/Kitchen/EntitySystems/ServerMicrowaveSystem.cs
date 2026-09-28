@@ -3,28 +3,25 @@ using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Lightning;
-using Content.Server.Temperature.Systems;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Kitchen.EntitySystems;
 using Content.Shared.Suicide;
-using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.Kitchen.EntitySystems;
 
 /// <inheritdoc />
-public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
+public sealed partial class ServerMicrowaveSystem : MicrowaveSystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private ExplosionSystem _explosion = default!;
     [Dependency] private LightningSystem _lightning = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedSuicideSystem _suicide = default!;
-    [Dependency] private TemperatureSystem _temperature = default!;
 
     /// <summary>
     ///     Kills the user by microwaving their head.
@@ -50,11 +47,11 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         var othersMessage = Loc.GetString("microwave-component-suicide-others-message", ("victim", victim));
         var selfMessage = Loc.GetString("microwave-component-suicide-message");
 
-        PopupSys.PopupEntity(othersMessage, victim, Filter.PvsExcept(victim), true);
-        PopupSys.PopupEntity(selfMessage, victim, victim);
+        Popup.PopupEntity(othersMessage, victim, Filter.PvsExcept(victim), true);
+        Popup.PopupEntity(selfMessage, victim, victim);
 
-        var audioParams = ent.Comp.ClickSound?.Params ?? AudioParams.Default;
-        AudioSys.PlayPvs(ent.Comp.ClickSound, ent.Owner, audioParams);
+        var audioParams = ent.Comp.ClickSound.Params;
+        Audio.PlayPvs(ent.Comp.ClickSound, ent.Owner, audioParams);
 
         ent.Comp.CurrentCookTimerTime = 10;
         DirtyField(ent.AsNullable(), nameof(MicrowaveComponent.CurrentCookTimeButtonIndex));
@@ -73,28 +70,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     private void OnConstructionTemp(Entity<ActivelyMicrowavedComponent> ent, ref OnConstructionTemperatureEvent args)
     {
         args.Result = HandleResult.False;
-    }
-
-    /// <inheritdoc />
-    protected override void AddTemperature(Entity<MicrowaveComponent> ent, float time)
-    {
-        var component = ent.Comp;
-        var heatToAdd = time * component.BaseHeatMultiplier;
-        var objHeatToAdd = heatToAdd * component.ObjectHeatMultiplier;
-
-        foreach (var entity in GetMicrowaveContents(ent.AsNullable()))
-        {
-            _temperature.ChangeHeat(entity, objHeatToAdd, ignoreHeatResistance: false);
-
-            foreach (var (_, soln) in SolutionSys.EnumerateSolutions(entity))
-            {
-                var solution = soln.Comp.Solution;
-                if (solution.Temperature > component.TemperatureUpperThreshold)
-                    continue;
-
-                SolutionSys.AddThermalEnergy(soln, heatToAdd);
-            }
-        }
     }
 
     /// <inheritdoc />
@@ -126,11 +101,12 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 
         if (TryComp<MachineComponent>(ent, out var machine))
         {
-            ContainerSys.CleanContainer(machine.BoardContainer);
-            ContainerSys.EmptyContainer(machine.PartContainer);
+            Container.CleanContainer(machine.BoardContainer);
+            Container.EmptyContainer(machine.PartContainer);
         }
 
-        _adminLogger.Add(LogType.Action, LogImpact.Medium,
+        _adminLogger.Add(LogType.Action,
+            LogImpact.Medium,
             $"{ToPrettyString(ent)} exploded from unsafe cooking!");
     }
 }

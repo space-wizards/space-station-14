@@ -1,4 +1,3 @@
-using Content.Client.Kitchen.EntitySystems;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Kitchen.EntitySystems;
 using JetBrains.Annotations;

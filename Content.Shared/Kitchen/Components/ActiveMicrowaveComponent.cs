@@ -10,7 +10,7 @@ namespace Content.Shared.Kitchen.Components;
 /// Attached to a microwave that is currently in the process of cooking
 /// </summary>
 [RegisterComponent]
-[Access(typeof(SharedMicrowaveSystem))]
+[Access(typeof(MicrowaveSystem))]
 [NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
 public sealed partial class ActiveMicrowaveComponent : Component
 {
@@ -25,12 +25,6 @@ public sealed partial class ActiveMicrowaveComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public PortionedRecipe? PortionedRecipe;
-
-    /// <summary>
-    ///     The user who activated this microwave.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntityUid? User;
 
     /// <summary>
     ///     The total cooking time of this operation.

@@ -1,12 +1,11 @@
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Kitchen.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Kitchen.EntitySystems;
 
-public abstract partial class SharedMicrowaveSystem
+public abstract partial class MicrowaveSystem
 {
     /// <summary>
     ///     Adjusts a microwave's visuals, audio, and power draw when activated.
@@ -14,24 +13,12 @@ public abstract partial class SharedMicrowaveSystem
     [SubscribeLocalEvent]
     private void OnCookStart(Entity<ActiveMicrowaveComponent> ent, ref ComponentStartup args)
     {
-        if (!_microwaveQuery.TryComp(ent, out var microwaveComponent))
+        if (!MicrowaveQuery.TryComp(ent, out var microwaveComponent))
             return;
 
-        SetAppearance((ent, microwaveComponent), MicrowaveVisualState.Cooking);
-        _powerState.SetWorkingState(ent.Owner, true);
-
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
-        if (microwaveComponent.PlayingStream != null && microwaveComponent.PlayingStream != EntityUid.Invalid)
-            return;
-
-        var audioParams = microwaveComponent.LoopingSound?.Params ?? AudioParams.Default;
-        audioParams = audioParams.WithLoop(true).WithMaxDistance(5);
-
-        var loopSound = AudioSys.PlayPredicted(microwaveComponent.LoopingSound, ent, ent.Comp.User, audioParams);
-        microwaveComponent.PlayingStream = loopSound?.Entity;
-        DirtyField(ent, microwaveComponent, nameof(MicrowaveComponent.PlayingStream));
+        ent.Comp.NextCookUpdate = Timing.CurTime + microwaveComponent.UpdateInterval;
+        DirtyField(ent.AsNullable(), nameof(ActiveMicrowaveComponent.NextCookUpdate));
+        ActivateMicrowaveCycle((ent, microwaveComponent));
     }
 
     /// <summary>
@@ -40,7 +27,7 @@ public abstract partial class SharedMicrowaveSystem
     [SubscribeLocalEvent]
     private void OnCookEnd(Entity<ActiveMicrowaveComponent> ent, ref ComponentShutdown args)
     {
-        if (!_microwaveQuery.TryComp(ent, out var microwaveComponent))
+        if (!MicrowaveQuery.TryComp(ent, out var microwaveComponent))
             return;
 
         DeactivateMicrowaveCycle((ent, microwaveComponent));
@@ -52,7 +39,7 @@ public abstract partial class SharedMicrowaveSystem
     [SubscribeLocalEvent]
     private void OnActiveMicrowaveInsert(Entity<ActiveMicrowaveComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        if (_timing.ApplyingState)
+        if (Timing.ApplyingState)
             return;
 
         BeginActivelyMicrowaving(args.Entity, ent.Owner);
@@ -64,7 +51,7 @@ public abstract partial class SharedMicrowaveSystem
     [SubscribeLocalEvent]
     private void OnActiveMicrowaveRemove(Entity<ActiveMicrowaveComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        if (_timing.ApplyingState)
+        if (Timing.ApplyingState)
             return;
 
         RemCompDeferred<ActivelyMicrowavedComponent>(args.Entity);
@@ -80,7 +67,7 @@ public abstract partial class SharedMicrowaveSystem
     [SubscribeLocalEvent]
     private void OnReactionAttempt(Entity<ActivelyMicrowavedComponent> ent, ref SolutionRelayEvent<ReactionAttemptEvent> args)
     {
-        if (!TryComp<ActiveMicrowaveComponent>(ent.Comp.Microwave, out var activeMicrowaveComp))
+        if (!ActiveMicrowaveQuery.TryComp(ent.Comp.Microwave, out var activeMicrowaveComp))
             return;
 
         var portionedRecipe = activeMicrowaveComp.PortionedRecipe;
@@ -101,30 +88,33 @@ public abstract partial class SharedMicrowaveSystem
     }
 
     /// <summary>
+    ///     Adjusts a microwave's visuals, audio, and power draw when activated.
+    /// </summary>
+    protected virtual void ActivateMicrowaveCycle(Entity<MicrowaveComponent> ent)
+    {
+        SetAppearance(ent, MicrowaveVisualState.Cooking);
+        _powerState.SetWorkingState(ent.Owner, true);
+    }
+
+    /// <summary>
     ///     Adjusts a microwave's visuals, audio, and power draw when deactivated.
     /// </summary>
-    private void DeactivateMicrowaveCycle(Entity<MicrowaveComponent> ent)
+    protected virtual void DeactivateMicrowaveCycle(Entity<MicrowaveComponent> ent)
     {
-        SetAppearance(ent.AsNullable(), MicrowaveVisualState.Idle);
+        SetAppearance(ent, MicrowaveVisualState.Idle);
         _powerState.SetWorkingState(ent.Owner, false);
-
-        // TODO: Completely redo our Audio API and prediction because it doesn't work for VARIOUS reasons
-        // TODO: See e#6722 for some details
-        PredictedQueueDel(ent.Comp.PlayingStream);
-        ent.Comp.PlayingStream = null;
-        DirtyField(ent.AsNullable(), nameof(MicrowaveComponent.PlayingStream));
-
-        foreach (var solid in GetMicrowaveContents(ent.AsNullable()))
+        foreach (var uid in GetMicrowaveContents(ent.AsNullable()))
         {
-            RemComp<ActivelyMicrowavedComponent>(solid);
+            RemCompDeferred<ActivelyMicrowavedComponent>(uid);
         }
     }
 
     /// <summary>
     ///     Add ActivelyMicrowavedComponent to items that are being actively microwaved.
     /// </summary>
-    /// <param name="uid">The entity to add this component to.</param>
-    private void BeginActivelyMicrowaving(EntityUid uid, EntityUid? microwave)
+    /// <param name="uid">The entity being microwaved.</param>
+    /// <param name="microwave">That dastardly microwave</param>
+    private void BeginActivelyMicrowaving(EntityUid uid, EntityUid microwave)
     {
         var comp = new ActivelyMicrowavedComponent { Microwave = microwave };
         AddComp(uid, comp);
