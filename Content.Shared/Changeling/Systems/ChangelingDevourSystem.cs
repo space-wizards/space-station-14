@@ -17,6 +17,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Store.Components;
 using Content.Shared.Whitelist;
+using Content.Shared.Zombies;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 
@@ -89,6 +90,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
             BreakOnMove = true,
             CancelDuplicate = true,
             DuplicateCondition = DuplicateConditions.None,
+            ExamineText = ent.Comp.WindupExamine == null ? null : Loc.GetString(ent.Comp.WindupExamine, ("user", Identity.Entity(ent, EntityManager)), ("target", Identity.Entity(target, EntityManager)))
         });
 
         var selfMessage = Loc.GetString("changeling-devour-begin-windup-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
@@ -141,6 +143,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
             BreakOnMove = true,
             CancelDuplicate = true,
             DuplicateCondition = DuplicateConditions.None,
+            ExamineText = ent.Comp.DevourExamine == null ? null : Loc.GetString(ent.Comp.DevourExamine, ("user", Identity.Entity(ent, EntityManager)), ("target", Identity.Entity(target, EntityManager)))
         });
     }
 
@@ -236,7 +239,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
             return false;
         }
 
-        if (HasComp<RottingComponent>(victim))
+        if (HasComp<RottingComponent>(victim) || HasComp<ZombieComponent>(victim))
         {
             if (showPopup)
                 _popupSystem.PopupEntity(Loc.GetString("changeling-devour-attempt-failed-rotting"), changeling.Owner, changeling.Owner, PopupType.Medium);

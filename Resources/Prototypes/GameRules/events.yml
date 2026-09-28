@@ -492,7 +492,11 @@
     table: !type:GroupSelector
       rolls: 4, 8
       children:
-      - id: MobGiantSpiderAngry
+      - id: MobGiantSpiderTarantulaAngry
+      - id: MobGiantSpiderHunterAngry
+      - id: MobGiantSpiderGuardAngry
+      - id: MobGiantSpiderMidwifeAngry
+      - id: MobGiantSpiderNurseAngry
 
 - type: entity
   id: SpiderClownSpawnHorde
@@ -511,8 +515,8 @@
     table: !type:GroupSelector
       rolls: 4, 8
       children:
-      - id: MobClownSpider
-    
+      - id: MobGiantSpiderClownAngry
+
 - type: entity
   id: GiantMushroomSpawnHorde
   parent: BaseStationEventShortDelay
@@ -536,9 +540,9 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    earliestStart: 90
+    earliestStart: 45
     minimumPlayers: 40
-    weight: 1 # Zombies was happening basically every single survival round, so now it's super rare
+    weight: 1
     duration: 1
     occursDuringRoundEnd: false
   - type: ZombieRule
@@ -651,7 +655,6 @@
   - type: StationEvent
     earliestStart: 0
     duration: 1
-    minimumPlayers: 1
     maxOccurrences: 2
     weight: 10
   - type: RandomSpawnRule

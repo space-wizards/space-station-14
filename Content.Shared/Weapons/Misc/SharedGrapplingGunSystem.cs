@@ -333,7 +333,7 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
                 if (grapplerBodyB.Mass < BaseWeightMass)
                     massFactorB *= grapplerBodyB.Mass / BaseWeightMass;
 
-                if (sameGrid && physicalHook != _transform.GetGrid(joint.BodyAUid))
+                if (!sameGrid || sameGrid && physicalHook != _transform.GetGrid(joint.BodyAUid))
                     _physics.ApplyLinearImpulse(grapplerUidA, -targetDirection * massFactorA * grappling.ReelForce * frameTime, grapplerOffsetA, body: grapplerBodyA);
 
                 _physics.ApplyLinearImpulse(grapplerUidB, targetDirection * massFactorB * grappling.ReelForce * frameTime, grapplerOffsetB, body: grapplerBodyB);

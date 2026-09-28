@@ -7,6 +7,14 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.EntityTable.EntitySelectors;
 
+/// <summary>
+/// An extensible table for configurable entity selection, both random and deterministic.
+/// </summary>
+/// <remarks>
+/// This is currently the favored way to select multiple entities - generally for spawning.
+/// With its children, it supports returning multiple entities, nested selectors,
+/// groups of entities, conditions, and probabilistic spawns.
+/// </remarks>
 [ImplicitDataDefinitionForInheritors, UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
 public abstract partial class EntityTableSelector
 {
