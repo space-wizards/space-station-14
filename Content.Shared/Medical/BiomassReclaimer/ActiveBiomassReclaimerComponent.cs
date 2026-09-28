@@ -1,14 +1,12 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Storage;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Medical.BiomassReclaimer;
+namespace Content.Shared.Medical.BiomassReclaimer;
 
-/// <summary>
-/// The current processing state, kept when the reclaimer loses power.
-/// </summary>
-[RegisterComponent, AutoGenerateComponentPause]
-[Access(typeof(ServerBiomassReclaimerSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
+[Access(typeof(BiomassReclaimerSystem))]
 public sealed partial class ActiveBiomassReclaimerComponent : Component
 {
     /// <summary>

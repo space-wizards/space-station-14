@@ -246,9 +246,6 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         if (TerminatingOrDeleted(dragged) || EntityManager.IsQueuedForDeletion(dragged))
             return BiomassReclaimerInsertResult.InvalidTarget;
 
-        if (_activeQuery.HasComp(reclaimer))
-            return BiomassReclaimerInsertResult.Busy;
-
         var result = base.ValidateInsertion(reclaimer, dragged);
         if (result != BiomassReclaimerInsertResult.Success)
             return result;

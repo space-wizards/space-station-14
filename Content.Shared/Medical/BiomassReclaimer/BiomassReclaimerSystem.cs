@@ -93,6 +93,9 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
 
     protected virtual BiomassReclaimerInsertResult ValidateInsertion(Entity<BiomassReclaimerComponent> reclaimer, EntityUid target)
     {
+        if (HasComp<ActiveBiomassReclaimerComponent>(reclaimer))
+            return BiomassReclaimerInsertResult.Busy;
+
         var isPlant = _produceQuery.HasComp(target);
         if ((!isPlant && !_mobStateQuery.HasComp(target)) || !_physicsQuery.HasComp(target))
             return BiomassReclaimerInsertResult.InvalidTarget;
