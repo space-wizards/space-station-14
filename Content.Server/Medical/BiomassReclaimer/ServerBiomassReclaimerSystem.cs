@@ -200,7 +200,7 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
     {
         var active = AddComp<ActiveBiomassReclaimerComponent>(ent);
         CollectMessData(toProcess, (ent.Owner, ent.Comp, active));
-        active.ExpectedYield = CalculateYield((toProcess.Owner, toProcess.Comp), ent);
+        active.ExpectedYield = CalculateYield(toProcess, ent);
         active.ProcessingEndTime = _timing.CurTime + TimeSpan.FromSeconds(toProcess.Comp.FixturesMass * ent.Comp.ProcessingTimePerUnitMass);
         active.NextMessTime = _timing.CurTime;
         EjectInventory(toProcess, ent.Owner);
@@ -249,6 +249,9 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
 
     protected override BiomassReclaimerInsertResult ValidateInsertion(Entity<BiomassReclaimerComponent> reclaimer, EntityUid dragged)
     {
+        if (TerminatingOrDeleted(dragged) || EntityManager.IsQueuedForDeletion(dragged))
+            return BiomassReclaimerInsertResult.InvalidTarget;
+
         if (_activeQuery.HasComp(reclaimer))
             return BiomassReclaimerInsertResult.Busy;
 

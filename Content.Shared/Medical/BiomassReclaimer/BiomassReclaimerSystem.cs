@@ -20,6 +20,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     [Dependency] protected EntityQuery<PhysicsComponent> _physicsQuery;
     [Dependency] protected EntityQuery<TransformComponent> _transformQuery;
     [Dependency] protected EntityQuery<ProduceComponent> _produceQuery;
+    [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery;
 
     [SubscribeLocalEvent]
     private void OnCanDrop(Entity<BiomassReclaimerComponent> ent, ref CanDropTargetEvent args)
@@ -34,10 +35,10 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnAfterInteractUsing(Entity<BiomassReclaimerComponent> reclaimer, ref AfterInteractUsingEvent args)
     {
-        if (!args.CanReach || args.Target == null)
+        if (args.Handled || !args.CanReach || args.Target == null)
             return;
 
-        TryStartInsertion(reclaimer, args.User, args.Used, true);
+        args.Handled = TryStartInsertion(reclaimer, args.User, args.Used, true);
     }
 
     [SubscribeLocalEvent]
@@ -92,7 +93,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     protected virtual BiomassReclaimerInsertResult ValidateInsertion(Entity<BiomassReclaimerComponent> reclaimer, EntityUid target)
     {
         var isPlant = _produceQuery.HasComp(target);
-        if ((!isPlant && !HasComp<MobStateComponent>(target)) || !_physicsQuery.HasComp(target))
+        if ((!isPlant && !_mobStateQuery.HasComp(target)) || !_physicsQuery.HasComp(target))
             return BiomassReclaimerInsertResult.InvalidTarget;
 
         if (!_transformQuery.GetComponent(reclaimer).Anchored)
