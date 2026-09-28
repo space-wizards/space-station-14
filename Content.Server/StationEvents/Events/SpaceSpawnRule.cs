@@ -85,8 +85,9 @@ public sealed partial class SpaceSpawnRule : StationEventSystem<SpaceSpawnRuleCo
 
         while (list.Count > 0)
         {
-            var arcIndex = RobustRandom.Pick(list);
-            list.RemoveSwap(arcIndex);
+            var index = RobustRandom.Next(list.Count);
+            var arcIndex = list[index];
+            list.RemoveSwap(index);
             var arcAngle = angleOffset + arcPerIndex * arcIndex;
             // position relative to station center
             var spawnOffset = arcAngle.ToVec() * distance;
