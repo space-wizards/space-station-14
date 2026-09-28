@@ -44,7 +44,7 @@ namespace Content.Server.Atmos.Reactions
                 energyReleased += (Atmospherics.FireHydrogenEnergyReleased * burnedFuel);
 
                 // Radiation pulse
-                if (location != null)
+                if (location != null && burnedFuel > Atmospherics.TritiumFireRadMinFuel)
                     atmosphereSystem.QueueTritiumFireRadiation(location, burnedFuel);
 
                 // Conservation of mass is important.

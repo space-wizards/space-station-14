@@ -79,9 +79,9 @@ public sealed partial class TileRadiationCommand : IConsoleCommand
                     metric = (0, 0);
 
                 var uniqueTiles = new HashSet<Vector2i>();
-                for (var i = 0; i < gridRad.Sources.Count; i++)
+                foreach (var sourceData in gridRad.Sources.Values)
                 {
-                    uniqueTiles.Add(gridRad.Sources[i].Tile);
+                    uniqueTiles.Add(sourceData.Tile);
                 }
 
                 mapMetrics[mapId] = (metric.Tiles + uniqueTiles.Count, metric.Sources + gridRad.Sources.Count);
@@ -112,9 +112,8 @@ public sealed partial class TileRadiationCommand : IConsoleCommand
             entriesFound = true;
 
             var groupedByTile = new Dictionary<Vector2i, List<TileSourceData>>();
-            for (var i = 0; i < gridRad.Sources.Count; i++)
+            foreach (var sourceData in gridRad.Sources.Values)
             {
-                var sourceData = gridRad.Sources[i];
                 if (!groupedByTile.TryGetValue(sourceData.Tile, out var list))
                 {
                     list = [];

@@ -404,11 +404,6 @@ public partial class AtmosphereSystem
     [PublicAPI]
     public void QueueTritiumFireRadiation(TileAtmosphere location, float burnedFuel)
     {
-        if (!TryComp(location.GridIndex, out TransformComponent? gridXform))
-            return;
-
-        var gridUid = gridXform.GridUid ?? location.GridIndex;
-
         float radIntensity;
         if (burnedFuel <= Atmospherics.TritiumFireRadThreshold)
         {
@@ -420,6 +415,13 @@ public partial class AtmosphereSystem
             var dynamicMultiplier = Atmospherics.TritiumFireRadMultiplier / (1f + Atmospherics.TritiumFireRadDropoff * excessFuel);
             radIntensity = burnedFuel * dynamicMultiplier;
         }
+
+        if (radIntensity < _rad.MinIntensity)
+            return;
+
+        var gridUid = location.GridIndex;
+        if (!gridUid.IsValid())
+            return;
 
         _rad.SetTileRadiation(
             gridUid,

@@ -260,6 +260,11 @@ namespace Content.Shared.Atmos
         public const float TritiumBurnFuelRatio = 2f;
 
         /// <summary>
+        ///     The burned fuel threshold where radiation emission begins
+        /// </summary>
+        public const float TritiumFireRadMinFuel = 0.01f;
+
+        /// <summary>
         ///     The baseline radiation multiplier for optimal tritium fires
         /// </summary>
         public const float TritiumFireRadMultiplier = 10f;

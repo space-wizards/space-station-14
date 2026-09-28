@@ -80,9 +80,8 @@ public partial class RadiationSystem
 
             var localMatrix = gridXform.LocalMatrix;
 
-            for (var i = 0; i < gridRad.Sources.Count; i++)
+            foreach (var tileSource in gridRad.Sources.Values)
             {
-                var tileSource = gridRad.Sources[i];
                 var sourceTileCenter = new Vector2(tileSource.Tile.X, tileSource.Tile.Y) + _halfTileOffset;
                 var worldPos = Vector2.Transform(sourceTileCenter, localMatrix);
 

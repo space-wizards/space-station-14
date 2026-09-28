@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using Content.Server.Radiation.Components;
 using Robust.Shared.Map.Components;
 
@@ -5,30 +6,26 @@ namespace Content.Server.Radiation.Systems;
 
 public partial class RadiationSystem
 {
+    private readonly List<(Vector2i Tile, ushort SourceId)> _toRemove = [];
     public void SetTileRadiation(EntityUid gridUid, Vector2i tile, ushort sourceId, float intensity, float slope, float halfLife = -1f, bool forceSet = false)
     {
-        if (intensity < MinIntensity)
-            return;
-
-        if (!_entMan.EntityExists(gridUid))
+        if (intensity < MinIntensity || !_entMan.EntityExists(gridUid))
             return;
 
         var gridRadComp = _entMan.EnsureComponent<GridTileRadiationComponent>(gridUid);
+        var key = (tile, sourceId);
+        ref var source = ref CollectionsMarshal.GetValueRefOrAddDefault(gridRadComp.Sources, key, out var sourceExists);
 
-        for (var i = 0; i < gridRadComp.Sources.Count; i++)
+        if (sourceExists)
         {
-            var source = gridRadComp.Sources[i];
-            if (source.Tile == tile && source.SourceId == sourceId)
-            {
-                source.Intensity = forceSet ? intensity : MathF.Max(source.Intensity, intensity);
-                source.Slope = slope;
-                source.HalfLife = halfLife;
-                gridRadComp.Sources[i] = source;
-                return;
-            }
+            source.Intensity = forceSet ? intensity : MathF.Max(source.Intensity, intensity);
+            source.Slope = slope;
+            source.HalfLife = halfLife;
         }
-
-        gridRadComp.Sources.Add(new TileSourceData(tile, sourceId, intensity, slope, halfLife));
+        else
+        {
+            source = new TileSourceData(tile, sourceId, intensity, slope, halfLife);
+        }
     }
 
     private void UpdateTileRadiationSources(float seconds)
@@ -36,18 +33,18 @@ public partial class RadiationSystem
         var query = EntityQueryEnumerator<GridTileRadiationComponent, MapGridComponent>();
         while (query.MoveNext(out var gridUid, out var gridRad, out var gridComp))
         {
-            for (var i = gridRad.Sources.Count - 1; i >= 0; i--)
+            var sources = gridRad.Sources;
+
+            foreach (var (key, source) in sources)
             {
-                var updatedSource = gridRad.Sources[i];
+                var updatedSource = source;
 
                 if (updatedSource.HalfLife == 0f)
-                {
                     continue;
-                }
 
                 if (updatedSource.HalfLife < 0f)
                 {
-                    gridRad.Sources.RemoveAt(i);
+                    _toRemove.Add(key);
                     continue;
                 }
 
@@ -60,11 +57,23 @@ public partial class RadiationSystem
                     !_maps.TryGetTileRef(gridUid, gridComp, updatedSource.Tile, out var tileRef) ||
                     tileRef.Tile.IsEmpty)
                 {
-                    gridRad.Sources.RemoveAt(i);
+                    _toRemove.Add(key);
                     continue;
                 }
 
-                gridRad.Sources[i] = updatedSource;
+                CollectionsMarshal.GetValueRefOrAddDefault(sources, key, out _) = updatedSource;
+            }
+
+            for (var i = 0; i < _toRemove.Count; i++)
+            {
+                sources.Remove(_toRemove[i]);
+            }
+
+            _toRemove.Clear();
+
+            if (sources.Count == 0)
+            {
+                RemCompDeferred<GridTileRadiationComponent>(gridUid);
             }
         }
     }
@@ -74,14 +83,20 @@ public partial class RadiationSystem
         if (!_entMan.TryGetComponent<GridTileRadiationComponent>(gridUid, out var gridRad))
             return;
 
-        for (var i = gridRad.Sources.Count - 1; i >= 0; i--)
+        foreach (var (key, source) in gridRad.Sources)
         {
-            var source = gridRad.Sources[i];
             if (source.Tile == tile && condition(source))
             {
-                gridRad.Sources.RemoveAt(i);
+                _toRemove.Add(key);
             }
         }
+
+        for (var i = 0; i < _toRemove.Count; i++)
+        {
+            gridRad.Sources.Remove(_toRemove[i]);
+        }
+
+        _toRemove.Clear();
     }
 
     public void ClearAllTileRadiation(Func<TileSourceData, bool> condition)
@@ -89,13 +104,20 @@ public partial class RadiationSystem
         var query = EntityQueryEnumerator<GridTileRadiationComponent>();
         while (query.MoveNext(out var gridUid, out var gridRad))
         {
-            for (var i = gridRad.Sources.Count - 1; i >= 0; i--)
+            foreach (var (key, source) in gridRad.Sources)
             {
-                if (condition(gridRad.Sources[i]))
+                if (condition(source))
                 {
-                    gridRad.Sources.RemoveAt(i);
+                    _toRemove.Add(key);
                 }
             }
+
+            for (var i = 0; i < _toRemove.Count; i++)
+            {
+                gridRad.Sources.Remove(_toRemove[i]);
+            }
+
+            _toRemove.Clear();
         }
     }
 }
