@@ -147,8 +147,8 @@ guide-entry-xenoborgs = Xenoborgs
 guide-entry-changelings = Changelings
 
 guide-entry-rules = Server Rules
-guide-entry-rules-core-only = Core Only Ruleset
-guide-entry-rules-lrp = Standard Ruleset
+guide-entry-rules-core-only = Core-Only Ruleset
+guide-entry-rules-lrp = LRP Ruleset
 guide-entry-rules-mrp = MRP Ruleset
 guide-entry-rules-role-types = Role Types
 guide-entry-rules-core = Core Rules
