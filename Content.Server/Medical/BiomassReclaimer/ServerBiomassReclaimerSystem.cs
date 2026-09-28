@@ -7,16 +7,12 @@ using Content.Shared.CCVar;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Construction.Components;
 using Content.Shared.Database;
-using Content.Shared.DoAfter;
-using Content.Shared.DragDrop;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Jittering;
-using Content.Shared.Medical;
 using Content.Shared.Medical.BiomassReclaimer;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
@@ -40,13 +36,11 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
     [Dependency] private SharedJitteringSystem _jitteringSystem = default!;
     [Dependency] private SharedAudioSystem _sharedAudioSystem = default!;
     [Dependency] private SharedAmbientSoundSystem _ambientSoundSystem = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private PuddleSystem _puddleSystem = default!;
     [Dependency] private SharedSolutionContainerSystem _solution = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
     [Dependency] private IRobustRandom _robustRandom = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private MaterialStorageSystem _material = default!;
     [Dependency] private SharedMindSystem _minds = default!;
@@ -185,37 +179,6 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
     }
 
     [SubscribeLocalEvent]
-    private void OnAfterInteractUsing(Entity<BiomassReclaimerComponent> reclaimer, ref AfterInteractUsingEvent args)
-    {
-        if (!args.CanReach || args.Target == null)
-            return;
-
-        TryStartInsertion(reclaimer, args.User, args.Used, needHand: true);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnDragDrop(Entity<BiomassReclaimerComponent> reclaimer, ref DragDropTargetEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        args.Handled = TryStartInsertion(reclaimer, args.User, args.Dragged, needHand: false);
-    }
-
-    private bool TryStartInsertion(Entity<BiomassReclaimerComponent> reclaimer, EntityUid user, EntityUid toProcess, bool needHand)
-    {
-        if (!TryValidateInsertionAndPopup(reclaimer, toProcess, user) || !_physicsQuery.TryComp(toProcess, out var physics))
-            return false;
-
-        var delay = reclaimer.Comp.BaseInsertionDelay * physics.FixturesMass;
-        return _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, delay, new ReclaimerDoAfterEvent(), reclaimer, target: reclaimer, used: toProcess)
-        {
-            NeedHand = needHand,
-            BreakOnMove = true
-        });
-    }
-
-    [SubscribeLocalEvent]
     private void OnDoAfter(Entity<BiomassReclaimerComponent> reclaimer, ref ReclaimerDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled)
@@ -283,31 +246,6 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         ent.Comp1.YieldRemainder = expectedYield - actualYield;
         _material.SpawnMultipleFromMaterial(actualYield, ent.Comp1.OutputMaterial, _transformQuery.GetComponent(ent).Coordinates);
         RemCompDeferred<ActiveBiomassReclaimerComponent>(ent);
-    }
-
-    private bool TryValidateInsertionAndPopup(Entity<BiomassReclaimerComponent> reclaimer, EntityUid target, EntityUid user)
-    {
-        var result = ValidateInsertion(reclaimer, target);
-        if (GetInsertionFailureLoc(result) is not { } message)
-            return true;
-
-        _popup.PopupEntity(Loc.GetString(message), reclaimer, user);
-        return false;
-    }
-
-    private static LocId? GetInsertionFailureLoc(BiomassReclaimerInsertResult result)
-    {
-        return result switch
-        {
-            BiomassReclaimerInsertResult.Success => null,
-            BiomassReclaimerInsertResult.InvalidTarget => "biomass-reclaimer-invalid-target",
-            BiomassReclaimerInsertResult.Unanchored => "biomass-reclaimer-unanchored",
-            BiomassReclaimerInsertResult.Unpowered => "biomass-reclaimer-unpowered",
-            BiomassReclaimerInsertResult.TargetAlive => "biomass-reclaimer-safety-enabled",
-            BiomassReclaimerInsertResult.Busy => "biomass-reclaimer-busy",
-            BiomassReclaimerInsertResult.SoulPresent => "biomass-reclaimer-soul-present",
-            _ => throw new ArgumentOutOfRangeException(nameof(result), result, null)
-        };
     }
 
     protected override BiomassReclaimerInsertResult ValidateInsertion(Entity<BiomassReclaimerComponent> reclaimer, EntityUid dragged)

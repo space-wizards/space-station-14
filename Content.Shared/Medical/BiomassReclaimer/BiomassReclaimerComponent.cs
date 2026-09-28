@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Medical.BiomassReclaimer;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(BiomassReclaimerSystem))]
 public sealed partial class BiomassReclaimerComponent : Component
 {
@@ -85,7 +85,7 @@ public sealed partial class BiomassReclaimerComponent : Component
     /// <summary>
     /// How many seconds to take to insert an entity per unit of its mass.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float BaseInsertionDelay = 0.1f;
 
     /// <summary>
@@ -103,6 +103,6 @@ public sealed partial class BiomassReclaimerComponent : Component
     /// <summary>
     /// Will this refuse to gib a living mob?
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool SafetyEnabled = true;
 }
