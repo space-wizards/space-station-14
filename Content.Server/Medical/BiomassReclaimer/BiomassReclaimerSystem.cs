@@ -19,7 +19,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Jittering;
-using Content.Shared.Materials;
 using Content.Shared.Medical;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
@@ -32,7 +31,6 @@ using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -59,8 +57,6 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private IGameTiming _timing = default!;
 
-    public static readonly ProtoId<MaterialPrototype> BiomassPrototype = "Biomass";
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -85,20 +81,20 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
         if (_timing.CurTime < active.NextMessTime)
             return;
 
-        if (_robustRandom.Prob(0.2f) && active.BloodReagents is { } blood)
+        if (_robustRandom.Prob(reclaimer.BloodSpillChance) && active.BloodReagents is { } blood)
             _puddleSystem.TrySpillAt(uid, blood, out _);
 
-        if (_robustRandom.Prob(0.03f) && active.SpawnedEntities.Count > 0)
+        if (_robustRandom.Prob(reclaimer.ItemThrowChance) && active.SpawnedEntities.Count > 0)
         {
             var thrown = Spawn(
                 _robustRandom.Pick(active.SpawnedEntities).PrototypeId,
                 Transform(uid).Coordinates);
 
             var direction = new Vector2(
-                _robustRandom.Next(-30, 30),
-                _robustRandom.Next(-30, 30));
+                _robustRandom.Next(reclaimer.ItemThrowDirectionMin, reclaimer.ItemThrowDirectionMax),
+                _robustRandom.Next(reclaimer.ItemThrowDirectionMin, reclaimer.ItemThrowDirectionMax));
 
-            _throwing.TryThrow(thrown, direction, _robustRandom.Next(1, 10));
+            _throwing.TryThrow(thrown, direction, _robustRandom.Next(reclaimer.ItemThrowMinSpeed, reclaimer.ItemThrowMaxSpeed));
         }
 
         active.NextMessTime += reclaimer.RandomMessInterval;
@@ -167,8 +163,11 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
 
     private void StartRunningEffects(EntityUid uid)
     {
-        _jitteringSystem.AddJitter(uid, -10, 100);
-        _sharedAudioSystem.PlayPvs("/Audio/Machines/reclaimer_startup.ogg", uid);
+        if (TryComp<BiomassReclaimerComponent>(uid, out var reclaimer))
+        {
+            _jitteringSystem.AddJitter(uid, reclaimer.JitterAmplitude, reclaimer.JitterFrequency);
+            _sharedAudioSystem.PlayPvs(reclaimer.StartupSound, uid);
+        }
         _ambientSoundSystem.SetAmbience(uid, true);
     }
 
@@ -210,8 +209,10 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
     {
         if (!CanProcess(reclaimer, args.Climber))
         {
-            var direction = new Vector2(_robustRandom.Next(-2, 2), _robustRandom.Next(-2, 2));
-            _throwing.TryThrow(args.Climber, direction, 0.5f);
+            var direction = new Vector2(
+                _robustRandom.Next(reclaimer.Comp.ClimberThrowDirectionMin, reclaimer.Comp.ClimberThrowDirectionMax),
+                _robustRandom.Next(reclaimer.Comp.ClimberThrowDirectionMin, reclaimer.Comp.ClimberThrowDirectionMax));
+            _throwing.TryThrow(args.Climber, direction, reclaimer.Comp.ClimberThrowSpeed);
             return;
         }
         _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.Instigator):player} used a biomass reclaimer to gib {ToPrettyString(args.Climber):target} in {ToPrettyString(reclaimer):reclaimer}");
@@ -241,7 +242,7 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
 
         var component = ent.Comp;
         var active = AddComp<ActiveBiomassReclaimerComponent>(ent);
-        CollectMessData(toProcess, active);
+        CollectMessData(toProcess, component, active);
         active.ExpectedYield = CalculateYield(toProcess, component, physics.FixturesMass);
         active.ProcessingEndTime = _timing.CurTime + TimeSpan.FromSeconds(physics.FixturesMass * component.ProcessingTimePerUnitMass);
         active.NextMessTime = _timing.CurTime;
@@ -249,13 +250,13 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
         QueueDel(toProcess);
     }
 
-    private void CollectMessData(EntityUid toProcess, ActiveBiomassReclaimerComponent active)
+    private void CollectMessData(EntityUid toProcess, BiomassReclaimerComponent reclaimer, ActiveBiomassReclaimerComponent active)
     {
         if (TryComp<BloodstreamComponent>(toProcess, out var stream) &&
             _solution.ResolveSolution(toProcess, stream.BloodSolutionName, ref stream.BloodSolution, out var solution))
         {
             active.BloodReagents = solution.Clone();
-            var scale = active.BloodReagents.Volume <= FixedPoint2.Zero ? 0 : 50 / active.BloodReagents.Volume;
+            var scale = active.BloodReagents.Volume <= FixedPoint2.Zero ? 0 : reclaimer.BloodSpillVolume / active.BloodReagents.Volume;
             active.BloodReagents.ScaleSolution(scale);
         }
         if (TryComp<ToolRefinableComponent>(toProcess, out var refinable))
@@ -285,7 +286,7 @@ public sealed partial class BiomassReclaimerSystem : EntitySystem
         var expectedYield = active.ExpectedYield + reclaimer.Comp.YieldRemainder;
         var actualYield = (int) expectedYield;
         reclaimer.Comp.YieldRemainder = expectedYield - actualYield;
-        _material.SpawnMultipleFromMaterial(actualYield, BiomassPrototype, Transform(reclaimer).Coordinates);
+        _material.SpawnMultipleFromMaterial(actualYield, reclaimer.Comp.OutputMaterial, Transform(reclaimer).Coordinates);
         RemCompDeferred<ActiveBiomassReclaimerComponent>(reclaimer);
     }
 
