@@ -52,7 +52,6 @@
   name: artifact
   description: A strange artifact from time unknown. Looks like a good time.
   abstract: true
-  noSpawn: true
   components:
   - type: UseDelay
   - type: StealTarget
