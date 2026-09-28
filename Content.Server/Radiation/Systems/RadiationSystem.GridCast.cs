@@ -75,7 +75,7 @@ public partial class RadiationSystem
         var gridRadQuery = EntityQueryEnumerator<GridTileRadiationComponent, TransformComponent>();
         while (gridRadQuery.MoveNext(out var gridUid, out var gridRad, out var gridXform))
         {
-            if (gridXform.MapUid is not { } mapUid || !TryComp<TransformComponent>(mapUid, out var mapXform))
+            if (gridXform.MapUid is not { } mapUid || !TryComp(mapUid, out TransformComponent? mapXform))
                 continue;
 
             var localMatrix = gridXform.LocalMatrix;
