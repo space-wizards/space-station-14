@@ -93,4 +93,4 @@
   - type: Armor
     modifiers:
       coefficients:
-        Piercing: 0.99 #1% pierce resist (funni)
+        Piercing: 1.01 #-1% pierce resist (bonus funni)
