@@ -15,6 +15,7 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedStackSystem _stack = default!;
     [Dependency] private SharedMapSystem _maps = default!;
+    [Dependency] private EntityManager _entMan = default!;
 
     [Dependency] private EntityQuery<RadiationReceiverComponent> _receiverQuery = default!;
     [Dependency] private EntityQuery<RadiationBlockingContainerComponent> _blockerQuery = default!;
@@ -39,9 +40,6 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
         if (_accumulator < GridcastUpdateRate)
             return;
 
-        // Added tile emitter component that place sources on tiles for testing
-        // but not optimized for performance so it can probably be removed or commented out before merging
-        UpdateTileRadiationEmitters();
         UpdateGridcast();
         UpdateTileRadiationSources(_accumulator);
         UpdateResistanceDebugOverlay();

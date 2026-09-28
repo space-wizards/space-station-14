@@ -1,4 +1,5 @@
 using Content.Server.Administration;
+using Content.Server.Radiation.Components;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
@@ -55,31 +56,35 @@ public sealed partial class TileRadiationCommand : IConsoleCommand
 
     private static void HandleList(IConsoleShell shell, RadiationSystem radSystem, IEntityManager entManager, string[] args)
     {
-        var sources = radSystem.GetTileRadiationSources();
+        var query = entManager.EntityQueryEnumerator<GridTileRadiationComponent, TransformComponent>();
 
-        if (sources.Count == 0)
+        if (!query.MoveNext(out _, out _, out _))
         {
             shell.WriteLine("No tile radiation active.");
             return;
         }
 
-        var xformQuery = entManager.GetEntityQuery<TransformComponent>();
+        query = entManager.EntityQueryEnumerator<GridTileRadiationComponent, TransformComponent>();
 
         if (args.Length == 1)
         {
             shell.WriteLine("--- Tile Radiation Overview ---");
 
             var mapMetrics = new Dictionary<MapId, (int Tiles, int Sources)>();
-            foreach (var (spatialKey, tileSources) in sources)
-            {
-                if (!xformQuery.TryGetComponent(spatialKey.GridUid, out var xform))
-                    continue;
 
+            while (query.MoveNext(out _, out var gridRad, out var xform))
+            {
                 var mapId = xform.MapID;
                 if (!mapMetrics.TryGetValue(mapId, out var metric))
                     metric = (0, 0);
 
-                mapMetrics[mapId] = (metric.Tiles + 1, metric.Sources + tileSources.Count);
+                var uniqueTiles = new HashSet<Vector2i>();
+                for (var i = 0; i < gridRad.Sources.Count; i++)
+                {
+                    uniqueTiles.Add(gridRad.Sources[i].Tile);
+                }
+
+                mapMetrics[mapId] = (metric.Tiles + uniqueTiles.Count, metric.Sources + gridRad.Sources.Count);
             }
 
             foreach (var (mapId, metric) in mapMetrics)
@@ -99,16 +104,32 @@ public sealed partial class TileRadiationCommand : IConsoleCommand
         shell.WriteLine($"--- Tile Radiation Breakdown for Map {targetMap} ---");
 
         var entriesFound = false;
-        foreach (var (spatialKey, distinctSources) in sources)
+        while (query.MoveNext(out var gridUid, out var gridRad, out var xform))
         {
-            if (!xformQuery.TryGetComponent(spatialKey.GridUid, out var xform) || xform.MapID != targetMap)
+            if (xform.MapID != targetMap)
                 continue;
 
             entriesFound = true;
-            shell.WriteLine($"Grid: {spatialKey.GridUid} | Tile X: {spatialKey.Tile.X}, Y: {spatialKey.Tile.Y}");
-            foreach (var data in distinctSources.Values)
+
+            var groupedByTile = new Dictionary<Vector2i, List<TileSourceData>>();
+            for (var i = 0; i < gridRad.Sources.Count; i++)
             {
-                shell.WriteLine($" ID: {data.SourceId} | Rads: {data.Intensity:F2} | HalfLife: {data.HalfLife}s | Slope: {data.Slope} ");
+                var sourceData = gridRad.Sources[i];
+                if (!groupedByTile.TryGetValue(sourceData.Tile, out var list))
+                {
+                    list = [];
+                    groupedByTile[sourceData.Tile] = list;
+                }
+                list.Add(sourceData);
+            }
+
+            foreach (var (tile, distinctSources) in groupedByTile)
+            {
+                shell.WriteLine($"Grid: {gridUid} | Tile X: {tile.X}, Y: {tile.Y}");
+                foreach (var data in distinctSources)
+                {
+                    shell.WriteLine($" ID: {data.SourceId} | Rads: {data.Intensity:F2} | HalfLife: {data.HalfLife}s | Slope: {data.Slope} ");
+                }
             }
         }
 
