@@ -388,7 +388,7 @@
     effects:
     - !type:PopupMessage
       visualType: LargeCaution
-      messages: changeling-sting-hemotoxin
+      messages: [ "changeling-sting-hemotoxin" ]
       type: Local
     - !type:AddReagentToBloodstream
       reagent: Hemorrhinol
