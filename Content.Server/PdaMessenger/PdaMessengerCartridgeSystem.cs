@@ -283,7 +283,11 @@ public sealed partial class PdaMessengerCartridgeSystem : EntitySystem
         }
     }
 
-    private void Send(Entity<PdaMessengerCartridgeComponent> ent, EntityUid loader, EntityUid actor, PdaMessengerSendMessage send)
+    private void Send(
+        Entity<PdaMessengerCartridgeComponent> ent,
+        EntityUid loader,
+        EntityUid actor,
+        PdaMessengerSendMessage send)
     {
         if (ent.Comp.Server is not { } server || GetUser(loader) is not { } self || self.UserId != ent.Comp.User?.UserId)
             return;
@@ -313,7 +317,8 @@ public sealed partial class PdaMessengerCartridgeSystem : EntitySystem
 
         var recipient = conversation.Participants.FirstOrNull(contact => contact.UserId == send.RecipientId);
         _adminLog.Add(LogType.PdaInteract, LogImpact.Low,
-            $"{ToPrettyString(actor):player} sent a PDA message as {self.Name} ({self.JobTitle}) to {recipient?.Name} ({recipient?.JobTitle}): {text}");
+            $"{ToPrettyString(actor):player} sent a PDA message as {self.Name} ({self.JobTitle}) "
+            + $"to {recipient?.Name} ({recipient?.JobTitle}): {text}");
     }
 
     private void UpdateUi(Entity<PdaMessengerCartridgeComponent> ent, EntityUid loader)
@@ -404,7 +409,9 @@ public sealed partial class PdaMessengerCartridgeSystem : EntitySystem
                && history.TryGetValue(conversationId, out conversation);
     }
 
-    private static PdaMessengerConversation GetOrCreateConversation(Entity<PdaMessengerCartridgeComponent> ent, string conversationId)
+    private static PdaMessengerConversation GetOrCreateConversation(
+        Entity<PdaMessengerCartridgeComponent> ent,
+        string conversationId)
     {
         var userId = ent.Comp.User!.Value.UserId;
         if (!ent.Comp.History.TryGetValue(userId, out var history))

@@ -101,7 +101,13 @@ public sealed partial class PdaMessengerUiFragment : BoxContainer
             return;
 
         if (state.Conversations.Count == 0)
-            ConversationList.AddChild(new Label { Text = Loc.GetString("pda-messenger-ui-no-conversations"), StyleClasses = { "LabelSubText" } });
+        {
+            ConversationList.AddChild(new Label
+            {
+                Text = Loc.GetString("pda-messenger-ui-no-conversations"),
+                StyleClasses = { "LabelSubText" },
+            });
+        }
 
         foreach (var conversation in state.Conversations)
         {
@@ -140,7 +146,13 @@ public sealed partial class PdaMessengerUiFragment : BoxContainer
             .ToList();
 
         if (contacts.Count == 0)
-            ContactList.AddChild(new Label { Text = Loc.GetString("pda-messenger-ui-no-contacts"), StyleClasses = { "LabelSubText" } });
+        {
+            ContactList.AddChild(new Label
+            {
+                Text = Loc.GetString("pda-messenger-ui-no-contacts"),
+                StyleClasses = { "LabelSubText" },
+            });
+        }
 
         foreach (var contact in contacts)
         {

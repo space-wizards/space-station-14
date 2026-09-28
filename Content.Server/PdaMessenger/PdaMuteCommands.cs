@@ -71,7 +71,9 @@ public abstract partial class PdaMuteCommandBase : LocalizedEntityCommands
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         return args.Length == 1
-            ? CompletionResult.FromHintOptions(CompletionHelper.SessionNames(players: _players), Loc.GetString("cmd-pdamute-hint"))
+            ? CompletionResult.FromHintOptions(
+                CompletionHelper.SessionNames(players: _players),
+                Loc.GetString("cmd-pdamute-hint"))
             : CompletionResult.Empty;
     }
 }
