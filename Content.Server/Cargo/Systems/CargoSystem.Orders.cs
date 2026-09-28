@@ -261,7 +261,6 @@ public sealed partial class CargoSystem
         component.Orders.Clear();
     }
 
-
     public int GetOutstandingOrderCount(
         Entity<StationCargoOrderDatabaseComponent> station,
         ProtoId<CargoAccountPrototype> account
