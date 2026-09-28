@@ -1,0 +1,71 @@
+- type: entity
+  id: PdaMessengerServer
+  parent: [ BaseMachinePowered, ConstructibleMachine, StructureHealthMachineStrong ]
+  name: PDA messenger server
+  description: Relays and stores the station's PDA messages.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/server.rsi
+    snapCardinals: true
+    layers:
+    - state: server-off
+    - state: server-on
+      visible: false
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+    - state: variant-messenger
+    - state: server_o
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Construction
+    graph: Machine
+    node: machine
+    containers:
+    - machine_board
+    - machine_parts
+  - type: Machine
+    board: PdaMessengerServerMachineCircuitboard
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: PdaMessengerServer
+  - type: SingletonDeviceNetServer
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    transmitFrequencyId: PDA
+    receiveFrequencyId: PdaMessengerServer
+    prefix: device-address-prefix-pda-messenger-server
+    autoConnect: false
+  - type: WirelessNetworkConnection
+    range: 500
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: ExtensionCableReceiver
+  - type: WiresPanel
+  - type: WiresVisuals
+  - type: Damageable
+    damageModifierSet: SteelMod
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 275
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: {visible: true}
+          False: {visible: false}
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -9
+    range: 5
+    enabled: false
+    sound:
+      collection: ServerFans
