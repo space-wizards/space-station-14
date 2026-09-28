@@ -17,7 +17,6 @@ using Content.Shared.Medical.BiomassReclaimer;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
 using Content.Shared.Power;
-using Content.Shared.Storage;
 using Content.Shared.Throwing;
 using Content.Shared.Tools.Components;
 using Robust.Server.Player;
@@ -81,7 +80,7 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         if (_robustRandom.Prob(reclaimer.ItemThrowChance) && active.SpawnedEntities.Count > 0)
         {
             var thrown = Spawn(
-                _robustRandom.Pick(active.SpawnedEntities),
+                _robustRandom.Pick(active.SpawnedEntities).PrototypeId?.Id,
                 _transformQuery.GetComponent(uid).Coordinates);
 
             _throwing.TryThrow(thrown, _robustRandom.NextVector2Box(30f, 30f), _robustRandom.NextFloat(reclaimer.ItemThrowMinSpeed, reclaimer.ItemThrowMaxSpeed));
@@ -221,7 +220,7 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         }
 
         if (TryComp<ToolRefinableComponent>(toProcess, out var refinable))
-            active.SpawnedEntities = EntitySpawnCollection.GetSpawns(refinable.RefineResult, _robustRandom);
+            active.SpawnedEntities = [.. refinable.RefineResult];
     }
 
     private float CalculateYield(Entity<PhysicsComponent> toProcess, Entity<BiomassReclaimerComponent> reclaimer)

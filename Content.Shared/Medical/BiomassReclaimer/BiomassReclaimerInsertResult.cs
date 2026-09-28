@@ -1,7 +1,7 @@
 namespace Content.Shared.Medical.BiomassReclaimer;
 
 /// <summary>
-/// Result of validating a target for insertion into a biomass reclaimer.
+/// Whether an entity can be processed by a biomass reclaimer.
 /// </summary>
 public enum BiomassReclaimerInsertResult : byte
 {

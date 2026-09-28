@@ -6,75 +6,72 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Medical.BiomassReclaimer;
 
-/// <summary>
-/// Configuration and persistent state of a biomass reclaimer.
-/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(BiomassReclaimerSystem))]
 public sealed partial class BiomassReclaimerComponent : Component
 {
     /// <summary>
-    /// Sound played when processing starts or resumes after power loss.
+    /// The sound played when processing starts or resumes after a power loss.
     /// </summary>
     [DataField]
     public SoundSpecifier? StartupSound = new SoundPathSpecifier("/Audio/Machines/reclaimer_startup.ogg");
 
     /// <summary>
-    /// Material produced when a processing job completes.
+    /// The material produced when processing a mob.
     /// </summary>
     [DataField]
     public ProtoId<MaterialPrototype> OutputMaterial = "Biomass";
 
     /// <summary>
-    /// The interval between chances to spill blood or throw an item while processing.
+    /// The interval between attempts to spill blood or throw an item.
     /// </summary>
     [DataField]
     public TimeSpan RandomMessInterval = TimeSpan.FromSeconds(5);
 
     /// <summary>
-    /// Chance to spill blood at each mess interval.
+    /// The chance to spill blood at each mess interval.
     /// </summary>
     [DataField]
     public float BloodSpillChance = 0.2f;
 
     /// <summary>
-    /// Chance to throw an item at each mess interval.
+    /// The chance to throw an item at each mess interval.
     /// </summary>
     [DataField]
     public float ItemThrowChance = 0.03f;
 
     /// <summary>
-    /// Minimum item throw speed, inclusive.
+    /// The minimum speed of thrown items, inclusive.
     /// </summary>
     [DataField]
     public float ItemThrowMinSpeed = 1f;
 
     /// <summary>
-    /// Maximum item throw speed, exclusive.
+    /// The maximum speed of thrown items, exclusive.
     /// </summary>
     [DataField]
     public float ItemThrowMaxSpeed = 10f;
 
     /// <summary>
-    /// Jitter amplitude while processing is running.
+    /// The jitter amplitude while processing a mob.
     /// </summary>
     [DataField]
     public float JitterAmplitude = -10f;
 
     /// <summary>
-    /// Jitter frequency while processing is running.
+    /// The jitter frequency while processing a mob.
     /// </summary>
     [DataField]
     public float JitterFrequency = 100f;
 
     /// <summary>
-    /// Volume of the blood solution prepared for spilling during a job.
+    /// How much blood can be spilled while processing a mob.
     /// </summary>
     [DataField]
     public FixedPoint2 BloodSpillVolume = 50;
 
     /// <summary>
-    /// Fractional biomass left over from completed jobs, carried into the next job.
+    /// Non-integer biomass left over from processing a mob, added to the next mob's yield.
     /// </summary>
     [DataField]
     public float YieldRemainder;
