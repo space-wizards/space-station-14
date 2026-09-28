@@ -438,7 +438,7 @@ public sealed partial class CargoSystem
             var tradePads = GetCargoPallets(trade, BuySellType.Buy);
 
             var freePads = GetFreeCargoPallets(trade, tradePads);
-            if (freePads.Count <= order.OrderQuantity) //check if the station has enough free pallets
+            if (freePads.Count < order.OrderQuantity) //check if the station has enough free pallets
                 continue;
 
             _random.Shuffle(freePads);
