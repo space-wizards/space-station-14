@@ -23,7 +23,7 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
     [Dependency] private EntityQuery<MapGridComponent> _gridQuery = default!;
 
     private float _accumulator;
-    private List<SourceData> _sources = new();
+    private List<SourceData> _sources = [];
 
     public override void Initialize()
     {

@@ -6,6 +6,7 @@ namespace Content.Server.Radiation.Systems;
 
 public partial class RadiationSystem
 {
+    public static readonly float HalfLifeConstantFactor = MathF.Log(2f);
     private readonly List<(Vector2i Tile, ushort SourceId)> _toRemove = [];
     public void SetTileRadiation(EntityUid gridUid, Vector2i tile, ushort sourceId, float intensity, float slope, float halfLife = -1f, bool forceSet = false)
     {
@@ -50,7 +51,7 @@ public partial class RadiationSystem
 
                 if (updatedSource.HalfLife > 0f)
                 {
-                    updatedSource.Intensity *= MathF.Pow(0.5f, seconds / updatedSource.HalfLife);
+                    updatedSource.Intensity *= MathF.Exp(seconds * (-HalfLifeConstantFactor / updatedSource.HalfLife));
                 }
 
                 if (updatedSource.Intensity < MinIntensity ||

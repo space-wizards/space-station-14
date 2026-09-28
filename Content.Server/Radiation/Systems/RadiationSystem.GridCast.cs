@@ -88,7 +88,7 @@ public partial class RadiationSystem
                 _sources.Add(new SourceData(
                     tileSource.Intensity,
                     tileSource.Slope,
-                    mapXform,
+                    gridXform,
                     worldPos,
                     null,
                     tileSource.SourceId,

@@ -412,8 +412,7 @@ public partial class AtmosphereSystem
         else
         {
             var excessFuel = burnedFuel - Atmospherics.TritiumFireRadThreshold;
-            var dynamicMultiplier = Atmospherics.TritiumFireRadMultiplier / (1f + Atmospherics.TritiumFireRadDropoff * excessFuel);
-            radIntensity = burnedFuel * dynamicMultiplier;
+            radIntensity = (burnedFuel * Atmospherics.TritiumFireRadMultiplier) / (1f + Atmospherics.TritiumFireRadDropoff * excessFuel);
         }
 
         if (radIntensity < _rad.MinIntensity)
