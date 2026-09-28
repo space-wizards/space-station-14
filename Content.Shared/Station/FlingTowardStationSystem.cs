@@ -3,6 +3,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Physics.Components;
 using Content.Shared.Random.Helpers;
+using Content.Shared.Station.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Station;
@@ -10,7 +11,7 @@ namespace Content.Shared.Station;
 public sealed partial class FlingTowardStationSystem : EntitySystem
 {
     [Dependency] private SharedPhysicsSystem _physics = default!;
-    [Dependency] private SharedStationSystem _station = default!;
+    [Dependency] private StationSystem _station = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private IGameTiming _timing = default!;
 
@@ -23,7 +24,7 @@ public sealed partial class FlingTowardStationSystem : EntitySystem
         // fetch the station's grid
         var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent.Owner));
         var station = random.Pick(_station.GetStations());
-        var grid = _station.GetLargestGrid(station);
+        var grid = _station.GetLargestGrid(station.AsNullable());
         if (grid == null)
             return;
 

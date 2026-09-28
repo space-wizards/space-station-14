@@ -1,4 +1,4 @@
-﻿using Content.Client.Hands.UI;
+using Content.Client.Hands.UI;
 using Content.Client.Items;
 using Content.Shared.Inventory.VirtualItem;
 

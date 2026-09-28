@@ -305,8 +305,10 @@ public abstract partial class SharedActionsSystem : EntitySystem
         if (IsCooldownActive(action, curTime))
             return false;
 
+        var target = GetEntity(ev.EntityTarget);
+
         // check for action use prevention
-        var attemptEv = new ActionAttemptEvent(user);
+        var attemptEv = new ActionAttemptEvent(user, target);
         RaiseLocalEvent(action, ref attemptEv);
         if (attemptEv.Cancelled)
         {
@@ -324,6 +326,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
             User = user,
             Provider = provider
         };
+
         RaiseLocalEvent(action, ref validateEv);
         if (validateEv.Invalid)
             return false;
@@ -610,7 +613,11 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
         UpdateAction(action);
 
-        var performed = new ActionPerformedEvent(performer);
+        EntityUid? actionTarget = null;
+        if (actionEvent is EntityTargetActionEvent targetEv)
+            actionTarget = targetEv.Target;
+
+        var performed = new ActionPerformedEvent(performer, actionTarget);
         RaiseLocalEvent(action, ref performed);
     }
     #endregion
