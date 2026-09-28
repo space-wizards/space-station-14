@@ -23,7 +23,6 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
     [Dependency] private IResourceCache _resCache = default!;
     [Dependency] private DisplacementMapSystem _displacement = default!;
 
-
     [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery = default!;
     [Dependency] private EntityQuery<AttachedVisualsComponent> _attachedVisualsQuery = default!;
     [Dependency] private EntityQuery<GenericVisualizerComponent> _genericVisualizerQuery = default!;
@@ -73,64 +72,80 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
         RemoveSprites(args.Container.Owner, origins);
     }
 
-    private void GetAttachedVisuals(Entity<AttachedVisualsComponent> ent, VisualAttachmentPrototype attachmentPrototype, string prefix, List<AttachedLayer> layers)
+    private void GetAttachedVisuals(Entity<AttachedVisualsComponent> ent,
+        VisualAttachmentPrototype attachmentPrototype,
+        string prefix,
+        List<AttachedLayer> layers)
     {
-        if (!ent.Comp.AttachedVisuals.TryGetValue(attachmentPrototype, out var visuals))
-            return;
-
-        _genericVisualizerQuery.TryComp(ent, out var visualizer);
-        _appearanceQuery.TryComp(ent, out var appearance);
-
-        if (attachmentPrototype.DefaultState != null && visuals.Layers == null)
+        foreach (var visuals in ent.Comp.AttachedVisuals)
         {
-            RSI? rsi = null;
+            if (visuals.AttachmentId != attachmentPrototype)
+                continue;
 
-            if (ent.Comp.RsiPath != null)
-                rsi = _resCache.GetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / ent.Comp.RsiPath).RSI;
-            else if (_spriteQuery.TryComp(ent, out var sprite))
-                rsi = sprite.BaseRSI;
+            _genericVisualizerQuery.TryComp(ent, out var visualizer);
+            _appearanceQuery.TryComp(ent, out var appearance);
 
-            if (rsi == null)
-                return;
-
-            var state = attachmentPrototype.DefaultState;
-
-            if (!rsi.TryGetState(state, out var _))
-                return;
-
-            var layer = new PrototypeLayerData();
-            layer.RsiPath = rsi.Path.ToString();
-            layer.State = state;
-
-            layers.Add(new AttachedLayer(ent, $"{prefix}-{layers.Count}", [], layer));
-            return;
-        }
-
-        if (visuals.Layers == null)
-            return;
-
-        foreach (var protoLayer in visuals.Layers)
-        {
-            var layer = _serialization.CreateCopy(protoLayer, notNullableOverride: true);
-            if (layer.RsiPath == null && layer.TexturePath == null)
+            if (attachmentPrototype.DefaultState != null && visuals.Layers == null)
             {
-                layer.RsiPath = ent.Comp.RsiPath;
-                if (layer.RsiPath == null)
-                    continue;
+                RSI? rsi = null;
+
+                if (ent.Comp.RsiPath != null)
+                    rsi = _resCache.GetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / ent.Comp.RsiPath).RSI;
+                else if (_spriteQuery.TryComp(ent, out var sprite))
+                    rsi = sprite.BaseRSI;
+
+                if (rsi == null)
+                    return;
+
+                var state = attachmentPrototype.DefaultState;
+
+                if (!rsi.TryGetState(state, out var _))
+                    return;
+
+                var layer = new PrototypeLayerData();
+                layer.RsiPath = rsi.Path.ToString();
+                layer.State = state;
+
+                layers.Add(new AttachedLayer(ent, $"{prefix}-{layers.Count}", [], layer));
+                return;
             }
 
-            var keys = new HashSet<string>();
+            if (visuals.Layers == null)
+                return;
 
-            if (layer.MapKeys != null)
+            foreach (var protoLayer in visuals.Layers)
             {
-                if (visualizer != null && appearance != null)
-                    ApplyVisualizer(ent, visualizer, appearance, layer);
+                var layer = _serialization.CreateCopy(protoLayer, notNullableOverride: true);
+                if (layer.RsiPath == null && layer.TexturePath == null)
+                {
+                    layer.RsiPath = ent.Comp.RsiPath;
+                    if (layer.RsiPath == null)
+                        continue;
+                }
 
-                keys = layer.MapKeys;
-                layer.MapKeys = null;
+                var keys = new HashSet<string>();
+
+                if (layer.MapKeys != null)
+                {
+                    if (visualizer != null && appearance != null)
+                        ApplyVisualizer(ent, visualizer, appearance, layer);
+
+                    keys = layer.MapKeys;
+                    layer.MapKeys = null;
+                }
+
+                layers.Add(new AttachedLayer(ent, $"{prefix}-{layers.Count}", keys.ToArray(), layer));
             }
 
-            layers.Add(new AttachedLayer(ent, $"{prefix}-{layers.Count}", keys.ToArray(), layer));
+            if (visuals.Attachments == null)
+                return;
+
+            visuals.Attachments.Sort();
+
+            foreach (var childAttachment in  visuals.Attachments)
+            {
+                GetAttachmentLayers(ent, childAttachment, layers, prefix);
+            }
         }
     }
 
@@ -259,21 +274,9 @@ public sealed partial class AttachedVisualsSystem : EntitySystem
             if (!_attachedVisualsQuery.TryComp(child, out var childComp))
                 continue;
 
-            if (!childComp.AttachedVisuals.TryGetValue(attachmentPrototype, out var childAttachedVisualLayers))
-                continue;
-
             var childPrefix = $"{keyPrefix}-{attachment.Container}-{child.Id}";
+
             GetAttachedVisuals((child, childComp), attachmentPrototype, childPrefix, results);
-
-            if (childAttachedVisualLayers.Attachments == null)
-                return;
-
-            childAttachedVisualLayers.Attachments.Sort();
-
-            foreach (var childAttachment in childAttachedVisualLayers.Attachments)
-            {
-                GetAttachmentLayers((child, childComp), childAttachment, results, childPrefix);
-            }
         }
     }
 

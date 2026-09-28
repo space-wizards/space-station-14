@@ -55,24 +55,6 @@
   - type: Tag
     tags:
     - BaseballBat
-  - type: Appearance
-  - type: AttachedVisuals
-    sprite: Objects/Weapons/Melee/baseball_bat.rsi
-    attachedVisuals:
-      InhandLeft:
-        layers:
-        - state: inhand-left
-          map: [ "unwielded" ]
-        - state: wielded-inhand-left
-          map: [ "wielded" ]
-          visible: false
-      InhandRight:
-        layers:
-        - state: inhand-right
-          map: [ "unwielded" ]
-        - state: wielded-inhand-right
-          map: [ "wielded" ]
-          visible: false
 
 - type: entity
   name: incomplete baseball bat

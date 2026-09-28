@@ -2,6 +2,7 @@ using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.AttachedVisuals;
 
@@ -27,7 +28,7 @@ public sealed partial class AttachedVisualsComponent : Component
     /// Visuals to show when this entity is in a given attachment slot
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Dictionary<ProtoId<VisualAttachmentPrototype>, AttachedVisualLayers> AttachedVisuals = new();
+    public List<AttachedVisualLayers> AttachedVisuals = new();
 
     /// <summary>
     /// Entity origins, and the layers they are showing on this entity.
@@ -41,20 +42,23 @@ public sealed partial class AttachedVisualsComponent : Component
 /// Also allows you to define sub-attachments, attachment points this item provides
 /// only when it is attached to this point.
 /// </summary>
-[DataDefinition, Serializable]
+[DataDefinition, Serializable, NetSerializable]
 public sealed partial class AttachedVisualLayers
 {
+    [DataField(required: true)]
+    public ProtoId<VisualAttachmentPrototype> AttachmentId;
+
     /// <summary>
     /// Sprite layers to draw
     /// </summary>
     [DataField]
-    public List<PrototypeLayerData>? Layers = new();
+    public List<PrototypeLayerData>? Layers;
 
     /// <summary>
     /// List of extra sub-attachment slots that this slot can provide
     /// </summary>
     [DataField]
-    public List<AttachmentDefinition>? Attachments = new();
+    public List<AttachmentDefinition>? Attachments;
 }
 
 /// <summary>
@@ -63,7 +67,7 @@ public sealed partial class AttachedVisualLayers
 /// For example, the "shoes" container on a Urist can have attachments called "Boots" and "Shoes"
 /// Those attachments can have different orders, so you can have boots over suits, but shoes under suits.
 /// </summary>
-[DataDefinition, Serializable]
+[DataDefinition, Serializable, NetSerializable]
 public sealed partial class AttachmentDefinition : IComparable<AttachmentDefinition>
 {
     /// <summary>
