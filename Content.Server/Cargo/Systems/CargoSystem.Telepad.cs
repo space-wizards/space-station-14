@@ -137,10 +137,10 @@ public sealed partial class CargoSystem
 
         if (_station.GetOwningStation(ent) is not { } station)
         {
-            station = _random.Pick(_station.GetStations().Where(x => HasComp<StationCargoOrderDatabaseComponent>(x.Owner)).ToList());
+            station = _random.Pick(_station.GetStations().Where(x => _orderQuery.HasComp(x.Owner)).ToList());
         }
 
-        if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var db) ||
+        if (!_orderQuery.TryComp(station, out var db) ||
             !TryComp<StationDataComponent>(station, out var data))
             return;
 
