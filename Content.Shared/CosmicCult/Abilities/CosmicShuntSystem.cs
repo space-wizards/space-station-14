@@ -6,7 +6,7 @@ using Content.Shared.GameTicking.Rules;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Mind;
-using Content.Shared.Mindshield.Components;
+using Content.Shared.Mindshield;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Content.Shared.Whitelist;
@@ -21,10 +21,11 @@ public sealed partial class CosmicShuntSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private CosmicCultSystem _cult = default!;
     [Dependency] private CosmicCultRuleSystem _cultRule = default!;
+    [Dependency] private MindShieldSystem _mindShield = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private CosmicCultSystem _cult = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedStunSystem _stun = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
@@ -43,6 +44,7 @@ public sealed partial class CosmicShuntSystem : EntitySystem
 
                 mind.PreventGhosting = false;
                 _mind.TransferTo(mindEnt, comp.OriginalBody);
+                _mindShield.GetMindshieldStatus(comp.OriginalBody, out var shielded, out _);
                 _popup.PopupEntity(Loc.GetString("cosmicability-shunt-return"), comp.OriginalBody, comp.OriginalBody);
 
                 if (_whitelist.IsWhitelistPass(comp.Blacklist, comp.OriginalBody))
@@ -52,7 +54,7 @@ public sealed partial class CosmicShuntSystem : EntitySystem
                     _popup.PopupCoordinates(Loc.GetString("cosmicability-shunt-conversion-fail-misc-wisp"), Transform(uid).Coordinates, PopupType.LargeCaution);
                 }
 
-                if (HasComp<MindShieldComponent>(comp.OriginalBody) && cultRule.Comp.Tier != 3)
+                if (shielded && cultRule.Comp.Tier != 3)
                 {
                     comp.ConvertOnReturn = false;
                     _popup.PopupCoordinates(Loc.GetString("cosmicability-shunt-conversion-fail-mindshield-body", ("target", Identity.Entity(comp.OriginalBody, EntityManager))), Transform(comp.OriginalBody).Coordinates, PopupType.Large);
