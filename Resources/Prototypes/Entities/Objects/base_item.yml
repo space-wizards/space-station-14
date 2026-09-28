@@ -201,6 +201,7 @@
     startRefinePopupType: small
     popupForUser: refined-butchered-success
     popupForOther: refined-butchered-success-others
+    tooltipQualityHint: tool-refinable-component-hint-slicing
     verbIcon: Interface/VerbIcons/cutlery.svg.192dpi.png
     sound: !type:SoundPathSpecifier
       path: /Audio/Items/Culinary/chop.ogg
@@ -211,6 +212,15 @@
   id: BaseSlicingRefinableFood
   components:
   - type: ToolRefinableSolution
+
+- type: entity
+  abstract: true
+  parent: BaseSlicingRefinable
+  id: BaseSlicingRefinableButchering
+  components:
+  - type: ToolRefinable
+    verbText: refined-butchered-verb-name
+    tooltipQualityHint: tool-refinable-component-hint-butchering
 
 # For entities with a hidden container slot that can be opened with a tool
 - type: entity
