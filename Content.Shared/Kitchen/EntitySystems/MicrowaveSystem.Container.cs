@@ -65,7 +65,7 @@ public abstract partial class MicrowaveSystem
         }
 
         // Only items can be inserted into the microwave
-        if (!TryComp<ItemComponent>(args.Used, out var item))
+        if (!ItemQuery.TryComp(args.Used, out var item))
         {
             var message = Loc.GetString("microwave-component-interact-using-transfer-fail");
             Popup.PopupEntity(message, ent, args.User);

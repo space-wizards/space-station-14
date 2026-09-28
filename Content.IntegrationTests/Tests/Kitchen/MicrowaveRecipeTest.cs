@@ -14,14 +14,14 @@ namespace Content.IntegrationTests.Tests.Kitchen;
 /// </summary>
 public sealed class MicrowaveRecipeTest : GameTest
 {
-    [SidedDependency(Side.Server)] private readonly MicrowaveSystem _microwave = null!;
+    [SidedDependency(Side.Server)] private readonly ServerMicrowaveSystem _microwave = null!;
 
     private static readonly string[] Recipes = GameDataScrounger.PrototypesOfKind<MicrowaveMealRecipePrototype>();
     private static readonly EntProtoId MicrowavePrototype = "KitchenMicrowave";
     private const uint MaxSeconds = 30;
 
     [Test]
-    [TestOf(typeof(MicrowaveSystem))]
+    [TestOf(typeof(ServerMicrowaveSystem))]
     [TestCaseSource(nameof(Recipes))]
     [Description("Checks whether a microwave recipe's ingredients will create that recipe in the microwave.")]
     public async Task AllRecipeIngredientsMakeRecipe(string protoKey)

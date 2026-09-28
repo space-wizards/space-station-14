@@ -16,7 +16,7 @@ public abstract partial class MicrowaveSystem
     public bool IsActiveMicrowave(Entity<MicrowaveComponent?> microwave)
     {
         return MicrowaveQuery.Resolve(microwave.Owner, ref microwave.Comp)
-            && HasComp<ActiveMicrowaveComponent>(microwave.Owner);
+            && ActiveMicrowaveQuery.HasComp(microwave.Owner);
     }
 
     /// <summary>

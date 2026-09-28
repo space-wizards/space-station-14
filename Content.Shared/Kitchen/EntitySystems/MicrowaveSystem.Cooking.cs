@@ -48,7 +48,7 @@ public abstract partial class MicrowaveSystem
             return;
 
         ent.Comp.Broken = true;
-        DirtyField(ent.AsNullable(), nameof(MicrowaveComponent.Broken));
+        DirtyField(ent.AsNullable(), nameof(ent.Comp.Broken));
     }
 
     /// <summary>

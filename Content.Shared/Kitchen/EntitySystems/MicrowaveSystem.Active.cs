@@ -17,7 +17,8 @@ public abstract partial class MicrowaveSystem
             return;
 
         ent.Comp.NextCookUpdate = Timing.CurTime + microwaveComponent.UpdateInterval;
-        DirtyField(ent.AsNullable(), nameof(ActiveMicrowaveComponent.NextCookUpdate));
+        ent.Comp.LastCookUpdated = Timing.CurTime;
+        DirtyFields(ent.AsNullable(), null, nameof(ent.Comp.NextCookUpdate), nameof(ent.Comp.LastCookUpdated));
         ActivateMicrowaveCycle((ent, microwaveComponent));
     }
 

@@ -23,6 +23,9 @@ public sealed partial class ServerMicrowaveSystem : MicrowaveSystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedSuicideSystem _suicide = default!;
 
+    [Dependency] private EntityQuery<DamageableComponent> _damageableQuery;
+    [Dependency] private EntityQuery<MachineComponent> _machineQuery;
+
     /// <summary>
     ///     Kills the user by microwaving their head.
     /// </summary>
@@ -37,7 +40,7 @@ public sealed partial class ServerMicrowaveSystem : MicrowaveSystem
             return;
 
         // The act of getting your head microwaved doesn't actually kill you
-        if (!TryComp<DamageableComponent>(args.Victim, out var damageableComponent))
+        if (!_damageableQuery.TryComp(args.Victim, out var damageableComponent))
             return;
 
         // The application of lethal damage is what kills you...
@@ -54,7 +57,7 @@ public sealed partial class ServerMicrowaveSystem : MicrowaveSystem
         Audio.PlayPvs(ent.Comp.ClickSound, ent.Owner, audioParams);
 
         ent.Comp.CurrentCookTimerTime = 10;
-        DirtyField(ent.AsNullable(), nameof(MicrowaveComponent.CurrentCookTimeButtonIndex));
+        DirtyField(ent.AsNullable(), nameof(ent.Comp.CurrentCookTimeButtonIndex));
         StartCooking(ent, args.Victim);
         UpdateUI(ent.AsNullable());
         args.Handled = true;
@@ -99,7 +102,7 @@ public sealed partial class ServerMicrowaveSystem : MicrowaveSystem
 
         _explosion.TriggerExplosive(ent);
 
-        if (TryComp<MachineComponent>(ent, out var machine))
+        if (_machineQuery.TryComp(ent, out var machine))
         {
             Container.CleanContainer(machine.BoardContainer);
             Container.EmptyContainer(machine.PartContainer);

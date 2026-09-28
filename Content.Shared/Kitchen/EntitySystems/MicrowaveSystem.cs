@@ -45,6 +45,8 @@ public abstract partial class MicrowaveSystem : EntitySystem
 
     [Dependency] protected EntityQuery<MicrowaveComponent> MicrowaveQuery;
     [Dependency] protected EntityQuery<ActiveMicrowaveComponent> ActiveMicrowaveQuery;
+    [Dependency] protected EntityQuery<ItemComponent> ItemQuery;
+    [Dependency] protected EntityQuery<StackComponent> StackQuery;
 
     public override void Initialize()
     {
@@ -68,13 +70,12 @@ public abstract partial class MicrowaveSystem : EntitySystem
             if (active.Malfunctioning && active.NextMalfunction < curTime)
             {
                 active.NextMalfunction += microwave.MalfunctionInterval;
-                DirtyField(uid, active, nameof(ActiveMicrowaveComponent.NextMalfunction));
+                DirtyField(uid, active, nameof(active.NextMalfunction));
 
                 RollMalfunction((uid, microwave));
             }
 
-            var lastUpdated = active.NextCookUpdate - microwave.UpdateInterval;
-            var timeSinceUpdate = curTime - lastUpdated;
+            var timeSinceUpdate = curTime - active.LastCookUpdated;
             var timeElapsed = (float)timeSinceUpdate.TotalSeconds;
 
             // Finish cooking
@@ -90,7 +91,8 @@ public abstract partial class MicrowaveSystem : EntitySystem
                 continue;
 
             active.NextCookUpdate += microwave.UpdateInterval;
-            DirtyField(uid, active, nameof(ActiveMicrowaveComponent.NextCookUpdate));
+            active.LastCookUpdated = curTime;
+            DirtyFields(uid, active, null, nameof(active.NextCookUpdate), nameof(active.LastCookUpdated));
             AddTemperature((uid, microwave), timeElapsed);
         }
     }
@@ -112,7 +114,7 @@ public abstract partial class MicrowaveSystem : EntitySystem
     private void OnBreak(Entity<MicrowaveComponent> ent, ref BreakageEventArgs args)
     {
         ent.Comp.Broken = true;
-        DirtyField(ent.AsNullable(), nameof(MicrowaveComponent.Broken));
+        DirtyField(ent.AsNullable(), nameof(ent.Comp.Broken));
         SetAppearance(ent, MicrowaveVisualState.Broken);
 
         StopCooking(ent);

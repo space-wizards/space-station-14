@@ -41,7 +41,7 @@ public abstract partial class MicrowaveSystem
         if (TryGetSolidId(item, out var solidId))
             ingredients.AddSolid(solidId.Value);
 
-        if (TryComp<StackComponent>(item, out var stack) && TryGetStackId(item, out var stackId))
+        if (StackQuery.TryComp(item, out var stack) && TryGetStackId(item, out var stackId))
             ingredients.AddStack(stackId.Value, stack.Count);
 
         if (TryGetUsableIngredientSolution(item, out _, out var solution))
@@ -262,7 +262,7 @@ public abstract partial class MicrowaveSystem
             }
 
             if (stacksToSpend.Count > 0
-                && TryComp<StackComponent>(item, out var stack)
+                && StackQuery.TryComp(item, out var stack)
                 && TryGetStackId((item, stack), out var stackId)
                 && stacksToSpend.ContainsKey(stackId.Value))
             {
