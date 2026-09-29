@@ -128,10 +128,12 @@
     sprite: Clothing/Shoes/Boots/magboots-ert.rsi
 
 - type: entity
-  parent: BaseToggleAction
+  parent: BaseAction
   id: ActionToggleMagboots
   name: Toggle Magboots
   description: Toggles the magboots on and off.
   components:
   - type: Action
     itemIconStyle: BigItem
+  - type: InstantAction
+    event: !type:ToggleActionEvent

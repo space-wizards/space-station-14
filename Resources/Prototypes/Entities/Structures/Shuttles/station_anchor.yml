@@ -74,7 +74,7 @@
     fuelCost: 10
     doAfterDelay: 5
   - type: Damageable
-    damageModifierSet: PlasteelStaticMod
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
     - trigger:

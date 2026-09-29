@@ -22,7 +22,6 @@
         Slash: 10
         Piercing: 10
         Caustic: 5
-        Structural: 15
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/armblade.rsi

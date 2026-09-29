@@ -7,11 +7,17 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
-public sealed partial class VariantizeCommand : LocalizedEntityCommands
+public sealed partial class VariantizeCommand : IConsoleCommand
 {
-    public override string Command => "variantize";
+    [Dependency] private IEntityManager _entManager = default!;
 
-    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    public string Command => "variantize";
+
+    public string Description => Loc.GetString("variantize-command-description");
+
+    public string Help => Loc.GetString("variantize-command-help-text");
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
         {
@@ -19,21 +25,21 @@ public sealed partial class VariantizeCommand : LocalizedEntityCommands
             return;
         }
 
-        if (!NetEntity.TryParse(args[0], out var euidNet) || !EntityManager.TryGetEntity(euidNet, out var euid))
+        if (!NetEntity.TryParse(args[0], out var euidNet) || !_entManager.TryGetEntity(euidNet, out var euid))
         {
             shell.WriteError($"Failed to parse euid '{args[0]}'.");
             return;
         }
 
-        if (!EntityManager.TryGetComponent(euid, out MapGridComponent? gridComp))
+        if (!_entManager.TryGetComponent(euid, out MapGridComponent? gridComp))
         {
             shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
             return;
         }
 
-        var mapsSystem = EntityManager.System<SharedMapSystem>();
-        var tileSystem = EntityManager.System<TileSystem>();
-        var turfSystem = EntityManager.System<TurfSystem>();
+        var mapsSystem = _entManager.System<SharedMapSystem>();
+        var tileSystem = _entManager.System<TileSystem>();
+        var turfSystem = _entManager.System<TurfSystem>();
 
         foreach (var tile in mapsSystem.GetAllTiles(euid.Value, gridComp))
         {
@@ -41,15 +47,5 @@ public sealed partial class VariantizeCommand : LocalizedEntityCommands
             var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, tileSystem.PickVariant(def), tile.Tile.RotationMirroring);
             mapsSystem.SetTile(euid.Value, gridComp, tile.GridIndices, newTile);
         }
-    }
-
-    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
-    {
-        return args.Length switch
-        {
-            1 => CompletionResult.FromHintOptions(CompletionHelper.Components<MapGridComponent>(args[0], EntityManager),
-                Loc.GetString($"cmd-{Command}-hint-grid")),
-            _ => CompletionResult.Empty,
-        };
     }
 }

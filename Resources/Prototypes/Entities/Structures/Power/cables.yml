@@ -32,7 +32,7 @@
     drawdepth: ThinWire
     visible: false
   - type: Damageable
-    damageModifierSet: RodMetalMod
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger: &DamageContainerWeak

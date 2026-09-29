@@ -47,10 +47,6 @@
         density: 4000
   - type: PlacementReplacement
     key: walls
-  - type: StructureAlignerPylon
-    pylons:
-    - Door
-    - Firelock
 
 - type: entity
   id: PlastitaniumWindowSquareBase

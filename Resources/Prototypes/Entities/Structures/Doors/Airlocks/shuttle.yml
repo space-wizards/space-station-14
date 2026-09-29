@@ -100,9 +100,6 @@
   - type: DirectionalArrowIndicator
     arrows:
     - offset: 0, -1.5
-  - type: StructureAligner
-    alignerType:
-    - DoNotAlign
 
 - type: entity
   id: AirlockGlassShuttle

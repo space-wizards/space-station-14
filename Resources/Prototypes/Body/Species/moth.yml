@@ -179,7 +179,7 @@
       types:
         Heat: 2.5 # moths burn more easily
   - type: TemperatureDamage # Moths hate the heat and thrive in the cold.
-    heatDamageThreshold: 314.15
+    heatDamageThreshold: 320
     coldDamageThreshold: 230
     coldDamage:
       types:

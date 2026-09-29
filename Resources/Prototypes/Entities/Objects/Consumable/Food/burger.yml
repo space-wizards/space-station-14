@@ -204,7 +204,7 @@
 # Tastes like bun, bacon.
 
 - type: entity
-  parent: [ FoodBurgerBase, BaseSportsBall ]
+  parent: FoodBurgerBase
   id: FoodBurgerBaseball
   name: baseball burger
   description: It's still warm. The steam coming off of it smells kinda sweaty.

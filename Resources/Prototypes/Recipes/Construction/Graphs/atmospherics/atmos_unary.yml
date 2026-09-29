@@ -1,6 +1,5 @@
 - type: constructionGraph
-  id: !type:CreateVariants
-    values: [ GasUnary, GasUnaryAlt1, GasUnaryAlt2 ]
+  id: GasUnary
   start: start
   graph:
   - node: start
@@ -30,8 +29,7 @@
         doAfter: 1
 
   - node: ventpump
-    entity: !type:CreateVariants
-      values: [ GasVentPump, GasVentPumpAlt1, GasVentPumpAlt2 ]
+    entity: GasVentPump
     edges:
     - to: start
       conditions:
@@ -49,8 +47,7 @@
         doAfter: 1
 
   - node: passivevent
-    entity: !type:CreateVariants
-      values: [ GasPassiveVent, GasPassiveVentAlt1, GasPassiveVentAlt2 ]
+    entity: GasPassiveVent
     edges:
     - to: start
       conditions:
@@ -68,8 +65,7 @@
         doAfter: 1
 
   - node: ventscrubber
-    entity: !type:CreateVariants
-      values: [ GasVentScrubber, GasVentScrubberAlt1, GasVentScrubberAlt2 ]
+    entity: GasVentScrubber
     edges:
     - to: start
       conditions:
@@ -87,8 +83,7 @@
         doAfter: 1
 
   - node: outletinjector
-    entity: !type:CreateVariants
-      values: [ GasOutletInjector, GasOutletInjectorAlt1, GasOutletInjectorAlt2 ]
+    entity: GasOutletInjector
     edges:
     - to: start
       conditions:

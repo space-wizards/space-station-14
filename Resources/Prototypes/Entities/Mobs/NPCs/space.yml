@@ -567,8 +567,6 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 3
-  - type: NameIdentifier
-    group: AdjectivePrefix
   - type: DamageStateVisuals
     states:
       Alive:
@@ -684,7 +682,7 @@
 - type: entity
   parent: [ BaseMobMothroach, MobSnail ]
   id: MobSnailMoth
-  name: snoth
+  name: Snoth
   components:
   - type: GhostRole
     name: ghost-role-information-snoth-name

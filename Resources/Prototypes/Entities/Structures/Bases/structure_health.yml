@@ -107,7 +107,7 @@
         damage: 20
       behaviors: *DoDestruction
 
-# Crate / closet
+# Crate / wall closet
 - type: entity
   abstract: true
   parent: BaseStructureHealth

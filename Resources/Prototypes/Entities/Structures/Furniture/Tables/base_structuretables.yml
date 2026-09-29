@@ -55,4 +55,3 @@
         - TableMask
         layer:
         - TableLayer
-        - LowImpassable

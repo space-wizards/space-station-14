@@ -143,24 +143,28 @@
   target: FloorArcadeBlue
 
 - type: tileAlias
+  id: FloorSteelMono
+  target: FloorSteel
+
+- type: tileAlias
   id: FloorHydro
   target: FloorSteel
 
 - type: tileAlias
   id: FloorElevatorShaft
-  target: FloorDark
+  target: FloorSteel
 
 - type: tileAlias
   id: FloorMining
-  target: FloorDarkPlastic
+  target: FloorSteel
 
 - type: tileAlias
   id: FloorMiningLight
-  target: FloorDarkPlastic
+  target: FloorSteel
 
 - type: tileAlias
   id: FloorMiningDark
-  target: FloorDarkPlastic
+  target: FloorSteel
 
 - type: tileAlias
   id: FloorRockVault
@@ -172,15 +176,15 @@
 
 - type: tileAlias
   id: FloorSteelSlatsContinuous
-  target: FloorSteelVerticalSlatsBordered
+  target: FloorSteel
 
 - type: tileAlias
   id: FloorDarkSlatsContinuous
-  target: FloorDarkVerticalSlatsBordered
+  target: FloorDark
 
 - type: tileAlias
   id: FloorWhiteSlatsContinuous
-  target: FloorWhiteVerticalSlatsBordered
+  target: FloorWhite
 
 - type: tileAlias
   id: FloorMono
@@ -274,7 +278,7 @@
 
 - type: tileAlias
   id: FloorLowDesert
-  target: FloorDesert
+  target: FloorDesertAstroSand
 
 - type: tileAlias
   id: FloorAsteroidSandUnvariantizedBorderless

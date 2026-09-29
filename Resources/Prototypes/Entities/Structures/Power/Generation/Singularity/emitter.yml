@@ -66,7 +66,7 @@
         !type:CableDeviceNode
         nodeGroupID: MVPower
   - type: Damageable
-    damageModifierSet: PlasteelStaticMod
+    damageModifierSet: PlasteelMod
   - type: ActiveRadio
     channels:
     - Engineering

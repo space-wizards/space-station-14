@@ -16,7 +16,7 @@
   - type: Transform
     anchored: true
   - type: Damageable
-    damageModifierSet: RodMetalMod
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:

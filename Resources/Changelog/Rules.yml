@@ -1,5 +1,4 @@
-AdminOnly: false
-Entries:
+﻿Entries:
 - author: Errant
   changes:
   - message: Tab created.

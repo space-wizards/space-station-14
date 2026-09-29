@@ -5,13 +5,14 @@
   name: pellet (ball, rubber)
   components:
   - type: Projectile
+    deleteOnCollide: false
     damage:
       types:
         Blunt: 4
   - type: StaminaDamageOnCollide
     damage: 55
   - type: TimedDespawn
-    lifetime: 0.10
+    lifetime: 0.25
 
 - type: entity
   parent: BaseBullet
@@ -20,11 +21,12 @@
   name: pellet (ball, lethal)
   components:
   - type: Projectile
+    deleteOnCollide: false
     damage:
       types:
         Piercing: 45
   - type: TimedDespawn
-    lifetime: 0.10
+    lifetime: 0.25
 
 - type: entity
   parent: BaseBulletIncendiary
@@ -33,6 +35,7 @@
   name: pellet (ball, incendiary)
   components:
   - type: Projectile
+    deleteOnCollide: false
     damage:
       types:
         Blunt: 1
@@ -41,7 +44,7 @@
     fireStacks: 1
     count: 10
   - type: TimedDespawn
-    lifetime: 0.10
+    lifetime: 0.25
 
 - type: entity
   parent: BaseBullet
@@ -50,8 +53,9 @@
   name: pellet (ball, less lethal)
   components:
   - type: Projectile
+    deleteOnCollide: false
     damage:
       types:
         Piercing: 5
   - type: TimedDespawn
-    lifetime: 0.10
+    lifetime: 0.25
