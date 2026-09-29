@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Fixtures.Attributes;
@@ -14,27 +15,32 @@ using Robust.Shared.Player;
 
 namespace Content.IntegrationTests.Tests.GameRules;
 
-[TestFixture]
 public sealed class AllGamePresetsStartTest : AntagTest
 {
     /// <summary>
     /// A list of blacklisted <see cref="GamePresetPrototype"/> for this test. Some down streams might make changes which nuke upstream game modes they don't use.
     /// This prevents them from being tested. If you use this to silence valid test fails and your game fails to start. Skill issue. Do 100 push-ups.
     /// </summary>
-    private static readonly HashSet<string> IgnoredPresets = []; // Is a string to prevent YAML Linter from freaking if this is empty.
+    /// <remarks>
+    /// Using <see langword="string"/> to prevent the YAML linter from failing if this is empty.
+    /// </remarks>
+    private static readonly HashSet<string> IgnoredPresets =
+    [
 
-    private static string[] _gamePresets = GameDataScrounger.PrototypesOfKind<GamePresetPrototype>().Where(p => !IgnoredPresets.Contains(p)).ToArray();
+    ];
+
+    private static readonly string[] GamePresets = GameDataScrounger.PrototypesOfKind<GamePresetPrototype>().Where(p => !IgnoredPresets.Contains(p)).ToArray();
 
     // Tests that all game modes can start given ideal circumstances.
     [Test]
     [TestOf(typeof(ServerGameTicker)), TestOf(typeof(AntagSelectionSystem)), TestOf(typeof(AntagSelectionComponent))]
-    [TestCaseSource(nameof(_gamePresets))]
+    [TestCaseSource(nameof(GamePresets))]
     [Description("Ensures all Game Presets are able to start and assign all antags correctly without spawning anyone in nullspace.")]
     [EnsureCVar(Side.Server, typeof(CCVars), nameof(CCVars.GameTickerIgnoredPresets), GameTicker.DummyGameRule)]
     public async Task TestAllGamemodesCanStart(string presetId)
     {
         // Initially in the lobby
-        await Server.WaitPost(() =>
+        await Server.WaitAssertion(() =>
         {
             Assert.That(STicker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
             Assert.That(Client.AttachedEntity, Is.Null);
@@ -44,8 +50,7 @@ public sealed class AllGamePresetsStartTest : AntagTest
         var preset = SProtoMan.Index<GamePresetPrototype>(presetId);
 
         // Spawn the minimum number of players.
-        var players = new List<ICommonSession>();
-        players.Add(Client.Session);
+        List<ICommonSession> players = [Client.Session!];
         var min = 0;
         await Server.WaitPost(() =>
         {
@@ -65,7 +70,7 @@ public sealed class AllGamePresetsStartTest : AntagTest
                 if (STicker.IsIgnored(ruleId))
                     continue;
 
-                if (!SProtoMan.Resolve(ruleId, out var rule ))
+                if (!SProtoMan.Resolve(ruleId, out var rule))
                     continue; // Bruh moment
 
                 // Ignore non-antag game-rules.
@@ -88,7 +93,7 @@ public sealed class AllGamePresetsStartTest : AntagTest
         });
 
         // No preset should ever try to spawn more antags roundstart than it can spawn players.
-        Assert.That(antags <= min, Is.True);
+        Assert.That(antags, Is.LessThanOrEqualTo(min));
         if (min > 1)
         {
             var dummies = await Server.AddDummySessions(min - 1);
@@ -110,7 +115,7 @@ public sealed class AllGamePresetsStartTest : AntagTest
             for (var count = 0; count < amount; count++)
             {
                 await Pair.SetAntagPreference(antag.PrefRoles.FirstOrDefault(), true, players[i++].UserId);
-                Assert.That(i < min, $"Tried to assign more antags than there were players");
+                Assert.That(i, Is.LessThan(min), $"Tried to assign more antags than there were players");
             }
         }
 
@@ -120,7 +125,7 @@ public sealed class AllGamePresetsStartTest : AntagTest
         await Pair.RunUntilSynced();
 
         // Game should have started
-        await Server.WaitPost(() =>
+        await Server.WaitAssertion(() =>
         {
             Assert.That(STicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
             Assert.That(STicker.PlayerGameStatuses.Values.All(x => x == PlayerGameStatus.JoinedGame));
@@ -132,13 +137,10 @@ public sealed class AllGamePresetsStartTest : AntagTest
         Assert.That(SEntMan.EntityExists(player));
 
         // Start all game presets so antags spawn!
-        await Server.WaitPost(() =>
-        {
-            STicker.StartGamePresetRules();
-        });
+        await Server.WaitPost(STicker.StartGamePresetRules);
         await Pair.RunUntilSynced();
 
-        await Server.WaitPost(() =>
+        await Server.WaitAssertion(() =>
         {
             var j = 0;
             foreach (var (antag, amount) in rules)
@@ -150,14 +152,17 @@ public sealed class AllGamePresetsStartTest : AntagTest
             }
         });
 
-        // Maps now exist
-        Assert.That(SEntMan.Count<MapComponent>(), Is.GreaterThan(0));
-        Assert.That(SEntMan.Count<MapGridComponent>(), Is.GreaterThan(0));
-        Assert.That(SEntMan.Count<StationCentcommComponent>(), Is.EqualTo(1));
+        using (Assert.EnterMultipleScope())
+        {
+            // Maps now exist
+            Assert.That(SEntMan.Count<MapComponent>(), Is.GreaterThan(0));
+            Assert.That(SEntMan.Count<MapGridComponent>(), Is.GreaterThan(0));
+            Assert.That(SEntMan.Count<StationCentcommComponent>(), Is.EqualTo(1));
+        }
 
         // Clear game preset and return to lobby
         await Pair.WaitCommand("golobby");
-        STicker.SetGamePreset((GamePresetPrototype) null);
+        STicker.SetGamePreset((GamePresetPrototype)null!);
         await Pair.RunUntilSynced();
     }
 }

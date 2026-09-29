@@ -69,7 +69,7 @@ public sealed class CargoTest : GameTest
     [Test]
     public async Task NoCargoBountyArbitrageTest()
     {
-        await Pair.CreateTestMap();
+        await CreateTestMap();
         var coordinates = Pair.TestMap!.GridCoords;
 
         await Server.WaitAssertion(() =>
@@ -139,7 +139,7 @@ public sealed class CargoTest : GameTest
     [Test]
     public async Task NoSliceableBountyArbitrageTest()
     {
-        await Pair.CreateTestMap();
+        await CreateTestMap();
         var coordinates = Pair.TestMap!.GridCoords;
 
         var bounties = SProtoMan.EnumeratePrototypes<CargoBountyPrototype>().ToList();
@@ -223,7 +223,7 @@ public sealed class CargoTest : GameTest
     [Test]
     public async Task StackPrice()
     {
-        await Pair.CreateTestMap();
+        await CreateTestMap();
         var coordinates = Pair.TestMap!.GridCoords;
         await Server.WaitAssertion(() =>
         {

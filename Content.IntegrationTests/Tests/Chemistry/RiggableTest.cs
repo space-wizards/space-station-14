@@ -1,11 +1,12 @@
+#nullable enable
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Tests.Interaction;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Power.EntitySystems;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Chemistry;
@@ -13,46 +14,50 @@ namespace Content.IntegrationTests.Tests.Chemistry;
 [TestOf(typeof(RiggableSystem))]
 public sealed class RiggableTest : InteractionTest
 {
+    private const string TestPlasmaSyringe = "TestPlasmaSyringe";
+    private const string TestMilkSyringe = "TestMilkSyringe";
     private static readonly EntProtoId HumanProtoId = "MobHuman";
     private static readonly EntProtoId BatteryProto = "PowerCellSmall";
     private static readonly EntProtoId FlashlightProto = "EmptyFlashlightLantern";
     private static readonly EntProtoId StunbatonProto = "Stunbaton";
+    private static readonly ProtoId<ReagentPrototype> PlasmaReagent = "Plasma";
+    private static readonly ProtoId<ReagentPrototype> MilkReagent = "Milk";
 
     [SidedDependency(Side.Server)] private readonly DamageableSystem _damageable = default!;
 
     [TestPrototypes]
-    private const string Prototypes = @"
+    private static readonly string Prototypes = $@"
 - type: entity
   parent: PrefilledSyringe
-  id: TestPlasmaSyringe
+  id: {TestPlasmaSyringe}
   components:
   - type: Solution
     solution:
       reagents:
-      - ReagentId: Plasma
+      - ReagentId: {PlasmaReagent}
         Quantity: 15
 
 - type: entity
   parent: PrefilledSyringe
-  id: TestMilkSyringe
+  id: {TestMilkSyringe}
   components:
   - type: Solution
     solution:
       reagents:
-      - ReagentId: Milk
+      - ReagentId: {MilkReagent}
         Quantity: 15
 ";
 
     [Test]
-    [TestCase("TestPlasmaSyringe", ExpectedResult = true)]
-    [TestCase("TestMilkSyringe", ExpectedResult = false)]
+    [TestCase(TestPlasmaSyringe, ExpectedResult = true)]
+    [TestCase(TestMilkSyringe, ExpectedResult = false)]
     [Description("Gives the player a power cell, injects it with different solutions and tests the rigged cell in a flashlight")]
     public async Task<bool> RigBatteryTest(string syringe)
     {
         await AddAtmosphere();
         await SpawnTarget(HumanProtoId);
 
-        Entity<DamageableComponent> mob = (STarget.Value, Comp<DamageableComponent>());
+        var mob = SEntity<DamageableComponent>(STarget.Value);
         Assert.That(_damageable.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero),
             "Player spawned with damage.");
 
@@ -100,7 +105,7 @@ public sealed class RiggableTest : InteractionTest
         await AddAtmosphere();
         await SpawnTarget(HumanProtoId);
 
-        Entity<DamageableComponent> mob = (STarget.Value, Comp<DamageableComponent>());
+        var mob = SEntity<DamageableComponent>(STarget.Value);
         Assert.That(_damageable.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero),
             "Player spawned with damage.");
 
@@ -109,7 +114,7 @@ public sealed class RiggableTest : InteractionTest
         Assert.That(Comp<ItemToggleComponent>(baton).Activated, Is.True, "Stunbaton did not activate");
 
         // Rig the baton
-        await PlaceInHands("TestPlasmaSyringe");
+        await PlaceInHands(TestPlasmaSyringe);
         await Interact();
 
         await RunTicks(5);

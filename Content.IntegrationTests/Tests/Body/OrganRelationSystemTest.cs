@@ -1,36 +1,37 @@
+#nullable enable
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
+using Content.IntegrationTests.NUnit.Constraints;
 using Content.Shared.Body;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Body;
 
-[TestFixture]
 [TestOf(typeof(OrganRelationSystem))]
 public sealed class OrganRelationSystemTest : GameTest
 {
+    private const string OrganRelationTestOrgan = "OrganRelationTestOrgan";
+
     [TestPrototypes]
-    private const string Prototypes = @"
+    private const string Prototypes = $@"
 - type: entity
-  id: OrganRelationTestOrgan
+  id: {OrganRelationTestOrgan}
   components:
   - type: Organ
   - type: ParentOrgan
   - type: ChildOrgan
 ";
 
-    [SidedDependency(Side.Server)] private OrganRelationSystem _organRelation = default!;
+    [SidedDependency(Side.Server)] private OrganRelationSystem _sOrganRelationSystem = default!;
 
     [Test]
     [RunOnSide(Side.Server)]
     public void RelateAndOrphan()
     {
-        var parent = SSpawn("OrganRelationTestOrgan");
-        var child = SSpawn("OrganRelationTestOrgan");
+        var parent = SSpawn(OrganRelationTestOrgan);
+        var child = SSpawn(OrganRelationTestOrgan);
 
-        _organRelation.Relate(parent, child);
+        _sOrganRelationSystem.Relate(parent, child);
 
         var parentComp = SComp<ParentOrganComponent>(parent);
         var childComp = SComp<ChildOrganComponent>(child);
@@ -38,7 +39,7 @@ public sealed class OrganRelationSystemTest : GameTest
         Assert.That(parentComp.Children, Does.Contain(child));
         Assert.That(childComp.Parent, Is.EqualTo(parent));
 
-        _organRelation.Orphan(child);
+        _sOrganRelationSystem.Orphan(child);
 
         Assert.That(parentComp.Children, Does.Not.Contain(child));
         Assert.That(childComp.Parent, Is.Null);
@@ -46,34 +47,35 @@ public sealed class OrganRelationSystemTest : GameTest
 
     [Test]
     [RunOnSide(Side.Server)]
+    [Description("Tests that AllChildren returns the children of children, and AllParents, the parents of parents.")]
     public void Traversal()
     {
-        var grandParent = SSpawn("OrganRelationTestOrgan");
-        var parent = SSpawn("OrganRelationTestOrgan");
-        var child = SSpawn("OrganRelationTestOrgan");
+        var grandParent = SSpawn(OrganRelationTestOrgan);
+        var parent = SSpawn(OrganRelationTestOrgan);
+        var child = SSpawn(OrganRelationTestOrgan);
 
-        _organRelation.Relate(grandParent, parent);
-        _organRelation.Relate(parent, child);
+        _sOrganRelationSystem.Relate(grandParent, parent);
+        _sOrganRelationSystem.Relate(parent, child);
 
-        var allChildren = _organRelation.AllChildren(grandParent).Select(e => e.Owner).ToList();
-        Assert.That(allChildren, Is.EquivalentTo(new[] { parent, child }));
+        var allChildren = _sOrganRelationSystem.AllChildren(grandParent).Select(e => e.Owner).ToList();
+        Assert.That(allChildren, Is.EquivalentTo([parent, child]));
 
-        var allParents = _organRelation.AllParents(child).Select(e => e.Owner).ToList();
-        Assert.That(allParents, Is.EquivalentTo(new[] { parent, grandParent }));
+        var allParents = _sOrganRelationSystem.AllParents(child).Select(e => e.Owner).ToList();
+        Assert.That(allParents, Is.EquivalentTo([parent, grandParent]));
     }
 
     [Test]
     [RunOnSide(Side.Server)]
     public void ParentDeletion()
     {
-        var parent = SSpawn("OrganRelationTestOrgan");
-        var child = SSpawn("OrganRelationTestOrgan");
+        var parent = SSpawn(OrganRelationTestOrgan);
+        var child = SSpawn(OrganRelationTestOrgan);
 
-        _organRelation.Relate(parent, child);
+        _sOrganRelationSystem.Relate(parent, child);
 
         SDeleteNow(parent);
 
-        Assert.That(SEntMan.Deleted(child), Is.False);
+        Assert.That(child, Is.Not.Deleted(Server));
         Assert.That(SComp<ChildOrganComponent>(child).Parent, Is.Null);
     }
 
@@ -81,10 +83,10 @@ public sealed class OrganRelationSystemTest : GameTest
     [RunOnSide(Side.Server)]
     public void ChildDeletion()
     {
-        var parent = SSpawn("OrganRelationTestOrgan");
-        var child = SSpawn("OrganRelationTestOrgan");
+        var parent = SSpawn(OrganRelationTestOrgan);
+        var child = SSpawn(OrganRelationTestOrgan);
 
-        _organRelation.Relate(parent, child);
+        _sOrganRelationSystem.Relate(parent, child);
 
         SDeleteNow(child);
 

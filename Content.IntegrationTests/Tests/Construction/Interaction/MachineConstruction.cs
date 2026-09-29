@@ -1,14 +1,18 @@
+#nullable enable
 using Content.IntegrationTests.Tests.Interaction;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Construction.Interaction;
 
 public sealed class MachineConstruction : InteractionTest
 {
-    private const string MachineFrame = "MachineFrame";
-    private const string Unfinished = "UnfinishedMachineFrame";
-    private const string ProtolatheBoard = "ProtolatheMachineCircuitboard";
-    private const string Protolathe = "Protolathe";
-    private const string Beaker = "Beaker";
+    private static readonly EntProtoId MachineFrame = "MachineFrame";
+    private static readonly EntProtoId Unfinished = "UnfinishedMachineFrame";
+    private static readonly EntProtoId ProtolatheBoard = "ProtolatheMachineCircuitboard";
+    private static readonly EntProtoId Protolathe = "Protolathe";
+    private static readonly EntProtoId Beaker = "Beaker";
+    private static readonly EntProtoId AutolatheBoard = "AutolatheMachineCircuitboard";
+    private static readonly EntProtoId Autolathe = "Autolathe";
 
     [Test]
     public async Task ConstructProtolathe()
@@ -49,10 +53,10 @@ public sealed class MachineConstruction : InteractionTest
         AssertPrototype(MachineFrame);
 
         // Change it into an autolathe
-        await InteractUsing("AutolatheMachineCircuitboard");
+        await InteractUsing(AutolatheBoard);
         AssertPrototype(MachineFrame);
         await Interact(Manipulator1, Manipulator1, Manipulator1, Manipulator1, Glass, Screw);
-        AssertPrototype("Autolathe");
+        AssertPrototype(Autolathe);
     }
 }
 

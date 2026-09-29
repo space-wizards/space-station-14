@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Client.Humanoid;
 using Content.IntegrationTests.Pair;
 using Content.Shared.Body;

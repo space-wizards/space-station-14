@@ -15,9 +15,16 @@ namespace Content.IntegrationTests.Tests.Administration.Notes;
 /// </summary>
 public sealed class NotesControlTest : InteractionTest
 {
-    public override PoolSettings PoolSettings => new() { Connected = true, Dirty = true, AdminLogsEnabled = true, DummyTicker = false };
+    public override PoolSettings PoolSettings => new()
+    {
+        Connected = true,
+        Dirty = true,
+        AdminLogsEnabled = true,
+        DummyTicker = false
+    };
 
     [Test]
+    [Description("Test that the admin notes UI can be used to add a new note.")]
     public async Task TestNotesControl()
     {
         // Click the ahelp button in the menu bar
@@ -34,7 +41,7 @@ public sealed class NotesControlTest : InteractionTest
         // Open their notes
         await ClickControl(bwoink.Bwoink.Notes);
         var noteCtrl = GetWindow<AdminNotesWindow>().Notes;
-        Assert.That(noteCtrl.Notes.ChildCount, Is.EqualTo(0));
+        Assert.That(noteCtrl.Notes.ChildCount, Is.Zero);
 
         // Add a new note
         await ClickControl(noteCtrl.NewNoteButton);

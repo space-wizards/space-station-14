@@ -1,33 +1,32 @@
+#nullable enable
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Robust.Shared.Exceptions;
 
-namespace Content.IntegrationTests.Tests
-{
-    [TestFixture]
-    public sealed class StartTest : GameTest
-    {
-        /// <summary>
-        ///     Test that the server, and client start, and stop.
-        /// </summary>
-        [Test]
-        public async Task TestClientStart()
-        {
-            var pair = Pair;
-            var client = pair.Client;
-            Assert.That(client.IsAlive);
-            await client.WaitRunTicks(5);
-            Assert.That(client.IsAlive);
-            var cRuntimeLog = client.ResolveDependency<IRuntimeLog>();
-            Assert.That(cRuntimeLog.ExceptionCount, Is.EqualTo(0), "No exceptions must be logged on client.");
-            await client.WaitIdleAsync();
-            Assert.That(client.IsAlive);
+namespace Content.IntegrationTests.Tests;
 
-            var server = pair.Server;
-            Assert.That(server.IsAlive);
-            var sRuntimeLog = server.ResolveDependency<IRuntimeLog>();
-            Assert.That(sRuntimeLog.ExceptionCount, Is.EqualTo(0), "No exceptions must be logged on server.");
-            await server.WaitIdleAsync();
-            Assert.That(server.IsAlive);
-        }
+public sealed class StartTest : GameTest
+{
+    [SidedDependency(Side.Client)] private IRuntimeLog _cRuntimeLog = null!;
+    [SidedDependency(Side.Server)] private IRuntimeLog _sRuntimeLog = null!;
+
+    /// <summary>
+    /// Test that the server and client start and stop.
+    /// </summary>
+    [Test]
+    [Description("Test that the server and client start.")]
+    public async Task TestClientStart()
+    {
+        Assert.That(Client.IsAlive);
+        await Client.WaitRunTicks(5);
+        Assert.That(Client.IsAlive);
+        Assert.That(_cRuntimeLog.ExceptionCount, Is.Zero, "No exceptions must be logged on client.");
+        await Client.WaitIdleAsync();
+        Assert.That(Client.IsAlive);
+
+        Assert.That(Server.IsAlive);
+        Assert.That(_sRuntimeLog.ExceptionCount, Is.Zero, "No exceptions must be logged on server.");
+        await Server.WaitIdleAsync();
+        Assert.That(Server.IsAlive);
     }
 }
