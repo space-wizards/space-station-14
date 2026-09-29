@@ -54,9 +54,9 @@ public sealed partial class BotanySampleTakerSystem : EntitySystem
             return;
         }
 
-        // Prevent early sampling.
+        // Prevent early sampling, unless the plant is fully grown.
         var growthStage = _plant.GetGrowthStageValue(ent.AsNullable());
-        if (growthStage <= args.Sample.Comp.MinSampleStage)
+        if (growthStage < ent.Comp.GrowthStages && growthStage <= args.Sample.Comp.MinSampleStage)
         {
             _popup.PopupCursor(Loc.GetString("plant-sample-component-early-sample-popup"), args.User);
             return;

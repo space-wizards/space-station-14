@@ -1,4 +1,4 @@
-﻿using Content.Shared.MouseRotator;
+using Content.Shared.MouseRotator;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;

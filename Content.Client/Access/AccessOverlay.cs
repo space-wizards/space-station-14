@@ -89,7 +89,7 @@ public sealed class AccessOverlay : Overlay
 
             var accessInfoText = textBuffer.ToString();
             var screenPos = args.ViewportControl.WorldToScreen(_transformSystem.GetRenderWorldPosition((uid, transform)));
-            args.ScreenHandle.DrawString(_font, screenPos, accessInfoText, Color.Gold);
+            args.ScreenHandle.DrawString(_font, screenPos, accessInfoText, 1, Color.Gold, TextOutline.Default);
         }
     }
 }

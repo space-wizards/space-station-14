@@ -38,7 +38,7 @@ public sealed partial class PlantGrowthSystem : EntitySystem
     private void OnPlantGrow(Entity<PlantGrowthComponent> ent, ref PlantGrowEvent args)
     {
         var (plantUid, plantComp) = ent;
-        var trayUid = GetEntity(args.Tray);
+        var trayUid = args.Tray;
 
         if (!_trayQuery.TryComp(trayUid, out var trayComp))
             return;
