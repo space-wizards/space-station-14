@@ -198,9 +198,9 @@ public sealed partial class PlantCommand : ToolshedCommand
             .OfType<Entity<PlantComponent>>();
     }
 
-    public Entity<PlantChemicalsComponent>? AddChemical(
+    public Entity<PlantComponent>? AddChemical(
         IInvocationContext ctx,
-        [PipedArgument] Entity<PlantChemicalsComponent> input,
+        [PipedArgument] Entity<PlantComponent> input,
         ProtoId<ReagentPrototype> reagent,
         float min,
         float amount,
@@ -210,7 +210,7 @@ public sealed partial class PlantCommand : ToolshedCommand
             return null;
 
         _plantChemicals ??= GetSys<PlantChemicalsSystem>();
-        if (!_plantChemicals.AddChemical(input!, reagent, FixedPoint2.New(min), FixedPoint2.New(amount), inherent))
+        if (!_plantChemicals.AddChemical(input.Owner, reagent, FixedPoint2.New(min), FixedPoint2.New(amount), inherent))
         {
             ctx.ReportError(new PlantCommandError(
                 $"Plant entity {input} did not accept added chemicals."));
@@ -221,9 +221,9 @@ public sealed partial class PlantCommand : ToolshedCommand
     }
 
     [CommandImplementation("addchem")]
-    public IEnumerable<Entity<PlantChemicalsComponent>> AddChemical(
+    public IEnumerable<Entity<PlantComponent>> AddChemical(
         IInvocationContext ctx,
-        [PipedArgument] IEnumerable<Entity<PlantChemicalsComponent>> input,
+        [PipedArgument] IEnumerable<Entity<PlantComponent>> input,
         ProtoId<ReagentPrototype> reagent,
         [CommandArgument(typeof(PlantChemQuantityParser))] float min,
         [CommandArgument(typeof(PlantChemQuantityParser))] float amount,
@@ -231,7 +231,7 @@ public sealed partial class PlantCommand : ToolshedCommand
     {
         return input
             .Select(entity => AddChemical(ctx, entity, reagent, min, amount, inherent))
-            .OfType<Entity<PlantChemicalsComponent>>();
+            .OfType<Entity<PlantComponent>>();
     }
 
     private bool TryGetPlant(
