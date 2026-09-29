@@ -1,18 +1,13 @@
 using System.Linq;
 using Content.Shared.Destructible.Thresholds;
-using Content.Shared.EntityTable;
-using Content.Shared.EntityTable.Conditions;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.Collections;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.Artifact;
 
 public sealed partial class XenoArtifactSystem
 {
-    [Dependency] private EntityTableSystem _entityTable = default!;
-
     private void GenerateArtifactStructure(Entity<XenoArtifactComponent> ent)
     {
         var desiredNodeCount = ent.Comp.NodeCount.Next(RobustRandom);
@@ -118,16 +113,9 @@ public sealed partial class XenoArtifactSystem
             var directPredecessors = SelectDirectPredecessors(predecessors, scatterCount);
             scatterCount -= (directPredecessors.Count - 1);
 
-            var trigger = _entityTable.GetFirstOrNull(ent.Comp.TriggersTable, RobustRandom, triggerPool.Context);
-            // should log error but in next PRs we will get cases of no nodes fitting into budget so it will be usual case, not error
-            if (trigger == null)
-                continue;
-
-            var nodeEntity = CreateNode(ent, trigger.Value, ent.Comp.EffectsTable, iteration);
+            var nodeEntity = CreateNode(ent, directPredecessors, triggerPool, iteration);
             if (!nodeEntity.HasValue)
                 continue;
-
-            triggerPool.AddTriggerAsUsed(trigger.Value);
 
             nodes.Add(nodeEntity.Value);
 
@@ -238,32 +226,5 @@ public sealed partial class XenoArtifactSystem
             else
                 AddEdge((ent, ent.Comp), node2, node1, false);
         }
-    }
-
-    /// <summary>
-    /// Container that represents pool of XenoArtifact triggers.
-    /// </summary>
-    private sealed class TriggerPoolData
-    {
-        private readonly HashSet<EntProtoId> _usedTriggers;
-
-        public TriggerPoolData(int requestedSize)
-        {
-            _usedTriggers = new(requestedSize);
-            Context = new EntityTableContext(new Dictionary<string, object>
-            {
-                [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = _usedTriggers
-            });
-        }
-
-        public readonly EntityTableContext Context;
-
-        public void AddTriggerAsUsed(EntProtoId trigger)
-        {
-            if (!_usedTriggers.Add(trigger))
-                throw new ArgumentException();
-        }
-
-        public IReadOnlyCollection<EntProtoId> UsedTriggers => _usedTriggers;
     }
 }
