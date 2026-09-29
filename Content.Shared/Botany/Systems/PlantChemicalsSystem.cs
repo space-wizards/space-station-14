@@ -40,7 +40,7 @@ public sealed partial class PlantChemicalsSystem : EntitySystem
         FixedPoint2 amount,
         bool inherent = false)
     {
-        if (!Resolve(ent, ref ent.Comp, false) || min < 0 || amount < 0 || min + amount <= 0)
+        if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
         var seedChemQuantity = new PlantChemQuantity

@@ -65,22 +65,33 @@ public sealed partial class PlantMutationSystem : EntitySystem
             return false;
 
         // If we already have the mutation don't apply it twice
-        if (mutation.Persists && ent.Comp.Mutations.Any(existing => existing.Name == mutation.Name))
-            return false;
+        if (mutation.Persists)
+        {
+            foreach (var existingMutation in ent.Comp.Mutations)
+            {
+                if (existingMutation.Name == mutation.Name)
+                    return false;
+            }
+        }
 
-        if (HasConflictingMutation(ent.Comp, mutation))
+        if (HasConflictingMutation((ent, ent.Comp), mutation))
             return false;
 
         ApplyMutation((ent, ent.Comp), mutation);
         return true;
     }
 
-    private bool HasConflictingMutation(PlantComponent plant, RandomPlantMutation mutation)
+    private bool HasConflictingMutation(Entity<PlantComponent> ent, RandomPlantMutation mutation)
     {
-        return mutation.ExclusiveGroup != null &&
-               plant.Mutations.Any(existing =>
-                   existing.Name != mutation.Name &&
-                   existing.ExclusiveGroup == mutation.ExclusiveGroup);
+        if (mutation.ExclusiveGroup == null)
+            return false;
+
+        foreach (var existingMutation in ent.Comp.Mutations)
+        {
+            if (existingMutation.ExclusiveGroup == mutation.ExclusiveGroup)
+                return true;
+        }
+        return false;
     }
 
     private void ApplyMutation(Entity<PlantComponent> ent, RandomPlantMutation mutation)
