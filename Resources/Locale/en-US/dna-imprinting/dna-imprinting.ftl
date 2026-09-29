@@ -3,10 +3,10 @@ reagent-desc-miniozine = An experimental modification to cognizine that sacrific
 entity-effect-guidebook-dna-imprint = { $chance ->
     [1] Imprints
     *[other] imprint
-    } the NPC on the most abundant imprinting DNA donor in its bloodstream, adding them as a master and following the newest master
+    } the DNA used in the creation, binding weak minded metabolizers as minions.
 reagent-name-ragorium = ragorium
 reagent-desc-ragorium = An experimental chemical which drives nonsentient life into a killing frenzy.
 entity-effect-guidebook-dna-hunt = { $chance ->
     [1] Drives
     *[other] drive
-    } the NPC to add the most abundant imprinting DNA donor in its bloodstream to its imprints and hunt the nearest imprinted donor, even after the target's death
+    } weak minded metabolizers to hunt down the bearer of the DNA used in creation.
