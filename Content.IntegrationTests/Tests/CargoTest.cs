@@ -45,6 +45,8 @@ public sealed class CargoTest : GameTest
         await Pair.CreateTestMap();
         var coordinates = Pair.TestMap!.GridCoords;
 
+        Dictionary<EntProtoId, double> priceCache = new();
+
         await Server.WaitAssertion(() =>
         {
             using (Assert.EnterMultipleScope())
@@ -63,9 +65,7 @@ public sealed class CargoTest : GameTest
                         {
                             foreach (var item in _sTableSystem.AverageSpawns(container.Value))
                             {
-                                ent = SSpawnAtPosition(item.spawn, coordinates);
-                                price += _sPricing.GetPrice(ent) * item.Item2;
-                                SDeleteNow(ent);
+                                price += GetPrice(item.spawn) * item.Item2;
                             }
                         }
                         contentsChecked = true;
@@ -83,6 +83,17 @@ public sealed class CargoTest : GameTest
                 }
             }
         });
+
+        double GetPrice(EntProtoId id)
+        {
+            if (!priceCache.TryGetValue(id, out var price))
+            {
+                var ent = SSpawnAtPosition(id, coordinates);
+                priceCache[id] = price = _sPricing.GetPrice(ent);
+                SDeleteNow(ent);
+            }
+            return price;
+        }
     }
 
     [Test]
