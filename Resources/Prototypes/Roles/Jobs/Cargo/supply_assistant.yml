@@ -5,10 +5,10 @@
   playTimeTracker: JobSupplyAssistant
   setPreference: false # TEMPORARILY not a player-facing role until the spawns are mapped; otherwise Cargo is just entirely unplayable for new players
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Cargo
-      time: 10h
-      inverted: true # stop playing intern if you're good at Cargo!
+  - !type:DepartmentTimeRequirement
+    department: Cargo
+    time: 10h
+    inverted: true # stop playing intern if you're good at Cargo!
   startingGear: SupplyAssistantGear
   icon: "JobIconSupplyAssistant"
   supervisors: job-supervisors-cargo
