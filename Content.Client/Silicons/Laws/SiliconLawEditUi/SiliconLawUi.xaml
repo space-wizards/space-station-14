@@ -8,17 +8,50 @@
     this shit does not layout properly unless I put the horizontal boxcontainer inside of a vertical one
     ????
     <!-->
-    <BoxContainer Orientation="Vertical" Margin="5">
-        <BoxContainer Orientation="Horizontal" Align="End">
-            <Button Name="OverrideProviderButton" Text="{Loc silicon-law-ui-modify-provider}" ToolTip="{Loc silicon-law-ui-modify-provider-tooltip}" ToggleMode="True" Pressed="True" MaxSize="256 64" Access="Public" StyleClasses="OpenLeft"></Button>
-            <Control HorizontalExpand="True"/>
-            <Button Name="NewLawButton" Text="{Loc silicon-law-ui-new-law}" MaxSize="256 64" StyleClasses="OpenRight"></Button>
-            <Button Name="Save" Text="{Loc silicon-law-ui-save}" MaxSize="256 64" Access="Public" StyleClasses="OpenLeft"></Button>
-        </BoxContainer>
+    <BoxContainer
+        Orientation="Vertical"
+        Margin="5">
+        <BoxContainer
+            Orientation="Horizontal"
+            Align="Center">
+            <Button
+                Name="OverrideProviderButton"
+                Text="{Loc silicon-law-ui-modify-provider}"
+                ToolTip="{Loc silicon-law-ui-modify-provider-tooltip}"
+                ToggleMode="True"
+                Pressed="True" MaxSize="256 64"
+                Access="Public"
+                StyleClasses="OpenLeft">
+            </Button>
+            <Control
+                HorizontalExpand="True"/>
+            <Button
+                Name="NewLawButton"
+                Text="{Loc silicon-law-ui-new-law}"
+                MaxSize="256 64"
+                StyleClasses="OpenRight">
+            </Button>
+            <Button
+                Name="Save"
+                Text="{Loc silicon-law-ui-save}"
+                MaxSize="256 64"
+                Access="Public"
+                StyleClasses="OpenLeft">
+            </Button>
+       </BoxContainer>
     </BoxContainer>
-    <BoxContainer Orientation="Vertical" Margin="4 60 0 0">
-        <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
-            <BoxContainer Orientation="Vertical" Name="LawContainer" Access="Public" VerticalExpand="True" />
+    <BoxContainer
+        Orientation="Vertical"
+        Margin="4 60 0 0">
+        <ScrollContainer
+            HorizontalExpand="True"
+            VerticalExpand="True"
+            HScrollEnabled="False">
+            <BoxContainer
+                Orientation="Vertical"
+                Name="LawContainer"
+                Access="Public"
+                VerticalExpand="True"/>
         </ScrollContainer>
     </BoxContainer>
 </controls:FancyWindow>
