@@ -10,7 +10,10 @@
     sprite: Objects/Specific/Medical/mouth_swab.rsi
     state: icon
   - type: Tag
-    tags: [ BotanyTool, Recyclable, Trash ]
+    tags:
+    - BotanyTool
+    - Recyclable
+    - Trash
   - type: BotanySwab
   - type: GuideHelp
     guides:

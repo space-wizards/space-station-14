@@ -429,7 +429,9 @@
   - type: PointLight
     color: orange
   - type: Tag
-    tags: [ DonkPocket, Meat ]
+    tags:
+    - DonkPocket
+    - Meat
   - type: SolutionManager
     solutions:
     - SolutionFoodDonkpocketWarm

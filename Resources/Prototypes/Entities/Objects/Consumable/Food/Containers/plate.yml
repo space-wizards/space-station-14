@@ -222,7 +222,9 @@
     - 0,0,0,0
     storedOffset: 0,-2
   - type: Tag
-    tags: [ Cookware, Trash ]
+    tags:
+    - Cookware
+    - Trash
   - type: PhysicalComposition
     materialComposition:
       Steel: 25

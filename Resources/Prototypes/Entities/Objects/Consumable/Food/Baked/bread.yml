@@ -115,12 +115,11 @@
     layers:
     - state: banana-slice
   - type: Tag
-    - type: Tag
-      tags:
-      - Bread
-      - FinishedMeal
-      - Fruit
-      - Slice
+    tags:
+    - Bread
+    - FinishedMeal
+    - Fruit
+    - Slice
 
 - type: entity
   parent: [FoodBreadBase, BaseSlicingRefinableFood]
