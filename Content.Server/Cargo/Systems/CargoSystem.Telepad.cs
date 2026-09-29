@@ -147,7 +147,10 @@ public sealed partial class CargoSystem
         if (disabled)
             ent.Comp.CurrentState = CargoTelepadState.Unpowered;
         else if (ent.Comp.CurrentState == CargoTelepadState.Unpowered)
+        {
+            ent.Comp.NextTeleport = Timing.CurTime + ent.Comp.Delay;
             ent.Comp.CurrentState = CargoTelepadState.Idle;
+        }
 
         _appearance.SetData(ent.Owner, CargoTelepadVisuals.State, ent.Comp.CurrentState);
     }
