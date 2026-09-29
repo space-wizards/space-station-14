@@ -48,6 +48,16 @@ public sealed partial class ItemSlotsComponent : Component
     /// </remarks>
     [DataField]
     public bool AllowSmartEquip;
+
+    /// <summary>
+    /// Whether to condense item slots containing the same item prototype in the same radial menu option.
+    /// This is used in <seealso cref="RadialItemSlotMenuBoundUserInterface"/>.
+    /// </summary>
+    /// <remarks>
+    /// If two slots contain a wet floor sign, they will be condensed into one nested radial option, instead of two radial options.
+    /// </remarks>
+    [DataField]
+    public bool CompactSimilarItemsInRadialMenu = true;
 }
 
 /// <summary>

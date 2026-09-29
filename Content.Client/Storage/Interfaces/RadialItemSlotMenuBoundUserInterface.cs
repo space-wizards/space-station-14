@@ -50,7 +50,7 @@ public sealed partial class RadialItemSlotMenuBoundUserInterface(EntityUid owner
             if (!_metaQuery.TryComp(slot.Item.Value, out var meta)
                 || meta.EntityPrototype == null
                 || slot.ID == null
-                || !usedItemNames.Add(meta.EntityName))
+                || itemSlots.CompactSimilarItemsInRadialMenu && !usedItemNames.Add(meta.EntityName))
                 continue;
 
             var option = new RadialMenuActionOption<string>(EjectItem, slot.ID)

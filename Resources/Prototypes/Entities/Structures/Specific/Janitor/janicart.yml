@@ -176,6 +176,7 @@
   #    - TrashBag
   #    - Bucket
   - type: ItemSlots
+    compactSimilarItemsInRadialMenu: false
     slots:
       mop_slot:
         name: janitorial-trolley-slot-component-slot-name-mop
