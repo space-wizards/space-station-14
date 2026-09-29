@@ -41,7 +41,7 @@
   parent: BaseItem
   id: GlassLens
   name: glass lens
-  description:
+  description: It does fancy things to photons so that you can see better.
   components:
     - type: Item
       storedRotation: -90
