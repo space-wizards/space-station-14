@@ -5,6 +5,10 @@
   - node: start
     edges:
     - to: mslaserframe
+      completed:
+      - !type:AdminLog
+        message: "Construction"
+        impact: High
       steps:
       - tag: ModularReceiver
         icon:
@@ -58,26 +62,7 @@
   - node: mslaserframeglasses
     entity: WeaponMakeshiftLaserFrame
     edges:
-    - to: mslaserwelded
-      steps:
-      - tool: Welding
-        doAfter: 2
-    - to: mslaserframescrewed
-      steps:
-      - tool: Cutting
-        doAfter: 1
-      completed:
-      - !type:SpawnPrototype
-        prototype: GlassLens
-
-  - node: mslaserwelded
-    entity: WeaponMakeshiftLaserFrame
-    edges:
-    - to: mslaser
-      completed:
-      - !type:AdminLog
-        message: "Construction"
-        impact: High
+    - to: mslasercelled
       steps:
       - tag: PowerCell
         store: cell_slot
@@ -86,7 +71,26 @@
           sprite: Objects/Power/power_cells.rsi
           state: medium
         doAfter: 1
+    - to: mslaserframescrewed
+      steps:
+      - tool: Cutting
+        doAfter: 1
+      completed:
+      - !type:SpawnPrototype
+        prototype: GlassLens
+
+  - node: mslasercelled
+    entity: WeaponMakeshiftLaserFrame
+    edges:
+    - to: mslaser
+      steps:
+      - tool: Welding
+        doAfter: 2
     - to: mslaserframeglasses
+      completed:
+      - !type:EmptyContainer
+        container: cell_slot
+        pickup: true
       steps:
       - tool: Cutting
         doAfter: 1
@@ -94,7 +98,7 @@
   - node: mslaser
     entity: WeaponMakeshiftLaserNoCell
     edges:
-    - to: mslaserwelded
+    - to: mslaserframeglasses
       completed:
       - !type:EmptyContainer
         container: cell_slot

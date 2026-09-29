@@ -208,12 +208,8 @@
     - LaserWeapon
 
 - type: entity
-  name: makeshift laser pistol
-  parent: [BaseWeaponPowerCell, BaseMinorContraband]
-  id: WeaponMakeshiftLaserNoCell
-  description: Better pray it won't burn your hands off.
-  suffix: No Cell
-  categories: [ HideSpawnMenu ]
+  abstract: true
+  id: WeaponMakeshiftLaserConstructionBase
   components:
   - type: ContainerContainer
     containers:
@@ -226,6 +222,19 @@
         whitelist:
           tags:
           - PowerCell
+  - type: Construction
+    graph: MakeshiftLaserGraph
+    containers:
+    - cell_slot
+
+- type: entity
+  parent: [BaseWeaponPowerCell, BaseMinorContraband]
+  id: WeaponMakeshiftLaserNoCell
+  categories: [ HideSpawnMenu ]
+  name: makeshift laser pistol
+  suffix: No Cell
+  description: Better pray it won't burn your hands off.
+  components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
     layers:
@@ -255,10 +264,7 @@
     - Sidearm
     - LaserWeapon
   - type: Construction
-    graph: MakeshiftLaserGraph
     node: mslaser
-    containers:
-    - cell_slot
 
 - type: entity # for salv loot & co
   parent: WeaponMakeshiftLaserNoCell
@@ -275,20 +281,17 @@
           - PowerCell
 
 - type: entity
-  parent: [BaseItem, BaseMinorContraband]
-  name: makeshift laser pistol frame
+  parent: [BaseItem, BaseMinorContraband, WeaponMakeshiftLaserConstructionBase]
   id: WeaponMakeshiftLaserFrame
+  name: makeshift laser pistol frame
   description: Only needs a bit more screwing and a doctorate in practical bluespace technology.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
     state: frame
   - type: Construction
-    graph: MakeshiftLaserGraph
     node: mslaserframe
     defaultTarget: mslaser
-    containers:
-    - cell_slot
 
 - type: entity
   name: tesla gun

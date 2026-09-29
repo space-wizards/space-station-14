@@ -32,6 +32,10 @@
 
 - type: entity
   parent: Armblade
+  id: Chamoblade
+
+- type: entity
+  parent: Armblade
   id: ArmbladeDull
   suffix: Dull
   components:
