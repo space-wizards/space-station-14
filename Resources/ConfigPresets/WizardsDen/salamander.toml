@@ -15,7 +15,7 @@ enabled = true
 prototype_list = "salamanderMrpWhitelist"
 
 [chat]
-motd = "Wizard's Den Salamander is a medium roleplay (MRP) server. Please read and abide by the MRP rule amendments."
+motd = "Wizard's Den Salamander is a medium roleplay (MRP) server. Please read and abide by the MRP rules and MRP amendments."
 
 [hub]
 tags = "lang:en,region:am_n_w,rp:med"
