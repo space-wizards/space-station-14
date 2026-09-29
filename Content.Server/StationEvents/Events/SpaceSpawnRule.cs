@@ -6,7 +6,6 @@ using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Server.StationEvents.Events;
@@ -21,7 +20,6 @@ namespace Content.Server.StationEvents.Events;
 public sealed partial class SpaceSpawnRule : StationEventSystem<SpaceSpawnRuleComponent>
 {
     [Dependency] private SharedMapSystem _map = default!;
-    [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
     [Dependency] private EntityQuery<MapGridComponent> _gridQuery;
@@ -76,12 +74,12 @@ public sealed partial class SpaceSpawnRule : StationEventSystem<SpaceSpawnRuleCo
 
         List<int> list = new(maxAttempts);
         List<Entity<MapGridComponent>> grids = [];
-        for (int i = 0; i < maxAttempts; i++)
+        for (var i = 0; i < maxAttempts; i++)
+        {
             list.Add(i);
+        }
 
         var gridClearOffset = new Vector2(spaceSpawn.ClearDistance, spaceSpawn.ClearDistance);
-
-        MapCoordinates spawnLocation;
 
         while (list.Count > 0)
         {
@@ -92,7 +90,7 @@ public sealed partial class SpaceSpawnRule : StationEventSystem<SpaceSpawnRuleCo
             // position relative to station center
             var spawnOffset = arcAngle.ToVec() * distance;
 
-            spawnLocation = gridCenter.Offset(spawnOffset);
+            var spawnLocation = gridCenter.Offset(spawnOffset);
 
             // Check area immediately around point for grids.
             var spawnBox = new Box2(spawnLocation.Position - gridClearOffset, spawnLocation.Position + gridClearOffset);
