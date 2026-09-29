@@ -26,6 +26,7 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
         base.Initialize();
         SubscribeLocalEvent<DNALeaderComponent, AfterPointedAtEvent>(OnPointedAt);
         SubscribeLocalEvent<NPCImprintedComponent, AttackAttemptEvent>(OnAttackAttempt);
+        InitializePlants();
     }
 
     protected override void Effect(Entity<HTNComponent> ent, ref EntityEffectEvent<DnaImprint> args)
@@ -36,6 +37,11 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
             !_solutions.TryGetSolution(ent.Owner, bloodstream.BloodSolutionName, out _, out var solution))
             return;
 
+        Imprint(ent, solution, effect);
+    }
+
+    private void Imprint(EntityUid uid, Content.Shared.Chemistry.Components.Solution solution, DnaImprint effect)
+    {
         // Only this effect's reagent supplies DNA; ordinary blood and other imprinting drugs are unrelated.
         var dna = new HashSet<string>();
         var unknownDna = Loc.GetString("forensics-dna-unknown");
@@ -57,7 +63,7 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
         var query = EntityQueryEnumerator<DnaComponent>();
         while (query.MoveNext(out var donor, out var donorDna))
         {
-            if (donor == ent.Owner || donorDna.DNA == null || !dna.Contains(donorDna.DNA) || TerminatingOrDeleted(donor))
+            if (donor == uid || donorDna.DNA == null || !dna.Contains(donorDna.DNA) || TerminatingOrDeleted(donor))
                 continue;
 
             donors.Add(donor);
@@ -65,7 +71,7 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
         if (donors.Count == 0)
             return;
 
-        var imprint = EnsureComp<NPCImprintedComponent>(ent);
+        var imprint = EnsureComp<NPCImprintedComponent>(uid);
         var changed = false;
         if (effect.Leader)
         {
@@ -86,12 +92,18 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
         }
 
         if (changed)
-        {
-            ent.Comp.Blackboard.Remove<EntityUid>(NPCBlackboard.CurrentOrderedTarget);
-            ent.Comp.RootTask = new HTNCompoundTask { Task = "ImprintedCompound" };
-            ent.Comp.ConstantlyReplan = true;
-            ResetPlan(ent.Comp);
-        }
+            UpdateBehavior(uid);
+    }
+
+    private void UpdateBehavior(EntityUid uid)
+    {
+        if (!IsNpc(uid) || !TryComp<HTNComponent>(uid, out var htn))
+            return;
+
+        htn.Blackboard.Remove<EntityUid>(NPCBlackboard.CurrentOrderedTarget);
+        htn.RootTask = new HTNCompoundTask { Task = "ImprintedCompound" };
+        htn.ConstantlyReplan = true;
+        ResetPlan(htn);
     }
 
     private bool IsNpc(EntityUid uid)
