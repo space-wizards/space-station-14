@@ -228,7 +228,7 @@
     - cell_slot
 
 - type: entity
-  parent: [BaseWeaponPowerCell, BaseMinorContraband, WeaponMakeshiftLaserConstructionBase]
+  parent: [WeaponMakeshiftLaserConstructionBase, BaseWeaponPowerCell, BaseMinorContraband]
   id: WeaponMakeshiftLaserNoCell
   categories: [ HideSpawnMenu ]
   name: makeshift laser pistol
