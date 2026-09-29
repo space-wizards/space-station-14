@@ -83,6 +83,7 @@ public sealed class CargoTest : GameTest
                         $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!"
                     );
 
+                    // TODO: Make this export to a csv
                     if (logPriceInfo)
                         TestContext.Out.WriteLineAsync($"{$"{proto.ID}",-50} |  {$"${proto.Cost}",6}  |  ${price,-8}");
 
