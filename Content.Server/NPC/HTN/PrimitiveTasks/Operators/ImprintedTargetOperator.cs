@@ -57,6 +57,7 @@ public sealed partial class ImprintedTargetOperator : HTNOperator
         {
             effects["Target"] = entity;
             effects["TargetCoordinates"] = new EntityCoordinates(entity, Vector2.Zero);
+            effects["ImprintedHunt"] = imprint.Target.Contains(entity);
         }
         return Task.FromResult<(bool, Dictionary<string, object>?)>((true, effects));
     }

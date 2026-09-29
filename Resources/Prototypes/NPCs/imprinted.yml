@@ -34,10 +34,30 @@
         removeKeyOnFinish: false
         pathfindKey: TargetPathfind
         rangeKey: MeleeRange
+    - !type:HTNCompoundTask
+      task: ImprintedAttackCompound
+
+- type: htnCompound
+  id: ImprintedAttackCompound
+  branches:
+  - preconditions:
+    - !type:KeyBoolEqualsPrecondition
+      key: ImprintedHunt
+      value: true
+    tasks:
     - !type:HTNPrimitiveTask
       operator: !type:MeleeOperator
         targetKey: Target
         targetState: Dead
+      preconditions:
+      - !type:TargetInRangePrecondition
+        targetKey: Target
+        rangeKey: MeleeRange
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:MeleeOperator
+        targetKey: Target
+        targetState: Alive
       preconditions:
       - !type:TargetInRangePrecondition
         targetKey: Target
