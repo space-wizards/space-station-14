@@ -41,6 +41,8 @@ public sealed class CargoTest : GameTest
         // Change this to print the costs and sell prices of every cargo product
         // This should always be false on master
         var logPriceInfo = false;
+        void PrintLogHeader() => TestContext.Out.WriteLineAsync($"{"Proto ID",-50} |  {"Cost",-6}  |  {"Sell Price",-8}");
+        void PrintLogLine(string protoId, int cost, double price) => TestContext.Out.WriteLineAsync($"{$"{protoId}",-50} |  {$"${cost}",6}  |  ${price,-8}");
 
         await Pair.CreateTestMap();
         var coordinates = Pair.TestMap!.GridCoords;
@@ -50,7 +52,7 @@ public sealed class CargoTest : GameTest
         await Server.WaitAssertion(() =>
         {
             if (logPriceInfo)
-                TestContext.Out.WriteLineAsync($"{"Proto ID",-50} |  {"Cost",-6}  |  {"Sell Price",-8}");
+                PrintLogHeader();
 
             using (Assert.EnterMultipleScope())
             {
@@ -85,7 +87,7 @@ public sealed class CargoTest : GameTest
 
                     // TODO: Make this export to a csv
                     if (logPriceInfo)
-                        TestContext.Out.WriteLineAsync($"{$"{proto.ID}",-50} |  {$"${proto.Cost}",6}  |  ${price,-8}");
+                        PrintLogLine(proto.ID, proto.Cost, price);
 
                     SDeleteNow(ent);
                 }
