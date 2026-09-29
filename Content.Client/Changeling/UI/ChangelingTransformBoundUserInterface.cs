@@ -33,12 +33,12 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
 
         if (!EntMan.TryGetComponent<ChangelingIdentityComponent>(Owner, out var lingIdentity))
             return;
-        
+
         var manualDrop = true;
 
         if (EntMan.TryGetComponent<ChangelingTransformComponent>(Owner, out var lingTransform))
             manualDrop = lingTransform.ManualDrop;
-            
+
         var models = ConvertToButtons(lingIdentity.ConsumedIdentities, lingIdentity.CurrentIdentity, manualDrop);
 
         _menu.SetButtons(models);
@@ -64,7 +64,7 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
                 IconSpecifier = RadialMenuIconSpecifier.With(identity.Identity.Value),
                 ToolTip = Loc.GetString("changeling-transform-bui-select-entity", ("entity", identity.Identity)),
                 BackgroundColor = (currentIdentity == identity.Identity) ? SelectedOptionBackground : null, // mark as selected
-                HoverBackgroundColor = (currentIdentity == identity.Identity) ? SelectedOptionHoverBackground : null
+                HoverBackgroundColor = (currentIdentity == identity.Identity) ? SelectedOptionHoverBackground : null,
             };
             buttons.Add(option);
 
@@ -79,18 +79,19 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
                     ? Loc.GetString("changeling-transform-bui-drop-identity-cannot-drop")
                     : Loc.GetString("changeling-transform-bui-drop-identity-entity", ("entity", identity.Identity)),
                 BackgroundColor = (currentIdentity == identity.Identity) ? DisabledOptionBackground : null, // cannot drop your current identity
-                HoverBackgroundColor = (currentIdentity == identity.Identity) ? DisabledOptionHoverBackground : null
+                HoverBackgroundColor = (currentIdentity == identity.Identity) ? DisabledOptionHoverBackground : null,
             };
             dropButtons.Add(dropOption);
         }
-        
+
         if (canDrop)
         {
             // Menu category for dropping identities.
             var dropMenuButton = new RadialMenuNestedLayerOption(dropButtons)
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete.svg.192dpi.png"))),
-                ToolTip = Loc.GetString("changeling-transform-bui-drop-identity-menu")
+                ToolTip = Loc.GetString("changeling-transform-bui-drop-identity-menu"),
+                Order = 0, // Explicit first option.
             };
             buttons.Add(dropMenuButton);
         }

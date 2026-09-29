@@ -1,8 +1,13 @@
-﻿- type: entity
-  parent: [ BaseStructure, StructureHealthDoor ]
-  id: Airlock
+﻿# Feature-reduced parent, compatible with the requirements of the High Security Door
+# You probably want to inherit from Airlock rather than this
+- type: entity
+  abstract: true
+  parent: BaseStructure
+  id: BaseAirlockIndestructible
   name: airlock
   description: It opens, it closes, and maybe crushes you.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Anchorable
     flags:
@@ -56,8 +61,6 @@
       visible: false
   - type: IconSmooth
     key: walls
-    additionalKeys:
-    - woods
     mode: NoSprite
   - type: AnimationPlayer
   - type: Physics
@@ -71,13 +74,13 @@
         mask:
         - FullTileMask
         layer:
-        - AirlockLayer
-  - type: LayerChangeOnWeld
-    unWeldedLayer: AirlockLayer
-    weldedLayer: WallLayer
+        - WallLayer # Unlike airlocks, this blocks LowImpassable (mice, rat king etc)
   - type: ContainerFill
     containers:
       board: [ DoorElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
   - type: AccessReader
     containerAccessProvider: board
   - type: Door
@@ -90,9 +93,6 @@
       path: /Audio/Machines/airlock_close.ogg
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
-  - type: ContainerContainer
-    containers:
-      board: !type:Container
   - type: Weldable
     fuel: 5
     time: 3
@@ -121,26 +121,6 @@
   - type: Wires
     boardName: wires-board-name-airlock
     layoutId: Airlock
-  - type: DoorSignalControl
-  - type: DeviceNetwork
-    deviceNetId: Wireless
-    receiveFrequencyId: BasicDevice
-  - type: WirelessNetworkConnection
-    range: 200
-  - type: DeviceLinkSink
-    ports:
-      - Open
-      - Close
-      - Toggle
-      - AutoClose
-      - DoorBolt
-  - type: DeviceLinkSource
-    ports:
-      - DoorStatus
-    lastSignals:
-      DoorStatus: false
-  - type: SoundOnOverload
-  - type: SpawnOnOverload
   - type: UserInterface
     interfaces:
       enum.AiUi.Key:
@@ -152,13 +132,62 @@
   - type: RadiationBlocker
     resistance: 3
   - type: Occluder
-    polygon:
-    - "-0.5, 0.5"
-    - "0.5, 0.5"
-    - "0.5, -0.5"
-    - "-0.5, -0.5"
   - type: Damageable
-    damageModifierSet: SteelMod
+    damageModifierSet: SteelStaticMod
+  - type: Construction
+    graph: Airlock
+    node: airlock
+    containers:
+    - board
+  - type: PlacementReplacement
+    key: walls
+  - type: LightningTarget
+    priority: 1
+  - type: Tag
+    tags:
+    - Airlock
+    # This tag is used to navigate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+    - DoorRemoteWhitelist
+    # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door
+  - type: BlockWeather
+  - type: GuideHelp
+    guides:
+    - Airlocks
+    - WirePanels
+  - type: StaticPrice
+    price: 150
+  - type: StructureAligner
+  - type: StructureAlignerPylon
+
+- type: entity
+  parent: [ BaseAirlockIndestructible, StructureHealthDoor ]
+  id: Airlock
+  name: airlock
+  description: It opens, it closes, and maybe crushes you.
+  components:
+  - type: LayerChangeOnWeld
+    unWeldedLayer: AirlockLayer
+    weldedLayer: WallLayer
+  - type: DoorSignalControl
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+    - Open
+    - Close
+    - Toggle
+    - AutoClose
+    - DoorBolt
+  - type: DeviceLinkSource
+    ports:
+    - DoorStatus
+    lastSignals:
+      DoorStatus: false
+  - type: SoundOnOverload
+  - type: SpawnOnOverload
   - type: RCDDeconstructable
     cost: 6
     delay: 8
@@ -173,46 +202,26 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalSlam
-  - type: Construction
-    graph: Airlock
-    node: airlock
-    containers:
-    - board
-  - type: PlacementReplacement
-    key: walls
   - type: Paintable
     group: AirlockStandard
-  - type: StaticPrice
-    price: 150
-  - type: LightningTarget
-    priority: 1
-  - type: Tag
-    tags:
-      - Airlock
-      # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
-      - DoorRemoteWhitelist
-      # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door
   - type: PryUnpowered
-  - type: BlockWeather
   - type: GuideHelp
     guides:
     - Airlocks
     - WirePanels
     - Networking
-  placement:
-    mode: SnapgridCenter
 
 - type: entity
-  id: AirlockRCDResistant
-  parent: Airlock
   abstract: true
+  parent: Airlock
+  id: AirlockRCDResistant
   components:
   - type: RCDDeconstructable
     deconstructable: false
 
 - type: entity
-  id: AirlockGlass
   parent: Airlock
+  id: AirlockGlass
   name: glass airlock
   components:
   - type: MeleeSound
@@ -225,7 +234,6 @@
     enabled: false
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/airlock-base.rsi
-  - type: AnimationPlayer
   - type: Fixtures
     fixtures:
       fix1:

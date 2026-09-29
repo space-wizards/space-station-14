@@ -241,7 +241,7 @@
     shotsPerBurst: 6
     minAngle: 10
     angleIncrease: 10
-    maxAngle: 60
+    maxAngle: 50
     projectileSpeed: 12.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rocket1.ogg
@@ -252,7 +252,7 @@
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: BallisticAmmoSelfRefiller
-    autoRefillRate: 12s
+    autoRefillRate: 17s
   - type: MagazineVisuals
     magState: mag
     steps: 7
