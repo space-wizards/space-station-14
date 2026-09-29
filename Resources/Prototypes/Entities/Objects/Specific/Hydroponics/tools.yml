@@ -7,7 +7,6 @@
   - type: Tag
     tags:
     - BotanyTool
-    - Hoe
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hoe.rsi
     state: icon
