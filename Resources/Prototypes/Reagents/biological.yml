@@ -307,3 +307,37 @@
     collection: FootstepBlood
     params:
       volume: 6
+
+- type: reagent
+  id: Miniozine
+  name: reagent-name-miniozine
+  desc: reagent-desc-miniozine
+  group: Medicine
+  physicalDesc: reagent-physical-desc-enigmatic
+  flavor: magical
+  color: "#d44e99"
+  metabolisms:
+    Bloodstream:
+      effects:
+      - guidebookText: entity-effect-guidebook-dna-imprint
+        conditions:
+        - !type:ReagentCondition
+          reagent: Miniozine
+          min: 5
+
+- type: reagent
+  id: Ragorium
+  name: reagent-name-ragorium
+  desc: reagent-desc-ragorium
+  group: Toxins
+  physicalDesc: reagent-physical-desc-enigmatic
+  flavor: metallic
+  color: "#b32e35"
+  metabolisms:
+    Bloodstream:
+      effects:
+      - guidebookText: entity-effect-guidebook-dna-hunt
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ragorium
+          min: 5

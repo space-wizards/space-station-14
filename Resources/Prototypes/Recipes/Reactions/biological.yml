@@ -108,3 +108,185 @@
     Romerodone: 2
     Protein: 1
     Mold: 1
+
+- type: reaction
+  id: Miniozine
+  reactants:
+    Cognizine:
+      amount: 5
+    Vestine:
+      amount: 5
+    Blood:
+      amount: 5
+  extension: !type:DnaImprinterReaction
+  products:
+    Miniozine: 5
+
+- type: reaction
+  id: MiniozineCopperBlood
+  reactants:
+    Cognizine:
+      amount: 5
+    Vestine:
+      amount: 5
+    CopperBlood:
+      amount: 5
+  extension: !type:DnaImprinterReaction
+  products:
+    Miniozine: 5
+
+- type: reaction
+  id: MiniozineInsectBlood
+  reactants:
+    Cognizine:
+      amount: 5
+    Vestine:
+      amount: 5
+    InsectBlood:
+      amount: 5
+  extension: !type:DnaImprinterReaction
+  products:
+    Miniozine: 5
+
+- type: reaction
+  id: MiniozineAmmoniaBlood
+  reactants:
+    Cognizine:
+      amount: 5
+    Vestine:
+      amount: 5
+    AmmoniaBlood:
+      amount: 5
+  extension: !type:DnaImprinterReaction
+  products:
+    Miniozine: 5
+
+- type: reaction
+  id: MiniozineSulfurBlood
+  reactants:
+    Cognizine:
+      amount: 5
+    Vestine:
+      amount: 5
+    SulfurBlood:
+      amount: 5
+  extension: !type:DnaImprinterReaction
+  products:
+    Miniozine: 5
+
+- type: reaction
+  id: MiniozineSlime
+  reactants:
+    Cognizine:
+      amount: 5
+    Vestine:
+      amount: 5
+    Slime:
+      amount: 5
+  extension: !type:DnaImprinterReaction
+  products:
+    Miniozine: 5
+
+- type: reaction
+  id: MiniozineSap
+  reactants:
+    Cognizine:
+      amount: 5
+    Vestine:
+      amount: 5
+    Sap:
+      amount: 5
+  extension: !type:DnaImprinterReaction
+  products:
+    Miniozine: 5
+
+- type: reaction
+  id: Ragorium
+  reactants:
+    Cognizine:
+      amount: 5
+    Lead:
+      amount: 5
+    Blood:
+      amount: 5
+  extension: !type:DnaImprinterReaction
+  products:
+    Ragorium: 5
+
+- type: reaction
+  id: RagoriumCopperBlood
+  reactants:
+    Cognizine:
+      amount: 5
+    Lead:
+      amount: 5
+    CopperBlood:
+      amount: 5
+  extension: !type:DnaImprinterReaction
+  products:
+    Ragorium: 5
+
+- type: reaction
+  id: RagoriumInsectBlood
+  reactants:
+    Cognizine:
+      amount: 5
+    Lead:
+      amount: 5
+    InsectBlood:
+      amount: 5
+  extension: !type:DnaImprinterReaction
+  products:
+    Ragorium: 5
+
+- type: reaction
+  id: RagoriumAmmoniaBlood
+  reactants:
+    Cognizine:
+      amount: 5
+    Lead:
+      amount: 5
+    AmmoniaBlood:
+      amount: 5
+  extension: !type:DnaImprinterReaction
+  products:
+    Ragorium: 5
+
+- type: reaction
+  id: RagoriumSulfurBlood
+  reactants:
+    Cognizine:
+      amount: 5
+    Lead:
+      amount: 5
+    SulfurBlood:
+      amount: 5
+  extension: !type:DnaImprinterReaction
+  products:
+    Ragorium: 5
+
+- type: reaction
+  id: RagoriumSlime
+  reactants:
+    Cognizine:
+      amount: 5
+    Lead:
+      amount: 5
+    Slime:
+      amount: 5
+  extension: !type:DnaImprinterReaction
+  products:
+    Ragorium: 5
+
+- type: reaction
+  id: RagoriumSap
+  reactants:
+    Cognizine:
+      amount: 5
+    Lead:
+      amount: 5
+    Sap:
+      amount: 5
+  extension: !type:DnaImprinterReaction
+  products:
+    Ragorium: 5
