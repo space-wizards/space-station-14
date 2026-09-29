@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Chemistry.Reaction;
 
 /// <summary>
-/// Copies the most abundant donor's DNA from a recipe's blood ingredient to its products.
+/// Copies the DNA from a recipe's ingredients to its products.
 /// </summary>
 public sealed partial class DnaImprinterReaction : ReactionExtension
 {

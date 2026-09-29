@@ -319,10 +319,10 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Cellular: 2
+      - !type:DnaImprint
+        reagent: Miniozine
+        leader: true
+        friendly: true
         guidebookText: entity-effect-guidebook-dna-imprint
         conditions:
         - !type:ReagentCondition
@@ -340,10 +340,9 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Cellular: 2
+      - !type:DnaImprint
+        reagent: Ragorium
+        target: true
         guidebookText: entity-effect-guidebook-dna-hunt
         conditions:
         - !type:ReagentCondition
