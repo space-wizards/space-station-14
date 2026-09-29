@@ -10,8 +10,10 @@ using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Labels.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Paper;
+using Content.Shared.Station.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
@@ -40,9 +42,17 @@ public sealed partial class CargoSystem : SharedCargoSystem
     [Dependency] private RadioSystem _radio = default!;
     [Dependency] private IdentitySystem _identity = default!;
 
-    [Dependency] private EntityQuery<CargoSellBlacklistComponent> _cargoSellBlacklistQuery = default!;
-    [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery = default!;
-    [Dependency] private EntityQuery<TradeStationComponent> _tradeStationQuery = default!;
+    [Dependency] private EntityQuery<CashComponent> _cashQuery;
+    [Dependency] private EntityQuery<CargoOrderConsoleComponent> _consoleQuery;
+    [Dependency] private EntityQuery<CargoSellBlacklistComponent> _cargoSellBlacklistQuery;
+    [Dependency] private EntityQuery<CargoSlipComponent> _slipQuery;
+    [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery;
+    [Dependency] private EntityQuery<PaperComponent> _paperQuery;
+    [Dependency] private EntityQuery<PaperLabelComponent> _paperLabelQuery;
+    [Dependency] private EntityQuery<StationBankAccountComponent> _bankQuery;
+    [Dependency] private EntityQuery<StationCargoOrderDatabaseComponent> _orderQuery;
+    [Dependency] private EntityQuery<StationDataComponent> _stationQuery;
+    [Dependency] private EntityQuery<TradeStationComponent> _tradeStationQuery;
 
     private HashSet<EntityUid> _setEnts = new();
     private List<EntityUid> _listEnts = new();
@@ -51,7 +61,6 @@ public sealed partial class CargoSystem : SharedCargoSystem
     public override void Initialize()
     {
         base.Initialize();
-        InitializeConsole();
         InitializeShuttle();
         InitializeTelepad();
         InitializeBounty();
