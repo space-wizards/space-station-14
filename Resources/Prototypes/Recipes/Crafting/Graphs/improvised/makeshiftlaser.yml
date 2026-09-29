@@ -44,13 +44,12 @@
     edges:
     - to: mslaserframeglasses
       steps:
-      - tag: Glasses
-        store: glasses
-        name: construction-graph-tag-glasses
+      - tag: GlassLens
+        name: construction-graph-tag-glass-lens
         icon:
-          sprite: Clothing/Eyes/Glasses/jamjar.rsi
+          sprite: Objects/Misc/lens.rsi
           state: icon
-        doAfter: 2
+        doAfter: 0.6
     - to: mslaserframe
       steps:
       - tool: Prying
@@ -68,9 +67,8 @@
       - tool: Cutting
         doAfter: 1
       completed:
-      - !type:EmptyContainer
-        container: glasses
-        pickup: true
+      - !type:SpawnPrototype
+        prototype: GlassLens
 
   - node: mslaserwelded
     entity: WeaponMakeshiftLaserFrame

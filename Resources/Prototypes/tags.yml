@@ -1171,7 +1171,8 @@
                      # ConstructionGraph: WallmountSubstation, makeshiftstunprod
 
 - type: Tag
-  id: Glasses # ConstructionGraph: makeshiftlaser
+  id: GlassLens # ConstructionGraph: makeshiftlaser
+
 - type: Tag
   id: Powerdrill # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering
 

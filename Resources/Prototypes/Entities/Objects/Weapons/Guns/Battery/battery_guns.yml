@@ -217,15 +217,9 @@
   components:
   - type: ContainerContainer
     containers:
-      glasses: !type:ContainerSlot
       cell_slot: !type:ContainerSlot
   - type: ItemSlots
     slots:
-      glasses:
-        locked: true
-        whitelist:
-          tags:
-          - Glasses
       cell_slot:
         locked: true
         name: Magazine
@@ -265,7 +259,6 @@
     node: mslaser
     containers:
     - cell_slot
-    - glasses
 
 - type: entity # for salv loot & co
   parent: WeaponMakeshiftLaserNoCell
@@ -280,12 +273,6 @@
         whitelist:
           tags:
           - PowerCell
-      glasses:
-        startingItem: ClothingEyesGlassesJamjar
-        locked: true
-        whitelist:
-          tags:
-          - Glasses
 
 - type: entity
   parent: [BaseItem, BaseMinorContraband]

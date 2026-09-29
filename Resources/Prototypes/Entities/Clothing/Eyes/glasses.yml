@@ -1,5 +1,17 @@
 - type: entity
   parent: ClothingEyesBase
+  id: ClothingEyesGlassesBase
+  abstract: true
+  components:
+  - type: ToolRefinable
+    qualityNeeded: Screwing
+    verbText: refined-screw-verb-name
+    refineResult:
+    - id: GlassLens
+      amount: 2
+
+- type: entity
+  parent: ClothingEyesGlassesBase
   id: ClothingEyesGlassesGar
   name: gar glasses
   description: Go beyond impossible and kick reason to the curb!
@@ -13,12 +25,9 @@
     damage:
       types:
         Blunt: 7
-  - type: Tag
-    tags:
-    - Glasses
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: ClothingEyesGlassesBase
   id: ClothingEyesGlassesGarOrange
   name: orange gar glasses
   description: Just who the hell do you think I am?!
@@ -35,12 +44,9 @@
     damage:
       types:
         Blunt: 10
-  - type: Tag
-    tags:
-    - Glasses
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: ClothingEyesGlassesBase
   id: ClothingEyesGlassesGarGiga
   name: giga gar glasses
   description: We evolve past the person we were a minute before. Little by little we advance with each turn. That's how a drill works!
@@ -57,12 +63,9 @@
     damage:
       types:
         Blunt: 10
-  - type: Tag
-    tags:
-    - Glasses
 
 - type: entity
-  parent: [ClothingEyesBase, BaseEngineeringContraband]
+  parent: [ClothingEyesGlassesBase, BaseEngineeringContraband]
   id: ClothingEyesGlassesMeson
   name: engineering goggles #less confusion
   description: Green-tinted goggles using a proprietary polymer that provides protection from eye damage of all types.
@@ -78,10 +81,9 @@
     tags:
     - PetWearable
     - WhitelistChameleon
-    - Glasses
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: ClothingEyesGlassesBase
   id: ClothingEyesGlasses
   name: glasses
   description: A pair of spectacular spectacles with prescription lenses.
@@ -95,10 +97,9 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
-    - Glasses
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: ClothingEyesGlassesBase
   id: ClothingEyesGlassesJensen
   name: jensen glasses
   description: A pair of yellow tinted folding glasses. You never asked for these.
@@ -110,10 +111,9 @@
   - type: Tag
     tags:
     - WhitelistChameleon
-    - Glasses
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: ClothingEyesGlassesBase
   id: ClothingEyesGlassesJamjar
   name: jamjar glasses
   description: These retro glasses remind you of a simpler time.
@@ -127,10 +127,9 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
-    - Glasses
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: ClothingEyesGlassesBase
   id: ClothingEyesGlassesOutlawGlasses
   name: outlaw glasses
   description: A must for every self-respecting undercover agent.
@@ -143,12 +142,9 @@
   - type: IdentityBlocker
   - type: StaticPrice
     price: 500
-  - type: Tag
-    tags:
-    - Glasses
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: ClothingEyesGlassesBase
   id: ClothingEyesGlassesCheapSunglasses
   name: cheap sunglasses
   description: A pair of black sunglasses. Doesn't block light well, more of an accessory than something useful.
@@ -162,7 +158,6 @@
     - HamsterWearable
     - PetWearable
     - WhitelistChameleon
-    - Glasses
   - type: IdentityBlocker
     coverage: EYES
 
@@ -181,10 +176,9 @@
     - PetWearable
     - HamsterWearable
     - WhitelistChameleon
-    - Glasses
 
 - type: entity
-  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband]
+  parent: [ClothingEyesGlassesBase, ShowSecurityIcons, BaseSecurityContraband]
   id: ClothingEyesGlassesSecurity
   name: security glasses
   description: Upgraded sunglasses that provide flash immunity and a security HUD.
@@ -204,7 +198,6 @@
     - HamsterWearable
     - PetWearable
     - WhitelistChameleon
-    - Glasses
   - type: GuideHelp
     guides:
     - Security
@@ -213,7 +206,7 @@
     coverage: EYES
 
 - type: entity
-  parent: [ClothingEyesBase, BaseCommandContraband]
+  parent: [ClothingEyesGlassesBase, BaseCommandContraband]
   id: ClothingEyesGlassesCommand
   name: administration glasses
   description: Upgraded sunglasses that provide flash immunity and show ID card status.
@@ -230,13 +223,12 @@
     - HamsterWearable
     - PetWearable
     - WhitelistChameleon
-    - Glasses
   - type: IdentityBlocker
     coverage: EYES
   - type: ShowJobIcons
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: ClothingEyesGlassesBase
   id: ClothingEyesGlassesMercenary
   name: mercenary glasses
   description: Glasses made for combat, to protect the eyes from bright blinding flashes.
@@ -250,13 +242,10 @@
     protectionTime: 5
   - type: IdentityBlocker
     coverage: EYES
-  - type: Tag
-    tags:
-    - Glasses
 
 #Make a scanner category when these actually function and we get the trayson
 - type: entity
-  parent: ClothingEyesBase
+  parent: ClothingEyesGlassesBase
   id: ClothingEyesGlassesThermal
   name: optical thermal scanner
   description: Thermals in the shape of glasses.
@@ -273,12 +262,9 @@
   - type: IdentityBlocker
     coverage: EYES
   - type: ThermalSight
-  - type: Tag
-    tags:
-    - Glasses
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: ClothingEyesGlassesBase
   id: ClothingEyesGlassesChemical
   name: chemical analysis goggles
   description: Goggles that can scan the chemical composition of a solution.
@@ -294,10 +280,9 @@
       tags:
       - PetWearable
       - WhitelistChameleon
-      - Glasses
 
 - type: entity
-  parent: [ClothingEyesBase, BaseHighlyIllegalContraband]
+  parent: [ClothingEyesGlassesBase, BaseHighlyIllegalContraband]
   id: ClothingEyesVisorNinja
   name: ninja visor
   description: An advanced visor protecting a ninja's eyes from flashing lights.
@@ -309,7 +294,7 @@
   - type: FlashImmunity
 
 - type: entity
-  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband]
+  parent: [ClothingEyesGlassesBase, ShowSecurityIcons, BaseSecurityContraband]
   id: ClothingEyesGlassesNoir
   name: noir-tech glasses
   description: A pair of glasses that simulate what the world looked like before the invention of color.
@@ -328,4 +313,3 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
-    - Glasses
