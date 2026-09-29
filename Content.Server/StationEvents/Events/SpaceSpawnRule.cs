@@ -1,15 +1,12 @@
-using System.Linq;
+using System.Diagnostics;
 using System.Numerics;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Antag;
 using Content.Shared.GameTicking.Components;
-using Content.Shared.Physics;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Station.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.StationEvents.Events;
@@ -64,19 +61,22 @@ public sealed partial class SpaceSpawnRule : StationEventSystem<SpaceSpawnRuleCo
             return;
         }
 
+        Debug.Assert(spaceSpawn.MaxAttempts > 0, $"Rule {ToPrettyString(ent):rule} has a non-positive MaxAttempts value");
+        var maxAttempts = int.Max(1, spaceSpawn.MaxAttempts);
+
         // figure out its AABB size and use that as a guide to how far the spawner should be
         var size = grid.LocalAABB.Size.Length() / 2;
         var distance = size + spaceSpawn.SpawnDistance;
 
         // Pick a random angle, find our angles per index (0-MaxAttempts).
         var angleOffset = RobustRandom.NextAngle();
-        var arcPerIndex = Math.Tau / int.Max(1, spaceSpawn.MaxAttempts);
+        var arcPerIndex = Math.Tau / maxAttempts;
 
         var gridCenter = _transform.ToMapCoordinates(new EntityCoordinates(gridUid.Value, grid.LocalAABB.Center));
 
-        List<int> list = new(spaceSpawn.MaxAttempts);
+        List<int> list = new(maxAttempts);
         List<Entity<MapGridComponent>> grids = [];
-        for (int i = 0; i < spaceSpawn.MaxAttempts; i++)
+        for (int i = 0; i < maxAttempts; i++)
             list.Add(i);
 
         var gridClearOffset = new Vector2(spaceSpawn.ClearDistance, spaceSpawn.ClearDistance);
@@ -96,6 +96,7 @@ public sealed partial class SpaceSpawnRule : StationEventSystem<SpaceSpawnRuleCo
 
             // Check area immediately around point for grids.
             var spawnBox = new Box2(spawnLocation.Position - gridClearOffset, spawnLocation.Position + gridClearOffset);
+            grids.Clear();
             _map.FindGridsIntersecting(spawnLocation.MapId, spawnBox, ref grids, approx: true, includeMap: false);
 
             if (grids.Count > 0)
@@ -112,7 +113,7 @@ public sealed partial class SpaceSpawnRule : StationEventSystem<SpaceSpawnRuleCo
 
         // All points had grids nearby.  Spawn at the first point and pray.
         spaceSpawn.Coords = new MapCoordinates(gridCenter.Position + angleOffset.ToVec() * distance, gridCenter.MapId);
-        Sawmill.Warning($"All {spaceSpawn.MaxAttempts} positions collided, spawning at {spaceSpawn.Coords} for {ToPrettyString(ent.Owner):rule}");
+        Sawmill.Warning($"All {maxAttempts} positions collided, spawning at {spaceSpawn.Coords} for {ToPrettyString(ent.Owner):rule}");
     }
 
     [SubscribeLocalEvent]
