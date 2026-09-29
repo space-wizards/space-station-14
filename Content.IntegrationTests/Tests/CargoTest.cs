@@ -24,7 +24,6 @@ public sealed class CargoTest : GameTest
     /// </summary>
     private static readonly HashSet<ProtoId<CargoProductPrototype>> Ignored =
     [
-
     ];
 
     [SidedDependency(Side.Server)]
