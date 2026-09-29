@@ -2,7 +2,7 @@
 # random sprite state when you spawn it.
 - type: entity
   abstract: true
-  parent: [ SimpleMobBase, BaseMobHemocyanin, MobCombat, BaseSlicingRefinable, MobNightVision, BaseMobDestructible ]
+  parent: [ SimpleMobBase, BaseMobHemocyanin, MobCombat, BaseSlicingRefinableButchering, MobNightVision, BaseMobDestructible ]
   id: MobSpiderBase
   components:
   - type: Physics

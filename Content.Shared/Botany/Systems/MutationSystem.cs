@@ -86,6 +86,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
         _botany.DeletePlantSnapshot(snapshot);
 
         ChemicalsSpeciesChange(newPlantUid, newPlantProto);
+        PlantSpeciesChange(newPlantUid, newPlantProto);
 
         if (_plant.TryGetTray(oldPlant.Owner, out var trayEnt))
             _plantTray.PlantingPlantInTray(trayEnt.AsNullable(), newPlantUid);
@@ -119,6 +120,23 @@ public sealed partial class PlantMutationSystem : EntitySystem
         }
 
         Dirty(plantUid, oldPlantChemicals);
+    }
+
+    /// <summary>
+    /// Copies information from the PlantComponent on a prototype over to a given plant.
+    /// </summary>
+    /// <remarks>
+    /// <see cref="PlantComponent.GrowthStages"/> must stay true for the given plant.
+    /// TODO: better support excluding fields depending on clone context.
+    /// </remarks>
+    private void PlantSpeciesChange(EntityUid plantUid, EntProtoId plantProto)
+    {
+        if (!_botany.TryGetPlantComponent<PlantComponent>(null, plantProto, out var newSpecies)
+            || !_plantQuery.TryComp(plantUid, out var plant))
+            return;
+
+        plant.GrowthStages = newSpecies.GrowthStages;
+        DirtyField(plantUid, plant, nameof(PlantComponent.GrowthStages));
     }
 
     /// <summary>
