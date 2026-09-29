@@ -9,12 +9,13 @@ namespace Content.Client.Administration.UI.CustomControls
     [Virtual]
     public class CommandButton : Button, IDocumentTag
     {
-        private readonly ISawmill _sawmill = Logger.GetSawmill("command.button");
+        private readonly ISawmill _sawmill;
 
         public string? Command { get; set; }
 
         public CommandButton()
         {
+            _sawmill = Logger.GetSawmill("command.button");
             OnPressed += Execute;
         }
 
