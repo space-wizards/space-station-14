@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: HandTeleporter
   parent: [BaseItem, BaseGrandTheftContraband]
   name: hand teleporter
@@ -12,6 +12,7 @@
   - type: Tag
     tags:
     - HighRiskItem
+    - FitInTeleporterConsole
   - type: StealTarget
     stealGroup: HandTeleporter
 
@@ -27,6 +28,9 @@
     layers:
     - state: icon
       color: green
+  - type: Tag
+    tags:
+    - FitInTeleporterConsole
   - type: HandTeleporter
     allowPortalsOnDifferentGrids: true
     allowPortalsOnDifferentMaps: true

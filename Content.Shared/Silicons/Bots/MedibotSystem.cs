@@ -18,15 +18,15 @@ namespace Content.Shared.Silicons.Bots;
 /// <summary>
 /// Handles emagging medibots and provides api.
 /// </summary>
-public sealed class MedibotSystem : EntitySystem
+public sealed partial class MedibotSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private EmagSystem _emag = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
 
     public override void Initialize()
     {
@@ -95,7 +95,7 @@ public sealed class MedibotSystem : EntitySystem
 
         if (HasComp<NPCRecentlyInjectedComponent>(target))
         {
-            _popup.PopupClient(Loc.GetString("medibot-recently-injected"), medibot, medibot);
+            _popup.PopupEntity(Loc.GetString("medibot-recently-injected"), medibot, medibot);
             return false;
         }
 
@@ -105,14 +105,14 @@ public sealed class MedibotSystem : EntitySystem
 
         if (mobState.CurrentState != MobState.Alive && mobState.CurrentState != MobState.Critical)
         {
-            _popup.PopupClient(Loc.GetString("medibot-target-dead"), medibot, medibot);
+            _popup.PopupEntity(Loc.GetString("medibot-target-dead"), medibot, medibot);
             return false;
         }
 
         var total = _damageable.GetTotalDamage((target, damageable));
         if (total == 0 && !HasComp<EmaggedComponent>(medibot))
         {
-            _popup.PopupClient(Loc.GetString("medibot-target-healthy"), medibot, medibot);
+            _popup.PopupEntity(Loc.GetString("medibot-target-healthy"), medibot, medibot);
             return false;
         }
 
@@ -137,7 +137,7 @@ public sealed class MedibotSystem : EntitySystem
         _solutionContainer.TryAddReagent(injectable.Value, treatment.Reagent, treatment.Quantity, out _);
 
         _popup.PopupEntity(Loc.GetString("injector-component-feel-prick-message"), target, target);
-        _popup.PopupClient(Loc.GetString("medibot-target-injected"), medibot, medibot);
+        _popup.PopupEntity(Loc.GetString("medibot-target-injected"), medibot, medibot);
 
         _audio.PlayPredicted(medibot.Comp.InjectSound, medibot, medibot);
 

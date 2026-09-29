@@ -1,5 +1,6 @@
 using System.Buffers;
 using System.Collections.Concurrent;
+using System.Numerics.Tensors;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
@@ -141,9 +142,13 @@ public sealed partial class AtmosphereSystem
 
             /*
              In order to perform SIMD ops we load the values into opposing pairs, where:
-             groupA: North, East, South, West
-             groupB: South, West, North, East
+             groupA: North, East
+             groupB: South, West
              That way NumericsHelpers can just do vectorized operations on them super easily.
+
+             In a sense this means that the arrays, per index, would look like:
+             0, 1 - 0, 2
+             0, 1 - 1, 3
              */
             for (var i = 0; i < len; i++)
             {
@@ -151,15 +156,16 @@ public sealed partial class AtmosphereSystem
                 var pairBase = i * DeltaPressurePairCount;
                 for (var j = 0; j < DeltaPressurePairCount; j++)
                 {
-                    groupA[pairBase + j] = pressures[presBase + j];
-                    groupB[pairBase + j] = pressures[presBase + j + DeltaPressurePairCount];
+                    var pressurePairBase = DeltaPressurePairCount * j;
+                    groupA[pairBase + j] = pressures[presBase + pressurePairBase];
+                    groupB[pairBase + j] = pressures[presBase + pressurePairBase + 1];
                 }
             }
 
             // Time to get crankin
-            NumericsHelpers.Max(groupA, groupB, groupMax);
-            NumericsHelpers.Sub(groupA, groupB);
-            NumericsHelpers.Abs(groupA);
+            TensorPrimitives.Max(groupA, groupB, groupMax);
+            TensorPrimitives.Subtract(groupA, groupB, groupA);
+            TensorPrimitives.Abs(groupA, groupA);
 
             // Now go through each entity and determine their max pressure & delta pressure.
             // Queue for damage if necessary.

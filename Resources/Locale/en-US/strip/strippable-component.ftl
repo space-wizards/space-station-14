@@ -22,3 +22,7 @@ strip-all-verb-get-data-text = Strip All
 
 strippable-bound-user-interface-stripping-menu-title = {CAPITALIZE($ownerName)}'s inventory
 strippable-bound-user-interface-stripping-menu-ensnare-button = Remove Leg Restraints
+strippable-bound-user-interface-stripping-menu-admin-button = Toggle Admin View
+strippable-bound-user-interface-stripping-menu-admin-button-tooltip = Toggles the admin overlay.
+    Padlock -> Contraband
+    "C" -> Chameleon

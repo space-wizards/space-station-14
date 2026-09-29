@@ -8,6 +8,7 @@ using Content.Shared.Item;
 using Content.Shared.Light.Components;
 using Content.Shared.Toggleable;
 using Robust.Client.GameObjects;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Toggleable;
@@ -18,10 +19,11 @@ namespace Content.Client.Toggleable;
 /// in-hand visuals; and <see cref="OnGetEquipmentVisuals"/> for the clothing visuals.
 /// </summary>
 /// <see cref="ToggleableVisualsComponent"/>
-public sealed class ToggleableVisualsSystem : VisualizerSystem<ToggleableVisualsComponent>
+public sealed partial class ToggleableVisualsSystem : VisualizerSystem<ToggleableVisualsComponent>
 {
-    [Dependency] private readonly SharedItemSystem _item = default!;
-    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
+    [Dependency] private ISerializationManager _seriMan = default!;
+    [Dependency] private SharedItemSystem _item = default!;
+    [Dependency] private SharedPointLightSystem _pointLight = default!;
 
     public override void Initialize()
     {
@@ -104,7 +106,10 @@ public sealed class ToggleableVisualsSystem : VisualizerSystem<ToggleableVisuals
             if (modulateColor)
                 layer.Color = color;
 
-            args.Layers.Add((key, layer));
+            // Create a copy of the layer, which might get modified.
+            PrototypeLayerData newLayer = new();
+            _seriMan.CopyTo(layer, ref newLayer, notNullableOverride: true);
+            args.Layers.Add((key, newLayer));
         }
     }
 

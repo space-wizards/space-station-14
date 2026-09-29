@@ -2,9 +2,9 @@ using Robust.Shared.Console;
 
 namespace Content.Client.Audio;
 
-public sealed class AmbientOverlayCommand : LocalizedEntityCommands
+public sealed partial class AmbientOverlayCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly AmbientSoundSystem _ambient = default!;
+    [Dependency] private AmbientSoundSystem _ambient = default!;
 
     public override string Command => "showambient";
 

@@ -1,13 +1,13 @@
-﻿using Content.Shared.FeedbackSystem;
+using Content.Shared.FeedbackSystem;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.FeedbackSystem;
 
 /// <inheritdoc />
-public sealed class ServerFeedbackManager : SharedFeedbackManager
+public sealed partial class ServerFeedbackManager : SharedFeedbackManager
 {
-    [Dependency] private readonly ISharedPlayerManager _player = null!;
+    [Dependency] private ISharedPlayerManager _player = null!;
 
     public override void Initialize()
     {

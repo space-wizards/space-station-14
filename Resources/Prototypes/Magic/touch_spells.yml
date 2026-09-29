@@ -32,9 +32,10 @@
   - type: Action
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/disintegrate.ogg
-    icon:
-      sprite: Objects/Magic/magicactions.rsi
-      state: gib
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: gib
   - type: EntityTargetAction
     event: !type:SmiteSpellEvent
   - type: SpeakOnAction
@@ -60,9 +61,10 @@
     useDelay: 120
     sound: !type:SoundPathSpecifier
       path: /Audio/Items/brokenbikehorn.ogg
-    icon:
-      sprite: Clothing/Mask/cluwne.rsi
-      state: icon
+  - type: Sprite
+    sprite: Clothing/Mask/cluwne.rsi
+    layers:
+    - state: icon
   - type: EntityTargetAction
     event: !type:ChangeComponentsSpellEvent
       toAdd:
@@ -82,9 +84,10 @@
     useDelay: 60
     sound: !type:SoundPathSpecifier
       path: /Audio/Effects/slip.ogg
-    icon:
-      sprite: Objects/Specific/Janitorial/soap.rsi
-      state: omega-4
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/soap.rsi
+    layers:
+    - state: omega-4
   - type: EntityTargetAction
     event: !type:ChangeComponentsSpellEvent
       toAdd:

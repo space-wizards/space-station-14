@@ -5,10 +5,10 @@ using Robust.Shared.Random;
 
 namespace Content.Server.DeviceLinking.Systems;
 
-public sealed class RandomGateSystem : SharedRandomGateSystem
+public sealed partial class RandomGateSystem : SharedRandomGateSystem
 {
-    [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {

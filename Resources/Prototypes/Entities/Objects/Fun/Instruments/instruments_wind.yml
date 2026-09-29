@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseHandheldInstrument
   id: BaseWoodwindInstrument
   abstract: true
@@ -51,6 +51,10 @@
     - neck
   - type: ActivatableUI
     inHandsOnly: false
+  - type: Tag
+    tags:
+    - WoodwindInstrument
+    - MonkeyWearable
 
 - type: entity
   parent: BaseWoodwindInstrument

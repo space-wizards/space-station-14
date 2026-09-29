@@ -1,6 +1,5 @@
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
-using Content.Server.Bible.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.Popups;
 using Content.Shared.Database;
@@ -10,6 +9,7 @@ using Content.Shared.Prayer;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
+using Content.Shared.Bible.Components;
 
 namespace Content.Server.Prayer;
 /// <summary>
@@ -18,12 +18,12 @@ namespace Content.Server.Prayer;
 /// <remarks>
 /// Rain is a professional developer and this did not take 2 PRs to fix subtle messages
 /// </remarks>
-public sealed class PrayerSystem : EntitySystem
+public sealed partial class PrayerSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private IChatManager _chatManager = default!;
+    [Dependency] private QuickDialogSystem _quickDialog = default!;
 
     public override void Initialize()
     {
@@ -48,7 +48,7 @@ public sealed class PrayerSystem : EntitySystem
             Icon = comp.VerbImage,
             Act = () =>
             {
-                if (comp.BibleUserOnly && !TryComp<BibleUserComponent>(args.User, out var bibleUser))
+                if (comp.BibleUserOnly && !HasComp<BibleUserComponent>(args.User))
                 {
                     _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-pray-locked"), uid, actor.PlayerSession, PopupType.Large);
                     return;

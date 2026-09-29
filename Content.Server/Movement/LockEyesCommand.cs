@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Movement;
 
 [AdminCommand(AdminFlags.Fun)]
-public sealed class LockEyesCommand : LocalizedEntityCommands
+public sealed partial class LockEyesCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly SharedMoverController _controller = default!;
+    [Dependency] private SharedMoverController _controller = default!;
 
     public override string Command => $"lockeyes";
 
