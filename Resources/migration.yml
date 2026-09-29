@@ -1140,7 +1140,13 @@ AsimovCircuitBoard: CrewsimovCircuitBoard
 ClothingShoesTourist: ClothingShoesSandalsBlack
 ClothingShoesWizard: ClothingShoesSandalsBrown
 
-# 2026-09-24
+# 2026-09-29
+WallMalign: WallSolid
+WallMalignIndestructible: WallSolid
+WallMalignIndestructibleNoOcclusion: WallSolid
+MalignWindow: Window
+
+# 2026-09-29
 CheckerCrownBlack: CheckersKingBlack
 CheckerCrownWhite: CheckersKingRed
 CheckerPieceBlack: CheckersPieceBlack
