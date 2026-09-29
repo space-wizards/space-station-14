@@ -10,6 +10,7 @@ using Content.Shared.Popups;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Remotes.Components;
 using Content.Shared.Tag;
+using Content.Shared.Silicons.StationAi;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -34,6 +35,7 @@ public abstract partial class SharedDoorRemoteSystem : EntitySystem
     {
         SubscribeLocalEvent<DoorRemoteComponent, DoorRemoteModeChangeMessage>(OnDoorRemoteModeChange);
         SubscribeLocalEvent<DoorRemoteComponent, BeforeRangedInteractEvent>(OnBeforeInteract);
+        SubscribeLocalEvent<DoorRemoteComponent, StationAiDoorRemoteInteractEvent>(OnStationAiInteract);
     }
 
     private void OnDoorRemoteModeChange(Entity<DoorRemoteComponent> ent, ref DoorRemoteModeChangeMessage args)
@@ -44,18 +46,33 @@ public abstract partial class SharedDoorRemoteSystem : EntitySystem
 
     private void OnBeforeInteract(Entity<DoorRemoteComponent> entity, ref BeforeRangedInteractEvent args)
     {
-        if (!Timing.IsFirstTimePredicted)
-            return;
+        HandleInteraction(entity, args.User, args.Used, args.Target, ref args);
+    }
 
-        var isAirlock = TryComp<AirlockComponent>(args.Target, out var airlockComp);
+    private void OnStationAiInteract(Entity<DoorRemoteComponent> entity, ref StationAiDoorRemoteInteractEvent args)
+    {
+        var interaction = new BeforeRangedInteractEvent(args.User, entity.Owner, args.Target, Transform(args.Target).Coordinates, true);
+        HandleInteraction(entity, args.User, entity.Owner, args.Target, ref interaction, args.RangeUser);
+        args.Handled = interaction.Handled;
+    }
+
+    private void HandleInteraction(
+        Entity<DoorRemoteComponent> entity,
+        EntityUid user,
+        EntityUid used,
+        EntityUid? target,
+        ref BeforeRangedInteractEvent args,
+        EntityUid? rangeUser = null)
+    {
+        var isAirlock = TryComp<AirlockComponent>(target, out var airlockComp);
 
         if (args.Handled
-            || args.Target == null
-            || !TryComp<DoorComponent>(args.Target, out var doorComp) // If it isn't a door we don't use it
+            || target == null
+            || !TryComp<DoorComponent>(target, out var doorComp) // If it isn't a door we don't use it
                                                                       // Only able to control doors if they are within your vision and within your max range.
                                                                       // Not affected by mobs or machines anymore.
-            || (entity.Comp.RequireInRangeUnoccluded && !_examine.InRangeUnOccluded(args.User,
-                args.Target.Value,
+            || (entity.Comp.RequireInRangeUnoccluded && !_examine.InRangeUnOccluded(rangeUser ?? user,
+                target.Value,
                 SharedInteractionSystem.MaxRaycastRange,
                 null)))
 
@@ -65,30 +82,33 @@ public abstract partial class SharedDoorRemoteSystem : EntitySystem
 
         args.Handled = true;
 
-        if (!_powerReceiver.IsPowered(args.Target.Value))
+        if (!Timing.IsFirstTimePredicted)
+            return;
+
+        if (!_powerReceiver.IsPowered(target.Value))
         {
-            _popup.PopupEntity(Loc.GetString("door-remote-no-power"), args.User, args.User);
+            _popup.PopupEntity(Loc.GetString("door-remote-no-power"), user, user);
             return;
         }
 
-        var accessTarget = args.Used;
+        var accessTarget = used;
         // This covers the accesses the REMOTE has, and is not effected by the user's ID card.
         if (entity.Comp.IncludeUserAccess) // Allows some door remotes to inherit the user's access.
         {
-            accessTarget = args.User;
+            accessTarget = user;
             // This covers the accesses the USER has, which always includes the remote's access since holding a remote acts like holding an ID card.
         }
 
         // Only let remote work on doors that have AccessReader; otherwise, it works on anything with a Door component (curtains, fence gates, etc)
-        if (TryComp<AccessReaderComponent>(args.Target, out var accessComponent) && _tagSystem.HasTag(args.Target.Value, entity.Comp.TargetTag))
+        if (TryComp<AccessReaderComponent>(target, out var accessComponent) && _tagSystem.HasTag(target.Value, entity.Comp.TargetTag))
         {
             // Has an access reader component. Check access.
-            if (!_doorSystem.HasAccess(args.Target.Value, accessTarget, doorComp, accessComponent))
+            if (!_doorSystem.HasAccess(target.Value, accessTarget, doorComp, accessComponent))
             {
                 if (isAirlock)
-                    _doorSystem.Deny(args.Target.Value, doorComp, user: args.User, predicted: true);
+                    _doorSystem.Deny(target.Value, doorComp, user: user, predicted: true);
 
-                _popup.PopupEntity(Loc.GetString("door-remote-denied"), args.User, args.User);
+                _popup.PopupEntity(Loc.GetString("door-remote-denied"), user, user);
                 return;
             }
         }
@@ -99,20 +119,20 @@ public abstract partial class SharedDoorRemoteSystem : EntitySystem
         switch (entity.Comp.Mode)
         {
             case OperatingMode.OpenClose:
-                if (_doorSystem.TryToggleDoor(args.Target.Value, doorComp, user: args.User, predicted: true))
+                if (_doorSystem.TryToggleDoor(target.Value, doorComp, user: user, predicted: true))
                     _adminLogger.Add(LogType.Action,
                         LogImpact.Medium,
-                        $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)}: {doorComp.State}");
+                        $"{ToPrettyString(user):player} used {ToPrettyString(used)} on {ToPrettyString(target.Value)}: {doorComp.State}");
                 break;
             case OperatingMode.ToggleBolts:
-                if (TryComp<DoorBoltComponent>(args.Target, out var boltsComp))
+                if (TryComp<DoorBoltComponent>(target, out var boltsComp))
                 {
                     if (!boltsComp.BoltWireCut)
                     {
-                        _doorSystem.SetBoltsDown((args.Target.Value, boltsComp), !boltsComp.BoltsDown, user: args.User, predicted: true);
+                        _doorSystem.SetBoltsDown((target.Value, boltsComp), !boltsComp.BoltsDown, user: user, predicted: true);
                         _adminLogger.Add(LogType.Action,
                             LogImpact.Medium,
-                            $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to {(boltsComp.BoltsDown ? "" : "un")}bolt it");
+                            $"{ToPrettyString(user):player} used {ToPrettyString(used)} on {ToPrettyString(target.Value)} to {(boltsComp.BoltsDown ? "" : "un")}bolt it");
                     }
                 }
 
@@ -120,24 +140,24 @@ public abstract partial class SharedDoorRemoteSystem : EntitySystem
             case OperatingMode.ToggleEmergencyAccess:
                 if (airlockComp != null)
                 {
-                    _airlock.SetEmergencyAccess((args.Target.Value, airlockComp), !airlockComp.EmergencyAccess, user: args.User, predicted: true);
+                    _airlock.SetEmergencyAccess((target.Value, airlockComp), !airlockComp.EmergencyAccess, user: user, predicted: true);
                     _adminLogger.Add(LogType.Action,
                         LogImpact.Medium,
-                        $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to set emergency access {(airlockComp.EmergencyAccess ? "on" : "off")}");
+                        $"{ToPrettyString(user):player} used {ToPrettyString(used)} on {ToPrettyString(target.Value)} to set emergency access {(airlockComp.EmergencyAccess ? "on" : "off")}");
                 }
 
                 break;
             case OperatingMode.ToggleOvercharge:
-                if (TryComp<ElectrifiedComponent>(args.Target, out var eletrifiedComp))
+                if (TryComp<ElectrifiedComponent>(target, out var eletrifiedComp))
                 {
-                    _electrify.SetElectrified((args.Target.Value, eletrifiedComp), !eletrifiedComp.Enabled);
+                    _electrify.SetElectrified((target.Value, eletrifiedComp), !eletrifiedComp.Enabled);
                     var soundToPlay = eletrifiedComp.Enabled
                         ? eletrifiedComp.AirlockElectrifyEnabled
                         : eletrifiedComp.AirlockElectrifyDisabled;
-                    _audio.PlayLocal(soundToPlay, args.Target.Value, args.User);
+                    _audio.PlayLocal(soundToPlay, target.Value, user);
                     _adminLogger.Add(LogType.Action,
                         LogImpact.Medium,
-                        $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to {(eletrifiedComp.Enabled ? "" : "un")}electrify it");
+                        $"{ToPrettyString(user):player} used {ToPrettyString(used)} on {ToPrettyString(target.Value)} to {(eletrifiedComp.Enabled ? "" : "un")}electrify it");
                 }
 
                 break;

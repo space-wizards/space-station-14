@@ -31,3 +31,19 @@
     - state: state_laws
   - type: InstantAction
     event: !type:ToggleLawsScreenEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionOpenDoorRadialMenu
+  name: Open Door Radial Menu
+  description: Opens the radial menu for doors.
+  components:
+  - type: Action
+    priority: -8
+    itemIconStyle: NoItem
+  - type: Sprite
+    sprite: Objects/Devices/door_remote.rsi
+    layers:
+    - state: door_remotebase
+  - type: InstantAction
+    event: !type:OpenDoorRadialMenuEvent
