@@ -313,7 +313,7 @@
     - !type:FixedAntagCount
       proto: ParadoxClone
   - type: DynamicRuleCost
-    cost: 50
+    cost: 75
 
 - type: entity
   parent: BaseGameRule
