@@ -59,6 +59,11 @@
 
 - type: latheRecipe
   parent: BaseCubeRecipe
+  id: MonkeyCube
+  result: SlimeCube
+
+- type: latheRecipe
+  parent: BaseCubeRecipe
   id: SpaceCarpCube
   result: SpaceCarpCube
   materials:

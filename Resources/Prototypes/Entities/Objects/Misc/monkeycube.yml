@@ -112,3 +112,30 @@
   - type: SpawnItemsOnUse
     items:
       - id: SyndicateSponge
+
+- type: entity
+  parent: BaseWrappedCube
+  name: slime cube
+  id: SlimeCubeWrapped
+  description: Unwrap this to get a slime cube.
+  components:
+  - type: SpawnItemsOnUse
+    items:
+    - id: SlimeCube
+  - type: Sprite
+    state: wrapper_slime
+
+- type: entity
+  parent: MonkeyCubeBox
+  name: slime cube box
+  id: SlimeCubeBox
+  description: Condensed friendly slimes in a cube. Just add water! Drymate® is not responsible for undue hostility from inappropriate fluid application.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: SlimeCubeWrapped
+        amount: 8
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: box_slime
