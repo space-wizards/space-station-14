@@ -21,7 +21,8 @@
       - ReagentId: Nutriment
         Quantity: 40 # Bonus for complete meal
   - type: Tag
-    tags: [ FinishedMeal ]
+    tags:
+    - FinishedMeal
 
 # Meals
 
@@ -89,7 +90,9 @@
   - type: Sprite
     state: fries-carrot
   - type: Tag
-    tags: [ CarrotFries, FinishedMeal ]
+    tags:
+    - CarrotFries
+    - FinishedMeal
   - type: Solution
     solution:
       reagents:

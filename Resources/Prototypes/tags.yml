@@ -367,7 +367,7 @@
   id: Cooked # MetamorphRecipe: FoodBurgerCheese, FoodBurgerChicken, FoodBurgerCrab, FoodBurgerDuck
 
 - type: Tag
-  id: FinishedMeal # Storage whitelist: BorgModuleCooking
+  id: Cookware # Storage whitelist: BorgModuleCooking
 
 - type: Tag
   id: CoordinatesDisk # Storage whitelist: DiskCase
@@ -573,6 +573,9 @@
 
 - type: Tag
   id: Figurine # Storage whitelist: BooksBag, BorgModuleService. CargoBounty: BountyFigurine
+
+- type: Tag
+  id: FinishedMeal # Storage whitelist: BorgModuleCooking
 
 - type: Tag
   id: FireAlarm # Used by AtmosAlarmableComponent for syncing devices.

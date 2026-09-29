@@ -21,7 +21,8 @@
       - ReagentId: Nutriment
         Quantity: 10
   - type: Tag
-    tags: [ Bread ]
+    tags:
+    - Bread
 
 - type: entity
   parent: FoodBagelBase
@@ -70,4 +71,6 @@
       - ReagentId: Fiber
         Quantity: 5
   - type: Tag
-    tags: [ Bread, ClothMade ]
+    tags:
+    - Bread
+    - ClothMade

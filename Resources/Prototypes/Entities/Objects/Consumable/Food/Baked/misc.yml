@@ -36,7 +36,8 @@
   - type: Item
     size: Tiny
   - type: Tag
-    tags: [ FinishedMeal ]
+    tags:
+    - FinishedMeal
 
 - type: entity
   name: berry muffin
@@ -56,7 +57,9 @@
       - ReagentId: JuiceBerry
         Quantity: 1
   - type: Tag
-    tags: [ FinishedMeal, Fruit ]
+    tags:
+    - FinishedMeal
+    - Fruit
 
 - type: entity
   name: cherry muffin
@@ -76,7 +79,9 @@
       - ReagentId: JuiceCherry
         Quantity: 1
   - type: Tag
-    tags: [ FinishedMeal, Fruit ]
+    tags:
+    - FinishedMeal
+    - Fruit
 
 - type: entity
   name: bluecherry muffin
@@ -87,7 +92,9 @@
   - type: Sprite
     state: muffin-bluecherry
   - type: Tag
-    tags: [ FinishedMeal, Fruit ]
+    tags:
+    - FinishedMeal
+    - Fruit
 
 - type: entity
   name: chocolate muffin
@@ -107,7 +114,8 @@
       - ReagentId: CocoaPowder
         Quantity: 1
   - type: Tag
-    tags: [ FinishedMeal ]
+    tags:
+    - FinishedMeal
 
 - type: entity
   name: banana muffin
@@ -127,7 +135,9 @@
       - ReagentId: JuiceBanana
         Quantity: 1
   - type: Tag
-    tags: [ FinishedMeal, Fruit ]
+    tags:
+    - FinishedMeal
+    - Fruit
 
 # Buns
 
@@ -140,7 +150,8 @@
   - type: Sprite
     state: bun-honey
   - type: Tag
-    tags: [ Bread ]
+    tags:
+    - FinishedMeal
 
 - type: entity
   name: hotcross bun
@@ -151,7 +162,8 @@
   - type: Sprite
     state: bun-hotcross
   - type: Tag
-    tags: [ Bread ]
+    tags:
+    - FinishedMeal
 
 - type: entity
   name: meat bun
@@ -162,7 +174,9 @@
   - type: Sprite
     state: bun-meat
   - type: Tag
-    tags: [ FinishedMeal, Meat ]
+    tags:
+    - FinishedMeal
+    - Meat
 
 # Cookies
 
@@ -175,7 +189,8 @@
   - type: Sprite
     state: COOKIE!!!
   - type: Tag
-    tags: [ FinishedMeal ]
+    tags:
+    - FinishedMeal
 
 - type: entity
   name: oatmeal cookie
@@ -186,7 +201,8 @@
   - type: Sprite
     state: cookie-oatmeal
   - type: Tag
-    tags: [ FinishedMeal ]
+    tags:
+    - FinishedMeal
 
 - type: entity
   name: raisin cookie
@@ -197,7 +213,9 @@
   - type: Sprite
     state: cookie-raisin
   - type: Tag
-    tags: [ FinishedMeal, Fruit ]
+    tags:
+    - FinishedMeal
+    - Fruit
 
 - type: entity
   name: sugar cookie
@@ -208,7 +226,8 @@
   - type: Sprite
     state: cookie-sugar
   - type: Tag
-    tags: [ FinishedMeal ]
+    tags:
+    - FinishedMeal
 
 # Nuggets
 
@@ -219,7 +238,10 @@
   description: A "chicken" nugget vaguely shaped into an object. # Should change depending on name.
   components:
   - type: Tag
-    tags: [ FinishedMeal, Nugget, Meat ]
+    tags:
+    - FinishedMeal
+    - Nugget
+    - Meat
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/nuggets.rsi
     layers:
@@ -289,7 +311,9 @@
       visible: false
   - type: Appearance
   - type: Tag
-    tags: [ FinishedMeal, Pancake ]
+    tags:
+    - FinishedMeal
+    - Pancake
 
 - type: entity
   name: blueberry pancake
@@ -340,7 +364,10 @@
       map: ["pancakesbb9"]
       visible: false
   - type: Tag
-    tags: [ FinishedMeal, Fruit, Pancake ]
+    tags:
+    - FinishedMeal
+    - Fruit
+    - Pancake
 
 - type: entity
   name: chocolate chip pancake
@@ -409,7 +436,8 @@
       - state: tray
       - state: waffles
   - type: Tag
-    tags: [ Bread, FinishedMeal ]
+    tags:
+    - FinishedMeal
 
 - type: entity
   name: soy waffles
@@ -455,7 +483,9 @@
   - type: Sprite
     state: pretzel
   - type: Tag
-    tags: [ Bread, FinishedMeal ]
+    tags:
+    - Bread
+    - FinishedMeal
 
 - type: entity
   name: cannoli
@@ -466,7 +496,8 @@
   - type: Sprite
     state: cannoli
   - type: Tag
-    tags: [ FinishedMeal ]
+    tags:
+    - FinishedMeal
 
 - type: entity
   name: dumplings
@@ -488,7 +519,9 @@
       - meaty
       - bread
   - type: Tag
-    tags: [ FinishedMeal, Meat ]
+    tags:
+    - FinishedMeal
+    - Meat
 
 - type: entity
   name: chèvre chaud
@@ -516,7 +549,8 @@
       - ReagentId: Blackpepper
         Quantity: 0.05
   - type: Tag
-    tags: [ FinishedMeal ]
+    tags:
+    - FinishedMeal
 
 - type: entity
   name: cotton chèvre chaud
@@ -549,7 +583,9 @@
       - ReagentId: Blackpepper
         Quantity: 0.1
   - type: Tag
-    tags: [ ClothMade, FinishedMeal ]
+    tags:
+    - ClothMade
+    - FinishedMeal
 
 - type: entity
   parent: [SolutionNormal, FoodBakedBase, BaseSlicingRefinableFood]
@@ -581,7 +617,8 @@
     - id: FoodBakedBrownie
       amount: 8
   - type: Tag
-    tags: [ FinishedMeal ]
+    tags:
+    - FinishedMeal
 
 - type: entity
   name: brownie
@@ -607,7 +644,9 @@
       - ReagentId: Theobromine
         Quantity: 2
   - type: Tag
-    tags: [ FinishedMeal, Slice ]
+    tags:
+    - FinishedMeal
+    - Slice
 
 - type: entity
   parent: [SolutionNormal, FoodBakedBase, BaseSlicingRefinableFood]
@@ -642,7 +681,9 @@
     - id: FoodBakedCannabisBrownie
       amount: 8
   - type: Tag
-    tags: [ FinishedMeal ]
+    tags:
+    - FinishedMeal
+    - Slice
 
 - type: entity
   parent: FoodBakedBase
@@ -670,7 +711,9 @@
       - ReagentId: THC
         Quantity: 2
   - type: Tag
-    tags: [ FinishedMeal, Slice ]
+    tags:
+    - FinishedMeal
+    - Slice
 
 - type: entity
   name: onion rings
@@ -694,7 +737,8 @@
         - ReagentId: Vitamin
           Quantity: 1
     - type: Tag
-      tags: [ FinishedMeal ]
+      tags:
+      - FinishedMeal
 
 - type: entity
   parent: [SolutionSmall, FoodBakedBase]
@@ -743,7 +787,9 @@
   - type: Edible
     requiresSpecialDigestion: true
   - type: Tag
-    tags: [ ClothMade, FinishedMeal]
+    tags:
+    - ClothMade
+    - FinishedMeal
   - type: Solution
     solution:
       reagents:
@@ -779,7 +825,8 @@
       - ReagentId: Butter
         Quantity: 2.5
   - type: Tag
-    tags: [ FinishedMeal ]
+    tags:
+    - FinishedMeal
 
 - type: entity
   parent: FoodBakedGrilledCheeseSandwich
@@ -798,7 +845,9 @@
   - type: Edible
     requiresSpecialDigestion: true
   - type: Tag
-    tags: [ ClothMade, FinishedMeal ]
+    tags:
+    - ClothMade
+    - FinishedMeal
   - type: Solution
     solution:
       reagents:

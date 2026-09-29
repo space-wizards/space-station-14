@@ -10,7 +10,8 @@
     closeSound:
       collection: bottleCloseSounds
   - type: Tag
-    tags: [ Ingredient ]
+    tags:
+    - Ingredient
 
 - type: entity
   abstract: true
@@ -19,7 +20,8 @@
   suffix: Full
   components:
   - type: Tag
-    tags: [ Ingredient ]
+    tags:
+    - Ingredient
 
 - type: entity
   abstract: true
@@ -29,7 +31,8 @@
   - type: Item
     size: Normal
   - type: Tag
-    tags: [ Ingredient ]
+    tags:
+    - Ingredient
 
 - type: entity
   abstract: true
@@ -38,7 +41,8 @@
   suffix: Full
   components:
   - type: Tag
-    tags: [ Ingredient ]
+    tags:
+    - Ingredient
 
 - type: entity
   abstract: true
@@ -50,8 +54,9 @@
     shape:
     - 0,0,1,3
   - type: Tag
-    tags: [ DrinkBottle, Trash ] # Need DrinkBottle to fit in the soda dispenser, probably needs a better name
-
+    tags:
+    - DrinkBottle # Need this to fit in the soda dispenser, probably needs a better name
+    - Trash
 
 - type: entity
   abstract: true
@@ -60,7 +65,8 @@
   suffix: Full
   components:
   - type: Tag
-    tags: [ DrinkBottle ] # Need this to fit in the soda dispenser, probably needs a better name
+    tags:
+    - DrinkBottle # Need this to fit in the soda dispenser, probably needs a better name
 
 # Small carton
 
@@ -84,7 +90,8 @@
       - ReagentId: JuiceLime
         Quantity: 60
   - type: Tag
-    tags: [ ]
+    tags:
+    - Ingredient
 
 - type: entity
   parent: DrinkCartonBase
@@ -106,7 +113,8 @@
       - ReagentId: JuiceOrange
         Quantity: 60
   - type: Tag
-    tags: [ ]
+    tags:
+    - Ingredient
 
 - type: entity
   parent: DrinkCartonBase
@@ -128,7 +136,8 @@
       - ReagentId: JuiceTomato
         Quantity: 60
   - type: Tag
-    tags: []
+    tags:
+    - Ingredient
 
 - type: entity
   parent: DrinkCartonBaseFull
@@ -164,7 +173,8 @@
       - ReagentId: Cream
         Quantity: 60
   - type: Tag
-    tags: [ ]
+    tags:
+    - Ingredient
 
 - type: entity
   parent: [DrinkBaseMaterialPlastic, DrinkCartonBaseFull]
@@ -216,7 +226,8 @@
       - ReagentId: Milk
         Quantity: 120
   - type: Tag
-    tags: [ Ingredient ]
+    tags:
+    - Ingredient
 
 - type: entity
   parent: DrinkCartonNormalBase
@@ -238,7 +249,8 @@
       - ReagentId: MilkSoy
         Quantity: 120
   - type: Tag
-    tags: [ Ingredient ]
+    tags:
+    - Ingredient
 
 - type: entity
   parent: [DrinkBaseMaterialPlastic, DrinkCartonNormalBase]
@@ -261,7 +273,8 @@
       - ReagentId: MilkOat
         Quantity: 120
   - type: Tag
-    tags: [ Ingredient ]
+    tags:
+    - Ingredient
 
 # Large cartons
 
