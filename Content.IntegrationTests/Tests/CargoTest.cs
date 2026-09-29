@@ -62,8 +62,8 @@ public sealed class CargoTest : GameTest
                     if (Ignored.Contains(proto.ID))
                         continue;
                     var entProto = SProtoMan.Index<EntityPrototype>(proto.Product);
-                    double price = 0;
-                    bool contentsChecked = false;
+                    var price = 0.0;
+                    var contentsChecked = false;
                     EntityUid ent;
                     if (entProto.TryComp<EntityTableContainerFillComponent>(out var fill, _sCompFact))
                     {
