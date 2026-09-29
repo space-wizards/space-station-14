@@ -1,7 +1,7 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-            MinSize="200 200" Title="Gas Mixer">
+            Resizable="False" Title="Gas Mixer">
     <BoxContainer Orientation="Vertical" Margin="10" SeparationOverride="10">
         <controls:SwitchButton
             Name="ToggleStatusButton"
@@ -10,7 +10,7 @@
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <Label Text="{Loc comp-gas-mixer-ui-mixer-output-pressure}"/>
             <Control MinSize="5 0" />
-            <LineEdit Name="MixerPressureOutputInput" MinSize="70 0" />
+            <LineEdit Name="MixerPressureOutputInput" MinSize="80 0" />
             <Control MinSize="5 0" />
             <Button Name="SetMaxPressureButton" Text="{Loc comp-gas-mixer-ui-mixer-max}" />
             <Control MinSize="5 0" />
