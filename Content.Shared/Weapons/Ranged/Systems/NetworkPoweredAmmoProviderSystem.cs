@@ -11,17 +11,12 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 /// Can be turned on/off, and be unpowered, but shoots only when turned on and powered properly.
 /// <seealso cref="NetworkPoweredAmmoProviderComponent"/>
 /// </summary>
-public abstract partial class SharedNetworkPoweredAmmoProviderSystem : EntitySystem
+public abstract partial class NetworkPoweredAmmoProviderSystem : EntitySystem
 {
     [Dependency] protected SharedPopupSystem Popup = default!;
 
-    /// <inheritdoc/>>
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<NetworkPoweredAmmoProviderComponent, ActivateInWorldEvent>(OnActivate, after: [typeof(ActivatableUISystem)]);
-    }
-
     /// <summary> Toggles active for device. </summary>
+    [SubscribeLocalEvent(after: [typeof(ActivatableUISystem)])]
     private void OnActivate(Entity<NetworkPoweredAmmoProviderComponent> ent, ref ActivateInWorldEvent args)
     {
         if (args.Handled || !args.Complex)

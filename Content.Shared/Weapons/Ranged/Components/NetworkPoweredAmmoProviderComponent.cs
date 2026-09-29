@@ -14,7 +14,7 @@ namespace Content.Shared.Weapons.Ranged.Components;
 /// Power consumption is stable and does not spike at moment of projectile creation.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedNetworkPoweredAmmoProviderSystem), typeof(BatteryWeaponFireModesSystem), typeof(SharedEmitterSystem))]
+[Access(typeof(NetworkPoweredAmmoProviderSystem), typeof(BatteryWeaponFireModesSystem), typeof(SharedEmitterSystem))]
 public sealed partial class NetworkPoweredAmmoProviderComponent : AmmoProviderComponent
 {
     /// <summary>
@@ -27,7 +27,7 @@ public sealed partial class NetworkPoweredAmmoProviderComponent : AmmoProviderCo
     /// Whether the power switch is on AND the machine has enough power (so is actively firing)
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool IsPowered = false;
+    public bool IsPowered;
 
     /// <summary>
     /// Signal port that turns on the emitter.

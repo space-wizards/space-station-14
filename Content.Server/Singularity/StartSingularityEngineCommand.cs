@@ -16,7 +16,7 @@ namespace Content.Server.Singularity
     [AdminCommand(AdminFlags.Admin)]
     public sealed partial class StartSingularityEngineCommand : LocalizedEntityCommands
     {
-        [Dependency] private NetworkPoweredAmmoProviderSystem _ammoProvider = default!;
+        [Dependency] private ServerNetworkPoweredAmmoProviderSystem _ammoProvider = default!;
         [Dependency] private MultipartMachineSystem _multipartSystem = default!;
         [Dependency] private ParticleAcceleratorSystem  _paSystem = default!;
         [Dependency] private RadiationCollectorSystem _radCollectorSystem = default!;

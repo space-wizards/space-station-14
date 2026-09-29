@@ -14,7 +14,7 @@ using Robust.Shared.Physics.Components;
 namespace Content.Server.Weapons.Ranged.Systems;
 
 /// <inheritdoc/>>
-public sealed partial class NetworkPoweredAmmoProviderSystem : SharedNetworkPoweredAmmoProviderSystem
+public sealed partial class ServerNetworkPoweredAmmoProviderSystem : NetworkPoweredAmmoProviderSystem
 {
     [Dependency] private SharedGunSystem _gun = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
@@ -67,14 +67,7 @@ public sealed partial class NetworkPoweredAmmoProviderSystem : SharedNetworkPowe
         if (!_powerState.GetWorkingState(ent.Owner))
             return;
 
-        if (args.ReceivedPower < args.DrawRate)
-        {
-            PowerOff(ent);
-        }
-        else
-        {
-            PowerOn(ent);
-        }
+        SetPoweredState(ent, !(args.ReceivedPower < args.DrawRate));
     }
 
     /// <summary> Turn on/off based on power feed. </summary>
@@ -84,14 +77,7 @@ public sealed partial class NetworkPoweredAmmoProviderSystem : SharedNetworkPowe
         if (!_powerState.GetWorkingState(ent.Owner))
             return;
 
-        if (!args.Powered)
-        {
-            PowerOff(ent);
-        }
-        else
-        {
-            PowerOn(ent);
-        }
+        SetPoweredState(ent, args.Powered);
     }
 
     /// <summary> Spawn ammo if we are ON. </summary>
@@ -161,21 +147,22 @@ public sealed partial class NetworkPoweredAmmoProviderSystem : SharedNetworkPowe
 
         _powerState.SetWorkingState((ent.Owner, powerState), true);
 
-        Dirty(ent);
-        PowerOn(ent);
+        SetPoweredState(ent, true);
     }
 
-    private void SwitchOff(Entity<NetworkPoweredAmmoProviderComponent> ent)
+    /// <summary>
+    /// Turns device OFF, disabling power usage.
+    /// </summary>
+    public void SwitchOff(Entity<NetworkPoweredAmmoProviderComponent> ent)
     {
         _powerState.SetWorkingState(ent.Owner, false);
-        Dirty(ent);
 
-        PowerOff(ent);
+        SetPoweredState(ent, false);
     }
 
-    private void PowerOff(Entity<NetworkPoweredAmmoProviderComponent> ent)
+    private void SetPoweredState(Entity<NetworkPoweredAmmoProviderComponent> ent, bool powerState)
     {
-        if (!ent.Comp.IsPowered)
+        if (ent.Comp.IsPowered == powerState)
             return;
 
 
@@ -185,21 +172,6 @@ public sealed partial class NetworkPoweredAmmoProviderSystem : SharedNetworkPowe
         if (!TryComp<AutoShootGunComponent>(ent, out var autoShoot))
             return;
 
-        _gun.SetEnabled((ent, autoShoot), false);
+        _gun.SetEnabled((ent, autoShoot), powerState);
     }
-
-    private void PowerOn(Entity<NetworkPoweredAmmoProviderComponent> ent)
-    {
-        if (ent.Comp.IsPowered)
-            return;
-
-        ent.Comp.IsPowered = true;
-        Dirty(ent);
-
-        if (!TryComp<AutoShootGunComponent>(ent, out var autoShoot))
-            return;
-
-        _gun.SetEnabled((ent, autoShoot), true);
-    }
-
 }
