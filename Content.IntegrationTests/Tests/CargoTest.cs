@@ -27,9 +27,6 @@ public sealed class CargoTest : GameTest
     ];
 
     [SidedDependency(Side.Server)]
-    private readonly IComponentFactory _sCompFact = null!;
-
-    [SidedDependency(Side.Server)]
     private readonly PricingSystem _sPricing = null!;
 
     [SidedDependency(Side.Server)]
@@ -65,11 +62,11 @@ public sealed class CargoTest : GameTest
                     var price = 0.0;
                     var contentsChecked = false;
                     EntityUid ent;
-                    if (entProto.TryComp<EntityTableContainerFillComponent>(out var fill, _sCompFact))
+                    if (entProto.TryComp<EntityTableContainerFillComponent>(out var fill, SEntMan.ComponentFactory))
                     {
                         foreach (var container in fill.Containers)
                         {
-                            foreach (var item in _sTableSystem.AverageSpawns(container.Value))
+                            foreach (var item in _sTable.AverageSpawns(container.Value))
                             {
                                 price += GetPrice(item.spawn) * item.Item2;
                             }
@@ -148,7 +145,7 @@ public sealed class CargoTest : GameTest
                 foreach (var (proto, staticPriceComp) in protoIds)
                 {
                     if (
-                        proto.TryComp<StackPriceComponent>(out var stackPriceComp, _sCompFact)
+                        proto.TryComp<StackPriceComponent>(out var stackPriceComp, SEntMan.ComponentFactory)
                         && stackPriceComp.Price > 0
                     )
                     {
@@ -159,7 +156,7 @@ public sealed class CargoTest : GameTest
                         );
                     }
 
-                    if (proto.HasComponent<StackComponent>(_sCompFact))
+                    if (proto.HasComponent<StackComponent>(SEntMan.ComponentFactory))
                     {
                         Assert.That(
                             staticPriceComp.Price,
@@ -283,7 +280,7 @@ public sealed class CargoTest : GameTest
                 foreach (var (proto, comp) in Pair.GetPrototypesWithComponent<MobPriceComponent>())
                 {
                     Assert.That(
-                        proto.TryComp<MobStateComponent>(out _, _sCompFact),
+                        proto.TryComp<MobStateComponent>(out _, SEntMan.ComponentFactory),
                         $"Found {nameof(MobPriceComponent)} on {proto.ID}, but no {nameof(MobStateComponent)}!"
                     );
                 }
