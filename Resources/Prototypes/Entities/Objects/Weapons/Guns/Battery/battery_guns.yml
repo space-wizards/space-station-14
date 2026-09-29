@@ -211,17 +211,6 @@
   abstract: true
   id: WeaponMakeshiftLaserConstructionBase
   components:
-  - type: ContainerContainer
-    containers:
-      cell_slot: !type:ContainerSlot
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        locked: true
-        name: Magazine
-        whitelist:
-          tags:
-          - PowerCell
   - type: Construction
     graph: MakeshiftLaserGraph
     containers:
@@ -279,6 +268,9 @@
         whitelist:
           tags:
           - PowerCell
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
 
 - type: entity
   parent: [BaseItem, BaseMinorContraband, WeaponMakeshiftLaserConstructionBase]
