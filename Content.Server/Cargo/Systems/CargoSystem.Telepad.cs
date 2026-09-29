@@ -80,6 +80,9 @@ public sealed partial class CargoSystem
         var query = EntityQueryEnumerator<CargoTelepadComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var telepad, out var xform))
         {
+            if (telepad.CurrentState == CargoTelepadState.Unpowered)
+                continue;
+
             if (Timing.CurTime < telepad.NextTeleport)
             {
                 telepad.CurrentState = CargoTelepadState.Idle;
