@@ -1,4 +1,3 @@
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAE.Components;
@@ -6,7 +5,7 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAE.Components;
 /// <summary>
 /// Applies components when effect is activated.
 /// </summary>
-[RegisterComponent, Access(typeof(XAEApplyComponentsSystem))]
+[RegisterComponent, Access(typeof(SharedXAEApplyComponentsSystem))]
 public sealed partial class XAEApplyComponentsComponent : Component
 {
     /// <summary>

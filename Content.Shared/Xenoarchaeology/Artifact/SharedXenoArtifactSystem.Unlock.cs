@@ -73,7 +73,16 @@ public abstract partial class SharedXenoArtifactSystem
         if (TryGetNodeFromUnlockState(ent, out var node))
         {
             SetNodeUnlocked((ent, artifactComponent), node.Value);
-            ActivateNode((ent, ent), (node.Value, node.Value), null, null, Transform(ent).Coordinates, false);
+            
+            Entity<XenoArtifactNodeComponent> nodeEnt = (node.Value, node.Value);
+            var currentNodeEffectModifications = GetBudgetNodeEffectModifications(nodeEnt);
+            ActivateNode(
+                (ent, ent),
+                nodeEnt,
+                Transform(ent).Coordinates,
+                currentNodeEffectModifications,
+                consumeDurability: false
+            );
             unlockAttemptResultMsg = artifactComponent.UnlockSuccessMsg;
 
             // as an experiment - unlocking node doesn't activate it, activation is left for player to decide.

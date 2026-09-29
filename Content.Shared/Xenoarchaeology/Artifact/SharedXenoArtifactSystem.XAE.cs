@@ -69,9 +69,20 @@ public abstract partial class SharedXenoArtifactSystem
             return false;
 
         var success = false;
-        foreach (var node in GetActiveNodes(artifact))
+        var activeNodes = GetActiveNodes(artifact);
+        var externalEffectModifications = new XenoArtifactEffectsModifications();
+        var collectModificationsEvent = new XenoArtifactCollectEffectModificationsOnActivationEvent(externalEffectModifications);
+        RaiseLocalEvent(artifact, ref collectModificationsEvent);
+        foreach (var node in activeNodes)
         {
-            success |= ActivateNode(artifact, node, user, target, coordinates, consumeDurability: consumeDurability);
+            RaiseLocalEvent(node, ref collectModificationsEvent);
+        }
+
+        foreach (var node in activeNodes)
+        {
+            var currentNodeEffectModifications = GetBudgetNodeEffectModifications(node);
+            currentNodeEffectModifications += externalEffectModifications;
+            success |= ActivateNode(artifact, node, coordinates, currentNodeEffectModifications, user, target, consumeDurability: consumeDurability);
         }
 
         if (!success)
@@ -106,14 +117,16 @@ public abstract partial class SharedXenoArtifactSystem
     /// <param name="user">Character that attempted to activate artifact.</param>
     /// <param name="target">Target, on which artifact activation attempt was used (for hand-held artifact - it can be 'clicked' over someone).</param>
     /// <param name="coordinates">Coordinates of <paramref name="target"/> entity.</param>
+    /// <param name="modifications">Effect modifications, external or related to node budget, that can be applied.</param>
     /// <param name="consumeDurability">Marker, if node durability should be adjusted as a result of activation.</param>
     /// <returns>True, if activation was successful, false otherwise.</returns>
     public bool ActivateNode(
         Entity<XenoArtifactComponent> artifact,
         Entity<XenoArtifactNodeComponent> node,
-        EntityUid? user,
-        EntityUid? target,
         EntityCoordinates coordinates,
+        XenoArtifactEffectsModifications modifications,
+        EntityUid? user = null,
+        EntityUid? target = null,
         bool consumeDurability = true
     )
     {
@@ -130,7 +143,7 @@ public abstract partial class SharedXenoArtifactSystem
             AdjustNodeDurability((node, node.Comp), -1);
         }
 
-        var ev = new XenoArtifactNodeActivatedEvent(artifact, node, user, target, coordinates);
+        var ev = new XenoArtifactNodeActivatedEvent(artifact, node, user, target, coordinates, modifications);
         RaiseLocalEvent(node, ref ev);
         return true;
     }
@@ -144,13 +157,15 @@ public abstract partial class SharedXenoArtifactSystem
 /// <param name="User">Character that attempted to activate artifact.</param>
 /// <param name="Target">Target, on which artifact activation attempt was used (for hand-held artifact - it can be 'clicked' over someone).</param>
 /// <param name="Coordinates">Coordinates of <paramref name="Target"/> entity.</param>
+/// <param name="Modifications">Effect modifications, external or related to node budget, that can be applied.</param>
 [ByRefEvent]
 public readonly record struct XenoArtifactNodeActivatedEvent(
     Entity<XenoArtifactComponent> Artifact,
     Entity<XenoArtifactNodeComponent> Node,
     EntityUid? User,
     EntityUid? Target,
-    EntityCoordinates Coordinates
+    EntityCoordinates Coordinates,
+    XenoArtifactEffectsModifications Modifications
 );
 
 [ByRefEvent]
