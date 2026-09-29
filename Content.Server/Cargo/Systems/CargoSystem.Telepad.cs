@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Power.Components;
@@ -8,7 +7,6 @@ using Content.Shared.Cargo.Components;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Power;
 using Content.Shared.Station.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Random;
 
 namespace Content.Server.Cargo.Systems;
@@ -107,7 +105,7 @@ public sealed partial class CargoSystem
                     telepad.CurrentOrders.Remove(currentOrder);
 
                 var teleportSound = telepad.TeleportSound;
-                var audioParams = teleportSound?.Params ?? AudioParams.Default;
+                var audioParams = teleportSound.Params;
                 audioParams = audioParams.AddVolume(-8f);
                 _audio.PlayPvs(_audio.ResolveSound(telepad.TeleportSound), uid, audioParams);
 
@@ -120,10 +118,7 @@ public sealed partial class CargoSystem
         }
     }
 
-    private bool IsLinkedToConsole(
-        EntityUid uid,
-        EntityUid? approvingConsole
-    )
+    private bool IsLinkedToConsole(EntityUid uid, EntityUid? approvingConsole)
     {
         if (approvingConsole is null
             || !TryComp<DeviceLinkSinkComponent>(uid, out var sinkComponent))
@@ -132,8 +127,7 @@ public sealed partial class CargoSystem
         return sinkComponent.LinkedSources.Any(ent => ent == approvingConsole.Value);
     }
 
-    private void SetEnabled(Entity<CargoTelepadComponent> ent, ApcPowerReceiverComponent? receiver = null,
-        TransformComponent? xform = null)
+    private void SetEnabled(Entity<CargoTelepadComponent> ent, ApcPowerReceiverComponent? receiver = null, TransformComponent? xform = null)
     {
         // False due to AllCompsOneEntity test where they may not have the powerreceiver.
         if (!Resolve(ent.Owner, ref receiver, ref xform, false))
@@ -145,7 +139,9 @@ public sealed partial class CargoSystem
         // Only change to Idle if off
         // don't overwrite teleporting state
         if (disabled)
+        {
             ent.Comp.CurrentState = CargoTelepadState.Unpowered;
+        }
         else if (ent.Comp.CurrentState == CargoTelepadState.Unpowered)
         {
             ent.Comp.NextTeleport = Timing.CurTime + ent.Comp.Delay;
