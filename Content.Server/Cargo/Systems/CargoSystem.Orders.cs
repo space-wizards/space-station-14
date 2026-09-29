@@ -50,10 +50,8 @@ public sealed partial class CargoSystem
     [SubscribeLocalEvent]
     private void OnEmagged(Entity<CargoOrderConsoleComponent> ent, ref GotEmaggedEvent args)
     {
-        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
-            return;
-
-        if (_emag.CheckFlag(ent, EmagType.Interaction))
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction)
+            || _emag.CheckFlag(ent, EmagType.Interaction))
             return;
 
         args.Handled = true;
