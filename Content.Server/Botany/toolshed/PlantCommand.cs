@@ -33,7 +33,7 @@ public sealed partial class PlantCommand : ToolshedCommand
     private PlantSystem? _plant;
     private PlantTraySystem? _plantTray;
 
-    private EntityUid? SpawnPlant(
+    private Entity<PlantComponent?>? SpawnPlant(
         IInvocationContext ctx,
         [PipedArgument] EntityCoordinates coordinates,
         EntProtoId seedPrototype)
@@ -58,7 +58,7 @@ public sealed partial class PlantCommand : ToolshedCommand
         return plant;
     }
 
-    private EntityUid? SpawnPlant(
+    private Entity<PlantComponent?>? SpawnPlant(
         IInvocationContext ctx,
         [PipedArgument] EntityUid target,
         EntProtoId seedPrototype)
@@ -67,31 +67,31 @@ public sealed partial class PlantCommand : ToolshedCommand
     }
 
     [CommandImplementation("spawn")]
-    public IEnumerable<EntityUid> SpawnPlant(
+    public IEnumerable<Entity<PlantComponent>> SpawnPlant(
         IInvocationContext ctx,
         [PipedArgument] IEnumerable<EntityCoordinates> coordinates,
         [CommandArgument(typeof(PlantSeedPrototypeParser))] EntProtoId seedPrototype)
     {
         return coordinates
             .Select(coordinate => SpawnPlant(ctx, coordinate, seedPrototype))
-            .OfType<EntityUid>();
+            .OfType<Entity<PlantComponent>>();
     }
 
     [CommandImplementation("spawn")]
-    public IEnumerable<EntityUid> SpawnPlant(
+    public IEnumerable<Entity<PlantComponent>> SpawnPlant(
         IInvocationContext ctx,
         [PipedArgument] IEnumerable<EntityUid> targets,
         [CommandArgument(typeof(PlantSeedPrototypeParser))] EntProtoId seedPrototype)
     {
         return targets
             .Select(target => SpawnPlant(ctx, target, seedPrototype))
-            .OfType<EntityUid>();
+            .OfType<Entity<PlantComponent>>();
 
     }
 
-    private EntityUid? Age(
+    private Entity<PlantComponent>? Age(
         IInvocationContext ctx,
-        [PipedArgument] EntityUid input,
+        [PipedArgument] Entity<PlantComponent> input,
         int ticks)
     {
         if (!TryGetPlant(input, ctx, out var plant, out var holder))
@@ -103,18 +103,18 @@ public sealed partial class PlantCommand : ToolshedCommand
     }
 
     [CommandImplementation("age")]
-    public IEnumerable<EntityUid> Age(
+    public IEnumerable<Entity<PlantComponent>> Age(
         IInvocationContext ctx,
-        [PipedArgument] IEnumerable<EntityUid> input,
+        [PipedArgument] IEnumerable<Entity<PlantComponent>> input,
         [CommandArgument(typeof(PlantTicksParser))] int ticks)
     {
         return input
             .Select(entity => Age(ctx, entity, ticks))
-            .OfType<EntityUid>();
+            .OfType<Entity<PlantComponent>>();
 
     }
 
-    public EntityUid? AgeUntilReady(IInvocationContext ctx, [PipedArgument] EntityUid input)
+    public Entity<PlantComponent>? AgeUntilReady(IInvocationContext ctx, [PipedArgument] Entity<PlantComponent> input)
     {
         if (!TryGetPlant(input, ctx, out var plant, out var holder))
             return null;
@@ -144,18 +144,18 @@ public sealed partial class PlantCommand : ToolshedCommand
     }
 
     [CommandImplementation("ageuntilready")]
-    public IEnumerable<EntityUid> AgeUntilReady(
+    public IEnumerable<Entity<PlantComponent>> AgeUntilReady(
         IInvocationContext ctx,
-        [PipedArgument] IEnumerable<EntityUid> input)
+        [PipedArgument] IEnumerable<Entity<PlantComponent>> input)
     {
         return input
             .Select(entity => AgeUntilReady(ctx, entity))
-            .OfType<EntityUid>();
+            .OfType<Entity<PlantComponent>>();
     }
 
-    public EntityUid? AddMutation(
+    public Entity<PlantComponent>? AddMutation(
         IInvocationContext ctx,
-        [PipedArgument] EntityUid input,
+        [PipedArgument] Entity<PlantComponent> input,
         ProtoId<RandomPlantMutationListPrototype> tableId,
         string mutationName)
     {
@@ -186,21 +186,21 @@ public sealed partial class PlantCommand : ToolshedCommand
     }
 
     [CommandImplementation("addmutation")]
-    public IEnumerable<EntityUid> AddMutation(
+    public IEnumerable<Entity<PlantComponent>> AddMutation(
         IInvocationContext ctx,
-        [PipedArgument] IEnumerable<EntityUid> input,
+        [PipedArgument] IEnumerable<Entity<PlantComponent>> input,
         [CommandArgument(typeof(PlantMutationNameParser))]
         (ProtoId<RandomPlantMutationListPrototype> tableId, string mutationName) mutation
     )
     {
         return input
             .Select(entity => AddMutation(ctx, entity, mutation.tableId, mutation.mutationName))
-            .OfType<EntityUid>();
+            .OfType<Entity<PlantComponent>>();
     }
 
-    public EntityUid? AddChemical(
+    public Entity<PlantChemicalsComponent>? AddChemical(
         IInvocationContext ctx,
-        [PipedArgument] EntityUid input,
+        [PipedArgument] Entity<PlantChemicalsComponent> input,
         ProtoId<ReagentPrototype> reagent,
         float min,
         float amount,
@@ -210,7 +210,7 @@ public sealed partial class PlantCommand : ToolshedCommand
             return null;
 
         _plantChemicals ??= GetSys<PlantChemicalsSystem>();
-        if (!_plantChemicals.AddChemical(input, reagent, FixedPoint2.New(min), FixedPoint2.New(amount), inherent))
+        if (!_plantChemicals.AddChemical(input!, reagent, FixedPoint2.New(min), FixedPoint2.New(amount), inherent))
         {
             ctx.ReportError(new PlantCommandError(
                 $"Plant entity {input} did not accept added chemicals."));
@@ -221,9 +221,9 @@ public sealed partial class PlantCommand : ToolshedCommand
     }
 
     [CommandImplementation("addchem")]
-    public IEnumerable<EntityUid> AddChemical(
+    public IEnumerable<Entity<PlantChemicalsComponent>> AddChemical(
         IInvocationContext ctx,
-        [PipedArgument] IEnumerable<EntityUid> input,
+        [PipedArgument] IEnumerable<Entity<PlantChemicalsComponent>> input,
         ProtoId<ReagentPrototype> reagent,
         [CommandArgument(typeof(PlantChemQuantityParser))] float min,
         [CommandArgument(typeof(PlantChemQuantityParser))] float amount,
@@ -231,7 +231,7 @@ public sealed partial class PlantCommand : ToolshedCommand
     {
         return input
             .Select(entity => AddChemical(ctx, entity, reagent, min, amount, inherent))
-            .OfType<EntityUid>();
+            .OfType<Entity<PlantChemicalsComponent>>();
     }
 
     private bool TryGetPlant(
