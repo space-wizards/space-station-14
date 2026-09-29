@@ -286,7 +286,25 @@ public sealed partial class ClimbSystem : VirtualController
 
         var xform = _xformQuery.GetComponent(uid);
         var (worldPos, worldRot) = _xformSystem.GetWorldPositionRotation(xform);
-        var worldDirection = _xformSystem.GetWorldPosition(climbable) - worldPos;
+        var climbableTransform = _physics.GetPhysicsTransform(climbable);
+        Box2? climbableBounds = null;
+
+        if (_fixturesQuery.TryGetComponent(climbable, out var climbableFixtures))
+        {
+            foreach (var fixture in climbableFixtures.Fixtures.Values)
+            {
+                if (!fixture.Hard)
+                    continue;
+
+                for (var i = 0; i < fixture.Shape.ChildCount; i++)
+                {
+                    var aabb = fixture.Shape.ComputeAABB(climbableTransform, i);
+                    climbableBounds = climbableBounds?.Union(aabb) ?? aabb;
+                }
+            }
+        }
+
+        var worldDirection = (climbableBounds?.Center ?? climbableTransform.Position) - worldPos;
         var distance = worldDirection.Length();
         var parentRot = worldRot - xform.LocalRotation;
         // Need direction relative to climber's parent.
