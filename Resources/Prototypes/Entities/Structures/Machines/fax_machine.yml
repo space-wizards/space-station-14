@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, StructureHealthMachineWeak ]
   id: FaxMachineBase
   name: long range fax machine
   description: Bluespace technologies on the application of bureaucracy.
@@ -9,6 +9,12 @@
     drawdepth: SmallObjects
     layers:
     - state: icon
+    - state: idle
+      map: [ "faxEyes" ]
+    - state: printing
+      map: [ "printing" ]
+      visible: false
+    - state:
       map: [ "enum.FaxMachineVisuals.VisualState" ]
   - type: Icon
     sprite: Structures/Machines/fax_machine.rsi
@@ -27,6 +33,14 @@
         - TabletopMachineMask
         layer:
         - TabletopMachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: ActivatableUI
     key: enum.FaxUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -54,13 +68,16 @@
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
-        enum.FaxMachineVisuals.VisualState:
-          True: { state: idle }
-          False: { state: icon }
+        faxEyes:
+          True: { visible: true }
+          False: { visible: false }
       enum.FaxMachineVisuals.VisualState:
+        printing:
+          Printing: { visible: true }
+          Normal: { visible: false }
         enum.FaxMachineVisuals.VisualState:
-          Printing: { state: printing }
-          Normal: {state: idle}
+          Inserting: { visible: true }
+          Normal: { visible: false }
   - type: ItemSlots
   - type: ContainerContainer
     containers:
@@ -81,9 +98,15 @@
   components:
   - type: Sprite
     layers:
-      - state: icon
-        map: [ "base" ]
-        color: "#bfe3ff"
+    - state: icon
+      color: "#bfe3ff"
+    - state: idle
+      map: [ "faxEyes" ]
+    - state: printing
+      map: [ "printing" ]
+      visible: false
+    - state:
+      map: [ "enum.FaxMachineVisuals.VisualState" ]
   - type: FaxMachine
     name: "Central Command"
     notifyAdmins: true
@@ -96,9 +119,15 @@
   components:
   - type: Sprite
     layers:
-      - state: icon
-        map: [ "base" ]
-        color: "#a3a3a3"
+    - state: icon
+      color: "#a3a3a3"
+    - state: idle
+      map: [ "faxEyes" ]
+    - state: printing
+      map: [ "printing" ]
+      visible: false
+    - state:
+      map: [ "enum.FaxMachineVisuals.VisualState" ]
   - type: FaxMachine
     name: "ERR*?*%!"
     responsePings: false

@@ -1,12 +1,10 @@
-﻿using System.Linq;
+using System.Linq;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Kitchen;
 
 public sealed partial class RecipeManager : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
-
     public List<FoodRecipePrototype> Recipes { get; private set; } = new();
 
     public override void Initialize()
@@ -25,7 +23,7 @@ public sealed partial class RecipeManager : EntitySystem
 
     private void ReloadRecipes()
     {
-        Recipes = _prototypeManager
+        Recipes = ProtoMan
             .EnumeratePrototypes<FoodRecipePrototype>()
             .Where(x => !x.SecretRecipe)
             .OrderByDescending(x => x.IngredientCount())

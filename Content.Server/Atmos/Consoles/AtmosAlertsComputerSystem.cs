@@ -253,8 +253,8 @@ public sealed partial class AtmosAlertsComputerSystem : SharedAtmosAlertsCompute
             // Create entry
             var netEnt = GetNetEntity(ent);
 
-            var entry = new AtmosAlertsComputerEntry
-                (netEnt,
+            var entry = new AtmosAlertsComputerEntry(
+                netEnt,
                 GetNetCoordinates(entXform.Coordinates),
                 entDevice.Group,
                 alarmState,

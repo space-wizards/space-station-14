@@ -49,6 +49,7 @@
                 "Server",
                 "Client"
             ],
+            "preLaunchTask": "build"
         }
     ]
 }

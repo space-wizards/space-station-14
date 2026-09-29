@@ -131,26 +131,19 @@ public abstract partial class SharedCreamPieSystem : EntitySystem
         SetCreamPied(creamPied.AsNullable(), true);
 
         // Throwing is not predicted, so the thrower is not equal to the client predicting the collision, so we cannot pass in a user.
-        // TODO: Make the popup API sane.
         if (_net.IsClient)
             return;
 
-        // Shown only to the player that was hit.
         _popup.PopupEntity(
             Loc.GetString(
                 "cream-pied-component-on-hit-by-message",
                 ("thrown", args.Thrown)),
-            creamPied.Owner, creamPied.Owner);
-
-        var otherPlayers = Filter.PvsExcept(creamPied.Owner);
-
-        // Show to everyone else.
-        _popup.PopupEntity(
             Loc.GetString(
                 "cream-pied-component-on-hit-by-message-others",
                 ("owner", Identity.Entity(creamPied.Owner, EntityManager)),
                 ("thrown", args.Thrown)),
-            creamPied.Owner, otherPlayers, false);
+            creamPied.Owner,
+            creamPied.Owner);
     }
 
     private void OnRejuvenate(Entity<CreamPiedComponent> ent, ref RejuvenateEvent args)
@@ -166,5 +159,17 @@ public abstract partial class SharedCreamPieSystem : EntitySystem
     private void OnToolRefine(Entity<CreamPieComponent> ent, ref BeforeToolRefinedEvent args)
     {
         ActivatePayload(ent);
+    }
+
+    public void CopyComponent(Entity<CreamPiedComponent?> entity, EntityUid clone)
+    {
+        if (!Resolve(entity, ref entity.Comp, false))
+            return;
+
+        // We don't clone whether you are actively creampied on purpose.
+        var cloneComp = EnsureComp<CreamPiedComponent>(clone);
+        cloneComp.Displacement = entity.Comp.Displacement;
+        cloneComp.Sprite = entity.Comp.Sprite;
+        Dirty(clone, cloneComp);
     }
 }
