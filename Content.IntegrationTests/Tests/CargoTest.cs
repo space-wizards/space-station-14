@@ -42,6 +42,10 @@ public sealed class CargoTest : GameTest
     [Test]
     public async Task NoCargoOrderArbitrage()
     {
+        // Change this to print the costs and sell prices of every cargo product
+        // This should always be false on master
+        var logPriceInfo = false;
+
         await Pair.CreateTestMap();
         var coordinates = Pair.TestMap!.GridCoords;
 
@@ -49,6 +53,9 @@ public sealed class CargoTest : GameTest
 
         await Server.WaitAssertion(() =>
         {
+            if (logPriceInfo)
+                TestContext.Out.WriteLineAsync($"{"Proto ID",-50} |  {"Cost",-6}  |  {"Sell Price",-8}");
+
             using (Assert.EnterMultipleScope())
             {
                 foreach (var proto in SProtoMan.EnumeratePrototypes<CargoProductPrototype>())
@@ -79,6 +86,10 @@ public sealed class CargoTest : GameTest
                         Is.AtMost(proto.Cost),
                         $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!"
                     );
+
+                    if (logPriceInfo)
+                        TestContext.Out.WriteLineAsync($"{$"{proto.ID}",-50} |  {$"${proto.Cost}",6}  |  ${price,-8}");
+
                     SDeleteNow(ent);
                 }
             }
