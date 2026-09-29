@@ -9,6 +9,9 @@
       - !type:AdminLog
         message: "Construction"
         impact: High
+      - !type:PlaySound
+        sound:
+          collection: PlaceWires
       steps:
       - tag: ModularReceiver
         icon:
@@ -47,6 +50,10 @@
     entity: WeaponMakeshiftLaserFrame
     edges:
     - to: mslaserframeglasses
+      completed:
+      - !type:PlaySound
+        sound:
+          collection: PlaceGlass
       steps:
       - tag: GlassLens
         name: construction-graph-tag-glass-lens
@@ -63,6 +70,10 @@
     entity: WeaponMakeshiftLaserFrame
     edges:
     - to: mslasercelled
+      completed:
+      - !type:PlaySound
+        sound:
+          collection: PlaceElectronics
       steps:
       - tag: PowerCell
         store: cell_slot
