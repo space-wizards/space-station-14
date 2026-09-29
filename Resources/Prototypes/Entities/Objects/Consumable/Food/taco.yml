@@ -61,7 +61,9 @@
     - 0,0,1,0
     storedOffset: 0,1
   - type: Tag
-    tags: [ FinishedMeal, Meat]
+    tags:
+    - FinishedMeal
+    - Meat
 
 - type: entity
   name: beef taco
@@ -197,4 +199,6 @@
   - type: Sprite
     state: softtaco
   - type: Tag
-    tags: [ FinishedMeal, Meat ]
+    tags:
+    - FinishedMeal
+    - Meat

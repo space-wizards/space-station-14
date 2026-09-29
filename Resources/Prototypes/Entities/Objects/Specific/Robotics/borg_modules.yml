@@ -1187,6 +1187,7 @@
           - Cake
           - ClothMade
           - Cooked
+          - Cookware
           - Dinnerware
           - DonkPocket
           - Donut
@@ -1230,6 +1231,7 @@
           tags:
           - ChiliBowl
           - Cooked
+          - Cookware
           - Dinnerware
           - Donut
           - DonkPocket

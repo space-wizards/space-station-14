@@ -22,7 +22,7 @@
     price: 0
   - type: Tag
     tags:
-      - Ingredient
+    - Ingredient
 
 # Packets
 
@@ -515,7 +515,9 @@
   - type: Icon
     state: bottle-ketchup
   - type: Tag
-    tags: [ BBQsauce, Ingredient]
+    tags:
+    - BBQsauce
+    - Ingredient
 
 # Shakers
 
@@ -574,7 +576,9 @@
   - type: Icon
     state: shaker-salt
   - type: Tag
-    tags: [ Ingredient, SaltShaker ]
+    tags:
+    - Ingredient
+    - SaltShaker
 
 - type: entity
   parent: BaseFoodShaker
@@ -592,4 +596,6 @@
   - type: Icon
     state: shaker-pepper
   - type: Tag
-    tags: [ Ingredient, PepperShaker ]
+    tags:
+    - Ingredient
+    - PepperShaker

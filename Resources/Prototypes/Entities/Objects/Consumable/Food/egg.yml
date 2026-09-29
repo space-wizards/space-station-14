@@ -78,7 +78,9 @@
   - type: Item
     size: Tiny
   - type: Tag
-    tags: [ Egg, Trash ]
+    tags:
+    - Egg
+    - Trash
   - type: SpaceGarbage
 
 # Egg
@@ -121,4 +123,7 @@
     heatCapacity: 15000
   - type: TemperatureDamage
   - type: Tag
-    tags: [ Egg, FinishedMeal, Meat ]
+    tags:
+    - Egg
+    - FinishedMeal
+    - Meat

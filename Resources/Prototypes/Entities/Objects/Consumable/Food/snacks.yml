@@ -282,7 +282,9 @@
     trash:
     - FoodPacketSusTrash
   - type: Tag
-    tags: [ FoodSnack, Meat ]
+    tags:
+    - FoodSnack
+    - Meat
 
 - type: entity
   name: syndi-cakes
