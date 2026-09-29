@@ -414,7 +414,7 @@
 # The actual brain inside the core
 - type: entity
   id: StationAiBrain
-  parent: PositronicBrainNotIonStormable # One day
+  parent: PositronicBrain # You can always card the AI and restore it to crewsimov.
   categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: Sprite

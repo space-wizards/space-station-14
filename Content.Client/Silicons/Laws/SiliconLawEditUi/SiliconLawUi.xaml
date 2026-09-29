@@ -38,7 +38,7 @@
                 Access="Public"
                 StyleClasses="OpenLeft">
             </Button>
-       </BoxContainer>
+        </BoxContainer>
     </BoxContainer>
     <BoxContainer
         Orientation="Vertical"
