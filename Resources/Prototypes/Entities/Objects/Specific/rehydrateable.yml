@@ -167,9 +167,9 @@
   components:
   - type: Rehydratable
     possibleSpawns:
-    - MobAdultSlimesYellow
-    - MobAdultSlimesBlue
-    - MobAdultSlimesGreen
+    - MobAdultSlimesYellowNeutral
+    - MobAdultSlimesBlueNeutral
+    - MobAdultSlimesGreenNeutral
 
 - type: entity
   parent: RehydratableAnimalCube

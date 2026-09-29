@@ -167,6 +167,17 @@
         settings: short
 
 - type: entity
+  name: blue slime
+  parent: MobAdultSlimesBlue
+  id: MobAdultSlimesBlueNeutral
+  suffix: Neutral
+  components:
+  - type: GhostRole
+    prob: 0.05
+  - type: NPCRetaliation
+    attackMemoryLength: 10
+
+- type: entity
   name: green slime
   parent: MobAdultSlimes
   id: MobAdultSlimesGreen
@@ -206,6 +217,17 @@
         settings: short
 
 - type: entity
+  name: green slime
+  parent: MobAdultSlimesGreen
+  id: MobAdultSlimesGreenNeutral
+  suffix: Neutral
+  components:
+  - type: GhostRole
+    prob: 0.05
+  - type: NPCRetaliation
+    attackMemoryLength: 10
+
+- type: entity
   name: yellow slime
   parent: MobAdultSlimes
   id: MobAdultSlimesYellow
@@ -242,3 +264,14 @@
       - MindRoleGhostRoleTeamAntagonist
       raffle:
         settings: short
+
+- type: entity
+  name: yellow slime
+  parent: MobAdultSlimesYellow
+  id: MobAdultSlimesYellowNeutral
+  suffix: Neutral
+  components:
+  - type: GhostRole
+    prob: 0.05
+  - type: NPCRetaliation
+    attackMemoryLength: 10

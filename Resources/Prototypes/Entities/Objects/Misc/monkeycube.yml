@@ -129,7 +129,7 @@
   parent: MonkeyCubeBox
   name: slime cube box
   id: SlimeCubeBox
-  description: Condensed friendly slimes in a cube. Just add water! Drymate® is not responsible for undue hostility from inappropriate fluid application.
+  description: Condensed slimes in a cube. Just add water! Drymate® is not responsible for undue hostility from inappropriate fluid application.
   components:
   - type: EntityTableContainerFill
     containers:
