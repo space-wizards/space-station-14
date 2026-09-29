@@ -1,0 +1,61 @@
+- files:
+  - music-cosmic-finale.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Music tracks 'Premonition' and 'A New Dawn' composed, mixed, and mastered by Nahu Pyrope (spotify, youtube, & more) for Cosmic Cult. This file is a blend of both tracks."
+  source: "https://github.com/space-wizards/space-station-14/pull/46202"
+
+- files:
+  - alarm-octarine.ogg
+  - chantry-alarm
+  - colossus-death.ogg
+  - colossus-spawn.ogg
+  - cosmic-detonate.ogg
+  - cosmic-lance-hit.ogg
+  - cosmic-lance-impact.ogg
+  - cosmic-projectile.ogg
+  - cosmic-projectile-hit.ogg
+  - cosmic-sword-glance.ogg
+  - cosmic-sword-hit.ogg
+  - cosmic-weapon-reload.ogg
+  - cosmic-weapon-swing.ogg
+  - cosmic-weapon-unwield.ogg
+  - cosmic-weapon-wield.ogg
+  - device-upgraded.ogg
+  - gateway-spawn.ogg
+  - monument-ambient.ogg
+  - stigma-destroyed.ogg
+  - stigma-harvest.ogg
+  - stigma-inserted.ogg
+  - tier2.ogg
+  - tier3.ogg
+  - trigger-sound.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "By AftrLite(GitHub) for Cosmic Cult. Made using a combination of CC0 samples from freesound.org and personally-recorded foley."
+  source: "https://github.com/space-wizards/space-station-14/pull/46202"
+
+- files:
+  - colossus-ambience.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "By AftrLite(GitHub) & widgetbeck(GitHub) for Cosmic Cult. Made using a combination of CC0 samples from freesound.org and personally-recorded foley."
+  source: "https://github.com/space-wizards/space-station-14/pull/46202"
+
+- files:
+  - colossus-exclaim.ogg
+  - colossus-ask.ogg
+  - colossus-say.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "By widgetbeck(GitHub) for Cosmic Cult. Made using a combination of CC0 samples from freesound.org and personally-recorded foley."
+  source: "https://github.com/space-wizards/space-station-14/pull/46202"
+
+- files:
+  - monument-gacha.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "By Darklyac for Cosmic Cult."
+  source: "https://github.com/space-wizards/space-station-14/pull/46202"
+
+- files:
+  - cosmic-ai-start.ogg
+  - cosmic-start.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "By Octofoss for Cosmic Cult."
+  source: "https://github.com/space-wizards/space-station-14/pull/46202"

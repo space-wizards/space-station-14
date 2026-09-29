@@ -1,5 +1,6 @@
-﻿- type: entity
+- type: entity
   id: OptionsVisualizerTest
+  name: OptionsVisualizerTest
   suffix: DEBUG
   components:
   - type: Sprite
@@ -18,4 +19,3 @@
         data: { state: motion }
       - options: [Test, ReducedMotion]
         data: { state: both }
-

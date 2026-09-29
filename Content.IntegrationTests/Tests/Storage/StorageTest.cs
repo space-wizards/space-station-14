@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
+using Content.Server.Item;
 using Content.Shared.Containers;
 using Content.Shared.Item;
 using Content.Shared.Prototypes;
@@ -15,6 +17,9 @@ namespace Content.IntegrationTests.Tests.Storage;
 
 public sealed class StorageTest : GameTest
 {
+    [SidedDependency(Side.Server)] private ItemSystem _sItem = default!;
+    [SidedDependency(Side.Server)] private SharedStorageSystem _sStorage = default!;
+
     /// <summary>
     /// Can an item store more than itself weighs.
     /// In an ideal world this test wouldn't need to exist because sizes would be recursive.
@@ -256,5 +261,37 @@ public sealed class StorageTest : GameTest
                 Assert.That(!proto.HasComp<StorageFillComponent>(compFact), $"Prototype {proto.ID} has both {nameof(ContainerFillComponent)} and {nameof(StorageFillComponent)}.");
             }
         });
+    }
+
+    [Test]
+    [Description("Tests that entities with no specified max size start with sane values.")]
+    [RunOnSide(Side.Server)]
+    public async Task ValidDefaultStorageSizeTest()
+    {
+        var uid = SSpawn(null);
+        var storage = SEntMan.AddComponent<StorageComponent>(uid);
+        Assume.That(storage.MaxItemSize, Is.Null);
+
+        var allSizes = SProtoMan.EnumeratePrototypes<ItemSizePrototype>().ToList();
+        allSizes.Sort();
+
+        using (Assert.EnterMultipleScope())
+        {
+            var defaultSize = _sStorage.GetMaxItemSize((uid, storage));
+            Assert.That(defaultSize, Is.Not.Null, "MaxItemSize for a default storage entity without ItemComponent was null.");
+            Assert.That(SProtoMan.HasIndex<ItemSizePrototype>(defaultSize), Is.True, "MaxItemSize for a default storage entity without ItemComponent returned an invalid prototype.");
+
+            var item = SEntMan.AddComponent<ItemComponent>(uid);
+
+            // Assign each size, check the max item size of the entity vs. the previous one.
+            ProtoId<ItemSizePrototype>? lastSize = null;
+            foreach (var size in allSizes)
+            {
+                _sItem.SetSize(uid, size, item);
+                var oldSize = lastSize ?? size;
+                Assert.That(_sStorage.GetMaxItemSize((uid, storage)).ID, Is.EqualTo(oldSize), $"Unexpected size returned from GetMaxItemSize for size \"{size.ID}\"");
+                lastSize = size;
+            }
+        }
     }
 }

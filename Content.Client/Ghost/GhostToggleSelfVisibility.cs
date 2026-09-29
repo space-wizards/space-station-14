@@ -1,4 +1,4 @@
-﻿using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.Console;
 

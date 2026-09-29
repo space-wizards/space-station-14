@@ -1,9 +1,7 @@
 using Content.Server.DeviceLinking.Components;
-using Content.Server.DeviceNetwork;
 using Content.Server.Doors.Systems;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors;
 using JetBrains.Annotations;
@@ -22,13 +20,20 @@ namespace Content.Server.DeviceLinking.Systems
             SubscribeLocalEvent<DoorSignalControlComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<DoorSignalControlComponent, SignalReceivedEvent>(OnSignalReceived);
             SubscribeLocalEvent<DoorSignalControlComponent, DoorStateChangedEvent>(OnStateChanged);
+            SubscribeLocalEvent<DoorSignalControlComponent, DoorBoltsChangedEvent>(OnBoltsChanged);
         }
 
         private void OnInit(EntityUid uid, DoorSignalControlComponent component, ComponentInit args)
         {
-
             _signalSystem.EnsureSinkPorts(uid, component.OpenPort, component.ClosePort, component.TogglePort);
+
+            if (HasComp<DoorBoltComponent>(uid))
+                _signalSystem.EnsureSinkPorts(uid, component.InBolt);
+
             _signalSystem.EnsureSourcePorts(uid, component.OutOpen);
+
+            if (HasComp<DoorBoltComponent>(uid))
+                _signalSystem.EnsureSourcePorts(uid, component.OutBolt);
         }
 
         private void OnSignalReceived(EntityUid uid, DoorSignalControlComponent component, ref SignalReceivedEvent args)
@@ -36,10 +41,38 @@ namespace Content.Server.DeviceLinking.Systems
             if (!TryComp(uid, out DoorComponent? door))
                 return;
 
-            var state = SignalState.Momentary;
-            args.Data?.TryGetValue(DeviceNetworkConstants.LogicState, out state);
+            if (args.Port == component.OpenPort)
+            {
+                if (door.State == DoorState.Closed)
+                    _doorSystem.TryOpen(uid, door);
+            }
+            else if (args.Port == component.ClosePort)
+            {
+                if (door.State == DoorState.Open)
+                    _doorSystem.TryClose(uid, door);
+            }
+            else if (args.Port == component.TogglePort)
+            {
+                _doorSystem.TryToggleDoor(uid, door);
+            }
+            else if (args.Port == component.InBolt)
+            {
+                if (!TryComp<DoorBoltComponent>(uid, out var bolts))
+                    return;
 
+                // if its a pulse toggle, otherwise set bolts to high/low
+                var bolt = !bolts.BoltsDown;
+                _doorSystem.SetBoltsDown((uid, bolts), bolt);
+            }
+        }
 
+        [SubscribeLocalEvent]
+        private void OnSignalReceived(EntityUid uid, DoorSignalControlComponent component, ref SignalReceivedEvent<LogicStatePayload> args)
+        {
+            if (!TryComp(uid, out DoorComponent? door))
+                return;
+
+            var state = args.Data.State;
             if (args.Port == component.OpenPort)
             {
                 if (state == SignalState.High || state == SignalState.Momentary)
@@ -98,6 +131,11 @@ namespace Content.Server.DeviceLinking.Systems
                 // say the door is open whenever it would be letting air pass
                 _signalSystem.SendSignal(uid, door.OutOpen, true);
             }
+        }
+
+        private void OnBoltsChanged(EntityUid uid, DoorSignalControlComponent door, DoorBoltsChangedEvent args)
+        {
+            _signalSystem.SendSignal(uid, door.OutBolt, args.BoltsDown);
         }
     }
 }

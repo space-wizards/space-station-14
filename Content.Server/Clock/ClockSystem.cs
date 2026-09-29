@@ -1,6 +1,7 @@
 using Content.Server.GameTicking.Events;
 using Content.Shared.Clock;
 using Content.Shared.Destructible;
+using Content.Shared.GameTicking.Events;
 using Robust.Server.GameStates;
 using Robust.Shared.Random;
 

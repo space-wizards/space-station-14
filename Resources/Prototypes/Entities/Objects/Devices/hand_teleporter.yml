@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: HandTeleporter
   parent: [BaseItem, BaseGrandTheftContraband]
   name: hand teleporter

@@ -23,6 +23,24 @@
     state: ShaftMiner
   jobName: job-name-salvagespec
 
+# Civilian
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconPassenger
+  icon:
+    sprite: *icon-rsi
+    state: Passenger
+  jobName: job-name-passenger
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconVisitor
+  icon:
+    sprite: *icon-rsi
+    state: Visitor
+  jobName: job-name-visitor
+
 # Command
 
 - type: jobIcon
@@ -329,9 +347,9 @@
   icon:
     sprite: *icon-rsi
     state: TramDriver
-  jobName: job-name-tramdriver
+  jobName: job-name-tram-driver
 
-# Entertainer (like service, but not actually service)
+# Theatre (not exactly service workers, but not civilians either)
 
 - type: jobIcon
   parent: JobIcon
@@ -356,24 +374,6 @@
     sprite: *icon-rsi
     state: Musician
   jobName: job-name-musician
-
-# Passenger
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconPassenger
-  icon:
-    sprite: *icon-rsi
-    state: Passenger
-  jobName: job-name-passenger
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconVisitor
-  icon:
-    sprite: *icon-rsi
-    state: Visitor
-  jobName: job-name-visitor
 
 # Silicon
 

@@ -283,7 +283,7 @@ public sealed partial class CargoSystem
 
         if (
             _station.GetOwningStation(ent.Owner) is not { } station
-            || !TryComp<StationBankAccountComponent>(station, out var bankAccount)
+            || !_bankQuery.TryComp(station, out var bankAccount)
         )
         {
             return;

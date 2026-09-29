@@ -127,7 +127,7 @@ public sealed partial class PoweredLightVisualizerSystem : VisualizerSystem<Powe
             {
                 KeyFrames =
                 {
-                    new AnimationTrackPlaySound.KeyFrame(sound, 0.5f)
+                    new AnimationTrackPlaySound.KeyFrame(sound, 0.5f, () => comp.BlinkingSound.Params)
                 }
             });
         }

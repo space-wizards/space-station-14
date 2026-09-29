@@ -4,7 +4,6 @@ using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Roles.Jobs;
 using Content.Shared.CCVar;
-using Content.Shared.Ghost;
 using Content.Shared.Mind.Components;
 using Content.Shared.Voting;
 using Robust.Server.Player;
@@ -14,19 +13,20 @@ using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using System.Threading.Tasks;
 using Content.Server.Players.Whitelist;
+using Content.Shared.GameTicking;
 using Content.Shared.Players.PlayTimeTracking;
+using Content.Shared.Ghost.Components;
 
 namespace Content.Server.Voting;
 
 public sealed partial class VotingSystem : EntitySystem
 {
-
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IAdminManager _adminManager = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private JobSystem _jobs = default!;
-    [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private ServerGameTicker _gameTicker = default!;
     [Dependency] private ISharedPlaytimeManager _playtimeManager = default!;
     [Dependency] private WhitelistManager _whitelistManager = default!;
 

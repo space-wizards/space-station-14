@@ -243,9 +243,6 @@
       outerClothing:
       - state: equipped-OUTERCLOTHING-light
         shader: unshaded
-      outerClothing-vox:
-      - state: equipped-OUTERCLOTHING-light-vox
-        shader: unshaded
   - type: ItemTogglePointLight
   - type: Appearance
   - type: HandheldLight
@@ -257,7 +254,7 @@
     color: "#80ff80"
     radius: 5
     energy: 2
-    mask: /Textures/Effects/LightMasks/cone.png
+    lightMask: ConeSingle
     autoRot: true
     netsync: false
   - type: LightBehaviour

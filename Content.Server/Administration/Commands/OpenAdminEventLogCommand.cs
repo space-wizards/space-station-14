@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration.AdminEventLog;
+using Content.Server.Administration.AdminEventLog;
 using Content.Server.EUI;
 using Content.Shared.Administration;
 using Robust.Shared.Console;

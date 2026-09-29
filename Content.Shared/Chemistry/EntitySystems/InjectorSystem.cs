@@ -15,12 +15,11 @@ using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Standing;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -33,7 +32,7 @@ public sealed partial class InjectorSystem : EntitySystem
 {
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedForensicsSystem _forensics = default!;
+    [Dependency] private ForensicsSystem _forensics = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private OpenableSystem _openable = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
@@ -648,7 +647,7 @@ public sealed partial class InjectorSystem : EntitySystem
         _forensics.TransferDna(injector, target);
         // Reset the delay, if present.
 
-        _useDelay.TryResetDelay(injector);
+        _useDelay.TryResetDelay(injector.Owner);
 
         // Automatically set syringe to draw after completely draining it.
         if (!_solutionContainer.ResolveSolution(injector.Owner, injector.Comp.SolutionName, ref injector.Comp.Solution, out var solution)

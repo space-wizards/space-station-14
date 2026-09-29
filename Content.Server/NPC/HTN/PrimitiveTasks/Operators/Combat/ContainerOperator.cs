@@ -1,4 +1,4 @@
-﻿using Robust.Server.Containers;
+using Robust.Server.Containers;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat;
 

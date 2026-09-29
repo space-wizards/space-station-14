@@ -4,8 +4,6 @@ using Content.Server.Clothing.Systems;
 using Content.Server.Emoting.Systems;
 using Content.Server.Popups;
 using Content.Shared.Chat;
-using Content.Shared.Chat.Prototypes;
-using Content.Shared.Clumsy;
 using Content.Shared.Cluwne;
 using Content.Shared.Damage.Systems;
 using Content.Shared.IdentityManagement;
@@ -13,6 +11,7 @@ using Content.Shared.Mobs;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Speech.EntitySystems;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
@@ -21,7 +20,6 @@ namespace Content.Server.Cluwne;
 
 public sealed partial class CluwneSystem : EntitySystem
 {
-
     [Dependency] private PopupSystem _popupSystem = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private IRobustRandom _robustRandom = default!;
@@ -31,6 +29,7 @@ public sealed partial class CluwneSystem : EntitySystem
     [Dependency] private AutoEmoteSystem _autoEmote = default!;
     [Dependency] private NameModifierSystem _nameMod = default!;
     [Dependency] private OutfitSystem _outfitSystem = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
     public override void Initialize()
     {
@@ -48,16 +47,15 @@ public sealed partial class CluwneSystem : EntitySystem
     /// </summary>
     private void OnMobState(Entity<CluwneComponent> ent, ref MobStateChangedEvent args)
     {
-        if (args.NewMobState == MobState.Dead)
-        {
-            RemComp<CluwneComponent>(ent.Owner);
-            RemComp<ClumsyComponent>(ent.Owner);
-            RemComp<AutoEmoteComponent>(ent.Owner);
-            _damageableSystem.TryChangeDamage(ent.Owner, ent.Comp.RevertDamage);
-        }
-    }
+        if (args.NewMobState != MobState.Dead)
+            return;
 
-    public EmoteSoundsPrototype? EmoteSounds;
+        _statusEffects.TryRemoveStatusEffect(ent, ent.Comp.CluwneStatus);
+        RemComp<CluwneComponent>(ent.Owner);
+        RemComp<AutoEmoteComponent>(ent.Owner);
+
+        _damageableSystem.TryChangeDamage(ent.Owner, ent.Comp.RevertDamage);
+    }
 
     /// <summary>
     /// OnStartup gives the cluwne outfit, ensures clumsy, and makes sure emote sounds are laugh.
@@ -67,16 +65,13 @@ public sealed partial class CluwneSystem : EntitySystem
         if (ent.Comp.EmoteSoundsId == null)
             return;
 
-        ProtoMan.TryIndex(ent.Comp.EmoteSoundsId, out EmoteSounds);
-
-
         if (ent.Comp.RandomEmote && ent.Comp.AutoEmoteId != null)
         {
             EnsureComp<AutoEmoteComponent>(ent.Owner);
             _autoEmote.AddEmote(ent.Owner, ent.Comp.AutoEmoteId);
         }
 
-        EnsureComp<ClumsyComponent>(ent.Owner);
+        _statusEffects.TrySetStatusEffectDuration(ent, ent.Comp.CluwneStatus);
 
         var transformMessage = Loc.GetString(ent.Comp.TransformMessage, ("target", Identity.Entity(ent.Owner, EntityManager)));
         _popupSystem.PopupEntity(transformMessage, ent.Owner, PopupType.LargeCaution);
@@ -98,7 +93,8 @@ public sealed partial class CluwneSystem : EntitySystem
         if (!ent.Comp.RandomEmote)
             return;
 
-        args.Handled = _chat.TryPlayEmoteSound(ent.Owner, EmoteSounds, args.Emote);
+        ProtoMan.TryIndex(ent.Comp.EmoteSoundsId, out var emoteSounds);
+        args.Handled = _chat.TryPlayEmoteSound(ent.Owner, emoteSounds, args.Emote);
 
         if (_robustRandom.Prob(ent.Comp.GiggleRandomChance))
         {

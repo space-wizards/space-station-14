@@ -1,7 +1,6 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Atmos.Monitor.Components;
 
@@ -19,33 +18,32 @@ public sealed partial class AtmosMonitorComponent : Component
     // Note that this cancels every single network
     // event, including ones that may not be
     // related to atmos monitor events.
-    [DataField("netEnabled")]
+    [DataField]
     public bool NetEnabled = true;
 
-    [DataField("temperatureThresholdId", customTypeSerializer: (typeof(PrototypeIdSerializer<AtmosAlarmThresholdPrototype>)))]
-    public string? TemperatureThresholdId;
+    [DataField]
+    public ProtoId<AtmosAlarmThresholdPrototype>? TemperatureThresholdId;
 
-    [DataField("temperatureThreshold")]
+    [DataField]
     public AtmosAlarmThreshold? TemperatureThreshold;
 
-    [DataField("pressureThresholdId", customTypeSerializer: (typeof(PrototypeIdSerializer<AtmosAlarmThresholdPrototype>)))]
-    public string? PressureThresholdId;
+    [DataField]
+    public ProtoId<AtmosAlarmThresholdPrototype>? PressureThresholdId;
 
-    [DataField("pressureThreshold")]
+    [DataField]
     public AtmosAlarmThreshold? PressureThreshold;
 
     // monitor fire - much different from temperature
     // since there's events for fire, setting this to true
     // will make the atmos monitor act like a smoke detector,
     // immediately signalling danger if there's a fire
-    [DataField("monitorFire")]
+    [DataField]
     public bool MonitorFire = false;
 
-    [DataField("gasThresholdPrototypes",
-        customTypeSerializer:typeof(PrototypeIdValueDictionarySerializer<Gas, AtmosAlarmThresholdPrototype>))]
-    public Dictionary<Gas, string>? GasThresholdPrototypes;
+    [DataField]
+    public Dictionary<Gas, ProtoId<AtmosAlarmThresholdPrototype>>? GasThresholdPrototypes;
 
-    [DataField("gasThresholds")]
+    [DataField]
     public Dictionary<Gas, AtmosAlarmThreshold>? GasThresholds;
 
     /// <summary>
@@ -55,17 +53,17 @@ public sealed partial class AtmosMonitorComponent : Component
     public GasMixture? TileGas;
 
     // Stores the last alarm state of this alarm.
-    [DataField("lastAlarmState")]
+    [DataField]
     public AtmosAlarmType LastAlarmState = AtmosAlarmType.Normal;
 
-    [DataField("trippedThresholds")]
+    [DataField]
     public AtmosMonitorThresholdTypeFlags TrippedThresholds;
 
     /// <summary>
     ///     Registered devices in this atmos monitor. Alerts will be sent directly
     ///     to these devices.
     /// </summary>
-    [DataField("registeredDevices")]
+    [DataField]
     public HashSet<string> RegisteredDevices = new();
 
     /// <summary>

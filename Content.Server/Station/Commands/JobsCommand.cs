@@ -13,12 +13,12 @@ namespace Content.Server.Station.Commands;
 [ToolshedCommand, AdminCommand(AdminFlags.VarEdit)]
 public sealed class JobsCommand : ToolshedCommand
 {
-    private StationJobsSystem? _jobs;
+    private ServerStationJobsSystem? _jobs;
 
     [CommandImplementation("jobs")]
     public IEnumerable<JobSlotRef> Jobs([PipedArgument] EntityUid station)
     {
-        _jobs ??= GetSys<StationJobsSystem>();
+        _jobs ??= GetSys<ServerStationJobsSystem>();
 
         foreach (var (job, _) in _jobs.GetJobs(station))
         {
@@ -33,7 +33,7 @@ public sealed class JobsCommand : ToolshedCommand
     [CommandImplementation("job")]
     public JobSlotRef Job([PipedArgument] EntityUid station, ProtoId<JobPrototype> job)
     {
-        _jobs ??= GetSys<StationJobsSystem>();
+        _jobs ??= GetSys<ServerStationJobsSystem>();
 
         return new JobSlotRef(job.Id, station, _jobs, EntityManager);
     }
@@ -53,7 +53,7 @@ public sealed class JobsCommand : ToolshedCommand
     [CommandImplementation("adjust")]
     public JobSlotRef Adjust([PipedArgument] JobSlotRef @ref, int by)
     {
-        _jobs ??= GetSys<StationJobsSystem>();
+        _jobs ??= GetSys<ServerStationJobsSystem>();
         _jobs.TryAdjustJobSlot(@ref.Station, @ref.Job, by, true, true);
         return @ref;
     }
@@ -66,7 +66,7 @@ public sealed class JobsCommand : ToolshedCommand
     [CommandImplementation("set")]
     public JobSlotRef Set([PipedArgument] JobSlotRef @ref, int by)
     {
-        _jobs ??= GetSys<StationJobsSystem>();
+        _jobs ??= GetSys<ServerStationJobsSystem>();
         _jobs.TrySetJobSlot(@ref.Station, @ref.Job, by, true);
         return @ref;
     }
@@ -78,7 +78,7 @@ public sealed class JobsCommand : ToolshedCommand
     [CommandImplementation("amount")]
     public int Amount([PipedArgument] JobSlotRef @ref)
     {
-        _jobs ??= GetSys<StationJobsSystem>();
+        _jobs ??= GetSys<ServerStationJobsSystem>();
         _jobs.TryGetJobSlot(@ref.Station, @ref.Job, out var slots);
         return slots ?? 0;
     }
@@ -89,7 +89,7 @@ public sealed class JobsCommand : ToolshedCommand
 }
 
 // Used for Toolshed queries.
-public readonly record struct JobSlotRef(string Job, EntityUid Station, StationJobsSystem Jobs, IEntityManager EntityManager)
+public readonly record struct JobSlotRef(string Job, EntityUid Station, ServerStationJobsSystem Jobs, IEntityManager EntityManager)
 {
     public override string ToString()
     {

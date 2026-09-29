@@ -48,6 +48,9 @@ public abstract partial class SharedPuddleSystem
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
+        if (!entity.Comp.CanSpillFromHand)
+            return;
+
         if (!_solutionContainerSystem.TryGetSolution(args.Target,
                 entity.Comp.SolutionName,
                 out var soln,

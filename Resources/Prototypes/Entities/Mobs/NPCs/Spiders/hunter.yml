@@ -1,0 +1,60 @@
+# Hunter Spider
+- type: entity
+  parent: MobSpiderAnimated
+  id: MobGiantSpiderHunter
+  name: hunter spider
+  description: An aggressive, fast-moving variety of giant spider.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/Spiders/hunterspider.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: idle
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 8
+  - type: SolutionManager
+    solutions:
+    - SolutionVenomSpiderHunter
+  - type: MeleeChemicalInjector
+    transferAmount: 10
+    solution: melee
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 6
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      60: Dead
+
+- type: entity
+  parent: [SolutionWeapon, SolutionTiny]
+  id: SolutionVenomSpiderHunter
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 10
+      reagents:
+      - ReagentId: Mechanotoxin
+        Quantity: 10
+  - type: SolutionRegeneration
+    generated:
+      reagents:
+      - ReagentId: Mechanotoxin
+        Quantity: 0.1
+
+# Angry Hunter Spider
+- type: entity
+  parent:
+  - MobSpiderAngryBase
+  - MobGiantSpiderHunter
+  id: MobGiantSpiderHunterAngry
+  suffix: Angry

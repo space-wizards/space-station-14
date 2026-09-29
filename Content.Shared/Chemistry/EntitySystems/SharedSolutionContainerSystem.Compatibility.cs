@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Chemistry.EntitySystems;

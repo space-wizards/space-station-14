@@ -35,7 +35,7 @@ public sealed partial class TimerTriggerVisualizerSystem : VisualizerSystem<Time
             ent.Comp.PrimingAnimation.AnimationTracks.Add(
                 new AnimationTrackPlaySound()
                 {
-                    KeyFrames = { new AnimationTrackPlaySound.KeyFrame(_audioSystem.ResolveSound(ent.Comp.PrimingSound), 0) }
+                    KeyFrames = { new AnimationTrackPlaySound.KeyFrame(_audioSystem.ResolveSound(ent.Comp.PrimingSound), 0, () => ent.Comp.PrimingSound.Params) }
                 }
             );
         }

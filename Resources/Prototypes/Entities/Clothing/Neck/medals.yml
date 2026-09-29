@@ -1,6 +1,18 @@
+- type: entity
+  abstract: true
+  parent: ClothingNeckBase
+  id: ClothingNeckMedalBase
+  name: medal
+  description: A medal to show your mettle. May or may not be made of metal.
+  components:
+  - type: Tag
+    tags:
+      - Medal
+      - MonkeyWearable
+      - WhitelistChameleon
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingNeckMedalBase
   id: ClothingNeckBronzeheart
   name: bronzeheart medal
   description: Given to crewmates for exemplary bravery in the face of danger.
@@ -9,13 +21,9 @@
     sprite: Clothing/Neck/Medals/bronzeheart.rsi
   - type: Clothing
     sprite: Clothing/Neck/Medals/bronzeheart.rsi
-  - type: Tag
-    tags:
-      - Medal
-      - WhitelistChameleon
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingNeckMedalBase
   id: ClothingNeckGoldmedal
   name: gold medal of crewmanship
   description: Given to crewmates who display excellent crewmanship.
@@ -26,13 +34,9 @@
     sprite: Clothing/Neck/Medals/gold.rsi
   - type: StealTarget
     stealGroup: ClothingNeckGoldmedal
-  - type: Tag
-    tags:
-      - Medal
-      - WhitelistChameleon
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingNeckMedalBase
   id: ClothingNeckCargomedal
   name: cargo medal
   description: Given for the best work in the cargo department.
@@ -41,13 +45,9 @@
     sprite: Clothing/Neck/Medals/cargomedal.rsi
   - type: Clothing
     sprite: Clothing/Neck/Medals/cargomedal.rsi
-  - type: Tag
-    tags:
-      - Medal
-      - WhitelistChameleon
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingNeckMedalBase
   id: ClothingNeckEngineermedal
   name: engineer medal
   description: Given for the best work in the engineering department.
@@ -56,13 +56,9 @@
     sprite: Clothing/Neck/Medals/engineermedal.rsi
   - type: Clothing
     sprite: Clothing/Neck/Medals/engineermedal.rsi
-  - type: Tag
-    tags:
-      - Medal
-      - WhitelistChameleon
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingNeckMedalBase
   id: ClothingNeckMedicalmedal
   name: medical medal
   description: Given for the best work in the medical department.
@@ -71,13 +67,9 @@
     sprite: Clothing/Neck/Medals/medicalmedal.rsi
   - type: Clothing
     sprite: Clothing/Neck/Medals/medicalmedal.rsi
-  - type: Tag
-    tags:
-      - Medal
-      - WhitelistChameleon
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingNeckMedalBase
   id: ClothingNeckSciencemedal
   name: science medal
   description: Given for the best work in the science department.
@@ -86,13 +78,9 @@
     sprite: Clothing/Neck/Medals/sciencemedal.rsi
   - type: Clothing
     sprite: Clothing/Neck/Medals/sciencemedal.rsi
-  - type: Tag
-    tags:
-      - Medal
-      - WhitelistChameleon
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingNeckMedalBase
   id: ClothingNeckSecuritymedal
   name: security medal
   description: Given for the best work in the security department.
@@ -101,13 +89,9 @@
     sprite: Clothing/Neck/Medals/securitymedal.rsi
   - type: Clothing
     sprite: Clothing/Neck/Medals/securitymedal.rsi
-  - type: Tag
-    tags:
-      - Medal
-      - WhitelistChameleon
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingNeckMedalBase
   id: ClothingNeckClownmedal
   name: clown medal
   description: Given for the best joke in the universe. HONK!
@@ -118,7 +102,3 @@
     sprite: Clothing/Neck/Medals/clownmedal.rsi
   - type: StealTarget
     stealGroup: ClothingNeckClownmedal
-  - type: Tag
-    tags:
-      - Medal
-      - WhitelistChameleon

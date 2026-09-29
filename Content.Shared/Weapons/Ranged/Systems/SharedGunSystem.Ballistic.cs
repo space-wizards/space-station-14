@@ -3,6 +3,7 @@ using Content.Shared.Emp;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Power;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
@@ -40,9 +41,10 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<BallisticAmmoInteractLoaderComponent, AfterInteractEvent>(OnBallisticAmmoLoad);
     }
 
-    private void OnBallisticRefillerMapInit(Entity<BallisticAmmoSelfRefillerComponent> entity, ref MapInitEvent _)
+    private void OnBallisticRefillerMapInit(Entity<BallisticAmmoSelfRefillerComponent> entity, ref MapInitEvent args)
     {
         entity.Comp.NextAutoRefill = Timing.CurTime + entity.Comp.AutoRefillRate;
+        DirtyField(entity.AsNullable(), nameof(BallisticAmmoSelfRefillerComponent.NextAutoRefill));
     }
 
     private void OnBallisticUse(Entity<BallisticAmmoProviderComponent> ent, ref UseInHandEvent args)
@@ -415,6 +417,9 @@ public abstract partial class SharedGunSystem
         if (!refiller.AutoRefill || IsFull(entity))
             return;
 
+        if (refiller.PowerConsumption > 0 && _battery.GetCharge(entity).Charge < refiller.PowerConsumption)
+            return;
+
         if (refiller.AmmoProto is not { } refillerAmmoProto)
         {
             // No ammo proto on the refiller, so just increment the unspawned count on the provider
@@ -437,14 +442,19 @@ public abstract partial class SharedGunSystem
         {
             // Can't use unspawned ammo, so spawn an entity and try to insert it.
             var ammoEntity = PredictedSpawnAttachedTo(refiller.AmmoProto, Transform(entity).Coordinates);
-            var insertSucceeded = TryBallisticInsert(entity, ammoEntity, null, suppressInsertionSound: true);
-            if (!insertSucceeded)
+            if (!TryBallisticInsert(entity, ammoEntity, null, suppressInsertionSound: true))
             {
                 PredictedQueueDel(ammoEntity);
                 Log.Error(
                     $"Failed to insert ammo {ammoEntity} into non-full {entity}. This is a configuration error. Is the {nameof(BallisticAmmoSelfRefillerComponent)}'s {nameof(BallisticAmmoSelfRefillerComponent.AmmoProto)} incorrect for the {nameof(BallisticAmmoProviderComponent)}'s {nameof(BallisticAmmoProviderComponent.Whitelist)}?");
+                return;
             }
         }
+
+        Audio.PlayPredicted(entity.Comp2.RechargeSound, entity, entity);
+
+        if (refiller.PowerConsumption > 0)
+            TakeCharge(entity, refiller.PowerConsumption);
     }
 }
 
