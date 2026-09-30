@@ -78,7 +78,7 @@ public sealed class CardListVisualState : ICloneable
 
     public object Clone() => new CardListVisualState
     {
-        CardList = CardList,
+        CardList = [.. CardList],
         Start = Start,
         Count = Count,
         MaxFanned = MaxFanned,

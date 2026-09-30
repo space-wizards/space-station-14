@@ -159,14 +159,11 @@ public abstract partial class SharedCardSystem
         }
         else
         {
-            var randomIndex = SharedRandomExtensions
-                .PredictedRandom(Timing, GetNetEntity(ent))
-                .Next(ent.Comp.Cards.Count);
             args.Verbs.Add(
                 new AlternativeVerb
                 {
                     Text = Loc.GetString("comp-cards-random-card"),
-                    Act = () => TryTakeCard(ent, user, ent.Comp.Cards[randomIndex].CardIndex, out _),
+                    Act = () => TryTakeRandomCard(ent, user, out _),
                     Priority = priority--,
                 }
             );

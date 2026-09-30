@@ -10,7 +10,7 @@ namespace Content.Server.Cards;
 public sealed partial class CardSystem : SharedCardSystem
 {
     // Server-side index counter. Needed so that all cards have unique ids. Basically a EntityUid but for cards.
-    private int _indexCounter = 0;
+    private int _indexCounter = 1;
 
     [SubscribeLocalEvent]
     private void OnPrepareThrow(Entity<CardsComponent> ent, ref PrepareThrowEvent args)
@@ -42,7 +42,7 @@ public sealed partial class CardSystem : SharedCardSystem
     ///  <inheritdoc />
     public override EntityUid? SplitDeck(Entity<CardsComponent> ent, EntityCoordinates spawnPosition, List<int> cardIndexes = default!)
     {
-        if (cardIndexes.Count != GetCardFromIndex(ent.Comp.Cards, cardIndexes).Count)
+        if (cardIndexes.Count == 0 || cardIndexes.Count != GetCardFromIndex(ent.Comp.Cards, cardIndexes).Count)
             return null;
 
         if (!ProtoMan.Resolve(ent.Comp.CardStackType, out var cardStack))

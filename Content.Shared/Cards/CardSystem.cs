@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
+using Content.Shared.Random.Helpers;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -200,7 +201,7 @@ public abstract partial class SharedCardSystem : EntitySystem
     public bool TryMoveCards(Entity<CardsComponent> recipient, Entity<CardsComponent> donor, List<int> cardIndexes)
     {
         var selected = GetCardFromIndex(donor.Comp.Cards, cardIndexes);
-        if (cardIndexes.Count != selected.Count)
+        if (selected.Count == 0 || cardIndexes.Count != selected.Count)
             return false;
         MoveCards(recipient, donor, selected);
         return true;
@@ -368,6 +369,15 @@ public abstract partial class SharedCardSystem : EntitySystem
         return true;
     }
 
+    private void TryTakeRandomCard(Entity<CardsComponent> cards, Entity<TransformComponent?> user, out EntityUid? split)
+    {
+        var randomIndex = SharedRandomExtensions
+            .PredictedRandom(Timing, GetNetEntity(cards))
+            .Next(cards.Comp.Cards.Count);
+        TryTakeCard(cards, user, cards.Comp.Cards[randomIndex].CardIndex, out split);
+    }
+
+
     /// <summary>
     /// Finds the <see cref="CardData"/> in the list of cards whose card index matches the specified value.
     /// </summary>
@@ -388,6 +398,8 @@ public abstract partial class SharedCardSystem : EntitySystem
     /// <returns>List of <see cref="CardData"/> that has card indexes which are in both cardIndexes and cards</returns>
     public List<CardData> GetCardFromIndex(List<CardData> cards, List<int> cardIndexes)
     {
-        return cards.Where(c => cardIndexes.Contains(c.CardIndex)).ToList();
+        var indexes = cardIndexes.ToHashSet();
+
+        return cards.Where(c => indexes.Contains(c.CardIndex)).ToList();
     }
 }
