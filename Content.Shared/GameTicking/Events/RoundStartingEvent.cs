@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.GameTicking.Events;
+namespace Content.Shared.GameTicking.Events;
 
 /// <summary>
 ///     Raised at the start of <see cref="GameTicker.StartRound"/>, after round id has been incremented

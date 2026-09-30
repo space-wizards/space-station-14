@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Construction.Components;
 using Content.Shared.Station.Systems;
 using Robust.Server.GameObjects;

@@ -1,4 +1,4 @@
-﻿using Content.Server.Station.Systems;
+using Content.Server.Station.Systems;
 using Content.Shared.GameTicking.Rules;
 using Robust.Shared.Random;
 

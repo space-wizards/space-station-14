@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameTicking;
+using Content.Shared.GameTicking;
 using Content.Shared.Spawners.Components;
 using Content.Shared.Station.Systems;
 using Robust.Shared.Map;

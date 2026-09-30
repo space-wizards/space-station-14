@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Station.Components;
+namespace Content.Shared.Station.Components;
 
 /// <summary>
 /// This is used for event eligibility.

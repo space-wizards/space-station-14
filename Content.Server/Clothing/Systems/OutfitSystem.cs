@@ -1,4 +1,4 @@
-﻿using Content.Server.Hands.Systems;
+using Content.Server.Hands.Systems;
 using Content.Server.Preferences.Managers;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Access.Components;

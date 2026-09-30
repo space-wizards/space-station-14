@@ -1,4 +1,4 @@
-﻿using Content.Shared.Dataset;
+using Content.Shared.Dataset;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.StationRecords;
 using Robust.Shared.Prototypes;

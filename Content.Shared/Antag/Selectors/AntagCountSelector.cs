@@ -1,4 +1,4 @@
-﻿using Content.Shared.Destructible.Thresholds;
+using Content.Shared.Destructible.Thresholds;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 

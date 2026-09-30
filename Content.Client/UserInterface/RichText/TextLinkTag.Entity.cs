@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chat;
+using Content.Shared.Chat;
 using Content.Client.UserInterface.Systems.Chat;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Utility;
@@ -24,12 +24,9 @@ public sealed partial class TextLinkTag
         if (!NetEntity.TryParse(entStr, out var netEntity))
             return false;
 
-        var chat = _entity.System<SharedChatSystem>();
-        var clickable = chat.CanClickMessageSender(netEntity);
-
         var color = GetLinkColor(node, netEntity);
 
-        data = new LinkData(LinkString: null, LinkEntity: netEntity, Color: color, Clickable: clickable);
+        data = new LinkData(LinkString: null, LinkEntity: netEntity, Color: color);
         return true;
     }
 
@@ -55,7 +52,7 @@ public sealed partial class TextLinkTag
             return null;
 
         if (!_entity.TryGetComponent<GrammarComponent>(uid, out var grammar) || grammar.ProperNoun != true)
-            return null;
+            return Color.LightGray; // return default name color
 
         var name = _entity.GetComponent<MetaDataComponent>(uid.Value).EntityName;
         return Color.FromHex(chatUi.GetNameColor(name));

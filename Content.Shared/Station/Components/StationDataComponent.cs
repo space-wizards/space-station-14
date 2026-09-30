@@ -1,4 +1,4 @@
-﻿using Content.Shared.Roles;
+using Content.Shared.Roles;
 using Content.Shared.Station.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
