@@ -241,14 +241,6 @@ public abstract partial class SharedCardSystem : EntitySystem
         return comp.Cards.Take(delta).Select(c => c.CardIndex).ToList();
     }
 
-    [SubscribeNetworkEvent]
-    private void HandleShuffleCardsEvent(ShuffleCardsEvent args)
-    {
-        var cards = GetEntity(args.Cards);
-        if (_cardsQuery.TryComp(cards, out var comp))
-            TryShuffleCards((cards, comp));
-    }
-
     /// <summary>
     /// Attempts to shuffle the cards within the given <see cref="CardsComponent"/> into a random order.
     /// </summary>
@@ -264,14 +256,6 @@ public abstract partial class SharedCardSystem : EntitySystem
         return true;
     }
 
-    [SubscribeNetworkEvent]
-    private void HandleFlipCardsEvent(FlipCardsEvent args)
-    {
-        var cards = GetEntity(args.Cards);
-        if (_cardsQuery.TryComp(cards, out var comp))
-            TryFlipCards((cards, comp));
-    }
-
     /// <summary>
     /// Attempts to flip the given card stack, toggling which side is face-up.
     /// </summary>
@@ -283,14 +267,6 @@ public abstract partial class SharedCardSystem : EntitySystem
         UpdateVisualState(cards);
         Dirty(cards.Owner, cards.Comp);
         return true;
-    }
-
-    [SubscribeNetworkEvent]
-    private void HandleFanCardsEvent(FanCardsEvent args)
-    {
-        var cards = GetEntity(args.Cards);
-        if (_cardsQuery.TryComp(cards, out var comp))
-            TryFanCards((cards, comp));
     }
 
     /// <summary>
@@ -305,15 +281,6 @@ public abstract partial class SharedCardSystem : EntitySystem
         // Stack count updated so the deck below the fan shows the correct number of cards
         Dirty(cards.Owner, cards.Comp);
         return true;
-    }
-
-    [SubscribeNetworkEvent]
-    private void HandleTakeCardEvent(TakeCardEvent args)
-    {
-        var cards = GetEntity(args.Cards);
-        var user = GetEntity(args.User);
-        if (_cardsQuery.TryComp(cards, out var comp))
-            TryTakeCard((cards, comp), (user, Transform(user)), args.CardIndex, out _);
     }
 
     /// <summary>
