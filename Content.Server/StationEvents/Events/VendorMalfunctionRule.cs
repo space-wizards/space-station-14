@@ -17,17 +17,6 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
     [Dependency] private VendingMachineSystem _vendingSystem = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
-    protected override void Added(Entity<VendorMalfunctionRuleComponent, GameRuleComponent> ent, ref GameRuleAddedEvent args)
-    {
-        if (!TryComp<StationEventComponent>(ent, out var stationEvent))
-            return;
-
-        var str = Loc.GetString("station-event-vendor-malfunction-announcement");
-        stationEvent.StartAnnouncement = str;
-
-        base.Added(ent, ref args);
-    }
-
     protected override void Started(Entity<VendorMalfunctionRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
         base.Started(ent, ref args);

@@ -441,6 +441,21 @@
     cost: 10
 
 - type: entity
+  id: VendorMalfunction
+  parent: BaseStationEvent
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-vendor-malfunction-announcement
+    weight: 5
+    duration: 1
+  - type: VendorMalfunctionRule
+    blacklist:
+      components:
+        - ProtectedGrid
+  - type: DynamicRuleCost
+    cost: 5
+
+- type: entity
   id: VentClog
   parent: BaseStationEventLongDelay
   components:
