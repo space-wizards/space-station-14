@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseItem, BaseXenoArtifact]
+  parent: [BaseXenoArtifact, BaseItem]
   id: BaseXenoArtifactItem
   name: artifact
   description: A strange artifact from time unknown. Looks like a good time. Fits in hand perfectly.
@@ -152,3 +152,11 @@
   components:
   - type: Stack
     count: 1
+
+- type: entity
+  parent: ArtifactFragment
+  id: ArtifactFragment10
+  suffix: 10
+  components:
+  - type: Stack
+    count: 10
