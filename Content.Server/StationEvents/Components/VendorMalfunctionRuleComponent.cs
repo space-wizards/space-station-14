@@ -10,8 +10,20 @@ namespace Content.Server.StationEvents.Components;
 public sealed partial class VendorMalfunctionRuleComponent : Component
 {
     /// <summary>
-    /// Blacklist of structures not eligible to trigger this game rule.
+    /// Blacklist of grids not eligible to trigger this game rule.
     /// </summary>
     [DataField]
     public EntityWhitelist? Blacklist;
+
+    /// <summary>
+    /// minimum quantity of affected machines
+    /// </summary>
+    [DataField]
+    public int MinimumAffected;
+
+    /// <summary>
+    /// maxmimum quantity of affected machines
+    /// </summary>
+    [DataField]
+    public int MaximumAffected;
 }

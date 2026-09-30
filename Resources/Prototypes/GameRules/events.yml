@@ -453,6 +453,8 @@
     blacklist:
       components:
       - ProtectedGrid
+    minimumAffected: 5
+    maximumAffected: 15
   - type: DynamicRuleCost
     cost: 5
 

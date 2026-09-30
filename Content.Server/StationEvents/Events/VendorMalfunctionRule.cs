@@ -36,7 +36,7 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
             }
         }
 
-        var toDispense = Math.Min(RobustRandom.Next(3, 7), vendingMachines.Count);
+        var toDispense = Math.Min(RobustRandom.Next(ent.Comp1.MinimumAffected, ent.Comp1.MaximumAffected), vendingMachines.Count);
         if (toDispense == 0)
             return;
 
