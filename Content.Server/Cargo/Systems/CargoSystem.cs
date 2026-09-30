@@ -62,7 +62,6 @@ public sealed partial class CargoSystem : SharedCargoSystem
     {
         base.Initialize();
         InitializeShuttle();
-        InitializeTelepad();
         InitializeBounty();
         InitializeFunds();
     }
@@ -71,7 +70,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
     {
         base.Update(frameTime);
         UpdateConsole();
-        UpdateTelepad(frameTime);
+        UpdateTelepad();
         UpdateBounty();
     }
 }
