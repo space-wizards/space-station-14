@@ -1,4 +1,4 @@
-using Content.Shared.Actions.Events;
+﻿using Content.Shared.Actions.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 
@@ -20,7 +20,7 @@ public abstract partial class SharedActionsSystem
         var delay = ent.Comp.Delay;
 
         // If there is a target to the action, they are they target of the doafter. Otherwise it is the performer.
-        var target = GetEntity(input.EntityTarget) ?? performer;
+        var target = GetEntity(input.NetTarget) ?? performer;
         var netEnt = GetNetEntity(performer);
 
         var actionDoAfterEvent = new ActionDoAfterEvent(netEnt, originalUseDelay, input);
