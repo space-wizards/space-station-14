@@ -31,7 +31,8 @@ public sealed partial class DynamicRuleSystem : GameRuleSystem<DynamicRuleCompon
         var dynamic = ent.Comp1;
 
         var blend = _random.NextFloat(0, 1);
-        dynamic.Budget = MathHelper.Lerp(dynamic.StartingBudgetMin, dynamic.StartingBudgetMax, blend);
+        dynamic.StartingBudget = MathHelper.Lerp(dynamic.StartingBudgetMin, dynamic.StartingBudgetMax, blend);
+        dynamic.Budget = dynamic.StartingBudget;
         dynamic.BudgetPerSecond = MathHelper.Lerp(dynamic.MinBudgetPerSecond, dynamic.MaxBudgetPerSecond, blend);
         dynamic.NextRuleTime = Timing.CurTime + _random.Next(dynamic.MinRuleInterval, dynamic.MaxRuleInterval);
     }

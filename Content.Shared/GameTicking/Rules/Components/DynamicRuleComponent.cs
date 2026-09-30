@@ -27,9 +27,21 @@ public sealed partial class DynamicRuleComponent : Component
     [DataField]
     public float BudgetPerSecond;
 
+    /// <summary>
+    /// The starting budget. Only stored for reference/debugging
+    /// </summary>
+    [ViewVariables]
+    public float StartingBudget;
+
+    /// <summary>
+    /// Minimum budget per second to pick
+    /// </summary>
     [DataField]
     public float MinBudgetPerSecond = 0.05f;
 
+    /// <summary>
+    /// Maximum budget per second to pick
+    /// </summary>
     [DataField]
     public float MaxBudgetPerSecond = 0.1f;
 

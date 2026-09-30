@@ -3,23 +3,21 @@
   id: DynamicRule
   components:
   - type: GameRule
-    minPlayers: 5 # <5 is greenshift hours, buddy.
+    minPlayers: 1 # <5 is greenshift hours, buddy.
   - type: DynamicRule
     minBudgetPerSecond: 0.05
     maxBudgetPerSecond: 0.1
-    startingBudgetMin: 150
-    startingBudgetMax: 350
+    startingBudgetMin: 175
+    startingBudgetMax: 325
     minRuleInterval: 180 # 3 minutes
     maxRuleInterval: 540 # 9 minutes
     roundStartTable: !type:AllSelector
-      rolls: !type:ConstantNumberSelector
-        value: 2
       children:
       # Roundstart Major Rules
       - !type:GroupSelector
         children:
         - id: Traitor
-          weight: 60
+          weight: 35
           conditions:
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
@@ -29,12 +27,14 @@
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
           - !type:PlayerCountCondition
-            min: 20
+            min: 5
         - id: Revolutionary
           weight: 5
           conditions:
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
+          - !type:PlayerCountCondition
+            min: 15
         - id: Zombie
           weight: 5
           conditions:
@@ -42,28 +42,20 @@
           - !type:MaxRuleOccurenceCondition
           - !type:PlayerCountCondition
             min: 20
-        - id: Wizard
-          weight: 5
-          conditions:
-          - !type:HasBudgetCondition
-          - !type:MaxRuleOccurenceCondition
-          - !type:PlayerCountCondition
-            min: 10
       # Roundstart Minor Rules
       - !type:GroupSelector
         children:
         - id: Thief
-          prob: 0.6
           conditions:
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
         - id: Changeling
-          prob: 0.25
           conditions:
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
+          - !type:PlayerCountCondition
+            min: 1
         - id: Xenoborgs
-          prob: 0.10
           conditions:
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
