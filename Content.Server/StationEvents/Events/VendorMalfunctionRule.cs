@@ -1,7 +1,6 @@
 using Content.Server.Power.EntitySystems;
 using Content.Server.StationEvents.Components;
 using Content.Server.VendingMachines;
-using Content.Shared.Emag.Systems;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
 using Content.Shared.VendingMachines.Components;
