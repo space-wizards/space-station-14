@@ -125,16 +125,17 @@
         damageType: Radiation
         damage: 15
       behaviors:
-      - !type:PopupBehavior
-        popup: mouth-taste-metal
-        popupType: LargeCaution
-        targetOnly: true
+      - !type:PopupMessage
+        messages: [mouth-taste-metal]
+        visualType: LargeCaution
+        method: PopupEntity
+        type: Local
     - trigger:
         !type:DamageTypeTrigger
         damageType: Radiation
         damage: 40
       behaviors:
-      - !type:VomitBehavior
+      - !type:Vomit
 
 # Used as a simple default for mob destruction
 - type: entity

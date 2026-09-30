@@ -100,7 +100,7 @@
         damageType: Blunt
         damage: 600
       behaviors:
-      - !type:GibBehavior
+      - !type:Gib
   - type: SlowOnDamage
     speedModifierThresholds:
       250: 0.7

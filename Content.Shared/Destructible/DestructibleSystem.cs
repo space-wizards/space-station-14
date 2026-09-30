@@ -68,19 +68,21 @@ public sealed partial class DestructibleSystem : EntitySystem
                 RaiseLocalEvent(uid, new DamageThresholdReached(comp, threshold), true);
 
                 var logImpact = LogImpact.Low;
-                // Convert behaviors into string for logs
-                var triggeredBehaviors = string.Join(", ",
-                    threshold.Behaviors.Select(behavior =>
-                    {
-                        if (behavior.Impact is { } impact && logImpact <= impact)
-                            logImpact = impact;
-                        if (behavior is DoActs doActs)
-                        {
-                            return $"{behavior.GetType().Name}:{doActs.Acts.ToString()}";
-                        }
+                var triggeredBehaviors = new List<string>();
 
-                        return behavior.GetType().Name;
-                    }));
+                // Convert behaviors into string for logs.
+                foreach (var behavior in threshold.Behaviors)
+                {
+                    if (behavior.Impact is { } impact && logImpact <= impact)
+                        logImpact = impact;
+
+                    if (behavior is DoActs doActs)
+                        triggeredBehaviors.Add($"{behavior.GetType().Name}:{doActs.Acts.ToString()}");
+                    else
+                        triggeredBehaviors.Add(behavior.GetType().Name);
+                }
+
+                var triggeredBehaviorsText = string.Join(", ", triggeredBehaviors);
 
                 // If it doesn't have a humanoid component, it's probably not particularly notable?
                 if (logImpact > LogImpact.Medium && !HasComp<HumanoidProfileComponent>(uid))
@@ -90,13 +92,13 @@ public sealed partial class DestructibleSystem : EntitySystem
                 {
                     _adminLogger.Add(LogType.Damaged,
                         logImpact,
-                        $"{ToPrettyString(args.Origin.Value):actor} caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
+                        $"{ToPrettyString(args.Origin.Value):actor} caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviorsText}]");
                 }
                 else
                 {
                     _adminLogger.Add(LogType.Damaged,
                         logImpact,
-                        $"Unknown damage source caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
+                        $"Unknown damage source caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviorsText}]");
                 }
 
                 Execute(threshold, uid, args.Origin);
@@ -248,11 +250,11 @@ public sealed partial class DestructibleSystem : EntitySystem
     // FFS this shouldn't be this hard. Maybe this should just be a field of the destructible component. Its not
     // like there is currently any entity that is NOT just destroyed upon reaching a total-damage value.
     /// <summary>
-    ///     Figure out how much damage an entity needs to have in order to be destroyed.
+    /// Figure out how much damage an entity needs to have in order to be destroyed.
     /// </summary>
     /// <remarks>
-    ///     This assumes that this entity has some sort of destruction or breakage behavior triggered by a
-    ///     total-damage threshold.
+    /// This assumes that this entity has some sort of destruction or breakage behavior triggered by a
+    /// total-damage threshold.
     /// </remarks>
     public FixedPoint2 DestroyedAt(EntityUid uid, DestructibleComponent? destructible = null)
     {
@@ -315,18 +317,18 @@ public sealed partial class DestructibleSystem : EntitySystem
         var eventArgs = new BreakageEventArgs();
         RaiseLocalEvent(owner, eventArgs);
     }
+}
 
-    // Currently only used for destructible integration tests. Unless other uses are found for this, maybe this should just be removed and the tests redone.
-    /// <summary>
-    /// Event raised when a <see cref="DamageThreshold"/> is reached.
-    /// </summary>
-    public sealed class DamageThresholdReached(DestructibleComponent parent, DamageThreshold threshold)
-        : EntityEventArgs
-    {
-        public readonly DestructibleComponent Parent = parent;
+// Currently only used for destructible integration tests. Unless other uses are found for this, maybe this should just be removed and the tests redone.
+/// <summary>
+/// Event raised when a <see cref="DamageThreshold"/> is reached.
+/// </summary>
+public sealed class DamageThresholdReached(DestructibleComponent parent, DamageThreshold threshold)
+    : EntityEventArgs
+{
+    public readonly DestructibleComponent Parent = parent;
 
-        public readonly DamageThreshold Threshold = threshold;
-    }
+    public readonly DamageThreshold Threshold = threshold;
 }
 
 /// <summary>

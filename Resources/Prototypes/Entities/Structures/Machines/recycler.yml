@@ -242,9 +242,9 @@
         !type:DamageTrigger
         damage: 200
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: ["Breakage"]
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
   - type: Repairable

@@ -51,15 +51,15 @@
         !type:DamageTrigger
         damage: 10
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: gib
-      - !type:EmptyContainersBehaviour
+      - !type:EmptyAllContainers
         containers:
         - storage
-      - !type:SpillBehavior
+      - !type:Spill
         solution: solution
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: AtmosExposed
   - type: MovedByPressure

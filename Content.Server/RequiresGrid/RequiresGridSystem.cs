@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-﻿using Content.Shared.Destructible;
-=======
-using Content.Server.Destructible;
->>>>>>> upstream/master
+using Content.Shared.Destructible;
 
 namespace Content.Server.RequiresGrid;
 

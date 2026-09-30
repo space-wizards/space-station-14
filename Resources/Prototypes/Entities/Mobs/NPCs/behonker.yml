@@ -92,7 +92,7 @@
         damageType: Blunt
         damage: 600
       behaviors:
-      - !type:GibBehavior
+      - !type:Gib
   - type: Metabolizer
     solutionOnBody: false
     updateInterval: 0.25

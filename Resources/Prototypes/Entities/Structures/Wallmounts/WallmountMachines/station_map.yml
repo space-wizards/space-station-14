@@ -37,8 +37,8 @@
       - &SoundMetalGlassBreak !type:PlaySound
         sound:
           collection: MetalGlassBreak
-      - !type:EmptyAllContainersBehaviour
-      - !type:SpawnEntitiesBehavior
+      - !type:EmptyAllContainers
+      - !type:SpawnEntities
         spawn:
           SheetSteel1: &Min0Max1
             min: 0
