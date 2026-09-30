@@ -105,7 +105,7 @@
         damage: 100
       behaviors:
       - *SoundMetalGlassBreak
-      - !type:ChangeConstructionNodeBehavior
+      - !type:ChangeConstructionNode
         node: broken
   - type: UserInterface
     interfaces:
@@ -148,7 +148,7 @@
     - trigger: *DamageMachineFlimsy
       behaviors:
       - *SoundMetalGlassBreak
-      - !type:EmptyAllContainersBehaviour
-      - !type:SpawnEntitiesBehavior
+      - !type:EmptyAllContainers
+      - !type:SpawnEntities
         spawn:
           SheetSteel1: *Min0Max1
