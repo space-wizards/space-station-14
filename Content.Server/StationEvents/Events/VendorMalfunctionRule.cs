@@ -17,7 +17,6 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
 {
     [Dependency] private VendingMachineSystem _vendingSystem = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
-    private EmagSystem _emag = default!;
 
     protected override void Started(Entity<VendorMalfunctionRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
