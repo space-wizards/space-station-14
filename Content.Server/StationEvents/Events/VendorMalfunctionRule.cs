@@ -26,7 +26,7 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
             uid => _whitelist.IsWhitelistFailOrNull(ent.Comp1.Blacklist, uid)))
             return;
 
-        var vendingMachines = new List<Entity<VendingMachineComponent?, VendingMachineEjectComponent?>>();
+        var vendingMachines = new List<Entity<VendingMachineComponent, VendingMachineEjectComponent>>();
         var query = EntityQueryEnumerator<VendingMachineComponent, VendingMachineEjectComponent, TransformComponent>();
         while (query.MoveNext(out var vendUid, out var vendor, out var vendEject, out var xform))
         {
@@ -45,7 +45,7 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
         for (var i = 0; i < toDispense; i++)
         {
             var vendor = vendingMachines[i];
-            _vendingSystem.EjectRandom(vendor, true);
+            _vendingSystem.EjectRandom(vendor!, true);
         }
     }
 }
