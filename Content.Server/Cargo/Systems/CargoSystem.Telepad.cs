@@ -34,22 +34,10 @@ public sealed partial class CargoSystem
     [SubscribeLocalEvent]
     private void OnShutdown(Entity<CargoTelepadComponent> ent, ref ComponentShutdown args)
     {
-        if (ent.Comp.CurrentOrders.Count == 0
-            || _station.GetStations().Count == 0)
-            return;
-
-        if (_station.GetOwningStation(ent) is not { } station)
-        {
-            station = _random.Pick(_station.GetStations().Where(x => _orderQuery.HasComp(x.Owner)).ToList());
-        }
-
-        if (!_orderQuery.TryComp(station, out var orderDatabase)
-            || !TryComp<StationDataComponent>(station, out var data))
-            return;
-
         foreach (var order in ent.Comp.CurrentOrders)
         {
-            TryFulfillOrder((station, data), order, orderDatabase);
+            order.Assigned = false;
+            order.AssignedEntity = null;
         }
     }
 
