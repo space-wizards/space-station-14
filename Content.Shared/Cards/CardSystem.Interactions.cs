@@ -2,8 +2,8 @@ using System.Linq;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Verbs;
+using Robust.Shared.Containers;
 
 namespace Content.Shared.Cards;
 
@@ -184,5 +184,14 @@ public abstract partial class SharedCardSystem
             return;
 
         args.Handled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnCardsContainerInserted(Entity<CardsComponent> ent, ref EntGotInsertedIntoContainerMessage args)
+    {
+        UpdateVisualState(ent);
+        // Unfans cards put inside containers except hands
+        if (ent.Comp.Fanned && !Hands.EnumerateHands(args.Container.Owner).Contains(args.Container.ID))
+            TryFanCards(ent);
     }
 }

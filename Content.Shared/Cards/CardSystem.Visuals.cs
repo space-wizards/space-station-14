@@ -11,15 +11,6 @@ public abstract partial class SharedCardSystem
         UpdateVisualState(ent);
     }
 
-    protected void UpdateVisualState(Entity<CardsComponent> ent)
-    {
-        if (TryComp<AppearanceComponent>(ent, out var appearance))
-        {
-            Appearance.SetData(ent, CardVisuals.CardList, GetCardListVisualState(ent.Comp), appearance);
-            Appearance.SetData(ent, CardVisuals.IsFlipped, ent.Comp.Flipped, appearance);
-        }
-    }
-
     /// <summary>
     /// Builds the <see cref="CardListVisualState"/> describing which cards in the stack are currently
     /// visible to the player and should be rendered, based on whether the stack is fanned or flipped.
@@ -43,6 +34,15 @@ public abstract partial class SharedCardSystem
             Count = count,
             MaxFanned = cards.MaxFanned,
         };
+    }
+
+    protected void UpdateVisualState(Entity<CardsComponent> ent)
+    {
+        if (TryComp<AppearanceComponent>(ent, out var appearance))
+        {
+            Appearance.SetData(ent, CardVisuals.CardList, GetCardListVisualState(ent.Comp), appearance);
+            Appearance.SetData(ent, CardVisuals.IsFlipped, ent.Comp.Flipped, appearance);
+        }
     }
 }
 

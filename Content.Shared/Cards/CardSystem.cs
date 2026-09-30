@@ -49,20 +49,6 @@ public abstract partial class SharedCardSystem : EntitySystem
         }
     }
 
-    private void MergeDecks(Entity<CardsComponent> donor, Entity<CardsComponent> recipient, List<CardData> selected)
-    {
-        MoveCards(recipient, donor, selected);
-
-        UpdateVisualState(donor);
-        UpdateVisualState(recipient);
-
-        Dirty(donor);
-        Dirty(recipient);
-
-        if (donor.Comp.Cards.Count <= 0)
-            PredictedQueueDel(donor.Owner);
-    }
-
     /// <summary>
     /// Moves as many cards as we can from the donor to the recipient.
     /// Cards are taken from the top of the donor and added to the top of the recipient.
@@ -119,20 +105,6 @@ public abstract partial class SharedCardSystem : EntitySystem
         return true;
     }
 
-    private int GetAvailableSpace(CardsComponent component)
-    {
-        return GetMaxCount(component) - component.Cards.Count;
-    }
-
-    protected int GetMaxCount(CardsComponent component)
-    {
-        if (component.MaxCountOverride != null)
-            return component.MaxCountOverride.Value;
-
-        var cardStackProto = ProtoMan.Index(component.CardStackType);
-        return cardStackProto.MaxCount ?? int.MaxValue;
-    }
-
     /// <summary>
     /// Spawns a new entity and moves an amount to it from the deck.
     /// </summary>
@@ -140,6 +112,7 @@ public abstract partial class SharedCardSystem : EntitySystem
     /// <param name="spawnPosition">Where to spawn the new deck.</param>
     /// <param name="cardIndexes">Card Indexes to move into the new deck</param>
     /// <returns>Null if CardsComponent doesn't resolve, or invalid indexes to move.</returns>
+    [PublicAPI]
     public virtual EntityUid? SplitDeck(Entity<CardsComponent> ent, EntityCoordinates spawnPosition, List<int> cardIndexes = default!)
     {
         return null;
@@ -152,6 +125,7 @@ public abstract partial class SharedCardSystem : EntitySystem
     /// <param name="cards"> Card deck which is to be split from </param>
     /// <param name="user"> The user who is trying to split the deck </param>
     /// <param name="amount"> Amount to try and split the deck. Will not always be the amount moved </param>
+    [PublicAPI]
     public void UserSplitDeck(Entity<CardsComponent> cards, EntityUid user, int amount)
     {
         if (amount <= 0)
@@ -182,15 +156,6 @@ public abstract partial class SharedCardSystem : EntitySystem
         Popup.PopupCursor(Loc.GetString("comp-stack-split"), user);
     }
 
-    [SubscribeLocalEvent]
-    private void OnCardsContainerInserted(Entity<CardsComponent> ent, ref EntGotInsertedIntoContainerMessage args)
-    {
-        UpdateVisualState(ent);
-        // Unfans cards put inside containers except hands
-        if (ent.Comp.Fanned && !Hands.EnumerateHands(args.Container.Owner).Contains(args.Container.ID))
-            TryFanCards(ent);
-    }
-
     /// <summary>
     /// Tries to move cards from one deck to the top of another.
     /// </summary>
@@ -205,25 +170,6 @@ public abstract partial class SharedCardSystem : EntitySystem
             return false;
         MoveCards(recipient, donor, selected);
         return true;
-    }
-
-    protected void MoveCards(Entity<CardsComponent> recipient, Entity<CardsComponent> donor, List<CardData> selected)
-    {
-        // Remove cards from source
-        foreach (var item in selected)
-            donor.Comp.Cards.Remove(item);
-        // Add cards to sink
-        // The cards will be added to the side which is "facing upwards"
-        if (recipient.Comp.Flipped)
-            recipient.Comp.Cards.AddRange(selected);
-        else
-            recipient.Comp.Cards.InsertRange(0, selected);
-
-        if (donor.Comp.Cards.Count == 1)
-            donor.Comp.Fanned = false;
-
-        if (donor.Comp.Cards.Count <= 0)
-            PredictedQueueDel(donor.Owner);
     }
 
     /// <summary>
@@ -336,14 +282,22 @@ public abstract partial class SharedCardSystem : EntitySystem
         return true;
     }
 
-    private void TryTakeRandomCard(Entity<CardsComponent> cards, Entity<TransformComponent?> user, out EntityUid? split)
+    /// <summary>
+    /// Takes a random card from the deck
+    /// </summary>
+    /// <param name="cards">The card stack entity to take a card from.</param>
+    /// <param name="user">The entity attempting to take the card.</param>
+    /// <param name="split">
+    /// When this method returns, contains the entity that the split-off card(s) ended up on,
+    /// or <c>null</c> if no split occurred or the operation failed.
+    /// </param>
+    public void TryTakeRandomCard(Entity<CardsComponent> cards, Entity<TransformComponent?> user, out EntityUid? split)
     {
         var randomIndex = SharedRandomExtensions
             .PredictedRandom(Timing, GetNetEntity(cards))
             .Next(cards.Comp.Cards.Count);
         TryTakeCard(cards, user, cards.Comp.Cards[randomIndex].CardIndex, out split);
     }
-
 
     /// <summary>
     /// Finds the <see cref="CardData"/> in the list of cards whose card index matches the specified value.
@@ -368,5 +322,51 @@ public abstract partial class SharedCardSystem : EntitySystem
         var indexes = cardIndexes.ToHashSet();
 
         return cards.Where(c => indexes.Contains(c.CardIndex)).ToList();
+    }
+    protected void MoveCards(Entity<CardsComponent> recipient, Entity<CardsComponent> donor, List<CardData> selected)
+    {
+        // Remove cards from source
+        foreach (var item in selected)
+            donor.Comp.Cards.Remove(item);
+        // Add cards to sink
+        // The cards will be added to the side which is "facing upwards"
+        if (recipient.Comp.Flipped)
+            recipient.Comp.Cards.AddRange(selected);
+        else
+            recipient.Comp.Cards.InsertRange(0, selected);
+
+        if (donor.Comp.Cards.Count == 1)
+            donor.Comp.Fanned = false;
+
+        if (donor.Comp.Cards.Count <= 0)
+            PredictedQueueDel(donor.Owner);
+    }
+
+    protected int GetMaxCount(CardsComponent component)
+    {
+        if (component.MaxCountOverride != null)
+            return component.MaxCountOverride.Value;
+
+        var cardStackProto = ProtoMan.Index(component.CardStackType);
+        return cardStackProto.MaxCount ?? int.MaxValue;
+    }
+
+    private void MergeDecks(Entity<CardsComponent> donor, Entity<CardsComponent> recipient, List<CardData> selected)
+    {
+        MoveCards(recipient, donor, selected);
+
+        UpdateVisualState(donor);
+        UpdateVisualState(recipient);
+
+        Dirty(donor);
+        Dirty(recipient);
+
+        if (donor.Comp.Cards.Count <= 0)
+            PredictedQueueDel(donor.Owner);
+    }
+
+    private int GetAvailableSpace(CardsComponent component)
+    {
+        return GetMaxCount(component) - component.Cards.Count;
     }
 }
