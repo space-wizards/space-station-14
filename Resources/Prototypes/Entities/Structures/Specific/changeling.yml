@@ -54,7 +54,7 @@
       - !type:PlaySound
         sound:
           collection: gib
-      - !type:EmptyAllContainers
+      - !type:EmptyContainers
         containers:
         - storage
       - !type:Spill
