@@ -11,13 +11,12 @@
     startingBudgetMax: 350
     minRuleInterval: 180 # 3 minutes
     maxRuleInterval: 540 # 9 minutes
-    table: !type:AllSelector
+    roundStartTable: !type:AllSelector
+      rolls: !type:ConstantNumberSelector
+        value: 2
       children:
       # Roundstart Major Rules
       - !type:GroupSelector
-        conditions:
-        - !type:RoundDurationCondition
-          max: 1
         children:
         - id: Traitor
           weight: 60
@@ -50,21 +49,11 @@
           - !type:MaxRuleOccurenceCondition
           - !type:PlayerCountCondition
             min: 10
-        - id: Xenoborgs
-          weight: 5
-          conditions:
-          - !type:HasBudgetCondition
-          - !type:MaxRuleOccurenceCondition
-          - !type:PlayerCountCondition
-            min: 35
       # Roundstart Minor Rules
       - !type:GroupSelector
-        conditions:
-        - !type:RoundDurationCondition
-          max: 1
         children:
         - id: Thief
-          prob: 0.5
+          prob: 0.6
           conditions:
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
@@ -73,7 +62,16 @@
           conditions:
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
+        - id: Xenoborgs
+          prob: 0.10
+          conditions:
+          - !type:HasBudgetCondition
+          - !type:MaxRuleOccurenceCondition
+          - !type:PlayerCountCondition
+            min: 35
 
+    table: !type:AllSelector
+      children:
       # Midround rules
       - !type:GroupSelector
         conditions:
@@ -82,28 +80,64 @@
         children:
         - !type:GroupSelector
           weight: 30
-          children: # copy paste of BasicCalmEventsTable because it's an AllSelector
+          children: # copy paste of BasicCalmEventsTable
           - id: AnomalySpawn
+            conditions:
+            - !type:HasBudgetCondition
           - id: BluespaceArtifact
+            conditions:
+            - !type:HasBudgetCondition
           - id: BluespaceLocker
+            conditions:
+            - !type:HasBudgetCondition
           - id: BreakerFlip
+            conditions:
+            - !type:HasBudgetCondition
           - id: BureaucraticError
+            conditions:
+            - !type:HasBudgetCondition
           - id: ClericalError
-          - id: CockroachMigration
+            conditions:
+            - !type:HasBudgetCondition
           - id: GasLeak
+            conditions:
+            - !type:HasBudgetCondition
           - id: GreytideVirus
+            conditions:
+            - !type:HasBudgetCondition
           - id: IonStorm
+            conditions:
+            - !type:HasBudgetCondition
           - id: KudzuGrowth
+            conditions:
+            - !type:HasBudgetCondition
           - id: MassHallucinations
-          - id: MouseMigration
+            conditions:
+            - !type:HasBudgetCondition
           - id: PowerGridCheck
+            conditions:
+            - !type:HasBudgetCondition
           - id: RandomSentience
+            conditions:
+            - !type:HasBudgetCondition
           - id: SlimesSpawnHorde
+            conditions:
+            - !type:HasBudgetCondition
           - id: SolarFlare
+            conditions:
+            - !type:HasBudgetCondition
           - id: SnakeSpawnHorde
+            conditions:
+            - !type:HasBudgetCondition
           - id: SpiderClownSpawnHorde
+            conditions:
+            - !type:HasBudgetCondition
           - id: SpiderSpawnHorde
+            conditions:
+            - !type:HasBudgetCondition
           - id: VentClog
+            conditions:
+            - !type:HasBudgetCondition
         - id: SleeperAgents
           weight: 15
           conditions:

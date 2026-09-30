@@ -67,6 +67,12 @@ public sealed partial class DynamicRuleComponent : Component
     /// A table of rules that are picked from.
     /// </summary>
     [DataField]
+    public EntityTableSelector RoundStartTable = new NoneSelector();
+
+    /// <summary>
+    /// A table of rules that are picked from.
+    /// </summary>
+    [DataField]
     public EntityTableSelector Table = new NoneSelector();
 
     /// <summary>

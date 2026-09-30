@@ -43,7 +43,7 @@ public sealed partial class DynamicRuleSystem : GameRuleSystem<DynamicRuleCompon
         // Since we don't know how long until this rule is activated, we need to
         // set the last budget update to now so it doesn't immediately give the component a bunch of points.
         ent.Comp1.LastBudgetUpdate = Timing.CurTime;
-        Execute(ent);
+        Execute(ent, true);
     }
 
     // TODO: We may not actually want to do this
@@ -73,13 +73,16 @@ public sealed partial class DynamicRuleSystem : GameRuleSystem<DynamicRuleCompon
     /// Generates and returns a list of randomly selected,
     /// valid rules to spawn based on <see cref="DynamicRuleComponent.Table"/>.
     /// </summary>
-    private IEnumerable<EntProtoId> GetRuleSpawns(Entity<DynamicRuleComponent> entity)
+    private IEnumerable<EntProtoId> GetRuleSpawns(Entity<DynamicRuleComponent> entity, bool roundStart = false)
     {
         UpdateBudget((entity.Owner, entity.Comp));
         var ctx = new EntityTableContext
         {
             { HasBudgetCondition.BudgetContextKey, entity.Comp.Budget },
         };
+
+        if (roundStart)
+            return _entityTable.GetSpawns(entity.Comp.RoundStartTable, ctx: ctx);
 
         return _entityTable.GetSpawns(entity.Comp.Table, ctx: ctx);
     }
@@ -102,14 +105,14 @@ public sealed partial class DynamicRuleSystem : GameRuleSystem<DynamicRuleCompon
     /// <returns>
     /// Returns a list of the rules that were executed.
     /// </returns>
-    private List<EntityUid> Execute(Entity<DynamicRuleComponent> entity)
+    private List<EntityUid> Execute(Entity<DynamicRuleComponent> entity, bool roundStart = false)
     {
         entity.Comp.NextRuleTime =
             Timing.CurTime + _random.Next(entity.Comp.MinRuleInterval, entity.Comp.MaxRuleInterval);
 
         var executedRules = new List<EntityUid>();
 
-        foreach (var rule in GetRuleSpawns(entity))
+        foreach (var rule in GetRuleSpawns(entity, roundStart))
         {
             if (!GameTicker.StartGameRule(rule, out var ruleUid))
                 continue;
