@@ -1,4 +1,4 @@
-﻿using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
 
 namespace Content.Shared.DeviceNetwork.Payloads;

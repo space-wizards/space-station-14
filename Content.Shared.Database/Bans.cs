@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Database;
+namespace Content.Shared.Database;
 
 /// <summary>
 /// Types of bans that can be stored in the database.
