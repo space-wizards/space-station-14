@@ -50,11 +50,11 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
             {
                 _vendingSystem.SetContraband(vendor, true);
             }
-
-            if (ent.Comp1.MinEjectedItems <= 0) continue;
+            var toEject = RobustRandom.Next(ent.Comp1.MinEjectedItems, ent.Comp1.MaxEjectedItems);
+            if (toEject <= 0) continue;
             _vendingSystem.EjectRandom(vendor.AsNullable(), true); // ensures the noise plays for the first ejected item
-            for (var j = RobustRandom.Next(ent.Comp1.MinEjectedItems, ent.Comp1.MaxEjectedItems); j > 1; j--)
-            { 
+            for (var j = 1; j < toEject; j++)
+            {
                 _vendingSystem.EjectRandom(vendor.AsNullable(), true, true); // handles ejecting the other items
             }
 
