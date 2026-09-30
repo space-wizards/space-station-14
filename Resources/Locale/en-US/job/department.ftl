@@ -8,6 +8,7 @@ department-Science = Science
 department-Security = Security
 department-Service = Service
 department-Silicon = Silicon
+department-Task-Force = Task Force
 department-Specific = Station specific
 
 department-Unknown = Unknown
