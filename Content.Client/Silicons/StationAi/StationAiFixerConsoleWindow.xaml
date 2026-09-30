@@ -8,7 +8,13 @@
         <BoxContainer VerticalExpand="True" HorizontalExpand="True" Orientation="Horizontal">
 
             <!-- Left side - AI display -->
-            <BoxContainer VerticalExpand="True" VerticalAlignment="Center" HorizontalExpand="True" Orientation="Vertical" MinWidth="225" Margin="20 15 20 20">
+            <BoxContainer
+                VerticalExpand="True"
+                VerticalAlignment="Center"
+                HorizontalExpand="True"
+                Orientation="Vertical"
+                MinWidth="225"
+                Margin="20 15 20 20">
 
                 <!-- AI panel -->
                 <PanelContainer>
@@ -24,8 +30,15 @@
                                Text="{Loc 'station-ai-fixer-console-window-no-station-ai'}"/>
 
                         <!-- AI portrait -->
-                        <AnimatedTextureRect Name="StationAiPortraitTexture" VerticalAlignment="Center" SetSize="128 128" />
-                        <SpriteView Name="StationAiPortraitView" VerticalAlignment="Center" SetSize="128 128" Visible="False" />
+                        <AnimatedTextureRect
+                            Name="StationAiPortraitTexture"
+                            VerticalAlignment="Center"
+                            SetSize="128 128" />
+                        <SpriteView
+                            Name="StationAiPortraitView"
+                            VerticalAlignment="Center"
+                            SetSize="128 128"
+                            Visible="False" />
                     </BoxContainer>
                 </PanelContainer>
 
@@ -115,7 +128,7 @@
 
                     <controls:StripeBack>
                         <PanelContainer>
-                            <Label Text="{Loc 'Controls'}"
+                            <Label Text="{Loc 'station-ai-fixer-console-window-controls'}"
                                    HorizontalExpand="True"
                                    HorizontalAlignment="Center"/>
                         </PanelContainer>
@@ -144,7 +157,10 @@
                     </Button>
 
                     <!-- Law Reset button -->
-                    <Button Name="LawResetButton" HorizontalExpand="True" Margin="0 10 0 0" SetHeight="40"
+                    <Button Name="LawResetButton"
+                            HorizontalExpand="True"
+                            Margin="0 10 0 0"
+                            SetHeight="40"
                             Text="{Loc 'station-ai-fixer-console-window-station-law-reset'}">
                         <TextureRect HorizontalAlignment="Left"
                                      VerticalAlignment="Center"
