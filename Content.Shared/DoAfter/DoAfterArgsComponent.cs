@@ -111,6 +111,14 @@ public sealed partial class DoAfterArgsComponent : Component
     [DataField]
     public TimeSpan? DelayReduction;
 
+    /// <summary>
+    /// Examinable text of this DoAfter. Shows on the entity who is performing it.
+    /// Passes in "user" and "target" of the DoAfter into the Loc as their identities.
+    /// Passes in "action" directly.
+    /// </summary>
+    [DataField]
+    public LocId? ExamineText;
+
     // End DoAfterArgsSettings
     #endregion
 }
