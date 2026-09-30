@@ -26,13 +26,13 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
             uid => _whitelist.IsWhitelistFailOrNull(ent.Comp1.Blacklist, uid)))
             return;
 
-        var vendingMachines = new List<Entity<VendingMachineComponent, VendingMachineEjectComponent>>();
-        var query = EntityQueryEnumerator<VendingMachineComponent, VendingMachineEjectComponent, TransformComponent>();
-        while (query.MoveNext(out var vendUid, out var vendor, out var vendEject, out var xform))
+        var vendingMachines = new List<Entity<VendingMachineComponent>>();
+        var query = EntityQueryEnumerator<VendingMachineComponent, TransformComponent>();
+        while (query.MoveNext(out var vendUid, out var vendor, out var xform))
         {
             if ((!vendor.Broken) && _vendingSystem.IsPowered(vendUid, EntityManager) && CompOrNull<StationMemberComponent>(xform.GridUid)?.Station == chosenStation.Value.Owner)
             {
-                vendingMachines.Add((vendUid, vendor, vendEject));
+                vendingMachines.Add((vendUid, vendor));
             }
         }
 
