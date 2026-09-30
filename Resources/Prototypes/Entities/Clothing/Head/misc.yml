@@ -102,8 +102,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatPwig
-  name: pwig
-  description: To be honest, those look ridiculous.
+  name: powdered wig
+  description: Ridiculous? You be the judge.
   components:
   - type: Sprite
     sprite: Clothing/Head/Misc/pwig.rsi
