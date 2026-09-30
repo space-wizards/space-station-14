@@ -150,17 +150,6 @@
     sprite: Clothing/Shoes/Specific/swat.rsi
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
-  id: ClothingShoesWizard
-  name: wizard shoes
-  description: A pair of magic shoes.
-  components:
-  - type: Sprite
-    sprite: Clothing/Shoes/Specific/wizard.rsi
-  - type: Clothing
-    sprite: Clothing/Shoes/Specific/wizard.rsi
-
-- type: entity
   parent: [ClothingShoesBase, BaseChameleon]
   id: ClothingShoesChameleon
   name: black shoes

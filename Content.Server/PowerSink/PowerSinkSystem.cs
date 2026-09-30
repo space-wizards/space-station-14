@@ -31,7 +31,7 @@ namespace Content.Server.PowerSink
         [Dependency] private ChatSystem _chat = default!;
         [Dependency] private ExplosionSystem _explosionSystem = default!;
         [Dependency] private SharedAudioSystem _audio = default!;
-        [Dependency] private StationSystem _station = default!;
+        [Dependency] private ServerStationSystem _station = default!;
         [Dependency] private BatterySystem _battery = default!;
 
         public override void Initialize()

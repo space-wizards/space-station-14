@@ -101,7 +101,7 @@
     graph: Grille
     node: grille
 
-### DIAGONAL
+### Diagonal
 - type: entity
   parent: Grille
   id: GrilleDiagonal
@@ -142,7 +142,7 @@
     graph: GrilleDiagonal
     node: grilleDiagonal
 
-### BROKEN
+### Broken state
 - type: entity
   parent: [ BaseStructure, StructureHealthFurnitureWeak ]
   id: GrilleBroken
@@ -164,7 +164,17 @@
     graph: Grille
     node: grilleBroken
     deconstructionTarget: start
-  - type: Fixtures # overwrite BaseStructure parent.
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,-0.28125"
+        density: 5
+        mask:
+        - DoorPassable
+        layer:
+        - DoorPassable
   - type: Physics
     bodyType: Static
     canCollide: false

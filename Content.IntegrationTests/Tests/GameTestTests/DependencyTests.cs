@@ -1,9 +1,8 @@
 #nullable enable
 using System.Collections.Generic;
-using Content.Client.GameTicking.Managers;
+using Content.Client.GameTicking;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
-using Content.IntegrationTests.NUnit.Constraints;
 using Content.Server.GameTicking;
 using Content.Shared.GameTicking;
 using Robust.Shared.GameObjects;
@@ -14,8 +13,8 @@ namespace Content.IntegrationTests.Tests.GameTestTests;
 [TestOf(typeof(SidedDependencyAttribute))]
 public sealed class DependencyTests : GameTest
 {
-    [SidedDependency(Side.Server)] private readonly SharedGameTicker _sGameTicker = null!;
-    [SidedDependency(Side.Client)] private readonly SharedGameTicker _cGameTicker = null!;
+    [SidedDependency(Side.Server)] private readonly GameTicker _sGameTicker = null!;
+    [SidedDependency(Side.Client)] private readonly GameTicker _cGameTicker = null!;
     [SidedDependency(Side.Server)] private readonly EntityQuery<TransformComponent> _sXformQuery = default!;
 
     [Test]
@@ -38,7 +37,7 @@ public sealed class DependencyTests : GameTest
         {
             Assert.That(!ReferenceEquals(_sGameTicker, _cGameTicker),
                 "Server and client gametickers should be distinct");
-            Assert.That(_sGameTicker, Is.TypeOf<GameTicker>());
+            Assert.That(_sGameTicker, Is.TypeOf<ServerGameTicker>());
             Assert.That(_cGameTicker, Is.TypeOf<ClientGameTicker>());
         }
     }

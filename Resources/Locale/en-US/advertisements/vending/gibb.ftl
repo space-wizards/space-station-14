@@ -1,4 +1,4 @@
-﻿advertisement-gibb-1 = Delicious!
+advertisement-gibb-1 = Delicious!
 advertisement-gibb-2 = Recommended by at least one doctor!
 advertisement-gibb-3 = Over 1 million drinks sold!
 advertisement-gibb-4 = Dr. Gibb, what's the worst that could happen?
