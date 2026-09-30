@@ -32,6 +32,12 @@ public sealed partial class CargoSystem
     }
 
     [SubscribeLocalEvent]
+    private void OnStationInit(EntityUid uid, StationCargoOrderDatabaseComponent orderDatabase, ComponentInit args)
+    {
+        orderDatabase.NextOrderCheck = Timing.CurTime + orderDatabase.OrderCheckDelay;
+    }
+
+    [SubscribeLocalEvent]
     private void OnInteractUsing(Entity<CargoOrderConsoleComponent> ent, ref InteractUsingEvent args)
     {
         if (_cashQuery.HasComp(args.Used))
@@ -177,34 +183,14 @@ public sealed partial class CargoSystem
             return;
         }
 
-        var emagged = _emag.CheckFlag(ent.Owner, EmagType.Interaction);
-        if (!emagged)
-            order.SetApproverData(_identity.GetIdentityShortInfo(player, ent.Owner));
-
         order.ApprovingConsole = GetNetEntity(ent.Owner);
         order.Approved = true;
 
-        var ev = new FulfillCargoOrderEvent((station.Value, stationData), order);
-        RaiseLocalEvent(ref ev);
-        ev.FulfillmentEntity ??= station.Value;
-
-        if (!ev.Handled)
-        {
-            if (!TryFulfillOrder((station.Value, stationData), order, orderDatabase))
-            {
-                _popup.PopupCursor(Loc.GetString("cargo-console-unfulfilled"), args.Actor);
-                PlayDenySound(ent);
-                order.Approver = null;
-                order.ApprovingConsole = null;
-                order.Approved = false;
-                return;
-            }
-        }
-
         _audio.PlayPvs(ApproveSound, ent.Owner);
 
-        if (!emagged)
+        if (!_emag.CheckFlag(ent.Owner, EmagType.Interaction))
         {
+            order.SetApproverData(_identity.GetIdentityShortInfo(player, ent.Owner));
             var message = Loc.GetString(
                 "cargo-console-unlock-approved-order-broadcast",
                 ("productName", Loc.GetString(product.Name)),
@@ -232,9 +218,11 @@ public sealed partial class CargoSystem
             $"{ToPrettyString(player):user} approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.Product}, requester:{order.Requester}, reason:{order.Reason}] on account {order.Account} with balance at {accountBalance}"
         );
 
-        orderDatabase.Orders.Remove(order);
         UpdateBankAccount((station.Value, bank), -cost, order.Account);
         UpdateOrders(station.Value);
+        // Prevent unnecessary close checks
+        orderDatabase.NextOrderCheck = Timing.CurTime + orderDatabase.OrderCheckDelay;
+        UpdateUndeliveredOrders((station.Value, orderDatabase));
     }
 
     public void RemoveOrder(
@@ -436,8 +424,6 @@ public sealed partial class CargoSystem
             var tradePads = GetCargoPallets(trade, BuySellType.Buy);
 
             var freePads = GetFreeCargoPallets(trade, tradePads);
-            if (freePads.Count < order.OrderQuantity) //check if the station has enough free pallets
-                continue;
 
             _random.Shuffle(freePads);
             foreach (var pad in freePads)
@@ -555,6 +541,21 @@ public sealed partial class CargoSystem
         return true;
     }
 
+    private bool TryDeliverOrder(
+        EntityUid dbUid,
+        CargoOrderData order,
+        StationCargoOrderDatabaseComponent orderDatabase
+    )
+    {
+        orderDatabase.Orders.Remove(order);
+        orderDatabase.DeliveredOrders.Add(order);
+        // Prevent unbounded growth of delivered orders.
+        if (orderDatabase.DeliveredOrders.Count > 1000)
+            orderDatabase.DeliveredOrders.RemoveAt(0);
+        UpdateOrders(dbUid);
+        return true;
+    }
+
     private static int GenerateOrderId(StationCargoOrderDatabaseComponent orderDb)
     {
         // We need an arbitrary unique ID to identify orders, since they may
@@ -564,16 +565,22 @@ public sealed partial class CargoSystem
 
     private void UpdateConsole()
     {
-        var stationQuery = EntityQueryEnumerator<StationBankAccountComponent>();
-        while (stationQuery.MoveNext(out var uid, out var bank))
+        var stationQuery = EntityQueryEnumerator<StationBankAccountComponent, StationCargoOrderDatabaseComponent>();
+        while (stationQuery.MoveNext(out var uid, out var bank, out var orderDatabase))
         {
-            if (Timing.CurTime < bank.NextIncomeTime)
-                continue;
+            if (Timing.CurTime > bank.NextIncomeTime)
+            {
+                bank.NextIncomeTime += bank.IncomeDelay;
 
-            bank.NextIncomeTime += bank.IncomeDelay;
+                var balanceToAdd = (int)Math.Round(bank.IncreasePerSecond * bank.IncomeDelay.TotalSeconds);
+                UpdateBankAccount((uid, bank), balanceToAdd, bank.RevenueDistribution);
+            }
+            if (Timing.CurTime > orderDatabase.NextOrderCheck)
+            {
+                orderDatabase.NextOrderCheck += orderDatabase.OrderCheckDelay;
 
-            var balanceToAdd = (int)Math.Round(bank.IncreasePerSecond * bank.IncomeDelay.TotalSeconds);
-            UpdateBankAccount((uid, bank), balanceToAdd, bank.RevenueDistribution);
+                UpdateUndeliveredOrders((uid, orderDatabase));
+            }
         }
     }
 
@@ -613,6 +620,51 @@ public sealed partial class CargoSystem
             RelevantOrders((station.Value, orderDatabase), console.Account),
             GetAvailableProducts((consoleUid, console))
         ));
+    }
+
+    private void UpdateUndeliveredOrders(Entity<StationCargoOrderDatabaseComponent> ent)
+    {
+        if (!TryComp<StationDataComponent>(ent, out var stationData))
+            return;
+
+        var toDeliver = new List<CargoOrderData>();
+
+        foreach (var order in ent.Comp.Orders)
+        {
+            if (!order.Approved)
+                continue;
+
+            if (order.NumDispatched >= order.OrderQuantity)
+            {
+                toDeliver.Add(order);
+                continue;
+            }
+
+            if (order.Assigned && TryGetEntity(order.AssignedEntity, out var _))
+                continue;
+
+            if (TryExternalFulfillment((ent, stationData), order))
+                continue;
+
+            if (TryFulfillOrder((ent, stationData), order, ent.Comp))
+                toDeliver.Add(order);
+        }
+
+        foreach (var order in toDeliver)
+            TryDeliverOrder(ent, order, ent.Comp);
+    }
+
+    private bool TryExternalFulfillment(Entity<StationDataComponent> station, CargoOrderData order)
+    {
+        var ev = new FulfillCargoOrderEvent(station, order);
+        RaiseLocalEvent(ref ev);
+
+        if (!ev.Handled || !TryGetNetEntity(ev.FulfillmentEntity, out var netEnt))
+            return false;
+
+        order.Assigned = true;
+        order.AssignedEntity = netEnt;
+        return true;
     }
 
     /// <summary>
