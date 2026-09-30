@@ -97,6 +97,9 @@ public sealed partial class PlantTraySystem : EntitySystem
     private void OnRelayInteractUsing(Entity<PlantTrayComponent> ent,
         ref PlantHolderRelayedEvent<InteractUsingEvent> args)
     {
+        if (args.Args.Handled)
+            return;
+
         args.Args.Handled = _interaction.InteractUsing(args.Args.User, args.Args.Used, ent, args.Args.ClickLocation);
     }
 
