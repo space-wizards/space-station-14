@@ -76,10 +76,10 @@ public sealed partial class DynamicRuleSystem : GameRuleSystem<DynamicRuleCompon
     private IEnumerable<EntProtoId> GetRuleSpawns(Entity<DynamicRuleComponent> entity)
     {
         UpdateBudget((entity.Owner, entity.Comp));
-        var ctx = new EntityTableContext(new Dictionary<string, object>
+        var ctx = new EntityTableContext
         {
             { HasBudgetCondition.BudgetContextKey, entity.Comp.Budget },
-        });
+        };
 
         return _entityTable.GetSpawns(entity.Comp.Table, ctx: ctx);
     }
