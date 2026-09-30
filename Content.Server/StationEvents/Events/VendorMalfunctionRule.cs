@@ -30,7 +30,7 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
         var query = EntityQueryEnumerator<VendingMachineComponent, VendingMachineEjectComponent, TransformComponent>();
         while (query.MoveNext(out var vendUid, out var vendor, out var vendEject, out var xform))
         {
-            if (_vendingSystem.IsPowered(vendUid, EntityManager) && CompOrNull<StationMemberComponent>(xform.GridUid)?.Station == chosenStation.Value.Owner)
+            if ((!vendor.Broken) && _vendingSystem.IsPowered(vendUid, EntityManager) && CompOrNull<StationMemberComponent>(xform.GridUid)?.Station == chosenStation.Value.Owner)
             {
                 vendingMachines.Add((vendUid, vendor, vendEject));
             }
@@ -45,10 +45,7 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
         for (var i = 0; i < toDispense; i++)
         {
             var vendor = vendingMachines[i];
-            for (var j = RobustRandom.Next(1, 4); j > 0; j--)
-            {
-                _vendingSystem.EjectRandom(vendor, true, true);
-            }
+            _vendingSystem.EjectRandom(vendor, true);
         }
     }
 }

@@ -452,7 +452,7 @@
   - type: VendorMalfunctionRule
     blacklist:
       components:
-        - ProtectedGrid
+      - ProtectedGrid
   - type: DynamicRuleCost
     cost: 5
 
