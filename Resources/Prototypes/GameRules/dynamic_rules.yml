@@ -78,8 +78,37 @@
         - !type:RoundDurationCondition
           min: 300 # minimum 5 minutes
         children:
+        - id: BasicCalmEventsTable
+          weight: 40
+          conditions:
+          - !type:HasBudgetCondition
+          - !type:RoundDurationCondition
+            min: 300 # 5 minutes
         - id: SleeperAgents
           weight: 15
+          conditions:
+          - !type:HasBudgetCondition
+          - !type:MaxRuleOccurenceCondition
+          - !type:RoundDurationCondition
+            min: 1200 # 20 minutes
+        - id: ClosetSkeleton
+          weight: 25
+          conditions:
+          - !type:HasBudgetCondition
+          - !type:MaxRuleOccurenceCondition
+          - !type:RoundDurationCondition
+            min: 1200 # 20 minutes
+        - id: KingRatMigration
+          weight: 25
+          conditions:
+          - !type:HasBudgetCondition
+          - !type:MaxRuleOccurenceCondition
+          - !type:PlayerCountCondition
+            min: 15
+          - !type:RoundDurationCondition
+            min: 1200 # 20 minutes
+        - id: ParadoxCloneSpawn
+          weight: 25
           conditions:
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
@@ -99,13 +128,6 @@
           - !type:MaxRuleOccurenceCondition
           - !type:RoundDurationCondition
             min: 1800 # 30 minutes
-        - id: ParadoxCloneSpawn
-          weight: 25
-          conditions:
-          - !type:HasBudgetCondition
-          - !type:MaxRuleOccurenceCondition
-          - !type:RoundDurationCondition
-            min: 1200 # 20 minutes
         - id: SpaceChangelingSpawn
           weight: 25
           conditions:
@@ -113,6 +135,15 @@
           - !type:MaxRuleOccurenceCondition
           - !type:PlayerCountCondition
             min: 15
+          - !type:RoundDurationCondition
+            min: 1800 # 30 minutes
+        - id: DerelictBorgEventTable
+          weight: 25
+          conditions:
+          - !type:HasBudgetCondition
+          - !type:MaxRuleOccurenceCondition
+          - !type:PlayerCountCondition
+            min: 20
           - !type:RoundDurationCondition
             min: 1800 # 30 minutes
         - id: ZombieOutbreak
