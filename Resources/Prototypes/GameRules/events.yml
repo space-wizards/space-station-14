@@ -86,6 +86,16 @@
       max:  20
 
 - type: entity
+  id: BaseStationEventVeryShortDelay
+  parent: BaseGameRule
+  abstract: true
+  components:
+    - type: GameRule
+      delay:
+        min:  1
+        max:  5
+
+- type: entity
   id: BaseStationEventShortDelay
   parent: BaseGameRule
   abstract: true
@@ -443,7 +453,7 @@
 
 - type: entity
   id: VendorMalfunction
-  parent: BaseStationEvent
+  parent: BaseStationEventVeryShortDelay
   components:
   - type: StationEvent
     startAnnouncement: station-event-vendor-malfunction-announcement
