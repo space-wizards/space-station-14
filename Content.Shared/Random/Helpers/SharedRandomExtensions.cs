@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Dataset;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -21,28 +22,6 @@ namespace Content.Shared.Random.Helpers
         {
             var index = random.Next(prototype.Values.Count);
             return Loc.GetString(prototype.Values[index]);
-        }
-
-        public static string Pick(this IWeightedRandomPrototype prototype, System.Random random)
-        {
-            var picks = prototype.Weights;
-            var sum = picks.Values.Sum();
-            var accumulated = 0f;
-
-            var rand = random.NextFloat() * sum;
-
-            foreach (var (key, weight) in picks)
-            {
-                accumulated += weight;
-
-                if (accumulated >= rand)
-                {
-                    return key;
-                }
-            }
-
-            // Shouldn't happen
-            throw new InvalidOperationException($"Invalid weighted pick for {prototype.ID}!");
         }
 
         public static string Pick(this IWeightedRandomPrototype prototype, IRobustRandom? random = null)
@@ -66,6 +45,14 @@ namespace Content.Shared.Random.Helpers
 
             // Shouldn't happen
             throw new InvalidOperationException($"Invalid weighted pick for {prototype.ID}!");
+        }
+
+        public static ProtoId<T> Pick<T>(this IWeightedRandomPrototype<T> prototype, IRobustRandom? random = null)
+        where
+            T: class, IPrototype
+        {
+            IoCManager.Resolve(ref random);
+            return random.Pick(prototype.Weights);
         }
 
         public static T Pick<T>(this IRobustRandom random, Dictionary<T, float> weights)
@@ -109,7 +96,7 @@ namespace Content.Shared.Random.Helpers
             return true;
         }
 
-        public static T Pick<T>(Dictionary<T, float> weights, System.Random random)
+        public static T Pick<T>(Dictionary<T, float> weights, IRobustRandom random)
             where T : notnull
         {
             var sum = weights.Values.Sum();
@@ -214,7 +201,7 @@ namespace Content.Shared.Random.Helpers
 
         // TODO: REPLACE ALL OF THIS WITH PREDICTED RANDOM WHEN ENGINE PR IS MERGED
         /// <summary>
-        /// Creates an instance of System.Random that will be the same for both the server and client.
+        /// Creates an instance of IRobustRandom that will be the same for both the server and client.
         /// This allows for the client and server to roll the same results when determining things randomly, preventing mispredictions.
         /// We generate a unique seed by getting 2-3 unique but predictable integers into a Hashcode.
         /// </summary>
@@ -225,10 +212,12 @@ namespace Content.Shared.Random.Helpers
         /// <param name="netEnt2">An optional relevant net entity to our seed.
         /// Typically used if we have an entity checking random potentially multiple times per tick, to ensure we get a unique seed each time.
         /// This entity should not be the same entity as <see cref="netEnt"/>.</param>
-        public static System.Random PredictedRandom(IGameTiming timing, NetEntity netEnt, NetEntity? netEnt2 = null)
+        public static IRobustRandom PredictedRandom(IGameTiming timing, NetEntity netEnt, NetEntity? netEnt2 = null)
         {
             var seed = HashCodeCombine((int)timing.CurTick.Value, netEnt.Id, netEnt2?.Id ?? 0);
-            return new System.Random(seed);
+            var random = new RobustRandom();
+            random.SetSeed(seed);
+            return random;
         }
 
         /// <summary>

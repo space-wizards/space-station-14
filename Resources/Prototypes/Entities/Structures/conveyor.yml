@@ -1,4 +1,5 @@
 - type: entity
+  parent: StructureHealthMachineFlimsy
   id: ConveyorBelt
   name: conveyor belt
   description: A conveyor belt, commonly used to transport large numbers of items elsewhere quite quickly.
@@ -6,15 +7,17 @@
     mode: SnapgridCenter
   components:
   - type: Rotatable
-    rotateWhileAnchored: true
+    rotateWhileAnchored: false
   - type: Clickable
   - type: InteractionOutline
   - type: Transform
     anchored: true
+  - type: Anchorable
   - type: Sprite
     sprite: Structures/conveyor.rsi
-    state: conveyor_stopped_cw
+    state: conveyor_stopped
     drawdepth: HighFloorObjects
+  - type: SyncSprite
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Physics
@@ -39,50 +42,65 @@
     range: 200
   - type: DeviceLinkSink
     ports:
-      - Reverse
-      - Forward
-      - Off
+    - Reverse
+    - Forward
+    - Off
   - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.ConveyorVisuals.State:
         enum.ConveyorState.Off:
-          Off: { state: conveyor_stopped_cw }
-          Forward: { state: conveyor_started_cw }
-          Reverse: { state: conveyor_started_cw_r }
+          Off: { state: conveyor_stopped }
+          Forward: { state: conveyor_started }
+          Reverse: { state: conveyor_started_r }
   - type: Construction
     graph: ConveyorGraph
     node: entity
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: PlasticMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 50
       behaviors:
-      # if ConveyorBeltAssembly becomes craftable, maybe spawn some of the ingredients?
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlastic1:
+            min: 0
+            max: 1
+          SheetSteel1:
+            min: 0
+            max: 1
 
 - type: entity
   id: ConveyorBeltAssembly
   parent: BaseItem
-  name: conveyor belt
-  suffix: assembly
+  name: conveyor belt assembly
   description: A conveyor belt assembly. Used to construct a conveyor belt.
   components:
-  - type: Tag
-    tags:
-    - ConveyorAssembly
   - type: Sprite
     sprite: Structures/conveyor.rsi
-    state: conveyor_loose
+    layers:
+    - state: conveyor_loose
+      map: [ "base" ]
+  - type: Item
+    size: Normal
   - type: Construction
     graph: ConveyorGraph
     node: item
-  - type: StaticPrice
+  - type: StackPrice
     price: 40
-
+  - type: Stack
+    stackType: ConveyorBeltStack
+    count: 1
+    baseLayer: base
+    layerStates:
+    - conveyor_loose # 0-item state
+    - conveyor_loose
+    - conveyor_loose_2
+    - conveyor_loose_3
+  - type: Appearance

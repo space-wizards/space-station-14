@@ -15,7 +15,7 @@
     - mode: OpenClose
       tooltip: &TextOpenClose door-remote-open-close-text
       icon: &IconOpenClose
-        sprite: /Textures/Structures/Doors/Airlocks/Standard/basic.rsi
+        sprite: /Textures/Structures/Doors/Airlocks/Standard/airlock-base.rsi
         state: assembly
     - mode: ToggleBolts
       tooltip: &TextToggleBolt door-remote-toggle-bolt-text
