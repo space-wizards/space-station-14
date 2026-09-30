@@ -1,3 +1,4 @@
+using Content.Server.Power.EntitySystems;
 using Content.Server.StationEvents.Components;
 using Content.Server.VendingMachines;
 using Content.Shared.GameTicking.Components;
@@ -8,8 +9,9 @@ using Content.Shared.Whitelist;
 namespace Content.Server.StationEvents.Events;
 
 /// <summary>
-/// This handles...
+/// Handler for events that cause some vending machines to eject some of their contents.
 /// </summary>
+/// <seealso cref="VendorMalfunctionRuleComponent"/>
 public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMalfunctionRuleComponent>
 {
     [Dependency] private VendingMachineSystem _vendingSystem = default!;
@@ -20,7 +22,7 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
         if (!TryComp<StationEventComponent>(ent, out var stationEvent))
             return;
 
-        var str = Loc.GetString("station-event-breaker-flip-announcement", ("data", Loc.GetString($"random-sentience-event-data-{RobustRandom.Next(1, 6)}")));
+        var str = Loc.GetString("station-event-vendor-malfunction-announcement");
         stationEvent.StartAnnouncement = str;
 
         base.Added(ent, ref args);
@@ -39,7 +41,7 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
         var query = EntityQueryEnumerator<VendingMachineComponent, VendingMachineEjectComponent, TransformComponent>();
         while (query.MoveNext(out var vendUid, out var vendor, out var vendEject, out var xform))
         {
-            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station == chosenStation.Value.Owner)
+            if (_vendingSystem.IsPowered(vendUid, EntityManager) && CompOrNull<StationMemberComponent>(xform.GridUid)?.Station == chosenStation.Value.Owner)
             {
                 vendingMachines.Add((vendUid, vendor, vendEject));
             }
@@ -54,11 +56,10 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
         for (var i = 0; i < toDispense; i++)
         {
             var vendor = vendingMachines[i];
-            _vendingSystem.EjectRandom(vendor, true, true);
-
-            //var stateString = apc.Comp.MainBreakerEnabled ? "Enabled" : "Disabled";
-            //AdminLogManager.Add(LogType.ItemConfigure, LogImpact.Medium,
-            //    $"Station event {ToPrettyString(ent):user} set the main breaker state of {ToPrettyString(apc):entity} to {stateString:state}");
+            for (var j = RobustRandom.Next(1, 4); j > 0; j--)
+            {
+                _vendingSystem.EjectRandom(vendor, true, true);
+            }
         }
     }
 }

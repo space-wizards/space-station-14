@@ -4,7 +4,7 @@ using Content.Shared.Whitelist;
 namespace Content.Server.StationEvents.Components;
 
 /// <summary>
-/// This is used for...
+/// Gamerule component to make some vending machines eject some of their contents
 /// </summary>
 [RegisterComponent, Access(typeof(VendorMalfunctionRule))]
 public sealed partial class VendorMalfunctionRuleComponent : Component
