@@ -45,7 +45,7 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
         for (var i = 0; i < toDispense; i++)
         {
             var vendor = vendingMachines[i];
-            _vendingSystem.EjectRandom(vendor!, true);
+            _vendingSystem.EjectRandom(vendor.AsNullable(), true);
         }
     }
 }
