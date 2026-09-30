@@ -702,6 +702,15 @@
       board: [ DoorElectronicsChemistry ]
 
 - type: entity
+  parent: AirlockChemistryGlass
+  id: AirlockChemistryGlassMedicalLocked
+  suffix: Chemistry, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMedical ]
+
+- type: entity
   parent: AirlockMedicalGlass
   id: AirlockMedicalMorgueGlassLocked
   suffix: Morgue, Locked
