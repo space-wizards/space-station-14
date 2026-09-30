@@ -12,6 +12,9 @@ namespace Content.Shared.Ghost.Roles.Raffles;
 [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
 public sealed partial class RngGhostRoleRaffleDecider : IGhostRoleRaffleDecider
 {
+    /// <summary>
+    /// Shuffles the candidates and tries to transfer the role to each one until a transfer succeeds.
+    /// </summary>
     public void PickWinner(IEnumerable<ICommonSession> candidates, Func<ICommonSession, bool> tryTakeover)
     {
         var random = IoCManager.Resolve<IRobustRandom>();

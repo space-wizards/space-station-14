@@ -38,6 +38,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Ghost.Roles;
 
+/// <inheritdoc />
 [UsedImplicitly]
 public sealed partial class GhostRoleSystem : SharedGhostRoleSystem
 {
@@ -170,6 +171,7 @@ public sealed partial class GhostRoleSystem : SharedGhostRoleSystem
         }
     }
 
+    /// <inheritdoc />
     public override void UpdateAllEui()
     {
         foreach (var eui in _openUis.Values)

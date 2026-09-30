@@ -2,6 +2,9 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ghost.Roles;
 
+/// <summary>
+/// Network representation of a ghost role available to the client.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class GhostRole
 {

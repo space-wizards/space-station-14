@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Ghost.Roles;
 
 /// <summary>
-///     For selectable ghostrole prototypes in ghostrole spawners.
+/// For selectable ghostrole prototypes in ghostrole spawners.
 /// </summary>
 [Prototype]
 public sealed partial class GhostRolePrototype : IPrototype
@@ -13,19 +13,19 @@ public sealed partial class GhostRolePrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     /// <summary>
-    ///     The name of the ghostrole.
+    /// The name of the ghostrole.
     /// </summary>
     [DataField(required: true)]
-    public LocId Name { get; set; } = default!;
+    public LocId Name { get; set; };
 
     /// <summary>
-    ///     The description of the ghostrole.
+    /// The description of the ghostrole.
     /// </summary>
     [DataField(required: true)]
-    public LocId Description { get; set; } = default!;
+    public LocId Description { get; set; };
 
     /// <summary>
-    ///     The entity prototype of the ghostrole
+    /// The entity prototype of the ghostrole
     /// </summary>
     [DataField(required: true)]
     public EntProtoId EntityPrototype;
@@ -35,11 +35,11 @@ public sealed partial class GhostRolePrototype : IPrototype
     /// Use this if you don't want to use the entity itself
     /// </summary>
     [DataField]
-    public EntProtoId? IconPrototype = null;
+    public EntProtoId? IconPrototype;
 
     /// <summary>
-    ///     Rules of the ghostrole
+    /// Rules of the ghostrole
     /// </summary>
     [DataField(required: true)]
-    public LocId Rules = default!;
+    public LocId Rules;
 }

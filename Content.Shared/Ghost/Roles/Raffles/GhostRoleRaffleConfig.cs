@@ -8,13 +8,8 @@ namespace Content.Shared.Ghost.Roles.Raffles;
 /// </summary>
 [Serializable, NetSerializable]
 [DataDefinition]
-public sealed partial class GhostRoleRaffleConfig
+public sealed partial class GhostRoleRaffleConfig(GhostRoleRaffleSettings settings)
 {
-    public GhostRoleRaffleConfig(GhostRoleRaffleSettings settings)
-    {
-        SettingsOverride = settings;
-    }
-
     /// <summary>
     /// Specifies the raffle settings to use.
     /// </summary>
@@ -26,7 +21,7 @@ public sealed partial class GhostRoleRaffleConfig
     /// Intended for allowing admins to set custom raffle settings for admeme ghost roles.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public GhostRoleRaffleSettings? SettingsOverride { get; set; }
+    public GhostRoleRaffleSettings? SettingsOverride { get; set; } = settings;
 
     /// <summary>
     /// Sets which <see cref="IGhostRoleRaffleDecider"/> is used.

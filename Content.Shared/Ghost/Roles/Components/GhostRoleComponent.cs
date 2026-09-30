@@ -4,6 +4,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Ghost.Roles.Components;
 
+/// <summary>
+/// Marks an entity as a role that can be taken by a ghost.
+/// </summary>
 [RegisterComponent]
 [Access(typeof(SharedGhostRoleSystem))]
 public sealed partial class GhostRoleComponent : Component
@@ -83,7 +86,7 @@ public sealed partial class GhostRoleComponent : Component
     /// </summary>
     [DataField]
     [Access(typeof(SharedGhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // Don't make eye contact
-    public List<EntProtoId> MindRoles = new() { "MindRoleGhostRoleNeutral" };
+    public List<EntProtoId> MindRoles = ["MindRoleGhostRoleNeutral"];
 
     /// <summary>
     /// Whether the granted mob is allowed to speak after takeover.
