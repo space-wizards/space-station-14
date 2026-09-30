@@ -118,6 +118,7 @@
     accent: slimes
   - type: GhostTakeoverAvailable
   - type: GhostRole
+    prob: 0.05
     makeSentient: true
     name: ghost-role-information-slimes-name
     description: ghost-role-information-slimes-description
@@ -136,6 +137,25 @@
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
+  - type: NPCRetaliation
+    attackMemoryLength: 10
+
+- type: entity
+  name: base angry slime
+  id: BaseAdultSlimesAngry
+  abstract: true
+  components:
+    - type: NpcFactionMember
+      factions:
+        - SimpleHostile
+    - type: GhostRole
+      prob: 1
+      description: ghost-role-information-angry-slimes-description
+      rules: ghost-role-information-angry-slimes-rules
+      mindRoles:
+      - MindRoleGhostRoleTeamAntagonist
+      raffle:
+        settings: short
 
 - type: entity
   name: blue slime
@@ -151,31 +171,9 @@
 
 - type: entity
   name: blue slime
-  parent: MobAdultSlimesBlue
+  parent: [ BaseAdultSlimesAngry, MobAdultSlimesBlue ]
   id: MobAdultSlimesBlueAngry
   suffix: Angry
-  components:
-    - type: NpcFactionMember
-      factions:
-        - SimpleHostile
-    - type: GhostRole
-      description: ghost-role-information-angry-slimes-description
-      rules: ghost-role-information-angry-slimes-rules
-      mindRoles:
-      - MindRoleGhostRoleTeamAntagonist
-      raffle:
-        settings: short
-
-- type: entity
-  name: blue slime
-  parent: MobAdultSlimesBlue
-  id: MobAdultSlimesBlueNeutral
-  suffix: Neutral
-  components:
-  - type: GhostRole
-    prob: 0.05
-  - type: NPCRetaliation
-    attackMemoryLength: 10
 
 - type: entity
   name: green slime
@@ -201,31 +199,9 @@
 
 - type: entity
   name: green slime
-  parent: MobAdultSlimesGreen
+  parent: [ BaseAdultSlimesAngry, MobAdultSlimesGreen ]
   id: MobAdultSlimesGreenAngry
   suffix: Angry
-  components:
-    - type: NpcFactionMember
-      factions:
-        - SimpleHostile
-    - type: GhostRole
-      description: ghost-role-information-angry-slimes-description
-      rules: ghost-role-information-angry-slimes-rules
-      mindRoles:
-      - MindRoleGhostRoleTeamAntagonist
-      raffle:
-        settings: short
-
-- type: entity
-  name: green slime
-  parent: MobAdultSlimesGreen
-  id: MobAdultSlimesGreenNeutral
-  suffix: Neutral
-  components:
-  - type: GhostRole
-    prob: 0.05
-  - type: NPCRetaliation
-    attackMemoryLength: 10
 
 - type: entity
   name: yellow slime
@@ -250,28 +226,6 @@
 
 - type: entity
   name: yellow slime
-  parent: MobAdultSlimesYellow
+  parent: [ BaseAdultSlimesAngry, MobAdultSlimesYellow ]
   id: MobAdultSlimesYellowAngry
   suffix: Angry
-  components:
-    - type: NpcFactionMember
-      factions:
-        - SimpleHostile
-    - type: GhostRole
-      description: ghost-role-information-angry-slimes-description
-      rules: ghost-role-information-angry-slimes-rules
-      mindRoles:
-      - MindRoleGhostRoleTeamAntagonist
-      raffle:
-        settings: short
-
-- type: entity
-  name: yellow slime
-  parent: MobAdultSlimesYellow
-  id: MobAdultSlimesYellowNeutral
-  suffix: Neutral
-  components:
-  - type: GhostRole
-    prob: 0.05
-  - type: NPCRetaliation
-    attackMemoryLength: 10

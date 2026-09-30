@@ -58,7 +58,7 @@
     Biomass: 16
 
 - type: latheRecipe
-  parent: MonkeyCube
+  parent: BaseCubeRecipe
   id: SlimeCube
   result: SlimeCube
 
