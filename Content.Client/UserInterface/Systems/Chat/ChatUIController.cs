@@ -61,8 +61,8 @@ public sealed partial class ChatUIController : UIController
     [UISystemDependency] private readonly CodewordSystem _codeword = default!;
     [UISystemDependency] private readonly ExamineSystem _examine = default!;
     [UISystemDependency] private readonly GhostSystem _ghost = default!;
-    [UISystemDependency] private readonly TypingIndicatorSystem _typingIndicator = default!;
     [UISystemDependency] private readonly TransformSystem _transform = default!;
+    [UISystemDependency] private readonly TypingIndicatorSystem _typingIndicator = default!;
 
     private SharedChatSystem? _sharedChatSys;
     private static readonly ProtoId<ColorPalettePrototype> ChatNamePalette = "ChatNames";
