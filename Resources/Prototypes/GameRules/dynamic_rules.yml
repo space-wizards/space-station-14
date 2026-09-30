@@ -3,7 +3,7 @@
   id: DynamicRule
   components:
   - type: GameRule
-    minPlayers: 1 # <5 is greenshift hours, buddy.
+    minPlayers: 5 # <5 is greenshift hours, buddy.
   - type: DynamicRule
     minBudgetPerSecond: 0.05
     maxBudgetPerSecond: 0.1
@@ -21,13 +21,15 @@
           conditions:
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
+          - !type:PlayerCountCondition
+            min: 5
         - id: Nukeops
           weight: 25
           conditions:
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
           - !type:PlayerCountCondition
-            min: 5
+            min: 20
         - id: Revolutionary
           weight: 5
           conditions:
@@ -54,7 +56,7 @@
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
           - !type:PlayerCountCondition
-            min: 1
+            min: 20
         - id: Xenoborgs
           conditions:
           - !type:HasBudgetCondition
