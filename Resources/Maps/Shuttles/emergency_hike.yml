@@ -4,8 +4,8 @@ meta:
   engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/23/2026 01:55:53
-  entityCount: 512
+  time: 09/30/2026 12:59:18
+  entityCount: 535
 maps: []
 grids:
 - 1
@@ -81,6 +81,11 @@ entities:
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
+    - type: DeviceNetwork
+      transmitFrequencyId: ShuttleTimer
+      deviceNetId: Wireless
+      deviceLists: []
+      configurators: []
     - type: GridAtmosphere
       version: 2
       data:
@@ -296,15 +301,15 @@ entities:
       parent: 1
       rot: -1.5707963267948966 rad
       pos: 3.5,17.5
-- proto: APCBasic
+- proto: APCHyperCapacity
   entities:
-  - uid: 229
+  - uid: 153
     components:
     - type: Transform
       parent: 1
       rot: 1.5707963267948966 rad
       pos: 0.5,15.5
-  - uid: 230
+  - uid: 229
     components:
     - type: Transform
       parent: 1
@@ -961,6 +966,66 @@ entities:
     - type: Transform
       parent: 1
       pos: -2.5,10.5
+  - uid: 520
+    components:
+    - type: Transform
+      parent: 1
+      pos: -0.5,9.5
+  - uid: 521
+    components:
+    - type: Transform
+      parent: 1
+      pos: -1.5,9.5
+  - uid: 522
+    components:
+    - type: Transform
+      parent: 1
+      pos: -0.5,9.5
+  - uid: 523
+    components:
+    - type: Transform
+      parent: 1
+      pos: 0.5,9.5
+  - uid: 524
+    components:
+    - type: Transform
+      parent: 1
+      pos: 0.5,8.5
+  - uid: 525
+    components:
+    - type: Transform
+      parent: 1
+      pos: -0.5,8.5
+  - uid: 526
+    components:
+    - type: Transform
+      parent: 1
+      pos: -0.5,7.5
+  - uid: 527
+    components:
+    - type: Transform
+      parent: 1
+      pos: -0.5,7.5
+  - uid: 528
+    components:
+    - type: Transform
+      parent: 1
+      pos: -0.5,6.5
+  - uid: 529
+    components:
+    - type: Transform
+      parent: 1
+      pos: -0.5,5.5
+  - uid: 530
+    components:
+    - type: Transform
+      parent: 1
+      pos: -0.5,4.5
+  - uid: 531
+    components:
+    - type: Transform
+      parent: 1
+      pos: -0.5,4.5
 - proto: CableMV
   entities:
   - uid: 214
@@ -1058,6 +1123,56 @@ entities:
     - type: Transform
       parent: 1
       pos: -1.5,8.5
+  - uid: 514
+    components:
+    - type: Transform
+      parent: 1
+      pos: -3.5,6.5
+  - uid: 515
+    components:
+    - type: Transform
+      parent: 1
+      pos: 0.5,7.5
+  - uid: 516
+    components:
+    - type: Transform
+      parent: 1
+      pos: 0.5,6.5
+  - uid: 517
+    components:
+    - type: Transform
+      parent: 1
+      pos: -0.5,7.5
+  - uid: 518
+    components:
+    - type: Transform
+      parent: 1
+      pos: 0.5,5.5
+  - uid: 519
+    components:
+    - type: Transform
+      parent: 1
+      pos: 0.5,3.5
+  - uid: 532
+    components:
+    - type: Transform
+      parent: 1
+      pos: 1.5,5.5
+  - uid: 533
+    components:
+    - type: Transform
+      parent: 1
+      pos: -0.5,5.5
+  - uid: 534
+    components:
+    - type: Transform
+      parent: 1
+      pos: -1.5,5.5
+  - uid: 535
+    components:
+    - type: Transform
+      parent: 1
+      pos: -2.5,5.5
 - proto: CarpetBlue
   entities:
   - uid: 74
@@ -2930,6 +3045,13 @@ entities:
       - 374
     - type: AtmosPipeColor
       color: '#990000FF'
+- proto: GeneratorBasic15kW
+  entities:
+  - uid: 513
+    components:
+    - type: Transform
+      parent: 1
+      pos: -3.5,7.5
 - proto: GeneratorWallmountAPU
   entities:
   - uid: 206
@@ -3500,13 +3622,14 @@ entities:
     - type: Transform
       parent: 1
       pos: 3.5,9.5
-- proto: SubstationBasic
+- proto: SubstationWallBasic
   entities:
-  - uid: 153
+  - uid: 230
     components:
     - type: Transform
       parent: 1
-      pos: -3.5,7.5
+      rot: 3.141592653589793 rad
+      pos: -3.5,6.5
 - proto: Table
   entities:
   - uid: 149
