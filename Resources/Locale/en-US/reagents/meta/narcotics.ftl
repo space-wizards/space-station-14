@@ -48,3 +48,6 @@ reagent-desc-Hydroxysomnolene = Byproduct of Methylenedioxystraquinone (aka Stra
 
 reagent-name-StrawberryIce = Methylenedioxystraquinone
 reagent-desc-StrawberryIce = A special drug designed to be even stronger than Desoxyephedrine. Known as "Strawberry Ice" or "Girl Ice" given its color and flavor, it is incredibly addictive and comes with strong withdrawal symptoms. While the highs are higher and users report flying in rainbows through space while under its influence, near-eternal horrors await those who cease consuming it.
+
+reagent-name-nyctalon = nyctalon
+reagent-desc-nyctalon = An irradiated medicine derived from oculine, this drug stimulates the rod and cone cells of the user's retina, enabling excellent night vision. This comes at a consequence of mild radiation sickness.

@@ -16,5 +16,5 @@ public sealed partial class SpawnOnOverloadComponent : Component
     /// The entity prototype to spawn when the device overloads
     /// </summary>
     [DataField("spawnedPrototype")]
-    public EntProtoId Prototype = "PuddleSparkle";
+    public EntProtoId Prototype = "EffectSparks";
 }
