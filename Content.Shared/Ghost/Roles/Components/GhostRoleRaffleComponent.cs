@@ -1,4 +1,4 @@
-﻿using Content.Shared.Ghost.Roles.Raffles;
+using Content.Shared.Ghost.Roles.Raffles;
 using Robust.Shared.Player;
 
 namespace Content.Shared.Ghost.Roles.Components;

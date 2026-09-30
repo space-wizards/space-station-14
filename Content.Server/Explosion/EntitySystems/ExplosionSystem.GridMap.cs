@@ -334,6 +334,10 @@ public sealed partial class ExplosionSystem
         Any = Cardinal | Diagonal
     }
 
+    /// <summary>
+    /// A simple utility to check for overlap between a NeighborFlag and AtmosDirection value.
+    /// </summary>
+    /// <returns>Returns true if any of the neighbors flag directions are blocked.</returns>
     public static bool AnyNeighborBlocked(NeighborFlag neighbors, AtmosDirection blockedDirs)
     {
         if ((neighbors & NeighborFlag.North) == NeighborFlag.North && (blockedDirs & AtmosDirection.North) == AtmosDirection.North)

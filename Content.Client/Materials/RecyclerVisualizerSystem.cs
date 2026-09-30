@@ -4,7 +4,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Materials;
 
-public sealed class RecyclerVisualizerSystem : VisualizerSystem<RecyclerVisualsComponent>
+public sealed partial class RecyclerVisualizerSystem : VisualizerSystem<RecyclerVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, RecyclerVisualsComponent component, ref AppearanceChangeEvent args)
     {

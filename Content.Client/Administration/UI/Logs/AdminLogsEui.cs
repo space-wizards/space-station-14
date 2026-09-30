@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 using Content.Client.Administration.UI.CustomControls;
 using Content.Client.Eui;
@@ -231,6 +231,11 @@ public sealed partial class AdminLogsEui : BaseEui
             case SetLogFilter setLogFilter:
                 if (setLogFilter.Search != null)
                     LogsControl.LogSearch.SetText(setLogFilter.Search);
+
+                if (setLogFilter.Players != null)
+                {
+                    LogsControl.SelectPlayers(setLogFilter.Players);
+                }
 
                 if (setLogFilter.Types != null)
                     LogsControl.SetTypesSelection(setLogFilter.Types, setLogFilter.InvertTypes);

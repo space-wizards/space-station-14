@@ -14,9 +14,10 @@
   components:
   - type: Action
     useDelay: 0.5
-    icon:
-      sprite: Interface/Actions/actions_mecha.rsi
-      state: mech_cycle_equip_on
+  - type: Sprite
+    sprite: Interface/Actions/actions_mecha.rsi
+    layers:
+    - state: mech_cycle_equip_on
   - type: InstantAction
     event: !type:MechToggleEquipmentEvent
 
@@ -28,9 +29,10 @@
   components:
   - type: Action
     useDelay: 1
-    icon:
-      sprite: Interface/Actions/actions_mecha.rsi
-      state: mech_view_stats
+  - type: Sprite
+    sprite: Interface/Actions/actions_mecha.rsi
+    layers:
+    - state: mech_view_stats
   - type: InstantAction
     event: !type:MechOpenUiEvent
 
@@ -41,8 +43,9 @@
   description: Ejects the pilot from the mech
   components:
   - type: Action
-    icon:
-      sprite: Interface/Actions/actions_mecha.rsi
-      state: mech_eject
+  - type: Sprite
+    sprite: Interface/Actions/actions_mecha.rsi
+    layers:
+    - state: mech_eject
   - type: InstantAction
     event: !type:MechEjectPilotEvent

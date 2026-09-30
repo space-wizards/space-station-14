@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using JetBrains.Annotations;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
