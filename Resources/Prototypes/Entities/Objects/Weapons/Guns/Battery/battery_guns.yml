@@ -268,9 +268,6 @@
         whitelist:
           tags:
           - PowerCell
-  - type: ContainerContainer
-    containers:
-      cell_slot: !type:ContainerSlot
 
 - type: entity
   parent: [BaseItem, BaseMinorContraband, WeaponMakeshiftLaserConstructionBase]
