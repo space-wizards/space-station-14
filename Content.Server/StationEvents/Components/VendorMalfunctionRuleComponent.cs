@@ -32,4 +32,13 @@ public sealed partial class VendorMalfunctionRuleComponent : Component
     /// chance of the 'contraband' inventory of the vending machine being enabled
     /// </summary>
     [DataField] public float ContrabandChance;
+
+    /// <summary>
+    /// minimum quantity to eject
+    /// </summary>
+    [DataField] public int MinEjectedItems = 1;
+    /// <summary>
+    /// maximum quantity to eject
+    /// </summary>
+    [DataField] public int MaxEjectedItems;
 }

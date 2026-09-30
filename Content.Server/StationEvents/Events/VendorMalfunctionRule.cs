@@ -30,7 +30,8 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
         var query = EntityQueryEnumerator<VendingMachineComponent, TransformComponent>();
         while (query.MoveNext(out var vendUid, out var vendor, out var xform))
         {
-            if ((!vendor.Broken) && _vendingSystem.IsPowered(vendUid, EntityManager) && CompOrNull<StationMemberComponent>(xform.GridUid)?.Station == chosenStation.Value.Owner)
+            if (vendor.Broken || !_vendingSystem.IsPowered(vendUid, EntityManager)) continue;
+            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station == chosenStation.Value.Owner)
             {
                 vendingMachines.Add((vendUid, vendor));
             }
@@ -49,7 +50,14 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
             {
                 _vendingSystem.SetContraband(vendor, true);
             }
-            _vendingSystem.EjectRandom(vendor.AsNullable(), true);
+
+            if (ent.Comp1.MinEjectedItems <= 0) continue;
+            _vendingSystem.EjectRandom(vendor.AsNullable(), true); // ensures the noise plays for the first ejected item
+            for (var j = RobustRandom.Next(ent.Comp1.MinEjectedItems, ent.Comp1.MaxEjectedItems); j > 1; j--)
+            { 
+                _vendingSystem.EjectRandom(vendor.AsNullable(), true, true); // handles ejecting the other items
+            }
+
         }
     }
 }

@@ -466,6 +466,8 @@
     minimumAffected: 5
     maximumAffected: 15
     contrabandChance: 0.5
+    minEjectedItems: 1
+    maxEjectedItems: 5
   - type: DynamicRuleCost
     cost: 5
 
