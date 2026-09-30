@@ -192,11 +192,10 @@ public abstract partial class SharedCardSystem : EntitySystem
     /// </summary>
     /// <param name="cards">The card stack entity to shuffle.</param>
     /// <returns><c>true</c> if the cards were shuffled. Currently always returns <c>true</c>.</returns>
-    // Currently mis-predicted
-    // TODO: FIX this mis-predict and replace with a proper animation
     public bool TryShuffleCards(Entity<CardsComponent> cards)
     {
-        cards.Comp.Cards = cards.Comp.Cards.Shuffle().ToList();
+        var random = SharedRandomExtensions.PredictedRandom(Timing, GetNetEntity(cards));
+        random.Shuffle(cards.Comp.Cards);
         UpdateVisualState(cards);
         Dirty(cards.Owner, cards.Comp);
         return true;
