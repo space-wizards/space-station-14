@@ -86,7 +86,7 @@ public sealed partial class GhostRoleComponent : Component
     /// </summary>
     [DataField]
     [Access(typeof(SharedGhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // Don't make eye contact
-    public List<EntProtoId> MindRoles = ["MindRoleGhostRoleNeutral"];
+    public List<EntProtoId> MindRoles = new() { "MindRoleGhostRoleNeutral" };
 
     /// <summary>
     /// Whether the granted mob is allowed to speak after takeover.
