@@ -38,5 +38,7 @@ A test failure has been detected on the main branch. This should never occur.
 
 </details>
 
+Link to runner: {{ env.RUN_URL }}
+
 ## Using this issue
 Please place troubleshooting notes in the comments of this issue.

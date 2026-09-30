@@ -81,6 +81,7 @@ jobs:
           FULLNAME: ${{ matrix.value.fullname }}
           OUTPUT: ${{ matrix.value.output }}
           FAILURE: ${{ matrix.value.failure }}
+          RUN_URL: ${{ env.GITHUB_SERVER_URL }}/${{ env.GITHUB_REPOSITORY }}/actions/runs/${{ env.GITHUB_RUN_ID }}
         with:
           filename: .github/ISSUE_TEMPLATE/heisentest_template.md
           update_existing: true
