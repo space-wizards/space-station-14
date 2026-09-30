@@ -1,3 +1,5 @@
+using Robust.Shared.Map;
+
 namespace Content.Shared.Throwing;
 
 /// <summary>
@@ -5,6 +7,15 @@ namespace Content.Shared.Throwing;
 /// </summary>
 [ByRefEvent]
 public readonly record struct ThrowEvent(EntityUid? User, EntityUid Thrown);
+
+/// <summary>
+/// Allows item-owned systems to replace a stack with its thrown portion.
+/// </summary>
+[ByRefEvent]
+public record struct PrepareThrowEvent(EntityUid User, EntityCoordinates SpawnCoordinates, EntityUid? ItemUid)
+{
+    public bool Handled;
+}
 
 /// <summary>
 /// Raised on an entity after it has been thrown.

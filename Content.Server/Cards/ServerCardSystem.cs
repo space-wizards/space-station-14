@@ -1,4 +1,5 @@
 using Content.Shared.Cards;
+using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 
@@ -10,6 +11,18 @@ public sealed partial class CardSystem : SharedCardSystem
 {
     // Server-side index counter. Needed so that all cards have unique ids. Basically a EntityUid but for cards.
     private int _indexCounter = 0;
+
+    [SubscribeLocalEvent]
+    private void OnPrepareThrow(Entity<CardsComponent> ent, ref PrepareThrowEvent args)
+    {
+        if (args.Handled || ent.Comp.Cards.Count <= 1)
+            return;
+
+        if (SplitDeck(ent, args.SpawnCoordinates, MovedCards(ent.Comp, 1)) is { Valid: true } split)
+            args.ItemUid = split;
+
+        args.Handled = true;
+    }
 
     protected override void OnCardsInit(Entity<CardsComponent> ent, ref ComponentInit args)
     {
