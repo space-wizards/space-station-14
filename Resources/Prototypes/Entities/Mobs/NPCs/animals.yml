@@ -1,6 +1,6 @@
 - type: entity
   name: bat
-  parent: [ SimpleMobBase, FlyingMobBase, MobCombat, BaseSlicingRefinable, MobNightVision ]
+  parent: [ SimpleMobBase, FlyingMobBase, MobCombat, BaseSlicingRefinableButchering, MobNightVision ]
   id: MobBat
   description: Some cultures find them terrifying, others crunchy on the teeth.
   components:
@@ -84,7 +84,7 @@
 
 - type: entity
   name: bee
-  parent: [ SolutionFood, SolutionTiny, SimpleMobBase, FlyingMobBase, BaseSlicingRefinable ]
+  parent: [ SolutionFood, SolutionTiny, SimpleMobBase, FlyingMobBase, BaseSlicingRefinableButchering ]
   id: MobBee
   description: Nice to have, but you can't build a civilization on a foundation of honey alone.
   components:
@@ -199,7 +199,7 @@
 
 - type: entity
   name: chicken
-  parent: [SimpleMobBase, BaseSlicingRefinable, BaseMobDestructible, BaseExaminableHunger]
+  parent: [SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible, BaseExaminableHunger]
   id: MobChicken
   description: Comes before an egg, and IS a dinosaur!
   components:
@@ -362,7 +362,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionFood, SolutionTiny, SimpleMobBase, BaseSlicingRefinable, MobNightVision]
+  parent: [SolutionFood, SolutionTiny, SimpleMobBase, BaseSlicingRefinableButchering, MobNightVision]
   id: BaseCockroach
   components:
   - type: Sprite
@@ -501,7 +501,7 @@
 
 - type: entity
   name: mothroach
-  parent: [ BaseMobMothroach, BaseCockroach, BaseSlicingRefinable ]
+  parent: [ BaseMobMothroach, BaseCockroach, BaseSlicingRefinableButchering ]
   id: MobMothroach
   description: This is the adorable by-product of multiple attempts at genetically mixing mothpeople with cockroaches.
   components:
@@ -677,7 +677,7 @@
 
 - type: entity
   name: mallard duck #Quack
-  parent: [SimpleMobBase, BaseSlicingRefinable, BaseMobDestructible, BaseExaminableHunger]
+  parent: [SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible, BaseExaminableHunger]
   id: MobDuckMallard
   description: An adorable mallard duck, it's fluffy and soft!
   components:
@@ -818,7 +818,7 @@
 
 - type: entity
   name: butterfly
-  parent: [ SolutionFood, SolutionTiny, SimpleMobBase, FlyingMobBase, BaseSlicingRefinable ]
+  parent: [ SolutionFood, SolutionTiny, SimpleMobBase, FlyingMobBase, BaseSlicingRefinableButchering ]
   id: MobButterfly
   description: Despite popular misconceptions, it's not actually made of butter.
   components:
@@ -893,7 +893,7 @@
 
 - type: entity
   name: cow
-  parent: [ BaseMobRuminant, SimpleMobBase, BaseSlicingRefinable, BaseMobDestructible, BaseExaminableHunger ]
+  parent: [ BaseMobRuminant, SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible, BaseExaminableHunger ]
   id: MobCow
   description: Moo.
   components:
@@ -995,7 +995,7 @@
 
 - type: entity
   name: crab
-  parent: [ SimpleMobBase, BaseMobHemocyanin, BaseSlicingRefinable, BaseMobDestructible ]
+  parent: [ SimpleMobBase, BaseMobHemocyanin, BaseSlicingRefinableButchering, BaseMobDestructible ]
   id: MobCrab
   description: A folk legend goes around that his claw snaps spacemen out of existence over distasteful remarks. Be polite and tolerant for your own safety.
   components:
@@ -1063,7 +1063,7 @@
 
 - type: entity
   name: goat
-  parent: [ BaseMobRuminant, SimpleMobBase, BaseSlicingRefinable, BaseMobDestructible, BaseExaminableHunger ]
+  parent: [ BaseMobRuminant, SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible, BaseExaminableHunger ]
   id: MobGoat
   description: Her spine consists of long sharp segments, no wonder she is so grumpy.
   components:
@@ -1190,7 +1190,7 @@
 
 - type: entity
   abstract: true
-  parent: [BaseMobRuminant, BaseSlicingRefinable, BaseExaminableHunger]
+  parent: [BaseMobRuminant, BaseSlicingRefinableButchering, BaseExaminableHunger]
   id: MobSheepBase
   name: sheepBase
   description: A sheep.
@@ -1392,7 +1392,7 @@
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
   name: goose
-  parent: [SimpleMobBase, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobGoose
   description: Its stomach and mind are an enigma beyond human comprehension.
   components:
@@ -1527,7 +1527,7 @@
   - SimpleMobBase
   - MobCombat
   - StripableInventoryBase
-  - BaseSlicingRefinable
+  - BaseSlicingRefinableButchering
   - BaseMobDestructible
   id: MobKangaroo
   description: A large marsupial herbivore. It has powerful hind legs, with nails that resemble long claws.
@@ -1964,7 +1964,7 @@
 
 - type: entity
   name: mouse
-  parent: [SimpleMobBase, BaseMobAnimal, SolutionVermin, BaseSlicingRefinable, MobNightVision]
+  parent: [SimpleMobBase, BaseMobAnimal, SolutionVermin, BaseSlicingRefinableButchering, MobNightVision]
   id: MobMouse
   description: Squeak!
   components:
@@ -2256,7 +2256,7 @@
 
 - type: entity
   name: lizard #Weh
-  parent: [SimpleMobBase, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobLizard
   description: A harmless dragon.
   components:
@@ -2313,7 +2313,7 @@
 
 - type: entity
   name: slug
-  parent: [SimpleMobBase, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobSlug
   description: And they called this a lizard?
   components:
@@ -2363,7 +2363,7 @@
 
 - type: entity
   name: frog
-  parent: [SimpleMobBase, BaseSlicingRefinable]
+  parent: [SimpleMobBase, BaseSlicingRefinableButchering]
   id: MobFrog
   description: Hop hop hop. Lookin' moist.
   components:
@@ -2434,7 +2434,7 @@
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
-  parent: [ SimpleMobBase, FlyingMobBase, BaseSlicingRefinable, BaseMobDestructible ]
+  parent: [ SimpleMobBase, FlyingMobBase, BaseSlicingRefinableButchering, BaseMobDestructible ]
   id: MobParrotBase
   name: parrot
   abstract: true
@@ -2521,7 +2521,7 @@
 
 - type: entity
   name: penguin
-  parent: [SimpleMobBase, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobPenguin
   description: Their lives are constant pain due to their inner-body knees.
   components:
@@ -2657,7 +2657,7 @@
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
 - type: entity
   name: snake
-  parent: [SimpleMobBase, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobSnake
   description: Hissss! Bites aren't poisonous.
   components:
@@ -2706,7 +2706,7 @@
 
 - type: entity
   name: possum
-  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobPossum
   description: '"O Possum! My Possum!" -- Walt Whitman, 1865'
   components:
@@ -2779,7 +2779,7 @@
 
 - type: entity
   name: raccoon
-  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobRaccoon
   description: Trash panda!
   components:
@@ -2832,7 +2832,7 @@
 
 - type: entity
   name: fox
-  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobFox
   description: They're a fox.
   components:
@@ -2983,7 +2983,7 @@
   #    state: creampie_corgi
 
 - type: entity
-  parent: [MobCorgiBase, BaseSlicingRefinable]
+  parent: [MobCorgiBase, BaseSlicingRefinableButchering]
   id: MobCorgi
   components:
   - type: DamageStateVisuals
@@ -3096,7 +3096,7 @@
 
 - type: entity
   name: cat
-  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobCat
   description: Feline pet, very funny.
   components:
@@ -3241,7 +3241,7 @@
 - type: entity
   name: space cat
   id: MobCatSpace
-  parent: [MobCat, BaseSlicingRefinable]
+  parent: [MobCat, BaseSlicingRefinableButchering]
   description: Feline pet, prepared for the worst.
   components:
   - type: Sprite
@@ -3334,7 +3334,7 @@
 
 - type: entity
   name: sloth
-  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobSloth
   description: Very slow animal. For people with low energy.
   components:
@@ -3391,7 +3391,7 @@
 
 - type: entity
   name: ferret
-  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobFerret
   description: Just a silly little guy!
   components:
@@ -3445,7 +3445,7 @@
 
 - type: entity
   name: hamster
-  parent: [ SimpleMobBase, MobCombat, StripableInventoryBase, BaseSlicingRefinable, MobNightVision]
+  parent: [ SimpleMobBase, MobCombat, StripableInventoryBase, BaseSlicingRefinableButchering, MobNightVision]
   id: MobHamster
   description: A cute, fluffy, robust hamster.
   components:
@@ -3602,7 +3602,7 @@
 
 - type: entity
   name: pig
-  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobPig
   description: Oink.
   components:
@@ -3674,7 +3674,7 @@
 
 - type: entity
   name: diona nymph
-  parent: [BaseMobAnimal, SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [BaseMobAnimal, SimpleMobBase, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   id: MobDionaNymph
   description: It's like a cat, only.... branch-ier.
   components:
@@ -3762,7 +3762,7 @@
 
 - type: entity
   name: reindeer buck
-  parent: [ SimpleMobBase, MobCombat, BaseSlicingRefinable, BaseMobDestructible ]
+  parent: [ SimpleMobBase, MobCombat, BaseSlicingRefinableButchering, BaseMobDestructible ]
   id: MobReindeerBuck
   description: You think it can pull a sleigh?
   components:
