@@ -6,11 +6,11 @@ namespace Content.Shared.StatusEffectNew;
 /// <summary>
 /// Handles displaying status effects that should show an alert, optionally with a duration.
 /// </summary>
-public sealed class StatusEffectAlertSystem : EntitySystem
+public sealed partial class StatusEffectAlertSystem : EntitySystem
 {
-    [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
 
-    private EntityQuery<StatusEffectComponent> _effectQuery;
+    [Dependency] private EntityQuery<StatusEffectComponent> _effectQuery = default!;
 
     public override void Initialize()
     {
@@ -19,8 +19,6 @@ public sealed class StatusEffectAlertSystem : EntitySystem
         SubscribeLocalEvent<StatusEffectAlertComponent, StatusEffectAppliedEvent>(OnStatusEffectApplied);
         SubscribeLocalEvent<StatusEffectAlertComponent, StatusEffectRemovedEvent>(OnStatusEffectRemoved);
         SubscribeLocalEvent<StatusEffectAlertComponent, StatusEffectEndTimeUpdatedEvent>(OnEndTimeUpdated);
-
-        _effectQuery = GetEntityQuery<StatusEffectComponent>();
     }
 
     private void OnStatusEffectApplied(Entity<StatusEffectAlertComponent> ent, ref StatusEffectAppliedEvent args)

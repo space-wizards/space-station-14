@@ -8,10 +8,10 @@ using SixLabors.ImageSharp.PixelFormats;
 namespace Content.Client.Anomaly;
 
 /// <inheritdoc cref="SharedAnomalyScannerSystem"/>
-public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
+public sealed partial class AnomalyScannerSystem : SharedAnomalyScannerSystem
 {
-    [Dependency] private readonly IClyde _clyde = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private IClyde _clyde = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     private const float MaxHueDegrees = 360f;
     private const float GreenHueDegrees = 110f;

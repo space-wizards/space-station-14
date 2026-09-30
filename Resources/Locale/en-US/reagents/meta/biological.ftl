@@ -16,6 +16,9 @@ reagent-desc-hemocyanin-blood = Contains copper as opposed to iron which gives i
 reagent-name-ammonia-blood = anaerobic blood
 reagent-desc-ammonia-blood = Nothing else in the entire galaxy smells quite so appalling.
 
+reagent-name-sulfur-blood = sulfuric blood
+reagent-desc-sulfur-blood = Feels almost acidic.
+
 reagent-name-zombie-blood = zombie blood
 reagent-desc-zombie-blood = Would not advise eating. Can be used to create an inoculation against the infection.
 
@@ -30,3 +33,6 @@ reagent-desc-vomit = You can see a few chunks of someone's last meal in it.
 
 reagent-name-grey-matter = grey matter
 reagent-desc-grey-matter = Thought juice, the stuff that leaks out of your ears.
+
+reagent-name-living-tissue = living tissue
+reagent-desc-living-tissue = A mix of visceral matter from an alien species. You can feel it staring at you.

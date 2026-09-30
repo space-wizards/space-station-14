@@ -9,10 +9,10 @@ using Robust.Shared.Input.Binding;
 
 namespace Content.Client.UserInterface.Systems.Info;
 
-public sealed class CloseRecentWindowUIController : UIController
+public sealed partial class CloseRecentWindowUIController : UIController
 {
-    [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
+    [Dependency] private IInputManager _inputManager = default!;
+    [Dependency] private IUserInterfaceManager _uiManager = default!;
 
     /// <summary>
     /// A list of windows that have been interacted with recently.  Windows should only
@@ -27,6 +27,7 @@ public sealed class CloseRecentWindowUIController : UIController
         // (Does not need to be unlistened since UIControllers live forever)
         _uiManager.OnKeyBindDown += OnKeyBindDown;
         _uiManager.WindowRoot.OnChildAdded += OnRootChildAdded;
+        _uiManager.WindowRoot.OnChildRemoved += OnRootChildRemoved;
 
         _inputManager.SetInputCommand(EngineKeyFunctions.WindowCloseRecent,
             InputCmdHandler.FromDelegate(session => CloseMostRecentWindow()));
@@ -119,6 +120,14 @@ public sealed class CloseRecentWindowUIController : UIController
         {
             // On new window open, add to tracking
             SetMostRecentlyInteractedWindow((BaseWindow) control);
+        }
+    }
+
+    private void OnRootChildRemoved(Control control)
+    {
+        if (control is BaseWindow window)
+        {
+            recentlyInteractedWindows.Remove(window);
         }
     }
 

@@ -11,7 +11,7 @@ namespace Content.Client.Atmos.Consoles;
 
 public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
 
     public bool ShowPipeNetwork = true;
     public int? FocusNetId = null;

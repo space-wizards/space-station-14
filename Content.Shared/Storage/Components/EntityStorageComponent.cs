@@ -131,7 +131,21 @@ public sealed partial class EntityStorageComponent : Component, IGasMixtureHolde
     /// standard requirement that the entity must be an item or mob is waived.
     /// </summary>
     [DataField]
-    public EntityWhitelist? Whitelist;
+    public EntityWhitelist? Whitelist = new()
+    {
+        Components =
+        [
+            "MobState",
+            "Item",
+        ],
+    };
+
+    /// <summary>
+    ///     Blacklist for what entities are not allowed to be inserted into this container.
+    ///     Blacklist takes priority over whitelist.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Blacklist;
 
     /// <summary>
     /// The contents of the storage.
@@ -170,16 +184,16 @@ public record struct EntityStorageIntoContainerAttemptEvent(BaseContainer Contai
 public record struct StorageOpenAttemptEvent(EntityUid User, bool Silent, bool Cancelled = false);
 
 [ByRefEvent]
-public readonly record struct StorageBeforeOpenEvent;
+public readonly record struct StorageBeforeOpenEvent(EntityUid? User);
 
 [ByRefEvent]
-public readonly record struct StorageAfterOpenEvent;
+public readonly record struct StorageAfterOpenEvent(EntityUid? User);
 
 [ByRefEvent]
 public record struct StorageCloseAttemptEvent(EntityUid? User, bool Cancelled = false);
 
 [ByRefEvent]
-public readonly record struct StorageBeforeCloseEvent(HashSet<EntityUid> Contents, HashSet<EntityUid> BypassChecks);
+public readonly record struct StorageBeforeCloseEvent(EntityUid? User, HashSet<EntityUid> Contents, HashSet<EntityUid> BypassChecks);
 
 [ByRefEvent]
-public readonly record struct StorageAfterCloseEvent;
+public readonly record struct StorageAfterCloseEvent(EntityUid? User);

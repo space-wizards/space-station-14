@@ -21,10 +21,10 @@ namespace Content.Client.ParticleAccelerator.UI;
 [GenerateTypedNameReferences]
 public sealed partial class ParticleAcceleratorControlMenu : FancyWindow
 {
-    [Dependency] private readonly IResourceCache _cache = default!;
+    [Dependency] private IResourceCache _cache = default!;
 
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IPlayerManager _player = default!;
 
     private readonly AccessReaderSystem _accessReader;
 
@@ -93,14 +93,9 @@ public sealed partial class ParticleAcceleratorControlMenu : FancyWindow
         StateSpinBox.ValueChanged += PowerStateChanged;
         StateSpinBox.LineEditDisabled = true;
 
-        OffButton.OnPressed += _ =>
+        PowerSwitch.OnToggled += args =>
         {
-            OnOverallState?.Invoke(false);
-        };
-
-        OnButton.OnPressed += _ =>
-        {
-            OnOverallState?.Invoke(true);
+            OnOverallState?.Invoke(args.Pressed);
         };
 
         ScanButton.OnPressed += _ =>
@@ -212,12 +207,10 @@ public sealed partial class ParticleAcceleratorControlMenu : FancyWindow
         bool hasAccess = _player.LocalSession?.AttachedEntity is {} player
             && _accessReader.IsAllowed(player, _entity);
 
-        OnButton.Pressed = enabled;
-        OffButton.Pressed = !enabled;
+        PowerSwitch.Pressed = enabled;
 
         var cantUse = !assembled || blocked || powerBlock || !hasAccess;
-        OnButton.Disabled = cantUse;
-        OffButton.Disabled = cantUse;
+        PowerSwitch.Disabled = cantUse;
         ScanButton.Disabled = blocked || !hasAccess;
 
         var cantChangeLevel = !assembled || blocked || !enabled || cantUse;

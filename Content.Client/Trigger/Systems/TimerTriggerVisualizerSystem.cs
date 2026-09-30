@@ -6,9 +6,9 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Client.Trigger.Systems;
 
-public sealed class TimerTriggerVisualizerSystem : VisualizerSystem<TimerTriggerVisualsComponent>
+public sealed partial class TimerTriggerVisualizerSystem : VisualizerSystem<TimerTriggerVisualsComponent>
 {
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
 
     public override void Initialize()
     {
@@ -35,7 +35,7 @@ public sealed class TimerTriggerVisualizerSystem : VisualizerSystem<TimerTrigger
             ent.Comp.PrimingAnimation.AnimationTracks.Add(
                 new AnimationTrackPlaySound()
                 {
-                    KeyFrames = { new AnimationTrackPlaySound.KeyFrame(_audioSystem.ResolveSound(ent.Comp.PrimingSound), 0) }
+                    KeyFrames = { new AnimationTrackPlaySound.KeyFrame(_audioSystem.ResolveSound(ent.Comp.PrimingSound), 0, () => ent.Comp.PrimingSound.Params) }
                 }
             );
         }

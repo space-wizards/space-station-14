@@ -1,6 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Monitor.Payloads;
 using Content.Server.Atmos.Monitor.Systems;
-using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer.EntitySystems;
@@ -8,14 +8,13 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Piping.Unary.Visuals;
 using Content.Shared.Audio;
 using Content.Shared.Database;
-using Content.Shared.DeviceNetwork;
-using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;
 using Content.Shared.Tools.Systems;
@@ -25,17 +24,17 @@ using Robust.Server.GameObjects;
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class GasVentScrubberSystem : EntitySystem
+    public sealed partial class GasVentScrubberSystem : EntitySystem
     {
-        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
-        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-        [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
-        [Dependency] private readonly TransformSystem _transformSystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly WeldableSystem _weldable = default!;
-        [Dependency] private readonly PowerReceiverSystem _powerReceiverSystem = default!;
+        [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private DeviceNetworkSystem _deviceNetSystem = default!;
+        [Dependency] private NodeContainerSystem _nodeContainer = default!;
+        [Dependency] private SharedAmbientSoundSystem _ambientSoundSystem = default!;
+        [Dependency] private TransformSystem _transformSystem = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private WeldableSystem _weldable = default!;
+        [Dependency] private PowerReceiverSystem _powerReceiverSystem = default!;
 
         public override void Initialize()
         {
@@ -46,7 +45,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasVentScrubberComponent, AtmosDeviceDisabledEvent>(OnVentScrubberLeaveAtmosphere);
             SubscribeLocalEvent<GasVentScrubberComponent, AtmosAlarmEvent>(OnAtmosAlarm);
             SubscribeLocalEvent<GasVentScrubberComponent, PowerChangedEvent>(OnPowerChanged);
-            SubscribeLocalEvent<GasVentScrubberComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
             SubscribeLocalEvent<GasVentScrubberComponent, WeldableChangedEvent>(OnWeldChanged);
         }
 
@@ -146,69 +144,68 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             UpdateState(uid, component);
         }
 
-        private void OnPacketRecv(EntityUid uid, GasVentScrubberComponent component, DeviceNetworkPacketEvent args)
+        [SubscribeLocalEvent]
+        private void OnSyncPayload(Entity<GasVentScrubberComponent> ent, ref DeviceNetworkPacketEvent<AtmosSyncPayload> args)
         {
-            if (!TryComp(uid, out DeviceNetworkComponent? netConn)
-                || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmd))
-                return;
-
-            var payload = new NetworkPayload();
-
-            switch (cmd)
+            var data = ent.Comp.ToAirAlarmData();
+            var airAlarm = new AirAlarmSetDataPayload
             {
-                case AtmosDeviceNetworkSystem.SyncData:
-                    payload.Add(DeviceNetworkConstants.Command, AtmosDeviceNetworkSystem.SyncData);
-                    payload.Add(AtmosDeviceNetworkSystem.SyncData, component.ToAirAlarmData());
+                Payload = data,
+            };
+            _deviceNetSystem.SendPacket(ent.Owner, args.SenderAddress, ref airAlarm);
+        }
 
-                    _deviceNetSystem.QueuePacket(uid, args.SenderAddress, payload, device: netConn);
+        [SubscribeLocalEvent]
+        private void OnSetPayload(Entity<GasVentScrubberComponent> ent, ref DeviceNetworkPacketEvent<GasVentScrubberSetDataPayload> args)
+        {
+            var setData = args.Data.Data;
+            var previous = ent.Comp.ToAirAlarmData();
 
-                    return;
-                case DeviceNetworkConstants.CmdSetState:
-                    if (!args.Data.TryGetValue(DeviceNetworkConstants.CmdSetState, out GasVentScrubberData? setData))
-                        break;
-
-                    var previous = component.ToAirAlarmData();
-
-                    if (previous.Enabled != setData.Enabled)
-                    {
-                        string enabled = setData.Enabled ? "enabled" : "disabled" ;
-                        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(uid)} {enabled}");
-                    }
-
-                    // TODO: IgnoreAlarms?
-
-                    if (previous.PumpDirection != setData.PumpDirection)
-                        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(uid)} direction changed to {setData.PumpDirection}");
-
-                    // TODO: This is iterating through both sets, it could probably be faster but they're both really small sets anyways
-                    foreach (Gas gas in previous.FilterGases)
-                        if (!setData.FilterGases.Contains(gas))
-                            _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(uid)} {gas} filtering disabled");
-
-                    foreach (Gas gas in setData.FilterGases)
-                        if (!previous.FilterGases.Contains(gas))
-                            _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(uid)} {gas} filtering enabled");
-
-                    if (previous.VolumeRate != setData.VolumeRate)
-                    {
-                        _adminLogger.Add(
-                            LogType.AtmosDeviceSetting,
-                            LogImpact.Medium,
-                            $"{ToPrettyString(uid)} volume rate changed from {previous.VolumeRate} L to {setData.VolumeRate} L"
-                        );
-                    }
-
-                    if (previous.WideNet != setData.WideNet)
-                    {
-                        string enabled = setData.WideNet ? "enabled" : "disabled" ;
-                        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(uid)} WideNet {enabled}");
-                    }
-
-                    component.FromAirAlarmData(setData);
-                    UpdateState(uid, component);
-
-                    return;
+            if (previous.Enabled != setData.Enabled)
+            {
+                string enabled = setData.Enabled ? "enabled" : "disabled";
+                _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(ent)} {enabled}");
             }
+
+            // TODO: IgnoreAlarms?
+
+            if (previous.PumpDirection != setData.PumpDirection)
+                _adminLogger.Add(LogType.AtmosDeviceSetting,
+                    LogImpact.Medium,
+                    $"{ToPrettyString(ent)} direction changed to {setData.PumpDirection}");
+
+            // TODO: This is iterating through both sets, it could probably be faster but they're both really small sets anyways
+            foreach (Gas gas in previous.FilterGases)
+                if (!setData.FilterGases.Contains(gas))
+                    _adminLogger.Add(LogType.AtmosDeviceSetting,
+                        LogImpact.Medium,
+                        $"{ToPrettyString(ent)} {gas} filtering disabled");
+
+            foreach (Gas gas in setData.FilterGases)
+                if (!previous.FilterGases.Contains(gas))
+                    _adminLogger.Add(LogType.AtmosDeviceSetting,
+                        LogImpact.Medium,
+                        $"{ToPrettyString(ent)} {gas} filtering enabled");
+
+            if (previous.VolumeRate != setData.VolumeRate)
+            {
+                _adminLogger.Add(
+                    LogType.AtmosDeviceSetting,
+                    LogImpact.Medium,
+                    $"{ToPrettyString(ent)} volume rate changed from {previous.VolumeRate} L to {setData.VolumeRate} L"
+                );
+            }
+
+            if (previous.WideNet != setData.WideNet)
+            {
+                string enabled = setData.WideNet ? "enabled" : "disabled";
+                _adminLogger.Add(LogType.AtmosDeviceSetting,
+                    LogImpact.Medium,
+                    $"{ToPrettyString(ent)} WideNet {enabled}");
+            }
+
+            ent.Comp.FromAirAlarmData(setData);
+            UpdateState(ent, ent.Comp);
         }
 
         /// <summary>

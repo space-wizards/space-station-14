@@ -1,7 +1,7 @@
 using System.Numerics;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Shared.DeviceNetwork;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Content.Shared.DeviceNetwork.Components;
@@ -12,7 +12,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
     [TestOf(typeof(DeviceNetworkComponent))]
     [TestOf(typeof(WiredNetworkComponent))]
     [TestOf(typeof(WirelessNetworkComponent))]
-    public sealed class DeviceNetworkTest
+    public sealed class DeviceNetworkTest : GameTest
     {
         [TestPrototypes]
         private const string Prototypes = @"
@@ -50,30 +50,27 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
         [Test]
         public async Task NetworkDeviceSendAndReceive()
         {
-            await using var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
 
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var deviceNetSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkSystem>();
             var deviceNetTestSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkTestSystem>();
-
 
             EntityUid device1 = default;
             EntityUid device2 = default;
             DeviceNetworkComponent networkComponent1 = null;
             DeviceNetworkComponent networkComponent2 = null;
 
-            var testValue = "test";
-            var payload = new NetworkPayload
-            {
-                ["Test"] = testValue,
-                ["testnumber"] = 1,
-                ["testbool"] = true
-            };
-
             await server.WaitAssertion(() =>
             {
+                var payload = new TestPayload
+                {
+                    TestString = "test",
+                    TestNumber = 1,
+                    TestBool = true
+                };
+
                 device1 = entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace);
 
                 Assert.That(entityManager.TryGetComponent(device1, out networkComponent1), Is.True);
@@ -94,28 +91,19 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                     Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
                 });
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Address, payload, networkComponent2.ReceiveFrequency.Value);
+                deviceNetSystem.SendPacket(device1, networkComponent2.Address, ref payload, networkComponent2.ReceiveFrequency.Value);
+                Assert.That(payload, Is.EqualTo(deviceNetTestSystem.LastPayload));
             });
-
-            await server.WaitRunTicks(2);
-            await server.WaitIdleAsync();
-
-            await server.WaitAssertion(() =>
-            {
-                Assert.That(payload, Is.EquivalentTo(deviceNetTestSystem.LastPayload));
-            });
-            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task WirelessNetworkDeviceSendAndReceive()
         {
-            await using var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
             var testMap = await pair.CreateTestMap();
             var coordinates = testMap.GridCoords;
 
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var deviceNetSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkSystem>();
             var deviceNetTestSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkTestSystem>();
@@ -125,14 +113,6 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             DeviceNetworkComponent networkComponent1 = null;
             DeviceNetworkComponent networkComponent2 = null;
             WirelessNetworkComponent wirelessNetworkComponent = null;
-
-            var testValue = "test";
-            var payload = new NetworkPayload
-            {
-                ["Test"] = testValue,
-                ["testnumber"] = 1,
-                ["testbool"] = true
-            };
 
             await server.WaitAssertion(() =>
             {
@@ -160,47 +140,39 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                     Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
                 });
 
-
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Address, payload, networkComponent2.ReceiveFrequency.Value);
-            });
-
-            await server.WaitRunTicks(2);
-            await server.WaitIdleAsync();
-
-            await server.WaitAssertion(() =>
-            {
-                Assert.That(payload, Is.EqualTo(deviceNetTestSystem.LastPayload).AsCollection);
-
-                payload = new NetworkPayload
+                var payload = new TestPayload
                 {
-                    ["Wirelesstest"] = 5
+                    TestString = "test",
+                    TestNumber = 1,
+                    TestBool = true
                 };
+
+                deviceNetSystem.SendPacket(device1, networkComponent2.Address, ref payload, networkComponent2.ReceiveFrequency.Value);
+
+                Assert.That(payload, Is.EqualTo(deviceNetTestSystem.LastPayload));
 
                 wirelessNetworkComponent.Range = 0;
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Address, payload, networkComponent2.ReceiveFrequency.Value);
+                var secondPayload = new SecondTestPayload
+                {
+                    TestString = "test",
+                    TestNumber = 1,
+                    TestBool = true
+                };
+
+                deviceNetSystem.SendPacket(device1, networkComponent2.Address, ref secondPayload, networkComponent2.ReceiveFrequency.Value);
+                Assert.That(secondPayload, Is.Not.EqualTo(deviceNetTestSystem.LastPayloadSecond));
             });
-
-            await server.WaitRunTicks(1);
-            await server.WaitIdleAsync();
-
-            await server.WaitAssertion(() =>
-            {
-                Assert.That(payload, Is.Not.EqualTo(deviceNetTestSystem.LastPayload).AsCollection);
-            });
-
-            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task WiredNetworkDeviceSendAndReceive()
         {
-            await using var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
             var testMap = await pair.CreateTestMap();
             var coordinates = testMap.GridCoords;
 
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var deviceNetSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkSystem>();
             var deviceNetTestSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkTestSystem>();
@@ -210,15 +182,6 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             DeviceNetworkComponent networkComponent1 = null;
             DeviceNetworkComponent networkComponent2 = null;
             WiredNetworkComponent wiredNetworkComponent = null;
-            var grid = testMap.Grid.Comp;
-
-            var testValue = "test";
-            var payload = new NetworkPayload
-            {
-                ["Test"] = testValue,
-                ["testnumber"] = 1,
-                ["testbool"] = true
-            };
 
             await server.WaitRunTicks(2);
             await server.WaitIdleAsync();
@@ -249,30 +212,21 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                     Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
                 });
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Address, payload, networkComponent2.ReceiveFrequency.Value);
-            });
+                var payload = new TestPayload
+                {
+                    TestString = "test",
+                    TestNumber = 1,
+                    TestBool = true
+                };
 
-            await server.WaitRunTicks(1);
-            await server.WaitIdleAsync();
-
-            await server.WaitAssertion(() =>
-            {
-                //CollectionAssert.AreNotEqual(deviceNetTestSystem.LastPayload, payload);
+                deviceNetSystem.SendPacket(device1, networkComponent2.Address, ref payload, networkComponent2.ReceiveFrequency.Value);
 
                 entityManager.SpawnEntity("CableApcExtension", coordinates);
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Address, payload, networkComponent2.ReceiveFrequency.Value);
+                deviceNetSystem.SendPacket(device1, networkComponent2.Address, ref payload, networkComponent2.ReceiveFrequency.Value);
+
+                Assert.That(payload, Is.EqualTo(deviceNetTestSystem.LastPayload));
             });
-
-            await server.WaitRunTicks(1);
-            await server.WaitIdleAsync();
-
-            await server.WaitAssertion(() =>
-            {
-                Assert.That(payload, Is.EqualTo(deviceNetTestSystem.LastPayload).AsCollection);
-            });
-
-            await pair.CleanReturnAsync();
         }
     }
 }

@@ -56,6 +56,11 @@
   copyright: "Created by Sarahon"
   source: "https://github.com/Sarahon"
 
+- files: ["flap.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made from mothroach.png (created by TurboTracker, screwed by TheShuEd), edited by Pgriha"
+  source: "https://github.com/space-wizards/space-station-14/pull/42912"
+
 - files: ["hew.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Modified from existing weh emote image (weh.png) by ArtisticRoomba"

@@ -6,25 +6,29 @@ using Content.Shared.Station.Components;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
+/// <summary>
+/// Handler for events that alter the laws of silicon entities (e.g. cyborgs, AI) on the affected station.
+/// </summary>
+/// <seealso cref="IonStormRuleComponent"/>
+public sealed partial class IonStormRule : StationEventSystem<IonStormRuleComponent>
 {
-    [Dependency] private readonly IonStormSystem _ionStorm = default!;
+    [Dependency] private IonStormSystem _ionStorm = default!;
 
-    protected override void Started(EntityUid uid, IonStormRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    protected override void Started(Entity<IonStormRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
-        base.Started(uid, comp, gameRule, args);
+        base.Started(ent, ref args);
 
-        if (!TryGetRandomStation(out var chosenStation))
+        if (!Station.TryGetRandomStation<StationEventEligibleComponent>(out var chosenStation))
             return;
 
         var query = EntityQueryEnumerator<SiliconLawBoundComponent, TransformComponent, IonStormTargetComponent>();
-        while (query.MoveNext(out var ent, out var lawBound, out var xform, out var target))
+        while (query.MoveNext(out var borgUid, out var lawBound, out var xform, out var target))
         {
             // only affect law holders on the station
-            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation)
+            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation.Value.Owner)
                 continue;
 
-            _ionStorm.IonStormTarget((ent, lawBound, target));
+            _ionStorm.IonStormTarget((borgUid, lawBound, target));
         }
     }
 }

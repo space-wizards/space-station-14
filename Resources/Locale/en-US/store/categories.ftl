@@ -12,6 +12,7 @@ store-category-allies = Allies
 store-category-job = Job
 store-category-wearables = Wearables
 store-category-pointless = Pointless
+store-category-objective = Objective
 store-discounted-items = Discounts
 
 # Revenant
@@ -26,3 +27,8 @@ store-caregory-spellbook-events = Event Spells
 
 # Nukie Delivery
 store-category-nukie-delivery = Offers
+
+# Changeling
+store-category-combat = Combat
+store-category-utility = Utility
+store-category-stealth = Stealth

@@ -8,7 +8,4 @@ public sealed partial class GodmodeComponent : Component
 {
     [DataField("wasMovedByPressure")]
     public bool WasMovedByPressure;
-
-    [DataField("oldDamage")]
-    public DamageSpecifier? OldDamage = null;
 }

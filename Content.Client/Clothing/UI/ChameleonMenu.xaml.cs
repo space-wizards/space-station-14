@@ -14,8 +14,8 @@ namespace Content.Client.Clothing.UI;
 [GenerateTypedNameReferences]
 public sealed partial class ChameleonMenu : DefaultWindow
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
     private readonly SpriteSystem _sprite;
     public event Action<string>? OnIdSelected;
 

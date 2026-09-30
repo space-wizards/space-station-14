@@ -14,10 +14,9 @@
     intensitySlope: 1.5
   - type: Sprite
     sprite: Objects/Power/power_cells.rsi
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      battery:
-        maxVol: 5
+    - SolutionRiggable
   - type: InjectableSolution
     solution: battery
   - type: DrawableSolution
@@ -25,8 +24,8 @@
   - type: Extractable
     juiceSolution:
       reagents:
-        - ReagentId: Zinc
-          Quantity: 5
+      - ReagentId: Zinc
+        Quantity: 5
   - type: Tag
     tags:
       - PowerCell
@@ -40,6 +39,16 @@
           Full: {visible: true, state: o2}
           Neither: {visible: true, state: o1}
           Empty: {visible: false}
+
+- type: entity
+  parent: Solution
+  id: SolutionRiggable
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    id: battery
+    solution:
+      maxVol: 5
 
 - type: entity
   name: potato battery
@@ -107,6 +116,11 @@
   - type: BatterySelfRecharger
     autoRechargeRate: 36 # 10 seconds to recharge
     autoRechargePauseTime: 30
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Uranium
+        Quantity: 5
 
 - type: entity
   name: medium-capacity power cell
@@ -125,6 +139,11 @@
   - type: Battery
     maxCharge: 720
     startingCharge: 720
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Lithium
+        Quantity: 5
 
 - type: entity
   id: PowerCellMediumPrinted
@@ -160,6 +179,11 @@
   - type: Battery
     maxCharge: 1080
     startingCharge: 1080
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Lithium
+        Quantity: 5
 
 - type: entity
   id: PowerCellHighPrinted
@@ -195,6 +219,11 @@
   - type: Battery
     maxCharge: 1800
     startingCharge: 1800
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Lithium
+        Quantity: 5
 
 - type: entity
   id: PowerCellHyperPrinted
@@ -232,6 +261,11 @@
     startingCharge: 720
   - type: BatterySelfRecharger
     autoRechargeRate: 12 # takes 1 minute to charge itself back to full
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Uranium
+        Quantity: 5
 
 - type: entity
   parent: PowerCellMicroreactor
@@ -267,6 +301,11 @@
       startingCharge: 1200
     - type: BatterySelfRecharger
       autoRechargeRate: 40
+    - type: Extractable
+      juiceSolution:
+        reagents:
+        - ReagentId: Uranium
+          Quantity: 5
 
 # Power cage (big heavy power cell for big devices)
 
@@ -277,16 +316,21 @@
   components:
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,3,5
   - type: MultiHandedItem
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      battery:
-        maxVol: 15
+    - SolutionRiggableLarge
+  - type: Riggable
+    reagent:
+      ReagentId: Plasma
+      Quantity: 15
   - type: Extractable
     juiceSolution:
       reagents:
-        - ReagentId: Zinc
-          Quantity: 15
+      - ReagentId: Zinc
+        Quantity: 15
   - type: Tag
     tags:
       - PowerCage
@@ -294,6 +338,16 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: HeldSpeedModifier
+
+- type: entity
+  parent: SolutionRiggable
+  id: SolutionRiggableLarge
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    id: battery
+    solution:
+      maxVol: 15
 
 - type: entity
   id: PowerCageSmall
@@ -330,6 +384,11 @@
   - type: Battery
     maxCharge: 2700
     startingCharge: 2700
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Lithium
+        Quantity: 10
 
 - type: entity
   id: PowerCageHigh
@@ -348,6 +407,11 @@
   - type: Battery
     maxCharge: 6200
     startingCharge: 6200
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Lithium
+        Quantity: 15
 
 - type: entity
   id: PowerCageSmallEmpty
