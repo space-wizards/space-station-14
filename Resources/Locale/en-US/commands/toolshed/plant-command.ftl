@@ -9,3 +9,6 @@ command-description-plant-ageuntilready =
 
 command-description-plant-addmutation =
     Adds the named mutation from a mutation table to the piped plant entities.
+
+command-description-plant-addchem =
+    Adds the chem to the piped plant entities with the given min, amount, and whether it should be inherent.
