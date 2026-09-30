@@ -76,13 +76,13 @@ public sealed partial class DynamicRuleComponent : Component
     public TimeSpan MaxRuleInterval = TimeSpan.FromMinutes(15);
 
     /// <summary>
-    /// A table of rules that are picked from.
+    /// A table of rules that are picked from roundstart
     /// </summary>
     [DataField]
     public EntityTableSelector RoundStartTable = new NoneSelector();
 
     /// <summary>
-    /// A table of rules that are picked from.
+    /// A table of rules that are picked from during the round.
     /// </summary>
     [DataField]
     public EntityTableSelector Table = new NoneSelector();

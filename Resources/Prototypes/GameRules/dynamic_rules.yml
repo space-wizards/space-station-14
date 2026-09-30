@@ -74,7 +74,7 @@
         children:
         - !type:GroupSelector
           weight: 30
-          children: # copy paste of BasicCalmEventsTable
+          children:
           - id: AnomalySpawn
             conditions:
             - !type:HasBudgetCondition
