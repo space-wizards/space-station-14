@@ -1,6 +1,7 @@
 using Content.Server.Power.EntitySystems;
 using Content.Server.StationEvents.Components;
 using Content.Server.VendingMachines;
+using Content.Shared.Emag.Systems;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
 using Content.Shared.VendingMachines.Components;
@@ -16,6 +17,7 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
 {
     [Dependency] private VendingMachineSystem _vendingSystem = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    private EmagSystem _emag = default!;
 
     protected override void Started(Entity<VendorMalfunctionRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
@@ -45,6 +47,10 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
         for (var i = 0; i < toDispense; i++)
         {
             var vendor = vendingMachines[i];
+            if (RobustRandom.NextDouble() < ent.Comp1.ContrabandChance)
+            {
+                _vendingSystem.SetContraband(vendor, true);
+            }
             _vendingSystem.EjectRandom(vendor.AsNullable(), true);
         }
     }

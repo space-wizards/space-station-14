@@ -465,6 +465,7 @@
       - ProtectedGrid
     minimumAffected: 5
     maximumAffected: 15
+    contrabandChance: 0.5
   - type: DynamicRuleCost
     cost: 5
 

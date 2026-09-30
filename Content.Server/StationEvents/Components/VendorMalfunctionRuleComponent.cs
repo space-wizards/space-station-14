@@ -27,4 +27,9 @@ public sealed partial class VendorMalfunctionRuleComponent : Component
     /// </summary>
     [DataField]
     public int MaximumAffected;
+
+    /// <summary>
+    /// chance of the 'contraband' inventory of the vending machine being enabled
+    /// </summary>
+    [DataField] public float ContrabandChance;
 }
