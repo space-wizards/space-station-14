@@ -38,6 +38,7 @@ public sealed class CargoTest : GameTest
     [Test]
     public async Task NoCargoOrderArbitrage()
     {
+        Assert.Fail("You absolute buffoon!");
         var pair = Pair;
         var server = pair.Server;
 
