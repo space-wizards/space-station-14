@@ -9,6 +9,8 @@
     maxBudgetPerSecond: 0.1
     startingBudgetMin: 150
     startingBudgetMax: 350
+    minRuleInterval: 180 # 3 minutes
+    maxRuleInterval: 540 # 9 minutes
     table: !type:AllSelector
       children:
       # Roundstart Major Rules
@@ -76,14 +78,32 @@
       - !type:GroupSelector
         conditions:
         - !type:RoundDurationCondition
-          min: 300 # minimum 5 minutes
+          min: 180 # minimum 3 minutes
         children:
-        - id: BasicCalmEventsTable
-          weight: 40
-          conditions:
-          - !type:HasBudgetCondition
-          - !type:RoundDurationCondition
-            min: 300 # 5 minutes
+        - !type:GroupSelector
+          weight: 30
+          children: # copy paste of BasicCalmEventsTable because it's an AllSelector
+          - id: AnomalySpawn
+          - id: BluespaceArtifact
+          - id: BluespaceLocker
+          - id: BreakerFlip
+          - id: BureaucraticError
+          - id: ClericalError
+          - id: CockroachMigration
+          - id: GasLeak
+          - id: GreytideVirus
+          - id: IonStorm
+          - id: KudzuGrowth
+          - id: MassHallucinations
+          - id: MouseMigration
+          - id: PowerGridCheck
+          - id: RandomSentience
+          - id: SlimesSpawnHorde
+          - id: SolarFlare
+          - id: SnakeSpawnHorde
+          - id: SpiderClownSpawnHorde
+          - id: SpiderSpawnHorde
+          - id: VentClog
         - id: SleeperAgents
           weight: 15
           conditions:
@@ -137,7 +157,8 @@
             min: 15
           - !type:RoundDurationCondition
             min: 1800 # 30 minutes
-        - id: DerelictBorgEventTable
+        - !type:NestedSelector
+          tableId: DerelictBorgEventTable
           weight: 25
           conditions:
           - !type:HasBudgetCondition
