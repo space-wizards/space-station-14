@@ -16,13 +16,13 @@ public sealed partial class GhostRolePrototype : IPrototype
     /// The name of the ghostrole.
     /// </summary>
     [DataField(required: true)]
-    public LocId Name { get; set; };
+    public LocId Name { get; set; }
 
     /// <summary>
     /// The description of the ghostrole.
     /// </summary>
     [DataField(required: true)]
-    public LocId Description { get; set; };
+    public LocId Description { get; set; }
 
     /// <summary>
     /// The entity prototype of the ghostrole
