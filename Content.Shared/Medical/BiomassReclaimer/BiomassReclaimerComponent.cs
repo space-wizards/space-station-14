@@ -73,7 +73,7 @@ public sealed partial class BiomassReclaimerComponent : Component
     /// <summary>
     /// Non-integer biomass left over from processing, added to the next yield.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float YieldRemainder;
 
     /// <summary>

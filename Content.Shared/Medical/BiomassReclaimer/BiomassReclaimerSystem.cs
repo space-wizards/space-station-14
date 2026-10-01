@@ -3,11 +3,13 @@ using Content.Shared.Construction.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
+using Content.Shared.Materials;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Power.EntitySystems;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Medical.BiomassReclaimer;
 
@@ -15,6 +17,8 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
 {
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedMaterialStorageSystem _material = default!;
+    [Dependency] protected IGameTiming _timing = default!;
     [Dependency] protected SharedPopupSystem _popup = default!;
     [Dependency] protected SharedPowerReceiverSystem _powerReceiver = default!;
 
@@ -22,6 +26,39 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     [Dependency] protected EntityQuery<TransformComponent> _transformQuery;
     [Dependency] protected EntityQuery<ProduceComponent> _produceQuery;
     [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery;
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<ActiveBiomassReclaimerComponent, BiomassReclaimerComponent>();
+        while (query.MoveNext(out var uid, out var active, out var reclaimer))
+        {
+            if (active.PowerLossTime != null)
+                continue;
+
+            UpdateMess((uid, reclaimer, active));
+
+            if (_timing.CurTime < active.ProcessingEndTime)
+                continue;
+
+            FinishProcessing((uid, reclaimer, active));
+        }
+    }
+
+    protected virtual void UpdateMess(Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent) { }
+
+    private void FinishProcessing(Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent)
+    {
+        var (uid, reclaimer, active) = ent;
+        var expectedYield = active.ExpectedYield + reclaimer.YieldRemainder;
+        var actualYield = (int)expectedYield;
+        reclaimer.YieldRemainder = expectedYield - actualYield;
+        Dirty(uid, reclaimer);
+
+        _material.SpawnMultipleFromMaterial(actualYield, reclaimer.OutputMaterial, _transformQuery.GetComponent(uid).Coordinates);
+        RemCompDeferred<ActiveBiomassReclaimerComponent>(uid);
+    }
 
     [SubscribeLocalEvent]
     private void OnUnanchorAttempt(Entity<ActiveBiomassReclaimerComponent> ent, ref UnanchorAttemptEvent args)

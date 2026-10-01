@@ -19,7 +19,7 @@ public sealed partial class ActiveBiomassReclaimerComponent : Component
     /// Amount of biomass that the entity being processed will yield.
     /// This is calculated from YieldPerUnitMass.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public float ExpectedYield;
 
     /// <summary>
@@ -39,6 +39,7 @@ public sealed partial class ActiveBiomassReclaimerComponent : Component
     /// When this time is reached, processing is completed and biomass is produced.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    [AutoNetworkedField]
     public TimeSpan ProcessingEndTime;
 
     /// <summary>

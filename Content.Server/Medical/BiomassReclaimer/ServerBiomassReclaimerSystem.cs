@@ -11,7 +11,6 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Jittering;
-using Content.Shared.Materials;
 using Content.Shared.Medical.BiomassReclaimer;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
@@ -23,7 +22,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Medical.BiomassReclaimer;
 
@@ -34,7 +32,6 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
     [Dependency] private IConfigurationManager _configManager = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedJitteringSystem _jitteringSystem = default!;
-    [Dependency] private SharedMaterialStorageSystem _material = default!;
     [Dependency] private SharedMindSystem _minds = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private PuddleSystem _puddleSystem = default!;
@@ -42,7 +39,6 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
     [Dependency] private SharedAudioSystem _sharedAudioSystem = default!;
     [Dependency] private SharedSolutionContainerSystem _solution = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
-    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
     [Dependency] private EntityQuery<ActiveBiomassReclaimerComponent> _activeQuery;
@@ -57,26 +53,7 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         Subs.CVar(_configManager, CCVars.BiomassEasyMode, value => _biomassEasyMode = value, true);
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<ActiveBiomassReclaimerComponent, BiomassReclaimerComponent>();
-        while (query.MoveNext(out var uid, out var active, out var reclaimer))
-        {
-            if (active.PowerLossTime != null)
-                continue;
-
-            UpdateMess((uid, reclaimer, active));
-
-            if (_timing.CurTime < active.ProcessingEndTime)
-                continue;
-
-            FinishProcessing((uid, reclaimer, active));
-        }
-    }
-
-    private void UpdateMess(Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent)
+    protected override void UpdateMess(Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent)
     {
         var (uid, reclaimer, active) = ent;
         if (_timing.CurTime < active.NextMessTime)
@@ -206,6 +183,8 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         active.ExpectedYield = CalculateYield(toProcess, ent);
         active.ProcessingEndTime = _timing.CurTime + TimeSpan.FromSeconds(toProcess.Comp.FixturesMass * ent.Comp.ProcessingTimePerUnitMass);
         active.NextMessTime = _timing.CurTime;
+        Dirty(ent.Owner, active);
+
         foreach (var item in _inventory.GetHandOrInventoryEntities(toProcess.Owner))
         {
             _transform.DropNextTo(item, ent.Owner);
@@ -235,16 +214,6 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         if (_produceQuery.HasComp(toProcess))
             expectedYield *= reclaimer.Comp.ProduceYieldMultiplier;
         return expectedYield;
-    }
-
-    private void FinishProcessing(Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent)
-    {
-        var (uid, reclaimer, active) = ent;
-        var expectedYield = active.ExpectedYield + reclaimer.YieldRemainder;
-        var actualYield = (int)expectedYield;
-        reclaimer.YieldRemainder = expectedYield - actualYield;
-        _material.SpawnMultipleFromMaterial(actualYield, reclaimer.OutputMaterial, _transformQuery.GetComponent(uid).Coordinates);
-        RemCompDeferred<ActiveBiomassReclaimerComponent>(uid);
     }
 
     protected override BiomassReclaimerInsertResult ValidateInsertion(Entity<BiomassReclaimerComponent> reclaimer, EntityUid dragged)
