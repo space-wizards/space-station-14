@@ -109,7 +109,8 @@
     grid:
     - 0,0,9,1
   - type: StealTarget
-    stealGroup: ChiefEngineerToolBelt
+    stealGroup:
+    - ChiefEngineerToolBelt
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -283,9 +284,7 @@
   - type: Storage
     whitelist:
       tags:
-      - PlantSampleTaker
       - BotanyShovel
-      - BotanyHoe
       - BotanyHatchet
       - PlantBGone
       - Bottle
@@ -293,6 +292,8 @@
       - CigPack
       - Dropper
       components:
+      - BotanySampleTaker
+      - BotanyHoe
       - Seed
       - Smokable
       - HandLabeler
@@ -305,7 +306,7 @@
           - BotanyHatchet
       hoe:
         whitelist:
-          tags:
+          components:
           - BotanyHoe
       secateurs: # We don't have secateurs and this looks similar enough.
         whitelist:
@@ -421,10 +422,9 @@
       - MagazinePistol
       - MagazineMagnum
       - CombatKnife
-      - Truncheon
       - HandGrenade
-      components:
       - Stunbaton
+      components:
       - FlashOnTrigger
       - SmokeOnTrigger
       - Flash
@@ -443,7 +443,7 @@
           - FlashOnTrigger
       stunbaton:
         whitelist:
-          components:
+          tags:
           - Stunbaton
       tear_gas_grenade:
         whitelist:

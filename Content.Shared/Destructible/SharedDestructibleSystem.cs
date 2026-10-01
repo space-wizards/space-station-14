@@ -12,15 +12,25 @@ public abstract partial class SharedDestructibleSystem : EntitySystem
     /// </summary>
     public bool DestroyEntity(EntityUid owner)
     {
-        var ev = new DestructionAttemptEvent();
-        RaiseLocalEvent(owner, ev);
-        if (ev.Cancelled)
+        if (!CanDestroy(owner))
             return false;
 
         var eventArgs = new DestructionEventArgs();
         RaiseLocalEvent(owner, eventArgs);
 
         PredictedQueueDel(owner);
+        return true;
+    }
+
+    /// <param name="owner">Entity that your checking.</param>
+    /// <returns>If it can be destroyed</returns>
+    public bool CanDestroy(EntityUid owner)
+    {
+        var ev = new DestructionAttemptEvent();
+        RaiseLocalEvent(owner, ev);
+        if (ev.Cancelled)
+            return false;
+
         return true;
     }
 

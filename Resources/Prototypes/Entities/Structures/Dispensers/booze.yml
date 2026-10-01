@@ -24,7 +24,8 @@
     - Bartender
     - Drinks
   - type: StealTarget
-    stealGroup: BoozeDispenser
+    stealGroup:
+    - BoozeDispenser
 
 - type: entity
   id: BoozeDispenser

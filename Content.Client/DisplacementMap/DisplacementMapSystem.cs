@@ -14,6 +14,7 @@ public sealed partial class DisplacementMapSystem : EntitySystem
 
     //needs to be replaced later: see comment on line 48
     private static readonly ProtoId<ShaderPrototype> UnshadedID = "unshaded";
+    public static readonly ProtoId<ShaderPrototype> DisplacedUnshaded = "DisplacedDrawUnshaded";
 
     private static string? BuildDisplacementLayerKey(object key)
     {
@@ -126,6 +127,23 @@ public sealed partial class DisplacementMapSystem : EntitySystem
         if (displacementLayerKey is null)
             return false;
 
-        return _sprite.RemoveLayer(sprite.AsNullable(), displacementLayerKey, false);
+        if (_sprite.RemoveLayer(sprite.AsNullable(), displacementLayerKey, false))
+        {
+            //TODO : this is a kinda janky workaround for the fact that the current rendering pipeline does not have
+            //proper support for multiple shaders on a given layer (or an ubershader to handle stacking all of the effects well)
+            //Same reason as where the displacement is added initially
+            var shader = sprite.Comp[key] is SpriteComponent.Layer layer && layer.ShaderPrototype == DisplacedUnshaded
+                ? SpriteSystem.UnshadedId.Id
+                : null;
+
+            if (shader != null)
+                sprite.Comp.LayerSetShader(key, shader);
+            else
+                sprite.Comp.LayerSetShader(key, null, null);
+
+            return true;
+        }
+
+        return false;
     }
 }

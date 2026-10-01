@@ -74,7 +74,7 @@ public sealed partial class FlashComponent : Component
     [DataField, AutoNetworkedField]
     public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Weapons/flash.ogg")
     {
-        Params = AudioParams.Default.WithVolume(1f).WithMaxDistance(3f)
+        Params = AudioParams.Default.AddVolume(1f).WithMaxDistance(3f)
     };
 
     /// <summary>

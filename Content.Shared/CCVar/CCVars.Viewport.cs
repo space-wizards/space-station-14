@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Configuration;
+using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
 
@@ -33,4 +33,7 @@ public sealed partial class CCVars
 
     public static readonly CVarDef<string> ViewportScalingFilterMode =
         CVarDef.Create("viewport.scaling_filter", "nearest", CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    public static readonly CVarDef<int> ViewportSharpnessStrength =
+        CVarDef.Create("viewport.sharpness_strength", 0, CVar.CLIENTONLY | CVar.ARCHIVE);
 }

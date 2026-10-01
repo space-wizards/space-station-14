@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Cargo.Components;
+namespace Content.Server.Cargo.Components;
 
 /// <summary>
 /// This is used for calculating the price of mobs.
