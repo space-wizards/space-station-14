@@ -1,4 +1,5 @@
 using Content.Server.StationEvents.Events;
+using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Whitelist;
 
 namespace Content.Server.StationEvents.Components;
@@ -17,28 +18,20 @@ public sealed partial class VendorMalfunctionRuleComponent : Component
     public EntityWhitelist? Blacklist;
 
     /// <summary>
-    /// minimum quantity of affected machines
+    /// quantity of machines which may be affected by this event
     /// </summary>
     [DataField]
-    public int MinimumAffected;
-
-    /// <summary>
-    /// maxmimum quantity of affected machines
-    /// </summary>
-    [DataField]
-    public int MaximumAffected;
+    public MinMax AffectedMachines;
 
     /// <summary>
     /// chance of the 'contraband' inventory of the vending machine being enabled
     /// </summary>
-    [DataField] public float ContrabandChance;
+    [DataField] 
+    public float ContrabandChance;
 
     /// <summary>
-    /// minimum quantity to eject
+    /// quantity of items to be ejected by affected machines
     /// </summary>
-    [DataField] public int MinEjectedItems = 1;
-    /// <summary>
-    /// maximum quantity to eject
-    /// </summary>
-    [DataField] public int MaxEjectedItems;
+    [DataField]
+    public MinMax ItemsToEject;
 }
