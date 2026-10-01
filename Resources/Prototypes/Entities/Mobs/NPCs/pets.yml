@@ -717,7 +717,7 @@
     predicted: true
 
 - type: entity
-  parent: [ BaseUniquePet, MobSpiderAnimated ]
+  parent: [ BaseUniquePet, MobSpiderBase ]
   id: MobSpiderShiva
   name: Shiva
   description: The first defender of the station.
