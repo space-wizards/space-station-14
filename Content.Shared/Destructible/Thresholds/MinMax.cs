@@ -22,9 +22,16 @@ public partial struct MinMax
         return random.Next((int)Min, (int)Max + 1);
     }
 
-    public readonly float NextFloat(IRobustRandom random)
+    /// <summary>
+    /// wrapper for RobustRandom.NextFloat using the values in this minMax
+    /// </summary>
+    /// <param name="random">RobustRandom instance to use</param>
+    /// <param name="maxOffset">Value to add to 'Max' in internal NextFloat call, can be used to make max value not exclusive</param>
+    /// <returns>Random value between <see cref="Min"/> (inclusive) and <see cref="Max"/> (exclusive)</returns>
+    /// <seealso cref="IRobustRandom.NextFloat(float, float)"/>
+    public readonly float NextFloat(IRobustRandom random, float maxOffset = 0)
     {
-        return random.NextFloat(Min, Max + 1);
+        return random.NextFloat(Min, Max + maxOffset);
     }
 
     public static implicit operator MinMax((int Min, int Max) tuple)

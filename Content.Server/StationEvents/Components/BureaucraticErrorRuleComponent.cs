@@ -1,4 +1,5 @@
 using Content.Server.StationEvents.Events;
+using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
@@ -12,4 +13,22 @@ public sealed partial class BureaucraticErrorRuleComponent : Component
     /// </summary>
     [DataField]
     public List<ProtoId<JobPrototype>> IgnoredJobs = new();
+
+    /// <summary>
+    /// chance of rolling the event subtype which closes all roles besides one which now has infinite slots.
+    /// </summary>
+    [DataField]
+    public float CloseAllButOneChance;
+
+    /// <summary>
+    /// the proportion of jobs to adjust slots of in the 'adjust individual jobs' variant of the rule
+    /// </summary>
+    [DataField]
+    public MinMax ProportionOfJobsToAdjust;
+
+    /// <summary>
+    /// minimum/maximum slot quantity adjustment for the jobs which get adjusted by this rule
+    /// </summary>
+    [DataField]
+    public MinMax JobSlotAdjustment;
 }
