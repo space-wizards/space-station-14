@@ -69,4 +69,3 @@
   parent: [ MobSpiderAngryBase, MobGiantSpiderClown ]
   id: MobGiantSpiderClownAngry
   suffix: Angry
-
