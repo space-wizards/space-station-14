@@ -357,6 +357,7 @@
     - MobChicken1
     - MobChicken2
     intervalSeconds: 20
+    allowContainerPlacement: true
   - type: TimedDespawn #delete the egg after the chicken spawns
     lifetime: 21
 
@@ -813,6 +814,7 @@
       - MobDuckWhite
       - MobDuckBrown
       intervalSeconds: 20
+      allowContainerPlacement: true
     - type: TimedDespawn #delete the egg after the chicken spawns
       lifetime: 21
 
