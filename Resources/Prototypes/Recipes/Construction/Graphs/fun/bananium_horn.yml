@@ -7,6 +7,8 @@
         - to: bananiumHorn
           steps:
             - tag: Pipe
+              amount: 2
+              store: bungo
               name: construction-graph-tag-pipe
               icon:
                 sprite: Structures/Piping/Atmospherics/pipe.rsi
