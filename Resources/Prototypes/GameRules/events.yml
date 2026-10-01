@@ -170,8 +170,8 @@
     cost: 10
 
 - type: entity
-  id: BureaucraticError
   parent: BaseGameRule
+  id: BureaucraticError
   components:
   - type: StationEvent
     startAnnouncement: station-event-bureaucratic-error-announcement
