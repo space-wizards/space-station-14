@@ -252,7 +252,7 @@ public sealed partial class CargoSystem
         ProtoId<CargoAccountPrototype> account
     )
     {
-        return RelevantOrders(station, account, approved: true, onlyShowThisAccount: false).Sum(order => order.OrderQuantity - order.NumDispatched);
+        return RelevantOrders(station, account, approved: true, onlyShowThisAccount: true).Sum(order => order.OrderQuantity - order.NumDispatched);
     }
 
     public List<ProtoId<CargoProductPrototype>> GetAvailableProducts(Entity<CargoOrderConsoleComponent> ent)
@@ -590,21 +590,27 @@ public sealed partial class CargoSystem
 
         foreach (var order in ent.Comp.Orders)
         {
+            // Don't deliver unapproved orders
             if (!order.Approved)
                 continue;
 
+            // If the order has been delivered remove from active and add to history
             if (order.NumDispatched >= order.OrderQuantity)
             {
                 toDeliver.Add(order);
                 continue;
             }
 
+            // If the order is already taken by something i.e. telepad
             if (order.Assigned && TryGetEntity(order.AssignedEntity, out var _))
                 continue;
 
+            // If something can take the order i.e. telepad
             if (TryExternalFulfillment((ent, stationData), order))
                 continue;
 
+            // Try to deliver the order
+            // This can partially deliver the order but will return false
             if (TryFulfillOrder((ent, stationData), order, ent.Comp))
                 toDeliver.Add(order);
         }
