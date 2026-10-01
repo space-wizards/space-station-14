@@ -28,7 +28,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.CanDrop = ValidateInsertion(ent, args.Dragged) == BiomassReclaimerInsertResult.Success;
+        args.CanDrop = IsValidTarget(args.Dragged);
         args.Handled = true;
     }
 
@@ -97,7 +97,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
             return BiomassReclaimerInsertResult.Busy;
 
         var isPlant = _produceQuery.HasComp(target);
-        if ((!isPlant && !_mobStateQuery.HasComp(target)) || !_physicsQuery.HasComp(target))
+        if (!IsValidTarget(target))
             return BiomassReclaimerInsertResult.InvalidTarget;
 
         if (!_transformQuery.GetComponent(reclaimer).Anchored)
@@ -109,5 +109,12 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
         return isPlant || !reclaimer.Comp.SafetyEnabled || _mobState.IsDead(target)
             ? BiomassReclaimerInsertResult.Success
             : BiomassReclaimerInsertResult.TargetAlive;
+    }
+
+    private bool IsValidTarget(EntityUid target)
+    {
+        return (_produceQuery.HasComp(target) 
+             || _mobStateQuery.HasComp(target))
+             && _physicsQuery.HasComp(target);
     }
 }
