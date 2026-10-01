@@ -46,6 +46,7 @@ public sealed partial class ClimbSystem : VirtualController
     [Dependency] private EntityQuery<BonkableComponent> _bonkQuery;
     [Dependency] private EntityQuery<ClimbableComponent> _climbableQuery;
     [Dependency] private EntityQuery<FixturesComponent> _fixturesQuery;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery;
     [Dependency] private EntityQuery<TransformComponent> _xformQuery;
 
     private const string ClimbingFixtureName = "climb";
@@ -90,7 +91,19 @@ public sealed partial class ClimbSystem : VirtualController
             }
 
             var xform = _xformQuery.GetComponent(uid);
-            _xformSystem.SetLocalPosition(uid, xform.LocalPosition + comp.Direction * frameTime, xform);
+            var oldPosition = xform.LocalPosition;
+            _xformSystem.SetLocalPosition(uid, oldPosition + comp.Direction * frameTime, xform);
+
+            var physics = _physicsQuery.GetComponent(uid);
+            if ((physics.CollisionMask & (int) CollisionGroup.Impassable) == 0
+                || _physics.GetEntitiesIntersectingBody(uid, (int) CollisionGroup.Impassable).Count == 0)
+            {
+                continue;
+            }
+
+            // Restore the last valid position and stop at the wall.
+            _xformSystem.SetLocalPosition(uid, oldPosition, xform);
+            FinishTransition(uid, comp);
         }
     }
 
@@ -102,7 +115,7 @@ public sealed partial class ClimbSystem : VirtualController
         Dirty(uid, comp);
 
         // Stop if necessary.
-        if (!_fixturesQuery.TryGetComponent(uid, out var fixtures) ||
+        if (!_fixturesQuery.TryComp(uid, out var fixtures) ||
             !IsClimbing(uid, fixtures))
         {
             StopClimb(uid, comp);
@@ -289,7 +302,7 @@ public sealed partial class ClimbSystem : VirtualController
         var climbableTransform = _physics.GetPhysicsTransform(climbable);
         Box2? climbableBounds = null;
 
-        if (_fixturesQuery.TryGetComponent(climbable, out var climbableFixtures))
+        if (_fixturesQuery.TryComp(climbable, out var climbableFixtures))
         {
             foreach (var fixture in climbableFixtures.Fixtures.Values)
             {
@@ -583,7 +596,7 @@ public sealed partial class ClimbSystem : VirtualController
 
     private void OnGlassClimbed(EntityUid uid, GlassTableComponent component, ref ClimbedOnEvent args)
     {
-        if (TryComp<PhysicsComponent>(args.Climber, out var physics) && physics.Mass <= component.MassLimit)
+        if (_physicsQuery.TryComp(args.Climber, out var physics) && physics.Mass <= component.MassLimit)
             return;
 
         _damageableSystem.TryChangeDamage(args.Climber, component.ClimberDamage, origin: args.Climber);
