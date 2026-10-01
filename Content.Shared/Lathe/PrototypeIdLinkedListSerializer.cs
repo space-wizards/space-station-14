@@ -15,10 +15,12 @@ namespace Content.Shared.Lathe;
 /// This is in the Content.Shared.Lathe namespace as there are no other LinkedList ProtoId instances.
 /// </remarks>
 [TypeSerializer]
-public sealed class LinkedListSerializer<T> : ITypeSerializer<LinkedList<T>, SequenceDataNode>, ITypeCopier<LinkedList<T>> where T : class
+public sealed class LinkedListSerializer<T> : ITypeSerializer<LinkedList<T>, SequenceDataNode>, ITypeCopier<LinkedList<T>>
 {
-    public ValidationNode Validate(ISerializationManager serializationManager, SequenceDataNode node,
-        IDependencyCollection dependencies, ISerializationContext? context = null)
+    public ValidationNode Validate(ISerializationManager serializationManager,
+        SequenceDataNode node,
+        IDependencyCollection dependencies,
+        ISerializationContext? context = null)
     {
         var list = new List<ValidationNode>();
 
@@ -30,7 +32,8 @@ public sealed class LinkedListSerializer<T> : ITypeSerializer<LinkedList<T>, Seq
         return new ValidatedSequenceNode(list);
     }
 
-    public DataNode Write(ISerializationManager serializationManager, LinkedList<T> value,
+    public DataNode Write(ISerializationManager serializationManager,
+        LinkedList<T> value,
         IDependencyCollection dependencies,
         bool alwaysWrite = false,
         ISerializationContext? context = null)
@@ -49,7 +52,8 @@ public sealed class LinkedListSerializer<T> : ITypeSerializer<LinkedList<T>, Seq
         SequenceDataNode node,
         IDependencyCollection dependencies,
         SerializationHookContext hookCtx,
-        ISerializationContext? context, ISerializationManager.InstantiationDelegate<LinkedList<T>>? instanceProvider)
+        ISerializationContext? context,
+        ISerializationManager.InstantiationDelegate<LinkedList<T>>? instanceProvider)
     {
         var list = instanceProvider != null ? instanceProvider() : new LinkedList<T>();
 

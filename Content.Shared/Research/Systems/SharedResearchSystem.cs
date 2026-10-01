@@ -12,7 +12,7 @@ namespace Content.Shared.Research.Systems;
 public abstract partial class SharedResearchSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private SharedLatheSystem _lathe = default!;
+    [Dependency] private LatheSystem _lathe = default!;
 
     public override void Initialize()
     {

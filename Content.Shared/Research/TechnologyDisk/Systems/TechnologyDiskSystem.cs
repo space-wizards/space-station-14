@@ -20,7 +20,7 @@ public sealed partial class TechnologyDiskSystem : EntitySystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedResearchSystem _research = default!;
-    [Dependency] private SharedLatheSystem _lathe = default!;
+    [Dependency] private LatheSystem _lathe = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private NameModifierSystem _nameModifier = default!;
 
