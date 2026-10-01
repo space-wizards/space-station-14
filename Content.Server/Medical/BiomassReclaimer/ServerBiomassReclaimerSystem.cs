@@ -1,4 +1,3 @@
-using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -8,11 +7,9 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Medical.BiomassReclaimer;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
-using Content.Shared.Throwing;
 using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
-using Robust.Shared.Random;
 
 namespace Content.Server.Medical.BiomassReclaimer;
 
@@ -22,10 +19,7 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
     [Dependency] private IConfigurationManager _configManager = default!;
     [Dependency] private SharedMindSystem _minds = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
-    [Dependency] private PuddleSystem _puddleSystem = default!;
-    [Dependency] private IRobustRandom _robustRandom = default!;
     [Dependency] private SharedAudioSystem _sharedAudioSystem = default!;
-    [Dependency] private ThrowingSystem _throwing = default!;
 
     private bool _biomassEasyMode;
 
@@ -34,28 +28,6 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         base.Initialize();
 
         Subs.CVar(_configManager, CCVars.BiomassEasyMode, value => _biomassEasyMode = value, true);
-    }
-
-    protected override void UpdateMess(Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent)
-    {
-        var (uid, reclaimer, active) = ent;
-        if (_timing.CurTime < active.NextMessTime)
-            return;
-
-        if (_robustRandom.Prob(reclaimer.BloodSpillChance) && active.BloodReagents is { } blood)
-            _puddleSystem.TrySpillAt(uid, blood, out _);
-
-        if (_robustRandom.Prob(reclaimer.ItemThrowChance) && active.SpawnedEntities.Count > 0)
-        {
-            var thrown = Spawn(
-                _robustRandom.Pick(active.SpawnedEntities).PrototypeId?.Id,
-                _transformQuery.GetComponent(uid).Coordinates);
-
-            _throwing.TryThrow(thrown, _robustRandom.NextVector2Box(30f, 30f), _robustRandom.NextFloat(reclaimer.ItemThrowMinSpeed, reclaimer.ItemThrowMaxSpeed));
-        }
-
-        active.NextMessTime += reclaimer.RandomMessInterval;
-        Dirty(uid, active);
     }
 
     [SubscribeLocalEvent]

@@ -6,6 +6,7 @@ using Content.Shared.Construction.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.FixedPoint;
+using Content.Shared.Fluids;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Jittering;
@@ -15,8 +16,11 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
+using Content.Shared.Random.Helpers;
+using Content.Shared.Throwing;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Medical.BiomassReclaimer;
@@ -31,6 +35,8 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     [Dependency] private SharedAmbientSoundSystem _ambientSoundSystem = default!;
     [Dependency] private SharedJitteringSystem _jitteringSystem = default!;
     [Dependency] private SharedSolutionContainerSystem _solution = default!;
+    [Dependency] private SharedPuddleSystem _puddleSystem = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
     [Dependency] protected IGameTiming _timing = default!;
     [Dependency] protected SharedPopupSystem _popup = default!;
     [Dependency] protected SharedPowerReceiverSystem _powerReceiver = default!;
@@ -61,7 +67,28 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
         }
     }
 
-    protected virtual void UpdateMess(Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent) { }
+    private void UpdateMess(Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent)
+    {
+        var (uid, reclaimer, active) = ent;
+        if (_timing.CurTime < active.NextMessTime)
+            return;
+
+        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(uid));
+        if (random.Prob(reclaimer.BloodSpillChance) && active.BloodReagents is { } blood)
+            _puddleSystem.TrySpillAt(uid, blood, out _);
+
+        if (random.Prob(reclaimer.ItemThrowChance) && active.SpawnedEntities.Count > 0)
+        {
+            var thrown = PredictedSpawnAtPosition(
+                random.Pick(active.SpawnedEntities).PrototypeId?.Id,
+                _transformQuery.GetComponent(uid).Coordinates);
+
+            _throwing.TryThrow(thrown, random.NextVector2Box(30f, 30f), random.NextFloat(reclaimer.ItemThrowMinSpeed, reclaimer.ItemThrowMaxSpeed));
+        }
+
+        active.NextMessTime += reclaimer.RandomMessInterval;
+        Dirty(uid, active);
+    }
 
     [SubscribeLocalEvent]
     private void OnInit(Entity<ActiveBiomassReclaimerComponent> ent, ref ComponentInit args)

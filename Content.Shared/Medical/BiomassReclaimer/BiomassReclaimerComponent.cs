@@ -25,31 +25,31 @@ public sealed partial class BiomassReclaimerComponent : Component
     /// <summary>
     /// The interval between attempts to spill blood or throw an item.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan RandomMessInterval = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// The chance to spill blood at each mess interval.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float BloodSpillChance = 0.2f;
 
     /// <summary>
     /// The chance to throw an item at each mess interval.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float ItemThrowChance = 0.03f;
 
     /// <summary>
     /// The minimum speed of thrown items, inclusive.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float ItemThrowMinSpeed = 1f;
 
     /// <summary>
     /// The maximum speed of thrown items, exclusive.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float ItemThrowMaxSpeed = 10f;
 
     /// <summary>
