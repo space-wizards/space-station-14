@@ -178,7 +178,8 @@
   - type: Computer
     board: CargoShuttleConsoleCircuitboard
   - type: StealTarget
-    stealGroup: CargoShuttleConsoleCircuitboard
+    stealGroup:
+    - CargoShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -1063,7 +1064,8 @@
   - type: AccessReader
     access: [["Salvage"]]
   - type: StealTarget
-    stealGroup: SalvageExpeditionsComputerCircuitboard
+    stealGroup:
+    - SalvageExpeditionsComputerCircuitboard
 
 - type: entity
   parent: BaseComputer

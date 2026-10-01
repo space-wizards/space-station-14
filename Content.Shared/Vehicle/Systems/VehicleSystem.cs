@@ -31,6 +31,7 @@ public sealed partial class VehicleSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedEyeSystem _eye = default!;
     [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedMoverController _mover = default!;
@@ -166,6 +167,7 @@ public sealed partial class VehicleSystem : EntitySystem
         Dirty(operatorUid, vehicleOperator);
 
         _mover.SetRelay(operatorUid, entity);
+        _eye.SetTarget(operatorUid, entity.Owner);
 
         var enterEvent = new OnVehicleEnteredEvent(entity, operatorUid);
         RaiseLocalEvent(operatorUid, ref enterEvent);
@@ -190,9 +192,9 @@ public sealed partial class VehicleSystem : EntitySystem
         if (entity.Comp.Operator is not { } currentOperator)
             return false;
 
-        _operatorQuery.TryComp(currentOperator, out var currentOperatorComponent);
+        _eye.SetTarget(currentOperator, null);
 
-        if (currentOperatorComponent != null)
+        if (_operatorQuery.TryComp(currentOperator, out var currentOperatorComponent))
         {
             var exitEvent = new OnVehicleExitedEvent(entity, currentOperator);
             RaiseLocalEvent(currentOperator, ref exitEvent);
@@ -211,7 +213,7 @@ public sealed partial class VehicleSystem : EntitySystem
         var setEvent = new VehicleOperatorSetEvent(null, currentOperator);
         RaiseLocalEvent(entity, ref setEvent);
 
-        Dirty(entity);
+        DirtyFields(entity.Owner, entity.Comp, null, nameof(VehicleComponent.Operator));
         return true;
     }
 
@@ -254,6 +256,7 @@ public sealed partial class VehicleSystem : EntitySystem
         if (_vehicleQuery.TryComp(vehicleUid, out var vehicle))
             return TryRemoveOperator((vehicleUid.Value, vehicle));
 
+        _eye.SetTarget(operatorEntity.Owner, null);
         UnblockHands(vehicleUid.Value, operatorEntity.Owner);
         ClearOperatorRelays(operatorEntity.Owner, vehicleUid.Value);
         operatorEntity.Comp.Vehicle = null;
