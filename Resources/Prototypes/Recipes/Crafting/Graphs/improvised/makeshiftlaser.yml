@@ -63,6 +63,7 @@
         icon:
           sprite: Objects/Misc/lens.rsi
           state: icon
+        amount: 2
         doAfter: 0.6
     - to: mslaserframe
       steps:
