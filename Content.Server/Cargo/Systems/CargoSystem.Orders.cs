@@ -634,7 +634,6 @@ public sealed partial class CargoSystem
         return true;
     }
 
-
     /// <summary>
     /// Updates all of the cargo-related consoles for a particular station.
     /// This should be called whenever orders change.
