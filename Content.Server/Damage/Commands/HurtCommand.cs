@@ -11,10 +11,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Damage.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    sealed class DamageCommand : IConsoleCommand
+    sealed partial class DamageCommand : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IEntityManager _entManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
 
         public string Command => "damage";
         public string Description => Loc.GetString("damage-command-description");

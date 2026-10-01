@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Gibbing;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -12,11 +12,11 @@ namespace Content.Server.Mind;
 /// to a different entity when they gib.
 /// used for skeletons.
 /// </summary>
-public sealed class TransferMindOnGibSystem : EntitySystem
+public sealed partial class TransferMindOnGibSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private SharedMindSystem _mindSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

@@ -11,7 +11,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 /// </summary>
 public sealed partial class PickAccessibleComponentOperator : HTNOperator
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
     private PathfindingSystem _pathfinding = default!;
     private EntityLookupSystem _lookup = default!;
 

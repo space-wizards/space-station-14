@@ -19,11 +19,10 @@
     - !type:DepartmentTimeRequirement
       department: Command
       time: 2.5h
-  weight: 20
   startingGear: HoPGear
   icon: "JobIconHeadOfPersonnel"
   supervisors: job-supervisors-captain
-  canBeAntag: false
+  guides: [ Command ] # TODO: should have a more specific guidebook page instead of using the department itself
   access:
   - Command
   - HeadOfPersonnel
@@ -51,6 +50,8 @@
   - Cargo
   - Atmospherics
   - Medical
+  - GenpopEnter
+  - GenpopLeave
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

@@ -15,7 +15,7 @@ namespace Content.Client.NetworkConfigurator;
 [GenerateTypedNameReferences]
 public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     private const string PanelBgColor = "#202023";
 

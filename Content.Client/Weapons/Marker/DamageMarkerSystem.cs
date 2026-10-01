@@ -4,10 +4,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Weapons.Marker;
 
-public sealed class DamageMarkerSystem : SharedDamageMarkerSystem
+public sealed partial class DamageMarkerSystem : SharedDamageMarkerSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {

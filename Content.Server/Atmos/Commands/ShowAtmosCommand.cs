@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class ShowAtmos : IConsoleCommand
+    public sealed partial class ShowAtmos : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _e = default!;
+        [Dependency] private IEntityManager _e = default!;
 
         public string Command => "showatmos";
         public string Description => "Toggles seeing atmos debug overlay.";

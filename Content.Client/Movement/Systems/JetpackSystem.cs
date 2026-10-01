@@ -10,12 +10,12 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Movement.Systems;
 
-public sealed class JetpackSystem : SharedJetpackSystem
+public sealed partial class JetpackSystem : SharedJetpackSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ClothingSystem _clothing = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ClothingSystem _clothing = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
 
     public override void Initialize()
     {

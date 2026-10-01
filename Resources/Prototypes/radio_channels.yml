@@ -2,14 +2,14 @@
   id: Common
   name: chat-radio-common
   keycode: ";"
-  frequency: 1459
+  frequency: 145.9
   color: "#2cdb2c"
 
 - type: radioChannel
   id: CentCom
   name: chat-radio-centcom
   keycode: 'y'
-  frequency: 1337
+  frequency: 133.7
   color: "#2681a5"
   longRange: true
 
@@ -17,63 +17,63 @@
   id: Command
   name: chat-radio-command
   keycode: 'c'
-  frequency: 1353
+  frequency: 135.3
   color: "#fcdf03"
 
 - type: radioChannel
   id: Engineering
   name: chat-radio-engineering
   keycode: 'e'
-  frequency: 1357
+  frequency: 135.7
   color: "#ff733c"
 
 - type: radioChannel
   id: Medical
   name: chat-radio-medical
   keycode: 'm'
-  frequency: 1355
+  frequency: 135.5
   color: "#57b8f0"
 
 - type: radioChannel
   id: Science
   name: chat-radio-science
   keycode: 'n'
-  frequency: 1351
+  frequency: 135.1
   color: "#cd7ccd"
 
 - type: radioChannel
   id: Security
   name: chat-radio-security
   keycode: 's'
-  frequency: 1359
+  frequency: 135.9
   color: "#ff4242"
 
 - type: radioChannel
   id: Service
   name: chat-radio-service
   keycode: 'v'
-  frequency: 1349
+  frequency: 134.9
   color: "#539c00"
 
 - type: radioChannel
   id: Supply
   name: chat-radio-supply
   keycode: 'u'
-  frequency: 1347
+  frequency: 134.7
   color: "#b48b57"
 
 - type: radioChannel
   id: Syndicate
   name: chat-radio-syndicate
   keycode: 't'
-  frequency: 1213
+  frequency: 121.3
   color: "#8f4a4b"
   longRange: true
 
 - type: radioChannel
   id: Handheld
   name: chat-radio-handheld
-  frequency: 1330
+  frequency: 133.0
   color: "#967101"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
   longRange: true
@@ -82,7 +82,7 @@
   id: Binary
   name: chat-radio-binary
   keycode: 'b'
-  frequency: 1001
+  frequency: 100.1
   color: "#5ed7aa"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
   longRange: true
@@ -91,7 +91,7 @@
   id: Freelance
   name: chat-radio-freelance
   keycode: 'f'
-  frequency: 1984
+  frequency: 198.4
   color: "#f6ce64"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
   longRange: true
@@ -100,7 +100,7 @@
   id: Xenoborg
   name: chat-radio-xenoborg
   keycode: 'x'
-  frequency: 2002
+  frequency: 200.2
   color: "#2288ff"
   # long range since I don't wanna make a special xenoborg telecomm server
   longRange: true
@@ -109,7 +109,7 @@
   id: Mothership
   name: chat-radio-mothership
   keycode: 'z'
-  frequency: 2003
+  frequency: 200.3
   color: "#ff2222"
   # long range since I don't wanna make a special xenoborg telecomm server
   longRange: true

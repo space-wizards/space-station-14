@@ -114,6 +114,22 @@
   id: Marble
   name: lathe-category-marble
 
+- type: latheCategory
+  id: Shuttle
+  name: lathe-category-shuttle-tile
+
+- type: latheCategory
+  id: Plastic
+  name: lathe-category-plastic-tile
+
+- type: latheCategory
+  id: Precious
+  name: lathe-category-precious-tile
+
+- type: latheCategory
+  id: Industrial
+  name: lathe-category-industrial-tile
+
 # Science
 - type: latheCategory
   id: Mech
