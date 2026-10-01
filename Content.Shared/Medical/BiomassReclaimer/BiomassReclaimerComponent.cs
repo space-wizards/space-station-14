@@ -79,7 +79,7 @@ public sealed partial class BiomassReclaimerComponent : Component
     /// <summary>
     /// How many units of biomass it produces for each unit of mass.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float YieldPerUnitMass = 0.4f;
 
     /// <summary>
@@ -91,13 +91,13 @@ public sealed partial class BiomassReclaimerComponent : Component
     /// <summary>
     /// How much to multiply biomass yield from botany produce.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float ProduceYieldMultiplier = 0.25f;
 
     /// <summary>
     /// The time it takes to process a mob, per mass.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float ProcessingTimePerUnitMass = 0.5f;
 
     /// <summary>

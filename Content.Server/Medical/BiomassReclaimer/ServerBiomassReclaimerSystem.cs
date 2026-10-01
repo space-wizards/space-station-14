@@ -9,7 +9,6 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Inventory;
 using Content.Shared.Jittering;
 using Content.Shared.Medical.BiomassReclaimer;
 using Content.Shared.Mind;
@@ -20,7 +19,6 @@ using Content.Shared.Tools.Components;
 using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Medical.BiomassReclaimer;
@@ -30,7 +28,6 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedAmbientSoundSystem _ambientSoundSystem = default!;
     [Dependency] private IConfigurationManager _configManager = default!;
-    [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedJitteringSystem _jitteringSystem = default!;
     [Dependency] private SharedMindSystem _minds = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
@@ -39,7 +36,6 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
     [Dependency] private SharedAudioSystem _sharedAudioSystem = default!;
     [Dependency] private SharedSolutionContainerSystem _solution = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
 
     [Dependency] private EntityQuery<ActiveBiomassReclaimerComponent> _activeQuery;
     [Dependency] private EntityQuery<BiomassReclaimerComponent> _reclaimerQuery;
@@ -176,26 +172,10 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         args.Handled = true;
     }
 
-    private void StartProcessing(Entity<PhysicsComponent> toProcess, Entity<BiomassReclaimerComponent> ent)
-    {
-        var active = AddComp<ActiveBiomassReclaimerComponent>(ent);
-        CollectMessData(toProcess, (ent.Owner, ent.Comp, active));
-        active.ExpectedYield = CalculateYield(toProcess, ent);
-        active.ProcessingEndTime = _timing.CurTime + TimeSpan.FromSeconds(toProcess.Comp.FixturesMass * ent.Comp.ProcessingTimePerUnitMass);
-        active.NextMessTime = _timing.CurTime;
-        Dirty(ent.Owner, active);
-
-        foreach (var item in _inventory.GetHandOrInventoryEntities(toProcess.Owner))
-        {
-            _transform.DropNextTo(item, ent.Owner);
-        }
-
-        QueueDel(toProcess);
-    }
-
-    private void CollectMessData(EntityUid toProcess, Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent)
+    protected override void CollectMessData(EntityUid toProcess, Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent)
     {
         var (_, reclaimer, active) = ent;
+        active.NextMessTime = _timing.CurTime;
         if (TryComp<BloodstreamComponent>(toProcess, out var stream) &&
             _solution.ResolveSolution(toProcess, stream.BloodSolutionName, ref stream.BloodSolution, out var solution))
         {
@@ -206,14 +186,6 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
 
         if (TryComp<ToolRefinableComponent>(toProcess, out var refinable))
             active.SpawnedEntities = [.. refinable.RefineResult];
-    }
-
-    private float CalculateYield(Entity<PhysicsComponent> toProcess, Entity<BiomassReclaimerComponent> reclaimer)
-    {
-        var expectedYield = toProcess.Comp.FixturesMass * reclaimer.Comp.YieldPerUnitMass;
-        if (_produceQuery.HasComp(toProcess))
-            expectedYield *= reclaimer.Comp.ProduceYieldMultiplier;
-        return expectedYield;
     }
 
     protected override BiomassReclaimerInsertResult ValidateInsertion(Entity<BiomassReclaimerComponent> reclaimer, EntityUid dragged)

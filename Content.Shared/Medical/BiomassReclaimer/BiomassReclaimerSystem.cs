@@ -3,6 +3,7 @@ using Content.Shared.Construction.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
 using Content.Shared.Materials;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -18,6 +19,8 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedMaterialStorageSystem _material = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] protected IGameTiming _timing = default!;
     [Dependency] protected SharedPopupSystem _popup = default!;
     [Dependency] protected SharedPowerReceiverSystem _powerReceiver = default!;
@@ -47,6 +50,32 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     }
 
     protected virtual void UpdateMess(Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent) { }
+
+    protected void StartProcessing(Entity<PhysicsComponent> toProcess, Entity<BiomassReclaimerComponent> ent)
+    {
+        var active = AddComp<ActiveBiomassReclaimerComponent>(ent);
+        CollectMessData(toProcess, (ent.Owner, ent.Comp, active));
+        active.ExpectedYield = CalculateYield(toProcess, ent);
+        active.ProcessingEndTime = _timing.CurTime + TimeSpan.FromSeconds(toProcess.Comp.FixturesMass * ent.Comp.ProcessingTimePerUnitMass);
+        Dirty(ent.Owner, active);
+
+        foreach (var item in _inventory.GetHandOrInventoryEntities(toProcess.Owner))
+        {
+            _transform.DropNextTo(item, ent.Owner);
+        }
+
+        PredictedQueueDel(toProcess);
+    }
+
+    protected virtual void CollectMessData(EntityUid toProcess, Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent) { }
+
+    private float CalculateYield(Entity<PhysicsComponent> toProcess, Entity<BiomassReclaimerComponent> reclaimer)
+    {
+        var expectedYield = toProcess.Comp.FixturesMass * reclaimer.Comp.YieldPerUnitMass;
+        if (_produceQuery.HasComp(toProcess))
+            expectedYield *= reclaimer.Comp.ProduceYieldMultiplier;
+        return expectedYield;
+    }
 
     private void FinishProcessing(Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent)
     {
