@@ -250,6 +250,8 @@
   - type: BatteryAmmoProvider
     proto: RedLaserMakeshift
     fireCost: 62.5
+  - type: PowerCellSlot
+    fitsInCharger: false
   - type: Tag
     tags:
     - Sidearm
