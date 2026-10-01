@@ -48,10 +48,7 @@ public sealed partial class SpawnTableOnUseSystem : EntitySystem
         var spawns = _entityTable.GetSpawns(ent.Comp.Table);
         ent.Comp.Uses--;
 
-        if (ent.Comp.Sound != null)
-        {
-            _audio.PlayPvs(ent.Comp.Sound, xform.Coordinates); // Entity itself is often being deleted, put it on the parent.
-        }
+        _audio.PlayPvs(ent.Comp.Sound, xform.Coordinates); // Entity itself is often being deleted, put it on the parent.
 
         if (ent.Comp.Uses <= 0)
         {
@@ -66,7 +63,7 @@ public sealed partial class SpawnTableOnUseSystem : EntitySystem
         {
             var spawned = SpawnNextToOrDrop(id, args.User); // Entity may be in nullspace, so base it off the user.
             _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User):user} used {ToPrettyString(ent):spawner} which spawned {ToPrettyString(spawned)}");
-            _hands.TryPickupAnyHand(args.User, spawned, handsComp: hands);
+            _hands.TryPickupAnyHand(args.User, spawned, handsComp: hands); // Micro opt for large loops to prevent unnecessary lookups for large spawn counts. Though large spawn counts present more issues with the actual spawning and moving, rather than this...
         }
 
         args.Handled = true;
