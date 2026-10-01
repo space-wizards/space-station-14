@@ -12,7 +12,7 @@ public sealed partial class ActiveBiomassReclaimerComponent : Component
     /// <summary>
     /// The reagents that will be spilled while processing a mob.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public Solution? BloodReagents;
 
     /// <summary>
@@ -46,6 +46,6 @@ public sealed partial class ActiveBiomassReclaimerComponent : Component
     /// <summary>
     /// Entities that can be randomly spawned while processing.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public List<EntitySpawnEntry> SpawnedEntities = [];
 }

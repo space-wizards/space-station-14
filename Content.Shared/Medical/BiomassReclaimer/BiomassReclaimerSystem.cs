@@ -1,8 +1,11 @@
 using Content.Shared.Audio;
 using Content.Shared.Botany.Items.Components;
+using Content.Shared.Body.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Construction.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Jittering;
@@ -12,6 +15,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
+using Content.Shared.Tools.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
@@ -26,13 +30,14 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedAmbientSoundSystem _ambientSoundSystem = default!;
     [Dependency] private SharedJitteringSystem _jitteringSystem = default!;
+    [Dependency] private SharedSolutionContainerSystem _solution = default!;
     [Dependency] protected IGameTiming _timing = default!;
     [Dependency] protected SharedPopupSystem _popup = default!;
     [Dependency] protected SharedPowerReceiverSystem _powerReceiver = default!;
 
     [Dependency] protected EntityQuery<PhysicsComponent> _physicsQuery;
     [Dependency] protected EntityQuery<TransformComponent> _transformQuery;
-    [Dependency] protected EntityQuery<ProduceComponent> _produceQuery;
+    [Dependency] private EntityQuery<ProduceComponent> _produceQuery;
     [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery;
     [Dependency] protected EntityQuery<ActiveBiomassReclaimerComponent> _activeQuery;
     [Dependency] private EntityQuery<BiomassReclaimerComponent> _reclaimerQuery;
@@ -141,7 +146,21 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
         PredictedQueueDel(toProcess);
     }
 
-    protected virtual void CollectMessData(EntityUid toProcess, Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent) { }
+    private void CollectMessData(EntityUid toProcess, Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent)
+    {
+        var (_, reclaimer, active) = ent;
+        active.NextMessTime = _timing.CurTime;
+        if (TryComp<BloodstreamComponent>(toProcess, out var stream) &&
+            _solution.ResolveSolution(toProcess, stream.BloodSolutionName, ref stream.BloodSolution, out var solution))
+        {
+            active.BloodReagents = solution.Clone();
+            var scale = active.BloodReagents.Volume <= FixedPoint2.Zero ? 0 : reclaimer.BloodSpillVolume / active.BloodReagents.Volume;
+            active.BloodReagents.ScaleSolution(scale);
+        }
+
+        if (TryComp<ToolRefinableComponent>(toProcess, out var refinable))
+            active.SpawnedEntities = [.. refinable.RefineResult];
+    }
 
     private float CalculateYield(Entity<PhysicsComponent> toProcess, Entity<BiomassReclaimerComponent> reclaimer)
     {

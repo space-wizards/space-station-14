@@ -1,10 +1,7 @@
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Body.Components;
 using Content.Shared.CCVar;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
-using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
@@ -12,7 +9,6 @@ using Content.Shared.Medical.BiomassReclaimer;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
-using Content.Shared.Tools.Components;
 using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
@@ -29,7 +25,6 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
     [Dependency] private PuddleSystem _puddleSystem = default!;
     [Dependency] private IRobustRandom _robustRandom = default!;
     [Dependency] private SharedAudioSystem _sharedAudioSystem = default!;
-    [Dependency] private SharedSolutionContainerSystem _solution = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
 
     private bool _biomassEasyMode;
@@ -107,22 +102,6 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         StartProcessing((toProcess, physics), reclaimer);
 
         args.Handled = true;
-    }
-
-    protected override void CollectMessData(EntityUid toProcess, Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent)
-    {
-        var (_, reclaimer, active) = ent;
-        active.NextMessTime = _timing.CurTime;
-        if (TryComp<BloodstreamComponent>(toProcess, out var stream) &&
-            _solution.ResolveSolution(toProcess, stream.BloodSolutionName, ref stream.BloodSolution, out var solution))
-        {
-            active.BloodReagents = solution.Clone();
-            var scale = active.BloodReagents.Volume <= FixedPoint2.Zero ? 0 : reclaimer.BloodSpillVolume / active.BloodReagents.Volume;
-            active.BloodReagents.ScaleSolution(scale);
-        }
-
-        if (TryComp<ToolRefinableComponent>(toProcess, out var refinable))
-            active.SpawnedEntities = [.. refinable.RefineResult];
     }
 
     protected override BiomassReclaimerInsertResult ValidateInsertion(Entity<BiomassReclaimerComponent> reclaimer, EntityUid dragged)
