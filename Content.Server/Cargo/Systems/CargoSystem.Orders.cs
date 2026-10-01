@@ -581,6 +581,39 @@ public sealed partial class CargoSystem
             }
         }
     }
+    private void UpdateUndeliveredOrders(Entity<StationCargoOrderDatabaseComponent> ent)
+    {
+        if (!TryComp<StationDataComponent>(ent, out var stationData))
+            return;
+
+        var toDeliver = new List<CargoOrderData>();
+
+        foreach (var order in ent.Comp.Orders)
+        {
+            if (!order.Approved)
+                continue;
+
+            if (order.NumDispatched >= order.OrderQuantity)
+            {
+                toDeliver.Add(order);
+                continue;
+            }
+
+            if (order.Assigned && TryGetEntity(order.AssignedEntity, out var _))
+                continue;
+
+            if (TryExternalFulfillment((ent, stationData), order))
+                continue;
+
+            if (TryFulfillOrder((ent, stationData), order, ent.Comp))
+                toDeliver.Add(order);
+        }
+
+        foreach (var order in toDeliver)
+            TryDeliverOrder(order, ent.Comp);
+
+        UpdateOrders(ent);
+    }
 
     /// <summary>
     /// Updates all of the cargo-related consoles for a particular station.
@@ -618,40 +651,6 @@ public sealed partial class CargoSystem
             RelevantOrders((station.Value, orderDatabase), console.Account),
             GetAvailableProducts((consoleUid, console))
         ));
-    }
-
-    private void UpdateUndeliveredOrders(Entity<StationCargoOrderDatabaseComponent> ent)
-    {
-        if (!TryComp<StationDataComponent>(ent, out var stationData))
-            return;
-
-        var toDeliver = new List<CargoOrderData>();
-
-        foreach (var order in ent.Comp.Orders)
-        {
-            if (!order.Approved)
-                continue;
-
-            if (order.NumDispatched >= order.OrderQuantity)
-            {
-                toDeliver.Add(order);
-                continue;
-            }
-
-            if (order.Assigned && TryGetEntity(order.AssignedEntity, out var _))
-                continue;
-
-            if (TryExternalFulfillment((ent, stationData), order))
-                continue;
-
-            if (TryFulfillOrder((ent, stationData), order, ent.Comp))
-                toDeliver.Add(order);
-        }
-
-        foreach (var order in toDeliver)
-            TryDeliverOrder(order, ent.Comp);
-
-        UpdateOrders(ent);
     }
 
     private bool TryExternalFulfillment(Entity<StationDataComponent> station, CargoOrderData order)
