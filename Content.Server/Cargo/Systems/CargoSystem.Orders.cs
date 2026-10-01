@@ -222,7 +222,7 @@ public sealed partial class CargoSystem
         UpdateOrders(station.Value);
         // Prevent unnecessary close checks
         orderDatabase.NextOrderCheck = Timing.CurTime + orderDatabase.OrderCheckDelay;
-        UpdateUndeliveredOrders((station.Value, orderDatabase));
+        TryDeliverAllUndeliveredOrders((station.Value, orderDatabase));
     }
 
     public void RemoveOrder(
@@ -309,6 +309,46 @@ public sealed partial class CargoSystem
 
         // Add it to the list
         return TryAddOrder(dbUid, order, component);
+    }
+
+    public void TryDeliverAllUndeliveredOrders(Entity<StationCargoOrderDatabaseComponent> ent)
+    {
+        if (!TryComp<StationDataComponent>(ent, out var stationData))
+            return;
+
+        var toDeliver = new List<CargoOrderData>();
+
+        foreach (var order in ent.Comp.Orders)
+        {
+            // Don't deliver unapproved orders
+            if (!order.Approved)
+                continue;
+
+            // If the order has been delivered remove from active and add to history
+            if (order.NumDispatched >= order.OrderQuantity)
+            {
+                toDeliver.Add(order);
+                continue;
+            }
+
+            // If the order is already taken by something i.e. telepad
+            if (order.Assigned && TryGetEntity(order.AssignedEntity, out var _))
+                continue;
+
+            // If something can take the order i.e. telepad
+            if (TryExternalFulfillment((ent, stationData), order))
+                continue;
+
+            // Try to deliver the order
+            // This can partially deliver the order but will return false
+            if (TryFulfillOrder((ent, stationData), order, ent.Comp))
+                toDeliver.Add(order);
+        }
+
+        foreach (var order in toDeliver)
+            TryDeliverOrder(order, ent.Comp);
+
+        UpdateOrders(ent);
     }
 
     private void OnInteractUsingSlip(
@@ -576,49 +616,24 @@ public sealed partial class CargoSystem
             {
                 orderDatabase.NextOrderCheck += orderDatabase.OrderCheckDelay;
 
-                UpdateUndeliveredOrders((uid, orderDatabase));
+                TryDeliverAllUndeliveredOrders((uid, orderDatabase));
             }
         }
     }
-    public void UpdateUndeliveredOrders(Entity<StationCargoOrderDatabaseComponent> ent)
+
+    private bool TryExternalFulfillment(Entity<StationDataComponent> station, CargoOrderData order)
     {
-        if (!TryComp<StationDataComponent>(ent, out var stationData))
-            return;
+        var ev = new FulfillCargoOrderEvent(station, order);
+        RaiseLocalEvent(ref ev);
 
-        var toDeliver = new List<CargoOrderData>();
+        if (!ev.Handled || !TryGetNetEntity(ev.FulfillmentEntity, out var netEnt))
+            return false;
 
-        foreach (var order in ent.Comp.Orders)
-        {
-            // Don't deliver unapproved orders
-            if (!order.Approved)
-                continue;
-
-            // If the order has been delivered remove from active and add to history
-            if (order.NumDispatched >= order.OrderQuantity)
-            {
-                toDeliver.Add(order);
-                continue;
-            }
-
-            // If the order is already taken by something i.e. telepad
-            if (order.Assigned && TryGetEntity(order.AssignedEntity, out var _))
-                continue;
-
-            // If something can take the order i.e. telepad
-            if (TryExternalFulfillment((ent, stationData), order))
-                continue;
-
-            // Try to deliver the order
-            // This can partially deliver the order but will return false
-            if (TryFulfillOrder((ent, stationData), order, ent.Comp))
-                toDeliver.Add(order);
-        }
-
-        foreach (var order in toDeliver)
-            TryDeliverOrder(order, ent.Comp);
-
-        UpdateOrders(ent);
+        order.Assigned = true;
+        order.AssignedEntity = netEnt;
+        return true;
     }
+
 
     /// <summary>
     /// Updates all of the cargo-related consoles for a particular station.
@@ -656,19 +671,6 @@ public sealed partial class CargoSystem
             RelevantOrders((station.Value, orderDatabase), console.Account),
             GetAvailableProducts((consoleUid, console))
         ));
-    }
-
-    private bool TryExternalFulfillment(Entity<StationDataComponent> station, CargoOrderData order)
-    {
-        var ev = new FulfillCargoOrderEvent(station, order);
-        RaiseLocalEvent(ref ev);
-
-        if (!ev.Handled || !TryGetNetEntity(ev.FulfillmentEntity, out var netEnt))
-            return false;
-
-        order.Assigned = true;
-        order.AssignedEntity = netEnt;
-        return true;
     }
 
     /// <summary>
