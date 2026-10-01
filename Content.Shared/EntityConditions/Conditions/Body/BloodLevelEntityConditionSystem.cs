@@ -40,16 +40,16 @@ public sealed partial class BloodLevelCondition : EntityConditionBase<BloodLevel
     public float Max = float.PositiveInfinity;
 
     /// <summary>
-    /// If <c>true</c>, values exactly equal to <see cref="Max"/> will NOT fail.
+    /// If <c>true</c>, values exactly equal to <see cref="Max"/> will pass the condition.
     /// </summary>
     [DataField]
-    public bool MaxInclusive = false;
+    public bool MaxInclusive;
 
     /// <summary>
-    /// If <c>true</c>, values exactly equal to <see cref="Min"/> will NOT fail.
+    /// If <c>true</c>, values exactly equal to <see cref="Min"/> will pass the condition.
     /// </summary>
     [DataField]
-    public bool MinInclusive = false;
+    public bool MinInclusive;
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
     {
