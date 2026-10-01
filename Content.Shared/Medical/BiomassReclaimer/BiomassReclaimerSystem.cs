@@ -37,12 +37,12 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     [Dependency] private SharedSolutionContainerSystem _solution = default!;
     [Dependency] private SharedPuddleSystem _puddleSystem = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
-    [Dependency] protected IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] protected SharedPopupSystem _popup = default!;
     [Dependency] protected SharedPowerReceiverSystem _powerReceiver = default!;
 
     [Dependency] protected EntityQuery<PhysicsComponent> _physicsQuery;
-    [Dependency] protected EntityQuery<TransformComponent> _transformQuery;
+    [Dependency] private EntityQuery<TransformComponent> _transformQuery;
     [Dependency] private EntityQuery<ProduceComponent> _produceQuery;
     [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery;
     [Dependency] protected EntityQuery<ActiveBiomassReclaimerComponent> _activeQuery;
@@ -93,7 +93,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnInit(Entity<ActiveBiomassReclaimerComponent> ent, ref ComponentInit args)
     {
-        if (_timing.ApplyingState)
+        if (_timing.ApplyingState || ent.Comp.PowerLossTime != null)
             return;
 
         if (_reclaimerQuery.TryComp(ent, out var reclaimer))
@@ -160,9 +160,10 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     protected void StartProcessing(Entity<PhysicsComponent> toProcess, Entity<BiomassReclaimerComponent> ent)
     {
         var active = AddComp<ActiveBiomassReclaimerComponent>(ent);
-        CollectMessData(toProcess, (ent.Owner, ent.Comp, active));
         active.ExpectedYield = CalculateYield(toProcess, ent);
         active.ProcessingEndTime = _timing.CurTime + TimeSpan.FromSeconds(toProcess.Comp.FixturesMass * ent.Comp.ProcessingTimePerUnitMass);
+        active.NextMessTime = _timing.CurTime;
+        CollectMessData(toProcess, (ent.Owner, ent.Comp, active));
         Dirty(ent.Owner, active);
 
         foreach (var item in _inventory.GetHandOrInventoryEntities(toProcess.Owner))
@@ -176,7 +177,6 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     private void CollectMessData(EntityUid toProcess, Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent)
     {
         var (_, reclaimer, active) = ent;
-        active.NextMessTime = _timing.CurTime;
         if (TryComp<BloodstreamComponent>(toProcess, out var stream) &&
             _solution.ResolveSolution(toProcess, stream.BloodSolutionName, ref stream.BloodSolution, out var solution))
         {
@@ -287,6 +287,9 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
 
     protected virtual BiomassReclaimerInsertResult ValidateInsertion(Entity<BiomassReclaimerComponent> reclaimer, EntityUid target)
     {
+        if (TerminatingOrDeleted(target) || EntityManager.IsQueuedForDeletion(target))
+            return BiomassReclaimerInsertResult.InvalidTarget;
+
         if (HasComp<ActiveBiomassReclaimerComponent>(reclaimer))
             return BiomassReclaimerInsertResult.Busy;
 
@@ -307,8 +310,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
 
     private bool IsValidTarget(EntityUid target)
     {
-        return (_produceQuery.HasComp(target) 
-             || _mobStateQuery.HasComp(target))
-             && _physicsQuery.HasComp(target);
+        return (_produceQuery.HasComp(target) || _mobStateQuery.HasComp(target)) &&
+               _physicsQuery.HasComp(target);
     }
 }

@@ -33,13 +33,7 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
     [SubscribeLocalEvent]
     private void OnSuicideByEnvironment(Entity<BiomassReclaimerComponent> ent, ref SuicideByEnvironmentEvent args)
     {
-        if (args.Handled)
-            return;
-
-        if (_activeQuery.HasComp(ent))
-            return;
-
-        if (!_powerReceiver.IsPowered(ent.Owner))
+        if (args.Handled || _activeQuery.HasComp(ent) || !_powerReceiver.IsPowered(ent.Owner))
             return;
 
         if (!_physicsQuery.TryComp(args.Victim, out var physics))
@@ -78,9 +72,6 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
 
     protected override BiomassReclaimerInsertResult ValidateInsertion(Entity<BiomassReclaimerComponent> reclaimer, EntityUid dragged)
     {
-        if (TerminatingOrDeleted(dragged) || EntityManager.IsQueuedForDeletion(dragged))
-            return BiomassReclaimerInsertResult.InvalidTarget;
-
         var result = base.ValidateInsertion(reclaimer, dragged);
         if (result != BiomassReclaimerInsertResult.Success)
             return result;

@@ -25,22 +25,19 @@ public sealed partial class ActiveBiomassReclaimerComponent : Component
     /// <summary>
     /// When this time is reached, there is a chance for the reclaimer to either spill blood or throw an item.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
-    [AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
     public TimeSpan NextMessTime;
 
     /// <summary>
     /// When processing was paused by a power loss. Null while processing is running.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
-    [AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
     public TimeSpan? PowerLossTime;
 
     /// <summary>
     /// When this time is reached, processing is completed and biomass is produced.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
-    [AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
     public TimeSpan ProcessingEndTime;
 
     /// <summary>
