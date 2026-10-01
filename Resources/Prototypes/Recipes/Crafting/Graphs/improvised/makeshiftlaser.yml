@@ -12,6 +12,9 @@
       - !type:PlaySound
         sound:
           collection: PlaceWires
+      - !type:PlaySound
+        sound:
+          collection: PlaceMetal
       steps:
       - tag: ModularReceiver
         icon:
@@ -89,6 +92,7 @@
       completed:
       - !type:SpawnPrototype
         prototype: GlassLens
+        amount: 2
 
   - node: mslasercelled
     entity: WeaponMakeshiftLaserFrame
