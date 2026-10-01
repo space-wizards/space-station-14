@@ -7,7 +7,6 @@
     back: ClothingBackpack # Wizard backpack?
     outerClothing: ClothingOuterWizardBlue
     shoes: ClothingShoesSandalsBrown
-    shoes: ClothingShoesWizard
     id: WizardPDA
     ears: ClothingHeadsetAltWizard
     belt: ClothingBeltWand
