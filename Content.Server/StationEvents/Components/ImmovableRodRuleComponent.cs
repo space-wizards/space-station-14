@@ -7,8 +7,8 @@ namespace Content.Server.StationEvents.Components;
 public sealed partial class ImmovableRodRuleComponent : Component
 {
     /// <summary>
-    ///     List of possible rods and spawn probabilities.
+    /// List of possible rods and spawn probabilities.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public EntityTableSelector RodPrototypes = default!;
 }
