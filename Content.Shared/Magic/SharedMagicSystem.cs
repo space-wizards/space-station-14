@@ -69,7 +69,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
     [Dependency] private ExamineSystemShared _examine = default!;
     [Dependency] private AliveHumanoidTargetSystem _target = default!;
 
-    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery;
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
 
