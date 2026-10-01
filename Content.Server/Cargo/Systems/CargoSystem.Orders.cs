@@ -321,8 +321,7 @@ public sealed partial class CargoSystem
         );
 
         // Add it to the list
-        return TryAddOrder(dbUid, order, component)
-            && TryFulfillOrder(stationData, order, component);
+        return TryAddOrder(dbUid, order, component);
     }
 
     private void OnInteractUsingSlip(
@@ -595,7 +594,7 @@ public sealed partial class CargoSystem
             }
         }
     }
-    private void UpdateUndeliveredOrders(Entity<StationCargoOrderDatabaseComponent> ent)
+    public void UpdateUndeliveredOrders(Entity<StationCargoOrderDatabaseComponent> ent)
     {
         if (!TryComp<StationDataComponent>(ent, out var stationData))
             return;
