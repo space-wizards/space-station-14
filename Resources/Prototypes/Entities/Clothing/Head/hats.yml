@@ -729,7 +729,8 @@
   - type: Clothing
     sprite: Clothing/Head/Hats/warden.rsi
   - type: StealTarget
-    stealGroup: ClothingHeadHatWarden
+    stealGroup:
+    - ClothingHeadHatWarden
   - type: Tag
     tags:
     - PetWearable

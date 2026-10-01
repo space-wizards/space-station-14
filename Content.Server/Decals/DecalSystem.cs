@@ -10,7 +10,6 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map.Events;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Decals;
 
@@ -93,9 +92,9 @@ public sealed partial class DecalSystem : SharedDecalSystem
         var moved = new HashSet<DecalIndex>();
         var toMove = new List<(DecalIndex Id, Decal Decal)>();
 
-        foreach (var tile in _mapSystem.GetAllTilesEnumerator(ev.Grid, grid))
+        foreach (var tile in _mapSystem.GetAllTiles(ev.Grid, grid))
         {
-            var tilePos = (Vector2) tile.GridIndices;
+            var tilePos = (Vector2)tile.GridIndices;
             var bounds = new Box2(tilePos - _boundsMinExpansion, tilePos + _boundsMaxExpansion);
 
             foreach (var (id, decal) in GetDecalsIntersecting(ev.OldGrid, bounds))
@@ -371,7 +370,7 @@ public sealed partial class DecalSystem : SharedDecalSystem
                 if (chunk.Comp2.MaxDecalId >= DecalChunkComponent.MaxServerDecalId)
                     break;
 
-                next = (ushort) (chunk.Comp2.MaxDecalId + 1);
+                next = (ushort)(chunk.Comp2.MaxDecalId + 1);
             }
 
             if (chunk.Comp2.Decals.ContainsKey(next))
