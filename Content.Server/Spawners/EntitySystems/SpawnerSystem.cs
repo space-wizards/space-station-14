@@ -50,13 +50,9 @@ public sealed partial class SpawnerSystem : EntitySystem
         {
             var entity = _random.Pick(component.Prototypes);
             if (component.AllowContainerPlacement)
-            {
                 SpawnNextToOrDrop(entity, uid);
-            }
             else
-            {
                 SpawnAtPosition(entity, coordinates);
-            }
         }
     }
 }
