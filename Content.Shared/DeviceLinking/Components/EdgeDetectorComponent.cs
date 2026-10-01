@@ -7,7 +7,7 @@ namespace Content.Shared.DeviceLinking.Components;
 /// <summary>
 /// An edge detector that pulses high or low output ports when the input port gets a rising or falling edge respectively.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(EdgeDetectorSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), Access(typeof(EdgeDetectorSystem))]
 public sealed partial class EdgeDetectorComponent : Component
 {
     /// <summary>

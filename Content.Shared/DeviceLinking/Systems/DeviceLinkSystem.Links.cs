@@ -221,10 +221,8 @@ public sealed partial class DeviceLinkSystem
             || !_deviceLinkSinkQuery.Resolve(sink.Owner, ref sink.Comp))
             return false;
 
-        var outputs = source.Comp.Outputs.GetOrNew(sourcePort);
-        var linkedPorts = source.Comp.LinkedPorts.GetOrNew(sink);
-
-        if (linkedPorts.Contains(new DeviceLink(sourcePort, sinkPort)))
+        if (source.Comp.LinkedPorts.TryGetValue(sink, out var existingLinkedPorts)
+            && existingLinkedPorts.Contains(new DeviceLink(sourcePort, sinkPort)))
         {
             if (userId != null)
                 _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"{ToPrettyString(userId.Value):actor} unlinked {ToPrettyString(source):source} {sourcePort} and {ToPrettyString(sink):sink} {sinkPort}");
@@ -236,10 +234,12 @@ public sealed partial class DeviceLinkSystem
             RaiseLocalEvent(source, ref sourceEv);
             RaiseLocalEvent(sink, ref sinkEv);
 
-            outputs.Remove(sink);
-            linkedPorts.Remove(new DeviceLink(sourcePort, sinkPort));
+            if (source.Comp.Outputs.TryGetValue(sourcePort, out var existingOutputs))
+                existingOutputs.Remove(sink);
 
-            if (linkedPorts.Count != 0)
+            existingLinkedPorts.Remove(new DeviceLink(sourcePort, sinkPort));
+
+            if (existingLinkedPorts.Count != 0)
                 return true;
 
             source.Comp.LinkedPorts.Remove(sink);
@@ -253,6 +253,9 @@ public sealed partial class DeviceLinkSystem
 
             if (!CanLink(userId, source, sink, sourcePort, sinkPort))
                 return false;
+
+            var outputs = source.Comp.Outputs.GetOrNew(sourcePort);
+            var linkedPorts = source.Comp.LinkedPorts.GetOrNew(sink);
 
             outputs.Add(sink);
             linkedPorts.Add(new DeviceLink(sourcePort, sinkPort));

@@ -1,3 +1,4 @@
+using Content.Shared.DeviceLinking.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -5,10 +6,11 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.DeviceLinking.Components;
 
 [RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState(fieldDeltas: true), Access(typeof(SignalTimerSystem))]
 public sealed partial class SignalTimerComponent : Component
 {
-    [DataField]
-    public double Delay = 5;
+    [DataField, AutoNetworkedField]
+    public TimeSpan Delay = TimeSpan.FromSeconds(5);
 
     /// <summary>
     ///     This shows the Label: text box in the UI.
@@ -19,7 +21,7 @@ public sealed partial class SignalTimerComponent : Component
     /// <summary>
     ///     The label, used for TextScreen visuals currently.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public string Label = string.Empty;
 
     /// <summary>
@@ -54,5 +56,5 @@ public sealed partial class SignalTimerComponent : Component
     ///     When a larger number is in the input box, the display will start counting down from this one instead
     /// </summary>
     [DataField]
-    public double MaxDuration = 3599; // 59m 59s
+    public TimeSpan MaxDuration = TimeSpan.FromSeconds(3599); // 59m 59s
 }

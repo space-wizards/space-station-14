@@ -7,7 +7,7 @@ namespace Content.Shared.DeviceLinking.Components;
 /// <summary>
 /// Memory cell that sets the output to the input when enabled.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(MemoryCellSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), Access(typeof(MemoryCellSystem))]
 public sealed partial class MemoryCellComponent : Component
 {
     /// <summary>

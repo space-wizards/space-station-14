@@ -43,8 +43,8 @@ public sealed partial class SignalTimerSystem : EntitySystem
             _ui.SetUiState(ent.Owner,
                 SignalTimerUiKey.Key,
                 new SignalTimerBoundUserInterfaceState(ent.Comp.Label,
-                TimeSpan.FromSeconds(ent.Comp.Delay).Minutes.ToString("D2"),
-                TimeSpan.FromSeconds(ent.Comp.Delay).Seconds.ToString("D2"),
+                ent.Comp.Delay.Minutes.ToString("D2"),
+                ent.Comp.Delay.Seconds.ToString("D2"),
                 ent.Comp.CanEditLabel,
                 time,
                 active != null,
@@ -67,8 +67,8 @@ public sealed partial class SignalTimerSystem : EntitySystem
             _ui.SetUiState(ent.Owner,
                 SignalTimerUiKey.Key,
                 new SignalTimerBoundUserInterfaceState(ent.Comp.Label,
-                TimeSpan.FromSeconds(ent.Comp.Delay).Minutes.ToString("D2"),
-                TimeSpan.FromSeconds(ent.Comp.Delay).Seconds.ToString("D2"),
+                ent.Comp.Delay.Minutes.ToString("D2"),
+                ent.Comp.Delay.Seconds.ToString("D2"),
                 ent.Comp.CanEditLabel,
                 TimeSpan.Zero,
                 false,
@@ -125,6 +125,7 @@ public sealed partial class SignalTimerSystem : EntitySystem
             return;
 
         ent.Comp.Label = args.Text[..Math.Min(ent.Comp.MaxLength, args.Text.Length)];
+        DirtyField(ent.AsNullable(), nameof(SignalTimerComponent.Label));
 
         if (_activeTimerQuery.HasComp(ent.Owner))
             return;
@@ -145,7 +146,9 @@ public sealed partial class SignalTimerSystem : EntitySystem
         if (!IsMessageValid(ent.Owner, args))
             return;
 
-        ent.Comp.Delay = Math.Min(args.Delay.TotalSeconds, ent.Comp.MaxDuration);
+        // TODO make TimeSpan math helpers to replace the thing below
+        ent.Comp.Delay = TimeSpan.FromSeconds(Math.Min(args.Delay.TotalSeconds, ent.Comp.MaxDuration.TotalSeconds));
+        DirtyField(ent.AsNullable(), nameof(SignalTimerComponent.Delay));
         _appearanceSystem.SetData(ent.Owner, TextScreenVisuals.TargetTime, ent.Comp.Delay);
     }
 
@@ -181,7 +184,8 @@ public sealed partial class SignalTimerSystem : EntitySystem
     public void OnStartTimer(Entity<SignalTimerComponent> ent)
     {
         var timer = EnsureComp<ActiveSignalTimerComponent>(ent);
-        timer.TriggerTime = _gameTiming.CurTime + TimeSpan.FromSeconds(ent.Comp.Delay);
+        timer.TriggerTime = _gameTiming.CurTime + ent.Comp.Delay;
+        DirtyField(ent.Owner, timer, nameof(ActiveSignalTimerComponent.TriggerTime));
 
         _appearanceSystem.SetData(ent.Owner, TextScreenVisuals.TargetTime, timer.TriggerTime);
         _appearanceSystem.SetData(ent.Owner, TextScreenVisuals.ScreenText, string.Empty);

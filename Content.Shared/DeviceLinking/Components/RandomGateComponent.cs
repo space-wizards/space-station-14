@@ -6,7 +6,7 @@ namespace Content.Shared.DeviceLinking.Components;
 /// <summary>
 /// A component for a random gate, which outputs a signal with a given probability.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class RandomGateComponent : Component
 {
     /// <summary>

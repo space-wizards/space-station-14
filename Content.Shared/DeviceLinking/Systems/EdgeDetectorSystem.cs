@@ -28,6 +28,7 @@ public sealed partial class EdgeDetectorSystem : EntitySystem
             return;
 
         ent.Comp.State = state;
+        DirtyField(ent.AsNullable(), nameof(EdgeDetectorComponent.State));
 
         var port = state == SignalState.High ? ent.Comp.OutputHighPort : ent.Comp.OutputLowPort;
         _deviceLink.InvokePort(ent.Owner, port);

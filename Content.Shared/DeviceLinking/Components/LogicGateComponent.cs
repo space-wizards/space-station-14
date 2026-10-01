@@ -9,13 +9,13 @@ namespace Content.Shared.DeviceLinking.Components;
 /// <summary>
 /// A logic gate that sets its output port by doing an operation on its 2 input ports, A and B.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(LogicGateSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), Access(typeof(LogicGateSystem))]
 public sealed partial class LogicGateComponent : Component
 {
     /// <summary>
     /// The logic gate operation to use.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public LogicGate Gate = LogicGate.Or;
 
     /// <summary>

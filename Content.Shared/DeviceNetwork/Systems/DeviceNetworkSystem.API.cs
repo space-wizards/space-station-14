@@ -159,7 +159,7 @@ public sealed partial class DeviceNetworkSystem
         var oldFrequency = ent.Comp.TransmitFrequency;
         ent.Comp.TransmitFrequency = frequency;
 
-        var ev = new DeviceReceiveFrequencyChangedEvent(oldFrequency, frequency);
+        var ev = new DeviceTransmitFrequencyChangedEvent(oldFrequency, frequency);
         RaiseLocalEvent(ent, ref ev);
 
         DirtyField(ent, nameof(DeviceNetworkComponent.TransmitFrequency));

@@ -6,7 +6,7 @@ namespace Content.Shared.DeviceLinking.Components;
 /// <summary>
 /// Simple ternary state for device linking.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class TwoWayLeverComponent : Component
 {
     [DataField, AutoNetworkedField]

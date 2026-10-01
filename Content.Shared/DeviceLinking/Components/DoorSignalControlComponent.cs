@@ -20,4 +20,7 @@ public sealed partial class DoorSignalControlComponent : Component
 
     [DataField("onOpenPort")]
     public ProtoId<SourcePortPrototype> OutOpen = "DoorStatus";
+
+    [DataField("onBoltPort")]
+    public ProtoId<SourcePortPrototype> OutBolt = "DoorBoltStatus";
 }

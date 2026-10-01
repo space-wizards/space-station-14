@@ -75,12 +75,13 @@ public sealed partial class LogicGateSystem : EntitySystem
         var gate = (int) ent.Comp.Gate;
         gate = ++gate % _gateCount;
         ent.Comp.Gate = (LogicGate) gate;
+        DirtyField(ent.AsNullable(), nameof(LogicGateComponent.Gate));
 
         // since gate changed the output probably has too, update it
         UpdateOutput(ent);
 
         // notify the user
-        _audio.PlayPvs(ent.Comp.CycleSound, ent.Owner);
+        _audio.PlayPredicted(ent.Comp.CycleSound, ent.Owner, args.User);
         var msg = Loc.GetString("logic-gate-cycle", ("gate", ent.Comp.Gate.ToString().ToUpper()));
         _popup.PopupEntity(msg, ent.Owner, args.User);
         _appearance.SetData(ent.Owner, LogicGateVisuals.Gate, ent.Comp.Gate);
@@ -96,11 +97,13 @@ public sealed partial class LogicGateSystem : EntitySystem
         if (args.Port == ent.Comp.InputPortA)
         {
             ent.Comp.StateA = SignalState.Momentary;
+            DirtyField(ent.AsNullable(), nameof(LogicGateComponent.StateA));
             _appearance.SetData(ent.Owner, LogicGateVisuals.InputA, false); //If A == High => Sets input A sprite to True
         }
         else if (args.Port == ent.Comp.InputPortB)
         {
             ent.Comp.StateB = SignalState.Momentary;
+            DirtyField(ent.AsNullable(), nameof(LogicGateComponent.StateB));
             _appearance.SetData(ent.Owner, LogicGateVisuals.InputB, false); //If B == High => Sets input B sprite to True
         }
 
@@ -116,11 +119,13 @@ public sealed partial class LogicGateSystem : EntitySystem
         if (args.Port == ent.Comp.InputPortA)
         {
             ent.Comp.StateA = state;
+            DirtyField(ent.AsNullable(), nameof(LogicGateComponent.StateA));
             _appearance.SetData(ent.Owner, LogicGateVisuals.InputA, state == SignalState.High); //If A == High => Sets input A sprite to True
         }
         else if (args.Port == ent.Comp.InputPortB)
         {
             ent.Comp.StateB = state;
+            DirtyField(ent.AsNullable(), nameof(LogicGateComponent.StateB));
             _appearance.SetData(ent.Owner, LogicGateVisuals.InputB, state == SignalState.High); //If B == High => Sets input B sprite to True
         }
 
@@ -165,6 +170,7 @@ public sealed partial class LogicGateSystem : EntitySystem
         if (output != ent.Comp.LastOutput)
         {
             ent.Comp.LastOutput = output;
+            DirtyField(ent.AsNullable(), nameof(LogicGateComponent.LastOutput));
 
             _deviceLink.SendSignal(ent.Owner, ent.Comp.OutputPort, output);
         }

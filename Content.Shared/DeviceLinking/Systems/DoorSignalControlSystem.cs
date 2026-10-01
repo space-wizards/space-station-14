@@ -21,7 +21,14 @@ public sealed partial class DoorSignalControlSystem : EntitySystem
     private void OnInit(Entity<DoorSignalControlComponent> ent, ref ComponentInit args)
     {
         _signalSystem.EnsureSinkPorts(ent.Owner, ent.Comp.OpenPort, ent.Comp.ClosePort, ent.Comp.TogglePort);
+
+        if (HasComp<DoorBoltComponent>(ent.Owner))
+            _signalSystem.EnsureSinkPort(ent.Owner, ent.Comp.InBolt);
+
         _signalSystem.EnsureSourcePort(ent.Owner, ent.Comp.OutOpen);
+
+        if (HasComp<DoorBoltComponent>(ent.Owner))
+            _signalSystem.EnsureSourcePort(ent.Owner, ent.Comp.OutBolt);
     }
 
     [SubscribeLocalEvent]
@@ -121,5 +128,11 @@ public sealed partial class DoorSignalControlSystem : EntitySystem
                 _signalSystem.SendSignal(ent.Owner, ent.Comp.OutOpen, true);
                 break;
         }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnBoltsChanged(Entity<DoorSignalControlComponent> ent, ref DoorBoltsChangedEvent args)
+    {
+        _signalSystem.SendSignal(ent.Owner, ent.Comp.OutBolt, args.BoltsDown);
     }
 }

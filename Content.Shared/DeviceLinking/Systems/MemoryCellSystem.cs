@@ -41,9 +41,15 @@ public sealed partial class MemoryCellSystem : EntitySystem
         var state = SignalState.Momentary;
 
         if (args.Port == ent.Comp.InputPort)
+        {
             ent.Comp.InputState = state;
+            DirtyField(ent.AsNullable(), nameof(MemoryCellComponent.InputState));
+        }
         else if (args.Port == ent.Comp.EnablePort)
+        {
             ent.Comp.EnableState = state;
+            DirtyField(ent.AsNullable(), nameof(MemoryCellComponent.EnableState));
+        }
 
         UpdateOutput(ent);
     }
@@ -54,9 +60,15 @@ public sealed partial class MemoryCellSystem : EntitySystem
         var state = args.Data.State;
 
         if (args.Port == ent.Comp.InputPort)
+        {
             ent.Comp.InputState = state;
+            DirtyField(ent.AsNullable(), nameof(MemoryCellComponent.InputState));
+        }
         else if (args.Port == ent.Comp.EnablePort)
+        {
             ent.Comp.EnableState = state;
+            DirtyField(ent.AsNullable(), nameof(MemoryCellComponent.EnableState));
+        }
 
         UpdateOutput(ent);
     }
@@ -71,6 +83,7 @@ public sealed partial class MemoryCellSystem : EntitySystem
             return;
 
         ent.Comp1.LastOutput = value;
+        DirtyField(ent, ent.Comp1, nameof(MemoryCellComponent.LastOutput));
         _deviceLink.SendSignal((ent.Owner, ent.Comp2), ent.Comp1.OutputPort, value);
     }
 }
