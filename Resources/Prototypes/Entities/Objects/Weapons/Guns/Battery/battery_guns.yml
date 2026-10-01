@@ -219,6 +219,9 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
   - type: Item
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
     storedOffset: 0,-4
 
 - type: entity
