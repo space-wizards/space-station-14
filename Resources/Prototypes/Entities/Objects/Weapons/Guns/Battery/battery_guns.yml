@@ -215,6 +215,10 @@
     graph: MakeshiftLaserGraph
     containers:
     - cell_slot
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
+  - type: Item
+    storedOffset: 0,-4
 
 - type: entity
   parent: [WeaponMakeshiftLaserConstructionBase, BaseWeaponPowerCell, BaseMinorContraband]
@@ -225,15 +229,12 @@
   description: Better pray it won't burn your hands off.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Item
-    storedOffset: 0,-4
   - type: MagazineVisuals
     magState: mag
     steps: 5
@@ -276,7 +277,6 @@
   description: Only needs a bit more screwing and a doctorate in practical bluespace technology.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
     state: frame
   - type: Construction
     node: mslaserframe
