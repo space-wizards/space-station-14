@@ -185,7 +185,7 @@
     - MedicalIntern
     - SecurityCadet
     - TechnicalAssistant
-    infiniteSlotsChance: 0.25
+    closeAllButOneChance: 0.25
     proportionOfJobsToAdjust:
       min: 0.2
       max: 0.3
