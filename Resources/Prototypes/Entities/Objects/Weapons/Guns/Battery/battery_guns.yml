@@ -209,6 +209,7 @@
 
 - type: entity
   abstract: true
+  parent: BaseMinorContraband
   id: WeaponMakeshiftLaserConstructionBase
   components:
   - type: Construction
@@ -221,7 +222,7 @@
     storedOffset: 0,-4
 
 - type: entity
-  parent: [WeaponMakeshiftLaserConstructionBase, BaseWeaponPowerCell, BaseMinorContraband]
+  parent: [WeaponMakeshiftLaserConstructionBase, BaseWeaponPowerCell]
   id: WeaponMakeshiftLaserNoCell
   categories: [ HideSpawnMenu ]
   name: makeshift laser pistol
@@ -271,7 +272,7 @@
           - PowerCell
 
 - type: entity
-  parent: [BaseItem, BaseMinorContraband, WeaponMakeshiftLaserConstructionBase]
+  parent: [BaseItem, WeaponMakeshiftLaserConstructionBase]
   id: WeaponMakeshiftLaserFrame
   name: makeshift laser pistol frame
   description: Only needs a bit more screwing and a doctorate in practical bluespace technology.
