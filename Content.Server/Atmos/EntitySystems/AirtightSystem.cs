@@ -152,8 +152,9 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             return newAirBlockedDirs;
-        }
-        public sealed partial class AirtightOnPoweredSystem : EntitySystem
+}
+
+        [SubscribeLocalEvent]
         private void OnPowerChanged(Entity<AirtightOnPoweredComponent> ent, ref PowerChangedEvent args)
         {
             if (_airtightQuery.TryComp(ent, out var airtight))
