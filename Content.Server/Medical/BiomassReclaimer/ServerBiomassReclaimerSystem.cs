@@ -49,6 +49,15 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
     [Dependency] private EntityQuery<ActiveBiomassReclaimerComponent> _activeQuery;
     [Dependency] private EntityQuery<BiomassReclaimerComponent> _reclaimerQuery;
 
+    private bool _biomassEasyMode;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        Subs.CVar(_configManager, CCVars.BiomassEasyMode, value => _biomassEasyMode = value, true);
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -251,7 +260,7 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
             return result;
 
         // Reject souled bodies in easy mode.
-        if (!_configManager.GetCVar(CCVars.BiomassEasyMode) ||
+        if (!_biomassEasyMode ||
             !HasComp<HumanoidProfileComponent>(dragged) ||
             !_minds.TryGetMind(dragged, out _, out var mind))
             return BiomassReclaimerInsertResult.Success;
