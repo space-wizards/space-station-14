@@ -1,4 +1,3 @@
-using Content.Shared.Construction.Prototypes;
 using Content.Shared.Lathe.Prototypes;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.Audio;
@@ -7,9 +6,20 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Lathe
 {
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true, true)]
     public sealed partial class LatheComponent : Component
     {
+        /// <summary>
+        /// The indices of fields we need to inspect for delta states.
+        /// If you add/remove/reorder fields or add/remove AutoNetworkedField
+        /// to any field, you *MUST* also update these values.
+        /// </summary>
+        public enum FieldIndices
+        {
+            Queue = 0,
+            CurrentRecipe = 2
+        }
+
         /// <summary>
         /// All of the recipe packs that the lathe has by default
         /// </summary>
@@ -32,7 +42,7 @@ namespace Content.Shared.Lathe
         /// This is a LinkedList to allow for constant time insertion/deletion (vs a List), and more efficient
         /// moves (vs a Queue).
         /// </remarks>
-        [DataField]
+        [DataField, AutoNetworkedField]
         public LinkedList<LatheRecipeBatch> Queue = new();
 
         /// <summary>
@@ -67,20 +77,20 @@ namespace Content.Shared.Lathe
         /// <summary>
         /// The recipe the lathe is currently producing
         /// </summary>
-        [ViewVariables]
+        [ViewVariables, DataField, AutoNetworkedField]
         public ProtoId<LatheRecipePrototype>? CurrentRecipe;
 
         #region MachineUpgrading
         /// <summary>
         /// A modifier that changes how long it takes to print a recipe
         /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public float TimeMultiplier = 1;
 
         /// <summary>
         /// A modifier that changes how much of a material is needed to print a recipe
         /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+        [DataField, AutoNetworkedField]
         public float MaterialUseMultiplier = 1;
         #endregion
     }
