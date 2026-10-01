@@ -5,6 +5,7 @@ refined-slice-verb-target-isnt-dead = Needs to be dead.
 refined-slice-verb-message-tool = You are going to need a different tool to slice {$target}.
 
 refined-slice-verb-name = Slice
+refined-screw-verb-name = Screw
 refined-butchered-verb-name = Butcher
 
 tool-refinable-component-hint = {CAPITALIZE(SUBJECT($target))} can be refined by [color=cyan]{$quality}[/color].
