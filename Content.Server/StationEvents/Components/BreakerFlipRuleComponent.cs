@@ -17,5 +17,5 @@ public sealed partial class BreakerFlipRuleComponent : Component
     /// range of how many APCs should be hit by this game rule
     /// </summary>
     [DataField]
-    public MinMax AffectedQuantity;
+    public MinMax AffectedQuantity = new MinMax(3, 6);
 }
