@@ -169,7 +169,8 @@
     tags:
     - HighRiskItem
   - type: StealTarget
-    stealGroup: JetpackCaptainFilled
+    stealGroup:
+    - JetpackCaptainFilled
 
 # Filled captain
 - type: entity
