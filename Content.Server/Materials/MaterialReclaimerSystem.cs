@@ -147,6 +147,9 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
         float completion = 1f,
         MaterialReclaimerComponent? component = null)
     {
+        if (EntityManager.IsQueuedForDeletion(item))
+            return;
+
         if (!Resolve(uid, ref component))
             return;
 
