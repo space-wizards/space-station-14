@@ -9,7 +9,7 @@
     drawdepth: Mobs
     sprite: Mobs/Animals/Spiders/clownspider.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: idle
   - type: ToolRefinable
     refineResult:
@@ -66,33 +66,7 @@
 
 # Angry Clown Spider
 - type: entity
-  parent:
-  - MobSpiderAngryBase
-  - MobGiantSpiderClown
+  parent: [ MobSpiderAngryBase, MobGiantSpiderClownBase ]
   id: MobGiantSpiderClownAngry
   suffix: Angry
-  components:
-  - type: ToolRefinable
-    refineResult:
-    - id: MaterialBananium1
-      amount: 1
-  - type: Bloodstream
-    bloodReferenceSolution:
-      reagents:
-      - ReagentId: Laughter
-        Quantity: 150
-  - type: MeleeWeapon
-    altDisarm: false
-    angle: 0
-    animation: WeaponArcBite
-    soundHit:
-      path: /Audio/Effects/bite.ogg
-    damage:
-      types:
-        Piercing: 6
-  - type: SolutionManager
-    solutions:
-    - SolutionVenomSpiderClown
-  - type: MeleeChemicalInjector
-    transferAmount: 5
-    solution: melee
+
