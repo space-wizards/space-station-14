@@ -480,9 +480,18 @@ namespace Content.Server.Lathe
                     {
                         batch.ItemsPrinted--;
                     }
+                    else
+                    {
+                        batch.ItemsRequested++;
+                    }
+                }
+                else
+                {
+                    var newBatch = new LatheRecipeBatch(component.CurrentRecipe.Value, 0, 1);
+                    component.Queue.AddFirst(newBatch);
                 }
 
-                RefundCurrentRecipe(uid, component);
+                // Finally, clear the current recipe.
                 component.CurrentRecipe = null;
             }
             RemCompDeferred<LatheProducingComponent>(uid);
