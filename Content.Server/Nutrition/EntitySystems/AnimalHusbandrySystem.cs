@@ -212,7 +212,10 @@ public sealed partial class AnimalHusbandrySystem : EntitySystem
         var spawns = EntitySpawnCollection.GetSpawns(component.Offspring, _random);
         foreach (var spawn in spawns)
         {
-            var offspring = SpawnNextToOrDrop(spawn, uid);
+            var offspring = _container.IsEntityOrParentInContainer(uid)
+                ? SpawnNextToOrDrop(spawn, uid)
+                : Spawn(spawn, spawnPosition.Value.Offset(_random.NextVector2(0.3f)));
+
             if (component.MakeOffspringInfant)
             {
                 var infant = AddComp<InfantComponent>(offspring);
