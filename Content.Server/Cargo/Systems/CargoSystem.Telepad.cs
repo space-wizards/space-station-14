@@ -39,6 +39,7 @@ public sealed partial class CargoSystem
             order.Assigned = false;
             order.AssignedEntity = null;
         }
+        ent.Comp.CurrentOrders.Clear();
     }
 
     [SubscribeLocalEvent]
