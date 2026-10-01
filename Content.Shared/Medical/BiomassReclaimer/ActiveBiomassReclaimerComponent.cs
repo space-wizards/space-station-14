@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Medical.BiomassReclaimer;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [Access(typeof(BiomassReclaimerSystem))]
 public sealed partial class ActiveBiomassReclaimerComponent : Component
 {
@@ -32,6 +32,7 @@ public sealed partial class ActiveBiomassReclaimerComponent : Component
     /// When processing was paused by a power loss. Null while processing is running.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    [AutoNetworkedField]
     public TimeSpan? PowerLossTime;
 
     /// <summary>

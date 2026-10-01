@@ -4,6 +4,7 @@ using Content.Shared.Interaction.Components;
 using Content.Shared.Stacks;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -48,6 +49,17 @@ public abstract partial class SharedMaterialStorageSystem : EntitySystem
             _appearance.SetData(uid, MaterialStorageVisuals.Inserting, false);
             RemComp(uid, inserting);
         }
+    }
+
+    /// <summary>
+    /// Spawn an amount of a material in stack entities.
+    /// Note the 'amount' is material dependent.
+    /// 1 biomass = 1 biomass in its stack,
+    /// but 100 plasma = 1 sheet of plasma, etc.
+    /// </summary>
+    public virtual List<EntityUid> SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates)
+    {
+        return new List<EntityUid>();
     }
 
     private void OnMapInit(EntityUid uid, MaterialStorageComponent component, MapInitEvent args)

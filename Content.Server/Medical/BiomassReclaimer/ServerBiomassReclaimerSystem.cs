@@ -1,11 +1,9 @@
 using Content.Server.Fluids.EntitySystems;
-using Content.Server.Materials;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Construction.Components;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
@@ -13,6 +11,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Jittering;
+using Content.Shared.Materials;
 using Content.Shared.Medical.BiomassReclaimer;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
@@ -35,7 +34,7 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
     [Dependency] private IConfigurationManager _configManager = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedJitteringSystem _jitteringSystem = default!;
-    [Dependency] private MaterialStorageSystem _material = default!;
+    [Dependency] private SharedMaterialStorageSystem _material = default!;
     [Dependency] private SharedMindSystem _minds = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private PuddleSystem _puddleSystem = default!;
@@ -147,7 +146,11 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
 
     private void PauseProcessing(Entity<ActiveBiomassReclaimerComponent> ent)
     {
-        ent.Comp.PowerLossTime ??= _timing.CurTime;
+        if (ent.Comp.PowerLossTime == null)
+        {
+            ent.Comp.PowerLossTime = _timing.CurTime;
+            Dirty(ent);
+        }
         StopRunningEffects(ent);
     }
 
@@ -161,6 +164,7 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         active.ProcessingEndTime += pauseDuration;
         active.NextMessTime += pauseDuration;
         active.PowerLossTime = null;
+        Dirty(uid, active);
         StartRunningEffects((uid, reclaimer));
     }
 
@@ -175,13 +179,6 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
     {
         RemComp<JitteringComponent>(uid);
         _ambientSoundSystem.SetAmbience(uid, false);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnUnanchorAttempt(Entity<ActiveBiomassReclaimerComponent> ent, ref UnanchorAttemptEvent args)
-    {
-        if (ent.Comp.PowerLossTime == null)
-            args.Cancel();
     }
 
     [SubscribeLocalEvent]

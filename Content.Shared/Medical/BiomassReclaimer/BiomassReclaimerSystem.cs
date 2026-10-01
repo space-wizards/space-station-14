@@ -1,4 +1,5 @@
 using Content.Shared.Botany.Items.Components;
+using Content.Shared.Construction.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
@@ -21,6 +22,13 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     [Dependency] protected EntityQuery<TransformComponent> _transformQuery;
     [Dependency] protected EntityQuery<ProduceComponent> _produceQuery;
     [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery;
+
+    [SubscribeLocalEvent]
+    private void OnUnanchorAttempt(Entity<ActiveBiomassReclaimerComponent> ent, ref UnanchorAttemptEvent args)
+    {
+        if (ent.Comp.PowerLossTime == null)
+            args.Cancel();
+    }
 
     [SubscribeLocalEvent]
     private void OnCanDrop(Entity<BiomassReclaimerComponent> ent, ref CanDropTargetEvent args)
