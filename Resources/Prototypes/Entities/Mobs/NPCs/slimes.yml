@@ -104,6 +104,7 @@
   - type: Speech
     speechVerb: Slime
     speechSounds: Slime
+    allowedEmotes: ['Squish']
   - type: TypingIndicator
     proto: slime
 
@@ -125,12 +126,6 @@
     rules: ghost-role-information-nonantagonist-rules
     raffle:
       settings: short
-  - type: Speech
-    speechVerb: Slime
-    speechSounds: Slime
-    allowedEmotes: ['Squish']
-  - type: TypingIndicator
-    proto: slime
   - type: NpcFactionMember
     factions:
     - SimpleNeutral
