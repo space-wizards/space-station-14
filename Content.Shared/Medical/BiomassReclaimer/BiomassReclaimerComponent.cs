@@ -55,13 +55,13 @@ public sealed partial class BiomassReclaimerComponent : Component
     /// <summary>
     /// The jitter amplitude while processing.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float JitterAmplitude = -10f;
 
     /// <summary>
     /// The jitter frequency while processing.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float JitterFrequency = 100f;
 
     /// <summary>

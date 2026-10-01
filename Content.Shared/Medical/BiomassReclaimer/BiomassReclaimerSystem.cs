@@ -1,13 +1,16 @@
+using Content.Shared.Audio;
 using Content.Shared.Botany.Items.Components;
 using Content.Shared.Construction.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
+using Content.Shared.Jittering;
 using Content.Shared.Materials;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
@@ -21,6 +24,8 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     [Dependency] private SharedMaterialStorageSystem _material = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedAmbientSoundSystem _ambientSoundSystem = default!;
+    [Dependency] private SharedJitteringSystem _jitteringSystem = default!;
     [Dependency] protected IGameTiming _timing = default!;
     [Dependency] protected SharedPopupSystem _popup = default!;
     [Dependency] protected SharedPowerReceiverSystem _powerReceiver = default!;
@@ -29,6 +34,8 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     [Dependency] protected EntityQuery<TransformComponent> _transformQuery;
     [Dependency] protected EntityQuery<ProduceComponent> _produceQuery;
     [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery;
+    [Dependency] protected EntityQuery<ActiveBiomassReclaimerComponent> _activeQuery;
+    [Dependency] private EntityQuery<BiomassReclaimerComponent> _reclaimerQuery;
 
     public override void Update(float frameTime)
     {
@@ -50,6 +57,73 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     }
 
     protected virtual void UpdateMess(Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent) { }
+
+    [SubscribeLocalEvent]
+    private void OnInit(Entity<ActiveBiomassReclaimerComponent> ent, ref ComponentInit args)
+    {
+        if (_timing.ApplyingState)
+            return;
+
+        if (_reclaimerQuery.TryComp(ent, out var reclaimer))
+            StartRunningEffects((ent.Owner, reclaimer));
+    }
+
+    [SubscribeLocalEvent]
+    private void OnShutdown(Entity<ActiveBiomassReclaimerComponent> ent, ref ComponentShutdown args)
+    {
+        if (_timing.ApplyingState)
+            return;
+
+        StopRunningEffects(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPowerChanged(Entity<BiomassReclaimerComponent> ent, ref PowerChangedEvent args)
+    {
+        if (_timing.ApplyingState || !_activeQuery.TryComp(ent, out var active))
+            return;
+
+        if (args.Powered)
+            ResumeProcessing((ent.Owner, ent.Comp, active));
+        else
+            PauseProcessing((ent.Owner, active));
+    }
+
+    private void PauseProcessing(Entity<ActiveBiomassReclaimerComponent> ent)
+    {
+        if (ent.Comp.PowerLossTime == null)
+        {
+            ent.Comp.PowerLossTime = _timing.CurTime;
+            Dirty(ent);
+        }
+        StopRunningEffects(ent);
+    }
+
+    private void ResumeProcessing(Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent)
+    {
+        var (uid, reclaimer, active) = ent;
+        if (active.PowerLossTime is not { } powerLossTime)
+            return;
+
+        var pauseDuration = _timing.CurTime - powerLossTime;
+        active.ProcessingEndTime += pauseDuration;
+        active.NextMessTime += pauseDuration;
+        active.PowerLossTime = null;
+        Dirty(uid, active);
+        StartRunningEffects((uid, reclaimer));
+    }
+
+    protected virtual void StartRunningEffects(Entity<BiomassReclaimerComponent> ent)
+    {
+        _jitteringSystem.AddJitter(ent, ent.Comp.JitterAmplitude, ent.Comp.JitterFrequency);
+        _ambientSoundSystem.SetAmbience(ent, true);
+    }
+
+    private void StopRunningEffects(EntityUid uid)
+    {
+        RemComp<JitteringComponent>(uid);
+        _ambientSoundSystem.SetAmbience(uid, false);
+    }
 
     protected void StartProcessing(Entity<PhysicsComponent> toProcess, Entity<BiomassReclaimerComponent> ent)
     {

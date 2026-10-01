@@ -26,6 +26,7 @@ public sealed partial class ActiveBiomassReclaimerComponent : Component
     /// When this time is reached, there is a chance for the reclaimer to either spill blood or throw an item.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    [AutoNetworkedField]
     public TimeSpan NextMessTime;
 
     /// <summary>

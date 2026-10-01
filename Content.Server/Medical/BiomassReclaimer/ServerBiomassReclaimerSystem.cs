@@ -1,6 +1,5 @@
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.EntitySystems;
@@ -9,11 +8,9 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Jittering;
 using Content.Shared.Medical.BiomassReclaimer;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
-using Content.Shared.Power;
 using Content.Shared.Throwing;
 using Content.Shared.Tools.Components;
 using Robust.Server.Player;
@@ -26,9 +23,7 @@ namespace Content.Server.Medical.BiomassReclaimer;
 public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSystem
 {
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private SharedAmbientSoundSystem _ambientSoundSystem = default!;
     [Dependency] private IConfigurationManager _configManager = default!;
-    [Dependency] private SharedJitteringSystem _jitteringSystem = default!;
     [Dependency] private SharedMindSystem _minds = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private PuddleSystem _puddleSystem = default!;
@@ -36,9 +31,6 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
     [Dependency] private SharedAudioSystem _sharedAudioSystem = default!;
     [Dependency] private SharedSolutionContainerSystem _solution = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
-
-    [Dependency] private EntityQuery<ActiveBiomassReclaimerComponent> _activeQuery;
-    [Dependency] private EntityQuery<BiomassReclaimerComponent> _reclaimerQuery;
 
     private bool _biomassEasyMode;
 
@@ -68,6 +60,7 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         }
 
         active.NextMessTime += reclaimer.RandomMessInterval;
+        Dirty(uid, active);
     }
 
     [SubscribeLocalEvent]
@@ -92,66 +85,10 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         args.Handled = true;
     }
 
-    [SubscribeLocalEvent]
-    private void OnInit(Entity<ActiveBiomassReclaimerComponent> ent, ref ComponentInit args)
+    protected override void StartRunningEffects(Entity<BiomassReclaimerComponent> ent)
     {
-        if (_reclaimerQuery.TryComp(ent, out var reclaimer))
-            StartRunningEffects((ent.Owner, reclaimer));
-    }
-
-    [SubscribeLocalEvent]
-    private void OnShutdown(Entity<ActiveBiomassReclaimerComponent> ent, ref ComponentShutdown args)
-    {
-        StopRunningEffects(ent);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnPowerChanged(Entity<BiomassReclaimerComponent> ent, ref PowerChangedEvent args)
-    {
-        if (!_activeQuery.TryComp(ent, out var active))
-            return;
-
-        if (args.Powered)
-            ResumeProcessing((ent.Owner, ent.Comp, active));
-        else
-            PauseProcessing((ent.Owner, active));
-    }
-
-    private void PauseProcessing(Entity<ActiveBiomassReclaimerComponent> ent)
-    {
-        if (ent.Comp.PowerLossTime == null)
-        {
-            ent.Comp.PowerLossTime = _timing.CurTime;
-            Dirty(ent);
-        }
-        StopRunningEffects(ent);
-    }
-
-    private void ResumeProcessing(Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent)
-    {
-        var (uid, reclaimer, active) = ent;
-        if (active.PowerLossTime is not { } powerLossTime)
-            return;
-
-        var pauseDuration = _timing.CurTime - powerLossTime;
-        active.ProcessingEndTime += pauseDuration;
-        active.NextMessTime += pauseDuration;
-        active.PowerLossTime = null;
-        Dirty(uid, active);
-        StartRunningEffects((uid, reclaimer));
-    }
-
-    private void StartRunningEffects(Entity<BiomassReclaimerComponent> ent)
-    {
-        _jitteringSystem.AddJitter(ent, ent.Comp.JitterAmplitude, ent.Comp.JitterFrequency);
+        base.StartRunningEffects(ent);
         _sharedAudioSystem.PlayPvs(ent.Comp.StartupSound, ent);
-        _ambientSoundSystem.SetAmbience(ent, true);
-    }
-
-    private void StopRunningEffects(EntityUid uid)
-    {
-        RemComp<JitteringComponent>(uid);
-        _ambientSoundSystem.SetAmbience(uid, false);
     }
 
     [SubscribeLocalEvent]
