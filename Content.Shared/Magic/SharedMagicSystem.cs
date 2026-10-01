@@ -294,15 +294,17 @@ public abstract partial class SharedMagicSystem : EntitySystem
         var direction = _transform.ToMapCoordinates(toCoords).Position -
                          fromMap.Position;
 
+        // Check for backwards velocity compensation.
         var compensation = 0.0f;
-        if (ev.BehindCompensation > 0.0f
+        if (ev.RearVelocityCompensation > 0.0f
             && !MathHelper.CloseToPercent(userLocalVelocity.LengthSquared(), 0.0f)
             && !MathHelper.CloseToPercent(direction.LengthSquared(), 0.0f))
         {
             var dotProduct = Vector2.Dot(direction, userLocalVelocity);
             if (dotProduct < 0.0f)
             {
-                compensation += -dotProduct / direction.Length(); // Get length relative to user's local velocity
+                // Get rearward component of user's local velocity, multiply it by our coefficient.
+                compensation += ev.RearVelocityCompensation * -dotProduct / direction.Length();
             }
         }
 
