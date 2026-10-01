@@ -20,5 +20,8 @@ namespace Content.Server.DeviceLinking.Components
 
         [DataField("onOpenPort")]
         public ProtoId<SourcePortPrototype> OutOpen = "DoorStatus";
+
+        [DataField("onBoltPort")]
+        public ProtoId<SourcePortPrototype> OutBolt = "DoorBoltStatus";
     }
 }
