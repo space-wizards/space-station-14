@@ -63,6 +63,9 @@
     damage:
       types:
         Blunt: 0
+  - type: Tag
+    tags:
+    - Ingredient
 
 - type: entity
   abstract: true
@@ -255,7 +258,7 @@
           True: {state: "salt-big_open"} # open
           False: {state: "salt-big"} # closed
   - type: Sprite
-    layers: 
+    layers:
     - state: salt-big
       map: ["enum.OpenableVisuals.Layer"]
   - type: Solution
@@ -282,7 +285,7 @@
           True: {state: "pepper-big_open"} # open
           False: {state: "pepper-big"} # closed
   - type: Sprite
-    layers: 
+    layers:
     - state: pepper-big
       map: ["enum.OpenableVisuals.Layer"]
   - type: Solution
@@ -348,7 +351,8 @@
         Quantity: 50
   - type: Tag
     tags:
-      - Mayo
+    - Ingredient
+    - Mayo
 
 # Baking
 
@@ -360,6 +364,9 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/ingredients.rsi
+  - type: Tag
+    tags:
+    - Ingredient
 
 # TODO Replace all nutriment in dough with something that is less metabolically efficient
 
@@ -373,6 +380,9 @@
     sourceSolution: food
     ignoreEmpty: true
     popup: spike-solution-mix
+  - type: Tag
+    tags:
+    - Ingredient
 
 - type: entity
   abstract: true
@@ -406,7 +416,7 @@
     state: dough-slice
   - type: Tag
     tags:
-    - Slice
+    - Ingredient
   - type: Solution
     solution:
       reagents:
@@ -422,7 +432,8 @@
     size: Small
     storedRotation: -45
   - type: Tag
-    tags: []
+    tags:
+    - Ingredient
 
 - type: entity
   parent: [FoodDoughBase, BaseSlicingRefinableFood]
@@ -550,6 +561,7 @@
   - type: Tag
     tags:
     - ClothMade
+    - Ingredient
   - type: Solution
     solution:
       reagents:
@@ -572,8 +584,9 @@
     state: cotton-dough-slice
   - type: Tag
     tags:
-    - Slice
     - ClothMade
+    - Ingredient
+    - Slice
   - type: Construction
     graph: DoughRopeCotton
     node: start
@@ -609,7 +622,8 @@
         Quantity: 5
   - type: Tag
     tags:
-     - ClothMade
+    - ClothMade
+    - Ingredient
 
 - type: entity
   name: raw pastry base
@@ -766,6 +780,7 @@
         Quantity: 2.5
   - type: Tag
     tags:
+    - Ingredient
     - Slice
 
 - type: entity
@@ -828,6 +843,7 @@
         Quantity: 15
   - type: Tag
     tags:
+    - Ingredient
     - Slice
   - type: FoodSequenceElement
     entries:
@@ -894,6 +910,7 @@
         Quantity: 1
   - type: Tag
     tags:
+    - Ingredient
     - Slice
 
 - type: entity
@@ -943,6 +960,7 @@
         Quantity: 6
   - type: Tag
     tags:
+    - Ingredient
     - Slice
 
 - type: entity
