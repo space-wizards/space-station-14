@@ -556,7 +556,6 @@ public sealed partial class CargoSystem
     }
 
     private bool TryDeliverOrder(
-        EntityUid dbUid,
         CargoOrderData order,
         StationCargoOrderDatabaseComponent orderDatabase
     )
@@ -566,7 +565,6 @@ public sealed partial class CargoSystem
         // Prevent unbounded growth of delivered orders.
         if (orderDatabase.DeliveredOrders.Count > 1000)
             orderDatabase.DeliveredOrders.RemoveAt(0);
-        UpdateOrders(dbUid);
         return true;
     }
 
@@ -665,7 +663,9 @@ public sealed partial class CargoSystem
         }
 
         foreach (var order in toDeliver)
-            TryDeliverOrder(ent, order, ent.Comp);
+            TryDeliverOrder(order, ent.Comp);
+
+        UpdateOrders(ent);
     }
 
     private bool TryExternalFulfillment(Entity<StationDataComponent> station, CargoOrderData order)
