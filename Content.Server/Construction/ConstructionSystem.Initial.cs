@@ -239,7 +239,6 @@ namespace Content.Server.Construction
                         }
 
                         break;
-
                 }
 
                 if (handled == false)
