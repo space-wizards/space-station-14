@@ -7,6 +7,6 @@ construction-presenter-tool-step = Use a {LOC($tool)}.
 construction-presenter-material-step = Add {$amount}x {LOC($material)}.
 construction-presenter-arbitrary-step = Add {$amount ->
      [one]  {LOC($name)}.
-    *[many] {$amount} {MAKEPLURAL(LOC($name))}.
+    *[many] {$amount}x {MAKEPLURAL(LOC($name))}.
 }
 construction-presenter-temperature-step = Heat to {$temperature}.
