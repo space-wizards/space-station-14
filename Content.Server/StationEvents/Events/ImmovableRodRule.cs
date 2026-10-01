@@ -43,7 +43,6 @@ public sealed partial class ImmovableRodRule : StationEventSystem<ImmovableRodRu
             var spawnCoords = mapCoords.Offset(-direction * speed * despawn.Lifetime / 2);
             var rodUid = Spawn(protoName, spawnCoords);
             _gun.ShootProjectile(rodUid, direction, Vector2.Zero, rule, speed: speed);
-
         }
     }
 }
