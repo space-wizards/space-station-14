@@ -18,7 +18,7 @@ namespace Content.MapRenderer.Painters
 {
     public sealed class TilePainter
     {
-        public const int TileImageSize = EyeManager.PixelsPerMeter;
+        public static int TileImageSize => EyeManager.PixelsPerMeter;
 
         private readonly ITileDefinitionManager _sTileDefinitionManager;
         private readonly SharedMapSystem _sMapSystem;

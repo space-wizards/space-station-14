@@ -13,9 +13,9 @@ namespace Content.Client.TextScreen;
 public sealed partial class TextScreenVisualsComponent : Component
 {
     /// <summary>
-    /// 1/32 - the size of a pixel in meters.
+    /// The size of a pixel in meters, 1 / <see cref="EyeManager.PixelsPerMeter"/>.
     /// </summary>
-    public const float PixelSize = 1f / EyeManager.PixelsPerMeter;
+    public static float PixelSize => 1f / EyeManager.PixelsPerMeter;
 
     /// <summary>
     /// The color of the text drawn.
