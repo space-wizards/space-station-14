@@ -76,7 +76,7 @@ public sealed partial class CargoGiftsRule : StationEventSystem<CargoGiftsRuleCo
         }
 
         cargoDb.NextOrderCheck = Timing.CurTime + cargoDb.OrderCheckDelay;
-        _cargoSystem.UpdateUndeliveredOrders((station.Value, cargoDb));
+        _cargoSystem.TryDeliverAllUndeliveredOrders((station.Value, cargoDb));
         _ticker.EndGameRule((uid, gameRule));
         // We're done here!
         /*     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⣼⣿⣿⣦⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
