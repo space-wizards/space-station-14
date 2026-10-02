@@ -50,7 +50,7 @@
       enum.CommunicationsConsoleUiKey.Key:
         type: CommunicationsConsoleBoundUserInterface
       enum.DoorRemoteUiKey.Key:
-        type: StationAiDoorRemoteBoundUserInterface
+        type: DoorRemoteBoundUserInterface
   - type: IntrinsicUI
     uis:
       enum.RadarConsoleUiKey.Key:
@@ -78,24 +78,6 @@
   - type: DamagedSiliconAccent
     startPowerCorruptionAtCharIdx: 4
     maxPowerCorruptionAtCharIdx: 20
-  - type: DoorRemote
-    requireInRangeUnoccluded: false
-    options:
-    - mode: OpenClose
-      tooltip: &TextOpenClose door-remote-open-close-text
-      icon: &IconOpenClose
-        sprite: /Textures/Structures/Doors/Airlocks/Standard/airlock-base.rsi
-        state: assembly
-    - mode: ToggleBolts
-      tooltip: &TextToggleBolt door-remote-toggle-bolt-text
-      icon: &IconToggleBolt
-        sprite: /Textures/Interface/Actions/actions_ai.rsi
-        state: bolt_door
-    - mode: ToggleEmergencyAccess
-      tooltip: &TextEmergencyAccess door-remote-emergency-access-text
-      icon: &IconEmergencyAccess
-        sprite: /Textures/Interface/Actions/actions_ai.rsi
-        state: emergency_on
 
 - type: entity
   id: AiHeldIntellicard
@@ -434,7 +416,7 @@
 # The actual brain inside the core
 - type: entity
   id: StationAiBrain
-  parent: PositronicBrain
+  parent: [ PositronicBrain, DoorRemoteOptionsBase, DoorRemoteOptionsCanElectrifyDoors ]
   categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: Sprite
@@ -493,6 +475,8 @@
     mindRoles:
     - MindRoleGhostRoleSilicon
     job: StationAi
+  - type: DoorRemote
+    requireInRangeUnoccluded: false
 
 # Hologram projection that the AI's eye tracks.
 - type: entity
