@@ -19,27 +19,7 @@
       "directions": 4
     },
     {
-      "name": "creampie_drone",
-      "directions": 4
-    },
-    {
-      "name": "creampie_engborg",
-      "directions": 4
-    },
-    {
-      "name": "creampie_hardsuit",
-      "directions": 4
-    },
-    {
-      "name": "creampie_helmet",
-      "directions": 4
-    },
-    {
       "name": "creampie_human",
-      "directions": 4
-    },
-    {
-      "name": "creampie_janborg",
       "directions": 4
     },
     {
@@ -51,10 +31,6 @@
       "directions": 4
     },
     {
-      "name": "creampie_medborg",
-      "directions": 4
-    },
-    {
       "name": "creampie_monkey",
       "directions": 4
     },
@@ -63,30 +39,12 @@
       "directions": 4
     },
     {
-      "name": "creampie_standborg",
-      "directions": 4
-    },
-    {
       "name": "creampie_vox",
       "directions": 4
     },
     {
-      "name": "creampie_xeno_crit"
-    },
-    {
-      "name": "creampie_xeno_dead"
-    },
-    {
-      "name": "creampie_xeno_sleep",
+      "name": "creampie_vulpkanin",
       "directions": 4
-    },
-    {
-      "name": "creampie_xenomorph",
-      "directions": 4
-    },
-      {
-          "name": "creampie_vulpkanin",
-          "directions": 4
-      }
+    }
   ]
 }

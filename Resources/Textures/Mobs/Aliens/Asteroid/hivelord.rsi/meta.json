@@ -19,43 +19,7 @@
       ]
     },
     {
-      "name": "hivelord_nocore",
-      "delays": [
-        [
-          0.5,
-          0.5,
-          0.5,
-          0.5
-        ]
-      ]
-    },
-    {
-      "name": "hivelord_alert",
-      "delays": [
-        [
-          0.5,
-          0.5,
-          0.5,
-          0.5
-        ]
-      ]
-    },
-    {
-      "name": "hivelord_alert_nocore",
-      "delays": [
-        [
-          0.5,
-          0.5,
-          0.5,
-          0.5
-        ]
-      ]
-    },
-    {
       "name": "hivelord_dead"
-    },
-    {
-      "name": "hivelord_dead_nocore"
     },
     {
       "name": "hivelordbrood",
