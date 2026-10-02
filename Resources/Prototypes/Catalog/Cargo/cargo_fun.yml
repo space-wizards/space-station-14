@@ -197,6 +197,6 @@
     sprite: Clothing/Uniforms/Jumpskirts/Service/virtual_singer.rsi
     state: icon
   product: CrateVirtualSingerOutfits
-  cost: 2500
+  cost: 25000
   category: cargoproduct-category-name-fun
   group: market
