@@ -348,7 +348,7 @@
   group: Savory
   solids:
     FoodBreadBun: 1
-    ClothingHeadHatWizard: 1
+    ClothingHeadHatWizardBlue: 1
 
 - type: microwaveMealRecipe
   id: RecipeSuperBiteBurger

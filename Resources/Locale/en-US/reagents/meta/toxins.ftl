@@ -1,5 +1,5 @@
 reagent-name-toxin = toxin
-reagent-desc-toxin = An unsurprisingly toxic chemical. Available at an emagged chem dispenser.
+reagent-desc-toxin = An unsurprisingly toxic chemical.
 
 reagent-name-carpotoxin = carpotoxin
 reagent-desc-carpotoxin = A highly toxic reagent found in space carps. Causes a painful burning sensation.
@@ -93,3 +93,6 @@ reagent-desc-hivarol = A toxin that attacks specific types of cells in the body,
 
 reagent-name-phosphoric-acid = phosphoric acid
 reagent-desc-phosphoric-acid = An acidic chemical often used in agriculture. Keep away from your eyes.
+
+reagent-name-hardlight-toxin = hardlight toxin
+reagent-desc-hardlight-toxin = A highly advanced toxin which inundates a victim's nervous system with ionizing radiation when metabolized.

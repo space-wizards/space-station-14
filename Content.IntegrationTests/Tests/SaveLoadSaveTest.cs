@@ -94,6 +94,10 @@ namespace Content.IntegrationTests.Tests
                 mapSystem.DeleteMap(mapId0);
                 mapSystem.DeleteMap(mapId1);
             });
+            foreach (var ent in SEntMan.GetEntities())
+            {
+                Console.WriteLine(SEntMan.ToPrettyString(ent));
+            }
             Assert.That(SEntMan.EntityCount.Equals(0), "Lingering entities at the end of CreateSaveLoadSaveGrid");
         }
 
@@ -177,6 +181,10 @@ namespace Content.IntegrationTests.Tests
 
             testSystem.Enabled = false;
             await server.WaitPost(() => mapSys.DeleteMap(mapId));
+            foreach (var ent in SEntMan.GetEntities())
+            {
+                Console.WriteLine(SEntMan.ToPrettyString(ent));
+            }
             Assert.That(SEntMan.EntityCount.Equals(0), "Lingering entities at the end of LoadSaveTicksSaveBagel");
         }
 
@@ -253,6 +261,10 @@ namespace Content.IntegrationTests.Tests
                 mapSys.DeleteMap(mapId1);
                 mapSys.DeleteMap(mapId2);
             });
+            foreach (var ent in SEntMan.GetEntities())
+            {
+                Console.WriteLine(SEntMan.ToPrettyString(ent));
+            }
             Assert.That(SEntMan.EntityCount.Equals(0), "Lingering entities at the end of LoadTickLoadBagel");
         }
 
