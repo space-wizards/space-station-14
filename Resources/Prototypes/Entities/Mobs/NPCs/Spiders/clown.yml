@@ -9,7 +9,7 @@
     drawdepth: Mobs
     sprite: Mobs/Animals/Spiders/clownspider.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: idle
   - type: ToolRefinable
     refineResult:
@@ -66,8 +66,6 @@
 
 # Angry Clown Spider
 - type: entity
-  parent:
-  - MobSpiderAngryBase
-  - MobGiantSpiderClown
+  parent: [ MobSpiderAngryBase, MobGiantSpiderClown ]
   id: MobGiantSpiderClownAngry
   suffix: Angry
