@@ -45,16 +45,6 @@
     },
     {
       "name": "nuclearbomb_base"
-    },
-    {
-      "name": "nuclearbombc",
-      "delays": [
-        [
-          1,
-          0.3,
-          0.3
-        ]
-      ]
     }
   ]
 }

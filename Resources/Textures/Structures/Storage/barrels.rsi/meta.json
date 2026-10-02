@@ -8,32 +8,10 @@
   },
   "states": [
     {
-      "name": "waterbarrel"
-    },
-    {
-      "name": "weldbarrel"
-    },
-    {
       "name": "silicatebarrel"
     },
     {
-      "name": "woodenbarrel"
-    },
-    {
       "name": "metalbarrel"
-    },
-    {
-      "name": "flamingmetalbarrel",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "iedweldbarrel"
     },
     {
       "name": "radbarrel"
