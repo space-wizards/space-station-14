@@ -1,6 +1,6 @@
 # Breacher Spider
 - type: entity
-  parent: MobSpiderAnimated
+  parent: MobSpiderBase
   id: MobGiantSpiderBreacher
   name: breacher spider
   description: A broad, sturdy spider with unusually powerful jaws.

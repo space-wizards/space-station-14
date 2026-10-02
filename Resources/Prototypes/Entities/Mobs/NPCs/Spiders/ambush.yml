@@ -1,6 +1,6 @@
 # Ambush Spider
 - type: entity
-  parent: MobSpiderAnimated
+  parent: MobSpiderBase
   id: MobGiantSpiderAmbush
   name: ambush spider
   description: A pale, heavy-fanged spider that waits patiently for prey to come near.

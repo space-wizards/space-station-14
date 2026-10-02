@@ -1,6 +1,6 @@
 # Scout Spider
 - type: entity
-  parent: MobSpiderAnimated
+  parent: MobSpiderBase
   id: MobGiantSpiderScout
   name: scout spider
   description: A quick, fragile spider that darts at its prey.
