@@ -77,7 +77,9 @@ public sealed partial class AnomalySystem
 
         var generating = EnsureComp<GeneratingAnomalyGeneratorComponent>(uid);
         generating.EndTime = Timing.CurTime + component.GenerationLength;
-        generating.AudioStream = Audio.PlayPvs(component.GeneratingSound, uid, AudioParams.Default.WithLoop(true))?.Entity;
+        var audioParams = component.GeneratingSound?.Params ?? AudioParams.Default;
+        audioParams = audioParams.WithLoop(true);
+        generating.AudioStream = Audio.PlayPvs(component.GeneratingSound, uid, audioParams)?.Entity;
         component.CooldownEndTime = Timing.CurTime + component.CooldownLength;
         UpdateGeneratorUi(uid, component);
     }

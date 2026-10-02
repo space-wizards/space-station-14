@@ -4,7 +4,7 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.DamageState;
 
-public sealed class DamageStateVisualizerSystem : VisualizerSystem<DamageStateVisualsComponent>
+public sealed partial class DamageStateVisualizerSystem : VisualizerSystem<DamageStateVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, DamageStateVisualsComponent component, ref AppearanceChangeEvent args)
     {

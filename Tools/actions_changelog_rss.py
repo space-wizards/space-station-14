@@ -55,6 +55,9 @@ TYPES_TO_EMOJI = {
     "Tweak":  "⚒️"
 }
 
+EXPERIMENTAL_LABEL = "Intent: Experimental"
+EXPERIMENTAL_EMOJI = "🧪"
+
 XML_NS = "https://spacestation14.com/changelog_rss"
 XML_NS_B = f"{{{XML_NS}}}"
 
@@ -181,6 +184,9 @@ def generate_description_for_entries(entries: List[Any]) -> str:
         for entry in sorted(group, key=lambda x: x["time"]):
             for change in entry["changes"]:
                 emoji = TYPES_TO_EMOJI.get(change["type"], "")
+                labels = entry.get("labels") or []
+                if EXPERIMENTAL_LABEL in labels:
+                    emoji = f"{emoji}{EXPERIMENTAL_EMOJI}"
                 msg = change["message"]
                 desc.write(f"<li>{emoji} {html.escape(msg)}</li>")
 
