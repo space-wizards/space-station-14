@@ -2,11 +2,8 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
-using Content.Shared.IdentityManagement;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Medical.BiomassReclaimer;
 using Content.Shared.Mind;
-using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
@@ -28,22 +25,6 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         base.Initialize();
 
         Subs.CVar(_configManager, CCVars.BiomassEasyMode, value => _biomassEasyMode = value, true);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnSuicideByEnvironment(Entity<BiomassReclaimerComponent> ent, ref SuicideByEnvironmentEvent args)
-    {
-        if (args.Handled || _activeQuery.HasComp(ent) || !_powerReceiver.IsPowered(ent.Owner))
-            return;
-
-        if (!_physicsQuery.TryComp(args.Victim, out var physics))
-            return;
-
-        _popup.PopupEntity(Loc.GetString("biomass-reclaimer-suicide-others", ("victim", Identity.Entity(args.Victim, EntityManager))),
-            ent,
-            PopupType.LargeCaution);
-        StartProcessing((args.Victim, physics), ent);
-        args.Handled = true;
     }
 
     protected override void StartRunningEffects(Entity<BiomassReclaimerComponent> ent)

@@ -7,7 +7,9 @@ using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Jittering;
 using Content.Shared.Materials;
@@ -38,14 +40,14 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     [Dependency] private SharedPuddleSystem _puddleSystem = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] protected SharedPopupSystem _popup = default!;
-    [Dependency] protected SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
 
     [Dependency] protected EntityQuery<PhysicsComponent> _physicsQuery;
     [Dependency] private EntityQuery<TransformComponent> _transformQuery;
     [Dependency] private EntityQuery<ProduceComponent> _produceQuery;
     [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery;
-    [Dependency] protected EntityQuery<ActiveBiomassReclaimerComponent> _activeQuery;
+    [Dependency] private EntityQuery<ActiveBiomassReclaimerComponent> _activeQuery;
     [Dependency] private EntityQuery<BiomassReclaimerComponent> _reclaimerQuery;
 
     public override void Update(float frameTime)
@@ -88,6 +90,22 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
 
         active.NextMessTime += reclaimer.RandomMessInterval;
         Dirty(uid, active);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnSuicideByEnvironment(Entity<BiomassReclaimerComponent> ent, ref SuicideByEnvironmentEvent args)
+    {
+        if (args.Handled || _activeQuery.HasComp(ent) || !_powerReceiver.IsPowered(ent.Owner))
+            return;
+
+        if (!_physicsQuery.TryComp(args.Victim, out var physics))
+            return;
+
+        _popup.PopupEntity(Loc.GetString("biomass-reclaimer-suicide-others", ("victim", Identity.Entity(args.Victim, EntityManager))),
+            ent,
+            PopupType.LargeCaution);
+        StartProcessing((args.Victim, physics), ent);
+        args.Handled = true;
     }
 
     [SubscribeLocalEvent]
