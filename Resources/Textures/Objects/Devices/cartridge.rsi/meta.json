@@ -11,85 +11,19 @@
       "name": "cart"
     },
     {
-      "name": "cart-a"
-    },
-    {
-      "name": "cart-b"
-    },
-    {
-      "name": "cart-c"
-    },
-    {
-      "name": "cart-ce"
-    },
-    {
-      "name": "cart-chem"
-    },
-    {
-      "name": "cart-clown"
-    },
-    {
-      "name": "cart-cmo"
-    },
-    {
-      "name": "cart-e"
-    },
-    {
-      "name": "cart-eye"
-    },
-    {
-      "name": "cart-h"
-    },
-    {
-      "name": "cart-hos"
-    },
-    {
-      "name": "cart-j"
-    },
-    {
-      "name": "cart-lib"
-    },
-    {
       "name": "cart-log"
-    },
-    {
-      "name": "cart-m"
     },
     {
       "name": "cart-med"
     },
     {
-      "name": "cart-mi"
-    },
-    {
       "name": "cart-nav"
-    },
-    {
-      "name": "cart-ord"
-    },
-    {
-      "name": "cart-q"
-    },
-    {
-      "name": "cart-rd"
-    },
-    {
-      "name": "cart-s"
     },
     {
       "name": "cart-sec"
     },
     {
-      "name": "cart-tear"
-    },
-    {
-      "name": "cart-tox"
-    },
-    {
       "name": "cart-y"
-    },
-    {
-      "name": "insert_overlay"
     }
   ]
 }
