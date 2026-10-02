@@ -311,7 +311,7 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
     }
 
     /// <summary>
-    /// Get all entities with <see cref="TComponent"/> that are on the station. Ignore entities outside the station.
+    /// Get entities with <see cref="TComponent"/> on a random event-eligible station's largest grid.
     /// </summary>
     /// <param name="onlyAnchored">Whether to only get anchored entities.
     /// Good check for air vents, bad for containers like crates.</param>
@@ -330,14 +330,17 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
     {
         HashSet<Entity<TComponent>> entities = [];
 
-        if (!TryGetRandomStation(out station))
+        if (!TryGetRandomStation<StationEventEligibleComponent>(out var eligibleStation))
+        {
+            station = null;
             return entities;
+        }
+
+        station = (eligibleStation.Value.Owner, eligibleStation.Value.Comp1);
 
         var grid = GetLargestGrid(station.Value.Owner);
         if (grid is null)
-        {
             return entities;
-        }
 
         var locations = EntityQueryEnumerator<TComponent, TransformComponent>();
         while (locations.MoveNext(out var uid, out var component, out var transform))
@@ -367,31 +370,26 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
 
         var targetGridMaybe = GetLargestGrid(station.Owner);
         if (targetGridMaybe is null)
-        {
             return false;
-        }
 
         if (!TryComp<MapGridComponent>(targetGridMaybe.Value, out var comp))
-        {
             return false;
-        }
 
         targetGrid = (targetGridMaybe.Value, comp);
         var grid = targetGrid.Value;
 
         var gridTiles = Map.GetAllTiles(grid, grid.Comp).ToList();
         var totalTiles = gridTiles.Count;
+        if (totalTiles == 0)
+            return false;
 
-        for (var i = 0; i < numAttempts; i++)
+        for (var i = 0; i < numAttempts && totalTiles > 0; i++)
         {
             // Find random tile within list.
             var nextTileIndex = Random.Next(totalTiles);
             var tileRef = gridTiles[nextTileIndex];
             gridTiles.RemoveSwap(nextTileIndex);
             totalTiles--;
-
-            if (totalTiles <= 0)
-                break;
 
             // Invalid tile, try again.
             if (_atmos.IsTileSpace(grid.Owner, Transform(grid).MapUid, tileRef.GridIndices)
@@ -414,91 +412,67 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
 /// This is the ideal point to add components to it.
 /// </summary>
 [PublicAPI]
-public sealed class StationInitializedEvent : EntityEventArgs
+public sealed class StationInitializedEvent(EntityUid station) : EntityEventArgs
 {
     /// <summary>
     /// Station this event is for.
     /// </summary>
-    public EntityUid Station;
-
-    public StationInitializedEvent(EntityUid station)
-    {
-        Station = station;
-    }
+    public EntityUid Station = station;
 }
 
 /// <summary>
 /// Directed event fired on a station when a grid becomes a member of the station.
 /// </summary>
 [PublicAPI]
-public sealed class StationGridAddedEvent : EntityEventArgs
+public sealed class StationGridAddedEvent(EntityUid gridId, EntityUid station, bool isSetup) : EntityEventArgs
 {
     /// <summary>
     /// ID of the grid added to the station.
     /// </summary>
-    public EntityUid GridId;
+    public EntityUid GridId = gridId;
 
     /// <summary>
     /// EntityUid of the station this grid was added to.
     /// </summary>
-    public EntityUid Station;
+    public EntityUid Station = station;
 
     /// <summary>
     /// Indicates that the event was fired during station setup,
     /// so that it can be ignored if StationInitializedEvent was already handled.
     /// </summary>
-    public bool IsSetup;
-
-    public StationGridAddedEvent(EntityUid gridId, EntityUid station, bool isSetup)
-    {
-        GridId = gridId;
-        Station = station;
-        IsSetup = isSetup;
-    }
+    public bool IsSetup = isSetup;
 }
 
 /// <summary>
 /// Directed event fired on a station when a grid is no longer a member of the station.
 /// </summary>
 [PublicAPI]
-public sealed class StationGridRemovedEvent : EntityEventArgs
+public sealed class StationGridRemovedEvent(EntityUid gridId, EntityUid station) : EntityEventArgs
 {
     /// <summary>
     /// ID of the grid removed from the station.
     /// </summary>
-    public EntityUid GridId;
+    public EntityUid GridId = gridId;
 
     /// <summary>
     /// EntityUid of the station this grid was added to.
     /// </summary>
-    public EntityUid Station;
-
-    public StationGridRemovedEvent(EntityUid gridId, EntityUid station)
-    {
-        GridId = gridId;
-        Station = station;
-    }
+    public EntityUid Station = station;
 }
 
 /// <summary>
 /// Directed event fired on a station when it is renamed.
 /// </summary>
 [PublicAPI]
-public sealed class StationRenamedEvent : EntityEventArgs
+public sealed class StationRenamedEvent(string oldName, string newName) : EntityEventArgs
 {
     /// <summary>
     /// Prior name of the station.
     /// </summary>
-    public string OldName;
+    public string OldName = oldName;
 
     /// <summary>
     /// New name of the station.
     /// </summary>
-    public string NewName;
-
-    public StationRenamedEvent(string oldName, string newName)
-    {
-        OldName = oldName;
-        NewName = newName;
-    }
+    public string NewName = newName;
 }

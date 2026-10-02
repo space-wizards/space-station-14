@@ -25,9 +25,7 @@ public sealed partial class GasLeakRule : StationEventSystem<GasLeakRuleComponen
         var gameRule = ent.Comp2;
 
         if (!TryComp<StationEventComponent>(ent, out var stationEvent))
-        {
             return;
-        }
 
         var stationVents = Station.GetEntitiesWithComponentOnStation<GasVentScrubberComponent>(true);
         if (stationVents.Count == 0)

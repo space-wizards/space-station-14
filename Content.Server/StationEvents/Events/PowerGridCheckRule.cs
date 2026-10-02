@@ -39,14 +39,17 @@ namespace Content.Server.StationEvents.Events
             var powerGridCheck = ent.Comp1;
 
             powerGridCheck.AffectedStation = chosenStation.Value;
+            var largestGrid = Station.GetLargestGrid(chosenStation.Value.AsNullable());
+            if (largestGrid is null)
+                return;
 
             foreach (var apcUid in apcs)
             {
-                if (apcUid.Comp.MainBreakerEnabled)
+                if (!apcUid.Comp.MainBreakerEnabled)
                     continue;
 
                 var apcTransform = Transform(apcUid);
-                if (apcTransform.GridUid != powerGridCheck.AffectedStation)
+                if (apcTransform.GridUid != largestGrid)
                     continue;
 
                 powerGridCheck.Powered.Add(apcUid);

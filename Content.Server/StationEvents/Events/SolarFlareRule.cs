@@ -63,7 +63,7 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
             foreach (var airlockEnt in component.AffectedAirlocks)
             {
                 if (airlockEnt.Item2.AutoClose && RobustRandom.Prob(component.DoorToggleChancePerSecond))
-                    _door.TryToggleDoor(airlockEnt.Item1, Comp<DoorComponent>(airlockEnt.Item1));
+                    _door.TryToggleDoor(airlockEnt.Item1);
             }
         }
     }

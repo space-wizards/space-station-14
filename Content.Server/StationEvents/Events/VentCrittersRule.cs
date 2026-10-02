@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Storage;
@@ -43,8 +42,7 @@ public sealed partial class VentCrittersRule : StationEventSystem<VentCrittersRu
                 Spawn(spawn, Transform(location).Coordinates);
             }
 
-            var specialSpawns = EntitySpawnCollection.GetSpawns(critterRule.Entries, RobustRandom)
-                .Concat(EntitySpawnCollection.GetSpawns(critterRule.SpecialEntries, RobustRandom));
+            var specialSpawns = EntitySpawnCollection.GetSpawns(critterRule.SpecialEntries, RobustRandom);
             foreach (var spawn in specialSpawns)
             {
                 Spawn(spawn, Transform(location).Coordinates);
