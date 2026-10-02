@@ -1,5 +1,6 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
+using Content.Shared.GameTicking;
 using Robust.Shared.Console;
 
 namespace Content.Server.GameTicking.Commands;
@@ -11,7 +12,7 @@ sealed class DelayStartCommand : LocalizedEntityCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var ticker = EntityManager.System<GameTicker>();
+        var ticker = EntityManager.System<ServerGameTicker>();
         if (ticker.RunLevel != GameRunLevel.PreRoundLobby)
         {
             shell.WriteLine(Loc.GetString("delaystart-preround-only"));

@@ -49,7 +49,7 @@
     currencyWhitelist:
     - ChangelingDNA
     balance:
-      ChangelingDNA: 60
+      ChangelingDNA: 50
     inputValidation: false
   mindRoles:
   - MindRoleChangeling

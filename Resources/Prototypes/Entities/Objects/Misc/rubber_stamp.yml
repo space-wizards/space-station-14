@@ -29,7 +29,8 @@
       - state: handle-inhand-right
         color: "#f8f8f8"
   - type: StealTarget
-    stealGroup: Stamp
+    stealGroup:
+    - Stamp
 
 - type: entity
   name: alternate rubber stamp

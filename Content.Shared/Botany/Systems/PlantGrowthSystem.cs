@@ -1,7 +1,7 @@
-using JetBrains.Annotations;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
 using Content.Shared.Random.Helpers;
+using JetBrains.Annotations;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -20,8 +20,8 @@ public sealed partial class PlantGrowthSystem : EntitySystem
     [Dependency] private PlantHolderSystem _plantHolder = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
 
-    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
-    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery = default!;
+    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery;
+    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery;
 
     [SubscribeLocalEvent]
     private void OnCrossPollinate(Entity<PlantGrowthComponent> ent, ref PlantCrossPollinateEvent args)
@@ -38,7 +38,7 @@ public sealed partial class PlantGrowthSystem : EntitySystem
     private void OnPlantGrow(Entity<PlantGrowthComponent> ent, ref PlantGrowEvent args)
     {
         var (plantUid, plantComp) = ent;
-        var trayUid = GetEntity(args.Tray);
+        var trayUid = args.Tray;
 
         if (!_trayQuery.TryComp(trayUid, out var trayComp))
             return;

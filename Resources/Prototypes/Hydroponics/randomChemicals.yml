@@ -1,5 +1,5 @@
 - type: weightedRandomFillSolution
-  id: RandomPickBotanyReagent
+  id: RandomPickBotanyGeneralReagent
   fills:
   - quantity: 5
     weight: 0.5
@@ -84,6 +84,10 @@
     - Copper
     - Sulfur
     - Lithium
+
+- type: weightedRandomFillSolution
+  id: RandomPickBotanyFarmingReagent
+  fills:
   - quantity: 10 # Basic Farming Table
     weight: 5
     reagents:

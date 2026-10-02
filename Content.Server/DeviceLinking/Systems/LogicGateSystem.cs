@@ -4,7 +4,8 @@ using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Components;
+using Content.Shared.Timing.Systems;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio.Systems;
 
@@ -71,8 +72,7 @@ public sealed partial class LogicGateSystem : EntitySystem
             return;
 
         // no sound spamming
-        if (TryComp<UseDelayComponent>(uid, out var useDelay)
-            && !_useDelay.TryResetDelay((uid, useDelay), true))
+        if (!_useDelay.TryResetDelay(uid, true))
             return;
 
         // cycle through possible gates

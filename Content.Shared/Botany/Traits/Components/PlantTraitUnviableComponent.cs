@@ -16,5 +16,7 @@ public sealed partial class PlantTraitUnviableComponent : PlantTraitsComponent
     public float UnviableDamage = 6f;
 
     /// <inheritdoc/>
-    public override LocId? TraitState { get; set; } = "mutation-plant-unviable";
+    public override LocId? TraitState { get; set; } = "mutation-plant-description-unviable";
+    /// <inheritdoc/>
+    public override LocId? TraitName { get; set; } = "mutation-plant-noun-unviable";
 }
