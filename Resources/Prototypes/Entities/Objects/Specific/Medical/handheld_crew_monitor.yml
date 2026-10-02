@@ -44,7 +44,8 @@
     tags:
     - HighRiskItem
   - type: StealTarget
-    stealGroup: HandheldCrewMonitor
+    stealGroup:
+    - HandheldCrewMonitor
 
 - type: entity
   id: HandheldCrewMonitorEmpty

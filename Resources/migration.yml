@@ -1140,13 +1140,23 @@ AsimovCircuitBoard: CrewsimovCircuitBoard
 ClothingShoesTourist: ClothingShoesSandalsBlack
 ClothingShoesWizard: ClothingShoesSandalsBrown
 
+#2026-09-28
+BorgModuleGardening: BorgModuleBotany
+BorgModuleHarvesting: BorgModuleBotany
+
 # 2026-09-29
 WallMalign: WallSolid
 WallMalignIndestructible: WallSolid
 WallMalignIndestructibleNoOcclusion: WallSolid
 MalignWindow: Window
 
-# 2026-09-29
+# 2026-10-01
+ClothingHeadHatWizard: ClothingHeadHatWizardBlue
+ClothingOuterWizard: ClothingOuterWizardBlue
+ClothingHeadHatRedwizard: ClothingHeadHatWizardRed
+ClothingHeadHatVioletwizard: ClothingHeadHatWizardViolet
+
+# 2026-10-02
 CheckerCrownBlack: CheckersKingBlack
 CheckerCrownWhite: CheckersKingRed
 CheckerPieceBlack: CheckersPieceBlack
