@@ -2,7 +2,7 @@
 
 [game]
 hostname = "[EN][MRP] Wizard's Den Salamander [NA West]"
-desc = "Official English server for Space Station 14. Medium roleplay ruleset. This server uses an automatic whitelisting system; in order to join, you must have at least 20 hours of combined playtime across all Wizard's Den servers, or the player count must be under 15 players."
+desc = "Official English server for Space Station 14. Medium roleplay ruleset. This server uses an automatic whitelisting system; in order to join, you must have at least 20 hours of playtime on Wizard's Den servers, or the player count must be under 15 players."
 round_restart_time = 300
 
 [server]
