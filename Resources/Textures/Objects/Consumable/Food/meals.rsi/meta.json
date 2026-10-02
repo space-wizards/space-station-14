@@ -10,15 +10,15 @@
     {
       "name": "amanita-jelly",
       "delays": [
-      [
-        5,
-        0.1,
-        0.1,
-        0.1,
-        0.1,
-        1
+        [
+          5,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          1
+        ]
       ]
-     ]
     },
     {
       "name": "bearsteak",
@@ -35,15 +35,6 @@
       "name": "benedict"
     },
     {
-      "name": "butterbiscuit"
-    },
-    {
-      "name": "butterdog"
-    },
-    {
-      "name": "butteronastick"
-    },
-    {
       "name": "cornedbeef"
     },
     {
@@ -54,12 +45,6 @@
     },
     {
       "name": "enchiladas"
-    },
-    {
-      "name": "fishandchips"
-    },
-    {
-      "name": "fishfry"
     },
     {
       "name": "friedegg"
@@ -74,13 +59,7 @@
       "name": "fries-cheesy"
     },
     {
-      "name": "fries-parsnip"
-    },
-    {
       "name": "hotdog"
-    },
-    {
-      "name": "lasagna"
     },
     {
       "name": "loadedbakedpotato"
@@ -122,22 +101,13 @@
       "name": "pigblanket"
     },
     {
-      "name": "poutine"
+      "name": "queso"
     },
-	{
-	  "name": "queso"
-	},
     {
       "name": "sashimi"
     },
     {
       "name": "saltysweet"
-    },
-    {
-      "name": "soydope"
-    },
-    {
-      "name": "stewedsoymeat"
     },
     {
       "name": "softtaco"

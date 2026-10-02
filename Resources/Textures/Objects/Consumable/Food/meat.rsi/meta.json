@@ -61,9 +61,6 @@
       "name": "crab-cooked"
     },
     {
-      "name": "crab-rangoon"
-    },
-    {
       "name": "cutlet"
     },
     {
@@ -103,12 +100,6 @@
     },
     {
       "name": "lizard-cooked"
-    },
-    {
-      "name": "lizard-tail"
-    },
-    {
-      "name": "plate-meat"
     },
     {
       "name": "plain"
@@ -209,10 +200,10 @@
       "name": "slime-inhand-left",
       "directions": 4
     },
-	{
+    {
       "name": "snail"
     },
-	{
+    {
       "name": "snail-cooked"
     },
     {
@@ -269,7 +260,7 @@
     {
       "name": "xenocutlet-cooked"
     },
-	{
+    {
       "name": "dragon"
     },
     {
@@ -280,7 +271,7 @@
       "name": "dragon-inhand-left",
       "directions": 4
     },
-	{
+    {
       "name": "dragon_veins"
     },
     {

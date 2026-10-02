@@ -77,9 +77,6 @@
       "name": "packet-empty"
     },
     {
-      "name": "packet-trash"
-    },
-    {
       "name": "packet-frostoil"
     },
     {
@@ -93,9 +90,6 @@
     },
     {
       "name": "packet-mustard"
-    },
-    {
-      "name": "packet-mixed"
     },
     {
       "name": "packet-pepper"
