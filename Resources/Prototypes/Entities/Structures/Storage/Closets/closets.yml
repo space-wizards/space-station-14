@@ -160,6 +160,7 @@
   - type: EntityStorageVisuals
     stateDoorOpen: generic_open
     stateDoorClosed: generic_door
+  - type: HauntedCloset
 
 - type: entity
   parent: ClosetMaintenance
