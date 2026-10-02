@@ -101,6 +101,8 @@
           SheetSteel1:
             min: 2
             max: 2
+  - type: IgnoreProjectilesAboveAngle
+    backwards: true
 
 - type: entity
   parent: AlwaysPoweredWallLight
