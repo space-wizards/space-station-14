@@ -14,13 +14,13 @@
       "name": "logic"
     },
     {
-       "name":  "logic_o"
+      "name": "logic_o"
     },
     {
-       "name":  "logic_b"
+      "name": "logic_b"
     },
     {
-      "name":  "logic_a"
+      "name": "logic_a"
     },
     {
       "name": "or"
@@ -42,9 +42,6 @@
     },
     {
       "name": "edge_detector"
-    },
-    {
-      "name": "or_icon"
     },
     {
       "name": "power_sensor"
