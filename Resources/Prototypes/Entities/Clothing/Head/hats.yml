@@ -848,7 +848,6 @@
     - ClothMade
     - WhitelistChameleon
 
-
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatXmasCrown
