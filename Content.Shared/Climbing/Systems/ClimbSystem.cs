@@ -95,8 +95,9 @@ public sealed partial class ClimbSystem : VirtualController
             _xformSystem.SetLocalPosition(uid, oldPosition + comp.Direction * frameTime, xform);
 
             var physics = _physicsQuery.GetComponent(uid);
-            if ((physics.CollisionMask & (int) CollisionGroup.Impassable) == 0
-                || _physics.GetEntitiesIntersectingBody(uid, (int) CollisionGroup.Impassable).Count == 0)
+            // TODO: Add a physics query for checking any intersecting entity with a configurable collision mask.
+            if ((physics.CollisionMask & comp.TransitionCollisionMask) == 0
+                || _physics.GetEntitiesIntersectingBody(uid, comp.TransitionCollisionMask).Count == 0)
             {
                 continue;
             }
@@ -299,25 +300,10 @@ public sealed partial class ClimbSystem : VirtualController
 
         var xform = _xformQuery.GetComponent(uid);
         var (worldPos, worldRot) = _xformSystem.GetWorldPositionRotation(xform);
-        var climbableTransform = _physics.GetPhysicsTransform(climbable);
-        Box2? climbableBounds = null;
-
-        if (_fixturesQuery.TryComp(climbable, out var climbableFixtures))
-        {
-            foreach (var fixture in climbableFixtures.Fixtures.Values)
-            {
-                if (!fixture.Hard)
-                    continue;
-
-                for (var i = 0; i < fixture.Shape.ChildCount; i++)
-                {
-                    var aabb = fixture.Shape.ComputeAABB(climbableTransform, i);
-                    climbableBounds = climbableBounds?.Union(aabb) ?? aabb;
-                }
-            }
-        }
-
-        var worldDirection = (climbableBounds?.Center ?? climbableTransform.Position) - worldPos;
+        var climbableCenter = _physicsQuery.HasComp(climbable) && _fixturesQuery.HasComp(climbable)
+            ? _physics.GetHardAABB(climbable).Center
+            : _physics.GetPhysicsTransform(climbable).Position;
+        var worldDirection = climbableCenter - worldPos;
         var distance = worldDirection.Length();
         var parentRot = worldRot - xform.LocalRotation;
         // Need direction relative to climber's parent.
