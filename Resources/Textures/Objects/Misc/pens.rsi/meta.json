@@ -26,14 +26,8 @@
       "name": "luxury_pen"
     },
     {
-      "name": "pen_blue"
+      "name": "pen_wizard"
     },
-    {
-      "name": "pen_red"
-    },
-	{
-	  "name": "pen_wizard"
-	},
     {
       "name": "pen-inhand-left",
       "directions": 4
