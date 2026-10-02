@@ -1,4 +1,3 @@
-using Content.Server.Antag;
 using Content.Shared.Antag;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Changeling.Systems;
@@ -36,9 +35,12 @@ public sealed partial class ServerChangelingLastResortSystem : ChangelingLastRes
         args.Handled = true;
 
         Audio.PlayPvs(ent.Comp.Sound, ent.Owner);
-        _popup.PopupEntity(Loc.GetString("changeling-takeover-start-others", ("user", Identity.Entity(ent.Owner, EntityManager))),
+        _popup.PopupEntity(Loc.GetString("changeling-takeover-start-others",
+                ("user", Identity.Entity(ent.Owner, EntityManager))),
             ent.Owner,
             PopupType.MediumCaution);
+
+        var examine = Loc.GetString("changeling-takeover-doafter", ("user", Identity.Entity(ent, EntityManager)), ("target", Identity.Entity(args.Target, EntityManager)));
 
         var doAfter = new DoAfterArgs(EntityManager,
             ent.Owner,
@@ -51,6 +53,7 @@ public sealed partial class ServerChangelingLastResortSystem : ChangelingLastRes
             BreakOnMove = true,
             DuplicateCondition = DuplicateConditions.None,
             RequireCanInteract = false,
+            ExamineText = examine
         };
 
         _doAfter.TryStartDoAfter(doAfter);
@@ -93,17 +96,21 @@ public sealed partial class ServerChangelingLastResortSystem : ChangelingLastRes
         if (!_mind.TryGetMind(args.User, out var mindId, out var mind))
             return;
 
-        TakeOverCorpse(args.User, target, mindId, mind);
-
-        _popup.PopupEntity(Loc.GetString("changeling-takeover-success-self"), target, target, PopupType.Large);
+        TakeOverCorpse(ent, target, mindId, mind);
     }
 
-    private void TakeOverCorpse(EntityUid user, EntityUid target, EntityUid mindId, MindComponent mind)
+    private void TakeOverCorpse(Entity<ChangelingSlugComponent> ent,
+        EntityUid target,
+        EntityUid mindId,
+        MindComponent mind)
     {
         _mind.TransferTo(mindId, target, mind: mind);
 
         _antag.AssignAntagComponents(target, ChangelingAntag);
 
-        QueueDel(user);
+        var ev = new BodyTakenByHeadslugEvent(target, ent.Comp.AutoStasis, ent.Comp.AutoStasisDurationMultiplier);
+        RaiseLocalEvent(target, ref ev);
+
+        QueueDel(ent);
     }
 }

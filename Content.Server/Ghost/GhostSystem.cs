@@ -16,6 +16,7 @@ using Content.Shared.Eye;
 using Content.Shared.FixedPoint;
 using Content.Shared.Follower;
 using Content.Shared.Follower.Components;
+using Content.Shared.GameTicking;
 using Content.Shared.Ghost.Components;
 using Content.Shared.Ghost.Systems;
 using Content.Shared.GhostTypes;
@@ -65,7 +66,7 @@ namespace Content.Server.Ghost
         [Dependency] private IConfigurationManager _configurationManager = default!;
         [Dependency] private IChatManager _chatManager = default!;
         [Dependency] private SharedMindSystem _mind = default!;
-        [Dependency] private GameTicker _gameTicker = default!;
+        [Dependency] private ServerGameTicker _gameTicker = default!;
         [Dependency] private DamageableSystem _damageable = default!;
         [Dependency] private SharedPopupSystem _popup = default!;
         [Dependency] private IRobustRandom _random = default!;
@@ -104,7 +105,7 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<GhostComponent, ToggleGhostHearingActionEvent>(OnGhostHearingAction);
             SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
 
-            SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
+            SubscribeLocalEvent<RoundEndMessageEvent>(_ => MakeVisible(true));
             SubscribeLocalEvent<ToggleGhostVisibilityToAllEvent>(OnToggleGhostVisibilityToAll);
 
             SubscribeLocalEvent<GhostComponent, GetVisMaskEvent>(OnGhostVis);
@@ -469,16 +470,8 @@ namespace Content.Server.Ghost
             if (spawnPosition?.IsValid(EntityManager) != true)
                 return false;
 
-            var mapUid = _transformSystem.GetMap(spawnPosition.Value);
-            var gridUid = spawnPosition?.EntityId;
-            // Test if the map is being deleted
-            if (mapUid == null || TerminatingOrDeleted(mapUid.Value))
-                return false;
-            // Test if the grid is being deleted
-            if (gridUid != null && TerminatingOrDeleted(gridUid.Value))
-                return false;
-
-            return true;
+            // Test if the parent is being deleted
+            return !TerminatingOrDeleted(spawnPosition.Value.EntityId);
         }
 
         public EntityUid? SpawnGhost(Entity<MindComponent?> mind, EntityCoordinates? spawnPosition = null,
@@ -488,22 +481,21 @@ namespace Content.Server.Ghost
                 return null;
 
             // Test if the map or grid is being deleted
-            if (!IsValidSpawnPosition(spawnPosition))
-                spawnPosition = null;
-
-            // If it's bad, look for a valid point to spawn
-            spawnPosition ??= _gameTicker.GetObserverSpawnPoint();
-
-            // Make sure the new point is valid too
-            if (!IsValidSpawnPosition(spawnPosition))
+            if (spawnPosition == null || !IsValidSpawnPosition(spawnPosition))
             {
-                Log.Warning($"No spawn valid ghost spawn position found for {mind.Comp.CharacterName}"
-                    + $" \"{ToPrettyString(mind)}\"");
-                _minds.TransferTo(mind.Owner, null, createGhost: false, mind: mind.Comp);
-                return null;
+                // If it's bad, look for a valid point to spawn
+                spawnPosition = _gameTicker.GetObserverSpawnPoint();
+
+                // Make sure the new point is valid too
+                if (!IsValidSpawnPosition(spawnPosition))
+                {
+                    Log.Error($"Fallback spawn position: {spawnPosition} provided for {mind.Comp.CharacterName} {ToPrettyString(mind)} was not valid.");
+                    _minds.TransferTo(mind.Owner, null, createGhost: false, mind: mind.Comp);
+                    return null;
+                }
             }
 
-            var ghost = SpawnAtPosition(GameTicker.ObserverPrototypeName, spawnPosition.Value);
+            var ghost = SpawnAtPosition(ServerGameTicker.ObserverPrototypeName, spawnPosition.Value);
             var ghostComponent = Comp<GhostComponent>(ghost);
 
             if (TryComp<GhostSpriteStateComponent>(ghost, out var state))  // If more TryComps are added this should be turned into an event

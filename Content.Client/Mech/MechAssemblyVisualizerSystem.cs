@@ -1,4 +1,4 @@
-﻿using Content.Shared.Mech;
+using Content.Shared.Mech;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Mech;

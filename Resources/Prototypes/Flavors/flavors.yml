@@ -20,6 +20,11 @@
   description: flavor-base-sour
 
 - type: flavor
+  id: earthy
+  flavorType: Base
+  description: flavor-base-earthy
+
+- type: flavor
   id: bitter
   flavorType: Base
   description: flavor-base-bitter

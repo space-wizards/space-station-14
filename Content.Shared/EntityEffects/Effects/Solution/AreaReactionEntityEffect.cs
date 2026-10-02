@@ -1,4 +1,4 @@
-﻿using Content.Shared.Database;
+using Content.Shared.Database;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
