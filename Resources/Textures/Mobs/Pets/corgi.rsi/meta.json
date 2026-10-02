@@ -12,10 +12,6 @@
             "directions": 4
         },
         {
-            "name": "corgi_rest",
-            "directions": 4
-        },
-        {
             "name": "corgi_dead"
         },
         {
@@ -26,25 +22,11 @@
             "name": "ian_dead"
         },
         {
-            "name": "corgi_deadcollar"
-        },
-        {
-            "name": "corgi_deadtag"
-        },
-        {
             "name": "ian_shaved",
             "directions": 4
         },
         {
             "name": "ian_shaved_dead"
-        },
-        {
-            "name": "corgicollar",
-            "directions": 4
-        },
-        {
-            "name": "corgitag",
-            "directions": 4
         },
         {
             "name": "lisa",
@@ -126,25 +108,11 @@
             "name": "puppy_dead"
         },
         {
-            "name": "puppy_deadcollar"
-        },
-        {
-            "name": "puppy_deadtag"
-        },
-        {
             "name": "puppy_shaved",
             "directions": 4
         },
         {
             "name": "puppy_shaved_dead"
-        },
-        {
-            "name": "puppycollar",
-            "directions": 4
-        },
-        {
-            "name": "puppytag",
-            "directions": 4
         },
         {
             "name": "real_mouse",
