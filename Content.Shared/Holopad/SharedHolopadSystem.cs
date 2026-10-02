@@ -9,9 +9,9 @@ namespace Content.Shared.Holopad;
 
 public abstract partial class SharedHolopadSystem : EntitySystem
 {
-    [Dependency] private IGameTiming _timing = null!;
-    [Dependency] private SharedPowerReceiverSystem _powerReceiver = null!;
-    [Dependency] private SharedStationAiSystem _stationAi = null!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private SharedStationAiSystem _stationAi = default!;
 
     public bool IsHolopadControlLocked(Entity<HolopadComponent> entity, EntityUid? user = null)
     {

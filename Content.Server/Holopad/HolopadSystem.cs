@@ -28,20 +28,20 @@ namespace Content.Server.Holopad;
 
 public sealed partial class HolopadSystem : SharedHolopadSystem
 {
-    [Dependency] private TelephoneSystem _telephone = null!;
-    [Dependency] private UserInterfaceSystem _ui = null!;
-    [Dependency] private TransformSystem _xform = null!;
-    [Dependency] private AppearanceSystem _appearance = null!;
-    [Dependency] private SharedPointLightSystem _pointLight = null!;
-    [Dependency] private SharedAmbientSoundSystem _ambientSound = null!;
-    [Dependency] private SharedStationAiSystem _stationAi = null!;
-    [Dependency] private AccessReaderSystem _accessReader = null!;
-    [Dependency] private ChatSystem _chat = null!;
-    [Dependency] private PopupSystem _popup = null!;
-    [Dependency] private IGameTiming _timing = null!;
-    [Dependency] private PvsOverrideSystem _pvs = null!;
-    [Dependency] private SharedPowerStateSystem _powerState = null!;
-    [Dependency] private MetaDataSystem _meta = null!;
+    [Dependency] private TelephoneSystem _telephone = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private TransformSystem _xform = default!;
+    [Dependency] private AppearanceSystem _appearance = default!;
+    [Dependency] private SharedPointLightSystem _pointLight = default!;
+    [Dependency] private SharedAmbientSoundSystem _ambientSound = default!;
+    [Dependency] private SharedStationAiSystem _stationAi = default!;
+    [Dependency] private AccessReaderSystem _accessReader = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private PvsOverrideSystem _pvs = default!;
+    [Dependency] private SharedPowerStateSystem _powerState = default!;
+    [Dependency] private MetaDataSystem _meta = default!;
 
 
     #region: Holopad UI bound user interface messages
