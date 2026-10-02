@@ -627,3 +627,27 @@
     sprite: Interface/Actions/voice-mask.rsi
     layers:
     - state: icon
+
+- type: entity
+  id: ActionVoiceSexModificationController
+  name: Change biological configuration
+  description: Change your voice and/or sex.
+  components:
+  - type: Action
+    priority: -20
+    itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Actions/Implants/implants.rsi
+    layers:
+    - state: bio_config
+  - type: InstantAction
+    event: !type:VoiceSexModificationControllerToggleMenuEvent
+
+- type: entity
+  parent: ActionVoiceSexModificationController
+  id: ActionVoiceSexModificationControllerImplant
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Slime/parts.rsi
+    layers:
+    - state: full

@@ -66,6 +66,21 @@
       params:
         variation: 0.125
 
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseSubdermalImplant
+  id: VoiceSexModificationControllerImplant
+  name: biological configuration implant
+  description: This implant allows a single-use change of the user's voice/sex.
+  components:
+  - type: VoiceSexModificationControllerImplant
+  - type: SubdermalImplant
+    implantAction: ActionVoiceSexModificationController
+  - type: UserInterface
+    interfaces:
+      enum.VoiceSexModificationControllerKey.Key:
+        type: VoiceSexModificationControllerBoundUserInterface
+
 #Security implants
 
 - type: entity
