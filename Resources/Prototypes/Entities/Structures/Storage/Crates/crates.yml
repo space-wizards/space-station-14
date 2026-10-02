@@ -335,7 +335,7 @@
   - type: Sprite
     sprite: Structures/Storage/Crates/command.rsi
   - type: AccessReader
-    access: [["HeadOfPersonnel"]]
+    access: [["Command"], ["External"]]
 
 - type: entity
   parent: CrateBaseSecure
@@ -448,6 +448,9 @@
   - type: EntityStorage
     capacity: 1
     airtight: false
+    whitelist:
+      sizes:
+      - Tiny
   - type: Fixtures
     fixtures:
       fix1:
