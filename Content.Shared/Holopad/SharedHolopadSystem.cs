@@ -65,7 +65,7 @@ public abstract partial class SharedHolopadSystem : EntitySystem
             stationAiCore.Comp is not { Remote: true, RemoteEntity: not null })
             return;
 
-        AlternativeVerb verb = new()
+        var verb = new AlternativeVerb
         {
             Act = () => ActivateProjector(entity, user),
             Text = Loc.GetString("holopad-activate-projector-verb"),
