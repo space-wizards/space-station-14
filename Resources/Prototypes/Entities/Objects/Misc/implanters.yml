@@ -48,6 +48,7 @@
     - RadioImplant
     - ChameleonControllerImplant
     - VoiceMaskImplant
+    - VoiceSexModificationControllerImplant
     deimplantFailureDamage:
       types:
         Cellular: 50

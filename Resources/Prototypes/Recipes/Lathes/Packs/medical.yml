@@ -50,6 +50,7 @@
   - OffsetCaneWood
   - JetInjector
   - VehicleWheelchairFolded
+  - VoiceSexModificationControllerImplanter
 
 - type: latheRecipePack
   id: RollerBedsStatic
