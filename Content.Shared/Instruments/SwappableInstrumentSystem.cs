@@ -5,8 +5,8 @@ namespace Content.Shared.Instruments;
 
 public sealed partial class SwappableInstrumentSystem : EntitySystem
 {
-    [Dependency] private SharedInstrumentSystem _sharedInstrument = null!;
-    [Dependency] private SharedPopupSystem _popup = null!;
+    [Dependency] private SharedInstrumentSystem _sharedInstrument = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     [SubscribeLocalEvent]
     private void AddStyleVerb(Entity<SwappableInstrumentComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
