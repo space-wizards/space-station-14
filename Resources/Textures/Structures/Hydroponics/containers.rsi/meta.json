@@ -8,18 +8,6 @@
   },
   "states": [
     {
-      "name": "claypot"
-    },
-    {
-      "name": "claypot-item"
-    },
-    {
-      "name": "claypot-large"
-    },
-    {
-      "name": "hydrocover"
-    },
-    {
       "name": "hydrotray"
     },
     {
