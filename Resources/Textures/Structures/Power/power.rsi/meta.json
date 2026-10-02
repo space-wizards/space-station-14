@@ -1,26 +1,26 @@
 {
-  "version": 1,
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation",
-  "states": [
-    {
-      "name": "generator"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "provider"
-    },
-    {
-      "name": "storage"
-    },
-    {
-      "name": "wiredmachine"
-    },
-    {
-      "name": "wirelessmachine"
-    }
-  ]
+    "states": [
+        {
+            "name": "generator"
+        },
+        {
+            "name": "provider"
+        },
+        {
+            "name": "storage"
+        },
+        {
+            "name": "wiredmachine"
+        },
+        {
+            "name": "wirelessmachine"
+        }
+    ]
 }

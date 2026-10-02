@@ -1,44 +1,44 @@
 {
-  "version": 1,
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/tgstation/tgstation at 0d9c9a8233dfc3fc55edc538955a761a6328bee0, micro_mani by EmoGarbage404 (github)",
-  "states": [
-    {
-      "name": "hdd1"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation at 0d9c9a8233dfc3fc55edc538955a761a6328bee0, micro_mani by EmoGarbage404 (github)",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "hdd2"
-    },
-    {
-      "name": "micro_mani"
-    },
-    {
-      "name": "rom1"
-    },
-    {
-      "name": "rom2"
-    },
-    {
-      "name": "romos1"
-    },
-    {
-      "name": "romos2"
-    },
-    {
-      "name": "scan_module",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    }
-  ]
+    "states": [
+        {
+            "name": "hdd1"
+        },
+        {
+            "name": "hdd2"
+        },
+        {
+            "name": "micro_mani"
+        },
+        {
+            "name": "rom1"
+        },
+        {
+            "name": "rom2"
+        },
+        {
+            "name": "romos1"
+        },
+        {
+            "name": "romos2"
+        },
+        {
+            "name": "scan_module",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        }
+    ]
 }
