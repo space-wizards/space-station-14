@@ -36,20 +36,7 @@ public sealed partial class SignalTimerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnAfterActivatableUIOpen(Entity<SignalTimerComponent> ent, ref AfterActivatableUIOpenEvent args)
     {
-        var time = _activeTimerQuery.TryComp(ent.Owner, out var active) ? active.TriggerTime : TimeSpan.Zero;
-
-        if (_ui.HasUi(ent.Owner, SignalTimerUiKey.Key))
-        {
-            _ui.SetUiState(ent.Owner,
-                SignalTimerUiKey.Key,
-                new SignalTimerBoundUserInterfaceState(ent.Comp.Label,
-                ent.Comp.Delay.Minutes.ToString("D2"),
-                ent.Comp.Delay.Seconds.ToString("D2"),
-                ent.Comp.CanEditLabel,
-                time,
-                active != null,
-                _accessReader.IsAllowed(args.User, ent.Owner)));
-        }
+        UpdateUi(ent);
     }
 
     /// <summary>
@@ -62,18 +49,7 @@ public sealed partial class SignalTimerSystem : EntitySystem
         _audio.PlayPvs(ent.Comp.DoneSound, ent.Owner);
         _signalSystem.InvokePort(ent.Owner, ent.Comp.TriggerPort);
 
-        if (_ui.HasUi(ent.Owner, SignalTimerUiKey.Key))
-        {
-            _ui.SetUiState(ent.Owner,
-                SignalTimerUiKey.Key,
-                new SignalTimerBoundUserInterfaceState(ent.Comp.Label,
-                ent.Comp.Delay.Minutes.ToString("D2"),
-                ent.Comp.Delay.Seconds.ToString("D2"),
-                ent.Comp.CanEditLabel,
-                TimeSpan.Zero,
-                false,
-                true));
-        }
+        UpdateUi(ent);
     }
 
     public override void Update(float frameTime)
@@ -108,7 +84,6 @@ public sealed partial class SignalTimerSystem : EntitySystem
     /// <summary>
     ///     Checks if a UI <paramref name="message"/> is allowed to be sent by the user.
     /// </summary>
-    /// <param name="uid">The entity that is interacted with.</param>
     private bool IsMessageValid(EntityUid uid, BoundUserInterfaceMessage message)
     {
         return _accessReader.IsAllowed(message.Actor, uid);
@@ -191,5 +166,11 @@ public sealed partial class SignalTimerSystem : EntitySystem
         _appearanceSystem.SetData(ent.Owner, TextScreenVisuals.ScreenText, string.Empty);
 
         _signalSystem.InvokePort(ent.Owner, ent.Comp.StartPort);
+    }
+
+    private void UpdateUi(Entity<SignalTimerComponent> ent)
+    {
+        if (_ui.TryGetOpenUi(ent.Owner, SignalTimerUiKey.Key, out var bui))
+            bui.Update();
     }
 }
