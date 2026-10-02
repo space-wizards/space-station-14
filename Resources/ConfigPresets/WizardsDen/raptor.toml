@@ -11,6 +11,10 @@ panic_bunker.custom_reason = ""
 [server]
 # This needs to be specified even though it's identical to the hostname, because fallback lobby name is "Lobby: <hostname>" which would be too long and go out of bounds
 lobby_name = "[EN][LRP] Wizard's Den Raptor [NA East]"
+force_client_hud_version_watermark = true
 
 [hub]
 tags = "lang:en,region:am_n_e,rp:low"
+
+[feedback]
+valid_origins = "wizden wizden_master"
