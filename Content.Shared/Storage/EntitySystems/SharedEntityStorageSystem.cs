@@ -237,7 +237,11 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
         Dirty(target);
         EmptyContents(target, target.Comp);
         ModifyComponents(target, target.Comp);
-        _audio.PlayLocal(target.Comp.OpenSound, target, user);
+        if (user.HasValue)
+            _audio.PlayLocal(target.Comp.OpenSound, target, user);
+        else
+            _audio.PlayPredicted(target.Comp.OpenSound, target, user);
+            
         ReleaseGas(target, target.Comp);
         var afterev = new StorageAfterOpenEvent(user);
         RaiseLocalEvent(target, ref afterev);
@@ -289,7 +293,10 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
             TakeGas(target, target.Comp);
 
         ModifyComponents(target, target.Comp);
-        _audio.PlayLocal(target.Comp.CloseSound, target, user);
+        if (user.HasValue)
+            _audio.PlayLocal(target.Comp.CloseSound, target, user);
+        else
+            _audio.PlayPredicted(target.Comp.CloseSound, target, user);
 
         var afterev = new StorageAfterCloseEvent(user);
         RaiseLocalEvent(target, ref afterev);
