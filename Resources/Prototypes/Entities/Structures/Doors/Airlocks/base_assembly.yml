@@ -27,9 +27,9 @@
   - type: Pullable
   - type: Transform
     anchored: true
-    noRot: true
+  - type: Rotatable
   - type: Damageable
-    damageModifierSet: SteelMod
+    damageModifierSet: SteelStaticMod
   - type: RCDDeconstructable
     cost: 6
     delay: 8

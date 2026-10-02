@@ -24,6 +24,7 @@
         - id: EmergencyOxygenTankFilled
         - id: EmergencyMedipen
         - id: Flare
+        - id: PillPotassiumIodide
   - type: Sprite
     layers:
     - state: internals
@@ -43,6 +44,7 @@
         - id: EmergencyNitrogenTankFilled
         - id: EmergencyMedipen
         - id: Flare
+        - id: PillPotassiumIodide
   - type: Sprite
     layers:
     - state: internals
@@ -62,6 +64,7 @@
         - id: ExtendedEmergencyOxygenTankFilled
         - id: EmergencyMedipen
         - id: Flare
+        - id: PillPotassiumIodide
   - type: Sprite
     layers:
     - state: internals
@@ -81,6 +84,7 @@
         - id: ExtendedEmergencyNitrogenTankFilled
         - id: EmergencyMedipen
         - id: Flare
+        - id: PillPotassiumIodide
   - type: Sprite
     layers:
     - state: internals
@@ -100,6 +104,7 @@
         - id: EmergencyOxygenTankFilled
         - id: EmergencyMedipen
         - id: Flare
+        - id: PillPotassiumIodide
 
 - type: entity
   parent: BoxSurvivalNitrogen
@@ -115,6 +120,7 @@
         - id: EmergencyNitrogenTankFilled
         - id: EmergencyMedipen
         - id: Flare
+        - id: PillPotassiumIodide
   - type: Sprite
     layers:
     - state: internals
@@ -134,6 +140,7 @@
         - id: EmergencyOxygenTankFilled
         - id: EmergencyMedipen
         - id: Flare
+        - id: PillPotassiumIodide
 
 - type: entity
   parent: BoxSurvivalNitrogen
@@ -149,6 +156,7 @@
         - id: EmergencyNitrogenTankFilled
         - id: EmergencyMedipen
         - id: Flare
+        - id: PillPotassiumIodide
   - type: Sprite
     layers:
     - state: internals
@@ -167,6 +175,7 @@
         - id: EmergencyFunnyOxygenTankFilled
         - id: EmergencyMedipen
         - id: Flare
+        - id: PillPotassiumIodide
 
 - type: entity
   parent: BoxSurvivalHug
@@ -181,6 +190,7 @@
         - id: EmergencyNitrogenTankFilled # This should probably be replaced by an equivalent to the funny emergency oxygen tank, once that exists
         - id: EmergencyMedipen
         - id: Flare
+        - id: PillPotassiumIodide
 
 # Primarily intended for antagonists that spawn outside the station (e.g ninjas, wizards)
 # Contains food and water because, unlike normal crew, we don't want to force them to seek food mid-round.

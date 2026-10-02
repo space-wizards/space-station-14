@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Silicons.Bots;
+namespace Content.Shared.Silicons.Bots;
 
 /// <summary>
 /// This component describes how a HugBot hugs.
