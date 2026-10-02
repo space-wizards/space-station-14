@@ -5,10 +5,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Buckle.Systems;
 
-public sealed class IgniteOnBuckleSystem : EntitySystem
+public sealed partial class IgniteOnBuckleSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly FlammableSystem _flammable = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private FlammableSystem _flammable = default!;
 
     public override void Initialize()
     {

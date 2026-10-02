@@ -1,50 +1,35 @@
-﻿using Content.Server.DeviceNetwork.Systems;
+using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
+using Content.Shared.SensorMonitoring;
 
 namespace Content.Server.SensorMonitoring;
 
-public sealed class BatterySensorSystem : EntitySystem
+public sealed partial class BatterySensorSystem : EntitySystem
 {
-    public const string DeviceNetworkCommandSyncData = "bat_sync_data";
+    [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
+    [Dependency] private SharedBatterySystem _battery = default!;
 
-    [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
-    [Dependency] private readonly SharedBatterySystem _battery = default!;
-
-    public override void Initialize()
+    [SubscribeLocalEvent]
+    private void OnSensorRequest(Entity<BatterySensorComponent> ent, ref DeviceNetworkPacketEvent<BatterySensorSyncPayload> args)
     {
-        SubscribeLocalEvent<BatterySensorComponent, DeviceNetworkPacketEvent>(PacketReceived);
-    }
+        var battery = Comp<BatteryComponent>(ent);
+        var currentCharge = _battery.GetCharge((ent.Owner, battery));
+        var netBattery = Comp<PowerNetworkBatteryComponent>(ent);
 
-    private void PacketReceived(EntityUid uid, BatterySensorComponent component, DeviceNetworkPacketEvent args)
-    {
-        if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd))
-            return;
-
-        switch (cmd)
+        var dataPayload = new BatterySensorDataPayload
         {
-            case DeviceNetworkCommandSyncData:
-                var battery = Comp<BatteryComponent>(uid);
-                var currentCharge = _battery.GetCharge((uid, battery));
-                var netBattery = Comp<PowerNetworkBatteryComponent>(uid);
+            Data = new BatterySensorData(
+                currentCharge,
+                battery.MaxCharge,
+                netBattery.CurrentReceiving,
+                netBattery.MaxChargeRate,
+                netBattery.CurrentSupply,
+                netBattery.MaxSupply),
+        };
 
-                var payload = new NetworkPayload
-                {
-                    [DeviceNetworkConstants.Command] = DeviceNetworkCommandSyncData,
-                    [DeviceNetworkCommandSyncData] = new BatterySensorData(
-                        currentCharge,
-                        battery.MaxCharge,
-                        netBattery.CurrentReceiving,
-                        netBattery.MaxChargeRate,
-                        netBattery.CurrentSupply,
-                        netBattery.MaxSupply)
-                };
-
-                _deviceNetwork.QueuePacket(uid, args.SenderAddress, payload);
-                break;
-        }
+        _deviceNetwork.SendPacket(ent.Owner, args.SenderAddress, ref dataPayload);
     }
 }

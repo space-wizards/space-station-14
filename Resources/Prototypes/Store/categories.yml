@@ -113,8 +113,16 @@
 #changeling
 #todo: add actual categories when changeling design/abilities are fleshed out
 - type: storeCategory
-  id: ChangelingAbilities
-  name: store-category-abilities
+  id: ChangelingStoreCombat
+  name: store-category-combat
+
+- type: storeCategory
+  id: ChangelingStoreUtility
+  name: store-category-utility
+
+- type: storeCategory
+  id: ChangelingStoreStealth
+  name: store-category-stealth
 
 - type: storeCategory
   id: DiscountedItems

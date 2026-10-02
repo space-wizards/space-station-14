@@ -11,3 +11,9 @@
   naming: First
   sexes:
   - Unsexed
+  defaultSoundsBySex:
+  - UnisexVox
+  - UnisexVox
+  - UnisexVox
+  voices:
+  - UnisexVox

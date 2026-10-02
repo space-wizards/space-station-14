@@ -5,7 +5,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
 public sealed partial class DisposalInsertOperator : HTNOperator
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
     private DisposalUnitSystem _disposalSystem = default!;
 
     /// <summary>
@@ -46,7 +46,7 @@ public sealed partial class DisposalInsertOperator : HTNOperator
         if (!_entManager.TryGetComponent<DisposalUnitComponent>(disposalUnitTarget, out var disposalComp))
             return HTNOperatorStatus.Failed;
 
-        if (!_disposalSystem.TryInsert(disposalUnitTarget, target, owner, disposalComp))
+        if (!_disposalSystem.TryInsert((disposalUnitTarget, disposalComp), target, owner))
             return HTNOperatorStatus.Failed;
 
         return HTNOperatorStatus.Finished;

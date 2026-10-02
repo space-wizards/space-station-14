@@ -1,20 +1,20 @@
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Rules;
-using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Station.Systems;
+using Content.Shared.GameTicking.Rules;
+using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.PowerCell;
 using Content.Shared.Pinpointer;
-using Content.Shared.Station;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Pinpointer;
 
-public sealed class StationMapSystem : EntitySystem
+public sealed partial class StationMapSystem : EntitySystem
 {
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly PowerCellSystem _cell = default!;
-    [Dependency] private readonly SharedStationSystem _station = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private PowerCellSystem _cell = default!;
+    [Dependency] private ServerStationSystem _station = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private ServerGameTicker _gameTicker = default!;
 
     public override void Initialize()
     {

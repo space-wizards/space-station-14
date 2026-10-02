@@ -10,15 +10,15 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Emp;
 
-public abstract class SharedEmpSystem : EntitySystem
+public abstract partial class SharedEmpSystem : EntitySystem
 {
-    [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
-    [Dependency] private readonly EntityQuery<EmpResistanceComponent> _resistanceQuery = default!;
+    [Dependency] private EntityQuery<EmpResistanceComponent> _resistanceQuery = default!;
 
     private HashSet<EntityUid> _entSet = new();
 
@@ -40,7 +40,7 @@ public abstract class SharedEmpSystem : EntitySystem
     /// <summary>
     /// Triggers an EMP pulse at the given location, by first raising an <see cref="EmpAttemptEvent"/>, then by raising <see cref="EmpPulseEvent"/> on all entities in range.
     /// </summary>
-    /// <param name="coordinates">The location to trigger the EMP pulse at.</param>
+    /// <param name="mapCoordinates">The location to trigger the EMP pulse at.</param>
     /// <param name="range">The range of the EMP pulse.</param>
     /// <param name="energyConsumption">The amount of energy consumed by the EMP pulse. In Joule.</param>
     /// <param name="duration">The duration of the EMP effects.</param>

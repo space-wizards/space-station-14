@@ -13,7 +13,8 @@ public sealed class StartEndGameRulesTest : GameTest
     public override PoolSettings PoolSettings => new PoolSettings
     {
         Dirty = true,
-        DummyTicker = false
+        DummyTicker = false,
+        Map = PoolManager.TestStation
     };
 
     /// <summary>
@@ -25,7 +26,7 @@ public sealed class StartEndGameRulesTest : GameTest
         var pair = Pair;
         var server = pair.Server;
         await server.WaitIdleAsync();
-        var gameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
+        var gameTicker = server.System<ServerGameTicker>();
         var cfg = server.ResolveDependency<IConfigurationManager>();
         Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
 

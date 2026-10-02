@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -30,8 +30,8 @@ public sealed partial class SolutionManagerComponent : Component
     public Dictionary<string, Entity<SolutionComponent>> Solutions = new ();
 
     /// <summary>
-    /// A list of solution entities to spawn when this component starts up.
+    /// A list of solution entities to spawn during <see cref="MapInitEvent"/>.
     /// </summary>
     [DataField("solutions", readOnly: true)]
-    public List<EntProtoId> SolutionEnts = new ();
+    public EntProtoId[]? SolutionEnts;
 }

@@ -9,11 +9,11 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Effects;
 
-public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
+public sealed partial class ColorFlashEffectSystem : SharedColorFlashEffectSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly AnimationPlayerSystem _animation = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private AnimationPlayerSystem _animation = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     /// <summary>
     /// It's a little on the long side but given we use multiple colours denoting what happened it makes it easier to register.

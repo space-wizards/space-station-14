@@ -40,18 +40,25 @@ namespace Content.Server.NPC.Pathfinding
          * See PathfindingSystem.Grid for a description of the grid implementation.
          */
 
-        [Dependency] private readonly IAdminManager _adminManager = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly IParallelManager _parallel = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly DestructibleSystem _destructible = default!;
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
-        [Dependency] private readonly FixtureSystem _fixtures = default!;
-        [Dependency] private readonly NPCSystem _npc = default!;
-        [Dependency] private readonly SharedMapSystem _maps = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private IAdminManager _adminManager = default!;
+        [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private IParallelManager _parallel = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private DestructibleSystem _destructible = default!;
+        [Dependency] private EntityLookupSystem _lookup = default!;
+        [Dependency] private FixtureSystem _fixtures = default!;
+        [Dependency] private NPCSystem _npc = default!;
+        [Dependency] private SharedMapSystem _maps = default!;
+        [Dependency] private SharedPhysicsSystem _physics = default!;
+        [Dependency] private SharedTransformSystem _transform = default!;
+
+        [Dependency] private EntityQuery<AccessReaderComponent> _accessReaderQuery = default!;
+        [Dependency] private EntityQuery<DestructibleComponent> _destructibleQuery = default!;
+        [Dependency] private EntityQuery<DoorComponent> _doorQuery = default!;
+        [Dependency] private EntityQuery<ClimbableComponent> _climbableQuery = default!;
+        [Dependency] private EntityQuery<FixturesComponent> _fixturesQuery = default!;
+        [Dependency] private EntityQuery<MapGridComponent> _mapGridQuery = default!;
 
         private readonly Dictionary<ICommonSession, PathfindingDebugMode> _subscribedSessions = new();
 
@@ -68,26 +75,9 @@ namespace Content.Server.NPC.Pathfinding
         private int _portalIndex;
         private readonly Dictionary<int, PathPortal> _portals = new();
 
-        private EntityQuery<AccessReaderComponent> _accessQuery;
-        private EntityQuery<DestructibleComponent> _destructibleQuery;
-        private EntityQuery<DoorComponent> _doorQuery;
-        private EntityQuery<ClimbableComponent> _climbableQuery;
-        private EntityQuery<FixturesComponent> _fixturesQuery;
-        private EntityQuery<MapGridComponent> _gridQuery;
-        private EntityQuery<TransformComponent> _xformQuery;
-
         public override void Initialize()
         {
             base.Initialize();
-
-            _accessQuery = GetEntityQuery<AccessReaderComponent>();
-            _destructibleQuery = GetEntityQuery<DestructibleComponent>();
-            _doorQuery = GetEntityQuery<DoorComponent>();
-            _climbableQuery = GetEntityQuery<ClimbableComponent>();
-            _fixturesQuery = GetEntityQuery<FixturesComponent>();
-            _gridQuery = GetEntityQuery<MapGridComponent>();
-            _xformQuery = GetEntityQuery<TransformComponent>();
-
             _playerManager.PlayerStatusChanged += OnPlayerChange;
             InitializeGrid();
             SubscribeNetworkEvent<RequestPathfindingDebugMessage>(OnBreadcrumbs);
