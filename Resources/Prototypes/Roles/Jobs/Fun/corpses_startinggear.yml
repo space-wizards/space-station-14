@@ -3,7 +3,7 @@
   id: CorpseCentcommOfficialGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitCentcomOfficial
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsCombat
     head: ClothingHeadHatCentcom
     gloves: ClothingHandsGlovesColorBlack
     pocket1: PenCentcom
@@ -59,7 +59,7 @@
     head: ClothingHeadHatBeretHoS
     gloves: ClothingHandsGlovesColorBlack
     eyes: ClothingEyesGlassesSecurity
-    belt: ClothingBeltSecurityFilled
+    belt: ClothingBeltSecurity
 
 - type: startingGear
   id: CorpseResearchDirectorGear
@@ -91,7 +91,7 @@
     head: ClothingHeadHatBeretWarden
     gloves: ClothingHandsGlovesColorBlack
     eyes: ClothingEyesGlassesSunglasses
-    belt: ClothingBeltSecurityFilled
+    belt: ClothingBeltSecurity
     pocket1: Handcuffs
 
 - type: startingGear
@@ -113,7 +113,7 @@
     outerClothing: ClothingOuterArmorBasic
     head: ClothingHeadHatBeretSecurity
     gloves: ClothingHandsGlovesColorBlack
-    belt: ClothingBeltSecurityFilled
+    belt: ClothingBeltSecurity
     pocket1: Handcuffs
 
 - type: startingGear
@@ -150,7 +150,7 @@
     head: ClothingHeadHatBeretMedic
     gloves: ClothingHandsGlovesLatex
     eyes: ClothingEyesGlasses
-    belt: ClothingBeltMedicalFilled
+    belt: ClothingBeltMedical
     pocket1: HandheldHealthAnalyzer
 
 - type: startingGear
@@ -161,7 +161,7 @@
     outerClothing: ClothingOuterCoatParamedicWB
     head: ClothingHeadHatParamedicsoft
     gloves: ClothingHandsGlovesNitrile
-    belt: ClothingBeltMedicalEMTFilled
+    belt: ClothingBeltMedicalEMT
     pocket1: EmergencyMedipen
 
 - type: startingGear
@@ -259,7 +259,7 @@
     outerClothing: ClothingOuterApronBotanist
     head: ClothingHeadBandBotany
     gloves: ClothingHandsGlovesLeather
-    belt: ClothingBeltPlantFilled
+    belt: ClothingBeltPlant
 
 - type: startingGear
   id: CorpseChefGear
@@ -268,7 +268,7 @@
     shoes: ClothingShoesChef
     outerClothing: ClothingOuterJacketChef
     head: ClothingHeadHatChef
-    belt: ClothingBeltChefFilled
+    belt: ClothingBeltChef
     pocket1: RollingPin
 
 - type: startingGear
@@ -278,7 +278,7 @@
     shoes: ClothingShoesGaloshes
     head: ClothingHeadHatPurplesoft
     gloves: ClothingHandsGlovesJanitor
-    belt: ClothingBeltJanitorFilled
+    belt: ClothingBeltJanitor
     pocket1: SoapNT
 
 - type: startingGear
