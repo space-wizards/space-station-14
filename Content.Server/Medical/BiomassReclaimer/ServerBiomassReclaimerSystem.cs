@@ -5,7 +5,6 @@ using Content.Shared.Humanoid;
 using Content.Shared.Medical.BiomassReclaimer;
 using Content.Shared.Mind;
 using Robust.Server.Player;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 
 namespace Content.Server.Medical.BiomassReclaimer;
@@ -16,7 +15,6 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
     [Dependency] private IConfigurationManager _configManager = default!;
     [Dependency] private SharedMindSystem _minds = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
-    [Dependency] private SharedAudioSystem _sharedAudioSystem = default!;
 
     private bool _biomassEasyMode;
 
@@ -25,12 +23,6 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         base.Initialize();
 
         Subs.CVar(_configManager, CCVars.BiomassEasyMode, value => _biomassEasyMode = value, true);
-    }
-
-    protected override void StartRunningEffects(Entity<BiomassReclaimerComponent> ent)
-    {
-        base.StartRunningEffects(ent);
-        _sharedAudioSystem.PlayPvs(ent.Comp.StartupSound, ent);
     }
 
     [SubscribeLocalEvent]

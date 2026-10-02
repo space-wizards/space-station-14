@@ -21,6 +21,8 @@ using Content.Shared.Power.EntitySystems;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Throwing;
 using Content.Shared.Tools.Components;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -39,6 +41,8 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     [Dependency] private SharedSolutionContainerSystem _solution = default!;
     [Dependency] private SharedPuddleSystem _puddleSystem = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private INetManager _net = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
@@ -161,12 +165,19 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
         active.PowerLossTime = null;
         Dirty(uid, active);
         StartRunningEffects((uid, reclaimer));
+        PlayStartupSound((uid, reclaimer));
     }
 
-    protected virtual void StartRunningEffects(Entity<BiomassReclaimerComponent> ent)
+    private void StartRunningEffects(Entity<BiomassReclaimerComponent> ent)
     {
         _jitteringSystem.AddJitter(ent, ent.Comp.JitterAmplitude, ent.Comp.JitterFrequency);
         _ambientSoundSystem.SetAmbience(ent, true);
+    }
+
+    private void PlayStartupSound(Entity<BiomassReclaimerComponent> ent)
+    {
+        if (_net.IsServer)
+            _audio.PlayPvs(ent.Comp.StartupSound, ent);
     }
 
     private void StopRunningEffects(EntityUid uid)
@@ -183,6 +194,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
         active.NextMessTime = _timing.CurTime;
         CollectMessData(toProcess, (ent.Owner, ent.Comp, active));
         Dirty(ent.Owner, active);
+        PlayStartupSound(ent);
 
         foreach (var item in _inventory.GetHandOrInventoryEntities(toProcess.Owner))
         {
