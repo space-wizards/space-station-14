@@ -329,8 +329,8 @@ public partial class NavMapControl : MapGridControl
             {
                 foreach (var gridCoords in regionOverlay.GridCoords)
                 {
-                    var positionTopLeft = ScalePosition(new Vector2(gridCoords.Item1.X, -gridCoords.Item1.Y) - new Vector2(offset.X, -offset.Y));
-                    var positionBottomRight = ScalePosition(new Vector2(gridCoords.Item2.X + _grid.TileSize, -gridCoords.Item2.Y - _grid.TileSize) - new Vector2(offset.X, -offset.Y));
+                    var positionTopLeft = ScalePosition(new Vector2(gridCoords.Item1.X, -gridCoords.Item2.Y - _grid.TileSize) - new Vector2(offset.X, -offset.Y));
+                    var positionBottomRight = ScalePosition(new Vector2(gridCoords.Item2.X + _grid.TileSize, -gridCoords.Item1.Y) - new Vector2(offset.X, -offset.Y));
 
                     var box = new UIBox2(positionTopLeft, positionBottomRight);
                     handle.DrawRect(box, regionOverlay.Color);

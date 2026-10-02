@@ -11,5 +11,5 @@ public sealed partial class CriminalRecordComponent : Component
     ///     The icon that should be displayed based on the criminal status of the entity.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public ProtoId<SecurityIconPrototype> StatusIcon = "SecurityIconWanted";
+    public ProtoId<StatusIconPrototype> StatusIcon = "SecurityIconWanted";
 }

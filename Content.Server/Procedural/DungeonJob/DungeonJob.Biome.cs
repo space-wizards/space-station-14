@@ -24,7 +24,7 @@ public sealed partial class DungeonJob
         var seed = random.Next();
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
-        var tiles = _maps.GetAllTilesEnumerator(_gridUid, _grid);
+        var tiles = _maps.GetAllTiles(_gridUid, _grid);
         while (tiles.MoveNext(out var tileRef))
         {
             var node = tileRef.Value.GridIndices;
