@@ -2,7 +2,7 @@
 
 [game]
 hostname = "[EN][LRP][Nightly] Wizard's Den Lizard [NA West]"
-desc = "Official English server for Space Station 14. Low roleplay ruleset. This server uses a nightly build containing the newest changes to the game; these changes may be experimental or unstable, and may be reverted before the next stable release. Please report bugs on our GitHub, forum, or community Discord."
+desc = "Official English server for Space Station 14. Low roleplay ruleset. This server runs a nightly build of the game containing the newest changes; these changes may be experimental or unstable, and may be reverted before the next stable release. Please report bugs on our GitHub, forum, or community Discord."
 panic_bunker.enabled = false
 panic_bunker.disable_with_admins = false
 panic_bunker.enable_without_admins = false
@@ -11,6 +11,10 @@ panic_bunker.custom_reason = ""
 [server]
 # This needs to be specified even though it's identical to the hostname, because fallback lobby name is "Lobby: <hostname>" which would be too long and go out of bounds
 lobby_name = "[EN][LRP][Nightly] Wizard's Den Lizard [NA West]"
+force_client_hud_version_watermark = true
+
+[chat]
+motd = "Wizard's Den Lizard runs a nightly build of the game containing the newest changes; [color=red]these changes may be experimental or unstable,[/color] and may be reverted before the next stable release. Please report bugs on our GitHub, forum, or community Discord."
 
 [hub]
 tags = "lang:en,region:am_n_w,rp:low"
