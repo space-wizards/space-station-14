@@ -1629,6 +1629,14 @@
     id: AgentIDCard
 
 - type: entity
+  parent: PassengerPDA
+  id: SyndiCovertPDA
+  suffix: Adaptive
+  components:
+  - type: Pda
+    id: SyndicateIDCardAdaptivePassenger
+
+- type: entity
   parent: BaseWidePDA
   id: WizardPDA
   name: wizard PDA

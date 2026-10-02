@@ -70,3 +70,15 @@ book-text-combat-bakery-kit = Thank you for choosing our combat bakery kit!
       Butter Slice x 1
       Glass Shard x 1
       Cook Time: 5 seconds
+
+book-text-reinforcement-initiation = [color=red][head=3]WELCOME TO THE SYNDICATE[/head][/color]
+
+    You have been chosen for an essential mission, and are to be discretely teleported into enemy territory. Observe the following upon your arrival:
+
+    - Aid the requester in their objectives, they are your commander. Their life is worth more than yours. Obey them without question.
+
+    - [italic]Do Not[/italic] reveal your identity to the enemies of the Syndicate unless ordered to by your commander. Consider equipping civilian clothing to blend in.
+
+    - Ensure your adaptive Syndicate ID Card properly displays your false identity, ask your commander how to do this if you failed to remember from basic training.
+
+    - Above all, remember:[bold] DEATH TO NANOTRASEN. [/bold]

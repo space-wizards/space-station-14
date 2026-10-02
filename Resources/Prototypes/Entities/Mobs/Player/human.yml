@@ -28,11 +28,15 @@
   # make the player a traitor once its taken
   - type: AutoTraitor
     profile: TraitorReinforcement
+  - type: RandomMetadata
+    nameSegments:
+    - NamesFirst
+    - NamesLast
 
 - type: entity
   parent: MobHumanSyndicateAgent
   id: MobHumanSyndicateAgentMedic
-  name: syndicate medic
+  name: syndicate combat medic
   components:
   - type: Loadout
     prototypes: [SyndicateReinforcementMedic]

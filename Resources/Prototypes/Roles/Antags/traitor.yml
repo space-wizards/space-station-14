@@ -85,57 +85,68 @@
   id: SyndicateOperativeClothing
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
-    back: ClothingBackpackSyndicate
+    back: ClothingBackpack
     shoes: ClothingShoesBootsSyndieFilled
     gloves: ClothingHandsGlovesColorBlack
+    ears: ClothingHeadsetAltSyndicate
+    id: SyndiCovertPDA
+    pocket1: WeaponPistolViper
+
 
 - type: startingGear
+  parent: SyndicateOperativeClothing
   id: SyndicateReinforcementMedic
   equipment:
-    jumpsuit: ClothingUniformJumpsuitOperative
-    shoes: ClothingShoesColorRed
-    gloves: ClothingHandsGlovesLatex
     head: ClothingHeadHatSurgcapPurple
-    id: VisitorPDA
+    mask: ClothingMaskSterile
+    gloves: ClothingHandsGlovesLatex
     belt: ClothingBeltMedicalFilled
     back: ClothingBackpackDuffelMedical
-    ears: ClothingHeadsetMedical
     eyes: ClothingEyesHudMedical
-    pocket1: HandheldHealthAnalyzer
     pocket2: PillCanisterBicaridine
   inhand:
     - MedkitCombatFilled
+    - PaperWrittenSyndicateInstructions
   storage:
     back:
-    - Defibrillator
+    - EncryptionKeySyndie
+    - EncryptionKeyMedical
+    - DefibrillatorSyndicate
     - CigPackSyndicate
     - UniformScrubsColorPurple
     - ChemistryBottleToxin
-    - WeaponPistolViper
     - Syringe
-    - Syringe
+    - HandheldHealthAnalyzer
+    - AdvancedJetInjector
 
 - type: startingGear
+  parent: SyndicateOperativeClothing
   id: SyndicateReinforcementSpy
   equipment:
-    jumpsuit: ClothingUniformJumpsuitOperative
-    back: ClothingBackpack
-    shoes: ClothingShoesColorBlack
-    gloves: ClothingHandsGlovesColorBlack
-    pocket1: WeaponPistolViper
+    pocket1: WeaponPistolCobra
     pocket2: VoiceMaskImplanter
   inhand:
     - ClothingBackpackChameleonFillAgent
-- type: startingGear
-  id: SyndicateReinforcementThief
-  parent: SyndicateOperativeClothing
-  equipment:
-    pocket1: WeaponPistolViper
-    pocket2: MagazinePistolHighCapacity
-  inhand:
-    - ToolboxSyndicateFilled
+    - PaperWrittenSyndicateInstructions
   storage:
     back:
+    - EncryptionKeySyndie
+    - RadioHandheld
+    - RadioHandheld
+
+- type: startingGear
+  parent: SyndicateOperativeClothing
+  id: SyndicateReinforcementThief
+  equipment:
+    eyes: ClothingEyesGlassesHiddenSecurity
+    outerClothing: ClothingOuterCoatJensenSyndie
+    pocket2: C4
+  inhand:
+    - ToolboxSyndicateFilled
+    - PaperWrittenSyndicateInstructions
+  storage:
+    back:
+    - EncryptionKeySyndie
     - SyndicateJawsOfLife
     - CameraBug
 
