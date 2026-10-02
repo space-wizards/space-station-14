@@ -642,12 +642,3 @@
     - state: bio_config
   - type: InstantAction
     event: !type:VoiceSexModificationControllerToggleMenuEvent
-
-- type: entity
-  parent: ActionVoiceSexModificationController
-  id: ActionVoiceSexModificationControllerImplant
-  components:
-  - type: Sprite
-    sprite: Mobs/Species/Slime/parts.rsi
-    layers:
-    - state: full
