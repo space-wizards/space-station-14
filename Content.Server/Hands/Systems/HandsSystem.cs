@@ -1,4 +1,6 @@
 using System.Numerics;
+using Content.Server.Inventory;
+using Content.Server.Popups;
 using Content.Server.Stack;
 using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
@@ -33,6 +35,7 @@ namespace Content.Server.Hands.Systems
         [Dependency] private PullingSystem _pullingSystem = default!;
         [Dependency] private ThrowingSystem _throwingSystem = default!;
         [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
+        [Dependency] private PopupSystem _popup = default!;
 
         /// <summary>
         /// Items dropped when the holder falls down will be launched in
@@ -113,7 +116,7 @@ namespace Content.Server.Hands.Systems
                 _pullingSystem.TryStopPull(puller.Pulling.Value, pullable);
 
             var offsetRandomCoordinates = _transformSystem.GetMoverCoordinates(args.Target).Offset(_random.NextVector2(1f, 1.5f));
-            if (!ThrowHeldItem(args.Target, offsetRandomCoordinates))
+            if (!ThrowHeldItem(args.Target, offsetRandomCoordinates, forcePlayerThrow: true))
                 return;
 
             args.PopupPrefix = "disarm-action-";
@@ -134,7 +137,12 @@ namespace Content.Server.Hands.Systems
         /// <summary>
         /// Throw the player's currently held item.
         /// </summary>
-        public bool ThrowHeldItem(EntityUid player, EntityCoordinates coordinates, float minDistance = 0.1f)
+        /// <param name="player">The entity with hands who is doing the throwing.</param>
+        /// <param name="coordinates">Target coordinates for the throw.</param>
+        /// <param name="minDistance">Minimum distance a throw may result in.</param>
+        /// <param name="forcePlayerThrow">If the throw should bypass checks involving the player (e.g. throw cooldowns for disarming).</param>
+        /// <returns></returns>
+        public bool ThrowHeldItem(EntityUid player, EntityCoordinates coordinates, float minDistance = 0.1f, bool forcePlayerThrow = false)
         {
             if (ContainerSystem.IsEntityInContainer(player) ||
                 !TryComp(player, out HandsComponent? hands) ||
@@ -142,8 +150,11 @@ namespace Content.Server.Hands.Systems
                 !_actionBlockerSystem.CanThrow(player, throwEnt.Value))
                 return false;
 
-            if (_timing.CurTime < hands.NextThrowTime)
+            if (!forcePlayerThrow && _timing.CurTime < hands.NextThrowTime)
+            {
+                _popup.PopupEntity(Loc.GetString("hands-system-throwing-cooldown"), player, player);
                 return false;
+            }
             hands.NextThrowTime = _timing.CurTime + hands.ThrowCooldown;
 
             if (TryComp(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
