@@ -150,23 +150,28 @@
     cost: 10
 
 - type: entity
-  id: BreakerFlip
   parent: BaseGameRule
+  id: BreakerFlip
   components:
   - type: StationEvent
     weight: 7
     duration: 1
     minimumPlayers: 15
+    startAudio:
+      path: /Audio/Announcements/announce.ogg
   - type: BreakerFlipRule
     blacklist:
       components:
         - ProtectedGrid
+    affectedQuantity:
+      min: 3
+      max: 6
   - type: DynamicRuleCost
     cost: 10
 
 - type: entity
-  id: BureaucraticError
   parent: BaseGameRule
+  id: BureaucraticError
   components:
   - type: StationEvent
     startAnnouncement: station-event-bureaucratic-error-announcement
@@ -180,6 +185,13 @@
     - MedicalIntern
     - SecurityCadet
     - TechnicalAssistant
+    closeAllButOneChance: 0.25
+    proportionOfJobsToAdjust:
+      min: 0.2
+      max: 0.3
+    jobSlotAdjustment:
+      min: -3
+      max: 5
   - type: DynamicRuleCost
     cost: 10
 
