@@ -2,6 +2,8 @@
 
 - type: foodSequenceElement
   id: BunTopBurger
+  useRandomOffset: false
+  canFlip: false
   final: true
   sprites:
   - sprite: Objects/Consumable/Food/burger_sequence.rsi
@@ -71,6 +73,7 @@
 
 - type: foodSequenceElement
   id: MeatPatty
+  offset: -0.03125, 0 # left by 1 pixel
   sprites:
   - sprite: Objects/Consumable/Food/meat.rsi
     state: patty
@@ -717,6 +720,8 @@
 - type: foodSequenceElement
   id: PineappleSliceBurger
   name: food-sequence-burger-content-pineapple
+  scale: 0.9, 0.9
+  offset: -0.015625, 0.03125 # left by 0.5 pixel, up by 1 pixel
   sprites:
   - sprite: Objects/Specific/Hydroponics/pineapple.rsi
     state: slice
@@ -739,6 +744,7 @@
 - type: foodSequenceElement
   id: OnionSliceBurger
   name: food-sequence-burger-content-onion
+  offset: -0.015625, 0.03125 # left by 0.5 pixel, up by 1 pixel
   sprites:
   - sprite: Objects/Specific/Hydroponics/onion.rsi
     state: slice
@@ -761,6 +767,7 @@
 - type: foodSequenceElement
   id: OnionRedSliceBurger
   name: food-sequence-burger-content-onion
+  offset: -0.015625, 0.03125 # left by 0.5 pixel, up by 1 pixel
   sprites:
   - sprite: Objects/Specific/Hydroponics/onion_red.rsi
     state: slice
@@ -1234,6 +1241,8 @@
 
 - type: foodSequenceElement
   id: CottonBunTopBurger
+  useRandomOffset: false
+  canFlip: false
   final: true
   sprites:
   - sprite: Objects/Consumable/Food/cottonburger.rsi
