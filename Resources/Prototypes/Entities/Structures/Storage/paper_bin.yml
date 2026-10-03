@@ -43,68 +43,30 @@
   id: PaperBin5
   suffix: 5
   components:
-  - type: Bin
-    initialContents:
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    whitelist:
-      tags:
-      - Document
-      - Write
+  - type: EntityTableContainerFill
+    containers:
+      bin-container:
+        id: Paper
+        amount: 5
 
 - type: entity
   parent: PaperBin
   id: PaperBin10
   suffix: 10
   components:
-  - type: Bin
-    initialContents:
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    whitelist:
-      tags:
-      - Document
-      - Write
+  - type: EntityTableContainerFill
+    containers:
+      bin-container:
+        id: Paper
+        amount: 10
 
 - type: entity
   parent: PaperBin
   id: PaperBin20
   suffix: 20
   components:
-  - type: Bin
-    initialContents:
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    whitelist:
-      tags:
-      - Document
-      - Write
+  - type: EntityTableContainerFill
+    containers:
+      bin-container:
+        id: Paper
+        amount: 20
