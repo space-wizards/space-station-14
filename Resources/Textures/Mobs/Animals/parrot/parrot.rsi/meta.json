@@ -1,27 +1,17 @@
 {
   "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b",
   "size": {
     "x": 32,
     "y": 32
   },
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b",
   "states": [
     {
-      "name": "icon",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "icon"
     },
     {
-      "name": "dead",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "dead"
     },
     {
       "name": "parrot",
@@ -82,24 +72,6 @@
           0.1,
           0.1,
           0.1
-        ]
-      ]
-    },
-    {
-      "name": "sit",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
         ]
       ]
     }

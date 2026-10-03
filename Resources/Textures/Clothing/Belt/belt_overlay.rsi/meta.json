@@ -29,16 +29,7 @@
       "name": "crowbar"
     },
     {
-      "name": "crowbar_brass"
-    },
-    {
       "name": "crowbar_red"
-    },
-    {
-      "name": "cutters_blade"
-    },
-    {
-      "name": "cutters_brass"
     },
     {
       "name": "cutters_handle"
@@ -116,9 +107,6 @@
       "name": "screwdriver"
     },
     {
-      "name": "screwdriver_brass"
-    },
-    {
       "name": "screwdriver_head"
     },
     {
@@ -162,9 +150,6 @@
     },
     {
       "name": "wire_brush"
-    },
-    {
-      "name": "wrench_brass"
     },
     {
       "name": "wrench_medical"
