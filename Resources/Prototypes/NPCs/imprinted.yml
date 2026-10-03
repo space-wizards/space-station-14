@@ -40,24 +40,11 @@
 - type: htnCompound
   id: ImprintedAttackCompound
   branches:
-  - preconditions:
-    - !type:KeyBoolEqualsPrecondition
-      key: ImprintedHunt
-      value: true
-    tasks:
-    - !type:HTNPrimitiveTask
-      operator: !type:MeleeOperator
-        targetKey: Target
-        targetState: Dead
-      preconditions:
-      - !type:TargetInRangePrecondition
-        targetKey: Target
-        rangeKey: MeleeRange
   - tasks:
     - !type:HTNPrimitiveTask
       operator: !type:MeleeOperator
         targetKey: Target
-        targetState: Alive
+        targetState: Critical
       preconditions:
       - !type:TargetInRangePrecondition
         targetKey: Target

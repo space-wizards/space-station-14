@@ -36,6 +36,7 @@ public sealed partial class ImprintedTargetOperator : HTNOperator
             foreach (var target in imprint.Target)
             {
                 if (_entities.Deleted(target) || imprint.Friendly.Contains(target) ||
+                    _entities.TryGetComponent<MobStateComponent>(target, out var targetState) && targetState.CurrentState > MobState.Critical ||
                     !coordinates.TryDistance(_entities, new EntityCoordinates(target, Vector2.Zero), out var distance) || distance >= nearest)
                     continue;
                 nearest = distance;
