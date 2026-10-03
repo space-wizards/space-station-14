@@ -43,7 +43,6 @@ public sealed partial class HolopadSystem : SharedHolopadSystem
     [Dependency] private SharedPowerStateSystem _powerState = default!;
     [Dependency] private MetaDataSystem _meta = default!;
 
-
     #region: Holopad UI bound user interface messages
 
     [SubscribeLocalEvent]
@@ -134,7 +133,6 @@ public sealed partial class HolopadSystem : SharedHolopadSystem
     {
         ActivateProjector(entity, args.Actor);
     }
-
 
     [SubscribeLocalEvent]
     private void OnHolopadStartBroadcast(Entity<HolopadComponent> source, ref HolopadStartBroadcastMessage args)
@@ -336,7 +334,6 @@ public sealed partial class HolopadSystem : SharedHolopadSystem
 
     #region: Misc events
 
-
     [SubscribeLocalEvent]
     private void OnEmote(Entity<HolopadUserComponent> entity, ref EmoteEvent args)
     {
@@ -382,7 +379,6 @@ public sealed partial class HolopadSystem : SharedHolopadSystem
 
         _telephone.EndTelephoneCalls((stationAiCore, stationAiCoreTelephone));
     }
-
 
     [SubscribeLocalEvent]
     private void OnAiRemove(Entity<HolopadComponent> entity, ref EntRemovedFromContainerMessage args)

@@ -13,32 +13,6 @@ public abstract partial class SharedHolopadSystem : EntitySystem
     [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
     [Dependency] private SharedStationAiSystem _stationAi = default!;
 
-    public bool IsHolopadControlLocked(Entity<HolopadComponent> entity, EntityUid? user = null)
-    {
-        if (_timing.CurTime > entity.Comp.ControlLockoutEndTime)
-            return false;
-
-        if (entity.Comp.ControlLockoutOwner is null || entity.Comp.ControlLockoutOwner == user)
-            return false;
-
-        return true;
-    }
-
-    public TimeSpan GetHolopadControlLockedPeriod(Entity<HolopadComponent> entity)
-    {
-        return entity.Comp.ControlLockoutEndTime - _timing.CurTime;
-    }
-
-    public bool IsHolopadBroadcastOnCoolDown(Entity<HolopadComponent> entity)
-    {
-        return !(_timing.CurTime > entity.Comp.ControlLockoutCoolDownEndTime);
-    }
-
-    public TimeSpan GetHolopadBroadcastCoolDown(Entity<HolopadComponent> entity)
-    {
-        return entity.Comp.ControlLockoutCoolDownEndTime - _timing.CurTime;
-    }
-
     [SubscribeLocalEvent]
     private void AddToggleProjectorVerb(Entity<HolopadComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
     {
@@ -73,6 +47,32 @@ public abstract partial class SharedHolopadSystem : EntitySystem
         };
 
         args.Verbs.Add(verb);
+    }
+
+    public bool IsHolopadControlLocked(Entity<HolopadComponent> entity, EntityUid? user = null)
+    {
+        if (_timing.CurTime > entity.Comp.ControlLockoutEndTime)
+            return false;
+
+        if (entity.Comp.ControlLockoutOwner is null || entity.Comp.ControlLockoutOwner == user)
+            return false;
+
+        return true;
+    }
+
+    public TimeSpan GetHolopadControlLockedPeriod(Entity<HolopadComponent> entity)
+    {
+        return entity.Comp.ControlLockoutEndTime - _timing.CurTime;
+    }
+
+    public bool IsHolopadBroadcastOnCoolDown(Entity<HolopadComponent> entity)
+    {
+        return !(_timing.CurTime > entity.Comp.ControlLockoutCoolDownEndTime);
+    }
+
+    public TimeSpan GetHolopadBroadcastCoolDown(Entity<HolopadComponent> entity)
+    {
+        return entity.Comp.ControlLockoutCoolDownEndTime - _timing.CurTime;
     }
 
     protected virtual void ActivateProjector(Entity<HolopadComponent> entity, EntityUid user) { }
