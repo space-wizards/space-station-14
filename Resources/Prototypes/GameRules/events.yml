@@ -160,7 +160,7 @@
   - type: BreakerFlipRule
     blacklist:
       components:
-        - ProtectedGrid
+      - ProtectedGrid
   - type: DynamicRuleCost
     cost: 10
 

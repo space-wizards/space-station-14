@@ -19,9 +19,12 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
     [Dependency] private ApcSystem _apcSystem = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
+    [Dependency] private EntityQuery<StationEventComponent> _stationEventQuery;
+    [Dependency] private EntityQuery<StationMemberComponent> _stationMemberQuery;
+
     protected override void Added(Entity<BreakerFlipRuleComponent, GameRuleComponent> ent, ref GameRuleAddedEvent args)
     {
-        if (!TryComp<StationEventComponent>(ent, out var stationEvent))
+        if (!_stationEventQuery.TryComp(ent, out var stationEvent))
             return;
 
         var str = Loc.GetString("station-event-breaker-flip-announcement", ("data", Loc.GetString($"random-sentience-event-data-{RobustRandom.Next(1, 6)}")));
@@ -34,35 +37,46 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
     {
         base.Started(ent, ref args);
 
-        if (!Station.TryGetRandomStation<StationEventEligibleComponent>(
-            out var chosenStation,
-            uid => _whitelist.IsWhitelistFailOrNull(ent.Comp1.Blacklist, uid)))
+        Station.TryGetRandomStation<StationEventEligibleComponent>(out var chosenEnt);
+        if (chosenEnt is not { } chosenStation)
             return;
 
-        var stationApcs = new List<Entity<ApcComponent>>();
+        var stationApcs = new List<(Entity<ApcComponent> apc, EntityUid grid)>(Count<ApcComponent>());
         var query = EntityQueryEnumerator<ApcComponent, TransformComponent>();
         while (query.MoveNext(out var apcUid, out var apc, out var xform))
         {
-            if (apc.MainBreakerEnabled && CompOrNull<StationMemberComponent>(xform.GridUid)?.Station == chosenStation.Value.Owner)
+            if (apc.MainBreakerEnabled
+                && xform.GridUid is { } grid
+                && _stationMemberQuery.CompOrNull(grid)?.Station == chosenStation)
             {
-                stationApcs.Add((apcUid, apc));
+                stationApcs.Add(((apcUid, apc), grid));
             }
         }
 
-        var toDisable = Math.Min(RobustRandom.Next(3, 7), stationApcs.Count);
-        if (toDisable == 0)
+        var breakerFlip = ent.Comp1;
+
+        var toDisable = Math.Min(breakerFlip.ApcCount.Next(RobustRandom), stationApcs.Count);
+        if (toDisable <= 0)
             return;
 
         RobustRandom.Shuffle(stationApcs);
 
-        for (var i = 0; i < toDisable; i++)
+        var disabled = 0;
+        foreach (var (apc, grid) in stationApcs)
         {
-            var apc = stationApcs[i];
+            // If the APC's grid matches our blacklist, skip to the next one.
+            if (_whitelist.IsWhitelistPass(breakerFlip.Blacklist, grid))
+                continue;
+
             _apcSystem.ApcToggleBreaker(apc, apc);
 
             var stateString = apc.Comp.MainBreakerEnabled ? "Enabled" : "Disabled";
             AdminLogManager.Add(LogType.ItemConfigure, LogImpact.Medium,
                 $"Station event {ToPrettyString(ent):user} set the main breaker state of {ToPrettyString(apc):entity} to {stateString:state}");
+
+            disabled++;
+            if (disabled >= toDisable)
+                return;
         }
     }
 }
