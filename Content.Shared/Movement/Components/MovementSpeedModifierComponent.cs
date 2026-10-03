@@ -1,3 +1,4 @@
+using Content.Shared.Cloning;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.GameStates;
 
@@ -8,7 +9,7 @@ namespace Content.Shared.Movement.Components
     /// If this is not present on the entity then they will use defaults for movement.
     /// </summary>
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-    [Access(typeof(MovementSpeedModifierSystem))]
+    [Access(typeof(MovementSpeedModifierSystem), typeof(CloningContext))]
     public sealed partial class MovementSpeedModifierComponent : Component
     {
         #region defaults

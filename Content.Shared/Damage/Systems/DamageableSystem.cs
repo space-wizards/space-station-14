@@ -6,10 +6,8 @@ using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Damage.Systems;
 
@@ -107,18 +105,5 @@ public sealed partial class DamageableSystem : EntitySystem
             }
         }
         return damageTypes;
-    }
-
-    public void CopyComponent(Entity<DamageableComponent?> entity, EntityUid clone)
-    {
-        if (!Resolve(entity, ref entity.Comp, false))
-            return;
-
-        // Don't clone current damage values.
-        var cloneComp = EnsureComp<DamageableComponent>(clone);
-        cloneComp.Displacement = entity.Comp.Displacement;
-        cloneComp.DamageModifierSetId = entity.Comp.DamageModifierSetId;
-        cloneComp.RadiationDamageTypeIDs = new (entity.Comp.RadiationDamageTypeIDs);
-        Dirty(clone, cloneComp);
     }
 }
