@@ -97,7 +97,7 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:GibBehavior
+      - !type:Gib
   - type: SlowOnDamage
     speedModifierThresholds:
       60: 0.9

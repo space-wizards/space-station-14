@@ -55,7 +55,7 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: GlassBreak
 
@@ -72,7 +72,7 @@
     thresholds:
     - trigger: *DamageFurnitureWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardCrystalGreen: &Min1Max2
             min: 1
@@ -91,7 +91,7 @@
     thresholds:
     - trigger: *DamageFurnitureWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardCrystalPink: *Min1Max2
 
@@ -108,7 +108,7 @@
     thresholds:
     - trigger: *DamageFurnitureWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardCrystalRed: *Min1Max2
 
@@ -125,7 +125,7 @@
     thresholds:
     - trigger: *DamageFurnitureWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardCrystalOrange: *Min1Max2
 
@@ -142,7 +142,7 @@
       thresholds:
       - trigger: *DamageFurnitureWeak
         behaviors:
-        - !type:SpawnEntitiesBehavior
+        - !type:SpawnEntities
           spawn:
             ShardCrystalBlack: *Min1Max2
 
@@ -159,7 +159,7 @@
     thresholds:
     - trigger: *DamageFurnitureWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardCrystalBlue: *Min1Max2
 
@@ -176,7 +176,7 @@
     thresholds:
     - trigger: *DamageFurnitureWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardCrystalYellow: *Min1Max2
 
@@ -193,6 +193,6 @@
     thresholds:
     - trigger: *DamageFurnitureWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardCrystalCyan: *Min1Max2

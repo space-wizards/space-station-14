@@ -20,12 +20,12 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalGlassBreak
-      - !type:ChangeConstructionNodeBehavior
+      - !type:ChangeConstructionNode
         node: TelescreenFrame
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardGlass:
             min: 0
@@ -79,10 +79,10 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetSteel1:
             min: 0

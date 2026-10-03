@@ -25,7 +25,7 @@
     - trigger: !type:DamageTrigger
         damage: 5
       behaviors: &DoDestruction
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
 
 # General furniture like tables and chairs
@@ -160,7 +160,7 @@
     - trigger: !type:DamageTrigger
         damage: 25
       behaviors: &DoBreakage
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Breakage" ]
 
 # Computer / tabletop machine

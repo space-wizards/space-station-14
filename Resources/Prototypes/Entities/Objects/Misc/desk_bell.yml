@@ -15,7 +15,7 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
   - type: MeleeWeapon
@@ -47,7 +47,7 @@
     thresholds:
     - trigger: *DamageTrigger50
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetSteel1:
             min: 0
@@ -71,12 +71,12 @@
     thresholds:
     - trigger: *DamageTrigger50
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           PartRodMetal1:
             min: 0
             max: 1
-      - !type:ChangeConstructionNodeBehavior
+      - !type:ChangeConstructionNode
         node: start
   - type: InteractionPopup
     successChance: 1
@@ -107,12 +107,12 @@
     thresholds:
     - trigger: *DamageTrigger50
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           CableApcStack1:
             min: 0
             max: 2
-      - !type:ChangeConstructionNodeBehavior
+      - !type:ChangeConstructionNode
         node: start
   - type: StationAiWhitelist
   - type: InteractionPopup
@@ -155,12 +155,12 @@
     thresholds:
     - trigger: *DamageTrigger50
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           BikeHorn:
             min: 1
             max: 1
-      - !type:ChangeConstructionNodeBehavior
+      - !type:ChangeConstructionNode
         node: start
   - type: InteractionPopup
     successChance: 1

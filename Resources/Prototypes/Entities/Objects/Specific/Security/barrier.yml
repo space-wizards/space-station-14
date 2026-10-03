@@ -51,12 +51,12 @@
         !type:DamageTrigger
         damage: 120
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetPlasteel1:
             min: 3
             max: 5
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
   - type: PointLight

@@ -8,9 +8,9 @@
         !type:DamageTrigger
         damage: 10
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Items/hiss.ogg
           params:

@@ -242,7 +242,7 @@
         !type:DamageTrigger
         damage: 75
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Machines/warning_buzzer.ogg
           params:
@@ -251,15 +251,15 @@
         !type:DamageTrigger
         damage: 300
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:EmptyContainersBehaviour
+      - !type:EmptyContainers
         containers:
         - borg_brain
         - borg_module
         - cell_slot
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
 
 - type: entity
@@ -536,7 +536,7 @@
         !type:DamageTrigger
         damage: 90
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Machines/warning_buzzer_xenoborg.ogg
           params:
@@ -545,18 +545,18 @@
         !type:DamageTrigger
         damage: 375
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           PinpointerMothershipPiece: # drop a piece of core pinpointer upon being destructed (4 pieces to make a core pinpointer)
             min: 1
             max: 1
-      - !type:EmptyContainersBehaviour
+      - !type:EmptyContainers
         containers:
         - borg_brain
         - borg_module
         - cell_slot
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]

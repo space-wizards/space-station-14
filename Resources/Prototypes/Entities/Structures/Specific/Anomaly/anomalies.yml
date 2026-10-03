@@ -804,9 +804,9 @@
         !type:DamageTrigger
         damage: 1
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           EffectAnomalyFloraBulb:
             min: 1

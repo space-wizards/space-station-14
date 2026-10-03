@@ -93,7 +93,7 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalGlassBreak
           params:
@@ -132,7 +132,7 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalGlassBreak
           params:

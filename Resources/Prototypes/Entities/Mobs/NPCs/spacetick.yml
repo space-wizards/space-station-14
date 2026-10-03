@@ -49,8 +49,8 @@
         damageType: Blunt
         damage: 30
       behaviors:
-      - !type:GibBehavior
-        recursive: false
+      - !type:Gib
+        dropGiblets: false
   - type: Stamina
     baseCritThreshold: 15
     animationThreshold: 5

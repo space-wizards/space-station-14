@@ -35,10 +35,10 @@
         !type:DamageTrigger
         damage: 80
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetBrass1:
             min: 1

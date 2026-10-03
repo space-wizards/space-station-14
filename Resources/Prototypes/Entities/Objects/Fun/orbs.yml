@@ -155,14 +155,14 @@
         !type:DamageTrigger
         damage: 20
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: GlassBreak
           params:
             volume: -4
-      - !type:SpillBehavior
+      - !type:Spill
         solution: solution
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: PhysicalComposition
     materialComposition:

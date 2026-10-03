@@ -32,7 +32,7 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalGlassBreak
 

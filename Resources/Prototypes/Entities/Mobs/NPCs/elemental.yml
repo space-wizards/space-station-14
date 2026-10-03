@@ -36,7 +36,7 @@
         !type:DamageTrigger
         damage: 120
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: ZombieImmune
   - type: ProtectedFromStepTriggers
@@ -84,15 +84,15 @@
         !type:DamageTrigger
         damage: 40
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: GlassBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SpaceQuartz1:
             min: 2
             max: 4
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
 
 - type: entity
@@ -116,15 +116,15 @@
         !type:DamageTrigger
         damage: 80
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: GlassBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SteelOre1:
             min: 2
             max: 4
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
 
 - type: entity
@@ -148,15 +148,15 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: GlassBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           Coal1:
             min: 2
             max: 4
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
 
 - type: entity
@@ -180,15 +180,15 @@
         !type:DamageTrigger
         damage: 80
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: GlassBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           UraniumOre1:
             min: 1
             max: 3
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: PointLight
     radius: 2
@@ -215,15 +215,15 @@
         !type:DamageTrigger
         damage: 30
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: GlassBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           BananiumOre1:
             min: 1
             max: 3
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: Slippery
     slipData:
@@ -269,15 +269,15 @@
         !type:DamageTrigger
         damage: 70
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: GlassBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SilverOre1:
             min: 1
             max: 3
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
 
 - type: entity
@@ -298,15 +298,15 @@
         !type:DamageTrigger
         damage: 70
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: GlassBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           GoldOre1:
             min: 1
             max: 3
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
 
 - type: entity

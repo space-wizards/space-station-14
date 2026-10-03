@@ -1116,7 +1116,7 @@ entities:
         trigger: !type:DamageTrigger
           damage: 20
         behaviors:
-        - !type:SpawnEntitiesBehavior
+        - !type:SpawnEntities
           spawnInContainer: False
           spawnAfter: 0
           spawn:
@@ -1125,7 +1125,7 @@ entities:
               max: 1
           offset: 0.5
           transferForensics: False
-        - !type:DoActsBehavior
+        - !type:DoActs
           acts: Destruction
   - uid: 46
     components:

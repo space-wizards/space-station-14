@@ -28,13 +28,13 @@
           !type:DamageTrigger
           damage: 100
         behaviors:
-        - !type:EmptyAllContainersBehaviour
-        - !type:PlaySoundBehavior
+        - !type:EmptyAllContainers
+        - !type:PlaySound
           sound:
             collection: MetalBreak
             params:
               volume: -3
-        - !type:SpawnEntitiesBehavior
+        - !type:SpawnEntities
           spawn:
             SheetPlastic1:
               min: 0

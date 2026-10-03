@@ -20,9 +20,9 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Effects/pop_high.ogg
   - type: Item

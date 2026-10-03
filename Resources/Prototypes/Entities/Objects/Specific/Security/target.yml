@@ -39,15 +39,15 @@
         !type:DamageTrigger
         damage: 500
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetSteel:
             min: 5
             max: 5
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
 
 

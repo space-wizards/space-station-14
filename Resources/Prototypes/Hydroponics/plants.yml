@@ -28,7 +28,7 @@
         !type:DamageTrigger
         damage: 75
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: RequireProjectileTarget
   - type: Plant
