@@ -40,6 +40,12 @@
       - !type:AddReagentToSolution
         reagent: Water
         solution: soil
+    - reagents: [ Holywater]
+      methods: [Touch, Ingestion, Injection]
+      effects:
+      - !type:AddReagentToSolution
+        reagent: Holywater
+        solution: soil
   - type: Appearance
   - type: PlantTrayVisuals
 

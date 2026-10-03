@@ -99,7 +99,7 @@
       Flammable: [ Touch ]
       Extinguish: [ Touch ]
     reactions:
-    - reagents: [ Water ]
+    - reagents: [ Water, Holywater ]
       methods: [ Touch ]
       effects:
       - !type:EvenHealthChange

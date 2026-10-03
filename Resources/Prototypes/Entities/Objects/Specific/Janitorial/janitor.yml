@@ -96,6 +96,7 @@
     - type: SolutionPurge
       preserve:
       - Water
+      - Holywater
       quantity: 10
     - type: Tag
       tags:
