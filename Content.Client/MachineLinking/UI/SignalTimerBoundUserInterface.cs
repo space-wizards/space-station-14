@@ -1,18 +1,20 @@
+using Content.Shared.Access.Systems;
+using Content.Shared.DeviceLinking.Components;
 using Content.Shared.MachineLinking;
-using Robust.Client.GameObjects;
+using JetBrains.Annotations;
+using Robust.Client.Player;
 using Robust.Client.UserInterface;
-using Robust.Shared.Timing;
 
 namespace Content.Client.MachineLinking.UI;
 
-public sealed class SignalTimerBoundUserInterface : BoundUserInterface
+[UsedImplicitly]
+public sealed partial class SignalTimerBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
+    [Dependency] private AccessReaderSystem _accessReader = default!;
+    [Dependency] private IPlayerManager _playerMan = default!;
+
     [ViewVariables]
     private SignalTimerWindow? _window;
-
-    public SignalTimerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {
@@ -27,38 +29,39 @@ public sealed class SignalTimerBoundUserInterface : BoundUserInterface
 
     public void StartTimer()
     {
-        SendMessage(new SignalTimerStartMessage());
+        SendPredictedMessage(new SignalTimerStartMessage());
     }
 
     private void OnTextChanged(string newText)
     {
-        SendMessage(new SignalTimerTextChangedMessage(newText));
+        SendPredictedMessage(new SignalTimerTextChangedMessage(newText));
     }
 
     private void OnDelayChanged(string newDelay)
     {
         if (_window == null)
             return;
-        SendMessage(new SignalTimerDelayChangedMessage(_window.GetDelay()));
+
+        SendPredictedMessage(new SignalTimerDelayChangedMessage(_window.GetDelay()));
     }
 
-    /// <summary>
-    /// Update the UI state based on server-sent info
-    /// </summary>
-    /// <param name="state"></param>
-    protected override void UpdateState(BoundUserInterfaceState state)
+    public override void Update()
     {
-        base.UpdateState(state);
+        base.Update();
 
-        if (_window == null || state is not SignalTimerBoundUserInterfaceState cast)
+        if (_window == null
+            || !EntMan.TryGetComponent(Owner, out SignalTimerComponent? comp))
             return;
 
-        _window.SetCurrentText(cast.CurrentText);
-        _window.SetCurrentDelayMinutes(cast.CurrentDelayMinutes);
-        _window.SetCurrentDelaySeconds(cast.CurrentDelaySeconds);
-        _window.SetShowText(cast.ShowText);
-        _window.SetTriggerTime(cast.TriggerTime);
-        _window.SetTimerStarted(cast.TimerStarted);
-        _window.SetHasAccess(cast.HasAccess);
+        var time = EntMan.TryGetComponent<ActiveSignalTimerComponent>(Owner, out var active)
+            ? active.TriggerTime
+            : TimeSpan.Zero;
+
+        _window.SetCurrentText(comp.Label);
+        _window.SetCurrentDelay(comp.Delay);
+        _window.SetShowText(comp.CanEditLabel);
+        _window.SetTriggerTime(time);
+        _window.SetTimerStarted(active != null);
+        _window.SetHasAccess(_playerMan.LocalEntity != null && _accessReader.IsAllowed(_playerMan.LocalEntity.Value, Owner));
     }
 }

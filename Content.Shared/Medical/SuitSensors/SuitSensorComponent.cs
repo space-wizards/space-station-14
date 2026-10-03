@@ -1,3 +1,4 @@
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -79,7 +80,7 @@ public sealed partial class SuitSensorComponent : Component
     ///     It does this by calling the servers entity system for performance reasons.
     /// </summary>
     [DataField("server")]
-    public string? ConnectedServer = null;
+    public DeviceAddress? ConnectedServer = null;
 
     /// <summary>
     /// The previous mode of the suit. This is used to restore the state when an EMP effect ends.

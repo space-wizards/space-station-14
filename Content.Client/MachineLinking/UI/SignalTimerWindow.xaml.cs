@@ -145,14 +145,10 @@ public sealed partial class SignalTimerWindow : DefaultWindow
         CurrentTextEdit.Text = text;
     }
 
-    public void SetCurrentDelayMinutes(string delay)
+    public void SetCurrentDelay(TimeSpan delay)
     {
-        CurrentDelayEditMinutes.Text = delay;
-    }
-
-    public void SetCurrentDelaySeconds(string delay)
-    {
-        CurrentDelayEditSeconds.Text = delay;
+        CurrentDelayEditMinutes.Text = delay.Minutes.ToString("D2");
+        CurrentDelayEditSeconds.Text = delay.Seconds.ToString("D2");
     }
 
     public void SetShowText(bool showTime)
