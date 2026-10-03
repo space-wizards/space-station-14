@@ -36,7 +36,7 @@ public sealed partial class ReagentGrinderComponent : Component
     /// The amount of entities that fit into the container.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public int StorageMaxEntities = 6;
+    public int StorageMaxEntities = 9;
 
     /// <summary>
     /// The time grinding or juicing takes.
