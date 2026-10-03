@@ -27,7 +27,6 @@ public abstract partial class SharedStationAiSystem
         SubscribeLocalEvent<StationAiWhitelistComponent, GetVerbsEvent<AlternativeVerb>>(OnTargetVerbs);
 
         SubscribeLocalEvent<StationAiHeldComponent, InteractionAttemptEvent>(OnHeldInteraction);
-        SubscribeLocalEvent<InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<StationAiHeldComponent, AttemptRelayActionComponentChangeEvent>(OnHeldRelay);
         SubscribeLocalEvent<StationAiHeldComponent, JumpToCoreEvent>(OnCoreJump);
 
@@ -51,6 +50,7 @@ public abstract partial class SharedStationAiSystem
         _xforms.DropNextTo(core.Comp.RemoteEntity.Value, core.Owner);
     }
 
+    [SubscribeLocalEvent]
     private void OnInteractHand(InteractHandEvent args)
     {
         var target = args.Target;
