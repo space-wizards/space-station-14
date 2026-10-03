@@ -28,7 +28,6 @@ public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<So
         component.InitialDescription = MetaData(uid).EntityDescription;
     }
 
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, SolutionContainerVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)

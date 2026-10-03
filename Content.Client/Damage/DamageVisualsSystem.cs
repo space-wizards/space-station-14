@@ -346,7 +346,6 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
         SpriteSystem.LayerSetVisible(spriteEnt, newLayer, false);
     }
 
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, DamageVisualsComponent damageVisComp, ref AppearanceChangeEvent args)
     {
         // how is this still here?

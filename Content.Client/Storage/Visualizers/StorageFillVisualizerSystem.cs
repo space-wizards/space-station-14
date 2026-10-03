@@ -5,7 +5,6 @@ namespace Content.Client.Storage.Visualizers;
 
 public sealed partial class StorageFillVisualizerSystem : VisualizerSystem<StorageFillVisualizerComponent>
 {
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, StorageFillVisualizerComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)

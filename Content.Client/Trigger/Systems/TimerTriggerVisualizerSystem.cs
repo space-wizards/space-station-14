@@ -36,7 +36,6 @@ public sealed partial class TimerTriggerVisualizerSystem : VisualizerSystem<Time
         }
     }
 
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, TimerTriggerVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null

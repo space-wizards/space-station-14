@@ -90,7 +90,6 @@ public sealed partial class RadiationCollectorSystem : VisualizerSystem<Radiatio
         UpdateVisuals(uid, targetState, comp, sprite, animPlayer);
     }
 
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, RadiationCollectorComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)

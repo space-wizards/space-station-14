@@ -6,7 +6,6 @@ namespace Content.Client.Lock.Visualizers;
 
 public sealed partial class LockVisualizerSystem : VisualizerSystem<LockVisualsComponent>
 {
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, LockVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null

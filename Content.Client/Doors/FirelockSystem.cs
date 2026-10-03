@@ -10,7 +10,6 @@ public sealed partial class FirelockSystem : SharedFirelockSystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
 
-    /// <inheritdoc/>
     protected override void OnComponentStartup(Entity<FirelockComponent> ent, ref ComponentStartup args)
     {
         base.OnComponentStartup(ent, ref args);

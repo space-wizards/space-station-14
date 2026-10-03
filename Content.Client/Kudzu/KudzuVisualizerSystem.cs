@@ -5,7 +5,6 @@ namespace Content.Client.Kudzu;
 
 public sealed partial class KudzuVisualsSystem : VisualizerSystem<KudzuVisualsComponent>
 {
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, KudzuVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null

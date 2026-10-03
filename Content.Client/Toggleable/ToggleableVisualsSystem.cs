@@ -34,7 +34,6 @@ public sealed partial class ToggleableVisualsSystem : VisualizerSystem<Toggleabl
             after: [typeof(ClientClothingSystem)]);
     }
 
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid,
         ToggleableVisualsComponent component,
         ref AppearanceChangeEvent args)

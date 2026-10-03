@@ -5,7 +5,6 @@ namespace Content.Client.ParticleAccelerator;
 
 public sealed partial class ParticleAcceleratorPartVisualizerSystem : VisualizerSystem<ParticleAcceleratorPartVisualsComponent>
 {
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, ParticleAcceleratorPartVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)

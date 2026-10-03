@@ -6,7 +6,6 @@ namespace Content.Client.DamageState;
 
 public sealed partial class DamageStateVisualizerSystem : VisualizerSystem<DamageStateVisualsComponent>
 {
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, DamageStateVisualsComponent component, ref AppearanceChangeEvent args)
     {
         var sprite = args.Sprite;

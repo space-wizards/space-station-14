@@ -7,7 +7,6 @@ namespace Content.Client.Paper;
 
 public sealed partial class PaperVisualizerSystem : VisualizerSystem<PaperVisualizerComponent>
 {
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, PaperVisualizerComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)

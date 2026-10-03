@@ -1,5 +1,3 @@
-using Content.Client.Alerts;
-using Content.Shared.Alert;
 using Content.Shared.Alert.Components;
 using Content.Shared.Revenant;
 using Content.Shared.Revenant.Components;
@@ -9,7 +7,6 @@ namespace Content.Client.Revenant;
 
 public sealed partial class RevenantSystem : VisualizerSystem<RevenantComponent>
 {
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, RevenantComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)

@@ -18,7 +18,6 @@ public sealed partial class PoweredLightVisualizerSystem : VisualizerSystem<Powe
         SubscribeLocalEvent<PoweredLightVisualsComponent, AnimationCompletedEvent>(OnAnimationCompleted);
     }
 
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, PoweredLightVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)

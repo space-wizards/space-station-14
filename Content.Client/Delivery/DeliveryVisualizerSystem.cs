@@ -9,7 +9,6 @@ public sealed partial class DeliveryVisualizerSystem : VisualizerSystem<Delivery
 {
     private static readonly ProtoId<JobIconPrototype> UnknownIcon = "JobIconUnknown";
 
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, DeliveryComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)

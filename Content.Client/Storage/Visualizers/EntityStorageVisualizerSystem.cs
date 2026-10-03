@@ -22,7 +22,6 @@ public sealed partial class EntityStorageVisualizerSystem : VisualizerSystem<Ent
         SpriteSystem.LayerSetRsiState((ent, sprite), StorageVisualLayers.Base, ent.Comp.StateBaseClosed);
     }
 
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid,
         EntityStorageVisualsComponent comp,
         ref AppearanceChangeEvent args)

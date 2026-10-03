@@ -6,7 +6,6 @@ namespace Content.Client.PDA;
 
 public sealed partial class PdaVisualizerSystem : VisualizerSystem<PdaVisualsComponent>
 {
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, PdaVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)

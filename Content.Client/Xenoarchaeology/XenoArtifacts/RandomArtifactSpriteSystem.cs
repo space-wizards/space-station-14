@@ -5,7 +5,6 @@ namespace Content.Client.Xenoarchaeology.XenoArtifacts;
 
 public sealed partial class RandomArtifactSpriteSystem : VisualizerSystem<RandomArtifactSpriteComponent>
 {
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, RandomArtifactSpriteComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)

@@ -5,7 +5,6 @@ namespace Content.Client.Tools.Visualizers;
 
 public sealed partial class WeldableVisualizerSystem : VisualizerSystem<WeldableComponent>
 {
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, WeldableComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)

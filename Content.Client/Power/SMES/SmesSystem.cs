@@ -6,7 +6,6 @@ namespace Content.Client.Power.SMES;
 
 public sealed partial class SmesVisualizerSystem : VisualizerSystem<SmesComponent>
 {
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, SmesComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)

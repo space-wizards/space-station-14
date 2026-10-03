@@ -5,7 +5,6 @@ namespace Content.Client.Smoking;
 
 public sealed partial class BurnStateVisualizerSystem : VisualizerSystem<BurnStateVisualsComponent>
 {
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, BurnStateVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)

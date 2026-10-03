@@ -9,7 +9,6 @@ namespace Content.Client.Mech;
 /// </summary>
 public sealed partial class MechAssemblyVisualizerSystem : VisualizerSystem<MechAssemblyVisualsComponent>
 {
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, MechAssemblyVisualsComponent component,
         ref AppearanceChangeEvent args)
     {

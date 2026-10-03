@@ -6,7 +6,6 @@ namespace Content.Client.Materials;
 
 public sealed partial class RecyclerVisualizerSystem : VisualizerSystem<RecyclerVisualsComponent>
 {
-    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, RecyclerVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null || !SpriteSystem.LayerMapTryGet((uid, args.Sprite), RecyclerVisualLayers.Main, out var layer, false))

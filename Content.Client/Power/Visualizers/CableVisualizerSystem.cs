@@ -8,7 +8,6 @@ public sealed partial class CableVisualizerSystem : EntitySystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
 
-    /// <inheritdoc/>
     [SubscribeLocalEvent(after: [typeof(SubFloorHideSystem)])]
     private void OnAppearanceChange(Entity<CableVisualizerComponent> ent, ref AppearanceChangeEvent args)
     {
