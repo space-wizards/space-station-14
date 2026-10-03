@@ -23,6 +23,14 @@
     state: ShaftMiner
   jobName: job-name-salvagespec
 
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSupplyAssistant
+  icon:
+    sprite: *icon-rsi
+    state: SupplyAssistant
+  jobName: job-name-supply-assistant
+
 # Civilian
 
 - type: jobIcon
