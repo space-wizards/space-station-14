@@ -29,27 +29,23 @@ public sealed partial class GasTileVacuumOverlaySystem : EntitySystem
         base.Shutdown();
 
         _cfgManager.UnsubValueChanged(CCVars.VacuumOverlay, OnVacuumOverlayChanged);
+        _cfgManager.UnsubValueChanged(CCVars.VacuumOverlayIntensity, OnVacuumOverlayIntensityChanged);
         _overlayMan.RemoveOverlay<GasTileVacuumOverlay>();
     }
 
     private void OnVacuumOverlayChanged(bool enabled)
     {
-        if (enabled)
-        {
-            _gasTileVacuumOverlay ??= new GasTileVacuumOverlay();
-
-            if (!_overlayMan.HasOverlay<GasTileVacuumOverlay>())
-                _overlayMan.AddOverlay(_gasTileVacuumOverlay);
-        }
-        else
-        {
-            _overlayMan.RemoveOverlay<GasTileVacuumOverlay>();
-        }
+        ToggleOverlay(enabled);
     }
 
     private void OnVacuumOverlayIntensityChanged(float intensity)
     {
-        if (intensity > 0f)
+        ToggleOverlay(intensity > 0f && _cfgManager.GetCVar(CCVars.VacuumOverlay));
+    }
+
+    private void ToggleOverlay(bool enabled)
+    {
+        if (enabled)
         {
             _gasTileVacuumOverlay ??= new GasTileVacuumOverlay();
 
