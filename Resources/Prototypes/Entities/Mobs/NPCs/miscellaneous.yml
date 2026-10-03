@@ -91,7 +91,6 @@
     rules: ghost-role-information-familiar-rules
     raffle:
       settings: short
-  - type: GhostTakeoverAvailable
   - type: CanEscapeInventory
     baseResistTime: 3
   - type: Reactive

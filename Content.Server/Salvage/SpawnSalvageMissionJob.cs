@@ -311,7 +311,6 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
                 var uid = _entManager.SpawnAtPosition(entry.Proto, _map.GridTileToLocal(grid, grid, tile));
                 _entManager.RemoveComponent<GhostRoleComponent>(uid);
-                _entManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
                 return;
             }
         }

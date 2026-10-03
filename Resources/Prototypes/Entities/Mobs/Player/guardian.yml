@@ -18,7 +18,6 @@
       - MindRoleGhostRoleFamiliar
       raffle:
         settings: default
-    - type: GhostTakeoverAvailable
     - type: Input
       context: "human"
     - type: MobMover
@@ -131,7 +130,6 @@
       rules: ghost-role-information-familiar-rules
       raffle:
         settings: default
-    - type: GhostTakeoverAvailable
     - type: NameIdentifier
       group: Holoparasite
     - type: TypingIndicator
@@ -164,7 +162,6 @@
       rules: ghost-role-information-familiar-rules
       raffle:
         settings: default
-    - type: GhostTakeoverAvailable
     - type: RandomSprite
       available:
         - enum.DamageStateVisualLayers.BaseUnshaded:
@@ -193,7 +190,6 @@
       rules: ghost-role-information-familiar-rules
       raffle:
         settings: default
-    - type: GhostTakeoverAvailable
     - type: NameIdentifier
       group: Holoparasite
     - type: FootstepModifier

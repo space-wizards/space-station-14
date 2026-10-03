@@ -526,7 +526,6 @@
         - SmallMobMask
         layer:
         - SmallMobLayer
-  - type: GhostTakeoverAvailable
   - type: Speech
     speechVerb: Moth
     speechSounds: Squeak
@@ -1581,7 +1580,6 @@
     name: ghost-role-information-kangaroo-name
     description: ghost-role-information-kangaroo-description
     rules: ghost-role-information-nonantagonist-rules
-  - type: GhostTakeoverAvailable
   - type: Vocal
     emoteSounds: Kangaroo
   - type: Puller
@@ -1756,7 +1754,6 @@
     name: ghost-role-information-monkey-name
     description: ghost-role-information-monkey-description
     rules: ghost-role-information-nonantagonist-rules
-  - type: GhostTakeoverAvailable
   - type: PermanentStatusEffects
     statusEffects:
     - StatusEffectClumsyMonkey
@@ -1790,7 +1787,6 @@
     - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
-  - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [SyndicateOperativeGearMonkey]
 
@@ -1903,7 +1899,6 @@
     - id: FoodMeat
       amount: 2
   - type: AlwaysRevolutionaryConvertible
-  - type: GhostTakeoverAvailable
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-kobold
   - type: GhostRole
@@ -1979,7 +1974,6 @@
     rules: ghost-role-information-freeagent-rules
     mindRoles:
     - MindRoleGhostRoleFreeAgentHarmless
-  - type: GhostTakeoverAvailable
   - type: Speech
     speechSounds: Squeak
     speechVerb: SmallMob
@@ -3215,7 +3209,6 @@
     - MindRoleGhostRoleTeamAntagonist
     raffle:
       settings: default
-  - type: GhostTakeoverAvailable
   - type: AutoImplant
     implants:
     - MicroBombImplant
@@ -3458,7 +3451,6 @@
     name: ghost-role-information-hamster-name
     description: ghost-role-information-hamster-description
     rules: ghost-role-information-nonantagonist-rules
-  - type: GhostTakeoverAvailable
   - type: Speech
     speechVerb: SmallMob
     speechSounds: Squeak

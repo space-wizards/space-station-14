@@ -30,6 +30,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Threading;
 using Robust.Shared.Utility;
 using ChunkIndicesEnumerator = Robust.Shared.Map.Enumerators.ChunkIndicesEnumerator;
+using Content.Server.Ghost.Roles;
 
 namespace Content.Server.Parallax;
 
@@ -42,6 +43,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private AtmosphereSystem _atmos = default!;
     [Dependency] private DecalSystem _decals = default!;
+    [Dependency] private GhostRoleSystem _ghostRole = default!;
     [Dependency] private SharedMapSystem _mapSystem = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
@@ -741,8 +743,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 // TODO: This is *kind* of a bandaid but natural mobs spawns needs a lot more work.
                 // Ideally we'd just have ghost role and non-ghost role variants for some stuff.
                 var uid = EntityManager.CreateEntityUninitialized(prototype, _mapSystem.GridTileToLocal(gridUid, grid, node));
-                RemComp<GhostTakeoverAvailableComponent>(uid);
-                RemComp<GhostRoleComponent>(uid);
+                _ghostRole.DestroyGhostRole(uid);
                 EntityManager.InitializeAndStartEntity(uid);
                 modified.Add(node);
             }
