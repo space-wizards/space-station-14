@@ -10,7 +10,6 @@ using Content.Shared.Popups;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Remotes.Components;
 using Content.Shared.Tag;
-using Content.Shared.Silicons.StationAi;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -45,27 +44,15 @@ public abstract partial class SharedDoorRemoteSystem : EntitySystem
 
     private void OnBeforeInteract(Entity<DoorRemoteComponent> entity, ref BeforeRangedInteractEvent args)
     {
-        HandleInteraction(entity, args.User, args.Used, args.Target, ref args);
-    }
-
-
-    public void HandleInteraction(
-        Entity<DoorRemoteComponent> entity,
-        EntityUid user,
-        EntityUid used,
-        EntityUid? target,
-        ref BeforeRangedInteractEvent args,
-        EntityUid? rangeUser = null)
-    {
-        var isAirlock = TryComp<AirlockComponent>(target, out var airlockComp);
+        var isAirlock = TryComp<AirlockComponent>(args.Target, out var airlockComp);
 
         if (args.Handled
-            || target == null
-            || !TryComp<DoorComponent>(target, out var doorComp) // If it isn't a door we don't use it
+            || args.Target == null
+            || !TryComp<DoorComponent>(args.Target, out var doorComp) // If it isn't a door we don't use it
                                                                       // Only able to control doors if they are within your vision and within your max range.
                                                                       // Not affected by mobs or machines anymore.
-            || (entity.Comp.RequireInRangeUnoccluded && !_examine.InRangeUnOccluded(rangeUser ?? user,
-                target.Value,
+            || (entity.Comp.RequireInRangeUnoccluded && !_examine.InRangeUnOccluded(args.User,
+                args.Target.Value,
                 SharedInteractionSystem.MaxRaycastRange,
                 null)))
 
@@ -76,32 +63,34 @@ public abstract partial class SharedDoorRemoteSystem : EntitySystem
         args.Handled = true;
 
         if (!Timing.IsFirstTimePredicted)
-            return;
-
-        if (!_powerReceiver.IsPowered(target.Value))
         {
-            _popup.PopupEntity(Loc.GetString("door-remote-no-power"), user, user);
             return;
         }
 
-        var accessTarget = used;
+        if (!_powerReceiver.IsPowered(args.Target.Value))
+        {
+            _popup.PopupEntity(Loc.GetString("door-remote-no-power"), args.User, args.User);
+            return;
+        }
+
+        var accessTarget = args.Used;
         // This covers the accesses the REMOTE has, and is not effected by the user's ID card.
         if (entity.Comp.IncludeUserAccess) // Allows some door remotes to inherit the user's access.
         {
-            accessTarget = user;
+            accessTarget = args.User;
             // This covers the accesses the USER has, which always includes the remote's access since holding a remote acts like holding an ID card.
         }
 
         // Only let remote work on doors that have AccessReader; otherwise, it works on anything with a Door component (curtains, fence gates, etc)
-        if (TryComp<AccessReaderComponent>(target, out var accessComponent) && _tagSystem.HasTag(target.Value, entity.Comp.TargetTag))
+        if (TryComp<AccessReaderComponent>(args.Target, out var accessComponent) && _tagSystem.HasTag(args.Target.Value, entity.Comp.TargetTag))
         {
             // Has an access reader component. Check access.
-            if (!_doorSystem.HasAccess(target.Value, accessTarget, doorComp, accessComponent))
+            if (!_doorSystem.HasAccess(args.Target.Value, accessTarget, doorComp, accessComponent))
             {
                 if (isAirlock)
-                    _doorSystem.Deny(target.Value, doorComp, user: user, predicted: true);
+                    _doorSystem.Deny(args.Target.Value, doorComp, user: args.User, predicted: true);
 
-                _popup.PopupEntity(Loc.GetString("door-remote-denied"), user, user);
+                _popup.PopupEntity(Loc.GetString("door-remote-denied"), args.User, args.User);
                 return;
             }
         }
@@ -112,20 +101,20 @@ public abstract partial class SharedDoorRemoteSystem : EntitySystem
         switch (entity.Comp.Mode)
         {
             case OperatingMode.OpenClose:
-                if (_doorSystem.TryToggleDoor(target.Value, doorComp, user: user, predicted: true))
+                if (_doorSystem.TryToggleDoor(args.Target.Value, doorComp, user: args.User, predicted: true))
                     _adminLogger.Add(LogType.Action,
                         LogImpact.Medium,
-                        $"{ToPrettyString(user):player} used {ToPrettyString(used)} on {ToPrettyString(target.Value)}: {doorComp.State}");
+                        $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)}: {doorComp.State}");
                 break;
             case OperatingMode.ToggleBolts:
-                if (TryComp<DoorBoltComponent>(target, out var boltsComp))
+                if (TryComp<DoorBoltComponent>(args.Target, out var boltsComp))
                 {
                     if (!boltsComp.BoltWireCut)
                     {
-                        _doorSystem.SetBoltsDown((target.Value, boltsComp), !boltsComp.BoltsDown, user: user, predicted: true);
+                        _doorSystem.SetBoltsDown((args.Target.Value, boltsComp), !boltsComp.BoltsDown, user: args.User, predicted: true);
                         _adminLogger.Add(LogType.Action,
                             LogImpact.Medium,
-                            $"{ToPrettyString(user):player} used {ToPrettyString(used)} on {ToPrettyString(target.Value)} to {(boltsComp.BoltsDown ? "" : "un")}bolt it");
+                            $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to {(boltsComp.BoltsDown ? "" : "un")}bolt it");
                     }
                 }
 
@@ -133,24 +122,24 @@ public abstract partial class SharedDoorRemoteSystem : EntitySystem
             case OperatingMode.ToggleEmergencyAccess:
                 if (airlockComp != null)
                 {
-                    _airlock.SetEmergencyAccess((target.Value, airlockComp), !airlockComp.EmergencyAccess, user: user, predicted: true);
+                    _airlock.SetEmergencyAccess((args.Target.Value, airlockComp), !airlockComp.EmergencyAccess, user: args.User, predicted: true);
                     _adminLogger.Add(LogType.Action,
                         LogImpact.Medium,
-                        $"{ToPrettyString(user):player} used {ToPrettyString(used)} on {ToPrettyString(target.Value)} to set emergency access {(airlockComp.EmergencyAccess ? "on" : "off")}");
+                        $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to set emergency access {(airlockComp.EmergencyAccess ? "on" : "off")}");
                 }
 
                 break;
             case OperatingMode.ToggleOvercharge:
-                if (TryComp<ElectrifiedComponent>(target, out var eletrifiedComp))
+                if (TryComp<ElectrifiedComponent>(args.Target, out var eletrifiedComp))
                 {
-                    _electrify.SetElectrified((target.Value, eletrifiedComp), !eletrifiedComp.Enabled);
+                    _electrify.SetElectrified((args.Target.Value, eletrifiedComp), !eletrifiedComp.Enabled);
                     var soundToPlay = eletrifiedComp.Enabled
                         ? eletrifiedComp.AirlockElectrifyEnabled
                         : eletrifiedComp.AirlockElectrifyDisabled;
-                    _audio.PlayLocal(soundToPlay, target.Value, user);
+                    _audio.PlayLocal(soundToPlay, args.Target.Value, args.User);
                     _adminLogger.Add(LogType.Action,
                         LogImpact.Medium,
-                        $"{ToPrettyString(user):player} used {ToPrettyString(used)} on {ToPrettyString(target.Value)} to {(eletrifiedComp.Enabled ? "" : "un")}electrify it");
+                        $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to {(eletrifiedComp.Enabled ? "" : "un")}electrify it");
                 }
 
                 break;
