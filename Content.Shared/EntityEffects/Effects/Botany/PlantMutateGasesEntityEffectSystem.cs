@@ -1,3 +1,4 @@
+using Content.Shared.Atmos;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Systems;
 using Content.Shared.Random.Helpers;
@@ -20,7 +21,7 @@ public sealed partial class PlantMutateExudeGasesEntityEffectSystem : EntityEffe
     {
         var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(entity));
         var amount = random.NextFloat(args.Effect.MinValue, args.Effect.MaxValue);
-        _plantConsumeExudeGas.MutateRandomExudeGasses(entity.Owner, amount);
+        _plantConsumeExudeGas.MutateRandomExudeGasses(entity.Owner, amount, args.Effect.SpawnGas);
     }
 }
 
@@ -38,6 +39,12 @@ public sealed partial class PlantMutateExudeGases : EntityEffectBase<PlantMutate
     /// </summary>
     [DataField]
     public float MaxValue = 0.5f;
+
+    /// <summary>
+    /// Gas to be exumed, if left empty a gas will be chosen at random.
+    /// </summary>
+    [DataField] 
+    public Gas? SpawnGas;
 
     /// <inheritdoc/>
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
