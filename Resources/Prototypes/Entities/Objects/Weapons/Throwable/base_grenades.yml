@@ -56,6 +56,14 @@
           Unprimed: { state: icon }
 
 - type: entity
+  parent: TimerGrenadeBase
+  abstract: true
+  id: TimerGrenadePrimedVisualsBase
+  components:
+  - type: TimerTriggerVisuals
+    inHandPrimedName: -primed
+
+- type: entity
   abstract: true
   parent: [ GrenadeBase, VolatileGrenadeBase ]
   id: ImpactGrenadeBase
