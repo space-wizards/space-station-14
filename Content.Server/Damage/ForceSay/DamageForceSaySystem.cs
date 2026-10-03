@@ -6,6 +6,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Speech;
 using Content.Shared.Stunnable;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -31,6 +32,7 @@ public sealed partial class DamageForceSaySystem : EntitySystem
         // (this won't double raise, because of the cooldown)
         SubscribeLocalEvent<DamageForceSayComponent, DamageChangedEvent>(OnDamageChanged, after: new []{ typeof(MobThresholdSystem)} );
         SubscribeLocalEvent<DamageForceSayComponent, SleepStateChangedEvent>(OnSleep);
+        SubscribeLocalEvent<AllowNextCritSpeechComponent, SpeakAttemptEvent>(OnSpeakAttempt);
     }
 
     public override void Update(float frameTime)
@@ -130,5 +132,13 @@ public sealed partial class DamageForceSaySystem : EntitySystem
         // LING IN MAI-
         TryForceSay(uid, component, false);
         AllowNextSpeech(uid);
+    }
+
+    private void OnSpeakAttempt(EntityUid uid, AllowNextCritSpeechComponent component, SpeakAttemptEvent args)
+    {
+        if (HasComp<AllowNextCritSpeechComponent>(uid))
+        {
+            RemCompDeferred<AllowNextCritSpeechComponent>(uid);
+        }
     }
 }
