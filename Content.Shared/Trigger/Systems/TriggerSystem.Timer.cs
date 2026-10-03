@@ -2,29 +2,22 @@ using Content.Shared.Trigger.Components;
 using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.Examine;
 using Content.Shared.Verbs;
-using Robust.Shared.Random;
 
 namespace Content.Shared.Trigger.Systems;
 
 public sealed partial class TriggerSystem
 {
-    private void InitializeTimer()
-    {
-        SubscribeLocalEvent<RepeatingTriggerComponent, MapInitEvent>(OnRepeatInit);
-        SubscribeLocalEvent<RandomTimerTriggerComponent, MapInitEvent>(OnRandomInit);
-        SubscribeLocalEvent<TimerTriggerComponent, ComponentShutdown>(OnTimerShutdown);
-        SubscribeLocalEvent<TimerTriggerComponent, ExaminedEvent>(OnTimerExamined);
-        SubscribeLocalEvent<TimerTriggerComponent, TriggerEvent>(OnTimerTriggered);
-        SubscribeLocalEvent<TimerTriggerComponent, GetVerbsEvent<AlternativeVerb>>(OnTimerGetAltVerbs);
-    }
+    public static readonly VerbCategory TimerOptions = new("verb-categories-timer", "/Textures/Interface/VerbIcons/clock.svg.192dpi.png");
 
     // set the time of the first trigger after being spawned
+    [SubscribeLocalEvent]
     private void OnRepeatInit(Entity<RepeatingTriggerComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextTrigger = _timing.CurTime + ent.Comp.Delay;
         Dirty(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnRandomInit(Entity<RandomTimerTriggerComponent> ent, ref MapInitEvent args)
     {
         if (_net.IsClient) // Nextfloat will mispredict, so we set it on the server and dirty it
@@ -37,17 +30,20 @@ public sealed partial class TriggerSystem
         Dirty(ent.Owner, timerTriggerComp);
     }
 
+    [SubscribeLocalEvent]
     private void OnTimerShutdown(Entity<TimerTriggerComponent> ent, ref ComponentShutdown args)
     {
         RemComp<ActiveTimerTriggerComponent>(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnTimerExamined(Entity<TimerTriggerComponent> ent, ref ExaminedEvent args)
     {
         if (args.IsInDetailsRange && ent.Comp.Examinable)
             args.PushText(Loc.GetString("timer-trigger-examine", ("time", ent.Comp.Delay.TotalSeconds)));
     }
 
+    [SubscribeLocalEvent]
     private void OnTimerTriggered(Entity<TimerTriggerComponent> ent, ref TriggerEvent args)
     {
         if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
@@ -59,6 +55,7 @@ public sealed partial class TriggerSystem
     /// <summary>
     /// Add an alt-click interaction that cycles through delays.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnTimerGetAltVerbs(Entity<TimerTriggerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess || args.Hands == null)
@@ -106,8 +103,6 @@ public sealed partial class TriggerSystem
             }
         }
     }
-
-    public static readonly VerbCategory TimerOptions = new("verb-categories-timer", "/Textures/Interface/VerbIcons/clock.svg.192dpi.png");
 
     /// <summary>
     /// Select the next entry from the DelayOptions.

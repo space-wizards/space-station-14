@@ -14,8 +14,10 @@ public abstract partial class TriggerOnXSystem : EntitySystem
 /// <summary>
 /// This is a base Trigger system which handles all the boilerplate for triggers automagically!
 /// </summary>
-public abstract class XOnTriggerSystem<T> : EntitySystem where T : BaseXOnTriggerComponent
+public abstract partial class XOnTriggerSystem<T> : EntitySystem where T : BaseXOnTriggerComponent
 {
+    [Dependency] protected TriggerSystem Trigger = default!;
+
     /// <inheritdoc/>
     public override void Initialize()
     {

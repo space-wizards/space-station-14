@@ -14,6 +14,7 @@ public sealed partial class PopupOnTriggerSystem : XOnTriggerSystem<PopupOnTrigg
     protected override void OnTrigger(Entity<PopupOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
         var user = args.User != null ? Identity.Name(args.User.Value, EntityManager) : Loc.GetString("generic-unknown");
+        args.Handled = true;
 
         // Popups only play for one entity
         if (ent.Comp.Quiet)

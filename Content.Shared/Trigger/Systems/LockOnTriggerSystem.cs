@@ -24,5 +24,7 @@ public sealed partial class LockOnTriggerSystem : XOnTriggerSystem<LockOnTrigger
                 _lock.ToggleLock(target, args.User, lockComp);
                 break;
         }
+
+        args.Handled = true;
     }
 }
