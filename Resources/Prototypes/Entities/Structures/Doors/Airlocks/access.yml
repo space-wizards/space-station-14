@@ -704,7 +704,7 @@
 - type: entity
   parent: AirlockChemistryGlass
   id: AirlockChemistryGlassMedicalLocked
-  suffix: Chemistry, Locked
+  suffix: Medical, Locked
   components:
   - type: ContainerFill
     containers:
