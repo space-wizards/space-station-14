@@ -1,4 +1,4 @@
-﻿using Content.Shared.Access;
+using Content.Shared.Access;
 using Content.Shared.DeviceNetwork;
 using Robust.Shared.Prototypes;
 

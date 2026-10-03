@@ -145,6 +145,19 @@
   group: market
 
 - type: cargoProduct
+  id: LivestockSlimeCube
+  icon:
+    sprite: Objects/Misc/monkeycube.rsi
+    state: box_slime
+  product: SlimeCubeBox
+  container:
+    entity: WrappedParcel
+    containerId: contents
+  cost: 2000
+  category: cargoproduct-category-name-livestock
+  group: market
+
+- type: cargoProduct
   id: LivestockMouse
   icon:
     sprite: Mobs/Animals/mouse.rsi
