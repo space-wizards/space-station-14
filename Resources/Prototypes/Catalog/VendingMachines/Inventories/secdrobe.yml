@@ -22,10 +22,10 @@
     ClothingNeckScarfStripedRed: 3
     ClothingOuterArmorBasicSlim: 2
     ClothingEyesBlindfold: 1
-    ClothingShoesBootsCombat: 1
     ClothingShoesBootsWinterSec: 2
     ClothingHeadHelmetJustice: 1
   contrabandInventory:
+    ClothingShoesBootsCombat: 1
     ClothingMaskClownSecurity: 1
     ClothingMaskMimeSecurity: 1
     ToyFigurineSecurity: 1
