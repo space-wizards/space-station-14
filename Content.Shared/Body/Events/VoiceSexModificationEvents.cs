@@ -35,7 +35,7 @@ public sealed class VoiceSexModificationControllerBuiState : BoundUserInterfaceS
     /// <summary>
     /// The current sex of the entity being targetted.
     /// </summary>
-    public Sex? CurrentSex;
+    public Sex CurrentSex;
 
     /// <summary>
     /// The current voice of the entity being targetted.

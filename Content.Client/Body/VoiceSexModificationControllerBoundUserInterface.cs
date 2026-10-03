@@ -16,6 +16,12 @@ public sealed class VoiceSexModificationControllerBoundUserInterface : BoundUser
     [ViewVariables]
     private VoiceSexModificationControllerMenu? _menu;
 
+    [ViewVariables]
+    private Sex _currentSex;
+
+    [ViewVariables]
+    private ProtoId<EmoteSoundsPrototype>? _currentVoice;
+
     /// <inheritdoc/>
     public VoiceSexModificationControllerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey) { }
 
@@ -37,10 +43,16 @@ public sealed class VoiceSexModificationControllerBoundUserInterface : BoundUser
             return;
 
         _menu?.UpdateState(bState);
+
+        _currentVoice = bState.CurrentVoice;
+        _currentSex = bState.CurrentSex;
     }
 
     private void OnConfirmChange(ProtoId<EmoteSoundsPrototype>? voice, Sex sex)
     {
+        //if (_currentVoice == voice && _currentSex == sex)
+        //    return;
+
         SendPredictedMessage(new VoiceSexModificationMessage(voice, sex));
     }
 }

@@ -4,7 +4,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid;
-using Content.Shared.Implants.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
@@ -29,12 +28,14 @@ public sealed partial class VoiceSexModificationControllerSystem : EntitySystem
             return;
 
         _actions.AddAction(entity, ref entity.Comp.ActionEntity, entity.Comp.Action, component: comp);
+        Dirty(entity);
     }
 
     [SubscribeLocalEvent]
     private void OnShutdown(Entity<VoiceSexModificationControllerComponent> entity, ref ComponentShutdown args)
     {
         _actions.RemoveAction(entity.Owner, entity.Comp.ActionEntity);
+        Dirty(entity);
     }
 
     [SubscribeLocalEvent]
@@ -48,27 +49,12 @@ public sealed partial class VoiceSexModificationControllerSystem : EntitySystem
         if (!_uiSystem.HasUi(source.Value, VoiceSexModificationControllerKey.Key))
             return;
 
-        // Target may not be the same as the source
-        EntityUid? targetEntity = null;
-        if (HasComp<VoiceSexModificationControllerImplantComponent>(source))
-        {
-            if (!TryComp<SubdermalImplantComponent>(source, out var implantComp) || implantComp.ImplantedEntity == null)
-                return;
-
-            targetEntity = implantComp.ImplantedEntity;
-        }
-        else if (HasComp<VoiceSexModificationControllerComponent>(source))
-        {
-            targetEntity = source;
-        }
-
-        if (targetEntity == null)
+        if (!HasComp<VoiceSexModificationControllerComponent>(source))
             return;
 
-        if (!TryComp<HumanoidProfileComponent>(targetEntity, out var humanoidProfileComp))
+        if (!TryComp<HumanoidProfileComponent>(source, out var humanoidProfileComp))
         {
-            // Maybe one day we'll have a situation where you want to run this for an entity without HumanoidProfileComponent.
-            _popup.PopupEntity(Loc.GetString("voice-sex-modification-not-humanoid"), targetEntity.Value, targetEntity.Value);
+            _popup.PopupEntity(Loc.GetString("voice-sex-modification-not-humanoid"), source.Value, source.Value);
             return;
         }
 
@@ -78,7 +64,7 @@ public sealed partial class VoiceSexModificationControllerSystem : EntitySystem
 
         if (ProtoMan.Resolve(species, out var speciesProto) && (speciesProto.Sexes.Count <= 1 && speciesProto.Voices.Count <= 1))
         {
-            _popup.PopupEntity(Loc.GetString("voice-sex-modification-incompatible-species"), targetEntity.Value, targetEntity.Value);
+            _popup.PopupEntity(Loc.GetString("voice-sex-modification-incompatible-species"), source.Value, source.Value);
             return;
         }
 
@@ -87,28 +73,18 @@ public sealed partial class VoiceSexModificationControllerSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnVoiceSexModificationImplantMessage(Entity<VoiceSexModificationControllerImplantComponent> ent, ref VoiceSexModificationMessage args)
-    {
-        if (!TryComp<SubdermalImplantComponent>(ent, out var implantComp) || implantComp.ImplantedEntity == null || !TryComp<HumanoidProfileComponent>(implantComp.ImplantedEntity, out var humanoidProfileComp))
-            return;
-
-        if (TryApplyChanges((implantComp.ImplantedEntity.Value, humanoidProfileComp), args.Voice, args.Sex))
-        {
-            _audio.PlayPredicted(ent.Comp.Sound, implantComp.ImplantedEntity.Value, implantComp.ImplantedEntity.Value);
-            if (ent.Comp.DeleteOnUse)
-                QueueDel(ent);
-        }
-    }
-
-    [SubscribeLocalEvent]
     private void OnVoiceSexModificationEntityMessage(Entity<VoiceSexModificationControllerComponent> ent, ref VoiceSexModificationMessage args)
     {
         if (!TryComp<HumanoidProfileComponent>(ent, out var humanoidProfileComp))
             return;
 
+        if (ent.Comp.ActionEntity == null || TryComp<ActionComponent>(ent.Comp.ActionEntity, out var actionComp) && _actions.IsCooldownActive(actionComp))
+            return;
+
         if (TryApplyChanges((ent, humanoidProfileComp), args.Voice, args.Sex))
         {
             _audio.PlayPredicted(ent.Comp.Sound, ent, ent);
+            _actions.StartUseDelay((ent.Comp.ActionEntity.Value, actionComp));
         }
     }
 

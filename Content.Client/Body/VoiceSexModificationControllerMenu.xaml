@@ -1,7 +1,7 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                Title="{Loc 'voice-sex-modification-menu-title'}"
-               SetWidth="200"
+               SetWidth="250"
                MinWidth="150">
     <BoxContainer Orientation="Vertical" Margin="10 10">
         <TableContainer Columns="2" HorizontalExpand="True" VerticalExpand="True">

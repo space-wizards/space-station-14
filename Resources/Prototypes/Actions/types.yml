@@ -630,15 +630,16 @@
 
 - type: entity
   id: ActionVoiceSexModificationController
-  name: Change biological configuration
+  name: Morph body properties
   description: Change your voice and/or sex.
   components:
   - type: Action
     priority: -20
     itemIconStyle: BigAction
+    useDelay: 10
   - type: Sprite
-    sprite: Actions/Implants/implants.rsi
+    sprite: Interface/Actions/slimeperson.rsi
     layers:
-    - state: bio_config
+    - state: morph
   - type: InstantAction
     event: !type:VoiceSexModificationControllerToggleMenuEvent

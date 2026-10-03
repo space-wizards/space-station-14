@@ -49,7 +49,6 @@ public sealed partial class VoiceSexModificationControllerMenu : FancyWindow
     /// <summary>
     /// Update the state of the modification menu, setting available voices/sexes based on the user's species.
     /// </summary>
-    /// <param name="state"></param>
     public void UpdateState(VoiceSexModificationControllerBuiState state)
     {
         SexButton.Clear();
@@ -66,7 +65,7 @@ public sealed partial class VoiceSexModificationControllerMenu : FancyWindow
             }
 
             var availableVoices = speciesProto.Voices;
-            _voices = System.Linq.Enumerable.Select(availableVoices, protoId => _prototypeManager.Index(protoId)).ToList();
+            _voices = Enumerable.Select(availableVoices, protoId => _prototypeManager.Index(protoId)).ToList();
 
             for (var i = 0; i < _voices.Count; i++)
             {
@@ -93,8 +92,8 @@ public sealed partial class VoiceSexModificationControllerMenu : FancyWindow
             SexButton.AddItem(Loc.GetString($"humanoid-profile-editor-sex-{sex.ToString().ToLower()}-text"), (int)sex);
         }
 
-        if (state.CurrentSex != null && sexes.Contains(state.CurrentSex.Value))
-            SexButton.SelectId((int)state.CurrentSex.Value);
+        if (sexes.Contains(state.CurrentSex))
+            SexButton.SelectId((int)state.CurrentSex);
         else
             SexButton.SelectId((int)sexes[0]);
     }

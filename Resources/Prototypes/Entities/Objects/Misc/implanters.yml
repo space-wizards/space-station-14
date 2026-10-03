@@ -48,7 +48,6 @@
     - RadioImplant
     - ChameleonControllerImplant
     - VoiceMaskImplant
-    - VoiceSexModificationControllerImplant
     deimplantFailureDamage:
       types:
         Cellular: 50
@@ -185,22 +184,6 @@
   components:
   - type: Implanter
     implant: BikeHornImplant
-
-- type: entity
-  parent: BaseImplantOnlyImplanter
-  id: VoiceSexModificationControllerImplanter
-  name: biological configuration implanter
-  components:
-  - type: Implanter
-    implant: VoiceSexModificationControllerImplant
-  - type: Sprite
-    layers:
-    - state: implanter1
-      map: [ "implantFull" ]
-      visible: true
-    - state: implanter0
-      map: [ "implantOnly" ]
-    - state: implanter_trans
 
 #Security implanters
 
