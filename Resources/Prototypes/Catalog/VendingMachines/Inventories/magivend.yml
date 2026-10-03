@@ -1,16 +1,19 @@
 - type: vendingMachineInventory
   id: MagiVendInventory
-  startingInventory:
-    ClothingHeadHatWizardAbyss: 3
-    ClothingOuterWizardAbyss: 3
-    ClothingHeadHatWizardBlue: 3
-    ClothingOuterWizardBlue: 3
-    ClothingHeadHatWizardRed: 3
-    ClothingOuterWizardRed: 3
-    ClothingHeadHatWizardViolet: 3
-    ClothingOuterWizardViolet: 3
-    ClothingHeadHelmetWizardHelm: 3
-    ClothingShoesSandalsBrown: 9
-    #TODO:
-    #only missing staff
-    #and if wizarditis reagent when hacked if we want this.
+  categories:
+  - name: vending-machine-category-clothing
+    icon: { entity: ClothingHeadHatWizard }
+    startingInventory:
+      ClothingHeadHatWizardAbyss: 3
+      ClothingOuterWizardAbyss: 3
+      ClothingHeadHatWizardBlue: 3
+      ClothingOuterWizardBlue: 3
+      ClothingHeadHatWizardRed: 3
+      ClothingOuterWizardRed: 3
+      ClothingHeadHatWizardViolet: 3
+      ClothingOuterWizardViolet: 3
+      ClothingHeadHelmetWizardHelm: 3
+      ClothingShoesSandalsBrown: 9
+      #TODO:
+      #only missing staff
+      #and if wizarditis reagent when hacked if we want this.
