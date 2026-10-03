@@ -189,8 +189,7 @@ public sealed partial class SharedConditionEvaluationSystem : EntitySystem
         //as a fallback event driven evaluation is used, but if the condition does not support that, something new was added we did not account for.
         if (condition is not IConditionByEvent conditionByEvent)
         {
-            throw new NotImplementedException("No Evaluation method for condition of type " +
-                                              condition.GetType().FullName + " found!");
+            return 0;
         }
 
         //make the event using our cached building function.
