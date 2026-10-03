@@ -29,6 +29,11 @@
             <Button HorizontalExpand="True" Name="BrainButton" ToggleMode="False" Margin="0" MinHeight="40" StyleClasses="OpenLeft">
                 <SpriteView Name="BrainView" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             </Button>
+            <RichTextLabel
+                Name="ChassisProviderWarning"
+                HorizontalAlignment="Center"
+                Access="Public">
+            </RichTextLabel>
         </BoxContainer>
         <controls:Separator StyleClasses="LowDivider" Orientation="Vertical" MinHeight="5"/>
         <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="15 10 15 15">

@@ -1,6 +1,6 @@
 - type: entity
   parent: [BaseMob, StripableInventoryBase]
-  id: BaseBorgChassisNotIonStormable
+  id: BaseBorgChassis
   name: cyborg
   description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
   save: false
@@ -55,11 +55,11 @@
     allowRevives: true
   - type: HealthExaminable
     examinableTypes:
-      - Blunt
-      - Slash
-      - Piercing
-      - Heat
-      - Shock
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    - Shock
     locPrefix: silicon
   - type: UserInterface
     interfaces:
@@ -75,14 +75,10 @@
         type: BorgSelectTypeUserInterface
   - type: ActivatableUI
     key: enum.BorgUiKey.Key
-  - type: SiliconLawBound
   - type: ActionGrant
     actions:
     - ActionViewLaws
-  - type: EmagSiliconLaw
-    stunTime: 5
-  - type: SiliconLawProvider
-    laws: Crewsimov
+  - type: SiliconLawBound
   - type: Inventory
     templateId: borg
   - type: Hands
@@ -148,7 +144,6 @@
     emoteSounds: UnisexSilicon
     wilhelmProbability: 0
   - type: DamagedSiliconAccent
-    damageAtMaxCorruption: 300
   - type: UnblockableSpeech
   - type: FootstepModifier
     footstepSoundCollection:
@@ -167,8 +162,32 @@
     - enum.BorgUiKey.Key
   - type: LockedWiresPanel
   - type: Damageable
-  - type: Injurable
     damageContainer: Silicon
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Machines/warning_buzzer.ogg
+          params:
+            volume: 5
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:EmptyContainersBehaviour
+        containers:
+        - borg_brain
+        - borg_module
+        - cell_slot
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: HandheldLight
     toggleOnInteract: false
     wattage: 0.2
@@ -228,39 +247,6 @@
     requiredMobState:
     - Critical
     - Dead
-
-- type: entity
-  abstract: true
-  parent: BaseBorgChassisNotIonStormable
-  id: BaseBorgChassis
-  components:
-  - type: IonStormTarget
-  - type: Destructible
-    generateOverkillThreshold: false
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 75
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Machines/warning_buzzer.ogg
-          params:
-            volume: 5
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-      - !type:EmptyContainersBehaviour
-        containers:
-        - borg_brain
-        - borg_module
-        - cell_slot
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   abstract: true
@@ -341,7 +327,10 @@
   id: BaseBorgChassisSyndicate
   parent: BaseBorgChassis
   abstract: true
+  suffix: Syndie, Provider
   components:
+  - type: BorgChassis
+    selfProvider: true
   - type: NpcFactionMember
     factions:
     - Syndicate
@@ -374,6 +363,8 @@
     color: "#dd200b"
   - type: BypassLock
     bypassDelay: 15 # We don't want people to easily be able to remove syndieborg brains.
+  - type: EmagSiliconLaw
+    stunTime: 5
 
 - type: entity
   id: BaseBorgChassisDerelict
@@ -388,10 +379,6 @@
     - AllAccess #Randomized access would be fun. AllAccess is the best i can think of right now that does make it too hard for it to enter the station or navigate it..
   - type: AccessReader
     access: [["Command"], ["Research"]]
-  - type: StartIonStormed
-    ionStormAmount: 3
-  - type: IonStormTarget
-    chance: 1
   - type: ShowJobIcons
   - type: ShowCrewIcons
 
@@ -399,10 +386,13 @@
   id: BaseBorgChassisSyndicateDerelict #For assault borg and maybe others in time
   parent: BaseBorgChassis # We don't want them to see Nukies or have syndi comms, their database is out of date
   abstract: true
+  suffix: Syndie, Provider
   components:
+  - type: BorgChassis
+    selfProvider: true
   - type: SiliconLawProvider
     laws: SyndicateStatic #Non-subverted version so they can still be changed
-  - type: StartIonStormed
+  - type: StartIonStormed #The chassis and the brain will have different ion storm laws, this is intended, since it can be the provider too
     ionStormAmount: 3
   - type: IonStormTarget
     chance: 1
@@ -429,19 +419,23 @@
     allowedEmotes:
     - Laugh
   - type: Vocal
-    emoteSounds: UnisexSiliconSyndicate
+    sounds:
+      Unsexed: UnisexSiliconSyndicate
   - type: PointLight
     color: "#dd200b"
   - type: BypassLock
     bypassDelay: 15 # We don't want people to easily be able to remove syndieborg brains.
+  - type: EmagSiliconLaw
+    stunTime: 5
 
 - type: entity
-  parent: BaseBorgChassisNotIonStormable
+  parent: BaseBorgChassis
   id: BaseXenoborgChassis
   name: xenoborg
   description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh Xenoborg chassis to grow their army.
   save: false
   abstract: true
+  suffix: Xeno, Provider
   components:
   - type: RandomMetadata
     nameSegments:
@@ -469,6 +463,7 @@
     - Xenoborg
     - Binary
   - type: BorgChassis
+    selfProvider: true
     maxModules: 0
     hasMindState: robot_e
     noMindState: robot_e_r
@@ -502,34 +497,6 @@
   - type: NpcFactionMember
     factions:
     - Xenoborg
-  - type: PointLight
-    color: "#3010ff"
-    energy: 7
-  - type: GuideHelp
-    guides:
-    - Cyborgs
-    - Robotics
-    - Xenoborgs
-  - type: Access
-    tags:
-    - Xenoborg
-  - type: AccessReader
-    access: [["Xenoborg"]]
-  - type: ShowJobIcons # not sure if it is needed
-  - type: ShowCrewIcons
-  - type: InteractionPopup
-    interactSuccessSound:
-      path: /Audio/Ambience/Objects/periodic_beep.ogg
-  - type: Xenoborg
-  - type: BypassLock
-    bypassDelay: 15 # We don't want people to easily be able to remove xenoborg brains.
-  - type: EmpResistance
-    strengthMultiplier: 0
-
-- type: entity
-  abstract: true
-  id: BaseXenoborgDestructible
-  components:
   - type: Destructible
     thresholds:
     - trigger:
@@ -560,3 +527,26 @@
         - cell_slot
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: PointLight
+    color: "#3010ff"
+    energy: 7
+  - type: GuideHelp
+    guides:
+    - Cyborgs
+    - Robotics
+    - Xenoborgs
+  - type: Access
+    tags:
+    - Xenoborg
+  - type: AccessReader
+    access: [["Xenoborg"]]
+  - type: ShowJobIcons # not sure if it is needed
+  - type: ShowCrewIcons
+  - type: InteractionPopup
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: Xenoborg
+  - type: BypassLock
+    bypassDelay: 15 # We don't want people to easily be able to remove xenoborg brains.
+  - type: EmpResistance
+    strengthMultiplier: 0

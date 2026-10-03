@@ -146,6 +146,17 @@ public sealed partial class BorgChassisComponent : Component
     /// </summary>
     [DataField]
     public bool CanOpenSelfUi;
+
+    /// <summary>
+    /// Whether the chassis is responsible for providing it's own laws,
+    /// rather then using the brain's laws.
+    /// Used for syndie borgs, but also used on the client UI for a warning.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool SelfProvider = false;
+
+    // Prevent cheat clients from seeing the battery of other players.
+    public override bool SendOnlyToOwner => true;
 }
 
 [Serializable, NetSerializable]

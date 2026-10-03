@@ -10,13 +10,13 @@ namespace Content.Server.Silicons.StationAi;
 
 public sealed partial class StationAiFixerConsoleSystem : SharedStationAiFixerConsoleSystem
 {
-    [Dependency] private EuiManager _eui = default!;
-    [Dependency] private IPlayerManager _player = default!;
-    [Dependency] private MindSystem _mind = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private readonly EuiManager _eui = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
-    protected override void FinalizeAction(Entity<StationAiFixerConsoleComponent> ent)
+    public override void FinalizeAction(Entity<StationAiFixerConsoleComponent> ent)
     {
         if (IsActionInProgress(ent) && ent.Comp.ActionTarget != null)
         {
@@ -53,6 +53,16 @@ public sealed partial class StationAiFixerConsoleSystem : SharedStationAiFixerCo
                     if (ent.Comp.PurgeFinishedSound != null)
                     {
                         _audio.PlayPvs(ent.Comp.PurgeFinishedSound, ent);
+                    }
+
+                    break;
+
+                case StationAiFixerConsoleAction.LawReset:
+                    _popup.PopupEntity(Loc.GetString("station-ai-fixer-console-law-reset-successful"), ent);
+
+                    if (ent.Comp.LawResetFinishedSound != null)
+                    {
+                        _audio.PlayPvs(ent.Comp.LawResetFinishedSound, ent);
                     }
 
                     break;

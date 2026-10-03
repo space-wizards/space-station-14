@@ -1,11 +1,16 @@
+using Content.Shared.Actions;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Mind;
-using Content.Shared.Overlays;
 using Content.Shared.Popups;
+using Content.Shared.Roles;
+using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Silicons.Laws.Components;
+using Content.Shared.Station.Systems;
 using Content.Shared.Stunnable;
-using Content.Shared.Wires;
-using Robust.Shared.Audio;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Silicons.Laws;
 
@@ -14,98 +19,118 @@ namespace Content.Shared.Silicons.Laws;
 /// </summary>
 public abstract partial class SharedSiliconLawSystem : EntitySystem
 {
-    [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private SharedStunSystem _stunSystem = default!;
-    [Dependency] private EmagSystem _emag = default!;
-    [Dependency] private SharedMindSystem _mind = default!;
+    public const int IonStormIdentifierMinLength = 1;
+    public const int IonStormIdentifierMaxLength = 4;
 
-    /// <summary>
-    /// Minimum length of generated ion storm law identifiers.
-    /// </summary>
-    public const int IonStormIdentifierMinLength = 3;
-    /// <summary>
-    /// Maximum length of generated ion storm law identifiers.
-    /// </summary>
-    public const int IonStormIdentifierMaxLength = 10;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _userInterface = default!;
+    [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
-        InitializeUpdater();
-        SubscribeLocalEvent<EmagSiliconLawComponent, GotEmaggedEvent>(OnGotEmagged);
+        base.Initialize();
+
+        SubscribeLocalEvent<SiliconLawBoundComponent, ComponentStartup>(OnLawBoundStartup);
+        SubscribeLocalEvent<SiliconLawBoundComponent, MapInitEvent>(OnLawBoundInit);
+        SubscribeLocalEvent<SiliconLawBoundComponent, ToggleLawsScreenEvent>(OnToggleLawsScreen);
+        SubscribeLocalEvent<SiliconLawBoundComponent, ComponentShutdown>(OnLawBoundShutdown);
+
+        SubscribeLocalEvent<BorgChassisComponent, GetSiliconLawsEvent>(OnChassisGetLaws);
+
+        InitializeProvider();
+        InitializeEmag();
     }
 
-    private void OnGotEmagged(EntityUid uid, EmagSiliconLawComponent component, ref GotEmaggedEvent args)
+    #region Events
+
+    private void OnLawBoundShutdown(Entity<SiliconLawBoundComponent> ent, ref ComponentShutdown args)
     {
-        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+        UnlinkFromProvider(ent.AsNullable());
+    }
+
+    private void OnLawBoundStartup(Entity<SiliconLawBoundComponent> ent, ref ComponentStartup args)
+    {
+        if (ent.Comp.FetchOnInit)
+            FetchLawset(ent.AsNullable());
+    }
+
+    private void OnLawBoundInit(Entity<SiliconLawBoundComponent> ent, ref MapInitEvent args)
+    {
+        if (ent.Comp.FetchOnInit)
+            FetchLawset(ent.AsNullable());
+    }
+
+    private void OnToggleLawsScreen(Entity<SiliconLawBoundComponent> ent, ref ToggleLawsScreenEvent args)
+    {
+        if (args.Handled || !TryComp<ActorComponent>(ent, out var actor))
             return;
-
-        if (_emag.CheckFlag(uid, EmagType.Interaction))
-            return;
-
-        // prevent self-emagging
-        if (uid == args.UserUid)
-        {
-            _popup.PopupEntity(Loc.GetString("law-emag-cannot-emag-self"), uid, args.UserUid);
-            return;
-        }
-
-        if (component.RequireOpenPanel &&
-            TryComp<WiresPanelComponent>(uid, out var panel) &&
-            !panel.Open)
-        {
-            _popup.PopupEntity(Loc.GetString("law-emag-require-panel"), uid, args.UserUid);
-            return;
-        }
-
-        var ev = new SiliconEmaggedEvent(args.UserUid);
-        RaiseLocalEvent(uid, ref ev);
-
-        component.OwnerName = Name(args.UserUid);
-
-        if (!TryComp<SiliconLawProviderComponent>(uid, out var lawcomp))
-            return;
-            
-        NotifyLawsChanged((uid, lawcomp), component.EmaggedSound);
-        if(_mind.TryGetMind(uid, out var mindId, out _))
-            EnsureSubvertedSiliconRole(mindId);
-
-        _stunSystem.TryUpdateParalyzeDuration(uid, component.StunTime);
 
         args.Handled = true;
+
+        _userInterface.TryToggleUi(ent.Owner, SiliconLawsUiKey.Key, actor.PlayerSession);
     }
 
-    public virtual void NotifyLawsChanged(Entity<SiliconLawProviderComponent> ent, SoundSpecifier? cue = null)
+    private void OnChassisGetLaws(Entity<BorgChassisComponent> ent, ref GetSiliconLawsEvent args)
     {
-
-    }
-
-    protected virtual void EnsureSubvertedSiliconRole(EntityUid mindId)
-    {
-        if (TryComp<MindComponent>(mindId, out var mind))
+        // Chassis specific laws take priority over brain laws.
+        // We want this for things like Syndieborgs or Xenoborgs, who depend on chassis specific laws.
+        if (TryComp<SiliconLawProviderComponent>(ent, out var chassisProvider))
         {
-            var owner = mind.OwnedEntity;
-            if (TryComp<ShowCrewIconsComponent>(owner, out var crewIconComp))
-            {
-                crewIconComp.UncertainCrewBorder = true;
-                Dirty(owner.Value, crewIconComp);
-            }
+            args.Laws = chassisProvider.Lawset.Clone();
+            args.Handled = true;
+        }
+        else if (TryComp<SiliconLawProviderComponent>(ent.Comp.BrainEntity, out var brainProvider))
+        {
+            args.Laws = brainProvider.Lawset.Clone();
+            args.LinkedEntity = ent.Comp.BrainEntity;
+            args.Handled = true;
         }
     }
-
-    protected virtual void RemoveSubvertedSiliconRole(EntityUid mindId)
-    {
-        if (TryComp<MindComponent>(mindId, out var mind))
-        {
-            var owner = mind.OwnedEntity;
-            if (TryComp<ShowCrewIconsComponent>(owner, out var crewIconComp))
-            {
-                crewIconComp.UncertainCrewBorder = false;
-                Dirty(owner.Value, crewIconComp);
-            }
-        }
-    }
+    #endregion Events
 }
 
+/// <summary>
+/// An event used to get the laws of silicons roundstart, linking them to potential LawProviders.
+/// </summary>
+/// <param name="Entity">The entity we are gathering the laws for.</param>
+/// <param name="LinkedEntity">The entity to link to, if null, uses the entity this event was raised on.</param>
 [ByRefEvent]
-public record struct SiliconEmaggedEvent(EntityUid user);
+public record struct GetSiliconLawsEvent(EntityUid Entity, EntityUid? LinkedEntity = null)
+{
+    public SiliconLawset Laws = new();
+
+    public bool Handled = false;
+}
+
+/// <summary>
+/// Raised on an entity with <see cref="SiliconLawBoundComponent"/> when their provider is changed.
+/// </summary>
+/// <param name="NewProvider">The new provider whose laws are being taken.</param>
+/// <param name="OldProvider">The old provider, can be null if there wasn't one.</param>
+[ByRefEvent]
+public record struct SiliconLawProviderChanged(EntityUid NewProvider, EntityUid? OldProvider = null);
+
+/// <summary>
+/// Raised on an entity with <see cref="SiliconLawBoundComponent"/> when they are unlinked from a provider.
+/// </summary>
+/// <param name="Provider">The provider the entity has been unlinked from..</param>
+[ByRefEvent]
+public record struct SiliconLawProviderUnlinked(EntityUid Provider);
+
+public sealed partial class ToggleLawsScreenEvent : InstantActionEvent
+{
+
+}
+
+[NetSerializable, Serializable]
+public enum SiliconLawsUiKey : byte
+{
+    Key
+}
