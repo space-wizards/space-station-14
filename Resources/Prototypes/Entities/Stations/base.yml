@@ -18,6 +18,11 @@
         Security: [ ]
         Service: [ ]
     - type: StationCargoBountyDatabase
+      maxClaimants: 3
+      statuses:
+      - Undelivered
+      - Waiting
+      - OnShuttle
 
 - type: entity
   id: BaseStationJobsSpawning

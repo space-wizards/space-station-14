@@ -24,6 +24,20 @@ public sealed partial class StationCargoBountyDatabaseComponent : Component
     public List<CargoBountyData> Bounties = new();
 
     /// <summary>
+    /// Maximum amount of people who can claim a bounty.
+    /// </summary>
+    [DataField]
+    public int MaxClaimants = 1;
+
+    /// <summary>
+    /// Statuses which bounty can be
+    /// Will show in the UI in the order here
+    /// The first item is the initial status
+    /// </summary>
+    [DataField]
+    public List<string> Statuses = new();
+
+    /// <summary>
     /// A list of all the bounties that have been completed or
     /// skipped for a station.
     /// </summary>
@@ -60,4 +74,28 @@ public sealed partial class StationCargoBountyDatabaseComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan SkipDelay = TimeSpan.FromMinutes(15);
+
+    /// <summary>
+    /// The time at which players will be able to register a claimant on a bounty again.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextClaimTime = TimeSpan.Zero;
+
+    /// <summary>
+    /// The minimum time between claims.
+    /// </summary>
+    [DataField]
+    public TimeSpan ClaimDelay = TimeSpan.FromSeconds(0.1);
+
+    /// <summary>
+    /// The time at which players will be able to update the status of a bounty again..
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextStatusUpdateTime = TimeSpan.Zero;
+
+    /// <summary>
+    /// The minimum time between status changes.
+    /// </summary>
+    [DataField]
+    public TimeSpan StatusUpdateDelay = TimeSpan.FromSeconds(1);
 }
