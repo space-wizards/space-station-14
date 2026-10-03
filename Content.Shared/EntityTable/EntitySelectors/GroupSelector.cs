@@ -30,7 +30,7 @@ public sealed partial class GroupSelector : EntityTableSelectorWithChildrenBase
         if (children.Count == 0)
             yield break;
 
-        var pick = SharedRandomExtensions.Pick(children, rand);
+        var pick = rand.Pick(children);
 
         foreach (var spawn in pick.GetSpawns(rand, entMan, proto, ctx))
         {
