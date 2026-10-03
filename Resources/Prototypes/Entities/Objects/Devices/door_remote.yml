@@ -206,7 +206,7 @@
     - Engineering
 
 - type: entity
-  parent: [BaseCommandContraband, DoorRemoteCanEletrifyDoors]
+  parent: [DoorRemoteCanEletrifyDoors, BaseCommandContraband]
   id: DoorRemoteAll
   name: super door remote
   description: A gadget which can open and bolt doors remotely. This one works even on wooden doors!
