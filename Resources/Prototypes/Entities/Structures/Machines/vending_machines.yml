@@ -10,6 +10,7 @@
   - type: ActionGrant
     actions:
     - ActionVendingThrow
+    - ActionVendingDispense
   - type: StationAiWhitelist
   - type: AmbientOnPowered
   - type: AmbientSound
