@@ -24,7 +24,9 @@ public abstract partial class AlertsSystem : EntitySystem
         SubscribeLocalEvent<AlertAutoRemoveComponent, EntityUnpausedEvent>(OnAutoRemoveUnPaused);
 
         SubscribeAllEvent<ClickAlertEvent>(HandleClickAlert);
+        SubscribeAllEvent<RightClickAlertEvent>(HandleRightClickAlert);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(HandlePrototypesReloaded);
+
         LoadPrototypes();
     }
 
@@ -306,6 +308,12 @@ public abstract partial class AlertsSystem : EntitySystem
             Dirty(entity, alertComp);
     }
 
+    [SubscribeLocalEvent]
+    private void OnClearAlertEvent(Entity<AlertsComponent> ent, ref ClearAlertEvent args)
+    {
+        ClearAlert(ent.Owner, args.AlertId);
+    }
+
     protected virtual void HandleComponentShutdown(EntityUid uid, AlertsComponent component, ComponentShutdown args)
     {
         RaiseLocalEvent(uid, new AlertSyncEvent(uid), true);
@@ -345,23 +353,32 @@ public abstract partial class AlertsSystem : EntitySystem
 
     private void HandleClickAlert(ClickAlertEvent msg, EntitySessionEventArgs args)
     {
-        var player = args.SenderSession.AttachedEntity;
+        ClickAlert(args.SenderSession.AttachedEntity, msg.Type, false);
+    }
+
+    private void HandleRightClickAlert(RightClickAlertEvent msg, EntitySessionEventArgs args)
+    {
+        ClickAlert(args.SenderSession.AttachedEntity, msg.Type, true);
+    }
+
+    private void ClickAlert(EntityUid? player, ProtoId<AlertPrototype> alertType, bool rightClick)
+    {
         if (player is null || !HasComp<AlertsComponent>(player))
             return;
 
-        if (!IsShowingAlert(player.Value, msg.Type))
+        if (!IsShowingAlert(player.Value, alertType))
         {
-            Log.Debug($"User {ToPrettyString(player.Value)} attempted to click alert {msg.Type} which is not currently showing for them");
+            Log.Debug($"User {ToPrettyString(player.Value)} attempted to click alert {alertType} which is not currently showing for them");
             return;
         }
 
-        if (!TryGet(msg.Type, out var alert))
+        if (!TryGet(alertType, out var alert))
         {
-            Log.Warning($"Unrecognized encoded alert {msg.Type}");
+            Log.Warning($"Unrecognized encoded alert {alertType}");
             return;
         }
 
-        if (ActivateAlert(player.Value, alert) && _timing.IsFirstTimePredicted)
+        if (ActivateAlert(player.Value, alert, rightClick) && _timing.IsFirstTimePredicted)
         {
             HandledAlert();
         }
@@ -372,16 +389,17 @@ public abstract partial class AlertsSystem : EntitySystem
 
     }
 
-    public bool ActivateAlert(EntityUid user, AlertPrototype alert)
+    private bool ActivateAlert(EntityUid user, AlertPrototype alert, bool rightClick = false)
     {
-        if (alert.ClickEvent is not { } clickEvent)
+        var alertEvent = rightClick ? alert.RightClickEvent : alert.ClickEvent;
+        if (alertEvent is not { } clickEvent)
             return false;
 
         clickEvent.Handled = false;
         clickEvent.User = user;
         clickEvent.AlertId = alert.ID;
 
-        RaiseLocalEvent(user, (object) clickEvent, true);
+        RaiseLocalEvent(user, (object)clickEvent, true);
         return clickEvent.Handled;
     }
 

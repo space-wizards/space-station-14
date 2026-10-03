@@ -49,7 +49,7 @@ public sealed partial class AlertsUI : UIWidget
         _alertControls.Clear();
     }
 
-    public event EventHandler<ProtoId<AlertPrototype>>? AlertPressed;
+    public event EventHandler<(ProtoId<AlertPrototype>, BoundKeyFunction)>? AlertPressed;
 
     private bool SyncRemoveControls(IReadOnlyDictionary<AlertKey, AlertState> alertStates)
     {
@@ -146,6 +146,7 @@ public sealed partial class AlertsUI : UIWidget
         {
             Cooldown = cooldown
         };
+        alertControl.EnableAllKeybinds = true;
         alertControl.OnPressed += AlertControlPressed;
         return alertControl;
     }
@@ -155,9 +156,9 @@ public sealed partial class AlertsUI : UIWidget
         if (args.Button is not AlertControl control)
             return;
 
-        if (args.Event.Function != EngineKeyFunctions.UIClick)
+        if (args.Event.Function != EngineKeyFunctions.UIClick && args.Event.Function != EngineKeyFunctions.UIRightClick)
             return;
 
-        AlertPressed?.Invoke(this, control.Alert.ID);
+        AlertPressed?.Invoke(this, (control.Alert.ID, args.Event.Function));
     }
 }

@@ -123,4 +123,9 @@ public sealed partial class ClientAlertsSystem : AlertsSystem
     {
         RaisePredictiveEvent(new ClickAlertEvent(alertType));
     }
+
+    public void AlertRightClicked(ProtoId<AlertPrototype> alertType)
+    {
+        RaisePredictiveEvent(new RightClickAlertEvent(alertType));
+    }
 }
