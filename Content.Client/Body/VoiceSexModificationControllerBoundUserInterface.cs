@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Body;
 
 /// <summary>
-/// BUI for the VoiceSexModification menu.
+/// BUI for the VoiceSexModificationController menu.
 /// </summary>
 [UsedImplicitly]
 public sealed class VoiceSexModificationControllerBoundUserInterface : BoundUserInterface
@@ -50,8 +50,8 @@ public sealed class VoiceSexModificationControllerBoundUserInterface : BoundUser
 
     private void OnConfirmChange(ProtoId<EmoteSoundsPrototype>? voice, Sex sex)
     {
-        //if (_currentVoice == voice && _currentSex == sex)
-        //    return;
+        if (_currentVoice == voice && _currentSex == sex)
+            return;
 
         SendPredictedMessage(new VoiceSexModificationMessage(voice, sex));
     }

@@ -631,7 +631,7 @@
 - type: entity
   id: ActionVoiceSexModificationController
   name: Morph body properties
-  description: Change your voice and/or sex.
+  description: Configure your voice and/or sex.
   components:
   - type: Action
     priority: -20

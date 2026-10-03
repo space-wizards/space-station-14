@@ -284,11 +284,3 @@
   materials:
     Steel: 500
     Plastic: 300
-
-- type: latheRecipe
-  id: VoiceSexModificationControllerImplanter
-  result: VoiceSexModificationControllerImplanter
-  completetime: 1
-  materials:
-    Glass: 500
-    Steel: 500
