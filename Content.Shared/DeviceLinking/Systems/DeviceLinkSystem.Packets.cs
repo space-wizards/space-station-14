@@ -4,6 +4,7 @@ using Content.Shared.DeviceLinking.Payloads;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.DeviceLinking.Systems;
@@ -16,6 +17,7 @@ public sealed partial class DeviceLinkSystem
     /// </summary>
     /// <param name="ent">The source that invokes the port</param>
     /// <param name="port">The port to invoke</param>
+    [PublicAPI]
     public void InvokePort(Entity<DeviceLinkSourceComponent?> ent, [ForbidLiteral] ProtoId<SourcePortPrototype> port)
     {
         if (!_deviceLinkSourceQuery.Resolve(ent.Owner, ref ent.Comp)
@@ -45,6 +47,7 @@ public sealed partial class DeviceLinkSystem
     /// <param name="ent">The source that invokes the port</param>
     /// <param name="port">The port to invoke</param>
     /// <param name="data">Optional data to send along</param>
+    [PublicAPI]
     public void InvokePort<T>(
         Entity<DeviceLinkSourceComponent?> ent,
         [ForbidLiteral] ProtoId<SourcePortPrototype> port,
@@ -164,6 +167,7 @@ public sealed partial class DeviceLinkSystem
     /// <summary>
     /// Helper function that invokes a port with a high/low binary logic signal.
     /// </summary>
+    [PublicAPI]
     public void SendSignal(Entity<DeviceLinkSourceComponent?> ent, [ForbidLiteral] ProtoId<SourcePortPrototype> port, bool signal)
     {
         if (!_deviceLinkSourceQuery.Resolve(ent.Owner, ref ent.Comp))
@@ -184,6 +188,7 @@ public sealed partial class DeviceLinkSystem
     /// This is not to be confused with sending a low signal, this is the complete absence of anything.
     /// Use if the device is in an invalid state and has no reasonable output signal.
     /// </summary>
+    [PublicAPI]
     public void ClearSignal(Entity<DeviceLinkSourceComponent?> ent, [ForbidLiteral] ProtoId<SourcePortPrototype> port)
     {
         if (!_deviceLinkSourceQuery.Resolve(ent, ref ent.Comp))

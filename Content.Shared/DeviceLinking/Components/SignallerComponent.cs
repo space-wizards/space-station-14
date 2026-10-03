@@ -1,12 +1,13 @@
+using Content.Shared.DeviceLinking.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.DeviceLinking.Components;
 
 /// <summary>
-/// Sends out a signal to machine linked objects.
+/// Sends out a signal to machine linked objects when used in hand.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(SignallerSystem))]
 public sealed partial class SignallerComponent : Component
 {
     /// <summary>

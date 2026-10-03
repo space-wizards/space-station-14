@@ -3,6 +3,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.DeviceLinking.Components;
 
+/// <summary>
+/// Added to currently active <see cref="SignalTimerComponent"/>.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
 public sealed partial class ActiveSignalTimerComponent : Component
 {

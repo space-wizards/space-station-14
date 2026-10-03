@@ -1,5 +1,6 @@
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DeviceNetwork;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.DeviceLinking.Payloads;
 
@@ -18,7 +19,7 @@ public partial record struct SignalPayload : INetworkPayload
     /// A signal port that was invoked.
     /// </summary>
     [DataField]
-    public string InvokedPort;
+    public ProtoId<SinkPortPrototype> InvokedPort;
 }
 
 /// <summary>
@@ -31,7 +32,7 @@ public partial record struct SignalPayload<T> : INetworkPayload where T : ISigna
     /// A signal port that was invoked.
     /// </summary>
     [DataField]
-    public string InvokedPort;
+    public ProtoId<SinkPortPrototype> InvokedPort;
 
     /// <summary>
     /// Optional additional data about the signal.

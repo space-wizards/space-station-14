@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Content.Shared.Database;
+﻿using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Popups;
@@ -19,8 +18,7 @@ public sealed partial class DeviceLinkSystem
         if (!_deviceLinkSourceQuery.Resolve(source.Owner, ref source.Comp) || !source.Comp.LinkedPorts.TryGetValue(sinkUid, out var links))
             return new HashSet<DeviceLink>();
 
-        // TODO fix this when DeviceLinkSourceComponent will store DeviceLinks inside
-        return links.Select(x => new DeviceLink(x.Source, x.Sink)).ToHashSet();
+        return links;
     }
 
     /// <summary>
@@ -188,8 +186,8 @@ public sealed partial class DeviceLinkSystem
         {
             foreach (var (sourcePort, sinkPort) in ports)
             {
-                var sourceEv = new PortDisconnectedEvent(sourcePort);
-                var sinkEv = new PortDisconnectedEvent(sinkPort);
+                var sourceEv = new SourcePortDisconnectedEvent(sourcePort);
+                var sinkEv = new SinkPortDisconnectedEvent(sinkPort);
                 RaiseLocalEvent(source, ref sourceEv);
                 RaiseLocalEvent(sink, ref sinkEv);
             }
@@ -229,8 +227,8 @@ public sealed partial class DeviceLinkSystem
             else
                 _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"unlinked {ToPrettyString(source):source} {sourcePort} and {ToPrettyString(sink):sink} {sinkPort}");
 
-            var sourceEv = new PortDisconnectedEvent(sourcePort);
-            var sinkEv = new PortDisconnectedEvent(sinkPort);
+            var sourceEv = new SourcePortDisconnectedEvent(sourcePort);
+            var sinkEv = new SinkPortDisconnectedEvent(sinkPort);
             RaiseLocalEvent(source, ref sourceEv);
             RaiseLocalEvent(sink, ref sinkEv);
 
@@ -280,7 +278,7 @@ public sealed partial class DeviceLinkSystem
         Entity<DeviceLinkSinkComponent?> sink,
         DeviceLink link)
     {
-        return ToggleLink(userId, source, sink, link.SourcePort, link.SinkPort);
+        return ToggleLink(userId, source, sink, link.Source, link.Sink);
     }
 
     /// <summary>

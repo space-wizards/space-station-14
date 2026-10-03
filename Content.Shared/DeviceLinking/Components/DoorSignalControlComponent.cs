@@ -1,9 +1,14 @@
+using Content.Shared.DeviceLinking.Systems;
+using Content.Shared.Doors.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.DeviceLinking.Components;
 
-[RegisterComponent, NetworkedComponent]
+/// <summary>
+/// Component that allows to control a <see cref="DoorComponent"/> using Device linking.
+/// </summary>
+[RegisterComponent, NetworkedComponent, Access(typeof(DoorSignalControlSystem))]
 public sealed partial class DoorSignalControlComponent : Component
 {
     [DataField]

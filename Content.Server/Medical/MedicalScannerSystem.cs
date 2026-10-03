@@ -42,7 +42,7 @@ namespace Content.Server.Medical
             SubscribeLocalEvent<MedicalScannerComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
             SubscribeLocalEvent<MedicalScannerComponent, DestructionEventArgs>(OnDestroyed);
             SubscribeLocalEvent<MedicalScannerComponent, DragDropTargetEvent>(OnDragDropOn);
-            SubscribeLocalEvent<MedicalScannerComponent, PortDisconnectedEvent>(OnPortDisconnected);
+            SubscribeLocalEvent<MedicalScannerComponent, SinkPortDisconnectedEvent>(OnPortDisconnected);
             SubscribeLocalEvent<MedicalScannerComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             SubscribeLocalEvent<MedicalScannerComponent, CanDropTargetEvent>(OnCanDragDropOn);
         }
@@ -140,9 +140,10 @@ namespace Content.Server.Medical
             InsertBody(uid, args.Dragged, scannerComponent);
         }
 
-        private void OnPortDisconnected(EntityUid uid, MedicalScannerComponent component, ref PortDisconnectedEvent args)
+        private void OnPortDisconnected(EntityUid uid, MedicalScannerComponent component, ref SinkPortDisconnectedEvent args)
         {
-            component.ConnectedConsole = null;
+            if (args.Port == MedicalScannerComponent.ScannerPort)
+                component.ConnectedConsole = null;
         }
 
         private void OnAnchorChanged(EntityUid uid, MedicalScannerComponent component, ref AnchorStateChangedEvent args)

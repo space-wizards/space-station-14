@@ -1,7 +1,7 @@
-using Content.Server.DeviceLinking.Systems;
+using Content.Shared.DeviceLinking.Systems;
 using Robust.Shared.Audio;
 
-namespace Content.Server.DeviceLinking.Components.Overload;
+namespace Content.Shared.DeviceLinking.Components;
 
 /// <summary>
 /// Plays a sound when a device link overloads.
@@ -21,6 +21,6 @@ public sealed partial class SoundOnOverloadComponent : Component
     /// <summary>
     /// Modifies the volume the sound is played at
     /// </summary>
-    [DataField("volumeModifier")]
+    [DataField]
     public float VolumeModifier;
 }

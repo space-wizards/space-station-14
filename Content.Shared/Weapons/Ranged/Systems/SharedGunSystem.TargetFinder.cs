@@ -48,7 +48,7 @@ public partial class SharedGunSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnPortDisconnected(Entity<TargetFinderComponent> ent, ref PortDisconnectedEvent args)
+    private void OnPortDisconnected(Entity<TargetFinderComponent> ent, ref SourcePortDisconnectedEvent args)
     {
         if (args.Port != ent.Comp.LinkingPort || ent.Comp.TargetAssigner == null)
             return;

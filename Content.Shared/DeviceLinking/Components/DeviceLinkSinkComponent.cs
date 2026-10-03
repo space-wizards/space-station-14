@@ -1,3 +1,4 @@
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DeviceLinking.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -5,20 +6,25 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.DeviceLinking.Components;
 
+/// <summary>
+/// Allows to create a device link from some device with a <see cref="DeviceLinkSourceComponent"/> to this entity.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 [Access(typeof(DeviceLinkSystem))]
 public sealed partial class DeviceLinkSinkComponent : Component
 {
     /// <summary>
-    /// The ports this sink has
+    /// The ports this sink has.
     /// </summary>
     [DataField, AutoNetworkedField]
     public HashSet<ProtoId<SinkPortPrototype>> Ports = new();
 
     /// <summary>
     /// Used for removing a sink from all linked sources when this component gets removed.
-    /// This is not serialized to yaml as it can be inferred from source components.
     /// </summary>
+    /// <remarks>
+    /// This is not serialized to YAML as it can be inferred from source components.
+    /// </remarks>
     [ViewVariables, AutoNetworkedField]
     public HashSet<EntityUid> LinkedSources = new();
 
@@ -41,9 +47,10 @@ public sealed partial class DeviceLinkSinkComponent : Component
     public int InvokeCounter;
 
     /// <summary>
-    /// How high the invoke counter is allowed to get before the links to the sink are removed and the DeviceLinkOverloadedEvent gets raised
-    /// If the invoke limit is smaller than 1 the sink can't overload
+    /// How high the <see cref="InvokeCounter"/> is allowed to get before the links to the sink
+    /// are removed and the <see cref="DeviceLinkOverloadedEvent"/> gets raised.
+    /// Values smaller than 1 mean the sink can't overload.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public int InvokeLimit = 10;
 }

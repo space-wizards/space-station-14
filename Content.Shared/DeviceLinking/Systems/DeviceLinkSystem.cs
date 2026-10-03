@@ -3,6 +3,7 @@ using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Popups;
+using JetBrains.Annotations;
 using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -19,9 +20,9 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
 
-    [Dependency] private EntityQuery<DeviceLinkSinkComponent> _deviceLinkSinkQuery = default!;
-    [Dependency] private EntityQuery<DeviceLinkSourceComponent> _deviceLinkSourceQuery = default!;
-    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
+    [Dependency] private EntityQuery<DeviceLinkSinkComponent> _deviceLinkSinkQuery;
+    [Dependency] private EntityQuery<DeviceLinkSourceComponent> _deviceLinkSourceQuery;
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery;
 
     [SubscribeLocalEvent]
     private void OnGetState(Entity<DeviceLinkSourceComponent> ent, ref ComponentGetState args)
@@ -56,7 +57,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
             outputs.Add(key, set);
         }
 
-        var linked = new Dictionary<EntityUid, HashSet<(ProtoId<SourcePortPrototype> Source, ProtoId<SinkPortPrototype> Sink)>>(state.LinkedPorts.Count);
+        var linked = new Dictionary<EntityUid, HashSet<DeviceLink>>(state.LinkedPorts.Count);
         foreach (var (net, value) in state.LinkedPorts)
         {
             if (TryGetEntity(net, out var uid))
@@ -94,7 +95,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
 
             foreach (var link in invalidLinks)
             {
-                Log.Warning($"Device source {ToPrettyString(source)} contains invalid links to entity {ToPrettyString(sink)}: {link.SourcePort}->{link.SinkPort}");
+                Log.Warning($"Device source {ToPrettyString(source)} contains invalid links to entity {ToPrettyString(sink)}: {link.Source}->{link.Sink}");
                 links.Remove(link);
             }
 
@@ -154,6 +155,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     /// <remarks>
     /// The return value of this function goes up by one every time a sink is invoked, and goes down by one every tick.
     /// </remarks>
+    [PublicAPI]
     public int GetEffectiveInvokeCounter(DeviceLinkSinkComponent sink)
     {
         // Shouldn't be possible but just to be safe.
@@ -166,6 +168,16 @@ public sealed partial class DeviceLinkSystem : EntitySystem
             return 0;
 
         return Math.Max(0, sink.InvokeCounter - (int)tickDelta);
+    }
+
+    /// <summary>
+    /// Sets <see cref="DeviceLinkSinkComponent.InvokeLimit"/> to a new value and dirties it.
+    /// </summary>
+    [PublicAPI]
+    public void SetInvokeLimit(Entity<DeviceLinkSinkComponent> sink, int value)
+    {
+        sink.Comp.InvokeLimit = value;
+        DirtyField(sink.AsNullable(), nameof(DeviceLinkSinkComponent.InvokeLimit));
     }
 
     private void SetInvokeCounter(Entity<DeviceLinkSinkComponent> sink, int value)

@@ -8,8 +8,8 @@ namespace Content.Shared.DeviceLinking;
 /// </summary>
 [DataRecord, Serializable, NetSerializable]
 public readonly partial record struct DeviceLink(
-    ProtoId<SourcePortPrototype> SourcePort,
-    ProtoId<SinkPortPrototype> SinkPort)
+    ProtoId<SourcePortPrototype> Source,
+    ProtoId<SinkPortPrototype> Sink)
 {
     public static implicit operator DeviceLink((ProtoId<SourcePortPrototype> Source, ProtoId<SinkPortPrototype> Sink) tuple)
     {
@@ -18,6 +18,6 @@ public readonly partial record struct DeviceLink(
 
     public static implicit operator ValueTuple<ProtoId<SourcePortPrototype>, ProtoId<SinkPortPrototype>>(DeviceLink link)
     {
-        return (link.SourcePort, link.SinkPort);
+        return (link.Source, link.Sink);
     }
 }

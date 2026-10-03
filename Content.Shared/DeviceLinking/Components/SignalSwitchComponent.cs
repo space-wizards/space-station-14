@@ -7,10 +7,11 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.DeviceLinking.Components;
 
 /// <summary>
-///     Simple switch that will fire ports when toggled on or off. A button is jsut a switch that signals on the
-///     same port regardless of its state.
+/// Simple switch that will fire ports when toggled on or off.
+/// A button is just a switch that signals on the same port regardless of its state.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), Access(typeof(SignalSwitchSystem))]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState(fieldDeltas: true), Access(typeof(SignalSwitchSystem))]
 public sealed partial class SignalSwitchComponent : Component
 {
     /// <summary>

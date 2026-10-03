@@ -1,7 +1,7 @@
-using Content.Server.DeviceLinking.Systems;
+using Content.Shared.DeviceLinking.Systems;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.DeviceLinking.Components.Overload;
+namespace Content.Shared.DeviceLinking.Components;
 
 /// <summary>
 /// Spawns an entity when a device link overloads.

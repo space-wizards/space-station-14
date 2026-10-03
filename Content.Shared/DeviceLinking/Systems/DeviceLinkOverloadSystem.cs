@@ -1,19 +1,15 @@
-using Content.Server.DeviceLinking.Components.Overload;
-using Robust.Server.Audio;
-using Robust.Shared.Audio;
+using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 
-namespace Content.Server.DeviceLinking.Systems;
+namespace Content.Shared.DeviceLinking.Systems;
 
 public sealed partial class DeviceLinkOverloadSystem : EntitySystem
 {
-    [Dependency] private AudioSystem _audioSystem = default!;
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<SoundOnOverloadComponent, DeviceLinkOverloadedEvent>(OnOverloadSound);
-        SubscribeLocalEvent<SpawnOnOverloadComponent, DeviceLinkOverloadedEvent>(OnOverloadSpawn);
-    }
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
 
+    [SubscribeLocalEvent]
     private void OnOverloadSound(EntityUid uid, SoundOnOverloadComponent component, ref DeviceLinkOverloadedEvent args)
     {
         var audioParams = component.OverloadSound?.Params ?? AudioParams.Default;
@@ -21,9 +17,9 @@ public sealed partial class DeviceLinkOverloadSystem : EntitySystem
         _audioSystem.PlayPvs(component.OverloadSound, uid, audioParams);
     }
 
-
+    [SubscribeLocalEvent]
     private void OnOverloadSpawn(EntityUid uid, SpawnOnOverloadComponent component, ref DeviceLinkOverloadedEvent args)
     {
-        Spawn(component.Prototype, Transform(uid).Coordinates);
+        PredictedSpawnAtPosition(component.Prototype, Transform(uid).Coordinates);
     }
 }
