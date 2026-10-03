@@ -17,6 +17,7 @@
     - Service
     - Supply
   - type: ActiveRadio
+    canSendInReceiveOnlyChannels: true
     channels:
     - Binary
     - Common

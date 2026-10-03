@@ -44,4 +44,10 @@ public sealed partial class RadioChannelPrototype : IPrototype
     /// </summary>
     [DataField]
     public bool LongRange;
+
+    /// <summary>
+    /// Whether the channel can be used to send messages from headsets.
+    /// </summary>
+    [DataField]
+    public bool AllowHeadsetSend = true;
 }
