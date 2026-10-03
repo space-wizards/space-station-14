@@ -3,7 +3,7 @@ using Content.Shared.Roles;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IAntagonistCondition : ICondition<IAntagonistCondition>
+public interface IAntagonistCondition : IConditionByEvent<IAntagonistCondition>
 {
 }
 

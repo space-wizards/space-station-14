@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IReagentCondition : ICondition<IReagentCondition>, IConditionWithDefaultSatisfactionRule
+public interface IReagentCondition : IConditionByEvent<IReagentCondition>, IConditionWithDefaultSatisfactionRule
 {
     /// <summary>
     /// Minimum amount required.

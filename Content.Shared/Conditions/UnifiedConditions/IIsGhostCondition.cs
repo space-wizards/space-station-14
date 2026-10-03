@@ -2,7 +2,7 @@ using Content.Shared.Ghost.Components;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IIsGhostCondition : ICondition<IIsGhostCondition>
+public interface IIsGhostCondition : IConditionByEvent<IIsGhostCondition>
 {
 }
 

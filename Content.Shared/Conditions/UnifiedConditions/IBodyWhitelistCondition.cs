@@ -3,7 +3,7 @@ using Content.Shared.Whitelist;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IBodyWhitelistCondition : ICondition<IBodyWhitelistCondition>
+public interface IBodyWhitelistCondition : IConditionByEvent<IBodyWhitelistCondition>
 {
     EntityWhitelist? Whitelist { get; }
 

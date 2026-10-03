@@ -2,7 +2,7 @@ using Content.Shared.Wires;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IWirePanelStateCondition : ICondition<IWirePanelStateCondition>
+public interface IWirePanelStateCondition : IConditionByEvent<IWirePanelStateCondition>
 {
     bool Open { get; }
 }

@@ -1,6 +1,6 @@
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IInSpaceCondition : ICondition<IInSpaceCondition>
+public interface IInSpaceCondition : IConditionByEvent<IInSpaceCondition>
 {
 }
 

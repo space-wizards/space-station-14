@@ -4,7 +4,7 @@ namespace Content.Shared.Conditions.UnifiedConditions;
 /// <summary>
 /// A condition that evaluates to the number of contents inside a container.
 /// </summary>
-public interface IContainerContentsCountCondition : ICondition<IContainerContentsCountCondition>
+public interface IContainerContentsCountCondition : IConditionByEvent<IContainerContentsCountCondition>
 {
     string Container { get; }
 }

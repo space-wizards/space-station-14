@@ -8,7 +8,7 @@ namespace Content.Shared.Construction
     /// Base for all Graph conditions, to be stored in data structures.
     /// </summary>
     [ImplicitDataDefinitionForInheritors]
-    public abstract partial class GraphCondition : ICondition
+    public abstract partial class GraphCondition : IConditionByEvent
     {
         public abstract bool DoExamine(ExaminedEvent args);
         public abstract IEnumerable<ConstructionGuideEntry> GenerateGuideEntry();
@@ -23,8 +23,8 @@ namespace Content.Shared.Construction
     /// Helper class to properly realize the Condition Event.
     /// </summary>
     /// <typeparam name="TCondition"></typeparam>
-    public abstract partial class GraphConditionBase<TCondition> : GraphCondition, ICondition<TCondition>
-        where TCondition : ICondition
+    public abstract partial class GraphConditionBase<TCondition> : GraphCondition, IConditionByEvent<TCondition>
+        where TCondition : IConditionByEvent
     {
         public override ConditionEvaluationEvent? WrapInEvent(EntityUid entity, EntityUid? sourceEntity)
         {

@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IHasAnyTagCondition : ICondition<IHasAnyTagCondition>
+public interface IHasAnyTagCondition : IConditionByEvent<IHasAnyTagCondition>
 {
     /// <summary>
     /// List of tags from which one must be matched.

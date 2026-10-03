@@ -1,6 +1,6 @@
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IOnMapGridCondition : ICondition<IOnMapGridCondition>
+public interface IOnMapGridCondition : IConditionByEvent<IOnMapGridCondition>
 {
 }
 

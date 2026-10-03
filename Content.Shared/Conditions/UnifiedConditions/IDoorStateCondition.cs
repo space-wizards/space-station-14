@@ -3,7 +3,7 @@ using Content.Shared.Doors.Components;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IDoorStateCondition : ICondition<IDoorStateCondition>
+public interface IDoorStateCondition : IConditionByEvent<IDoorStateCondition>
 {
     DoorState TargetState { get; }
 }

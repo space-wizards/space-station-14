@@ -3,7 +3,7 @@ using Content.Shared.Nutrition.EntitySystems;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IMouthUncoveredCondition : ICondition<IMouthUncoveredCondition>
+public interface IMouthUncoveredCondition : IConditionByEvent<IMouthUncoveredCondition>
 {
     SlotFlags Slots { get; }
 }

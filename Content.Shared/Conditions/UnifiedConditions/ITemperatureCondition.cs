@@ -7,7 +7,7 @@ namespace Content.Shared.Conditions.UnifiedConditions;
 /// <summary>
 /// A condition checked against <see cref="TemperatureComponent" /> and <see cref="SolutionComponent" /> for value.
 /// </summary>
-public interface ITemperatureCondition : ICondition<ITemperatureCondition>, IConditionWithDefaultSatisfactionRule
+public interface ITemperatureCondition : IConditionByEvent<ITemperatureCondition>, IConditionWithDefaultSatisfactionRule
 {
     /// <summary>
     /// Minimum allowed temperature

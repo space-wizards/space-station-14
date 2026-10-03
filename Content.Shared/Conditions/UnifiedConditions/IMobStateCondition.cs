@@ -3,7 +3,7 @@ using Content.Shared.Mobs.Components;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IMobStateCondition : ICondition<IMobStateCondition>
+public interface IMobStateCondition : IConditionByEvent<IMobStateCondition>
 {
     /// <summary>
     /// The mobstate necessary to fulfill this condition.

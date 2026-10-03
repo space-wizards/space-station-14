@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IMetabolizerTypeCondition : ICondition<IMetabolizerTypeCondition>
+public interface IMetabolizerTypeCondition : IConditionByEvent<IMetabolizerTypeCondition>
 {
     /// <summary>
     /// Which metabolizer types would fulfill this condition. Need only one match.

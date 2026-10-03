@@ -9,7 +9,7 @@ namespace Content.Shared.Conditions.UnifiedConditions;
 /// <summary>
 /// Checks if the given mind is an antagonist with specified tag.
 /// </summary>
-public interface IAntagonistTagCondition : ICondition<IAntagonistTagCondition>, IWithInverted
+public interface IAntagonistTagCondition : IConditionByEvent<IAntagonistTagCondition>, IWithInverted
 {
     /// <summary>
     /// The tags this check will succeed for.

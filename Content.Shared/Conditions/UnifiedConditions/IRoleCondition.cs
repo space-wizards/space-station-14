@@ -5,7 +5,7 @@ using Content.Shared.Whitelist;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IRoleCondition : ICondition<IRoleCondition>
+public interface IRoleCondition : IConditionByEvent<IRoleCondition>
 {
     EntityWhitelist Whitelist { get; }
 }

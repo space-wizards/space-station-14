@@ -1,6 +1,6 @@
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IEntityAnchoredCondition : ICondition<IEntityAnchoredCondition>
+public interface IEntityAnchoredCondition : IConditionByEvent<IEntityAnchoredCondition>
 {
 
 }

@@ -3,7 +3,7 @@ namespace Content.Shared.Conditions.HelperConditions;
 /// <summary>
 /// A helper condition wraps an inner condition to clamp its output value.
 /// </summary>
-public interface ILimiterCondition : ICondition<ILimiterCondition>
+public interface ILimiterCondition : IConditionByEvent<ILimiterCondition>
 {
     ICondition Condition { get; }
 

@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface INearbyComponentsCondition : ICondition<INearbyComponentsCondition>,
+public interface INearbyComponentsCondition : IConditionByEvent<INearbyComponentsCondition>,
     IConditionWithDefaultSatisfactionRule
 {
     /// <summary>

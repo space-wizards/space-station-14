@@ -5,7 +5,7 @@ namespace Content.Shared.Conditions.HelperConditions;
 /// <summary>
 /// A helper condition that returns the multiple of its inner conditions.
 /// </summary>
-public interface IMultiplierCondition : ICondition<IMultiplierCondition>
+public interface IMultiplierCondition : IConditionByEvent<IMultiplierCondition>
 {
     /// <summary>
     /// Conditions multiplied together.

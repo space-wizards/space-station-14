@@ -89,9 +89,6 @@ public abstract partial class EntityCondition : ICondition
     public abstract string EntityConditionGuidebookText(IPrototypeManager prototype);
 
     /// <inheritdoc/>
-    public abstract ConditionEvaluationEvent? WrapInEvent(EntityUid entity, EntityUid? sourceEntity);
-
-    /// <inheritdoc/>
     [DataField]
     public virtual Satisfier? Satisfier { get; set; }
 }
@@ -100,8 +97,8 @@ public abstract partial class EntityCondition : ICondition
 /// The concrete condition for strongly typing.
 /// </summary>
 /// <typeparam name="TCondition"></typeparam>
-public abstract partial class EntityConditionBase<TCondition> : EntityCondition, IWithInverted
-    where TCondition : ICondition
+public abstract partial class EntityConditionBase<TCondition> : EntityCondition, IConditionByEvent , IWithInverted
+    where TCondition : IConditionByEvent
 {
     /// <summary>
     /// If true, invert the result. So false returns true and true returns false!
@@ -110,7 +107,7 @@ public abstract partial class EntityConditionBase<TCondition> : EntityCondition,
     public bool Inverted { get; set; }
 
     /// <inheritdoc/>
-    public override ConditionEvaluationEvent? WrapInEvent(EntityUid entity, EntityUid? sourceEntity)
+    public ConditionEvaluationEvent? WrapInEvent(EntityUid entity, EntityUid? sourceEntity)
     {
         if (this is not TCondition condition)
             return null;

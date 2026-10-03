@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IJobCondition : ICondition<IJobCondition>
+public interface IJobCondition : IConditionByEvent<IJobCondition>
 {
     /// <summary>
     /// Jobs required to fulfill this condition (only needs single match).

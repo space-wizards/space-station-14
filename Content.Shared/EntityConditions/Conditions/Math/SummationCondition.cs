@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Math;
 
-public sealed partial class SummationCondition : EntityConditionBase<ISummationCondition>, ISummationCondition
+public sealed partial class SummationCondition : EntityCondition, ISummationCondition
 {
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
     {

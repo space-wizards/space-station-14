@@ -5,7 +5,7 @@ using Content.Shared.Roles.Jobs;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IDifferentDepartmentCondition : ICondition<IDifferentDepartmentCondition>
+public interface IDifferentDepartmentCondition : IConditionByEvent<IDifferentDepartmentCondition>
 {
 }
 

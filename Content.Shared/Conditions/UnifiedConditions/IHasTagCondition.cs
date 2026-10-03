@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IHasTagCondition : ICondition<IHasTagCondition>
+public interface IHasTagCondition : IConditionByEvent<IHasTagCondition>
 {
     /// <summary>
     /// Tag required to fulfill this condition.

@@ -5,7 +5,7 @@ using Content.Shared.FixedPoint;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface ISolutionVolumeCondition : ICondition<ISolutionVolumeCondition>, IConditionWithDefaultSatisfactionRule
+public interface ISolutionVolumeCondition : IConditionByEvent<ISolutionVolumeCondition>, IConditionWithDefaultSatisfactionRule
 {
     /// <summary>
     /// Minimum amount required.

@@ -2,7 +2,7 @@ using Content.Shared.Lock;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface ILockedCondition : ICondition<ILockedCondition>
+public interface ILockedCondition : IConditionByEvent<ILockedCondition>
 {
 
 }

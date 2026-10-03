@@ -3,7 +3,7 @@ using Content.Shared.Whitelist;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface INearbyEntitiesCondition : ICondition<INearbyEntitiesCondition>, IConditionWithDefaultSatisfactionRule
+public interface INearbyEntitiesCondition : IConditionByEvent<INearbyEntitiesCondition>, IConditionWithDefaultSatisfactionRule
 {
     int Count { get; }
 

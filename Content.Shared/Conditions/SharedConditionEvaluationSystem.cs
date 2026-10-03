@@ -1,12 +1,157 @@
+using System.Diagnostics;
+using System.Linq.Expressions;
+using System.Reflection;
 using Content.Shared.Conditions.HelperConditions;
+using Content.Shared.Mindshield;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Conditions;
 
 /// <summary>
-/// The central API through which <see cref="ICondition" />s can be evaluated.
+/// The central API through which <see cref="IConditionByEvent" />s can be evaluated.
 /// </summary>
 public sealed class SharedConditionEvaluationSystem : EntitySystem
 {
+    /// <summary>
+    /// A lookup of ICondition types to a dedicated function that evaluates it.
+    /// build using <see cref="CreateBindingsForEvaluator"/>
+    /// </summary>
+    private readonly Dictionary<Type, Func<ICondition, EntityUid, EntityUid?, float>> _bindings = [];
+
+    public override void Initialize()
+    {
+        SetupBindings();
+        //in case we load more assemblies during runtime, we need to create more bindings.
+        AppDomain.CurrentDomain.AssemblyLoad += AssemblyLoaded;
+        base.Initialize();
+    }
+
+    public override void Shutdown()
+    {
+        AppDomain.CurrentDomain.AssemblyLoad -= AssemblyLoaded;
+        _bindings.Clear();
+        base.Shutdown();
+    }
+
+    private void AssemblyLoaded(object? sender, AssemblyLoadEventArgs args)
+    {
+        _bindings.Clear();
+        SetupBindings();
+    }
+
+    private void SetupBindings()
+    {
+        //step 1: create bindings for each evaluator system
+        CreateBindingsForEvaluator();
+        //step 2: reuse bindings for specific implementations.
+        CreateConditionBindingsToEvaluatorBindings();
+    }
+
+    private void CreateConditionBindingsToEvaluatorBindings()
+    {
+        //cache all bindings, to avoid weird chains from interacting weirdly.
+        List<KeyValuePair<Type, Func<ICondition, EntityUid, EntityUid?, float>>> bindingsToAdd = [];
+        //go through all types
+        foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+        {
+            foreach (var type in assembly.GetTypes())
+            {
+                //skip types that might be open.
+                if (type.IsAbstract || !type.IsSealed || _bindings.ContainsKey(type))
+                    continue;
+                //  Walk up the inheritance chain
+                var currentBase = type.BaseType;
+                while (currentBase != null && currentBase != typeof(object))
+                {
+                    //see if there is an existing binding.
+                    if (_bindings.TryGetValue(currentBase, out var func))
+                    {
+                        bindingsToAdd.Add(new(type, func));
+                        break;
+                    }
+
+                    // Move up to the next parent class
+                    currentBase = currentBase.BaseType;
+                }
+            }
+        }
+
+        //register all bindings.
+        foreach (var b in bindingsToAdd)
+        {
+            _bindings[b.Key] = b.Value;
+        }
+    }
+
+    private void CreateBindingsForEvaluator()
+    {
+        // find all ConditionEvaluator Systems.
+
+        //go through all types
+        foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+        {
+            foreach (var type in assembly.GetTypes())
+            {
+                //skip types that might be open.
+                if (type.IsAbstract || !type.IsSealed || _bindings.ContainsKey(type))
+                    continue;
+                //  Walk up the inheritance chain (Because we might end up with a shared evaluator type in between step and server/client side evaluator at the bottom of the chain)
+                var currentBase = type.BaseType;
+                while (currentBase != null && currentBase != typeof(object))
+                {
+                    //check if we reached the correct step
+                    if (currentBase.IsGenericType &&
+                        currentBase.GetGenericTypeDefinition() == typeof(ConditionEvaluatorSystem<>))
+                    {
+                        // Extract the type of the Condition we evaluate for.
+                        var conditionType = currentBase.GetGenericArguments()[0];
+
+                        RegisterConditionEvaluator(conditionType, type);
+
+                        break; // Found it, no need to keep walking up the chain
+                    }
+
+                    // Move up to the next parent class
+                    currentBase = currentBase.BaseType;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Help function to create the entry in <see cref="_bindings"/> for a given condition and evaluator system pair.
+    /// </summary>
+    /// <param name="conditionType"></param>
+    /// <param name="evaluatorSystemType"></param>
+    private void RegisterConditionEvaluator(Type conditionType, Type evaluatorSystemType)
+    {
+        //define parameters
+        var paramCondition = Expression.Parameter(typeof(ICondition), "condition");
+        var paramEntity = Expression.Parameter(typeof(EntityUid), "entityUid");
+        var paramSource = Expression.Parameter(typeof(EntityUid?), "sourceEntity");
+        //add conversion of generic ICondition to Condition Type
+        var cast = Expression.Convert(paramCondition, conditionType);
+        //Resolve evaluator as a system.
+        var evaluatorSystemObject = IoCManager.ResolveType(evaluatorSystemType);
+        //feed object into expression
+        var evaluatorConst = Expression.Constant(evaluatorSystemObject);
+        //grab local method using the base type definition.
+        var evaluateMethod = evaluatorSystemType.GetMethod(nameof(ConditionEvaluatorSystem<>.Evaluate));
+        //assertion, which should never hit, because of how we got here in the first place.
+        DebugTools.Assert(evaluateMethod != null,
+            $"Somehow System {evaluatorSystemType.FullName} does not implement evaluation method!");
+        //build the function System.Evaluate(Condition, Entity, Source)
+        var call = Expression.Call(evaluatorConst, evaluateMethod, cast, paramEntity, paramSource);
+        //add hint about typing of the expression
+        var lambda = Expression.Lambda<Func<ICondition, EntityUid, EntityUid?, float>>(call);
+        //compile final lambda expression into IL and store in dictionary.
+        if (!_bindings.TryAdd(conditionType, lambda.Compile()))
+        {
+            // we have a duplicate evaluator???
+            throw new Exception("Duplicate evaluator for condition type: " + conditionType.FullName);
+        }
+    }
+
     /// <summary>
     /// Evaluates a condition against an entity given an optional source entity.
     /// </summary>
@@ -23,8 +168,19 @@ public sealed class SharedConditionEvaluationSystem : EntitySystem
     /// </exception>
     public float EvaluateCondition(ICondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
+        if (_bindings.TryGetValue(condition.GetType(), out var func))
+        {
+            return func(condition, entityUid, sourceEntity);
+        }
+
+        if (condition is not IConditionByEvent conditionByEvent)
+        {
+            throw new NotImplementedException("No Evaluation method for condition of type " +
+                                              condition.GetType().FullName + " found!");
+        }
+
         //make the event using our cached building function.
-        var evt = condition.WrapInEvent(entityUid, sourceEntity);
+        var evt = conditionByEvent.WrapInEvent(entityUid, sourceEntity);
         if (evt == null)
             return 0f;
         // Use event to evaluate condition on entity.

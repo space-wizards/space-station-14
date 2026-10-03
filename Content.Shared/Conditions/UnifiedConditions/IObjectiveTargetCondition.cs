@@ -2,7 +2,7 @@ using Content.Shared.Whitelist;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IObjectiveTargetCondition : ICondition<IObjectiveTargetCondition>
+public interface IObjectiveTargetCondition : IConditionByEvent<IObjectiveTargetCondition>
 {
     /// <summary>
     /// A whitelist to check objectives against.

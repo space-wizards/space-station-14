@@ -2,7 +2,7 @@ using Content.Shared.Tools.Systems;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IStorageWeldedCondition : ICondition<IStorageWeldedCondition>
+public interface IStorageWeldedCondition : IConditionByEvent<IStorageWeldedCondition>
 {
     bool Welded { get; }
 }

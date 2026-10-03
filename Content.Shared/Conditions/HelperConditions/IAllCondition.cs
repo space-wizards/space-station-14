@@ -3,7 +3,7 @@ namespace Content.Shared.Conditions.HelperConditions;
 /// <summary>
 /// A flattening condition that unlike <see cref="IMultiplierCondition"/> only produces a binary value from its children.
 /// </summary>
-public interface IAllCondition : ICondition<IAllCondition>
+public interface IAllCondition : IConditionByEvent<IAllCondition>
 {
     IEnumerable<ICondition> Conditions { get; }
 }

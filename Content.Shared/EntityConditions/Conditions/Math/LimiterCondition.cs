@@ -11,8 +11,10 @@ public sealed partial class LimiterCondition : EntityConditionBase<ILimiterCondi
         return "";
     }
 
+    ICondition ILimiterCondition.Condition => Condition;
+
     [DataField]
-    public required ICondition Condition { get; set; }
+    public required EntityCondition Condition { get; set; }
 
     [DataField]
     public float MinimumOutputValue { get; set; } = float.MinValue;

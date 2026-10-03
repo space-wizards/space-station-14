@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface ISatiationCondition : ICondition<ISatiationCondition>, IConditionWithDefaultSatisfactionRule
+public interface ISatiationCondition : IConditionByEvent<ISatiationCondition>, IConditionWithDefaultSatisfactionRule
 {
     /// <summary>
     /// The value above which this condition will fail. If <see cref="MaxInclusive" /> is false, the condition will fail

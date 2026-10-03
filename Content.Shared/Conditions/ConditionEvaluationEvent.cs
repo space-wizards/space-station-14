@@ -7,7 +7,7 @@ namespace Content.Shared.Conditions;
 /// <param name="entityUid">The entity for which we check the condition</param>
 /// <param name="sourceEntity">An optional entity, which triggered this evaluation</param>
 [ByRefEvent]
-public abstract class ConditionEvaluationEvent(ICondition condition, EntityUid entityUid, EntityUid? sourceEntity)
+public abstract class ConditionEvaluationEvent(IConditionByEvent condition, EntityUid entityUid, EntityUid? sourceEntity)
 {
     /// <summary>
     /// The entity for which we check the condition
@@ -32,7 +32,7 @@ public abstract class ConditionEvaluationEvent(ICondition condition, EntityUid e
     /// <summary>
     /// The condition to be used. A Handler using this, must do its own check for match.
     /// </summary>
-    public ICondition ConditionWeak { get; } = condition;
+    public IConditionByEvent ConditionWeak { get; } = condition;
 }
 
 /// <summary>
@@ -46,7 +46,7 @@ public sealed class ConditionEvaluationEvent<TCondition>(
     TCondition condition,
     EntityUid entityUid,
     EntityUid? sourceEntity)
-    : ConditionEvaluationEvent(condition, entityUid, sourceEntity) where TCondition : ICondition
+    : ConditionEvaluationEvent(condition, entityUid, sourceEntity) where TCondition : IConditionByEvent
 {
     /// <summary>
     /// The strongly typed condition to be used. A handler using this has certainty.

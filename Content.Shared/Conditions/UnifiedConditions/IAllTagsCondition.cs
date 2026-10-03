@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IAllTagsCondition : ICondition<IAllTagsCondition>, IConditionWithDefaultSatisfactionRule
+public interface IAllTagsCondition : IConditionByEvent<IAllTagsCondition>, IConditionWithDefaultSatisfactionRule
 {
     ProtoId<TagPrototype>[] Tags { get; }
 

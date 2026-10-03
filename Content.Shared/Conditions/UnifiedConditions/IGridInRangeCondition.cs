@@ -3,7 +3,7 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IGridInRangeCondition : ICondition<IGridInRangeCondition>
+public interface IGridInRangeCondition : IConditionByEvent<IGridInRangeCondition>
 {
     float Range { get; }
 }

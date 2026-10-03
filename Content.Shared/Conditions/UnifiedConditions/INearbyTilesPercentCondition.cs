@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface INearbyTilesPercentCondition : ICondition<INearbyTilesPercentCondition>,
+public interface INearbyTilesPercentCondition : IConditionByEvent<INearbyTilesPercentCondition>,
     IConditionWithDefaultSatisfactionRule
 {
     bool IgnoreAnchored { get; }

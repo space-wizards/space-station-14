@@ -2,7 +2,7 @@ using Content.Shared.Conditions.Satisfier;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IWiresCutCondition : ICondition<IWiresCutCondition>, IConditionWithDefaultSatisfactionRule
+public interface IWiresCutCondition : IConditionByEvent<IWiresCutCondition>, IConditionWithDefaultSatisfactionRule
 {
 
     bool Value { get; }

@@ -3,6 +3,7 @@ using Content.IntegrationTests.Fixtures;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Conditions;
+using Content.Shared.Conditions.HelperConditions;
 using Content.Shared.Coordinates;
 using Content.Shared.EntityConditions.Conditions.Math;
 using Content.Shared.FixedPoint;
@@ -24,7 +25,8 @@ namespace Content.IntegrationTests.Tests.Conditions
             var server = pair.Server;
 
          //   var testMap = await pair.CreateTestMap();
-
+            _ = server.System<AbsoluteConditionSystem>();
+            _ = server.System<SummationConditionSystem>();
             var evaluationSystem = server.System<SharedConditionEvaluationSystem>();
 
             await server.WaitAssertion(() =>

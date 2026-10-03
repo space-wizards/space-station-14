@@ -2,7 +2,7 @@ using Content.Shared.Body.Components;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IInternalsCondition : ICondition<IInternalsCondition>
+public interface IInternalsCondition : IConditionByEvent<IInternalsCondition>
 {
 }
 

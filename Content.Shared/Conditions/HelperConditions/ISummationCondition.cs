@@ -5,7 +5,7 @@ namespace Content.Shared.Conditions.HelperConditions;
 /// <summary>
 /// A helper condition, that just
 /// </summary>
-public interface ISummationCondition : ICondition<ISummationCondition>
+public interface ISummationCondition : ICondition
 {
     /// <summary>
     /// Conditions whose value will be summed together.
@@ -16,21 +16,18 @@ public interface ISummationCondition : ICondition<ISummationCondition>
 /// <summary>
 /// Evaluation of <see cref="ISummationCondition" />
 /// </summary>
-public sealed partial class SummationConditionSystem : EntitySystem
+public sealed partial class SummationConditionSystem : ConditionEvaluatorSystem<ISummationCondition>
 {
     [Dependency] private SharedConditionEvaluationSystem _conditionEvaluationSystem = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(ref ConditionEvaluationEvent<ISummationCondition> args)
+    public override float Evaluate(ISummationCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        var entity = args.EntityUid;
-        var sourceEntity = args.SourceEntity;
-        if (args.Condition.Summands.Any())
+        if (condition.Summands.Any())
         {
-            args.Value = args.Condition.Summands
-                .Sum(e => _conditionEvaluationSystem.EvaluateCondition(e, entity, sourceEntity));
+            return condition.Summands
+                .Sum(e => _conditionEvaluationSystem.EvaluateCondition(e, entityUid, sourceEntity));
         }
         else
-            args.Value = 0;
+            return 0;
     }
 }

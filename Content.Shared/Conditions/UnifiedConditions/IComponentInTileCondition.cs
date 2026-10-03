@@ -3,7 +3,7 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IComponentInTileCondition : ICondition<IComponentInTileCondition>
+public interface IComponentInTileCondition : IConditionByEvent<IComponentInTileCondition>
 {
     string Component { get; }
 }
