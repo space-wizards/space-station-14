@@ -12,6 +12,17 @@
     storedRotation: -90
 
 - type: entity
+  abstract: true
+  parent: ClothingEyesBase
+  id: ClothingEyesSunglassesBase
+  components:
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
+  - type: IdentityBlocker
+    coverage: EYES
+
+- type: entity
   parent: [ClothingEyesBase, BaseFoldable]
   id: ClothingHeadEyeBaseFlippable
   abstract: true
