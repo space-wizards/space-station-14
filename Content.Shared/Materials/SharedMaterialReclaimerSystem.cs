@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Body;
@@ -17,7 +18,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
-using System.Linq;
 
 namespace Content.Shared.Materials;
 
@@ -27,15 +27,15 @@ namespace Content.Shared.Materials;
 /// </summary>
 public abstract partial class SharedMaterialReclaimerSystem : EntitySystem
 {
+    [Dependency] private EmagSystem _emag = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private ISharedAdminLogManager _adminLog = default!;
+    [Dependency] private OpenableSystem _openable = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] protected IGameTiming Timing = default!;
     [Dependency] protected SharedAmbientSoundSystem AmbientSound = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] protected SharedContainerSystem Container = default!;
-    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private EmagSystem _emag = default!;
-    [Dependency] private OpenableSystem _openable = default!;
-    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
     [Dependency] private EntityQuery<MaterialReclaimerComponent> _materialReclaimerQuery;
     [Dependency] private EntityQuery<SolutionTransferComponent> _solutionTransferQuery;
@@ -125,8 +125,8 @@ public abstract partial class SharedMaterialReclaimerSystem : EntitySystem
         if (HasComp<MobStateComponent>(item) && !CanDamageAndGib(uid, item, component)) // whitelist? We be gibbing, boy!
             return false;
 
-        if (_whitelistSystem.IsWhitelistFail(component.Whitelist, item) ||
-            _whitelistSystem.IsWhitelistPass(component.Blacklist, item))
+        if (_whitelist.IsWhitelistFail(component.Whitelist, item) ||
+            _whitelist.IsWhitelistPass(component.Blacklist, item))
             return false;
 
         if (Container.TryGetContainingContainer((item, null, null), out _) && !Container.TryRemoveFromContainer(item))

@@ -27,7 +27,7 @@ namespace Content.Server.Materials;
 public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 {
     [Dependency] private AppearanceSystem _appearance = default!;
-    [Dependency] private GhostSystem _ghostSystem = default!;
+    [Dependency] private GhostSystem _ghost = default!;
     [Dependency] private MaterialStorageSystem _materialStorage = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
@@ -56,7 +56,7 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
         if (TryComp(victim, out ActorComponent? actor) &&
             _mind.TryGetMind(actor.PlayerSession, out var mindId, out var mind))
         {
-            _ghostSystem.OnGhostAttempt(mindId, false, mind: mind);
+            _ghost.OnGhostAttempt(mindId, false, mind: mind);
             if (mind.OwnedEntity is { Valid: true } suicider)
             {
                 _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message"), suicider);
@@ -149,10 +149,7 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
 
         if (CanDamageAndGib(uid, item, component))
         {
-            var didBloody = false;
-
-            if (component.DamageOnEmag is not null && _damage.TryChangeDamage(item, component.DamageOnEmag, false)) // It shouldn't ignore resistance
-                didBloody = true;
+            var didBloody = component.DamageOnEmag is not null && _damage.TryChangeDamage(item, component.DamageOnEmag); // It shouldn't ignore resistance
 
             if (_destructible.CanDestroy(item) && component.GibOnEmag)
             {
