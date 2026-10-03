@@ -26,6 +26,8 @@ using Content.Shared.Throwing;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Collections;
 using Robust.Shared.Player;
+using Robust.Shared.Physics.Events;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Shared.StatusEffectNew;
 
@@ -53,6 +55,9 @@ public sealed partial class StatusEffectsSystem
         SubscribeLocalEvent<StatusEffectContainerComponent, CanSeeAttemptEvent>(RelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, FlashAttemptEvent>(RefRelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, SelfBeforeClimbEvent>(RelayStatusEffectEvent);
+
+        SubscribeLocalEvent<StatusEffectContainerComponent, StartCollideEvent>(RefRelayStatusEffectEvent);
+        SubscribeLocalEvent<StatusEffectContainerComponent, ContactInteractionEvent>(RelayStatusEffectEvent);
 
         SubscribeLocalEvent<StatusEffectContainerComponent, BeforeForceSayEvent>(RelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, BeforeAlertSeverityCheckEvent>(RelayStatusEffectEvent);

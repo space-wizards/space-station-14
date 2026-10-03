@@ -180,6 +180,19 @@
       requireAll: true
   - type: FlashedStatusEffect
 
+- type: entity
+  parent: StatusEffectBase
+  id: StatusEffectGuardianTrapped
+  name: guardian trapped
+  components:
+  - type: StatusEffect
+  - type: GuardianTrappedStatusEffect
+    selfPrototype: StatusEffectGuardianTrapped
+    victimEffects:
+    - !type:Explosion
+      explosionType: Default
+
+
 # Forces fake items into the hands/slots of the target
 - type: entity
   parent: MobStatusEffectDebuff
