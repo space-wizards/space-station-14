@@ -15,10 +15,11 @@ namespace Content.Client.Silicons.StationAi;
 
 public sealed partial class StationAiOverlay : Overlay
 {
-    private static readonly ProtoId<ShaderPrototype> CameraStaticShader = "CameraStatic";
+    private static readonly ProtoId<ShaderPrototype> StationAiStaticShader = "StationAiStatic";
     private static readonly ProtoId<ShaderPrototype> CameraStaticAccessibleShader = "CameraStaticAccessible";
+    private static readonly ProtoId<ShaderPrototype> StationAiStaticStencilDrawShader = "StationAiStaticStencilDraw";
+    private static readonly ProtoId<ShaderPrototype> StencilClearShader = "StencilClear";
     private static readonly ProtoId<ShaderPrototype> StencilMaskShader = "StencilMask";
-    private static readonly ProtoId<ShaderPrototype> StencilDrawShader = "StencilDraw";
 
     [Dependency] private IClyde _clyde = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
@@ -32,21 +33,28 @@ public sealed partial class StationAiOverlay : Overlay
     private readonly HashSet<Vector2i> _visibleTiles = new();
 
     private readonly OverlayResourceCache<CachedResources> _resources = new();
+    private readonly ShaderInstance _cameraStaticShader;
+    private readonly ShaderInstance _cameraStaticAccessibleShader;
 
-    private ProtoId<ShaderPrototype> _activeShader = CameraStaticShader;
+    private ShaderInstance _activeShader;
     private float _updateRate = 1f / 30f;
     private float _accumulator;
 
     public StationAiOverlay()
     {
         IoCManager.InjectDependencies(this);
+
+        _cameraStaticShader = _proto.Index(StationAiStaticShader).InstanceUnique();
+        _cameraStaticAccessibleShader = _proto.Index(CameraStaticAccessibleShader).InstanceUnique();
+        _activeShader = _cameraStaticShader;
+
         _cfg.OnValueChanged(CCVars.DisableAiStatic, OnAiStaticChanged, invokeImmediately: true);
 
     }
 
     private void OnAiStaticChanged(bool toggle)
     {
-        _activeShader = toggle ? CameraStaticAccessibleShader : CameraStaticShader;
+        _activeShader = toggle ? _cameraStaticAccessibleShader : _cameraStaticShader;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -109,8 +117,20 @@ public sealed partial class StationAiOverlay : Overlay
             () =>
             {
                 worldHandle.SetTransform(invMatrix);
-                var shader = _proto.Index(_activeShader).Instance();
-                worldHandle.UseShader(shader);
+                worldBounds.GetCorners(out var bottomLeft, out var bottomRight, out _, out var topLeft);
+                var worldXAxis = bottomRight - bottomLeft;
+                var worldYAxis = topLeft - bottomLeft;
+                _cameraStaticShader.SetParameter("worldOriginAndCellSize", new Vector4(
+                    bottomLeft.X,
+                    bottomLeft.Y,
+                    1f / EyeManager.PixelsPerMeter,
+                    0f));
+                _cameraStaticShader.SetParameter("worldAxes", new Vector4(
+                    worldXAxis.X,
+                    worldXAxis.Y,
+                    worldYAxis.X,
+                    worldYAxis.Y));
+                worldHandle.UseShader(_activeShader);
                 worldHandle.DrawRect(worldBounds, Color.White);
             },
             Color.Black);
@@ -131,12 +151,15 @@ public sealed partial class StationAiOverlay : Overlay
             }, Color.Black);
         }
 
-        // Use the lighting as a mask
+        worldHandle.UseShader(_proto.Index(StencilClearShader).Instance());
+        worldHandle.DrawRect(worldBounds, Color.White);
+
+        // Use the AI vision tile mask as a stencil.
         worldHandle.UseShader(_proto.Index(StencilMaskShader).Instance());
         worldHandle.DrawTextureRect(res.StencilTexture!.Texture, worldBounds);
 
         // Draw the static
-        worldHandle.UseShader(_proto.Index(StencilDrawShader).Instance());
+        worldHandle.UseShader(_proto.Index(StationAiStaticStencilDrawShader).Instance());
         worldHandle.DrawTextureRect(res.StaticTexture!.Texture, worldBounds);
 
         worldHandle.SetTransform(Matrix3x2.Identity);
@@ -146,6 +169,9 @@ public sealed partial class StationAiOverlay : Overlay
 
     protected override void DisposeBehavior()
     {
+        _cfg.UnsubValueChanged(CCVars.DisableAiStatic, OnAiStaticChanged);
+        _cameraStaticShader.Dispose();
+        _cameraStaticAccessibleShader.Dispose();
         _resources.Dispose();
 
         base.DisposeBehavior();
