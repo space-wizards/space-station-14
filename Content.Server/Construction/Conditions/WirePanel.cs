@@ -1,3 +1,4 @@
+using Content.Shared.Conditions.UnifiedConditions;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using Content.Shared.Wires;
@@ -7,20 +8,11 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class WirePanel : IGraphCondition
+    public sealed partial class WirePanel : GraphConditionBase<IWirePanelStateCondition>, IWirePanelStateCondition
     {
         [DataField("open")] public bool Open { get; private set; } = true;
 
-        public bool Condition(EntityUid uid, IEntityManager entityManager)
-        {
-            //if it doesn't have a wire panel, then just let it work.
-            if (!entityManager.TryGetComponent<WiresPanelComponent>(uid, out var wires))
-                return true;
-
-            return wires.Open == Open;
-        }
-
-        public bool DoExamine(ExaminedEvent args)
+        public override bool DoExamine(ExaminedEvent args)
         {
             var entity = args.Examined;
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<WiresPanelComponent>(entity, out var panel)) return false;
@@ -38,7 +30,7 @@ namespace Content.Server.Construction.Conditions
             return false;
         }
 
-        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        public override IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
         {
             yield return new ConstructionGuideEntry()
             {

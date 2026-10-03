@@ -5,6 +5,7 @@ using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Mind;
 using Content.Server.Roles;
+using Content.Shared.Conditions.UnifiedConditions;
 using Content.Shared.EntityConditions;
 using Content.Shared.EntityConditions.Conditions.Mind;
 using Content.Shared.Mind.Components;
@@ -14,7 +15,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.EntityTable;
 
-[TestOf(typeof(AntagonistTagCondition))]
+[TestOf(typeof(IAntagonistTagCondition))]
 [TestOf(typeof(AntagonistTagEntityConditionSystem))]
 public sealed class AntagonistTagConditionTest : GameTest
 {

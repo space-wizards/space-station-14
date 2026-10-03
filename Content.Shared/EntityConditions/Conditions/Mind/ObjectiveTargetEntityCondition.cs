@@ -1,9 +1,10 @@
+using Content.Shared.Conditions.UnifiedConditions;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Mind;
 
-public sealed partial class ObjectiveTargetCondition : EntityConditionBase<ObjectiveTargetCondition>
+public sealed partial class ObjectiveTargetCondition : EntityConditionBase<IObjectiveTargetCondition>, IObjectiveTargetCondition
 {
     /// <summary>
     /// A whitelist to check objectives against.
@@ -11,7 +12,7 @@ public sealed partial class ObjectiveTargetCondition : EntityConditionBase<Objec
     /// and that objective passes this whitelist, the condition returns true.
     /// </summary>
     [DataField(required: true)]
-    public EntityWhitelist? Whitelist;
+    public EntityWhitelist? Whitelist { get; set; }
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
     {

@@ -1,3 +1,5 @@
+using Content.Shared.Conditions.HelperConditions;
+using Content.Shared.Conditions.UnifiedConditions;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using Content.Shared.Maps;
@@ -13,8 +15,11 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class ComponentInTile : IGraphCondition
+    public sealed partial class ComponentInTile : GraphConditionBase<IComponentInTileCondition>,IComponentInTileCondition, IWithInverted
     {
+
+        public bool Inverted =>!HasEntity;
+
         /// <summary>
         ///     If true, any entity on the tile must have the component.
         ///     If false, no entity on the tile must have the component.
@@ -67,7 +72,7 @@ namespace Content.Server.Construction.Conditions
             return !HasEntity;
         }
 
-        public bool DoExamine(ExaminedEvent args)
+        public override bool DoExamine(ExaminedEvent args)
         {
             if (string.IsNullOrEmpty(ExamineText))
                 return false;
@@ -76,7 +81,7 @@ namespace Content.Server.Construction.Conditions
             return true;
         }
 
-        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        public override IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
         {
             if (string.IsNullOrEmpty(GuideText))
                 yield break;
@@ -87,5 +92,7 @@ namespace Content.Server.Construction.Conditions
                 Icon = GuideIcon,
             };
         }
+
+
     }
 }
