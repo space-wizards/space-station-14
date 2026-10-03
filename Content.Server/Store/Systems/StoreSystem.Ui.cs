@@ -288,6 +288,32 @@ public sealed partial class StoreSystem
             amountRemaining -= value * amountToSpawn;
         }
 
+        var logImpact = LogImpact.Low;
+        var logExtraInfo = "";
+
+        if (component.AccountOwner != null && Mind.TryGetMind(buyer, out var buyerMind, out _) && component.AccountOwner != buyerMind)
+        {
+            logImpact = LogImpact.Medium;
+            logExtraInfo += $" belonging to {ToPrettyString(component.AccountOwner):player}";
+        }
+
+        if (component.ExpectedFaction?.Count > 0 && !_npcFaction.IsMemberOfAny(buyer, component.ExpectedFaction))
+        {
+            logImpact = LogImpact.High;
+            logExtraInfo += ", and was not from an expected faction";
+
+            _mindShield.GetMindshieldStatus(buyer, out var isMindshielded, out _);
+            if (isMindshielded)
+            {
+                logImpact = LogImpact.Extreme;
+                logExtraInfo += " while also possessing a mindshield";
+            }
+        }
+
+        _admin.Add(LogType.StoreWithdrawal,
+            logImpact,
+            $"{ToPrettyString(buyer):player} withdrew {msg.Amount} {msg.Currency} from {ToPrettyString(uid)}{logExtraInfo}.");
+
         component.Balance[msg.Currency] -= msg.Amount;
         UpdateUserInterface(buyer, uid, component);
     }
