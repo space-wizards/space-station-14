@@ -215,7 +215,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnProjectileHit(EntityUid uid, StaminaDamageOnCollideComponent component, ref ProjectileHitEvent args)
     {
-        OnCollide(uid, component, args.Target);
+        OnCollide(uid, component, args.Target, args.Shooter);
     }
 
     [SubscribeLocalEvent]
@@ -230,7 +230,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnThrowHit(EntityUid uid, StaminaDamageOnCollideComponent component, ThrowDoHitEvent args)
     {
-        OnCollide(uid, component, args.Target);
+        OnCollide(uid, component, args.Target, args.Component.Thrower);
     }
 
     [SubscribeLocalEvent]
@@ -269,7 +269,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         args.Cost += ent.Comp.RequiredCharge;
     }
 
-    private void OnCollide(EntityUid uid, StaminaDamageOnCollideComponent component, EntityUid target)
+    private void OnCollide(EntityUid uid, StaminaDamageOnCollideComponent component, EntityUid target, EntityUid? user)
     {
         // you can't inflict stamina damage on things with no stamina component
         // this prevents stun batons from using up charges when throwing it at lockers or lights
@@ -289,7 +289,8 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         var hitEvent = new StaminaMeleeHitEvent(toHit);
         RaiseLocalEvent(uid, hitEvent);
 
-        TakeStaminaDamage(target, component.Damage, stamina, uid, sound: component.Sound);
+        // Log whoever shot or threw it as the source, with the item itself as the tool
+        TakeStaminaDamage(target, component.Damage, stamina, source: user ?? uid, with: user != null ? uid : null, sound: component.Sound);
     }
 
     private void UpdateStaminaVisuals(Entity<StaminaComponent> entity)
