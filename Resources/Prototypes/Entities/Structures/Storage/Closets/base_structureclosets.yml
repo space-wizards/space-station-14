@@ -45,10 +45,13 @@
         layer:
         - MachineLayer
   - type: EntityStorage
+    toggleRequireProjectileTargetWhenOpen: true
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
       paper_label: !type:ContainerSlot
+  - type: RequireProjectileTarget
+    active: false
   - type: Weldable
   - type: PlaceableSurface
     placeCentered: true
