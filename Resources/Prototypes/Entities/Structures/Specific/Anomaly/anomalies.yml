@@ -275,9 +275,11 @@
 
 - type: entity
   id: AnomalyBluespace
-  parent: BaseAnomaly
+  parent: [ BaseAnomaly, BasePortalTeleportation ]
   suffix: Bluespace
   components:
+  - type: TeleportOnVerb
+    verbIcon: /Textures/Interface/VerbIcons/open.svg.192dpi.png
   - type: Sprite
     layers:
     - state: anom4
@@ -291,7 +293,6 @@
     color: "#00ccff"
     castShadows: false
   - type: BluespaceAnomaly
-  - type: Portal
   - type: Fixtures
     fixtures:
       fix1:
@@ -942,9 +943,11 @@
 
 - type: entity
   id: AnomalyShadow
-  parent: BaseAnomaly
+  parent: [ BaseAnomaly, BasePortalTeleportation ]
   suffix: Shadow
   components:
+  - type: TeleportOnVerb
+    verbIcon: /Textures/Interface/VerbIcons/open.svg.192dpi.png
   - type: Sprite
     sprite: Structures/Specific/Anomalies/shadow_anom.rsi
     layers:
@@ -988,7 +991,7 @@
         maxRange: 50
       spawns:
       - ShadowKudzu
-  - type: Portal
+  - type: TeleportSound
     arrivalSound: /Audio/Items/hiss.ogg
     departureSound: /Audio/Items/hiss.ogg
   - type: Tag
