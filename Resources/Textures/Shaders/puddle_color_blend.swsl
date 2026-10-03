@@ -1,0 +1,50 @@
+uniform mediump vec4 selfColor;
+
+// Neighbor arrays are ordered clockwise: north, north-east, east, south-east,
+// south, south-west, west, north-west. A neighbor can be transparent, so its
+// presence is tracked independently from its color alpha.
+uniform mediump vec4[8] neighborColors;
+uniform mediump float[8] neighborPresent;
+
+void fragment()
+{
+    // UV2 is local to this puddle sprite. Center it so each axis runs from
+    // -0.5 to 0.5 and can be used as a weight towards the nearest edge.
+    mediump vec2 offset = UV2 - vec2(0.5);
+    mediump float horizontalAmount = abs(offset.x);
+    mediump float verticalAmount = abs(offset.y);
+
+    // Select the neighbor on the side of the sprite currently being shaded.
+    // step() keeps this branchless for every fragment.
+    mediump float east = step(0.0, offset.x);
+    mediump float north = step(0.0, offset.y);
+
+    mediump vec4 horizontalColor = mix(neighborColors[6], neighborColors[2], east);
+    mediump float horizontalPresent = mix(neighborPresent[6], neighborPresent[2], east);
+    mediump vec4 verticalColor = mix(neighborColors[4], neighborColors[0], north);
+    mediump float verticalPresent = mix(neighborPresent[4], neighborPresent[0], north);
+
+    mediump vec4 northDiagonal = mix(neighborColors[7], neighborColors[1], east);
+    mediump float northDiagonalPresent = mix(neighborPresent[7], neighborPresent[1], east);
+    mediump vec4 southDiagonal = mix(neighborColors[5], neighborColors[3], east);
+    mediump float southDiagonalPresent = mix(neighborPresent[5], neighborPresent[3], east);
+    mediump vec4 diagonalColor = mix(southDiagonal, northDiagonal, north);
+    mediump float diagonalPresent = mix(southDiagonalPresent, northDiagonalPresent, north);
+
+    // Blend the puddle's own color with its horizontal, vertical, and diagonal
+    // neighbors. Missing neighbors have zero weight, leaving the self color in place.
+    mediump float selfWeight = (1.0 - horizontalAmount) * (1.0 - verticalAmount);
+    mediump float horizontalWeight = horizontalAmount * (1.0 - verticalAmount) * horizontalPresent;
+    mediump float verticalWeight = (1.0 - horizontalAmount) * verticalAmount * verticalPresent;
+    mediump float diagonalWeight = horizontalAmount * verticalAmount * diagonalPresent;
+    mediump float totalWeight = selfWeight + horizontalWeight + verticalWeight + diagonalWeight;
+
+    mediump vec4 blendedColor =
+        (selfColor * selfWeight +
+         horizontalColor * horizontalWeight +
+         verticalColor * verticalWeight +
+         diagonalColor * diagonalWeight) / totalWeight;
+
+    // Preserve the sprite texture's shape and alpha while applying the blended tint.
+    COLOR = zTexture(UV) * blendedColor;
+}
