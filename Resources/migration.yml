@@ -1155,3 +1155,9 @@ ClothingHeadHatWizard: ClothingHeadHatWizardBlue
 ClothingOuterWizard: ClothingOuterWizardBlue
 ClothingHeadHatRedwizard: ClothingHeadHatWizardRed
 ClothingHeadHatVioletwizard: ClothingHeadHatWizardViolet
+
+# 2026-10-02
+CheckerCrownBlack: CheckersKingBlack
+CheckerCrownWhite: CheckersKingRed
+CheckerPieceBlack: CheckersPieceBlack
+CheckerPieceWhite: CheckersPieceRed

@@ -364,8 +364,8 @@
   name: admin-smite-chess-dimension-name
   description: admin-smite-chess-dimension-description
   icon:
-    sprite: Objects/Fun/Tabletop/chessboard.rsi
-    state: chessboard
+    sprite: Objects/Fun/Tabletop/boards.rsi
+    state: chess
   effects:
   - !type:SetGodmode
   - !type:AddComponents
