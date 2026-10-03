@@ -54,7 +54,6 @@
         name: id-card-console-privileged-id
         ejectSound: /Audio/Machines/id_swipe.ogg
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-        swap: false
         whitelist:
           components:
           - IdCard
