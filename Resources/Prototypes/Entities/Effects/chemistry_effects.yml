@@ -153,6 +153,13 @@
   categories: [ HideSpawnMenu ]
   parent: MetalFoam
   components:
+  - type: ReplaceFloorOnSpawn
+    replaceableTiles:
+    - Plating
+    - Lattice
+    - TrainLattice
+    replacementTiles:
+    - FloorMetalFoam
   - type: SpawnOnDespawn
     prototype: FoamedAluminiumMetal
 
