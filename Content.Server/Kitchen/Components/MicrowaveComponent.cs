@@ -82,7 +82,7 @@ namespace Content.Server.Kitchen.Components
         public string ContainerId = "microwave_entity_container";
 
         [DataField]
-        public int Capacity = 10;
+        public int Capacity = 12;
 
         [DataField]
         public ProtoId<ItemSizePrototype> MaxItemSize = "Normal";
