@@ -108,6 +108,19 @@ public abstract partial class SharedDoorSystem
         return true;
     }
 
+    ///<summary>
+    /// Force bolts down, skips the power check.
+    ///</summary>
+    public void SetBoltsDownNow(Entity<DoorBoltComponent> ent)
+    {
+        ent.Comp.BoltsDown = true;
+        Dirty(ent, ent.Comp);
+        UpdateBoltLightStatus(ent);
+
+        var ev = new DoorBoltsChangedEvent(true);
+        RaiseLocalEvent(ent.Owner, ev);
+    }
+
     private void OnStateChanged(Entity<DoorBoltComponent> entity, ref DoorStateChangedEvent args)
     {
         // If the door is closed, we should look if the bolt was locked while closing
