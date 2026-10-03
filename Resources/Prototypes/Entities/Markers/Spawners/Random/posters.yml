@@ -5,7 +5,7 @@
     - id: PosterContrabandFreeTonto
     - id: PosterContrabandAtmosiaDeclarationIndependence
     - id: PosterContrabandFunPolice
-    - id: PosterContrabandRealExomorph
+    - id: PosterContrabandRealXeno
     - id: PosterContrabandSyndicateRecruitment
     - id: PosterContrabandClown
     - id: PosterContrabandSmoke
@@ -63,9 +63,9 @@
     - id: PosterContrabandInterdyne
     - id: PosterContrabandWaffleCorp
     - id: PosterContrabandMissingSpacepen
-    - id: PosterContrabandExoAcid
-    - id: PosterContrabandExoRun
-    - id: PosterContrabandExoChomp
+    - id: PosterContrabandXenoAcid
+    - id: PosterContrabandXenoRun
+    - id: PosterContrabandXenoChomp
 
 - type: entityTable
   id: LegitPosterTable
