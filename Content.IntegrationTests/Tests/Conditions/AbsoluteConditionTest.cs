@@ -25,8 +25,6 @@ namespace Content.IntegrationTests.Tests.Conditions
             var server = pair.Server;
 
          //   var testMap = await pair.CreateTestMap();
-            _ = server.System<AbsoluteConditionSystem>();
-            _ = server.System<SummationConditionSystem>();
             var evaluationSystem = server.System<SharedConditionEvaluationSystem>();
 
             await server.WaitAssertion(() =>

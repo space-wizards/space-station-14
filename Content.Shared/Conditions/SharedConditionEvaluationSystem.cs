@@ -1,8 +1,10 @@
 using System.Diagnostics;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Content.Shared.Conditions.HelperConditions;
 using Content.Shared.Mindshield;
+using Robust.Shared.Reflection;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Conditions;
@@ -10,8 +12,15 @@ namespace Content.Shared.Conditions;
 /// <summary>
 /// The central API through which <see cref="IConditionByEvent" />s can be evaluated.
 /// </summary>
-public sealed class SharedConditionEvaluationSystem : EntitySystem
+public sealed partial class SharedConditionEvaluationSystem : EntitySystem
 {
+    /// <summary>
+    /// added dependency to ensure all systems have been loaded.
+    /// </summary>
+    [Dependency] private IEntitySystemManager _entitySystemManager = default!;
+
+    [Dependency] private IReflectionManager _reflectionManager = default!;
+
     /// <summary>
     /// A lookup of ICondition types to a dedicated function that evaluates it.
     /// build using <see cref="CreateBindingsForEvaluator"/>
@@ -22,21 +31,26 @@ public sealed class SharedConditionEvaluationSystem : EntitySystem
     {
         SetupBindings();
         //in case we load more assemblies during runtime, we need to create more bindings.
-        AppDomain.CurrentDomain.AssemblyLoad += AssemblyLoaded;
+        _reflectionManager.OnAssemblyAdded += AssemblyLoaded;
         base.Initialize();
+    }
+
+    /// <summary>
+    /// Rebuild bindings if assembly changed.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void AssemblyLoaded(object? sender, ReflectionUpdateEventArgs e)
+    {
+        _bindings.Clear();
+        SetupBindings();
     }
 
     public override void Shutdown()
     {
-        AppDomain.CurrentDomain.AssemblyLoad -= AssemblyLoaded;
+        _reflectionManager.OnAssemblyAdded -= AssemblyLoaded;
         _bindings.Clear();
         base.Shutdown();
-    }
-
-    private void AssemblyLoaded(object? sender, AssemblyLoadEventArgs args)
-    {
-        _bindings.Clear();
-        SetupBindings();
     }
 
     private void SetupBindings()
@@ -52,27 +66,27 @@ public sealed class SharedConditionEvaluationSystem : EntitySystem
         //cache all bindings, to avoid weird chains from interacting weirdly.
         List<KeyValuePair<Type, Func<ICondition, EntityUid, EntityUid?, float>>> bindingsToAdd = [];
         //go through all types
-        foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+        foreach (var type in _reflectionManager.GetAllChildren(typeof(ICondition)))
         {
-            foreach (var type in assembly.GetTypes())
-            {
-                //skip types that might be open.
-                if (type.IsAbstract || !type.IsSealed || _bindings.ContainsKey(type))
-                    continue;
-                //  Walk up the inheritance chain
-                var currentBase = type.BaseType;
-                while (currentBase != null && currentBase != typeof(object))
-                {
-                    //see if there is an existing binding.
-                    if (_bindings.TryGetValue(currentBase, out var func))
-                    {
-                        bindingsToAdd.Add(new(type, func));
-                        break;
-                    }
+            //skip types that might be open.
+            if (_bindings.ContainsKey(type))
+                continue;
+            //  Walk up the inheritance chain
+            var currentBase = type;
 
-                    // Move up to the next parent class
-                    currentBase = currentBase.BaseType;
+            while (currentBase != null && currentBase != typeof(object))
+            {
+                //see if there is an existing binding.
+                //fallback to non interface base conditions (should not be the case)
+                var match = _bindings.Keys.FirstOrDefault(e => currentBase.GetInterfaces().Contains(e)) ??
+                            _bindings.Keys.FirstOrDefault(e => currentBase.IsAssignableTo(e));
+                if (match != null)
+                {
+                    bindingsToAdd.Add(new(type, _bindings[match]));
+                    break;
                 }
+                // Move up to the next parent class
+                currentBase = currentBase.BaseType;
             }
         }
 
@@ -88,32 +102,30 @@ public sealed class SharedConditionEvaluationSystem : EntitySystem
         // find all ConditionEvaluator Systems.
 
         //go through all types
-        foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+
+        foreach (var type in _reflectionManager.GetAllChildren(typeof(EntitySystem)))
         {
-            foreach (var type in assembly.GetTypes())
+            //skip types that might be open.
+            if (type.IsAbstract || !type.IsSealed)
+                continue;
+            //  Walk up the inheritance chain (Because we might end up with a shared evaluator type in between step and server/client side evaluator at the bottom of the chain)
+            var currentBase = type.BaseType;
+            while (currentBase != null && currentBase != typeof(object))
             {
-                //skip types that might be open.
-                if (type.IsAbstract || !type.IsSealed || _bindings.ContainsKey(type))
-                    continue;
-                //  Walk up the inheritance chain (Because we might end up with a shared evaluator type in between step and server/client side evaluator at the bottom of the chain)
-                var currentBase = type.BaseType;
-                while (currentBase != null && currentBase != typeof(object))
+                //check if we reached the correct step
+                if (currentBase.IsGenericType &&
+                    currentBase.GetGenericTypeDefinition() == typeof(ConditionEvaluatorSystem<>))
                 {
-                    //check if we reached the correct step
-                    if (currentBase.IsGenericType &&
-                        currentBase.GetGenericTypeDefinition() == typeof(ConditionEvaluatorSystem<>))
-                    {
-                        // Extract the type of the Condition we evaluate for.
-                        var conditionType = currentBase.GetGenericArguments()[0];
+                    // Extract the type of the Condition we evaluate for.
+                    var conditionType = currentBase.GetGenericArguments()[0];
 
-                        RegisterConditionEvaluator(conditionType, type);
+                    RegisterConditionEvaluator(conditionType, type);
 
-                        break; // Found it, no need to keep walking up the chain
-                    }
-
-                    // Move up to the next parent class
-                    currentBase = currentBase.BaseType;
+                    break; // Found it, no need to keep walking up the chain
                 }
+
+                // Move up to the next parent class
+                currentBase = currentBase.BaseType;
             }
         }
     }
@@ -132,7 +144,7 @@ public sealed class SharedConditionEvaluationSystem : EntitySystem
         //add conversion of generic ICondition to Condition Type
         var cast = Expression.Convert(paramCondition, conditionType);
         //Resolve evaluator as a system.
-        var evaluatorSystemObject = IoCManager.ResolveType(evaluatorSystemType);
+        var evaluatorSystemObject = _entitySystemManager.GetEntitySystem(evaluatorSystemType);
         //feed object into expression
         var evaluatorConst = Expression.Constant(evaluatorSystemObject);
         //grab local method using the base type definition.
@@ -143,7 +155,11 @@ public sealed class SharedConditionEvaluationSystem : EntitySystem
         //build the function System.Evaluate(Condition, Entity, Source)
         var call = Expression.Call(evaluatorConst, evaluateMethod, cast, paramEntity, paramSource);
         //add hint about typing of the expression
-        var lambda = Expression.Lambda<Func<ICondition, EntityUid, EntityUid?, float>>(call);
+        var lambda =
+            Expression.Lambda<Func<ICondition, EntityUid, EntityUid?, float>>(call,
+                paramCondition,
+                paramEntity,
+                paramSource);
         //compile final lambda expression into IL and store in dictionary.
         if (!_bindings.TryAdd(conditionType, lambda.Compile()))
         {

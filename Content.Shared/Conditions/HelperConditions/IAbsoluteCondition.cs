@@ -4,7 +4,7 @@ namespace Content.Shared.Conditions.HelperConditions;
 /// This condition will always return a given value.
 /// Use to construct arbitrary equations using arithmetic conditions.
 /// </summary>
-public interface IAbsoluteCondition : IConditionByEvent<IAbsoluteCondition>
+public interface IAbsoluteCondition : ICondition
 {
     float Value { get; }
 }

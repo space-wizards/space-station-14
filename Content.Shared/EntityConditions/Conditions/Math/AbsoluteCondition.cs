@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Math;
 
-public sealed partial class AbsoluteCondition : EntityConditionBase<IAbsoluteCondition>, IAbsoluteCondition
+public sealed partial class AbsoluteCondition : EntityCondition, IAbsoluteCondition
 {
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
     {
