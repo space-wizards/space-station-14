@@ -1,6 +1,6 @@
 - type: entity
   parent: BaseItem
-  id: BaseStationBeacon 
+  id: BaseStationBeacon
   name: station beacon
   description: A small device that transmits information to station maps. Can be configured.
   placement:
@@ -328,14 +328,6 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-surgery
-
-- type: entity
-  parent: DefaultStationBeaconMedical
-  id: DefaultStationBeaconPsychology
-  suffix: Psychology
-  components:
-  - type: NavMapBeacon
-    defaultText: station-beacon-psychology
 
 - type: entity
   parent: DefaultStationBeaconMedical
@@ -750,6 +742,14 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-theater
+
+- type: entity
+  parent: DefaultStationBeaconService
+  id: DefaultStationBeaconPsychology
+  suffix: Psychology
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-psychology
 
 - type: entity
   parent: DefaultStationBeacon

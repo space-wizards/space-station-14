@@ -5,19 +5,17 @@
   playTimeTracker: JobPsychologist
   startingGear: PsychologistGear
   icon: "JobIconPsychologist"
-  supervisors: job-supervisors-cmo
+  supervisors: job-supervisors-hop
   access:
-  - Medical
+  - Psychologist
   - Maintenance
-  extendedAccess:
-  - Chemistry
 
 - type: startingGear
   id: PsychologistGear
   equipment:
     shoes: ClothingShoesLeather
     id: PsychologistPDA
-    ears: ClothingHeadsetMedical
+    ears: ClothingHeadsetService
   storage:
     back:
     - RubberStampPsychologist
@@ -26,10 +24,9 @@
   id: PsychologistChameleonOutfit
   job: Psychologist
   equipment:
-    head: ClothingHeadHatBeretMedic
-    eyes: ClothingEyesHudMedical
-    mask: ClothingMaskSterile
+    head: ClothingHeadHatFedoraGrey
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskBreath
     outerClothing: ClothingOuterCoatLab
-    neck: ClothingNeckStethoscope
-    belt: ClothingBeltMedical
+    neck: ClothingNeckTieRed
     gloves: ClothingHandsGlovesLatex

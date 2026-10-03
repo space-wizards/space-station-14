@@ -30,6 +30,7 @@
   - Reporter
   - Visitor
   - ServiceWorker
+  - Psychologist
 
 - type: department
   id: CentralCommand
@@ -95,7 +96,6 @@
   - ChiefMedicalOfficer
   - MedicalDoctor
   - MedicalIntern
-  - Psychologist
   - Paramedic
 
 - type: department

@@ -50,7 +50,6 @@
   - JobIconChemist
   - JobIconGeneticist
   - JobIconParamedic
-  - JobIconPsychologist
   - JobIconVirologist
 
 - type: jobIconGroup
@@ -98,6 +97,7 @@
   - JobIconReporter
   - JobIconServiceWorker
   - JobIconZookeeper
+  - JobIconPsychologist
 
 # Not exactly service workers, but not civilians either
 - type: jobIconGroup

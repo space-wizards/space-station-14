@@ -15,6 +15,7 @@
       - ChefGear
       - ChaplainGear
       - PassengerGear
+      - PsychologistGear
 
 - type: entity
   parent: SalvageHumanCorpse
@@ -45,7 +46,6 @@
   - type: Loadout
     prototypes:
     - MedicalInternGear
-    - PsychologistGear
     - ChemistGear
     - DoctorGear
 

@@ -339,24 +339,6 @@
     job: Chemist
 
 - type: entity
-  parent: IDCardStandard
-  id: PsychologistIDCard
-  name: psychologist ID card
-  components:
-  - type: Sprite
-    layers:
-    - state: default
-    - state: stripe_top
-      color: *color-medical-top
-    - state: stripe_bottom
-      color: *color-medical-bottom
-    - sprite: *icon-rsi
-      offset: *icon-offset
-      state: Psychologist
-  - type: PresetIdCard
-    job: Psychologist
-
-- type: entity
   parent: MedicalIDCard
   id: SeniorPhysicianIDCard
   name: senior physician ID card
@@ -800,6 +782,24 @@
     - sprite: *icon-rsi
       offset: *icon-offset
       state: Zookeeper
+
+- type: entity
+  parent: IDCardStandard
+  id: PsychologistIDCard
+  name: psychologist ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: stripe_top
+      color: *color-service-top
+    - state: stripe_bottom
+      color: *color-service-bottom
+    - sprite: *icon-rsi
+      offset: *icon-offset
+      state: Psychologist
+  - type: PresetIdCard
+    job: Psychologist
 
 #Supply
 
