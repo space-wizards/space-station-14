@@ -43,9 +43,11 @@ public partial class ChatBox : UIWidget, IEntityLinkClickHandler
         ChatInput.ChannelSelector.OnChannelSelect += OnChannelSelect;
         ChatInput.FilterButton.Popup.OnChannelFilter += OnChannelFilter;
         ChatInput.FilterButton.Popup.OnNewHighlights += OnNewHighlights;
+        ChatInput.FilterButton.Popup.OnNewFilters += OnNewFilters;
         _controller = UserInterfaceManager.GetUIController<ChatUIController>();
         _controller.MessageAdded += OnMessageAdded;
         _controller.HighlightsUpdated += OnHighlightsUpdated;
+        _controller.WordFiltersUpdated += OnWordFiltersUpdated;
         _controller.RegisterChat(this);
     }
 
@@ -75,6 +77,11 @@ public partial class ChatBox : UIWidget, IEntityLinkClickHandler
     private void OnHighlightsUpdated(string highlights)
     {
         ChatInput.FilterButton.Popup.UpdateHighlights(highlights);
+    }
+
+    private void OnWordFiltersUpdated(string wordFilters)
+    {
+        ChatInput.FilterButton.Popup.UpdateWordFilters(wordFilters);
     }
 
     private void OnChannelSelect(ChatSelectChannel channel)
@@ -124,6 +131,11 @@ public partial class ChatBox : UIWidget, IEntityLinkClickHandler
     private void OnNewHighlights(string highlighs)
     {
         _controller.UpdateHighlights(highlighs);
+    }
+
+    private void OnNewFilters(string wordFilters)
+    {
+        _controller.UpdateWordFilters(wordFilters);
     }
 
     public void AddLine(string message, Color color)
