@@ -33,9 +33,10 @@
     state: full
   - type: IconSmooth
     key: lava
-    base: water
-    additionalKeys:
-    - walls
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ lava, walls ]
+      base: water
   - type: Physics
     bodyType: Static
   - type: Fixtures
