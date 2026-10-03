@@ -56,15 +56,7 @@ namespace Content.Client.Ame.UI
                 ToggleInjection.Disabled = true;
             }
 
-            if (!castState.Injecting)
-            {
-                InjectionStatus.Text = Loc.GetString("ame-window-engine-injection-status-not-injecting-label") + " ";
-            }
-            else
-            {
-                InjectionStatus.Text = Loc.GetString("ame-window-engine-injection-status-injecting-label") + " ";
-            }
-
+            ToggleInjection.Pressed = castState.Injecting;
             CoreCount.Text = $"{castState.CoreCount}";
             InjectionAmount.Text = $"{castState.InjectionAmount}";
             // format power statistics to pretty numbers
