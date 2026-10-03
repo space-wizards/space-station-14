@@ -20,7 +20,6 @@ public sealed partial class MindSystem : SharedMindSystem
 {
     [Dependency] private ServerGameTicker _gameTicker = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
-    [Dependency] private IPlayerManager _players = default!;
     [Dependency] private GhostSystem _ghosts = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private PvsOverrideSystem _pvsOverride = default!;
@@ -31,7 +30,7 @@ public sealed partial class MindSystem : SharedMindSystem
         if (mind.UserId is {} user)
         {
             UserMinds.Remove(user);
-            if (_players.TryGetPlayerData(user, out var data) && data.ContentData() is { } oldData)
+            if (PlayerMan.TryGetPlayerData(user, out var data) && data.ContentData() is { } oldData)
                 oldData.Mind = null;
             mind.UserId = null;
         }
@@ -78,11 +77,11 @@ public sealed partial class MindSystem : SharedMindSystem
     {
         if (base.TryGetMind(user, out mindId, out mind))
         {
-            DebugTools.Assert(!_players.TryGetPlayerData(user, out var playerData) || playerData.ContentData() is not { } data || data.Mind == mindId);
+            DebugTools.Assert(!PlayerMan.TryGetPlayerData(user, out var playerData) || playerData.ContentData() is not { } data || data.Mind == mindId);
             return true;
         }
 
-        DebugTools.Assert(!_players.TryGetPlayerData(user, out var pData) || pData.ContentData()?.Mind == null);
+        DebugTools.Assert(!PlayerMan.TryGetPlayerData(user, out var pData) || pData.ContentData()?.Mind == null);
         return false;
     }
 
@@ -90,7 +89,7 @@ public sealed partial class MindSystem : SharedMindSystem
     {
         base.WipeAllMinds();
 
-        foreach (var unCastData in _players.GetAllPlayerData())
+        foreach (var unCastData in PlayerMan.GetAllPlayerData())
         {
             if (unCastData.ContentData()?.Mind is not { } mind)
                 continue;
@@ -127,8 +126,8 @@ public sealed partial class MindSystem : SharedMindSystem
 
         // Do this AFTER the entity changes above as this will fire off a player-detached event
         // which will run ghosting twice.
-        if (_players.TryGetSessionById(mind.UserId, out var session))
-            _players.SetAttachedEntity(session, entity);
+        if (PlayerMan.TryGetSessionById(mind.UserId, out var session))
+            PlayerMan.SetAttachedEntity(session, entity);
 
         Log.Info($"Session {session?.Name} visiting entity {entity}.");
     }
@@ -145,14 +144,14 @@ public sealed partial class MindSystem : SharedMindSystem
 
         RemoveVisitingEntity(mindId, mind);
 
-        if (mind.UserId == null || !_players.TryGetSessionById(mind.UserId.Value, out var session))
+        if (!PlayerMan.TryGetSessionById(mind.UserId, out var session))
             return;
 
         if (session.AttachedEntity == mind.VisitingEntity)
             return;
 
         var owned = mind.OwnedEntity;
-        _players.SetAttachedEntity(session, owned);
+        PlayerMan.SetAttachedEntity(session, owned);
 
         if (owned.HasValue)
         {
@@ -184,7 +183,7 @@ public sealed partial class MindSystem : SharedMindSystem
             if (TryComp<ActorComponent>(entity.Value, out var actor))
             {
                 // Happens when transferring to your currently visited entity.
-                if (!_players.TryGetSessionByEntity(entity.Value, out var session) ||
+                if (!PlayerMan.TryGetSessionByEntity(entity.Value, out var session) ||
                     mind.UserId == null || actor.PlayerSession != session )
                 {
                     throw new ArgumentException("Visit target already has a session.", nameof(entity));
@@ -250,10 +249,9 @@ public sealed partial class MindSystem : SharedMindSystem
         }
 
         // Player is CURRENTLY connected.
-        if (mind.UserId != null && _players.TryGetSessionById(mind.UserId.Value, out var userSession)
-                                && !alreadyAttached && mind.VisitingEntity == null)
+        if (PlayerMan.TryGetSessionById(mind.UserId, out var userSession) && !alreadyAttached && mind.VisitingEntity == null)
         {
-            _players.SetAttachedEntity(userSession, entity, true);
+            PlayerMan.SetAttachedEntity(userSession, entity, true);
             DebugTools.Assert(userSession.AttachedEntity == entity, "Failed to attach entity.");
             Log.Info($"Session {userSession.Name} transferred to entity {entity}.");
         }
@@ -292,23 +290,23 @@ public sealed partial class MindSystem : SharedMindSystem
 
         Dirty(mindId, mind);
 
-        if (userId != null && !_players.TryGetPlayerData(userId.Value, out _))
+        if (userId != null && !PlayerMan.TryGetPlayerData(userId.Value, out _))
         {
             Log.Error($"Attempted to set mind user to invalid value {userId}");
             return;
         }
 
         // Clear any existing entity attachment
-        if (_players.TryGetSessionById(mind.UserId, out var oldSession))
+        if (PlayerMan.TryGetSessionById(mind.UserId, out var oldSession))
         {
-            _players.SetAttachedEntity(oldSession, null);
+            PlayerMan.SetAttachedEntity(oldSession, null);
             _pvsOverride.RemoveSessionOverride(mindId, oldSession);
         }
 
         if (mind.UserId != null)
         {
             UserMinds.Remove(mind.UserId.Value);
-            if (_players.GetPlayerData(mind.UserId.Value).ContentData() is { } oldData)
+            if (PlayerMan.GetPlayerData(mind.UserId.Value).ContentData() is { } oldData)
                 oldData.Mind = null;
             mind.UserId = null;
         }
@@ -322,7 +320,7 @@ public sealed partial class MindSystem : SharedMindSystem
             SetUserId(oldMindId, null, oldMind);
         }
 
-        DebugTools.AssertNull(_players.GetPlayerData(userId.Value).ContentData()?.Mind);
+        DebugTools.AssertNull(PlayerMan.GetPlayerData(userId.Value).ContentData()?.Mind);
 
         UserMinds[userId.Value] = mindId;
         mind.UserId = userId;
@@ -330,13 +328,13 @@ public sealed partial class MindSystem : SharedMindSystem
 
         // The UserId may not have a current session, but user data may still exist for disconnected players.
         // So we cannot combine this with the TryGetSessionById() check below.
-        if (_players.GetPlayerData(userId.Value).ContentData() is { } data)
+        if (PlayerMan.GetPlayerData(userId.Value).ContentData() is { } data)
             data.Mind = mindId;
 
-        if (_players.TryGetSessionById(userId.Value, out var session))
+        if (PlayerMan.TryGetSessionById(userId.Value, out var session))
         {
             _pvsOverride.AddSessionOverride(mindId, session);
-            _players.SetAttachedEntity(session, mind.CurrentEntity);
+            PlayerMan.SetAttachedEntity(session, mind.CurrentEntity);
         }
     }
 

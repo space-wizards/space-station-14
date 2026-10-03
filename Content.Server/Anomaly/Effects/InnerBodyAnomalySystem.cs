@@ -14,7 +14,6 @@ using Content.Shared.Popups;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Events;
-using Robust.Shared.Player;
 
 namespace Content.Server.Anomaly.Effects;
 
@@ -25,7 +24,6 @@ public sealed partial class InnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private GibbingSystem _gibbing = default!;
     [Dependency] private IChatManager _chat = default!;
-    [Dependency] private ISharedPlayerManager _player = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private JitteringSystem _jitter = default!;
     [Dependency] private MindSystem _mind = default!;
@@ -69,7 +67,7 @@ public sealed partial class InnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
             return;
         if (TryComp<InnerBodyAnomalyComponent>(args.OtherEntity, out var innerAnom) && innerAnom.Injected)
             return;
-        if (!_mind.TryGetMind(args.OtherEntity, out _, out var mindComponent))
+        if (!_mind.TryGetMind(args.OtherEntity, out _, out _))
             return;
 
         EntityManager.AddComponents(args.OtherEntity, ent.Comp.InjectionComponents);
@@ -100,8 +98,7 @@ public sealed partial class InnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
             _audio.PlayPvs(ent.Comp.StartSound, ent);
 
         if (ent.Comp.StartMessage is not null &&
-            _mind.TryGetMind(ent, out _, out var mindComponent) &&
-            _player.TryGetSessionById(mindComponent.UserId, out var session))
+            _mind.TryGetAttachedSession(ent.Owner, out var session))
         {
             var message = Loc.GetString(ent.Comp.StartMessage);
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
@@ -133,8 +130,7 @@ public sealed partial class InnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
 
     private void OnSeverityChanged(Entity<InnerBodyAnomalyComponent> ent, ref AnomalySeverityChangedEvent args)
     {
-        if (!_mind.TryGetMind(ent, out _, out var mindComponent) ||
-            !_player.TryGetSessionById(mindComponent.UserId, out var session))
+        if (!_mind.TryGetAttachedSession(ent.Owner, out var session))
             return;
 
         var message = string.Empty;
@@ -210,8 +206,7 @@ public sealed partial class InnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
         _stun.TryUpdateParalyzeDuration(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration));
 
         if (ent.Comp.EndMessage is not null &&
-            _mind.TryGetMind(ent, out _, out var mindComponent) &&
-            _player.TryGetSessionById(mindComponent.UserId, out var session))
+            _mind.TryGetAttachedSession(ent.Owner, out var session))
         {
             var message = Loc.GetString(ent.Comp.EndMessage);
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));

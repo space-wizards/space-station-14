@@ -24,12 +24,10 @@ using Content.Shared.Medical;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Throwing;
 using Content.Shared.Tools.Components;
-using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
@@ -53,7 +51,6 @@ namespace Content.Server.Medical.BiomassReclaimer
         [Dependency] private IRobustRandom _robustRandom = default!;
         [Dependency] private ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
-        [Dependency] private IPlayerManager _playerManager = default!;
         [Dependency] private MaterialStorageSystem _material = default!;
         [Dependency] private SharedMindSystem _minds = default!;
         [Dependency] private InventorySystem _inventory = default!;
@@ -263,15 +260,9 @@ namespace Content.Server.Medical.BiomassReclaimer
                 return false;
 
             // Reject souled bodies in easy mode.
-            if (_configManager.GetCVar(CCVars.BiomassEasyMode) &&
-                HasComp<HumanoidProfileComponent>(dragged) &&
-                _minds.TryGetMind(dragged, out _, out var mind))
-            {
-                if (mind.UserId != null && _playerManager.TryGetSessionById(mind.UserId.Value, out _))
-                    return false;
-            }
-
-            return true;
+            return !_configManager.GetCVar(CCVars.BiomassEasyMode)
+                   || !HasComp<HumanoidProfileComponent>(dragged)
+                   || !_minds.TryGetAttachedSession(dragged, out _);
         }
     }
 }

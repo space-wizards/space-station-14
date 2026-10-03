@@ -216,9 +216,7 @@ namespace Content.Server.Cloning
                     }
                     else
                     {
-                        if (!_mindSystem.TryGetMind(scanBody.Value, out _, out var mind) ||
-                            mind.UserId == null ||
-                            !_playerManager.TryGetSessionById(mind.UserId.Value, out _))
+                        if (!_mindSystem.TryGetAttachedSession(scanBody.Value, out _))
                         {
                             clonerStatus = ClonerStatus.NoMindDetected;
                         }

@@ -320,8 +320,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
             container.ID != chassisComponent.BrainContainerId)
             return;
 
-        if (!_mind.TryGetMind(brain.Owner, out var mindId, out var mind) ||
-            !_player.TryGetSessionById(mind.UserId, out var session))
+        if (!_mind.TryGetAttachedSession(brain.Owner, out var mind, out var session))
             return;
 
         if (!CanPlayerBeBorged(session))
@@ -332,7 +331,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
             return;
         }
 
-        _mind.TransferTo(mindId, borg, mind: mind);
+        _mind.TransferTo(mind.Value, borg, mind: mind);
     }
 
     private void OnBrainPointAttempt(Entity<BorgBrainComponent> brain, ref PointAttemptEvent args)

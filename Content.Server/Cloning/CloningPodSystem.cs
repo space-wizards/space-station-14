@@ -58,6 +58,7 @@ public sealed partial class CloningPodSystem : EntitySystem
     [Dependency] private EmagSystem _emag = default!;
     [Dependency] private DamageableSystem _damageable = default!;
 
+    // TODO: Using a Component as a key should unironically be an error. Use the EntityUid.
     public readonly Dictionary<MindComponent, EntityUid> ClonesWaitingForMind = new();
     public readonly ProtoId<CloningSettingsPrototype> SettingsId = "CloningPod";
     public const float EasyModeCloningCost = 0.7f;
@@ -146,8 +147,8 @@ public sealed partial class CloningPodSystem : EntitySystem
         {
             if (Exists(clone) &&
                 !_mobStateSystem.IsDead(clone) &&
-                TryComp<MindContainerComponent>(clone, out var cloneMindComp) &&
-                (cloneMindComp.Mind == null || cloneMindComp.Mind == mindEnt))
+                _mindSystem.TryGetMind(clone, out var mindUid, out _) &&
+                mindUid == mindEnt.Owner)
                 return false; // Mind already has clone
 
             ClonesWaitingForMind.Remove(mind);
