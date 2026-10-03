@@ -341,6 +341,9 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #Chief Engineer's Hardsuit
 - type: entity
@@ -379,6 +382,9 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #Chief Medical Officer's Hardsuit
 - type: entity
@@ -410,6 +416,9 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #Research Director's Hardsuit
 - type: entity
@@ -454,7 +463,9 @@
   - type: StaticPrice
     price: 750
   - type: StealTarget
-    stealGroup: ClothingOuterHardsuitRd
+    stealGroup:
+    - ClothingOuterHardsuitRd
+    - HeadHardsuit
 
 #Head of Security's Hardsuit
 - type: entity
@@ -487,6 +498,9 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurityRed
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #Luxury Mining Hardsuit
 - type: entity
@@ -847,7 +861,7 @@
 #CENTCOMM / ERT HARDSUITS
 #ERT Leader Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieCommander ]
+  parent: [ BaseTaskForceContraband, ClothingOuterHardsuitSyndieCommander ]
   id: ClothingOuterHardsuitERTLeader
   name: ERT leader's hardsuit
   description: A protective hardsuit worn by the leader of an emergency response team.
@@ -862,10 +876,13 @@
     - 0,0,3,3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTLeader
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #ERT Chaplain Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndie ]
+  parent: [ BaseTaskForceContraband, ClothingOuterHardsuitSyndie ]
   id: ClothingOuterHardsuitERTChaplain
   name: ERT chaplain's hardsuit
   description: A protective hardsuit worn by the chaplains of an Emergency Response Team.
@@ -880,10 +897,13 @@
     - 0,0,3,3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTChaplain
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #ERT Engineer Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieElite ]
+  parent: [ BaseTaskForceContraband, ClothingOuterHardsuitSyndieElite ]
   id: ClothingOuterHardsuitERTEngineer
   name: ERT engineer's hardsuit
   description: A protective hardsuit worn by the engineers of an emergency response team.
@@ -900,10 +920,13 @@
     clothingPrototype: ClothingHeadHelmetHardsuitERTEngineer
   - type: FireProtection
     reduction: 0.8
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #ERT Medic Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieMedic ]
+  parent: [ BaseTaskForceContraband, ClothingOuterHardsuitSyndieMedic ]
   id: ClothingOuterHardsuitERTMedical
   name: ERT medic's hardsuit
   description: A protective hardsuit worn by the medics of an emergency response team.
@@ -918,10 +941,13 @@
     - 0,0,3,3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTMedical
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #ERT Security Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndie ]
+  parent: [ BaseTaskForceContraband, ClothingOuterHardsuitSyndie ]
   id: ClothingOuterHardsuitERTSecurity
   name: ERT security's hardsuit
   description: A protective hardsuit worn by the security officers of an emergency response team.
@@ -940,10 +966,13 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #ERT Janitor Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieElite ]
+  parent: [ BaseTaskForceContraband, ClothingOuterHardsuitSyndieElite ]
   id: ClothingOuterHardsuitERTJanitor
   name: ERT janitor's hardsuit
   description: A protective hardsuit worn by the janitors of an emergency response team.
@@ -958,10 +987,13 @@
     - 0,0,3,3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTJanitor
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #Deathsquad
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitBase ]
+  parent: [ BaseDeathSquadContraband, ClothingOuterHardsuitBase ]
   id: ClothingOuterHardsuitDeathsquad
   name: death squad hardsuit
   description: An advanced hardsuit favored by commandos for use in special operations.
@@ -999,10 +1031,13 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitDeathsquad
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #CBURN Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitBase ]
+  parent: [ BaseCBURNContraband, ClothingOuterHardsuitBase ]
   id: ClothingOuterHardsuitCBURN
   name: CBURN exosuit
   description: A lightweight yet strong exosuit used for special cleanup operations.

@@ -97,7 +97,8 @@
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: nanotrasen
   - type: StealTarget
-    stealGroup: AltarNanotrasen
+    stealGroup:
+    - AltarNanotrasen
 
 - type: entity
   parent: AltarBaseSteel
