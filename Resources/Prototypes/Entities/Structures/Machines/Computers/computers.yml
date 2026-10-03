@@ -684,6 +684,8 @@
       whitelist:
         components:
         - IdCard
+        - Access
+        requireAll: true
     targetIdSlot:
       name: id-card-console-target-id
       ejectSound: /Audio/Machines/id_swipe.ogg
@@ -693,6 +695,8 @@
       whitelist:
         components:
         - IdCard
+        - Access
+        requireAll: true
   - type: ActivatableUI
     key: enum.IdCardConsoleUiKey.Key
   - type: UserInterface
