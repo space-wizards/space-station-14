@@ -25,6 +25,7 @@ using Content.Server.ServerUpdates;
 using Content.Server.Voting.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Localizations;
+using Content.Shared.Prototypes;
 using Robust.Server;
 using Robust.Server.ServerStatus;
 using Robust.Shared.Configuration;
@@ -168,6 +169,7 @@ namespace Content.Server.Entry
             _multiServerKick.Initialize();
             _cvarCtrl.Initialize();
             _feedbackManager.Initialize();
+            _entSys.GetEntitySystem<PrototypeGenerationSystem>().Generate();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
