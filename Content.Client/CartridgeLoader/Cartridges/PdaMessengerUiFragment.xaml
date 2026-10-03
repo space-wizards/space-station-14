@@ -1,0 +1,40 @@
+<cartridges:PdaMessengerUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
+                                   xmlns="https://spacestation14.io"
+                                   Orientation="Vertical"
+                                   HorizontalExpand="True"
+                                   VerticalExpand="True"
+                                   Margin="1 0 2 0">
+    <Label Name="StatusLabel" StyleClasses="LabelSubText" ClipText="True" Margin="4 2"/>
+
+    <BoxContainer Name="ConversationsView" Orientation="Vertical" VerticalExpand="True">
+        <Button Name="NewMessageButton" Text="{Loc 'pda-messenger-ui-new-message'}" HorizontalAlignment="Right" Margin="4"/>
+        <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+            <BoxContainer Name="ConversationList" Orientation="Vertical" Margin="4" SeparationOverride="2"/>
+        </ScrollContainer>
+    </BoxContainer>
+
+    <BoxContainer Name="ContactsView" Orientation="Vertical" VerticalExpand="True" Visible="False">
+        <BoxContainer Orientation="Horizontal" Margin="4" SeparationOverride="4">
+            <Button Name="ContactsBackButton" Text="{Loc 'pda-messenger-ui-back'}"/>
+            <LineEdit Name="SearchInput" HorizontalExpand="True" PlaceHolder="{Loc 'pda-messenger-ui-search'}"/>
+        </BoxContainer>
+        <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+            <BoxContainer Name="ContactList" Orientation="Vertical" Margin="4" SeparationOverride="2"/>
+        </ScrollContainer>
+    </BoxContainer>
+
+    <BoxContainer Name="ChatView" Orientation="Vertical" VerticalExpand="True" Visible="False">
+        <BoxContainer Orientation="Horizontal" Margin="4" SeparationOverride="4">
+            <Button Name="ChatBackButton" Text="{Loc 'pda-messenger-ui-back'}"/>
+            <Label Name="ChatTitle" HorizontalExpand="True" ClipText="True"/>
+        </BoxContainer>
+        <PanelContainer StyleClasses="BackgroundDark" VerticalExpand="True">
+            <OutputPanel Name="History" VerticalExpand="True" Margin="4"/>
+        </PanelContainer>
+        <Label Name="BlockedLabel" StyleClasses="LabelSubText" Visible="False" Margin="4 2"/>
+        <BoxContainer Orientation="Horizontal" Margin="4" SeparationOverride="4">
+            <LineEdit Name="MessageInput" HorizontalExpand="True" PlaceHolder="{Loc 'pda-messenger-ui-input'}"/>
+            <Button Name="SendButton" Text="{Loc 'pda-messenger-ui-send'}"/>
+        </BoxContainer>
+    </BoxContainer>
+</cartridges:PdaMessengerUiFragment>

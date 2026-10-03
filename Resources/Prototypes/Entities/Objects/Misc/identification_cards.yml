@@ -17,6 +17,7 @@
     storedRotation: -90
   - type: Access
   - type: IdCard
+  - type: PdaMessengerId
   - type: StationRecordKeyStorage
   - type: Tag
     tags:
