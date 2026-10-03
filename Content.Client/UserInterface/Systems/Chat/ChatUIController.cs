@@ -9,7 +9,6 @@ using Content.Client.Chat.UI;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Ghost;
-using Content.Client.Mind;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Client.UserInterface.Systems.Gameplay;
@@ -119,6 +118,21 @@ public sealed partial class ChatUIController : UIController
     /// </summary>
     private const int SpeechBubbleCap = 4;
 
+    /// <summary>
+    /// How many recent messages to check for duplicates before adding a new message.
+    /// </summary>
+    private const int RecentRepeatMessageLimit = 16;
+
+    /// <summary>
+    /// How recent messages should be to consider whether a new message is a duplicate.
+    /// </summary>
+    private static readonly TimeSpan RecentRepeatTimeLimit = TimeSpan.FromSeconds(15);
+
+    /// <summary>
+    /// How many times a message has been repeated recently.
+    /// </summary>
+    private readonly Dictionary<string, int> _recentSameMessageCounts = new();
+
     private LayoutContainer _speechBubbleRoot = default!;
 
     /// <summary>
@@ -149,7 +163,7 @@ public sealed partial class ChatUIController : UIController
     private readonly Dictionary<ChatChannel, int> _unreadMessages = new();
 
     // TODO add a cap for this for non-replays
-    public readonly List<(GameTick Tick, ChatMessage Msg)> History = new();
+    public readonly List<(TimeSpan timeSent, ChatMessage Msg)> History = new();
 
     // Maintains which channels a client should be able to filter (for showing in the chatbox)
     // and select (for attempting to send on).
@@ -808,17 +822,70 @@ public sealed partial class ChatUIController : UIController
     private void OnChatMessage(MsgChatMessage message)
     {
         var msg = message.Message;
-        ProcessChatMessage(msg);
+        ProcessChatMessage(msg, true, out _);
+    }
 
-        if ((msg.Channel & ChatChannel.AdminRelated) == 0 ||
-            _config.GetCVar(CCVars.ReplayRecordAdminChat))
+    public void ProcessChatMessage(ChatMessage msg, bool speechBubble, out bool sendToReplay)
+    {
+        sendToReplay = true;
+
+        var skipMessage = false;
+
+        if ((msg.Channel & (ChatChannel.Notifications
+                            | ChatChannel.Visual
+                            | ChatChannel.Damage
+                            | ChatChannel.Emotes)) != 0)
+        {
+            sendToReplay = (msg.Channel & ChatChannel.Emotes) != 0;
+
+            for (var i = History.Count - 1; i >= 0 && History.Count - i <= RecentRepeatMessageLimit; i--)
+            {
+                var (sentTime, previousMessage) = History[i];
+
+                if (previousMessage.Channel != msg.Channel ||
+                    !previousMessage.WrappedMessage.Contains(msg.WrappedMessage))
+                {
+                    continue;
+                }
+
+                if (_timing.CurTime - sentTime > RecentRepeatTimeLimit)
+                {
+                    continue;
+                }
+
+                _recentSameMessageCounts[msg.WrappedMessage] += 1;
+                var count = _recentSameMessageCounts[msg.WrappedMessage];
+
+                if (count > 0)
+                {
+                    previousMessage.WrappedMessage = Loc.GetString("chat-manager-repeated-message-stacking-wrap",
+                        ("message", msg.WrappedMessage),
+                        ("count", 1 + count),
+                        ("size", Math.Min(8 + count, 16)));
+                }
+
+                foreach (var chat in _chats)
+                {
+                    chat.UpdateMessage(previousMessage);
+                }
+
+                skipMessage = true;
+                break;
+            }
+
+            if (!skipMessage)
+            {
+                _recentSameMessageCounts[msg.WrappedMessage] = 0;
+            }
+        }
+
+        if (((msg.Channel & ChatChannel.AdminRelated) == 0
+             || _config.GetCVar(CCVars.ReplayRecordAdminChat))
+            && sendToReplay)
         {
             _replayRecording.RecordClientMessage(msg);
         }
-    }
 
-    public void ProcessChatMessage(ChatMessage msg, bool speechBubble = true)
-    {
         // color the name unless it's something like "the old man"
         if ((msg.Channel == ChatChannel.Local || msg.Channel == ChatChannel.Whisper) && _chatNameColorsEnabled)
         {
@@ -843,9 +910,9 @@ public sealed partial class ChatUIController : UIController
         }
 
         // Log all incoming chat to repopulate when filter is un-toggled
-        if (!msg.HideChat)
+        if (!msg.HideChat && !skipMessage)
         {
-            History.Add((_timing.CurTick, msg));
+            History.Add((_timing.CurTime, msg));
             MessageAdded?.Invoke(msg);
 
             if (!msg.Read)
