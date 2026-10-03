@@ -9,11 +9,9 @@ using Content.Shared.Forensics.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -46,14 +44,13 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         InitializeImplanted();
 
         SubscribeLocalEvent<ImplanterComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<ImplanterComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ImplanterComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         SubscribeLocalEvent<ImplanterComponent, ExaminedEvent>(OnExamine);
 
         SubscribeLocalEvent<ImplanterComponent, AfterInteractEvent>(OnImplanterAfterInteract);
-        SubscribeLocalEvent<ImplanterComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<ImplanterComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
         SubscribeLocalEvent<ImplanterComponent, DeimplantChangeVerbMessage>(OnSelected);
+        SubscribeLocalEvent<ImplanterComponent, DeimplantTargetStartVerbMessage>(TryDraw);
 
         SubscribeLocalEvent<ImplanterComponent, ImplantEvent>(OnImplant);
         SubscribeLocalEvent<ImplanterComponent, DrawEvent>(OnDraw);
@@ -65,12 +62,6 @@ public abstract partial class SharedImplanterSystem : EntitySystem
             ent.Comp.ImplanterSlot.StartingItem = ent.Comp.Implant;
 
         _itemSlots.AddItemSlot(ent.Owner, ImplanterComponent.ImplanterSlotId, ent.Comp.ImplanterSlot);
-    }
-
-    private void OnMapInit(Entity<ImplanterComponent> ent, ref MapInitEvent args)
-    {
-        ent.Comp.DeimplantChosen ??= ent.Comp.DeimplantWhitelist.FirstOrNull();
-        Dirty(ent);
     }
 
     private void OnEntInserted(Entity<ImplanterComponent> ent, ref EntInsertedIntoContainerMessage args)
@@ -106,7 +97,9 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         // TODO: Rework drawing to work with implant cases when surgery is in
         if (ent.Comp.CurrentMode == ImplanterToggleMode.Draw && !ent.Comp.ImplantOnly)
         {
-            TryDraw(ent, args.User, target);
+            ent.Comp.TargetToDrawImplant = args.Target;
+            ent.Comp.UserTrigger = args.User;
+            TryOpenUi(ent.AsNullable(), args.User);
         }
         else
         {
@@ -151,17 +144,12 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         }
     }
 
-    private void OnUseInHand(Entity<ImplanterComponent> ent, ref UseInHandEvent args)
-    {
-        if (ent.Comp.CurrentMode == ImplanterToggleMode.Draw)
-            TryOpenUi(ent.AsNullable(), args.User);
-    }
-
     private void OnSelected(Entity<ImplanterComponent> ent, ref DeimplantChangeVerbMessage args)
     {
-        ent.Comp.DeimplantChosen = args.Implant;
-        Dirty(ent);
-        SetSelectedDeimplant(ent.AsNullable(), args.Implant);
+        if (args.Implant == null)
+            return;
+
+        SetSelectedDeimplant(ent.AsNullable(), (EntProtoId)args.Implant);
     }
 
     private void TryOpenUi(Entity<ImplanterComponent?> ent, EntityUid user)
@@ -170,7 +158,6 @@ public abstract partial class SharedImplanterSystem : EntitySystem
             return;
 
         _ui.TryToggleUi(ent.Owner, DeimplantUiKey.Key, user);
-        ent.Comp.DeimplantChosen ??= ent.Comp.DeimplantWhitelist.FirstOrNull();
         Dirty(ent);
     }
 
@@ -214,16 +201,22 @@ public abstract partial class SharedImplanterSystem : EntitySystem
     /// Try to remove an implant and store it in an implanter
     /// </summary>
     // TODO: Remove when surgery is in
-    public void TryDraw(Entity<ImplanterComponent> ent, EntityUid user, EntityUid target)
+    public void TryDraw(Entity<ImplanterComponent> ent, ref DeimplantTargetStartVerbMessage args)
     {
-        var args = new DoAfterArgs(EntityManager, user, ent.Comp.DrawTime, new DrawEvent(), ent, target: target, used: ent)
+        if (!TryGetEntity(args.Target, out var targetUid) || (targetUid is not { } target))
+            return;
+
+        if (!TryGetEntity(args.User, out var userUid) || (userUid is not { } user))
+            return;
+
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, ent.Comp.DrawTime, new DrawEvent(), ent, target: target, used: ent)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
             NeedHand = true,
         };
 
-        if (!_doAfter.TryStartDoAfter(args))
+        if (!_doAfter.TryStartDoAfter(doAfterArgs))
             return;
 
         _popup.PopupEntity(Loc.GetString("injector-component-needle-injecting-user"), target, user);
@@ -498,13 +491,13 @@ public abstract partial class SharedImplanterSystem : EntitySystem
     /// <summary>
     /// Sets the selected deimplant in the UI.
     /// </summary>
-    public void SetSelectedDeimplant(Entity<ImplanterComponent?> ent, string? implant)
+    public void SetSelectedDeimplant(Entity<ImplanterComponent?> ent, EntProtoId implant)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        if (implant != null && ProtoMan.TryIndex<EntityPrototype>(implant, out var proto)) // TODO: Why???
-            ent.Comp.DeimplantChosen = proto;
+        if (_whitelist.IsValid(ent.Comp.DeimplantWhitelist, implant))
+            ent.Comp.DeimplantChosen = implant;
 
         UpdateUi(ent!);
         Dirty(ent);
@@ -546,7 +539,17 @@ public sealed class AddImplantAttemptEvent(EntityUid user, EntityUid target, Ent
 [Serializable, NetSerializable]
 public sealed class DeimplantChangeVerbMessage(string? implant) : BoundUserInterfaceMessage
 {
-    public readonly string? Implant = implant;
+    public readonly EntProtoId? Implant = implant;
+}
+
+/// <summary>
+/// Start deimplant process to target
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class DeimplantTargetStartVerbMessage(NetEntity? target, NetEntity? user) : BoundUserInterfaceMessage
+{
+    public readonly NetEntity? Target = target;
+    public readonly NetEntity? User = user;
 }
 
 [Serializable, NetSerializable]
