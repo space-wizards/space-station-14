@@ -9,7 +9,7 @@ namespace Content.Shared.Conditions.UnifiedConditions;
 /// <summary>
 /// Checks if the given mind is an antagonist with specified tag.
 /// </summary>
-public interface IAntagonistTagCondition : IConditionByEvent<IAntagonistTagCondition>, IWithInverted
+public interface IAntagonistTagCondition : ICondition, IWithInverted
 {
     /// <summary>
     /// The tags this check will succeed for.
@@ -25,22 +25,20 @@ public interface IAntagonistTagCondition : IConditionByEvent<IAntagonistTagCondi
     bool AllowNonAntags { get; }
 }
 
-public sealed partial class AntagonistTagEntityConditionSystem : EntitySystem
+public sealed partial class AntagonistTagEntityConditionSystem : ConditionEvaluatorSystem<IAntagonistTagCondition>
 {
     [Dependency] private SharedRoleSystem _roleSystem = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<IAntagonistTagCondition> args)
+    public override float Evaluate(IAntagonistTagCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
-        var conditionTags = args.Condition.Tags;
+        var conditionTags = condition.Tags;
 
-        if (!_roleSystem.TryGetAllAntagTags(entity.AsNullable(), out var antagTags))
+        if (!_roleSystem.TryGetAllAntagTags(entityUid, out var antagTags))
         {
-            args.Value = args.Condition is { AllowNonAntags: true, Inverted: false } ? 1 : 0;
-            return;
+            return condition is { AllowNonAntags: true, Inverted: false } ? 1 : 0;
+
         }
 
-        args.Value = antagTags.Intersect(conditionTags).Count() / (float)args.Condition.Tags.Count;
+        return antagTags.Intersect(conditionTags).Count() / (float)condition.Tags.Count;
     }
 }

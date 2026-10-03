@@ -1,13 +1,14 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Conditions.Satisfier;
 using Content.Shared.Temperature.Components;
+using Content.Shared.Temperature.HeatContainer;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
 /// <summary>
 /// A condition checked against <see cref="TemperatureComponent" /> and <see cref="SolutionComponent" /> for value.
 /// </summary>
-public interface ITemperatureCondition : IConditionByEvent<ITemperatureCondition>, IConditionWithDefaultSatisfactionRule
+public interface ITemperatureCondition : ICondition, IConditionWithDefaultSatisfactionRule
 {
     /// <summary>
     /// Minimum allowed temperature
@@ -35,33 +36,27 @@ public interface ITemperatureCondition : IConditionByEvent<ITemperatureCondition
 /// <summary>
 /// Evaluates <see cref="ITemperatureCondition" />
 /// </summary>
-public sealed partial class TemperatureEntityConditionSystem : EntitySystem
+public sealed partial class TemperatureEntityConditionSystem : ConditionEvaluatorSystem<ITemperatureCondition>
 {
-    /// <summary>
-    /// Returns the proportional value of components temperature to the conditions bound.
-    /// </summary>
-    /// <param name="entity"></param>
-    /// <param name="args"></param>
-    [SubscribeLocalEvent]
-    private void Condition(Entity<TemperatureComponent> entity,
-        ref ConditionEvaluationEvent<ITemperatureCondition> args)
+    public override float Evaluate(ITemperatureCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Value = (entity.Comp.Temperature - args.Condition.Min) / (args.Condition.Max - args.Condition.Min);
+        TryComp(entityUid, out TemperatureComponent? temperatureComponent);
+        TryComp(entityUid, out SolutionComponent? solutionComponent);
+        float temperature;
+        if (temperatureComponent != null && solutionComponent != null)
+        {
+            //get the average for good measure. really there only should ever be either.
+            temperature = (temperatureComponent.Temperature + solutionComponent.Solution.Temperature) / 2;
+        }
+        else
+        {
+            temperature = (temperatureComponent?.Temperature ?? 0) + (solutionComponent?.Solution.Temperature ?? 0);
+        }
 
-        args.Handled = true;
-    }
+        if (condition.Min - condition.Max < 0.0001)
+            return temperature - condition.Max < 0.001 ? 1 : 0;
 
-    /// <summary>
-    /// Returns the proportional value of components solutions temperature to the conditions bound.
-    /// </summary>
-    /// <param name="entity"></param>
-    /// <param name="args"></param>
-    [SubscribeLocalEvent]
-    private void Condition(Entity<SolutionComponent> entity, ref ConditionEvaluationEvent<ITemperatureCondition> args)
-    {
-        args.Value = (entity.Comp.Solution.Temperature - args.Condition.Min) /
-                     (args.Condition.Max - args.Condition.Min);
-
-        args.Handled = true;
+        return (temperature - condition.Min) /
+               (condition.Max - condition.Min);
     }
 }

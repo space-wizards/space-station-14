@@ -9,7 +9,7 @@ namespace Content.Shared.EntityConditions.Conditions;
 
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class TemperatureCondition : EntityConditionBase<ITemperatureCondition>, ITemperatureCondition
+public sealed partial class TemperatureCondition : EntityCondition, ITemperatureCondition
 {
     /// <summary>
     /// Minimum allowed temperature

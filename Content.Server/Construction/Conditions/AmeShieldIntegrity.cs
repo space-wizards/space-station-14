@@ -10,7 +10,7 @@ namespace Content.Server.Construction.Conditions;
 
 [UsedImplicitly]
 [DataDefinition]
-public sealed partial class AmeShieldIntegrity : GraphConditionBase<IAmeShieldIntegrityCondition>, IAmeShieldIntegrityCondition, IConditionWithDefaultSatisfactionRule
+public sealed partial class AmeShieldIntegrity : GraphCondition, IAmeShieldIntegrityCondition, IConditionWithDefaultSatisfactionRule
 {
 
     [DataField]

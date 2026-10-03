@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Math;
 
-public sealed partial class LimiterCondition : EntityConditionBase<ILimiterCondition>, ILimiterCondition
+public sealed partial class LimiterCondition : EntityCondition, ILimiterCondition
 {
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
     {

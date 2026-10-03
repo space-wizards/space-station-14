@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Mind;
 
-public sealed partial class BodyWhitelistCondition : EntityConditionBase<IBodyWhitelistCondition> , IBodyWhitelistCondition
+public sealed partial class BodyWhitelistCondition : EntityCondition , IBodyWhitelistCondition
 {
     [DataField]
     public EntityWhitelist? Whitelist { get; set; }

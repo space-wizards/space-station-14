@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface INearbyTilesPercentCondition : IConditionByEvent<INearbyTilesPercentCondition>,
+public interface INearbyTilesPercentCondition : ICondition,
     IConditionWithDefaultSatisfactionRule
 {
     bool IgnoreAnchored { get; }
@@ -31,7 +31,7 @@ public interface INearbyTilesPercentCondition : IConditionByEvent<INearbyTilesPe
 /// <summary>
 /// Checks if a percentage of the tiles we are nearby match
 /// </summary>
-public sealed partial class NearbyTilesPercentConditionSystem : EntitySystem
+public sealed partial class NearbyTilesPercentConditionSystem : ConditionEvaluatorSystem<INearbyTilesPercentCondition>
 {
     [Dependency] private SharedMapSystem _map = default!;
 
@@ -39,28 +39,27 @@ public sealed partial class NearbyTilesPercentConditionSystem : EntitySystem
     [Dependency] private ITileDefinitionManager _tileDef = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(Entity<TransformComponent> entity,
-        ref ConditionEvaluationEvent<INearbyTilesPercentCondition> args)
+    public override float Evaluate(INearbyTilesPercentCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
+        if (!TryComp(entityUid, out TransformComponent? transformComponent))
+            return 0;
 
-        if (!TryComp<MapGridComponent>(entity.Comp.GridUid, out var grid))
-            return;
+        if (!TryComp<MapGridComponent>(transformComponent.GridUid, out var grid))
+            return 0;
 
         var tileCount = 0;
         var matchingTileCount = 0;
 
-        var tiles = _map.GetTilesIntersecting(entity.Comp.GridUid.Value,
+        var tiles = _map.GetTilesIntersecting(transformComponent.GridUid.Value,
             grid,
-            new Circle(_transform.GetWorldPosition(entity.Comp), args.Condition.Range));
+            new Circle(_transform.GetWorldPosition(transformComponent), condition.Range));
 
         foreach (var tile in tiles)
         {
             // Only consider collidable anchored (for reasons some subfloor stuff has physics but non-collidable)
-            if (args.Condition.IgnoreAnchored)
+            if (condition.IgnoreAnchored)
             {
-                var gridEnum = _map.GetAnchoredEntities(entity.Comp.GridUid.Value, grid, tile.GridIndices);
+                var gridEnum = _map.GetAnchoredEntities(transformComponent.GridUid.Value, grid, tile.GridIndices);
                 var found = false;
 
                 while (gridEnum.MoveNext(out var ancUid))
@@ -79,12 +78,12 @@ public sealed partial class NearbyTilesPercentConditionSystem : EntitySystem
 
             tileCount++;
 
-            if (!args.Condition.Tiles.Contains(_tileDef[tile.Tile.TypeId].ID))
+            if (!condition.Tiles.Contains(_tileDef[tile.Tile.TypeId].ID))
                 continue;
 
             matchingTileCount++;
         }
 
-        args.Value = tileCount > 0 ? matchingTileCount / (float)tileCount : 0;
+        return tileCount > 0 ? matchingTileCount / (float)tileCount : 0;
     }
 }

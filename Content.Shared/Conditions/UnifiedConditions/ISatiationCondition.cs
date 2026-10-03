@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface ISatiationCondition : IConditionByEvent<ISatiationCondition>, IConditionWithDefaultSatisfactionRule
+public interface ISatiationCondition : ICondition, IConditionWithDefaultSatisfactionRule
 {
     /// <summary>
     /// The value above which this condition will fail. If <see cref="MaxInclusive" /> is false, the condition will fail
@@ -52,19 +52,24 @@ public interface ISatiationCondition : IConditionByEvent<ISatiationCondition>, I
 /// <see cref="ISatiationCondition.Min" /> and <see cref="ISatiationCondition.Max" />. If the entity does not have the
 /// specified satiation, the condition evaluates to false.
 /// </summary>
-public sealed partial class SatiationEntityConditionSystem : EntitySystem
+public sealed partial class SatiationEntityConditionSystem : ConditionEvaluatorSystem<ISatiationCondition>
 {
     [Dependency] private SatiationSystem _satiation = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(Entity<SatiationComponent> entity,
-        ref ConditionEvaluationEvent<ISatiationCondition> args)
+    public override float Evaluate(ISatiationCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
+        float canWorkIfNull = ((condition.Max - condition.Min == 0f) && condition.Max == 0) ? 1 : 0;
 
-        if (_satiation.GetValueOrNull(entity, args.Condition.SatiationType) is not { } satiation)
-            return;
+        if (!TryComp(entityUid, out SatiationComponent? satiationComponent))
+            return canWorkIfNull;
 
-        args.Value = (satiation - args.Condition.Min) / (args.Condition.Max - args.Condition.Min);
+        var val = _satiation.GetValueOrNull((entityUid, satiationComponent), condition.SatiationType);
+        if (!val.HasValue)
+            return canWorkIfNull;
+
+        if (condition.Max - condition.Min == 0)
+            return val - condition.Max <= 0.001 ? 1 : 0;
+
+        return (val.Value - condition.Min) / (condition.Max - condition.Min);
     }
 }

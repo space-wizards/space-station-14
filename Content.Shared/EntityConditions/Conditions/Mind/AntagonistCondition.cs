@@ -6,7 +6,7 @@ namespace Content.Shared.EntityConditions.Conditions.Mind;
 /// <summary>
 /// Checks if the given mind is an antagonist.
 /// </summary>
-public sealed partial class AntagonistCondition : EntityConditionBase<IAntagonistCondition>, IAntagonistCondition
+public sealed partial class AntagonistCondition : EntityCondition, IAntagonistCondition
 {
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
     {

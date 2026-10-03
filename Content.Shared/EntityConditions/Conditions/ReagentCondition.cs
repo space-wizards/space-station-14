@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityConditions.Conditions;
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class ReagentCondition : EntityConditionBase<IReagentCondition>, IReagentCondition
+public sealed partial class ReagentCondition : EntityCondition, IReagentCondition
 {
     /// <inheritdoc/>
     [DataField]

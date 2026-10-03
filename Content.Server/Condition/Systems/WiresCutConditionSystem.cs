@@ -5,19 +5,8 @@ using System.Linq;
 
 namespace Content.Server.Condition.Systems;
 
-public sealed partial class WiresCutConditionSystem : EntitySystem
+public sealed partial class WiresCutConditionSystem : ConditionEvaluatorSystem<IWiresCutCondition>
 {
-    [SubscribeLocalEvent]
-    private void Condition(Entity<MetaDataComponent> entity, ref ConditionEvaluationEvent<IWiresCutCondition> args)
-    {
-        args.Handled = true;
-        var flag = args.Condition.Value;
-        if (!TryComp(entity.Owner, out WiresComponent? wires))
-            args.Value = 1;
-        else
-            args.Value = (float)wires.WiresList.Count(e=>e.IsCut==flag)/(float)wires.WiresList.Count;
-    }
-
     /*
      * original code for comparison.
              public bool Condition(EntityUid uid, IEntityManager entityManager)
@@ -40,4 +29,11 @@ public sealed partial class WiresCutConditionSystem : EntitySystem
      *
      */
 
+    public override float Evaluate(IWiresCutCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
+    {
+        var flag = condition.Value;
+        if (!TryComp(entityUid, out WiresComponent? wires))
+            return 1; // see above legacy code...
+        return (float)wires.WiresList.Count(e=>e.IsCut==flag)/(float)wires.WiresList.Count;
+    }
 }

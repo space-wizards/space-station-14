@@ -8,7 +8,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class DoorBolted : GraphConditionBase<IDoorBoltedCondition>, IDoorBoltedCondition
+    public sealed partial class DoorBolted : GraphCondition, IDoorBoltedCondition
     {
         [DataField("value")]
         public bool Value { get; private set; } = true;

@@ -13,7 +13,7 @@ namespace Content.Server.Construction.Conditions;
 /// Requires that a certain solution has a minimum amount of a reagent to proceed.
 /// </summary>
 [DataDefinition]
-public sealed partial class MinSolution : GraphConditionBase<IReagentCondition>, IReagentCondition
+public sealed partial class MinSolution : GraphCondition, IReagentCondition
 {
     /// <summary>
     /// The solution that needs to have the reagent.

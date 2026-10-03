@@ -9,7 +9,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class EntityAnchored : GraphConditionBase<IEntityAnchoredCondition>, IEntityAnchoredCondition, IWithInverted
+    public sealed partial class EntityAnchored : GraphCondition, IEntityAnchoredCondition, IWithInverted
     {
 
         public bool Inverted => !Anchored;

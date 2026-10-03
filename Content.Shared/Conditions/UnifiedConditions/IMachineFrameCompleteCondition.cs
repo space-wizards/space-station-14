@@ -1,5 +1,5 @@
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IMachineFrameCompleteCondition : IConditionByEvent<IMachineFrameCompleteCondition>
+public interface IMachineFrameCompleteCondition : ICondition
 {
 }

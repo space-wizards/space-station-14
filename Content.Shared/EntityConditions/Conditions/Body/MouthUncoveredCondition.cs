@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityConditions.Conditions.Body;
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class MouthUncoveredCondition : EntityConditionBase<IMouthUncoveredCondition>, IMouthUncoveredCondition
+public sealed partial class MouthUncoveredCondition : EntityCondition, IMouthUncoveredCondition
 {
     /// <summary>
     /// The slots to check for <see cref="IngestionBlockerComponent"/>.

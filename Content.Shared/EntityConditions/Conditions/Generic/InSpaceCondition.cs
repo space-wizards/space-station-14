@@ -7,7 +7,7 @@ namespace Content.Shared.EntityConditions.Conditions.Generic;
 
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class InSpaceCondition : EntityConditionBase<IInSpaceCondition>, IInSpaceCondition
+public sealed partial class InSpaceCondition : EntityCondition, IInSpaceCondition
 {
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) => String.Empty;
 }

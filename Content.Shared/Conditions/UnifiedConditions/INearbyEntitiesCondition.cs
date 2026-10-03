@@ -3,7 +3,7 @@ using Content.Shared.Whitelist;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface INearbyEntitiesCondition : IConditionByEvent<INearbyEntitiesCondition>,
+public interface INearbyEntitiesCondition : ICondition,
     IConditionWithDefaultSatisfactionRule
 {
     int Count { get; }
@@ -25,31 +25,33 @@ public interface INearbyEntitiesCondition : IConditionByEvent<INearbyEntitiesCon
 /// <summary>
 /// Checks for entities matching the whitelist in range.
 /// </summary>
-public sealed partial class NearbyEntitiesConditionSystem : EntitySystem
+public sealed partial class NearbyEntitiesConditionSystem : ConditionEvaluatorSystem<INearbyEntitiesCondition>
 {
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(Entity<TransformComponent> entity,
-        ref ConditionEvaluationEvent<INearbyEntitiesCondition> args)
+    public override float Evaluate(INearbyEntitiesCondition condition,
+        EntityUid entityUid,
+        EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
+        if (condition.Count == 0 || !TryComp(entityUid, out TransformComponent? transform))
+            return 0;
 
-        if (entity.Comp.MapUid == null)
-            return;
+        if (transform.MapUid == null)
+            return 0;
 
-        var worldPos = _transform.GetWorldPosition(entity.Comp);
+        var worldPos = _transform.GetWorldPosition(transform);
 
-        foreach (var ent in _lookup.GetEntitiesInRange(entity.Comp.MapID, worldPos, args.Condition.Range))
+        float value = 0;
+        foreach (var ent in _lookup.GetEntitiesInRange(transform.MapID, worldPos, condition.Range))
         {
-            if (_whitelist.IsWhitelistFail(args.Condition.Whitelist, ent))
+            if (_whitelist.IsWhitelistFail(condition.Whitelist, ent))
                 continue;
 
-            args.Value++;
+            value++;
         }
 
-        args.Value /= args.Condition.Count;
+        return value / condition.Count;
     }
 }

@@ -3,7 +3,7 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IGridInRangeCondition : IConditionByEvent<IGridInRangeCondition>
+public interface IGridInRangeCondition : ICondition
 {
     float Range { get; }
 }
@@ -11,30 +11,28 @@ public interface IGridInRangeCondition : IConditionByEvent<IGridInRangeCondition
 /// <summary>
 /// Returns true if entity is on a grid or in range of one.
 /// </summary>
-public sealed partial class GridInRangeConditionSystem : EntitySystem
+public sealed partial class GridInRangeConditionSystem : ConditionEvaluatorSystem<IGridInRangeCondition>
 {
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent<IGridInRangeCondition> args)
+    public override float Evaluate(IGridInRangeCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
+        if (!TryComp(entityUid, out TransformComponent? transformComponent))
+            return 0;
 
-        if (entity.Comp.GridUid != null)
+        if (transformComponent.GridUid != null)
         {
-            args.Value = 1;
-            return;
+            return 1;
         }
 
-        var worldPos = _transform.GetWorldPosition(entity.Comp);
-        var gridRange = new Vector2(args.Condition.Range, args.Condition.Range);
+        var worldPos = _transform.GetWorldPosition(transformComponent);
+        var gridRange = new Vector2(condition.Range, condition.Range);
 
         List<Entity<MapGridComponent>> grids = [];
 
-        _map.FindGridsIntersecting(entity.Comp.MapID, new Box2(worldPos - gridRange, worldPos + gridRange), ref grids);
+        _map.FindGridsIntersecting(transformComponent.MapID, new Box2(worldPos - gridRange, worldPos + gridRange), ref grids);
 
-
-        args.Value = grids.Count > 0 ? 1 : 0;
+        return grids.Count > 0 ? 1 : 0;
     }
 }

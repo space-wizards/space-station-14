@@ -9,7 +9,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class Locked : GraphConditionBase<ILockedCondition>, ILockedCondition, IWithInverted
+    public sealed partial class Locked : GraphCondition, ILockedCondition, IWithInverted
     {
         public bool Inverted => !IsLocked;
 

@@ -10,7 +10,7 @@ namespace Content.Shared.EntityConditions.Conditions.Mind;
 /// <summary>
 /// Checks if the given mind is an antagonist with specified tag.
 /// </summary>
-public sealed partial class AntagonistTagCondition : EntityConditionBase<IAntagonistTagCondition>, IAntagonistTagCondition
+public sealed partial class AntagonistTagCondition : EntityCondition, IAntagonistTagCondition
 {
     /// <summary>
     /// The tags this check will succeed for.

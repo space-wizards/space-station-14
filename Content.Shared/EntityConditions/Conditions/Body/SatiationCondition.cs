@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityConditions.Conditions.Body;
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class SatiationCondition : EntityConditionBase<ISatiationCondition>, ISatiationCondition
+public sealed partial class SatiationCondition : EntityCondition, ISatiationCondition
 {
     /// <summary>
     /// The value above which this condition will fail. If <see cref="MaxInclusive"/> is false, the condition will fail

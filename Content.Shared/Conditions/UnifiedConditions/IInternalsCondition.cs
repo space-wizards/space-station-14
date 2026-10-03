@@ -2,20 +2,19 @@ using Content.Shared.Body.Components;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IInternalsCondition : IConditionByEvent<IInternalsCondition>
+public interface IInternalsCondition : ICondition
 {
 }
 
 /// <summary>
 /// Returns true if this entity is using internals. False if they are not or cannot use internals.
 /// </summary>
-public sealed partial class InternalsOnEntityConditionSystem : EntitySystem
+public sealed partial class InternalsOnEntityConditionSystem : ConditionEvaluatorSystem<IInternalsCondition>
 {
-    [SubscribeLocalEvent]
-    private void Condition(Entity<InternalsComponent> entity, ref ConditionEvaluationEvent<IInternalsCondition> args)
+    public override float Evaluate(IInternalsCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
-
-        args.Value = entity.Comp.GasTankEntity != null ? 1 : 0;
+        if (!TryComp(entityUid, out InternalsComponent? internalsComponent))
+            return 0;
+        return internalsComponent.GasTankEntity != null ? 1 : 0;
     }
 }

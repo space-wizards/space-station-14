@@ -8,14 +8,12 @@ namespace Content.Server.Condition.Systems;
 /// <summary>
 /// Returns true if this entity is both able to breathe and is currently breathing.
 /// </summary>
-public sealed partial class IsBreathingEntityConditionSystem : EntitySystem
+public sealed partial class IsBreathingEntityConditionSystem : ConditionEvaluatorSystem<IIsBreathingCondition>
 {
     [Dependency] private RespiratorSystem _respirator = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(Entity<RespiratorComponent> entity, ref ConditionEvaluationEvent<IIsBreathingCondition> args)
+    public override float Evaluate(IIsBreathingCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
-        args.Value = _respirator.IsBreathing(entity.AsNullable()) ? 1 : 0;
+        return _respirator.IsBreathing(entityUid) ? 1 : 0;
     }
 }

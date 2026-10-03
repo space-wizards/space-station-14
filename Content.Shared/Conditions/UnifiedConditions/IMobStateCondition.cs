@@ -3,7 +3,7 @@ using Content.Shared.Mobs.Components;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IMobStateCondition : IConditionByEvent<IMobStateCondition>
+public interface IMobStateCondition : ICondition
 {
     /// <summary>
     /// The mobstate necessary to fulfill this condition.
@@ -14,13 +14,12 @@ public interface IMobStateCondition : IConditionByEvent<IMobStateCondition>
 /// <summary>
 /// Returns true if this entity's current mob state matches the condition's specified mob state.
 /// </summary>
-public sealed partial class MobStateEntityConditionSystem : EntitySystem
+public sealed partial class MobStateEntityConditionSystem : ConditionEvaluatorSystem<IMobStateCondition>
 {
-    [SubscribeLocalEvent]
-    private void Condition(Entity<MobStateComponent> entity, ref ConditionEvaluationEvent<IMobStateCondition> args)
+    public override float Evaluate(IMobStateCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
-
-        args.Value = entity.Comp.CurrentState == args.Condition.Mobstate ? 1 : 0;
+        if (!TryComp(entityUid, out MobStateComponent? mobState))
+            return 0;
+        return mobState.CurrentState == condition.Mobstate ? 1 : 0;
     }
 }

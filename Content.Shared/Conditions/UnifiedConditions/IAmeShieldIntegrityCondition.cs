@@ -2,7 +2,7 @@ using Content.Shared.Conditions.Satisfier;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IAmeShieldIntegrityCondition : IConditionByEvent<IAmeShieldIntegrityCondition>,
+public interface IAmeShieldIntegrityCondition : ICondition,
     IConditionWithDefaultSatisfactionRule
 {
     float IntegrityThreshold { get; }

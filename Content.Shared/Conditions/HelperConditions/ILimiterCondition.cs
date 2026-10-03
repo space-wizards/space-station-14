@@ -3,7 +3,7 @@ namespace Content.Shared.Conditions.HelperConditions;
 /// <summary>
 /// A helper condition wraps an inner condition to clamp its output value.
 /// </summary>
-public interface ILimiterCondition : IConditionByEvent<ILimiterCondition>
+public interface ILimiterCondition : ICondition
 {
     ICondition Condition { get; }
 
@@ -21,17 +21,16 @@ public interface ILimiterCondition : IConditionByEvent<ILimiterCondition>
 /// <summary>
 /// Evaluates <see cref="ILimiterCondition" />
 /// </summary>
-public sealed partial class LimiterConditionSystem : EntitySystem
+public sealed partial class LimiterConditionSystem : ConditionEvaluatorSystem<ILimiterCondition>
 {
     [Dependency] private SharedConditionEvaluationSystem _conditionEvaluationSystem = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(Entity<MetaDataComponent> _, ref ConditionEvaluationEvent<ILimiterCondition> args)
+    public override float Evaluate(ILimiterCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
         var innerValue =
-            _conditionEvaluationSystem.EvaluateCondition(args.Condition.Condition, args.EntityUid, args.SourceEntity);
-        args.Value = MathHelper.Clamp(innerValue,
-            args.Condition.MinimumOutputValue,
-            args.Condition.MaximumOutputValue);
+            _conditionEvaluationSystem.EvaluateCondition(condition.Condition, entityUid, sourceEntity);
+         return MathHelper.Clamp(innerValue,
+            condition.MinimumOutputValue,
+            condition.MaximumOutputValue);
     }
 }

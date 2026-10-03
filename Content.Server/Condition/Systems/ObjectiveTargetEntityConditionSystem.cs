@@ -11,32 +11,36 @@ namespace Content.Server.Condition.Systems;
 /// Then filters by a whitelist, if any objectives pass the whitelist and target entity is a target, the condition passes.
 /// Fails if the passed argument is null or not a mind.
 /// </summary>
-public sealed partial class ObjectiveTargetEntityConditionSystem : EntitySystem
+public sealed partial class ObjectiveTargetEntityConditionSystem : ConditionEvaluatorSystem<IObjectiveTargetCondition>
 {
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private EntityQuery<TargetObjectiveComponent> _targetQuery;
 
-    [SubscribeLocalEvent]
-    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<IObjectiveTargetCondition> args)
+
+    public override float Evaluate(IObjectiveTargetCondition condition,
+        EntityUid entityUid,
+        EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
+        if (!TryComp<MindComponent>(sourceEntity, out var mind))
+            return 0;
 
-        if (!TryComp<MindComponent>(args.SourceEntity, out var mind))
-            return;
+        if (mind.Objectives.Count == 0)
+            return 0;
 
+        float value = 0;
         foreach (var objective in mind.Objectives)
         {
             // if the player has an objective targeting this mind
-            if (!_targetQuery.TryComp(objective, out var kill) || kill.Target != entity)
+            if (!_targetQuery.TryComp(objective, out var kill) || kill.Target != entityUid)
                 continue;
 
             // remove the mind if this objective is blacklisted
-            if (!_whitelist.IsWhitelistPassOrNull(args.Condition.Whitelist, objective))
+            if (!_whitelist.IsWhitelistPassOrNull(condition.Whitelist, objective))
                 continue;
 
-            args.Value++;
+            value++;
         }
 
-        args.Value /= mind.Objectives.Count;
+        return value / mind.Objectives.Count;
     }
 }

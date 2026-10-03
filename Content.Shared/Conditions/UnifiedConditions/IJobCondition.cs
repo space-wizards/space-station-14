@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IJobCondition : IConditionByEvent<IJobCondition>
+public interface IJobCondition : ICondition
 {
     /// <summary>
     /// Jobs required to fulfill this condition (only needs single match).
@@ -19,24 +19,12 @@ public interface IJobCondition : IConditionByEvent<IJobCondition>
 /// Returns true if this entity has any of the specified jobs. False if the entity has no mind, none of the specified jobs,
 /// or is jobless.
 /// </summary>
-public sealed partial class JobConditionSystem : EntitySystem
+public sealed partial class JobConditionSystem : ConditionEvaluatorSystem<IJobCondition>
 {
     [Dependency] private SharedJobSystem _job = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(Entity<MindContainerComponent> entity, ref ConditionEvaluationEvent<IJobCondition> args)
+    public override float Evaluate(IJobCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
-
-        args.Value = args.Condition.Jobs.Count(job => _job.MindHasJobWithId(entity.Comp.Mind, job));
-    }
-
-    [SubscribeLocalEvent]
-    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<IJobCondition> args)
-    {
-        args.Handled = true;
-
-        args.Value = args.Condition.Jobs.Count(job => _job.MindHasJobWithId(entity, job)) /
-                     (float)args.Condition.Jobs.Length;
+        return condition.Jobs.Count(job => _job.MindHasJobWithId(entityUid, job)) /  (float)condition.Jobs.Length;
     }
 }

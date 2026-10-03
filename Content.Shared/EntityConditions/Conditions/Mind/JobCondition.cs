@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityConditions.Conditions.Mind;
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class JobCondition : EntityConditionBase<IJobCondition>, IJobCondition
+public sealed partial class JobCondition : EntityCondition, IJobCondition
 {
     /// <summary>
     /// Jobs required to fulfill this condition (only needs single match).

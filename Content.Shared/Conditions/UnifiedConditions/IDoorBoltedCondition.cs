@@ -2,24 +2,13 @@ using Content.Shared.Doors.Components;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IDoorBoltedCondition : IConditionByEvent<IDoorBoltedCondition>
+public interface IDoorBoltedCondition : ICondition
 {
     bool Value { get; }
 }
 
-public sealed partial class DoorBoltedConditionSystem : EntitySystem
+public sealed partial class DoorBoltedConditionSystem : ConditionEvaluatorSystem<IDoorBoltedCondition>
 {
-    [SubscribeLocalEvent]
-    private void Condition(Entity<MetaDataComponent> entity, ref ConditionEvaluationEvent<IDoorBoltedCondition> args)
-    {
-        args.Handled = true;
-
-        if (!TryComp(entity.Owner, out DoorBoltComponent? airlock))
-            args.Value = 1;
-        else
-            args.Value = airlock.BoltsDown == args.Condition.Value ? 1 : 0;
-    }
-
     /* SO I am leaving this here. the original code of the condition, which is probably bugged? but i implemented their code as is.
          public bool Condition(EntityUid uid, IEntityManager entityManager)
          {
@@ -29,4 +18,11 @@ public sealed partial class DoorBoltedConditionSystem : EntitySystem
              return airlock.BoltsDown == Value;
          }
      */
+    public override float Evaluate(IDoorBoltedCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
+    {
+        if (!TryComp(entityUid, out DoorBoltComponent? airlock))
+            return 1;
+
+        return airlock.BoltsDown == condition.Value ? 1 : 0;
+    }
 }

@@ -1,18 +1,18 @@
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IInSpaceCondition : IConditionByEvent<IInSpaceCondition>
+public interface IInSpaceCondition : ICondition
 {
 }
 
 /// <summary>
 /// Returns true if the entity is in space.
 /// </summary>
-public sealed partial class InSpaceConditionSystem : EntitySystem
+public sealed partial class InSpaceConditionSystem : ConditionEvaluatorSystem<IInSpaceCondition>
 {
-    [SubscribeLocalEvent]
-    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent<IInSpaceCondition> args)
+    public override float Evaluate(IInSpaceCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
-        args.Value = entity.Comp.GridUid == null ? 1 : 0;
+        if (!TryComp(entityUid, out TransformComponent? transformComponent))
+            return 0;
+        return transformComponent.GridUid == null ? 1 : 0;
     }
 }

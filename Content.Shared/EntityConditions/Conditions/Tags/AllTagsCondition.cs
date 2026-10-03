@@ -9,7 +9,7 @@ using Content.Shared.Conditions.UnifiedConditions;
 namespace Content.Shared.EntityConditions.Conditions.Tags;
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class AllTagsCondition : EntityConditionBase<IAllTagsCondition>, IAllTagsCondition
+public sealed partial class AllTagsCondition : EntityCondition, IAllTagsCondition
 {
     /// <summary>
     /// Tags which all need to be possessed to fulfill the condition.

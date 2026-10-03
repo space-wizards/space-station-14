@@ -15,7 +15,7 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class ComponentInTile : GraphConditionBase<IComponentInTileCondition>,IComponentInTileCondition, IWithInverted
+    public sealed partial class ComponentInTile : GraphCondition,IComponentInTileCondition, IWithInverted
     {
 
         public bool Inverted =>!HasEntity;

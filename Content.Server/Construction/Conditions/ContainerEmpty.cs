@@ -10,7 +10,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class ContainerEmpty : GraphConditionBase<IContainerContentsCountCondition>
+    public sealed partial class ContainerEmpty : GraphCondition,IContainerContentsCountCondition
     {
 
         /// <summary>

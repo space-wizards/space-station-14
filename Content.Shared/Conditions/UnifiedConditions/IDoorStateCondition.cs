@@ -2,17 +2,16 @@ using Content.Shared.Doors.Components;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IDoorStateCondition : IConditionByEvent<IDoorStateCondition>
+public interface IDoorStateCondition : ICondition
 {
     DoorState TargetState { get; }
 }
 
-public sealed partial class DoorStateConditionSystem : EntitySystem
+public sealed partial class DoorStateConditionSystem : ConditionEvaluatorSystem<IDoorStateCondition>
 {
-    [SubscribeLocalEvent]
-    private void Condition(Entity<DoorComponent> entity, ref ConditionEvaluationEvent<IDoorStateCondition> args)
+
+    public override float Evaluate(IDoorStateCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
-        args.Value = entity.Comp.State == args.Condition.TargetState ? 1 : 0;
+        return TryComp(entityUid,out DoorComponent? component) ? (component.State == condition.TargetState ? 1 : 0) : 0;
     }
 }

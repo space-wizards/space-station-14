@@ -5,7 +5,7 @@ using Content.Shared.Whitelist;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IRoleCondition : IConditionByEvent<IRoleCondition>
+public interface IRoleCondition : ICondition
 {
     EntityWhitelist Whitelist { get; }
 }
@@ -14,25 +14,20 @@ public interface IRoleCondition : IConditionByEvent<IRoleCondition>
 /// Returns true if this entity has any of the specified jobs. False if the entity has no mind, none of the specified jobs,
 /// or is jobless.
 /// </summary>
-public sealed partial class MindContainerRoleEntityConditionSystem : EntitySystem
+public sealed partial class MindContainerRoleEntityConditionSystem : ConditionEvaluatorSystem<IRoleCondition>
 {
     [Dependency] private SharedRoleSystem _role = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(Entity<MindContainerComponent> entity, ref ConditionEvaluationEvent<IRoleCondition> args)
+    public override float Evaluate(IRoleCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
+        if (TryComp(entityUid, out MindContainerComponent? containerComponent)&&containerComponent.Mind!=null)
+        {
+            entityUid = containerComponent.Mind.Value;
+        }
 
-        if (!TryComp<MindComponent>(entity.Comp.Mind, out var mind))
-            return;
+        if (!TryComp(entityUid, out MindComponent? mind))
+            return 0;
 
-        args.Value = _role.MindHasRole((entity.Comp.Mind.Value, mind), args.Condition.Whitelist) ? 1 : 0;
-    }
-
-    [SubscribeLocalEvent]
-    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<IRoleCondition> args)
-    {
-        args.Handled = true;
-        args.Value = _role.MindHasRole(entity, args.Condition.Whitelist) ? 1 : 0;
+        return _role.MindHasRole((entityUid, mind), condition.Whitelist) ? 1 : 0;
     }
 }

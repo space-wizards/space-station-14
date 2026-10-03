@@ -11,7 +11,7 @@ namespace Content.Server.Construction.Conditions;
 /// Requires that a certain solution be empty to proceed.
 /// </summary>
 [DataDefinition]
-public sealed partial class SolutionEmpty : GraphConditionBase<ISolutionVolumeCondition>, ISolutionVolumeCondition
+public sealed partial class SolutionEmpty : GraphCondition, ISolutionVolumeCondition
 {
     /// <summary>
     /// The solution that needs to be empty.

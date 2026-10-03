@@ -3,7 +3,7 @@ using Content.Shared.Whitelist;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IObjectiveWhitelistCondition : IConditionByEvent<IObjectiveWhitelistCondition>
+public interface IObjectiveWhitelistCondition : ICondition
 {
     EntityWhitelist? Whitelist { get; }
 
@@ -13,24 +13,23 @@ public interface IObjectiveWhitelistCondition : IConditionByEvent<IObjectiveWhit
 /// <summary>
 /// Checks if the target mind has an objective which passes the given whitelist and/or blacklist.
 /// </summary>
-public sealed partial class ObjectiveEntityConditionSystem : EntitySystem
+public sealed partial class ObjectiveEntityConditionSystem : ConditionEvaluatorSystem<IObjectiveWhitelistCondition>
 {
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
-    private void Condition(Entity<MindComponent> entity,
-        ref ConditionEvaluationEvent<IObjectiveWhitelistCondition> args)
+    public override float Evaluate(IObjectiveWhitelistCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
-
-        foreach (var obj in entity.Comp.Objectives)
+        if (!TryComp(entityUid, out MindComponent? mindComponent))
+            return 0;
+        float value = 0;
+        foreach (var obj in mindComponent.Objectives)
         {
             // mind has a blacklisted objective, remove it from the pool
-            if (!_whitelist.CheckBoth(obj, args.Condition.Blacklist, args.Condition.Whitelist))
+            if (!_whitelist.CheckBoth(obj, condition.Blacklist, condition.Whitelist))
                 continue;
             //count hits, as to get a scale.
-            args.Value++;
+            value++;
         }
-
-        args.Value /= entity.Comp.Objectives.Count;
+        return value/mindComponent.Objectives.Count;
     }
 }

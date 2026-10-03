@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IMetabolizerTypeCondition : IConditionByEvent<IMetabolizerTypeCondition>
+public interface IMetabolizerTypeCondition : ICondition
 {
     /// <summary>
     /// Which metabolizer types would fulfill this condition. Need only one match.
@@ -15,17 +15,17 @@ public interface IMetabolizerTypeCondition : IConditionByEvent<IMetabolizerTypeC
 /// <summary>
 /// Returns true if this entity has any of the listed metabolizer types.
 /// </summary>
-public sealed partial class MetabolizerTypeConditionSystem : EntitySystem
+public sealed partial class MetabolizerTypeConditionSystem : ConditionEvaluatorSystem<IMetabolizerTypeCondition>
 {
-    [SubscribeLocalEvent]
-    private void Condition(Entity<MetabolizerComponent> entity,
-        ref ConditionEvaluationEvent<IMetabolizerTypeCondition> args)
+    public override float Evaluate(IMetabolizerTypeCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
-        if (entity.Comp.MetabolizerTypes == null)
-            return;
+        if (!TryComp(entityUid, out MetabolizerComponent? component))
+            return 0;
 
-        args.Value = entity.Comp.MetabolizerTypes.Intersect(args.Condition.Type).Count() /
-                     (float)args.Condition.Type.Length;
+        if (component.MetabolizerTypes == null||condition.Type.Length==0)
+            return 0;
+
+        return component.MetabolizerTypes.Intersect(condition.Type).Count() /
+                     (float)condition.Type.Length;
     }
 }

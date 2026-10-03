@@ -91,6 +91,12 @@ public abstract partial class EntityCondition : ICondition
     /// <inheritdoc/>
     [DataField]
     public virtual Satisfier? Satisfier { get; set; }
+
+    /// <summary>
+    /// If true, invert the result. So false returns true and true returns false!
+    /// </summary>
+    [DataField]
+    public bool Inverted { get; set; }
 }
 
 /// <summary>
@@ -100,12 +106,6 @@ public abstract partial class EntityCondition : ICondition
 public abstract partial class EntityConditionBase<TCondition> : EntityCondition, IConditionByEvent , IWithInverted
     where TCondition : IConditionByEvent
 {
-    /// <summary>
-    /// If true, invert the result. So false returns true and true returns false!
-    /// </summary>
-    [DataField]
-    public bool Inverted { get; set; }
-
     /// <inheritdoc/>
     public ConditionEvaluationEvent? WrapInEvent(EntityUid entity, EntityUid? sourceEntity)
     {
