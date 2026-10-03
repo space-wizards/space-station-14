@@ -459,9 +459,6 @@
     weight: 5
     duration: 1
   - type: VendorMalfunctionRule
-    blacklist:
-      components:
-      - ProtectedGrid
     affectedMachines:
       min: 5
       max: 15

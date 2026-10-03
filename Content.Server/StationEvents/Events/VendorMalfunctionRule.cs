@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Power.EntitySystems;
 using Content.Server.StationEvents.Components;
 using Content.Server.VendingMachines;
@@ -15,42 +16,34 @@ namespace Content.Server.StationEvents.Events;
 public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMalfunctionRuleComponent>
 {
     [Dependency] private VendingMachineSystem _vendingSystem = default!;
-    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     protected override void Started(Entity<VendorMalfunctionRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
         base.Started(ent, ref args);
 
-        // ensure that we aren't affecting a structure/grid which is blacklisted by this rule
-        if (!Station.TryGetRandomStation<StationEventEligibleComponent>(
-            out var chosenStation,
-            uid => _whitelist.IsWhitelistFailOrNull(ent.Comp1.Blacklist, uid)))
-            return;
-
-        // create a list of all vending machines on the target station which have power and aren't broken
-        var vendingMachines = new List<Entity<VendingMachineComponent>>();
-        var query = EntityQueryEnumerator<VendingMachineComponent, TransformComponent>();
-        while (query.MoveNext(out var vendUid, out var vendor, out var xform))
-        {
-            if (vendor.Broken || !_vendingSystem.IsPowered(vendUid, EntityManager)) continue;
-            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station == chosenStation.Value.Owner)
-            {
-                vendingMachines.Add((vendUid, vendor));
-            }
-        }
-
         // work out how many machines we want to hit
-        var toDispense = Math.Min(ent.Comp1.AffectedMachines.Next(RobustRandom), vendingMachines.Count);
+        var toDispense = ent.Comp1.AffectedMachines.Next(RobustRandom);
         if (toDispense == 0)
             return;
 
-        // we will hit the first `n=toDispense` machines in our list; shuffling the list ensures we hit a random subset of them.
+        // get a list of all vending machines on the target station, and then shuffle it.
+        var vendingMachines = Station.GetEntitiesWithComponentOnStation<VendingMachineComponent>(true).ToList();
         RobustRandom.Shuffle(vendingMachines);
 
-        // this performs the necessary actions (contraband inventory/item ejection) on the affected machines.
-        for (var i = 0; i < toDispense; i++)
+        // target number of vending machines to hit is `toDispense`.
+        // this loop goes through the shuffled list of vending machines, and hits the first `toDispense` hittable machines,
+        // skipping any unpowered/broken machines.
+        foreach (var vendor in vendingMachines)
         {
-            var vendor = vendingMachines[i];
+            // give up if we've reached our quota of machines to hit.
+            if (toDispense == 0)
+                break;
+
+            // make sure the vendor is powered and isn't broken
+            if (vendor.Comp.Broken || !_vendingSystem.IsPowered(vendor, EntityManager)) continue;
+
+            // this vending machine has been hit (even if nothing ultimately happens), decrement toDispense.
+            toDispense--;
 
             // roll to enable contraband inventory
             if (RobustRandom.NextDouble() < ent.Comp1.ContrabandChance)
@@ -65,7 +58,6 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
             {
                 _vendingSystem.EjectRandom(vendor.AsNullable(), true, true); // handles ejecting the other items
             }
-
         }
     }
 }
