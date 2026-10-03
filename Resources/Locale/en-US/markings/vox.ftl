@@ -52,7 +52,8 @@ marking-TattooVoxNightlingChest = Vox Chest Tattoo (Nightling)
 marking-TattooVoxNightbelt-nightbelt = Vox Stomach Tattoo (Nightling)
 marking-TattooVoxNightbelt = Vox Stomach Tattoo (Nightling)
 
-marking-TattooVoxChestV-night_v = Vox Chest Tattoo (V Shape)
+marking-TattooVoxChestV-chest_v_1 = Vox Chest Tattoo (V Shape)
+marking-TattooVoxChestV-chest_v_2 = Vox Chest Tattoo (V Shape)
 marking-TattooVoxChestV = Vox Chest Tattoo (V Shape)
 
 marking-TattooVoxUnderbelly-underbelly = Underbelly
@@ -64,10 +65,10 @@ marking-VoxScarEyeRight = Eye Scar (Right)
 marking-VoxScarEyeLeft-vox_scar_eye_left = Left Eye Scar
 marking-VoxScarEyeLeft = Eye Scar (Left)
 
-marking-VoxScarTopSurgeryShort-vox_scar_top_surgery_short = Thoracotomy Scar
+marking-VoxScarTopSurgeryShort-vox_top_surgery_short = Thoracotomy Scar
 marking-VoxScarTopSurgeryShort = Thoracotomy Scar
 
-marking-VoxScarTopSurgeryLong-vox_scar_top_surgery_long = Clamshell Scar
+marking-VoxScarTopSurgeryLong-vox_top_surgery_long = Clamshell Scar
 marking-VoxScarTopSurgeryLong = Clamshell Scar
 
 marking-VoxScarChest-vox_scar_chest = Chest Scar
@@ -111,3 +112,15 @@ marking-VoxTailDocked = Vox Tail (Vestigial)
 
 marking-VoxTailSplit-vox_tail_split = Vox Tail (Split)
 marking-VoxTailSplit = Vox Tail (Split)
+
+marking-VoxLArmScales = Scales (Left Arm)
+marking-VoxRArmScales = Scaled (Right Arm)
+
+marking-VoxLFootScales = Scales (Left Foot)
+marking-VoxRFootScales = Scales (Right Foor)
+
+marking-VoxLHandScales = Scales (Left Hand)
+marking-VoxRHandScales = Scales (Right Hand)
+
+marking-VoxLLegScales = Scales (Left Leg)
+marking-VoxRLegScales = Scales (Right Leg)
