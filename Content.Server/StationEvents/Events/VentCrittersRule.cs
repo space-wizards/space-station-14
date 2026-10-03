@@ -18,13 +18,9 @@ public sealed partial class VentCrittersRule : StationEventSystem<VentCrittersRu
         base.Started(ent, ref args);
 
         var critterRule = ent.Comp1;
-
         var validLocations = Station.GetEntitiesWithComponentOnStation<VentCritterSpawnLocationComponent>(true);
-
         if (validLocations.Count == 0)
-        {
             return;
-        }
 
         // guaranteed spawn
         if (critterRule.SpecialEntries.Count > 0)

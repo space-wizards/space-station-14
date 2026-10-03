@@ -27,9 +27,7 @@ public sealed partial class RandomEntityStorageSpawnRule : StationEventSystem<Ra
         foreach (var storageEnt in Station.GetEntitiesWithComponentOnStation<EntityStorageComponent>(false))
         {
             if (!_entityStorage.CanInsert(spawn, storageEnt, storageEnt.Comp))
-            {
                 continue;
-            }
 
             validLockers.Add(storageEnt);
         }

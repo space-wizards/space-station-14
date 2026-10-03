@@ -88,20 +88,20 @@ public sealed partial class GasLeakRule : StationEventSystem<GasLeakRuleComponen
 
     private void Spark(Entity<GasLeakRuleComponent> rule)
     {
-        if (RobustRandom.NextFloat() <= rule.Comp.SparkChance)
-        {
-            if (!rule.Comp.FoundTile ||
-                rule.Comp.TargetGrid == default ||
-                (!Exists(rule.Comp.TargetGrid) ? EntityLifeStage.Deleted : MetaData(rule.Comp.TargetGrid).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                !_atmosphere.IsSimulatedGrid(rule.Comp.TargetGrid))
-            {
-                return;
-            }
+        if (!(RobustRandom.NextFloat() <= rule.Comp.SparkChance))
+            return;
 
-            // Don't want it to be so obnoxious as to instantly murder anyone in the area but enough that
-            // it COULD start potentially start a bigger fire.
-            _atmosphere.HotspotExpose(rule.Comp.TargetGrid, (Vector2i)rule.Comp.TargetCoords.Position, 700f, 50f, null, true);
-            Audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/sparks4.ogg"), rule.Comp.TargetCoords);
+        if (!rule.Comp.FoundTile ||
+            rule.Comp.TargetGrid == default ||
+            (!Exists(rule.Comp.TargetGrid) ? EntityLifeStage.Deleted : MetaData(rule.Comp.TargetGrid).EntityLifeStage) >= EntityLifeStage.Deleted ||
+            !_atmosphere.IsSimulatedGrid(rule.Comp.TargetGrid))
+        {
+            return;
         }
+
+        // Don't want it to be so obnoxious as to instantly murder anyone in the area but enough that
+        // it COULD start potentially start a bigger fire.
+        _atmosphere.HotspotExpose(rule.Comp.TargetGrid, (Vector2i)rule.Comp.TargetCoords.Position, 700f, 50f, null, true);
+        Audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/sparks4.ogg"), rule.Comp.TargetCoords);
     }
 }

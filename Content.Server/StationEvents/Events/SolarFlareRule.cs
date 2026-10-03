@@ -26,7 +26,7 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
 
     [Dependency] private EntityQuery<HeadsetComponent> _headsetQuery;
 
-    private float _effectTimer = 0;
+    private float _effectTimer;
 
     protected override void Started(Entity<SolarFlareRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
@@ -51,20 +51,20 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
         base.ActiveTick(uid, component, gameRule, frameTime);
 
         _effectTimer -= frameTime;
-        if (_effectTimer < 0)
-        {
-            _effectTimer += 1;
-            foreach (var light in component.AffectedLights)
-            {
-                if (RobustRandom.Prob(component.LightBreakChancePerSecond))
-                    _poweredLight.TryDestroyBulb(light.Item1, light.Item2);
-            }
+        if (!(_effectTimer < 0))
+            return;
 
-            foreach (var airlockEnt in component.AffectedAirlocks)
-            {
-                if (airlockEnt.Item2.AutoClose && RobustRandom.Prob(component.DoorToggleChancePerSecond))
-                    _door.TryToggleDoor(airlockEnt.Item1);
-            }
+        _effectTimer += 1;
+        foreach (var light in component.AffectedLights)
+        {
+            if (RobustRandom.Prob(component.LightBreakChancePerSecond))
+                _poweredLight.TryDestroyBulb(light.Item1, light.Item2);
+        }
+
+        foreach (var airlockEnt in component.AffectedAirlocks)
+        {
+            if (airlockEnt.Item2.AutoClose && RobustRandom.Prob(component.DoorToggleChancePerSecond))
+                _door.TryToggleDoor(airlockEnt.Item1);
         }
     }
 
