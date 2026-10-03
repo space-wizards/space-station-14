@@ -19,7 +19,7 @@ public sealed class DoAfterOverlay : Overlay
     private readonly IEntityManager _entManager;
     private readonly IGameTiming _timing;
     private readonly IPlayerManager _player;
-    private readonly SharedTransformSystem _transform;
+    private readonly TransformSystem _transform;
     private readonly MetaDataSystem _meta;
     private readonly ProgressColorSystem _progressColor;
     private readonly SharedContainerSystem _container;
@@ -53,7 +53,7 @@ public sealed class DoAfterOverlay : Overlay
         _entManager = entManager;
         _timing = timing;
         _player = player;
-        _transform = _entManager.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
+        _transform = _entManager.EntitySysManager.GetEntitySystem<TransformSystem>();
         _meta = _entManager.EntitySysManager.GetEntitySystem<MetaDataSystem>();
         _container = _entManager.EntitySysManager.GetEntitySystem<SharedContainerSystem>();
         _progressColor = _entManager.System<ProgressColorSystem>();
@@ -68,8 +68,6 @@ public sealed class DoAfterOverlay : Overlay
     {
         var handle = args.WorldHandle;
         var rotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
-        var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
-
         // If you use the display UI scale then need to set max(1f, displayscale) because 0 is valid.
         const float scale = 1f;
         var scaleMatrix = Matrix3Helpers.CreateScale(new Vector2(scale, scale));
@@ -90,7 +88,7 @@ public sealed class DoAfterOverlay : Overlay
             if (comp.DoAfters.Count == 0)
                 continue;
 
-            var worldPosition = _transform.GetWorldPosition(xform, xformQuery);
+            var worldPosition = _transform.GetRenderWorldPosition((uid, xform));
             if (!bounds.Contains(worldPosition))
                 continue;
 
