@@ -133,10 +133,16 @@ public sealed partial class DoorComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public HashSet<EntityUid> CurrentlyCrushing = new();
+
+    /// <summary>
+    /// Whether a failed partial close should retry closing after the door finishes reversing open.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool RetryCloseAfterOpening;
+
     #endregion
 
     #region Graphics
-
 
     public const string OpenKey = "door_animation_open";
 
@@ -300,20 +306,6 @@ public sealed partial class DoorComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public bool ClickOpen = true;
-
-    /// <summary>
-    /// If true, the door closing check will try to match only entities intersecting the door's first fixture.
-    /// If false, the door will check the full tile the door is on.
-    /// </summary>
-    [DataField]
-    public bool CheckFixtureCollision;
-
-    /// <summary>
-    /// If true, the door will be able to close over entities with the MachineLayer fixture layer.
-    /// Useful for windoors or other thin doors.
-    /// </summary>
-    [DataField]
-    public bool AllowMachineLayer;
 
     [DataField(customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
     public int OpenDrawDepth = (int) DrawDepth.DrawDepth.Doors;
