@@ -9,9 +9,11 @@ using Content.Server.NPC.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Administration;
 using Content.Shared.Climbing.Components;
+using Content.Shared.CCVar;
 using Content.Shared.Doors.Components;
 using Content.Shared.NPC;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -41,6 +43,7 @@ namespace Content.Server.NPC.Pathfinding
          */
 
         [Dependency] private IAdminManager _adminManager = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
         [Dependency] private IGameTiming _timing = default!;
         [Dependency] private IParallelManager _parallel = default!;
         [Dependency] private IPlayerManager _playerManager = default!;
@@ -67,6 +70,8 @@ namespace Content.Server.NPC.Pathfinding
 
         private static readonly TimeSpan PathTime = TimeSpan.FromMilliseconds(3);
 
+        private bool _enabled = true;
+
         /// <summary>
         /// How many paths we can process in a single tick.
         /// </summary>
@@ -80,6 +85,7 @@ namespace Content.Server.NPC.Pathfinding
             base.Initialize();
             _playerManager.PlayerStatusChanged += OnPlayerChange;
             InitializeGrid();
+            Subs.CVar(_cfg, CCVars.PathfindingEnabled, SetPathfindingEnabled, true);
             SubscribeNetworkEvent<RequestPathfindingDebugMessage>(OnBreadcrumbs);
         }
 
@@ -94,6 +100,10 @@ namespace Content.Server.NPC.Pathfinding
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+
+            if (!_enabled)
+                return;
+
             var options = new ParallelOptions()
             {
                 MaxDegreeOfParallelism = _parallel.ParallelProcessCount,
@@ -181,6 +191,9 @@ namespace Content.Server.NPC.Pathfinding
             var mapUidA = _transform.GetMap(coordsA);
             var mapUidB = _transform.GetMap(coordsB);
             handle = -1;
+
+            if (!_enabled)
+                return false;
 
             if (mapUidA != mapUidB || mapUidA == null)
             {
@@ -387,6 +400,9 @@ namespace Content.Server.NPC.Pathfinding
         /// </summary>
         public PathPoly? GetPoly(EntityCoordinates coordinates)
         {
+            if (!_enabled)
+                return null;
+
             var gridUid = _transform.GetGrid(coordinates);
 
             if (!TryComp<GridPathfindingComponent>(gridUid, out var comp) ||
@@ -426,6 +442,45 @@ namespace Content.Server.NPC.Pathfinding
             }
 
             return new AStarPathRequest(start, end, flags, range, layer, mask, cancelToken);
+        }
+
+        private void SetPathfindingEnabled(bool value)
+        {
+            if (_enabled == value)
+                return;
+
+            _enabled = value;
+
+            if (value)
+            {
+                var mapQuery = AllEntityQuery<MapGridComponent>();
+                while (mapQuery.MoveNext(out var uid, out var mapGrid))
+                {
+                    EnsureGridPathfinding(uid, mapGrid);
+                }
+
+                return;
+            }
+
+            foreach (var request in _pathRequests)
+            {
+                request.Tcs.TrySetResult(PathResult.NoPath);
+            }
+
+            _pathRequests.Clear();
+            _portals.Clear();
+
+            var grids = new List<EntityUid>();
+            var gridQuery = AllEntityQuery<GridPathfindingComponent>();
+            while (gridQuery.MoveNext(out var uid, out _))
+            {
+                grids.Add(uid);
+            }
+
+            foreach (var grid in grids)
+            {
+                RemComp<GridPathfindingComponent>(grid);
+            }
         }
 
         public PathFlags GetFlags(EntityUid uid)
@@ -470,6 +525,9 @@ namespace Content.Server.NPC.Pathfinding
         {
             // We could maybe try an initial quick run to avoid forcing time-slicing over ticks.
             // For now it seems okay and it shouldn't block on 1 NPC anyway.
+
+            if (!_enabled)
+                return new PathResultEvent(PathResult.NoPath, new List<PathPoly>());
 
             if (safe)
             {
