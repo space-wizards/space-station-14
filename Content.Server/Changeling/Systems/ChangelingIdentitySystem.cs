@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Server.Changeling.Systems;
 
-public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
+public sealed partial class ChangelingIdentitySystem : SharedChangelingIdentitySystem
 {
     public override void Initialize()
     {
@@ -24,8 +24,9 @@ public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
                 Identity = GetNetEntity(identity.Identity),
                 Original = GetNetEntity(identity.Original),
                 OriginalJob = identity.OriginalJob,
-                OriginalName = identity.Original != null ? Name(identity.Original.Value) : string.Empty,
+                OriginalName = identity.OriginalName,
                 Starting = identity.Starting,
+                GrantedDna = identity.GrantedDna,
             };
 
             sentIdentities.Add(netData);
@@ -35,6 +36,10 @@ public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
 
         var netCurrent = GetNetEntity(current);
 
-        args.State = new ChangelingIdentityComponentState(sentIdentities, netCurrent, entity.Comp.IdentityCloningSettings);
+        args.State = new ChangelingIdentityComponentState(
+            sentIdentities,
+            netCurrent,
+            entity.Comp.IdentityCloningSettings,
+            entity.Comp.MaxStoredDisguises);
     }
 }

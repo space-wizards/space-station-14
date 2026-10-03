@@ -3,9 +3,9 @@ using Content.Shared.Trigger.Components.Effects;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed class AddTagsOnTriggerSystem : XOnTriggerSystem<AddTagsOnTriggerComponent>
+public sealed partial class AddTagsOnTriggerSystem : XOnTriggerSystem<AddTagsOnTriggerComponent>
 {
-    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private TagSystem _tag = default!;
 
     protected override void OnTrigger(Entity<AddTagsOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
@@ -14,9 +14,9 @@ public sealed class AddTagsOnTriggerSystem : XOnTriggerSystem<AddTagsOnTriggerCo
     }
 }
 
-public sealed class RemoveTagsOnTriggerSystem : XOnTriggerSystem<RemoveTagsOnTriggerComponent>
+public sealed partial class RemoveTagsOnTriggerSystem : XOnTriggerSystem<RemoveTagsOnTriggerComponent>
 {
-    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private TagSystem _tag = default!;
 
     protected override void OnTrigger(Entity<RemoveTagsOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {

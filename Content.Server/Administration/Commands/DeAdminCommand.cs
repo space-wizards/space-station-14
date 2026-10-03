@@ -7,9 +7,9 @@ namespace Content.Server.Administration.Commands
 {
     [UsedImplicitly]
     [AdminCommand(AdminFlags.None)]
-    public sealed class DeAdminCommand : LocalizedCommands
+    public sealed partial class DeAdminCommand : LocalizedCommands
     {
-        [Dependency] private readonly IAdminManager _admin = default!;
+        [Dependency] private IAdminManager _admin = default!;
 
         public override string Command => "deadmin";
 

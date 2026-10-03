@@ -7,9 +7,9 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Salvage.UI;
 
-public sealed class SalvageMagnetBoundUserInterface : BoundUserInterface
+public sealed partial class SalvageMagnetBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
 
     private OfferingWindow? _window;
 

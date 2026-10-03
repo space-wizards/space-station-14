@@ -7,10 +7,10 @@ using Robust.Shared.Random;
 
 namespace Content.Client.Light.Visualizers;
 
-public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLightVisualsComponent>
+public sealed partial class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLightVisualsComponent>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -127,7 +127,7 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
             {
                 KeyFrames =
                 {
-                    new AnimationTrackPlaySound.KeyFrame(sound, 0.5f)
+                    new AnimationTrackPlaySound.KeyFrame(sound, 0.5f, () => comp.BlinkingSound.Params)
                 }
             });
         }

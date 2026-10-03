@@ -14,34 +14,35 @@ namespace Content.Server.StationEvents.Events;
 /// <summary>
 /// Variant of <see cref="VentCrittersRule"/> that selects a single vent and spawns all entities there.
 /// </summary>
-public sealed class VentHordeRule : StationEventSystem<VentHordeRuleComponent>
+/// <remarks>
+/// Do NOT copy paste this class to make a new mob event, create a new game rule entity using <see cref="VentHordeRuleComponent"/>.
+/// </remarks>
+public sealed partial class VentHordeRule : StationEventSystem<VentHordeRuleComponent>
 {
-    /*
-     * DO NOT COPY PASTE THIS TO MAKE YOUR MOB EVENT.
-     * USE THE PROTOTYPE.
-     */
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private NavMapSystem _navMap = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private EntityTableSystem _table = default!;
+    [Dependency] private VentHordeSystem _horde = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly NavMapSystem _navMap = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly EntityTableSystem _table = default!;
-    [Dependency] private readonly VentHordeSystem _horde = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private EntityQuery<VentHordeSpawnerComponent> _hordeSpawnerQuery;
 
-    protected override void Added(EntityUid uid, VentHordeRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    protected override void Added(Entity<VentHordeRuleComponent, GameRuleComponent> ent, ref GameRuleAddedEvent args)
     {
+        var ventHorde = ent.Comp1;
         // Choose location and make sure it's not null
-        component.ChosenVent = ChooseVent();
+        ventHorde.ChosenVent = ChooseVent();
 
-        if (component.ChosenVent is not { } vent)
+        if (ventHorde.ChosenVent is not { } vent)
         {
-            Log.Warning($"Unable to find a valid vent for {args.RuleId}!");
-            ForceEndSelf(uid, gameRule);
+            Log.Warning($"Unable to find a valid vent for {ToPrettyString(args.Rule)}!");
+            ForceEndSelf((ent.Owner, ent.Comp2));
             return;
         }
 
         // Get the event component so we can format the announcement
-        if (TryComp<StationEventComponent>(uid, out var stationEventComp) && stationEventComp.StartAnnouncement != null)
+        if (TryComp<StationEventComponent>(ent, out var stationEventComp) && stationEventComp.StartAnnouncement != null)
         {
             // Get the nearest beacon
             var mapLocation = _transform.ToMapCoordinates(Transform(vent).Coordinates);
@@ -55,41 +56,43 @@ public sealed class VentHordeRule : StationEventSystem<VentHordeRuleComponent>
                     ("location", nearestBeacon));
         }
 
-        base.Added(uid, component, gameRule, args);
+        base.Added(ent, ref args);
     }
 
-    protected override void Started(EntityUid uid, VentHordeRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    protected override void Started(Entity<VentHordeRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
-        base.Started(uid, component, gameRule, args);
+        base.Started(ent, ref args);
 
-        if (!Exists(component.ChosenVent))
+        if (!Exists(ent.Comp1.ChosenVent))
         {
             Log.Warning($"Chosen vent for {args.RuleId} does not exist!");
-            ForceEndSelf(uid, gameRule);
+            ForceEndSelf((ent.Owner, ent.Comp2));
             return;
         }
 
-        if (!TryComp<StationEventComponent>(uid, out var stationEventComp))
+        if (!TryComp<StationEventComponent>(ent, out var stationEventComp))
             return;
+
+        var ventHorde = ent.Comp1;
 
         // We grab when the gamerule is expected to end and subtract the current time from it to get the duration.
         var duration = (stationEventComp.EndTime - _timing.CurTime) ?? TimeSpan.Zero;
 
-        var spawns = _table.GetSpawns(component.Table);
+        var spawns = _table.GetSpawns(ventHorde.Table);
 
-        if (component.ChosenVent == null)
+        if (ventHorde.ChosenVent == null)
             return;
 
         // And start the spawn at the chosen vent.
         // The duration is the same as the time until expected gamerule end time, but that is only for convenience.
         // The spawn can happen early in certain circumstances anyway.
-        _horde.StartHordeSpawn(component.ChosenVent.Value, spawns.ToList(), duration);
+        _horde.StartHordeSpawn(ventHorde.ChosenVent.Value, spawns.ToList(), duration);
     }
 
     private EntityUid? ChooseVent()
     {
         // Get a station
-        if (!TryGetRandomStation(out var station))
+        if (!Station.TryGetRandomStation<StationEventEligibleComponent>(out var station))
         {
             return null;
         }
@@ -104,10 +107,10 @@ public sealed class VentHordeRule : StationEventSystem<VentHordeRuleComponent>
             if (!transform.Anchored)
                 continue;
 
-            if (HasComp<VentHordeSpawnerComponent>(uid))
+            if (_hordeSpawnerQuery.HasComp(uid))
                 continue;
 
-            if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == station)
+            if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == station.Value.Owner)
             {
                 validLocations.Add(uid);
             }

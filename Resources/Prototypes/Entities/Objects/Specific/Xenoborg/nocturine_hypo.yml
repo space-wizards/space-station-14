@@ -11,7 +11,6 @@
       - ReagentId: Nocturine
         Quantity: 12
   - type: SolutionRegeneration
-    solution: hypospray
     generated:
       reagents:
       - ReagentId: Nocturine

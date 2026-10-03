@@ -1,14 +1,18 @@
 using System.Linq;
 using Content.Shared.Chemistry;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Electrocution;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Kitchen;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Throwing;
+using Content.Shared.Weapons.Hitscan.Events;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
+using Robust.Shared.Physics.Events;
 
 namespace Content.Shared.Xenoarchaeology.Artifact;
 
@@ -16,7 +20,7 @@ public abstract partial class SharedXenoArtifactSystem
 {
     private void InitializeXAT()
     {
-        XATRelayLocalEvent<DamageChangedEvent>();
+        XATRelayLocalEvent<DamageDealtEvent>();
         XATRelayLocalEvent<InteractUsingEvent>();
         XATRelayLocalEvent<PullStartedMessage>();
         XATRelayLocalEvent<AttackedEvent>();
@@ -24,6 +28,12 @@ public abstract partial class SharedXenoArtifactSystem
         XATRelayLocalEvent<InteractHandEvent>();
         XATRelayLocalEvent<ReactionEntityEvent>();
         XATRelayLocalEvent<LandEvent>();
+        XATRelayLocalEvent<BeingMicrowavedEvent>();
+        XATRelayLocalEvent<XATInteractWithDoAfterEvent>();
+        XATRelayLocalEvent<ElectrocutionAttemptEvent>();
+        XATRelayLocalEvent<StartCollideEvent>();
+        XATRelayLocalEvent<HitscanRaycastStrikeEvent>();
+        XATRelayLocalEvent<BeforeStaminaDamageEvent>();
 
         // special case this one because we need to order the messages
         SubscribeLocalEvent<XenoArtifactComponent, ExaminedEvent>(OnExamined);
@@ -55,9 +65,14 @@ public abstract partial class SharedXenoArtifactSystem
     }
 
     /// <summary>
-    /// Attempts to shift artifact into unlocking state, in which it is going to listen to interactions, that could trigger nodes.
+    /// Attempts to shift artifact into unlocking state, in which it is going to listen to interactions, that could trigger
+    /// nodes.
     /// </summary>
-    public void TriggerXenoArtifact(Entity<XenoArtifactComponent> ent, Entity<XenoArtifactNodeComponent>? node, bool force = false)
+    public void TriggerXenoArtifact(
+        Entity<XenoArtifactComponent> ent,
+        Entity<XenoArtifactNodeComponent>? node,
+        bool force = false
+    )
     {
         // limits spontaneous chain activations, also prevents spamming every triggering tool to activate nodes
         // without real knowledge about triggers
@@ -70,27 +85,49 @@ public abstract partial class SharedXenoArtifactSystem
             unlockingComp.EndTime = _timing.CurTime + ent.Comp.UnlockStateDuration;
             Log.Debug($"{ToPrettyString(ent)} entered unlocking state");
 
-            if (_net.IsServer)
-                _popup.PopupEntity(Loc.GetString("artifact-unlock-state-begin"), ent);
+            if (ent.Comp.UnlockBeginMsg != null)
+                _popup.PopupEntity(Loc.GetString(ent.Comp.UnlockBeginMsg), ent);
+
             Dirty(ent);
+            if (node != null && unlockingComp.TriggeredNodeIndexes.Add(GetIndex(ent, node.Value)))
+                Dirty(ent, unlockingComp);
         }
         else if (node != null)
         {
             var index = GetIndex(ent, node.Value);
 
-            var predecessorNodeIndices = GetPredecessorNodes((ent, ent), index);
-            var successorNodeIndices = GetSuccessorNodes((ent, ent), index);
-            if (unlockingComp.TriggeredNodeIndexes.Count == 0
-                || unlockingComp.TriggeredNodeIndexes.All(
-                    x => predecessorNodeIndices.Contains(x) || successorNodeIndices.Contains(x)
-                )
-               )
-                // we add time on each new trigger, if it is not going to fail us
-                unlockingComp.EndTime += ent.Comp.UnlockStateIncrementPerNode;
-        }
+            // We need to add time, UNLESS the unlocking process is in a failed state after adding the new trigger.
+            // An unlockable node will fail to unlock if there is a trigger other than its required triggers.
+            // A failing unlocking state is one where there exists no unlockable nodes that have not failed.
 
-        if (node != null && unlockingComp.TriggeredNodeIndexes.Add(GetIndex(ent, node.Value)))
-        {
+            if (unlockingComp.TriggeredNodeIndexes.Add(index))
+            {
+                var allNodes = GetAllNodes((ent, ent));
+                foreach (var nodeEnt in allNodes)
+                {
+                    if (!nodeEnt.Comp.Locked)
+                        continue;
+
+                    var directPredecessorNodes = GetDirectPredecessorNodes((ent, ent), nodeEnt);
+                    if (directPredecessorNodes.Count == 0 || directPredecessorNodes.All(x => !x.Comp.Locked))
+                    {
+                        // This is an unlockable node, check if is failed
+                        var predecessorNodeIndices = GetPredecessorNodes((ent, ent), GetIndex(ent, nodeEnt.Owner));
+                        // Remember that triggering the unlockable node shouldn't count as failing the unlock!
+                        predecessorNodeIndices.Add(GetIndex(ent, nodeEnt.Owner)); 
+                        if (unlockingComp.TriggeredNodeIndexes.All(x => predecessorNodeIndices.Contains(x)))
+                        {
+                            // We have found an unlockable node that is still possible to unlock - it contains all triggers in its predecessors
+                            unlockingComp.EndTime += ent.Comp.UnlockStateIncrementPerNode; 
+
+                            if (ent.Comp.UnlockContinueMsg != null)
+                                _popup.PopupEntity(Loc.GetString(ent.Comp.UnlockContinueMsg), ent);
+                            break;
+                        }
+                    }
+                }
+            }
+
             Dirty(ent, unlockingComp);
         }
     }

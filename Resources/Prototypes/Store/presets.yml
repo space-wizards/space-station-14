@@ -48,9 +48,12 @@
   - type: Store
     name: store-preset-name-changeling
     categories:
-    - ChangelingAbilities
+    - ChangelingStoreCombat
+    - ChangelingStoreStealth
+    - ChangelingStoreUtility
     currencyWhitelist:
     - ChangelingDNA
+    inputValidation: false
 
 - type: entity
   parent: StorePresetUplink

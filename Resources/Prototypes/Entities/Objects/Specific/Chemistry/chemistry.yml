@@ -183,7 +183,7 @@
   id: CryoxadoneBeakerSmall
   components:
   - type: Label
-    currentLabel: reagent-name-cryoxadone
+    localizedLabel: reagent-name-cryoxadone
   - type: Solution
     solution:
       reagents:
@@ -196,7 +196,7 @@
   suffix: arithrazine
   components:
   - type: Label
-    currentLabel: reagent-name-arithrazine
+    localizedLabel: reagent-name-arithrazine
   - type: Solution
     solution:
       reagents:
@@ -209,7 +209,7 @@
   suffix: sigynate
   components:
   - type: Label
-    currentLabel: reagent-name-sigynate
+    localizedLabel: reagent-name-sigynate
   - type: Solution
     solution:
       reagents:
@@ -222,7 +222,7 @@
   suffix: phalanximine
   components:
   - type: Label
-    currentLabel: reagent-name-phalanximine
+    localizedLabel: reagent-name-phalanximine
   - type: Solution
     solution:
       reagents:
@@ -235,7 +235,7 @@
   suffix: diphenhydramine
   components:
   - type: Label
-    currentLabel: reagent-name-diphenhydramine
+    localizedLabel: reagent-name-diphenhydramine
   - type: Solution
     solution:
       reagents:
@@ -248,7 +248,7 @@
   suffix: bruizine
   components:
   - type: Label
-    currentLabel: reagent-name-bruizine
+    localizedLabel: reagent-name-bruizine
   - type: Solution
     solution:
       reagents:
@@ -261,7 +261,7 @@
   suffix: lacerinol
   components:
   - type: Label
-    currentLabel: reagent-name-lacerinol
+    localizedLabel: reagent-name-lacerinol
   - type: Solution
     solution:
       reagents:
@@ -315,7 +315,7 @@
 
 - type: entity
   name: bluespace beaker
-  parent: [SolutionGinormous, BaseBeakerMetallic]
+  parent: [SolutionGinormous, BaseBeakerMetallic] # Bluespace items hold 8x the solution of regular items (240u a tile)
   description: Powered by experimental bluespace technology.
   id: BluespaceBeaker
   components:
@@ -327,6 +327,8 @@
       - state: beakerbluespace
   - type: SolutionContainerVisuals
     maxFillLevels: 0
+  - type: Item
+    size: Normal
 
 - type: entity
   name: dropper
@@ -613,6 +615,7 @@
   components:
   - type: Solution
     solution:
+      canReact: false
       maxVol: 20
 
 - type: entity

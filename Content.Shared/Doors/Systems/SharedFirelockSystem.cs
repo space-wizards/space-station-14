@@ -8,13 +8,13 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Doors.Systems;
 
-public abstract class SharedFirelockSystem : EntitySystem
+public abstract partial class SharedFirelockSystem : EntitySystem
 {
-    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedDoorSystem _doorSystem = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
 
     public override void Initialize()
     {
@@ -82,14 +82,14 @@ public abstract class SharedFirelockSystem : EntitySystem
     {
         if (ent.Comp.Temperature)
         {
-            _popupSystem.PopupClient(Loc.GetString("firelock-component-is-holding-fire-message"),
+            _popupSystem.PopupEntity(Loc.GetString("firelock-component-is-holding-fire-message"),
                 ent.Owner,
                 user,
                 PopupType.MediumCaution);
         }
         else if (ent.Comp.Pressure)
         {
-            _popupSystem.PopupClient(Loc.GetString("firelock-component-is-holding-pressure-message"),
+            _popupSystem.PopupEntity(Loc.GetString("firelock-component-is-holding-pressure-message"),
                 ent.Owner,
                 user,
                 PopupType.MediumCaution);

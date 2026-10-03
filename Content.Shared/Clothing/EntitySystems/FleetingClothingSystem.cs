@@ -9,14 +9,14 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
-public sealed class FleetingClothingSystem : EntitySystem
+public sealed partial class FleetingClothingSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly ClothingSystem _clothing = default!;
-    [Dependency] private readonly SharedDestructibleSystem _destructibleSystem = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private ClothingSystem _clothing = default!;
+    [Dependency] private SharedDestructibleSystem _destructibleSystem = default!;
 
     public override void Initialize()
     {
@@ -77,13 +77,13 @@ public sealed class FleetingClothingSystem : EntitySystem
                 othersMessage = Loc.GetString(ent.Comp.SelfUnquipPopupOthers, ("item", ent.Owner));
 
             // Use the wearer for the popup location because the item item itself will get deleted.
-            _popup.PopupPredicted(selfMessage, othersMessage, args.EquipTarget, args.User, PopupType.LargeCaution);
+            _popup.PopupEntity(selfMessage, othersMessage, args.EquipTarget, args.User, PopupType.LargeCaution);
         }
         else
         {
             // Show the same popup message for everyone.
             if (ent.Comp.RemovedPopup != null)
-                _popup.PopupPredicted(Loc.GetString(ent.Comp.RemovedPopup, ("item", ent.Owner)), args.EquipTarget, args.User, PopupType.LargeCaution);
+                _popup.PopupEntity(Loc.GetString(ent.Comp.RemovedPopup, ("item", ent.Owner)), args.EquipTarget, PopupType.LargeCaution);
         }
     }
 

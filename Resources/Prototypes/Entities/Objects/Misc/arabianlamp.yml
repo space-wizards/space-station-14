@@ -51,6 +51,7 @@
         volume: -12
     deactivatedSoundOnHitNoDamage:
       collection: MetalThud
+  - type: ItemToggleExaminableStatus
   - type: ItemToggle
     predictable: false
     soundActivate:
@@ -107,7 +108,6 @@
     heldOnly: true
     exactVolume: true
   - type: SolutionRegeneration
-    solution: welder
     generated:
       reagents:
       - ReagentId: WeldingFuel

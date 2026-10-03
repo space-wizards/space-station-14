@@ -1,5 +1,5 @@
-﻿using Content.Server.GameTicking;
-using Content.Server.GameTicking.Events;
+using Content.Shared.GameTicking;
+using Content.Shared.GameTicking.Events;
 
 namespace Content.Server.Administration.Logs;
 
@@ -7,9 +7,9 @@ namespace Content.Server.Administration.Logs;
 ///     For system events that the manager needs to know about.
 ///     <see cref="IAdminLogManager"/> for admin log usage.
 /// </summary>
-public sealed class AdminLogSystem : EntitySystem
+public sealed partial class AdminLogSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogs = default!;
+    [Dependency] private IAdminLogManager _adminLogs = default!;
 
     public override void Initialize()
     {

@@ -5,9 +5,9 @@ using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Shared.Body.Systems;
 
-public sealed class StomachSystem : EntitySystem
+public sealed partial class StomachSystem : EntitySystem
 {
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
     public const string DefaultSolutionName = "stomach";
 

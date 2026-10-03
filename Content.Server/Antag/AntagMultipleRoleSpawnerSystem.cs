@@ -1,11 +1,12 @@
 using Content.Server.Antag.Components;
+using Content.Shared.Antag;
 using Robust.Shared.Random;
 
 namespace Content.Server.Antag;
 
-public sealed class AntagMultipleRoleSpawnerSystem : EntitySystem
+public sealed partial class AntagMultipleRoleSpawnerSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {
