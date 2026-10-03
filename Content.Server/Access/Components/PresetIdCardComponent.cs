@@ -3,6 +3,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Access.Components;
 
+/// <summary>
+/// Changes icon, job and name of the owner ID-Card on init
+/// </summary>
 [RegisterComponent]
 public sealed partial class PresetIdCardComponent : Component
 {
@@ -10,5 +13,5 @@ public sealed partial class PresetIdCardComponent : Component
     public ProtoId<JobPrototype>? JobName;
 
     [DataField("name")]
-    public string? IdName;
+    public LocId? IdName;
 }
