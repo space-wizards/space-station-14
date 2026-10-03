@@ -37,6 +37,18 @@
     },
     {
       "name": "radbarrel"
+    },
+    {
+      "name": "inhand",
+      "directions": 4
+    },
+    {
+      "name": "inhand-radbarrel",
+      "directions": 4
+    },
+    {
+      "name": "inhand-silicate",
+      "directions": 4
     }
   ]
 }
