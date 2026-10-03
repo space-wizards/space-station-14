@@ -287,6 +287,12 @@ public sealed partial class AirAlarmSystem : EntitySystem
 
     private void OnUpdateAutoMode(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAutoModeMessage args)
     {
+        if (!AccessCheck(uid, args.Actor, component))
+        {
+            UpdateUI(uid, component);
+            return;
+        }
+
         component.AutoMode = args.Enabled;
 
         _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(args.Actor)} changed {ToPrettyString(uid)} auto mode to {args.Enabled}");
