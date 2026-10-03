@@ -68,6 +68,10 @@
         whitelist:
           tags:
             - CartridgeDebug
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
 
 - type: entity
   id: MagazinePistolDebug
