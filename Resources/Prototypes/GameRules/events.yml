@@ -11,6 +11,7 @@
     - id: CockroachMigration
     - id: GasLeak
     - id: GreytideVirus
+    - id: HauntedClosets
     - id: IonStorm # its calm like 90% of the time smh
     - id: KudzuGrowth
     - id: MassHallucinations
@@ -635,6 +636,16 @@
       collection: Paracusia
   - type: DynamicRuleCost
     cost: 10
+
+- type: entity
+  parent: BaseGameRule
+  id: HauntedClosets
+  components:
+  - type: HauntedClosetRule
+  - type: StationEvent
+    weight: 8
+    reoccurrenceDelay: 5
+    duration: 1
 
 - type: entity
   parent: BaseGameRule
