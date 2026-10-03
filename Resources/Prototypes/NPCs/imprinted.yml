@@ -1,0 +1,64 @@
+- type: htnCompound
+  id: ImprintedCompound
+  branches:
+  - tasks:
+    - !type:HTNCompoundTask
+      task: ImprintedCombatCompound
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:ImprintedTargetOperator
+        leader: true
+    - !type:HTNCompoundTask
+      task: FollowCompound
+  - tasks:
+    - !type:HTNCompoundTask
+      task: IdleCompound
+
+- type: htnCompound
+  id: ImprintedCombatCompound
+  branches:
+  - preconditions:
+    - !type:PulledPrecondition
+      isPulled: true
+    tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:ImprintedTargetOperator
+    - !type:HTNPrimitiveTask
+      operator: !type:UnPullOperator
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:ImprintedTargetOperator
+    - !type:HTNPrimitiveTask
+      operator: !type:MoveToOperator
+        shutdownState: PlanFinished
+        removeKeyOnFinish: false
+        pathfindKey: TargetPathfind
+        rangeKey: MeleeRange
+    - !type:HTNCompoundTask
+      task: ImprintedAttackCompound
+
+- type: htnCompound
+  id: ImprintedAttackCompound
+  branches:
+  - preconditions:
+    - !type:KeyBoolEqualsPrecondition
+      key: ImprintedHunt
+      value: true
+    tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:MeleeOperator
+        targetKey: Target
+        targetState: Dead
+      preconditions:
+      - !type:TargetInRangePrecondition
+        targetKey: Target
+        rangeKey: MeleeRange
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:MeleeOperator
+        targetKey: Target
+        targetState: Alive
+      preconditions:
+      - !type:TargetInRangePrecondition
+        targetKey: Target
+        rangeKey: MeleeRange
