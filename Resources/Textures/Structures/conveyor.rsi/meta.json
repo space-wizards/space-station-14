@@ -1,7 +1,7 @@
 {
   "version": 2,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/8e33113cfe8b5da0e64d74c842bec0e6059d992d and modified by Swept and Peperos, switch-fwd and switch-rev modified by RedBookcase (Github)",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/8e33113cfe8b5da0e64d74c842bec0e6059d992d and modified by Swept and Peperos, switch-fwd and switch-rev modified by RedBookcase (Github), corner belt textures seperated out by Gergoric",
   "size": {
     "x": 32,
     "y": 32
@@ -110,6 +110,70 @@
     },
     {
       "name": "conveyor_stopped",
+      "directions": 4
+    },
+	{
+      "name": "conveyor_corner_started",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "conveyor_corner_started_r",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "conveyor_corner_stopped",
       "directions": 4
     },
     {

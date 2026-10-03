@@ -632,6 +632,12 @@
   targetNode: entity
 
 - type: construction
+  parent: BaseStructureFullTileDirectional
+  id: ConveyorBeltCorner
+  graph: ConveyorCornerGraph
+  targetNode: entity
+
+- type: construction
   parent: BaseStructureFullTile
   id: FungalSoil
   graph: Soil
