@@ -13,6 +13,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using System.Numerics;
+using static Content.Shared.Atmos.EntitySystems.SharedGasTileOverlaySystem;
 using Color = Robust.Shared.Maths.Color;
 using Texture = Robust.Client.Graphics.Texture;
 
@@ -165,9 +166,9 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
                     // for each tile and its gas --->
                     foreach (var chunk in comp.Chunks.Values)
                     {
-                        var enumerator = new GasChunkEnumerator(chunk);
+                        var enumerator = new GasChunkEnumerator<SharedGasTemperatureData>(chunk.TileGasTemperatureData);
 
-                        while (enumerator.MoveNext(out var tileGas))
+                        while (enumerator.MoveNext(out var sharedGasTemperatureData))
                         {
                             // Check and make sure the tile is within the viewport/screen
                             var tilePosition = chunk.Origin + (enumerator.X, enumerator.Y);
@@ -175,7 +176,7 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
                                 continue;
 
                             // Get the distortion strength from the temperature and bail if it's not hot enough
-                            var strength = GetHeatDistortionStrength(tileGas.ByteGasTemperature);
+                            var strength = GetHeatDistortionStrength(sharedGasTemperatureData.ByteGasTemperature);
                             if (strength <= 0f)
                                 continue;
 
