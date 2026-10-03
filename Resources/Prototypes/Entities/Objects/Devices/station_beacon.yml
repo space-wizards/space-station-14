@@ -1,9 +1,5 @@
 - type: entity
-<<<<<<< HEAD
-  parent: BaseItem
-=======
   parent: [ BaseItem, StructureHealthMachineWeak ]
->>>>>>> master
   id: BaseStationBeacon
   name: station beacon
   suffix: Not teleport point, Ninja bombing target blacklist

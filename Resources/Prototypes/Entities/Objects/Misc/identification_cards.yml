@@ -787,19 +787,31 @@
 
 - type: entity
   parent: IDCardStandard
-<<<<<<< HEAD
-  id: PsychologistIDCard
-  name: psychologist ID card
-=======
   id: TramDriverIDCard
   name: tram driver ID card
->>>>>>> master
   components:
   - type: Sprite
     layers:
     - state: default
     - state: stripe_top
-<<<<<<< HEAD
+  color: "#ffc500"
+  - state: stripe_bottom
+    color: "#454a50"
+  - sprite: *icon-rsi
+    offset: *icon-offset
+    state: TramDriver
+  - type: PresetIdCard
+    job: TramDriver
+
+- type: entity
+  parent: IDCardStandard
+  id: PsychologistIDCard
+  name: psychologist ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: stripe_top
       color: *color-service-top
     - state: stripe_bottom
       color: *color-service-bottom
@@ -808,16 +820,6 @@
       state: Psychologist
   - type: PresetIdCard
     job: Psychologist
-=======
-      color: "#ffc500"
-    - state: stripe_bottom
-      color: "#454a50"
-    - sprite: *icon-rsi
-      offset: *icon-offset
-      state: TramDriver
-  - type: PresetIdCard
-    job: TramDriver
->>>>>>> master
 
 #Supply
 
