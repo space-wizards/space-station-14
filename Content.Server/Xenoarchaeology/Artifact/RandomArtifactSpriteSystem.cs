@@ -47,7 +47,7 @@ public sealed partial class RandomArtifactSpriteSystem : EntitySystem
     {
         var randomSprite = _random.Next(component.MinSprite, component.MaxSprite + 1);
         _appearance.SetData(uid, SharedArtifactsVisuals.SpriteIndex, randomSprite);
-        _item.SetHeldPrefix(uid, "ano" + randomSprite.ToString("D2")); //set item artifact inhands
+        _item.SetHeldPrefix(uid, component.Prefix + randomSprite.ToString("D2")); //set item artifact inhands
     }
 
     private void UnlockingStageStarted(Entity<RandomArtifactSpriteComponent> ent, ref ArtifactUnlockingStartedEvent args)
