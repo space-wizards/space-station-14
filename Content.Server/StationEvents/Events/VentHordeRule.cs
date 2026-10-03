@@ -91,30 +91,8 @@ public sealed partial class VentHordeRule : StationEventSystem<VentHordeRuleComp
 
     private EntityUid? ChooseVent()
     {
-        // Get a station
-        if (!Station.TryGetRandomStation<StationEventEligibleComponent>(out var station))
-        {
-            return null;
-        }
-
-        // Query the possible locations
-        var locations = EntityQueryEnumerator<VentCritterSpawnLocationComponent, TransformComponent>();
-        var validLocations = new List<EntityUid>();
-
-        // Filter to things on the same station
-        while (locations.MoveNext(out var uid, out _, out var transform))
-        {
-            if (!transform.Anchored)
-                continue;
-
-            if (_hordeSpawnerQuery.HasComp(uid))
-                continue;
-
-            if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == station.Value.Owner)
-            {
-                validLocations.Add(uid);
-            }
-        }
+        var validLocations = Station.GetEntitiesWithComponentOnStation<VentCritterSpawnLocationComponent>(true);
+        validLocations.RemoveWhere(uid => HasComp<VentHordeSpawnerComponent>(uid));
 
         // Pick one at random
         if (validLocations.Count != 0)
