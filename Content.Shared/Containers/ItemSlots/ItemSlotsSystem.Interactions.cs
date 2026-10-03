@@ -1,6 +1,8 @@
+using Content.Shared.Containers.ItemSlots.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.UserInterface;
 
 namespace Content.Shared.Containers.ItemSlots;
 
@@ -117,6 +119,17 @@ public sealed partial class ItemSlotsSystem
             args.Handled = true;
             return;
         }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnActivatableUIRequiresItemSlot(Entity<ActivatableUIRequiresFilledItemSlotComponent> ent, ref ActivatableUIOpenAttemptEvent args)
+    {
+        if (HasItemInAnySlot(ent.Owner))
+            return;
+
+        args.Cancel();
+        if (!args.Silent)
+            _popupSystem.PopupEntity(Loc.GetString("no-item-slots-filled"), ent, args.User);
     }
 
     [SubscribeLocalEvent]

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -47,6 +48,16 @@ public sealed partial class ItemSlotsComponent : Component
     /// </remarks>
     [DataField]
     public bool AllowSmartEquip;
+
+    /// <summary>
+    /// Whether to condense item slots containing the same item prototype in the same radial menu option.
+    /// This is used in <seealso cref="RadialItemSlotMenuBoundUserInterface"/>.
+    /// </summary>
+    /// <remarks>
+    /// If two slots contain a wet floor sign, they will be condensed into one nested radial option, instead of two radial options.
+    /// </remarks>
+    [DataField]
+    public bool CompactSimilarItemsInRadialMenu = true;
 }
 
 /// <summary>
@@ -226,7 +237,9 @@ public sealed partial class ItemSlot
     public string? ID => ContainerSlot?.ID;
 
     // Convenience properties
+    [MemberNotNullWhen(true, nameof(Item))]
     public bool HasItem => ContainerSlot?.ContainedEntity != null;
+
     public EntityUid? Item => ContainerSlot?.ContainedEntity;
 
     /// <summary>
