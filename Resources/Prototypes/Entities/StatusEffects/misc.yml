@@ -176,7 +176,6 @@
     whitelist:
       components:
       - MobState
-      - Blindable
       requireAll: true
   - type: FlashedStatusEffect
 
