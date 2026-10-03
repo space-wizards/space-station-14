@@ -24,7 +24,7 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
     [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private ILogManager _logManager = default!;
 
-    private readonly ISawmill _sawmill = default!;
+    private readonly ISawmill _sawmill;
 
     public IPrototype? RepresentedPrototype { get; private set; }
 
@@ -136,7 +136,7 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
 
             var liquidColorLabel = new GuidebookRichPrototypeLink();
             liquidColorLabel.SetMessage(liquidColorMsg);
-            liquidColorLabel.HorizontalAlignment = Control.HAlignment.Center;
+            liquidColorLabel.HorizontalAlignment = HAlignment.Center;
             liquidColorLabel.LinkedPrototype = reagent;
 
             IngredientsGrid.AddChild(liquidColorLabel);
