@@ -202,7 +202,7 @@ public sealed partial class CloningPodSystem : EntitySystem
         }
         // end of genetic damage checks
 
-        if (!_cloning.TryCloning(bodyToClone, _transformSystem.GetMapCoordinates(bodyToClone), SettingsId, out var mob)) // spawn a new body
+        if (!_cloning.TryCloneHumanoid(bodyToClone, _transformSystem.GetMapCoordinates(bodyToClone), SettingsId, out var mob)) // spawn a new body
         {
             if (clonePod.ConnectedConsole != null)
                 _chatSystem.TrySendInGameICMessage(clonePod.ConnectedConsole.Value, Loc.GetString("cloning-console-uncloneable-trait-error"), InGameICChatType.Speak, false);

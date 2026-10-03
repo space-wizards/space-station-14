@@ -12,13 +12,13 @@ namespace Content.Server.Fax.AdminUI;
 public sealed partial class AdminFaxEui : BaseEui
 {
     [Dependency] private IEntityManager _entityManager = default!;
-    private readonly FaxSystem _faxSystem;
+    private readonly ServerFaxSystem _faxSystem;
     private readonly FollowerSystem _followerSystem;
 
     public AdminFaxEui()
     {
         IoCManager.InjectDependencies(this);
-        _faxSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<FaxSystem>();
+        _faxSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ServerFaxSystem>();
         _followerSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<FollowerSystem>();
     }
 
@@ -33,7 +33,7 @@ public sealed partial class AdminFaxEui : BaseEui
         var entries = new List<AdminFaxEntry>();
         while (faxes.MoveNext(out var uid, out var fax, out var device))
         {
-            entries.Add(new AdminFaxEntry(_entityManager.GetNetEntity(uid), fax.FaxName, device.Address));
+            entries.Add(new AdminFaxEntry(_entityManager.GetNetEntity(uid), fax.Name, device.Address));
         }
         return new AdminFaxEuiState(entries);
     }
@@ -55,10 +55,14 @@ public sealed partial class AdminFaxEui : BaseEui
             }
             case AdminFaxEuiMsg.Send sendData:
             {
-                var printout = new FaxPrintout(sendData.Content, sendData.Title, null, null, sendData.StampState,
-                        new() { new StampDisplayInfo { StampedName = sendData.From, StampedColor = sendData.StampColor } },
-                        locked: sendData.Locked);
-                _faxSystem.Receive(_entityManager.GetEntity(sendData.Target), printout);
+                var payload = _faxSystem.GetPayload(new FaxPrintout(sendData.Content,
+                    sendData.Title,
+                    null,
+                    null,
+                    sendData.StampState,
+                    [new() { StampedName = sendData.From, StampedColor = sendData.StampColor }],
+                    sendData.Locked));
+                _faxSystem.Receive(_entityManager.GetEntity(sendData.Target), payload);
                 break;
             }
         }
