@@ -1,17 +1,25 @@
 - type: entity
   parent: [ BaseWallmountMachine, StructureHealthMachineWeak ]
   id: WallmountTelescreen
-  suffix: camera monitor
-  name: telescreen
-  description: Finally, some decent reception around here...
+  name: camera monitor
+  suffix: Wallmount
+  description: A wallmounted surveillance camera monitor. You're watching them. Maybe.
   components:
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
     layers:
-      - map: ["computerLayerBody"]
-        state: telescreen_frame
-      - map: ["computerLayerScreen"]
-        state: telescreen
+      - state: telescreen_frame
+      - state: telescreen
+      - map: ["enum.PowerDeviceVisualLayers.Powered"]
+        state: telescreen_cameras
+        shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
   - type: Damageable
     damageModifierSet: GlassMod
   - type: Destructible
@@ -40,6 +48,8 @@
     radius: 1.5
     energy: 3.0
     color: "#b89f25"
+    enabled: false
+  - type: LitOnPowered
   - type: DeviceNetwork
     deviceNetId: Wired
     receiveFrequencyId: SurveillanceCamera
@@ -60,19 +70,16 @@
 - type: entity
   parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: WallmountTelescreenFrame
-  name: telescreen frame
-  description: Finally, some decent reception around here...
+  name: camera monitor frame
+  suffix: Wallmount
+  description: A frame for a wallmounted surveillance camera monitor.
   components:
   - type: Construction
     graph: WallmountTelescreen
     node: TelescreenFrame
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
-    layers:
-    - map: ["computerLayerBody"]
-      state: telescreen_frame
-    - map: ["computerLayerScreen"]
-      state: telescreen
+    state: telescreen_frame
   - type: Destructible
     thresholds:
     - trigger:
