@@ -6,7 +6,8 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface INearbyAccessCondition : IConditionByEvent<INearbyAccessCondition>, IConditionWithDefaultSatisfactionRule
+public interface INearbyAccessCondition : IConditionByEvent<INearbyAccessCondition>,
+    IConditionWithDefaultSatisfactionRule
 {
     // This exists because of door electronics contained inside doors.
     /// <summary>

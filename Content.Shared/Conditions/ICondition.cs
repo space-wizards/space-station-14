@@ -1,13 +1,11 @@
 namespace Content.Shared.Conditions;
 
-
 public interface ICondition
 {
     /// <summary>
     /// If set, rather than just checkin on value != 0, we use some more intricate logic.
     /// </summary>
     Satisfier.Satisfier? Satisfier { get; }
-
 }
 
 /// <summary>
@@ -16,7 +14,6 @@ public interface ICondition
 /// </summary>
 public interface IConditionByEvent : ICondition
 {
-
     /// <summary>
     /// Used to help the evaluation system to raise an event to evaluate this condition.
     /// </summary>
@@ -41,7 +38,8 @@ public interface IConditionByEvent<TCondition> : IConditionByEvent where TCondit
 public interface IConditionWithDefaultSatisfactionRule : ICondition
 {
     /// <summary>
-    /// Gives a default satisfier, which the evaluation system will use if <see cref="IConditionByEvent.Satisfier" /> is not set.
+    /// Gives a default satisfier, which the evaluation system will use if <see cref="IConditionByEvent.Satisfier" /> is not
+    /// set.
     /// </summary>
     /// <returns></returns>
     Satisfier.Satisfier GetDefaultSatisfier();

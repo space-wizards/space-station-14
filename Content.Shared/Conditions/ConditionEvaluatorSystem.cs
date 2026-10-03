@@ -7,7 +7,7 @@ namespace Content.Shared.Conditions;
 public abstract class ConditionEvaluatorSystem<TCondition> : EntitySystem where TCondition : ICondition
 {
     /// <summary>
-    /// The main evaluation function called by <see cref="SharedConditionEvaluationSystem.EvaluateCondition"/>
+    /// The main evaluation function called by <see cref="SharedConditionEvaluationSystem.EvaluateCondition" />
     /// </summary>
     /// <param name="condition"></param>
     /// <param name="entityUid"></param>
@@ -15,4 +15,3 @@ public abstract class ConditionEvaluatorSystem<TCondition> : EntitySystem where 
     /// <returns></returns>
     public abstract float Evaluate(TCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null);
 }
-

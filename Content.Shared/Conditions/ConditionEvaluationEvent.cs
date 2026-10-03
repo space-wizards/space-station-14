@@ -7,7 +7,10 @@ namespace Content.Shared.Conditions;
 /// <param name="entityUid">The entity for which we check the condition</param>
 /// <param name="sourceEntity">An optional entity, which triggered this evaluation</param>
 [ByRefEvent]
-public abstract class ConditionEvaluationEvent(IConditionByEvent condition, EntityUid entityUid, EntityUid? sourceEntity)
+public abstract class ConditionEvaluationEvent(
+    IConditionByEvent condition,
+    EntityUid entityUid,
+    EntityUid? sourceEntity)
 {
     /// <summary>
     /// The entity for which we check the condition

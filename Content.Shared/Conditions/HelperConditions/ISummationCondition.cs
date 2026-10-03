@@ -27,7 +27,7 @@ public sealed partial class SummationConditionSystem : ConditionEvaluatorSystem<
             return condition.Summands
                 .Sum(e => _conditionEvaluationSystem.EvaluateCondition(e, entityUid, sourceEntity));
         }
-        else
-            return 0;
+
+        return 0;
     }
 }

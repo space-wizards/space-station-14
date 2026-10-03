@@ -2,7 +2,6 @@ namespace Content.Shared.Conditions.UnifiedConditions;
 
 public interface IEntityAnchoredCondition : IConditionByEvent<IEntityAnchoredCondition>
 {
-
 }
 
 public sealed partial class EntityAnchoredConditionSystem : EntitySystem

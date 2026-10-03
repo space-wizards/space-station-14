@@ -1,5 +1,4 @@
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Conditions.Satisfier;
@@ -35,10 +34,10 @@ public interface IReagentCondition : IConditionByEvent<IReagentCondition>, ICond
     {
         if (Min == Max)
         {
-            return new WithThreshold()
+            return new WithThreshold
             {
                 Threshold = 1,
-                Comparison = WithThreshold.Comparator.Equal
+                Comparison = WithThreshold.Comparator.Equal,
             };
         }
 
@@ -84,12 +83,8 @@ public sealed partial class ReagentEntityConditionSystem : EntitySystem
         var quant = solution.GetTotalPrototypeQuantity(args.Condition.Reagent);
 
         if (args.Condition.Max == args.Condition.Min)
-        {
             args.Value = quant == args.Condition.Max ? 1 : 0;
-        }
         else
-        {
             args.Value = ((quant - args.Condition.Min) / (args.Condition.Max - args.Condition.Min)).Float();
-        }
     }
 }

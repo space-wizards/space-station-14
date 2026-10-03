@@ -4,7 +4,6 @@ namespace Content.Shared.Conditions.UnifiedConditions;
 
 public interface ILockedCondition : IConditionByEvent<ILockedCondition>
 {
-
 }
 
 public sealed partial class LockedConditionSystem : EntitySystem

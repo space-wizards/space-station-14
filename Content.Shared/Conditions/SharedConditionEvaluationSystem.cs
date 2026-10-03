@@ -1,9 +1,6 @@
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using Content.Shared.Conditions.HelperConditions;
-using Content.Shared.Mindshield;
 using Robust.Shared.Reflection;
 using Robust.Shared.Utility;
 
@@ -15,17 +12,17 @@ namespace Content.Shared.Conditions;
 public sealed partial class SharedConditionEvaluationSystem : EntitySystem
 {
     /// <summary>
+    /// A lookup of ICondition types to a dedicated function that evaluates it.
+    /// build using <see cref="CreateBindingsForEvaluator" />
+    /// </summary>
+    private readonly Dictionary<Type, Func<ICondition, EntityUid, EntityUid?, float>> _bindings = [];
+
+    /// <summary>
     /// added dependency to ensure all systems have been loaded.
     /// </summary>
     [Dependency] private IEntitySystemManager _entitySystemManager = default!;
 
     [Dependency] private IReflectionManager _reflectionManager = default!;
-
-    /// <summary>
-    /// A lookup of ICondition types to a dedicated function that evaluates it.
-    /// build using <see cref="CreateBindingsForEvaluator"/>
-    /// </summary>
-    private readonly Dictionary<Type, Func<ICondition, EntityUid, EntityUid?, float>> _bindings = [];
 
     public override void Initialize()
     {
@@ -82,9 +79,11 @@ public sealed partial class SharedConditionEvaluationSystem : EntitySystem
                             _bindings.Keys.FirstOrDefault(e => currentBase.IsAssignableTo(e));
                 if (match != null)
                 {
-                    bindingsToAdd.Add(new(type, _bindings[match]));
+                    bindingsToAdd.Add(
+                        new KeyValuePair<Type, Func<ICondition, EntityUid, EntityUid?, float>>(type, _bindings[match]));
                     break;
                 }
+
                 // Move up to the next parent class
                 currentBase = currentBase.BaseType;
             }
@@ -131,7 +130,7 @@ public sealed partial class SharedConditionEvaluationSystem : EntitySystem
     }
 
     /// <summary>
-    /// Help function to create the entry in <see cref="_bindings"/> for a given condition and evaluator system pair.
+    /// Help function to create the entry in <see cref="_bindings" /> for a given condition and evaluator system pair.
     /// </summary>
     /// <param name="conditionType"></param>
     /// <param name="evaluatorSystemType"></param>
@@ -185,9 +184,7 @@ public sealed partial class SharedConditionEvaluationSystem : EntitySystem
     public float EvaluateCondition(ICondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
         if (_bindings.TryGetValue(condition.GetType(), out var func))
-        {
             return func(condition, entityUid, sourceEntity);
-        }
 
         if (condition is not IConditionByEvent conditionByEvent)
         {

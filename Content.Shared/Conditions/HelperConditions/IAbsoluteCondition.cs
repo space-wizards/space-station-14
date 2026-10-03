@@ -12,9 +12,8 @@ public interface IAbsoluteCondition : ICondition
 /// <summary>
 /// System for evaluating <see cref="IAbsoluteCondition" />
 /// </summary>
-public sealed partial class AbsoluteConditionSystem : ConditionEvaluatorSystem<IAbsoluteCondition>
+public sealed class AbsoluteConditionSystem : ConditionEvaluatorSystem<IAbsoluteCondition>
 {
-
     public override float Evaluate(IAbsoluteCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
         return condition.Value;

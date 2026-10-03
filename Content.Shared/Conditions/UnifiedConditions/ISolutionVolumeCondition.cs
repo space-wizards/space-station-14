@@ -5,7 +5,8 @@ using Content.Shared.FixedPoint;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface ISolutionVolumeCondition : IConditionByEvent<ISolutionVolumeCondition>, IConditionWithDefaultSatisfactionRule
+public interface ISolutionVolumeCondition : IConditionByEvent<ISolutionVolumeCondition>,
+    IConditionWithDefaultSatisfactionRule
 {
     /// <summary>
     /// Minimum amount required.
@@ -27,10 +28,10 @@ public interface ISolutionVolumeCondition : IConditionByEvent<ISolutionVolumeCon
     {
         if (Min == Max)
         {
-            return new WithThreshold()
+            return new WithThreshold
             {
                 Threshold = 1,
-                Comparison = WithThreshold.Comparator.Equal
+                Comparison = WithThreshold.Comparator.Equal,
             };
         }
 
@@ -43,7 +44,6 @@ public interface ISolutionVolumeCondition : IConditionByEvent<ISolutionVolumeCon
             Inverted = false,
         };
     }
-
 }
 
 /// <summary>
@@ -54,11 +54,12 @@ public sealed partial class SolutionVolumeConditionSystem : EntitySystem
     [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
     [SubscribeLocalEvent]
-    private void Condition(Entity<MetaDataComponent> entity, ref ConditionEvaluationEvent<ISolutionVolumeCondition> args)
+    private void Condition(Entity<MetaDataComponent> entity,
+        ref ConditionEvaluationEvent<ISolutionVolumeCondition> args)
     {
         args.Handled = true;
 
-        if(args.Condition.Max == args.Condition.Min&&args.Condition.Max==0)
+        if (args.Condition.Max == args.Condition.Min && args.Condition.Max == 0)
             args.Value = 1;
 
         Solution? solution;
@@ -75,14 +76,9 @@ public sealed partial class SolutionVolumeConditionSystem : EntitySystem
         }
 
 
-
         if (args.Condition.Max == args.Condition.Min)
-        {
             args.Value = solution.Volume == args.Condition.Max ? 1 : 0;
-        }
         else
-        {
             args.Value = ((solution.Volume - args.Condition.Min) / (args.Condition.Max - args.Condition.Min)).Float();
-        }
     }
 }

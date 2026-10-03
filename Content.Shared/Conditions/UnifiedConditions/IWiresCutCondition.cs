@@ -4,16 +4,14 @@ namespace Content.Shared.Conditions.UnifiedConditions;
 
 public interface IWiresCutCondition : IConditionByEvent<IWiresCutCondition>, IConditionWithDefaultSatisfactionRule
 {
-
     bool Value { get; }
 
     Satisfier.Satisfier IConditionWithDefaultSatisfactionRule.GetDefaultSatisfier()
     {
-        return new WithThreshold()
+        return new WithThreshold
         {
             Comparison = WithThreshold.Comparator.GreaterEqual,
-            Threshold = 1
+            Threshold = 1,
         };
     }
 }
-

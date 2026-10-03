@@ -1,4 +1,3 @@
-using Content.Shared.Conditions.HelperConditions;
 using Content.Shared.Doors.Components;
 
 namespace Content.Shared.Conditions.UnifiedConditions;

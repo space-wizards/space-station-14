@@ -1,6 +1,5 @@
 using Content.Shared.Doors.Components;
 
-
 namespace Content.Shared.Conditions.UnifiedConditions;
 
 public interface IDoorBoltedCondition : IConditionByEvent<IDoorBoltedCondition>

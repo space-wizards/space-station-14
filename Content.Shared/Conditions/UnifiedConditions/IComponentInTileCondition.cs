@@ -10,11 +10,10 @@ public interface IComponentInTileCondition : IConditionByEvent<IComponentInTileC
 
 public sealed partial class ComponentInTileConditionSystem : EntitySystem
 {
-
     [Dependency] private IComponentFactory ComponentFactory = default!;
-    [Dependency] private SharedTransformSystem transformSys = default!;
-    [Dependency] private EntityLookupSystem lookup = default!;
     [Dependency] private IEntityManager entityManager = default!;
+    [Dependency] private EntityLookupSystem lookup = default!;
+    [Dependency] private SharedTransformSystem transformSys = default!;
 
     [SubscribeLocalEvent]
     private void Condition(Entity<TransformComponent> entity,
@@ -37,10 +36,11 @@ public sealed partial class ComponentInTileConditionSystem : EntitySystem
 
         var indices = transform.Coordinates.ToVector2i(entityManager, transformSys);
 
-        if (!entityManager.System<SharedMapSystem>().TryGetTileRef(transform.GridUid.Value, grid, indices, out var tile))
+        if (!entityManager.System<SharedMapSystem>()
+                .TryGetTileRef(transform.GridUid.Value, grid, indices, out var tile))
             return;
 
-        foreach (var ent in lookup.GetEntitiesInTile(tile, flags: LookupFlags.Approximate | LookupFlags.Static))
+        foreach (var ent in lookup.GetEntitiesInTile(tile, LookupFlags.Approximate | LookupFlags.Static))
         {
             if (entityManager.HasComponent(ent, type))
                 args.Value++;
