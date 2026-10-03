@@ -35,7 +35,6 @@ public abstract partial class SharedDoorRemoteSystem : EntitySystem
     {
         SubscribeLocalEvent<DoorRemoteComponent, DoorRemoteModeChangeMessage>(OnDoorRemoteModeChange);
         SubscribeLocalEvent<DoorRemoteComponent, BeforeRangedInteractEvent>(OnBeforeInteract);
-        SubscribeLocalEvent<DoorRemoteComponent, StationAiDoorRemoteInteractEvent>(OnStationAiInteract);
     }
 
     private void OnDoorRemoteModeChange(Entity<DoorRemoteComponent> ent, ref DoorRemoteModeChangeMessage args)
@@ -49,14 +48,8 @@ public abstract partial class SharedDoorRemoteSystem : EntitySystem
         HandleInteraction(entity, args.User, args.Used, args.Target, ref args);
     }
 
-    private void OnStationAiInteract(Entity<DoorRemoteComponent> entity, ref StationAiDoorRemoteInteractEvent args)
-    {
-        var interaction = new BeforeRangedInteractEvent(args.User, entity.Owner, args.Target, Transform(args.Target).Coordinates, true);
-        HandleInteraction(entity, args.User, entity.Owner, args.Target, ref interaction, args.RangeUser);
-        args.Handled = interaction.Handled;
-    }
 
-    private void HandleInteraction(
+    public void HandleInteraction(
         Entity<DoorRemoteComponent> entity,
         EntityUid user,
         EntityUid used,

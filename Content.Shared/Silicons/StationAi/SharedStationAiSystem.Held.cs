@@ -8,6 +8,8 @@ using Content.Shared.Verbs;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Doors.Components;
+using Content.Shared.Remotes.EntitySystems;
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -26,7 +28,6 @@ public abstract partial class SharedStationAiSystem
 
         SubscribeLocalEvent<StationAiHeldComponent, InteractionAttemptEvent>(OnHeldInteraction);
         SubscribeLocalEvent<InteractHandEvent>(OnInteractHand);
-        SubscribeLocalEvent<ActivateInWorldEvent>(OnActivateInWorld);
         SubscribeLocalEvent<StationAiHeldComponent, AttemptRelayActionComponentChangeEvent>(OnHeldRelay);
         SubscribeLocalEvent<StationAiHeldComponent, JumpToCoreEvent>(OnCoreJump);
 
@@ -52,49 +53,31 @@ public abstract partial class SharedStationAiSystem
 
     private void OnInteractHand(InteractHandEvent args)
     {
-        if (TryHandleAiDoorRemote(args.User, args.Target))
-            args.Handled = true;
+        var target = args.Target;
+
+        if (HasComp<DoorComponent>(target))
+        {
+            args.Handled = TryHandleAiDoorRemoteInteract(args.User, args.Target);
+        }
     }
 
-    private void OnActivateInWorld(ActivateInWorldEvent args)
+    private bool TryHandleAiDoorRemoteInteract(EntityUid user, EntityUid target)
     {
-        if (TryHandleAiDoorRemote(args.User, args.Target))
-            args.Handled = true;
-    }
-
-    private bool TryHandleAiDoorRemote(EntityUid user, EntityUid target)
-    {
-        Entity<StationAiCoreComponent?> core;
-        EntityUid? held = null;
-        EntityUid? rangeUser = null;
-
-        if (TryGetCore(user, out core) && TryGetHeld(core, out held))
+        if (!TryGetCore(user, out var aiCore) || !TryGetHeld(aiCore, out var aiHeld))
         {
-            rangeUser = core.Comp?.RemoteEntity;
-        }
-        else
-        {
-            var query = EntityQueryEnumerator<StationAiCoreComponent>();
-            while (query.MoveNext(out var coreUid, out var coreComp))
-            {
-                if (coreUid != user && coreComp.RemoteEntity != user)
-                    continue;
-
-                core = (coreUid, coreComp);
-                if (TryGetHeld(core, out held))
-                {
-                    rangeUser = core.Comp?.RemoteEntity;
-                    break;
-                }
-            }
-        }
-
-        if (held == null || !HasComp<DoorRemoteComponent>(held.Value))
             return false;
+        }
 
-        var ev = new StationAiDoorRemoteInteractEvent(held.Value, target, rangeUser);
-        RaiseLocalEvent(held.Value, ev);
-        return ev.Handled;
+        if (!HasComp<DoorRemoteComponent>(aiHeld.Value))
+        {
+            return false;
+        }
+
+        var beforeRangedInteractEvent =
+            new BeforeRangedInteractEvent(aiHeld.Value, aiHeld.Value, target, Transform(target).Coordinates, true);
+        RaiseLocalEvent(aiHeld.Value, beforeRangedInteractEvent, true);
+
+        return beforeRangedInteractEvent.Handled;
     }
 
     /// <summary>
@@ -264,20 +247,6 @@ public abstract partial class SharedStationAiSystem
 public sealed class StationAiRadialMessage : BoundUserInterfaceMessage
 {
     public BaseStationAiAction Event = default!;
-}
-
-public sealed class StationAiDoorRemoteInteractEvent : HandledEntityEventArgs
-{
-    public EntityUid User { get; }
-    public EntityUid Target { get; }
-    public EntityUid? RangeUser { get; }
-
-    public StationAiDoorRemoteInteractEvent(EntityUid user, EntityUid target, EntityUid? rangeUser)
-    {
-        User = user;
-        Target = target;
-        RangeUser = rangeUser;
-    }
 }
 
 // Do nothing on server just here for shared move along.

@@ -35,8 +35,8 @@
 - type: entity
   parent: BaseMentalAction
   id: ActionOpenDoorRadialMenu
-  name: Open Door Radial Menu
-  description: Opens the radial menu for doors.
+  name: Set door action
+  description: Set the action that will happen when you interact with doors.
   components:
   - type: Action
     priority: -8
@@ -45,5 +45,9 @@
     sprite: Objects/Devices/door_remote.rsi
     layers:
     - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#5ed7aa"
+    - state: door_remotescreencolour
+      color: "#5ed7aa"
   - type: InstantAction
     event: !type:OpenDoorRadialMenuEvent
