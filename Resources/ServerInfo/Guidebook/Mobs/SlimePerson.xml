@@ -4,21 +4,26 @@
   <Box>
     <GuideEntityEmbed Entity="MobSlimePerson" Caption=""/>
   </Box>
+  ###Air, Unlimited Air, but no air.
+  Slimepeople [italic](unlike most species)[/italic] breathe [bold][color=#f65044]Nitrogen[/bold] (N2)[/color] instead of [color=#2694d6][bold]Oxygen[/bold] (O2)[/color].
+  \nIt's abundant in the station's atmosphere, but rarer to find compressed into portable gas tanks.
+  \nThey [bold]suffocate 80% slower[/bold], but take [bold]9% more barotrauma damage[/bold]. This makes them by far the species most capable to survive when the air is thin, or spaced completely.
 
-  They breathe nitrogen instead of oxygen, which is abundant in the station air, but harder to find compressed into gas tanks. They take significant damage if they are sprayed or splashed with water, but can
-  (and like other species, need to) drink it safely to stay hydrated.
-  They exhale nitrous oxide and are unaffected by it.
-  Their body can process 6 reagents at the same time instead of just 2.
+###Oh god it burns!
+  They take [italic]significant burns[/italic] when [bold]slashed or sprayed with [color=#75b1f0]Water[/color][/bold], but passively heal burns twice as fast.
+  \nThey still need to drink it to stay hydrated, and can do so safely.
 
+
+ ###It has pockets!
   Slimepeople have an [bold]internal 2x3 storage inventory[/bold] inside of their slime membrane. Anyone can see what's inside and take it out of you without asking,
   so be careful.
 
-  Slimepeople have roughly [color=#1e90ff]double[/color] regeneration compared to other humanoids and can regenerate from far greater wounds up to [color=#1e90ff]triple[/color] compared to others.
+###Full of chemicals.
+  They exhale nitrous oxide and are unaffected by it, and can process 6 reagents a second, instead of just 2.
+  \nTheir slime "blood" can not be regenerated from iron, though can be syringed up off the floor, and injected back into their bodies
+  \n[bold][color=#2cf274]Slime[/color][/bold] is technically a source of food for other species, although drinking the blood of your coworkers is [italic]usually[/italic] frowned upon.
 
-  Their slime "blood" can not be regenerated from Iron. Slime Blood is technically a source of
-  moderately filling food for other species, although drinking the blood of your coworkers is usually frowned upon.
-  They suffocate 80% slower, but take pressure damage 9% faster. This makes them by far the species most capable to survive in hard vacuum. For a while.
-
-  They take [color=#1e90ff]40% less Blunt damage[/color], but [color=#ffa500]50% more Cold damage, 20% more Slash damage and 20% more Piercing damage[/color].
-
+###Damage.
+  They take [bold][color=#1e90ff]40% less Blunt damage[/color][/bold], but [bold][color=#ffa500]50% more Cold damage, 20% more Slash damage and 20% more Piercing damage[/color][/bold].
+  Their punches do [italic]5 blunt damage[/italic]
 </Document>
