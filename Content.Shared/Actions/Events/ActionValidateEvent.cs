@@ -1,3 +1,5 @@
+using Robust.Shared.Map;
+
 namespace Content.Shared.Actions.Events;
 
 /// <summary>
@@ -7,22 +9,32 @@ namespace Content.Shared.Actions.Events;
 /// 3. Give the action system an event to raise on the performer, to actually do the action.
 /// </summary>
 [ByRefEvent]
-public struct ActionValidateEvent
+public record struct ActionValidateEvent(EntityUid Action, EntityUid? Target, EntityCoordinates? Coordinates, EntityUid User, EntityUid Provider)
 {
     /// <summary>
-    /// Request event the client sent.
+    /// Action being attempted to be used
     /// </summary>
-    public RequestPerformActionEvent Input;
+    public EntityUid Action = Action;
+
+    /// <summary>
+    /// Possible target action is being used on
+    /// </summary>
+    public EntityUid? EntityTarget = Target;
+
+    /// <summary>
+    /// Possible coordinates action is being used on
+    /// </summary>
+    public EntityCoordinates? EntityCoordinatesTarget = Coordinates;
 
     /// <summary>
     /// User trying to use the action.
     /// </summary>
-    public EntityUid User;
+    public EntityUid User = User;
 
     /// <summary>
     /// Entity providing this action to the user, used for logging.
     /// </summary>
-    public EntityUid Provider;
+    public EntityUid Provider = Provider;
 
     /// <summary>
     /// If set to true, the client sent invalid event data and this should be logged as an error.

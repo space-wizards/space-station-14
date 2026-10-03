@@ -1,4 +1,4 @@
-using Content.Shared.Actions.Events;
+﻿using Content.Shared.Actions.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 
@@ -11,7 +11,7 @@ public abstract partial class SharedActionsSystem
         SubscribeLocalEvent<DoAfterArgsComponent, ActionDoAfterEvent>(OnActionDoAfter);
     }
 
-    private bool TryStartActionDoAfter(Entity<DoAfterArgsComponent> ent, Entity<DoAfterComponent?> performer, TimeSpan? originalUseDelay, RequestPerformActionEvent input)
+    private bool TryStartActionDoAfter(Entity<DoAfterArgsComponent> ent, Entity<DoAfterComponent?> performer, TimeSpan? originalUseDelay, ActionArgs input)
     {
         // relay to user
         if (!Resolve(performer, ref performer.Comp))
@@ -20,7 +20,7 @@ public abstract partial class SharedActionsSystem
         var delay = ent.Comp.Delay;
 
         // If there is a target to the action, they are they target of the doafter. Otherwise it is the performer.
-        var target = GetEntity(input.EntityTarget) ?? performer;
+        var target = GetEntity(input.NetTarget) ?? performer;
         var netEnt = GetNetEntity(performer);
 
         var actionDoAfterEvent = new ActionDoAfterEvent(netEnt, originalUseDelay, input);
@@ -80,7 +80,7 @@ public abstract partial class SharedActionsSystem
             args.Args.Delay = ent.Comp.DelayReduction.Value;
 
         // Validate again for charges, blockers, etc
-        if (TryPerformAction(args.Input, performer, skipDoActionRequest: true))
+        if (TryPerformAction(performer, args.Input, skipDoActionRequest: true))
             return;
 
         // Cancel this doafter if we can't validate the action
