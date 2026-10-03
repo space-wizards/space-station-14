@@ -46,7 +46,7 @@ namespace Content.Client.Inventory
         private readonly ExamineSystem _examine;
         private readonly HandsSystem _hands;
         private readonly InventorySystem _inv;
-        private readonly SharedCuffableSystem _cuffable;
+        private readonly CuffableSystem _cuffable;
         private readonly StrippableSystem _strippable;
         private readonly SharedEnsnareableSystem _snare;
         private readonly ContrabandSystem _contraband;
@@ -102,7 +102,7 @@ namespace Content.Client.Inventory
             _examine = EntMan.System<ExamineSystem>();
             _hands = EntMan.System<HandsSystem>();
             _inv = EntMan.System<InventorySystem>();
-            _cuffable = EntMan.System<SharedCuffableSystem>();
+            _cuffable = EntMan.System<CuffableSystem>();
             _strippable = EntMan.System<StrippableSystem>();
             _contraband = EntMan.System<ContrabandSystem>();
             _snare = EntMan.System<SharedEnsnareableSystem>();

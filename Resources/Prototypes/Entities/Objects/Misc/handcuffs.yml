@@ -9,7 +9,7 @@
     storedRotation: 90
   - type: Handcuff
     cuffedRSI: Objects/Misc/handcuffs.rsi
-    bodyIconState: body-overlay
+    validStates: [ arachnid ]
   - type: Sprite
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
@@ -37,9 +37,9 @@
   parent: Handcuffs
   components:
   - type: Handcuff
+    validStates: [ arachnid ]
     breakoutTime: 3
     cuffedRSI: Objects/Misc/cablecuffs.rsi
-    bodyIconState: body-overlay
     color: forestgreen
     breakOnRemove: true
     brokenPrototype: CablecuffsBroken
@@ -79,9 +79,9 @@
     size: Tiny
     storedRotation: 0
   - type: Handcuff
+    validStates: [ arachnid ]
     breakoutTime: 3
     cuffedRSI: Objects/Misc/cablecuffs.rsi  # cablecuffs will look fine
-    bodyIconState: body-overlay
     breakOnRemove: true
     brokenPrototype: ZiptiesBroken
     startCuffSound:
@@ -150,6 +150,7 @@
   - type: Item
     size: Normal
   - type: Handcuff
+    validStates: [ vox ]
     cuffedRSI: Clothing/OuterClothing/Misc/straight_jacket.rsi
     breakoutTime: 100
     cuffTime: 10
