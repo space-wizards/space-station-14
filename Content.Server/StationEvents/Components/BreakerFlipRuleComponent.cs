@@ -8,12 +8,6 @@ namespace Content.Server.StationEvents.Components;
 public sealed partial class BreakerFlipRuleComponent : Component
 {
     /// <summary>
-    /// Blacklist of structures not eligible to trigger this game rule.
-    /// </summary>
-    [DataField]
-    public EntityWhitelist? Blacklist;
-
-    /// <summary>
     /// range of how many APCs should be hit by this game rule
     /// </summary>
     [DataField]

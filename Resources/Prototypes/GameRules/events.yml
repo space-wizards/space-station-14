@@ -160,9 +160,6 @@
     startAudio:
       path: /Audio/Announcements/announce.ogg
   - type: BreakerFlipRule
-    blacklist:
-      components:
-        - ProtectedGrid
     affectedQuantity:
       min: 3
       max: 6
