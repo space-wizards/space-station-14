@@ -24,20 +24,18 @@ namespace Content.IntegrationTests.Tests.Conditions
             var pair = Pair;
             var server = pair.Server;
 
-         //   var testMap = await pair.CreateTestMap();
+            //   var testMap = await pair.CreateTestMap();
             var evaluationSystem = server.System<SharedConditionEvaluationSystem>();
 
             await server.WaitAssertion(() =>
             {
+                var entity = SSpawn(null);
 
-                var entity=SSpawn(null);
+                var condition = new AbsoluteCondition() { Value = 555 };
 
-                var condition=new AbsoluteCondition(){Value = 555};
-
-                var value=evaluationSystem.EvaluateCondition(condition, entity, null);
+                var value = evaluationSystem.EvaluateCondition(condition, entity, null);
 
                 Assert.That(value, Is.EqualTo(555));
-
             });
         }
     }
