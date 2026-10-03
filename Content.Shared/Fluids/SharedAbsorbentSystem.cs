@@ -6,11 +6,11 @@ using Content.Shared.Fluids.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Popups;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Components;
+using Content.Shared.Timing.Systems;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Fluids;
@@ -79,8 +79,9 @@ public abstract partial class SharedAbsorbentSystem : EntitySystem
         if (other > FixedPoint2.Zero)
             ent.Comp.Progress[otherColor] = other.Float();
 
+        // Fill the empty part of the reagents bar with Color.Transparent (so that the background is visible in the UI)
         if (solution.AvailableVolume > FixedPoint2.Zero)
-            ent.Comp.Progress[Color.DarkGray] = solution.AvailableVolume.Float();
+            ent.Comp.Progress[Color.Transparent] = solution.AvailableVolume.Float();
 
         Dirty(ent);
         _item.VisualsChanged(ent);

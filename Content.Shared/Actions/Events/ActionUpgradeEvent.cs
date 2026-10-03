@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Actions.Events;
+namespace Content.Shared.Actions.Events;
 
 public sealed class ActionUpgradeEvent : EntityEventArgs
 {

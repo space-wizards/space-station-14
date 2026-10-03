@@ -6,6 +6,7 @@
   startingGear: PsychologistGear
   icon: "JobIconPsychologist"
   supervisors: job-supervisors-hop
+  guides: [ Service ] # TODO: should have a more specific guidebook page instead of using the department itself
   access:
   - Psychologist
   - Maintenance

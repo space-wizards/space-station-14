@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using Content.Client.Graphics;
 using Content.Client.Wall.Systems;
@@ -13,27 +12,35 @@ using Robust.Shared.Timing;
 namespace Content.Client.Wall;
 
 /// <summary>
-/// Renders wall-mounted entities conditionally based on their facing arc relative to the viewport's eye.
+/// Manages the visibility of wall-mounted entities based on their facing arc relative to the viewport's eye.
 /// </summary>
-public sealed partial class WallMountVisibilityOverlay(
-    IGameTiming timing,
-    SharedMapSystem map,
-    SpriteSystem sprite,
-    TransformSystem xform,
-    WallMountTreeSystem tree,
-    WallMountVisibilitySystem visibility,
-    EntityQuery<MapGridComponent> gridQuery,
-    EntityQuery<SpriteComponent> spriteQuery) : Overlay
+public sealed partial class WallMountVisibilityOverlay : Overlay
 {
-    private readonly IGameTiming _timing = timing;
-    private readonly SharedMapSystem _map = map;
-    private readonly SpriteSystem _sprite = sprite;
-    private readonly TransformSystem _xform = xform;
-    private readonly WallMountTreeSystem _tree = tree;
-    private readonly WallMountVisibilitySystem _visibility = visibility;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
-    private readonly EntityQuery<MapGridComponent> _gridQuery = gridQuery;
-    private readonly EntityQuery<SpriteComponent> _spriteQuery = spriteQuery;
+    private readonly SharedMapSystem _map;
+    private readonly SpriteSystem _sprite;
+    private readonly TransformSystem _xform;
+    private readonly WallMountTreeSystem _tree;
+    private readonly WallMountVisibilitySystem _visibility;
+
+    private readonly EntityQuery<MapGridComponent> _gridQuery;
+    private readonly EntityQuery<SpriteComponent> _spriteQuery;
+
+    public WallMountVisibilityOverlay()
+    {
+        IoCManager.InjectDependencies(this);
+
+        _map = _entManager.System<SharedMapSystem>();
+        _sprite = _entManager.System<SpriteSystem>();
+        _xform = _entManager.System<TransformSystem>();
+        _tree = _entManager.System<WallMountTreeSystem>();
+        _visibility = _entManager.System<WallMountVisibilitySystem>();
+
+        _gridQuery = _entManager.GetEntityQuery<MapGridComponent>();
+        _spriteQuery = _entManager.GetEntityQuery<SpriteComponent>();
+    }
 
     /// <summary>
     /// Caches <see cref="ViewportFadeState"/> instances per viewport.
@@ -44,6 +51,11 @@ public sealed partial class WallMountVisibilityOverlay(
     /// Original sprite alphas, shared across viewports to avoid capturing values modified by another viewport.
     /// </summary>
     private readonly Dictionary<EntityUid, float> _originalAlphas = [];
+
+    /// <summary>
+    /// Entities to remove from fade tracking.
+    /// </summary>
+    private readonly List<EntityUid> _toRemove = [];
 
     /// <summary>
     /// Alpha change per second during fade.
@@ -70,14 +82,20 @@ public sealed partial class WallMountVisibilityOverlay(
 
         viewportState.WasFovEnabled = true;
 
-        var fadeStep = FadeSpeed * (float)_timing.FrameTime.TotalSeconds;
+        var fadeStep = _visibility.FadeEnabled ? FadeSpeed * (float)_timing.FrameTime.TotalSeconds : 1f;
         var matrix = args.Viewport.GetWorldToLocalMatrix();
 
         viewportState.SeenThisFrame.Clear();
         ProcessVisibleEntities(args, eye, matrix, fadeStep, viewportState);
 
         // Remove entities that left the viewport this frame.
-        foreach (var uid in viewportState.FadeStates.Keys.Except(viewportState.SeenThisFrame).ToList())
+        _toRemove.Clear();
+        foreach (var uid in viewportState.FadeStates.Keys)
+        {
+            if (!viewportState.SeenThisFrame.Contains(uid))
+                _toRemove.Add(uid);
+        }
+        foreach (var uid in _toRemove)
         {
             RemoveTrackedEntity(uid, viewportState);
         }
@@ -130,7 +148,7 @@ public sealed partial class WallMountVisibilityOverlay(
 
             viewportState.SeenThisFrame.Add(uid);
 
-            var targetAlpha = ComputeTargetAlpha(uid, wallmount, xform, eye, matrix);
+            var targetAlpha = ComputeTargetAlpha(wallmount, xform, eye, matrix);
             UpdateFadeState(uid, originalAlpha, targetAlpha, fadeStep, viewportState);
         }
     }
@@ -138,7 +156,7 @@ public sealed partial class WallMountVisibilityOverlay(
     /// <summary>
     /// Returns 1 if the entity is within its facing arc relative to the eye, 0 otherwise.
     /// </summary>
-    private float ComputeTargetAlpha(EntityUid uid, WallMountComponent wallmount, TransformComponent xform, IEye eye, Matrix3x2 matrix)
+    private float ComputeTargetAlpha(WallMountComponent wallmount, TransformComponent xform, IEye eye, Matrix3x2 matrix)
     {
         if (!wallmount.DirectionalVisibility || wallmount.Arc >= Math.Tau)
             return 1f;
@@ -147,7 +165,7 @@ public sealed partial class WallMountVisibilityOverlay(
             return 1f;
 
         var tile = _map.TileIndicesFor(gridUid, grid, xform.Coordinates);
-        if (!_visibility.IsTileBlocked(gridUid, tile, uid))
+        if (!_visibility.IsTileBlocked((gridUid, grid), tile))
             return 1f;
 
         var (pos, rot) = _xform.GetWorldPositionRotation(xform);
@@ -199,6 +217,10 @@ public sealed partial class WallMountVisibilityOverlay(
         viewportState.FadeStates[uid] = WallMountFadeState.Snapped(originalAlpha, targetAlpha);
     }
 
+
+    /// <summary>
+    /// Restores the sprite color and visibility.
+    /// </summary>
     private void RestoreSprite(EntityUid uid, WallMountFadeState state)
     {
         if (!_spriteQuery.TryGetComponent(uid, out var sprite))
@@ -234,9 +256,20 @@ public sealed partial class WallMountVisibilityOverlay(
         viewportState.SeenThisFrame.Clear();
     }
 
-    protected override void DisposeBehavior()
+    /// <summary>
+    /// Restores all tracked sprites and clears all fade states.
+    /// </summary>
+    public void RestoreAll()
     {
         _fadeCache.Dispose();
+        _originalAlphas.Clear();
+        _toRemove.Clear();
+    }
+
+    protected override void DisposeBehavior()
+    {
+        RestoreAll();
+
         base.DisposeBehavior();
     }
 }
