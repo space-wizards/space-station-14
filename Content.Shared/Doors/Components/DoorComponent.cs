@@ -331,7 +331,8 @@ public enum DoorState : byte
     Opening,
     Welded,
     Denying,
-    Emagging
+    Emagging,
+    EmaggingWelded
 }
 
 [Serializable, NetSerializable]
