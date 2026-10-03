@@ -1,6 +1,7 @@
 using Content.Server.Pinpointer;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Materials.OreSilo;
+using Content.Shared.Pinpointer;
 using Robust.Server.GameStates;
 using Robust.Shared.Player;
 

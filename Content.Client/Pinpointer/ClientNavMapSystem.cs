@@ -4,15 +4,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Pinpointer;
 
-public sealed partial class NavMapSystem : SharedNavMapSystem
+public sealed partial class ClientNavMapSystem : NavMapSystem
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<NavMapComponent, ComponentHandleState>(OnHandleState);
-    }
-
+    [SubscribeLocalEvent]
     private void OnHandleState(EntityUid uid, NavMapComponent component, ref ComponentHandleState args)
     {
         Dictionary<Vector2i, int[]> modifiedChunks;
