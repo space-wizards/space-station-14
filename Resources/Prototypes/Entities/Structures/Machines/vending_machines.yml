@@ -177,7 +177,6 @@
   - type: Electrified
     enabled: false
     usesApcPower: true
-  - type: Rotatable
 
 # Vending machines
 
