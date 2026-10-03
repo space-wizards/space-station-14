@@ -146,10 +146,16 @@
     interfaces:
       enum.DisposalUnitUiKey.Key:
         type: DisposalUnitBoundUserInterface
+      enum.DisposalTaggerUiKey.Key:
+        type: DisposalTaggerBoundUserInterface
   - type: Rummageable
     table: !type:NestedSelector
       tableId: RatKingLoot
   - type: RequireProjectileTarget
+  - type: DisposalTagger
+    tag: waste
+  - type: AccessReader
+    access: [["Engineering"]] # Too easy to break disposals when the tag can be edited by anyone
 
 - type: entity
   id: MailingUnit
