@@ -1,0 +1,18 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+               Title="{Loc 'voice-sex-modification-menu-title'}"
+               SetWidth="250"
+               MinWidth="150">
+    <BoxContainer Orientation="Vertical" Margin="10 10">
+        <TableContainer Columns="2" HorizontalExpand="True" VerticalExpand="True">
+            <Label Text="{Loc 'voice-sex-modification-voice-label'}" Margin="0 0 5 0" HorizontalAlignment="Left"/>
+            <OptionButton Name="VoiceButton" HorizontalAlignment="Right" Margin="2"/>
+            <Label Text="{Loc 'voice-sex-modification-sex-label'}" Margin="0 0 5 0"/>
+            <OptionButton Name="SexButton" HorizontalAlignment="Right" Margin="2"/>
+        </TableContainer>
+        <BoxContainer Orientation="Horizontal" Align="Center">
+            <Button Name="ConfirmButton" Text="{Loc 'voice-sex-modification-confirm-button'}" Margin="5 0 0 0" StyleClasses="OpenRight" />
+            <Button Name="CancelButton" Text="{Loc 'voice-sex-modification-cancel-button'}" Margin="0 0 5 0" StyleClasses="OpenLeft" />
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

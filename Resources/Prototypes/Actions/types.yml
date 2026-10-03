@@ -627,3 +627,19 @@
     sprite: Interface/Actions/voice-mask.rsi
     layers:
     - state: icon
+
+- type: entity
+  id: ActionVoiceSexModificationController
+  name: Morph body properties
+  description: Configure your voice and/or sex.
+  components:
+  - type: Action
+    priority: -20
+    itemIconStyle: BigAction
+    useDelay: 10
+  - type: Sprite
+    sprite: Interface/Actions/slimeperson.rsi
+    layers:
+    - state: morph
+  - type: InstantAction
+    event: !type:VoiceSexModificationControllerToggleMenuEvent
