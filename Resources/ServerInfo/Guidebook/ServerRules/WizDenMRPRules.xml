@@ -2,7 +2,7 @@
   # Server Rules
   This is a Wizard's Den server, one of the official Space Station 14 servers. If you are banned on this server, you will be banned on all official servers.
 
-  This is a roleplay server, meaning that roleplay rules apply. [color=#ff0000]This is also a medium roleplay (MRP) server, meaning that MRP Amendments do apply.[/color]
+  This is a medium roleplay (MRP) server, meaning that roleplay rules apply, [color=#ff0000]including the MRP rules and MRP amendments.[/color]
 
   Space Station 14 is not like most games. Many rules are designed to require roleplay, and not all rules are intuitive. Please take the time to read and understand the rules before you play so that you aren't surprised. Some of our rules are zero tolerance rules, meaning that a violation will result in an indefinite ban without any warning. Game admins will treat you as if you have read the rules, even if you have not.
 
@@ -25,9 +25,9 @@
   - [textlink="14. Do not use LOOC or OOC to share current round information" link="RuleC14"]
 
   ## Roleplay Rules
-  These rules only apply during a round. A round ends only when the game returns to the lobby. [color=#ff0000]All of these rules apply fully whenever the game is not at the lobby unless it is in an exempt game mode.[/color]
+  These rules only apply during a round. Unlike on LRP servers, a round ends [italic]only[/italic] once the game returns to the lobby screen. [color=#ff0000]All of these rules apply fully whenever the game is not at the lobby unless it is in an exempt game mode.[/color]
 
-  The deathmatch and sandbox game modes are exempt from these rules. Players who choose to not follow these rules are entirely responsible for knowing if an exempt game mode is active.
+  The Deathmatch and Sandbox game modes are exempt from these rules. Players who choose to not follow these rules are entirely responsible for knowing if an exempt game mode is active.
 
   Roleplay rules do not apply to ghosts/spectators/observers while they are ghosts/spectators/observers. Dead chat is considered to be an in-game out of character chat channel.
 
@@ -64,11 +64,8 @@
   - [textlink="10. You may determine how you resolve conflicts between orders" link="RuleS10"]
 
   ## MRP Rules
-  MRP rules exclusive to our MRP Servers. Other rules may still contain amendments.
+  MRP rules and MRP amendments exclusively apply to medium roleplay (MRP) servers.
 
-  These rules do not apply to any server that is not under the MRP Ruleset.
-
-  - [textlink="1. Do not Powergame " link="RuleM1"]
-
-
+  - [textlink="MRP amendments " link="RuleMA"]
+  - [textlink="1. Do not powergame " link="RuleM1"]
 </Document>
