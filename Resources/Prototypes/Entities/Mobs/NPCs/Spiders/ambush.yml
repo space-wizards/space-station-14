@@ -1,55 +1,55 @@
-# Nurse Spider
+# Ambush Spider
 - type: entity
   parent: MobSpiderBase
-  id: MobGiantSpiderNurse
-  name: nurse spider
-  description: A pallid, unsettling spider that oozes something caustic.
+  id: MobGiantSpiderAmbush
+  name: ambush spider
+  description: A pale, heavy-fanged spider that waits patiently for prey to come near.
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Animals/Spiders/nursespider.rsi
+    sprite: Mobs/Animals/Spiders/ambushspider.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: idle
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 2
+        Piercing: 9
   - type: SolutionManager
     solutions:
-    - SolutionVenomSpiderNurse
+    - SolutionVenomSpiderAmbush
   - type: MeleeChemicalInjector
     transferAmount: 1
     solution: melee
   - type: MovementSpeedModifier
     baseWalkSpeed: 3
-    baseSprintSpeed: 5
+    baseSprintSpeed: 4
   - type: MobThresholds
     thresholds:
       0: Alive
-      60: Dead
+      80: Dead
 
 - type: entity
   parent: [SolutionWeapon, SolutionTiny]
-  id: SolutionVenomSpiderNurse
+  id: SolutionVenomSpiderAmbush
   categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
-      maxVol: 30
+      maxVol: 4
       reagents:
       - ReagentId: Mechanotoxin
-        Quantity: 10
+        Quantity: 4
   - type: SolutionRegeneration
     generated:
       reagents:
       - ReagentId: Mechanotoxin
-        Quantity: 1
+        Quantity: 0.1
 
-# Angry Nurse Spider
+# Angry Ambush Spider
 - type: entity
   parent:
   - MobSpiderAngryBase
-  - MobGiantSpiderNurse
-  id: MobGiantSpiderNurseAngry
+  - MobGiantSpiderAmbush
+  id: MobGiantSpiderAmbushAngry
   suffix: Angry

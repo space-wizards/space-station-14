@@ -1,13 +1,13 @@
-# Nurse Spider
+# Viper Spider
 - type: entity
   parent: MobSpiderBase
-  id: MobGiantSpiderNurse
-  name: nurse spider
-  description: A pallid, unsettling spider that oozes something caustic.
+  id: MobGiantSpiderViper
+  name: viper spider
+  description: A frail-looking spider with a dangerously venomous bite.
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Animals/Spiders/nursespider.rsi
+    sprite: Mobs/Animals/Spiders/viperspider.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: idle
@@ -17,39 +17,39 @@
         Piercing: 2
   - type: SolutionManager
     solutions:
-    - SolutionVenomSpiderNurse
+    - SolutionVenomSpiderViper
   - type: MeleeChemicalInjector
-    transferAmount: 1
+    transferAmount: 12
     solution: melee
   - type: MovementSpeedModifier
     baseWalkSpeed: 3
-    baseSprintSpeed: 5
+    baseSprintSpeed: 6
   - type: MobThresholds
     thresholds:
       0: Alive
-      60: Dead
+      40: Dead
 
 - type: entity
   parent: [SolutionWeapon, SolutionTiny]
-  id: SolutionVenomSpiderNurse
+  id: SolutionVenomSpiderViper
   categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     solution:
-      maxVol: 30
+      maxVol: 12
       reagents:
       - ReagentId: Mechanotoxin
-        Quantity: 10
+        Quantity: 12
   - type: SolutionRegeneration
     generated:
       reagents:
       - ReagentId: Mechanotoxin
-        Quantity: 1
+        Quantity: 0.1
 
-# Angry Nurse Spider
+# Angry Viper Spider
 - type: entity
   parent:
   - MobSpiderAngryBase
-  - MobGiantSpiderNurse
-  id: MobGiantSpiderNurseAngry
+  - MobGiantSpiderViper
+  id: MobGiantSpiderViperAngry
   suffix: Angry
