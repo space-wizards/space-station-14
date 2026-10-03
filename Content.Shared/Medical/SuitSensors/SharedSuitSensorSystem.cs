@@ -14,6 +14,8 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Station.Systems;
+using Content.Shared.StationRecords;
+using Content.Shared.StationRecords.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -37,6 +39,7 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private StationRecordsSystem _records = default!;
 
     [Dependency] private EntityQuery<SuitSensorComponent> _sensorQuery = default!;
 
@@ -371,6 +374,7 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
         var userJob = Loc.GetString("suit-sensor-component-unknown-job");
         var userJobIcon = "JobIconNoId";
         var userJobDepartments = new List<string>();
+        string? userJobProto = null;
 
         if (_idCardSystem.TryFindIdCard(sensor.User.Value, out var card))
         {
@@ -378,6 +382,23 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
                 userName = card.Comp.FullName;
             if (card.Comp.LocalizedJobTitle != null)
                 userJob = card.Comp.LocalizedJobTitle;
+            if (card.Comp.JobPrototype != null)
+                userJobProto = card.Comp.JobPrototype;
+
+            var station = _stationSystem.GetOwningStation(ent);
+            if (station != null)
+            {
+                var recordId = _records.GetRecordByName(station.Value, Name(sensor.User.Value));
+                if (recordId is not null)
+                {
+                    var key = new StationRecordKey(recordId.Value, station.Value);
+                    if (_records.TryGetRecord<GeneralStationRecord>(key, out var record))
+                    {
+                        userJobProto = record.JobPrototype;
+                    }
+                }
+            }
+
             userJobIcon = card.Comp.JobIcon;
 
             foreach (var department in card.Comp.JobDepartments)
@@ -398,7 +419,7 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
             totalDamageThreshold = critThreshold.Value.Int();
 
         // finally, form suit sensor status
-        var status = new SuitSensorStatus(GetNetEntity(sensor.User.Value), GetNetEntity(ent.Owner), userName, userJob, userJobIcon, userJobDepartments);
+        var status = new SuitSensorStatus(GetNetEntity(sensor.User.Value), GetNetEntity(ent.Owner), userName, userJob, userJobIcon, userJobDepartments, userJobProto);
         switch (sensor.Mode)
         {
             case SuitSensorMode.SensorBinary:
