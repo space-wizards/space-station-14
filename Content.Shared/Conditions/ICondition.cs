@@ -1,5 +1,9 @@
 namespace Content.Shared.Conditions;
 
+/// <summary>
+/// Interface to mark a data structure as a condition for shared storage and evaluation.
+/// If deriving an event directly and solely from this, remember to have an appropriate <see cref="ConditionEvaluatorSystem{TCondition}"/> implemeneted.
+/// </summary>
 public interface ICondition
 {
     /// <summary>
@@ -9,7 +13,7 @@ public interface ICondition
 }
 
 /// <summary>
-/// Interface to mark a data structure as a condition for shared storage and evaluation.
+/// A condition which for some reason must be evaluated by an event rather than <see cref="ConditionEvaluatorSystem{TCondition}"/>
 /// It is advised to use <see cref="IConditionByEvent{TCondition}" />.
 /// </summary>
 public interface IConditionByEvent : ICondition
@@ -21,7 +25,7 @@ public interface IConditionByEvent : ICondition
 }
 
 /// <summary>
-/// The "strongly" typed version of ICondition.
+/// The "strongly" typed version of <see cref="IConditionByEvent"/>.
 /// Assign directly to condition classes or interfaces for the case of shared legacy conditions.
 /// </summary>
 /// <typeparam name="TCondition">
@@ -42,5 +46,6 @@ public interface IConditionWithDefaultSatisfactionRule : ICondition
     /// set.
     /// </summary>
     /// <returns></returns>
+    /// <remarks>While you can set <see cref="ICondition.Satisfier"/> as part of the conditions constructor, if you expect the satisfier to be mutable, use this.</remarks>
     Satisfier.Satisfier GetDefaultSatisfier();
 }

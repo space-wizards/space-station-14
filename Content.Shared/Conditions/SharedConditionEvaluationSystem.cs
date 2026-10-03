@@ -183,9 +183,10 @@ public sealed partial class SharedConditionEvaluationSystem : EntitySystem
     /// </exception>
     public float EvaluateCondition(ICondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
+        // Normal method is looking up the bound evaluation function for the conditions type.
         if (_bindings.TryGetValue(condition.GetType(), out var func))
             return func(condition, entityUid, sourceEntity);
-
+        //as a fallback event driven evaluation is used, but if the condition does not support that, something new was added we did not account for.
         if (condition is not IConditionByEvent conditionByEvent)
         {
             throw new NotImplementedException("No Evaluation method for condition of type " +
