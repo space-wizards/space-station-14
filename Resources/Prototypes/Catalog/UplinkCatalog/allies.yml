@@ -89,7 +89,7 @@
         tags:
           - NukeOpsUplink
     - !type:ListingLimitedStockCondition
-    stock: 3
+      stock: 3
     
 - type: listing
   id: UplinkReinforcementRadioSyndicateAncestorNukeops # Version for Nukeops that spawns a syndicate monkey with the NukeOperative component.
