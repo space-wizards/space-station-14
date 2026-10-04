@@ -1,5 +1,5 @@
-changeling-catalog-arm-blade-name = Retractable Arm Blade
-changeling-catalog-arm-blade-desc = Transform your arm into a terrifying flesh blade. Can be toggled.
+changeling-catalog-arm-blade-name = Retractable Armblade
+changeling-catalog-arm-blade-desc = Transform your arm into a terrifying blade made of flesh and bone. Can double as means of prying open powered doors. Can be toggled.
 
 changeling-catalog-flesh-clothing-name = Flesh Clothing
 changeling-catalog-flesh-clothing-desc = Your body's surface will adapt to mirror the clothing of any person you are transforming into. However, these clothing items are non-functional and will make you easy to identify as a changeling if someone tries to remove them. Can be toggled.
@@ -14,7 +14,7 @@ changeling-catalog-sting-dna-name = Extract DNA
 changeling-catalog-sting-dna-desc = Learn to utilize your stinger to absorb the identity of unsuspecting victims. Does not grant DNA to your store or count as devouring.
 
 changeling-catalog-blind-sting-name = Blind Sting
-changeling-catalog-blind-sting-desc = Causes temporary blindness in the target. Good to escape or initiate a fight. Can be used on self.
+changeling-catalog-blind-sting-desc = Causes eye damage and temporary blindness in the target. Good to escape or initiate a fight. Can be used on self.
 
 changeling-catalog-cryogenic-sting-name = Cryogenic Sting
 changeling-catalog-cryogenic-sting-desc = Causes movement slowdown in the target. Perfect for keeping prey from running away. Can be used on self.
@@ -22,8 +22,11 @@ changeling-catalog-cryogenic-sting-desc = Causes movement slowdown in the target
 changeling-catalog-lethal-sting-name = Lethal Sting
 changeling-catalog-lethal-sting-desc = Causes very slow damage to the target. Useless in combat, but ensures they will require medical attention. Can be used on self.
 
-changeling-catalog-hallucinogenic-sting-name = Hallucinogenic Sting
-changeling-catalog-hallucinogenic-sting-desc = Causes the target to get high and have difficulty speaking. Causes confusion among the crew. Can be used on self.
+changeling-catalog-mute-sting-name = Mute Sting
+changeling-catalog-mute-sting-desc = Causes the target to be incapable of speech. Imperceptible until the target tries to speak. Can be used on self.
+
+changeling-catalog-armblade-sting-name = Armblade Sting
+changeling-catalog-armblade-sting-desc = Causes the target to spontaneously grow a dulled armblade after a lengthy delay. Instant with increased duration when used on corpses. Can be used on self.
 
 changeling-catalog-screech-name = Screech [TEMPORARY]
 changeling-catalog-screech-desc = We let out a powerful screech that disarms people who hear it without adequate ear protection. THIS ACTION WILL BE MOVED TO THE HORROR FORM WHEN IT IS IMPLEMENTED.
@@ -38,3 +41,6 @@ changeling-catalog-voice-mindshield-desc = Modify your neuron's natural waves to
 
 changeling-catalog-night-vision-name = Night Vision
 changeling-catalog-night-vision-desc = You modify your photoreceptors and heighten your senses as to become able to see in complete darkness.
+
+changeling-catalog-fleshtomb-name = Fleshtomb [EXPERIMENTAL]
+changeling-catalog-fleshtomb-desc = Preserve a corpse in a fleshy prison, slowly harvesting their genetic code for your own use. It slowly generates DNA, but is very fragile and must be preserved in proper atmosphere to not fall apart.

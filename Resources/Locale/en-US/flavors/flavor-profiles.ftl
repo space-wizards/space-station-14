@@ -12,6 +12,7 @@ flavor-base-savory = savory
 flavor-base-sweet = sweet
 flavor-base-salty = salty
 flavor-base-sour = sour
+flavor-base-earthy = earthy
 flavor-base-bitter = bitter
 flavor-base-spicy = spicy
 flavor-base-metallic = metallic

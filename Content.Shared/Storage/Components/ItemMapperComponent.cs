@@ -1,4 +1,4 @@
-﻿using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Storage.Components

@@ -1,4 +1,4 @@
-﻿
+
 namespace Content.Shared.Administration
 {
     /// <summary>
