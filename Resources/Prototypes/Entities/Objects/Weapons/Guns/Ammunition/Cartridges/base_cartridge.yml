@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: [ BaseItem, BaseItemDestructible ]
   id: BaseCartridge
   components:
   - type: Sprite
@@ -16,18 +16,6 @@
           - ItemMask
         restitution: 0.3  # fite me
         friction: 0.2
-  - type: Damageable
-    damageModifierSet: StrongMetallic # We only want explosions breaking them (for the most part)
-  - type: Injurable
-    damageContainer: StructuralInorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 75
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Tag
     tags:
     - Cartridge

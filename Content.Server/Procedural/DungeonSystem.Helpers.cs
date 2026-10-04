@@ -1,12 +1,13 @@
 using Content.Shared.NPC;
 using Robust.Shared.Collections;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural;
 
 public sealed partial class DungeonSystem
 {
-    public List<(Vector2i Start, Vector2i End)> MinimumSpanningTree(List<Vector2i> tiles, System.Random random)
+    public List<(Vector2i Start, Vector2i End)> MinimumSpanningTree(List<Vector2i> tiles, IRobustRandom random)
     {
         // Generate connections between all rooms.
         var connections = new Dictionary<Vector2i, List<(Vector2i Tile, float Distance)>>(tiles.Count);

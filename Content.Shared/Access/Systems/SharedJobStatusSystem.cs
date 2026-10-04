@@ -11,7 +11,6 @@ namespace Content.Shared.Access.Systems;
 public abstract partial class SharedJobStatusSystem : EntitySystem
 {
     [Dependency] private AccessReaderSystem _accessReader = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
 
     private static readonly ProtoId<JobIconPrototype> JobIconForNoId = "JobIconNoId";
 
@@ -59,7 +58,21 @@ public abstract partial class SharedJobStatusSystem : EntitySystem
         }
 
         ent.Comp.JobStatusIcon = iconId;
-        ent.Comp.IsCrew = _prototype.Index(iconId).IsCrewJob;
+        ent.Comp.IsCrew = ProtoMan.Index(iconId).IsCrewJob;
         Dirty(ent);
+    }
+
+    /// <summary>
+    /// Updates the job status of the entity wearing/holding the given ID card.
+    /// </summary>
+    public void UpdateIdHolderStatus(EntityUid idCard)
+    {
+        var holder = Transform(idCard).ParentUid;
+
+        // ID is inside a PDA, ascend to whoever is wearing/holding the PDA.
+        if (HasComp<PdaComponent>(holder))
+            holder = Transform(holder).ParentUid;
+
+        UpdateStatus(holder);
     }
 }
