@@ -24,7 +24,8 @@
     - WhitelistChameleon
     - WhitelistChameleonIdCard
   - type: StealTarget
-    stealGroup: IDCard
+    stealGroup:
+    - IDCard
 
 #IDs with layers
 
@@ -70,7 +71,8 @@
     - WhitelistChameleonIdCard
     - HighRiskItem
   - type: StealTarget
-    stealGroup: CaptainIDCard
+    stealGroup:
+    - CaptainIDCard
 
 - type: entity
   parent: IDCardStandard
@@ -801,6 +803,24 @@
       offset: *icon-offset
       state: Zookeeper
 
+- type: entity
+  parent: IDCardStandard
+  id: TramDriverIDCard
+  name: tram driver ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: stripe_top
+      color: "#ffc500"
+    - state: stripe_bottom
+      color: "#454a50"
+    - sprite: *icon-rsi
+      offset: *icon-offset
+      state: TramDriver
+  - type: PresetIdCard
+    job: TramDriver
+
 #Supply
 
 - type: entity
@@ -935,10 +955,17 @@
 #Antags
 
 - type: entity
-  parent: [PassengerIDCard, BaseChameleon]
+  parent: [IDCardStandard, BaseChameleon]
   id: AgentIDCard
+  name: passenger ID card
   suffix: Agent
   components:
+  - type: Sprite
+    layers:
+    - state: default
+    - sprite: *icon-rsi
+      offset: *icon-offset
+      state: Passenger
   - type: Access
     tags:
     - Maintenance
@@ -947,17 +974,19 @@
     iconGroups:
     - CommandIconGroup
     - SecurityIconGroup
-    - ResearchIconGroup
     - CargoIconGroup
     - EngineeringIconGroup
     - MedicalIconGroup
+    - ScienceIconGroup
     - ServiceIconGroup
+    - TheatreIconGroup
     - CivilianIconGroup
-    - EntertainerIconGroup
     - SiliconIconGroup
-    - BlankIconGroup
-    - ThreatIconGroup
     - CentCommIconGroup
+    - TaskForceIconGroup
+    - AntagonistIconGroup
+    - MiscIconGroup
+    - BlankIconGroup
   - type: UIRequiresLock
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
@@ -1359,17 +1388,19 @@
     iconGroups:
     - CommandIconGroup
     - SecurityIconGroup
-    - ResearchIconGroup
     - CargoIconGroup
     - EngineeringIconGroup
     - MedicalIconGroup
+    - ScienceIconGroup
     - ServiceIconGroup
+    - TheatreIconGroup
     - CivilianIconGroup
-    - EntertainerIconGroup
     - SiliconIconGroup
-    - BlankIconGroup
-    - ThreatIconGroup
     - CentCommIconGroup
+    - TaskForceIconGroup
+    - AntagonistIconGroup
+    - MiscIconGroup
+    - BlankIconGroup
     - AdminIconGroup
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key

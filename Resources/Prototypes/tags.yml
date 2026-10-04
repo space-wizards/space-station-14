@@ -150,10 +150,10 @@
   id: Bot # Targeting whitelist: ChameleonProjector
 
 - type: Tag
-  id: BotanyHatchet # Storage whitelist: ClothingBeltPlant. ItemMapper: ClothingBeltPlant
+  id: BotanyTool # For borg gardening module whitelisted module slot
 
 - type: Tag
-  id: BotanyHoe # Storage whitelist: ClothingBeltPlant. ItemMapper: ClothingBeltPlant
+  id: BotanyHatchet # Storage whitelist: ClothingBeltPlant. ItemMapper: ClothingBeltPlant
 
 - type: Tag
   id: BotanyShovel # Storage whitelist: ClothingBeltPlant. ItemMapper: ClothingBeltPlant
@@ -328,7 +328,7 @@
   id: CleanerGrenade # Storage whitelist: ClothingBeltJanitor. ItemMapper: ClothingBeltJanitor
 
 - type: Tag
-  id: ClothMade # SpecialDigestible: OrganMothStomach. Storage whitelist: FoodBoxCloth
+  id: ClothMade # SpecialDigestible: OrganMothStomach. Storage whitelist: FoodBoxCloth, BorgModuleCooking
 
 - type: Tag
   id: ClownMask # ConstructionGraph: Honker, BananaClownMask
@@ -367,10 +367,13 @@
   id: Cooked # MetamorphRecipe: FoodBurgerCheese, FoodBurgerChicken, FoodBurgerCrab, FoodBurgerDuck
 
 - type: Tag
+  id: Cookware # Storage whitelist: BorgModuleCooking
+
+- type: Tag
   id: CoordinatesDisk # Storage whitelist: DiskCase
 
-- type: Tag # designed to let corgis wear things; at present only for SmartCorgi.  View PR 33737 on upstream for more dog wearables
-  id: CorgiWearable # Used by inventoryTemplate:SmartCorgi to whitelist clothes slots outerClothing, head, back.
+- type: Tag
+  id: CorgiWearable # inventory_template whitelist tag: lets corgis wear a clothing item with this tag in the inventory slot the tag is used in.
 
 - type: Tag #Ohioans die happy
   id: Corn  # CargoBounty: BountyCorn
@@ -462,6 +465,9 @@
   id: Diamond # CargoBounty: BountySalvageDiamond
 
 - type: Tag
+  id: Dinnerware # Storage whitelist: BorgModuleCooking
+
+- type: Tag
   id: Dice # Storage whitelist: BorgModuleService, DiceBag, BooksBag
 
 - type: Tag
@@ -489,7 +495,7 @@
   id: DoorBumpOpener # Used by SharedDoorSystem to allow tagged entities to open doors when they collide.
 
 - type: Tag
-  id: DoorElectronics  # ConstructionGraph: PinionAirlock, BlastDoor, Windoor
+  id: DoorElectronics  # ConstructionGraph: BlastDoor, Windoor
                        # Used interchangeably with DoorElectronicsComponent, sometimes even in the same graph. TODO pick one
 
 - type: Tag
@@ -559,11 +565,17 @@
 - type: Tag
   id: FakeMindShieldImplant # Used by FakeMindShieldSystem to toggle the tagged action when a chameleon outfit is selected.
 
+- type: Tag # Also used by FakeMindShieldSystem, but only for changelings
+  id: FakeMindShieldChangeling
+
 - type: Tag
   id: FakeNukeDisk # Exists so that the fake nuke disk can be blacklisted by storages that blacklist the real disk.
 
 - type: Tag
   id: Figurine # Storage whitelist: BooksBag, BorgModuleService. CargoBounty: BountyFigurine
+
+- type: Tag
+  id: FinishedMeal # Storage whitelist: BorgModuleCooking
 
 - type: Tag
   id: FireAlarm # Used by AtmosAlarmableComponent for syncing devices.
@@ -582,6 +594,9 @@
 
 - type: Tag
   id: FirelockElectronics # ConstructionGraph: Firelock
+
+- type: Tag
+  id: FitInTeleporterConsole
 
 - type: Tag
   id: Flare # Storage whitelist: BaseClothingBeltEngineering
@@ -617,7 +632,7 @@
   id: FreezerElectronics # ConstructionGraph: CrateFreezer, ClosetFreezer
 
 - type: Tag
-  id: Fruit # SpecialDigestible: OrganReptilianStomach. CargoBounty: BountyFruit
+  id: Fruit # SpecialDigestible: OrganReptilianStomach. CargoBounty: BountyFruit. StorageWhitelist: BorgModuleCooking
 
 ## G ##
 
@@ -754,9 +769,6 @@
   id: HiViz # CargoBounty: BountyHiVizVest
 
 - type: Tag
-  id: Hoe # Used by PlantHolderSystem to make tagged entities a pseudo-tool for weeding plants. TODO this sucks!
-
-- type: Tag
   id: HolofanProjector # Storage whitelist: BaseClothingBeltEngineering
 
 - type: Tag
@@ -811,6 +823,9 @@
 
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete # Basically used as a bool for InnateToolComponent in InnateToolSystem. TODO remove
+
+- type: Tag
+  id: Ingredient # StorageWhitelist: BorgModuleCooking
 
 - type: Tag
   id: InstantDoAfters # Used by SharedDoAfterSystem for tagged entities to skip DoAfters (aghost). TODO remove
@@ -971,7 +986,7 @@
   id: MonkeyCube # Storage whitelist: ClothingBeltChef. CargoBounty: BountyMonkeyCube
 
 - type: Tag
-  id: MonkeyWearable # Used by inventoryTemplate:monkey to whitelist clothing slot outerClothing for slightly less intelligent primates.
+  id: MonkeyWearable # Used by inventoryTemplate:monkey to whitelist items for certain clothing slots.
 
 - type: Tag
   id: Mop # Storage whitelist: JanitorialTrolley
@@ -993,6 +1008,9 @@
 
 - type: Tag
   id: Mouse # CargoBounty: BountyMouse
+
+- type: Tag
+  id: Muffin #  StorageWhitelist: BorgModuleCooking
 
 - type: Tag
   id: Multitool # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering. ConstructionGraph: LogicGate
@@ -1082,8 +1100,8 @@
   id: PetOnly # Used by human, diona, arachnid InventoryTemplate to blacklist back slot items.
 
 - type: Tag
-  id: PetWearable # Used by hamster, kangaroo, pet, petAdvanced, SmartCorgi InventoryTemplate to whitelist mask slots.
-                  # SmartCorgi and petAdvanced use it for eyes slots. petAdvanced uses it for head slot.
+  id: PetWearable # Used by hamster, kangaroo, pet, petAdvanced, InventoryTemplate to whitelist mask slots.
+                  # petAdvanced uses it for eyes and head slot.
 
 - type: Tag
   id: Pickaxe # GatherableComponent whitelist on WallRock.
@@ -1114,9 +1132,6 @@
 
 - type: Tag
   id: PlantBGone # Storage whitelist: ClothingBeltPlant. ItemMapper: ClothingBeltPlant
-
-- type: Tag
-  id: PlantSampleTaker # Used by PlantHolderSystem to make tagged entities a pseudo-tool for trimming seeds. TODO this sucks!
 
 - type: Tag
   id: PlasmaGlassShard # ConstructionGraph: ImprovisedArrowPlasma, PlasmaShiv, SpearPlasma
@@ -1272,15 +1287,6 @@
   id: SecBeltEquip # Storage whitelist: ClothingBeltSecurity
 
 - type: Tag
-  id: SecurePlasmaWindoor # Used in ConstructionGraph "Windoor" to navigate between Windoor, PlasmaWindoor, and UraniumWindoor airlocks.
-
-- type: Tag
-  id: SecureUraniumWindoor # Used in ConstructionGraph "Windoor" to navigate between Windoor, PlasmaWindoor, and UraniumWindoor airlocks.
-
-- type: Tag
-  id: SecureWindoor # Used in ConstructionGraph "Windoor" to navigate between Windoor, PlasmaWindoor, and UraniumWindoor airlocks.
-
-- type: Tag
   id: SecurityHelmet # ConstructionGraph: HelmetJustice
 
 - type: Tag
@@ -1297,6 +1303,9 @@
 
 - type: Tag
   id: Shiv # CargoBounty: BountyShiv
+
+- type: Tag
+  id: SmeltingImmune # for entities that should not be deleted industrial smelter's MaterialReclaimer
 
 - type: Tag
   id: Sidearm # Storage whitelist: ClothingBeltSecurity, ClothingShoesMilitaryBase
@@ -1385,6 +1394,9 @@
 
 - type: Tag
   id: StunImmune # Tagged mob entity cannot gain the stunned status effect. Blacklist on StatusEffectStunned.
+
+- type: Tag
+  id: Stunbaton # Storage whitelist: ClothingBeltSecurity, WeaponCapacitorRecharger, TurboItemRecharger, WallWeaponCapacitorRecharger
 
 - type: Tag
   id: SubdermalImplant # Storage whitelist: BaseImplanter
@@ -1520,10 +1532,6 @@
 ## W ##
 
 - type: Tag
-  id: Wall # Tagged entity is a wall. Several systems and several targeting whitelists (BaseMobDragon) care about this.
-           # .cs: SharedNavMapSystem, WallmountCondition, TileWallsCommand, DungeonJob
-
-- type: Tag
   id: WallmountGeneratorAPUElectronics # ConstructionGraph: WallmountGenerator
 
 - type: Tag
@@ -1560,6 +1568,15 @@
   id: WhitelistChameleonPDA # Chameleon key for ChameleonPDA
 
 - type: Tag
+  id: Windoor # Used in ConstructionGraph "Windoor" to navigate between Windoor, PlasmaWindoor, and UraniumWindoor airlocks.
+
+- type: Tag
+  id: WindoorPlasma # Used in ConstructionGraph "Windoor" to navigate between Windoor, PlasmaWindoor, and UraniumWindoor airlocks.
+
+- type: Tag
+  id: WindoorUranium # Used in ConstructionGraph "Windoor" to navigate between Windoor, PlasmaWindoor, and UraniumWindoor airlocks.
+
+- type: Tag
   id: Window # Tagged entity is a window. Several systems and several targeting whitelists (XenoArtifactShatterWindows) care about this.
              # .cs: SharedNavMapSystem, ElectrocutionSystem, RevenantSystem, NoWindowsInTile
 
@@ -1585,6 +1602,9 @@
                          # MachineBoard construction: DawInstrumentMachineCircuitboard
 
 - type: Tag
+  id: WrappedCube # StorageWhitelist: BorgModuleCooking
+
+- type: Tag
   id: Wrench # Storage whitelist: BaseClothingBeltEngineering, ClothingBeltJanitor, ClothingBeltMedical.
              # ItemMapper: BaseClothingBeltEngineering, ClothingBeltJanitor, ClothingBeltMedical
 
@@ -1595,6 +1615,9 @@
   id: WriteIgnoreStamps # Used by PaperSystem to allow tagged entity to bypass stamps.
 
 ## X ##
+
+- type: Tag
+  id: XenoborgCrystal # MaterialStorage whitelist: Mothership core
 
 - type: Tag
   id: XenoborgGhostrole # spawn whitelist : SpawnPointGhostRoleXenoborg
@@ -1613,6 +1636,21 @@
 
 - type: Tag
   id: XenoborgModuleStealth # Cyborg module category for evil stealth xenoborg
+
+- type: Tag
+  id: XenoborgModuleAccessBreaker # Used for module blacklisting
+
+- type: Tag
+  id: XenoborgModuleInvisibility # Used for module blacklisting
+
+- type: Tag
+  id: XenoborgModulePrimaryWeapon # Used for module blacklisting
+
+- type: Tag
+  id: XenoborgModuleSecondaryWeapon # Used for module blacklisting
+
+- type: Tag
+  id: XenoborgModuleWithSimpleOverlay # Used for module blacklisting
 
 ## Y ##
 ## Z ##
