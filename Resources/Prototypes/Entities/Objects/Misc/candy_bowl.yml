@@ -10,8 +10,10 @@
     drawdepth: SmallObjects
     state: candy_bowl0
   - type: Appearance
-  - type: Bin
-    maxItems: 100
+  - type: Storage
+    maxItemSize: Small
+    grid:
+    - 0,0,19,4  # Matching previous BinComponent.MaxItems of 100
     whitelist:
       components:
         - Pill
@@ -20,6 +22,10 @@
   - type: ContainerContainer
     containers:
       bin-container: !type:Container
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
   - type: Damageable
   - type: Injurable
     damageContainer: Inorganic
