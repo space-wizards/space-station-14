@@ -9,7 +9,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Access.Systems;
 
 /// <summary>
-/// Handles things related to the agent ID, such as copying access and the UI.
+/// Handles the UI of the agent ID, as well as automatically updating from voice masks, implants, etc.
 /// </summary>
 public abstract partial class SharedAgentIdCardSystem : EntitySystem
 {

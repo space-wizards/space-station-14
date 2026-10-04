@@ -5,7 +5,7 @@ using Content.Shared.Popups;
 namespace Content.Shared.Access.Systems;
 
 /// <summary>
-/// Handles things related to the agent ID, such as copying access and the UI.
+/// Handles copying access from other ID's, used by the Agent ID.
 /// </summary>
 public sealed partial class AccessStealerSystem : EntitySystem
 {
