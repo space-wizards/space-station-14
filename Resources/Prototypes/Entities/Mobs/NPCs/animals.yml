@@ -3265,6 +3265,7 @@
   - type: Tag
     tags:
       - DoorBumpOpener
+      - VimPilot
   - type: MovementAlwaysTouching
   - type: PermanentStatusEffects
     statusEffects:
