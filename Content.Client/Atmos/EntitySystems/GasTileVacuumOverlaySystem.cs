@@ -7,7 +7,7 @@ using Robust.Shared.Configuration;
 namespace Content.Client.Atmos.EntitySystems;
 
 /// <summary>
-///     System responsible for rendering vacuum effects using <see cref="GasTileVacuumOverlay"/>.
+/// System responsible for rendering vacuum effects using <see cref="GasTileVacuumOverlay"/>.
 /// </summary>
 [UsedImplicitly]
 public sealed partial class GasTileVacuumOverlaySystem : EntitySystem
