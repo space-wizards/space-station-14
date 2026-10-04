@@ -292,7 +292,6 @@
       - DiscreteHealthAnalyzer
       - SurgeryTool
       - Dropper
-      #- Defibrilator #Only belt-sized defibrilator obtainable basegame is Syndicate.
       components:
       - Injector
       - Pill
