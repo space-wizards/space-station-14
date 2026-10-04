@@ -729,9 +729,6 @@
   id: HandGrenade # Storage whitelist: ClothingBeltSecurity
 
 - type: Tag
-  id: FoamGrenade #Storage whitelist: ClothingBeltUtility
-
-- type: Tag
   id: HappyHonk # ConstructionGraph: HonkBot
 
 - type: Tag

@@ -30,7 +30,6 @@
       - WeldingMask
       - RemoteSignaller
       - UtilityKnife
-      - FoamGrenade
       components:
       - StationMap
       - SprayPainter
