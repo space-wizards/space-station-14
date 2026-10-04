@@ -21,6 +21,9 @@ public sealed partial class RandomGateSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnProbabilityChanged(Entity<RandomGateComponent> ent, ref RandomGateProbabilityChangedMessage args)
     {
+        if (!args.Probability.IsValid())
+            return;
+
         ent.Comp.SuccessProbability = Math.Clamp(args.Probability, 0f, 100f) / 100f;
         DirtyField(ent.AsNullable(), nameof(RandomGateComponent.SuccessProbability));
         UpdateUI(ent);
@@ -28,10 +31,8 @@ public sealed partial class RandomGateSystem : EntitySystem
 
     private void UpdateUI(Entity<RandomGateComponent> ent)
     {
-        if (!_ui.HasUi(ent.Owner, RandomGateUiKey.Key))
-            return;
-
-        _ui.SetUiState(ent.Owner, RandomGateUiKey.Key, new RandomGateBoundUserInterfaceState(ent.Comp.SuccessProbability));
+        if (_ui.TryGetOpenUi(ent.Owner, RandomGateUiKey.Key, out var ui))
+            ui.Update();
     }
 
     [SubscribeLocalEvent]
@@ -39,7 +40,6 @@ public sealed partial class RandomGateSystem : EntitySystem
     {
         if (args.Port != ent.Comp.InputPort)
             return;
-
 
         var output = SharedRandomExtensions.PredictedProb(_timing, ent.Comp.SuccessProbability, GetNetEntity(ent));
         if (output == ent.Comp.LastOutput)

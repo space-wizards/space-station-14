@@ -7,19 +7,14 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.NetworkConfigurator;
 
-public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
+public sealed partial class NetworkConfiguratorBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
-    private readonly NetworkConfiguratorOverlaySystem _netConfigOverlay;
+    [Dependency] private NetworkConfiguratorOverlaySystem _netConfigOverlay = default!;
 
     [ViewVariables]
     private NetworkConfiguratorConfigurationMenu? _configurationMenu;
 
-    public NetworkConfiguratorBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-        _netConfigOverlay = EntMan.System<NetworkConfiguratorOverlaySystem>();
-    }
-
-    public void OnRemoveButtonPressed(LocDeviceAddress address)
+    private void OnRemoveButtonPressed(LocDeviceAddress address)
     {
         SendPredictedMessage(new NetworkConfiguratorRemoveDeviceMessage(address));
     }

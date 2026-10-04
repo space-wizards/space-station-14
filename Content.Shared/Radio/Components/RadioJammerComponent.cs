@@ -1,4 +1,5 @@
 using Content.Shared.DeviceNetwork;
+using Content.Shared.Radio.EntitySystems;
 using Robust.Shared.Serialization;
 using Robust.Shared.GameStates;
 
@@ -9,7 +10,7 @@ namespace Content.Shared.Radio.Components;
 /// Suit sensors will also stop working.
 /// </summary>
 [NetworkedComponent, RegisterComponent]
-[AutoGenerateComponentState]
+[AutoGenerateComponentState, Access(typeof(JammerSystem))]
 public sealed partial class RadioJammerComponent : Component
 {
     [DataDefinition]

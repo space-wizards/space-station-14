@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Database;
 using Content.Shared.DeviceConfigurator.Components;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 
 namespace Content.Shared.DeviceConfigurator.Systems;
@@ -18,7 +17,7 @@ public sealed partial class NetworkConfiguratorSystem
             !AccessCheck(targetUid.Value, userUid, configurator))
             return;
 
-        _uiSystem.OpenUi(configurator.Owner, NetworkConfiguratorUiKey.Link, userUid);
+        _uiSystem.OpenUi(configurator.Owner, NetworkConfiguratorUiKey.Link, userUid, true);
         configurator.Comp.DeviceLinkTarget = targetUid;
         DirtyField(configurator.AsNullable(), nameof(NetworkConfiguratorComponent.DeviceLinkTarget));
 
@@ -61,7 +60,7 @@ public sealed partial class NetworkConfiguratorSystem
         DirtyField(configurator.AsNullable(), nameof(NetworkConfiguratorComponent.ActiveDeviceList));
         DirtyField(targetUid.Value, list, nameof(DeviceListComponent.Configurators));
 
-        if (_uiSystem.TryOpenUi(configurator.Owner, NetworkConfiguratorUiKey.Configure, userUid))
+        if (_uiSystem.TryOpenUi(configurator.Owner, NetworkConfiguratorUiKey.Configure, userUid, true))
         {
             if (_uiSystem.TryGetOpenUi(configurator.Owner, NetworkConfiguratorUiKey.Configure, out var bui))
                 bui.Update();
@@ -94,6 +93,9 @@ public sealed partial class NetworkConfiguratorSystem
     [SubscribeLocalEvent]
     private void OnUiClosed(Entity<NetworkConfiguratorComponent> ent, ref BoundUIClosedEvent args)
     {
+        if (_gameTiming.ApplyingState)
+            return;
+
         if (!args.UiKey.Equals(NetworkConfiguratorUiKey.Configure)
             && !args.UiKey.Equals(NetworkConfiguratorUiKey.Link)
             && !args.UiKey.Equals(NetworkConfiguratorUiKey.List))
