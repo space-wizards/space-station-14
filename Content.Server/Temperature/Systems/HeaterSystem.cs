@@ -1,17 +1,19 @@
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Temperature.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.IgnitionSource;
 using Content.Shared.Placeable;
-using Content.Shared.Temperature;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.HeatContainer;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Temperature.Systems;
 
-public sealed class HeaterSystem : EntitySystem
+/// <summary>
+///     System that heats entities and solutions placed onto a heater via <see cref="ItemPlacerComponent"/>.
+/// </summary>
+public sealed partial class HeaterSystem : EntitySystem
 {
     [Dependency] private readonly TemperatureSystem _temperature = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
@@ -28,17 +30,27 @@ public sealed class HeaterSystem : EntitySystem
             if (heater.RequiresPower && !_powerReceiver.IsPowered(uid))
                 continue;
 
+            var maxTemp = heater.MaxTemperature;
+            if (heater.RequiresIgnition && TryComp<IgnitionSourceComponent>(uid, out var ignition))
+            {
+                if (!ignition.Ignited)
+                    continue;
+
+                maxTemp = Math.Min(maxTemp, ignition.Temperature);
+            }
+
             foreach (var target in placer.PlacedEntities)
             {
-                // Heat the entity itself
+                // Heat the entity itself using foundational HeatContainer / Temperature methods
                 if (TryComp<TemperatureComponent>(target, out var temp))
                 {
                     var heatCap = _temperature.GetHeatCapacity(target, temp);
                     if (heatCap > 0)
                     {
                         var heatContainer = new HeatContainer(heatCap, temp.CurrentTemperature);
-                        var heatToApply = heatContainer.ConductHeatQuery(heater.MaxTemperature, frameTime, heater.Conductivity);
-                        _temperature.ChangeHeat(target, heatToApply, temperature: temp);
+                        var heatToApply = heatContainer.ConductHeat(maxTemp, frameTime, heater.Conductivity);
+                        if (heatToApply != 0f)
+                            _temperature.ChangeHeat(target, heatToApply, temperature: temp);
                     }
                 }
 
@@ -54,10 +66,9 @@ public sealed class HeaterSystem : EntitySystem
                         continue;
 
                     var heatContainer = new HeatContainer(heatCap, solution.Temperature);
-                    var heatToApply = heatContainer.ConductHeatQuery(heater.MaxTemperature, frameTime, heater.Conductivity);
-                    
-                    heatContainer.AddHeat(heatToApply);
-                    _solutionContainer.SetTemperature(soln, heatContainer.Temperature);
+                    var heatToApply = heatContainer.ConductHeat(maxTemp, frameTime, heater.Conductivity);
+                    if (heatToApply != 0f)
+                        _solutionContainer.SetTemperature(soln, heatContainer.Temperature);
                 }
             }
         }

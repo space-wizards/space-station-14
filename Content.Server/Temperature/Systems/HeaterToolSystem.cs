@@ -8,9 +8,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Temperature.Systems;
 
 /// <summary>
-///     Allows a tool to heat things.
+///     Allows a tool to directly heat solutions inside containers.
 /// </summary>
-public sealed class HeaterToolSystem : EntitySystem
+public sealed partial class HeaterToolSystem : EntitySystem
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
@@ -58,7 +58,7 @@ public sealed class HeaterToolSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Handles adding heat and consuming fuel when the heating step completes.
+    ///     Handles conducting heat and consuming resources when the heating do-after completes.
     /// </summary>
     private void OnHeatDoAfter(Entity<HeaterToolComponent> ent, ref HeaterToolDoAfterEvent args)
     {
@@ -86,14 +86,13 @@ public sealed class HeaterToolSystem : EntitySystem
                 continue;
 
             var heatContainer = new HeatContainer(heatCap, solution.Temperature);
-            
-            // Heat is conducted from the tool (MaxTemperature) to the container.
-            var heatToApply = heatContainer.ConductHeatQuery(ent.Comp.MaxTemperature, (float) args.Args.Delay.TotalSeconds, ent.Comp.Conductivity);
 
-            if (heatToApply <= 0)
+            // Conduct heat from the tool's flame to the solution container using foundational ConductHeat
+            var heatToApply = heatContainer.ConductHeat(ent.Comp.MaxTemperature, (float) args.Args.Delay.TotalSeconds, ent.Comp.Conductivity);
+
+            if (heatToApply <= 0f)
                 continue;
 
-            heatContainer.AddHeat(heatToApply);
             _solutionContainer.SetTemperature(soln, heatContainer.Temperature);
             shouldRepeat = true;
         }

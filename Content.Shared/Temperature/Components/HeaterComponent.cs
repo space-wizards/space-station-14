@@ -26,4 +26,11 @@ public sealed partial class HeaterComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool RequiresPower = true;
+
+    /// <summary>
+    ///     Whether this heater requires an active ignition source (if present on the entity) to function.
+    ///     If true, the heater will only transfer heat when the ignition source is lit.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool RequiresIgnition = true;
 }
