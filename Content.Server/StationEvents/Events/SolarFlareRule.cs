@@ -4,6 +4,7 @@ using Content.Server.Light.EntitySystems;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.StationEvents.Components;
+using Content.Server.VendingMachines;
 using Content.Shared.CriminalRecords;
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
@@ -17,6 +18,7 @@ using Content.Shared.Light.Components;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Content.Shared.Atmos.Monitor.Components;
+using Content.Shared.VendingMachines.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
@@ -38,6 +40,7 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
     [Dependency] private AirAlarmSystem _airAlarm = default!;
     [Dependency] private CriminalRecordsSystem _criminalRecords = default!;
     [Dependency] private StationRecordsSystem _stationRecords = default!;
+    [Dependency] private VendingMachineSystem _vendingMachine = default!;
 
     [Dependency] private EntityQuery<HeadsetComponent> _headsetQuery;
 
@@ -88,6 +91,11 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
                 }
             }
         }
+
+        solarFlareRuleComponent.AffectedVendingMachines = Station
+            .GetEntitiesWithComponentOnStation<VendingMachineComponent>(true)
+            .Select(e => (e.Owner, e.Comp))
+            .ToHashSet();
     }
 
     protected override void ActiveTick(EntityUid uid, SolarFlareRuleComponent component, GameRuleComponent gameRule, float frameTime)
@@ -171,6 +179,18 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
                 RobustRandom.Pick(CrimeStatuses),
                 null);
         }
+
+        foreach (var vendingMachine in component.AffectedVendingMachines)
+        {
+            if (!RobustRandom.Prob(component.VendChance))
+            {
+                continue;
+            }
+
+            _vendingMachine.EjectRandom(vendingMachine, true);
+        }
+
+
     }
 
     [SubscribeLocalEvent]

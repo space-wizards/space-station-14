@@ -436,6 +436,7 @@
     doorAffectChance: 0.001
     airAlarmModeChangeChance: 0.004
     changeCriminalRecordChance: 0.0003
+    vendChance: 0.001
   - type: DynamicRuleCost
     cost: 10
 

@@ -6,6 +6,7 @@ using Robust.Shared.Prototypes;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Shared.CriminalRecords;
 using Content.Shared.StationRecords;
+using Content.Shared.VendingMachines.Components;
 
 namespace Content.Server.StationEvents.Components;
 
@@ -81,6 +82,12 @@ public sealed partial class SolarFlareRuleComponent : Component
     [DataField]
     public HashSet<(StationRecordKey, GeneralStationRecord, CriminalRecord)> AffectedStationRecords = [];
 
+    /// <summary>
+    ///    The collection of vending machines that can be affected by the solar flare event.
+    /// </summary>
+    [DataField]
+    public HashSet<(EntityUid, VendingMachineComponent)> AffectedVendingMachines = [];
+
     #endregion
 
     #region Event probabilities
@@ -108,6 +115,12 @@ public sealed partial class SolarFlareRuleComponent : Component
     /// </summary>
     [DataField]
     public float ChangeCriminalRecordChance;
+
+    /// <summary>
+    ///    Chance per second per vending machine to dispense a random item.
+    /// </summary>
+    [DataField]
+    public float VendChance;
 
     #endregion
 }
