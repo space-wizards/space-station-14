@@ -45,7 +45,7 @@ public sealed partial class MapTextSystem : SharedMapTextSystem
         if (args.Current is not MapTextComponentState state)
             return;
 
-        ent.Comp.Text = state.Text;
+        ent.Comp.Text = state.Text ?? "";
         ent.Comp.LocText = state.LocText;
         ent.Comp.Color = state.Color;
         ent.Comp.FontId = state.FontId;
