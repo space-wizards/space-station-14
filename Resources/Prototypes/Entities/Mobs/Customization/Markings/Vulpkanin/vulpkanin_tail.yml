@@ -1,5 +1,6 @@
 # Tail Markings
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpTailFennec
   bodyPart: Tail
   groupWhitelist: [ Vulpkanin ]
@@ -10,6 +11,7 @@
       state: fennec-tip
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpTailFluffy
   bodyPart: Tail
   groupWhitelist: [ Vulpkanin ]
@@ -20,6 +22,7 @@
       state: fluffy-tip
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpTailHusky
   bodyPart: Tail
   groupWhitelist: [ Vulpkanin ]
@@ -32,6 +35,7 @@
       state: husky-outer
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpTailLong
   bodyPart: Tail
   groupWhitelist: [ Vulpkanin ]
@@ -42,6 +46,7 @@
       state: long-tip
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpTailVulp
   bodyPart: Tail
   groupWhitelist: [ Vulpkanin ]
@@ -52,6 +57,7 @@
       state: vulp-tip
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpTailVulpFade
   bodyPart: Tail
   groupWhitelist: [ Vulpkanin ]
@@ -62,6 +68,7 @@
       state: vulp-fade
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpTailCoyote
   bodyPart: Tail
   groupWhitelist: [ Vulpkanin ]
@@ -71,6 +78,7 @@
 
 # Animated
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpTailFennecAnimated
   bodyPart: Tail
   groupWhitelist: []
@@ -81,6 +89,7 @@
     state: fennec-wagging-tip
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpTailFluffyAnimated
   bodyPart: Tail
   groupWhitelist: []
@@ -91,6 +100,7 @@
     state: fluffy-wagging-tip
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpTailHuskyAnimated
   bodyPart: Tail
   groupWhitelist: []
@@ -103,6 +113,7 @@
     state: husky-wagging-outer
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpTailLongAnimated
   bodyPart: Tail
   groupWhitelist: []
@@ -113,6 +124,7 @@
     state: long-wagging-tip
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpTailVulpAnimated
   bodyPart: Tail
   groupWhitelist: []
@@ -123,6 +135,7 @@
     state: vulp-wagging-tip
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpTailVulpFadeAnimated
   bodyPart: Tail
   groupWhitelist: []
@@ -133,6 +146,7 @@
     state: vulp-wagging-fade
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpTailCoyoteAnimated
   bodyPart: Tail
   groupWhitelist: []
