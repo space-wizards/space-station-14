@@ -171,11 +171,11 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#d73307"
+        color: "#15b606"
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#d73307"
+        color: "#15b606"
 
 - type: entity
   parent: BaseMagazineShotgun
@@ -196,8 +196,8 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#d73307"
+        color: "#5da0b5"
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#d73307"
+        color: "#5da0b5"
