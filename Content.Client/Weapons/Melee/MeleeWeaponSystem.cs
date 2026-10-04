@@ -159,10 +159,10 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         return Interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range, overlapCheck: false);
     }
 
-    protected override void DoDamageEffect(List<EntityUid> targets, EntityUid? user, TransformComponent targetXform)
+    protected override void DoDamageEffect(HashSet<EntityUid> targets, EntityUid? user, TransformComponent targetXform)
     {
         // Server never sends the event to us for predictiveeevent.
-        _color.RaiseEffect(Color.Red, targets, Filter.Local());
+        _color.RaiseEffect(Color.Red, targets.ToList(), Filter.Local());
     }
 
     /// <summary>
@@ -189,8 +189,9 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
         // Server will validate it with InRangeUnobstructed.
-        var entities = GetNetEntityList(ArcRayCast(userPos, direction.ToWorldAngle(), component.Angle, distance, userXform.MapID, user).ToList());
-        RaisePredictiveEvent(new HeavyAttackEvent(GetNetEntity(meleeUid), entities.GetRange(0, Math.Min(MaxTargets, entities.Count)), GetNetCoordinates(coordinates)));
+        var entities = GetNetEntitySet(ArcRayCast(userPos, direction.ToWorldAngle(), component.Angle, distance, userXform.MapID, user));
+        entities = entities.Take(Math.Min(MaxTargets, entities.Count)).ToHashSet();
+        RaisePredictiveEvent(new HeavyAttackEvent(GetNetEntity(meleeUid), entities, GetNetCoordinates(coordinates)));
     }
 
     private void ClientDisarm(EntityUid attacker, MapCoordinates mousePos, EntityCoordinates coordinates)
