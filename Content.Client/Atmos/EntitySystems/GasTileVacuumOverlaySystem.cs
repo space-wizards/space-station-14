@@ -22,11 +22,9 @@ public sealed partial class GasTileVacuumOverlaySystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         _cfgManager.OnValueChanged(CCVars.VacuumOverlay, OnVacuumOverlayChanged, true);
         _cfgManager.OnValueChanged(CCVars.VacuumOverlayIntensity, OnVacuumOverlayIntensityChanged, true);
-
-        _vacuumOverlayEnabledDueToCvar = _cfgManager.GetCVar(CCVars.VacuumOverlay);
-        _vacuumOverlayEnabledIntensity = _cfgManager.GetCVar(CCVars.VacuumOverlayIntensity) > 0f;
     }
 
     public override void Shutdown()

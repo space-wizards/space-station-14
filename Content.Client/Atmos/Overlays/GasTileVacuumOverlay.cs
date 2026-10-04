@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Graphics;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
@@ -9,22 +10,21 @@ using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
-using System.Numerics;
-using System.Security.Cryptography;
 using Color = Robust.Shared.Maths.Color;
 
 namespace Content.Client.Atmos.Overlays;
 
 /// <summary>
-///     Overlay responsible for rendering vacuum overlay.
+/// Overlay responsible for rendering vacuum overlay.
 /// </summary>
 public sealed partial class GasTileVacuumOverlay : Overlay
 {
     public override bool RequestScreenTexture { get; set; } = true;
     private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
     private static readonly ProtoId<ShaderPrototype> VacuumOverlayShader = "VacuumDesaturation";
-    private static readonly Color EmptyColor = new Color(0, 0, 0, 0);
-    private static readonly Color MarkerColor = new Color(255f, 0, 0);
+    private static readonly Color EmptyColor = new(0, 0, 0, 0);
+    private static readonly Color MarkerColor = new(255f, 0, 0);
+
     [Dependency] private IEntityManager _entManager = default!;
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private IClyde _clyde = default!;
@@ -39,7 +39,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
     private readonly OverlayResourceCache<CachedResources> _resources = new();
 
     // Overlay settings
-    private float _intensity = 0f; // overlay intensity. 0.0f = turned off, 1.0f = full grayscale
+    private float _intensity; // overlay intensity. 0.0f = turned off, 1.0f = full grayscale
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -106,7 +106,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
                     var (_, _, gridEntToWorld, worldToGridLocal) = _xformSys.GetWorldPositionRotationMatrixWithInv(grid.Owner);
                     var gridEntToViewportLocal = gridEntToWorld * worldToViewportLocal;
 
-                    if (!Matrix3x2.Invert(gridEntToViewportLocal, out var viewportLocalToGridEnt))
+                    if (!Matrix3x2.Invert(gridEntToViewportLocal, out _))
                         continue;
 
                     // Draw commands (like DrawRect) will be using grid coordinates from here
@@ -133,15 +133,15 @@ public sealed partial class GasTileVacuumOverlay : Overlay
                             if (!localBounds.Contains(tilePosition))
                                 continue;
 
-                            if (tileGas.ByteGasTemperature.Value == ThermalByte.StateVacuum)
-                            {
-                                // Encode the strength in the red channel
-                                // alpha set to 1 as tile is active
-                                worldHandle.DrawRect(
-                                    Box2.CenteredAround(tilePosition + grid.Comp.TileSizeHalfVector,
-                                        grid.Comp.TileSizeVector), MarkerColor);
-                                anyVacuum = true;
-                            }
+                            if (tileGas.ByteGasTemperature.Value != ThermalByte.StateVacuum)
+                                continue;
+
+                            // Encode the strength in the red channel
+                            // alpha set to 1 as tile is active
+                            worldHandle.DrawRect(Box2.CenteredAround(tilePosition + grid.Comp.TileSizeHalfVector,
+                                    grid.Comp.TileSizeVector),
+                                MarkerColor);
+                            anyVacuum = true;
                         }
                     }
                 }
@@ -187,6 +187,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
     internal sealed class CachedResources : IDisposable
     {
         public IRenderTexture? VacuumTarget;
+
         public void Dispose()
         {
             VacuumTarget?.Dispose();
