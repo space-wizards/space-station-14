@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Power.Components;
 
@@ -16,7 +17,7 @@ public sealed partial class PowerNetworkBatteryVisualsComponent : Component
 
     /// <summary>
     /// The number of distinct charge levels a battery has.
-    /// 0 is empty, and (NumChargeLevels - 1) is full.
+    /// 0 is empty, and (<see cref="NumChargeLevels"/> - 1) is full.
     /// </summary>
     [DataField(serverOnly: true)]
     public int NumChargeLevels = 7;
@@ -30,22 +31,26 @@ public sealed partial class PowerNetworkBatteryVisualsComponent : Component
 
     /// <summary>
     /// Whether the battery is being charged/discharged/neither.
-    /// The initial visuals for this entity should match a stable charge for correct behaviour.
     /// </summary>
+    /// <remarks>
+    /// The initial visuals for this entity should match a stable charge for correct behaviour.
+    /// </remarks>
     [ViewVariables]
     public ChargeState LastChargeState = ChargeState.Still;
 
     /// <summary>
     /// Whether the battery can be charged and/or discharged.
-    /// The initial visuals for this entity should match a disconnected state for correct behaviour.
     /// </summary>
+    /// <remarks>
+    /// The initial visuals for this entity should match a disconnected state for correct behaviour.
+    /// </remarks>
     [ViewVariables]
     public PowerNetworkBatteryChargeCapabilities LastChargeCapabilities = PowerNetworkBatteryChargeCapabilities.Neither;
 
     /// <summary>
     /// The next time that the visuals should be updated.
     /// </summary>
-    [ViewVariables, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextUpdateTime;
 
     /// <summary>

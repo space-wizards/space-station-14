@@ -14,6 +14,7 @@ public sealed partial class PowerNetworkBatteryVisualizerSystem : VisualizerSyst
         if (args.Sprite == null)
             return;
 
+        // Update charge level.
         if (args.TryGetData<int>(PowerNetworkBatteryVisuals.LastChargeLevel, out var chargeLevel)
             && SpriteSystem.LayerMapTryGet(uid, PowerNetworkBatteryVisualLayers.ChargeLevel, out var layerIndex, logMissing: false))
         {
@@ -28,15 +29,21 @@ public sealed partial class PowerNetworkBatteryVisualizerSystem : VisualizerSyst
             }
         }
 
-        if (args.TryGetData<ChargeState>(PowerNetworkBatteryVisuals.LastChargeState, out var chargeState))
+        // Update charge state.
+        if (args.TryGetData<ChargeState>(PowerNetworkBatteryVisuals.LastChargeState, out var chargeState)
+            && SpriteSystem.LayerMapTryGet(uid, PowerNetworkBatteryVisualLayers.ChargeState, out layerIndex, logMissing: false))
         {
-            SpriteSystem.LayerSetRsiState((uid, args.Sprite), PowerNetworkBatteryVisualLayers.ChargeState, component.ChargeStatePrefix + chargeState.ToString().ToLowerInvariant());
+            SpriteSystem.LayerSetRsiState((uid, args.Sprite), layerIndex, component.ChargeStatePrefix + chargeState.ToString().ToLowerInvariant());
         }
 
+        // Update charge capabilities.
         if (args.TryGetData<PowerNetworkBatteryChargeCapabilities>(PowerNetworkBatteryVisuals.LastChargeCapabilities, out var chargeCapabilities))
         {
-            SpriteSystem.LayerSetVisible((uid, args.Sprite), PowerNetworkBatteryVisualLayers.CanCharge, chargeCapabilities.HasFlag(PowerNetworkBatteryChargeCapabilities.CanCharge));
-            SpriteSystem.LayerSetVisible((uid, args.Sprite), PowerNetworkBatteryVisualLayers.CanDischarge, chargeCapabilities.HasFlag(PowerNetworkBatteryChargeCapabilities.CanDischarge));
+            if (SpriteSystem.LayerMapTryGet(uid, PowerNetworkBatteryVisualLayers.CanCharge, out layerIndex, logMissing: false))
+                SpriteSystem.LayerSetVisible((uid, args.Sprite), layerIndex, chargeCapabilities.HasFlag(PowerNetworkBatteryChargeCapabilities.CanCharge));
+
+            if (SpriteSystem.LayerMapTryGet(uid, PowerNetworkBatteryVisualLayers.CanDischarge, out layerIndex, logMissing: false))
+                SpriteSystem.LayerSetVisible((uid, args.Sprite), layerIndex, chargeCapabilities.HasFlag(PowerNetworkBatteryChargeCapabilities.CanDischarge));
         }
     }
 }

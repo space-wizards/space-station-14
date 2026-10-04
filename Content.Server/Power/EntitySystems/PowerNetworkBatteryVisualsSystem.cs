@@ -81,7 +81,7 @@ public sealed partial class PowerNetworkBatteryVisualsSystem : EntitySystem
     /// <param name="ent">The entity to check, along with its visuals component.</param>
     private void UpdateChargeCapabilities(Entity<PowerNetworkBatteryVisualsComponent> ent)
     {
-        var chargeCapabilities = GetChargeCapabilities(ent);
+        var chargeCapabilities = GetChargeCapabilities(ent.Owner);
         if (chargeCapabilities != ent.Comp.LastChargeCapabilities)
         {
             ent.Comp.LastChargeCapabilities = chargeCapabilities;
@@ -104,7 +104,7 @@ public sealed partial class PowerNetworkBatteryVisualsSystem : EntitySystem
             _appearance.SetData(ent, PowerNetworkBatteryVisuals.LastChargeLevel, newLevel);
         }
 
-        var newChargeState = CalcChargeState(ent);
+        var newChargeState = CalcChargeState(ent.Owner);
         if (newChargeState != ent.Comp.LastChargeState)
         {
             ent.Comp.LastChargeState = newChargeState;
@@ -115,32 +115,23 @@ public sealed partial class PowerNetworkBatteryVisualsSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets the current level of charge of the given entity.
+    /// Gets the current level of charge of the given entity, from 0 up to <see cref="ent.Comp.NumChargeLevels"/>
     /// </summary>
-    /// <param name="ent">The entity to check, along with its visuals component.</param>
-    /// <param name="netBattery">The optional NetworkBatteryComponent of the entity passed.</param>
-    /// <returns>The level of charge of the entity given, from 0 up to ent.Comp.NumChargeLevels</returns>
-    private int CalcChargeLevel(Entity<PowerNetworkBatteryVisualsComponent> ent, BatteryComponent? battery = null)
+    private int CalcChargeLevel(Entity<PowerNetworkBatteryVisualsComponent> ent)
     {
-        if (!Resolve(ent, ref battery, false))
-            return 0;
-
-        var currentCharge = _battery.GetCharge((ent, battery));
-        return ContentHelpers.RoundToLevels(currentCharge, battery.MaxCharge, ent.Comp.NumChargeLevels);
+        var (currentCharge, maxCharge) = _battery.GetCharge(ent);
+        return ContentHelpers.RoundToLevels(currentCharge, maxCharge, ent.Comp.NumChargeLevels);
     }
 
     /// <summary>
     /// Gets the current charge state of the given entity.
     /// </summary>
-    /// <param name="uid">The UID of the entity to check.</param>
-    /// <param name="netBattery">The optional NetworkBatteryComponent of the entity passed.</param>
-    /// <returns>The charge state of the entity given.</returns>
-    private ChargeState CalcChargeState(EntityUid uid, PowerNetworkBatteryComponent? netBattery = null)
+    private ChargeState CalcChargeState(Entity<PowerNetworkBatteryComponent?> ent)
     {
-        if (!Resolve(uid, ref netBattery, false))
+        if (!Resolve(ent, ref ent.Comp, false))
             return ChargeState.Still;
 
-        return (netBattery.CurrentReceiving - netBattery.CurrentSupply) switch
+        return (ent.Comp.CurrentReceiving - ent.Comp.CurrentSupply) switch
         {
             > MinPowerThreshold => ChargeState.Charging,
             < -MinPowerThreshold => ChargeState.Discharging,
@@ -151,18 +142,17 @@ public sealed partial class PowerNetworkBatteryVisualsSystem : EntitySystem
     /// <summary>
     /// Gets the current charging capabilities of the given entity.
     /// </summary>
-    /// <param name="uid">The UID of the entity to check.</param>
-    /// <param name="netBattery">The optional NetworkBatteryComponent of the entity passed.</param>
+    /// <param name="uid">The entity to check.</param>
     /// <returns>The charging capabilities of the entity given.</returns>
-    private PowerNetworkBatteryChargeCapabilities GetChargeCapabilities(EntityUid uid, PowerNetworkBatteryComponent? netBattery = null)
+    private PowerNetworkBatteryChargeCapabilities GetChargeCapabilities(Entity<PowerNetworkBatteryComponent?> ent)
     {
         var state = PowerNetworkBatteryChargeCapabilities.Neither;
-        if (!Resolve(uid, ref netBattery, false))
+        if (!Resolve(ent, ref ent.Comp, false))
             return state;
 
-        if (netBattery.CanCharge)
+        if (ent.Comp.CanCharge)
             state |= PowerNetworkBatteryChargeCapabilities.CanCharge;
-        if (netBattery.CanDischarge)
+        if (ent.Comp.CanDischarge)
             state |= PowerNetworkBatteryChargeCapabilities.CanDischarge;
 
         return state;
