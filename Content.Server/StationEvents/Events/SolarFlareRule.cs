@@ -18,6 +18,7 @@ using Content.Shared.Light.Components;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Content.Shared.Atmos.Monitor.Components;
+using Content.Shared.Lock;
 using Content.Shared.VendingMachines.Components;
 using Robust.Shared.Random;
 
@@ -41,6 +42,7 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
     [Dependency] private CriminalRecordsSystem _criminalRecords = default!;
     [Dependency] private StationRecordsSystem _stationRecords = default!;
     [Dependency] private VendingMachineSystem _vendingMachine = default!;
+    [Dependency] private LockSystem _lock = default!;
 
     [Dependency] private EntityQuery<HeadsetComponent> _headsetQuery;
 
@@ -94,6 +96,9 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
 
         solarFlareRuleComponent.AffectedVendingMachines = Station
             .GetEntitiesWithComponentOnStation<VendingMachineComponent>(true)
+            .Select(e => (e.Owner, e.Comp))
+            .ToHashSet();
+        solarFlareRuleComponent.AffectedLocks = Station.GetEntitiesWithComponentOnStation<LockComponent>(false)
             .Select(e => (e.Owner, e.Comp))
             .ToHashSet();
     }
@@ -190,7 +195,15 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
             _vendingMachine.EjectRandom(vendingMachine, true);
         }
 
+        foreach (var lockable in component.AffectedLocks)
+        {
+            if (!RobustRandom.Prob(component.LockToggleChance))
+            {
+                continue;
+            }
 
+            _lock.ToggleLock(lockable.Item1, null, lockable.Item2);
+        }
     }
 
     [SubscribeLocalEvent]
