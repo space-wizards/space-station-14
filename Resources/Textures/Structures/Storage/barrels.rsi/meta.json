@@ -6,27 +6,27 @@
         "x": 32,
         "y": 32
     },
-  "states": [
-    {
-      "name": "silicatebarrel"
-    },
-    {
-      "name": "metalbarrel"
-    },
-    {
-      "name": "radbarrel"
-    },
-    {
-      "name": "inhand",
-      "directions": 4
-    },
-    {
-      "name": "inhand-radbarrel",
-      "directions": 4
-    },
-    {
-      "name": "inhand-silicate",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+          "name": "silicatebarrel"
+        },
+        {
+          "name": "metalbarrel"
+        },
+        {
+          "name": "radbarrel"
+        },
+        {
+          "name": "inhand-metalbarrel",
+          "directions": 4
+        },
+        {
+          "name": "inhand-radbarrel",
+          "directions": 4
+        },
+        {
+          "name": "inhand-silicate",
+          "directions": 4
+        }
+   ]
 }
