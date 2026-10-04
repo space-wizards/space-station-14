@@ -140,3 +140,8 @@
   id: Sharpness
   kind: source
   path: "/Textures/Shaders/sharpness.swsl"
+
+- type: shader
+  id: PuddleColorBlend
+  kind: source
+  path: "/Textures/Shaders/puddle_color_blend.swsl"
