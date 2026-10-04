@@ -13,7 +13,7 @@ namespace Content.Client.Computer.Visualizers;
 /// <seealso cref="ComputerVisualsComponent"/>
 public sealed partial class ComputerVisualizerSystem : VisualizerSystem<ComputerVisualsComponent>
 {
-    [Dependency] EntityQuery<SpriteComponent> _spriteQuery;
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery;
 
     protected override void OnAppearanceChange(EntityUid uid,
         ComputerVisualsComponent comp,
@@ -56,7 +56,7 @@ public sealed partial class ComputerVisualizerSystem : VisualizerSystem<Computer
 
     private void TrySetLayerState(Entity<SpriteComponent?> ent, Enum key, string? state)
     {
-        if (SpriteSystem.LayerMapTryGet(ent, key, out var layerIndex, logMissing: false))
+        if (SpriteSystem.LayerMapTryGet(ent, key, out var layerIndex, logMissing: state != null))
             SpriteSystem.LayerSetRsiState(ent, layerIndex, state);
     }
 

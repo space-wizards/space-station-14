@@ -4,9 +4,9 @@ namespace Content.Client.Computer.Visualizers;
 /// A component to set up visuals for computers.
 /// </summary>
 /// <remarks>
-/// Sets up initial states (RSI not specified, each layer is expected to be correct and unchanging).
+/// Sets up initial states. Each configured state requires a mapped sprite layer with the appropriate RSI.
 /// Hides and shows screen, handles key shading with power updates.
-/// </remarksy>
+/// </remarks>
 [RegisterComponent]
 [Access(typeof(ComputerVisualizerSystem))]
 public sealed partial class ComputerVisualsComponent : Component
@@ -36,7 +36,7 @@ public sealed partial class ComputerVisualsComponent : Component
     public string? StateKeys;
 
     /// <summary>
-    /// The RSI state used for the screen of the maintenance panel.
+    /// The RSI state used for the open maintenance panel.
     /// </summary>
     [DataField]
     public string? StatePanel;
