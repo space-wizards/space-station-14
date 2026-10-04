@@ -434,6 +434,7 @@
     extraCount: 2
     lightBreakChancePerSecond: 0.0003
     doorToggleChancePerSecond: 0.001
+    airAlarmModeChangeChancePerSecond: 0.004
   - type: DynamicRuleCost
     cost: 10
 

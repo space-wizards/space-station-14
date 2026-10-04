@@ -3,6 +3,7 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Light.Components;
 using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
+using Content.Server.Atmos.Monitor.Components;
 
 namespace Content.Server.StationEvents.Components;
 
@@ -56,6 +57,12 @@ public sealed partial class SolarFlareRuleComponent : Component
     [DataField]
     public HashSet<(EntityUid, AirlockComponent)> AffectedAirlocks = [];
 
+    /// <summary>
+    ///     The collection of air alarms that can be affected by the solar flare event.
+    /// </summary>
+    [DataField]
+    public HashSet<(EntityUid, AirAlarmComponent)> AffectedAirAlarms = [];
+
     #endregion
 
     /// <summary>
@@ -65,10 +72,14 @@ public sealed partial class SolarFlareRuleComponent : Component
     public float LightBreakChancePerSecond;
 
     /// <summary>
-    ///     Chance door toggles per second during event
+    ///     Chance to apply a random action on a door per second during event.
     /// </summary>
     [DataField("doorToggleChancePerSecond")]
-    public float DoorToggleChancePerSecond;
+    public float DoorAffectChancePerSecond;
 
-
+    /// <summary>
+    ///     Chance for each air alarm to have its mode randomized when the event starts
+    /// </summary>
+    [DataField]
+    public float AirAlarmModeChangeChancePerSecond;
 }

@@ -1,5 +1,7 @@
 using System.Linq;
 using Content.Server.Light.EntitySystems;
+using Content.Server.Atmos.Monitor.Components;
+using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
@@ -8,6 +10,7 @@ using Content.Shared.GameTicking.Components;
 using Content.Shared.Light.Components;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
+using Content.Shared.Atmos.Monitor.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
@@ -26,10 +29,12 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
     [Dependency] private SharedDoorSystem _door = default!;
     [Dependency] private SharedAirlockSystem _airlock = default!;
     [Dependency] private SharedElectrocutionSystem _electrocution = default!;
+    [Dependency] private AirAlarmSystem _airAlarm = default!;
 
     [Dependency] private EntityQuery<HeadsetComponent> _headsetQuery;
 
     private static readonly SolarFlareDoorAction[] SolarFlareActions = Enum.GetValues<SolarFlareDoorAction>();
+    private static readonly AirAlarmMode[] AirAlarmModes = Enum.GetValues<AirAlarmMode>();
 
     private float _effectTimer;
 
@@ -49,6 +54,9 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
         ent.Comp1.AffectedAirlocks = Station.GetEntitiesWithComponentOnStation<AirlockComponent>(true)
             .Select(e => (e.Owner, e.Comp))
             .ToHashSet();
+        ent.Comp1.AffectedAirAlarms = Station.GetEntitiesWithComponentOnStation<AirAlarmComponent>(true)
+            .Select(e => (e.Owner, e.Comp))
+            .ToHashSet();
     }
 
     protected override void ActiveTick(EntityUid uid, SolarFlareRuleComponent component, GameRuleComponent gameRule, float frameTime)
@@ -57,18 +65,22 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
 
         _effectTimer -= frameTime;
         if (!(_effectTimer < 0))
+        {
             return;
+        }
 
         _effectTimer += 1;
         foreach (var light in component.AffectedLights)
         {
             if (RobustRandom.Prob(component.LightBreakChancePerSecond))
+            {
                 _poweredLight.TryDestroyBulb(light.Item1, light.Item2);
+            }
         }
 
         foreach (var airlockEnt in component.AffectedAirlocks)
         {
-            if (!RobustRandom.Prob(component.DoorToggleChancePerSecond))
+            if (!RobustRandom.Prob(component.DoorAffectChancePerSecond))
             {
                 continue;
             }
@@ -102,6 +114,17 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
 
                     break;
             }
+        }
+
+        foreach (var airAlarm in component.AffectedAirAlarms)
+        {
+            if (!RobustRandom.Prob(component.AirAlarmModeChangeChancePerSecond))
+            {
+                continue;
+            }
+
+            airAlarm.Item2.AutoMode = false;
+            _airAlarm.SetMode(airAlarm.Item1, string.Empty, RobustRandom.Pick(AirAlarmModes), false, airAlarm.Item2);
         }
     }
 
