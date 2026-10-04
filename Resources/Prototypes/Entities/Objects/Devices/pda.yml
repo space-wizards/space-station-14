@@ -85,8 +85,8 @@
       - NanoTaskCartridge
       - NewsReaderCartridge
     cartridgeSlot:
-      priority: 1
       name: device-pda-slot-component-slot-name-cartridge
+      priority: 1
       ejectSound: /Audio/Machines/id_swipe.ogg
       insertSound: /Audio/Machines/id_insert.ogg
       whitelist:
@@ -409,6 +409,7 @@
       insertSound: null
   - type: CartridgeLoader
     cartridgeSlot:
+      priority: 1
       ejectSound: null
       insertSound: null
       whitelist:
