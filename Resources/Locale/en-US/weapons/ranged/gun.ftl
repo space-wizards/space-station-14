@@ -54,3 +54,8 @@ gun-speedloader-empty = Speedloader empty
 # GunSpreadModifier
 examine-gun-spread-modifier-reduction = The spread has been reduced by [color=yellow]{$percentage}%[/color].
 examine-gun-spread-modifier-increase = The spread has been increased by [color=yellow]{$percentage}%[/color].
+
+gun-access-locked = The {$target} is access locked!
+gun-toggle-on = The {$target} turns on.
+gun-toggle-off = The {$target} turns off.
+gun-not-anchored = The {$target} isn't anchored to the ground!
