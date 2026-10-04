@@ -1,6 +1,6 @@
 using Content.Shared.Construction;
+using Content.Shared.Destructible;
 using JetBrains.Annotations;
-using Content.Server.Destructible;
 
 namespace Content.Server.Construction.Completions
 {

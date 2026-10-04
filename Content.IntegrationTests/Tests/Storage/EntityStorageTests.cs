@@ -26,7 +26,7 @@ public sealed class EntityStorageTests : GameTest
         !type:DamageTrigger
         damage: 10
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ Destruction ]
 ";
 

@@ -47,7 +47,7 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: ["Breakage"]
   - type: Anchorable
 

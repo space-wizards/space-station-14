@@ -26,12 +26,12 @@
         !type:DamageTrigger
         damage: 20
       behaviors:
-      - !type:SpillBehavior
+      - !type:Spill
         solution: tank
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetSteel1:
             min: 1

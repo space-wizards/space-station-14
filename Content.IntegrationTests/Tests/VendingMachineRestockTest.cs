@@ -91,7 +91,7 @@ namespace Content.IntegrationTests.Tests
         damage: 20
       behaviors:
       - !type:DumpRestockInventory
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ 'Destruction' ]
   - type: VendingMachineRestock
     canRestock:

@@ -125,16 +125,17 @@
         damageType: Radiation
         damage: 15
       behaviors:
-      - !type:PopupBehavior
-        popup: mouth-taste-metal
-        popupType: LargeCaution
-        targetOnly: true
+      - !type:PopupMessage
+        messages: [mouth-taste-metal]
+        visualType: LargeCaution
+        method: PopupEntity
+        type: Local
     - trigger:
         !type:DamageTypeTrigger
         damageType: Radiation
         damage: 40
       behaviors:
-      - !type:VomitBehavior
+      - !type:Vomit
 
 # Used as a simple default for mob destruction
 - type: entity
@@ -149,20 +150,25 @@
         damageType: Blunt
         damage: 400
       behaviors:
-      - !type:GibBehavior { }
+      - !type:Gib { }
     - trigger:
         !type:DamageTypeTrigger
         damageType: Heat
         damage: 1500
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawnInContainer: true
         spawn:
           Ash:
             min: 1
             max: 1
-      - !type:BurnBodyBehavior
-      - !type:PlaySoundBehavior
+      - !type:DeleteEntity
+      - !type:PopupMessage
+        messages: [ "bodyburn-text-others" ]
+        visualType: LargeCaution
+        method: PopupCoordinates
+        type: Pvs
+      - !type:PlaySound
         sound:
           collection: MeatLaserImpact
 

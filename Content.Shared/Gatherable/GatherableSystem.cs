@@ -20,7 +20,7 @@ namespace Content.Shared.Gatherable;
 public sealed partial class GatherableSystem : EntitySystem
 {
     [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedDestructibleSystem _destructible = default!;
+    [Dependency] private DestructibleSystem _destructible = default!;
     [Dependency] private EntityTableSystem _entityTable = default!;
     [Dependency] private TagSystem _tagSystem = default!;
     [Dependency] private IGameTiming _timing = default!;

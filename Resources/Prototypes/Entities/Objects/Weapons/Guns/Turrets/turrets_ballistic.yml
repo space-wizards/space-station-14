@@ -24,7 +24,7 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:TriggerBehavior
+      - !type:Trigger
   - type: Gun
     fireRate: 2
     selectedMode: FullAuto
@@ -114,10 +114,10 @@
         !type:DamageTrigger
         damage: 175
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: gib
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           FoodMeatXeno:
             min: 3

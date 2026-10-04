@@ -90,7 +90,7 @@
         !type:DamageTrigger
         damage: 175
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalGlassBreak
 

@@ -72,24 +72,24 @@
         !type:DamageTrigger
         damage: 8
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Effects/poster_broken.ogg
           params:
             volume: -4
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTypeTrigger
         damageType: Slash
         damage: 5
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Effects/poster_broken.ogg
           params:
             volume: -4
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: Tag
     tags:

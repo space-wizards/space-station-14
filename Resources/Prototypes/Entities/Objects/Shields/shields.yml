@@ -36,12 +36,12 @@
         !type:DamageTrigger
         damage: 125 #This is probably enough damage before it breaks
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetSteel:
             min: 2
@@ -183,12 +183,12 @@
           !type:DamageTrigger
           damage: 50 #Weaker shield
         behaviors:
-        - !type:DoActsBehavior
+        - !type:DoActs
           acts: [ "Destruction" ]
-        - !type:PlaySoundBehavior
+        - !type:PlaySound
           sound:
             collection: WoodDestroy
-        - !type:SpawnEntitiesBehavior
+        - !type:SpawnEntities
           spawn:
             MaterialWoodPlank:
               min: 5
@@ -222,11 +222,11 @@
           !type:DamageTrigger
           damage: 25 #Very very weak shield
         behaviors:
-        - !type:DoActsBehavior
+        - !type:DoActs
           acts: [ "Destruction" ]
-        - !type:PlaySoundBehavior
+        - !type:PlaySound
           sound: /Audio/Items/Toys/ToyFall2.ogg
-        - !type:SpawnEntitiesBehavior
+        - !type:SpawnEntities
           spawn:
             MaterialCardboard:
               min: 2
@@ -253,12 +253,12 @@
           !type:DamageTrigger
           damage: 75
         behaviors:
-        - !type:DoActsBehavior
+        - !type:DoActs
           acts: [ "Destruction" ]
-        - !type:PlaySoundBehavior
+        - !type:PlaySound
           sound:
             collection: MetalBreak
-        - !type:SpawnEntitiesBehavior
+        - !type:SpawnEntities
           spawn:
             SheetSteel:
               min: 1
@@ -291,14 +291,14 @@
           !type:DamageTrigger
           damage: 50
         behaviors:
-        - !type:DoActsBehavior
+        - !type:DoActs
           acts: [ "Destruction" ]
-        - !type:SpawnEntitiesBehavior
+        - !type:SpawnEntities
           spawn:
             MaterialWebSilk:
               min: 1
               max: 1
-        - !type:PlaySoundBehavior
+        - !type:PlaySound
           sound:
             collection: WoodDestroy
 
@@ -347,12 +347,12 @@
           !type:DamageTrigger
           damage: 50
         behaviors:
-        - !type:DoActsBehavior
+        - !type:DoActs
           acts: [ "Destruction" ]
-        - !type:PlaySoundBehavior
+        - !type:PlaySound
           sound:
             collection: GlassBreak
-        - !type:SpawnEntitiesBehavior
+        - !type:SpawnEntities
           spawn:
             SheetGlass:
               min: 5
@@ -432,12 +432,12 @@
           !type:DamageTrigger
           damage: 125
         behaviors:
-        - !type:DoActsBehavior
+        - !type:DoActs
           acts: [ "Destruction" ]
-        - !type:PlaySoundBehavior
+        - !type:PlaySound
           sound:
             collection: GlassBreak
-        - !type:SpawnEntitiesBehavior
+        - !type:SpawnEntities
           spawn:
             BrokenEnergyShield:
               min: 1

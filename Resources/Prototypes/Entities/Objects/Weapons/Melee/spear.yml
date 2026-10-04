@@ -88,17 +88,17 @@
         !type:DamageTrigger
         damage: 20
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: GlassBreak
           params:
             volume: -4
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           PartRodMetal1:
             min: 1
             max: 1
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: DamageOnLand
     damage:
@@ -192,7 +192,7 @@
         !type:DamageTrigger
         damage: 20
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialBones1:
             min: 1

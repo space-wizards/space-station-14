@@ -250,7 +250,7 @@
         !type:DamageTrigger
         damage: 1 # Intentionally very weak to encourage speedy repair, think of it as thin webbing
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
 
 - type: entity

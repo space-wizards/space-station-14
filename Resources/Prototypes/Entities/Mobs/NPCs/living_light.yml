@@ -97,9 +97,9 @@
         !type:DamageTrigger
         damage: 25
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: GlassBreak
 

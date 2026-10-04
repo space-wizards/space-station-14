@@ -37,13 +37,13 @@
           !type:DamageTrigger
           damage: 40
         behaviors:
-        - !type:PlaySoundBehavior
+        - !type:PlaySound
           sound:
             path: /Audio/Effects/tree_fell.ogg
             params:
               volume: -5
               variation: 0.05
-        - !type:SpawnEntitiesBehavior
+        - !type:SpawnEntities
           spawn:
             FoodSpaceshroom:
               min: 0

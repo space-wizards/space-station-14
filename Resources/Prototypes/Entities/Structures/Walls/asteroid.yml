@@ -47,7 +47,7 @@
         !type:DamageTrigger
         damage: 30
       behaviors:
-      - &SoundStoneBreak !type:PlaySoundBehavior
+      - &SoundStoneBreak !type:PlaySound
         sound:
           path: /Audio/Effects/break_stone.ogg
           params:
@@ -104,17 +104,17 @@
         !type:DamageTrigger
         damage: 3
       behaviors:
-      - !type:TimerStartBehavior
-      - !type:PlaySoundBehavior
+      - !type:TimerStart
+      - !type:PlaySound
         sound:
           collection: GlassBreak
     - trigger:
         !type:DamageTrigger
         damage: 500 # you have to really smack it for it to manually detonate. re-examine once defusal exists
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: ["Destruction"]
-      - !type:TriggerBehavior
+      - !type:Trigger
         keyOut: timer # explode immediately
 
 - type: entity

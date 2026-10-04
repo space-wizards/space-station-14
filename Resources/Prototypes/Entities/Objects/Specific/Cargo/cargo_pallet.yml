@@ -44,7 +44,7 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           PartRodMetal: # takes two to construct, so drop less than that
             min: 0

@@ -35,7 +35,7 @@
     - trigger: !type:DamageTrigger
         damage: 175
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         offset: 0
         spawn:
           MachineFrameDestroyed:
@@ -84,7 +84,7 @@
     - trigger: !type:DamageTrigger
         damage: 175
       behaviors:
-      - !type:ChangeConstructionNodeBehavior
+      - !type:ChangeConstructionNode
         node: machineFrame
 
 - type: entity
@@ -106,5 +106,5 @@
     - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:ChangeConstructionNodeBehavior
+      - !type:ChangeConstructionNode
         node: machineFrame

@@ -168,10 +168,10 @@
         !type:DamageTrigger
         damage: 20
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: WoodDestroy
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialWebSilk:
             min: 3
@@ -378,10 +378,10 @@
         !type:DamageTrigger
         damage: 20
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: WoodDestroyHeavy
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialWoodPlank1:
             min: 1
@@ -435,10 +435,10 @@
         !type:DamageTrigger
         damage: 20
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalGlassBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetPlastic:
             min: 1
@@ -731,10 +731,10 @@
         !type:DamageTrigger
         damage: 20
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: WoodDestroy
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialWoodPlank1:
             min: 1
@@ -773,10 +773,10 @@
         !type:DamageTrigger
         damage: 100 # discourage just beating the grave to break it open
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: WoodDestroy
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialWoodPlank1:
             min: 1

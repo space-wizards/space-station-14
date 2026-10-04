@@ -29,7 +29,7 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           BrokenBottle:
             min: 1
