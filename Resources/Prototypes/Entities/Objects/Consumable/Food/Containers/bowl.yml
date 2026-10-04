@@ -19,7 +19,7 @@
       visible: false
   - type: Solution
     solution:
-      maxVol: 50
+      maxVol: 60
   - type: MixableSolution
     solution: food
   - type: Edible
