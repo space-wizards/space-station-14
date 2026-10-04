@@ -14,7 +14,7 @@ public sealed partial class FirelockSystem : SharedFirelockSystem
     [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
-    [Dependency] private EntityQuery<DoorComponent> _doorQuery = default!;
+    [Dependency] private EntityQuery<DoorComponent> _doorQuery;
 
     /// <inheritdoc/>
     protected override void OnComponentStartup(Entity<FirelockComponent> ent, ref ComponentStartup args)
@@ -30,7 +30,7 @@ public sealed partial class FirelockSystem : SharedFirelockSystem
             door.OpenSpriteStates.Add((DoorVisualLayers.BaseUnlit, ent.Comp.WarningLightSpriteState));
 
             ((Animation)door.OpeningAnimation).AnimationTracks.Add(
-                new AnimationTrackSpriteFlick()
+                new AnimationTrackSpriteFlick
                 {
                     LayerKey = DoorVisualLayers.BaseUnlit,
                     KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(ent.Comp.OpeningLightSpriteState, 0f) },
@@ -38,7 +38,7 @@ public sealed partial class FirelockSystem : SharedFirelockSystem
             );
 
             ((Animation)door.ClosingAnimation).AnimationTracks.Add(
-                new AnimationTrackSpriteFlick()
+                new AnimationTrackSpriteFlick
                 {
                     LayerKey = DoorVisualLayers.BaseUnlit,
                     KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(ent.Comp.ClosingLightSpriteState, 0f) },
@@ -52,7 +52,7 @@ public sealed partial class FirelockSystem : SharedFirelockSystem
         door.OpenSpriteStates.Add((WiresVisualLayers.MaintenancePanel, null));
         door.ClosedSpriteStates.Add((WiresVisualLayers.MaintenancePanel, ent.Comp.OpenPanelSpriteState));
 
-        ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick()
+        ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick
         {
             LayerKey = WiresVisualLayers.MaintenancePanel,
             KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(ent.Comp.OpeningPanelSpriteState, 0f) },

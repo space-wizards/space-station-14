@@ -13,7 +13,7 @@ public sealed partial class AirlockSystem : SharedAirlockSystem
     [Dependency] private AppearanceSystem _appearanceSystem = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
-    [Dependency] private EntityQuery<DoorComponent> _doorQuery = default!;
+    [Dependency] private EntityQuery<DoorComponent> _doorQuery;
 
     [SubscribeLocalEvent]
     private void OnComponentStartup(Entity<AirlockComponent> ent, ref ComponentStartup args)
@@ -28,26 +28,26 @@ public sealed partial class AirlockSystem : SharedAirlockSystem
             door.ClosedSpriteStates.Add((DoorVisualLayers.BaseUnlit, ent.Comp.ClosedSpriteState));
         }
 
-        ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick()
+        ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick
         {
             LayerKey = DoorVisualLayers.BaseUnlit,
             KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(ent.Comp.OpeningSpriteState, 0f) },
         }
         );
 
-        ((Animation)door.ClosingAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick()
+        ((Animation)door.ClosingAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick
         {
             LayerKey = DoorVisualLayers.BaseUnlit,
             KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(ent.Comp.ClosingSpriteState, 0f) },
         }
         );
 
-        door.DenyingAnimation = new Animation()
+        door.DenyingAnimation = new Animation
         {
             Length = TimeSpan.FromSeconds(ent.Comp.DenyAnimationTime),
             AnimationTracks =
             {
-                new AnimationTrackSpriteFlick()
+                new AnimationTrackSpriteFlick
                 {
                     LayerKey = DoorVisualLayers.BaseUnlit,
                     KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(ent.Comp.DenySpriteState, 0f) },
@@ -61,7 +61,7 @@ public sealed partial class AirlockSystem : SharedAirlockSystem
         door.OpenSpriteStates.Add((WiresVisualLayers.MaintenancePanel, null));
         door.ClosedSpriteStates.Add((WiresVisualLayers.MaintenancePanel, ent.Comp.OpenPanelSpriteState));
 
-        ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick()
+        ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick
         {
             LayerKey = WiresVisualLayers.MaintenancePanel,
             KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(ent.Comp.OpeningPanelSpriteState, 0f) },
@@ -116,7 +116,8 @@ public sealed partial class AirlockSystem : SharedAirlockSystem
         if (ent.Comp.EmergencyAccessLayer)
         {
             var isDoorIdle = state != DoorState.Open && state != DoorState.Opening && state != DoorState.Closing;
-            _sprite.LayerSetVisible((ent, args.Sprite), DoorVisualLayers.BaseEmergencyAccess,
+            _sprite.LayerSetVisible((ent, args.Sprite),
+                DoorVisualLayers.BaseEmergencyAccess,
                 showEmergency && isDoorIdle && !showBolted);
         }
 
