@@ -834,7 +834,7 @@
   parent: [WeaponPistolCHIMP, BaseSyndicateContraband]
   id: WeaponPistolCHIMPSyndicate
   suffix: Syndicate
-  description: For all your illegal anomaly manipulation needs.
+  description: For all your illegal anomaly manipulation needs. Comes with a recharging battery.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/chimp_syndicate.rsi

@@ -446,3 +446,18 @@
         - id: WeaponShotgunHushpup
         - id: BoxLethalshot
         - id: TreasureCoinIron
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledCHIMP
+  name: C.H.I.M.P bundle
+  description: Contains the Syndicate C.H.I.M.P., bundled with a few other useful tools.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: WeaponPistolCHIMPSyndicate
+        - id: SheetPlasma
+        - id: AnomalyScanner
+        - id: AnomalyLocator
