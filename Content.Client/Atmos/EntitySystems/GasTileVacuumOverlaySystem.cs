@@ -16,12 +16,17 @@ public sealed partial class GasTileVacuumOverlaySystem : EntitySystem
     [Dependency] private IConfigurationManager _cfgManager = default!;
 
     private GasTileVacuumOverlay? _gasTileVacuumOverlay;
+    private bool _vacuumOverlayEnabledDueToCvar; // due to CVar being enabled
+    private bool _vacuumOverlayEnabledIntensity; // due to non zero intensity in setting
 
     public override void Initialize()
     {
         base.Initialize();
         _cfgManager.OnValueChanged(CCVars.VacuumOverlay, OnVacuumOverlayChanged, true);
         _cfgManager.OnValueChanged(CCVars.VacuumOverlayIntensity, OnVacuumOverlayIntensityChanged, true);
+
+        _vacuumOverlayEnabledDueToCvar = _cfgManager.GetCVar(CCVars.VacuumOverlay);
+        _vacuumOverlayEnabledIntensity = _cfgManager.GetCVar(CCVars.VacuumOverlayIntensity) > 0f;
     }
 
     public override void Shutdown()
@@ -35,17 +40,19 @@ public sealed partial class GasTileVacuumOverlaySystem : EntitySystem
 
     private void OnVacuumOverlayChanged(bool enabled)
     {
-        ToggleOverlay(enabled);
+        _vacuumOverlayEnabledDueToCvar = enabled;
+        UpdateOverlay();
     }
 
     private void OnVacuumOverlayIntensityChanged(float intensity)
     {
-        ToggleOverlay(intensity > 0f && _cfgManager.GetCVar(CCVars.VacuumOverlay));
+        _vacuumOverlayEnabledIntensity = intensity > 0f;
+        UpdateOverlay();
     }
 
-    private void ToggleOverlay(bool enabled)
+    private void UpdateOverlay()
     {
-        if (enabled)
+        if (_vacuumOverlayEnabledDueToCvar && _vacuumOverlayEnabledIntensity)
         {
             _gasTileVacuumOverlay ??= new GasTileVacuumOverlay();
 
