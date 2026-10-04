@@ -857,6 +857,27 @@
       fireCost: 100
   - type: BatterySelfRecharger
     autoRechargeRate: 25
+  - type: Construction
+    graph: UpgradeWeaponPistolCHIMPSyndicate
+    node: start
+
+- type: entity
+  parent: [WeaponPistolCHIMPSyndicate]
+  id: WeaponPistolCHIMPSyndicateUpgraded
+  suffix: Syndicate
+  components:
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: AnomalousParticleDeltaStrong
+      fireCost: 100
+    - proto: AnomalousParticleEpsilonStrong
+      fireCost: 100
+    - proto: AnomalousParticleOmegaStrong
+      fireCost: 100
+    - proto: AnomalousParticleZetaStrong
+      fireCost: 100
+    - proto: AnomalousParticleSigmaStrong
+      fireCost: 100
 
 - type: entity
   name: eye of a behonker
