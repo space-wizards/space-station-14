@@ -44,30 +44,39 @@ public abstract partial class RelayAccentSystem<T> : EntitySystem where T : Base
         if (!ent.Comp.RelayAccent)
             return;
 
-        // Check owner (character trait accents).
-        if (TryComp<T>(args.Owner, out var own) && IsSameAccent((args.Owner, own), ent))
+        // Prevent the same accent from applying twice.
+        if (HasAccent(args.Owner, ent))
             return;
-
-        // Check items in invontery that apply the same accent.
-        var enumerator = _inventory.GetSlotEnumerator(args.Owner, args.Args.TargetSlots);
-        while (enumerator.NextItem(out var item))
-        {
-            if (item == ent.Owner)
-                break;
-
-            if (TryComp<T>(item, out var other) && other.RelayAccent && IsSameAccent((item, other), ent))
-                return;
-        }
 
         OnAccent(ent, ref args.Args);
     }
 
     /// <summary>
-    /// Check if two accents are the same accent.
+    /// Checks if target already has this accent.
     /// </summary>
-    protected virtual bool IsSameAccent(Entity<T> a, Entity<T> b)
+    public bool HasAccent(EntityUid target, Entity<T> accentEnt)
     {
-        return true;
+        // If not ReplacementAccent all accentProto checks are null == null (true).
+        var accentProto = (accentEnt.Comp as ReplacementAccentComponent)?.Accent;
+
+        // Check owner (character trait accents).
+        if (TryComp<T>(target, out var own) && (own as ReplacementAccentComponent)?.Accent == accentProto)
+            return true;
+
+        // Check items in invontery that apply the same accent.
+        var enumerator = _inventory.GetSlotEnumerator(target, SlotFlags.WITHOUT_POCKET);
+        while (enumerator.NextItem(out var item))
+        {
+            if (item == accentEnt.Owner)
+                // Runs for every relayAccent item. A continue here would make neither apply.
+                break;
+
+            if (TryComp<T>(item, out var other) && other.RelayAccent
+                && (other as ReplacementAccentComponent)?.Accent == accentProto)
+                return true;
+        }
+
+        return false;
     }
 
     protected virtual void OnStatusEffectRelayAccent(Entity<T> ent, ref StatusEffectRelayedEvent<AccentGetEvent> args)

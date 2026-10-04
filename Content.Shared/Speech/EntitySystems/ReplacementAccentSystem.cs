@@ -49,11 +49,6 @@ public sealed partial class ReplacementAccentSystem : RelayAccentSystem<Replacem
         return ApplyReplacements(message, ent.Value.Comp.Accent, ent.Value.Owner);
     }
 
-    protected override bool IsSameAccent(Entity<ReplacementAccentComponent> a, Entity<ReplacementAccentComponent> b)
-    {
-        return a.Comp.Accent == b.Comp.Accent;
-    }
-
     /// <summary>
     /// Applies a replacement accent to an entity.
     /// </summary>
