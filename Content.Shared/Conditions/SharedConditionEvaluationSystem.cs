@@ -136,6 +136,18 @@ public sealed partial class SharedConditionEvaluationSystem : EntitySystem
     /// <param name="evaluatorSystemType"></param>
     private void RegisterConditionEvaluator(Type conditionType, Type evaluatorSystemType)
     {
+
+        var evaluatorSystemObject = _entitySystemManager.GetEntitySystem(evaluatorSystemType) as ConditionEvaluatorSystem;
+        if (evaluatorSystemObject == null)
+            throw new Exception($"Could not resolve {evaluatorSystemType.FullName} to {nameof(ConditionEvaluatorSystem)}");
+
+        Func<ICondition, EntityUid, EntityUid?, float> evaluationFunc = evaluatorSystemObject.EvaluateAny;
+        if (!_bindings.TryAdd(conditionType, evaluationFunc))
+        {
+            // we have a duplicate evaluator???
+            throw new Exception("Duplicate evaluator for condition type: " + conditionType.FullName);
+        }
+        /*
         //define parameters
         var paramCondition = Expression.Parameter(typeof(ICondition), "condition");
         var paramEntity = Expression.Parameter(typeof(EntityUid), "entityUid");
@@ -165,6 +177,7 @@ public sealed partial class SharedConditionEvaluationSystem : EntitySystem
             // we have a duplicate evaluator???
             throw new Exception("Duplicate evaluator for condition type: " + conditionType.FullName);
         }
+        */
     }
 
     /// <summary>
