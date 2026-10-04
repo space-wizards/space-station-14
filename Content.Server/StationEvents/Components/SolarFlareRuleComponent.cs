@@ -4,6 +4,8 @@ using Content.Shared.Light.Components;
 using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
 using Content.Server.Atmos.Monitor.Components;
+using Content.Shared.CriminalRecords;
+using Content.Shared.StationRecords;
 
 namespace Content.Server.StationEvents.Components;
 
@@ -13,6 +15,12 @@ namespace Content.Server.StationEvents.Components;
 [RegisterComponent, Access(typeof(SolarFlareRule))]
 public sealed partial class SolarFlareRuleComponent : Component
 {
+    /// <summary>
+    ///     The station that is affected by the solar flare event.
+    /// </summary>
+    [ViewVariables]
+    public EntityUid? AffectedStation;
+
     #region Radio
 
     /// <summary>
@@ -45,6 +53,10 @@ public sealed partial class SolarFlareRuleComponent : Component
     [DataField("extraCount")]
     public uint ExtraCount;
 
+    #endregion
+
+    #region Affected collections
+
     /// <summary>
     ///    The collection of lights that will be affected by the solar flare event.
     /// </summary>
@@ -63,23 +75,39 @@ public sealed partial class SolarFlareRuleComponent : Component
     [DataField]
     public HashSet<(EntityUid, AirAlarmComponent)> AffectedAirAlarms = [];
 
-    #endregion
-
     /// <summary>
-    ///     Chance light bulb breaks per second during event
-    /// </summary>
-    [DataField("lightBreakChancePerSecond")]
-    public float LightBreakChancePerSecond;
-
-    /// <summary>
-    ///     Chance to apply a random action on a door per second during event.
-    /// </summary>
-    [DataField("doorToggleChancePerSecond")]
-    public float DoorAffectChancePerSecond;
-
-    /// <summary>
-    ///     Chance for each air alarm to have its mode randomized when the event starts
+    ///    The collection of station records that can be affected by the solar flare event.
     /// </summary>
     [DataField]
-    public float AirAlarmModeChangeChancePerSecond;
+    public HashSet<(StationRecordKey, GeneralStationRecord, CriminalRecord)> AffectedStationRecords = [];
+
+    #endregion
+
+    #region Event probabilities
+
+    /// <summary>
+    ///     Chance per second light bulb breaks during event.
+    /// </summary>
+    [DataField("lightBreakChancePerSecond")]
+    public float LightBreakChance;
+
+    /// <summary>
+    ///     Chance per second to apply a random action on a door during event.
+    /// </summary>
+    [DataField("doorToggleChancePerSecond")]
+    public float DoorAffectChance;
+
+    /// <summary>
+    ///     Chance per second for each air alarm to have its mode randomized when the event starts.
+    /// </summary>
+    [DataField]
+    public float AirAlarmModeChangeChance;
+
+    /// <summary>
+    ///     Chance per second per crew member to assign a random criminal status.
+    /// </summary>
+    [DataField]
+    public float ChangeCriminalRecordChance;
+
+    #endregion
 }

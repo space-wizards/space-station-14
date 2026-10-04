@@ -1,8 +1,14 @@
 using System.Linq;
+using Content.Server.CriminalRecords.Systems;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.StationEvents.Components;
+using Content.Shared.CriminalRecords;
+using Content.Shared.Security;
+using Content.Shared.StationRecords;
+using Content.Shared.StationRecords.Components;
+using Content.Shared.StationRecords.Systems;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Electrocution;
@@ -30,33 +36,58 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
     [Dependency] private SharedAirlockSystem _airlock = default!;
     [Dependency] private SharedElectrocutionSystem _electrocution = default!;
     [Dependency] private AirAlarmSystem _airAlarm = default!;
+    [Dependency] private CriminalRecordsSystem _criminalRecords = default!;
+    [Dependency] private StationRecordsSystem _stationRecords = default!;
 
     [Dependency] private EntityQuery<HeadsetComponent> _headsetQuery;
 
     private static readonly SolarFlareDoorAction[] SolarFlareActions = Enum.GetValues<SolarFlareDoorAction>();
     private static readonly AirAlarmMode[] AirAlarmModes = Enum.GetValues<AirAlarmMode>();
+    private static readonly SecurityStatus[] CrimeStatuses = Enum.GetValues<SecurityStatus>()
+        .Where(status => status != SecurityStatus.None)
+        .ToArray();
 
     private float _effectTimer;
 
-    protected override void Started(Entity<SolarFlareRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
+    protected override void Started(Entity<SolarFlareRuleComponent, GameRuleComponent> ent,
+        ref GameRuleStartedEvent args)
     {
         base.Started(ent, ref args);
 
-        for (var i = 0; i < ent.Comp1.ExtraCount; i++)
+        var solarFlareRuleComponent = ent.Comp1;
+
+        for (var i = 0; i < solarFlareRuleComponent.ExtraCount; i++)
         {
             var channel = RobustRandom.Pick(ent.Comp1.ExtraChannels);
-            ent.Comp1.AffectedChannels.Add(channel);
+            solarFlareRuleComponent.AffectedChannels.Add(channel);
         }
 
-        ent.Comp1.AffectedLights = Station.GetEntitiesWithComponentOnStation<PoweredLightComponent>(true)
+        solarFlareRuleComponent.AffectedLights = Station
+            .GetEntitiesWithComponentOnStation<PoweredLightComponent>(true, out var station)
             .Select(e => (e.Owner, e.Comp))
             .ToHashSet();
-        ent.Comp1.AffectedAirlocks = Station.GetEntitiesWithComponentOnStation<AirlockComponent>(true)
+        solarFlareRuleComponent.AffectedAirlocks = Station.GetEntitiesWithComponentOnStation<AirlockComponent>(true)
             .Select(e => (e.Owner, e.Comp))
             .ToHashSet();
-        ent.Comp1.AffectedAirAlarms = Station.GetEntitiesWithComponentOnStation<AirAlarmComponent>(true)
+        solarFlareRuleComponent.AffectedAirAlarms = Station.GetEntitiesWithComponentOnStation<AirAlarmComponent>(true)
             .Select(e => (e.Owner, e.Comp))
             .ToHashSet();
+
+        solarFlareRuleComponent.AffectedStation = station?.Owner;
+
+        if (solarFlareRuleComponent.AffectedStation is { } stationUid
+            && TryComp<StationRecordsComponent>(stationUid, out var stationRecords))
+        {
+            foreach (var (recordId, general) in _stationRecords.GetRecordsOfType<GeneralStationRecord>((stationUid,
+                         stationRecords)))
+            {
+                var key = new StationRecordKey(recordId, stationUid);
+                if (_stationRecords.TryGetRecord<CriminalRecord>(key, out var criminal))
+                {
+                    solarFlareRuleComponent.AffectedStationRecords.Add((key, general, criminal));
+                }
+            }
+        }
     }
 
     protected override void ActiveTick(EntityUid uid, SolarFlareRuleComponent component, GameRuleComponent gameRule, float frameTime)
@@ -72,7 +103,7 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
         _effectTimer += 1;
         foreach (var light in component.AffectedLights)
         {
-            if (RobustRandom.Prob(component.LightBreakChancePerSecond))
+            if (RobustRandom.Prob(component.LightBreakChance))
             {
                 _poweredLight.TryDestroyBulb(light.Item1, light.Item2);
             }
@@ -80,7 +111,7 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
 
         foreach (var airlockEnt in component.AffectedAirlocks)
         {
-            if (!RobustRandom.Prob(component.DoorAffectChancePerSecond))
+            if (!RobustRandom.Prob(component.DoorAffectChance))
             {
                 continue;
             }
@@ -118,13 +149,27 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
 
         foreach (var airAlarm in component.AffectedAirAlarms)
         {
-            if (!RobustRandom.Prob(component.AirAlarmModeChangeChancePerSecond))
+            if (!RobustRandom.Prob(component.AirAlarmModeChangeChance))
             {
                 continue;
             }
 
             airAlarm.Item2.AutoMode = false;
             _airAlarm.SetMode(airAlarm.Item1, string.Empty, RobustRandom.Pick(AirAlarmModes), false, airAlarm.Item2);
+        }
+
+        var chance = component.ChangeCriminalRecordChance * component.AffectedStationRecords.Count;
+        if (component.AffectedStationRecords.Count >= 1
+            && RobustRandom.Prob(chance))
+        {
+            (StationRecordKey Key, GeneralStationRecord General, CriminalRecord Criminal) target =
+                RobustRandom.Pick(component.AffectedStationRecords);
+
+            _criminalRecords.OverwriteStatus(
+                target.Key,
+                target.Criminal,
+                RobustRandom.Pick(CrimeStatuses),
+                null);
         }
     }
 

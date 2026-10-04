@@ -432,9 +432,10 @@
     - Service
     - Supply
     extraCount: 2
-    lightBreakChancePerSecond: 0.0003
-    doorToggleChancePerSecond: 0.001
-    airAlarmModeChangeChancePerSecond: 0.004
+    lightBreakChance: 0.0003
+    doorAffectChance: 0.001
+    airAlarmModeChangeChance: 0.004
+    changeCriminalRecordChance: 0.0003
   - type: DynamicRuleCost
     cost: 10
 
