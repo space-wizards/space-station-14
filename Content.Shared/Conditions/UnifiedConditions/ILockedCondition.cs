@@ -4,7 +4,7 @@ namespace Content.Shared.Conditions.UnifiedConditions;
 
 public interface ILockedCondition : ICondition
 {
-    bool IsLocked { get; }
+
 }
 
 public sealed partial class LockedConditionSystem : ConditionEvaluatorSystem<ILockedCondition>
@@ -18,8 +18,8 @@ public sealed partial class LockedConditionSystem : ConditionEvaluatorSystem<ILo
     public override float Evaluate(ILockedCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
         if (!TryComp(entityUid, out LockComponent? lockComponent))
-            return 1;
+            return 0;
 
-        return lockComponent.Locked == condition.IsLocked ? 1 : 0;
+        return lockComponent.Locked ? 1 : 0;
     }
 }

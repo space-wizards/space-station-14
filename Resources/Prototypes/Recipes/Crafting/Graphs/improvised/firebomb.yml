@@ -35,8 +35,7 @@
       conditions:
       - !type:MinSolution
         solution: drink
-        reagent:
-          ReagentId: WeldingFuel
+        reagent: WeldingFuel
         quantity: 40
       steps:
       - tool: Screwing
@@ -55,8 +54,7 @@
       conditions: # no dumping out 29u of the fuel then adding wires :)
       - !type:MinSolution
         solution: drink
-        reagent:
-          ReagentId: WeldingFuel
+        reagent: WeldingFuel
         quantity: 40
       steps:
       - material: Cable
