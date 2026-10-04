@@ -295,9 +295,9 @@
 
 - type: entity
   name: pulse pistol
-  parent: [BaseWeaponBatterySmall, BaseCentcommContraband]
+  parent: [BaseWeaponBatterySmall, BaseDeathSquadContraband]
   id: WeaponPulsePistol
-  description: A state of the art energy pistol favoured as a sidearm by the NT operatives.
+  description: A state-of-the-art energy pistol favoured as a sidearm by elite Nanotrasen operatives.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
@@ -335,9 +335,9 @@
 
 - type: entity
   name: pulse carbine
-  parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseDeathSquadContraband]
   id: WeaponPulseCarbine
-  description: A high tech energy carbine favoured by the NT-ERT operatives.
+  description: A high-tech energy carbine favoured by elite Nanotrasen operatives.
   components:
   - type: Item
     size: Large
@@ -373,9 +373,9 @@
 
 - type: entity
   name: pulse rifle
-  parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseDeathSquadContraband]
   id: WeaponPulseRifle
-  description: A weapon that is almost as infamous as its users.
+  description: A weapon almost as infamous as its users.
   components:
   - type: Item
     size: Huge
@@ -541,9 +541,12 @@
     projectileSpeed: 35 # any higher and this causes issues in lag
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+  - type: Battery
+    maxCharge: 800
+    startingCharge: 800 # Charges in a 20W recharger at 40 seconds
   - type: BatteryAmmoProvider
     proto: BulletDisablerPractice
-    fireCost: 62.5
+    fireCost: 25 # 32 shots, 2 stamcrits, +3 miss buffer per stamcrit (256 stam damage total)
   - type: Tag
     tags:
     - Taser
@@ -572,7 +575,6 @@
       - Belt
   - type: BatteryAmmoProvider
     proto: BulletDisabler
-    fireCost: 40
   - type: GuideHelp
     guides:
     - Security
@@ -610,7 +612,7 @@
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: BatteryAmmoProvider
     proto: BulletDisablerSmgSlowing
-    fireCost: 25
+    fireCost: 15.6 # 64 shots, 2 stamcrits, +7 miss buffer per stamcrit (256 stam damage total)
   - type: MagazineVisuals
     magState: mag
     steps: 5
@@ -661,7 +663,7 @@
 
 - type: entity
   name: elite taser
-  parent: [ BaseCentcommContraband, WeaponTaser ]
+  parent: [ BaseTaskForceContraband, WeaponTaser ]
   id: WeaponTaserSuper
   suffix: ADMEME
   description: A low-capacity, energy-based stun gun used by elite security teams to disable even the toughest of targets.
@@ -714,7 +716,8 @@
   - type: StaticPrice
     price: 750
   - type: StealTarget
-    stealGroup: WeaponAntiqueLaser
+    stealGroup:
+    - WeaponAntiqueLaser
   - type: SentienceTarget # I hope this is only the captain's gun
     flavorKind: station-event-random-sentience-flavor-inanimate
     weight: 0.0002 # 5,000 times less likely than 1 regular animal
@@ -924,7 +927,8 @@
     - HighRiskItem
     - Sidearm
   - type: StealTarget
-    stealGroup: WeaponEnergyMagnum
+    stealGroup:
+    - WeaponEnergyMagnum
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
