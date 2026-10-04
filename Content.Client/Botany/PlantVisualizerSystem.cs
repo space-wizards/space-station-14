@@ -19,7 +19,7 @@ public sealed partial class PlantVisualizerSystem : VisualizerSystem<PlantVisual
             return;
 
         // Ensure they always render above the tray sprite.
-        SpriteSystem.SetDrawDepth((uid, sprite), (int)DrawDepth.SmallObjects);
+        SpriteSystem.SetDrawDepth((uid, sprite), (byte)DrawDepth.SmallObjects);
         SpriteSystem.LayerMapReserve((uid, sprite), PlantLayers.Plant);
         SpriteSystem.LayerSetVisible((uid, sprite), PlantLayers.Plant, false);
     }
