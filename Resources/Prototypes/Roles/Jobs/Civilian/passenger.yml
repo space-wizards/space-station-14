@@ -6,7 +6,7 @@
   startingGear: PassengerGear
   icon: "JobIconPassenger"
   supervisors: job-supervisors-everyone
-  guides: [ Civilian ]
+  guides: [ Civilian ] # Doesn't need a unique guidebook page because Civilian is a catch-all for zero-responsibility jobs
   access:
   - Maintenance
 
