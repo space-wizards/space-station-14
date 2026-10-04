@@ -12,6 +12,8 @@ namespace Content.Server.StationEvents.Components;
 [RegisterComponent, Access(typeof(SolarFlareRule))]
 public sealed partial class SolarFlareRuleComponent : Component
 {
+    #region Radio
+
     /// <summary>
     ///     If true, only headsets affected, but e.g. handheld radio will still work
     /// </summary>
@@ -54,6 +56,8 @@ public sealed partial class SolarFlareRuleComponent : Component
     [DataField]
     public HashSet<(EntityUid, AirlockComponent)> AffectedAirlocks = [];
 
+    #endregion
+
     /// <summary>
     ///     Chance light bulb breaks per second during event
     /// </summary>
@@ -65,4 +69,6 @@ public sealed partial class SolarFlareRuleComponent : Component
     /// </summary>
     [DataField("doorToggleChancePerSecond")]
     public float DoorToggleChancePerSecond;
+
+
 }

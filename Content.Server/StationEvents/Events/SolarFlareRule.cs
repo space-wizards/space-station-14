@@ -3,6 +3,7 @@ using Content.Server.Light.EntitySystems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Electrocution;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Light.Components;
 using Content.Shared.Radio;
@@ -23,8 +24,12 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
 {
     [Dependency] private PoweredLightSystem _poweredLight = default!;
     [Dependency] private SharedDoorSystem _door = default!;
+    [Dependency] private SharedAirlockSystem _airlock = default!;
+    [Dependency] private SharedElectrocutionSystem _electrocution = default!;
 
     [Dependency] private EntityQuery<HeadsetComponent> _headsetQuery;
+
+    private static readonly SolarFlareDoorAction[] SolarFlareActions = Enum.GetValues<SolarFlareDoorAction>();
 
     private float _effectTimer;
 
@@ -63,8 +68,40 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
 
         foreach (var airlockEnt in component.AffectedAirlocks)
         {
-            if (airlockEnt.Item2.AutoClose && RobustRandom.Prob(component.DoorToggleChancePerSecond))
-                _door.TryToggleDoor(airlockEnt.Item1);
+            if (!RobustRandom.Prob(component.DoorToggleChancePerSecond))
+            {
+                continue;
+            }
+
+            var action = RobustRandom.Pick(SolarFlareActions);
+
+            switch (action)
+            {
+                case SolarFlareDoorAction.Toggle:
+                    if (airlockEnt.Item2.AutoClose)
+                    {
+                        _door.TryToggleDoor(airlockEnt.Item1);
+                    }
+
+                    break;
+                case SolarFlareDoorAction.Bolt:
+                    if (TryComp<DoorBoltComponent>(airlockEnt.Item1, out var boltComp))
+                    {
+                        _door.SetBoltsDown((airlockEnt.Item1, boltComp), true);
+                    }
+
+                    break;
+                case SolarFlareDoorAction.EnableEmergencyAccess:
+                    _airlock.SetEmergencyAccess((airlockEnt.Item1, airlockEnt.Item2), true);
+                    break;
+                case SolarFlareDoorAction.Electrify:
+                    if (TryComp<ElectrifiedComponent>(airlockEnt.Item1, out var electrifiedComp))
+                    {
+                        _electrocution.SetElectrified((airlockEnt.Item1, electrifiedComp), true);
+                    }
+
+                    break;
+            }
         }
     }
 
@@ -89,5 +126,13 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
                 return;
             }
         }
+    }
+
+    private enum SolarFlareDoorAction
+    {
+        Toggle,
+        Bolt,
+        EnableEmergencyAccess,
+        Electrify,
     }
 }
