@@ -5,18 +5,11 @@ using Content.Shared.Whitelist;
 namespace Content.Server.StationEvents.Components;
 
 /// <summary>
-/// Gamerule component to make some vending machines eject some of their contents
+/// Gamerule component to make some vending machines toggle their contraband inventory and eject some of their contents
 /// </summary>
 [RegisterComponent, Access(typeof(VendorMalfunctionRule))]
 public sealed partial class VendorMalfunctionRuleComponent : Component
 {
-    /// <summary>
-    /// Blacklist of grids which are not eligible to trigger this game rule.
-    /// </summary>
-    /// <see cref="BreakerFlipRuleComponent.Blacklist"/>
-    [DataField]
-    public EntityWhitelist? Blacklist;
-
     /// <summary>
     /// quantity of machines which may be affected by this event
     /// </summary>
