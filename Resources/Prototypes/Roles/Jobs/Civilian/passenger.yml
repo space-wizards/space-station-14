@@ -6,6 +6,7 @@
   startingGear: PassengerGear
   icon: "JobIconPassenger"
   supervisors: job-supervisors-everyone
+  guides: [ Civilian ]
   access:
   - Maintenance
 

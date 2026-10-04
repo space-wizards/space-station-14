@@ -6,6 +6,7 @@
   icon: JobIconVisitor
   setPreference: false
   overrideConsoleVisibility: true
+  guides: [ Civilian ]
   access:
   - Maintenance
   extendedAccess:
