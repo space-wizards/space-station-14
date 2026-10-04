@@ -8,7 +8,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class AnyConditions : GraphConditionBase<IAnyCondition>, IAnyCondition
+    public sealed partial class AnyConditions : GraphCondition, IAnyCondition
     {
         IEnumerable<ICondition> IAnyCondition.Conditions => Conditions;
 

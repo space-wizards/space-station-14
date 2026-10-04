@@ -2,7 +2,7 @@ using Content.Shared.Wires;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IWirePanelStateCondition : ICondition<IWirePanelStateCondition>
+public interface IWirePanelStateCondition : ICondition
 {
     bool Open { get; }
 }
@@ -10,20 +10,16 @@ public interface IWirePanelStateCondition : ICondition<IWirePanelStateCondition>
 /// <summary>
 /// Returns true if this solution entity has an amount of reagent in it within a specified minimum and maximum.
 /// </summary>
-public sealed partial class WirePanelStateConditionSystem : EntitySystem
+public sealed partial class WirePanelStateConditionSystem : ConditionEvaluatorSystem<IWirePanelStateCondition>
 {
-    [SubscribeLocalEvent]
-    private void Condition(Entity<MetaDataComponent> entity,
-        ref ConditionEvaluationEvent<IWirePanelStateCondition> args)
+    public override float Evaluate(IWirePanelStateCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
         //if it doesn't have a wire panel, then just let it work.
-        if (!TryComp<WiresPanelComponent>(entity.Owner, out var wires))
+        if (!TryComp<WiresPanelComponent>(entityUid, out var wires))
         {
-            args.Value = 1;
-            return;
+            return 1;
         }
 
-        args.Value = wires.Open == args.Condition.Open ? 1 : 0;
+        return wires.Open == condition.Open ? 1 : 0;
     }
 }

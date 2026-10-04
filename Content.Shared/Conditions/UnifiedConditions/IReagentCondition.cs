@@ -1,5 +1,4 @@
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Conditions.Satisfier;
@@ -8,7 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IReagentCondition : ICondition<IReagentCondition>, IConditionWithDefaultSatisfactionRule
+public interface IReagentCondition : ICondition, IConditionWithDefaultSatisfactionRule
 {
     /// <summary>
     /// Minimum amount required.
@@ -35,10 +34,10 @@ public interface IReagentCondition : ICondition<IReagentCondition>, IConditionWi
     {
         if (Min == Max)
         {
-            return new WithThreshold()
+            return new WithThreshold
             {
                 Threshold = 1,
-                Comparison = WithThreshold.Comparator.Equal
+                Comparison = WithThreshold.Comparator.Equal,
             };
         }
 
@@ -56,40 +55,33 @@ public interface IReagentCondition : ICondition<IReagentCondition>, IConditionWi
 /// <summary>
 /// Returns true if this solution entity has an amount of reagent in it within a specified minimum and maximum.
 /// </summary>
-public sealed partial class ReagentEntityConditionSystem : EntitySystem
+public sealed partial class ReagentEntityConditionSystem : ConditionEvaluatorSystem<IReagentCondition>
 {
     [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(Entity<MetaDataComponent> entity, ref ConditionEvaluationEvent<IReagentCondition> args)
+    public override float Evaluate(IReagentCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
-
-        if (args.Condition.Max == args.Condition.Min && args.Condition.Max == 0)
-            args.Value = 1;
+        if (condition.Max == condition.Min && condition.Max == 0)
+            return 1;
 
         Solution? solution;
-        if (args.Condition.Solution == null)
+        if (condition.Solution == null)
         {
-            if (!TryComp(entity.Owner, out SolutionComponent? solutionComponent))
-                return;
+            if (!TryComp(entityUid, out SolutionComponent? solutionComponent))
+                return 0;
             solution = solutionComponent.Solution;
         }
         else
         {
-            if (!_solutionContainerSystem.TryGetSolution(entity.Owner, args.Condition.Solution, out _, out solution))
-                return;
+            if (!_solutionContainerSystem.TryGetSolution(entityUid, condition.Solution, out _, out solution))
+                return 0;
         }
 
-        var quant = solution.GetTotalPrototypeQuantity(args.Condition.Reagent);
+        var quant = solution.GetTotalPrototypeQuantity(condition.Reagent);
 
-        if (args.Condition.Max == args.Condition.Min)
-        {
-            args.Value = quant == args.Condition.Max ? 1 : 0;
-        }
-        else
-        {
-            args.Value = ((quant - args.Condition.Min) / (args.Condition.Max - args.Condition.Min)).Float();
-        }
+        if (condition.Max == condition.Min)
+            return quant == condition.Max ? 1 : 0;
+
+        return ((quant - condition.Min) / (condition.Max - condition.Min)).Float();
     }
 }

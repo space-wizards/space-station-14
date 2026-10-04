@@ -15,18 +15,16 @@ namespace Content.Shared.Construction
 
         [DataField]
         public Satisfier? Satisfier { get; set; }
-
-        public abstract ConditionEvaluationEvent? WrapInEvent(EntityUid entity, EntityUid? sourceEntity);
     }
 
     /// <summary>
     /// Helper class to properly realize the Condition Event.
     /// </summary>
     /// <typeparam name="TCondition"></typeparam>
-    public abstract partial class GraphConditionBase<TCondition> : GraphCondition, ICondition<TCondition>
-        where TCondition : ICondition
+    public abstract partial class GraphConditionBase<TCondition> : GraphCondition, IConditionByEvent<TCondition>
+        where TCondition : IConditionByEvent
     {
-        public override ConditionEvaluationEvent? WrapInEvent(EntityUid entity, EntityUid? sourceEntity)
+        public ConditionEvaluationEvent? WrapInEvent(EntityUid entity, EntityUid? sourceEntity)
         {
             if (this is not TCondition condition)
                 return null;

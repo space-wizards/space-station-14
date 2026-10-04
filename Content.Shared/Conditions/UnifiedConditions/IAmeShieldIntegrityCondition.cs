@@ -1,9 +1,9 @@
-using Content.Shared.Ame.Components;
 using Content.Shared.Conditions.Satisfier;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IAmeShieldIntegrityCondition : ICondition<IAmeShieldIntegrityCondition>, IConditionWithDefaultSatisfactionRule
+public interface IAmeShieldIntegrityCondition : ICondition,
+    IConditionWithDefaultSatisfactionRule
 {
     float IntegrityThreshold { get; }
 
@@ -11,7 +11,7 @@ public interface IAmeShieldIntegrityCondition : ICondition<IAmeShieldIntegrityCo
 
     Satisfier.Satisfier IConditionWithDefaultSatisfactionRule.GetDefaultSatisfier()
     {
-        return new WithThreshold()
+        return new WithThreshold
         {
             // since in ConditionSystem -> Component.Integrity / IntegrityThreshold, our threshold here is 1
             Threshold = 1,
@@ -19,5 +19,3 @@ public interface IAmeShieldIntegrityCondition : ICondition<IAmeShieldIntegrityCo
         };
     }
 }
-
-

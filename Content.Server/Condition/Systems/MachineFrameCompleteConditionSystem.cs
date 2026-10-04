@@ -5,18 +5,9 @@ using Content.Shared.Conditions.UnifiedConditions;
 
 namespace Content.Server.Condition.Systems;
 
-public sealed partial class MachineFrameCompleteConditionSystem : EntitySystem
+public sealed partial class MachineFrameCompleteConditionSystem : ConditionEvaluatorSystem<IMachineFrameCompleteCondition>
 {
     [Dependency] private MachineFrameSystem _machineFrameSystem = default!;
-
-    [SubscribeLocalEvent]
-    private void Condition(Entity<MachineFrameComponent> entity,
-        ref ConditionEvaluationEvent<IEntityAnchoredCondition> args)
-    {
-        args.Handled = true;
-
-        args.Value = _machineFrameSystem.IsComplete(entity.Comp) ? 1 : 0;
-    }
 
     /*
      *
@@ -26,4 +17,11 @@ public sealed partial class MachineFrameCompleteConditionSystem : EntitySystem
        return entityManager.EntitySysManager.GetEntitySystem<MachineFrameSystem>().IsComplete(machineFrame);
      *
      */
+    public override float Evaluate(IMachineFrameCompleteCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
+    {
+        if (!TryComp(entityUid, out MachineFrameComponent? machineFrame))
+            return 0;
+
+        return _machineFrameSystem.IsComplete(machineFrame)?1:0;
+    }
 }

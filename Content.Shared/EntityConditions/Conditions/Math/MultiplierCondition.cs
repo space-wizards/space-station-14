@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Math;
 
-public sealed partial class MultiplierCondition : EntityConditionBase<IMultiplierCondition>, IMultiplierCondition
+public sealed partial class MultiplierCondition : EntityCondition, IMultiplierCondition
 {
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
     {

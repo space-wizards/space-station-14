@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityConditions.Conditions.Generic;
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class NearbyAccessCondition : EntityConditionBase<INearbyAccessCondition>, INearbyAccessCondition
+public sealed partial class NearbyAccessCondition : EntityCondition, INearbyAccessCondition
 {
     // This exists because of door electronics contained inside doors.
     /// <summary>

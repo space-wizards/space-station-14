@@ -4,16 +4,8 @@ using Content.Shared.Conditions.UnifiedConditions;
 
 namespace Content.Server.Condition.Systems;
 
-public sealed partial class AmeShieldIntegrityConditionSystem : EntitySystem
+public sealed partial class AmeShieldIntegrityConditionSystem : ConditionEvaluatorSystem<IAmeShieldIntegrityCondition>
 {
-    [SubscribeLocalEvent]
-    private void Condition(Entity<AmeShieldComponent> entity,
-        ref ConditionEvaluationEvent<IAmeShieldIntegrityCondition> args)
-    {
-        args.Handled = true;
-        args.Value = (float)entity.Comp.CoreIntegrity / args.Condition.IntegrityThreshold;
-    }
-
     /*
      *
      *if (!entityManager.TryGetComponent<AmeShieldComponent>(uid, out var shield))
@@ -26,4 +18,10 @@ public sealed partial class AmeShieldIntegrityConditionSystem : EntitySystem
        return shield.CoreIntegrity < IntegrityThreshold;
      *
      */
+    public override float Evaluate(IAmeShieldIntegrityCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
+    {
+        if (!TryComp<AmeShieldComponent>(entityUid, out var shield))
+            return 1; //see above legacy code...
+        return (float)shield.CoreIntegrity / condition.IntegrityThreshold;
+    }
 }

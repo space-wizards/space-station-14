@@ -13,7 +13,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityConditions.Conditions.Mind;
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class RoleCondition : EntityConditionBase<IRoleCondition>, IRoleCondition
+public sealed partial class RoleCondition : EntityCondition, IRoleCondition
 {
     [DataField(required: true)]
     public EntityWhitelist Whitelist { get; set; } = new();

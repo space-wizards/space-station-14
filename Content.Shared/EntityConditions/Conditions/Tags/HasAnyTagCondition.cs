@@ -8,7 +8,7 @@ using Content.Shared.Conditions.UnifiedConditions;
 namespace Content.Shared.EntityConditions.Conditions.Tags;
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class AnyTagCondition : EntityConditionBase<IHasAnyTagCondition>, IHasAnyTagCondition
+public sealed partial class AnyTagCondition : EntityCondition, IHasAnyTagCondition
 {
     /// <summary>
     /// List of tags from which one must be matched.

@@ -3,7 +3,7 @@ using Content.Shared.Nutrition.EntitySystems;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IMouthUncoveredCondition : ICondition<IMouthUncoveredCondition>
+public interface IMouthUncoveredCondition : ICondition
 {
     SlotFlags Slots { get; }
 }
@@ -12,14 +12,12 @@ public interface IMouthUncoveredCondition : ICondition<IMouthUncoveredCondition>
 /// A condition which passes if the specified entity has their mouth uncovered, generally meaning they're able to eat or
 /// drink.
 /// </summary>
-public sealed partial class MouthUncoveredEntityConditionSystem : EntitySystem
+public sealed partial class MouthUncoveredEntityConditionSystem : ConditionEvaluatorSystem<IMouthUncoveredCondition>
 {
     [Dependency] private IngestionSystem _ingestion = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(Entity<InventoryComponent> entity,
-        ref ConditionEvaluationEvent<IMouthUncoveredCondition> args)
+    public override float Evaluate(IMouthUncoveredCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Value = _ingestion.HasMouthAvailable(entity, args.Condition.Slots) ? 1 : 0;
+        return _ingestion.HasMouthAvailable(entityUid, condition.Slots) ? 1 : 0;
     }
 }

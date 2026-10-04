@@ -2,7 +2,7 @@ using Content.Shared.Tools.Systems;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IStorageWeldedCondition : ICondition<IStorageWeldedCondition>
+public interface IStorageWeldedCondition : ICondition
 {
     bool Welded { get; }
 }
@@ -10,14 +10,12 @@ public interface IStorageWeldedCondition : ICondition<IStorageWeldedCondition>
 /// <summary>
 /// Returns true if this solution entity has an amount of reagent in it within a specified minimum and maximum.
 /// </summary>
-public sealed partial class StorageWeldedConditionSystem : EntitySystem
+public sealed partial class StorageWeldedConditionSystem : ConditionEvaluatorSystem<IStorageWeldedCondition>
 {
     [Dependency] private WeldableSystem _weldableSystem = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(Entity<MetaDataComponent> entity, ref ConditionEvaluationEvent<IStorageWeldedCondition> args)
+    public override float Evaluate(IStorageWeldedCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
-        args.Value = _weldableSystem.IsWelded(entity) ? 1 : 0;
+        return _weldableSystem.IsWelded(entityUid) ? 1 : 0;
     }
 }

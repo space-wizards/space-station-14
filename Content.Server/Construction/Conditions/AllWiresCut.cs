@@ -14,7 +14,7 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class AllWiresCut : GraphConditionBase<IWiresCutCondition>
+    public sealed partial class AllWiresCut : GraphCondition
     {
         [DataField("value")] public bool Value { get; private set; } = true;
 

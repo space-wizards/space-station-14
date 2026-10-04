@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityConditions.Conditions.Generic;
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class NearbyTilesPercentCondition : EntityConditionBase<INearbyTilesPercentCondition>, INearbyTilesPercentCondition
+public sealed partial class NearbyTilesPercentCondition : EntityCondition, INearbyTilesPercentCondition
 {
     [DataField]
     public bool IgnoreAnchored { get; set; }

@@ -3,47 +3,46 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IComponentInTileCondition : ICondition<IComponentInTileCondition>
+public interface IComponentInTileCondition : ICondition
 {
     string Component { get; }
 }
 
-public sealed partial class ComponentInTileConditionSystem : EntitySystem
+public sealed partial class ComponentInTileConditionSystem : ConditionEvaluatorSystem<IComponentInTileCondition>
 {
-
     [Dependency] private IComponentFactory ComponentFactory = default!;
-    [Dependency] private SharedTransformSystem transformSys = default!;
-    [Dependency] private EntityLookupSystem lookup = default!;
     [Dependency] private IEntityManager entityManager = default!;
+    [Dependency] private EntityLookupSystem lookup = default!;
+    [Dependency] private SharedTransformSystem transformSys = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(Entity<TransformComponent> entity,
-        ref ConditionEvaluationEvent<IComponentInTileCondition> args)
+    public override float Evaluate(IComponentInTileCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
+        if (string.IsNullOrEmpty(condition.Component))
+            return 0;
 
-        if (string.IsNullOrEmpty(args.Condition.Component))
-            return;
+        if (!TryComp(entityUid, out TransformComponent? transform))
+            return 0;
 
-        if (entity.Comp.GridUid == null)
-            return;
-
-        var transform = entity.Comp;
+        if (transform.GridUid == null)
+            return 0;
 
         if (!entityManager.TryGetComponent<MapGridComponent>(transform.GridUid.Value, out var grid))
-            return;
+            return 0;
 
-        var type = ComponentFactory.GetRegistration(args.Condition.Component).Type;
+        var type = ComponentFactory.GetRegistration(condition.Component).Type;
 
         var indices = transform.Coordinates.ToVector2i(entityManager, transformSys);
 
-        if (!entityManager.System<SharedMapSystem>().TryGetTileRef(transform.GridUid.Value, grid, indices, out var tile))
-            return;
-
-        foreach (var ent in lookup.GetEntitiesInTile(tile, flags: LookupFlags.Approximate | LookupFlags.Static))
+        if (!entityManager.System<SharedMapSystem>()
+                .TryGetTileRef(transform.GridUid.Value, grid, indices, out var tile))
+            return 0;
+        float value = 0;
+        foreach (var ent in lookup.GetEntitiesInTile(tile, LookupFlags.Approximate | LookupFlags.Static))
         {
             if (entityManager.HasComponent(ent, type))
-                args.Value++;
+                value++;
         }
+
+        return value;
     }
 }

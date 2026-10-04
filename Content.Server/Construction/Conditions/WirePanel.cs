@@ -8,7 +8,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class WirePanel : GraphConditionBase<IWirePanelStateCondition>, IWirePanelStateCondition
+    public sealed partial class WirePanel : GraphCondition, IWirePanelStateCondition
     {
         [DataField("open")] public bool Open { get; private set; } = true;
 

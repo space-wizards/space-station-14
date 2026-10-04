@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityConditions.Conditions.Tags;
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class TagCondition : EntityConditionBase<IHasTagCondition>, IHasTagCondition
+public sealed partial class TagCondition : EntityCondition, IHasTagCondition
 {
     /// <summary>
     /// Tag required to fulfill this condition.

@@ -37,7 +37,9 @@ public sealed partial class WithThreshold : Satisfier
             case Comparator.LessEqual:
                 return value <= Threshold;
             case Comparator.Equal:
-                return value.Equals(Threshold);
+                return
+                    Math.Abs(value - Threshold) <=
+                    0.001; //Fixed2 uses 2 decimal places as precision, so we just use 3 places for good measure
             case Comparator.Greater:
                 return value > Threshold;
             case Comparator.GreaterEqual:

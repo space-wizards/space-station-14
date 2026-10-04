@@ -4,7 +4,7 @@ namespace Content.Shared.Conditions.HelperConditions;
 /// This condition will always return a given value.
 /// Use to construct arbitrary equations using arithmetic conditions.
 /// </summary>
-public interface IAbsoluteCondition : ICondition<IAbsoluteCondition>
+public interface IAbsoluteCondition : ICondition
 {
     float Value { get; }
 }
@@ -12,12 +12,10 @@ public interface IAbsoluteCondition : ICondition<IAbsoluteCondition>
 /// <summary>
 /// System for evaluating <see cref="IAbsoluteCondition" />
 /// </summary>
-public sealed partial class AbsoluteConditionSystem : EntitySystem
+public sealed partial class AbsoluteConditionSystem : ConditionEvaluatorSystem<IAbsoluteCondition>
 {
-    [SubscribeLocalEvent]
-    private void Condition(Entity<MetaDataComponent> _, ref ConditionEvaluationEvent<IAbsoluteCondition> args)
+    public override float Evaluate(IAbsoluteCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
-        args.Value = args.Condition.Value;
+        return condition.Value;
     }
 }

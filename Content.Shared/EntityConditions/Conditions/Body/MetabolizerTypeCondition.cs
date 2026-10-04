@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityConditions.Conditions.Body;
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class MetabolizerTypeCondition : EntityConditionBase<IMetabolizerTypeCondition>, IMetabolizerTypeCondition
+public sealed partial class MetabolizerTypeCondition : EntityCondition, IMetabolizerTypeCondition
 {
     /// <summary>
     /// Which metabolizer types would fulfill this condition. Need only one match.

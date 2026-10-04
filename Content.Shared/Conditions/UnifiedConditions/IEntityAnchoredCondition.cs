@@ -1,20 +1,11 @@
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IEntityAnchoredCondition : ICondition<IEntityAnchoredCondition>
+public interface IEntityAnchoredCondition : ICondition
 {
-
 }
 
-public sealed partial class EntityAnchoredConditionSystem : EntitySystem
+public sealed partial class EntityAnchoredConditionSystem : ConditionEvaluatorSystem<IEntityAnchoredCondition>
 {
-    [SubscribeLocalEvent]
-    private void Condition(Entity<TransformComponent> entity,
-        ref ConditionEvaluationEvent<IEntityAnchoredCondition> args)
-    {
-        args.Handled = true;
-        args.Value = entity.Comp.Anchored ? 1 : 0;
-    }
-
     /*
      *
     public bool Condition(EntityUid uid, IEntityManager entityManager)
@@ -24,4 +15,10 @@ public sealed partial class EntityAnchoredConditionSystem : EntitySystem
            }
      *
      */
+    public override float Evaluate(IEntityAnchoredCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
+    {
+        if (!TryComp(entityUid, out TransformComponent? transformComponent))
+            return 0;
+        return transformComponent.Anchored ? 1 : 0;
+    }
 }

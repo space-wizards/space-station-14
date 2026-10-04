@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityConditions.Conditions.Generic;
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class NearbyEntitiesCondition : EntityConditionBase<INearbyEntitiesCondition>, INearbyEntitiesCondition
+public sealed partial class NearbyEntitiesCondition : EntityCondition, INearbyEntitiesCondition
 {
     /// <summary>
     /// How many of the entity need to be nearby.

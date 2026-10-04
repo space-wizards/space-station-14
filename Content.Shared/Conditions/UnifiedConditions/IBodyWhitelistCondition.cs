@@ -3,25 +3,19 @@ using Content.Shared.Whitelist;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IBodyWhitelistCondition : ICondition<IBodyWhitelistCondition>
+public interface IBodyWhitelistCondition : ICondition
 {
     EntityWhitelist? Whitelist { get; }
 
     EntityWhitelist? Blacklist { get; }
 }
 
-public sealed partial class BodyWhitelistConditionSystem : EntitySystem
+public sealed partial class BodyWhitelistConditionSystem : ConditionEvaluatorSystem<IBodyWhitelistCondition>
 {
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<IBodyWhitelistCondition> args)
+    public override float Evaluate(IBodyWhitelistCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
-
-        if (entity.Comp.OwnedEntity is not { } body)
-            return;
-
-        args.Value = _whitelist.CheckBoth(body, args.Condition.Blacklist, args.Condition.Whitelist) ? 1 : 0;
+       return _whitelist.CheckBoth(entityUid, condition.Blacklist, condition.Whitelist) ? 1 : 0;
     }
 }

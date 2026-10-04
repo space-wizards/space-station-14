@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IAllTagsCondition : ICondition<IAllTagsCondition>, IConditionWithDefaultSatisfactionRule
+public interface IAllTagsCondition : ICondition, IConditionWithDefaultSatisfactionRule
 {
     ProtoId<TagPrototype>[] Tags { get; }
 
@@ -22,14 +22,14 @@ public interface IAllTagsCondition : ICondition<IAllTagsCondition>, IConditionWi
 /// <summary>
 /// Returns true if this entity has all the listed tags.
 /// </summary>
-public sealed partial class HasAllTagsEntityConditionSystem : EntitySystem
+public sealed partial class HasAllTagsEntityConditionSystem : ConditionEvaluatorSystem<IAllTagsCondition>
 {
     [Dependency] private TagSystem _tag = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(Entity<TagComponent> entity, ref ConditionEvaluationEvent<IAllTagsCondition> args)
+    public override float Evaluate(IAllTagsCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
-        args.Value = args.Condition.Tags.Count(tag => _tag.HasTag(entity.Comp, tag));
+        if (!TryComp<TagComponent>(entityUid, out var component))
+            return 0;
+        return condition.Tags.Count(tag => _tag.HasTag(component, tag));
     }
 }

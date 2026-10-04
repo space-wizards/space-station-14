@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityConditions.Conditions.Body;
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class BreathingCondition : EntityConditionBase<IIsBreathingCondition>, IIsBreathingCondition
+public sealed partial class BreathingCondition : EntityCondition, IIsBreathingCondition
 {
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
         Loc.GetString("entity-condition-guidebook-breathing", ("isBreathing", !Inverted));

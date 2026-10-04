@@ -5,7 +5,7 @@ namespace Content.Shared.Conditions.HelperConditions;
 /// <summary>
 /// A helper condition that returns the multiple of its inner conditions.
 /// </summary>
-public interface IMultiplierCondition : ICondition<IMultiplierCondition>
+public interface IMultiplierCondition : ICondition
 {
     /// <summary>
     /// Conditions multiplied together.
@@ -16,23 +16,20 @@ public interface IMultiplierCondition : ICondition<IMultiplierCondition>
 /// <summary>
 /// Evaluation of <see cref="IMultiplierCondition" />
 /// </summary>
-public sealed partial class MultiplierConditionSystem : EntitySystem
+public sealed partial class MultiplierConditionSystem : ConditionEvaluatorSystem<IMultiplierCondition>
 {
     [Dependency] private SharedConditionEvaluationSystem _conditionEvaluationSystem = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(ref ConditionEvaluationEvent<IMultiplierCondition> args)
+    public override float Evaluate(IMultiplierCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        var entity = args.EntityUid;
-        var sourceEntity = args.SourceEntity;
-        if (args.Condition.Multipliers.Any())
+        if (condition.Multipliers.Any())
         {
-            args.Value = args.Condition.Multipliers
-                .Select(e => _conditionEvaluationSystem.EvaluateCondition(e, entity, sourceEntity))
+            return condition.Multipliers
+                .Select(e => _conditionEvaluationSystem.EvaluateCondition(e, entityUid, sourceEntity))
                 .Append(1)
                 .Aggregate((a, b) => a * b);
         }
         else
-            args.Value = 0;
+            return 0;
     }
 }

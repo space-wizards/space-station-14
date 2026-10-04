@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface INearbyComponentsCondition : ICondition<INearbyComponentsCondition>,
+public interface INearbyComponentsCondition : ICondition,
     IConditionWithDefaultSatisfactionRule
 {
     /// <summary>
@@ -31,28 +31,29 @@ public interface INearbyComponentsCondition : ICondition<INearbyComponentsCondit
 /// <summary>
 /// Checks if an entity is in range of a specified number of entities with specific components.
 /// </summary>
-public sealed partial class NearbyComponentsConditionSystem : EntitySystem
+public sealed partial class NearbyComponentsConditionSystem : ConditionEvaluatorSystem<INearbyComponentsCondition>
 {
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(Entity<TransformComponent> entity,
-        ref ConditionEvaluationEvent<INearbyComponentsCondition> args)
+    public override float Evaluate(INearbyComponentsCondition condition,
+        EntityUid entityUid,
+        EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
-
-        var worldPos = _transform.GetWorldPosition(entity.Comp);
+        if (condition.Count == 0 || !TryComp(entityUid, out TransformComponent? transformComponent))
+            return 0;
+        var worldPos = _transform.GetWorldPosition(entityUid);
         var count = 0.0f;
 
-        var box = Box2.CenteredAround(worldPos, new Vector2(args.Condition.Range));
 
-        foreach (var ent in _lookup.GetEntitiesIntersecting(entity.Comp.MapID, box))
+        var box = Box2.CenteredAround(worldPos, new Vector2(condition.Range));
+
+        foreach (var ent in _lookup.GetEntitiesIntersecting(transformComponent.MapID, box))
         {
-            if (args.Condition.Anchored && !Transform(ent).Anchored)
+            if (condition.Anchored != transformComponent.Anchored)
                 continue;
 
-            foreach (var compType in args.Condition.Components.Values)
+            foreach (var compType in condition.Components.Values)
             {
                 if (!HasComp(ent, compType.Component.GetType()))
                     continue;
@@ -60,6 +61,6 @@ public sealed partial class NearbyComponentsConditionSystem : EntitySystem
             }
         }
 
-        args.Value = count / args.Condition.Count;
+        return count / condition.Count;
     }
 }

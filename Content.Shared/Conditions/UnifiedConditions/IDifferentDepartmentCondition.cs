@@ -5,24 +5,15 @@ using Content.Shared.Roles.Jobs;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IDifferentDepartmentCondition : ICondition<IDifferentDepartmentCondition>
+public interface IDifferentDepartmentCondition : ICondition
 {
 }
 
-public sealed partial class DifferentDepartmentConditionSystem : EntitySystem
+public sealed partial class DifferentDepartmentConditionSystem : ConditionEvaluatorSystem<IDifferentDepartmentCondition>
 {
     [Dependency] private SharedJobSystem _jobSystem = default!;
-    [Dependency] private SharedRoleSystem _roleSystem = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(Entity<MindComponent> entity,
-        ref ConditionEvaluationEvent<IDifferentDepartmentCondition> args)
-    {
-        args.Handled = true;
-        args.Value = !IsInvalid(entity, args.SourceEntity) ? 1 : 0;
-    }
-
-    private bool IsInvalid(Entity<MindComponent> mind, EntityUid? exclude)
+    private bool IsInvalid(Entity<MindComponent?> mind, EntityUid? exclude)
     {
         // no entity to exclude depts, so all depts are valid
         if (!exclude.HasValue)
@@ -47,5 +38,10 @@ public sealed partial class DifferentDepartmentConditionSystem : EntitySystem
             return true;
 
         return false;
+    }
+
+    public override float Evaluate(IDifferentDepartmentCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
+    {
+       return !IsInvalid(entityUid, sourceEntity) ? 1 : 0;
     }
 }

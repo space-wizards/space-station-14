@@ -6,7 +6,8 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface INearbyAccessCondition : ICondition<INearbyAccessCondition>, IConditionWithDefaultSatisfactionRule
+public interface INearbyAccessCondition : ICondition,
+    IConditionWithDefaultSatisfactionRule
 {
     // This exists because of door electronics contained inside doors.
     /// <summary>
@@ -36,30 +37,32 @@ public interface INearbyAccessCondition : ICondition<INearbyAccessCondition>, IC
 /// <summary>
 /// Checks for a number of entities nearby with the specified accesses.
 /// </summary>
-public sealed partial class NearbyAccessConditionSystem : EntitySystem
+public sealed partial class NearbyAccessConditionSystem : ConditionEvaluatorSystem<INearbyAccessCondition>
 {
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private AccessReaderSystem _reader = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(Entity<TransformComponent> entity, ref ConditionEvaluationEvent<INearbyAccessCondition> args)
+    public override float Evaluate(INearbyAccessCondition condition,
+        EntityUid entityUid,
+        EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
+        if (!TryComp(entityUid, out TransformComponent? transform))
+            return 0;
 
-        if (entity.Comp.MapUid == null)
-            return;
+        if (transform.MapUid == null)
+            return 0;
 
         var count = 0f;
 
-        foreach (var (ent, comp) in _lookup.GetEntitiesInRange<AccessReaderComponent>(entity.Comp.Coordinates,
-                     args.Condition.Range))
+        foreach (var (ent, comp) in _lookup.GetEntitiesInRange<AccessReaderComponent>(transform.Coordinates,
+                     condition.Range))
         {
-            if (!_reader.AreAccessTagsAllowed(args.Condition.Access, comp) ||
-                args.Condition.Anchored && !Transform(ent).Anchored)
+            if (!_reader.AreAccessTagsAllowed(condition.Access, comp) ||
+                condition.Anchored && !Transform(ent).Anchored)
                 continue;
             count++;
         }
 
-        args.Value = count / args.Condition.Count;
+        return count / condition.Count;
     }
 }

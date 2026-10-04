@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityConditions.Conditions.Body;
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class MobStateCondition : EntityConditionBase<IMobStateCondition>, IMobStateCondition
+public sealed partial class MobStateCondition : EntityCondition, IMobStateCondition
 {
     /// <summary>
     /// The mobstate necessary to fulfill this condition.

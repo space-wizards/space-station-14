@@ -13,7 +13,7 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class MachineFrameComplete : GraphConditionBase<IMachineFrameCompleteCondition>, IMachineFrameCompleteCondition
+    public sealed partial class MachineFrameComplete : GraphCondition, IMachineFrameCompleteCondition
     {
         [DataField("guideIconBoard")]
         public SpriteSpecifier? GuideIconBoard { get; private set; }

@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IHasAnyTagCondition : ICondition<IHasAnyTagCondition>
+public interface IHasAnyTagCondition : ICondition
 {
     /// <summary>
     /// List of tags from which one must be matched.
@@ -15,15 +15,15 @@ public interface IHasAnyTagCondition : ICondition<IHasAnyTagCondition>
 /// <summary>
 /// Returns true if this entity have any of the listed tags.
 /// </summary>
-public sealed partial class HasAnyTagEntityConditionSystem : EntitySystem
+public sealed partial class HasAnyTagEntityConditionSystem : ConditionEvaluatorSystem<IHasAnyTagCondition>
 {
     [Dependency] private TagSystem _tag = default!;
 
-    private void Condition(Entity<TagComponent> entity, ref ConditionEvaluationEvent<IHasAnyTagCondition> args)
+    public override float Evaluate(IHasAnyTagCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
-        //count matches to scale, as default condition if value != 0 -> satisfy == true.
-        args.Value = args.Condition.Tags.Count(tag => _tag.HasTag(entity.Comp, tag)) /
-                     (float)args.Condition.Tags.Length;
+        if (!TryComp(entityUid, out TagComponent? tagComponent))
+            return 0;
+        return condition.Tags.Count(tag => _tag.HasTag(tagComponent, tag)) /
+               (float)condition.Tags.Length;
     }
 }

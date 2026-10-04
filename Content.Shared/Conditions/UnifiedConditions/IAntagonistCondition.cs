@@ -3,19 +3,16 @@ using Content.Shared.Roles;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IAntagonistCondition : ICondition<IAntagonistCondition>
+public interface IAntagonistCondition : ICondition
 {
 }
 
-public sealed partial class AntagonistEntityConditionSystem : EntitySystem
+public sealed partial class AntagonistEntityConditionSystem : ConditionEvaluatorSystem<IAntagonistCondition>
 {
     [Dependency] private SharedRoleSystem _roleSystem = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(Entity<MindComponent> entity, ref ConditionEvaluationEvent<IAntagonistCondition> args)
+    public override float Evaluate(IAntagonistCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
-
-        args.Value = _roleSystem.MindIsAntagonist(entity) ? 1 : 0;
+        return _roleSystem.MindIsAntagonist(entityUid) ? 1 : 0;
     }
 }

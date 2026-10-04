@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityConditions.Conditions.Generic;
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class NearbyComponentsCondition : EntityConditionBase<INearbyComponentsCondition>, INearbyComponentsCondition
+public sealed partial class NearbyComponentsCondition : EntityCondition, INearbyComponentsCondition
 {
     /// <summary>
     /// Does the entity need to be anchored.

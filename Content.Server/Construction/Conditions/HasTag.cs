@@ -14,7 +14,7 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class HasTag : GraphConditionBase<IHasTagCondition>, IHasTagCondition
+    public sealed partial class HasTag : GraphCondition, IHasTagCondition
     {
         /// <summary>
         ///     The tag the entity is being checked for

@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Mind;
 
-public sealed partial class ObjectiveCondition : EntityConditionBase<IObjectiveWhitelistCondition>, IObjectiveWhitelistCondition
+public sealed partial class ObjectiveCondition : EntityCondition, IObjectiveWhitelistCondition
 {
     [DataField]
     public EntityWhitelist? Whitelist { get; set; }

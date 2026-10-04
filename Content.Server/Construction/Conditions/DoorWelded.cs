@@ -9,7 +9,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class DoorWelded : GraphConditionBase<IDoorStateCondition>, IWithInverted, IDoorStateCondition
+    public sealed partial class DoorWelded : GraphCondition, IWithInverted, IDoorStateCondition
     {
 
         public bool Inverted => !Welded;

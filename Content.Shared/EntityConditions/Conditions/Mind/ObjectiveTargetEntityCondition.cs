@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Mind;
 
-public sealed partial class ObjectiveTargetCondition : EntityConditionBase<IObjectiveTargetCondition>, IObjectiveTargetCondition
+public sealed partial class ObjectiveTargetCondition : EntityCondition, IObjectiveTargetCondition
 {
     /// <summary>
     /// A whitelist to check objectives against.

@@ -3,26 +3,23 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Conditions.UnifiedConditions;
 
-public interface IHasTagCondition : ICondition<IHasTagCondition>
+public interface IHasTagCondition : ICondition
 {
     /// <summary>
     /// Tag required to fulfill this condition.
     /// </summary>
-
     ProtoId<TagPrototype> Tag { get; }
 }
 
 /// <summary>
 /// Returns true if this entity has the listed tag.
 /// </summary>
-public sealed partial class HasTagEntityConditionSystem : EntitySystem
+public sealed partial class HasTagEntityConditionSystem : ConditionEvaluatorSystem<IHasTagCondition>
 {
     [Dependency] private TagSystem _tag = default!;
 
-    [SubscribeLocalEvent]
-    private void Condition(Entity<TagComponent> entity, ref ConditionEvaluationEvent<IHasTagCondition> args)
+    public override float Evaluate(IHasTagCondition condition, EntityUid entityUid, EntityUid? sourceEntity = null)
     {
-        args.Handled = true;
-        args.Value = _tag.HasTag(entity.Comp, args.Condition.Tag) ? 1 : 0;
+        return _tag.HasTag(entityUid, condition.Tag) ? 1 : 0;
     }
 }

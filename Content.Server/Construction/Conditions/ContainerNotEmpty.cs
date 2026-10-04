@@ -11,7 +11,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class ContainerNotEmpty : GraphConditionBase<IContainerContentsCountCondition>
+    public sealed partial class ContainerNotEmpty : GraphCondition,IContainerContentsCountCondition
     {
         [DataField("container")] public string Container { get; private set; } = string.Empty;
         [DataField("examineText")] public string? ExamineText { get; private set; }
