@@ -5,6 +5,8 @@ using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.Containers;
+using Content.Shared.EntityTable;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
@@ -22,12 +24,7 @@ public sealed class CargoTest : GameTest
     /// </summary>
     private static readonly HashSet<ProtoId<CargoProductPrototype>> Ignored =
     [
-        // This is ignored because it is explicitly intended to be able to sell for more than it costs.
-        new("FunCrateGambling"),
     ];
-
-    [SidedDependency(Side.Server)]
-    private readonly IComponentFactory _sCompFact = null!;
 
     [SidedDependency(Side.Server)]
     private readonly PricingSystem _sPricing = null!;
@@ -35,35 +32,78 @@ public sealed class CargoTest : GameTest
     [SidedDependency(Side.Server)]
     private readonly CargoSystem _sCargo = null!;
 
+    [SidedDependency(Side.Server)]
+    private readonly EntityTableSystem _sTable = null!;
+
     [Test]
     public async Task NoCargoOrderArbitrage()
     {
-        var pair = Pair;
-        var server = pair.Server;
+        // Change this to print the costs and sell prices of every cargo product
+        // This should always be false on master
+        var logPriceInfo = false;
+        void PrintLogHeader() => TestContext.Out.WriteLineAsync($"{"Proto ID",-50} |  {"Cost",-6}  |  {"Sell Price",-8}");
+        void PrintLogLine(string protoId, int cost, double price) => TestContext.Out.WriteLineAsync($"{$"{protoId}",-50} |  {$"${cost}",6}  |  ${price,-8}");
 
-        var testMap = await pair.CreateTestMap();
+        await Pair.CreateTestMap();
+        var coordinates = Pair.TestMap!.GridCoords;
 
-        var entManager = server.ResolveDependency<IEntityManager>();
-        var protoManager = server.ResolveDependency<IPrototypeManager>();
-        var pricing = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PricingSystem>();
+        Dictionary<EntProtoId, double> priceCache = new();
 
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
-            Assert.Multiple(() =>
+            if (logPriceInfo)
+                PrintLogHeader();
+
+            using (Assert.EnterMultipleScope())
             {
-                foreach (var proto in protoManager.EnumeratePrototypes<CargoProductPrototype>())
+                foreach (var proto in SProtoMan.EnumeratePrototypes<CargoProductPrototype>())
                 {
                     if (Ignored.Contains(proto.ID))
                         continue;
+                    var entProto = SProtoMan.Index<EntityPrototype>(proto.Product);
+                    var price = 0.0;
+                    var contentsChecked = false;
+                    EntityUid ent;
+                    if (entProto.TryComp<EntityTableContainerFillComponent>(out var fill, SEntMan.ComponentFactory))
+                    {
+                        foreach (var container in fill.Containers)
+                        {
+                            foreach (var item in _sTable.AverageSpawns(container.Value))
+                            {
+                                price += GetPrice(item.spawn) * item.Item2;
+                            }
+                        }
+                        contentsChecked = true;
+                    }
 
-                    var ent = entManager.SpawnEntity(proto.Product, testMap.MapCoords);
-                    var price = pricing.GetPrice(ent);
+                    ent = SSpawnAtPosition(proto.Product, coordinates);
+                    price += _sPricing.GetPrice(ent, includeContents: !contentsChecked);
 
-                    Assert.That(price, Is.AtMost(proto.Cost), $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!");
+                    Assert.That(
+                        price,
+                        Is.AtMost(proto.Cost),
+                        $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!"
+                    );
+
+                    // TODO: Make this export to a csv
+                    if (logPriceInfo)
+                        PrintLogLine(proto.ID, proto.Cost, price);
+
                     SDeleteNow(ent);
                 }
-            });
+            }
         });
+
+        double GetPrice(EntProtoId id)
+        {
+            if (!priceCache.TryGetValue(id, out var price))
+            {
+                var ent = SSpawnAtPosition(id, coordinates);
+                priceCache[id] = price = _sPricing.GetPrice(ent);
+                SDeleteNow(ent);
+            }
+            return price;
+        }
     }
 
     [Test]
@@ -108,7 +148,7 @@ public sealed class CargoTest : GameTest
                 foreach (var (proto, staticPriceComp) in protoIds)
                 {
                     if (
-                        proto.TryComp<StackPriceComponent>(out var stackPriceComp, _sCompFact)
+                        proto.TryComp<StackPriceComponent>(out var stackPriceComp, SEntMan.ComponentFactory)
                         && stackPriceComp.Price > 0
                     )
                     {
@@ -119,7 +159,7 @@ public sealed class CargoTest : GameTest
                         );
                     }
 
-                    if (proto.HasComponent<StackComponent>(_sCompFact))
+                    if (proto.HasComponent<StackComponent>(SEntMan.ComponentFactory))
                     {
                         Assert.That(
                             staticPriceComp.Price,
@@ -243,7 +283,7 @@ public sealed class CargoTest : GameTest
                 foreach (var (proto, comp) in Pair.GetPrototypesWithComponent<MobPriceComponent>())
                 {
                     Assert.That(
-                        proto.TryComp<MobStateComponent>(out _, _sCompFact),
+                        proto.TryComp<MobStateComponent>(out _, SEntMan.ComponentFactory),
                         $"Found {nameof(MobPriceComponent)} on {proto.ID}, but no {nameof(MobStateComponent)}!"
                     );
                 }
