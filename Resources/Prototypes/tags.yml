@@ -1010,9 +1010,6 @@
   id: Mouse # CargoBounty: BountyMouse
 
 - type: Tag
-  id: Muffin #  StorageWhitelist: BorgModuleCooking
-
-- type: Tag
   id: Multitool # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering. ConstructionGraph: LogicGate
 
 - type: Tag
