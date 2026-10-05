@@ -84,13 +84,13 @@
   categories:
   - UplinkAllies
   conditions:
-    - !type:StoreWhitelistCondition
-      blacklist:
-        tags:
-          - NukeOpsUplink
-    - !type:ListingLimitedStockCondition
-      stock: 3
-    
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+        - NukeOpsUplink
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
 - type: listing
   id: UplinkReinforcementRadioSyndicateAncestorNukeops # Version for Nukeops that spawns a syndicate monkey with the NukeOperative component.
   name: uplink-reinforcement-radio-ancestor-name
