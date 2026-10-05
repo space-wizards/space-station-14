@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DoAfter;
 using Robust.Shared.Map;
@@ -50,6 +51,8 @@ public partial struct SuitSensorStatus : IEquatable<SuitSensorStatus>
                && Name == other.Name
                && Job == other.Job
                && JobIcon == other.JobIcon
+               && JobProto == other.JobProto
+               && JobDepartments.SequenceEqual(other.JobDepartments)
                && IsAlive == other.IsAlive
                && TotalDamage == other.TotalDamage
                && TotalDamageThreshold == other.TotalDamageThreshold
@@ -70,6 +73,9 @@ public partial struct SuitSensorStatus : IEquatable<SuitSensorStatus>
         hashCode.Add(Name);
         hashCode.Add(Job);
         hashCode.Add(JobIcon);
+        hashCode.Add(JobProto);
+        foreach (var department in JobDepartments)
+            hashCode.Add(department);
         hashCode.Add(IsAlive);
         hashCode.Add(TotalDamage);
         hashCode.Add(TotalDamageThreshold);

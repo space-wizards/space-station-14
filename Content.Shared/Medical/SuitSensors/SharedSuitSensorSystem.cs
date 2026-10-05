@@ -15,6 +15,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Station.Systems;
 using Content.Shared.StationRecords;
+using Content.Shared.StationRecords.Components;
 using Content.Shared.StationRecords.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -385,18 +386,11 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
             if (card.Comp.JobPrototype != null)
                 userJobProto = card.Comp.JobPrototype;
 
-            var station = _stationSystem.GetOwningStation(ent);
-            if (station != null)
+            if (TryComp<StationRecordKeyStorageComponent>(card.Owner, out var keyStorage)
+                && keyStorage.Key is { } key
+                && _records.TryGetRecord<GeneralStationRecord>(key, out var record))
             {
-                var recordId = _records.GetRecordByName(station.Value, Name(sensor.User.Value));
-                if (recordId is not null)
-                {
-                    var key = new StationRecordKey(recordId.Value, station.Value);
-                    if (_records.TryGetRecord<GeneralStationRecord>(key, out var record))
-                    {
-                        userJobProto = record.JobPrototype;
-                    }
-                }
+                userJobProto = record.JobPrototype;
             }
 
             userJobIcon = card.Comp.JobIcon;

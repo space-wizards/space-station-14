@@ -11,6 +11,4 @@ public partial record struct BroadcastSuitSensorStatePayload : INetworkPayload
     [DataField]
     public Dictionary<string, SuitSensorStatus> SensorStatus = new();
 
-    [DataField]
-    public NetEntity? Station = new();
 }

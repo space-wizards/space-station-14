@@ -192,16 +192,19 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         var entriesSort = new List<(JobPrototype? job, SuitSensorStatus entry)>();
         foreach (var a in departmentSensors)
         {
-            if (a.JobProto is null)
-                continue;
+            JobPrototype? job = null;
+            if (a.JobProto is { } jobProto)
+                _prototypeManager.TryIndex(jobProto, out job);
 
-            _prototypeManager.TryIndex(a.JobProto, out JobPrototype? job);
             entriesSort.Add((job, a));
         }
 
         ProtoId<JobWeightPrototype>? weights = null;
-        if (station is not null)
-            weights = _entManager.GetComponent<StationDataComponent>(station.Value).JobWeights;
+        if (station is not null &&
+            _entManager.TryGetComponent<StationDataComponent>(station.Value, out var stationData))
+        {
+            weights = stationData.JobWeights;
+        }
 
         if (JobUIComparer.TryCreate(_prototypeManager, weights, out var comparer))
         {
