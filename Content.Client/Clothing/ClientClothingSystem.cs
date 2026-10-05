@@ -12,6 +12,7 @@ using Content.Shared.Item;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Utility;
 using static Robust.Client.GameObjects.SpriteComponent;
@@ -47,6 +48,7 @@ public sealed partial class ClientClothingSystem : ClothingSystem
     };
 
     [Dependency] private IResourceCache _cache = default!;
+    [Dependency] private ISerializationManager _seriMan = default!;
     [Dependency] private DisplacementMapSystem _displacement = default!;
     [Dependency] private InventorySystem _inventorySystem = default!;
     [Dependency] private SpriteSystem _sprite = default!;
@@ -121,7 +123,11 @@ public sealed partial class ClientClothingSystem : ClothingSystem
             }
 
             ent.Comp.MappedLayer = key;
-            args.Layers.Add((key, layer));
+
+            // Create a copy of the layer, which might get modified.
+            PrototypeLayerData newLayer = new();
+            _seriMan.CopyTo(layer, ref newLayer, notNullableOverride: true);
+            args.Layers.Add((key, newLayer));
         }
     }
 
