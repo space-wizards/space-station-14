@@ -20,6 +20,7 @@ using Content.Shared.Radio.Components;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Lock;
 using Content.Shared.VendingMachines.Components;
+using Content.Shared.Utility;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
@@ -53,6 +54,31 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
         .ToArray();
 
     private float _effectTimer;
+
+    protected override void Added(Entity<SolarFlareRuleComponent, GameRuleComponent> ent, ref GameRuleAddedEvent args)
+    {
+        if (TryComp<StationEventComponent>(ent, out var stationEvent))
+        {
+            var announcement = Loc.GetString("station-event-solar-flare-start-announcement");
+
+            var scrambledAnnouncement = string.Empty;
+            for (float i = 0; i < announcement.Length; i++)
+            {
+                if (RobustRandom.Prob(MathF.Pow(i / announcement.Length, 4)))
+                {
+                    scrambledAnnouncement += Convert.ToChar(RobustRandom.NextByte(32, 255));
+                }
+                else
+                {
+                    scrambledAnnouncement += announcement[(int)i];
+                }
+            }
+
+            stationEvent.StartAnnouncement = scrambledAnnouncement;
+        }
+
+        base.Added(ent, ref args);
+    }
 
     protected override void Started(Entity<SolarFlareRuleComponent, GameRuleComponent> ent,
         ref GameRuleStartedEvent args)
