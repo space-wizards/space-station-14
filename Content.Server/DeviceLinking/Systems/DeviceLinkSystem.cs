@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
@@ -100,8 +101,8 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
 
         SetInvokeCounter(sink.Comp, invokeCounter + 1);
 
-        //Just skip using device networking if the source or the sink doesn't support it
-        if (!HasComp<DeviceNetworkComponent>(source) || !TryComp<DeviceNetworkComponent>(sink, out var sinkNetwork))
+        // raise the event directly if the signal cant be delivered over the wireless device network
+        if (!TryGetWirelessSink(source, sink, out var sinkNetwork))
         {
             var eventArgs = new SignalReceivedEvent(sinkPort, source);
             RaiseLocalEvent(sink, ref eventArgs);
@@ -144,8 +145,8 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
 
         SetInvokeCounter(sink.Comp, invokeCounter + 1);
 
-        //Just skip using device networking if the source or the sink doesn't support it
-        if (!HasComp<DeviceNetworkComponent>(source) || !TryComp<DeviceNetworkComponent>(sink, out var sinkNetwork))
+        // raise the event directly if the signal cant be delivered over the wireless device network
+        if (!TryGetWirelessSink(source, sink, out var sinkNetwork))
         {
             var eventArgs = new SignalReceivedEvent(sinkPort, source);
             RaiseLocalEvent(sink, ref eventArgs);
@@ -164,6 +165,20 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
             ref payload,
             sinkNetwork.ReceiveFrequency,
             (int)DeviceNetIdDefaults.Wireless);
+    }
+
+    /// <summary>
+    /// gets the sinks device network component if a signal from the source can be delivered to it over the wireless network
+    /// </summary>
+    /// <remarks> 
+    /// signals are always sent over the wireless network, so sinks registered on any other network would never receive the packet
+    /// </remarks>
+    private bool TryGetWirelessSink(EntityUid source, EntityUid sink, [NotNullWhen(true)] out DeviceNetworkComponent? sinkNetwork)
+    {
+        sinkNetwork = null;
+        return HasComp<DeviceNetworkComponent>(source)
+               && TryComp(sink, out sinkNetwork)
+               && sinkNetwork.NetIdEnum == DeviceNetIdDefaults.Wireless;
     }
 
     /// <summary>

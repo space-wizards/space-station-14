@@ -68,6 +68,7 @@
       maxChargeRate: 5000
       supplyRampTolerance: 5000
       supplyRampRate: 1000
+    - type: BatterySignalControl
     - type: PointLight
       radius: 1.2
       energy: 3.0
