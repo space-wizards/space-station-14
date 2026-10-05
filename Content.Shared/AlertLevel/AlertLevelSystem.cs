@@ -23,7 +23,7 @@ public sealed partial class AlertLevelSystem : EntitySystem
     // Absolute worst case fallbacks.
     private static string _fallbackAlertName = "generic-unknown-title";
     private static string _fallbackAlertAnnouncement = "alert-level-unknown-announcement";
-    private static string _fallbackAlertInstructions = $"alert-level-unknown-instructions";
+    private static string _fallbackAlertInstructions = "alert-level-unknown-instructions";
 
     public override void Update(float time)
     {
