@@ -2,17 +2,16 @@ using System.Linq;
 using Content.Server.Administration.Commands;
 using Content.Server.Chat.Managers;
 using Content.Server.EUI;
-using Content.Shared.Database;
-using Content.Shared.Verbs;
+using Content.Shared.Administration.Notes;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Notes;
 
-public sealed partial class AdminNotesSystem : EntitySystem
+/// <inheritdoc/>
+public sealed partial class ServerAdminNotesSystem : AdminNotesSystem
 {
     [Dependency] private IConsoleHost _console = default!;
     [Dependency] private IAdminNotesManager _notes = default!;
@@ -22,33 +21,19 @@ public sealed partial class AdminNotesSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddVerbs);
+        base.Initialize();
         _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
     }
 
-    private void AddVerbs(GetVerbsEvent<Verb> ev)
+    protected override void OpenNotes(EntityUid user, EntityUid target)
     {
-        if (EntityManager.GetComponentOrNull<ActorComponent>(ev.User) is not {PlayerSession: var user} ||
-            EntityManager.GetComponentOrNull<ActorComponent>(ev.Target) is not {PlayerSession: var target})
-        {
+        if (!TryComp<ActorComponent>(user, out var userActor) ||
+            !TryComp<ActorComponent>(target, out var targetActor))
             return;
-        }
 
-        if (!_notes.CanView(user))
-        {
-            return;
-        }
-
-        var verb = new Verb
-        {
-            Text = Loc.GetString("admin-notes-verb-text"),
-            Category = VerbCategory.Admin,
-            Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/examine.svg.192dpi.png")),
-            Act = () => _console.RemoteExecuteCommand(user, $"{OpenAdminNotesCommand.CommandName} \"{target.UserId}\""),
-            Impact = LogImpact.Low
-        };
-
-        ev.Verbs.Add(verb);
+        var userSession = userActor.PlayerSession;
+        _console.RemoteExecuteCommand(userSession,
+            $"{OpenAdminNotesCommand.CommandName} \"{targetActor.PlayerSession.UserId}\"");
     }
 
     private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
