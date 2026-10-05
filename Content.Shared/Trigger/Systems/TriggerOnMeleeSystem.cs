@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.Weapons.Melee.Events;
 
@@ -30,7 +31,7 @@ public sealed partial class TriggerOnMeleeTriggerSystem : TriggerOnXSystem
         if  (args.HitEntities.Count == 0)
             target = ent.Comp.TargetIsUser ? null : args.User;
         else
-            target = ent.Comp.TargetIsUser ? args.HitEntities[0] : args.User;
+            target = ent.Comp.TargetIsUser ? args.HitEntities.First() : args.User;
 
         Trigger.Trigger(ent.Owner, target, ent.Comp.KeyOut);
     }
@@ -42,7 +43,7 @@ public sealed partial class TriggerOnMeleeTriggerSystem : TriggerOnXSystem
 
         if (!ent.Comp.TriggerEveryHit)
         {
-            var target = ent.Comp.TargetIsUser ? args.HitEntities[0] : args.User;
+            var target = ent.Comp.TargetIsUser ? args.HitEntities.First() : args.User;
             Trigger.Trigger(ent.Owner, target, ent.Comp.KeyOut);
             return;
         }
