@@ -30,7 +30,8 @@ public sealed partial class HauntedClosetRuleSystem : GameRuleSystem<HauntedClos
             query.Add((ent, comp));
         }
 
-        var count = (int)Math.Floor(query.Count * ruleEnt.Comp1.ClosetFraction);
+        // at least one, usually
+        var count = (int)Math.Ceiling(query.Count * ruleEnt.Comp1.ClosetFraction);
 
         // do maths to find the desired closets
         for (var i = 0; i < count; i++)
