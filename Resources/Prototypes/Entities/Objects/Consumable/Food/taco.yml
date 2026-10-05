@@ -62,7 +62,8 @@
     storedOffset: 0,1
   - type: Tag
     tags:
-      - Meat
+    - FinishedMeal
+    - Meat
 
 - type: entity
   name: beef taco
@@ -199,4 +200,5 @@
     state: softtaco
   - type: Tag
     tags:
-      - Meat
+    - FinishedMeal
+    - Meat

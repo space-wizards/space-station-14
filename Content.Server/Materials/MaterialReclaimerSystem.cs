@@ -2,7 +2,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Ghost;
 using Content.Server.Popups;
-using Content.Server.Stack;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage.Systems;
@@ -28,31 +27,18 @@ namespace Content.Server.Materials;
 public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 {
     [Dependency] private AppearanceSystem _appearance = default!;
-    [Dependency] private GhostSystem _ghostSystem = default!;
+    [Dependency] private GhostSystem _ghost = default!;
     [Dependency] private MaterialStorageSystem _materialStorage = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private GibbingSystem _gibbing = default!;
     [Dependency] private PuddleSystem _puddle = default!;
-    [Dependency] private StackSystem _stack = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private SharedDestructibleSystem _destructible = default!;
     [Dependency] private DamageableSystem _damage = default!;
 
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<MaterialReclaimerComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<MaterialReclaimerComponent, SuicideByEnvironmentEvent>(OnSuicideByEnvironment);
-        SubscribeLocalEvent<ActiveMaterialReclaimerComponent, PowerChangedEvent>(OnActivePowerChanged);
-
-        SubscribeLocalEvent<MaterialReclaimerComponent, BreakageEventArgs>(OnBreakage);
-        SubscribeLocalEvent<MaterialReclaimerComponent, RepairedEvent>(OnRepaired);
-    }
-
+    [SubscribeLocalEvent]
     private void OnPowerChanged(Entity<MaterialReclaimerComponent> entity, ref PowerChangedEvent args)
     {
         AmbientSound.SetAmbience(entity.Owner, entity.Comp.Enabled && args.Powered);
@@ -60,6 +46,7 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
         Dirty(entity);
     }
 
+    [SubscribeLocalEvent]
     private void OnSuicideByEnvironment(Entity<MaterialReclaimerComponent> entity, ref SuicideByEnvironmentEvent args)
     {
         if (args.Handled)
@@ -69,7 +56,7 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
         if (TryComp(victim, out ActorComponent? actor) &&
             _mind.TryGetMind(actor.PlayerSession, out var mindId, out var mind))
         {
-            _ghostSystem.OnGhostAttempt(mindId, false, mind: mind);
+            _ghost.OnGhostAttempt(mindId, false, mind: mind);
             if (mind.OwnedEntity is { Valid: true } suicider)
             {
                 _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message"), suicider);
@@ -87,12 +74,14 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnActivePowerChanged(Entity<ActiveMaterialReclaimerComponent> entity, ref PowerChangedEvent args)
     {
         if (!args.Powered)
             TryFinishProcessItem(entity, null, entity.Comp);
     }
 
+    [SubscribeLocalEvent]
     private void OnBreakage(Entity<MaterialReclaimerComponent> ent, ref BreakageEventArgs args)
     {
         //un-emags itself when it breaks
@@ -100,6 +89,7 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
         SetBroken(ent, true);
     }
 
+    [SubscribeLocalEvent]
     private void OnRepaired(Entity<MaterialReclaimerComponent> ent, ref RepairedEvent args)
     {
         SetBroken(ent, false);
@@ -133,7 +123,7 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
         Dirty(uid, component);
 
         // scales the output if the process was interrupted.
-        var completion = 1f - Math.Clamp((float) Math.Round((active.EndTime - Timing.CurTime) / active.Duration),
+        var completion = 1f - Math.Clamp((float)Math.Round((active.EndTime - Timing.CurTime) / active.Duration),
             0f,
             1f);
         Reclaim(uid, item, completion, component);
@@ -157,21 +147,14 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
         if (component.ReclaimMaterials)
             SpawnMaterialsFromComposition(uid, item, completion * component.Efficiency, xform: xform);
 
-        var playSound = true;
-
         if (CanDamageAndGib(uid, item, component))
         {
-            var didBloody = false;
-
-            if (component.DamageOnEmag is not null && _damage.TryChangeDamage(item, component.DamageOnEmag, false)) // It shouldn't ignore resistance
-                didBloody = true;
+            var didBloody = component.DamageOnEmag is not null && _damage.TryChangeDamage(item, component.DamageOnEmag); // It shouldn't ignore resistance
 
             if (_destructible.CanDestroy(item) && component.GibOnEmag)
             {
                 var logImpact = HasComp<HumanoidProfileComponent>(item) ? LogImpact.Extreme : LogImpact.Medium;
                 _adminLogger.Add(LogType.Gib, logImpact, $"{ToPrettyString(item):victim} was gibbed by {ToPrettyString(uid):entity}");
-
-                playSound = false; // Gibbing already make the noise!
 
                 _gibbing.Gib(item);
 
@@ -180,10 +163,12 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
 
             if (didBloody)
                 _appearance.SetData(uid, RecyclerVisuals.Bloody, true);
+
+            return;
         }
 
         if (_destructible.CanDestroy(item) && component.ReclaimSolutions)
-            SpawnChemicalsFromComposition(uid, item, completion, playSound, component, xform);
+            SpawnChemicalsFromComposition(uid, item, completion, true, component, xform);
 
         _destructible.DestroyEntity(item);
     }
@@ -206,23 +191,11 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
 
         foreach (var (material, amount) in composition.MaterialComposition)
         {
-            var outputAmount = (int) (amount * efficiency * modifier);
+            var outputAmount = (int)(amount * efficiency * modifier);
             _materialStorage.TryChangeMaterialAmount(reclaimer, material, outputAmount, storage);
         }
 
-        foreach (var (storedMaterial, storedAmount) in storage.Storage)
-        {
-            var stacks = _materialStorage.SpawnMultipleFromMaterial(storedAmount,
-                storedMaterial,
-                xform.Coordinates,
-                out var materialOverflow);
-            var amountConsumed = storedAmount - materialOverflow;
-            _materialStorage.TryChangeMaterialAmount(reclaimer, storedMaterial, -amountConsumed, storage);
-            foreach (var stack in stacks)
-            {
-                _stack.TryMergeToContacts(stack);
-            }
-        }
+        _materialStorage.EjectAllMaterial(reclaimer, xform.Coordinates, storage, true);
     }
 
     private void SpawnChemicalsFromComposition(EntityUid reclaimer,

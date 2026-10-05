@@ -33,7 +33,8 @@
   - type: Clothing
     sprite: Clothing/Neck/Medals/gold.rsi
   - type: StealTarget
-    stealGroup: ClothingNeckGoldmedal
+    stealGroup:
+    - ClothingNeckGoldmedal
 
 - type: entity
   parent: ClothingNeckMedalBase
@@ -101,4 +102,5 @@
   - type: Clothing
     sprite: Clothing/Neck/Medals/clownmedal.rsi
   - type: StealTarget
-    stealGroup: ClothingNeckClownmedal
+    stealGroup:
+    - ClothingNeckClownmedal

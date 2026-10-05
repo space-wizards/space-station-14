@@ -33,3 +33,4 @@ anomaly-status-charges = [color=orange]{$charges} charges[/color]
 
 # Timer Trigger Status
 timer-trigger-status-delay = Set Delay: [color=white]{$delay}s[/color]
+timer-trigger-status-delay-unknown = Set Delay: [color=gray]???[/color]

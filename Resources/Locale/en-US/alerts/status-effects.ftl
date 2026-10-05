@@ -12,3 +12,6 @@ alerts-stunned-desc = You're [color=yellow]stunned[/color]! Something is impairi
 
 alerts-vow-silence-name = Vow of Silence
 alerts-vow-silence-desc = You have taken a vow forbidding verbal or written communication as part of initiation into the Mystiko Tagma Mimon. Click to break your vow.
+
+alerts-blind-name = Blind
+alerts-blind-desc = You can't quite make out what's happening around you.

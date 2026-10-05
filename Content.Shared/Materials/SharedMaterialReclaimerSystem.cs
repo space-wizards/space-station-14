@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Body;
@@ -17,7 +18,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
-using System.Linq;
 
 namespace Content.Shared.Materials;
 
@@ -27,30 +27,22 @@ namespace Content.Shared.Materials;
 /// </summary>
 public abstract partial class SharedMaterialReclaimerSystem : EntitySystem
 {
+    [Dependency] private EmagSystem _emag = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private ISharedAdminLogManager _adminLog = default!;
+    [Dependency] private OpenableSystem _openable = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] protected IGameTiming Timing = default!;
     [Dependency] protected SharedAmbientSoundSystem AmbientSound = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] protected SharedContainerSystem Container = default!;
-    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private EmagSystem _emag = default!;
-    [Dependency] private OpenableSystem _openable = default!;
-    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+
+    [Dependency] private EntityQuery<MaterialReclaimerComponent> _materialReclaimerQuery;
+    [Dependency] private EntityQuery<SolutionTransferComponent> _solutionTransferQuery;
 
     public const string ActiveReclaimerContainerId = "active-material-reclaimer-container";
 
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<MaterialReclaimerComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<MaterialReclaimerComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<MaterialReclaimerComponent, GotEmaggedEvent>(OnEmagged);
-        SubscribeLocalEvent<MaterialReclaimerComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<CollideMaterialReclaimerComponent, StartCollideEvent>(OnCollide);
-        SubscribeLocalEvent<ActiveMaterialReclaimerComponent, ComponentStartup>(OnActiveStartup);
-        SubscribeLocalEvent<MaterialReclaimerComponent, InteractUsingEvent>(OnInteractUsing,
-            before: [typeof(SolutionTransferSystem), typeof(AnchorableSystem)]);
-    }
+    [SubscribeLocalEvent(before: [typeof(SolutionTransferSystem), typeof(AnchorableSystem)])]
     private void OnInteractUsing(Entity<MaterialReclaimerComponent> entity, ref InteractUsingEvent args)
     {
         if (args.Handled)
@@ -64,7 +56,7 @@ public abstract partial class SharedMaterialReclaimerSystem : EntitySystem
                 if (_openable.IsClosed(args.Used))
                     return;
 
-                if (TryComp<SolutionTransferComponent>(args.Used, out var transfer) &&
+                if (_solutionTransferQuery.TryComp(args.Used, out var transfer) &&
                     transfer.CanSend)
                     return;
             }
@@ -73,44 +65,50 @@ public abstract partial class SharedMaterialReclaimerSystem : EntitySystem
         args.Handled = TryStartProcessItem(entity.Owner, args.Used, entity.Comp, args.User);
     }
 
-    private void OnMapInit(EntityUid uid, MaterialReclaimerComponent component, MapInitEvent args)
+    [SubscribeLocalEvent]
+    private void OnMapInit(Entity<MaterialReclaimerComponent> ent, ref MapInitEvent args)
     {
-        component.NextSound = Timing.CurTime;
+        ent.Comp.NextSound = Timing.CurTime;
     }
 
-    private void OnShutdown(EntityUid uid, MaterialReclaimerComponent component, ComponentShutdown args)
+    [SubscribeLocalEvent]
+    private void OnShutdown(Entity<MaterialReclaimerComponent> ent, ref ComponentShutdown args)
     {
-        _audio.Stop(component.Stream);
+        _audio.Stop(ent.Comp.Stream);
     }
 
-    private void OnExamined(EntityUid uid, MaterialReclaimerComponent component, ExaminedEvent args)
+    [SubscribeLocalEvent]
+    private void OnExamined(Entity<MaterialReclaimerComponent> ent, ref ExaminedEvent args)
     {
-        args.PushMarkup(Loc.GetString("recycler-count-items", ("items", component.ItemsProcessed)));
+        args.PushMarkup(Loc.GetString("recycler-count-items", ("items", ent.Comp.ItemsProcessed)));
     }
 
-    private void OnEmagged(EntityUid uid, MaterialReclaimerComponent component, ref GotEmaggedEvent args)
+    [SubscribeLocalEvent]
+    private void OnEmagged(Entity<MaterialReclaimerComponent> ent, ref GotEmaggedEvent args)
     {
         if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
             return;
 
-        if (_emag.CheckFlag(uid, EmagType.Interaction))
+        if (_emag.CheckFlag(ent, EmagType.Interaction))
             return;
 
         args.Handled = true;
     }
 
-    private void OnCollide(EntityUid uid, CollideMaterialReclaimerComponent component, ref StartCollideEvent args)
+    [SubscribeLocalEvent]
+    private void OnCollide(Entity<CollideMaterialReclaimerComponent> ent, ref StartCollideEvent args)
     {
-        if (args.OurFixtureId != component.FixtureId)
+        if (args.OurFixtureId != ent.Comp.FixtureId)
             return;
-        if (!TryComp<MaterialReclaimerComponent>(uid, out var reclaimer))
+        if (!_materialReclaimerQuery.TryComp(ent, out var reclaimer))
             return;
-        TryStartProcessItem(uid, args.OtherEntity, reclaimer);
+        TryStartProcessItem(ent, args.OtherEntity, reclaimer);
     }
 
-    private void OnActiveStartup(EntityUid uid, ActiveMaterialReclaimerComponent component, ComponentStartup args)
+    [SubscribeLocalEvent]
+    private void OnActiveStartup(Entity<ActiveMaterialReclaimerComponent> ent, ref ComponentStartup args)
     {
-        component.ReclaimingContainer = Container.EnsureContainer<Container>(uid, ActiveReclaimerContainerId);
+        ent.Comp.ReclaimingContainer = Container.EnsureContainer<Container>(ent, ActiveReclaimerContainerId);
     }
 
     /// <summary>
@@ -127,8 +125,8 @@ public abstract partial class SharedMaterialReclaimerSystem : EntitySystem
         if (HasComp<MobStateComponent>(item) && !CanDamageAndGib(uid, item, component)) // whitelist? We be gibbing, boy!
             return false;
 
-        if (_whitelistSystem.IsWhitelistFail(component.Whitelist, item) ||
-            _whitelistSystem.IsWhitelistPass(component.Blacklist, item))
+        if (_whitelist.IsWhitelistFail(component.Whitelist, item) ||
+            _whitelist.IsWhitelistPass(component.Blacklist, item))
             return false;
 
         if (Container.TryGetContainingContainer((item, null, null), out _) && !Container.TryRemoveFromContainer(item))
