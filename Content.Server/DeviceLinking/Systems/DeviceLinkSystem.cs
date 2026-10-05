@@ -106,7 +106,9 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
         // TODO: better support devices with multiple networks
         if (!_deviceNetworkQuery.TryComp(source, out var sourceNetwork)
             || !_deviceNetworkQuery.TryComp(sink, out var sinkNetwork)
-            || sourceNetwork.DeviceNetId != sinkNetwork.DeviceNetId)
+            || sourceNetwork.DeviceNetId != sinkNetwork.DeviceNetId
+            || sourceNetwork.TransmitFrequency == null
+            || sourceNetwork.TransmitFrequency != sinkNetwork.ReceiveFrequency)
         {
             var eventArgs = new SignalReceivedEvent(sinkPort, source);
             RaiseLocalEvent(sink, ref eventArgs);
@@ -153,7 +155,9 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
         // TODO: better support devices with multiple networks
         if (!_deviceNetworkQuery.TryComp(source, out var sourceNetwork)
             || !_deviceNetworkQuery.TryComp(sink, out var sinkNetwork)
-            || sourceNetwork.DeviceNetId != sinkNetwork.DeviceNetId)
+            || sourceNetwork.DeviceNetId != sinkNetwork.DeviceNetId
+            || sourceNetwork.TransmitFrequency == null
+            || sourceNetwork.TransmitFrequency != sinkNetwork.ReceiveFrequency)
         {
             var eventArgs = new SignalReceivedEvent(sinkPort, source);
             RaiseLocalEvent(sink, ref eventArgs);
