@@ -102,7 +102,7 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
 
         SetInvokeCounter(sink.Comp, invokeCounter + 1);
 
-        //Just skip using device networking if the source or the sink doesn't support it
+        // Just skip using device networking if the source or the sink doesn't support it, or if they're on different networks.
         // TODO: better support devices with multiple networks
         if (!_deviceNetworkQuery.TryComp(source, out var sourceNetwork)
             || !_deviceNetworkQuery.TryComp(sink, out var sinkNetwork)
@@ -149,7 +149,7 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
 
         SetInvokeCounter(sink.Comp, invokeCounter + 1);
 
-        //Just skip using device networking if the source or the sink doesn't support it, or if they're on different networks.
+        // Just skip using device networking if the source or the sink doesn't support it, or if they're on different networks.
         // TODO: better support devices with multiple networks
         if (!_deviceNetworkQuery.TryComp(source, out var sourceNetwork)
             || !_deviceNetworkQuery.TryComp(sink, out var sinkNetwork)
