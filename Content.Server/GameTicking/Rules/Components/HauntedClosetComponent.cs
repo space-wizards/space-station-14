@@ -9,10 +9,10 @@ namespace Content.Server.GameTicking.Rules.Components;
 public sealed partial class HauntedClosetComponent : Component
 {
     /// <summary>
-    /// 1 = always closed, 0 = never closed
+    /// Higher means it will be selected more often by the rule
     /// </summary>
     [DataField]
-    public float CloseChance = 0.01f;
+    public float CloseChance = 1f;
 
     /// <summary>
     /// Loot that will be placed
