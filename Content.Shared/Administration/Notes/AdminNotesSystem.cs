@@ -13,12 +13,12 @@ public abstract partial class AdminNotesSystem : EntitySystem
     [SubscribeLocalEvent]
     private void AddVerbs(GetVerbsEvent<Verb> ev)
     {
-        if (!HasComp<ActorComponent>(ev.User) || !HasComp<ActorComponent>(ev.Target) ||
-            !_admins.HasAdminFlag(ev.User, AdminFlags.ViewNotes))
-            return;
-
         var user = ev.User;
         var target = ev.Target;
+
+        if (!HasComp<ActorComponent>(user) || !HasComp<ActorComponent>(target) ||
+            !_admins.HasAdminFlag(user, AdminFlags.ViewNotes))
+            return;
 
         var verb = new Verb
         {

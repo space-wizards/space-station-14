@@ -10,6 +10,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Notes;
 
+/// <inheritdoc/>
 public sealed partial class ServerAdminNotesSystem : AdminNotesSystem
 {
     [Dependency] private IConsoleHost _console = default!;
