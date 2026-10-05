@@ -1,11 +1,13 @@
-﻿using Content.Shared.Chat;
+﻿using Content.Server.Chat.Systems;
+using Content.Shared.Chat;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
 public sealed partial class SayKeyOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entManager = default!;
-    [Dependency] private SharedChatSystem _chat = default!;
+
+    private ChatSystem _chat = default!;
 
     [DataField(required: true)]
     public string Key = string.Empty;
@@ -15,6 +17,13 @@ public sealed partial class SayKeyOperator : HTNOperator
     /// </summary>
     [DataField]
     public bool Hidden;
+
+    public override void Initialize(IEntitySystemManager sysManager)
+    {
+        base.Initialize(sysManager);
+
+        _chat = sysManager.GetEntitySystem<ChatSystem>();
+    }
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {

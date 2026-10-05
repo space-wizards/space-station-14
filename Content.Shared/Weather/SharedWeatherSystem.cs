@@ -15,7 +15,6 @@ namespace Content.Shared.Weather;
 public abstract partial class SharedWeatherSystem : EntitySystem
 {
     [Dependency] protected IGameTiming Timing = default!;
-    [Dependency] protected IPrototypeManager ProtoMan = default!;
     [Dependency] protected SharedAudioSystem Audio = default!;
     [Dependency] private ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private SharedMapSystem _mapSystem = default!;
@@ -44,7 +43,7 @@ public abstract partial class SharedWeatherSystem : EntitySystem
         if (!tileDef.Weather)
             return false;
 
-        var anchoredEntities = _mapSystem.GetAnchoredEntitiesEnumerator(ent, ent.Comp1, tileRef.GridIndices);
+        var anchoredEntities = _mapSystem.GetAnchoredEntities(ent, ent.Comp1, tileRef.GridIndices);
 
         while (anchoredEntities.MoveNext(out var anchored))
         {

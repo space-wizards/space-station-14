@@ -39,7 +39,7 @@ public sealed partial class SelectableComponentAdderSystem : EntitySystem
                     if (entry.Popup == null)
                         return;
                     var message = Loc.GetString(entry.Popup.Value, ("target", target));
-                    _popup.PopupClient(message, target, user);
+                    _popup.PopupEntity(message, target, user);
                 },
                 Text = Loc.GetString(entry.VerbName),
             };

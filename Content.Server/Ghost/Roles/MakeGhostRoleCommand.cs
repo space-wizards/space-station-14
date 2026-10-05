@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Administration;
 using Content.Shared.Mind.Components;

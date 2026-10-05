@@ -7,3 +7,13 @@
   id: BibleHit
   files:
   - /Audio/Effects/hit_kick.ogg
+
+- type: soundCollection
+  id: BibleSizzle
+  files:
+  - /Audio/Effects/lightburn.ogg
+
+- type: soundCollection
+  id: BibleHeal
+  files:
+  - /Audio/Effects/holy.ogg
