@@ -42,6 +42,8 @@ changeling-catalog-voice-mindshield-desc = Modify your neuron's natural waves to
 changeling-catalog-night-vision-name = Night Vision
 changeling-catalog-night-vision-desc = You modify your photoreceptors and heighten your senses as to become able to see in complete darkness.
 
-
 changeling-catalog-horror-form-name = Horror Form
 changeling-catalog-horror-form-desc = Turns you into a nigh-unstoppable juggernaut. Using this ability is exhausting, as it burns through DNA points. When running out of DNA, you will be forced out of this form and stunned. Needs 3 devours to be purchased.
+
+changeling-catalog-fleshtomb-name = Fleshtomb [EXPERIMENTAL]
+changeling-catalog-fleshtomb-desc = Preserve a corpse in a fleshy prison, slowly harvesting their genetic code for your own use. It slowly generates DNA, but is very fragile and must be preserved in proper atmosphere to not fall apart.

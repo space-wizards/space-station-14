@@ -64,7 +64,10 @@ changeling-fake-mindshield-disabled = We stop emitting fake mindshield waves.
 changeling-not-enough-chemicals = We don't have enough Chemicals.
 
 # other
+changeling-action-fail-generic = We cannot do this right now.
 changeling-paused-map-name = Changeling identity storage map
+changeling-cocoon-success = We encase {THE($target)} in a fleshy tomb.
+changeling-cocoon-doafter = [color=red]{ CAPITALIZE(SUBJECT($user)) } { CONJUGATE-BE($user) } covering { THE($target) } in a fleshy mass![/color]
 
 # horror transformation
 changeling-transform-horror-attempt-self = Our flesh rapidly expands as we reveal our otherwordly mouth bare.

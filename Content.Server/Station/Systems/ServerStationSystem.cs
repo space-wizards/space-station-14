@@ -65,7 +65,7 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
             return;
 
         stationData.Grids.Remove(uid);
-        Dirty(uid, component);
+        Dirty(component.Station, stationData);
     }
 
     public override void Shutdown()
