@@ -10,8 +10,30 @@ namespace Content.Client.Buckle;
 internal sealed partial class BuckleSystem : SharedBuckleSystem
 {
     [Dependency] private RotationVisualizerSystem _rotationVisualizerSystem = default!;
+    [Dependency] private TransformSystem _xformSystem = default!;
 
     #region Event Handlers
+
+    protected override void AfterBuckleParentChanged(Entity<BuckleComponent> ent, ref EntParentChangedMessage args)
+    {
+        if (HasComp<StrapComponent>(args.Transform.ParentUid) ||
+            args.OldParent is { } oldParent && HasComp<StrapComponent>(oldParent))
+        {
+            _xformSystem.SnapRenderTransformAfterParentChange(ent, true);
+        }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnBuckledEvent(Entity<BuckleComponent> ent, ref BuckledEvent args)
+    {
+        _xformSystem.SnapRenderTransform(ent, true);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnUnbuckledEvent(Entity<BuckleComponent> ent, ref UnbuckledEvent args)
+    {
+        _xformSystem.SnapRenderTransform(ent, true);
+    }
 
     [SubscribeLocalEvent]
     private void OnMobCollide(Entity<BuckleComponent> ent, ref AttemptMobCollideEvent args)
@@ -28,7 +50,7 @@ internal sealed partial class BuckleSystem : SharedBuckleSystem
         if (!TryComp<RotationVisualsComponent>(ent, out var rotVisuals))
             return;
 
-        if (!Appearance.TryGetData<bool>(ent, BuckleVisuals.Buckled, out var buckled, args.Component) ||
+        if (!args.TryGetData<bool>(BuckleVisuals.Buckled, out var buckled) ||
             !buckled ||
             args.Sprite == null)
         {

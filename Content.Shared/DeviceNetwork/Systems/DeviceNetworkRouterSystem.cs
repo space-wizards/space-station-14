@@ -1,4 +1,4 @@
-﻿using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Payloads;
 using Content.Shared.SurveillanceCamera;

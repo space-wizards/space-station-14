@@ -305,8 +305,10 @@ public abstract partial class SharedActionsSystem : EntitySystem
         if (IsCooldownActive(action, curTime))
             return false;
 
+        var target = GetEntity(ev.EntityTarget);
+
         // check for action use prevention
-        var attemptEv = new ActionAttemptEvent(user);
+        var attemptEv = new ActionAttemptEvent(user, target);
         RaiseLocalEvent(action, ref attemptEv);
         if (attemptEv.Cancelled)
         {
@@ -324,6 +326,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
             User = user,
             Provider = provider
         };
+
         RaiseLocalEvent(action, ref validateEv);
         if (validateEv.Invalid)
             return false;
@@ -587,13 +590,15 @@ public abstract partial class SharedActionsSystem : EntitySystem
         ev.Action = action;
 
         // TODO: This is where we'd add support for event lists
-        if (!action.Comp.RaiseOnUser && action.Comp.Container is {} container && !_mindQuery.HasComp(container))
+        if (!action.Comp.RaiseOnUser && action.Comp.Container is { } container && !_mindQuery.HasComp(container))
             target = container;
 
+#pragma warning disable CS0618 // Enabling RaiseOnAction compatibility behaviour.
         if (action.Comp.RaiseOnAction)
             target = action;
+#pragma warning restore CS0618
 
-        RaiseLocalEvent(target, (object) ev, broadcast: true);
+        RaiseLocalEvent(target, (object)ev, broadcast: true);
         handled = ev.Handled;
 
         if (!handled)
@@ -610,7 +615,11 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
         UpdateAction(action);
 
-        var performed = new ActionPerformedEvent(performer);
+        EntityUid? actionTarget = null;
+        if (actionEvent is EntityTargetActionEvent targetEv)
+            actionTarget = targetEv.Target;
+
+        var performed = new ActionPerformedEvent(performer, actionTarget);
         RaiseLocalEvent(action, ref performed);
     }
     #endregion

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: CyborgEndoskeleton
   name: cyborg endoskeleton
   description: A frame that cyborgs are built on. Significantly less spooky than expected.
