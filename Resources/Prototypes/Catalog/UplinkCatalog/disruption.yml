@@ -267,3 +267,19 @@
     Telecrystal: 2
   categories:
   - UplinkDisruption
+
+- type: listing
+  id: UplinkArtifactBundle
+  name: uplink-artifact-bundle-name
+  description: uplink-artifact-bundle-desc
+  icon: { sprite: /Textures/Structures/Storage/Crates/syndicate.rsi, state: icon }
+  productEntity: CrateArtifactBundle
+  cost:
+    Telecrystal: 16
+  categories:
+  - UplinkDisruption
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink

@@ -82,6 +82,27 @@
       min: 9
       max: 13
 
+
+- type: entity
+  parent: BaseXenoArtifactItem
+  id: DangerousXenoArtifactItem
+  suffix: Hand-Sized
+  components:
+  - type: XenoArtifact
+    triggersTable: !type:NestedSelector
+      tableId: XenoArtifactHandheldOnlyTriggerTable
+    effectsTable: !type:GroupSelector
+      children:
+      - !type:NestedSelector
+        tableId: XenoArtifactEffectsDefaultable
+        weight: 54
+      - !type:NestedSelector
+        tableId: XenoArtifactEffectsHandheldOnlyTable
+        weight: 2
+    nodeCount:
+      min: 9
+      max: 13
+
 - type: entity
   id: ArtifactFragment
   parent: BaseItem
