@@ -276,7 +276,7 @@ public abstract partial class TabletopSystem : EntitySystem
 
         _adminLog.Add(LogType.Action, $"{user:player} removed piece {ToPrettyString(piece)}, from board {ToPrettyString(table)}");
 
-        PredictedQueueDel(piece);
+        QueueDel(piece);
     }
 
     /// <summary>
