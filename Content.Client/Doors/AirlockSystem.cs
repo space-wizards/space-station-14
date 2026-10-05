@@ -7,15 +7,18 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Doors;
 
+/// <inheritdoc/>
 public sealed partial class AirlockSystem : SharedAirlockSystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
+
+    [Dependency] private EntityQuery<DoorComponent> _doorQuery;
 
     [SubscribeLocalEvent]
     private void OnComponentStartup(Entity<AirlockComponent> ent, ref ComponentStartup args)
     {
         // Has to be on component startup because we don't know what order components initialize in and running this before DoorComponent inits _will_ crash.
-        if (!TryComp<DoorComponent>(ent, out var door))
+        if (!_doorQuery.TryComp(ent, out var door))
             return;
 
         if (ent.Comp.OpenUnlitVisible) // Otherwise there are flashes of the fallback sprite between clicking on the door and the door closing animation starting.
@@ -24,26 +27,26 @@ public sealed partial class AirlockSystem : SharedAirlockSystem
             door.ClosedSpriteStates.Add((DoorVisualLayers.BaseUnlit, ent.Comp.ClosedSpriteState));
         }
 
-        ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick()
+        ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick
         {
             LayerKey = DoorVisualLayers.BaseUnlit,
             KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(ent.Comp.OpeningSpriteState, 0f) },
         }
         );
 
-        ((Animation)door.ClosingAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick()
+        ((Animation)door.ClosingAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick
         {
             LayerKey = DoorVisualLayers.BaseUnlit,
             KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(ent.Comp.ClosingSpriteState, 0f) },
         }
         );
 
-        door.DenyingAnimation = new Animation()
+        door.DenyingAnimation = new Animation
         {
             Length = TimeSpan.FromSeconds(ent.Comp.DenyAnimationTime),
             AnimationTracks =
             {
-                new AnimationTrackSpriteFlick()
+                new AnimationTrackSpriteFlick
                 {
                     LayerKey = DoorVisualLayers.BaseUnlit,
                     KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(ent.Comp.DenySpriteState, 0f) },
@@ -54,12 +57,10 @@ public sealed partial class AirlockSystem : SharedAirlockSystem
         if (!ent.Comp.AnimatePanel)
             return;
 
-        // For some reason the open panel sprite is used for both open and
-        // closed sprites. I really don't get it.
-        door.OpenSpriteStates.Add((WiresVisualLayers.MaintenancePanel, ent.Comp.OpenPanelSpriteState));
+        door.OpenSpriteStates.Add((WiresVisualLayers.MaintenancePanel, null));
         door.ClosedSpriteStates.Add((WiresVisualLayers.MaintenancePanel, ent.Comp.OpenPanelSpriteState));
 
-        ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick()
+        ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick
         {
             LayerKey = WiresVisualLayers.MaintenancePanel,
             KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(ent.Comp.OpeningPanelSpriteState, 0f) },
