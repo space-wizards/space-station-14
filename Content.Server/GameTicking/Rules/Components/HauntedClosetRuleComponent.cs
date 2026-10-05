@@ -16,5 +16,5 @@ public sealed partial class HauntedClosetRuleComponent : Component
     /// If this is true, the closets will have their state toggled. If this is false, then they will only be closed.
     /// </summary>
     [DataField]
-    public bool Toggle = false;
+    public bool Toggle = true;
 }

@@ -607,7 +607,7 @@
   - type: HauntedClosetRule
   - type: StationEvent
     weight: 8
-    reoccurrenceDelay: 5
+    reoccurrenceDelay: 20
     duration: 1
 
 - type: entity
