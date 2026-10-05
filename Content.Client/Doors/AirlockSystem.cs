@@ -10,7 +10,6 @@ namespace Content.Client.Doors;
 /// <inheritdoc/>
 public sealed partial class AirlockSystem : SharedAirlockSystem
 {
-    [Dependency] private AppearanceSystem _appearanceSystem = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
     [Dependency] private EntityQuery<DoorComponent> _doorQuery;
@@ -80,10 +79,10 @@ public sealed partial class AirlockSystem : SharedAirlockSystem
         if (args.Sprite == null)
             return;
 
-        if (!_appearanceSystem.TryGetData<DoorState>(ent, DoorVisuals.State, out var state, args.Component))
+        if (!args.TryGetData<DoorState>(DoorVisuals.State, out var state))
             state = DoorState.Closed;
 
-        _appearanceSystem.TryGetData<bool>(ent, PowerDeviceVisuals.Powered, out var hasPower, args.Component);
+        args.TryGetData<bool>(PowerDeviceVisuals.Powered, out var hasPower);
 
         var showBaseUnlit = false;
         var showBolted = false;
@@ -91,10 +90,10 @@ public sealed partial class AirlockSystem : SharedAirlockSystem
 
         if (hasPower)
         {
-            _appearanceSystem.TryGetData<bool>(ent, DoorVisuals.BoltLights, out var boltedVisible, args.Component);
+            args.TryGetData<bool>(DoorVisuals.BoltLights, out var boltedVisible);
             showBolted = boltedVisible && (state == DoorState.Closed || state == DoorState.Welded);
 
-            _appearanceSystem.TryGetData<bool>(ent, DoorVisuals.EmergencyLights, out var emergencyVisible, args.Component);
+            args.TryGetData<bool>(DoorVisuals.EmergencyLights, out var emergencyVisible);
             showEmergency = emergencyVisible;
 
             if (!showBolted && !showEmergency)
@@ -105,7 +104,7 @@ public sealed partial class AirlockSystem : SharedAirlockSystem
                 if (state == DoorState.Open && ent.Comp.OpenUnlitVisible)
                     showBaseUnlit = true;
 
-                _appearanceSystem.TryGetData<bool>(ent, DoorVisuals.ClosedLights, out var closedLightsVisible, args.Component);
+                args.TryGetData<bool>(DoorVisuals.ClosedLights, out var closedLightsVisible);
                 if (state == DoorState.Closed && closedLightsVisible)
                     showBaseUnlit = true;
             }
@@ -116,8 +115,7 @@ public sealed partial class AirlockSystem : SharedAirlockSystem
         if (ent.Comp.EmergencyAccessLayer)
         {
             var isDoorIdle = state != DoorState.Open && state != DoorState.Opening && state != DoorState.Closing;
-            _sprite.LayerSetVisible((ent, args.Sprite),
-                DoorVisualLayers.BaseEmergencyAccess,
+            _sprite.LayerSetVisible((ent, args.Sprite), DoorVisualLayers.BaseEmergencyAccess,
                 showEmergency && isDoorIdle && !showBolted);
         }
 

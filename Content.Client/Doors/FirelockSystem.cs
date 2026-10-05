@@ -11,7 +11,6 @@ namespace Content.Client.Doors;
 /// <inheritdoc/>
 public sealed partial class FirelockSystem : SharedFirelockSystem
 {
-    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
     [Dependency] private EntityQuery<DoorComponent> _doorQuery;
@@ -71,15 +70,15 @@ public sealed partial class FirelockSystem : SharedFirelockSystem
         if (args.Sprite == null)
             return;
 
-        if (!_appearanceSystem.TryGetData<DoorState>(ent, DoorVisuals.State, out var state, args.Component))
+        if (!args.TryGetData<DoorState>(DoorVisuals.State, out var state))
             state = DoorState.Closed;
 
-        var boltedVisible = _appearanceSystem.TryGetData<bool>(ent, DoorVisuals.BoltLights, out var lights, args.Component) && lights;
+        var boltedVisible = args.TryGetData<bool>(DoorVisuals.BoltLights, out var lights) && lights;
         var unlitVisible =
             state == DoorState.Closing
             || state == DoorState.Opening
             || state == DoorState.Denying
-            || _appearanceSystem.TryGetData<bool>(ent, DoorVisuals.ClosedLights, out var closedLights, args.Component) && closedLights;
+            || args.TryGetData<bool>(DoorVisuals.ClosedLights, out var closedLights) && closedLights;
 
         if (_sprite.LayerMapTryGet((ent, args.Sprite), DoorVisualLayers.BaseUnlit, out var unlitLayer, logMissing: false))
             _sprite.LayerSetVisible((ent, args.Sprite), unlitLayer, unlitVisible && !boltedVisible);
