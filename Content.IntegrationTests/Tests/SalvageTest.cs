@@ -1,4 +1,4 @@
-﻿using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.CCVar;
 using Content.Shared.Salvage;

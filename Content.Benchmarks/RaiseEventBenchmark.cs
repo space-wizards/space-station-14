@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
