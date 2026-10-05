@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseDeltaPressurePlasma, BaseWindowStructure, BaseRCDResistant]
+  parent: [BaseDeltaPressurePlasma, BaseWindowStructure, BaseRCDResistant, StructureHealthBarrier]
   id: UraniumWindow
   name: uranium window
   components:
@@ -9,14 +9,12 @@
     sprite: Structures/Windows/window-uranium.rsi
     state: full
   - type: Damageable
-    damageModifierSet: Glass
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 80
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -26,8 +24,6 @@
           ShardGlassUranium:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: IconSmooth
     base: uwindow
   - type: Construction
@@ -46,7 +42,7 @@
     resistance: 3
 
 - type: entity
-  parent: [BaseDeltaPressurePlasmaQuarter, BaseWindowStructureDirectional, BaseRCDResistant]
+  parent: [BaseDeltaPressurePlasmaQuarter, BaseWindowStructureDirectional, BaseRCDResistant, StructureHealthBarrierWeak]
   id: UraniumWindowDirectional
   name: directional uranium window
   components:
@@ -67,14 +63,12 @@
     damageOverlay:
       sprite: Structures/Windows/cracks_directional.rsi
   - type: Damageable
-    damageModifierSet: Glass
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 30
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -84,8 +78,6 @@
           ShardGlassUranium:
             min: 1
             max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: StaticPrice
     price: 100
   - type: RadiationBlocker

@@ -1,5 +1,5 @@
 - type: entity
-  parent: [SolutionTank, SolutionHuge]
+  parent: [SolutionTank, SolutionHuge, StructureHealthFurnitureStrong]
   id: SinkEmpty
   name: sink
   description: The faucets have been tightened to the maximum possible torque but are still known to drip.
@@ -36,28 +36,30 @@
     autoDrain: false
   - type: DumpableSolution
     solution: drainBuffer
+  - type: Edible
+    edible: Drink
+    solution: tank
+    destroyOnEmpty: false
+    utensil: Spoon
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: Inorganic
+    damageModifierSet: RockMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 40
+        damage: 80
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
-          collection: MetalBreak
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -3
   - type: AmbientSound
     enabled: false
     volume: -8
     range: 8
     sound:
       path: /Audio/Ambience/Objects/drain.ogg
-
 
 - type: entity
   parent: SinkEmpty

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Temperature.Components;
+using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.Systems;
 using Robust.Shared.Prototypes;
 

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Teleportation.Systems;
+using Content.Shared.Teleportation.Systems;
 
 namespace Content.Client.Teleportation;
 

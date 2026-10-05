@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseItemDestructible ]
   id: LogicEmptyCircuit
   name: empty circuit
   description: Something seems to be missing.
@@ -24,6 +24,8 @@
     receiveFrequencyId: BasicDevice
   - type: WirelessNetworkConnection
     range: 200
+  - type: SoundOnOverload
+  - type: SpawnOnOverload
 
 - type: entity
   parent: BaseLogicItem

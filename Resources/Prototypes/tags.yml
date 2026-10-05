@@ -150,6 +150,9 @@
   id: Bot # Targeting whitelist: ChameleonProjector
 
 - type: Tag
+  id: BotanyTool # For borg gardening module whitelisted module slot
+
+- type: Tag
   id: BotanyHatchet # Storage whitelist: ClothingBeltPlant. ItemMapper: ClothingBeltPlant
 
 - type: Tag
@@ -325,7 +328,7 @@
   id: CleanerGrenade # Storage whitelist: ClothingBeltJanitor. ItemMapper: ClothingBeltJanitor
 
 - type: Tag
-  id: ClothMade # SpecialDigestible: OrganMothStomach. Storage whitelist: FoodBoxCloth
+  id: ClothMade # SpecialDigestible: OrganMothStomach. Storage whitelist: FoodBoxCloth, BorgModuleCooking
 
 - type: Tag
   id: ClownMask # ConstructionGraph: Honker, BananaClownMask
@@ -362,6 +365,9 @@
 
 - type: Tag
   id: Cooked # MetamorphRecipe: FoodBurgerCheese, FoodBurgerChicken, FoodBurgerCrab, FoodBurgerDuck
+
+- type: Tag
+  id: Cookware # Storage whitelist: BorgModuleCooking
 
 - type: Tag
   id: CoordinatesDisk # Storage whitelist: DiskCase
@@ -457,6 +463,9 @@
 
 - type: Tag
   id: Diamond # CargoBounty: BountySalvageDiamond
+
+- type: Tag
+  id: Dinnerware # Storage whitelist: BorgModuleCooking
 
 - type: Tag
   id: Dice # Storage whitelist: BorgModuleService, DiceBag, BooksBag
@@ -566,6 +575,9 @@
   id: Figurine # Storage whitelist: BooksBag, BorgModuleService. CargoBounty: BountyFigurine
 
 - type: Tag
+  id: FinishedMeal # Storage whitelist: BorgModuleCooking
+
+- type: Tag
   id: FireAlarm # Used by AtmosAlarmableComponent for syncing devices.
 
 - type: Tag
@@ -620,7 +632,7 @@
   id: FreezerElectronics # ConstructionGraph: CrateFreezer, ClosetFreezer
 
 - type: Tag
-  id: Fruit # SpecialDigestible: OrganReptilianStomach. CargoBounty: BountyFruit
+  id: Fruit # SpecialDigestible: OrganReptilianStomach. CargoBounty: BountyFruit. StorageWhitelist: BorgModuleCooking
 
 ## G ##
 
@@ -757,9 +769,6 @@
   id: HiViz # CargoBounty: BountyHiVizVest
 
 - type: Tag
-  id: Hoe # Used by PlantHolderSystem to make tagged entities a pseudo-tool for weeding plants. TODO this sucks!
-
-- type: Tag
   id: HolofanProjector # Storage whitelist: BaseClothingBeltEngineering
 
 - type: Tag
@@ -814,6 +823,9 @@
 
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete # Basically used as a bool for InnateToolComponent in InnateToolSystem. TODO remove
+
+- type: Tag
+  id: Ingredient # StorageWhitelist: BorgModuleCooking
 
 - type: Tag
   id: InstantDoAfters # Used by SharedDoAfterSystem for tagged entities to skip DoAfters (aghost). TODO remove
@@ -996,6 +1008,9 @@
 
 - type: Tag
   id: Mouse # CargoBounty: BountyMouse
+
+- type: Tag
+  id: Muffin #  StorageWhitelist: BorgModuleCooking
 
 - type: Tag
   id: Multitool # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering. ConstructionGraph: LogicGate
@@ -1272,15 +1287,6 @@
   id: SecBeltEquip # Storage whitelist: ClothingBeltSecurity
 
 - type: Tag
-  id: SecurePlasmaWindoor # Used in ConstructionGraph "Windoor" to navigate between Windoor, PlasmaWindoor, and UraniumWindoor airlocks.
-
-- type: Tag
-  id: SecureUraniumWindoor # Used in ConstructionGraph "Windoor" to navigate between Windoor, PlasmaWindoor, and UraniumWindoor airlocks.
-
-- type: Tag
-  id: SecureWindoor # Used in ConstructionGraph "Windoor" to navigate between Windoor, PlasmaWindoor, and UraniumWindoor airlocks.
-
-- type: Tag
   id: SecurityHelmet # ConstructionGraph: HelmetJustice
 
 - type: Tag
@@ -1297,6 +1303,9 @@
 
 - type: Tag
   id: Shiv # CargoBounty: BountyShiv
+
+- type: Tag
+  id: SmeltingImmune # for entities that should not be deleted industrial smelter's MaterialReclaimer
 
 - type: Tag
   id: Sidearm # Storage whitelist: ClothingBeltSecurity, ClothingShoesMilitaryBase
@@ -1385,6 +1394,9 @@
 
 - type: Tag
   id: StunImmune # Tagged mob entity cannot gain the stunned status effect. Blacklist on StatusEffectStunned.
+
+- type: Tag
+  id: Stunbaton # Storage whitelist: ClothingBeltSecurity, WeaponCapacitorRecharger, TurboItemRecharger, WallWeaponCapacitorRecharger
 
 - type: Tag
   id: SubdermalImplant # Storage whitelist: BaseImplanter
@@ -1556,6 +1568,15 @@
   id: WhitelistChameleonPDA # Chameleon key for ChameleonPDA
 
 - type: Tag
+  id: Windoor # Used in ConstructionGraph "Windoor" to navigate between Windoor, PlasmaWindoor, and UraniumWindoor airlocks.
+
+- type: Tag
+  id: WindoorPlasma # Used in ConstructionGraph "Windoor" to navigate between Windoor, PlasmaWindoor, and UraniumWindoor airlocks.
+
+- type: Tag
+  id: WindoorUranium # Used in ConstructionGraph "Windoor" to navigate between Windoor, PlasmaWindoor, and UraniumWindoor airlocks.
+
+- type: Tag
   id: Window # Tagged entity is a window. Several systems and several targeting whitelists (XenoArtifactShatterWindows) care about this.
              # .cs: SharedNavMapSystem, ElectrocutionSystem, RevenantSystem, NoWindowsInTile
 
@@ -1579,6 +1600,9 @@
 - type: Tag
   id: WoodwindInstrument # even more like our atmos
                          # MachineBoard construction: DawInstrumentMachineCircuitboard
+
+- type: Tag
+  id: WrappedCube # StorageWhitelist: BorgModuleCooking
 
 - type: Tag
   id: Wrench # Storage whitelist: BaseClothingBeltEngineering, ClothingBeltJanitor, ClothingBeltMedical.
@@ -1612,6 +1636,21 @@
 
 - type: Tag
   id: XenoborgModuleStealth # Cyborg module category for evil stealth xenoborg
+
+- type: Tag
+  id: XenoborgModuleAccessBreaker # Used for module blacklisting
+
+- type: Tag
+  id: XenoborgModuleInvisibility # Used for module blacklisting
+
+- type: Tag
+  id: XenoborgModulePrimaryWeapon # Used for module blacklisting
+
+- type: Tag
+  id: XenoborgModuleSecondaryWeapon # Used for module blacklisting
+
+- type: Tag
+  id: XenoborgModuleWithSimpleOverlay # Used for module blacklisting
 
 ## Y ##
 ## Z ##
