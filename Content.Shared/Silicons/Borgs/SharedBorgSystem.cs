@@ -23,6 +23,7 @@ using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Silicons.Laws;
 using Content.Shared.Throwing;
 using Content.Shared.UserInterface;
 using Content.Shared.Wires;
@@ -66,6 +67,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
     [Dependency] private SharedAccessSystem _access = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedSiliconLawSystem _siliconLaw = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -96,10 +98,24 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgChassisComponent, GetCharacterUnrevivableIcEvent>(OnGetUnrevivableIC);
         SubscribeLocalEvent<BorgChassisComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
         SubscribeLocalEvent<BorgChassisComponent, PowerCellChangedEvent>(OnPowerCellChanged);
+        SubscribeLocalEvent<BorgChassisComponent, SiliconLawProviderChanged>(OnProviderChanged);
+        SubscribeLocalEvent<BorgChassisComponent, SiliconLawProviderUnlinked>(OnProviderUnlinked);
 
         SubscribeLocalEvent<BorgBrainComponent, MindAddedMessage>(OnBrainMindAdded);
         SubscribeLocalEvent<BorgBrainComponent, PointAttemptEvent>(OnBrainPointAttempt);
 
+    }
+
+    private void OnProviderChanged(Entity<BorgChassisComponent> ent, ref SiliconLawProviderChanged args)
+    {
+        ent.Comp.SelfProvider = args.NewProvider == ent.Owner;
+        Dirty(ent);
+    }
+
+    private void OnProviderUnlinked(Entity<BorgChassisComponent> ent, ref SiliconLawProviderUnlinked args)
+    {
+        ent.Comp.SelfProvider = false;
+        Dirty(ent);
     }
 
     private void OnTryGetIdentityShortInfo(Entity<BorgChassisComponent> chassis, ref TryGetIdentityShortInfoEvent args)
@@ -166,9 +182,17 @@ public abstract partial class SharedBorgSystem : EntitySystem
         if (args.Container != chassis.Comp.BrainContainer)
             return;
 
-        if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(args.Entity, out var mindId, out var mind))
+        if (HasComp<BorgBrainComponent>(args.Entity))
         {
-            _mind.TransferTo(mindId, chassis.Owner, mind: mind);
+            if (!chassis.Comp.SelfProvider)
+                _siliconLaw.LinkToProvider(chassis.Owner, args.Entity);
+            else
+                _siliconLaw.LinkToProvider(args.Entity, chassis.Owner);
+
+            if (_mind.TryGetMind(args.Entity, out var mindId, out var mind))
+            {
+                _mind.TransferTo(mindId, chassis.Owner, mind: mind);
+            }
         }
     }
 
@@ -182,9 +206,23 @@ public abstract partial class SharedBorgSystem : EntitySystem
         if (args.Container != chassis.Comp.BrainContainer)
             return;
 
-        if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(chassis.Owner, out var mindId, out var mind))
+        if (HasComp<BorgBrainComponent>(args.Entity))
         {
-            _mind.TransferTo(mindId, args.Entity, mind: mind);
+            if (!chassis.Comp.SelfProvider)
+            {
+                _siliconLaw.UnlinkFromProvider(chassis.Owner, args.Entity);
+                _siliconLaw.FetchLawset(chassis.Owner);
+            }
+            else
+            {
+                _siliconLaw.UnlinkFromProvider(args.Entity, chassis.Owner);
+                _siliconLaw.FetchLawset(args.Entity);
+            }
+
+            if (_mind.TryGetMind(chassis.Owner, out var mindId, out var mind))
+            {
+                _mind.TransferTo(mindId, args.Entity, mind: mind);
+            }
         }
     }
 

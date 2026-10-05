@@ -8,7 +8,8 @@ namespace Content.Shared.Silicons.Borgs;
 
 public abstract partial class SharedBorgSystem
 {
-    private static readonly EntProtoId SiliconBrainRole = "MindRoleSiliconBrain";
+    public static readonly EntProtoId SiliconBrainRole = "MindRoleSiliconBrain";
+    public static readonly EntProtoId SubvertedSiliconRole = "MindRoleSubvertedSilicon";
 
     public void InitializeMMI()
     {
@@ -37,10 +38,8 @@ public abstract partial class SharedBorgSystem
 
         if (_mind.TryGetMind(brain, out var mindId, out var mindComp))
         {
+            // Mindroles are handled inside of SiliconLawSystem with MindAdded and MindRemoved messages.
             _mind.TransferTo(mindId, ent.Owner, true, mind: mindComp);
-
-            if (!_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
-                _roles.MindAddRole(mindId, SiliconBrainRole, silent: true);
         }
 
         _appearance.SetData(ent.Owner, MMIVisuals.BrainPresent, true);
@@ -66,10 +65,8 @@ public abstract partial class SharedBorgSystem
 
         if (_mind.TryGetMind(ent, out var mindId, out var mindComp))
         {
+            // Mindroles are handled inside of SiliconLawSystem with MindAdded and MindRemoved messages.
             _mind.TransferTo(mindId, args.Entity, true, mind: mindComp);
-
-            if (_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
-                _roles.MindRemoveRole<SiliconBrainRoleComponent>(mindId);
         }
 
         _appearance.SetData(ent, MMIVisuals.BrainPresent, false);
