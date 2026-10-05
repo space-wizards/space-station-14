@@ -55,20 +55,19 @@ public sealed partial class MicrowaveMenu : FancyWindow
         _isBusy = isBusy;
         _currentCookTimeEnd = cookTimeEnd;
 
-        var hasIngredients = contents.Count > 0;
-        var controlsDisabled = _isBusy || !hasIngredients;
-
-        DisableCookingPanelOverlay.Visible = controlsDisabled;
-        StartButton.Disabled = controlsDisabled;
-        EjectButton.Disabled = controlsDisabled;
-
         IngredientGridHelper.PopulateIngredientsGrid(
             IngredientsGrid,
             _entityManager,
             contents,
             entity => OnEjectSolid?.Invoke(entity));
 
-        IngredientsEmptyLabel.Visible = IngredientsGrid.ChildCount == 0;
+        var hasIngredients = IngredientsGrid.ChildCount > 0;
+        var controlsDisabled = _isBusy || !hasIngredients;
+
+        DisableCookingPanelOverlay.Visible = _isBusy;
+        StartButton.Disabled = controlsDisabled;
+        EjectButton.Disabled = controlsDisabled;
+        IngredientsEmptyLabel.Visible = !hasIngredients;
         IngredientsBusyBackground.Visible = _isBusy && hasIngredients;
 
         if (_isBusy)
