@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
@@ -214,25 +215,12 @@ public sealed partial class StoreSystem
             component.RefundAllowed = false;
         }
 
-        //log dat shit.
-        var logImpact = LogImpact.Low;
-        var logExtraInfo = "";
-        if (component.ExpectedFaction?.Count > 0 && !_npcFaction.IsMemberOfAny(buyer, component.ExpectedFaction))
+        if (GetExtraLogInfo((uid, component), buyer, out var logExtraInfo, out var logImpact))
         {
-            logImpact = LogImpact.High;
-            logExtraInfo = ", but was not from an expected faction";
-
-            _mindShield.GetMindshieldStatus(buyer, out var isMindshielded, out _);
-            if (isMindshielded)
-            {
-                logImpact = LogImpact.Extreme;
-                logExtraInfo += " while also possessing a mindshield";
-            }
+            _admin.Add(LogType.StorePurchase,
+                logImpact.Value,
+                $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, ProtoMan)}\" from {ToPrettyString(uid)}{logExtraInfo}.");
         }
-
-        _admin.Add(LogType.StorePurchase,
-            logImpact,
-            $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, ProtoMan)}\" from {ToPrettyString(uid)}{logExtraInfo}.");
 
         listing.PurchaseAmount++; //track how many times something has been purchased
         if (msg.SoundSource != null && GetEntity(msg.SoundSource) != null)
@@ -297,17 +285,10 @@ public sealed partial class StoreSystem
             logExtraInfo += $" belonging to {ToPrettyString(component.AccountOwner):player}";
         }
 
-        if (component.ExpectedFaction?.Count > 0 && !_npcFaction.IsMemberOfAny(buyer, component.ExpectedFaction))
+        if (GetExtraLogInfo((uid, component), buyer, out var extraInfo, out var extraLogImpact))
         {
-            logImpact = LogImpact.High;
-            logExtraInfo += ", and was not from an expected faction";
-
-            _mindShield.GetMindshieldStatus(buyer, out var isMindshielded, out _);
-            if (isMindshielded)
-            {
-                logImpact = LogImpact.Extreme;
-                logExtraInfo += " while also possessing a mindshield";
-            }
+            logExtraInfo += extraInfo;
+            logImpact = extraLogImpact.Value;
         }
 
         _admin.Add(LogType.StoreWithdrawal,
@@ -316,6 +297,31 @@ public sealed partial class StoreSystem
 
         component.Balance[msg.Currency] -= msg.Amount;
         UpdateUserInterface(buyer, uid, component);
+    }
+
+    private bool GetExtraLogInfo(Entity<StoreComponent> ent,
+        EntityUid buyer,
+        [NotNullWhen(true)] out string? logExtraInfo,
+        [NotNullWhen(true)] out LogImpact? logImpact)
+    {
+        logExtraInfo = null;
+        logImpact = null;
+        if (ent.Comp.ExpectedFaction?.Count > 0 && !_npcFaction.IsMemberOfAny(buyer, ent.Comp.ExpectedFaction))
+        {
+            logImpact = LogImpact.High;
+            logExtraInfo = ", but was not from an expected faction";
+
+            _mindShield.GetMindshieldStatus(buyer, out var isMindshielded, out _);
+            if (isMindshielded)
+            {
+                logImpact = LogImpact.Extreme;
+                logExtraInfo += " while also possessing a mindshield";
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     private void OnRequestRefund(EntityUid uid, StoreComponent component, StoreRequestRefundMessage args)
