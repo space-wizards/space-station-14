@@ -6,6 +6,8 @@
   isSubfloor: true
   footstepSounds:
     collection: FootstepPlating
+  materialComposition:
+    Steel: 75 # 0.75 sheets; 0.5 for the lattice, 0.25 for the tile
   baseTurf: Lattice
 
 - type: tile
@@ -77,3 +79,5 @@
   heatCapacity: 10000
   mass: 200
   variants: 3
+  materialComposition:
+    Steel: 50 # 0.5 sheets = 1 rod

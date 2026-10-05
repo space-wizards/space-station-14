@@ -5,8 +5,12 @@
   - type: GameRule
     minPlayers: 5 # <5 is greenshift hours, buddy.
   - type: DynamicRule
-    startingBudgetMin: 200
+    minBudgetPerSecond: 0.05
+    maxBudgetPerSecond: 0.1
+    startingBudgetMin: 150
     startingBudgetMax: 350
+    minRuleInterval: 180 # 3 minutes
+    maxRuleInterval: 540 # 9 minutes
     table: !type:AllSelector
       children:
       # Roundstart Major Rules
@@ -46,6 +50,13 @@
           - !type:MaxRuleOccurenceCondition
           - !type:PlayerCountCondition
             min: 10
+        - id: Xenoborgs
+          weight: 5
+          conditions:
+          - !type:HasBudgetCondition
+          - !type:MaxRuleOccurenceCondition
+          - !type:PlayerCountCondition
+            min: 35
       # Roundstart Minor Rules
       - !type:GroupSelector
         conditions:
@@ -62,41 +73,100 @@
           conditions:
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
+
       # Midround rules
       - !type:GroupSelector
         conditions:
         - !type:RoundDurationCondition
-          min: 300 # minimum 5 minutes
+          min: 180 # minimum 3 minutes
         children:
+        - !type:GroupSelector
+          weight: 30
+          children: # copy paste of BasicCalmEventsTable because it's an AllSelector
+          - id: AnomalySpawn
+          - id: BluespaceArtifact
+          - id: BluespaceLocker
+          - id: BreakerFlip
+          - id: BureaucraticError
+          - id: ClericalError
+          - id: CockroachMigration
+          - id: GasLeak
+          - id: GreytideVirus
+          - id: IonStorm
+          - id: KudzuGrowth
+          - id: MassHallucinations
+          - id: MouseMigration
+          - id: PowerGridCheck
+          - id: RandomSentience
+          - id: SlimesSpawnHorde
+          - id: SolarFlare
+          - id: SnakeSpawnHorde
+          - id: SpiderClownSpawnHorde
+          - id: SpiderSpawnHorde
+          - id: VentClog
         - id: SleeperAgents
           weight: 15
           conditions:
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
           - !type:RoundDurationCondition
-            min: 900 # 15 minutes
+            min: 1200 # 20 minutes
+        - id: ClosetSkeleton
+          weight: 25
+          conditions:
+          - !type:HasBudgetCondition
+          - !type:MaxRuleOccurenceCondition
+          - !type:RoundDurationCondition
+            min: 1200 # 20 minutes
+        - id: KingRatMigration
+          weight: 25
+          conditions:
+          - !type:HasBudgetCondition
+          - !type:MaxRuleOccurenceCondition
+          - !type:PlayerCountCondition
+            min: 15
+          - !type:RoundDurationCondition
+            min: 1200 # 20 minutes
+        - id: ParadoxCloneSpawn
+          weight: 25
+          conditions:
+          - !type:HasBudgetCondition
+          - !type:MaxRuleOccurenceCondition
+          - !type:RoundDurationCondition
+            min: 1200 # 20 minutes
         - id: DragonSpawn
           weight: 15
           conditions:
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
           - !type:RoundDurationCondition
-            min: 900 # 15 minutes
+            min: 1800 # 30 minutes
         - id: NinjaSpawn
           weight: 20
           conditions:
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
           - !type:RoundDurationCondition
-            min: 900 # 15 minutes
-        - id: ParadoxCloneSpawn
+            min: 1800 # 30 minutes
+        - id: SpaceChangelingSpawn
           weight: 25
           conditions:
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
-            max: 2
+          - !type:PlayerCountCondition
+            min: 15
           - !type:RoundDurationCondition
-            min: 600 # 10 minutes
+            min: 1800 # 30 minutes
+        - !type:NestedSelector
+          tableId: DerelictBorgEventTable
+          weight: 25
+          conditions:
+          - !type:HasBudgetCondition
+          - !type:MaxRuleOccurenceCondition
+          - !type:PlayerCountCondition
+            min: 20
+          - !type:RoundDurationCondition
+            min: 1800 # 30 minutes
         - id: ZombieOutbreak
           weight: 2.5
           conditions:
@@ -107,11 +177,21 @@
           - !type:RoundDurationCondition
             min: 2700 # 45 minutes
         - id: LoneOpsSpawn
-          weight: 5
+          weight: 15
           conditions:
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
           - !type:PlayerCountCondition
             min: 20
           - !type:RoundDurationCondition
-            min: 2100 # 35 minutes
+            min: 2700 # 45 minutes
+        - id: WizardSpawn
+          weight: 10
+          conditions:
+          - !type:HasBudgetCondition
+          - !type:MaxRuleOccurenceCondition
+          - !type:PlayerCountCondition
+            min: 20
+          - !type:RoundDurationCondition
+            min: 2700 # 45 minutes
+

@@ -159,7 +159,7 @@
   components:
   - type: Microwave
     cookTimeMultiplier: 0.5
-    baseHeatMultiplier: 200
+    objectHeatMultiplier: 200
     canMicrowaveIdsSafely: false
     explosionChance: 0.3
   - type: Sprite

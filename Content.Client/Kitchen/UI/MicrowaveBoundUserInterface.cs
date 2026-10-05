@@ -1,10 +1,15 @@
 using Content.Shared.Kitchen.Components;
+using Content.Shared.Kitchen.EntitySystems;
+using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Kitchen.UI;
 
-public sealed class MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+[UsedImplicitly]
+public sealed partial class MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
+    [Dependency] private MicrowaveSystem _microwave = default!;
+
     [ViewVariables]
     private MicrowaveMenu? _menu;
 
@@ -20,20 +25,25 @@ public sealed class MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : B
         _menu.OnEjectAll += () =>
             SendPredictedMessage(new MicrowaveEjectMessage());
 
-        _menu.OnEjectSolid += netEntity =>
-            SendPredictedMessage(new MicrowaveEjectSolidIndexedMessage(netEntity));
+        _menu.OnEjectSolid += entity =>
+            SendPredictedMessage(new MicrowaveEjectSolidIndexedMessage(EntMan.GetNetEntity(entity)));
 
         _menu.OnCookTimeSelected += (buttonIndex, cookTime) =>
             SendPredictedMessage(new MicrowaveSelectCookTimeMessage(buttonIndex, cookTime));
+
+        Update();
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    public override void Update()
     {
-        base.UpdateState(state);
+        base.Update();
 
-        if (state is not MicrowaveUpdateUserInterfaceState cState || _menu == null)
+        if (_menu == null || !EntMan.TryGetComponent<MicrowaveComponent>(Owner, out var comp))
             return;
 
-        _menu.UpdateUi(cState);
+        var contents = _microwave.GetMicrowaveContents(Owner);
+        var isBusy = EntMan.TryGetComponent<ActiveMicrowaveComponent>(Owner, out var active);
+        _menu.UpdateUi(contents, isBusy, active?.CookTimeEnd ?? TimeSpan.Zero,
+            comp.CurrentCookTimerTime, comp.CurrentCookTimeButtonIndex);
     }
 }

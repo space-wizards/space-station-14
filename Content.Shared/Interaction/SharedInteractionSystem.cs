@@ -131,8 +131,6 @@ namespace Content.Shared.Interaction
                     CCVars.InteractionRateLimitAnnounceAdminsDelay,
                     RateLimitAlertAdmins)
             );
-
-            InitializeBlocking();
         }
 
         private void RateLimitAlertAdmins(ICommonSession session)
@@ -167,8 +165,11 @@ namespace Content.Shared.Interaction
 
             var range = _ui.GetUiRange(ev.Target, ev.UiKey);
 
-            // As long as range>0, the UI frame updates should have auto-closed the UI if it is out of range.
-            DebugTools.Assert(range <= 0 || UiRangeCheck(ev.Actor, ev.Target, range));
+            if (range > 0 && !UiRangeCheck(ev.Actor, ev.Target, range))
+            {
+                ev.Cancel();
+                return;
+            }
 
             if (range <= 0 && !IsAccessible(ev.Actor, ev.Target))
             {
