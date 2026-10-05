@@ -174,6 +174,18 @@ public sealed partial class MarkingManager
                 {
                     markings[i] = new Marking(marking.ID, existingColors.Take(marking.Sprites.Count));
                 }
+
+                // Ensure the colors are clamped properly
+                if (marking.Strategy == null)
+                    continue;
+
+                var clampedColors = new List<Color>();
+                foreach (var color in markings[i].MarkingColors)
+                {
+                    clampedColors.Add(marking.Strategy.ClosestSkinColor(color));
+                }
+
+                markings[i] =  new Marking(marking.ID, clampedColors);
             }
         }
     }

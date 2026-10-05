@@ -1,6 +1,7 @@
 # Snout Markings
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpSnout
   bodyPart: Snout
   groupWhitelist: [ Vulpkanin ]
@@ -13,6 +14,7 @@
         !type:SkinColoring
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpSnoutNose
   bodyPart: SnoutCover
   groupWhitelist: [ Vulpkanin ]
@@ -21,6 +23,7 @@
       state: snout-nose
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpSnoutVulpine
   bodyPart: SnoutCover
   groupWhitelist: [ Vulpkanin ]
@@ -29,6 +32,7 @@
       state: vulpine
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpSnoutVulpineLines
   bodyPart: SnoutCover
   groupWhitelist: [ Vulpkanin ]
@@ -37,6 +41,7 @@
       state: vulpine-lines
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpSnoutBlaze
   bodyPart: SnoutCover
   groupWhitelist: [ Vulpkanin ]
@@ -45,6 +50,7 @@
       state: blaze
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpSnoutMask
   bodyPart: SnoutCover
   groupWhitelist: [ Vulpkanin ]
@@ -53,6 +59,7 @@
       state: mask
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpSnoutTop
   bodyPart: SnoutCover
   groupWhitelist: [ Vulpkanin ]
@@ -61,6 +68,7 @@
       state: snout-top
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpSnoutPatch
   bodyPart: SnoutCover
   groupWhitelist: [ Vulpkanin ]

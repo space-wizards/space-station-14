@@ -1,4 +1,5 @@
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpClawsHandLeft
   bodyPart: LHand
   groupWhitelist: [ Vulpkanin ]
@@ -7,6 +8,7 @@
       state: claws_l_hand
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpClawsHandRight
   bodyPart: RHand
   groupWhitelist: [ Vulpkanin ]
@@ -15,6 +17,7 @@
       state: claws_r_hand
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpClawsFootLeft
   bodyPart: LFoot
   groupWhitelist: [ Vulpkanin ]
@@ -23,6 +26,7 @@
       state: claws_l_foot
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpClawsFootRight
   bodyPart: RFoot
   groupWhitelist: [ Vulpkanin ]
@@ -34,6 +38,7 @@
 
 ## Left Side
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsCrestLegLeft
   bodyPart: LLeg
   groupWhitelist: [ Vulpkanin ]
@@ -42,6 +47,7 @@
       state: crest-leg-l
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsCrestArmLeft
   bodyPart: LArm
   groupWhitelist: [ Vulpkanin ]
@@ -50,6 +56,7 @@
       state: crest-arm-l
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsCrestFootLeft
   bodyPart: LFoot
   groupWhitelist: [ Vulpkanin ]
@@ -58,6 +65,7 @@
       state: crest-foot-l
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsCrestHandLeft
   bodyPart: LHand
   groupWhitelist: [ Vulpkanin ]
@@ -68,6 +76,7 @@
 ## Right Side
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsCrestLegRight
   bodyPart: RLeg
   groupWhitelist: [ Vulpkanin ]
@@ -76,6 +85,7 @@
       state: crest-leg-r
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsCrestArmRight
   bodyPart: RArm
   groupWhitelist: [ Vulpkanin ]
@@ -84,6 +94,7 @@
       state: crest-arm-r
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsCrestFootRight
   bodyPart: RFoot
   groupWhitelist: [ Vulpkanin ]
@@ -92,6 +103,7 @@
       state: crest-foot-r
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsCrestHandRight
   bodyPart: RHand
   groupWhitelist: [ Vulpkanin ]
@@ -104,6 +116,7 @@
 ## Left Side
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsFadeLegLeft
   bodyPart: LLeg
   groupWhitelist: [ Vulpkanin ]
@@ -112,6 +125,7 @@
       state: points_fade-leg-l
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsFadeArmLeft
   bodyPart: LArm
   groupWhitelist: [ Vulpkanin ]
@@ -120,6 +134,7 @@
       state: points_fade-arm-l
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsFadeFootLeft
   bodyPart: LFoot
   groupWhitelist: [ Vulpkanin ]
@@ -128,6 +143,7 @@
       state: points_fade-foot-l
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsFadeHandLeft
   bodyPart: LHand
   groupWhitelist: [ Vulpkanin ]
@@ -138,6 +154,7 @@
 ## Right Side
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsFadeLegRight
   bodyPart: RLeg
   groupWhitelist: [ Vulpkanin ]
@@ -146,6 +163,7 @@
       state: points_fade-leg-r
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsFadeArmRight
   bodyPart: RArm
   groupWhitelist: [ Vulpkanin ]
@@ -154,6 +172,7 @@
       state: points_fade-arm-r
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsFadeFootRight
   bodyPart: RFoot
   groupWhitelist: [ Vulpkanin ]
@@ -162,6 +181,7 @@
       state: points_fade-foot-r
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsFadeHandRight
   bodyPart: RHand
   groupWhitelist: [ Vulpkanin ]
@@ -174,6 +194,7 @@
 ## Left Side
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsSharpLegLeft
   bodyPart: LLeg
   groupWhitelist: [ Vulpkanin ]
@@ -182,6 +203,7 @@
       state: points_sharp-leg-l
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsSharpArmLeft
   bodyPart: LArm
   groupWhitelist: [ Vulpkanin ]
@@ -190,6 +212,7 @@
       state: points_sharp-arm-l
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsSharpLongArmLeft
   bodyPart: LArm
   groupWhitelist: [ Vulpkanin ]
@@ -198,6 +221,7 @@
       state: points_sharp-arm-long-l
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsSharpFootLeft
   bodyPart: LFoot
   groupWhitelist: [ Vulpkanin ]
@@ -206,6 +230,7 @@
       state: points_sharp-foot-l
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsSharpHandLeft
   bodyPart: LHand
   groupWhitelist: [ Vulpkanin ]
@@ -216,6 +241,7 @@
 ## Right Side
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsSharpLegRight
   bodyPart: RLeg
   groupWhitelist: [ Vulpkanin ]
@@ -224,6 +250,7 @@
       state: points_sharp-leg-r
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsSharpArmRight
   bodyPart: RArm
   groupWhitelist: [ Vulpkanin ]
@@ -232,6 +259,7 @@
       state: points_sharp-arm-r
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsSharpLongArmRight
   bodyPart: RArm
   groupWhitelist: [ Vulpkanin ]
@@ -240,6 +268,7 @@
       state: points_sharp-arm-long-r
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsSharpFootRight
   bodyPart: RFoot
   groupWhitelist: [ Vulpkanin ]
@@ -248,6 +277,7 @@
       state: points_sharp-foot-r
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpPointsSharpHandRight
   bodyPart: RHand
   groupWhitelist: [ Vulpkanin ]
