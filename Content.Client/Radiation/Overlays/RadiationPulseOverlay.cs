@@ -98,7 +98,7 @@ namespace Content.Client.Radiation.Overlays
                             (
                                 _baseShader.Duplicate(),
                                 new RadiationShaderInstance(
-                                    _transform.GetMapCoordinates(pulseEntity),
+                                    _transform.GetRenderMapCoordinates(pulseEntity),
                                     pulse.VisualRange,
                                     pulse.StartTime,
                                     pulse.VisualDuration
@@ -116,7 +116,7 @@ namespace Content.Client.Radiation.Overlays
                     _entityManager.TryGetComponent(pulseEntity, out RadiationPulseComponent? pulse))
                 {
                     var shaderInstance = _pulses[pulseEntity];
-                    shaderInstance.instance.CurrentMapCoords = _transform.GetMapCoordinates(pulseEntity);
+                    shaderInstance.instance.CurrentMapCoords = _transform.GetRenderMapCoordinates(pulseEntity);
                     shaderInstance.instance.Range = pulse.VisualRange;
                 }
                 else
