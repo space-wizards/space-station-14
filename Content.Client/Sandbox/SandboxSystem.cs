@@ -106,10 +106,9 @@ namespace Content.Client.Sandbox
                 // Get the rotation of the object to copy relative to its grid (if it exists) or the map.
                 var xform = Transform(uid);
                 var targetRotation = _transform.GetWorldRotation(xform);
-                if (TryComp(xform.GridUid, out TransformComponent? gridXform))
-                {
+                if (TryComp<TransformComponent>(xform.GridUid, out var gridXform))
                     targetRotation -= gridXform.LocalRotation;
-                }
+
                 _placement.Direction = targetRotation.GetCardinalDir();
 
                 _placement.BeginPlacing(new()
