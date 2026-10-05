@@ -4,7 +4,6 @@ using Content.Server.Communications;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Nuke;
 using Content.Server.NukeOps;
-using Content.Server.Pinpointer;
 using Content.Server.Popups;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Events;

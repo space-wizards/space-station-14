@@ -1,4 +1,3 @@
-using Content.Server.Pinpointer;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Radio.Components;

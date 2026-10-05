@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.Pinpointer;
 using Content.Server.StationEvents.Components;
 using Content.Server.VentHorde.Components;
 using Content.Server.VentHorde.Systems;

@@ -87,6 +87,152 @@ public abstract partial class NavMapSystem : EntitySystem
         return true;
     }
 
+    protected void UpdateBeaconEnabledVisuals(Entity<NavMapBeaconComponent> ent)
+    {
+        _appearance.SetData(ent, NavMapBeaconVisuals.Enabled, ent.Comp.Enabled && Transform(ent).Anchored);
+    }
+
+    #region API
+
+    /// <summary>
+    /// Sets the beacon's Enabled field and refreshes the grid.
+    /// </summary>
+    [PublicAPI]
+    public void SetBeaconEnabled(Entity<NavMapBeaconComponent?> ent, bool enabled)
+    {
+        if (!Resolve(ent, ref ent.Comp) || ent.Comp.Enabled == enabled)
+            return;
+
+        ent.Comp.Enabled = enabled;
+        Dirty(ent);
+        UpdateBeaconEnabledVisuals((ent.Owner, ent.Comp));
+
+    }
+
+    /// <summary>
+    /// Toggles the beacon's Enabled field and refreshes the grid.
+    /// </summary>
+    [PublicAPI]
+    public void ToggleBeacon(Entity<NavMapBeaconComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        SetBeaconEnabled(ent, !ent.Comp.Enabled);
+    }
+
+    /// <summary>
+    /// Returns a string describing the rough distance and direction
+    /// to the position of <paramref name="ent"/> from the nearest beacon.
+    /// </summary>
+    [PublicAPI]
+    public string GetNearestBeaconString(Entity<TransformComponent?> ent, bool onlyName = false)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return Loc.GetString("nav-beacon-pos-no-beacons");
+
+        return GetNearestBeaconString(_transform.GetMapCoordinates(ent, ent.Comp), onlyName);
+    }
+
+    /// <summary>
+    /// Returns a string describing the rough distance and direction
+    /// to <paramref name="coordinates"/> from the nearest beacon.
+    /// </summary>
+    [PublicAPI]
+    public string GetNearestBeaconString(MapCoordinates coordinates, bool onlyName = false)
+    {
+        if (!TryGetNearestBeacon(coordinates, out var beacon, out var pos))
+            return Loc.GetString("nav-beacon-pos-no-beacons");
+
+        if (onlyName)
+            return beacon.Value.Comp.Text!;
+
+        var gridOffset = Angle.Zero;
+        if (MapSystem.TryFindGridAt(pos.Value, out var grid, out _))
+            gridOffset = Transform(grid).LocalRotation;
+
+        // get the angle between the two positions, adjusted for the grid rotation so that
+        // we properly preserve north in relation to the grid.
+        var offset = coordinates.Position - pos.Value.Position;
+        var dir = offset.ToWorldAngle();
+        var adjustedDir = (dir - gridOffset).GetDir();
+
+        var length = offset.Length();
+        if (length < CloseDistance)
+        {
+            return Loc.GetString("nav-beacon-pos-format",
+                ("color", beacon.Value.Comp.Color),
+                ("marker", beacon.Value.Comp.Text!));
+        }
+
+        var modifier = length > FarDistance
+            ? Loc.GetString("nav-beacon-pos-format-direction-mod-far")
+            : string.Empty;
+
+        // we can null suppress the text being null because TryGetNearestVisibleStationBeacon always gives us a beacon with not-null text.
+        return Loc.GetString("nav-beacon-pos-format-direction",
+            ("modifier", modifier),
+            ("direction", ContentLocalizationManager.FormatDirection(adjustedDir).ToLowerInvariant()),
+            ("color", beacon.Value.Comp.Color),
+            ("marker", beacon.Value.Comp.Text!));
+    }
+
+    /// <summary>
+    /// For a given position, tries to find the nearest configurable beacon that is marked as visible.
+    /// This is used for things like announcements where you want to find the closest "landmark" to something.
+    /// </summary>
+    [PublicAPI]
+    public bool TryGetNearestBeacon(Entity<TransformComponent?> ent,
+        [NotNullWhen(true)] out Entity<NavMapBeaconComponent>? beacon,
+        [NotNullWhen(true)] out MapCoordinates? beaconCoords)
+    {
+        beacon = null;
+        beaconCoords = null;
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        return TryGetNearestBeacon(_transform.GetMapCoordinates(ent, ent.Comp), out beacon, out beaconCoords);
+    }
+
+    /// <summary>
+    /// For a given position, tries to find the nearest configurable beacon that is marked as visible.
+    /// This is used for things like announcements where you want to find the closest "landmark" to something.
+    /// </summary>
+    [PublicAPI]
+    public bool TryGetNearestBeacon(MapCoordinates coordinates,
+        [NotNullWhen(true)] out Entity<NavMapBeaconComponent>? beacon,
+        [NotNullWhen(true)] out MapCoordinates? beaconCoords)
+    {
+        beacon = null;
+        beaconCoords = null;
+        var minDistance = float.PositiveInfinity;
+
+        var query = EntityQueryEnumerator<ConfigurableNavMapBeaconComponent, NavMapBeaconComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out _, out var navBeacon, out var xform))
+        {
+            if (!navBeacon.Enabled)
+                continue;
+
+            if (navBeacon.Text == null)
+                continue;
+
+            if (coordinates.MapId != xform.MapID)
+                continue;
+
+            var coords = _transform.GetWorldPosition(xform);
+            var distanceSquared = (coordinates.Position - coords).LengthSquared();
+            if (!float.IsInfinity(minDistance) && distanceSquared >= minDistance)
+                continue;
+
+            minDistance = distanceSquared;
+            beacon = (uid, navBeacon);
+            beaconCoords = new MapCoordinates(coords, xform.MapID);
+        }
+
+        return beacon != null;
+    }
+
+    [PublicAPI]
     public void AddOrUpdateNavMapRegion(EntityUid uid, NavMapComponent component, NetEntity regionOwner, NavMapRegionProperties regionProperties)
     {
         // Check if a new region has been added or an existing one has been altered
@@ -101,6 +247,7 @@ public abstract partial class NavMapSystem : EntitySystem
         }
     }
 
+    [PublicAPI]
     public void RemoveNavMapRegion(EntityUid uid, NavMapComponent component, NetEntity regionOwner)
     {
         bool regionOwnerRemoved = component.RegionProperties.Remove(regionOwner) | component.RegionOverlays.Remove(regionOwner);
@@ -123,6 +270,7 @@ public abstract partial class NavMapSystem : EntitySystem
         }
     }
 
+    [PublicAPI]
     public Dictionary<NetEntity, NavMapRegionOverlay> GetNavMapRegionOverlays(EntityUid uid, NavMapComponent component, Enum uiKey)
     {
         var regionOverlays = new Dictionary<NetEntity, NavMapRegionOverlay>();
@@ -137,6 +285,8 @@ public abstract partial class NavMapSystem : EntitySystem
 
         return regionOverlays;
     }
+
+    #endregion
 
     #region: Event handling
 
@@ -279,145 +429,4 @@ public abstract partial class NavMapSystem : EntitySystem
     }
 
     #endregion
-
-    #region API
-    /// <summary>
-    /// Sets the beacon's Enabled field and refreshes the grid.
-    /// </summary>
-    public void SetBeaconEnabled(EntityUid uid, bool enabled, NavMapBeaconComponent? comp = null)
-    {
-        if (!Resolve(uid, ref comp) || comp.Enabled == enabled)
-            return;
-
-        comp.Enabled = enabled;
-        Dirty(uid, comp);
-        UpdateBeaconEnabledVisuals((uid, comp));
-    }
-
-    /// <summary>
-    /// Toggles the beacon's Enabled field and refreshes the grid.
-    /// </summary>
-    public void ToggleBeacon(EntityUid uid, NavMapBeaconComponent? comp = null)
-    {
-        if (!Resolve(uid, ref comp))
-            return;
-
-        SetBeaconEnabled(uid, !comp.Enabled, comp);
-    }
-
-    /// <summary>
-    /// Returns a string describing the rough distance and direction
-    /// to the position of <paramref name="ent"/> from the nearest beacon.
-    /// </summary>
-    [PublicAPI]
-    public string GetNearestBeaconString(Entity<TransformComponent?> ent, bool onlyName = false)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return Loc.GetString("nav-beacon-pos-no-beacons");
-
-        return GetNearestBeaconString(_transform.GetMapCoordinates(ent, ent.Comp), onlyName);
-    }
-
-    /// <summary>
-    /// Returns a string describing the rough distance and direction
-    /// to <paramref name="coordinates"/> from the nearest beacon.
-    /// </summary>
-
-    public string GetNearestBeaconString(MapCoordinates coordinates, bool onlyName = false)
-    {
-        if (!TryGetNearestBeacon(coordinates, out var beacon, out var pos))
-            return Loc.GetString("nav-beacon-pos-no-beacons");
-
-        if (onlyName)
-            return beacon.Value.Comp.Text!;
-
-        var gridOffset = Angle.Zero;
-        if (MapSystem.TryFindGridAt(pos.Value, out var grid, out _))
-            gridOffset = Transform(grid).LocalRotation;
-
-        // get the angle between the two positions, adjusted for the grid rotation so that
-        // we properly preserve north in relation to the grid.
-        var offset = coordinates.Position - pos.Value.Position;
-        var dir = offset.ToWorldAngle();
-        var adjustedDir = (dir - gridOffset).GetDir();
-
-        var length = offset.Length();
-        if (length < CloseDistance)
-        {
-            return Loc.GetString("nav-beacon-pos-format",
-                ("color", beacon.Value.Comp.Color),
-                ("marker", beacon.Value.Comp.Text!));
-        }
-
-        var modifier = length > FarDistance
-            ? Loc.GetString("nav-beacon-pos-format-direction-mod-far")
-            : string.Empty;
-
-        // we can null suppress the text being null because TryGetNearestVisibleStationBeacon always gives us a beacon with not-null text.
-        return Loc.GetString("nav-beacon-pos-format-direction",
-            ("modifier", modifier),
-            ("direction", ContentLocalizationManager.FormatDirection(adjustedDir).ToLowerInvariant()),
-            ("color", beacon.Value.Comp.Color),
-            ("marker", beacon.Value.Comp.Text!));
-    }
-
-        /// <summary>
-    /// For a given position, tries to find the nearest configurable beacon that is marked as visible.
-    /// This is used for things like announcements where you want to find the closest "landmark" to something.
-    /// </summary>
-    [PublicAPI]
-    public bool TryGetNearestBeacon(Entity<TransformComponent?> ent,
-        [NotNullWhen(true)] out Entity<NavMapBeaconComponent>? beacon,
-        [NotNullWhen(true)] out MapCoordinates? beaconCoords)
-    {
-        beacon = null;
-        beaconCoords = null;
-        if (!Resolve(ent, ref ent.Comp))
-            return false;
-
-        return TryGetNearestBeacon(_transform.GetMapCoordinates(ent, ent.Comp), out beacon, out beaconCoords);
-    }
-
-    /// <summary>
-    /// For a given position, tries to find the nearest configurable beacon that is marked as visible.
-    /// This is used for things like announcements where you want to find the closest "landmark" to something.
-    /// </summary>
-    public bool TryGetNearestBeacon(MapCoordinates coordinates,
-        [NotNullWhen(true)] out Entity<NavMapBeaconComponent>? beacon,
-        [NotNullWhen(true)] out MapCoordinates? beaconCoords)
-    {
-        beacon = null;
-        beaconCoords = null;
-        var minDistance = float.PositiveInfinity;
-
-        var query = EntityQueryEnumerator<ConfigurableNavMapBeaconComponent, NavMapBeaconComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out _, out var navBeacon, out var xform))
-        {
-            if (!navBeacon.Enabled)
-                continue;
-
-            if (navBeacon.Text == null)
-                continue;
-
-            if (coordinates.MapId != xform.MapID)
-                continue;
-
-            var coords = _transform.GetWorldPosition(xform);
-            var distanceSquared = (coordinates.Position - coords).LengthSquared();
-            if (!float.IsInfinity(minDistance) && distanceSquared >= minDistance)
-                continue;
-
-            minDistance = distanceSquared;
-            beacon = (uid, navBeacon);
-            beaconCoords = new MapCoordinates(coords, xform.MapID);
-        }
-
-        return beacon != null;
-    }
-    #endregion
-
-    protected void UpdateBeaconEnabledVisuals(Entity<NavMapBeaconComponent> ent)
-    {
-        _appearance.SetData(ent, NavMapBeaconVisuals.Enabled, ent.Comp.Enabled && Transform(ent).Anchored);
-    }
 }
