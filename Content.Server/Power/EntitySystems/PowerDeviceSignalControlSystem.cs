@@ -39,10 +39,17 @@ public sealed partial class PowerDeviceSignalControlSystem : EntitySystem
         if (!TryComp<ApcComponent>(ent, out var apc))
             return;
 
+        var attemptEv = new ApcToggleMainBreakerAttemptEvent();
+        RaiseLocalEvent(ent, ref attemptEv);
+        if (attemptEv.Cancelled)
+        {
+            LogSignal(ent, args.Trigger, "main breaker", "blocked");
+            return;
+        }
+
         _apc.ApcToggleBreaker(ent, apc);
 
-        var state = apc.MainBreakerEnabled ? "enabled" : "disabled";
-        LogSignal(ent, args.Trigger, $"main breaker {state}");
+        LogSignal(ent, args.Trigger, "main breaker", apc.MainBreakerEnabled);
     }
 
     private void OnBatteryMapInit(Entity<BatterySignalControlComponent> ent, ref MapInitEvent args)
@@ -58,18 +65,23 @@ public sealed partial class PowerDeviceSignalControlSystem : EntitySystem
         if (args.Port == ent.Comp.ToggleInputPort)
         {
             battery.CanCharge = !battery.CanCharge;
-            LogSignal(ent, args.Trigger, $"input breaker {(battery.CanCharge ? "enabled" : "disabled")}");
+            LogSignal(ent, args.Trigger, "input breaker", battery.CanCharge);
         }
         else if (args.Port == ent.Comp.ToggleOutputPort)
         {
             battery.CanDischarge = !battery.CanDischarge;
-            LogSignal(ent, args.Trigger, $"output breaker {(battery.CanDischarge ? "enabled" : "disabled")}");
+            LogSignal(ent, args.Trigger, "output breaker", battery.CanDischarge);
         }
     }
 
-    private void LogSignal(EntityUid uid, EntityUid? trigger, string change)
+    private void LogSignal(EntityUid uid, EntityUid? trigger, string breaker, bool enabled)
+    {
+        LogSignal(uid, trigger, breaker, enabled ? "enabled" : "disabled");
+    }
+
+    private void LogSignal(EntityUid uid, EntityUid? trigger, string breaker, string state)
     {
         _adminLogger.Add(LogType.DeviceLinking, LogImpact.Medium,
-            $"{ToPrettyString(trigger):source} set the {change:change} of {ToPrettyString(uid):entity} via signal.");
+            $"{ToPrettyString(trigger):source} toggled the {breaker:breaker} of {ToPrettyString(uid):entity} via signal, result: {state:state}.");
     }
 }
