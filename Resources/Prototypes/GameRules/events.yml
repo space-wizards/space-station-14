@@ -605,6 +605,7 @@
   id: HauntedClosets
   components:
   - type: HauntedClosetRule
+    closetFraction: 1.0
   - type: StationEvent
     weight: 8
     reoccurrenceDelay: 20

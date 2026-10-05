@@ -1,3 +1,5 @@
+using Content.Shared.EntityTable.EntitySelectors;
+
 namespace Content.Server.GameTicking.Rules.Components;
 
 /// <summary>
@@ -11,4 +13,16 @@ public sealed partial class HauntedClosetComponent : Component
     /// </summary>
     [DataField]
     public float CloseChance = 0.01f;
+
+    /// <summary>
+    /// Loot that will be placed
+    /// </summary>
+    [DataField]
+    public EntityTableSelector? FillLoot = null;
+
+    /// <summary>
+    /// There needs to be at most FillEntityMax entities in the container for it to be refilled when closing
+    /// </summary>
+    [DataField]
+    public int FillEntityMax = 2;
 }

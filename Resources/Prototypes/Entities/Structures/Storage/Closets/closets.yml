@@ -161,6 +161,8 @@
     stateDoorOpen: generic_open
     stateDoorClosed: generic_door
   - type: HauntedCloset
+    fillLoot: !type:NestedSelector
+      tableId: MaintenanceLockerLoot
 
 - type: entity
   parent: ClosetMaintenance
