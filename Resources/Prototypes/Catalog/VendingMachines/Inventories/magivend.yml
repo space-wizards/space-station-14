@@ -2,7 +2,7 @@
   id: MagiVendInventory
   categories:
   - name: vending-machine-category-clothing
-    icon: { entity: ClothingHeadHatWizard }
+    icon: { entity: ClothingHeadHatWizardBlue }
     startingInventory:
       ClothingHeadHatWizardAbyss: 3
       ClothingOuterWizardAbyss: 3
