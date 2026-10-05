@@ -197,9 +197,9 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
             _airAlarm.SetMode(airAlarm.Item1, string.Empty, RobustRandom.Pick(AirAlarmModes), false, airAlarm.Item2);
         }
 
-        var chance = component.ChangeCriminalRecordChance * component.AffectedStationRecords.Count;
+        var totalChangeCriminalRecordChance = component.ChangeCriminalRecordChance * component.AffectedStationRecords.Count;
         if (component.AffectedStationRecords.Count >= 1
-            && RobustRandom.Prob(chance))
+            && RobustRandom.Prob(totalChangeCriminalRecordChance))
         {
             (StationRecordKey Key, GeneralStationRecord General, CriminalRecord Criminal) target =
                 RobustRandom.Pick(component.AffectedStationRecords);
