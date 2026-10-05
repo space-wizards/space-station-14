@@ -56,4 +56,4 @@
         Slash: 16 # a load of damage
         Piercing: 12
         Caustic: 10
-        Structural: 160 # break down walls absurdly easily
+        Structural: 30 # stronk, better than a fireaxe

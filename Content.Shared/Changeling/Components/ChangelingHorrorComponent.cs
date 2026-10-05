@@ -45,11 +45,14 @@ public sealed partial class ChangelingHorrorComponent : Component
     public TimeSpan TimeBudget = TimeSpan.Zero;
 
     /// <summary>
-    ///
+    /// Alert that is displayed to show the amount of time remaining in the horror form
     /// </summary>
     [DataField]
     public ProtoId<AlertPrototype> TimeAlert = "ChangelingHorrorTime";
 
+    /// <summary>
+    /// Screech that is invoked when entering the horror form
+    /// </summary>
     [DataField]
     public EntProtoId SpawnScreechVfx = "EffectScreechChangelingHorrorSpawn";
 
@@ -90,8 +93,9 @@ public sealed partial class ChangelingHorrorComponent : Component
     public EntityUid? LastIdentity;
 
     /// <summary>
-    /// Tags that will be added on transformation, then removed when transforming back
+    /// Amount of time you'll get stunned and knocked down if you run out of points
     /// </summary>
     [DataField]
-    public ProtoId<TagPrototype>[]? TagsToAdd;
+    public TimeSpan StunTime = TimeSpan.FromSeconds(10);
+
 }

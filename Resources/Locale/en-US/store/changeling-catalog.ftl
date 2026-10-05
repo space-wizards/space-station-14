@@ -47,4 +47,4 @@ changeling-catalog-night-vision-desc = You modify your photoreceptors and height
 
 
 changeling-catalog-horror-form-name = Horror Form
-changeling-catalog-horror-form-desc = We reveal our true nature, transforming into a juggernaut of maw and flesh. However, this form is exhausting and cannot be maintained forever. Keeping it up burns DNA points.
+changeling-catalog-horror-form-desc = Turns you into a nigh-unstoppable juggernaut. Using this ability is exhausting, as it burns through DNA points. When running out of DNA, you will be forced out of this form and stunned. Needs 3 devours to be purchased.

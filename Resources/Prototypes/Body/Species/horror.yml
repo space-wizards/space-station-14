@@ -117,7 +117,7 @@
       types:
         Slash: 16 # a load of damage
         Piercing: 12
-        Structural: 160 # break down walls absurdly easily
+        Structural: 30 # stronk, better than a fireaxe
   - type: Tag
     tags:
     - DoorBumpOpener
@@ -139,8 +139,6 @@
   - type: ChangelingHorror # marks them as a changeling horror
     spawnAnnouncementSound:
       path: /Audio/Effects/Screech/changeling_screech_strong.ogg
-    tagsToAdd: # because copying tags is icky
-    - StunImmune
     spawnEffects:
     - !type:EvenHealthChange # why not
       damage:

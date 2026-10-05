@@ -12,7 +12,6 @@ using Content.Shared.Screech;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.Stunnable;
-using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -39,7 +38,16 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popups = default!;
     [Dependency] private ScreechSystem _screech = default!;
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
-    [Dependency] private TagSystem _tag = default!;
+
+    // constants
+    /// <summary>
+    /// Currency that is used to maintain the horror form
+    /// </summary>
+    private readonly ProtoId<CurrencyPrototype> _currency = "ChangelingDNA";
+    /// <summary>
+    /// The horror form's prototype
+    /// </summary>
+    private readonly EntProtoId _protoId = "MobHorror";
 
     public override void Update(float frameTime)
     {
@@ -86,8 +94,8 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
                 PopupType.MediumCaution);
 
                 // we apply a stun penality, you should transform back yourself!
-                _stuns.TryAddStunDuration(uid, TimeSpan.FromSeconds(10));
-                _stuns.TryKnockdown(uid, TimeSpan.FromSeconds(10));
+                _stuns.TryAddStunDuration(uid, comp.StunTime);
+                _stuns.TryKnockdown(uid, comp.StunTime);
             }
         }
     }
@@ -110,9 +118,9 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
                 return;
             }
 
-            if (store.Balance.ContainsKey("ChangelingDNA"))
+            if (store.Balance.ContainsKey(_currency))
             {
-                var k = store.Balance["ChangelingDNA"];
+                var k = store.Balance[_currency];
                 if (k >= FixedPoint2.New(1d)) // you need at least one dna point
                 {
                     return;
@@ -144,10 +152,6 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
             }
         }
 
-        // Remove the horror's tags
-        if (ent.Comp.TagsToAdd != null)
-            _tag.RemoveTags(ent.Owner, ent.Comp.TagsToAdd);
-
         // Remove the alert that displays time
         _alerts.ClearAlert(ent.Owner, ent.Comp.TimeAlert);
 
@@ -156,7 +160,7 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
         {
             // do fancy math to add back DNA based on remaining time
             Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> dico = new() {
-                {"ChangelingDNA", TimeToDNA(ent.Comp.TimeBudget - (_timing.CurTime - ent.Comp.InitialTime), ent.Comp.SecondPerDNA, ent.Comp.GracePeriod) }
+                {_currency, TimeToDNA(ent.Comp.TimeBudget - (_timing.CurTime - ent.Comp.InitialTime), ent.Comp.SecondPerDNA, ent.Comp.GracePeriod) }
                 };
             _stores.TryAddCurrency(dico, ent.Owner, null);
         }
@@ -168,7 +172,7 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnUnlock(Entity<ChangelingIdentityComponent> ent, ref ChangelingUnlockHorrorEvent ev)
     {
-        var idEnt = Spawn("MobHorror"); // todo: make this into a generic system that unlocks identities (can be used for the lesser form etc.)
+        var idEnt = Spawn(_protoId); // todo: make this into a generic system that unlocks identities (can be used for the lesser form etc.)
         var identity = _identitySystem.GrantIdentity((ent.Owner, ent.Comp), idEnt);
         if (identity.HasValue)
         {
@@ -196,12 +200,12 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
 
         if (TryComp<StoreComponent>(ent.Owner, out var store))
         {
-            if (store.Balance.ContainsKey("ChangelingDNA"))
+            if (store.Balance.ContainsKey(_currency))
             {
-                var k = store.Balance["ChangelingDNA"];
+                var k = store.Balance[_currency];
                 // remove all DNA points from the store, since they are being converted into time
                 Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> dico = new() {
-                    {"ChangelingDNA", -k }
+                    {_currency, -k }
                 };
                 _stores.TryAddCurrency(dico, ent.Owner, null);
                 transformationTime = DNAToTime(k, ent.Comp.SecondPerDNA, ent.Comp.GracePeriod);
@@ -211,10 +215,6 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
         ent.Comp.TimeBudget = transformationTime;
         ent.Comp.InitialTime = now;
         ent.Comp.LastIdentity = ev.PreviousIdentity;
-
-        // Give the horror's tags
-        if (ent.Comp.TagsToAdd != null)
-            _tag.AddTags(ent.Owner, ent.Comp.TagsToAdd);
 
         // this alert will display the time
         _alerts.ShowAlert(ent.Owner, ent.Comp.TimeAlert);
