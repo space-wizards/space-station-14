@@ -716,7 +716,8 @@
   - type: StaticPrice
     price: 750
   - type: StealTarget
-    stealGroup: WeaponAntiqueLaser
+    stealGroup:
+    - WeaponAntiqueLaser
   - type: SentienceTarget # I hope this is only the captain's gun
     flavorKind: station-event-random-sentience-flavor-inanimate
     weight: 0.0002 # 5,000 times less likely than 1 regular animal
@@ -926,7 +927,8 @@
     - HighRiskItem
     - Sidearm
   - type: StealTarget
-    stealGroup: WeaponEnergyMagnum
+    stealGroup:
+    - WeaponEnergyMagnum
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
