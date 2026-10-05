@@ -1,4 +1,4 @@
-﻿using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Atmos;
 

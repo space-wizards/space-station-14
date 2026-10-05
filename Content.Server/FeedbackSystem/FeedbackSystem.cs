@@ -1,4 +1,4 @@
-﻿using Content.Server.GameTicking;
+using Content.Server.GameTicking;
 using Content.Shared.FeedbackSystem;
 using Content.Shared.GameTicking;
 using Robust.Shared.Prototypes;
@@ -8,7 +8,7 @@ namespace Content.Server.FeedbackSystem;
 public sealed partial class FeedbackSystem : EntitySystem
 {
     [Dependency] private ServerFeedbackManager _feedbackManager = null!;
-    [Dependency] private GameTicker _gameTicker = null!;
+    [Dependency] private ServerGameTicker _gameTicker = null!;
 
     public override void Initialize()
     {

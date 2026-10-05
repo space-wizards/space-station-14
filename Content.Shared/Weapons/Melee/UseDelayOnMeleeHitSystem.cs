@@ -1,4 +1,4 @@
-﻿using Content.Shared.Throwing;
+using Content.Shared.Throwing;
 using Content.Shared.Timing.Components;
 using Content.Shared.Timing.Systems;
 using Content.Shared.Weapons.Melee.Components;
