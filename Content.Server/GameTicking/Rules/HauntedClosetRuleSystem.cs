@@ -89,7 +89,9 @@ public sealed partial class HauntedClosetRuleSystem : GameRuleSystem<HauntedClos
         else if (rule.Toggle)
         {
             // open it
-            _lockSystem.Unlock(ent, null);
+            if (HasComp<LockComponent>(ent))
+                _lockSystem.Unlock(ent, null);
+
             _entityStorage.OpenStorage(ent);
         }
     }
