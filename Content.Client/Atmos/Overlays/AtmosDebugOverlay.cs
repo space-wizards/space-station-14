@@ -65,8 +65,6 @@ public sealed partial class AtmosDebugOverlay : Overlay
             handle.SetTransform(_transform.GetWorldMatrix(grid));
             DrawData(msg, handle);
         }
-
-        handle.SetTransform(Matrix3x2.Identity);
     }
 
     private void DrawData(DebugMessage msg,
