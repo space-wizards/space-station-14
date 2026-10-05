@@ -69,27 +69,8 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         NavMap.TileColor = _tileColor;
 
         // Set nav map grid uid
-        var stationName = Loc.GetString("atmos-alerts-window-unknown-location");
-
-        if (_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
-        {
-            NavMap.MapUid = xform.GridUid;
-
-            // Assign station name
-            if (_entManager.TryGetComponent<MetaDataComponent>(xform.GridUid, out var stationMetaData))
-                stationName = stationMetaData.EntityName;
-
-            var msg = new FormattedMessage();
-            msg.TryAddMarkup(Loc.GetString("atmos-alerts-window-station-name", ("stationName", stationName)), out _);
-
-            StationName.SetMessage(msg);
-        }
-
-        else
-        {
-            StationName.SetMessage(stationName);
-            NavMap.Visible = false;
-        }
+        StationName.SetMessage(Loc.GetString("atmos-alerts-window-unknown-location"));
+        NavMap.Visible = false;
 
         // Set trackable entity selected action
         NavMap.TrackedEntitySelectedAction += SetTrackedEntityFromNavMap;
