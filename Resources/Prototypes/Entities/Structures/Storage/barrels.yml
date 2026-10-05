@@ -60,9 +60,9 @@
     size: Huge
     inhandVisuals:
       left:
-      - state: inhand
+      - state: inhand-metalbarrel
       right:
-      - state: inhand
+      - state: inhand-metalbarrel
     shape:
     - 0,0,7,3
   - type: MultiHandedItem
