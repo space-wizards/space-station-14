@@ -10,31 +10,27 @@ public sealed partial class DamageStateVisualizerSystem : VisualizerSystem<Damag
     {
         var sprite = args.Sprite;
 
-        if (sprite == null || !AppearanceSystem.TryGetData<MobState>(uid, MobStateVisuals.State, out var data, args.Component))
-        {
+        if (sprite == null || !args.TryGetData<MobState>(MobStateVisuals.State, out var data))
             return;
-        }
 
         if (!component.States.TryGetValue(data, out var layers))
-        {
             return;
-        }
 
         // Brain no worky rn so this was just easier.
         foreach (var key in new[] { DamageStateVisualLayers.Base, DamageStateVisualLayers.BaseUnshaded })
         {
-            if (!SpriteSystem.LayerMapTryGet((uid, sprite), key, out _, false)) continue;
+            if (!SpriteSystem.LayerMapTryGet((uid, sprite), key, out var layerIndex, false)) continue;
 
-            SpriteSystem.LayerSetVisible((uid, sprite), key, false);
+            SpriteSystem.LayerSetVisible((uid, sprite), layerIndex, false);
         }
 
         foreach (var (key, state) in layers)
         {
             // Inheritance moment.
-            if (!SpriteSystem.LayerMapTryGet((uid, sprite), key, out _, false)) continue;
+            if (!SpriteSystem.LayerMapTryGet((uid, sprite), key, out var layerIndex, false)) continue;
 
-            SpriteSystem.LayerSetVisible((uid, sprite), key, true);
-            SpriteSystem.LayerSetRsiState((uid, sprite), key, state);
+            SpriteSystem.LayerSetVisible((uid, sprite), layerIndex, true);
+            SpriteSystem.LayerSetRsiState((uid, sprite), layerIndex, state);
         }
 
         // So they don't draw over mobs anymore
