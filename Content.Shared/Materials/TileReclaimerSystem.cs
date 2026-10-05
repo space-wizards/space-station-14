@@ -2,6 +2,7 @@
 using Content.Shared.Maps;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
@@ -23,6 +24,7 @@ public abstract partial class TileReclaimerSystem : EntitySystem
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
 
     [Dependency] private EntityQuery<PhysicsComponent> _physicsComponentQuery = default!;
 
@@ -94,6 +96,9 @@ public abstract partial class TileReclaimerSystem : EntitySystem
 
                 foreach (var entityOnTile in intersectingEntities)
                 {
+                    if (_container.IsEntityInContainer(entityOnTile))
+                        continue;
+
                     if (!_physicsComponentQuery.TryComp(entityOnTile, out var physicsComp))
                     {
                         // Marker/Spawn entities and similar don't have physics, so we just plain remove them.

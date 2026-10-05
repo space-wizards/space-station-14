@@ -31,7 +31,8 @@
     tags:
       - Scanner
   - type: StealTarget
-    stealGroup: ForensicScanner
+    stealGroup:
+    - ForensicScanner
 
 - type: entity
   name: forensic scanner report
