@@ -366,16 +366,14 @@
   color: "#d44e99"
   metabolisms:
     Bloodstream:
+      metabolismRate: 5
       effects:
       - !type:DnaImprint
         reagent: Miniozine
+        minScale: 1
         leader: true
         friendly: true
         guidebookText: entity-effect-guidebook-dna-imprint
-        conditions:
-        - !type:ReagentCondition
-          reagent: Miniozine
-          min: 5
 
 - type: reagent
   id: Ragorium
@@ -387,12 +385,10 @@
   color: "#b32e35"
   metabolisms:
     Bloodstream:
+      metabolismRate: 5
       effects:
       - !type:DnaImprint
         reagent: Ragorium
+        minScale: 1
         target: true
         guidebookText: entity-effect-guidebook-dna-hunt
-        conditions:
-        - !type:ReagentCondition
-          reagent: Ragorium
-          min: 5
