@@ -26,7 +26,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
 {
     private readonly IEntityManager _entManager;
     private readonly SpriteSystem _spriteSystem;
-    private readonly SharedNavMapSystem _navMapSystem;
+    private readonly NavMapSystem _navMapSystem;
 
     private EntityUid? _console;
     private NetEntity? _trackedEntity;
@@ -62,14 +62,34 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         RobustXamlLoader.Load(this);
         _entManager = IoCManager.Resolve<IEntityManager>();
         _spriteSystem = _entManager.System<SpriteSystem>();
-        _navMapSystem = _entManager.System<SharedNavMapSystem>();
+        _navMapSystem = _entManager.System<NavMapSystem>();
 
         // Set nav map colors
         NavMap.WallColor = _wallColor;
         NavMap.TileColor = _tileColor;
 
-        StationName.SetMessage(Loc.GetString("atmos-alerts-window-unknown-location"));
-        NavMap.Visible = false;
+        // Set nav map grid uid
+        var stationName = Loc.GetString("atmos-alerts-window-unknown-location");
+
+        if (_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
+        {
+            NavMap.MapUid = xform.GridUid;
+
+            // Assign station name
+            if (_entManager.TryGetComponent<MetaDataComponent>(xform.GridUid, out var stationMetaData))
+                stationName = stationMetaData.EntityName;
+
+            var msg = new FormattedMessage();
+            msg.TryAddMarkup(Loc.GetString("atmos-alerts-window-station-name", ("stationName", stationName)), out _);
+
+            StationName.SetMessage(msg);
+        }
+
+        else
+        {
+            StationName.SetMessage(stationName);
+            NavMap.Visible = false;
+        }
 
         // Set trackable entity selected action
         NavMap.TrackedEntitySelectedAction += SetTrackedEntityFromNavMap;

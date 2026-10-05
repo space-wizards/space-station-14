@@ -57,8 +57,8 @@ public sealed partial class ChatUIController : UIController
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IReplayRecordingManager _replayRecording = default!;
 
-    [UISystemDependency] private readonly ChatSystem _chatSys = default!;
-    [UISystemDependency] private readonly CodewordSystem _codeword = default!;
+    [UISystemDependency] private readonly ChatSystem? _chatSys = default!;
+    [UISystemDependency] private readonly CodewordSystem? _codeword = default!;
     [UISystemDependency] private readonly ExamineSystem _examine = default!;
     [UISystemDependency] private readonly GhostSystem _ghost = default!;
     [UISystemDependency] private readonly TransformSystem _transform = default!;
@@ -833,12 +833,16 @@ public sealed partial class ChatUIController : UIController
             msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, highlight, "color", _highlightsColor);
         }
 
-        // Color any codewords for minds that have roles that use them
-        foreach (var data in _codeword.GetPlayerCodewords(_player.LocalUser))
+        // In case we get messages outside of systems being init.
+        if (_codeword != null)
         {
-            foreach (var codeword in data.Codewords)
+            // Color any codewords for minds that have roles that use them
+            foreach (var data in _codeword.GetPlayerCodewords(_player.LocalUser))
             {
-                msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, codeword, "color", data.Color.ToHex());
+                foreach (var codeword in data.Codewords)
+                {
+                    msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, codeword, "color", data.Color.ToHex());
+                }
             }
         }
 
