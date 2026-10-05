@@ -3264,8 +3264,8 @@
     coldDamageThreshold: 0
   - type: Tag
     tags:
-      - DoorBumpOpener
-      - VimPilot
+    - DoorBumpOpener
+    - VimPilot
   - type: MovementAlwaysTouching
   - type: PermanentStatusEffects
     statusEffects:
