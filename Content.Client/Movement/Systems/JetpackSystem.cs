@@ -19,9 +19,9 @@ public sealed partial class JetpackSystem : SharedJetpackSystem
     [SubscribeLocalEvent]
     private void OnJetpackAppearance(Entity<JetpackComponent> ent, ref AppearanceChangeEvent args)
     {
-        Appearance.TryGetData<bool>(ent.Owner, JetpackVisuals.Enabled, out var enabled, args.Component);
+        args.TryGetData<bool>(JetpackVisuals.Enabled, out var enabled);
 
-        if (TryComp<ClothingComponent>(ent.Owner, out var clothing))
-            _clothing.SetEquippedPrefix(ent.Owner, enabled ? "on" : null, clothing);
+        if (TryComp<ClothingComponent>(ent, out var clothing))
+            _clothing.SetEquippedPrefix(ent, enabled ? "on" : null, clothing);
     }
 }

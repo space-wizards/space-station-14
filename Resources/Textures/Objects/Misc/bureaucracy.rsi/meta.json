@@ -23,13 +23,7 @@
             "name": "envelope_open"
         },
         {
-            "name": "envelope_open_overlay"
-        },
-        {
             "name": "envelope_torn"
-        },
-        {
-            "name": "envelope_torn_overlay"
         },
         {
             "name": "envelope-inhand-right",
@@ -38,35 +32,6 @@
         {
             "name": "envelope-inhand-left",
             "directions": 4
-        },
-        {
-            "name": "nano_paper"
-        },
-        {
-            "name": "nano_paper_words",
-            "delays": [
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1
-                ]
-            ]
-        },
-        {
-            "name": "newspaper"
-        },
-        {
-            "name": "np_dispenser"
-        },
-        {
-            "name": "np_dispenser_empty"
         },
         {
             "name": "pamphlet"
@@ -81,52 +46,7 @@
             "name": "paper_bin1"
         },
         {
-            "name": "paper_plane"
-        },
-        {
-            "name": "paper_talisman"
-        },
-        {
-            "name": "paper_talisman_armor"
-        },
-        {
-            "name": "paper_talisman_blind"
-        },
-        {
-            "name": "paper_talisman_communicate"
-        },
-        {
-            "name": "paper_talisman_conceal"
-        },
-        {
-            "name": "paper_talisman_deafen"
-        },
-        {
-            "name": "paper_talisman_emp"
-        },
-        {
-            "name": "paper_talisman_newtome"
-        },
-        {
-            "name": "paper_talisman_revealrunes"
-        },
-        {
-            "name": "paper_talisman_runestun"
-        },
-        {
-            "name": "paper_talisman_supply"
-        },
-        {
-            "name": "paper_talisman_travel"
-        },
-        {
-            "name": "paper_talisman_travel_unused"
-        },
-        {
             "name": "paper_words"
-        },
-        {
-            "name": "paper_words-blood"
         },
         {
             "name": "paper_receipt"
@@ -148,9 +68,6 @@
         },
         {
             "name": "scrap"
-        },
-        {
-            "name": "scrap_bloodied"
         },
         {
             "name": "paper_stamp-cap"
