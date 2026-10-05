@@ -332,9 +332,13 @@ public abstract partial class SharedAbsorbentSystem : EntitySystem
         else
         {
             var absorberSolution = absorberSoln.Comp.Solution;
-            var available = absorberSolution.MaxVolume - absorberSolution.Volume;
-            var transferMax = absorber.PickupAmount;
-            var transferAmount = available > transferMax ? transferMax : available;
+            var transferAmount = FixedPoint2.Min(absorberSolution.AvailableVolume, absorber.PickupAmount);
+            if (transferAmount <= FixedPoint2.Zero)
+            {
+                _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", absorbEnt)), absorbEnt, user);
+                return true;
+            }
+
             puddleSplit = puddleSolution.SplitSolution(transferAmount);
             // Despawn if we're done
             if (puddleSolution.Volume == FixedPoint2.Zero)
