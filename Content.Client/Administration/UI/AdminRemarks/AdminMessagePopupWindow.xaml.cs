@@ -12,7 +12,7 @@ namespace Content.Client.Administration.UI.AdminRemarks;
 [GenerateTypedNameReferences]
 public sealed partial class AdminMessagePopupWindow : Control
 {
-    [Dependency] private readonly IStylesheetManager _styleMan = default!;
+    [Dependency] private IStylesheetManager _styleMan = default!;
 
     private float _timer = float.MaxValue;
 
@@ -42,7 +42,7 @@ public sealed partial class AdminMessagePopupWindow : Control
 
     public void SetState(AdminMessageEuiState state)
     {
-        Timer = (float) state.Time.TotalSeconds;
+        Timer = (float)state.Time.TotalSeconds;
 
         MessageContainer.RemoveAllChildren();
 
@@ -52,7 +52,7 @@ public sealed partial class AdminMessagePopupWindow : Control
         }
 
         Description.SetMessage(
-            FormattedMessage.FromMarkup(Loc.GetString("admin-notes-message-desc", ("count", state.Messages.Length))));
+            FormattedMessage.FromMarkupOrThrow(Loc.GetString("admin-notes-message-desc", ("count", state.Messages.Length))));
     }
 
     private void OnDismissButtonPressed(BaseButton.ButtonEventArgs obj)

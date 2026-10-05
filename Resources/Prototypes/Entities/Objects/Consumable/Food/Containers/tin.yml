@@ -4,18 +4,21 @@
 # trash prototypes use "trash" state
 - type: entity
   abstract: true
-  parent: [FoodBase, FoodOpenableBase]
+  parent: [FoodBaseTrash, FoodOpenableBase]
   id: FoodTinBase
   name: tin
   description: A tin of something, sealed tight.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 15
+  - type: Solution
+    solution:
+      maxVol: 50 # about 400-450ml
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 40
+      - ReagentId: Sugar
+        Quantity: 5
+      - ReagentId: TableSalt
+        Quantity: 5
   - type: Openable
     openableByHand: false
     sound:
@@ -47,6 +50,7 @@
       types:
         Blunt: 3
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: StaticPrice
     price: 50

@@ -1,8 +1,12 @@
+# Non Descript Solo Antags
+
 - type: antag
   id: GenericAntagonist
   name: roles-antag-generic-solo-antagonist-name
   antagonist: true
   objective: never-shown
+
+# Non Descript Team Antags
 
 - type: antag
   id: GenericTeamAntagonist
@@ -10,14 +14,10 @@
   antagonist: true
   objective: never-shown
 
+# Free Agents
+
 - type: antag
   id: GenericFreeAgent
   name: roles-antag-generic-free-agent-name
-  antagonist: true
-  objective: never-shown
-
-- type: antag
-  id: GenericSiliconAntagonist
-  name: roles-antag-generic-silicon-antagonist-name
   antagonist: true
   objective: never-shown

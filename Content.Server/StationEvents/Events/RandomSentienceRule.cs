@@ -6,33 +6,38 @@ using Content.Shared.GameTicking.Components;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared.Station.Components;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRuleComponent>
+/// <summary>
+/// Handler for events that create ghost roles on random entities with <see cref="SentienceTargetComponent"/>.
+/// </summary>
+/// <seealso cref="RandomSentienceRuleComponent"/>
+public sealed partial class RandomSentienceRule : StationEventSystem<RandomSentienceRuleComponent>
 {
     private static readonly ProtoId<LocalizedDatasetPrototype> DataSourceNames = "RandomSentienceEventData";
     private static readonly ProtoId<LocalizedDatasetPrototype> IntelligenceLevelNames = "RandomSentienceEventStrength";
 
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
-    protected override void Started(EntityUid uid, RandomSentienceRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    protected override void Started(Entity<RandomSentienceRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
-        if (!TryGetRandomStation(out var station))
+        if (!Station.TryGetRandomStation<StationEventEligibleComponent>(out var station))
             return;
 
         var targetList = new List<Entity<SentienceTargetComponent>>();
         var query = EntityQueryEnumerator<SentienceTargetComponent, TransformComponent>();
         while (query.MoveNext(out var targetUid, out var target, out var xform))
         {
-            if (StationSystem.GetOwningStation(targetUid, xform) != station)
+            if (Station.GetOwningStation(targetUid, xform) != station.Value.Owner)
                 continue;
 
             targetList.Add((targetUid, target));
         }
 
-        var toMakeSentient = _random.Next(component.MinSentiences, component.MaxSentiences);
+        var toMakeSentient = _random.Next(ent.Comp1.MinSentiences, ent.Comp1.MaxSentiences);
 
         var groups = new HashSet<string>();
 

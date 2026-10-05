@@ -52,7 +52,8 @@
   - type: Physics
     canCollide: false
   - type: StealTarget
-    stealGroup: LAMP
+    stealGroup:
+    - LAMP
 
 - type: entity
   name: lamp
@@ -226,8 +227,9 @@
         startingItem: PowerCellMedium
   - type: Anchorable
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -264,16 +266,11 @@
     state: floodlight-broken
   - type: Anchorable
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 40
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 20

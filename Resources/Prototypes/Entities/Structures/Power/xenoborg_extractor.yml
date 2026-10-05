@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseMachine, BaseXenoborgContraband]
+  parent: [BaseMachine, BaseMachineDestructible, BaseXenoborgContraband]
   id: XenoborgExtractor
   name: xenoborg extractor
   description: Drains electricity from the grid to produce xenoborg crystals via nuclear fusion.
@@ -26,7 +26,7 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.PowerDeviceVisuals.Powered:
+      enum.PowerConsumerVisuals.Consuming:
         base:
           True: { visible: false }
           False: { visible: true }
@@ -40,31 +40,18 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 175
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+      - !type:ExplodeBehavior
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
-      - !type:ExplodeBehavior
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          MachineFrameDestroyed:
-            min: 1
-            max: 1
   - type: Explosive # small explosion when destroyed
     explosionType: Default
     maxIntensity: 20
     totalIntensity: 10
     intensitySlope: 5
     canCreateVacuum: false
-  - type: NodeContainer
-    examinable: true
-    nodes:
-      input:
-        !type:CableDeviceNode
-        nodeGroupID: Apc
   - type: LightningTarget
     priority: 1
   - type: Electrified
@@ -72,31 +59,33 @@
     onInteractUsing: false
     onBump: false
     requirePower: true
-    highVoltageNode: input
-    mediumVoltageNode: input
-    lowVoltageNode: input
+    highVoltageNode: input_hv
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input_hv:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+        enabled: true
+  - type: PowerConsumerBatteryCharger
+    efficiency: 0.25
+  - type: PowerConsumer
+    voltage: High
+    drawRate: 240000 # 240kW (60kW effectively) - 15 seconds to spawn one # sets off the rogue power consuming device alert!
   - type: Battery
-    maxCharge: 2000000 # 2MJ
+    maxCharge: 900000 # 900KJ
     netsync: false
   - type: ExaminableBattery
-  - type: PowerConsumerBatteryCharger
-  - type: PowerConsumer
-    voltage: Apc
-    drawRate: 10000
-  - type: VoltageToggler
-    settings:
-    - voltage: Apc
-      wattage: 16000 # 16kW - 125 seconds to spawn one
-      name: power-voltage-low
-    - voltage: Medium
-      wattage: 50000 # 50kW - 40 seconds to spawn one
-      name: power-voltage-medium
-    - voltage: High
-      wattage: 200000 # 200kW - 10 seconds to spawn one # sets off the rogue power consuming device alert!
-      name: power-voltage-high
-  - type: SpawnOnBatteryLevel
-    prototype: MaterialXenoborgCrystal1
-    charge: 2000000 # 2MJ
+  - type: SpawnOnBatteryFull
+    table: !type:NestedSelector
+      tableId: XenoborgExtractorCrystals
+
+- type: entityTable
+  id: XenoborgExtractorCrystals
+  table: !type:GroupSelector
+    children:
+    - id: MaterialXenoborgCrystal1
+      weight: 1
 
 - type: entity
   parent: XenoborgExtractor

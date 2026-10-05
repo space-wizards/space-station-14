@@ -7,11 +7,11 @@ using Robust.Shared.Configuration;
 
 namespace Content.Client.Audio;
 
-public sealed class AudioUIController : UIController
+public sealed partial class AudioUIController : UIController
 {
-    [Dependency] private readonly IAudioManager _audioManager = default!;
-    [Dependency] private readonly IConfigurationManager _configManager = default!;
-    [Dependency] private readonly IResourceCache _cache = default!;
+    [Dependency] private IAudioManager _audioManager = default!;
+    [Dependency] private IConfigurationManager _configManager = default!;
+    [Dependency] private IResourceCache _cache = default!;
 
     private float _interfaceGain;
     private IAudioSource? _clickSource;

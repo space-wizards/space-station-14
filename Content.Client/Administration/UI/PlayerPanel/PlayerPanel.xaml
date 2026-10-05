@@ -17,6 +17,8 @@
        <Label Name="Bans"/>
        <Label Name="RoleBans"/>
        <Label Name="SharedConnections"/>
+       <Label Name="TrustScore"/>
+       <Label Name="AccountCreationDate"/>
 
        <BoxContainer Align="Center">
            <GridContainer Rows="6">

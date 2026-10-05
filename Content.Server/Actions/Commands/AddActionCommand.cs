@@ -1,19 +1,18 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Administration;
-using Content.Shared.Prototypes;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Actions.Commands;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class AddActionCommand : LocalizedEntityCommands
+public sealed partial class AddActionCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     public override string Command => "addaction";
 
@@ -38,7 +37,7 @@ public sealed class AddActionCommand : LocalizedEntityCommands
         }
 
         if (!_prototypeManager.TryIndex<EntityPrototype>(args[1], out var proto) ||
-            !proto.HasComponent<ActionComponent>())
+            !proto.HasComp<ActionComponent>(EntityManager.ComponentFactory))
         {
             shell.WriteError(Loc.GetString("cmd-addaction-action-not-found", ("action", args[1])));
             return;
@@ -63,7 +62,7 @@ public sealed class AddActionCommand : LocalizedEntityCommands
             return CompletionResult.Empty;
 
         var actionPrototypes = _prototypeManager.EnumeratePrototypes<EntityPrototype>()
-            .Where(p => p.HasComponent<ActionComponent>())
+            .Where(p => p.HasComp<ActionComponent>(EntityManager.ComponentFactory))
             .Select(p => p.ID)
             .Order();
 

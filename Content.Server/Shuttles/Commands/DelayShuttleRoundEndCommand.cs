@@ -9,9 +9,9 @@ namespace Content.Server.Shuttles.Commands;
 /// Delays the round from ending via the shuttle call. Can still be ended via other means.
 /// </summary>
 [AdminCommand(AdminFlags.Fun)]
-public sealed class DelayRoundEndCommand : LocalizedEntityCommands
+public sealed partial class DelayRoundEndCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly EmergencyShuttleSystem _shuttleSystem = default!;
+    [Dependency] private EmergencyShuttleSystem _shuttleSystem = default!;
 
     public override string Command => "delayroundend";
 

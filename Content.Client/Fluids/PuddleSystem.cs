@@ -7,10 +7,10 @@ using Robust.Shared.Map;
 
 namespace Content.Client.Fluids;
 
-public sealed class PuddleSystem : SharedPuddleSystem
+public sealed partial class PuddleSystem : SharedPuddleSystem
 {
-    [Dependency] private readonly IconSmoothSystem _smooth = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private IconSmoothSystem _smooth = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -24,12 +24,8 @@ public sealed class PuddleSystem : SharedPuddleSystem
         if (args.Sprite == null)
             return;
 
-        var volume = 1f;
-
-        if (args.AppearanceData.TryGetValue(PuddleVisuals.CurrentVolume, out var volumeObj))
-        {
-            volume = (float)volumeObj;
-        }
+        if (!args.TryGetData<float>(PuddleVisuals.CurrentVolume, out var volume))
+            volume = 1.0f;
 
         // Update smoothing and sprite based on volume.
         if (TryComp<IconSmoothComponent>(uid, out var smooth))
@@ -57,15 +53,10 @@ public sealed class PuddleSystem : SharedPuddleSystem
 
         var baseColor = Color.White;
 
-        if (args.AppearanceData.TryGetValue(PuddleVisuals.SolutionColor, out var colorObj))
-        {
-            var color = (Color)colorObj;
-            _sprite.SetColor((uid, args.Sprite), color * baseColor);
-        }
-        else
-        {
-            _sprite.SetColor((uid, args.Sprite), args.Sprite.Color * baseColor);
-        }
+        if (!args.TryGetData<Color>(PuddleVisuals.SolutionColor, out var color))
+            color = args.Sprite.Color;
+
+        _sprite.SetColor((uid, args.Sprite), color * baseColor);
     }
 
     #region Spill

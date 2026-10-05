@@ -24,13 +24,13 @@ using Direction = Robust.Shared.Maths.Direction;
 namespace Content.Client.Examine
 {
     [UsedImplicitly]
-    public sealed class ExamineSystem : ExamineSystemShared
+    public sealed partial class ExamineSystem : ExamineSystemShared
     {
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
-        [Dependency] private readonly VerbSystem _verbSystem = default!;
-        [Dependency] private readonly SpriteSystem _sprite = default!;
+        [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IEyeManager _eyeManager = default!;
+        [Dependency] private VerbSystem _verbSystem = default!;
+        [Dependency] private SpriteSystem _sprite = default!;
 
         private List<Verb> _verbList = new();
 
@@ -386,6 +386,10 @@ namespace Content.Client.Examine
             vbox.AddChild(buttonsHBox);
         }
 
+        /// <summary>
+        /// Handler for the OnClick Event of a Verb Button.
+        /// </summary>
+        /// <param name="obj">The event args</param>
         public void VerbButtonPressed(BaseButton.ButtonEventArgs obj)
         {
             if (obj.Button is ExamineButton button)
@@ -396,6 +400,12 @@ namespace Content.Client.Examine
             }
         }
 
+        /// <summary>
+        /// Open and fills by query to server an examine menu with the correct tooltip and menu items.
+        /// </summary>
+        /// <param name="entity">The entity examined.</param>
+        /// <param name="centeredOnCursor">If the popup should be on the cursor or the entity's screen position.</param>
+        /// <param name="userOverride">An optional user object; if null we assume the client's player entity.</param>
         public void DoExamine(EntityUid entity, bool centeredOnCursor = true, EntityUid? userOverride = null)
         {
             var playerEnt = userOverride ?? _playerManager.LocalEntity;

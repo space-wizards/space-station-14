@@ -1,4 +1,4 @@
-﻿- type: shader
+- type: shader
   id: DisplacedStencilDraw
   kind: source
   path: "/Textures/Shaders/displacement.swsl"
@@ -13,5 +13,12 @@
   id: DisplacedDraw
   kind: source
   path: "/Textures/Shaders/displacement.swsl"
+  params:
+    displacementSize: 127
+
+- type: shader
+  id: DisplacedDrawUnshaded
+  kind: source
+  path: "/Textures/Shaders/displacement_unshaded.swsl"
   params:
     displacementSize: 127

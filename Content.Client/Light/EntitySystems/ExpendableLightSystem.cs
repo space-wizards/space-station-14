@@ -5,11 +5,11 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Client.Light.EntitySystems;
 
-public sealed class ExpendableLightSystem : VisualizerSystem<ExpendableLightComponent>
+public sealed partial class ExpendableLightSystem : VisualizerSystem<ExpendableLightComponent>
 {
-    [Dependency] private readonly PointLightSystem _pointLightSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly LightBehaviorSystem _lightBehavior = default!;
+    [Dependency] private PointLightSystem _pointLightSystem = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private LightBehaviorSystem _lightBehavior = default!;
 
     public override void Initialize()
     {
@@ -28,7 +28,7 @@ public sealed class ExpendableLightSystem : VisualizerSystem<ExpendableLightComp
         if (args.Sprite == null)
             return;
 
-        if (AppearanceSystem.TryGetData<string>(uid, ExpendableLightVisuals.Behavior, out var lightBehaviourID, args.Component)
+        if (args.TryGetData<string>(ExpendableLightVisuals.Behavior, out var lightBehaviourID)
             && TryComp<LightBehaviourComponent>(uid, out var lightBehaviour))
         {
             _lightBehavior.StopLightBehaviour((uid, lightBehaviour));
@@ -43,7 +43,7 @@ public sealed class ExpendableLightSystem : VisualizerSystem<ExpendableLightComp
             }
         }
 
-        if (!AppearanceSystem.TryGetData<ExpendableLightState>(uid, ExpendableLightVisuals.State, out var state, args.Component))
+        if (!args.TryGetData<ExpendableLightState>(ExpendableLightVisuals.State, out var state))
             return;
 
         switch (state)

@@ -1,34 +1,41 @@
+using Content.IntegrationTests.Fixtures;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.GameRules
 {
     [TestFixture]
     [TestOf(typeof(MaxTimeRestartRuleSystem))]
-    public sealed class RuleMaxTimeRestartTest
+    public sealed class RuleMaxTimeRestartTest : GameTest
     {
+        public override PoolSettings PoolSettings => new() { InLobby = true };
+
+        private static readonly EntProtoId MaxTimeRestartGameRule = "MaxTimeRestart";
+
         [Test]
         public async Task RestartTest()
         {
-            await using var pair = await PoolManager.GetServerClient(new PoolSettings { InLobby = true });
+            var pair = Pair;
             var server = pair.Server;
 
             Assert.That(server.EntMan.Count<GameRuleComponent>(), Is.Zero);
             Assert.That(server.EntMan.Count<ActiveGameRuleComponent>(), Is.Zero);
 
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var sGameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
+            var sGameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<ServerGameTicker>();
             var sGameTiming = server.ResolveDependency<IGameTiming>();
 
             MaxTimeRestartRuleComponent maxTime = null;
             await server.WaitPost(() =>
             {
-                sGameTicker.StartGameRule("MaxTimeRestart", out var ruleEntity);
-                Assert.That(entityManager.TryGetComponent<MaxTimeRestartRuleComponent>(ruleEntity, out maxTime));
+                sGameTicker.StartGameRule(MaxTimeRestartGameRule, out var ruleEntity);
+                Assert.That(entityManager.TryGetComponent(ruleEntity, out maxTime));
             });
 
             Assert.That(server.EntMan.Count<GameRuleComponent>(), Is.EqualTo(1));
@@ -64,8 +71,6 @@ namespace Content.IntegrationTests.Tests.GameRules
             {
                 Assert.That(sGameTicker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
             });
-
-            await pair.CleanReturnAsync();
         }
     }
 }

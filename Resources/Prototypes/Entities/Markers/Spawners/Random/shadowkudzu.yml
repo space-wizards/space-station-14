@@ -1,27 +1,28 @@
 - type: entity
+  parent: MarkerBase
   id: ShadowKudzuLootSpawner
   name: shadow kudzu loot spawner
-  parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-      - state: red
-      - sprite: Structures/Specific/Anomalies/shadow_anom.rsi
-        state: anom
-    - type: RandomSpawner
-      offset: 0.05
-      chance: 0.7
-      prototypes:
-        - CrystalPink
-        - CrystalPink
-        - ShadowPortal
-        - ShadowTree #TODO: transform into EntityTable with weight
-        - ShadowTree
-        - ShadowTree
-        - ShadowTree
-        - ShadowTree
-        - ShadowTree
-      rareChance: 0.05
-      rarePrototypes:
-        - MobCatShadow
-        - ArtifactFragment1
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Structures/Specific/Anomalies/shadow_anom.rsi
+      state: anom
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 0.95
+        prob: 0.7
+        children:
+        - id: CrystalPink
+          weight: 2
+        - id: ShadowPortal
+        - id: ShadowTree
+          weight: 6
+      - !type:GroupSelector
+        weight: 0.05
+        children:
+        - id: MobCatShadow
+        - id: ArtifactFragment1
+    offset: 0.05

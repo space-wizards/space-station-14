@@ -11,11 +11,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Storage.Systems;
 
-public sealed class StorageSystem : SharedStorageSystem
+public sealed partial class StorageSystem : SharedStorageSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly EntityPickupAnimationSystem _entityPickupAnimation = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private EntityPickupAnimationSystem _entityPickupAnimation = default!;
 
     private Dictionary<EntityUid, ItemStorageLocation> _oldStoredItems = new();
 
@@ -78,8 +78,8 @@ public sealed class StorageSystem : SharedStorageSystem
             // Make sure nesting still updated.
             var player = _player.LocalEntity;
 
-            if (NestedStorage && player != null && ContainerSystem.TryGetContainingContainer((uid, null, null), out var container) &&
-                UI.TryGetOpenUi<StorageBoundUserInterface>(container.Owner, StorageComponent.StorageUiKey.Key, out var containerBui))
+            if (NestedStorage && player != null && TryGetContainingStorage(uid, out var parentStorage) &&
+                UI.TryGetOpenUi<StorageBoundUserInterface>(parentStorage.Value.Owner, StorageComponent.StorageUiKey.Key, out var containerBui))
             {
                 _queuedBuis.Add((containerBui, false));
             }
