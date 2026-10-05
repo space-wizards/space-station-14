@@ -1,5 +1,6 @@
 using Content.Client.Administration.Managers;
 using Content.Client.Movement.Systems;
+using Content.Client.Sandbox.Components;
 using Content.Shared.Sandbox;
 using Robust.Client.Console;
 using Robust.Client.Placement;
@@ -17,6 +18,8 @@ namespace Content.Client.Sandbox
         [Dependency] private ContentEyeSystem _contentEye = default!;
         [Dependency] private SharedTransformSystem _transform = default!;
         [Dependency] private SharedMapSystem _mapSystem = default!;
+
+        [Dependency] private EntityQuery<SandboxCopyableComponent> _sandboxCopyableQuery;
 
         private bool _sandboxEnabled;
         public bool SandboxAllowed { get; private set; }
@@ -97,7 +100,12 @@ namespace Content.Client.Sandbox
                 && TryComp(uid, out MetaDataComponent? comp)
                 && !comp.EntityDeleted)
             {
-                if (comp.EntityPrototype == null || comp.EntityPrototype.HideSpawnMenu || comp.EntityPrototype.Abstract)
+                // Unconditional failures.
+                if (comp.EntityPrototype == null || comp.EntityPrototype.Abstract)
+                    return false;
+
+                // Skippable failures.
+                if (comp.EntityPrototype.HideSpawnMenu && !_sandboxCopyableQuery.HasComp(uid))
                     return false;
 
                 if (_placement.Eraser)
