@@ -14,7 +14,7 @@ namespace Content.Shared.Interaction;
 /// </summary>
 public partial class SharedInteractionSystem
 {
-    [Dependency] EntityQuery<RelayInputMoverComponent> _relayInputMoverQuery;
+    [Dependency] private EntityQuery<RelayInputMoverComponent> _relayInputMoverQuery;
 
     [SubscribeLocalEvent]
     private void CancelInteractEvent(Entity<BlockMovementComponent> ent, ref InteractionAttemptEvent args)
