@@ -138,7 +138,7 @@ public sealed partial class TechnologyDiskSystem : EntitySystem
                 _research.AddLatheRecipe(target, recipe, database);
             }
         }
-        _popup.PopupClient(Loc.GetString("tech-disk-inserted"), target, args.User);
+        _popup.PopupEntity(Loc.GetString("tech-disk-inserted"), target, args.User);
         PredictedQueueDel(ent.Owner);
         args.Handled = true;
     }

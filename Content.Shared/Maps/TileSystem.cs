@@ -122,6 +122,10 @@ public sealed partial class TileSystem : EntitySystem
     /// </summary>
     public byte PickVariant(ContentTileDefinition tile, IRobustRandom random)
     {
+        // Null variants? Uniform distribution.
+        if (tile.PlacementVariants == null)
+            return random.NextByte(tile.Variants);
+
         var variants = tile.PlacementVariants;
 
         var sum = variants.Sum();
@@ -200,7 +204,7 @@ public sealed partial class TileSystem : EntitySystem
             return false;
 
         var key = tileref.GridIndices;
-        var currentTileDef = (ContentTileDefinition) _tileDefinitionManager[tileref.Tile.TypeId];
+        var currentTileDef = (ContentTileDefinition)_tileDefinitionManager[tileref.Tile.TypeId];
 
         // If the tile we're placing has a baseTurf that matches the tile we're replacing, we don't need to create a history
         // unless the tile already has a history.
@@ -305,11 +309,10 @@ public sealed partial class TileSystem : EntitySystem
             previousTileId = tileDef.BaseTurf.Value;
         }
 
-        if (spawnItem)
+        if (spawnItem && tileDef.ItemDropPrototypeName != null)
         {
             //Actually spawn the relevant tile item at the right position and give it some random offset.
-            var tileItem = Spawn(tileDef.ItemDropPrototypeName, coordinates);
-            Transform(tileItem).LocalRotation = _robustRandom.NextDouble() * Math.Tau;
+            SpawnAttachedTo(tileDef.ItemDropPrototypeName, coordinates, rotation: _robustRandom.NextAngle());
         }
 
         //Destroy any decals on the tile

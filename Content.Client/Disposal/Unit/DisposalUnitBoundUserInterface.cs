@@ -1,4 +1,6 @@
 using Content.Client.Power.EntitySystems;
+using Content.Client.UserInterface.Controls;
+using Content.Shared.Access.Systems;
 using Content.Shared.Disposal.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -6,13 +8,61 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Disposal.Unit
 {
     [UsedImplicitly]
-    public sealed class DisposalUnitBoundUserInterface : BoundUserInterface
+    public sealed class DisposalUnitBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
     {
         [ViewVariables]
         private DisposalUnitWindow? _disposalUnitWindow;
 
-        public DisposalUnitBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        protected override void Open()
         {
+            base.Open();
+            _disposalUnitWindow = this.CreateWindow<DisposalUnitWindow>();
+            _disposalUnitWindow.OpenCenteredRight();
+            _disposalUnitWindow.SetInfoFromEntity(EntMan, Owner);
+
+            _disposalUnitWindow.OnTogglePower += ButtonPressed;
+            _disposalUnitWindow.OnEject += ButtonPressed;
+            _disposalUnitWindow.OnEngage += ButtonPressed;
+
+            _disposalUnitWindow.OnChangeRouting += OpenRoutingWindow;
+
+            Update();
+        }
+
+        public override void Update()
+        {
+            base.Update();
+
+            if (_disposalUnitWindow == null)
+                return;
+
+            // Update general fields
+            if (!EntMan.TryGetComponent<DisposalUnitComponent>(Owner, out var component))
+                return;
+
+            var disposalSystem = EntMan.System<DisposalUnitSystem>();
+            _disposalUnitWindow.Populate(
+                    EntMan.System<PowerReceiverSystem>().IsPowered(Owner),
+                    component.Engaged,
+                    disposalSystem.GetState((Owner, component)),
+                    disposalSystem.EstimatedFullPressure((Owner, component)),
+                    component.PressurePerSecond);
+
+            // Update if routing is enabled or accessible
+            if (!EntMan.TryGetComponent<DisposalTaggerComponent>(Owner, out var tagger))
+            {
+                _disposalUnitWindow.PopulateRouting(false, false);
+                return;
+            }
+
+            var hasAccess = false;
+            if (PlayerManager.LocalEntity != null)
+            {
+                var accessReader = EntMan.System<AccessReaderSystem>();
+                hasAccess = accessReader.IsAllowed((EntityUid)PlayerManager.LocalEntity, Owner);
+            }
+
+            _disposalUnitWindow.PopulateRouting(tagger.Editable, hasAccess);
         }
 
         private void ButtonPressed(DisposalUnitUiButton button)
@@ -20,55 +70,9 @@ namespace Content.Client.Disposal.Unit
             SendPredictedMessage(new DisposalUnitUiButtonPressedMessage(button));
         }
 
-        protected override void Open()
+        private void OpenRoutingWindow()
         {
-            base.Open();
-
-            _disposalUnitWindow = this.CreateWindow<DisposalUnitWindow>();
-            _disposalUnitWindow.OpenCenteredRight();
-
-            _disposalUnitWindow.Eject.OnPressed += _ => ButtonPressed(DisposalUnitUiButton.Eject);
-            _disposalUnitWindow.Engage.OnPressed += _ => ButtonPressed(DisposalUnitUiButton.Engage);
-            _disposalUnitWindow.Power.OnPressed += _ => ButtonPressed(DisposalUnitUiButton.Power);
-
-            if (EntMan.TryGetComponent(Owner, out DisposalUnitComponent? component))
-            {
-                Refresh((Owner, component));
-            }
-        }
-
-        public override void Update()
-        {
-            base.Update();
-
-            if (EntMan.TryGetComponent(Owner, out DisposalUnitComponent? component))
-            {
-                Refresh((Owner, component));
-            }
-        }
-
-        public void Refresh(Entity<DisposalUnitComponent> entity)
-        {
-            if (_disposalUnitWindow == null)
-                return;
-
-            var name = EntMan.GetComponent<MetaDataComponent>(entity.Owner).EntityName;
-            _disposalUnitWindow.Title = Loc.GetString("ui-disposal-unit-title", ("name", name));
-
-            if (!EntMan.TryGetComponent(entity.Owner, out DisposalUnitComponent? disposals))
-                return;
-
-            var disposalUnit = EntMan.System<DisposalUnitSystem>();
-            var disposalState = disposalUnit.GetState(entity);
-            var fullPressure = disposalUnit.EstimatedFullPressure((Owner, disposals));
-            var pressurePerSecond = disposals.PressurePerSecond;
-
-            _disposalUnitWindow.UnitState.Text = Loc.GetString($"disposal-unit-state-{disposalState}");
-            _disposalUnitWindow.FullPressure = disposalUnit.EstimatedFullPressure(entity);
-            _disposalUnitWindow.PressurePerSecond = entity.Comp.PressurePerSecond;
-            _disposalUnitWindow.PressureBar.UpdatePressure(fullPressure, pressurePerSecond);
-            _disposalUnitWindow.Power.Pressed = EntMan.System<PowerReceiverSystem>().IsPowered(Owner);
-            _disposalUnitWindow.Engage.Pressed = entity.Comp.Engaged;
+            SendPredictedMessage(new DisposalTaggerOpenUiMessage());
         }
     }
 }

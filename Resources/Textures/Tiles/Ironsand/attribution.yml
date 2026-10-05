@@ -1,0 +1,13 @@
+- files:
+  - ironsand.png
+  - double_edge_E.png
+  - double_edge_N.png
+  - double_edge_S.png
+  - double_edge_W.png
+  - single_edge_NE.png
+  - single_edge_NW.png
+  - single_edge_SE.png
+  - single_edge_SW.png
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Spooky @ Shiptest, modified by AftrLite (GitHub)"
+  source: "https://github.com/shiptest-ss13/Shiptest/blob/0074e283f49378cf125131d873069e2366a7e459/icons/turf/floors/beachsand.dmi"

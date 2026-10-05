@@ -60,7 +60,7 @@ public sealed partial class PlungerSystem : EntitySystem
         if (!TryComp(target, out PlungerUseComponent? plunge))
             return;
 
-        _popup.PopupClient(Loc.GetString("plunger-unblock", ("target", target)), args.User, args.User, PopupType.Medium);
+        _popup.PopupEntity(Loc.GetString("plunger-unblock", ("target", target)), args.User, args.User, PopupType.Medium);
         plunge.Plunged = true;
 
         var spawn = ProtoMan.Index<WeightedRandomEntityPrototype>(plunge.PlungerLoot).Pick(_random);

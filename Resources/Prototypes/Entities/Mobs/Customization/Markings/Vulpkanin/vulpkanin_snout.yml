@@ -7,6 +7,10 @@
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
       state: snout
+  coloring:
+    default:
+      type:
+        !type:SkinColoring
 
 - type: marking
   id: VulpSnoutNose

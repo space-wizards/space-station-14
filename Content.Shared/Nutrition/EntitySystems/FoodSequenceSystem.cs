@@ -124,7 +124,7 @@ public sealed partial class FoodSequenceSystem : SharedFoodSequenceSystem
         if (start.Comp.FoodLayers.Count >= start.Comp.MaxLayers && !elementIndexed.Final || start.Comp.Finished)
         {
             if (user is not null)
-                _popup.PopupClient(Loc.GetString("food-sequence-no-space"), start, user.Value);
+                _popup.PopupEntity(Loc.GetString("food-sequence-no-space"), start, user.Value);
             return false;
         }
 

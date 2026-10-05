@@ -83,7 +83,7 @@
 # kill
 
 - type: entity
-  parent: [BaseTraitorObjective, BaseKillObjective]
+  parent: [BaseTraitorObjective, BaseKillRandomObjective]
   id: KillRandomPersonObjective
   description: Do it however you like, just make sure they don't get off the station.
   components:
@@ -92,18 +92,11 @@
     unique: false
   - type: TargetObjective
     title: objective-condition-maroon-person-title
-  - type: PickRandomPerson
-    filters:
-    # Can't have multiple objectives to kill the same person.
-    - !type:TargetObjectiveMindFilter
-      blacklist:
-        components:
-        - KillPersonCondition
   - type: KillPersonCondition
     requireMaroon: true
 
 - type: entity
-  parent: [BaseTraitorObjective, BaseKillObjective]
+  parent: [BaseTraitorObjective, BaseKillRandomObjective]
   id: KillRandomHeadObjective
   description: We need this head gone and you probably know why. Make sure they don't make it to CentComm, even if they're dead. Good luck, agent.
   components:
@@ -115,16 +108,11 @@
   - type: TargetObjective
     title: objective-condition-kill-maroon-title
   - type: PickRandomPerson
-    filters:
-    - !type:BodyMindFilter
+    conditions:
+    - !type:BodyWhitelistCondition
       whitelist:
         components:
         - CommandStaff
-    # Can't have multiple objectives to kill the same person.
-    - !type:TargetObjectiveMindFilter
-      blacklist:
-        components:
-        - KillPersonCondition
   - type: KillPersonCondition
     # don't count missing evac as killing as heads are higher profile, so you really need to do the dirty work
     # if ce flies a shittle to centcom you better find a way onto it
@@ -132,7 +120,7 @@
     requireMaroon: true
 
 - type: entity
-  parent: [BaseTraitorObjective, BaseKillObjective]
+  parent: [BaseTraitorObjective, BaseKillRandomObjective]
   id: KillStationAiObjective
   description: Nanotrasen proudly boasts about their state of the art artificial intelligence. Remind them it's just another toy that can be broken.
   components:
@@ -147,12 +135,6 @@
     title: objective-condition-kill-station-ai
   - type: PickRandomPerson
     pool: !type:AliveAiPool
-    filters:
-    # Can't have multiple objectives to kill the same person.
-    - !type:TargetObjectiveMindFilter
-      blacklist:
-        components:
-        - KillPersonCondition
   - type: KillPersonCondition
     requireDead: true
 
@@ -168,14 +150,15 @@
   - type: TargetObjective
     title: objective-condition-other-traitor-alive-title
   - type: PickRandomPerson
-    filters:
-    - !type:HasRoleMindFilter
+    conditions:
+    - !type:RoleCondition
       whitelist:
         components:
         - TraitorRole
     # Can't have multiple objectives to help/save the same person
-    - !type:TargetObjectiveMindFilter
-      blacklist:
+    - !type:ObjectiveTargetCondition
+      inverted: true
+      whitelist:
         components:
         - HelpProgressCondition
         - KeepAliveCondition
@@ -190,21 +173,23 @@
   - type: TargetObjective
     title: objective-condition-other-traitor-progress-title
   - type: PickRandomPerson
-    filters:
-    - !type:HasRoleMindFilter
+    conditions:
+    - !type:RoleCondition
       whitelist:
         components:
         - TraitorRole
     # Can't help anyone who is tasked with helping:
     # 1. thats boring
     # 2. no cyclic progress dependencies!!!
-    - !type:ObjectiveMindFilter
-      blacklist:
+    - !type:ObjectiveCondition
+      inverted: true
+      whitelist:
         components:
         - HelpProgressCondition
     # Can't have multiple objectives to help/save the same person
-    - !type:TargetObjectiveMindFilter
-      blacklist:
+    - !type:ObjectiveTargetCondition
+      inverted: true
+      whitelist:
         components:
         - HelpProgressCondition
         - KeepAliveCondition
