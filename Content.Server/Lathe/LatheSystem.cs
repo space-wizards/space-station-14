@@ -460,6 +460,12 @@ namespace Content.Server.Lathe
                 _materialStorage.TryChangeMaterialAmount(uid, mat, amount * delta);
         }
 
+        /// <summary>
+        /// Aborts the recipe currently printing, putting it back on the queue.
+        /// </summary>
+        /// <remarks>
+        /// Alters batch counts where possible instead of creating a new batch.
+        /// </remarks>
         public void AbortProduction(EntityUid uid, LatheComponent? component = null)
         {
             if (!Resolve(uid, ref component))
@@ -469,20 +475,32 @@ namespace Content.Server.Lathe
             {
                 if (component.Queue.Count > 0)
                 {
-                    // Batch abandoned while printing last item, need to create a one-item batch
                     var batch = component.Queue.First();
                     if (batch.Recipe != component.CurrentRecipe)
                     {
+                        // Batch on top doesn't match, create a new one to store the current recipe.
                         var newBatch = new LatheRecipeBatch(component.CurrentRecipe.Value, 0, 1);
                         component.Queue.AddFirst(newBatch);
                     }
                     else if (batch.ItemsPrinted > 0)
                     {
+                        // Partial batch in progress, remove from the printed count
                         batch.ItemsPrinted--;
                     }
+                    else
+                    {
+                        // Batch not yet started, add to the requested set.
+                        batch.ItemsRequested++;
+                    }
+                }
+                else
+                {
+                    // Nothing exists, create a new batch to save the current recipe.
+                    var newBatch = new LatheRecipeBatch(component.CurrentRecipe.Value, 0, 1);
+                    component.Queue.AddFirst(newBatch);
                 }
 
-                RefundCurrentRecipe(uid, component);
+                // Finally, clear the current recipe.
                 component.CurrentRecipe = null;
             }
             RemCompDeferred<LatheProducingComponent>(uid);
