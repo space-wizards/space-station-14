@@ -1,5 +1,4 @@
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.FixedPoint;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Popups;
 using Content.Shared.Temperature;
@@ -20,64 +19,55 @@ public sealed partial class WelderHeaterSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<WelderComponent, HeaterAttemptEvent>(OnHeaterAttempt);
-        SubscribeLocalEvent<WelderComponent, HeaterConsumedEvent>(OnHeaterConsumed);
+        SubscribeLocalEvent<WelderHeaterComponent, HeaterAttemptEvent>(OnHeaterAttempt);
+        SubscribeLocalEvent<WelderHeaterComponent, HeaterConsumedEvent>(OnHeaterConsumed);
     }
 
     /// <summary>
     ///     Checks if the welder is lit and has sufficient fuel before heating can occur.
     /// </summary>
-    private void OnHeaterAttempt(Entity<WelderComponent> ent, ref HeaterAttemptEvent args)
+    private void OnHeaterAttempt(Entity<WelderHeaterComponent> ent, ref HeaterAttemptEvent args)
     {
         if (args.Cancelled)
             return;
 
-        if (!_itemToggle.IsActivated(ent.Owner))
+        if (!TryComp<WelderComponent>(ent, out var welder) || !_itemToggle.IsActivated(ent.Owner))
         {
             args.Cancelled = true;
             return;
         }
 
-        if (!_solutionContainer.TryGetSolution(ent.Owner, ent.Comp.FuelSolutionName, out _, out var fuelSolution))
+        if (!_solutionContainer.TryGetSolution(ent.Owner, welder.FuelSolutionName, out _, out var fuelSolution))
         {
             args.Cancelled = true;
             return;
         }
 
-        var fuelNeeded = FixedPoint2.New(1.0f);
-        if (TryComp<WelderHeaterComponent>(ent, out var welderHeater))
-        {
-            fuelNeeded = FixedPoint2.New(welderHeater.FuelConsumptionPerHeat);
-        }
-
-        if (fuelSolution.GetTotalPrototypeQuantity(ent.Comp.FuelReagent) < fuelNeeded)
+        if (fuelSolution.GetTotalPrototypeQuantity(welder.FuelReagent) < ent.Comp.FuelConsumptionPerHeat)
         {
             args.Cancelled = true;
-            _popup.PopupEntity(Loc.GetString("welder-component-no-fuel-message"), ent.Owner, args.User);
+            _popup.PopupEntity(Loc.GetString("welder-component-no-fuel-message"), ent, args.User);
         }
     }
 
     /// <summary>
     ///     Consumes fuel from the welder after a heating cycle completes.
     /// </summary>
-    private void OnHeaterConsumed(Entity<WelderComponent> ent, ref HeaterConsumedEvent args)
+    private void OnHeaterConsumed(Entity<WelderHeaterComponent> ent, ref HeaterConsumedEvent args)
     {
-        if (!_solutionContainer.TryGetSolution(ent.Owner, ent.Comp.FuelSolutionName, out var fuelSolnComp, out var fuelSolution))
+        if (!TryComp<WelderComponent>(ent, out var welder))
             return;
 
-        var fuelConsumption = 1.0f;
-        if (TryComp<WelderHeaterComponent>(ent, out var welderHeater))
-        {
-            fuelConsumption = welderHeater.FuelConsumptionPerHeat;
-        }
+        if (!_solutionContainer.TryGetSolution(ent.Owner, welder.FuelSolutionName, out var fuelSolnComp, out var fuelSolution))
+            return;
 
-        var fuelNeeded = FixedPoint2.New(fuelConsumption);
-        if (fuelSolution.GetTotalPrototypeQuantity(ent.Comp.FuelReagent) < fuelNeeded)
+        var fuelNeeded = ent.Comp.FuelConsumptionPerHeat;
+        if (fuelSolution.GetTotalPrototypeQuantity(welder.FuelReagent) < fuelNeeded)
         {
-            _popup.PopupEntity(Loc.GetString("welder-component-no-fuel-message"), ent.Owner, args.User);
+            _popup.PopupEntity(Loc.GetString("welder-component-no-fuel-message"), ent, args.User);
             return;
         }
 
-        _solutionContainer.RemoveReagent(fuelSolnComp.Value, ent.Comp.FuelReagent, fuelNeeded);
+        _solutionContainer.RemoveReagent(fuelSolnComp.Value, welder.FuelReagent, fuelNeeded);
     }
 }

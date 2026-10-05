@@ -53,7 +53,7 @@
     ignited: true
   - type: Heater
     maxTemperature: 700
-    conductivity: 10
+    conductivity: 0.35
     requiresPower: false
   - type: ItemPlacer
     whitelist:

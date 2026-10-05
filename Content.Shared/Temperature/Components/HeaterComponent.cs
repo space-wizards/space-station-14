@@ -1,3 +1,4 @@
+using Content.Shared.Temperature.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Temperature.Components;
@@ -5,7 +6,8 @@ namespace Content.Shared.Temperature.Components;
 /// <summary>
 ///     Heats entities and solutions placed on this entity.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
+[Access(typeof(SharedTemperatureSystem))]
 public sealed partial class HeaterComponent : Component
 {
     /// <summary>
@@ -13,7 +15,7 @@ public sealed partial class HeaterComponent : Component
     ///     This determines how fast heat is transferred to the target based on temperature difference.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float Conductivity = 10f;
+    public float Conductivity = 0.35f;
 
     /// <summary>
     ///     The maximum temperature the heater can heat a target to.

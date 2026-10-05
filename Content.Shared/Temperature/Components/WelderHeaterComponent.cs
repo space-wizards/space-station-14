@@ -1,3 +1,5 @@
+using Content.Shared.FixedPoint;
+using Content.Shared.Temperature.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Temperature.Components;
@@ -6,11 +8,12 @@ namespace Content.Shared.Temperature.Components;
 ///     Specifies welder-specific heating values for <see cref="HeaterToolComponent"/>.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(SharedTemperatureSystem))]
 public sealed partial class WelderHeaterComponent : Component
 {
     /// <summary>
     ///     Amount of fuel consumed per heat application cycle.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float FuelConsumptionPerHeat = 1.0f;
+    public FixedPoint2 FuelConsumptionPerHeat = FixedPoint2.New(1);
 }

@@ -1,5 +1,4 @@
 using Content.Server.Power.EntitySystems;
-using Content.Server.Temperature.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.IgnitionSource;
@@ -27,6 +26,9 @@ public sealed partial class HeaterSystem : EntitySystem
         var query = EntityQueryEnumerator<HeaterComponent, ItemPlacerComponent>();
         while (query.MoveNext(out var uid, out var heater, out var placer))
         {
+            if (placer.PlacedEntities.Count == 0)
+                continue;
+
             if (heater.RequiresPower && !_powerReceiver.IsPowered(uid))
                 continue;
 
@@ -49,7 +51,7 @@ public sealed partial class HeaterSystem : EntitySystem
                     {
                         var heatContainer = new HeatContainer(heatCap, temp.CurrentTemperature);
                         var heatToApply = heatContainer.ConductHeat(maxTemp, frameTime, heater.Conductivity);
-                        if (heatToApply != 0f)
+                        if (heatToApply > 0f)
                             _temperature.ChangeHeat(target, heatToApply, temperature: temp);
                     }
                 }
@@ -67,7 +69,7 @@ public sealed partial class HeaterSystem : EntitySystem
 
                     var heatContainer = new HeatContainer(heatCap, solution.Temperature);
                     var heatToApply = heatContainer.ConductHeat(maxTemp, frameTime, heater.Conductivity);
-                    if (heatToApply != 0f)
+                    if (heatToApply > 0f)
                         _solutionContainer.SetTemperature(soln, heatContainer.Temperature);
                 }
             }
