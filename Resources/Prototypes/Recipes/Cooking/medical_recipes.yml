@@ -13,8 +13,9 @@
   group: Medicinal
   solids:
     FoodPoppy: 1
-    Brutepack: 1
-    MaterialCloth1: 1
+  stacks:
+    Brutepack: 10
+    Cloth: 1
   reagents:
     TranexamicAcid: 20
     Cryptobiolin: 20
@@ -26,8 +27,9 @@
   group: Medicinal
   solids:
     FoodAloe: 1
-    Ointment: 1
-    MaterialCloth1: 1
+  stacks:
+    Ointment: 10
+    Cloth: 1
   reagents:
     Sigynate: 20
     Dermaline: 20

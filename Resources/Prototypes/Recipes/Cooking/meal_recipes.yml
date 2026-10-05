@@ -191,7 +191,8 @@
   group: Savory
   solids:
     FoodBreadBun: 1
-    SheetPlasma1: 2
+  stacks:
+    Plasma: 2
 
 - type: microwaveMealRecipe
   id: RecipeCarpBurger
@@ -315,7 +316,7 @@
   group: Savory
   solids:
     FoodBreadBun: 1
-    ClothingHeadHatWizard: 1
+    ClothingHeadHatWizardBlue: 1
 
 - type: microwaveMealRecipe
   id: RecipeSuperBiteBurger
@@ -496,9 +497,10 @@
   reagents:
     TableSalt: 1
     Blackpepper: 1
+  stacks:
+    MetalRod: 1
   solids:
     FoodDough: 1
-    PartRodMetal1: 1
 
 - type: microwaveMealRecipe
   id: RecipeButteredToast
@@ -650,7 +652,8 @@
     FoodDoughFlat: 1
     FoodChiliPepper: 2
     FoodTomato: 2
-    SheetUranium1: 2
+  stacks:
+    Uranium: 2
 
 - type: microwaveMealRecipe
   id: RecipeCottonPizza
@@ -967,9 +970,9 @@
   solids:
     FoodBowlBig: 1
     FoodBanana: 1
-    MaterialBananium: 1
     ShardGlass: 1
-    #idk probably replace shard with someting bananium when #14663 merged
+  stacks:
+    Bananium: 1
 
 - type: microwaveMealRecipe
   id: RecipeMonkeysDelightSoup
@@ -1118,9 +1121,9 @@
 #  result: FoodPiePlump
 #  time: 15
 #  solids:
-#    FoodDoughPie: 1
-#    FoodPlumpHelmet: 3 #a big part of me wants to veto this because the item description is a dick joke but i'll write the placeholder anyway
-#    FoodPlateTin: 1
+#  FoodDoughPie: 1
+#  FoodPlumpHelmet: 3 #a big part of me wants to veto this because the item description is a dick joke but i'll write the placeholder anyway
+#  FoodPlateTin: 1
 
 - type: microwaveMealRecipe
   id: RecipeXenoPie
@@ -1436,6 +1439,7 @@
   result: FoodCakeLemoon
   time: 5
   group: Cake
+  priority: 1 # Otherwise it breaks because of the berry cake recipe at higher portion counts
   solids:
     FoodCakePlain: 1
     FoodLemoon: 1
@@ -1734,9 +1738,8 @@
   result: FoodMealQueso
   time: 15
   group: Soup
-  #todo Add blackpepper
-  #reagents:
-    #blackpepper: 5
+  reagents:
+    Blackpepper: 5
   solids:
     FoodChiliPepper: 1
     FoodCheeseSlice: 2
@@ -2050,7 +2053,7 @@
   time: 5
   group: Breads
   solids:
-    FoodDoughTortillaFlat: 1 # one eighth a standard bread dough recipe
+    FoodDoughTortillaFlat: 1 # one eighth of a standard bread dough recipe
 
 - type: microwaveMealRecipe
   id: RecipeTacoBeef

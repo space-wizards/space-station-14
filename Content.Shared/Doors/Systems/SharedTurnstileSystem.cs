@@ -89,14 +89,14 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
                 if (!_accessReader.IsAllowed(args.OtherEntity, ent))
                 {
                     _audio.PlayPredicted(ent.Comp.DenySound, ent, args.OtherEntity);
-                    PlayAnimation(ent, ent.Comp.DenyState);
+                    PlayAnimation(ent, TurnstileStates.Deny);
                 }
             }
 
             return;
         }
         // if they passed through:
-        PlayAnimation(ent, ent.Comp.SpinState);
+        PlayAnimation(ent, TurnstileStates.Spin);
         _audio.PlayPredicted(ent.Comp.TurnSound, ent, args.OtherEntity);
     }
 
@@ -121,14 +121,14 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
         var rotateAngle = rot.ToWorldVec().ToAngle();
 
         var diff = Math.Abs(approachAngle - rotateAngle);
-        diff %= MathHelper.TwoPi;
+        diff %= Math.Tau;
         if (diff > Math.PI)
-            diff = MathHelper.TwoPi - diff;
+            diff = Math.Tau - diff;
 
         return diff < Math.PI / 4;
     }
 
-    protected virtual void PlayAnimation(EntityUid uid, string stateId)
+    protected virtual void PlayAnimation(EntityUid uid, TurnstileStates state)
     {
 
     }

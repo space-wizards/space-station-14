@@ -65,9 +65,14 @@ public abstract partial class SharedXenoArtifactSystem
     }
 
     /// <summary>
-    /// Attempts to shift artifact into unlocking state, in which it is going to listen to interactions, that could trigger nodes.
+    /// Attempts to shift artifact into unlocking state, in which it is going to listen to interactions, that could trigger
+    /// nodes.
     /// </summary>
-    public void TriggerXenoArtifact(Entity<XenoArtifactComponent> ent, Entity<XenoArtifactNodeComponent>? node, bool force = false)
+    public void TriggerXenoArtifact(
+        Entity<XenoArtifactComponent> ent,
+        Entity<XenoArtifactNodeComponent>? node,
+        bool force = false
+    )
     {
         // limits spontaneous chain activations, also prevents spamming every triggering tool to activate nodes
         // without real knowledge about triggers
@@ -84,27 +89,45 @@ public abstract partial class SharedXenoArtifactSystem
                 _popup.PopupEntity(Loc.GetString(ent.Comp.UnlockBeginMsg), ent);
 
             Dirty(ent);
+            if (node != null && unlockingComp.TriggeredNodeIndexes.Add(GetIndex(ent, node.Value)))
+                Dirty(ent, unlockingComp);
         }
         else if (node != null)
         {
             var index = GetIndex(ent, node.Value);
 
-            var predecessorNodeIndices = GetPredecessorNodes((ent, ent), index);
-            var successorNodeIndices = GetSuccessorNodes((ent, ent), index);
-            if (unlockingComp.TriggeredNodeIndexes.Count == 0
-                || unlockingComp.TriggeredNodeIndexes.All(
-                    x => predecessorNodeIndices.Contains(x) || successorNodeIndices.Contains(x)
-                )
-               )
-                // we add time on each new trigger, if it is not going to fail us
-                unlockingComp.EndTime += ent.Comp.UnlockStateIncrementPerNode;
+            // We need to add time, UNLESS the unlocking process is in a failed state after adding the new trigger.
+            // An unlockable node will fail to unlock if there is a trigger other than its required triggers.
+            // A failing unlocking state is one where there exists no unlockable nodes that have not failed.
 
-            if (ent.Comp.UnlockContinueMsg != null)
-                _popup.PopupEntity(Loc.GetString(ent.Comp.UnlockContinueMsg), ent);
-        }
+            if (unlockingComp.TriggeredNodeIndexes.Add(index))
+            {
+                var allNodes = GetAllNodes((ent, ent));
+                foreach (var nodeEnt in allNodes)
+                {
+                    if (!nodeEnt.Comp.Locked)
+                        continue;
 
-        if (node != null && unlockingComp.TriggeredNodeIndexes.Add(GetIndex(ent, node.Value)))
-        {
+                    var directPredecessorNodes = GetDirectPredecessorNodes((ent, ent), nodeEnt);
+                    if (directPredecessorNodes.Count == 0 || directPredecessorNodes.All(x => !x.Comp.Locked))
+                    {
+                        // This is an unlockable node, check if is failed
+                        var predecessorNodeIndices = GetPredecessorNodes((ent, ent), GetIndex(ent, nodeEnt.Owner));
+                        // Remember that triggering the unlockable node shouldn't count as failing the unlock!
+                        predecessorNodeIndices.Add(GetIndex(ent, nodeEnt.Owner)); 
+                        if (unlockingComp.TriggeredNodeIndexes.All(x => predecessorNodeIndices.Contains(x)))
+                        {
+                            // We have found an unlockable node that is still possible to unlock - it contains all triggers in its predecessors
+                            unlockingComp.EndTime += ent.Comp.UnlockStateIncrementPerNode; 
+
+                            if (ent.Comp.UnlockContinueMsg != null)
+                                _popup.PopupEntity(Loc.GetString(ent.Comp.UnlockContinueMsg), ent);
+                            break;
+                        }
+                    }
+                }
+            }
+
             Dirty(ent, unlockingComp);
         }
     }

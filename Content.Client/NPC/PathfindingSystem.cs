@@ -254,7 +254,7 @@ namespace Content.Client.NPC
                                 text.AppendLine(flagStr);
                             }
 
-                            screenHandle.DrawString(_font, mousePos.Position, text.ToString());
+                            screenHandle.DrawString(_font, mousePos.Position, text.ToString(), 1, Color.White, TextOutline.Default);
                             found = true;
                             break;
                         }
