@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Kitchen;
 
 /// <summary>
-///    A microwave-based cooking recipe to produce an entity.
+/// A microwave-based cooking recipe to produce an entity.
 /// </summary>
 [Prototype]
 public sealed partial class MicrowaveMealRecipePrototype : IPrototype
@@ -146,9 +146,9 @@ public partial record struct CookingIngredients
     }
 
     /// <summary>
-    ///    Count the number of ingredients in a recipe for sorting the recipe list.
-    ///    This makes sure that where ingredient lists overlap, the more complex
-    ///    recipe is picked first.
+    /// Count the number of ingredients in a recipe for sorting the recipe list.
+    /// This makes sure that where ingredient lists overlap, the more complex
+    /// recipe is picked first.
     /// </summary>
     public readonly FixedPoint2 Count()
     {
