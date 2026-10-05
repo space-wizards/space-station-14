@@ -234,7 +234,7 @@ namespace Content.Shared.Interaction
                 RemCompDeferred<UnremoveableComponent>(uid);
             else
                 QueueDel(uid);
-        }QueueDel
+        }
 
         private void OnUnequipHand(EntityUid uid, UnremoveableComponent item, GotUnequippedHandEvent args)
         {
