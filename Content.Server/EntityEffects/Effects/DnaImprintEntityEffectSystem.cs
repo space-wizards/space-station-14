@@ -12,6 +12,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Pointing;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using ChemistrySolution = Content.Shared.Chemistry.Components.Solution;
 
 namespace Content.Server.EntityEffects.Effects;
 
@@ -40,7 +41,7 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
         Imprint(ent, solution, effect);
     }
 
-    private void Imprint(EntityUid uid, Content.Shared.Chemistry.Components.Solution solution, DnaImprint effect)
+    private void Imprint(EntityUid uid, ChemistrySolution solution, DnaImprint effect)
     {
         // Only this effect's reagent supplies DNA; ordinary blood and other imprinting drugs are unrelated.
         var dna = new HashSet<string>();
