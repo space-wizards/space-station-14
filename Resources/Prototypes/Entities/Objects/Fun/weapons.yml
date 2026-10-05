@@ -172,6 +172,7 @@
     damage:
       types:
         Blunt: 0.0 # Remove damage to avoid pacifism metagaming
+    undamagedAlertThreshold: 0
 
 - type: entity
   parent: [ BaseItem, BaseToySword ]

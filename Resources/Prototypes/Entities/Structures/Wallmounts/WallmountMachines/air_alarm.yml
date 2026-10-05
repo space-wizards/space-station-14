@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseWallmountMachine
+  parent: [ BaseWallmountMachine, StructureHealthMachineWeak ]
   id: AirAlarm
   name: air alarm
   description: An air alarm. Alarms... air?
@@ -51,12 +51,15 @@
     group: AirAlarm
   - type: Clickable
   - type: InteractionOutline
+  - type: ActivatableUI
+    key: enum.SharedAirAlarmInterfaceKey.Key
   - type: UserInterface
     interfaces:
       enum.SharedAirAlarmInterfaceKey.Key:
         type: AirAlarmBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
+  - type: ActivatableUIRequiresPower
   - type: WiresPanel
   - type: Wires
     boardName: wires-board-name-airalarm
@@ -84,18 +87,12 @@
   - type: Construction
     graph: AirAlarm
     node: air_alarm
-  - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
@@ -107,7 +104,7 @@
     - DeviceMonitoringAndControl
 
 - type: entity
-  parent: BaseWallmountMetallic
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: AirAlarmAssembly
   name: air alarm assembly
   description: An air alarm. Doesn't look like it'll be alarming air any time soon.
@@ -133,10 +130,8 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 15
+        damage: 50
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak

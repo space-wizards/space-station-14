@@ -33,9 +33,9 @@
   components:
   - type: Action
   - type: Sprite
-    sprite: Mobs/Animals/spider.rsi
+    sprite: Mobs/Animals/Spiders/tarantulaspider.rsi
     layers:
-    - state: tarantula
+    - state: idle
   - type: InstantAction
     event: !type:PolymorphActionEvent
       protoId: WizardSpider

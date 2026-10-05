@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 288.0.1
+  engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/12/2026 22:07:20
-  entityCount: 941
+  time: 08/22/2026 13:59:38
+  entityCount: 942
 maps: []
 grids:
 - 818
@@ -44,7 +44,7 @@ entities:
       chunks:
         -1,-1:
           ind: -1,-1
-          tiles: AAAAAAAAAHkAAAAAAAAdAAAAAAAAWQAAAAAAAB0AAAAAAAABAAAAAAQAHQAAAAAAAFkAAAAAAAAdAAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB5AAAAAAAAHQAAAAAAAFkAAAAAAAAdAAAAAAAAAQAAAAAAAB0AAAAAAABZAAAAAAAAHQAAAAAAAHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAAB0AAAAAAABZAAAAAAAAHQAAAAAAAAEAAAAABgAdAAAAAAAAWQAAAAAAAB0AAAAAAAB5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHkAAAAAAAAdAAAAAAAAWQAAAAAAAB0AAAAAAAABAAAAAAQAHQAAAAAAAFkAAAAAAAAdAAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHkAAAAAAAB5AAAAAAAAeQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAeQAAAAAAAHkAAAAAAAB5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABoAAAAAAAAeQAAAAAAAGgAAAAAAABZAAAAAAAAWQAAAAAAAEwAAAAAAABZAAAAAAAAWQAAAAAAAGgAAAAAAAB5AAAAAAAAaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAAHkAAAAAAAB5AAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAAB5AAAAAAAAeQAAAAAAAHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAAFkAAAAAAABZAAAAAAAATAAAAAAAAFkAAAAAAABZAAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB5AAAAAAAAWQAAAAAAAFkAAAAAAABMAAAAAAAAWQAAAAAAAFkAAAAAAAB5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAAHkAAAAAAAB5AAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAeQAAAAAAAHkAAAAAAAB5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHkAAAAAAAAdAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB5AAAAAAAAHQAAAAAAAFkAAAAAAABZAAAAAAAATAAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAHkAAAAAAAB5AAAAAAAAeQAAAAAAAHkAAAAAAAB5AAAAAAAAeQAAAAAAAHkAAAAAAAAAAAAAAAAAeQAAAAAAAB0AAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAAAAAAAAAAHkAAAAAAAAdAAAAAAAAWQAAAAAAAFkAAAAAAABMAAAAAAAAWQAAAAAAAEwAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAA==
+          tiles: AAAAAAAAAHkAAAAAAAAdAAAAAAAAWQAAAAAAAB0AAAAAAAB5AAAAAAAAHQAAAAAAAFkAAAAAAAAdAAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB5AAAAAAAAHQAAAAAAAFkAAAAAAAAdAAAAAAAAAQAAAAAAAB0AAAAAAABZAAAAAAAAHQAAAAAAAHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAAB0AAAAAAABZAAAAAAAAHQAAAAAAAAEAAAAABgAdAAAAAAAAWQAAAAAAAB0AAAAAAAB5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHkAAAAAAAAdAAAAAAAAWQAAAAAAAB0AAAAAAAB5AAAAAAAAHQAAAAAAAFkAAAAAAAAdAAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHkAAAAAAAB5AAAAAAAAeQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAeQAAAAAAAHkAAAAAAAB5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABoAAAAAAAAeQAAAAAAAGgAAAAAAABZAAAAAAAAWQAAAAAAAEwAAAAAAABZAAAAAAAAWQAAAAAAAGgAAAAAAAB5AAAAAAAAaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAAHkAAAAAAAB5AAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAAB5AAAAAAAAeQAAAAAAAHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAAFkAAAAAAABZAAAAAAAATAAAAAAAAFkAAAAAAABZAAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB5AAAAAAAAWQAAAAAAAFkAAAAAAABMAAAAAAAAWQAAAAAAAFkAAAAAAAB5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAAHkAAAAAAAB5AAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAeQAAAAAAAHkAAAAAAAB5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHkAAAAAAAAdAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB5AAAAAAAAHQAAAAAAAFkAAAAAAABZAAAAAAAATAAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAHkAAAAAAAB5AAAAAAAAeQAAAAAAAHkAAAAAAAB5AAAAAAAAeQAAAAAAAHkAAAAAAAAAAAAAAAAAeQAAAAAAAB0AAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAAAAAAAAAAHkAAAAAAAAdAAAAAAAAWQAAAAAAAFkAAAAAAABMAAAAAAAAWQAAAAAAAEwAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAA==
           version: 7
         0,0:
           ind: 0,0
@@ -52,7 +52,7 @@ entities:
           version: 7
         0,-1:
           ind: 0,-1
-          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB5AAAAAAAAHQAAAAAAAFkAAAAAAAAdAAAAAAAAAQAAAAABAB0AAAAAAABZAAAAAAAAHQAAAAAAAHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAAB0AAAAAAABZAAAAAAAAHQAAAAAAAAEAAAAAAAAdAAAAAAAAWQAAAAAAAB0AAAAAAAB5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHkAAAAAAAAdAAAAAAAAWQAAAAAAAB0AAAAAAAABAAAAAAIAHQAAAAAAAFkAAAAAAAAdAAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB5AAAAAAAAHQAAAAAAAFkAAAAAAAAdAAAAAAAAAQAAAAADAB0AAAAAAABZAAAAAAAAHQAAAAAAAHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB5AAAAAAAAeQAAAAAAAHkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAHkAAAAAAAB5AAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAAAAAAHkAAAAAAABoAAAAAAAAWQAAAAAAAFkAAAAAAABMAAAAAAAAWQAAAAAAAFkAAAAAAABoAAAAAAAAeQAAAAAAAGgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHkAAAAAAAB5AAAAAAAAeQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAeQAAAAAAAHkAAAAAAAB5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHkAAAAAAABZAAAAAAAAWQAAAAAAAEwAAAAAAABZAAAAAAAAWQAAAAAAAHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB5AAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAAB5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAAFkAAAAAAABZAAAAAAAATAAAAAAAAFkAAAAAAABZAAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHkAAAAAAAB5AAAAAAAAeQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAHkAAAAAAAB5AAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB5AAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAHkAAAAAAAAAAAAAAAAAAAAAAAAAAHkAAAAAAAB5AAAAAAAAeQAAAAAAAHkAAAAAAAB5AAAAAAAAeQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAAB5AAAAAAAAAAAAAAAAAAAAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAHkAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB5AAAAAAAAHQAAAAAAAFkAAAAAAAAdAAAAAAAAeQAAAAAAAB0AAAAAAABZAAAAAAAAHQAAAAAAAHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAAB0AAAAAAABZAAAAAAAAHQAAAAAAAAEAAAAAAAAdAAAAAAAAWQAAAAAAAB0AAAAAAAB5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHkAAAAAAAAdAAAAAAAAWQAAAAAAAB0AAAAAAAABAAAAAAIAHQAAAAAAAFkAAAAAAAAdAAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB5AAAAAAAAHQAAAAAAAFkAAAAAAAAdAAAAAAAAeQAAAAAAAB0AAAAAAABZAAAAAAAAHQAAAAAAAHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB5AAAAAAAAeQAAAAAAAHkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAHkAAAAAAAB5AAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAAAAAAHkAAAAAAABoAAAAAAAAWQAAAAAAAFkAAAAAAABMAAAAAAAAWQAAAAAAAFkAAAAAAABoAAAAAAAAeQAAAAAAAGgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHkAAAAAAAB5AAAAAAAAeQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAeQAAAAAAAHkAAAAAAAB5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHkAAAAAAABZAAAAAAAAWQAAAAAAAEwAAAAAAABZAAAAAAAAWQAAAAAAAHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB5AAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAAB5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAAFkAAAAAAABZAAAAAAAATAAAAAAAAFkAAAAAAABZAAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHkAAAAAAAB5AAAAAAAAeQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAHkAAAAAAAB5AAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB5AAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAHkAAAAAAAAAAAAAAAAAAAAAAAAAAHkAAAAAAAB5AAAAAAAAeQAAAAAAAHkAAAAAAAB5AAAAAAAAeQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAAB5AAAAAAAAAAAAAAAAAAAAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAFkAAAAAAABZAAAAAAAAWQAAAAAAAHkAAAAAAAAAAAAAAAAAAAAAAAAAAA==
           version: 7
         -1,0:
           ind: -1,0
@@ -109,7 +109,7 @@ entities:
           -4,-5:
             0: 36744
           -3,-4:
-            0: 65535
+            0: 57341
           -3,-3:
             0: 65535
           -3,-2:
@@ -176,7 +176,7 @@ entities:
           1,-5:
             0: 36744
           2,-4:
-            0: 65535
+            0: 57341
           2,-3:
             0: 65535
           2,-2:
@@ -451,17 +451,6 @@ entities:
     - Construction
 - proto: AlwaysPoweredWallLight
   entities:
-  - uid: 150
-    components:
-    - type: Transform
-      parent: 818
-      rot: -1.5707963267948966 rad
-      pos: -8.5,-5.5
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - Destructible
-    - RCDDeconstructable
   - uid: 188
     components:
     - type: Transform
@@ -484,17 +473,6 @@ entities:
     - Construction
     - Destructible
     - RCDDeconstructable
-  - uid: 209
-    components:
-    - type: Transform
-      parent: 818
-      rot: 1.5707963267948966 rad
-      pos: 7.5,-5.5
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - Destructible
-    - RCDDeconstructable
   - uid: 341
     components:
     - type: Transform
@@ -506,6 +484,18 @@ entities:
     - Construction
     - Destructible
     - RCDDeconstructable
+  - uid: 597
+    components:
+    - type: Transform
+      parent: 818
+      rot: 1.5707963267948966 rad
+      pos: -12.5,-5.5
+  - uid: 633
+    components:
+    - type: Transform
+      parent: 818
+      rot: -1.5707963267948966 rad
+      pos: 11.5,-5.5
   - uid: 634
     components:
     - type: Transform
@@ -527,17 +517,12 @@ entities:
     - Construction
     - Destructible
     - RCDDeconstructable
-  - uid: 649
+  - uid: 648
     components:
     - type: Transform
       parent: 818
       rot: 3.141592653589793 rad
-      pos: -10.5,-11.5
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - Destructible
-    - RCDDeconstructable
+      pos: -10.5,-20.5
   - uid: 650
     components:
     - type: Transform
@@ -548,6 +533,18 @@ entities:
     - Construction
     - Destructible
     - RCDDeconstructable
+  - uid: 670
+    components:
+    - type: Transform
+      parent: 818
+      rot: 3.141592653589793 rad
+      pos: 9.5,-20.5
+  - uid: 671
+    components:
+    - type: Transform
+      parent: 818
+      rot: 3.141592653589793 rad
+      pos: -10.5,-11.5
   - uid: 687
     components:
     - type: Transform
@@ -702,30 +699,38 @@ entities:
     - Destructible
 - proto: ArrivalsShuttleTimer
   entities:
-  - uid: 597
+  - uid: 91
     components:
     - type: Transform
       parent: 818
+      rot: -1.5707963267948966 rad
       pos: -7.5,-5.5
-    - type: Godmode
-  - uid: 633
+  - uid: 139
     components:
     - type: Transform
       parent: 818
+      rot: 1.5707963267948966 rad
       pos: 6.5,-5.5
-    - type: Godmode
-  - uid: 928
+  - uid: 159
     components:
     - type: Transform
       parent: 818
-      pos: -6.5,-14.5
-    - type: Godmode
-  - uid: 929
+      pos: -6.5,-16.5
+  - uid: 209
     components:
     - type: Transform
       parent: 818
-      pos: 5.5,-14.5
-    - type: Godmode
+      pos: -6.5,-9.5
+  - uid: 923
+    components:
+    - type: Transform
+      parent: 818
+      pos: 5.5,-9.5
+  - uid: 926
+    components:
+    - type: Transform
+      parent: 818
+      pos: 5.5,-16.5
 - proto: AtmosDeviceFanDirectional
   entities:
   - uid: 296
@@ -3006,8 +3011,8 @@ entities:
       pos: -3.5,8.5
     - type: Godmode
     missingComponents:
-    - RCDDeconstructable
     - Destructible
+    - RCDDeconstructable
     - Construction
 - proto: Catwalk
   entities:
@@ -3581,7 +3586,6 @@ entities:
     - type: Godmode
     missingComponents:
     - Construction
-    - Destructible
     - Anchorable
 - proto: ChairWood
   entities:
@@ -3865,11 +3869,6 @@ entities:
           decals:
             246: 6,-3
         - node:
-            id: BushCThree
-            color: '#FFFFFFFF'
-          decals:
-            0: 8.958727,-15.96412
-        - node:
             id: Bushc1
             color: '#FFFFFFFF'
           decals:
@@ -3879,21 +3878,6 @@ entities:
             color: '#FFFFFFFF'
           decals:
             16: 8.954511,-13.729745
-        - node:
-            id: Bushe4
-            color: '#FFFFFFFF'
-          decals:
-            17: 8.970136,-15.604745
-        - node:
-            id: Bushf1
-            color: '#FFFFFFFF'
-          decals:
-            11: 8.984636,-13.12037
-        - node:
-            id: Bushf2
-            color: '#FFFFFFFF'
-          decals:
-            12: 9.015886,-15.635995
         - node:
             id: Bushj3
             color: '#FFFFFFFF'
@@ -3915,11 +3899,6 @@ entities:
             color: '#334E6DC8'
           decals:
             271: 0,-1
-        - node:
-            id: Grassb2
-            color: '#FFFFFFFF'
-          decals:
-            3: 9.014171,-12.979745
         - node:
             id: Grassb5
             color: '#FFFFFFFF'
@@ -4073,7 +4052,6 @@ entities:
           decals:
             128: -9,-17
             129: -10,-17
-            130: -11,-17
             131: -12,-17
             132: -13,-17
         - node:
@@ -4230,26 +4208,6 @@ entities:
           decals:
             354: -6,-2
             355: -6,-1
-        - node:
-            id: BushATwo
-            color: '#FFFFFFFF'
-          decals:
-            6: -11.016409,-15.979745
-        - node:
-            id: BushCThree
-            color: '#FFFFFFFF'
-          decals:
-            5: -11.047659,-13.073495
-        - node:
-            id: Bushe2
-            color: '#FFFFFFFF'
-          decals:
-            15: -11.003177,-13.104745
-        - node:
-            id: Bushe4
-            color: '#FFFFFFFF'
-          decals:
-            14: -11.128177,-15.96412
         - node:
             id: Bushf3
             color: '#FFFFFFFF'
@@ -5473,22 +5431,18 @@ entities:
       pos: -12.722768,2.7627993
 - proto: ExtinguisherCabinetFilled
   entities:
-  - uid: 213
+  - uid: 645
     components:
     - type: Transform
       parent: 818
+      rot: -1.5707963267948966 rad
       pos: -6.5,-2.5
-    - type: Godmode
-    missingComponents:
-    - Destructible
-  - uid: 816
+  - uid: 928
     components:
     - type: Transform
       parent: 818
+      rot: 1.5707963267948966 rad
       pos: 5.5,-2.5
-    - type: Godmode
-    missingComponents:
-    - Destructible
 - proto: FirelockEdge
   entities:
   - uid: 690
@@ -5707,6 +5661,7 @@ entities:
     components:
     - type: Transform
       parent: 818
+      rot: 1.5707963267948966 rad
       pos: 5.5,0.5
     - type: Godmode
     missingComponents:
@@ -5737,6 +5692,7 @@ entities:
     components:
     - type: Transform
       parent: 818
+      rot: 1.5707963267948966 rad
       pos: -6.5,0.5
     - type: Godmode
     missingComponents:
@@ -5747,6 +5703,7 @@ entities:
     components:
     - type: Transform
       parent: 818
+      rot: 1.5707963267948966 rad
       pos: 5.5,-1.5
     - type: Godmode
     missingComponents:
@@ -5757,6 +5714,7 @@ entities:
     components:
     - type: Transform
       parent: 818
+      rot: 1.5707963267948966 rad
       pos: 5.5,-0.5
     - type: Godmode
     missingComponents:
@@ -5767,6 +5725,7 @@ entities:
     components:
     - type: Transform
       parent: 818
+      rot: 1.5707963267948966 rad
       pos: -6.5,-1.5
     - type: Godmode
     missingComponents:
@@ -5777,6 +5736,7 @@ entities:
     components:
     - type: Transform
       parent: 818
+      rot: 1.5707963267948966 rad
       pos: -6.5,-0.5
     - type: Godmode
     missingComponents:
@@ -6022,15 +5982,6 @@ entities:
     - type: Transform
       parent: 818
       pos: 13.5,-12.5
-    - type: Godmode
-    missingComponents:
-    - Destructible
-    - Construction
-  - uid: 139
-    components:
-    - type: Transform
-      parent: 818
-      pos: -14.5,-12.5
     - type: Godmode
     missingComponents:
     - Destructible
@@ -6620,6 +6571,33 @@ entities:
     missingComponents:
     - Destructible
     - Construction
+  - uid: 642
+    components:
+    - type: Transform
+      parent: 818
+      pos: -10.5,-12.5
+  - uid: 659
+    components:
+    - type: Transform
+      parent: 818
+      pos: -10.5,-15.5
+  - uid: 660
+    components:
+    - type: Transform
+      parent: 818
+      pos: -14.5,-12.5
+  - uid: 674
+    components:
+    - type: Transform
+      parent: 818
+      rot: 3.141592653589793 rad
+      pos: 9.5,-15.5
+  - uid: 816
+    components:
+    - type: Transform
+      parent: 818
+      rot: 3.141592653589793 rad
+      pos: 9.5,-12.5
 - proto: PaperBin10
   entities:
   - uid: 729
@@ -6639,24 +6617,18 @@ entities:
     - Destructible
 - proto: PosterLegitEnlist
   entities:
-  - uid: 926
+  - uid: 213
     components:
     - type: Transform
       parent: 818
-      pos: -14.5,1.5
-    - type: Godmode
-    missingComponents:
-    - Destructible
+      pos: -14.5,-3.5
 - proto: PosterLegitHighClassMartini
   entities:
-  - uid: 925
+  - uid: 922
     components:
     - type: Transform
       parent: 818
-      pos: -6.5,-3.5
-    - type: Godmode
-    missingComponents:
-    - Destructible
+      pos: -6.5,-4.5
 - proto: PosterLegitJustAWeekAway
   entities:
   - uid: 821
@@ -6727,24 +6699,23 @@ entities:
     - type: Godmode
     missingComponents:
     - Destructible
-  - uid: 922
+  - uid: 669
     components:
     - type: Transform
       parent: 818
-      pos: -0.5,6.5
-    - type: Godmode
-    missingComponents:
-    - Destructible
+      pos: 0.5,6.5
+  - uid: 929
+    components:
+    - type: Transform
+      parent: 818
+      pos: -1.5,6.5
 - proto: PosterLegitNTTGC
   entities:
-  - uid: 924
+  - uid: 649
     components:
     - type: Transform
       parent: 818
-      pos: 5.5,-3.5
-    - type: Godmode
-    missingComponents:
-    - Destructible
+      pos: 5.5,-4.5
 - proto: PosterLegitPDAAd
   entities:
   - uid: 920
@@ -6767,14 +6738,11 @@ entities:
     - Destructible
 - proto: PosterLegitWorkForAFuture
   entities:
-  - uid: 923
+  - uid: 644
     components:
     - type: Transform
       parent: 818
-      pos: 12.5,2.5
-    - type: Godmode
-    missingComponents:
-    - Destructible
+      pos: 13.5,-3.5
 - proto: PottedPlantRandom
   entities:
   - uid: 236
@@ -7037,16 +7005,6 @@ entities:
     - RCDDeconstructable
     - Destructible
     - Construction
-  - uid: 91
-    components:
-    - type: Transform
-      parent: 818
-      pos: -14.5,-12.5
-    - type: Godmode
-    missingComponents:
-    - RCDDeconstructable
-    - Destructible
-    - Construction
   - uid: 93
     components:
     - type: Transform
@@ -7237,16 +7195,11 @@ entities:
     - RCDDeconstructable
     - Destructible
     - Construction
-  - uid: 159
+  - uid: 150
     components:
     - type: Transform
       parent: 818
-      pos: -14.5,-13.5
-    - type: Godmode
-    missingComponents:
-    - RCDDeconstructable
-    - Destructible
-    - Construction
+      pos: -14.5,-12.5
   - uid: 160
     components:
     - type: Transform
@@ -7717,6 +7670,31 @@ entities:
     - RCDDeconstructable
     - Destructible
     - Construction
+  - uid: 675
+    components:
+    - type: Transform
+      parent: 818
+      pos: 9.5,-15.5
+  - uid: 678
+    components:
+    - type: Transform
+      parent: 818
+      pos: 9.5,-12.5
+  - uid: 917
+    components:
+    - type: Transform
+      parent: 818
+      pos: -10.5,-12.5
+  - uid: 924
+    components:
+    - type: Transform
+      parent: 818
+      pos: -10.5,-15.5
+  - uid: 925
+    components:
+    - type: Transform
+      parent: 818
+      pos: -14.5,-13.5
 - proto: SignNanotrasen1
   entities:
   - uid: 721
@@ -7903,41 +7881,11 @@ entities:
     - Destructible
     - Construction
     - RCDDeconstructable
-  - uid: 642
-    components:
-    - type: Transform
-      parent: 818
-      pos: -6.5,-17.5
-    - type: Godmode
-    missingComponents:
-    - Destructible
-    - Construction
-    - RCDDeconstructable
   - uid: 643
     components:
     - type: Transform
       parent: 818
       pos: -14.5,-10.5
-    - type: Godmode
-    missingComponents:
-    - Destructible
-    - Construction
-    - RCDDeconstructable
-  - uid: 644
-    components:
-    - type: Transform
-      parent: 818
-      pos: -6.5,-10.5
-    - type: Godmode
-    missingComponents:
-    - Destructible
-    - Construction
-    - RCDDeconstructable
-  - uid: 645
-    components:
-    - type: Transform
-      parent: 818
-      pos: 5.5,-10.5
     - type: Godmode
     missingComponents:
     - Destructible
@@ -7963,27 +7911,35 @@ entities:
     - Destructible
     - Construction
     - RCDDeconstructable
-  - uid: 648
-    components:
-    - type: Transform
-      parent: 818
-      pos: 5.5,-17.5
-    - type: Godmode
-    missingComponents:
-    - Destructible
-    - Construction
-    - RCDDeconstructable
-  - uid: 917
+  - uid: 661
     components:
     - type: Transform
       parent: 818
       rot: 3.141592653589793 rad
-      pos: -0.5,7.5
-    - type: Godmode
-    missingComponents:
-    - Destructible
-    - Construction
-    - RCDDeconstructable
+      pos: -6.5,-17.5
+  - uid: 664
+    components:
+    - type: Transform
+      parent: 818
+      rot: 3.141592653589793 rad
+      pos: -6.5,-10.5
+  - uid: 665
+    components:
+    - type: Transform
+      parent: 818
+      rot: 3.141592653589793 rad
+      pos: 5.5,-10.5
+  - uid: 668
+    components:
+    - type: Transform
+      parent: 818
+      rot: 3.141592653589793 rad
+      pos: 5.5,-17.5
+  - uid: 942
+    components:
+    - type: Transform
+      parent: 818
+      pos: -0.5,8.5
 - proto: SMESBasic
   entities:
   - uid: 805
@@ -8247,9 +8203,6 @@ entities:
       parent: 818
       rot: 3.141592653589793 rad
       pos: -11.5,-20.5
-      anchored: True
-    - type: Physics
-      bodyType: Static
     - type: Godmode
     missingComponents:
     - Construction
@@ -8261,9 +8214,6 @@ entities:
       parent: 818
       rot: 3.141592653589793 rad
       pos: -9.5,-20.5
-      anchored: True
-    - type: Physics
-      bodyType: Static
     - type: Godmode
     missingComponents:
     - Construction
@@ -8275,9 +8225,6 @@ entities:
       parent: 818
       rot: 3.141592653589793 rad
       pos: 8.5,-20.5
-      anchored: True
-    - type: Physics
-      bodyType: Static
     - type: Godmode
     missingComponents:
     - Construction
@@ -8289,9 +8236,6 @@ entities:
       parent: 818
       rot: 3.141592653589793 rad
       pos: 10.5,-20.5
-      anchored: True
-    - type: Physics
-      bodyType: Static
     - type: Godmode
     missingComponents:
     - Construction
@@ -8303,9 +8247,6 @@ entities:
       parent: 818
       rot: -1.5707963267948966 rad
       pos: -12.5,-0.5
-      anchored: True
-    - type: Physics
-      bodyType: Static
     - type: Godmode
     missingComponents:
     - Construction
@@ -8317,9 +8258,6 @@ entities:
       parent: 818
       rot: -1.5707963267948966 rad
       pos: -12.5,0.5
-      anchored: True
-    - type: Physics
-      bodyType: Static
     - type: Godmode
     missingComponents:
     - Construction
@@ -8331,9 +8269,6 @@ entities:
       parent: 818
       rot: -1.5707963267948966 rad
       pos: -12.5,-1.5
-      anchored: True
-    - type: Physics
-      bodyType: Static
     - type: Godmode
     missingComponents:
     - Construction
@@ -8345,9 +8280,6 @@ entities:
       parent: 818
       rot: -1.5707963267948966 rad
       pos: -12.5,-2.5
-      anchored: True
-    - type: Physics
-      bodyType: Static
     - type: Godmode
     missingComponents:
     - Construction
@@ -9721,38 +9653,6 @@ entities:
     - Construction
     - RCDDeconstructable
     - Destructible
-  - uid: 659
-    components:
-    - type: Transform
-      parent: 818
-      pos: 9.5,-15.5
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 660
-    components:
-    - type: Transform
-      parent: 818
-      rot: 3.141592653589793 rad
-      pos: 9.5,-12.5
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 661
-    components:
-    - type: Transform
-      parent: 818
-      rot: 1.5707963267948966 rad
-      pos: 9.5,-12.5
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
   - uid: 662
     components:
     - type: Transform
@@ -9770,28 +9670,6 @@ entities:
       parent: 818
       rot: 1.5707963267948966 rad
       pos: 9.5,-14.5
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 664
-    components:
-    - type: Transform
-      parent: 818
-      rot: 1.5707963267948966 rad
-      pos: 9.5,-15.5
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 665
-    components:
-    - type: Transform
-      parent: 818
-      rot: -1.5707963267948966 rad
-      pos: 9.5,-15.5
     - type: Godmode
     missingComponents:
     - Construction
@@ -9819,49 +9697,6 @@ entities:
     - Construction
     - RCDDeconstructable
     - Destructible
-  - uid: 668
-    components:
-    - type: Transform
-      parent: 818
-      rot: -1.5707963267948966 rad
-      pos: 9.5,-12.5
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 669
-    components:
-    - type: Transform
-      parent: 818
-      rot: 3.141592653589793 rad
-      pos: -10.5,-12.5
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 670
-    components:
-    - type: Transform
-      parent: 818
-      pos: -10.5,-15.5
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 671
-    components:
-    - type: Transform
-      parent: 818
-      rot: -1.5707963267948966 rad
-      pos: -10.5,-15.5
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
   - uid: 672
     components:
     - type: Transform
@@ -9884,28 +9719,6 @@ entities:
     - Construction
     - RCDDeconstructable
     - Destructible
-  - uid: 674
-    components:
-    - type: Transform
-      parent: 818
-      rot: -1.5707963267948966 rad
-      pos: -10.5,-12.5
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 675
-    components:
-    - type: Transform
-      parent: 818
-      rot: 1.5707963267948966 rad
-      pos: -10.5,-12.5
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
   - uid: 676
     components:
     - type: Transform
@@ -9923,17 +9736,6 @@ entities:
       parent: 818
       rot: 1.5707963267948966 rad
       pos: -10.5,-14.5
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 678
-    components:
-    - type: Transform
-      parent: 818
-      rot: 1.5707963267948966 rad
-      pos: -10.5,-15.5
     - type: Godmode
     missingComponents:
     - Construction
