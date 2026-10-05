@@ -862,6 +862,41 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("custom_vote_log_option", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.FlaggedWord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("flagged_word_id");
+
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("enabled");
+
+                    b.Property<bool>("FlagPartialMatches")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("flag_partial_matches");
+
+                    b.Property<byte>("Severity")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("severity");
+
+                    b.Property<string>("Word")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("word");
+
+                    b.HasKey("Id")
+                        .HasName("PK_flagged_word");
+
+                    b.HasIndex("Word")
+                        .IsUnique()
+                        .HasDatabaseName("IX_flagged_word_word");
+
+                    b.ToTable("flagged_word", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.IPIntelCache", b =>
                 {
                     b.Property<int>("Id")
