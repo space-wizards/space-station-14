@@ -2,7 +2,7 @@
   # Server Rules
   This is a Wizard's Den server, one of the official Space Station 14 servers. If you are banned on this server, you will be banned on all official servers.
 
-  This is a medium roleplay (MRP) server, meaning that roleplay rules apply, [color=#ff0000]including the MRP rules and MRP amendments.[/color]
+  This is a medium roleplay (MRP) server, meaning that roleplay rules apply, [color=#ff0000]including the MRP rules.[/color]
 
   Space Station 14 is not like most games. Many rules are designed to require roleplay, and not all rules are intuitive. Please take the time to read and understand the rules before you play so that you aren't surprised. Some of our rules are zero tolerance rules, meaning that a violation will result in an indefinite ban without any warning. Game admins will treat you as if you have read the rules, even if you have not.
 
@@ -25,7 +25,7 @@
   - [textlink="14. Do not use LOOC or OOC to share current round information" link="RuleC14"]
 
   ## Roleplay Rules
-  These rules only apply during a round. Unlike on LRP servers, a round ends [italic]only[/italic] once the game returns to the lobby screen. [color=#ff0000]All of these rules apply fully whenever the game is not at the lobby unless it is in an exempt game mode.[/color]
+  These rules only apply during a round. Unlike on LRP servers, a round ends [italic]only[/italic] once the game returns to the Lobby screen (as clarified in MRP Rule 1). [color=#ff0000]All of these rules apply fully whenever the game is not at the Lobby unless it is in an exempt game mode.[/color]
 
   The Deathmatch and Sandbox game modes are exempt from these rules. Players who choose to not follow these rules are entirely responsible for knowing if an exempt game mode is active.
 
@@ -64,8 +64,10 @@
   - [textlink="10. You may determine how you resolve conflicts between orders" link="RuleS10"]
 
   ## MRP Rules
-  MRP rules and MRP amendments exclusively apply to medium roleplay (MRP) servers.
+  MRP rules exclusively apply to medium roleplay (MRP) servers. These rules override the standard roleplay rules if there is any conflict.
 
-  - [textlink="MRP amendments " link="RuleMA"]
-  - [textlink="1. Do not powergame " link="RuleM1"]
+  - [textlink="1. The round only ends at the Lobby screen " link="RuleM1"]
+  - [textlink="2. Do not powergame " link="RuleM2"]
+  - [textlink="3. As an antagonist, do not make the emergency shuttle uninhabitable " link="RuleM3"]
+  - [textlink="4. Your character has no memory of events witnessed while unconscious or dead " link="RuleM4"]
 </Document>

@@ -1,0 +1,17 @@
+<Document>
+  # MRP Rule 4 - Your character has no memory of events witnessed while unconscious or dead
+
+  Being in the critically injured state or otherwise unconscious (such as being asleep) prevents your character from remembering anything that happened to or around them while unconscious. If brought out of the critical state to the alive state, you may remember what caused you to enter critical state.
+
+  Entering the dead state causes your character to forget all events related to their death (if you can tie it to how you died, do not remember it). If revived, placed in a MMI, or in the case of Diona, splitting, the character is aware of the fact that they have died but not how.
+
+  ## Examples
+  Acceptable:
+  - The Captain is ambushed by an antagonist who beats them unconscious, steals their sword, and flees into Engineering. After being revived by Medical staff, the Captain can recall who they saw ambush them. Though they can't directly remember their sword being stolen, they notice it's missing now and can reasonably assume the ambusher is the one responsible. They can't remember the antagonist fleeing into Engineering, because that happened when they were unconscious.
+  - A passenger is walking to Cargo, and an antagonist ambushes them in the hallway and shoots them to death. After being revived by Medical staff, the passenger remembers that they were walking to Cargo when they died, but remembers nothing about how they died or who was responsible.
+  - A security officer is ambushed by an antagonist who kidnaps them. After being held captive for several minutes, the antagonist slits the security officer's throat, killing them. After being revived my Medical staff, the security officer remembers who kidnapped them, and can remember most of their time in captivity, but does not remember their throat being slit (though they can make a reasonable guess as to the kidnapper being responsible for their death).
+
+  Prohibited:
+  - The Captain is ambushed by an antagonist who beats them unconscious, steals their sword, and flees into Engineering. After being revived by Medical staff, the Captain immediately goes to Engineering to search for the thief and/or their stolen sword.
+  - A passenger is walking to Cargo, and an antagonist ambushes them in the hallway and shoots them to death. After being revived by Medical staff, the passenger immediately tells Security who attacked them.
+</Document>

@@ -356,20 +356,34 @@
   priority: 10
   text: "/ServerInfo/Guidebook/ServerRules/MRPRules/RuleM0.xml"
   children:
-  - RuleMA
   - RuleM1
-
-- type: guideEntry
-  id: RuleMA
-  name: guide-entry-rules-mA
-  ruleEntry: true
-  text: "/ServerInfo/Guidebook/ServerRules/MRPRules/RuleMAMRPAmendments.xml"
+  - RuleM2
+  - RuleM3
+  - RuleM4
 
 - type: guideEntry
   id: RuleM1
   name: guide-entry-rules-m1
   ruleEntry: true
-  text: "/ServerInfo/Guidebook/ServerRules/MRPRules/RuleM1DoNotPowergame.xml"
+  text: "/ServerInfo/Guidebook/ServerRules/MRPRules/RuleM1RoundEndsAtLobby.xml"
+
+- type: guideEntry
+  id: RuleM2
+  name: guide-entry-rules-m2
+  ruleEntry: true
+  text: "/ServerInfo/Guidebook/ServerRules/MRPRules/RuleM2DoNotPowergame.xml"
+
+- type: guideEntry
+  id: RuleM3
+  name: guide-entry-rules-m3
+  ruleEntry: true
+  text: "/ServerInfo/Guidebook/ServerRules/MRPRules/RuleM3DoNotDestroyEvac.xml"
+
+- type: guideEntry
+  id: RuleM4
+  name: guide-entry-rules-m4
+  ruleEntry: true
+  text: "/ServerInfo/Guidebook/ServerRules/MRPRules/RuleM4NewLifeRule.xml"
 
 # Ban-Related Guide Entries are used as hyperlinks in certain Ruleset Guide Entry explanations.
 

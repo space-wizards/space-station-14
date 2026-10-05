@@ -1,7 +1,9 @@
 <Document>
   # MRP Rules
-  MRP rules and MRP amendments exclusively apply to medium roleplay (MRP) servers.
+  MRP rules exclusively apply to medium roleplay (MRP) servers. These rules override the standard roleplay rules if there is any conflict.
 
-  - [textlink="MRP amendments " link="RuleMA"]
-  - [textlink="1. Do not powergame " link="RuleM1"]
+  - [textlink="1. The round only ends at the Lobby screen " link="RuleM1"]
+  - [textlink="2. Do not powergame " link="RuleM2"]
+  - [textlink="3. As an antagonist, do not make the emergency shuttle uninhabitable " link="RuleM3"]
+  - [textlink="4. Your character has no memory of events witnessed while unconscious or dead " link="RuleM4"]
 </Document>
