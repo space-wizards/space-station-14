@@ -67,16 +67,6 @@
       shader: unshaded
       sprite: Structures/Doors/Airlocks/Effects/airlock-effects-firelock.rsi
       map: ["enum.FirelockVisualLayersTemperature.Base"]
-  - type: GenericVisualizer
-    visuals:
-      enum.FirelockVisuals.PressureWarning:
-        enum.FirelockVisualLayersPressure.Base:
-          True: { visible: true }
-          False: { visible: false }
-      enum.FirelockVisuals.TemperatureWarning:
-        enum.FirelockVisualLayersTemperature.Base:
-          True: { visible: true }
-          False: { visible: false }
   - type: AnimationPlayer
   - type: Fixtures
     fixtures:
