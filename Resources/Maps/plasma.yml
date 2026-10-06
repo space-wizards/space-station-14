@@ -72801,7 +72801,7 @@ entities:
       parent: 2
       rot: -1.5707963267948966 rad
       pos: -109.5,-6.5
-- proto: computerBodyScanner
+- proto: ComputerBodyScanner
   entities:
   - uid: 3700
     components:
@@ -85236,7 +85236,7 @@ entities:
     - type: FaxMachine
       name: Boardroom
     - type: Label
-- proto: filingCabinetDrawerRandom
+- proto: FilingCabinetDrawerRandom
   entities:
   - uid: 3001
     components:
@@ -85268,7 +85268,7 @@ entities:
     - type: Transform
       parent: 2
       pos: -17.5,-21.5
-- proto: filingCabinetRandom
+- proto: FilingCabinetRandom
   entities:
   - uid: 776
     components:
@@ -85325,7 +85325,7 @@ entities:
     - type: Transform
       parent: 2
       pos: -138.5,-7.5
-- proto: filingCabinetTallRandom
+- proto: FilingCabinetTallRandom
   entities:
   - uid: 6294
     components:
@@ -134141,7 +134141,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: hydroponicsSoil
+- proto: HydroponicsSoil
   entities:
   - uid: 1294
     components:
@@ -134258,7 +134258,7 @@ entities:
     - type: Transform
       parent: 2
       pos: -86.52159,-47.242317
-- proto: hydroponicsTray
+- proto: HydroponicsTray
   entities:
   - uid: 8378
     components:
@@ -160097,7 +160097,7 @@ entities:
     - type: Transform
       parent: 2
       pos: -86.74045,-46.56269
-- proto: trayScanner
+- proto: TrayScanner
   entities:
   - uid: 2532
     components:

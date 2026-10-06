@@ -3023,7 +3023,7 @@ entities:
     - type: Transform
       parent: 1
       pos: -10.630073,-3.4031057
-- proto: computerBodyScanner
+- proto: ComputerBodyScanner
   entities:
   - uid: 418
     components:

@@ -5337,7 +5337,7 @@ entities:
     - type: Transform
       parent: 1
       pos: 41.751633,-13.424282
-- proto: computerBodyScanner
+- proto: ComputerBodyScanner
   entities:
   - uid: 647
     components:
@@ -7968,7 +7968,7 @@ entities:
     - type: Transform
       parent: 1
       pos: 19.517994,-21.428076
-- proto: trayScanner
+- proto: TrayScanner
   entities:
   - uid: 2181
     components:

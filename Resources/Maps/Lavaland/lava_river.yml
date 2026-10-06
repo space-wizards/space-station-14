@@ -1947,7 +1947,7 @@ entities:
     - type: Transform
       pos: -15.5,4.5
       parent: 1
-- proto: filingCabinetDrawerRandom
+- proto: FilingCabinetDrawerRandom
   entities:
   - uid: 1026
     components:

@@ -29819,7 +29819,7 @@ entities:
       parent: 1668
       rot: -1.5707963267948966 rad
       pos: -22.5,-11.5
-- proto: filingCabinetRandom
+- proto: FilingCabinetRandom
   entities:
   - uid: 1537
     components:
@@ -44907,7 +44907,7 @@ entities:
     - type: Transform
       parent: 1668
       pos: 8.511248,-21.41136
-- proto: hydroponicsTray
+- proto: HydroponicsTray
   entities:
   - uid: 983
     components:
@@ -58021,7 +58021,7 @@ entities:
     - type: Transform
       parent: 1668
       pos: -38.2898,9.5166025
-- proto: trayScanner
+- proto: TrayScanner
   entities:
   - uid: 6778
     components:

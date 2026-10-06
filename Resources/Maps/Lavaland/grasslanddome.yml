@@ -1583,7 +1583,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -10.5,-2.5
       parent: 1
-- proto: hydroponicsSoil
+- proto: HydroponicsSoil
   entities:
   - uid: 331
     components:

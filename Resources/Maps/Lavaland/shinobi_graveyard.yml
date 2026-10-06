@@ -286,7 +286,7 @@ entities:
     - type: Transform
       pos: 8.5,2.5
       parent: 1
-- proto: hydroponicsSoil
+- proto: HydroponicsSoil
   entities:
   - uid: 50
     components:

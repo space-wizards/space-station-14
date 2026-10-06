@@ -12164,7 +12164,7 @@ entities:
     - type: Transform
       parent: 1
       pos: 46.5,53.5
-- proto: computerBodyScanner
+- proto: ComputerBodyScanner
   entities:
   - uid: 1221
     components:
@@ -13515,14 +13515,14 @@ entities:
     - type: Transform
       parent: 1
       pos: 42.5,17.5
-- proto: filingCabinet
+- proto: FilingCabinet
   entities:
   - uid: 1640
     components:
     - type: Transform
       parent: 1
       pos: 40.5,18.5
-- proto: filingCabinetDrawer
+- proto: FilingCabinetDrawer
   entities:
   - uid: 3317
     components:
@@ -15065,7 +15065,7 @@ entities:
     - type: Transform
       parent: 1
       pos: 33.5,45.5
-- proto: hydroponicsTray
+- proto: HydroponicsTray
   entities:
   - uid: 1031
     components:
@@ -20039,7 +20039,7 @@ entities:
     - type: Transform
       parent: 1
       pos: 56.579758,38.263474
-- proto: trayScanner
+- proto: TrayScanner
   entities:
   - uid: 442
     components:

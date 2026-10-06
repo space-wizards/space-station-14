@@ -62651,7 +62651,7 @@ entities:
     - type: Transform
       parent: 3564
       pos: 29.5,-23.5
-- proto: trayScanner
+- proto: TrayScanner
   entities:
   - uid: 4386
     components:

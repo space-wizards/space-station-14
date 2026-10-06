@@ -505,7 +505,7 @@
           - CableCoil
     - item: Wirecutter
     - item: Crowbar
-    - item: trayScanner
+    - item: TrayScanner
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
 
@@ -1634,7 +1634,7 @@
     - item: PowerDrill
     - item: WelderExperimental
     - item: Multitool
-    - item: trayScanner
+    - item: TrayScanner
     - item: RCDRecharging
     - item: SelfRechargingFireExtinguisher
   - type: BorgModuleIcon

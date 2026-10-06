@@ -2044,7 +2044,7 @@ entities:
     - type: Transform
       parent: 1
       pos: -3.4224727,-3.1169958
-- proto: hydroponicsTray
+- proto: HydroponicsTray
   entities:
   - uid: 54
     components:

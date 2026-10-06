@@ -58723,7 +58723,7 @@ entities:
       parent: 2
       rot: 3.141592653589793 rad
       pos: 35.5,-16.5
-- proto: computerBodyScanner
+- proto: ComputerBodyScanner
   entities:
   - uid: 4012
     components:
@@ -67240,7 +67240,7 @@ entities:
       pos: -26.5,-5.5
     - type: FaxMachine
       destinationAddress: Captain's Office
-- proto: filingCabinetDrawerRandom
+- proto: FilingCabinetDrawerRandom
   entities:
   - uid: 3112
     components:
@@ -67312,7 +67312,7 @@ entities:
     - type: Transform
       parent: 2
       pos: -42.5,-40.5
-- proto: filingCabinetRandom
+- proto: FilingCabinetRandom
   entities:
   - uid: 3575
     components:
@@ -94340,7 +94340,7 @@ entities:
     - type: Transform
       parent: 2
       pos: -5.465043,8.29865
-- proto: hydroponicsSoil
+- proto: HydroponicsSoil
   entities:
   - uid: 14181
     components:
@@ -94376,7 +94376,7 @@ entities:
     - type: Transform
       parent: 2
       pos: 14.176923,7.6900864
-- proto: hydroponicsTray
+- proto: HydroponicsTray
   entities:
   - uid: 252
     components:

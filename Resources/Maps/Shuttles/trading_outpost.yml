@@ -3465,7 +3465,7 @@ entities:
       parent: 2
       rot: -1.5707963267948966 rad
       pos: 5.5,-9.5
-- proto: filingCabinetDrawerRandom
+- proto: FilingCabinetDrawerRandom
   entities:
   - uid: 306
     components:

@@ -45,7 +45,7 @@
 
 - type: entity
   parent: [ BaseHydroponicsSoil, StructureHealthContainer ]
-  id: hydroponicsSoil
+  id: HydroponicsSoil
   name: soil
   description: A mix of organic matter and minerals creating a soil to grow your plant in space. Seems to be dry.
   components:
@@ -65,7 +65,7 @@
     state: soil
 
 - type: entity
-  parent: hydroponicsSoil
+  parent: HydroponicsSoil
   id: FungalSoil
   name: fungal soil
   description: A mix of organic matter and fungal root creating a soil to grow your plant in space. Seems to be dry.

@@ -59846,7 +59846,7 @@ entities:
     - type: Transform
       parent: 30
       pos: 13.5,-22.5
-- proto: computerBodyScanner
+- proto: ComputerBodyScanner
   entities:
   - uid: 7584
     components:
@@ -69277,7 +69277,7 @@ entities:
       pos: -21.5,30.5
     - type: FaxMachine
       name: Captain
-- proto: filingCabinet
+- proto: FilingCabinet
   entities:
   - uid: 6899
     components:
@@ -69299,7 +69299,7 @@ entities:
     - type: Transform
       parent: 30
       pos: 43.5,37.5
-- proto: filingCabinetDrawer
+- proto: FilingCabinetDrawer
   entities:
   - uid: 12856
     components:
@@ -69311,7 +69311,7 @@ entities:
     - type: Transform
       parent: 30
       pos: 23.5,15.5
-- proto: filingCabinetDrawerRandom
+- proto: FilingCabinetDrawerRandom
   entities:
   - uid: 11017
     components:
@@ -69328,7 +69328,7 @@ entities:
     - type: Transform
       parent: 30
       pos: -12.5,31.5
-- proto: filingCabinetRandom
+- proto: FilingCabinetRandom
   entities:
   - uid: 8234
     components:
@@ -107531,7 +107531,7 @@ entities:
     - type: Transform
       parent: 30
       pos: 34.5,30.5
-- proto: hydroponicsSoil
+- proto: HydroponicsSoil
   entities:
   - uid: 17963
     components:
@@ -107658,7 +107658,7 @@ entities:
     - type: Transform
       parent: 30
       pos: -76.56253,-53.662086
-- proto: hydroponicsTray
+- proto: HydroponicsTray
   entities:
   - uid: 328
     components:
@@ -134342,7 +134342,7 @@ entities:
     - type: Transform
       parent: 30
       pos: 44.5157,21.682869
-- proto: trayScanner
+- proto: TrayScanner
   entities:
   - uid: 5669
     components:

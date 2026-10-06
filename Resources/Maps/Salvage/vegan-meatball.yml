@@ -583,7 +583,7 @@ entities:
     - type: Transform
       parent: 1
       pos: -5.5,-0.5
-- proto: hydroponicsTray
+- proto: HydroponicsTray
   entities:
   - uid: 19
     components:

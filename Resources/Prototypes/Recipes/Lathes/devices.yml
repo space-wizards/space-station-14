@@ -65,7 +65,7 @@
 - type: latheRecipe
   parent: BasePartRecipe
   id: VoiceSensor
-  result: voicesensor
+  result: VoiceSensor
   materials:
     Steel: 100
     Plastic: 200
