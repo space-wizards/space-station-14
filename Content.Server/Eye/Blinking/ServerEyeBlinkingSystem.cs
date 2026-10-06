@@ -5,7 +5,7 @@ using Content.Shared.Eye.Blinking;
 namespace Content.Server.Eye.Blinking;
 
 /// <inheritdoc/>
-public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
+public sealed partial class ServerEyeBlinkingSystem : EyeBlinkingSystem
 {
     // TODO: Move all this stuff into Shared once chat is predicted.
     [SubscribeLocalEvent]

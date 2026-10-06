@@ -14,7 +14,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Eye.Blinking;
 
 /// <inheritdoc/>
-public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
+public sealed partial class ClientEyeBlinkingSystem : EyeBlinkingSystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IResourceCache _resCache = default!;
@@ -41,7 +41,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     }
 
     /// <summary>
-    /// Initializes eyelids following the <see cref="ApplyOrganMarkingsEvent">, when the entity receives skin color data for its organs
+    /// Initializes eyelids following the <see cref="ApplyOrganMarkingsEvent"/>, when the entity receives skin color data for its organs
     /// </summary>
     [SubscribeLocalEvent]
     private void OnAfterAutoHandleState(Entity<EyeBlinkingComponent> ent, ref AfterAutoHandleStateEvent args)
@@ -76,7 +76,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     {
         var ent = GetEntity(ev.NetEntity);
 
-        if (!ent.IsValid() || !EyeBlinkingQuery.TryComp(ent, out EyeBlinkingComponent? blinkingComp))
+        if (!ent.IsValid() || !EyeBlinkingQuery.TryComp(ent, out var blinkingComp))
             return;
 
         Blink((ent, blinkingComp));
@@ -197,14 +197,17 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     /// If the entity does not have a valid <see cref="SpriteComponent"/> or if the eyelid layer is not found,
     /// the method exits without making any changes.
     /// </summary>
+    /// <param name="ent"></param>
     /// <param name="eyeClosed">Value close eye if true, and open if false</param>
     private void ChangeEyesState(Entity<EyeBlinkingComponent> ent, bool eyeClosed)
     {
-        if (!_spriteQuery.TryComp(ent.Comp.Body, out SpriteComponent? sprite))
+        if (!_spriteQuery.TryComp(ent.Comp.Body, out var sprite))
             return;
 
         foreach (var eyelidState in ent.Comp.Eyelids)
+        {
             ChangeEyeState((ent.Comp.Body.Value, sprite), eyelidState, eyeClosed);
+        }
     }
 
 
@@ -215,7 +218,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     /// <param name="body"></param>
     private void InitEyeBlinking(Entity<EyeBlinkingComponent> ent, EntityUid body)
     {
-        if (!_spriteQuery.TryComp(body, out SpriteComponent? sprite))
+        if (!_spriteQuery.TryComp(body, out var sprite))
             return;
 
         if (!_sprite.LayerMapTryGet((body, sprite), HumanoidVisualLayers.Eyelids, out var targetLayer, false))
@@ -252,7 +255,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
     private void InitEyelidsLayers(Entity<EyeBlinkingComponent> ent, EntityUid body, int eyelidsLayer)
     {
-        if (!_spriteQuery.TryComp(body, out SpriteComponent? comp))
+        if (!_spriteQuery.TryComp(body, out var comp))
             return;
 
         // Remove existing eyelid layers by their expected mapping
@@ -278,12 +281,11 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         // If the entity has a specific eyelid color defined after organData init, use that color instead of the default white.
         var eyelidColor = ent.Comp.EyelidsColor ?? Color.White;
-
         var rsiCollection = rsiRes.RSI;
 
         DisplacementDataPrototype? displacementProto = null;
 
-        if (VisualOrganQuery.TryComp(ent.Owner, out VisualOrganComponent? visualOrgan)
+        if (VisualOrganQuery.TryComp(ent.Owner, out var visualOrgan)
             && visualOrgan.Displacement != null)
         {
             ProtoMan.Resolve(visualOrgan.Displacement, out displacementProto);
@@ -334,7 +336,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             if (comp.Status != BlinkStatus.Normal)
                 continue;
 
-            if (!_spriteQuery.TryComp(comp.Body, out SpriteComponent? sprite))
+            if (!_spriteQuery.TryComp(comp.Body, out var sprite))
                 continue;
 
             // If a blink is currently in progress, check the scheduled times for each eyelid and update their states accordingly.
@@ -342,15 +344,16 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             {
                 foreach (var eyelidState in comp.Eyelids)
                 {
-                    // If the eyelid is not closed and the current time has reached or passed the scheduled close time, close the eyelid.
-                    if (!eyelidState.IsClosed && curTime >= eyelidState.ScheduledCloseTime && eyelidState.IsCompleteBlink == false)
+                    switch (eyelidState.IsClosed)
                     {
-                        ChangeEyeState((comp.Body.Value, sprite), eyelidState, true);
-                    }
-                    // If the eyelid is closed and the current time has reached or passed the scheduled open time, open the eyelid.
-                    else if (eyelidState.IsClosed && curTime >= eyelidState.ScheduledOpenTime)
-                    {
-                        ChangeEyeState((comp.Body.Value, sprite), eyelidState, false);
+                        // If the eyelid is not closed and the current time has reached or passed the scheduled close time, close the eyelid.
+                        case false when curTime >= eyelidState.ScheduledCloseTime && !eyelidState.IsCompleteBlink:
+                            ChangeEyeState((comp.Body.Value, sprite), eyelidState, true);
+                            break;
+                        // If the eyelid is closed and the current time has reached or passed the scheduled open time, open the eyelid.
+                        case true when curTime >= eyelidState.ScheduledOpenTime:
+                            ChangeEyeState((comp.Body.Value, sprite), eyelidState, false);
+                            break;
                     }
                 }
 

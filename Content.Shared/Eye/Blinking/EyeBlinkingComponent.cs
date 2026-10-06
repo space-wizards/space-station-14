@@ -1,4 +1,5 @@
 using Content.Shared.Chat.Prototypes;
+using Content.Shared.Humanoid;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -87,13 +88,13 @@ public sealed partial class EyeBlinkingComponent : Component
     public BlinkStatus LastStatus = BlinkStatus.Normal;
 
     /// <summary>
-    /// The prototype ID of the emote that triggers a forced blink.
+    /// The prototype IDs of emotes that trigger a forced blink.
     /// </summary>
     [DataField, AutoNetworkedField]
     public List<ProtoId<EmotePrototype>> BlinkEmoteId = new() { "Blink" };
 
     /// <summary>
-    /// The state prefix to use to search for eyelid states.
+    /// The prefix used to find eyelid states in <see cref="EyelidsSprite"/>.
     /// </summary>
     [DataField]
     public string StatePrefix = "eyelid";
