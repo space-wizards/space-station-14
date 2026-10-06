@@ -25,6 +25,8 @@
         Quantity: 15
   - type: Tag
     tags:
+    - Medal
+    - MonkeyWearable
     - ClothMade
     - Recyclable
     - WhitelistChameleon
