@@ -117,7 +117,7 @@
   description: uplink-ammo-frag-desc
   productEntity: GrenadeFrag
   cost:
-    Telecrystal: 3
+    Telecrystal: 1
   categories:
   - UplinkAmmo
 
@@ -127,6 +127,6 @@
   description: uplink-ammo-blast-desc
   productEntity: GrenadeBlast
   cost:
-    Telecrystal: 3
+    Telecrystal: 1
   categories:
     - UplinkAmmo

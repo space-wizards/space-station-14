@@ -52,6 +52,8 @@
   - MagazineRifleEmpty
   - SpeedLoaderMagnum
   - SpeedLoaderMagnumEmpty
+  - GrenadeFrag
+  - GrenadeBlast
 
 - type: latheRecipePack
   id: SecurityWeaponsStatic
@@ -92,6 +94,7 @@
   - EmptyDetonator
   - ExplosivePayload
   - GrenadeBlast
+  - GrenadeFrag
   - GrenadeEMP
   - GrenadeFlash
   - MagazineGrenadeEmpty

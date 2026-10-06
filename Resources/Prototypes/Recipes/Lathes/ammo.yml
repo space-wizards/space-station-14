@@ -502,6 +502,17 @@
     Gold: 150
 
 - type: latheRecipe
+  id: GrenadeFrag
+  result: GrenadeFrag
+  categories:
+  - Ammo
+  completetime: 3
+  materials:
+    Steel: 450
+    Plastic: 300
+    Gold: 150
+
+- type: latheRecipe
   id: GrenadeFlash
   result: GrenadeFlash
   categories:
