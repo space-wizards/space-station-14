@@ -7,7 +7,7 @@ namespace Content.Shared.Temperature;
 ///     Fired on the heater and target entities to check if they can heat or be heated.
 /// </summary>
 [ByRefEvent]
-public record struct HeaterAttemptEvent(EntityUid User, float FrequencyMultiplier = 1f, bool Cancelled = false);
+public record struct HeaterAttemptEvent(EntityUid User, AttemptFrequency AttemptFrequency = AttemptFrequency.Never, bool Cancelled = false);
 
 /// <summary>
 ///     Fired on the heater entity when it has successfully heated a solution.
