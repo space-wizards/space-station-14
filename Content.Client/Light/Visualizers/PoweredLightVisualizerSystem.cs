@@ -7,10 +7,10 @@ using Robust.Shared.Random;
 
 namespace Content.Client.Light.Visualizers;
 
-public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLightVisualsComponent>
+public sealed partial class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLightVisualsComponent>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -23,7 +23,7 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
         if (args.Sprite == null)
             return;
 
-        if (!AppearanceSystem.TryGetData<PoweredLightState>(uid, PoweredLightVisuals.BulbState, out var state, args.Component))
+        if (!args.TryGetData<PoweredLightState>(PoweredLightVisuals.BulbState, out var state))
             return;
 
         if (comp.SpriteStateMap.TryGetValue(state, out var spriteState))
@@ -42,7 +42,7 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
         SetBlinkingAnimation(
             uid,
             state == PoweredLightState.On
-            && (AppearanceSystem.TryGetData<bool>(uid, PoweredLightVisuals.Blinking, out var isBlinking, args.Component) && isBlinking),
+            && (args.TryGetData<bool>(PoweredLightVisuals.Blinking, out var isBlinking) && isBlinking),
             comp
         );
     }
@@ -127,7 +127,7 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
             {
                 KeyFrames =
                 {
-                    new AnimationTrackPlaySound.KeyFrame(sound, 0.5f)
+                    new AnimationTrackPlaySound.KeyFrame(sound, 0.5f, () => comp.BlinkingSound.Params)
                 }
             });
         }

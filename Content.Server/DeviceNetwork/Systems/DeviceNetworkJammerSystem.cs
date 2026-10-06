@@ -6,10 +6,10 @@ using Robust.Server.GameObjects;
 namespace Content.Server.DeviceNetwork.Systems;
 
 /// <inheritdoc/>
-public sealed class DeviceNetworkJammerSystem : SharedDeviceNetworkJammerSystem
+public sealed partial class DeviceNetworkJammerSystem : SharedDeviceNetworkJammerSystem
 {
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly SharedDeviceNetworkJammerSystem _jammer = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private SharedDeviceNetworkJammerSystem _jammer = default!;
 
     public override void Initialize()
     {
@@ -27,7 +27,7 @@ public sealed class DeviceNetworkJammerSystem : SharedDeviceNetworkJammerSystem
 
         while (query.MoveNext(out var uid, out var jammerComp, out var jammerXform))
         {
-            if (!_jammer.GetJammableNetworks((uid, jammerComp)).Contains(ev.NetworkId))
+            if (!_jammer.GetJammableNetworks((uid, jammerComp)).Contains(ev.NetId))
                 continue;
 
             if (jammerComp.FrequenciesExcluded != null &&
@@ -37,10 +37,9 @@ public sealed class DeviceNetworkJammerSystem : SharedDeviceNetworkJammerSystem
             if (_transform.InRange(jammerXform.Coordinates, ev.SenderTransform.Coordinates, jammerComp.Range)
                 || _transform.InRange(jammerXform.Coordinates, xform.Comp.Coordinates, jammerComp.Range))
             {
-                ev.Cancel();
+                ev.Cancelled = true;
                 return;
             }
         }
     }
-
 }

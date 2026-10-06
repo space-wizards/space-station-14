@@ -1,0 +1,17 @@
+<BoxContainer
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.Lobby.UI"
+    Orientation="Horizontal"
+    HorizontalExpand="True"
+    >
+    
+    <TextureButton
+        Name="LockButton"
+        StyleIdentifier="RandomizerLockButton"
+        ToggleMode="True"
+        VerticalAlignment="Center"
+        Scale="0.3 0.3"
+        ToolTip="{Loc 'humanoid-profile-editor-randomizer-lock-tooltip'}"/>
+    <Label Name="LockName"/>
+
+</BoxContainer>

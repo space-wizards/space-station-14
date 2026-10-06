@@ -10,12 +10,12 @@ using Robust.Shared.Random;
 namespace Content.Server.Xenoarchaeology.Equipment.Systems;
 
 /// <inheritdoc/>
-public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
+public sealed partial class ArtifactCrusherSystem : SharedArtifactCrusherSystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly GibbingSystem _gibbing = default!;
-    [Dependency] private readonly StackSystem _stack = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private GibbingSystem _gibbing = default!;
+    [Dependency] private StackSystem _stack = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
     // TODO: Move to shared once StackSystem spawning is in Shared and we have RandomPredicted
     public override void FinishCrushing(Entity<ArtifactCrusherComponent, EntityStorageComponent> ent)

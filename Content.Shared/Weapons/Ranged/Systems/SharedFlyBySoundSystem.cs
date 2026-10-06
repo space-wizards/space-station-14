@@ -11,9 +11,9 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
-public abstract class SharedFlyBySoundSystem : EntitySystem
+public abstract partial class SharedFlyBySoundSystem : EntitySystem
 {
-    [Dependency] private readonly FixtureSystem _fixtures = default!;
+    [Dependency] private FixtureSystem _fixtures = default!;
 
     public const string FlyByFixture = "fly-by";
 

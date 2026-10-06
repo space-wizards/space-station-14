@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: hover entity
   id: hoverentity
   categories: [ HideSpawnMenu ]

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Beeper.Components;
+using Content.Shared.Beeper.Components;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Pinpointer;
 using Content.Shared.ProximityDetection;
@@ -10,9 +10,9 @@ namespace Content.Shared.Beeper.Systems;
 /// <summary>
 /// This handles controlling a beeper from proximity detector events.
 /// </summary>
-public sealed class ProximityBeeperSystem : EntitySystem
+public sealed partial class ProximityBeeperSystem : EntitySystem
 {
-    [Dependency] private readonly BeeperSystem _beeper = default!;
+    [Dependency] private BeeperSystem _beeper = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

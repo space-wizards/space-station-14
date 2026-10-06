@@ -4,10 +4,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Spawners.EntitySystems;
 
-public sealed class SpawnerSystem : EntitySystem
+public sealed partial class SpawnerSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -49,7 +49,10 @@ public sealed class SpawnerSystem : EntitySystem
         for (var i = 0; i < number; i++)
         {
             var entity = _random.Pick(component.Prototypes);
-            SpawnAtPosition(entity, coordinates);
+            if (component.AllowContainerPlacement)
+                SpawnNextToOrDrop(entity, uid);
+            else
+                SpawnAtPosition(entity, coordinates);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Alert;
+using Content.Shared.Alert;
 using Content.Shared.Mobs;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.PowerCell;
@@ -15,16 +15,16 @@ namespace Content.Client.Silicons.Borgs;
 /// <inheritdoc/>
 public sealed partial class BorgSystem : SharedBorgSystem
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly SharedBatterySystem _battery = default!;
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly EntityQuery<BorgChassisComponent> _chassisQuery = default!;
-    [Dependency] private readonly EntityQuery<PowerCellSlotComponent> _slotQuery = default!;
+    [Dependency] private AppearanceSystem _appearance = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private PowerCellSystem _powerCell = default!;
+    [Dependency] private SharedBatterySystem _battery = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private EntityQuery<BorgChassisComponent> _chassisQuery = default!;
+    [Dependency] private EntityQuery<PowerCellSlotComponent> _slotQuery = default!;
 
     public override void Initialize()
     {
@@ -93,28 +93,43 @@ public sealed partial class BorgSystem : SharedBorgSystem
         _sprite.LayerSetRsiState((ent.Owner, ent.Comp3), BorgVisualLayers.Light, hasPlayer ? ent.Comp1.HasMindState : ent.Comp1.NoMindState);
     }
 
-    private void OnMMIAppearanceChanged(EntityUid uid, MMIComponent component, ref AppearanceChangeEvent args)
+    private void OnMMIAppearanceChanged(Entity<MMIComponent> ent, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
-        var sprite = args.Sprite;
 
-        if (!_appearance.TryGetData(uid, MMIVisuals.BrainPresent, out bool brain))
+        if (!args.TryGetData(MMIVisuals.BrainPresent, out bool brain))
             brain = false;
-        if (!_appearance.TryGetData(uid, MMIVisuals.HasMind, out bool hasMind))
+        if (!args.TryGetData(MMIVisuals.HasMind, out bool hasMind))
             hasMind = false;
 
-        _sprite.LayerSetVisible((uid, sprite), MMIVisualLayers.Brain, brain);
+        var lightColor = Color.White;
+        var lightVisible = false;
+        var spriteEnt = (ent.Owner, args.Sprite);
+
+        _sprite.LayerSetVisible(spriteEnt, MMIVisualLayers.Brain, brain);
         if (!brain)
         {
-            _sprite.LayerSetRsiState((uid, sprite), MMIVisualLayers.Base, component.NoBrainState);
+            _sprite.LayerSetRsiState(spriteEnt, MMIVisualLayers.Base, ent.Comp.NoBrainState);
         }
         else
         {
             var state = hasMind
-                ? component.HasMindState
-                : component.NoMindState;
-            _sprite.LayerSetRsiState((uid, sprite), MMIVisualLayers.Base, state);
+                ? ent.Comp.HasMindState
+                : ent.Comp.NoMindState;
+            _sprite.LayerSetRsiState(spriteEnt, MMIVisualLayers.Base, state);
+
+            lightColor = hasMind
+                ? ent.Comp.HasMindLightColor
+                : ent.Comp.NoMindLightColor;
+            lightVisible = true;
+        }
+
+        // Update color if it exists.
+        if (_sprite.LayerMapTryGet(spriteEnt, MMIVisualLayers.Unlit, out var layerIndex, logMissing: false))
+        {
+            _sprite.LayerSetVisible(spriteEnt, layerIndex, lightVisible);
+            _sprite.LayerSetColor(spriteEnt, layerIndex, lightColor);
         }
     }
 

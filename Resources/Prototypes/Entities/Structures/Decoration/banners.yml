@@ -1,6 +1,6 @@
 - type: entity
+  parent: [ BaseStructureDynamic, StructureHealthFurnitureStrong ]
   id: BannerBase
-  parent: BaseStructureDynamic
   name: base banner
   description: It's the concept of a banner, you shouldn't be seeing this.
   abstract: true
@@ -27,16 +27,16 @@
         - BulletImpassable
   - type: InteractionOutline
   - type: Damageable
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: DurathreadMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 80
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
 
 - type: entity
   id: BannerNanotrasen

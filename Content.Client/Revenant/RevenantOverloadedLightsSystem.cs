@@ -1,12 +1,12 @@
-﻿using Content.Shared.Revenant.Components;
+using Content.Shared.Revenant.Components;
 using Content.Shared.Revenant.EntitySystems;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Revenant;
 
-public sealed class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLightsSystem
+public sealed partial class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLightsSystem
 {
-    [Dependency] private readonly SharedPointLightSystem _lights = default!;
+    [Dependency] private SharedPointLightSystem _lights = default!;
 
     public override void Initialize()
     {
