@@ -141,12 +141,12 @@
     #  weight: 10.0
     - id: XenoArtifactSpeedUp
       weight: 4
-    - id: XenoArtifactGhost
-      weight: 2
-    - id: XenoArtifactPotassiumWave
-      weight: 7
-    - id: XenoArtifactFloraSpawn
-      weight: 10
+#    - id: XenoArtifactGhost
+#      weight: 2
+#    - id: XenoArtifactPotassiumWave
+#      weight: 7
+#    - id: XenoArtifactFloraSpawn
+#      weight: 10
     - id: XenoArtifactChemicalPuddle
       weight: 10
     - id: XenoArtifactFoamMild
