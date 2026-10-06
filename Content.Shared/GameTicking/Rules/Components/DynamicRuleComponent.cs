@@ -25,7 +25,13 @@ public sealed partial class DynamicRuleComponent : Component
     /// The amount of budget accumulated every second.
     /// </summary>
     [DataField]
-    public float BudgetPerSecond = 0.1f;
+    public float BudgetPerSecond;
+
+    [DataField]
+    public float MinBudgetPerSecond = 0.05f;
+
+    [DataField]
+    public float MaxBudgetPerSecond = 0.1f;
 
     /// <summary>
     /// The minimum or lower bound for budgets to start at.
@@ -49,13 +55,13 @@ public sealed partial class DynamicRuleComponent : Component
     /// Minimum delay between rules
     /// </summary>
     [DataField]
-    public TimeSpan MinRuleInterval = TimeSpan.FromMinutes(10);
+    public TimeSpan MinRuleInterval = TimeSpan.FromMinutes(5);
 
     /// <summary>
     /// Maximum delay between rules
     /// </summary>
     [DataField]
-    public TimeSpan MaxRuleInterval = TimeSpan.FromMinutes(30);
+    public TimeSpan MaxRuleInterval = TimeSpan.FromMinutes(15);
 
     /// <summary>
     /// A table of rules that are picked from.
