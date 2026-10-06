@@ -24,7 +24,8 @@
     - WhitelistChameleon
     - WhitelistChameleonIdCard
   - type: StealTarget
-    stealGroup: IDCard
+    stealGroup:
+    - IDCard
 
 #IDs with layers
 
@@ -70,7 +71,8 @@
     - WhitelistChameleonIdCard
     - HighRiskItem
   - type: StealTarget
-    stealGroup: CaptainIDCard
+    stealGroup:
+    - CaptainIDCard
 
 - type: entity
   parent: IDCardStandard
@@ -674,8 +676,8 @@
       state: Bartender
   - type: PresetIdCard
     job: Bartender
-    name: Pun Pun
-  - type: Tag #  Ignore Chameleon tags
+    name: id-card-preset-pun
+  - type: Tag # Ignore Chameleon tags
     tags:
     - DoorBumpOpener
 

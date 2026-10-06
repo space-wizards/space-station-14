@@ -11,7 +11,6 @@ using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
 using Content.Shared.Roles.Jobs;
-using Content.Shared.Roles.RoleCodeword;
 using Robust.Shared.Random;
 
 namespace Content.Shared.GameTicking.Rules;
@@ -24,7 +23,6 @@ public abstract partial class TraitorRuleSystem : GameRuleSystem<TraitorRuleComp
     [Dependency] private NpcFactionSystem _npcFaction = default!;
     [Dependency] private SharedJobSystem _jobs = default!;
     [Dependency] private SharedMindSystem _mindSystem = default!;
-    [Dependency] private SharedRoleCodewordSystem _roleCodewordSystem = default!;
     [Dependency] private SharedRoleSystem _roleSystem = default!;
 
     private static readonly Color TraitorCodewordColor = Color.FromHex("#cc3b3b");
@@ -102,23 +100,20 @@ public abstract partial class TraitorRuleSystem : GameRuleSystem<TraitorRuleComp
         //Since this provides neither an antag/job prototype, nor antag status/roletype,
         //and is intrinsically related to the traitor role
         //it does not need to be a separate Mind Role Entity
-        _roleSystem.MindHasRole<TraitorRoleComponent>((mindId, mind), out var traitorRole);
-        if (traitorRole is not null)
+        if (_roleSystem.MindHasRole<TraitorRoleComponent>((mindId, mind), out var traitorRole))
         {
             Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Add traitor briefing components");
             EnsureComp<RoleBriefingComponent>(traitorRole.Value.Owner, out var briefingComp);
             briefingComp.Briefing = briefing;
+
+            // The mind entity is stored in nullspace with a PVS override for the owner, so only they can see the codewords.
+            var codewordComp = EnsureComp<RoleCodewordComponent>(traitorRole.Value);
+            Codeword.SetRoleCodewords((traitorRole.Value, codewordComp), factionCodewords.ToList(), TraitorCodewordColor);
         }
         else
         {
             Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - did not get traitor briefing");
         }
-
-        var color = TraitorCodewordColor; // Fall back to a dark red Syndicate color if a prototype is not found
-
-        // The mind entity is stored in nullspace with a PVS override for the owner, so only they can see the codewords.
-        var codewordComp = EnsureComp<RoleCodewordComponent>(mindId);
-        _roleCodewordSystem.SetRoleCodewords((mindId, codewordComp), "traitor", factionCodewords.ToList(), color);
 
         // Change the faction
         Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Change faction");

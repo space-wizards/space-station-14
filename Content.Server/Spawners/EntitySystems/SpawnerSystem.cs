@@ -49,7 +49,10 @@ public sealed partial class SpawnerSystem : EntitySystem
         for (var i = 0; i < number; i++)
         {
             var entity = _random.Pick(component.Prototypes);
-            SpawnAtPosition(entity, coordinates);
+            if (component.AllowContainerPlacement)
+                SpawnNextToOrDrop(entity, uid);
+            else
+                SpawnAtPosition(entity, coordinates);
         }
     }
 }
