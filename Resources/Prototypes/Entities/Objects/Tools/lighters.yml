@@ -35,6 +35,12 @@
     fuelConsumption: 0.01
     fuelLitCost: 0.1
     tankSafe: true
+  - type: HeaterTool
+    conductivity: 0.2
+    maxTemperature: 350
+    doAfterDelay: 2.5
+  - type: WelderHeater
+    fuelConsumptionPerHeat: 0.05
   - type: PointLight
     enabled: false
     netsync: false
@@ -217,6 +223,12 @@
       right:
       - state: inhand-right-lit
         shader: unshaded
+  - type: HeaterTool
+    conductivity: 0.25
+    maxTemperature: 380
+    doAfterDelay: 2.2
+  - type: WelderHeater
+    fuelConsumptionPerHeat: 0.06
   - type: PointLight
     radius: 1.5 #slightly stronger than the other lighters
 

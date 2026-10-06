@@ -1,4 +1,3 @@
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
@@ -15,17 +14,16 @@ namespace Content.Server.Temperature.Systems;
 /// </summary>
 public sealed partial class HeaterToolSystem : EntitySystem
 {
-    private const float MinFrequencyMultiplier = 0.01f;
-
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<HeaterToolComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<HeaterToolComponent, DoAfterAttemptEvent<HeaterToolDoAfterEvent>>(OnHeaterToolDoAfterAttempt);
         SubscribeLocalEvent<HeaterToolComponent, HeaterToolDoAfterEvent>(OnHeaterToolDoAfter);
     }
 
@@ -38,12 +36,9 @@ public sealed partial class HeaterToolSystem : EntitySystem
             return;
 
         // Only interact with entities that actually contain solutions with heat capacity.
-        if (!TryComp<SolutionContainerManagerComponent>(args.Target.Value, out var container))
-            return;
-
         var hasSolution = false;
         var canHeat = false;
-        foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((args.Target.Value, container)))
+        foreach (var (_, soln) in _solutionContainer.EnumerateSolutions(args.Target.Value))
         {
             var solution = soln.Comp.Solution;
             if (solution.GetHeatCapacity(_prototype) <= 0)
@@ -76,10 +71,7 @@ public sealed partial class HeaterToolSystem : EntitySystem
             return;
         }
 
-        // If frequency is 2.0, the delay is 0.5x.
-        var delay = ent.Comp.DoAfterDelay / Math.Max(MinFrequencyMultiplier, ev.FrequencyMultiplier);
-
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, delay,
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.DoAfterDelay,
             new HeaterToolDoAfterEvent(), ent,
             target: args.Target,
             used: ent)
@@ -87,10 +79,33 @@ public sealed partial class HeaterToolSystem : EntitySystem
             NeedHand = true,
             BreakOnMove = true,
             BreakOnWeightlessMove = false,
+            AttemptFrequency = ev.AttemptFrequency,
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);
         args.Handled = true;
+    }
+
+    /// <summary>
+    ///     Checks if the heating do-after can continue (e.g. if a welder runs out of fuel mid-heating).
+    /// </summary>
+    private void OnHeaterToolDoAfterAttempt(Entity<HeaterToolComponent> ent, ref DoAfterAttemptEvent<HeaterToolDoAfterEvent> args)
+    {
+        var doAfterArgs = args.Event.DoAfter.Args;
+        var ev = new HeaterAttemptEvent(doAfterArgs.User);
+        RaiseLocalEvent(ent, ref ev);
+        if (ev.Cancelled)
+        {
+            args.Cancel();
+            return;
+        }
+
+        if (doAfterArgs.Target is { } target)
+        {
+            RaiseLocalEvent(target, ref ev);
+            if (ev.Cancelled)
+                args.Cancel();
+        }
     }
 
     /// <summary>
@@ -125,7 +140,7 @@ public sealed partial class HeaterToolSystem : EntitySystem
             var heatContainer = new HeatContainer(heatCap, solution.Temperature);
 
             // Conduct heat from the tool's flame to the solution container using foundational ConductHeat
-            var heatToApply = heatContainer.ConductHeat(ent.Comp.MaxTemperature, (float) args.Args.Delay.TotalSeconds, ent.Comp.Conductivity);
+            var heatToApply = HeatContainerHelpers.ConductHeat(ref heatContainer, ent.Comp.MaxTemperature, (float) args.Args.Delay.TotalSeconds, ent.Comp.Conductivity);
 
             if (heatToApply <= 0f)
                 continue;

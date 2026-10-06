@@ -56,7 +56,8 @@
     whitelist:
       components:
       - Temperature
-      - SolutionContainerManager
+      - Solution
+      - SolutionManager
   - type: RequireProjectileTarget
 
 - type: entity

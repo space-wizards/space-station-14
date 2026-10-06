@@ -77,4 +77,5 @@
     whitelist:
       components:
       - Temperature
-      - SolutionContainerManager
+      - Solution
+      - SolutionManager

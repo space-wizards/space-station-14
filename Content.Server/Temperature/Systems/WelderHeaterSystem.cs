@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.DoAfter;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Popups;
 using Content.Shared.Temperature;
@@ -12,9 +13,9 @@ namespace Content.Server.Temperature.Systems;
 /// </summary>
 public sealed partial class WelderHeaterSystem : EntitySystem
 {
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private ItemToggleSystem _itemToggle = default!;
 
     public override void Initialize()
     {
@@ -46,8 +47,11 @@ public sealed partial class WelderHeaterSystem : EntitySystem
         if (fuelSolution.GetTotalPrototypeQuantity(welder.FuelReagent) < ent.Comp.FuelConsumptionPerHeat)
         {
             args.Cancelled = true;
-            _popup.PopupEntity(Loc.GetString("welder-component-no-fuel-message"), ent, args.User);
+            _popup.PopupEntity(Loc.GetString("welder-component-no-fuel-message", ("owner", ent.Owner)), ent, args.User);
+            return;
         }
+
+        args.AttemptFrequency = AttemptFrequency.EveryTick;
     }
 
     /// <summary>
@@ -64,7 +68,7 @@ public sealed partial class WelderHeaterSystem : EntitySystem
         var fuelNeeded = ent.Comp.FuelConsumptionPerHeat;
         if (fuelSolution.GetTotalPrototypeQuantity(welder.FuelReagent) < fuelNeeded)
         {
-            _popup.PopupEntity(Loc.GetString("welder-component-no-fuel-message"), ent, args.User);
+            _popup.PopupEntity(Loc.GetString("welder-component-no-fuel-message", ("owner", ent.Owner)), ent, args.User);
             return;
         }
 

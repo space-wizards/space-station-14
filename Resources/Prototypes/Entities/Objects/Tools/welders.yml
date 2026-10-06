@@ -178,6 +178,9 @@
     color: lightblue
   - type: Welder
     fuelReagent: Plasma
+  - type: HeaterTool
+    conductivity: 3.0
+    maxTemperature: 600
   - type: RequiresEyeProtection
     statusEffectTime: 5 # less harmful; sunglasses can block it
 
