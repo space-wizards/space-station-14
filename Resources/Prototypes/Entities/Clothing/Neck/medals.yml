@@ -1,6 +1,36 @@
 
 - type: entity
-  parent: ClothingNeckBase
+  abstract: true
+  parent: [SolutionFood, SolutionToolSmall, Clothing]
+  id: ClothingMedalBase
+  components:
+  - type: Item
+    size: Small
+  - type: Clothing
+    quickEquip: true
+    slots:
+    - neck
+  - type: Sprite
+    state: icon
+  - type: PhysicalComposition # 50% of the amount of cloth you'd obtain upon butchering
+    materialComposition:
+      Cloth: 100
+  - type: Edible
+    requiresSpecialDigestion: true
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 15
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon
+
+
+- type: entity
+  parent: ClothingMedalBase
   id: ClothingNeckBronzeheart
   name: bronzeheart medal
   description: Given to crewmates for exemplary bravery in the face of danger.
@@ -15,7 +45,7 @@
       - WhitelistChameleon
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingMedalBase
   id: ClothingNeckGoldmedal
   name: gold medal of crewmanship
   description: Given to crewmates who display excellent crewmanship.
@@ -32,7 +62,7 @@
       - WhitelistChameleon
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingMedalBase
   id: ClothingNeckCargomedal
   name: cargo medal
   description: Given for the best work in the cargo department.
@@ -47,7 +77,7 @@
       - WhitelistChameleon
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingMedalBase
   id: ClothingNeckEngineermedal
   name: engineer medal
   description: Given for the best work in the engineering department.
@@ -62,7 +92,7 @@
       - WhitelistChameleon
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingMedalBase
   id: ClothingNeckMedicalmedal
   name: medical medal
   description: Given for the best work in the medical department.
@@ -77,7 +107,7 @@
       - WhitelistChameleon
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingMedalBase
   id: ClothingNeckSciencemedal
   name: science medal
   description: Given for the best work in the science department.
@@ -92,7 +122,7 @@
       - WhitelistChameleon
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingMedalBase
   id: ClothingNeckSecuritymedal
   name: security medal
   description: Given for the best work in the security department.
@@ -107,7 +137,7 @@
       - WhitelistChameleon
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingMedalBase
   id: ClothingNeckClownmedal
   name: clown medal
   description: Given for the best joke in the universe. HONK!
