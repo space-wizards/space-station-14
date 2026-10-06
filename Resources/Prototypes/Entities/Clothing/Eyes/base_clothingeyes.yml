@@ -13,7 +13,7 @@
 
 - type: entity
   abstract: true
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, ClothingEyesGlassesBase]
   id: ClothingEyesSunglassesBase
   components:
   - type: FlashImmunity
