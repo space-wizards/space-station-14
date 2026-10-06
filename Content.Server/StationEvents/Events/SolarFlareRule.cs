@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Text;
 using Content.Server.CriminalRecords.Systems;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Atmos.Monitor.Components;
@@ -62,20 +63,20 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
         {
             var announcement = Loc.GetString("station-event-solar-flare-start-announcement");
 
-            var scrambledAnnouncement = string.Empty;
+            var scrambledAnnouncement = new StringBuilder(announcement.Length);
             for (float i = 0; i < announcement.Length; i++)
             {
                 if (RobustRandom.Prob(MathF.Pow(i / announcement.Length, 4)))
                 {
-                    scrambledAnnouncement += Convert.ToChar(RobustRandom.NextByte(32, 255));
+                    scrambledAnnouncement.Append(Convert.ToChar(RobustRandom.NextByte(32, 255)));
                 }
                 else
                 {
-                    scrambledAnnouncement += announcement[(int)i];
+                    scrambledAnnouncement.Append(announcement[(int)i]);
                 }
             }
 
-            stationEvent.StartAnnouncement = scrambledAnnouncement;
+            stationEvent.StartAnnouncement = scrambledAnnouncement.ToString();
         }
 
         base.Added(ent, ref args);
