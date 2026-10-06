@@ -12,7 +12,6 @@ using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
-using System.Numerics;
 using Color = Robust.Shared.Maths.Color;
 using Texture = Robust.Client.Graphics.Texture;
 
@@ -27,8 +26,8 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
     private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
     private static readonly ProtoId<ShaderPrototype> HeatOverlayShader = "HeatBlur";
 
-    private static readonly Color EmptyColor = new Color(0, 0, 0, 0);
-    private static readonly Color MarkerColor = new Color(255f, 0, 0);
+    private static readonly Color EmptyColor = new(0, 0, 0, 0);
+    private static readonly Color MarkerColor = new(255f, 0, 0);
 
     [Dependency] private IEntityManager _entManager = default!;
     [Dependency] private IPrototypeManager _proto = default!;
@@ -126,11 +125,9 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
                 {
                     if (!overlayQuery.TryGetComponent(grid.Owner, out var comp))
                         continue;
+
                     var (_, _, gridEntToWorld, worldToGridLocal) = _xformSys.GetWorldPositionRotationMatrixWithInv(grid.Owner);
                     var gridEntToViewportLocal = gridEntToWorld * worldToViewportLocal;
-
-                    if (!Matrix3x2.Invert(gridEntToViewportLocal, out var viewportLocalToGridEnt))
-                        continue;
 
                     // Draw commands (like DrawRect) will be using grid coordinates from here
                     worldHandle.SetTransform(gridEntToViewportLocal);
@@ -229,7 +226,6 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
     internal sealed class CachedResources : IDisposable
     {
         public IRenderTexture? HeatTarget;
-
         public void Dispose()
         {
             HeatTarget?.Dispose();
