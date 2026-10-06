@@ -95,7 +95,7 @@ public sealed partial class ClientEyeBlinkingSystem : EyeBlinkingSystem
     /// The entity's owner must be valid, and its eyes must not already be closed.</param>
     public void Blink(Entity<EyeBlinkingComponent> ent)
     {
-        if (ent.Comp.Status != BlinkStatus.Normal || _statusEffects.HasEffectComp<UnblinkingStatusEffectComponent>(ent.Comp.Body))
+        if (ent.Comp.Status != BlinkStatus.Normal)
             return;
 
         // Checks if a blink is still in progress to avoid a "frozen eyes" effect caused by emote spamming. A blink must complete fully before the next one can start.
@@ -182,6 +182,9 @@ public sealed partial class ClientEyeBlinkingSystem : EyeBlinkingSystem
     /// </summary>
     private void ChangeEyeState(Entity<SpriteComponent?> ent, EyelidState state, bool eyeClosed)
     {
+        if (_statusEffects.HasEffectComp<UnblinkingStatusEffectComponent>(ent.Owner))
+            eyeClosed = false;
+
         var layer = state.LayerKey;
         if (!_sprite.LayerMapTryGet(ent, layer, out var layerIndex, logMissing: false))
             return;
