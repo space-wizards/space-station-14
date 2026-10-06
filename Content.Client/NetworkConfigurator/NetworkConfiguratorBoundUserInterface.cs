@@ -14,7 +14,7 @@ public sealed partial class NetworkConfiguratorBoundUserInterface(EntityUid owne
     [ViewVariables]
     private NetworkConfiguratorConfigurationMenu? _configurationMenu;
 
-    private void OnRemoveButtonPressed(LocDeviceAddress address)
+    private void OnRemoveButtonPressed(DeviceAddress address)
     {
         SendPredictedMessage(new NetworkConfiguratorRemoveDeviceMessage(address));
     }

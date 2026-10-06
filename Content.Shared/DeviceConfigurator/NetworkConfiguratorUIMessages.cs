@@ -43,9 +43,9 @@ public enum NetworkConfiguratorButtonKey
 /// Message sent when the remove button for one device on the list was pressed
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class NetworkConfiguratorRemoveDeviceMessage(LocDeviceAddress address) : BoundUserInterfaceMessage
+public sealed class NetworkConfiguratorRemoveDeviceMessage(DeviceAddress address) : BoundUserInterfaceMessage
 {
-    public readonly LocDeviceAddress Address = address;
+    public readonly DeviceAddress Address = address;
 }
 
 /// <summary>

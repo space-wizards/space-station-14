@@ -8,7 +8,7 @@ namespace Content.Client.NetworkConfigurator;
 [GenerateTypedNameReferences]
 public sealed partial class NetworkConfiguratorListMenu : FancyWindow
 {
-    public event Action<LocDeviceAddress>? OnRemoveAddress;
+    public event Action<DeviceAddress>? OnRemoveAddress;
 
     public NetworkConfiguratorListMenu()
     {

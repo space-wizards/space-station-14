@@ -290,7 +290,7 @@ public sealed partial class NetworkConfiguratorSystem
             _ => "error"
         };
 
-        _popupSystem.PopupCursor(Loc.GetString(resultText), actor, PopupType.Medium);
+        _popupSystem.PopupCursor(resultText, actor, PopupType.Medium);
 
         if (_uiSystem.TryGetOpenUi(ent.Owner, NetworkConfiguratorUiKey.Configure, out var bui))
             bui.Update();

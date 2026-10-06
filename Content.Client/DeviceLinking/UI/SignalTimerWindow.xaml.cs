@@ -4,7 +4,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Timing;
 
-namespace Content.Client.MachineLinking.UI;
+namespace Content.Client.DeviceLinking.UI;
 
 /// <summary>
 /// A simple window to edit the duration and finish message for a signal timer.

@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 
-namespace Content.Client.MachineLinking.UI;
+namespace Content.Client.DeviceLinking.UI;
 
 [UsedImplicitly]
 public sealed partial class SignalTimerBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
