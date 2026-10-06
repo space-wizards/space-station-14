@@ -20,6 +20,8 @@
   - type: Solution
     solution:
       maxVol: 60
+  - type: ExaminableSolution
+    solution: food
   - type: MixableSolution
     solution: food
   - type: Edible
