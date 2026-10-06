@@ -223,6 +223,12 @@
   id: ArtifactCrusherMachineCircuitboard
   result: ArtifactCrusherMachineCircuitboard
 
+# Teleportation
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseResearchMachineRecipeCategory ]
+  id: StationTeleporterMachineCircuitboard
+  result: StationTeleporterMachineCircuitboard
+
 # Anomaly
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseResearchMachineRecipeCategory ]

@@ -12,19 +12,18 @@ namespace Content.Shared.DeviceLinking;
 
 public abstract partial class SharedDeviceLinkSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
 
-    [Dependency] private EntityQuery<DeviceLinkSinkComponent> _deviceLinkSinkQuery = default!;
-
-    public const string InvokedPort = "link_port";
+    [Dependency] protected EntityQuery<DeviceLinkSinkComponent> DeviceLinkSinkQuery = default!;
+    [Dependency] protected EntityQuery<DeviceLinkSourceComponent> DeviceLinkSourceQuery = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
+        base.Initialize();
         SubscribeLocalEvent<DeviceLinkSourceComponent, ComponentStartup>(OnSourceStartup);
         SubscribeLocalEvent<DeviceLinkSourceComponent, ComponentRemove>(OnSourceRemoved);
         SubscribeLocalEvent<DeviceLinkSinkComponent, ComponentRemove>(OnSinkRemoved);
@@ -86,7 +85,7 @@ public abstract partial class SharedDeviceLinkSystem : EntitySystem
     {
         foreach (var sinkUid in source.Comp.LinkedPorts.Keys)
         {
-            if (_deviceLinkSinkQuery.TryGetComponent(sinkUid, out var sink))
+            if (DeviceLinkSinkQuery.TryGetComponent(sinkUid, out var sink))
                 RemoveSinkFromSourceInternal(source, sinkUid, source, sink);
             else
                 Log.Error($"Device source {ToPrettyString(source)} links to invalid entity: {ToPrettyString(sinkUid)}");
@@ -119,7 +118,7 @@ public abstract partial class SharedDeviceLinkSystem : EntitySystem
         var comp = EnsureComp<DeviceLinkSourceComponent>(uid);
         foreach (var port in ports)
         {
-            if (!_prototypeManager.HasIndex(port))
+            if (!ProtoMan.HasIndex(port))
                 Log.Error($"Attempted to add invalid port {port} to {ToPrettyString(uid)}");
             else
                 comp.Ports.Add(port);
@@ -137,7 +136,7 @@ public abstract partial class SharedDeviceLinkSystem : EntitySystem
         var comp = EnsureComp<DeviceLinkSinkComponent>(uid);
         foreach (var port in ports)
         {
-            if (!_prototypeManager.HasIndex(port))
+            if (!ProtoMan.HasIndex(port))
                 Log.Error($"Attempted to add invalid port {port} to {ToPrettyString(uid)}");
             else
                 comp.Ports.Add(port);
@@ -161,7 +160,7 @@ public abstract partial class SharedDeviceLinkSystem : EntitySystem
         var sourcePorts = new List<SourcePortPrototype>();
         foreach (var port in sourceComponent.Ports)
         {
-            sourcePorts.Add(_prototypeManager.Index(port));
+            sourcePorts.Add(ProtoMan.Index(port));
         }
 
         return sourcePorts;
@@ -184,7 +183,7 @@ public abstract partial class SharedDeviceLinkSystem : EntitySystem
         var sinkPorts = new List<SinkPortPrototype>();
         foreach (var port in sinkComponent.Ports)
         {
-            sinkPorts.Add(_prototypeManager.Index(port));
+            sinkPorts.Add(ProtoMan.Index(port));
         }
 
         return sinkPorts;
@@ -195,7 +194,7 @@ public abstract partial class SharedDeviceLinkSystem : EntitySystem
     /// </summary>
     public string PortName<TPort>(string port) where TPort : DevicePortPrototype, IPrototype
     {
-        if (!_prototypeManager.TryIndex<TPort>(port, out var proto))
+        if (!ProtoMan.TryIndex<TPort>(port, out var proto))
             return port;
 
         return Loc.GetString(proto.Name);
@@ -312,8 +311,8 @@ public abstract partial class SharedDeviceLinkSystem : EntitySystem
         RemoveSinkFromSource(sourceUid, sinkUid, sourceComponent);
         foreach (var (source, sink) in links)
         {
-            DebugTools.Assert(_prototypeManager.HasIndex<SourcePortPrototype>(source));
-            DebugTools.Assert(_prototypeManager.HasIndex<SinkPortPrototype>(sink));
+            DebugTools.Assert(ProtoMan.HasIndex<SourcePortPrototype>(source));
+            DebugTools.Assert(ProtoMan.HasIndex<SinkPortPrototype>(sink));
 
             if (!sourceComponent.Ports.Contains(source) || !sinkComponent.Ports.Contains(sink))
                 continue;
@@ -540,12 +539,21 @@ public abstract partial class SharedDeviceLinkSystem : EntitySystem
     /// Sends a network payload directed at the sink entity.
     /// Just raises a <see cref="SignalReceivedEvent"/> without data if the source or the sink doesn't have a <see cref="DeviceNetworkComponent"/>
     /// </summary>
-    /// <param name="uid">The source uid that invokes the port</param>
+    /// <param name="ent">The source uid that invokes the port</param>
+    /// <param name="port">The port to invoke</param>
+    public virtual void InvokePort(Entity<DeviceLinkSourceComponent?> ent, string port)
+    {
+        // NOOP on client for the moment.
+    }
+
+    /// <summary>
+    /// Sends a network payload directed at the sink entity.
+    /// Just raises a <see cref="SignalReceivedEvent"/> without data if the source or the sink doesn't have a <see cref="DeviceNetworkComponent"/>
+    /// </summary>
+    /// <param name="ent">The source entity that invokes the port</param>
     /// <param name="port">The port to invoke</param>
     /// <param name="data">Optional data to send along</param>
-    /// <param name="sourceComponent"></param>
-    public virtual void InvokePort(EntityUid uid, string port, NetworkPayload? data = null,
-        DeviceLinkSourceComponent? sourceComponent = null)
+    public virtual void InvokePort<T>(Entity<DeviceLinkSourceComponent?> ent, string port, ref T data) where T : ISignalNetworkPayload
     {
         // NOOP on client for the moment.
     }

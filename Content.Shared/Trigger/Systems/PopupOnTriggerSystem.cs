@@ -20,7 +20,7 @@ public sealed partial class PopupOnTriggerSystem : XOnTriggerSystem<PopupOnTrigg
         {
             if (ent.Comp.Predicted)
             {
-                _popup.PopupClient(Loc.GetString(ent.Comp.Text, ("entity", ent), ("user", user)),
+                _popup.PopupEntity(Loc.GetString(ent.Comp.Text, ("entity", ent), ("user", user)),
                     target,
                     ent.Comp.UserIsRecipient ? args.User : ent.Owner,
                     ent.Comp.PopupType);
@@ -40,7 +40,7 @@ public sealed partial class PopupOnTriggerSystem : XOnTriggerSystem<PopupOnTrigg
         // Popups play for all entities
         if (ent.Comp.Predicted)
         {
-            _popup.PopupPredicted(Loc.GetString(ent.Comp.Text, ("entity", ent), ("user", user)),
+            _popup.PopupEntity(Loc.GetString(ent.Comp.Text, ("entity", ent), ("user", user)),
                 Loc.GetString(ent.Comp.OtherText ?? ent.Comp.Text, ("entity", ent), ("user", user)),
                 target,
                 ent.Comp.UserIsRecipient ? args.User : ent.Owner,

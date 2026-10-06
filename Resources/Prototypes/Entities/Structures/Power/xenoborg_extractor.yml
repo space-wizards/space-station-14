@@ -1,0 +1,100 @@
+- type: entity
+  parent: [BaseMachine, BaseMachineDestructible, BaseXenoborgContraband]
+  id: XenoborgExtractor
+  name: xenoborg extractor
+  description: Drains electricity from the grid to produce xenoborg crystals via nuclear fusion.
+  suffix: Unanchored
+  placement:
+    mode: PlaceFree
+  components:
+  - type: Physics
+    bodyType: Dynamic
+  - type: Transform
+    anchored: false
+  - type: AnchorOnlyOnStation
+  - type: Sprite
+    sprite: Structures/Machines/xenoborg_extractor.rsi
+    snapCardinals: true
+    layers:
+    - state: icon
+      map: ["base"]
+    - state: running
+      map: ["running"]
+    - state: light
+      shader: unshaded
+      map: ["light"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerConsumerVisuals.Consuming:
+        base:
+          True: { visible: false }
+          False: { visible: true }
+        running:
+          True: { visible: true }
+          False: { visible: false }
+        light:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 175
+      behaviors:
+      - !type:ExplodeBehavior
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+  - type: Explosive # small explosion when destroyed
+    explosionType: Default
+    maxIntensity: 20
+    totalIntensity: 10
+    intensitySlope: 5
+    canCreateVacuum: false
+  - type: LightningTarget
+    priority: 1
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    highVoltageNode: input_hv
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input_hv:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+        enabled: true
+  - type: PowerConsumerBatteryCharger
+    efficiency: 0.25
+  - type: PowerConsumer
+    voltage: High
+    drawRate: 240000 # 240kW (60kW effectively) - 15 seconds to spawn one # sets off the rogue power consuming device alert!
+  - type: Battery
+    maxCharge: 900000 # 900KJ
+    netsync: false
+  - type: ExaminableBattery
+  - type: SpawnOnBatteryFull
+    table: !type:NestedSelector
+      tableId: XenoborgExtractorCrystals
+
+- type: entityTable
+  id: XenoborgExtractorCrystals
+  table: !type:GroupSelector
+    children:
+    - id: MaterialXenoborgCrystal1
+      weight: 1
+
+- type: entity
+  parent: XenoborgExtractor
+  id: XenoborgExtractorAnchored
+  suffix: Anchored
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Physics
+    bodyType: Static
+  - type: Transform
+    anchored: true

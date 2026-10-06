@@ -1,0 +1,81 @@
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformJumpsuitChemistry
+  name: chemistry jumpsuit
+  description: There's some odd stains on this jumpsuit. Hm.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Medical/chemistry.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitVirology
+  name: virology jumpsuit
+  description: It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Medical/virology.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Medical/virology.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitGenetics
+  name: genetics jumpsuit
+  description: It's made of a special fiber that gives special protection against biohazards. It has a geneticist rank stripe on it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Medical/genetics.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Medical/genetics.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband, ClothingUniformFoldableBase]
+  id: ClothingUniformJumpsuitCMO
+  name: chief medical officer's jumpsuit
+  description: It's a jumpsuit worn by those with the experience to be Chief Medical Officer. It provides minor biological protection.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Medical/cmo.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitCMOTurtle
+  name: chief medical officer's turtleneck jumpsuit
+  description: It's a turtleneck worn by those with the experience to be Chief Medical Officer. It provides minor biological protection.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Medical/cmo_turtle.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Medical/cmo_turtle.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformJumpsuitMedicalDoctor
+  name: medical doctor jumpsuit
+  description: It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Medical/medical.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitParamedic
+  name: paramedic jumpsuit
+  description: It's got a plus on it, that's a good thing right?
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Medical/paramedic.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Medical/paramedic.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSeniorPhysician
+  name: senior physician jumpsuit
+  description: A sign of skill and prestige within the medical department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Medical/senior_physician.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Medical/senior_physician.rsi
