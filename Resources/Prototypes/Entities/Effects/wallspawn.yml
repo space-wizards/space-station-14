@@ -121,3 +121,19 @@
   components:
   - type: SpawnOnDespawn
     prototype: AsteroidRockCoal
+
+- type: entity
+  parent: WallSpawnAsteroid
+  id: WallSpawnAsteroidBananiumCrab
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SpawnOnDespawn
+    prototype: AsteroidRockBananiumCrab
+
+- type: entity
+  parent: WallSpawnAsteroid
+  id: WallSpawnAsteroidBananium
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SpawnOnDespawn
+    prototype: AsteroidRockBananium

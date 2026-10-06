@@ -269,6 +269,22 @@
 
 - type: entity
   abstract: true
+  id: BaseVeinBananium
+  suffix: Bananium
+  description: An ore vein rich with bananium, honk!
+  components:
+  - type: OreVein
+    oreChance: 1.0
+    currentOre: OreBananium
+  - type: Sprite
+    layers:
+    # TODO: unique sprite
+    - state: rock_uranium
+      sprite: Structures/Walls/stone-ore.rsi
+      map: [ "enum.MiningScannerVisualLayers.Overlay" ]
+
+- type: entity
+  abstract: true
   id: BaseVeinRandom
   suffix: 33% Random Ores
   description: A vein rich with strange artifacts.
@@ -352,6 +368,18 @@
   components:
   - type: OreVein
     currentOre: OreSilverCrab
+
+- type: entity
+  parent: AsteroidRockBananium
+  id: AsteroidRockBananiumCrab
+  suffix: Bananium Crab
+  components:
+  - type: OreVein
+    currentOre: OreBananiumCrab
+
+- type: entity
+  parent: [ BaseVeinBananium, AsteroidRock ]
+  id: AsteroidRockBananium
 
 # Yes I know it drops steel but we may get smelting at some point
 - type: entity
@@ -460,6 +488,10 @@
 - type: entity
   parent: [ BaseVeinDiamond, IronRock ]
   id: IronRockDiamond
+
+- type: entity
+  parent: [ BaseVeinBananium, IronRock ]
+  id: IronRockBananium
 
 #endregion
 #region Wall Rock
@@ -609,6 +641,17 @@
       WallRockSand: WallRockSandSalt
       WallRockSnow: WallRockSnowSalt
 
+- type: entity
+  parent: [ BaseVeinBananium, WallRock ]
+  id: WallRockBananium
+  components:
+  - type: EntityRemap
+    mask:
+      AsteroidRock: AsteroidRockBananium
+      WallRockChromite: WallRockChromiteBananium
+      WallRockSand: WallRockSandBananium
+      WallRockSnow: WallRockSnowBananium
+
 #endregion
 #region Wall Rock (Snow)
 
@@ -663,6 +706,10 @@
   parent: [ BaseVeinSalt, WallRockSnow ]
   id: WallRockSnowSalt
 
+
+- type: entity
+  parent: [ BaseVeinBananium, WallRockSnow ]
+  id: WallRockSnowBananium
 #endregion
 #region Wall Rock (Sand)
 
@@ -717,6 +764,10 @@
   parent: [ BaseVeinSalt, WallRockSand ]
   id: WallRockSandSalt
 
+- type: entity
+  parent: [ BaseVeinBananium, WallRockSand ]
+  id: WallRockSandBananium
+
 #endregion
 #region Wall Rock (Chromite)
 
@@ -770,5 +821,9 @@
 - type: entity
   parent: [ BaseVeinSalt, WallRockChromite ]
   id: WallRockChromiteSalt
+
+- type: entity
+  parent: [ BaseVeinBananium, WallRockChromite ]
+  id: WallRockChromiteBananium
 
 #endregion
