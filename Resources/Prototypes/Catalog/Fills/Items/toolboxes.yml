@@ -221,8 +221,8 @@
         weight: 5
       - id: BarberScissors
         weight: 0.75
-      - id: DrinkSpaceLube
-      - id: DrinkSpaceGlue
+      - id: CrazyGlue
+      - id: CrazyLube
       - !type:NestedSelector
         tableId: RandomBikeHornTable
         weight: 0.75
