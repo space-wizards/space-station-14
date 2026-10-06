@@ -943,7 +943,7 @@
     node: meat steak
   - type: FoodSequenceElement
     entries:
-      Burger: MeatSteak
+      Burger: MeatSteakBurger
       Taco: MeatSteak
   - type: Item
     storedOffset: -2,1
