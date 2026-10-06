@@ -88,10 +88,13 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
 
         var solarFlareRuleComponent = ent.Comp1;
 
-        for (var i = 0; i < solarFlareRuleComponent.ExtraCount; i++)
+        if (solarFlareRuleComponent.ExtraChannels.Count > 0 && solarFlareRuleComponent.ExtraCount > 0)
         {
-            var channel = RobustRandom.Pick(ent.Comp1.ExtraChannels);
-            solarFlareRuleComponent.AffectedChannels.Add(channel);
+            for (var i = 0; i < solarFlareRuleComponent.ExtraCount; i++)
+            {
+                var channel = RobustRandom.Pick(ent.Comp1.ExtraChannels);
+                solarFlareRuleComponent.AffectedChannels.Add(channel);
+            }
         }
 
         solarFlareRuleComponent.AffectedLights = Station
