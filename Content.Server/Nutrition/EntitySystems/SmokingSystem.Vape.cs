@@ -29,19 +29,19 @@ namespace Content.Server.Nutrition.EntitySystems
         [SubscribeLocalEvent]
         private void OnVapeActivatedEvent(Entity<VapeComponent> entity, ref ActivateInWorldEvent args)
         {
-            if (!args.Handled)
-            {
-                args.Handled = TryUseVape(entity, args.User, args.User);
-            }
+            if (args.Handled)
+                return;
+
+            args.Handled = TryUseVape(entity, args.User, args.User);
         }
 
         [SubscribeLocalEvent]
         private void OnVapeInteraction(Entity<VapeComponent> entity, ref AfterInteractEvent args)
         {
-            if (!args.Handled && args.CanReach)
-            {
-                args.Handled = TryUseVape(entity, args.User, args.Target);
-            }
+            if (args.Handled || !args.CanReach)
+                return;
+
+            args.Handled = TryUseVape(entity, args.User, args.Target);
         }
 
         private bool TryUseVape(Entity<VapeComponent> entity, EntityUid user, EntityUid? target)
