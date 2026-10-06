@@ -14,7 +14,7 @@
     sprite: Objects/Misc/id_cards.rsi
   - type: Item
     size: Small
-    heldPrefix: default
+    heldPrefix: makeshift
     storedRotation: -90
   - type: IdCard
     canMicrowave: false
@@ -59,6 +59,7 @@
     - state: makeshift_base
   - type: Item
     size: Small
+    heldPrefix: makeshift
     storedRotation: -90
   - type: Construction
     graph: makeshiftID
@@ -76,6 +77,7 @@
     - state: makeshift_soldered
   - type: Item
     size: Small
+    heldPrefix: makeshift
     storedRotation: -90
   - type: Construction
     graph: makeshiftID
