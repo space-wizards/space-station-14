@@ -27,14 +27,14 @@
   id: CrateArtifactBundle
   name: Artifact bundle
   suffix: Filled
-  description: Contains artifacts and the equipment to fulfill your mad science needs.
+  description: Contains artifacts and the equipment to fulfill your mad science needs. take to an open area before opening.
   components:
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:AllSelector
         children:
         - id: DangerousXenoArtifactItem
-          amount: 3
+          amount: 4
         - id: MachineArtifactAnalyzer
         - id: ComputerAnalysisConsole
         - id: NodeScanner
@@ -58,7 +58,8 @@
         - id: BoxBeaker
         - id: BoxSyringe
         - id: HandheldArtifactContainer
-
+        - id: AnomalyScanner
+        - id: WeaponPistolCHIMPUpgraded
 
 - type: entity
   parent: [ CrateSyndicate, StorePresetUplink, BaseSyndicateContraband ]
