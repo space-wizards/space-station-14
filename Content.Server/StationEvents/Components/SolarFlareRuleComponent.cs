@@ -3,6 +3,7 @@ using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
 using Content.Shared.CriminalRecords;
 using Content.Shared.StationRecords;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.StationEvents.Components;
 
@@ -143,4 +144,10 @@ public sealed partial class SolarFlareRuleComponent : Component
     public float LinkPortInvokeChance;
 
     #endregion
+
+    /// <summary>
+    ///     A blacklist of device link source prototypes that will not be affected by the solar flare event.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist DeviceLinkSourceBlacklist = new();
 }

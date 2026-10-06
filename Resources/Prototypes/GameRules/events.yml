@@ -438,7 +438,14 @@
     changeCriminalRecordChance: 0.0003
     vendChance: 0.001
     lockToggleChance: 0.001
-    linkPortInvokeChance: 0.001
+    linkPortInvokeChance: 0.004
+    deviceLinkSourceBlacklist:
+      tags:
+      - SolarFlareLinkSourceBlacklist
+      - AirAlarm
+      - Airlock
+      - GlassAirlock
+      - Windoor
   - type: DynamicRuleCost
     cost: 10
 

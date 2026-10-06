@@ -22,6 +22,7 @@ using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Lock;
 using Content.Shared.VendingMachines.Components;
+using Content.Shared.Whitelist;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
@@ -46,6 +47,7 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
     [Dependency] private VendingMachineSystem _vendingMachine = default!;
     [Dependency] private LockSystem _lock = default!;
     [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
 
     [Dependency] private EntityQuery<HeadsetComponent> _headsetQuery;
 
@@ -135,6 +137,7 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
         solarFlareComp.AffectedLinkSources = Station
             .GetEntitiesWithComponentOnStation<DeviceLinkSourceComponent>(false)
             .Select(e => e.Owner)
+            .Where(e => _entityWhitelist.IsWhitelistFail(solarFlareComp.DeviceLinkSourceBlacklist, e))
             .ToHashSet();
     }
 
