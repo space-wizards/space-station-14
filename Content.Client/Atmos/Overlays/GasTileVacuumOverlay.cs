@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Client.Graphics;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
@@ -10,6 +9,8 @@ using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
+using System.Numerics;
+using static Content.Shared.Atmos.EntitySystems.SharedGasTileOverlaySystem;
 using Color = Robust.Shared.Maths.Color;
 
 namespace Content.Client.Atmos.Overlays;
@@ -124,7 +125,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
                     // for each tile and its gas --->
                     foreach (var chunk in comp.Chunks.Values)
                     {
-                        var enumerator = new GasChunkEnumerator(chunk);
+                        var enumerator = new GasChunkEnumerator<SharedGasTemperatureData>(chunk.TileGasTemperatureData);
 
                         while (enumerator.MoveNext(out var tileGas))
                         {
