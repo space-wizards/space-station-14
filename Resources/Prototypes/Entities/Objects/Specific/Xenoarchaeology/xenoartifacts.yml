@@ -1,8 +1,8 @@
 - type: entity
+  abstract: true
   id: BaseArtifact
   name: artifact
   description: A strange artifact from time unknown. Looks like a good time.
-  abstract: true
   components:
   # Visual
   - type: Appearance
@@ -47,11 +47,11 @@
     cooldown: 0.1
 
 - type: entity
+  abstract: true
   id: BaseXenoArtifact
   parent: [ BaseArtifact, BaseMob ]
   name: artifact
   description: A strange artifact from time unknown. Looks like a good time.
-  abstract: true
   components:
   - type: UseDelay
   - type: StealTarget

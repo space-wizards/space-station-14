@@ -2,7 +2,7 @@
   id: LootboxTriggersBasic #lootbox triggers should require the player to DO something to it. Avoid accidental openings.
   table: !type:GroupSelector
     conditionsForChildren:
-      - !type:ExcludeEntitiesFromContextCondition
+    - !type:ExcludeEntitiesFromContextCondition
     children:
     - id: TriggerScrewing #these ones already have a description so can just use them as is
     - id: TriggerPrying
@@ -19,7 +19,7 @@
   id: LootboxTriggersEngineering
   table: !type:GroupSelector
     conditionsForChildren:
-      - !type:ExcludeEntitiesFromContextCondition
+    - !type:ExcludeEntitiesFromContextCondition
     children:
     #- id: LootboxTriggerAccessCE
     - id: LootboxTriggerHeat
@@ -34,7 +34,7 @@
   id: LootboxTriggersSecurity
   table: !type:GroupSelector
     conditionsForChildren:
-      - !type:ExcludeEntitiesFromContextCondition
+    - !type:ExcludeEntitiesFromContextCondition
     children:
     #- id: LootboxTriggerAccessHOS
     - id: LootboxTriggerInteractCuffs
@@ -45,7 +45,7 @@
   id: LootboxTriggersMedical
   table: !type:GroupSelector
     conditionsForChildren:
-      - !type:ExcludeEntitiesFromContextCondition
+    - !type:ExcludeEntitiesFromContextCondition
     children:
     #- id: LootboxTriggerAccessCMO
     - id: LootboxTriggerBlood
@@ -59,7 +59,7 @@
   id: LootboxTriggersScience
   table: !type:GroupSelector  #science are already good at artifact triggers so they get some of the rest too
     conditionsForChildren:
-      - !type:ExcludeEntitiesFromContextCondition
+    - !type:ExcludeEntitiesFromContextCondition
     children:
     #- id: LootboxTriggerAccessRD
     - id: LootboxTriggerBlood
@@ -77,7 +77,7 @@
   id: LootboxTriggersService
   table: !type:GroupSelector
     conditionsForChildren:
-      - !type:ExcludeEntitiesFromContextCondition
+    - !type:ExcludeEntitiesFromContextCondition
     children:
     #LootboxTriggerAccessHOP
     - id: LootboxTriggerConsumeCarbs
