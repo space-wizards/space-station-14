@@ -447,6 +447,7 @@
         - id: BoxLethalshot
         - id: TreasureCoinIron
 
+- type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledCHIMP
   name: C.H.I.M.P bundle
