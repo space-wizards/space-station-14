@@ -2,6 +2,7 @@
     xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:kitchen="clr-namespace:Content.Client.Kitchen.UI"
     Title="{Loc 'microwave-menu-title'}"
     MinWidth="512"
     MinSize="512 256">
@@ -49,15 +50,11 @@
                                 Align="Center"
                                 Modulate="#FFFFFF"
                                 VAlign="Center" />
-                            <BoxContainer  Orientation="Vertical">
-                                <Button
+                            <BoxContainer Orientation="Vertical" SeparationOverride="1">
+                                <kitchen:MicrowaveCookTimeButton
                                     Name="InstantCookButton"
-                                    Access="Public"
-                                    Text="{Loc 'microwave-menu-instant-button'}"
-                                    StyleClasses="OpenLeft"
-                                    ToggleMode="True"
-                                    Margin="0 0 2 0"
-                                    TextAlign="Center" />
+                                    CookTime="0"
+                                    StyleClasses="OpenBoth"/>
                                 <GridContainer
                                     Name="CookTimeButtonVbox"
                                     HSeparationOverride="1"
@@ -71,6 +68,7 @@
                                 <BoxContainer
                                     Orientation="Vertical"
                                     Align="Center"
+                                    SeparationOverride="1"
                                     SizeFlagsStretchRatio="3">
                                     <Control MinSize="0 15" />
                                     <Button
