@@ -26,19 +26,14 @@
   - type: Damageable
     damageModifierSet: Wood
   - type: Injurable
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 15
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Ash:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+  - type: AtmosExposed
+  - type: Temperature
+  - type: TemperatureTransform
+    entries:
+    - temperatureRange: 330, 2000
+      table: !type:AllSelector
+        children:
+        - id: Ash
   - type: Edible
     delay: 7
     forceFeedDelay: 7
