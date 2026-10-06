@@ -14,7 +14,7 @@ public record SmartFridgeListData(EntityUid Representative, SmartFridgeEntry Ent
 [GenerateTypedNameReferences]
 public sealed partial class SmartFridgeMenu : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
 
     public event Action<GUIBoundKeyEventArgs, ListData>? OnItemSelected;
     public event Action<SmartFridgeListData>? OnRemoveButtonPressed;

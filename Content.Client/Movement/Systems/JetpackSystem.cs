@@ -10,18 +10,12 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Movement.Systems;
 
-public sealed class JetpackSystem : SharedJetpackSystem
+public sealed partial class JetpackSystem : SharedJetpackSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ClothingSystem _clothing = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<JetpackComponent, AppearanceChangeEvent>(OnJetpackAppearance);
-    }
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ClothingSystem _clothing = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
 
     protected override bool CanEnable(EntityUid uid, JetpackComponent component)
     {
@@ -29,12 +23,13 @@ public sealed class JetpackSystem : SharedJetpackSystem
         return false;
     }
 
-    private void OnJetpackAppearance(EntityUid uid, JetpackComponent component, ref AppearanceChangeEvent args)
+    [SubscribeLocalEvent]
+    private void OnJetpackAppearance(Entity<JetpackComponent> ent, ref AppearanceChangeEvent args)
     {
-        Appearance.TryGetData<bool>(uid, JetpackVisuals.Enabled, out var enabled, args.Component);
+        args.TryGetData<bool>(JetpackVisuals.Enabled, out var enabled);
 
-        if (TryComp<ClothingComponent>(uid, out var clothing))
-            _clothing.SetEquippedPrefix(uid, enabled ? "on" : null, clothing);
+        if (TryComp<ClothingComponent>(ent, out var clothing))
+            _clothing.SetEquippedPrefix(ent, enabled ? "on" : null, clothing);
     }
 
     public override void Update(float frameTime)

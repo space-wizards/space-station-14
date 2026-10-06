@@ -1,0 +1,96 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/ at 38b65a605df7ae2907d6bf0d4aebc5faa1bbc561",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "closed"
+        },
+        {
+            "name": "closing",
+            "delays": [
+                [
+                    0.1,
+                    0.05,
+                    0.05,
+                    0.03,
+                    0.03,
+                    0.03,
+                    0.05,
+                    0.05,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "open"
+        },
+        {
+            "name": "opening",
+            "delays": [
+                [
+                    0.1,
+                    0.05,
+                    0.05,
+                    0.03,
+                    0.03,
+                    0.03,
+                    0.05,
+                    0.05,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "panel_closing",
+            "delays": [
+                [
+                    0.1,
+                    0.05,
+                    0.05,
+                    0.03,
+                    0.03,
+                    0.03,
+                    0.05,
+                    0.05,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "panel_open"
+        },
+        {
+            "name": "panel_opening",
+            "delays": [
+                [
+                    0.1,
+                    0.05,
+                    0.05,
+                    0.03,
+                    0.03,
+                    0.03,
+                    0.05,
+                    0.05,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "pressure_unlit"
+        },
+        {
+            "name": "temperature_unlit"
+        },
+        {
+            "name": "welded"
+        },
+        {
+            "name": "welded_open"
+        }
+    ]
+}

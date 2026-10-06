@@ -1,0 +1,20 @@
+// Unsharp mask sharpening shader
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp float Strength;
+uniform highp vec2 PixelSize;
+
+void fragment() {
+    highp vec4 center = zTextureSpec(SCREEN_TEXTURE, UV);
+    highp vec4 blur = vec4(0.0);
+
+    blur += zTextureSpec(SCREEN_TEXTURE, UV + vec2(PixelSize.x, 0.0));
+    blur += zTextureSpec(SCREEN_TEXTURE, UV + vec2(-PixelSize.x, 0.0));
+    blur += zTextureSpec(SCREEN_TEXTURE, UV + vec2(0.0, PixelSize.y));
+    blur += zTextureSpec(SCREEN_TEXTURE, UV + vec2(0.0, -PixelSize.y));
+    blur /= 4.0;
+
+    highp vec4 sharpened = center + Strength * (center - blur);
+
+    COLOR = clamp(sharpened, 0.0, 1.0);
+}

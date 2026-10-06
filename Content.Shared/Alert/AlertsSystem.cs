@@ -6,12 +6,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Alert;
 
-public abstract class AlertsSystem : EntitySystem
+public abstract partial class AlertsSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
-    [Dependency] private readonly EntityQuery<AlertsComponent> _alertsQuery = default!;
+    [Dependency] private EntityQuery<AlertsComponent> _alertsQuery = default!;
     private FrozenDictionary<ProtoId<AlertPrototype>, AlertPrototype> _typeToAlert = default!;
 
     public override void Initialize()
@@ -326,7 +325,7 @@ public abstract class AlertsSystem : EntitySystem
     protected virtual void LoadPrototypes()
     {
         var dict = new Dictionary<ProtoId<AlertPrototype>, AlertPrototype>();
-        foreach (var alert in _prototypeManager.EnumeratePrototypes<AlertPrototype>())
+        foreach (var alert in ProtoMan.EnumeratePrototypes<AlertPrototype>())
         {
             if (!dict.TryAdd(alert.ID, alert))
                 Log.Error($"Found alert with duplicate alertType {alert.ID} - all alerts must have a unique alertType, this one will be skipped");

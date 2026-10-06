@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Numerics;
 using Content.Client.Administration.UI.BanList.Bans;
 using Content.Client.Administration.UI.BanList.RoleBans;
@@ -11,9 +11,9 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Administration.UI.BanList;
 
 [UsedImplicitly]
-public sealed class BanListEui : BaseEui
+public sealed partial class BanListEui : BaseEui
 {
-    [Dependency] private readonly IUserInterfaceManager _ui = default!;
+    [Dependency] private IUserInterfaceManager _ui = default!;
 
     private BanListIdsPopup? _popup;
 

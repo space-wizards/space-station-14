@@ -1,15 +1,16 @@
 using Content.Server.GameTicking.Events;
 using Content.Shared.Clock;
 using Content.Shared.Destructible;
+using Content.Shared.GameTicking.Events;
 using Robust.Server.GameStates;
 using Robust.Shared.Random;
 
 namespace Content.Server.Clock;
 
-public sealed class ClockSystem : SharedClockSystem
+public sealed partial class ClockSystem : SharedClockSystem
 {
-    [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private PvsOverrideSystem _pvsOverride = default!;
+    [Dependency] private IRobustRandom _robustRandom = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

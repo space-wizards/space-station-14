@@ -1,5 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Content.Client.Stylesheets;
+using System.Diagnostics.CodeAnalysis;
+using Content.Client.Stylesheets.Palette;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Power;
 using Content.Shared.Rounding;
@@ -29,10 +29,10 @@ public sealed partial class BatteryMenu : FancyWindow
     // Colors used for the storage cell bar graphic.
     private static readonly Color[] StorageColors =
     [
-        StyleNano.DangerousRedFore,
+        Palettes.Status.Critical,
         Color.FromHex("#C49438"),
         Color.FromHex("#B3BF28"),
-        StyleNano.GoodGreenFore,
+        Palettes.Status.Good
     ];
 
     // StorageColors but dimmed for "off" bars.
@@ -50,8 +50,8 @@ public sealed partial class BatteryMenu : FancyWindow
     private const float PowerPulseFactor = 4;
 
     // Dependencies
-    [Dependency] private readonly IEntityManager _entityManager = null!;
-    [Dependency] private readonly ILocalizationManager _loc = null!;
+    [Dependency] private IEntityManager _entityManager = null!;
+    [Dependency] private ILocalizationManager _loc = null!;
 
     // Active and inactive style boxes for power lines.
     // We modify _activePowerLineStyleBox's properties programmatically to implement the pulsing animation.
@@ -91,8 +91,8 @@ public sealed partial class BatteryMenu : FancyWindow
 
         InitChargeMeter();
 
-        InBreaker.StateChanged += val => OnInBreaker?.Invoke(val);
-        OutBreaker.StateChanged += val => OnOutBreaker?.Invoke(val);
+        InBreaker.OnToggled += args => OnInBreaker?.Invoke(args.Pressed);
+        OutBreaker.OnToggled += args => OnOutBreaker?.Invoke(args.Pressed);
 
         ChargeRateSlider.OnValueChanged += _ =>
         {
@@ -160,8 +160,8 @@ public sealed partial class BatteryMenu : FancyWindow
         SetPowerLineState(DischargePowerLine, storageDelta < 0);
 
         // Update breakers.
-        InBreaker.IsOn = msg.CanCharge;
-        OutBreaker.IsOn = msg.CanDischarge;
+        InBreaker.Pressed = msg.CanCharge;
+        OutBreaker.Pressed = msg.CanDischarge;
 
         // Update various power values.
         InValue.Text = FormatPower(inValue);

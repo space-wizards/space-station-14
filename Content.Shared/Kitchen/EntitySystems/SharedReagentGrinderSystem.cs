@@ -20,22 +20,26 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Kitchen.EntitySystems;
 
+/// <summary>
+///     Entity system for the reagent grinder, a device that can grind solid objects into
+///     reagents in an inserted container.
+/// </summary>
 [UsedImplicitly]
-public abstract class SharedReagentGrinderSystem : EntitySystem
+public abstract partial class SharedReagentGrinderSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainersSystem = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedStackSystem _stackSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly SharedDestructibleSystem _destructible = default!;
-    [Dependency] private readonly SharedJitteringSystem _jitter = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
-    [Dependency] private readonly SharedPowerStateSystem _powerState = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainersSystem = default!;
+    [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedStackSystem _stackSystem = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private SharedContainerSystem _containerSystem = default!;
+    [Dependency] private SharedDestructibleSystem _destructible = default!;
+    [Dependency] private SharedJitteringSystem _jitter = default!;
+    [Dependency] private SharedPowerReceiverSystem _power = default!;
+    [Dependency] private SharedPowerStateSystem _powerState = default!;
 
     public override void Initialize()
     {
@@ -155,7 +159,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
             if (!HasComp<FitsInDispenserComponent>(heldEnt))
             {
                 // This is ugly but we can't use whitelistFailPopup because there are 2 containers with different whitelists.
-                _popupSystem.PopupClient(Loc.GetString("reagent-grinder-component-cannot-put-entity-message"), ent.Owner, args.User);
+                _popupSystem.PopupEntity(Loc.GetString("reagent-grinder-component-cannot-put-entity-message"), ent.Owner, args.User);
             }
 
             // Entity did NOT pass the whitelist for grind/juice.
@@ -233,7 +237,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         if (!_power.IsPowered(ent.Owner))
             return;
 
-        var beaker = _itemSlotsSystem.GetItemOrNull(ent, ReagentGrinderComponent.BeakerSlotId);
+        var beaker = _itemSlotsSystem.GetItemOrNull(ent.Owner, ReagentGrinderComponent.BeakerSlotId);
 
         // Do we have anything to grind/juice and a container to put the reagents in?
         if (ent.Comp.InputContainer.ContainedEntities.Count <= 0 || !HasComp<FitsInDispenserComponent>(beaker))
@@ -263,8 +267,11 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         // Unpredicted because we don't have the user in the update loop
         // TODO: Make the audio API sane https://github.com/space-wizards/RobustToolbox/issues/6436
         if (_net.IsServer)
-            ent.Comp.AudioStream = _audioSystem.PlayPvs(sound, ent,
-            AudioParams.Default.WithPitchScale(1 / ent.Comp.WorkTimeMultiplier))?.Entity; //slightly higher pitched
+        {
+            ent.Comp.AudioStream = _audioSystem
+                .PlayPvs(sound, ent, sound.Params.WithPitchScale(1 / ent.Comp.WorkTimeMultiplier))
+                ?.Entity; //slightly higher pitched
+        }
     }
 
     /// <summary>
@@ -277,7 +284,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
 
         ent.Comp.Program = null;
         ent.Comp.AudioStream = _audioSystem.Stop(ent.Comp.AudioStream);
-        ent.Comp.EndTime = null; // It's important that we do this first or PredictedQueueDelete will fail to remove the entity from the container because the grinder is still active.
+        ent.Comp.EndTime = null; // It's important that we do this first or QueueDelete will fail to remove the entity from the container because the grinder is still active.
         Dirty(ent);
         // Remove deferred to avoid modifying the component we are currently enumerating over in the update loop.
         RemCompDeferred<ActiveReagentGrinderComponent>(ent);

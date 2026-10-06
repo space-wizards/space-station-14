@@ -6,11 +6,11 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.SurveillanceCamera;
 
-public partial class SurveillanceCameraSystem
+public sealed partial class SurveillanceCameraSystem
 {
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
-    [Dependency] private readonly EntityQuery<CameraActiveOnCollideComponent> _cameraQuery = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedPowerReceiverSystem _power = default!;
+    [Dependency] private EntityQuery<CameraActiveOnCollideComponent> _cameraQuery = default!;
 
     public void InitializeCollide()
     {
