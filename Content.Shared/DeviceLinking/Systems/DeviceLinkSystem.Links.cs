@@ -18,7 +18,7 @@ public sealed partial class DeviceLinkSystem
         if (!_deviceLinkSourceQuery.Resolve(source.Owner, ref source.Comp) || !source.Comp.LinkedPorts.TryGetValue(sinkUid, out var links))
             return new HashSet<DeviceLink>();
 
-        return links;
+        return new HashSet<DeviceLink>(links);
     }
 
     /// <summary>

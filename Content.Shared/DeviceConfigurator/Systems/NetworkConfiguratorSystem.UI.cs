@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Database;
 using Content.Shared.DeviceConfigurator.Components;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Popups;
 
 namespace Content.Shared.DeviceConfigurator.Systems;
@@ -115,8 +116,7 @@ public sealed partial class NetworkConfiguratorSystem
         {
             ent.Comp.ActiveDeviceLink = null;
             ent.Comp.DeviceLinkTarget = null;
-            DirtyField(ent.AsNullable(), nameof(NetworkConfiguratorComponent.ActiveDeviceLink));
-            DirtyField(ent.AsNullable(), nameof(NetworkConfiguratorComponent.DeviceLinkTarget));
+            DirtyFields(ent.AsNullable(), null, nameof(NetworkConfiguratorComponent.ActiveDeviceLink), nameof(NetworkConfiguratorComponent.DeviceLinkTarget));
         }
 
         DirtyField(ent.AsNullable(), nameof(NetworkConfiguratorComponent.ActiveDeviceList));
@@ -154,7 +154,7 @@ public sealed partial class NetworkConfiguratorSystem
         }
 
         UpdateListUiState(ent);
-        DirtyField(ent.AsNullable(), nameof(NetworkConfiguratorComponent.Devices));
+        DirtyFields(ent.AsNullable(), null, nameof(NetworkConfiguratorComponent.Devices), nameof(NetworkConfiguratorComponent.NamedDevices));
     }
 
     [SubscribeLocalEvent]
@@ -374,15 +374,23 @@ public sealed partial class NetworkConfiguratorSystem
         if (!Resolve(conf.Owner, ref conf.Comp))
             return;
 
+        var removedAddresses = new List<DeviceAddress>();
         foreach (var (addr, dev) in conf.Comp.Devices)
         {
             if (device.Owner != dev)
                 continue;
 
+            removedAddresses.Add(addr);
+        }
+
+        foreach (var addr in removedAddresses)
+        {
             conf.Comp.Devices.Remove(addr);
             conf.Comp.NamedDevices.Remove(addr);
-            DirtyFields(conf, null, nameof(NetworkConfiguratorComponent.Devices), nameof(NetworkConfiguratorComponent.NamedDevices));
         }
+
+        if (removedAddresses.Count > 0)
+            DirtyFields(conf, null, nameof(NetworkConfiguratorComponent.Devices), nameof(NetworkConfiguratorComponent.NamedDevices));
 
         UpdateListUiState(conf!);
     }

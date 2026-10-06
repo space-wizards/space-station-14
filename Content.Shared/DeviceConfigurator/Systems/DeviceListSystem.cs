@@ -26,7 +26,10 @@ public sealed partial class DeviceListSystem : EntitySystem
         foreach (var device in ent.Comp.Devices)
         {
             if (_linkedDeviceQuery.TryComp(device, out var comp))
+            {
                 comp.DeviceLists.Remove(ent);
+                DirtyField(device, comp, nameof(LinkedDeviceNetworkComponent.DeviceLists));
+            }
         }
 
         ent.Comp.Devices.Clear();
@@ -215,7 +218,7 @@ public sealed partial class DeviceListSystem : EntitySystem
             comp.DeviceLists.Add(ent);
         }
 
-        var ev = new DeviceListUpdateEvent(oldDevices, list);
+        var ev = new DeviceListUpdateEvent(oldDevices, [.. ent.Comp.Devices]);
         RaiseLocalEvent(ent, ref ev);
 
         Dirty(ent);

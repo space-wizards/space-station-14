@@ -334,10 +334,11 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
         foreach (var invalidDevice in _invalidDevicesCache)
         {
             configurator.Comp.Devices.Remove(invalidDevice.Item1);
+            configurator.Comp.NamedDevices.Remove(invalidDevice.Item1);
             DebugTools.Assert($"{ToPrettyString(configurator)} contained an invalid link to entity {invalidDevice}!");
         }
 
-        DirtyField(configurator.AsNullable(), nameof(NetworkConfiguratorComponent.Devices));
+        DirtyFields(configurator.AsNullable(), null,  nameof(NetworkConfiguratorComponent.Devices), nameof(NetworkConfiguratorComponent.NamedDevices));
     }
 
     /// <summary>

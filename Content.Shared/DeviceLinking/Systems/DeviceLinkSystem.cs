@@ -46,7 +46,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         var outputs = new Dictionary<ProtoId<SourcePortPrototype>, HashSet<EntityUid>>(state.Outputs.Count);
         foreach (var (key, output) in state.Outputs)
         {
-            var netSet = GetEntitySet(output);
+            var netSet = EnsureEntitySet<DeviceLinkSinkComponent>(output, ent.Owner);
             var set = new HashSet<EntityUid>(netSet.Count);
             foreach (var uid in netSet)
             {
@@ -60,13 +60,15 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         var linked = new Dictionary<EntityUid, HashSet<DeviceLink>>(state.LinkedPorts.Count);
         foreach (var (net, value) in state.LinkedPorts)
         {
-            if (TryGetEntity(net, out var uid))
-                linked.Add(uid.Value, value);
+            var uid = EnsureEntity<DeviceLinkSinkComponent>(net, ent.Owner);
+            if (uid.IsValid())
+                linked.Add(uid, value);
         }
 
         ent.Comp.Outputs = outputs;
         ent.Comp.LinkedPorts = linked;
         ent.Comp.LastSignals = state.LastSignals;
+        ent.Comp.Ports = state.Ports;
     }
 
     /// <summary>

@@ -11,7 +11,7 @@ namespace Content.Shared.DeviceLinking.Components;
 /// Outputs its own signals when the timer starts/finishes.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState(fieldDeltas: true), Access(typeof(SignalTimerSystem))]
+[AutoGenerateComponentState(raiseAfterAutoHandleState: true, fieldDeltas: true), Access(typeof(SignalTimerSystem))]
 public sealed partial class SignalTimerComponent : Component
 {
     /// <summary>

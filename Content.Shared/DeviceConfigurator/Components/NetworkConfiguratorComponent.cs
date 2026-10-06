@@ -6,7 +6,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.DeviceConfigurator.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true, fieldDeltas: true)]
 [Access(typeof(NetworkConfiguratorSystem))]
 public sealed partial class NetworkConfiguratorComponent : Component
 {

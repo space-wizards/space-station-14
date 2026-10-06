@@ -22,6 +22,7 @@ public sealed partial class NetworkConfiguratorOverlaySystem : EntitySystem
     [Dependency] private IOverlayManager _overlay = default!;
     [Dependency] private ActionsSystem _actions = default!;
     [Dependency] private IInputManager _inputManager = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
 
     private static readonly EntProtoId Action = "ActionClearNetworkLinkOverlays";
 
@@ -31,6 +32,19 @@ public sealed partial class NetworkConfiguratorOverlaySystem : EntitySystem
 
         SubscribeLocalEvent<ClearAllOverlaysEvent>(_ => ClearAllOverlays());
         Subs.ItemStatus<NetworkConfiguratorComponent>(OnCollectItemStatus);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnConfiguratorState(Entity<NetworkConfiguratorComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        if (_ui.TryGetOpenUi<NetworkConfiguratorBoundUserInterface>(ent.Owner, NetworkConfiguratorUiKey.Configure, out var configure))
+            configure.Update();
+
+        if (_ui.TryGetOpenUi<NetworkConfiguratorListBoundUserInterface>(ent.Owner, NetworkConfiguratorUiKey.List, out var list))
+            list.Update();
+
+        if (_ui.TryGetOpenUi<NetworkConfiguratorLinkBoundUserInterface>(ent.Owner, NetworkConfiguratorUiKey.Link, out var link))
+            link.Update();
     }
 
     private Control OnCollectItemStatus(Entity<NetworkConfiguratorComponent> entity)

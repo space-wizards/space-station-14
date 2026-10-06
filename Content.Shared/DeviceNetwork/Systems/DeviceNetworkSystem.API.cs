@@ -157,6 +157,9 @@ public sealed partial class DeviceNetworkSystem
             return;
 
         var oldFrequency = ent.Comp.TransmitFrequency;
+        if (oldFrequency == frequency)
+            return;
+
         ent.Comp.TransmitFrequency = frequency;
 
         var ev = new DeviceTransmitFrequencyChangedEvent(oldFrequency, frequency);

@@ -12,8 +12,8 @@ public sealed partial class StationLimitedNetworkSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnBeforePacketSent(Entity<StationLimitedNetworkComponent> ent, ref BeforePacketSentEvent args)
     {
-        if (_stationTrackerQuery.TryComp(ent, out var tracker)
-            && !CheckStationId(args.Sender, ent.Comp.AllowNonStationPackets, tracker.Station))
+        if (!_stationTrackerQuery.TryComp(ent, out var tracker)
+            || !CheckStationId(args.Sender, ent.Comp.AllowNonStationPackets, tracker.Station))
             args.Cancelled = true;
     }
 

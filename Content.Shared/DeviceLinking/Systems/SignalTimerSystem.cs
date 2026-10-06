@@ -50,6 +50,12 @@ public sealed partial class SignalTimerSystem : EntitySystem
         UpdateUi(ent);
     }
 
+    [SubscribeLocalEvent]
+    private void OnAfterState(Entity<SignalTimerComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        UpdateUi(ent);
+    }
+
     /// <summary>
     ///     Called by <see cref="SignalTimerTextChangedMessage"/> to both
     ///     change the default ent.Comp label, and propagate that change to the TextScreen.
