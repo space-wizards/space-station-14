@@ -165,7 +165,8 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
                             worldHandle.DrawTextureRect(
                                 _heatGradientTexture,
                                 Box2.CenteredAround(tilePosition + grid.Comp.TileSizeHalfVector,
-                                    grid.Comp.TileSizeVector * ShaderSpilling), MarkerColor);
+                                    grid.Comp.TileSizeVector * ShaderSpilling),
+                                    new Color(strength, 0f, 0f));
                         }
                     }
                 }
