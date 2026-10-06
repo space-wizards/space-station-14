@@ -55,7 +55,8 @@
   components:
   - type: UseDelay
   - type: StealTarget
-    stealGroup: XenoArtifact
+    stealGroup:
+    - XenoArtifact
   - type: GuideHelp
     guides:
     - Xenoarchaeology
