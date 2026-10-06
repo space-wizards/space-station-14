@@ -15,22 +15,13 @@ public sealed partial class PowerDeviceSignalControlSystem : EntitySystem
     [Dependency] private ApcSystem _apc = default!;
     [Dependency] private DeviceLinkSystem _deviceLink = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ApcSignalControlComponent, MapInitEvent>(OnApcMapInit);
-        SubscribeLocalEvent<ApcSignalControlComponent, SignalReceivedEvent>(OnApcSignalReceived);
-
-        SubscribeLocalEvent<BatterySignalControlComponent, MapInitEvent>(OnBatteryMapInit);
-        SubscribeLocalEvent<BatterySignalControlComponent, SignalReceivedEvent>(OnBatterySignalReceived);
-    }
-
+    [SubscribeLocalEvent]
     private void OnApcMapInit(Entity<ApcSignalControlComponent> ent, ref MapInitEvent args)
     {
         _deviceLink.EnsureSinkPorts(ent, ent.Comp.ToggleOutputPort);
     }
 
+    [SubscribeLocalEvent]
     private void OnApcSignalReceived(Entity<ApcSignalControlComponent> ent, ref SignalReceivedEvent args)
     {
         if (args.Port != ent.Comp.ToggleOutputPort)
@@ -52,11 +43,13 @@ public sealed partial class PowerDeviceSignalControlSystem : EntitySystem
         LogSignal(ent, args.Trigger, "main breaker", apc.MainBreakerEnabled);
     }
 
+    [SubscribeLocalEvent]
     private void OnBatteryMapInit(Entity<BatterySignalControlComponent> ent, ref MapInitEvent args)
     {
         _deviceLink.EnsureSinkPorts(ent, ent.Comp.ToggleInputPort, ent.Comp.ToggleOutputPort);
     }
 
+    [SubscribeLocalEvent]
     private void OnBatterySignalReceived(Entity<BatterySignalControlComponent> ent, ref SignalReceivedEvent args)
     {
         if (!TryComp<PowerNetworkBatteryComponent>(ent, out var battery))
