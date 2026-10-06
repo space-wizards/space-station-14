@@ -31,9 +31,9 @@
     containers:
       charger_slot: !type:ContainerSlot
   - type: ItemSlots
+    allowSmartEquip: true
     slots:
       charger_slot:
-        ejectOnInteract: true
         whitelist:
           components:
           - BatteryAmmoProvider

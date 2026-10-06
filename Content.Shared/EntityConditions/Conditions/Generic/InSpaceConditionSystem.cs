@@ -5,7 +5,7 @@ namespace Content.Shared.EntityConditions.Conditions.Generic;
 /// <summary>
 /// Returns true if the entity is in space.
 /// </summary>
-public sealed class InSpaceConditionSystem : EntityConditionSystem<TransformComponent, InSpaceCondition>
+public sealed partial class InSpaceConditionSystem : EntityConditionSystem<TransformComponent, InSpaceCondition>
 {
     protected override void Condition(Entity<TransformComponent> entity, ref EntityConditionEvent<InSpaceCondition> args)
     {

@@ -9,15 +9,22 @@
     noRot: true
     layers:
     - state: frame
-    - state: portal
-      shader: unshaded
     - state: on
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
+      visible: false
+    - state: portal
+      shader: unshaded
+      map: ["portal"]
+      visible: false
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+      enum.LinkedEntityVisuals.HasAnyLinks:
+        portal:
           True: { visible: true }
           False: { visible: false }
   - type: InteractionOutline
@@ -37,3 +44,19 @@
         - WallLayer
         hard: false
   - type: Appearance
+  - type: StationTeleporter
+    portalLayerMap: "portal"
+    autoLinkKey: Nanotrasen
+  - type: Portal
+    randomTeleport: false
+    canTeleportToOtherMaps: true
+  - type: PointLight
+    enabled: true
+    radius: 3
+    energy: 1
+  - type: AmbientSound
+    enabled: true
+    sound:
+      path: /Audio/Ambience/ambi_gateway.ogg
+    range: 5
+    volume: 8
