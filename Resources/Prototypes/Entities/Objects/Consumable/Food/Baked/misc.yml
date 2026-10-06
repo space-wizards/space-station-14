@@ -765,6 +765,10 @@
         Quantity: 20
       - ReagentId: Butter
         Quantity: 2.5
+  - type: Tag
+    tags:
+    - Bread
+    - FinishedMeal
 
 - type: entity
   parent: FoodBakedCroissant

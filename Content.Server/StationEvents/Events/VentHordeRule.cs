@@ -1,11 +1,10 @@
 using System.Linq;
-using Content.Server.Pinpointer;
 using Content.Server.StationEvents.Components;
 using Content.Server.VentHorde.Components;
 using Content.Server.VentHorde.Systems;
 using Content.Shared.EntityTable;
 using Content.Shared.GameTicking.Components;
-using Content.Shared.Station.Components;
+using Content.Shared.Pinpointer;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -25,8 +24,6 @@ public sealed partial class VentHordeRule : StationEventSystem<VentHordeRuleComp
     [Dependency] private EntityTableSystem _table = default!;
     [Dependency] private VentHordeSystem _horde = default!;
     [Dependency] private IGameTiming _timing = default!;
-
-    [Dependency] private EntityQuery<VentHordeSpawnerComponent> _hordeSpawnerQuery;
 
     protected override void Added(Entity<VentHordeRuleComponent, GameRuleComponent> ent, ref GameRuleAddedEvent args)
     {
@@ -76,7 +73,7 @@ public sealed partial class VentHordeRule : StationEventSystem<VentHordeRuleComp
         var ventHorde = ent.Comp1;
 
         // We grab when the gamerule is expected to end and subtract the current time from it to get the duration.
-        var duration = (stationEventComp.EndTime - _timing.CurTime) ?? TimeSpan.Zero;
+        var duration = stationEventComp.EndTime - _timing.CurTime ?? TimeSpan.Zero;
 
         var spawns = _table.GetSpawns(ventHorde.Table);
 
@@ -91,30 +88,8 @@ public sealed partial class VentHordeRule : StationEventSystem<VentHordeRuleComp
 
     private EntityUid? ChooseVent()
     {
-        // Get a station
-        if (!Station.TryGetRandomStation<StationEventEligibleComponent>(out var station))
-        {
-            return null;
-        }
-
-        // Query the possible locations
-        var locations = EntityQueryEnumerator<VentCritterSpawnLocationComponent, TransformComponent>();
-        var validLocations = new List<EntityUid>();
-
-        // Filter to things on the same station
-        while (locations.MoveNext(out var uid, out _, out var transform))
-        {
-            if (!transform.Anchored)
-                continue;
-
-            if (_hordeSpawnerQuery.HasComp(uid))
-                continue;
-
-            if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == station.Value.Owner)
-            {
-                validLocations.Add(uid);
-            }
-        }
+        var validLocations = Station.GetEntitiesWithComponentOnStation<VentCritterSpawnLocationComponent>(true);
+        validLocations.RemoveWhere(uid => HasComp<VentHordeSpawnerComponent>(uid));
 
         // Pick one at random
         if (validLocations.Count != 0)
