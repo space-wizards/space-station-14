@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Speech;
 using Robust.Client.Graphics;
+using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
@@ -15,7 +16,7 @@ public abstract partial class BaseBubble : Control
     [Dependency] protected IEyeManager EyeManager = default!;
     [Dependency] protected IEntityManager EntityManager = default!;
     [Dependency] protected IConfigurationManager ConfigManager = default!;
-    protected SharedTransformSystem TransformSystem = default!;
+    private readonly TransformSystem TransformSystem = default!;
 
     /// <summary>
     ///     The distance in world space to offset the speech bubble from the center of the entity.
@@ -34,7 +35,7 @@ public abstract partial class BaseBubble : Control
     {
         IoCManager.InjectDependencies(this);
         SenderEntity = senderEntity;
-        TransformSystem = EntityManager.System<SharedTransformSystem>();
+        TransformSystem = EntityManager.System<TransformSystem>();
         RectClipContent = true;
     }
 
@@ -65,7 +66,7 @@ public abstract partial class BaseBubble : Control
             baseOffset = speech.SpeechBubbleOffset;
 
         var offset = (-EyeManager.CurrentEye.Rotation).ToWorldVec() * -(EntityVerticalOffset + baseOffset);
-        var worldPos = TransformSystem.GetWorldPosition(xform) + offset;
+        var worldPos = TransformSystem.GetRenderWorldPosition((SenderEntity, xform)) + offset;
 
         var lowerCenter = EyeManager.WorldToScreen(worldPos) / UIScale;
         var screenPos = lowerCenter - new Vector2(ContentSize.X / 2, ContentSize.Y + VerticalOffsetAchieved);
