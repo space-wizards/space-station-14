@@ -69,6 +69,20 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
         string sinkAddress,
         List<DeviceLink>? defaults = null)
     {
+        _links.Links.Clear();
+        _links.Links.AddRange(links);
+        _defaults = defaults;
+
+        ButtonLinkDefault.Disabled = _defaults == default;
+        FromAddressLabel.Text = sourceAddress;
+        ToAddressLabel.Text = sinkAddress;
+
+        // Keep selection and layout intact during prediction refreshes.
+        if (_sources.Select(port => port.ID).SequenceEqual(sources.Select(port => port.Id))
+            && _sinks.Select(port => port.ID).SequenceEqual(sinks.Select(port => port.Id)))
+            return;
+
+        _selectedButton = null;
         ButtonContainerLeft.RemoveAllChildren();
         ButtonContainerRight.RemoveAllChildren();
 
@@ -95,14 +109,6 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
             _links.SinkButtons.Add(sink.ID, button);
             i++;
         }
-
-        _links.Links.Clear();
-        _links.Links.AddRange(links);
-        _defaults = defaults;
-
-        ButtonLinkDefault.Disabled = _defaults == default;
-        FromAddressLabel.Text = sourceAddress;
-        ToAddressLabel.Text = sinkAddress;
     }
 
     private void LinkDefaults()

@@ -238,7 +238,10 @@ public sealed partial class DeviceLinkSystem
             existingLinkedPorts.Remove(new DeviceLink(sourcePort, sinkPort));
 
             if (existingLinkedPorts.Count != 0)
+            {
+                Dirty(source);
                 return true;
+            }
 
             source.Comp.LinkedPorts.Remove(sink);
             sink.Comp.LinkedSources.Remove(source);

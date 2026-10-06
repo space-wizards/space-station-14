@@ -34,7 +34,17 @@ public sealed partial class DeviceLinkSystem : EntitySystem
             netOutputs.Add(key, set);
         }
 
-        args.State = new DeviceLinkSourceComponentState(netOutputs, ent.Comp.LastSignals, GetNetEntityDictionary(ent.Comp.LinkedPorts), ent.Comp.Ports);
+        var linkedPorts = new Dictionary<NetEntity, HashSet<DeviceLink>>(ent.Comp.LinkedPorts.Count);
+        foreach (var (sink, links) in ent.Comp.LinkedPorts)
+        {
+            linkedPorts.Add(GetNetEntity(sink), new HashSet<DeviceLink>(links));
+        }
+
+        args.State = new DeviceLinkSourceComponentState(
+            netOutputs,
+            new Dictionary<ProtoId<SourcePortPrototype>, bool>(ent.Comp.LastSignals),
+            linkedPorts,
+            new HashSet<ProtoId<SourcePortPrototype>>(ent.Comp.Ports));
     }
 
     [SubscribeLocalEvent]
@@ -58,17 +68,18 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         }
 
         var linked = new Dictionary<EntityUid, HashSet<DeviceLink>>(state.LinkedPorts.Count);
+        // Prediction must never mutate the cached state used for the next rollback.
         foreach (var (net, value) in state.LinkedPorts)
         {
             var uid = EnsureEntity<DeviceLinkSinkComponent>(net, ent.Owner);
             if (uid.IsValid())
-                linked.Add(uid, value);
+                linked.Add(uid, new HashSet<DeviceLink>(value));
         }
 
         ent.Comp.Outputs = outputs;
         ent.Comp.LinkedPorts = linked;
-        ent.Comp.LastSignals = state.LastSignals;
-        ent.Comp.Ports = state.Ports;
+        ent.Comp.LastSignals = new Dictionary<ProtoId<SourcePortPrototype>, bool>(state.LastSignals);
+        ent.Comp.Ports = new HashSet<ProtoId<SourcePortPrototype>>(state.Ports);
     }
 
     /// <summary>
