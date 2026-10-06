@@ -30,8 +30,8 @@ public sealed partial class GasTileOverlaySystem : SharedGasTileOverlaySystem
     [Robust.Shared.IoC.Dependency] private AtmosphereSystem _atmosphereSystem = default!;
     [Robust.Shared.IoC.Dependency] private ChunkingSystem _chunkingSys = default!;
 
-    [Robust.Shared.IoC.Dependency] private EntityQuery<MapGridComponent> _mapGridQuery = default!;
-    [Robust.Shared.IoC.Dependency] private EntityQuery<GasTileOverlayComponent> _gasTileOverlayQuery = default!;
+    [Robust.Shared.IoC.Dependency] private EntityQuery<MapGridComponent> _mapGridQuery;
+    [Robust.Shared.IoC.Dependency] private EntityQuery<GasTileOverlayComponent> _gasTileOverlayQuery;
 
     /// <summary>
     /// Per-tick cache of sessions.
@@ -42,17 +42,17 @@ public sealed partial class GasTileOverlaySystem : SharedGasTileOverlaySystem
     private readonly Dictionary<ICommonSession, Dictionary<NetEntity, HashSet<Vector2i>>> _lastSentChunks = new();
 
     // Oh look its more duplicated decal system code!
-    private ObjectPool<HashSet<Vector2i>> _chunkIndexPool =
+    private readonly ObjectPool<HashSet<Vector2i>> _chunkIndexPool =
         new DefaultObjectPool<HashSet<Vector2i>>(
             new DefaultPooledObjectPolicy<HashSet<Vector2i>>(), 64);
-    private ObjectPool<Dictionary<NetEntity, HashSet<Vector2i>>> _chunkViewerPool =
+    private readonly ObjectPool<Dictionary<NetEntity, HashSet<Vector2i>>> _chunkViewerPool =
         new DefaultObjectPool<Dictionary<NetEntity, HashSet<Vector2i>>>(
             new DefaultPooledObjectPolicy<Dictionary<NetEntity, HashSet<Vector2i>>>(), 64);
 
     private bool _doSessionUpdate;
 
     /// <summary>
-    ///     Overlay update interval, in seconds.
+    /// Overlay update interval, in seconds.
     /// </summary>
     private float _updateInterval;
 
@@ -197,7 +197,7 @@ public sealed partial class GasTileOverlaySystem : SharedGasTileOverlaySystem
     }
 
     /// <summary>
-    ///     Updates the visuals for a tile on some grid chunk. Returns true if the visuals have changed.
+    /// Updates the visuals for a tile on some grid chunk. Returns true if the visuals have changed.
     /// </summary>
     private bool UpdateChunkTile(GridAtmosphereComponent gridAtmosphere, GasOverlayChunk chunk, Vector2i index)
     {
@@ -218,7 +218,7 @@ public sealed partial class GasTileOverlaySystem : SharedGasTileOverlaySystem
 
         if (tile.Hotspot.Valid)
             newByteTemp.SetTemperature(tile.Hotspot.Temperature);
-        else if (!tile.Space && tile.Air?.TotalMoles <= 5f)
+        else if (!tile.Space && tile.Air?.TotalMoles <= ThermalByte.MinimalPressureThreshold)
             newByteTemp.SetVacuum();
         else if (!tile.Space && tile.Air != null)
             newByteTemp = new(tile.Air.Temperature);
@@ -230,7 +230,7 @@ public sealed partial class GasTileOverlaySystem : SharedGasTileOverlaySystem
         }
         else if (oldData.FireState != tile.Hotspot.State ||
                  Math.Abs(oldData.ByteGasTemperature.Value - newByteTemp.Value) > 1 || // Dirty Temperature when there is more then 1 byte difference. That should measure up to minimum 4 degreese difference, 6 degreese on average.
-                 (oldData.ByteGasTemperature.Value != newByteTemp.Value && newByteTemp.Value > ThermalByte.TempResolution)) // change of special ThermalByte value
+                 oldData.ByteGasTemperature.Value != newByteTemp.Value && newByteTemp.Value > ThermalByte.TempResolution) // change of special ThermalByte value
         {
             changed = true;
             oldData = new GasOverlayData(tile.Hotspot.State, oldData.Opacity, newByteTemp);

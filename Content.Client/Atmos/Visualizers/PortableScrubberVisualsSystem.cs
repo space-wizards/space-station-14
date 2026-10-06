@@ -14,8 +14,8 @@ public sealed partial class PortableScrubberSystem : VisualizerSystem<PortableSc
         if (args.Sprite == null)
             return;
 
-        if (AppearanceSystem.TryGetData<bool>(uid, PortableScrubberVisuals.IsFull, out var isFull, args.Component)
-            && AppearanceSystem.TryGetData<bool>(uid, PortableScrubberVisuals.IsRunning, out var isRunning, args.Component))
+        if (args.TryGetData<bool>(PortableScrubberVisuals.IsFull, out var isFull)
+            && args.TryGetData<bool>(PortableScrubberVisuals.IsRunning, out var isRunning))
         {
             var runningState = isRunning ? component.RunningState : component.IdleState;
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), PortableScrubberVisualLayers.IsRunning, runningState);
@@ -24,7 +24,7 @@ public sealed partial class PortableScrubberSystem : VisualizerSystem<PortableSc
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), PowerDeviceVisualLayers.Powered, fullState);
         }
 
-        if (AppearanceSystem.TryGetData<bool>(uid, PortableScrubberVisuals.IsDraining, out var isDraining, args.Component))
+        if (args.TryGetData<bool>(PortableScrubberVisuals.IsDraining, out var isDraining))
         {
             SpriteSystem.LayerSetVisible((uid, args.Sprite), PortableScrubberVisualLayers.IsDraining, isDraining);
         }

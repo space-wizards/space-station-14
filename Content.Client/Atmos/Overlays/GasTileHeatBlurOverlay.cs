@@ -179,8 +179,6 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
         // no distortion, no need to render
         if (!anyDistortion)
         {
-            args.WorldHandle.UseShader(null);
-            args.WorldHandle.SetTransform(Matrix3x2.Identity);
             return false;
         }
 
@@ -199,9 +197,6 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
 
         args.WorldHandle.UseShader(_shader);
         args.WorldHandle.DrawTextureRect(res.HeatTarget.Texture, args.WorldBounds);
-
-        args.WorldHandle.UseShader(null);
-        args.WorldHandle.SetTransform(Matrix3x2.Identity);
     }
 
     protected override void DisposeBehavior()
