@@ -1,4 +1,15 @@
 - type: entity
+  abstract: true
+  parent: BaseScrewingRefinable
+  id: ClothingEyesGlassesBase
+  components:
+  - type: ToolRefinable
+    refineResult:
+    - id: GlassLens
+      amount: 2
+    - id: PartRodMetal1
+
+- type: entity
   parent: ClothingEyesBase
   id: ClothingEyesGlassesGar
   name: gar glasses
@@ -71,7 +82,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, ClothingEyesGlassesBase]
   id: ClothingEyesGlasses
   name: glasses
   description: A pair of spectacular spectacles with prescription lenses.
@@ -87,7 +98,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, ClothingEyesGlassesBase]
   id: ClothingEyesGlassesJensen
   name: jensen glasses
   description: A pair of yellow tinted folding glasses. You never asked for these.
@@ -101,7 +112,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, ClothingEyesGlassesBase]
   id: ClothingEyesGlassesJamjar
   name: jamjar glasses
   description: These retro glasses remind you of a simpler time.
@@ -117,7 +128,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, ClothingEyesGlassesBase]
   id: ClothingEyesGlassesOutlawGlasses
   name: outlaw glasses
   description: A must for every self-respecting undercover agent.
@@ -132,7 +143,7 @@
     price: 500
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, ClothingEyesGlassesBase]
   id: ClothingEyesGlassesCheapSunglasses
   name: cheap sunglasses
   description: A pair of black sunglasses. Doesn't block light well, more of an accessory than something useful.
@@ -166,7 +177,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband]
+  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband, ClothingEyesGlassesBase]
   id: ClothingEyesGlassesSecurity
   name: security glasses
   description: Upgraded sunglasses that provide flash immunity and a security HUD.
@@ -194,7 +205,7 @@
     coverage: EYES
 
 - type: entity
-  parent: [ClothingEyesBase, BaseCommandContraband]
+  parent: [ClothingEyesBase, BaseCommandContraband, ClothingEyesGlassesBase]
   id: ClothingEyesGlassesCommand
   name: administration glasses
   description: Upgraded sunglasses that provide flash immunity and show ID card status.
@@ -216,7 +227,7 @@
   - type: ShowJobIcons
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, ClothingEyesGlassesBase]
   id: ClothingEyesGlassesMercenary
   name: mercenary glasses
   description: Glasses made for combat, to protect the eyes from bright blinding flashes.
@@ -282,7 +293,7 @@
   - type: FlashImmunity
 
 - type: entity
-  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband]
+  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband, ClothingEyesGlassesBase]
   id: ClothingEyesGlassesNoir
   name: noir-tech glasses
   description: A pair of glasses that simulate what the world looked like before the invention of color.

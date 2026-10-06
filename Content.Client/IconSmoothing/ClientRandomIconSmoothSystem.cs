@@ -6,18 +6,11 @@ namespace Content.Client.IconSmoothing;
 public sealed partial class ClientRandomIconSmoothSystem : SharedRandomIconSmoothSystem
 {
     [Dependency] private IconSmoothSystem _iconSmooth = default!;
-    [Dependency] private AppearanceSystem _appearance = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<RandomIconSmoothComponent, AppearanceChangeEvent>(OnAppearanceChange);
-    }
-
+    [SubscribeLocalEvent]
     private void OnAppearanceChange(Entity<RandomIconSmoothComponent> ent, ref AppearanceChangeEvent args)
     {
-        if (!_appearance.TryGetData<string>(ent, RandomIconSmoothState.State, out var state, args.Component))
+        if (!args.TryGetData<string>(RandomIconSmoothState.State, out var state))
             return;
 
         _iconSmooth.SetStateBase(ent.Owner, ent.Comp.Index, state);
