@@ -52,9 +52,7 @@ public sealed partial class GhostGui : UIWidget
             if (roles > _prevNumberRoles)
             {
                 if (!_euiManager.IsOpen<GhostRolesEui>())
-                {
                     GhostRolesButton.StyleClasses.Add(StyleClass.Negative);
-                }
             }
 
             _prevNumberRoles = (int)roles;
