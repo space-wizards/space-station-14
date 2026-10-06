@@ -28,10 +28,10 @@ namespace Content.Server.StationEvents.Events;
 
 /// <summary>
 /// Handler for events that cause a solar flare for some amount of time.
+/// Various systems will malfunction, including lights, doors, air alarms, and radios.
 /// </summary>
 /// <remarks>
-/// When a solar flare is active, radio communications are disabled on a random set of channels,
-/// doors can randomly open and close, and lights can explode.
+/// The event only affects entities that existed when the solar flare started.
 /// </remarks>
 /// <seealso cref="SolarFlareRuleComponent"/>
 public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleComponent>
@@ -57,9 +57,9 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
 
     private float _effectTimer;
 
-    protected override void Added(Entity<SolarFlareRuleComponent, GameRuleComponent> ent, ref GameRuleAddedEvent args)
+    protected override void Added(Entity<SolarFlareRuleComponent, GameRuleComponent> solarFlare, ref GameRuleAddedEvent args)
     {
-        if (TryComp<StationEventComponent>(ent, out var stationEvent))
+        if (TryComp<StationEventComponent>(solarFlare, out var stationEvent))
         {
             var announcement = Loc.GetString("station-event-solar-flare-start-announcement");
 
@@ -79,39 +79,39 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
             stationEvent.StartAnnouncement = scrambledAnnouncement.ToString();
         }
 
-        base.Added(ent, ref args);
+        base.Added(solarFlare, ref args);
     }
 
-    protected override void Started(Entity<SolarFlareRuleComponent, GameRuleComponent> ent,
+    protected override void Started(Entity<SolarFlareRuleComponent, GameRuleComponent> solarFlare,
         ref GameRuleStartedEvent args)
     {
-        base.Started(ent, ref args);
+        base.Started(solarFlare, ref args);
 
-        var solarFlareRuleComponent = ent.Comp1;
+        var solarFlareComp = solarFlare.Comp1;
 
-        if (solarFlareRuleComponent.ExtraChannels.Count > 0 && solarFlareRuleComponent.ExtraCount > 0)
+        if (solarFlareComp.ExtraChannels.Count > 0 && solarFlareComp.ExtraCount > 0)
         {
-            for (var i = 0; i < solarFlareRuleComponent.ExtraCount; i++)
+            for (var i = 0; i < solarFlareComp.ExtraCount; i++)
             {
-                var channel = RobustRandom.Pick(ent.Comp1.ExtraChannels);
-                solarFlareRuleComponent.AffectedChannels.Add(channel);
+                var channel = RobustRandom.Pick(solarFlare.Comp1.ExtraChannels);
+                solarFlareComp.AffectedChannels.Add(channel);
             }
         }
 
-        solarFlareRuleComponent.AffectedLights = Station
+        solarFlareComp.AffectedLights = Station
             .GetEntitiesWithComponentOnStation<PoweredLightComponent>(true, out var station)
-            .Select(e => (e.Owner, e.Comp))
+            .Select(e => e.Owner)
             .ToHashSet();
-        solarFlareRuleComponent.AffectedAirlocks = Station.GetEntitiesWithComponentOnStation<AirlockComponent>(true)
-            .Select(e => (e.Owner, e.Comp))
+        solarFlareComp.AffectedAirlocks = Station.GetEntitiesWithComponentOnStation<AirlockComponent>(true)
+            .Select(e => e.Owner)
             .ToHashSet();
-        solarFlareRuleComponent.AffectedAirAlarms = Station.GetEntitiesWithComponentOnStation<AirAlarmComponent>(true)
-            .Select(e => (e.Owner, e.Comp))
+        solarFlareComp.AffectedAirAlarms = Station.GetEntitiesWithComponentOnStation<AirAlarmComponent>(true)
+            .Select(e => e.Owner)
             .ToHashSet();
 
-        solarFlareRuleComponent.AffectedStation = station?.Owner;
+        solarFlareComp.AffectedStation = station?.Owner;
 
-        if (solarFlareRuleComponent.AffectedStation is { } stationUid
+        if (solarFlareComp.AffectedStation is { } stationUid
             && TryComp<StationRecordsComponent>(stationUid, out var stationRecords))
         {
             foreach (var (recordId, general) in _stationRecords.GetRecordsOfType<GeneralStationRecord>((stationUid,
@@ -120,27 +120,27 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
                 var key = new StationRecordKey(recordId, stationUid);
                 if (_stationRecords.TryGetRecord<CriminalRecord>(key, out var criminal))
                 {
-                    solarFlareRuleComponent.AffectedStationRecords.Add((key, general, criminal));
+                    solarFlareComp.AffectedStationRecords.Add((key, general, criminal));
                 }
             }
         }
 
-        solarFlareRuleComponent.AffectedVendingMachines = Station
+        solarFlareComp.AffectedVendingMachines = Station
             .GetEntitiesWithComponentOnStation<VendingMachineComponent>(true)
-            .Select(e => (e.Owner, e.Comp))
+            .Select(e => e.Owner)
             .ToHashSet();
-        solarFlareRuleComponent.AffectedLocks = Station.GetEntitiesWithComponentOnStation<LockComponent>(false)
-            .Select(e => (e.Owner, e.Comp))
+        solarFlareComp.AffectedLocks = Station.GetEntitiesWithComponentOnStation<LockComponent>(false)
+            .Select(e => e.Owner)
             .ToHashSet();
-        solarFlareRuleComponent.AffectedLinkSources = Station
+        solarFlareComp.AffectedLinkSources = Station
             .GetEntitiesWithComponentOnStation<DeviceLinkSourceComponent>(false)
-            .Select(e => (e.Owner, e.Comp))
+            .Select(e => e.Owner)
             .ToHashSet();
     }
 
-    protected override void ActiveTick(EntityUid uid, SolarFlareRuleComponent component, GameRuleComponent gameRule, float frameTime)
+    protected override void ActiveTick(EntityUid solarFlare, SolarFlareRuleComponent solarFlareComp, GameRuleComponent gameRuleComp, float frameTime)
     {
-        base.ActiveTick(uid, component, gameRule, frameTime);
+        base.ActiveTick(solarFlare, solarFlareComp, gameRuleComp, frameTime);
 
         _effectTimer -= frameTime;
         if (!(_effectTimer < 0))
@@ -149,17 +149,23 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
         }
 
         _effectTimer += 1;
-        foreach (var light in component.AffectedLights)
+        foreach (var light in solarFlareComp.AffectedLights)
         {
-            if (RobustRandom.Prob(component.LightBreakChance))
+            if (RobustRandom.Prob(solarFlareComp.LightBreakChance)
+                && TryComp(light, out PoweredLightComponent? lightComp))
             {
-                _poweredLight.TryDestroyBulb(light.Item1, light.Item2);
+                _poweredLight.TryDestroyBulb(light, lightComp);
             }
         }
 
-        foreach (var airlockEnt in component.AffectedAirlocks)
+        foreach (var airlock in solarFlareComp.AffectedAirlocks)
         {
-            if (!RobustRandom.Prob(component.DoorAffectChance))
+            if (!RobustRandom.Prob(solarFlareComp.DoorAffectChance))
+            {
+                continue;
+            }
+
+            if (!TryComp(airlock, out AirlockComponent? airlockComp))
             {
                 continue;
             }
@@ -169,49 +175,50 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
             switch (action)
             {
                 case SolarFlareDoorAction.Toggle:
-                    if (airlockEnt.Item2.AutoClose)
+                    if (airlockComp.AutoClose)
                     {
-                        _door.TryToggleDoor(airlockEnt.Item1);
+                        _door.TryToggleDoor(airlock);
                     }
 
                     break;
                 case SolarFlareDoorAction.Bolt:
-                    if (TryComp<DoorBoltComponent>(airlockEnt.Item1, out var boltComp))
+                    if (TryComp(airlock, out DoorBoltComponent? boltComp))
                     {
-                        _door.SetBoltsDown((airlockEnt.Item1, boltComp), true);
+                        _door.SetBoltsDown((airlock, boltComp), true);
                     }
 
                     break;
                 case SolarFlareDoorAction.EnableEmergencyAccess:
-                    _airlock.SetEmergencyAccess((airlockEnt.Item1, airlockEnt.Item2), true);
+                    _airlock.SetEmergencyAccess((airlock, airlockComp), true);
                     break;
                 case SolarFlareDoorAction.Electrify:
-                    if (TryComp<ElectrifiedComponent>(airlockEnt.Item1, out var electrifiedComp))
+                    if (TryComp(airlock, out ElectrifiedComponent? electrifiedComp))
                     {
-                        _electrocution.SetElectrified((airlockEnt.Item1, electrifiedComp), true);
+                        _electrocution.SetElectrified((airlock, electrifiedComp), true);
                     }
 
                     break;
             }
         }
 
-        foreach (var airAlarm in component.AffectedAirAlarms)
+        foreach (var airAlarm in solarFlareComp.AffectedAirAlarms)
         {
-            if (!RobustRandom.Prob(component.AirAlarmModeChangeChance))
+            if (!RobustRandom.Prob(solarFlareComp.AirAlarmModeChangeChance)
+                || !TryComp(airAlarm, out AirAlarmComponent? airAlarmComp))
             {
                 continue;
             }
 
-            airAlarm.Item2.AutoMode = false;
-            _airAlarm.SetMode(airAlarm.Item1, string.Empty, RobustRandom.Pick(AirAlarmModes), false, airAlarm.Item2);
+            airAlarmComp.AutoMode = false;
+            _airAlarm.SetMode(airAlarm, string.Empty, RobustRandom.Pick(AirAlarmModes), false, airAlarmComp);
         }
 
-        var totalChangeCriminalRecordChance = component.ChangeCriminalRecordChance * component.AffectedStationRecords.Count;
-        if (component.AffectedStationRecords.Count >= 1
+        var totalChangeCriminalRecordChance = solarFlareComp.ChangeCriminalRecordChance * solarFlareComp.AffectedStationRecords.Count;
+        if (solarFlareComp.AffectedStationRecords.Count >= 1
             && RobustRandom.Prob(totalChangeCriminalRecordChance))
         {
             (StationRecordKey Key, GeneralStationRecord General, CriminalRecord Criminal) target =
-                RobustRandom.Pick(component.AffectedStationRecords);
+                RobustRandom.Pick(solarFlareComp.AffectedStationRecords);
 
             _criminalRecords.OverwriteStatus(
                 target.Key,
@@ -220,36 +227,39 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
                 null);
         }
 
-        foreach (var vendingMachine in component.AffectedVendingMachines)
+        foreach (var vendingMachine in solarFlareComp.AffectedVendingMachines)
         {
-            if (!RobustRandom.Prob(component.VendChance))
+            if (!RobustRandom.Prob(solarFlareComp.VendChance)
+                || !TryComp(vendingMachine, out VendingMachineComponent? vendingMachineComp))
             {
                 continue;
             }
 
-            _vendingMachine.EjectRandom(vendingMachine, true);
+            _vendingMachine.EjectRandom((vendingMachine, vendingMachineComp), true);
         }
 
-        foreach (var lockable in component.AffectedLocks)
+        foreach (var lockable in solarFlareComp.AffectedLocks)
         {
-            if (!RobustRandom.Prob(component.LockToggleChance))
+            if (!RobustRandom.Prob(solarFlareComp.LockToggleChance)
+                || !TryComp(lockable, out LockComponent? lockComp))
             {
                 continue;
             }
 
-            _lock.ToggleLock(lockable.Item1, null, lockable.Item2);
+            _lock.ToggleLock(lockable, null, lockComp);
         }
 
-        foreach (var linkSource in component.AffectedLinkSources)
+        foreach (var linkSource in solarFlareComp.AffectedLinkSources)
         {
-            if (!RobustRandom.Prob(component.LinkPortInvokeChance))
+            if (!RobustRandom.Prob(solarFlareComp.LinkPortInvokeChance)
+                || !TryComp(linkSource, out DeviceLinkSourceComponent? linkSourceComp))
             {
                 continue;
             }
 
-            foreach (var port in linkSource.Item2.Ports)
+            foreach (var port in linkSourceComp.Ports)
             {
-                _deviceLink.InvokePort(linkSource.Item1, port);
+                _deviceLink.InvokePort((linkSource, linkSourceComp), port);
             }
         }
     }

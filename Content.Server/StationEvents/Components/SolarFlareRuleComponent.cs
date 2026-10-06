@@ -1,14 +1,8 @@
 using Content.Server.StationEvents.Events;
-using Content.Shared.Doors.Components;
-using Content.Shared.Light.Components;
 using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
-using Content.Server.Atmos.Monitor.Components;
 using Content.Shared.CriminalRecords;
-using Content.Shared.DeviceLinking;
-using Content.Shared.Lock;
 using Content.Shared.StationRecords;
-using Content.Shared.VendingMachines.Components;
 
 namespace Content.Server.StationEvents.Components;
 
@@ -61,22 +55,22 @@ public sealed partial class SolarFlareRuleComponent : Component
     #region Affected collections
 
     /// <summary>
-    ///    The collection of lights that will be affected by the solar flare event.
+    ///    The entities with lights that were present when the solar flare started.
     /// </summary>
     [DataField]
-    public HashSet<(EntityUid, PoweredLightComponent)> AffectedLights = [];
+    public HashSet<EntityUid> AffectedLights = [];
 
     /// <summary>
-    ///     The collection of airlocks that will be affected by the solar flare event.
+    ///     The entities with airlocks that were present when the solar flare started.
     /// </summary>
     [DataField]
-    public HashSet<(EntityUid, AirlockComponent)> AffectedAirlocks = [];
+    public HashSet<EntityUid> AffectedAirlocks = [];
 
     /// <summary>
-    ///     The collection of air alarms that can be affected by the solar flare event.
+    ///     The entities with air alarms that were present when the solar flare started.
     /// </summary>
     [DataField]
-    public HashSet<(EntityUid, AirAlarmComponent)> AffectedAirAlarms = [];
+    public HashSet<EntityUid> AffectedAirAlarms = [];
 
     /// <summary>
     ///    The collection of station records that can be affected by the solar flare event.
@@ -85,22 +79,22 @@ public sealed partial class SolarFlareRuleComponent : Component
     public HashSet<(StationRecordKey, GeneralStationRecord, CriminalRecord)> AffectedStationRecords = [];
 
     /// <summary>
-    ///    The collection of vending machines that can be affected by the solar flare event.
+    ///    The entities with vending machines that were present when the solar flare started.
     /// </summary>
     [DataField]
-    public HashSet<(EntityUid, VendingMachineComponent)> AffectedVendingMachines = [];
+    public HashSet<EntityUid> AffectedVendingMachines = [];
 
     /// <summary>
-    ///    The collection of Lockable entities that can be affected by the solar flare event.
+    ///    The lockable entities that were present when the solar flare started.
     /// </summary>
     [DataField]
-    public HashSet<(EntityUid, LockComponent)> AffectedLocks = [];
+    public HashSet<EntityUid> AffectedLocks = [];
 
     /// <summary>
-    ///    The collection of Linkable source entities that can be affected by the solar flare event.
+    ///    The link source entities that were present when the solar flare started.
     /// </summary>
     [DataField]
-    public HashSet<(EntityUid, DeviceLinkSourceComponent)> AffectedLinkSources = [];
+    public HashSet<EntityUid> AffectedLinkSources = [];
 
     #endregion
 
@@ -119,7 +113,7 @@ public sealed partial class SolarFlareRuleComponent : Component
     public float DoorAffectChance;
 
     /// <summary>
-    ///     Chance per second for each air alarm to have its mode randomized when the event starts.
+    ///     Chance per second for each air alarm to have its mode randomized.
     /// </summary>
     [DataField]
     public float AirAlarmModeChangeChance;
