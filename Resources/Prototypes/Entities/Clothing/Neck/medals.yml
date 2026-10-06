@@ -3,6 +3,8 @@
   abstract: true
   parent: [SolutionFood, SolutionToolSmall, Clothing]
   id: ClothingMedalBase
+  name: medal
+  description: A medal to show your mettle. May or may not be made out of metal.
   components:
   - type: Item
     size: Small
@@ -27,6 +29,7 @@
     - ClothMade
     - Recyclable
     - WhitelistChameleon
+
 
 
 - type: entity
