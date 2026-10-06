@@ -71,7 +71,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         // Find the entity, remove it from the session and set it's position to the tabletop.
         session.Entities.TryGetValue(entity, out var result);
         session.Entities.Remove(result);
-        PredictedQueueDel(result);
+        QueueDel(result);
     }
 
     private void OnInteractUsing(Entity<TabletopGameComponent> ent, ref InteractUsingEvent args)
@@ -94,14 +94,14 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         var meta = MetaData(handEnt.Value);
         var protoId = meta.EntityPrototype?.ID;
 
-        var hologram = EntityManager.PredictedSpawn(protoId, session.Position.Offset(-1, 0));
+        var hologram = PredictedSpawn(protoId, session.Position.Offset(-1, 0));
 
         // Make sure the entity can be dragged and can be removed, move it into the board game world and add it to the Entities hashmap.
         EnsureComp<TabletopDraggableComponent>(hologram);
         EnsureComp<TabletopHologramComponent>(hologram);
         session.Entities.Add(hologram);
 
-        _popup.PopupClient(Loc.GetString("tabletop-added-piece"), ent.Owner, args.User);
+        _popup.PopupEntity(Loc.GetString("tabletop-added-piece"), ent.Owner, args.User);
     }
 
     /// <summary>

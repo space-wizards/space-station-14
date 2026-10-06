@@ -90,7 +90,7 @@ public abstract partial class SharedFlatpackSystem : EntitySystem
 
         if (!_anchorable.TileFree((grid, gridComp), buildPos, layer, mask))
         {
-            _popup.PopupPredicted(Loc.GetString("flatpack-unpack-no-room"), uid, args.User);
+            _popup.PopupEntity(Loc.GetString("flatpack-unpack-no-room"), uid, args.User);
             return;
         }
 

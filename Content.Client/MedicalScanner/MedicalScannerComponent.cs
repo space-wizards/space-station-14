@@ -1,4 +1,4 @@
-﻿using Content.Shared.MedicalScanner;
+using Content.Shared.MedicalScanner;
 
 namespace Content.Client.MedicalScanner;
 

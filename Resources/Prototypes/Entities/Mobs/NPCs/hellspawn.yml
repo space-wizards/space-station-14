@@ -5,7 +5,8 @@
   - MobCombat
   - MobBloodstream
   - BaseMobAnimal
-  - BaseSlicingRefinable
+  - BaseSlicingRefinableButchering
+  - BaseMobDestructible
   id: MobHellspawn
   description: An unstoppable force of carnage.
   components:
@@ -94,7 +95,6 @@
     damage:
       types:
         Blunt: 150
-        Structural: 70
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepThud

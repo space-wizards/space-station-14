@@ -17,7 +17,7 @@ jobs:
     - name: Checkout Master
       uses: actions/checkout@v6
       with:
-          submodules: recursive
+        submodules: recursive
 
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v4.1.0
@@ -41,6 +41,15 @@ jobs:
       run: |
         $env:DOTNET_gcServer=1
         dotnet test --no-build --configuration DebugOpt Content.IntegrationTests/Content.IntegrationTests.csproj -- NUnit.ConsoleOut=0 NUnit.MapWarningTo=Failed NUnit.TestOutputXml="logs" NUnit.WorkDirectory="$(pwd)/test_results"
+
+    - name: Archive NUnit3 test results.
+      if: failure()
+      uses: actions/upload-artifact@v7
+      with:
+        name: nunit3-results
+        path: test_results/*
+        retention-days: 7
+        compression-level: 9
 
     - name: Extract Failures
       if: failure()
@@ -72,7 +81,11 @@ jobs:
           FULLNAME: ${{ matrix.value.fullname }}
           OUTPUT: ${{ matrix.value.output }}
           FAILURE: ${{ matrix.value.failure }}
+          GITHUB_SERVER_URL: ${{ vars.GITHUB_SERVER_URL }}
+          GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
+          GITHUB_RUN_ID: ${{ vars.GITHUB_RUN_ID }}
+          GITHUB_SHA: ${{ vars.GITHUB_SHA }}
         with:
           filename: .github/ISSUE_TEMPLATE/heisentest_template.md
           update_existing: true
-          search_existing: all
+          search_existing: open

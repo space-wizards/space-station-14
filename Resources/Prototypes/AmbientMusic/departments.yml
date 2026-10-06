@@ -4,8 +4,14 @@
     params:
       volume: -12
     collection: AmbienceMedical
-  rules: NearMedical
   priority: 3
+  allowRepeat: false
+  conditions:
+  - !type:NearbyComponentsCondition
+    components:
+    - type: AmbientMusicMarkerMedical
+    count: 3
+    range: 5
 
 - type: ambientMusic
   id: Engineering
@@ -13,5 +19,10 @@
     params:
       volume: -12
     collection: AmbienceEngineering
-  rules: NearEngineering
   priority: 3
+  conditions:
+  - !type:NearbyComponentsCondition
+    components:
+    - type: AmbientMusicMarkerEngineering
+    count: 3
+    range: 5

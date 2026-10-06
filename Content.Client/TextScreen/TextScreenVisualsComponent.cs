@@ -1,76 +1,198 @@
 using System.Numerics;
 using Robust.Client.Graphics;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Client.TextScreen;
 
-[RegisterComponent]
+/// <summary>
+/// A component for rendering text on a screen.
+/// Can show scrolling text, timers, or other specific-use information (e.g. arrivals timer).
+/// </summary>
+/// <remarks>
+/// Pausing handled manually due to <see cref="TextScreenRow"/> logic.
+/// </remarks>
+[RegisterComponent, Access(typeof(TextScreenSystem))]
 public sealed partial class TextScreenVisualsComponent : Component
 {
     /// <summary>
-    ///     1/32 - the size of a pixel
+    /// 1/32 - the size of a pixel in meters.
     /// </summary>
     public const float PixelSize = 1f / EyeManager.PixelsPerMeter;
 
+    #region Appearance
     /// <summary>
-    ///     The color of the text drawn.
+    /// The color of the text drawn.
     /// </summary>
     /// <remarks>
-    ///     15,151,251 is the old ss13 color, from tg
+    /// 15,151,251 is the old SS13 color used on tgstation.
     /// </remarks>
-    [DataField("color"), ViewVariables(VVAccess.ReadWrite)]
-    public Color Color = new Color(15, 151, 251);
+    [DataField]
+    public Color Color = new(15, 151, 251);
 
     /// <summary>
-    ///     Offset for centering the text.
+    /// The current color being drawn on the screen.
     /// </summary>
-    [DataField("textOffset"), ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables]
+    public Color CurrentColor;
+
+    /// <summary>
+    /// Offset for centering the text.
+    /// </summary>
+    /// <remarks>
+    /// Values in pixels.
+    /// </remarks>
+    [DataField]
     public Vector2 TextOffset = Vector2.Zero;
 
     /// <summary>
-    ///    Offset for centering the timer.
+    /// Vertical distance between the top pixel of each row.
     /// </summary>
-    [DataField("timerOffset"), ViewVariables(VVAccess.ReadWrite)]
-    public Vector2 TimerOffset = Vector2.Zero;
-
-    /// <summary>
-    ///     Number of rows of text this screen can render.
-    /// </summary>
-    [DataField("rows")]
-    public int Rows = 2;
-
-    /// <summary>
-    ///     Spacing between each text row
-    /// </summary>
-    [DataField("rowOffset")]
+    [DataField]
     public int RowOffset = 7;
 
     /// <summary>
-    ///     The amount of characters this component can show per row.
+    /// The amount of characters this component can show per row.
     /// </summary>
-    [DataField("rowLength")]
+    /// <remarks>
+    /// Note that scrolling text can show one more than this.
+    /// </remarks>
+    [DataField]
     public int RowLength = 5;
 
     /// <summary>
-    ///     Text the screen should show when it finishes a timer.
+    /// The longest that a message should take to cross the screen before wrapping around.
     /// </summary>
-    [DataField("text"), ViewVariables(VVAccess.ReadWrite)]
-    public string?[] Text = new string?[2];
+    [DataField]
+    public TimeSpan MaxMessageScrollTime = TimeSpan.FromSeconds(5);
 
     /// <summary>
-    ///     Text the screen will draw whenever appearance is updated.
+    /// The longest that it should take to scroll one pixel on a screen.
     /// </summary>
-    public string?[] TextToDraw = new string?[2];
+    [DataField]
+    public TimeSpan MaxPixelScrollTime = TimeSpan.FromMilliseconds(100);
 
     /// <summary>
-    ///     Per-character layers, for mapping into the sprite component.
+    /// The maximum number of characters to display per row.
     /// </summary>
-    [DataField("layerStatesToDraw")]
-    public Dictionary<string, string?> LayerStatesToDraw = new();
+    [DataField]
+    public int MaxScrollingCharacters = 32;
 
-    [DataField("hourFormat")]
-    public string HourFormat = "D2";
-    [DataField("minuteFormat")]
-    public string MinuteFormat = "D2";
-    [DataField("secondFormat")]
-    public string SecondFormat = "D2";
+    /// <summary>
+    /// When scrolling, a horizontal offset for the scrolling, in pixels.
+    /// </summary>
+    /// <remarks>
+    /// Needed for finer adjustments of scroll bounds, along with
+    /// <see cref="LeftInvisiblePixels"/> and <see cref="RightInvisiblePixels"/>
+    /// </remarks>
+    /// <seealso cref="TextScreenSystem.CharWidth"/>
+    [DataField]
+    public int HorizontalScrollOffset;
+
+    /// <summary>
+    /// When scrolling, the number of pixels that the leftmost letters should be invisible for.
+    /// Value should be between [0,CharWidth).
+    /// </summary>
+    /// <seealso cref="TextScreenSystem.CharWidth"/>
+    [DataField]
+    public int LeftInvisiblePixels;
+
+    /// <summary>
+    /// When scrolling, the number of pixels that the rightmost letters should be invisible for.
+    /// Value should be between [0,CharWidth).
+    /// </summary>
+    /// <seealso cref="TextScreenSystem.CharWidth"/>
+    [DataField]
+    public int RightInvisiblePixels;
+
+    /// <summary>
+    /// The layer for the outer frame of the text screen.
+    /// </summary>
+    /// <remarks>
+    /// Will be registered on top of the other layers.
+    /// Should be at least 2 pixels thick on either side for the illusion to work.
+    /// </remarks>
+    [DataField]
+    public PrototypeLayerData? FrameState;
+    #endregion
+
+    #region Text State
+    /// <summary>
+    /// If true, the screen is able to scroll its text.
+    /// </summary>
+    [DataField]
+    public bool ScrollEnabled;
+
+    /// <summary>
+    /// The list of row data for the text screens.
+    /// </summary>
+    /// <remarks>
+    /// Each row needs its own entry. To declare a three row timer, the yaml could look like <c>rowData: [{},{},{}]</c>.
+    /// </remarks>
+    [DataField]
+    public TextScreenRow[] RowData = { new(), new() };
+
+    /// <summary>
+    /// The text to display on the screen.
+    /// Each row delimited with a newline (\n) character.
+    /// </summary>
+    [ViewVariables]
+    public string? TextToDisplay;
+
+    /// <summary>
+    /// The time that the text was sent.
+    /// Used for scrolling.
+    /// </summary>
+    [ViewVariables]
+    public TimeSpan TextTime;
+
+    /// <summary>
+    /// If true, text to display has been updated and should redraw.
+    /// </summary>
+    [ViewVariables]
+    public bool NewTextToDisplay;
+    #endregion
+}
+
+/// <summary>
+/// All information about a given row of text.
+/// </summary>
+[DataDefinition, Serializable]
+public partial struct TextScreenRow()
+{
+    /// <summary>
+    /// The time this row should next scroll the text by a pixel.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextScroll = TimeSpan.MaxValue;
+
+    /// <summary>
+    /// The delay between each pixel scrolled on this screen.
+    /// </summary>
+    [DataField]
+    public TimeSpan ScrollDelay = TimeSpan.MaxValue;
+
+    /// <summary>
+    /// The current position of the row in the string, in pixels.
+    /// </summary>
+    /// <remarks>
+    /// Increases monotonically, should be taken modulo the text length.
+    /// Each character is a fixed size (pixel width defined in <see cref="TextScreenSystem.CharWidth"/>).
+    /// </remarks>
+    [DataField]
+    public int ScrollPosition;
+
+    /// <summary>
+    /// A list with each of the row's sprite layers, with the key inside of it and the state it's currently on.
+    /// </summary>
+    /// <remarks>
+    /// Currently not removed from the sprite when the component is removed.
+    /// </remarks>
+    [DataField]
+    public List<(string Key, string? State)> Layers = new();
+
+    /// <summary>
+    /// The full text currently being drawn on the row. May not all fit on the screen at once.
+    /// </summary>
+    [DataField]
+    public string Text = string.Empty;
 }
