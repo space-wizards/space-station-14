@@ -5,6 +5,7 @@ using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Shared.CriminalRecords;
+using Content.Shared.DeviceLinking;
 using Content.Shared.Lock;
 using Content.Shared.StationRecords;
 using Content.Shared.VendingMachines.Components;
@@ -95,6 +96,12 @@ public sealed partial class SolarFlareRuleComponent : Component
     [DataField]
     public HashSet<(EntityUid, LockComponent)> AffectedLocks = [];
 
+    /// <summary>
+    ///    The collection of Linkable source entities that can be affected by the solar flare event.
+    /// </summary>
+    [DataField]
+    public HashSet<(EntityUid, DeviceLinkSourceComponent)> AffectedLinkSources = [];
+
     #endregion
 
     #region Event probabilities
@@ -134,6 +141,12 @@ public sealed partial class SolarFlareRuleComponent : Component
     /// </summary>
     [DataField]
     public float LockToggleChance;
+
+    /// <summary>
+    ///    Chance per second per link source to have its ports invoked.
+    /// </summary>
+    [DataField]
+    public float LinkPortInvokeChance;
 
     #endregion
 }

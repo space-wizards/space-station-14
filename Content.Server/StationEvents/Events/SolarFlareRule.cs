@@ -18,9 +18,9 @@ using Content.Shared.Light.Components;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Content.Shared.Atmos.Monitor.Components;
+using Content.Shared.DeviceLinking;
 using Content.Shared.Lock;
 using Content.Shared.VendingMachines.Components;
-using Content.Shared.Utility;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
@@ -44,6 +44,7 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
     [Dependency] private StationRecordsSystem _stationRecords = default!;
     [Dependency] private VendingMachineSystem _vendingMachine = default!;
     [Dependency] private LockSystem _lock = default!;
+    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
 
     [Dependency] private EntityQuery<HeadsetComponent> _headsetQuery;
 
@@ -125,6 +126,10 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
             .Select(e => (e.Owner, e.Comp))
             .ToHashSet();
         solarFlareRuleComponent.AffectedLocks = Station.GetEntitiesWithComponentOnStation<LockComponent>(false)
+            .Select(e => (e.Owner, e.Comp))
+            .ToHashSet();
+        solarFlareRuleComponent.AffectedLinkSources = Station
+            .GetEntitiesWithComponentOnStation<DeviceLinkSourceComponent>(false)
             .Select(e => (e.Owner, e.Comp))
             .ToHashSet();
     }
@@ -229,6 +234,19 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
             }
 
             _lock.ToggleLock(lockable.Item1, null, lockable.Item2);
+        }
+
+        foreach (var linkSource in component.AffectedLinkSources)
+        {
+            if (!RobustRandom.Prob(component.LinkPortInvokeChance))
+            {
+                continue;
+            }
+
+            foreach (var port in linkSource.Item2.Ports)
+            {
+                _deviceLink.InvokePort(linkSource.Item1, port);
+            }
         }
     }
 
