@@ -48,8 +48,8 @@
 
 - type: entity
   abstract: true
-  id: BaseXenoArtifact
   parent: [ BaseArtifact, BaseMob ]
+  id: BaseXenoArtifact
   name: artifact
   description: A strange artifact from time unknown. Looks like a good time.
   components:
