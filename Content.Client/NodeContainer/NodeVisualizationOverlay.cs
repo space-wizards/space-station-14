@@ -93,7 +93,7 @@ namespace Content.Client.NodeContainer
             sb.Append($"grid pos: {gridTile}\n");
             sb.Append(group.DebugData);
 
-            args.ScreenHandle.DrawString(_font, mousePos + new Vector2(20, -20), sb.ToString());
+            args.ScreenHandle.DrawString(_font, mousePos + new Vector2(20, -20), sb.ToString(), 1, Color.White, TextOutline.Default);
         }
 
         private void DrawWorld(in OverlayDrawArgs overlayDrawArgs)
@@ -199,8 +199,6 @@ namespace Content.Client.NodeContainer
                 _nodeIndex.Clear();
             }
 
-
-            handle.SetTransform(Matrix3x2.Identity);
             _gridIndex.Clear();
         }
 

@@ -347,9 +347,9 @@
   icon:
     sprite: *icon-rsi
     state: TramDriver
-  jobName: job-name-tramdriver
+  jobName: job-name-tram-driver
 
-# Entertainer (like service, but not actually service)
+# Theatre (not exactly service workers, but not civilians either)
 
 - type: jobIcon
   parent: JobIcon

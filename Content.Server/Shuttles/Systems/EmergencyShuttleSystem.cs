@@ -21,7 +21,9 @@ using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.GameTicking;
+using Content.Shared.GameTicking.Events;
 using Content.Shared.Localizations;
+using Content.Shared.Pinpointer;
 using Content.Shared.RoundEnd;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
@@ -56,7 +58,7 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
     [Dependency] private CommunicationsConsoleSystem _commsConsole = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private DockingSystem _dock = default!;
-    [Dependency] private GameTicker _ticker = default!;
+    [Dependency] private ServerGameTicker _ticker = default!;
     [Dependency] private IdCardSystem _idSystem = default!;
     [Dependency] private NavMapSystem _navMap = default!;
     [Dependency] private MapLoaderSystem _loader = default!;
@@ -64,7 +66,7 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
     [Dependency] private RoundEndSystem _roundEnd = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private ShuttleSystem _shuttle = default!;
-    [Dependency] private StationSystem _station = default!;
+    [Dependency] private ServerStationSystem _station = default!;
     [Dependency] private TransformSystem _transformSystem = default!;
     [Dependency] private UserInterfaceSystem _uiSystem = default!;
 
@@ -117,15 +119,6 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
         QueueDel(component.MapEntity);
         component.Entity = null;
         component.MapEntity = null;
-    }
-
-    /// <summary>
-    ///     Attempts to get the EntityUid of the emergency shuttle
-    /// </summary>
-    public EntityUid? GetShuttle()
-    {
-        AllEntityQuery<EmergencyShuttleComponent>().MoveNext(out var shuttle, out _);
-        return shuttle;
     }
 
     private void SetEmergencyShuttleEnabled(bool value)

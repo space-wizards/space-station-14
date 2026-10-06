@@ -74,6 +74,8 @@
     actions:
     - ActionChangelingStasisWeak
   - type: ChangelingSlug
+  - type: DestructionResistance
+  - type: ZombieImmune
   - type: Puller
     needsHands: false
   - type: Tag # Removes DoorBumpOpener
@@ -169,6 +171,8 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/cat_meow.ogg # meow
+  - type: ChangelingSlug
+    autoStasisDurationMultiplier: 0.5 # Mercy upon headslugs who already took forever to find a body.
 
 - type: entity # dummy prototype for the store listing
   id: ChangelingFleshClothingAbilityStoreDummy
