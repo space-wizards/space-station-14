@@ -96,7 +96,7 @@ public sealed partial class XATInteractWithSystem : BaseXATSystem<XATInteractWit
             if (HasComp<StackComponent>(args.Used) && amount > node.Comp1.Count) // _stack.ReduceCount doesn't affect non-stack items.
                 _stack.ReduceCount(args.Used.Value, node.Comp1.Count.Value);
             else
-                PredictedQueueDel(args.Used);
+                QueueDel(args.Used);
         }
 
         node.Comp1.Count -= amount; // reduce the current required count by our amount
