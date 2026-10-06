@@ -1,10 +1,10 @@
-﻿using Content.Server.GameTicking;
-using Content.Server.Nuke;
+﻿using Content.Server.Nuke;
 using Content.Server.RoundEnd;
+using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
+using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Nuke;
-using Content.Shared.Station.Components;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -12,6 +12,7 @@ public sealed partial class SuddenNukeArmRule : StationEventSystem<SuddenNukeArm
 {
     [Dependency] private NukeSystem _nukeSystem = default!;
     [Dependency] private RoundEndSystem _roundEndSystem = default!;
+    [Dependency] private ServerStationSystem _stationSystem = default!;
 
     private bool IsNukePicked(out HashSet<EntityUid> pickedNukes)
     {
@@ -29,56 +30,31 @@ public sealed partial class SuddenNukeArmRule : StationEventSystem<SuddenNukeArm
         return pickedNukes.Count > 0;
     }
 
-    protected override void Started(
-        EntityUid uid,
-        SuddenNukeArmRuleComponent component,
-        GameRuleComponent gameRule,
-        GameRuleStartedEvent args
-    )
+    protected override void Started(Entity<SuddenNukeArmRuleComponent, GameRuleComponent> rule,
+        ref GameRuleStartedEvent args)
     {
-        if (!TryGetRandomStation(out var chosenStation))
+        var nukes = _stationSystem.GetEntitiesWithComponentOnStation<NukeComponent>(false);
+
+        foreach (var nuke in nukes)
         {
-            return;
-        }
-
-        if (!TryComp<StationDataComponent>(chosenStation, out var stationData))
-        {
-            return;
-        }
-
-        var grid = StationSystem.GetLargestGrid((chosenStation.Value, stationData));
-        if (grid is null)
-        {
-            return;
-        }
-
-        var query = EntityQueryEnumerator<NukeComponent>();
-
-        while (query.MoveNext(out var nukeUid, out var nukeComponent))
-        {
-            if (Transform(nukeUid).ParentUid != grid)
-            {
-                continue;
-            }
-
             if (IsNukePicked(out var existingPickedNukes)
-                && existingPickedNukes.Contains(nukeUid))
+                && existingPickedNukes.Contains(nuke.Owner))
             {
                 continue;
             }
 
-            if (nukeComponent.Status == NukeStatus.ARMED)
+            if (nuke.Comp.Status == NukeStatus.ARMED)
             {
                 continue;
             }
 
             // If nuke was already armed by other causes and then disarmed,
             // start counter from beginning again to give leeway.
-            _nukeSystem.SetRemainingTime(nukeUid, nukeComponent.Timer);
+            _nukeSystem.SetRemainingTime(nuke.Owner, nuke.Comp.Timer);
 
-            _nukeSystem.ArmBomb(nukeUid, nukeComponent);
+            _nukeSystem.ArmBomb(nuke.Owner, nuke.Comp);
 
-            component.PickedNuke = nukeUid;
+            rule.Comp1.PickedNuke = nuke.Owner;
             break;
         }
     }
@@ -120,14 +96,12 @@ public sealed partial class SuddenNukeArmRule : StationEventSystem<SuddenNukeArm
         }
     }
 
-    protected override void AppendRoundEndText(EntityUid uid,
-        SuddenNukeArmRuleComponent component,
-        GameRuleComponent gameRule,
+    protected override void AppendRoundEndText(Entity<SuddenNukeArmRuleComponent> rule,
         ref RoundEndTextAppendEvent args)
     {
-        base.AppendRoundEndText(uid, component, gameRule, ref args);
+        base.AppendRoundEndText(rule, ref args);
 
-        if (component.ExplodedNuke is null || component.PickedNuke != component.ExplodedNuke)
+        if (rule.Comp.ExplodedNuke is null || rule.Comp.PickedNuke != rule.Comp.ExplodedNuke)
         {
             return;
         }
