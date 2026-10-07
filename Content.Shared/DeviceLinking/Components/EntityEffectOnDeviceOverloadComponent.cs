@@ -1,3 +1,4 @@
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.EntityEffects;
 using Robust.Shared.GameStates;
@@ -7,7 +8,7 @@ namespace Content.Shared.DeviceLinking.Components;
 /// <summary>
 /// Raises effects an entity when a device link overloads.
 /// An overload happens when a device link sink is invoked to many times per tick
-/// and it raises a <see cref="Content.Shared.DeviceLinking.Events.DeviceLinkOverloadedEvent"/>
+/// and it raises a <see cref="DeviceLinkOverloadedEvent"/>
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(EntityEffectOnDeviceOverloadSystem))]

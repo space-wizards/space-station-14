@@ -28,8 +28,7 @@ public sealed partial class TwoWayLeverSystem : EntitySystem
         ent.Comp.State = ent.Comp.State switch
         {
             TwoWayLeverState.Middle => ent.Comp.NextSignalLeft ? TwoWayLeverState.Left : TwoWayLeverState.Right,
-            TwoWayLeverState.Right => TwoWayLeverState.Middle,
-            TwoWayLeverState.Left => TwoWayLeverState.Middle,
+            TwoWayLeverState.Right or TwoWayLeverState.Left => TwoWayLeverState.Middle,
             _ => throw new ArgumentOutOfRangeException()
         };
 
@@ -41,7 +40,7 @@ public sealed partial class TwoWayLeverSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnGetInteractionVerbs(Entity<TwoWayLeverComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || (args.Hands == null))
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
         var disabled = ent.Comp.State == TwoWayLeverState.Left;

@@ -38,7 +38,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        var footerStyleBox = new StyleBoxFlat()
+        var footerStyleBox = new StyleBoxFlat
         {
             BorderThickness = new Thickness(0, 2, 0, 0),
             BorderColor = Color.FromHex("#5A5A5A")
@@ -73,7 +73,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
         _links.Links.AddRange(links);
         _defaults = defaults;
 
-        ButtonLinkDefault.Disabled = _defaults == default;
+        ButtonLinkDefault.Disabled = _defaults == null;
         FromAddressLabel.Text = sourceAddress;
         ToAddressLabel.Text = sinkAddress;
 
@@ -113,7 +113,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
 
     private void LinkDefaults()
     {
-        if (_defaults == default)
+        if (_defaults == null)
             return;
 
         OnLinkDefaults?.Invoke(_defaults);
@@ -174,22 +174,15 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
     }
 
     /// <summary>
-    ///  Draws lines between linked ports using bezier curve calculated with polynomial coefficients
-    ///  See: https://youtu.be/jvPPXbo87ds?t=351
+    /// Draws lines between linked ports using bezier curve calculated with polynomial coefficients
+    /// See: https://youtu.be/jvPPXbo87ds?t=351
     /// </summary>
-    private sealed class LinksRender : Control
+    private sealed class LinksRender(BoxContainer leftButtonContainer, BoxContainer rightButtonContainer)
+        : Control
     {
         public readonly List<DeviceLink> Links = new();
         public readonly Dictionary<string, Button> SourceButtons = new();
         public readonly Dictionary<string, Button> SinkButtons = new();
-        private readonly BoxContainer _leftButtonContainer;
-        private readonly BoxContainer _rightButtonContainer;
-
-        public LinksRender(BoxContainer leftButtonContainer, BoxContainer rightButtonContainer)
-        {
-            _leftButtonContainer = leftButtonContainer;
-            _rightButtonContainer = rightButtonContainer;
-        }
 
         protected override void Draw(DrawingHandleScreen handle)
         {
@@ -198,8 +191,8 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
                 if (!SourceButtons.TryGetValue(left, out var leftChild) || !SinkButtons.TryGetValue(right, out var rightChild))
                     continue;
 
-                var leftOffset = _leftButtonContainer.PixelPosition.Y;
-                var rightOffset = _rightButtonContainer.PixelPosition.Y;
+                var leftOffset = leftButtonContainer.PixelPosition.Y;
+                var rightOffset = rightButtonContainer.PixelPosition.Y;
 
                 var y1 = leftChild.PixelPosition.Y + leftChild.PixelHeight / 2 + leftOffset;
                 var y2 = rightChild.PixelPosition.Y + rightChild.PixelHeight / 2 + rightOffset;

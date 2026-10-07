@@ -20,7 +20,7 @@ public sealed partial class LogicGateSystem : EntitySystem
     [Dependency] private SharedToolSystem _tool = default!;
     [Dependency] private UseDelaySystem _useDelay = default!;
 
-    [Dependency] private EntityQuery<UseDelayComponent> _useDelayQuery = default!;
+    [Dependency] private EntityQuery<UseDelayComponent> _useDelayQuery;
 
     private readonly int _gateCount = Enum.GetValues<LogicGate>().Length;
 
@@ -31,13 +31,10 @@ public sealed partial class LogicGateSystem : EntitySystem
         {
             // handle momentary pulses - high when received then low the next tick
             if (comp.StateA == SignalState.Momentary)
-            {
                 comp.StateA = SignalState.Low;
-            }
+
             if (comp.StateB == SignalState.Momentary)
-            {
                 comp.StateB = SignalState.Low;
-            }
 
             // output most likely changed so update it
             UpdateOutput((uid, comp));
@@ -167,12 +164,12 @@ public sealed partial class LogicGateSystem : EntitySystem
         _appearance.SetData(ent.Owner, LogicGateVisuals.Output, output);
 
         // only send a payload if it actually changed
-        if (output != ent.Comp.LastOutput)
-        {
-            ent.Comp.LastOutput = output;
-            DirtyField(ent.AsNullable(), nameof(LogicGateComponent.LastOutput));
+        if (output == ent.Comp.LastOutput)
+            return;
 
-            _deviceLink.SendSignal(ent.Owner, ent.Comp.OutputPort, output);
-        }
+        ent.Comp.LastOutput = output;
+        DirtyField(ent.AsNullable(), nameof(LogicGateComponent.LastOutput));
+
+        _deviceLink.SendSignal(ent.Owner, ent.Comp.OutputPort, output);
     }
 }

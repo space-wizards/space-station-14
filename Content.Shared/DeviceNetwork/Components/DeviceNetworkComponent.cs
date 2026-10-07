@@ -19,20 +19,20 @@ public sealed partial class DeviceNetworkComponent : Component
     public LocDeviceAddress LocAddress => new(Address, Prefix);
 
     /// <summary>
-    ///     The frequency that this device is listening on.
+    /// The frequency that this device is listening on.
     /// </summary>
     [DataField, AutoNetworkedField]
     public DeviceFrequency? ReceiveFrequency;
 
     /// <summary>
-    ///     The address ID of the device, either on the network it is currently connected to or whatever address it
-    ///     most recently used.
+    /// The address ID of the device, either on the network it is currently connected to or whatever address it
+    /// most recently used.
     /// </summary>
     [DataField, AutoNetworkedField]
     public DeviceAddress Address = DeviceAddress.Invalid;
 
     /// <summary>
-    ///     Whether the device should listen for all device messages, regardless of the intended recipient.
+    /// Whether the device should listen for all device messages, regardless of the intended recipient.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool ReceiveAll;
@@ -87,8 +87,8 @@ public sealed partial class DeviceNetworkComponent : Component
     public bool SavableAddress = true;
 
     /// <summary>
-    ///     If true, the address was customized and should be preserved across networks. If false, a randomly
-    ///     generated address will be created whenever this device connects to a network.
+    /// If true, the address was customized and should be preserved across networks. If false, a randomly
+    /// generated address will be created whenever this device connects to a network.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool CustomAddress;

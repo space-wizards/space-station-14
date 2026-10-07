@@ -10,8 +10,8 @@ public sealed partial class GunSignalControlSystem : EntitySystem
     [Dependency] private DeviceLinkSystem _signalSystem = default!;
     [Dependency] private SharedGunSystem _gun = default!;
 
-    [Dependency] private EntityQuery<GunComponent> _gunQuery = default!;
-    [Dependency] private EntityQuery<AutoShootGunComponent> _gunAutoQuery = default!;
+    [Dependency] private EntityQuery<GunComponent> _gunQuery;
+    [Dependency] private EntityQuery<AutoShootGunComponent> _gunAutoQuery;
 
     [SubscribeLocalEvent]
     private void OnInit(Entity<GunSignalControlComponent> gunControl, ref MapInitEvent args)

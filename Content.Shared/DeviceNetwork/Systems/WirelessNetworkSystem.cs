@@ -7,7 +7,7 @@ public sealed partial class WirelessNetworkSystem : EntitySystem
 {
     [Dependency] private SharedTransformSystem _transformSystem = default!;
 
-    [Dependency] private EntityQuery<WirelessNetworkComponent> _wirelessQuery = default!;
+    [Dependency] private EntityQuery<WirelessNetworkComponent> _wirelessQuery;
 
     [SubscribeLocalEvent]
     private void OnBeforePacketSent(Entity<WirelessNetworkComponent> ent, ref BeforePacketSentEvent args)

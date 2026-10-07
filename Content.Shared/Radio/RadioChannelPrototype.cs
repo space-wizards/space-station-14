@@ -33,7 +33,7 @@ public sealed partial class RadioChannelPrototype : IPrototype
     [DataField]
     public Color Color { get; private set; } = Color.Lime;
 
-    [DataField("frequency")]
+    [DataField]
     public DeviceFrequency Frequency { get; private set; } = 1;
 
     /// <summary>

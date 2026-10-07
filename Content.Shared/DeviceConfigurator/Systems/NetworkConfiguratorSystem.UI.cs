@@ -341,7 +341,7 @@ public sealed partial class NetworkConfiguratorSystem
 
         ClearDevices(ent);
 
-        foreach (var (addr, (device, name)) in _deviceListSystem.GetDeviceList(ent.Comp.ActiveDeviceList.Value))
+        foreach (var (_, (device, _)) in _deviceListSystem.GetDeviceList(ent.Comp.ActiveDeviceList.Value))
         {
             AddDevice(ent.AsNullable(), device);
         }

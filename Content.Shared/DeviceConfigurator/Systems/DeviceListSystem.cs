@@ -11,9 +11,9 @@ public sealed partial class DeviceListSystem : EntitySystem
 {
     [Dependency] private NetworkConfiguratorSystem _configurator = default!;
 
-    [Dependency] private EntityQuery<LinkedDeviceNetworkComponent> _linkedDeviceQuery = default!;
-    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
-    [Dependency] private EntityQuery<DeviceListComponent> _deviceListQuery = default!;
+    [Dependency] private EntityQuery<LinkedDeviceNetworkComponent> _linkedDeviceQuery;
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery;
+    [Dependency] private EntityQuery<DeviceListComponent> _deviceListQuery;
 
     [SubscribeLocalEvent]
     private void OnShutdown(Entity<DeviceListComponent> ent, ref ComponentShutdown args)
@@ -25,11 +25,11 @@ public sealed partial class DeviceListSystem : EntitySystem
 
         foreach (var device in ent.Comp.Devices)
         {
-            if (_linkedDeviceQuery.TryComp(device, out var comp))
-            {
-                comp.DeviceLists.Remove(ent);
-                DirtyField(device, comp, nameof(LinkedDeviceNetworkComponent.DeviceLists));
-            }
+            if (!_linkedDeviceQuery.TryComp(device, out var comp))
+                continue;
+
+            comp.DeviceLists.Remove(ent);
+            DirtyField(device, comp, nameof(LinkedDeviceNetworkComponent.DeviceLists));
         }
 
         ent.Comp.Devices.Clear();
@@ -41,7 +41,7 @@ public sealed partial class DeviceListSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets the given device list as a dictionary
+    /// Gets the given device list as a dictionary.
     /// </summary>
     /// <remarks>
     /// If any entity in the device list is pre-map init, it will show the entity UID of the device instead.
@@ -167,7 +167,7 @@ public sealed partial class DeviceListSystem : EntitySystem
 
             var old = device.Devices.ToList();
             device.Devices.ExceptWith(_toRemove);
-            var listEv = new DeviceListUpdateEvent(old, device.Devices.ToList());
+            var listEv = new DeviceListUpdateEvent(old, [.. device.Devices]);
             RaiseLocalEvent(uid, ref listEv);
             Dirty(uid, device);
             _toRemove.Clear();
@@ -175,7 +175,7 @@ public sealed partial class DeviceListSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Updates the device list stored on this entity.
+    /// Updates the device list stored on this entity.
     /// </summary>
     /// <param name="ent">The entity to update.</param>
     /// <param name="devices">The devices to store.</param>

@@ -15,20 +15,20 @@ namespace Content.Shared.DeviceLinking.Components;
 public sealed partial class SignalSwitchComponent : Component
 {
     /// <summary>
-    ///     The port that gets signaled when the switch turns on.
+    /// The port that gets signaled when the switch turns on.
     /// </summary>
     [DataField]
     public ProtoId<SourcePortPrototype> OnPort = "On";
 
     /// <summary>
-    ///     The port that gets signaled when the switch turns off.
+    /// The port that gets signaled when the switch turns off.
     /// </summary>
     [DataField]
     public ProtoId<SourcePortPrototype> OffPort = "Off";
 
     /// <summary>
-    ///     The port that gets signaled with the switch's current status.
-    ///     This is only used if OnPort is different from OffPort, not in the case of a toggle switch.
+    /// The port that gets signaled with the switch's current status.
+    /// This is only used if OnPort is different from OffPort, not in the case of a toggle switch.
     /// </summary>
     [DataField]
     public ProtoId<SourcePortPrototype> StatusPort = "Status";

@@ -9,9 +9,9 @@ using Robust.Shared.Utility;
 namespace Content.Shared.DeviceNetwork.Systems;
 
 /// <summary>
-///     Entity system that handles everything device network related.
-///     Device networking allows machines and devices to communicate with each other
-///     while adhering to restrictions like range or being connected to the same power network.
+/// Entity system that handles everything device network related.
+/// Device networking allows machines and devices to communicate with each other
+/// while adhering to restrictions like range or being connected to the same power network.
 /// </summary>
 public sealed partial class DeviceNetworkSystem : EntitySystem
 {
@@ -19,7 +19,7 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedTransformSystem _transformSystem = default!;
 
-    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceQuery = default!;
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceQuery;
 
     // Basically a cache of devices to connect them together faster.
     // TODO make DeviceNets smarter and make them entities
@@ -72,7 +72,7 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Try to find a device on a network using its address.
+    /// Try to find a device on a network using its address.
     /// </summary>
     private bool TryGetDevice(int netId, int address, [NotNullWhen(true)] out Device? device)
     {
@@ -89,7 +89,6 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
     /// Tries to get an already existing device network, and creates a new network if it doesn't exist.
     /// </summary>
     /// <returns>False if the manager is not initialized.</returns>
-    /// <returns></returns>
     private bool TryEnsureNetwork(int netId, [NotNullWhen(true)] out DeviceNet? network)
     {
         network = null;
@@ -157,14 +156,10 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
             }
 
             Extensions.EnsureLength(ref _deviceCache, totalDevices);
-            if (devices != null)
-            {
-                devices.CopyTo(_deviceCache);
-            }
+            devices?.CopyTo(_deviceCache);
             if (hasTargetedDevice)
-            {
                 _deviceCache[totalDevices - 1] = device.Value;
-            }
+
             SendToConnections(_deviceCache.AsSpan(0, totalDevices), packet);
         }
     }

@@ -110,7 +110,7 @@ public sealed partial class DeviceLinkSystem
         };
 
         // Force using wireless network so things like atmos devices are able to send signals.
-        _deviceNetworkSystem.SendPacket(
+        _deviceNetwork.SendPacket(
             source.Owner,
             sinkNetwork.Address,
             ref payload,
@@ -161,7 +161,7 @@ public sealed partial class DeviceLinkSystem
         // TODO allow devices to connect to multiple device networks,
         // then allow the devices to customize the device net they will use to communicate signals.
         var network = (int) DeviceNetIdDefaults.Wireless;
-        _deviceNetworkSystem.SendPacket(source.Owner, sinkNetwork.Address, ref payload, sinkNetwork.ReceiveFrequency, network);
+        _deviceNetwork.SendPacket(source.Owner, sinkNetwork.Address, ref payload, sinkNetwork.ReceiveFrequency, network);
     }
 
     /// <summary>
@@ -200,7 +200,7 @@ public sealed partial class DeviceLinkSystem
 
     /// <summary>
     /// Checks if the payload has a port defined and if the port is present on the sink.
-    /// Raises a <see cref="SignalReceivedEvent"/> containing the payload when the check passes
+    /// Raises a <see cref="SignalReceivedEvent"/> containing the payload when the check passes.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnPacketReceived(Entity<DeviceLinkSinkComponent> ent, ref DeviceNetworkPacketEvent<SignalPayload> args)

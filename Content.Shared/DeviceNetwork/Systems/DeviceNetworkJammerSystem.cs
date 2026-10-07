@@ -1,5 +1,6 @@
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
+using JetBrains.Annotations;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
@@ -38,6 +39,7 @@ public sealed partial class DeviceNetworkJammerSystem : EntitySystem
     /// <summary>
     /// Sets the range of the jamming effect.
     /// </summary>
+    [PublicAPI]
     public void SetRange(Entity<DeviceNetworkJammerComponent> ent, float value)
     {
         ent.Comp.Range = value;
@@ -45,6 +47,7 @@ public sealed partial class DeviceNetworkJammerSystem : EntitySystem
     }
 
     /// <inheritdoc cref="SetRange"/>
+    [PublicAPI]
     public bool TrySetRange(Entity<DeviceNetworkJammerComponent?> ent, float value)
     {
         if (!Resolve(ent, ref ent.Comp, logMissing: false))
@@ -57,6 +60,7 @@ public sealed partial class DeviceNetworkJammerSystem : EntitySystem
     /// <summary>
     /// Returns the set of networks that this entity can jam.
     /// </summary>
+    [PublicAPI]
     public IReadOnlySet<int> GetJammableNetworks(Entity<DeviceNetworkJammerComponent> ent)
     {
         return ent.Comp.JammableNetworks;
@@ -65,6 +69,7 @@ public sealed partial class DeviceNetworkJammerSystem : EntitySystem
     /// <summary>
     /// Enables this entity to jam packets on the specified network.
     /// </summary>
+    [PublicAPI]
     public void AddJammableNetwork(Entity<DeviceNetworkJammerComponent> ent, int networkId)
     {
         if (ent.Comp.JammableNetworks.Add(networkId))
@@ -74,6 +79,7 @@ public sealed partial class DeviceNetworkJammerSystem : EntitySystem
     /// <summary>
     /// Stops this entity from jamming packets on the specified network.
     /// </summary>
+    [PublicAPI]
     public void RemoveJammableNetwork(Entity<DeviceNetworkJammerComponent> ent, int networkId)
     {
         if (ent.Comp.JammableNetworks.Remove(networkId))
@@ -83,6 +89,7 @@ public sealed partial class DeviceNetworkJammerSystem : EntitySystem
     /// <summary>
     /// Stops this entity from jamming packets on any networks.
     /// </summary>
+    [PublicAPI]
     public void ClearJammableNetworks(Entity<DeviceNetworkJammerComponent> ent)
     {
         if (ent.Comp.JammableNetworks.Count == 0)
@@ -95,6 +102,7 @@ public sealed partial class DeviceNetworkJammerSystem : EntitySystem
     /// <summary>
     /// Enables this entity to stop packets with the specified frequency from being jammmed.
     /// </summary>
+    [PublicAPI]
     public void AddExcludedFrequency(Entity<DeviceNetworkJammerComponent> ent, DeviceFrequency frequency)
     {
         if (ent.Comp.FrequenciesExcluded.Add(frequency))
@@ -104,6 +112,7 @@ public sealed partial class DeviceNetworkJammerSystem : EntitySystem
     /// <summary>
     /// Stops this entity to stop packets with the specified frequency from being jammmed.
     /// </summary>
+    [PublicAPI]
     public void RemoveExcludedFrequency(Entity<DeviceNetworkJammerComponent> ent, DeviceFrequency frequency)
     {
         if (ent.Comp.FrequenciesExcluded.Remove(frequency))
@@ -113,6 +122,7 @@ public sealed partial class DeviceNetworkJammerSystem : EntitySystem
     /// <summary>
     /// Stops this entity to stop packets with any frequency from being jammmed.
     /// </summary>
+    [PublicAPI]
     public void ClearExcludedFrequency(Entity<DeviceNetworkJammerComponent> ent)
     {
         if (ent.Comp.FrequenciesExcluded.Count == 0)

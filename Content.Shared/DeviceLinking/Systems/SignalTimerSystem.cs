@@ -1,9 +1,9 @@
-using Content.Shared.UserInterface;
 using Content.Shared.Access.Systems;
 using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.MachineLinking;
 using Content.Shared.TextScreen;
+using Content.Shared.UserInterface;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
@@ -12,7 +12,7 @@ namespace Content.Shared.DeviceLinking.Systems;
 /// <summary>
 /// A system for signallable timers. Sets timer AppearanceData when triggered to start/stop.
 /// </summary>
-/// <seealso cref="Content.Client.TextScreenTimerVisualsComponent"/>
+/// <seealso cref="Content.Client.TextScreen.TimerVisualsComponent"/>
 /// <seealso cref="AppearanceComponent"/>
 public sealed partial class SignalTimerSystem : EntitySystem
 {
@@ -57,8 +57,8 @@ public sealed partial class SignalTimerSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Called by <see cref="SignalTimerTextChangedMessage"/> to both
-    ///     change the default ent.Comp label, and propagate that change to the TextScreen.
+    /// Called by <see cref="SignalTimerTextChangedMessage"/> to both
+    /// change the default ent.Comp label, and propagate that change to the TextScreen.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnTextChangedMessage(Entity<SignalTimerComponent> ent, ref SignalTimerTextChangedMessage args)
@@ -80,8 +80,8 @@ public sealed partial class SignalTimerSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Called by <see cref="SignalTimerDelayChangedMessage"/> to change the <see cref="SignalTimerComponent"/>
-    ///     delay, and propagate that change to a textscreen.
+    /// Called by <see cref="SignalTimerDelayChangedMessage"/> to change the <see cref="SignalTimerComponent"/>
+    /// delay, and propagate that change to a textscreen.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnDelayChangedMessage(Entity<SignalTimerComponent> ent, ref SignalTimerDelayChangedMessage args)
@@ -96,8 +96,8 @@ public sealed partial class SignalTimerSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Called by <see cref="SignalTimerStartMessage"/> to instantiate an <see cref="ActiveSignalTimerComponent"/>,
-    ///     clear <see cref="TextScreenVisuals.ScreenText"/>, propagate those changes, and invoke the start port.
+    /// Called by <see cref="SignalTimerStartMessage"/> to instantiate an <see cref="ActiveSignalTimerComponent"/>,
+    /// clear <see cref="TextScreenVisuals.ScreenText"/>, propagate those changes, and invoke the start port.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnTimerStartMessage(Entity<SignalTimerComponent> ent, ref SignalTimerStartMessage args)
@@ -125,7 +125,7 @@ public sealed partial class SignalTimerSystem : EntitySystem
     #region Public API
 
     /// <summary>
-    ///     Finishes a timer, triggering its main port, and removing its <see cref="ActiveSignalTimerComponent"/>.
+    /// Finishes a timer, triggering its main port, and removing its <see cref="ActiveSignalTimerComponent"/>.
     /// </summary>
     public void Trigger(Entity<SignalTimerComponent> ent)
     {

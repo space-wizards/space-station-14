@@ -14,8 +14,8 @@ namespace Content.Shared.DeviceLinking.Systems;
 
 public sealed partial class DeviceLinkSystem : EntitySystem
 {
-    [Dependency] private SharedPopupSystem _popupSystem = default!;
-    [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
@@ -37,14 +37,14 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         var linkedPorts = new Dictionary<NetEntity, HashSet<DeviceLink>>(ent.Comp.LinkedPorts.Count);
         foreach (var (sink, links) in ent.Comp.LinkedPorts)
         {
-            linkedPorts.Add(GetNetEntity(sink), new HashSet<DeviceLink>(links));
+            linkedPorts.Add(GetNetEntity(sink), [.. links]);
         }
 
         args.State = new DeviceLinkSourceComponentState(
             netOutputs,
             new Dictionary<ProtoId<SourcePortPrototype>, bool>(ent.Comp.LastSignals),
             linkedPorts,
-            new HashSet<ProtoId<SourcePortPrototype>>(ent.Comp.Ports));
+            [.. ent.Comp.Ports]);
     }
 
     [SubscribeLocalEvent]
@@ -73,13 +73,13 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         {
             var uid = EnsureEntity<DeviceLinkSinkComponent>(net, ent.Owner);
             if (uid.IsValid())
-                linked.Add(uid, new HashSet<DeviceLink>(value));
+                linked.Add(uid, [.. value]);
         }
 
         ent.Comp.Outputs = outputs;
         ent.Comp.LinkedPorts = linked;
         ent.Comp.LastSignals = new Dictionary<ProtoId<SourcePortPrototype>, bool>(state.LastSignals);
-        ent.Comp.Ports = new HashSet<ProtoId<SourcePortPrototype>>(state.Ports);
+        ent.Comp.Ports = [.. state.Ports];
     }
 
     /// <summary>

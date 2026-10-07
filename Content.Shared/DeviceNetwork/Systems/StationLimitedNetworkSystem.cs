@@ -6,8 +6,8 @@ namespace Content.Shared.DeviceNetwork.Systems;
 
 public sealed partial class StationLimitedNetworkSystem : EntitySystem
 {
-    [Dependency] private EntityQuery<StationTrackerComponent> _stationTrackerQuery = default!;
-    [Dependency] private EntityQuery<StationLimitedNetworkComponent> _stationLimitedQuery = default!;
+    [Dependency] private EntityQuery<StationTrackerComponent> _stationTrackerQuery;
+    [Dependency] private EntityQuery<StationLimitedNetworkComponent> _stationLimitedQuery;
 
     [SubscribeLocalEvent]
     private void OnBeforePacketSent(Entity<StationLimitedNetworkComponent> ent, ref BeforePacketSentEvent args)

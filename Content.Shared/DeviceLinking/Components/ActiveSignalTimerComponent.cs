@@ -10,7 +10,7 @@ namespace Content.Shared.DeviceLinking.Components;
 public sealed partial class ActiveSignalTimerComponent : Component
 {
     /// <summary>
-    ///     The time the timer triggers.
+    /// The time the timer triggers.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoNetworkedField, AutoPausedField]

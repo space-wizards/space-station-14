@@ -8,13 +8,13 @@ namespace Content.Server.Medical.CrewMonitoring;
 public sealed partial class CrewMonitoringServerComponent : Component
 {
     /// <summary>
-    ///     List of all currently connected sensors to this server.
+    /// List of all currently connected sensors to this server.
     /// </summary>
     public readonly Dictionary<DeviceAddress, SuitSensorStatus> SensorStatus = new();
 
     /// <summary>
-    ///     After what time sensor consider to be lost.
+    /// After what time sensor consider to be lost.
     /// </summary>
-    [DataField("sensorTimeout"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float SensorTimeout = 10f;
 }

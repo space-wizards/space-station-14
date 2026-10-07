@@ -10,23 +10,18 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.NetworkConfigurator;
 
-public sealed partial class NetworkConfiguratorLinkBoundUserInterface : BoundUserInterface
+public sealed partial class NetworkConfiguratorLinkBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private NetworkConfiguratorLinkMenu? _linkMenu;
 
-    [Dependency] private DeviceLinkSystem _deviceLinkSystem = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
 
-    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
-    [Dependency] private EntityQuery<DeviceLinkSinkComponent> _deviceLinkSinkQuery = default!;
-    [Dependency] private EntityQuery<DeviceLinkSourceComponent> _deviceLinkSourceQuery = default!;
-    [Dependency] private EntityQuery<NetworkConfiguratorComponent> _configQuery = default!;
-
-    public NetworkConfiguratorLinkBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-
-    }
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery;
+    [Dependency] private EntityQuery<DeviceLinkSinkComponent> _deviceLinkSinkQuery;
+    [Dependency] private EntityQuery<DeviceLinkSourceComponent> _deviceLinkSourceQuery;
+    [Dependency] private EntityQuery<NetworkConfiguratorComponent> _configQuery;
 
     protected override void Open()
     {
@@ -63,10 +58,10 @@ public sealed partial class NetworkConfiguratorLinkBoundUserInterface : BoundUse
             || !_deviceLinkSinkQuery.TryComp(sink, out var sinkComp))
             return;
 
-        var sources = _deviceLinkSystem.GetSourcePorts((source, sourceComp));
-        var sinks = _deviceLinkSystem.GetSinkPortIds((sink, sinkComp));
-        var links = _deviceLinkSystem.GetLinks((source, sourceComp), sink);
-        var defaults = _deviceLinkSystem.GetDefaults(sources);
+        var sources = _deviceLink.GetSourcePorts((source, sourceComp));
+        var sinks = _deviceLink.GetSinkPortIds((sink, sinkComp));
+        var links = _deviceLink.GetLinks((source, sourceComp), sink);
+        var defaults = _deviceLink.GetDefaults(sources);
         var sourceIds = sources.ToArray();
 
         var sourceAddress = string.Empty;

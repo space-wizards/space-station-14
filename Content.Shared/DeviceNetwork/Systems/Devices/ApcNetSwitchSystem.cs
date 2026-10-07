@@ -1,8 +1,8 @@
-using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.Interaction;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Components.Devices;
+using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Payloads;
+using Content.Shared.Interaction;
 
 namespace Content.Shared.DeviceNetwork.Systems.Devices;
 
@@ -10,7 +10,7 @@ public sealed partial class ApcNetSwitchSystem : EntitySystem
 {
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
 
-    [Dependency] private EntityQuery<DeviceNetworkComponent> _query = default!;
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _query;
 
     /// <summary>
     /// Toggles the state of the switch and sends a <see cref="ApcNetTogglePayload"/>.

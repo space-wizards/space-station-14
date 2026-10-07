@@ -10,20 +10,20 @@ namespace Content.Shared.DeviceNetwork;
 public partial record struct DeviceData
 {
     /// <summary>
-    ///     The frequency that this device is listening on.
+    /// The frequency that this device is listening on.
     /// </summary>
     [DataField]
     public DeviceFrequency? ReceiveFrequency;
 
     /// <summary>
-    ///     The address ID of the device, either on the network it is currently connected to or whatever address it
-    ///     most recently used.
+    /// The address ID of the device, either on the network it is currently connected to or whatever address it
+    /// most recently used.
     /// </summary>
     [DataField]
     public DeviceAddress AddressId;
 
     /// <summary>
-    ///     Whether the device should listen for all device messages, regardless of the intended recipient.
+    /// Whether the device should listen for all device messages, regardless of the intended recipient.
     /// </summary>
     [DataField]
     public bool ReceiveAll;

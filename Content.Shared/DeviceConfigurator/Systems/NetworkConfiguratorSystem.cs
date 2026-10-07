@@ -36,12 +36,12 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
     [Dependency] private INetManager _net = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
 
-    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
-    [Dependency] private EntityQuery<DeviceLinkSinkComponent> _deviceLinkSinkQuery = default!;
-    [Dependency] private EntityQuery<DeviceLinkSourceComponent> _deviceLinkSourceQuery = default!;
-    [Dependency] private EntityQuery<DeviceListComponent> _deviceListQuery = default!;
-    [Dependency] private EntityQuery<NetworkConfiguratorComponent> _networkConfigQuery = default!;
-    [Dependency] private EntityQuery<LinkedDeviceNetworkComponent> _linkedDeviceQuery = default!;
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery;
+    [Dependency] private EntityQuery<DeviceLinkSinkComponent> _deviceLinkSinkQuery;
+    [Dependency] private EntityQuery<DeviceLinkSourceComponent> _deviceLinkSourceQuery;
+    [Dependency] private EntityQuery<DeviceListComponent> _deviceListQuery;
+    [Dependency] private EntityQuery<NetworkConfiguratorComponent> _networkConfigQuery;
+    [Dependency] private EntityQuery<LinkedDeviceNetworkComponent> _linkedDeviceQuery;
 
     [SubscribeLocalEvent]
     private void OnMapSave(BeforeSerializationEvent ev)

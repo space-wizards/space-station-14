@@ -29,12 +29,6 @@ public sealed partial class RandomGateSystem : EntitySystem
         UpdateUI(ent);
     }
 
-    private void UpdateUI(Entity<RandomGateComponent> ent)
-    {
-        if (_ui.TryGetOpenUi(ent.Owner, RandomGateUiKey.Key, out var ui))
-            ui.Update();
-    }
-
     [SubscribeLocalEvent]
     private void OnSignalReceived(Entity<RandomGateComponent> ent, ref SignalReceivedEvent args)
     {
@@ -48,5 +42,11 @@ public sealed partial class RandomGateSystem : EntitySystem
         ent.Comp.LastOutput = output;
         DirtyField(ent.AsNullable(), nameof(RandomGateComponent.LastOutput));
         _deviceLink.SendSignal(ent.Owner, ent.Comp.OutputPort, output);
+    }
+
+    private void UpdateUI(Entity<RandomGateComponent> ent)
+    {
+        if (_ui.TryGetOpenUi(ent.Owner, RandomGateUiKey.Key, out var ui))
+            ui.Update();
     }
 }

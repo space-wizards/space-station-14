@@ -42,7 +42,7 @@ public sealed partial class DeviceLinkSourceComponent : Component
     public Dictionary<EntityUid, HashSet<DeviceLink>> LinkedPorts = new();
 
     /// <summary>
-    ///     Limits the range devices can be linked across.
+    /// Limits the range devices can be linked across.
     /// </summary>
     [DataField]
     public float Range = 30f;

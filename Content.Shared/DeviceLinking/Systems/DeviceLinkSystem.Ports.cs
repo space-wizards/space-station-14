@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Content.Shared.DeviceLinking.Components;
+﻿using Content.Shared.DeviceLinking.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
@@ -72,7 +71,7 @@ public sealed partial class DeviceLinkSystem
     [PublicAPI]
     public ProtoId<SourcePortPrototype>[] GetSourcePortIds(Entity<DeviceLinkSourceComponent> source)
     {
-        return source.Comp.Ports.ToArray();
+        return [.. source.Comp.Ports];
     }
 
     /// <summary>
@@ -83,7 +82,7 @@ public sealed partial class DeviceLinkSystem
     public HashSet<ProtoId<SourcePortPrototype>> GetSourcePorts(Entity<DeviceLinkSourceComponent?> source)
     {
         if (!_deviceLinkSourceQuery.Resolve(source.Owner, ref source.Comp))
-            return new HashSet<ProtoId<SourcePortPrototype>>();
+            return [];
 
         return source.Comp.Ports;
     }
@@ -91,7 +90,7 @@ public sealed partial class DeviceLinkSystem
     [PublicAPI]
     public ProtoId<SinkPortPrototype>[] GetSinkPortIds(Entity<DeviceLinkSinkComponent> source)
     {
-        return source.Comp.Ports.ToArray();
+        return [.. source.Comp.Ports];
     }
 
     /// <summary>
@@ -102,7 +101,7 @@ public sealed partial class DeviceLinkSystem
     public List<SinkPortPrototype> GetSinkPorts(Entity<DeviceLinkSinkComponent?> sink)
     {
         if (!_deviceLinkSinkQuery.Resolve(sink.Owner, ref sink.Comp))
-            return new List<SinkPortPrototype>();
+            return [];
 
         var sinkPorts = new List<SinkPortPrototype>();
         foreach (var port in sink.Comp.Ports)
