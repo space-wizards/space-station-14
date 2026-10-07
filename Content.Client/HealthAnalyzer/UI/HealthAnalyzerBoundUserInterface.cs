@@ -21,7 +21,7 @@ public sealed partial class HealthAnalyzerBoundUserInterface(EntityUid owner, En
 
     /// <summary>
     /// This will update the UI to reflect the newest health changes of the scanned entity.
-    /// This gets called in the <see cref="SharedHealthAnalyzerSystem"/> by SetUIState().
+    /// This gets called in the <see cref="HealthAnalyzerSystem"/> by SetUIState().
     /// </summary>
     protected override void UpdateState(BoundUserInterfaceState state)
     {
@@ -31,4 +31,3 @@ public sealed partial class HealthAnalyzerBoundUserInterface(EntityUid owner, En
         _window.Populate(cast);
     }
 }
-

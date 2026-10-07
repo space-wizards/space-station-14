@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Shared.Atmos;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
@@ -121,6 +122,9 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
                 ? GetStatus(mobStateComponent.CurrentState)
                 : Loc.GetString("health-analyzer-window-entity-unknown-text");
 
+        if (!_entityManager.HasComponent<DamageableComponent>(target.Value))
+            return;
+
         // Total Damage
         DamageLabel.Text = _damageable.GetTotalDamage(target.Value).ToString();
 
@@ -200,7 +204,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
 
             var groupTitleText = $"{Loc.GetString(
                 "health-analyzer-window-damage-group-text",
-                ("damageGroup", _prototypes.Index<DamageGroupPrototype>(damageGroupId).LocalizedName),
+                ("damageGroup", _prototypes.Index(damageGroupId).LocalizedName),
                 ("amount", damageAmount)
             )}";
 
@@ -215,7 +219,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
             GroupsContainer.AddChild(groupContainer);
 
             // Show the damage for each type in that group.
-            var group = _prototypes.Index<DamageGroupPrototype>(damageGroupId);
+            var group = _prototypes.Index(damageGroupId);
 
             foreach (var type in group.DamageTypes)
             {
@@ -224,7 +228,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
 
                 var damageString = Loc.GetString(
                     "health-analyzer-window-damage-type-text",
-                    ("damageType", _prototypes.Index<DamageTypePrototype>(type).LocalizedName),
+                    ("damageType", _prototypes.Index(type).LocalizedName),
                     ("amount", typeAmount)
                 );
 
@@ -239,7 +243,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
         var rsiSprite = new SpriteSpecifier.Rsi(rsiPath, texture);
 
         var rsi = _cache.GetResource<RSIResource>(rsiSprite.RsiPath).RSI;
-        if (!rsi.TryGetState(rsiSprite.RsiState, out var state))
+        if (!rsi.TryGetState(rsiSprite.RsiState, out _))
         {
             rsiSprite = new SpriteSpecifier.Rsi(rsiPath, "unknown");
         }

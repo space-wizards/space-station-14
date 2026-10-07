@@ -4,13 +4,16 @@ using Content.Shared.Temperature.Components;
 
 namespace Content.Server.Medical.HealthAnalyzer;
 
-public sealed partial class HealthAnalyzerSystem : SharedHealthAnalyzerSystem
+/// <inheritdoc/>
+public sealed partial class ServerHealthAnalyzerSystem : HealthAnalyzerSystem
 {
+    [Dependency] private EntityQuery<TemperatureComponent> _temperatureQuery;
+
     public override HealthAnalyzerUiState GetHealthAnalyzerUiState(EntityUid? target, bool scanMode)
     {
         var state = base.GetHealthAnalyzerUiState(target, scanMode);
 
-        if (TryComp<TemperatureComponent>(target, out var temp))
+        if (_temperatureQuery.TryComp(target, out var temp))
             state.Temperature = temp.Temperature;
 
         return state;

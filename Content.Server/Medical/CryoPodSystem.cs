@@ -17,7 +17,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
     [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private GasCanisterSystem _gasCanisterSystem = default!;
     [Dependency] private GasAnalyzerSystem _gasAnalyzerSystem = default!;
-    [Dependency] private HealthAnalyzerSystem _healthAnalyzerSystem = default!;
+    [Dependency] private ServerHealthAnalyzerSystem _healthAnalyzerSystem = default!;
     [Dependency] private NodeContainerSystem _nodeContainer = default!;
     [Dependency] private DamageableSystem _damageable = default!;
 
