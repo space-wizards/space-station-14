@@ -1,27 +1,26 @@
+using Content.Shared.Medical.Cryogenics;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Medical.Components;
+namespace Content.Shared.Medical.HealthAnalyzer;
 
 /// <summary>
 /// After scanning, retrieves the target Uid to use with its related UI.
 /// </summary>
-/// <remarks>
-/// Requires <c>ItemToggleComponent</c>.
-/// </remarks>
-[RegisterComponent, AutoGenerateComponentPause]
-[Access(typeof(HealthAnalyzerSystem), typeof(CryoPodSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
+[Access(typeof(HealthAnalyzerSystem), typeof(SharedCryoPodSystem))]
 public sealed partial class HealthAnalyzerComponent : Component
 {
     /// <summary>
-    /// When should the next update be sent for the patient
+    /// When should the next update be sent for the patient.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoPausedField]
+    [AutoPausedField, AutoNetworkedField]
     public TimeSpan NextUpdate = TimeSpan.Zero;
 
     /// <summary>
-    /// The delay between patient health updates
+    /// The delay between patient health updates.
     /// </summary>
     [DataField]
     public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
@@ -29,8 +28,8 @@ public sealed partial class HealthAnalyzerComponent : Component
     /// <summary>
     /// If the last state of the health analyzer was active (e.g. they are in range of the patient).
     /// </summary>
-    [DataField]
-    public bool IsAnalyzerActive = false;
+    [DataField, AutoNetworkedField]
+    public bool IsAnalyzerActive;
 
     /// <summary>
     /// How long it takes to scan someone.
@@ -39,31 +38,31 @@ public sealed partial class HealthAnalyzerComponent : Component
     public TimeSpan ScanDelay = TimeSpan.FromSeconds(0.8);
 
     /// <summary>
-    /// Which entity has been scanned, for continuous updates
+    /// Which entity has been scanned, for continuous updates.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? ScannedEntity;
 
     /// <summary>
-    /// The maximum range in tiles at which the analyzer can receive continuous updates, a value of null will be infinite range
+    /// The maximum range in tiles at which the analyzer can receive continuous updates, a value of null will be infinite range.
     /// </summary>
     [DataField]
     public float? MaxScanRange = 2.5f;
 
     /// <summary>
-    /// Sound played on scanning begin
+    /// Sound played on scanning begin.
     /// </summary>
     [DataField]
     public SoundSpecifier? ScanningBeginSound;
 
     /// <summary>
-    /// Sound played on scanning end
+    /// Sound played on scanning end.
     /// </summary>
     [DataField]
     public SoundSpecifier ScanningEndSound = new SoundPathSpecifier("/Audio/Items/Medical/healthscanner.ogg");
 
     /// <summary>
-    /// Whether to show up the popup
+    /// Whether to show up the popup.
     /// </summary>
     [DataField]
     public bool Silent;
