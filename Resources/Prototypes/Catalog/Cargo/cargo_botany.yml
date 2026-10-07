@@ -53,7 +53,8 @@
   icon:
     sprite: Structures/Hydroponics/containers.rsi
     state: hydrotray3
-  product: CrateHydroponicsTray
+  product: HydroponicsTrayFlatpack
+  container: CrateHydroponics
   cost: 750
   category: cargoproduct-category-name-hydroponics
   group: market
