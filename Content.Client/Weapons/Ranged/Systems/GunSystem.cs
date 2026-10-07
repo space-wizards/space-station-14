@@ -49,7 +49,7 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedCameraRecoilSystem _recoil = default!;
     [Dependency] private SharedMapSystem _maps = default!;
-    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private TransformSystem _xform = default!;
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private SpriteTreeSystem _spriteTree = default!;
 
@@ -137,6 +137,8 @@ public sealed partial class GunSystem : SharedGunSystem
             var targetWorldRot = a.angle + _xform.GetWorldRotation(relativeXform);
             var delta = targetWorldRot - _xform.GetWorldRotation(xform);
             _xform.SetLocalRotationNoLerp(ent, xform.LocalRotation + delta, xform);
+            // Without this the effect renders at its spawn rotation until the next tick.
+            _xform.SnapRenderTransform(ent);
 
             sprite[EffectLayers.Unshaded].AutoAnimated = false;
             _sprite.LayerSetSprite((ent, sprite), EffectLayers.Unshaded, rsi);
@@ -328,6 +330,8 @@ public sealed partial class GunSystem : SharedGunSystem
 
         var ent = Spawn(message.Prototype, coordinates);
         TransformSystem.SetWorldRotationNoLerp(ent, message.Angle);
+        // Without this the effect renders at its spawn rotation until the next tick.
+        _xform.SnapRenderTransform(ent);
 
         if (tracked != null)
         {
