@@ -14,8 +14,14 @@ public sealed partial class DeviceNetworkComponent : Component
     [DataField("deviceNetId")]
     public DeviceNetIdDefaults NetIdEnum { get; set; }
 
+    /// <summary>
+    /// The numeric identifier of the device network this device uses.
+    /// </summary>
     public int DeviceNetId => (int) NetIdEnum;
 
+    /// <summary>
+    /// The device address paired with its optional localized prefix.
+    /// </summary>
     public LocDeviceAddress LocAddress => new(Address, Prefix);
 
     /// <summary>

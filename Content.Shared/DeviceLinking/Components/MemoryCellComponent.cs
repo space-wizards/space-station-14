@@ -30,12 +30,21 @@ public sealed partial class MemoryCellComponent : Component
     public ProtoId<SourcePortPrototype> OutputPort = "Output";
 
     // State
+    /// <summary>
+    /// Most recent state received on the input port.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public SignalState InputState = SignalState.Low;
 
+    /// <summary>
+    /// Most recent state received on the enable port.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public SignalState EnableState = SignalState.Low;
 
+    /// <summary>
+    /// Whether the cell's last output was high.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool LastOutput;
 }

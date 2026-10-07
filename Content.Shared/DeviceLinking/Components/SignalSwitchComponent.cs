@@ -33,15 +33,21 @@ public sealed partial class SignalSwitchComponent : Component
     [DataField]
     public ProtoId<SourcePortPrototype> StatusPort = "Status";
 
+    /// <summary>
+    /// Whether the switch is currently on.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool State;
 
+    /// <summary>
+    /// Sound played when the switch is clicked.
+    /// </summary>
     [DataField]
     public SoundSpecifier? ClickSound = new SoundPathSpecifier("/Audio/Machines/lightswitch.ogg");
 }
 
 /// <summary>
-/// Enum for the appearance system.
+/// Appearance data keys used by signal switches.
 /// </summary>
 [Serializable, NetSerializable]
 public enum SwitchVisuals

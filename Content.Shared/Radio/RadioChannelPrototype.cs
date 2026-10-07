@@ -18,6 +18,9 @@ public sealed partial class RadioChannelPrototype : IPrototype
     [DataField]
     public LocId Name { get; private set; } = string.Empty;
 
+    /// <summary>
+    /// The localized display name of this channel.
+    /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public string LocalizedName => Loc.GetString(Name);
 
@@ -33,6 +36,9 @@ public sealed partial class RadioChannelPrototype : IPrototype
     [DataField]
     public Color Color { get; private set; } = Color.Lime;
 
+    /// <summary>
+    /// The device network frequency used by this channel.
+    /// </summary>
     [DataField]
     public DeviceFrequency Frequency { get; private set; } = 1;
 

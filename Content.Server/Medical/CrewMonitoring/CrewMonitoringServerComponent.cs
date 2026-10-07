@@ -3,6 +3,9 @@ using Content.Shared.Medical.SuitSensors;
 
 namespace Content.Server.Medical.CrewMonitoring;
 
+/// <summary>
+/// Stores suit sensor status received by a crew monitoring server.
+/// </summary>
 [RegisterComponent]
 [Access(typeof(CrewMonitoringServerSystem))]
 public sealed partial class CrewMonitoringServerComponent : Component
@@ -13,7 +16,7 @@ public sealed partial class CrewMonitoringServerComponent : Component
     public readonly Dictionary<DeviceAddress, SuitSensorStatus> SensorStatus = new();
 
     /// <summary>
-    /// After what time sensor consider to be lost.
+    /// How long without an update before a sensor is considered lost, in seconds.
     /// </summary>
     [DataField]
     public float SensorTimeout = 10f;

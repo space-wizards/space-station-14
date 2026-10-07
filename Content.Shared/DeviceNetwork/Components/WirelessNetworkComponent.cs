@@ -10,6 +10,10 @@ namespace Content.Shared.DeviceNetwork.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class WirelessNetworkComponent : Component
 {
+    /// <summary>
+    /// Maximum distance at which wireless device network messages can be received.
+    /// Null allows communication anywhere on the same map.
+    /// </summary>
     [DataField]
     public float? Range;
 }

@@ -3,6 +3,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.DeviceConfigurator.Components;
 
+/// <summary>
+/// Stores devices that may or may not communicate with this entity, according to its list mode.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 [Access(typeof(DeviceListSystem))]
 public sealed partial class DeviceListComponent : Component
@@ -31,6 +34,9 @@ public sealed partial class DeviceListComponent : Component
     [DataField, AutoNetworkedField]
     public bool HandleIncomingPackets;
 
+    /// <summary>
+    /// Entities currently using this list through a network configurator.
+    /// </summary>
     [DataField, AutoNetworkedField]
     [Access(typeof(NetworkConfiguratorSystem))]
     public HashSet<EntityUid> Configurators = new();

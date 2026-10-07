@@ -48,6 +48,9 @@ public sealed partial class DeviceLinkSourceComponent : Component
     public float Range = 30f;
 }
 
+/// <summary>
+/// Network state for a device link source component.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class DeviceLinkSourceComponentState(
     Dictionary<ProtoId<SourcePortPrototype>, HashSet<NetEntity>> outputs,
