@@ -18,10 +18,10 @@ using Content.Shared.Projectiles;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Content.Shared.Throwing;
-using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.FixedPoint;
+using Content.Shared.Timing.Systems;
 using JetBrains.Annotations;
 using Robust.Server.Audio;
 using Robust.Shared.Physics.Components;
@@ -57,6 +57,8 @@ namespace Content.Server.Atmos.EntitySystems
         private static readonly TimeSpan UpdateTime = TimeSpan.FromSeconds(1);
 
         private readonly Dictionary<Entity<FlammableComponent>, float> _fireEvents = new();
+
+        private const int FirestackEnergy = 37500; // joules release when on fire
 
         public override void Initialize()
         {
@@ -174,7 +176,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             args.Handled = true;
 
-            if (!TryComp(uid, out UseDelayComponent? useDelay) || !_useDelay.TryResetDelay((uid, useDelay), true))
+            if (!_useDelay.TryResetDelay(uid, true))
                 return;
 
             _audio.PlayPvs(component.ExtinguishAttemptSound, uid);
@@ -475,7 +477,7 @@ namespace Content.Server.Atmos.EntitySystems
                     var source = EnsureComp<IgnitionSourceComponent>(uid);
                     _ignitionSourceSystem.SetIgnited((uid, source));
 
-                    _temperatureSystem.ChangeHeat(uid, 12500 * flammable.FireStacks, false);
+                    _temperatureSystem.ChangeHeat(uid, FirestackEnergy * flammable.FireStacks, false);
 
                     var ev = new GetFireProtectionEvent();
                     // let the thing on fire handle it

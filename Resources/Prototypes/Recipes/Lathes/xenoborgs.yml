@@ -120,7 +120,7 @@
   id: XenoborgModuleRocketRecipe
   result: XenoborgModuleRocket
   materials:
-    XenoborgCrystal: 300
+    XenoborgCrystal: 400
 
 - type: latheRecipe
   parent: BaseXenoborgModulesRecipe

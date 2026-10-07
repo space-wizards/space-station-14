@@ -79,6 +79,7 @@
   - Hands # displacements
   - Puller
   - Vocal # voice sounds
+  - EyeBlinking # for rsiPath and other blinking settings
 
 # for job-specific traits etc.
 - type: cloningSettings
@@ -191,6 +192,7 @@
   - PlantTraitLigneous
   - PlantTraitScream
   - PlantTraitUnviable
+  - PlantTraitSeedless
 
 # for plant lifecycle clones
 - type: cloningSettings
@@ -199,6 +201,5 @@
   components:
   # traits
   - PlantTraitSampled
-  - PlantTraitSeedless
   eventComponents:
   - PlantHolder

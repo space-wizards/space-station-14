@@ -30,5 +30,7 @@ public sealed partial class PlantTraitKudzuComponent : PlantTraitsComponent
     public float WeedGrowthAmount = 1f;
 
     /// <inheritdoc/>
-    public override LocId? TraitState { get; set; } = "mutation-plant-kudzu";
+    public override LocId? TraitState { get; set; } = "mutation-plant-description-kudzu";
+    /// <inheritdoc/>
+    public override LocId? TraitName { get; set; } = "mutation-plant-noun-kudzu";
 }

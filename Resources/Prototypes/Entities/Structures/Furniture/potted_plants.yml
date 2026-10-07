@@ -246,7 +246,8 @@
   - type: Sprite
     state: plant-25
   - type: StealTarget
-    stealGroup: PlantRD
+    stealGroup:
+    - PlantRD
 
 - type: entity
   id: PottedPlant26

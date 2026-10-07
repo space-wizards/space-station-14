@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Cloning;
@@ -271,7 +271,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
             dropped.Identity = null;
         }
 
-        PredictedQueueDel(identity);
+        QueueDel(identity);
 
         if (toDrop.Count > 0)
         {

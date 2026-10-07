@@ -1,4 +1,4 @@
-﻿norepinephricacid-effect-eyelids = Your eyelids are rapidly twitching.
+norepinephricacid-effect-eyelids = Your eyelids are rapidly twitching.
 norepinephricacid-effect-eyes-itch = Your eyes feel itchy.
 norepinephricacid-effect-vision-fade = You feel your vision fading.
 norepinephricacid-effect-vision-fail = You can feel your vision failing you.

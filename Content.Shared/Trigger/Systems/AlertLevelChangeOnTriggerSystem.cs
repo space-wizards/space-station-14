@@ -1,13 +1,13 @@
 using Content.Shared.AlertLevel;
+using Content.Shared.Station.Systems;
 using Content.Shared.Trigger.Components.Effects;
-using Content.Shared.Station;
 
 namespace Content.Shared.Trigger.Systems;
 
 public sealed partial class AlertLevelChangeOnTriggerSystem : EntitySystem
 {
     [Dependency] private AlertLevelSystem _alertLevel = default!;
-    [Dependency] private SharedStationSystem _station = default!;
+    [Dependency] private StationSystem _station = default!;
 
     public override void Initialize()
     {
