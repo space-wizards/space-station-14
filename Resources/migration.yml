@@ -1179,3 +1179,13 @@ AirlockStandardGlass: AirlockGlass
 
 # 2026-10-30
 PlushieArachind: PlushieArachnid
+
+# 2026-05-04
+# Rewriting of Cargo orders makes these redundent as box is put in box after being spawned
+CrateVendingMachineRestockEngineeringFilled: VendingMachineRestockEngineering
+CrateVendingMachineRestockMedicalFilled: VendingMachineRestockMedical
+CrateVendingMachineRestockChemVendFilled: VendingMachineRestockChemVend
+CrateVendingMachineRestockNutriMaxFilled: VendingMachineRestockNutriMax
+CrateVendingMachineRestockSecTechFilled: VendingMachineRestockSecTech
+CrateVendingMachineRestockSeedsFilled: VendingMachineRestockSeeds
+CrateVendingMachineRestockRoboticsFilled: VendingMachineRestockRobotics

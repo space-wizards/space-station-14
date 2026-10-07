@@ -21,13 +21,15 @@ cargo-console-menu-search-bar-placeholder = Search
 cargo-console-menu-requests-label = Requests
 cargo-console-menu-orders-label = Orders
 cargo-console-menu-populate-categories-all-text = All
-cargo-console-menu-order-row-title = {$productName} (x{$orderAmount} for {$orderPrice}$)
-cargo-console-menu-populate-orders-cargo-order-row-product-name-text = Requested by: {$orderRequester} from [color={$accountColor}]{$account}[/color]
-cargo-console-menu-order-row-product-description = Reason: {$orderReason}
+cargo-console-menu-order-row-title = Order {$orderID}
+cargo-console-menu-order-row-product-reason = Reason: {$orderReason}
+cargo-console-menu-order-row-product-description = Account Used: {$accountName} \[[color={$accountColor}]{$account}[/color]\]
+cargo-console-menu-order-row-product-requester = {$requester}
 cargo-console-menu-order-row-button-approve = Approve
 cargo-console-menu-order-row-button-cancel = Cancel
 cargo-console-menu-order-row-alerts-reason-absent = The reason is not specified
 cargo-console-menu-order-row-alerts-requester-unknown = Unknown
+cargo-console-menu-tab-title-market = Market
 cargo-console-menu-tab-title-orders = Orders
 cargo-console-menu-tab-title-funds = Transfers
 cargo-console-menu-account-action-transfer-limit = [bold]Transfer Limit:[/bold] ${$limit}
@@ -38,17 +40,24 @@ cargo-console-menu-account-action-button = Transfer
 cargo-console-menu-toggle-account-lock-button = Toggle Transfer Limit
 cargo-console-menu-account-action-option-withdraw = Withdraw Cash
 cargo-console-menu-account-action-option-transfer = Transfer Funds to {$code}
+cargo-console-menu-cart-label = Cart
+cargo-console-menu-cart-submit = Submit
+cargo-console-menu-cart-container-cost-label = Crates Cost
+cargo-console-menu-cart-total-label = Total Cost
+cargo-console-menu-orders-history-label = History
 
 # Orders
 cargo-console-order-not-allowed = Access not allowed
 cargo-console-station-not-found = No available station
 cargo-console-invalid-product = Invalid product ID
-cargo-console-too-many = Too many approved orders
+cargo-console-too-many = Too many orders
 cargo-console-snip-snip = Order trimmed to capacity
 cargo-console-insufficient-funds = Insufficient funds (require {$cost})
 cargo-console-unfulfilled = No room to fulfill order
 cargo-console-trade-station = Sent to {$destination}
-cargo-console-unlock-approved-order-broadcast = [bold]{$productName} x{$orderAmount}[/bold], which cost [bold]{$cost}[/bold], was approved by [bold]{$approver}[/bold]
+cargo-console-unlock-approved-order-broadcast-item = [bold]x{$orderAmount} - {$productName}[/bold]
+cargo-console-unlock-approved-order-broadcast-header = [bold] Order {$orderID}:[/bold]
+cargo-console-unlock-approved-order-broadcast-footer = Cost: [bold]${$cost}[/bold]. Approved by: [bold]{$approver}[/bold]
 cargo-console-fund-withdraw-broadcast = [bold]{$name} withdrew {$amount} spesos from {$name1} \[{$code1}\]
 cargo-console-fund-transfer-broadcast = [bold]{$name} transferred {$amount} spesos from {$name1} \[{$code1}\] to {$name2} \[{$code2}\][/bold]
 cargo-console-fund-transfer-user-unknown = Unknown
@@ -57,10 +66,17 @@ cargo-console-paper-reason-default = None
 cargo-console-paper-approver-default = Unknown
 cargo-console-paper-print-name = Order #{$orderNumber}
 cargo-console-paper-print-text = [head=2]Order #{$orderNumber}[/head]
-    {"[bold]Item:[/bold]"} {$itemName} (x{$orderQuantity})
-    {"[bold]Requested by:[/bold]"} {$requester}
-
+    {"[bold]Item:[/bold]"} {$itemName}
     {"[head=3]Order Information[/head]"}
+    {"[bold]Requested by:[/bold]"} {$requester}
+    {"[bold]Payer[/bold]:"} {$account} [font="Monospace"]\[{$accountcode}\][/font]
+    {"[bold]Approved by:[/bold]"} {$approver}
+    {"[bold]Reason:[/bold]"} {$reason}
+cargo-console-paper-print-header = [head=2]Order #{$orderNumber}[/head]
+    {"[bold]Items:[/bold]"}
+cargo-console-paper-print-item = x{$orderQuantity} - {$itemName}
+cargo-console-paper-print-footer = [head=3]Order Information[/head]
+    {"[bold]Requested by:[/bold]"} {$requester}
     {"[bold]Payer[/bold]:"} {$account} [font="Monospace"]\[{$accountcode}\][/font]
     {"[bold]Approved by:[/bold]"} {$approver}
     {"[bold]Reason:[/bold]"} {$reason}
@@ -91,13 +107,12 @@ cargo-funding-alloc-console-label-save-fail = [bold]Revenue Divisions Invalid![/
 }{$val}%)[/color]
 
 # Slip template
-cargo-acquisition-slip-body = [head=3]Asset Detail[/head]
-    {"[bold]Product:[/bold]"} {$product}
-    {"[bold]Description:[/bold]"} {$description}
-    {"[bold]Unit cost:[/bold"}] ${$unit}
-    {"[bold]Amount:[/bold]"} {$amount}
-    {"[bold]Cost:[/bold]"} ${$cost}
-
+cargo-acquisition-slip-header = [head=3]Asset Detail[/head]
+cargo-acquisition-slip-item = {"[bold]Item:[/bold]"} {$itemName} (x{$orderQuantity})
+    {"[bold]Unit cost:[/bold]"} ${$cost}
+cargo-acquisition-slip-footer =
     {"[head=3]Purchase Detail[/head]"}
+    {"[bold]Total Cost:[/bold]"} ${$cost}
     {"[bold]Orderer:[/bold]"} {$orderer}
     {"[bold]Reason:[/bold]"} {$reason}
+cargo-console-menu-cart-remove = X
