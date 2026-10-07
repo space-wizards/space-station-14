@@ -28,6 +28,9 @@ changeling-catalog-mute-sting-desc = Causes the target to be incapable of speech
 changeling-catalog-armblade-sting-name = Armblade Sting
 changeling-catalog-armblade-sting-desc = Causes the target to spontaneously grow a dulled armblade after a lengthy delay. Instant with increased duration when used on corpses. Can be used on self.
 
+changeling-catalog-hemotoxin-sting-name = Hemotoxin Sting
+changeling-catalog-hemotoxin-sting-desc = Causes extreme damage to the blood cells of the target. Very noticeable but very deadly if left untreated. Can be used on self.
+
 changeling-catalog-last-resort-name = Last Resort
 changeling-catalog-last-resort-desc = Gib your current body and escape as a weak head slug. If you infest a humanoid corpse, you can return to a full changeling body. Can only be bought when at least one body has been devoured.
 

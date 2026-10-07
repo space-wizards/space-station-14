@@ -103,7 +103,6 @@ public sealed partial class DrunkOverlay : Overlay
         _drunkShader.SetParameter("phase", Phase);
         handle.UseShader(_drunkShader);
         handle.DrawRect(args.WorldBounds, Color.White);
-        handle.UseShader(null);
     }
 
     /// <summary>
