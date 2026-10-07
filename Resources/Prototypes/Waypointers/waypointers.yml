@@ -1,6 +1,3 @@
-﻿# If you add a new waypointer, you'll need to add the "WaypointerTrackable" component to every entity that you want to be tracked EXCEPT grids.
-# Why not grids? As Todd Howard would say, they just work.
-
 - type: waypointer
   abstract: true
   id: BaseWaypointer
@@ -54,6 +51,11 @@
   name: Rift Waypointer
   trackedComponents:
   - type: DragonRift
+    spawn: !type:GroupSelector # This doesn't spawn anything. This is here because dragonRiftComponent requires spawn to be filled.
+      children:
+        - id: MobCarpDragon
+        - id: MobSharkDragon
+          weight: 0.15
   workOnGrid: true
   color: Orange
   maxRange: 50

@@ -84,7 +84,7 @@ public sealed partial class WaypointerOverlay : Overlay
             return;
 
         var player = _player.LocalEntity.Value;
-        var playerPosition = _transform.GetWorldPosition(playerXform);
+        var playerPosition = _transform.GetRenderWorldPosition(player);
 
         foreach (var waypointerPair in waypointer.WaypointerProtoIds)
         {
@@ -117,7 +117,7 @@ public sealed partial class WaypointerOverlay : Overlay
                 // Avoid drawing it twice later on, as we are in PVS range and have more accurate data.
                 serverPositions.Remove(_entity.GetNetEntity(target));
 
-                var targetPositionAndRotation = _transform.GetWorldPositionRotation(targetXform);
+                var targetPositionAndRotation = _transform.GetRenderWorldPositionRotation(target);
                 var targetPosition = targetPositionAndRotation.WorldPosition;
 
                 float distance;
