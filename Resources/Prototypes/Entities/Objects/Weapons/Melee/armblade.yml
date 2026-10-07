@@ -55,9 +55,16 @@
     pryPowered: true
     force: true
   - type: MeleeWeapon
+    attackRate: 1.3
     damage:
       types:
         Slash: 14 # a load of damage
         Piercing: 14
         Caustic: 8
         Structural: 20 # stronk, better than a fireaxe
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: null
+      right:
+      - state: null

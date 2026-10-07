@@ -93,8 +93,6 @@
   components:
   - type: HumanoidProfile
     examinable: false
-  - type: Hands
-    showInHands: false # hides the arm blades
   # it speaks like a SPOOKY MONSTER!!!!
   - type: Speech
     speechVerb: Horror
@@ -153,6 +151,8 @@
         amount: -50 # bleeding is evil
     - !type:ModifyBloodLevel # reasonable blood restore
       amount: 150
+    actions:
+    - ActionChangelingScreech
   - type: PermanentStatusEffects
     statusEffects:
     - StatusEffectHorrorFormArmblades

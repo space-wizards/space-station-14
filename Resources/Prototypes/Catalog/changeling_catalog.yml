@@ -180,34 +180,22 @@
   productComponents: ChangelingNightVisionDummy
 
 - type: listing
-  id: ChangelingScreech
-  name: changeling-catalog-screech-name
-  description: changeling-catalog-screech-desc
-  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: screech }
-  applyToMob: true
-  cost:
-    ChangelingDNA: 20
-  categories:
-  - ChangelingStoreCombat
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 1
-  productAction: ActionChangelingScreech
-
-
-- type: listing
   id: ChangelingHorrorForm
   name: changeling-catalog-horror-form-name
   description: changeling-catalog-horror-form-desc
   icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: horror_shop }
   applyToMob: true
   cost:
-    ChangelingDNA: 1
+    ChangelingDNA: 20 # kinda cheap because it burns thru DNA
   categories:
   - ChangelingStoreCombat
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+  - !type:BuyerChangelingIdentityCountCondition
+    requireDevour: true
+    count: 3
+    lock: true
   productEvent: !type:ChangelingUnlockHorrorEvent
   raiseProductEventOnUser: true
 

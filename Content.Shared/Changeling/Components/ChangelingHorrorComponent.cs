@@ -79,4 +79,16 @@ public sealed partial class ChangelingHorrorComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public int MinimumDna = 10;
+
+    /// <summary>
+    /// Actions that are granted to the horror upon transformation
+    /// </summary>
+    [DataField]
+    public EntProtoId[]? Actions;
+
+    /// <summary>
+    /// Actions that are removed upon transformation
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public List<EntityUid> StoredActions = new();
 }

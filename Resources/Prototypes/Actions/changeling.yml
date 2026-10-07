@@ -503,7 +503,7 @@
     selfMessage: changeling-cocoon-success
   - type: DoAfterArgs
     examineText: changeling-cocoon-doafter
-    delay: 10
+    delay: 5
     breakOnMove: true
     breakOnDamage: true
   - type: EntityTargetAction

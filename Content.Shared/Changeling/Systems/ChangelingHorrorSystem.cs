@@ -1,7 +1,9 @@
 using System.Linq;
+using System.Numerics;
 using Content.Shared.Actions;
 using Content.Shared.Alert;
 using Content.Shared.Changeling.Components;
+using Content.Shared.Coordinates;
 using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.EntityEffects;
@@ -12,12 +14,16 @@ using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Changeling.Systems;
+
+// The horror form works through weird hacks around the fact that we're trying to strip an humanoid of what makes it an humanoid without actually making it not an humanoid.
+// TODO: make this work in a better way. It shouldn't need to be a whole specie with only a torso sprite and invisible organs.
 
 /// <summary>
 /// Handles transforming to / from the horror form, including the timed limit & the handing out of actions.
@@ -157,6 +163,14 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
                 };
             _stores.TryAddCurrency(dico, ent.Owner, storeComp);
         }
+
+        // removed actions
+        foreach (var action in ent.Comp.StoredActions)
+        {
+            _actions.RemoveAction(action);
+        }
+
+        ent.Comp.StoredActions.Clear();
     }
 
     /// <summary>
@@ -179,7 +193,7 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnBeforeTransform(Entity<ChangelingTransformComponent> ent, ref BeforeChangelingTransformEvent args)
     {
-        if (HasComp<ChangelingHorrorComponent>(args.StoredIdentity))
+        if (!HasComp<ChangelingHorrorComponent>(args.StoredIdentity))
             return;
 
         // Turn actions on/off
@@ -248,7 +262,18 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
         // play a spawn sound
         _audio.PlayPredicted(ent.Comp.SpawnSound, ent.Owner, null);
 
-        PredictedSpawnAttachedTo(ent.Comp.SpawnScreech, Transform(ent.Owner).Coordinates);
+        PredictedSpawnAttachedTo(ent.Comp.SpawnScreech, new EntityCoordinates(ent.Owner, Vector2.Zero));
+
+        if (ent.Comp.Actions == null)
+            return;
+
+        foreach (var actionProto in ent.Comp.Actions)
+        {
+            EntityUid? actEnt = null;
+            _actions.AddAction(ent.Owner, ref actEnt, actionProto);
+            if (actEnt.HasValue)
+                ent.Comp.StoredActions.Add(actEnt.Value);
+        }
     }
 
     [SubscribeLocalEvent]

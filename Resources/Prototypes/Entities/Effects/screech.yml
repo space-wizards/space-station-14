@@ -24,6 +24,9 @@
       walkSpeedModifier: 0.90
       sprintSpeedModifier: 0.90
       time: 5
+  - type: Sprite
+    sprite: Actions/Implants/implants.rsi
+    state: freedom
 
 - type: entity
   # way bigger and will be given a PVS override

@@ -28,9 +28,6 @@ changeling-catalog-mute-sting-desc = Causes the target to be incapable of speech
 changeling-catalog-armblade-sting-name = Armblade Sting
 changeling-catalog-armblade-sting-desc = Causes the target to spontaneously grow a dulled armblade after a lengthy delay. Instant with increased duration when used on corpses. Can be used on self.
 
-changeling-catalog-screech-name = Screech [TEMPORARY]
-changeling-catalog-screech-desc = We let out a powerful screech that disarms people who hear it without adequate ear protection. THIS ACTION WILL BE MOVED TO THE HORROR FORM WHEN IT IS IMPLEMENTED.
-
 changeling-catalog-last-resort-name = Last Resort
 changeling-catalog-last-resort-desc = Gib your current body and escape as a weak head slug. If you infest a humanoid corpse, you can return to a full changeling body. Can only be bought when at least one body has been devoured.
 
@@ -45,5 +42,5 @@ changeling-catalog-night-vision-desc = You modify your photoreceptors and height
 changeling-catalog-horror-form-name = Horror Form
 changeling-catalog-horror-form-desc = Turns you into a nigh-unstoppable juggernaut. Using this ability is exhausting, as it burns through DNA points. When running out of DNA, you will be forced out of this form and stunned. Needs 3 devours to be purchased.
 
-changeling-catalog-fleshtomb-name = Fleshtomb [EXPERIMENTAL]
+changeling-catalog-fleshtomb-name = Fleshtomb
 changeling-catalog-fleshtomb-desc = Preserve a corpse in a fleshy prison, slowly harvesting their genetic code for your own use. It slowly generates DNA, but is very fragile and must be preserved in proper atmosphere to not fall apart.
