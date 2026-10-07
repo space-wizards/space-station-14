@@ -744,12 +744,16 @@ public sealed partial class ShuttleSystem
     }
 
     /// <summary>
-    /// Tries to get the target position to FTL near the target coordinates.
-    /// If the target coordinates have a mapgrid then will try to offset the AABB.
+    /// Tries to find a spot to FTL near the target coordinates without
+    /// overlapping any grids by the target.
     /// </summary>
     /// <param name="angle">The rotation to give the shuttle, if this returns true.</param>
-    /// <param name="minOffset">Min offset for the final FTL.</param>
-    /// <param name="maxOffset">Max offset for the final FTL from the box we spawn.</param>
+    /// <param name="minOffset">
+    /// Minimum extra distance beyond the keep-out box's corners when placing the shuttle's center
+    /// </param>
+    /// <param name="maxOffset">
+    /// Maximum extra distance beyond the keep-out box's corners when placing the shuttle's center
+    /// </param>
     /// <param name="shuttleUid">The shuttle being moved.</param>
     /// <param name="targetCoordinates">The point to arrive near.</param>
     /// <param name="coordinates">Where to put the shuttle's origin, if this returns true</param>
