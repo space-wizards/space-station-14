@@ -449,7 +449,7 @@
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsExternal ]
+      board: [ DoorElectronicsEVA ]
 
 # Glass Airlocks
 - type: entity
@@ -852,7 +852,7 @@
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsExternal ]
+      board: [ DoorElectronicsEVA ]
 
 - type: entity
   parent: AirlockSyndicateGlass
@@ -1118,6 +1118,14 @@
     sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
+  parent: AirlockEVALocked
+  id: AirlockMaintEVALocked
+  suffix: EVA, Locked
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
+
+- type: entity
   parent: AirlockSyndicate
   id: AirlockSyndicateLocked
   suffix: Syndicate, Locked
@@ -1238,6 +1246,7 @@
     radarColor: "#B22222"
     highlightedRadarColor: Red
     dockLegendCategory: Arrivals
+  - type: AmbientMusicMarkerArrivals
 
 - type: entity
   parent: AirlockGlassShuttle

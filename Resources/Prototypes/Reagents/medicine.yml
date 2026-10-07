@@ -189,7 +189,7 @@
     Bloodstream:
       effects:
       - !type:AdjustTemperature
-        amount: 80000 # Heats you up as it metabolizes necessitating constant cooling.
+        amount: 60000 # Heats you up as it metabolizes necessitating constant cooling.
       - !type:EvenHealthChange
         conditions:
         - !type:TemperatureCondition
@@ -843,6 +843,10 @@
         damage:
           Brute: -1
           Burn: -1
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectFrail # Reduced combat viability
+        time: 5
+        type: Update # Only weak while the reagent is metabolising
       - !type:HealthChange
         conditions:
         - !type:MobStateCondition
@@ -1338,7 +1342,7 @@
     Bloodstream:
       effects:
       - !type:AdjustTemperature
-        amount: 80000 # Heats you up as it metabolizes necessitating constant cooling.
+        amount: 60000 # Heats you up as it metabolizes necessitating constant cooling.
       - !type:EvenHealthChange
         conditions:
         - !type:TemperatureCondition

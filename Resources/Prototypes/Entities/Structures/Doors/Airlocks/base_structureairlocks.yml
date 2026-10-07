@@ -60,8 +60,7 @@
       shader: unshaded
       visible: false
   - type: IconSmooth
-    key: walls
-    mode: NoSprite
+    key: doors
   - type: AnimationPlayer
   - type: Physics
   - type: Fixtures
@@ -189,8 +188,10 @@
   - type: DeviceLinkSource
     ports:
     - DoorStatus
+    - DoorBoltStatus
     lastSignals:
       DoorStatus: false
+      DoorBoltStatus: false
   - type: SoundOnOverload
   - type: SpawnOnOverload
   - type: RCDDeconstructable

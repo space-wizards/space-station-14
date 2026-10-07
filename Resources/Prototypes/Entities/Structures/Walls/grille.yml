@@ -36,9 +36,12 @@
   - type: PlacementReplacement
     key: grilles
   - type: IconSmooth
-    index: 0
-    key: walls
-    base: grille
+    key: grilles
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, grilles, doors, marble ]
+      base: grille
+      index: 0
   - type: Electrified
     requirePower: true
     noWindowInTile: true
@@ -98,7 +101,7 @@
     graph: Grille
     node: grille
 
-### DIAGONAL
+### Diagonal
 - type: entity
   parent: Grille
   id: GrilleDiagonal
@@ -107,7 +110,6 @@
   - type: Sprite
     sprite: Structures/Walls/grille-diagonal.rsi
     layers:
-    - state: state0
     - state: electrified_diagonal
       sprite: Effects/electricity.rsi
       map: ["enum.ElectrifiedLayers.Sparks"]
@@ -117,10 +119,12 @@
     sprite: Structures/Walls/grille-diagonal.rsi
     state: state0
   - type: IconSmooth
-    index: 0
-    mode: Diagonal
     key: grilles
-    base: state
+    states:
+    - !type:DiagonalSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: state
+      index: 0
   - type: Fixtures
     fixtures:
       fix1:
@@ -138,7 +142,7 @@
     graph: GrilleDiagonal
     node: grilleDiagonal
 
-### BROKEN
+### Broken state
 - type: entity
   parent: [ BaseStructure, StructureHealthFurnitureWeak ]
   id: GrilleBroken
@@ -160,7 +164,17 @@
     graph: Grille
     node: grilleBroken
     deconstructionTarget: start
-  - type: Fixtures # overwrite BaseStructure parent.
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,-0.28125"
+        density: 5
+        mask:
+        - DoorPassable
+        layer:
+        - DoorPassable
   - type: Physics
     bodyType: Static
     canCollide: false
