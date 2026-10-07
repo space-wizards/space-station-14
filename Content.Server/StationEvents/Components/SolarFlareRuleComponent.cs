@@ -19,6 +19,9 @@ public sealed partial class SolarFlareRuleComponent : Component
     [ViewVariables]
     public EntityUid? AffectedStation;
 
+    /// <summary>
+    ///     The timer that tracks when the next effect runs.
+    /// </summary>
     [DataField, AutoPausedField]
     public TimeSpan EffectTimer = TimeSpan.Zero;
 
