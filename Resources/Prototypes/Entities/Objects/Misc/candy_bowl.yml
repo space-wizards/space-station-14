@@ -21,7 +21,8 @@
         - FoodSnack
   - type: ContainerContainer
     containers:
-      bin-container: !type:Container
+      storagebase: !type:Container
+        ents: []
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:
