@@ -65,7 +65,7 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
 
         foreach (var deleted in toDelete)
         {
-            PredictedQueueDel(deleted);
+            QueueDel(deleted);
         }
 
         if (ent.Comp.SpillSolution != null)

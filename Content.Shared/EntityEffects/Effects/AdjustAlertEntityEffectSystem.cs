@@ -8,7 +8,7 @@ namespace Content.Shared.EntityEffects.Effects;
 /// Adjusts a given alert on this entity.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
-public sealed partial class AdjustAlertEntityEffectSysten : EntityEffectSystem<AlertsComponent, AdjustAlert>
+public sealed partial class AdjustAlertEntityEffectSystem : EntityEffectSystem<AlertsComponent, AdjustAlert>
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private AlertsSystem _alerts = default!;
