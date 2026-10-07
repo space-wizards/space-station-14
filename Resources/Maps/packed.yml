@@ -52210,7 +52210,7 @@ entities:
     - type: Transform
       parent: 2
       pos: 19.5,24.5
-- proto: FilingCabinetRandom
+- proto: filingCabinetRandom
   entities:
   - uid: 4017
     components:
@@ -52222,7 +52222,7 @@ entities:
     - type: Transform
       parent: 2
       pos: 35.5,45.5
-- proto: FilingCabinetTallRandom
+- proto: filingCabinetTallRandom
   entities:
   - uid: 5198
     components:
@@ -77475,7 +77475,7 @@ entities:
       parent: 2
       rot: -12.566370614359172 rad
       pos: 34.99685,17.65206
-- proto: HydroponicsTray
+- proto: hydroponicsTray
   entities:
   - uid: 2194
     components:

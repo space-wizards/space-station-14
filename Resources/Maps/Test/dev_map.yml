@@ -13515,7 +13515,7 @@ entities:
     - type: Transform
       parent: 1
       pos: 42.5,17.5
-- proto: FilingCabinet
+- proto: filingCabinet
   entities:
   - uid: 1640
     components:
@@ -15065,7 +15065,7 @@ entities:
     - type: Transform
       parent: 1
       pos: 33.5,45.5
-- proto: HydroponicsTray
+- proto: hydroponicsTray
   entities:
   - uid: 1031
     components:

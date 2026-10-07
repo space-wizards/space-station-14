@@ -1162,7 +1162,10 @@ ClothingHeadHatVioletwizard: ClothingHeadHatWizardViolet
 
 # 2026-10-07
 computerBodyScanner: ComputerBodyScanner
+filingCabinet: FilingCabinet
 filingCabinetDrawer: FilingCabinetDrawer
 filingCabinetDrawerRandom: FilingCabinetDrawerRandom
+filingCabinetTall: FilingCabinetTall
+filingCabinetTallRandom: FilingCabinetTallRandom
 hydroponicsSoil: HydroponicsSoil
 trayScanner: TrayScanner

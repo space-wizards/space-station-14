@@ -7863,7 +7863,7 @@ entities:
     - type: Transform
       parent: 1653
       pos: 35.5,16.5
-- proto: FilingCabinetRandom
+- proto: filingCabinetRandom
   entities:
   - uid: 1482
     components:
@@ -7875,7 +7875,7 @@ entities:
     - type: Transform
       parent: 1653
       pos: 32.5,12.5
-- proto: FilingCabinetTallRandom
+- proto: filingCabinetTallRandom
   entities:
   - uid: 1338
     components:
@@ -8356,7 +8356,7 @@ entities:
     - type: Transform
       parent: 1653
       pos: 18.469873,9.442207
-- proto: HydroponicsTray
+- proto: hydroponicsTray
   entities:
   - uid: 1354
     components:

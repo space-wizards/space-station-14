@@ -6214,7 +6214,7 @@ entities:
       rot: -25.132741228718352 rad
       pos: 54.5895,12.542201
       parent: 1
-- proto: HydroponicsTray
+- proto: hydroponicsTray
   entities:
   - uid: 1423
     components:

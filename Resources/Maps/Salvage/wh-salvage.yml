@@ -976,14 +976,14 @@ entities:
     - type: Transform
       parent: 374
       pos: 3.4984207,1.6334293
-- proto: FilingCabinetRandom
+- proto: filingCabinetRandom
   entities:
   - uid: 319
     components:
     - type: Transform
       parent: 374
       pos: 10.5,7.5
-- proto: FilingCabinetTallRandom
+- proto: filingCabinetTallRandom
   entities:
   - uid: 320
     components:

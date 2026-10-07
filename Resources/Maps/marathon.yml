@@ -69277,7 +69277,7 @@ entities:
       pos: -21.5,30.5
     - type: FaxMachine
       name: Captain
-- proto: FilingCabinet
+- proto: filingCabinet
   entities:
   - uid: 6899
     components:
@@ -69328,7 +69328,7 @@ entities:
     - type: Transform
       parent: 30
       pos: -12.5,31.5
-- proto: FilingCabinetRandom
+- proto: filingCabinetRandom
   entities:
   - uid: 8234
     components:
@@ -107658,7 +107658,7 @@ entities:
     - type: Transform
       parent: 30
       pos: -76.56253,-53.662086
-- proto: HydroponicsTray
+- proto: hydroponicsTray
   entities:
   - uid: 328
     components:
