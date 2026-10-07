@@ -31,8 +31,6 @@
     - Recyclable
     - WhitelistChameleon
 
-
-
 - type: entity
   parent: ClothingMedalBase
   id: ClothingNeckBronzeheart
