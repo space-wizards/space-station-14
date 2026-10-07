@@ -49,7 +49,7 @@ public sealed partial class NetworkConfiguratorOverlaySystem : EntitySystem
 
     private Control OnCollectItemStatus(Entity<NetworkConfiguratorComponent> entity)
     {
-        _inputManager.TryGetKeyBinding((ContentKeyFunctions.AltUseItemInHand), out var binding);
+        _inputManager.TryGetKeyBinding(ContentKeyFunctions.AltUseItemInHand, out var binding);
         return new StatusControl(entity, binding?.GetKeyString() ?? "");
     }
 

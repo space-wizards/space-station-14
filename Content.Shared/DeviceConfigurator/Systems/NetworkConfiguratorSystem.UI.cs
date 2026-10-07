@@ -86,6 +86,9 @@ public sealed partial class NetworkConfiguratorSystem
 
         if (_uiSystem.TryGetOpenUi(ent.Owner, NetworkConfiguratorUiKey.List, out var bui))
             bui.Update();
+
+        if (_uiSystem.TryGetOpenUi(ent.Owner, NetworkConfiguratorUiKey.Configure, out var configure))
+            configure.Update();
     }
 
     /// <summary>
@@ -147,6 +150,8 @@ public sealed partial class NetworkConfiguratorSystem
 
         ent.Comp.Devices.Remove(args.Address.AddressId);
         ent.Comp.NamedDevices.Remove(args.Address.AddressId);
+        DirtyFields(ent.AsNullable(), null, nameof(NetworkConfiguratorComponent.Devices), nameof(NetworkConfiguratorComponent.NamedDevices));
+
         if (_linkedDeviceQuery.TryComp(removedDevice, out var device))
         {
             device.Configurators.Remove(ent);
@@ -154,7 +159,6 @@ public sealed partial class NetworkConfiguratorSystem
         }
 
         UpdateListUiState(ent);
-        DirtyFields(ent.AsNullable(), null, nameof(NetworkConfiguratorComponent.Devices), nameof(NetworkConfiguratorComponent.NamedDevices));
     }
 
     [SubscribeLocalEvent]
