@@ -2,6 +2,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
+
 namespace Content.Shared.Access.Systems;
 
 /// <summary>
@@ -12,6 +13,9 @@ public sealed partial class AccessStealerSystem : EntitySystem
     [Dependency] private LockSystem _lock = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
+    [Dependency] private EntityQuery<AccessComponent> _accessQuery;
+    [Dependency] private EntityQuery<IdCardComponent> _idCardQuery;
+
     /// <summary>
     /// Steals access from interacted ids.
     /// </summary>
@@ -19,11 +23,11 @@ public sealed partial class AccessStealerSystem : EntitySystem
     private void OnAfterInteract(Entity<AccessStealerComponent> ent, ref AfterInteractEvent args)
     {
         if (args.Target == null || !args.CanReach || _lock.IsLocked(ent.Owner) ||
-            !TryComp<AccessComponent>(args.Target, out var targetAccess) || !HasComp<IdCardComponent>(args.Target))
+            !_accessQuery.TryComp(args.Target, out var targetAccess) || !_idCardQuery.HasComp(args.Target))
             return;
 
         // Am I an id?
-        if (!TryComp<AccessComponent>(ent, out var access) || !HasComp<IdCardComponent>(ent))
+        if (!_accessQuery.TryComp(ent, out var access) || !_idCardQuery.HasComp(ent))
             return;
 
         var beforeLength = access.Tags.Count;
