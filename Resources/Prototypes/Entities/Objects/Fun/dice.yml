@@ -24,7 +24,7 @@
     sides: 10
     multiplier: 10
     offset: 1 # first side is a 0
-    currentValue:
+    currentValue: 0
   - type: Sprite
     state: percentile_0
 
