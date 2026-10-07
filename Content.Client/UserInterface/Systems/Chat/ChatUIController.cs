@@ -10,19 +10,17 @@ using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Ghost;
 using Content.Client.Mind;
-using Content.Client.Roles;
-using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
+using Content.Shared.Codewords;
 using Content.Shared.Damage.ForceSay;
 using Content.Shared.Decals;
 using Content.Shared.Input;
 using Content.Shared.Radio;
-using Content.Shared.Roles.RoleCodeword;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -59,13 +57,12 @@ public sealed partial class ChatUIController : UIController
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IReplayRecordingManager _replayRecording = default!;
 
-    [UISystemDependency] private readonly ExamineSystem? _examine = default;
-    [UISystemDependency] private readonly GhostSystem? _ghost = default;
-    [UISystemDependency] private readonly TypingIndicatorSystem? _typingIndicator = default;
-    [UISystemDependency] private readonly ChatSystem? _chatSys = default;
-    [UISystemDependency] private readonly TransformSystem? _transform = default;
-    [UISystemDependency] private readonly MindSystem? _mindSystem = default!;
-    [UISystemDependency] private readonly RoleCodewordSystem? _roleCodewordSystem = default!;
+    [UISystemDependency] private readonly ChatSystem? _chatSys = default!;
+    [UISystemDependency] private readonly CodewordSystem? _codeword = default!;
+    [UISystemDependency] private readonly ExamineSystem _examine = default!;
+    [UISystemDependency] private readonly GhostSystem _ghost = default!;
+    [UISystemDependency] private readonly TransformSystem _transform = default!;
+    [UISystemDependency] private readonly TypingIndicatorSystem _typingIndicator = default!;
 
     private SharedChatSystem? _sharedChatSys;
     private static readonly ProtoId<ColorPalettePrototype> ChatNamePalette = "ChatNames";
@@ -136,6 +133,11 @@ public sealed partial class ChatUIController : UIController
     /// </summary>
     private readonly Dictionary<EntityUid, SpeechBubbleQueueData> _queuedSpeechBubbles
         = new();
+
+    /// <summary>
+    ///     The typing preview bubble currently displayed on screen, if any.
+    /// </summary>
+    private PreviewBubble? _previewBubble;
 
     private readonly HashSet<ChatBox> _chats = new();
     public IReadOnlySet<ChatBox> Chats => _chats;
@@ -836,15 +838,15 @@ public sealed partial class ChatUIController : UIController
             msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, highlight, "color", _highlightsColor);
         }
 
-        // Color any codewords for minds that have roles that use them
-        if (_player.LocalUser != null && _mindSystem != null && _roleCodewordSystem != null)
+        // In case we get messages outside of systems being init.
+        if (_codeword != null)
         {
-            if (_mindSystem.TryGetMind(_player.LocalUser.Value, out var mindId) && _ent.TryGetComponent(mindId, out RoleCodewordComponent? codewordComp))
+            // Color any codewords for minds that have roles that use them
+            foreach (var data in _codeword.GetPlayerCodewords(_player.LocalUser))
             {
-                foreach (var (_, codewordData) in codewordComp.RoleCodewords)
+                foreach (var codeword in data.Codewords)
                 {
-                    foreach (string codeword in codewordData.Codewords)
-                        msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, codeword, "color", codewordData.Color.ToHex());
+                    msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, codeword, "color", data.Color.ToHex());
                 }
             }
         }
@@ -933,6 +935,66 @@ public sealed partial class ChatUIController : UIController
     public void NotifyChatFocus(bool isFocused)
     {
         _typingIndicator?.ClientChangedChatFocus(isFocused);
+    }
+
+    /// <summary>
+    ///     Called by <see cref="ChatBox"/> every time the player's chat input text changes.
+    ///     Creates or updates a "typing preview" speech bubble above the player's character.
+    /// </summary>
+    /// <param name="box">
+    ///     The current chat input box.
+    /// </param>
+    public void UpdateTypingPreview(ChatBox box)
+    {
+        var text = box.ChatInput.Input.Text;
+
+        if (!_config.GetCVar(CCVars.ChatTypingPreviewEnabled)
+            || _player.LocalEntity is not { } player
+            || string.IsNullOrEmpty(text))
+        {
+            ClearTypingPreview();
+            return;
+        }
+
+        // If no preview bubble exists, create one.
+        if (_previewBubble == null)
+        {
+            _previewBubble = new PreviewBubble(player);
+            _speechBubbleRoot.AddChild(_previewBubble);
+        }
+
+        // For an existing bubble, update its text.
+        var heightDelta = _previewBubble.UpdateText(text);
+        if (heightDelta != 0 && _activeSpeechBubbles.TryGetValue(player, out var activeBubbles))
+        {
+            foreach (var bubble in activeBubbles)
+            {
+                bubble.VerticalOffset += heightDelta;
+            }
+        }
+    }
+
+    /// <summary>
+    ///     Removes and disposes the typing preview bubble if one is currently shown.
+    ///     Also shifts real speech bubbles back down to close the gap left by the removed preview.
+    /// </summary>
+    public void ClearTypingPreview()
+    {
+        if (_previewBubble == null)
+            return;
+
+        if (_previewBubble.ContentSize.Y > 0
+            && _player.LocalEntity is { } player
+            && _activeSpeechBubbles.TryGetValue(player, out var activeBubbles))
+        {
+            foreach (var bubble in activeBubbles)
+            {
+                bubble.VerticalOffset -= _previewBubble.ContentSize.Y;
+            }
+        }
+
+        _previewBubble.Dispose();
+        _previewBubble = null;
     }
 
     public void Repopulate()
