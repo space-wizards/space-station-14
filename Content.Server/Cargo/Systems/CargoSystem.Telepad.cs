@@ -83,14 +83,18 @@ public sealed partial class CargoSystem
                 continue;
 
             var currentOrder = telepad.CurrentOrders.First();
-            if (currentOrder.NumDispatched >= currentOrder.OrderQuantity)
+            var containers = PackOrderIntoContainers(currentOrder);
+
+            if (currentOrder.Basket.All(item => item.NumOrdered >= item.Quantity))
             {
                 telepad.CurrentOrders.Remove(currentOrder);
             }
-            else if (FulfillOrder(currentOrder, xform.Coordinates, telepad.PrinterOutput))
+            else if (
+                IsLinkedToConsole(uid, GetEntity(currentOrder.ApprovingConsole))
+                && FulfillOrder(containers.First(), xform.Coordinates, telepad.PrinterOutput)
+            )
             {
-                currentOrder.NumDispatched++;
-                if (currentOrder.NumDispatched >= currentOrder.OrderQuantity)
+                if (currentOrder.Basket.All(item => item.NumOrdered >= item.Quantity))
                     telepad.CurrentOrders.Remove(currentOrder);
 
                 var teleportSound = telepad.TeleportSound;

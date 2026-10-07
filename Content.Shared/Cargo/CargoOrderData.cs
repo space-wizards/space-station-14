@@ -49,18 +49,6 @@ namespace Content.Shared.Cargo
         public NetEntity? ApprovingConsole { get; set; }
 
         /// <summary>
-        /// If this order has been assigned to be delivered differently from the
-        /// </summary>
-        [ViewVariables]
-        public bool Assigned { get; set; }
-
-        /// <summary>
-        /// The entity assigned to deliver, only not null if not the ATS
-        /// </summary>
-        [ViewVariables]
-        public NetEntity? AssignedEntity { get; set; }
-
-        /// <summary>
         /// A string representation of the approver's name, unless the ordering console was emagged.
         /// </summary>
         [DataField]
