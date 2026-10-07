@@ -10,4 +10,5 @@ public partial record struct BroadcastSuitSensorStatePayload : INetworkPayload
 {
     [DataField]
     public Dictionary<string, SuitSensorStatus> SensorStatus = new();
+
 }
