@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
+using Content.Shared.Cargo;
 using Content.Server.GameTicking;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
@@ -16,7 +17,6 @@ namespace Content.Server.StationEvents.Events;
 public sealed partial class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
 {
     [Dependency] private CargoSystem _cargoSystem = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private ServerGameTicker _ticker = default!;
 
     protected override void Added(Entity<CargoGiftsRuleComponent, GameRuleComponent> rule, ref GameRuleAddedEvent args)
@@ -59,27 +59,23 @@ public sealed partial class CargoGiftsRule : StationEventSystem<CargoGiftsRuleCo
             return;
         }
 
-        foreach (var (productId, qty) in component.Gifts)
-        {
-            var product = _prototypeManager.Index(productId);
-
-            _cargoSystem.AddAndApproveOrder(
-                    station!.Value,
-                    product,
-                    qty,
-                    Loc.GetString(component.Sender),
-                    Loc.GetString(component.Description),
-                    Loc.GetString(component.Dest),
-                    cargoDb,
-                    component.Account,
-                    (station.Value, stationData));
-        }
-
+        // Add some presents
+        var outstanding = _cargoSystem.GetOutstandingOrderCount((station.Value, cargoDb), component.Account);
+        List<CargoOrderItemData> basket = component.Gifts.Select(x => new CargoOrderItemData(x.Key, x.Value)).ToList();
+        _cargoSystem.AddAndApproveOrder(
+                station!.Value,
+                basket,
+                Loc.GetString(component.Sender),
+                Loc.GetString(component.Description),
+                Loc.GetString(component.Dest),
+                cargoDb,
+                component.Account,
+                (station.Value, stationData));
         cargoDb.NextOrderCheck = Timing.CurTime + cargoDb.OrderCheckDelay;
         _cargoSystem.TryDeliverAllUndeliveredOrders((station.Value, cargoDb));
-        _ticker.EndGameRule((uid, gameRule));
-        // We're done here!
-        /*     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⣼⣿⣿⣦⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+        _ticker.EndGameRule((uid, gameRule));if (component.Gifts.Count == 0)
+            // We're done here!
+            /* ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⣼⣿⣿⣦⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣴⣶⣾⣿⣿⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
