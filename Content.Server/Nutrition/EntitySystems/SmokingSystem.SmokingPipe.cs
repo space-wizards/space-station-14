@@ -22,7 +22,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         public void OnComponentInit(Entity<SmokingPipeComponent> entity, ref ComponentInit args)
         {
-            _itemSlotsSystem.AddItemSlot(entity, SmokingPipeComponent.BowlSlotId, entity.Comp.BowlSlot);
+            _itemSlotsSystem.AddItemSlot(entity.Owner, SmokingPipeComponent.BowlSlotId, entity.Comp.BowlSlot);
         }
 
         private void OnPipeInteractUsingEvent(Entity<SmokingPipeComponent> entity, ref InteractUsingEvent args)
@@ -69,7 +69,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnPipeSolutionEmptyEvent(Entity<SmokingPipeComponent> entity, ref SmokableSolutionEmptyEvent args)
         {
-            _itemSlotsSystem.SetLock(entity, entity.Comp.BowlSlot, false);
+            _itemSlotsSystem.SetLock(entity.Owner, entity.Comp.BowlSlot, false);
             SetSmokableState(entity, SmokableState.Unlit);
         }
 

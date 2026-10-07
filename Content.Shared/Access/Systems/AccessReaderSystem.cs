@@ -14,6 +14,8 @@ using Content.Shared.Lock;
 using Content.Shared.NameIdentifier;
 using Content.Shared.PDA;
 using Content.Shared.StationRecords;
+using Content.Shared.StationRecords.Components;
+using Content.Shared.StationRecords.Systems;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
 using Robust.Shared.Collections;
@@ -29,10 +31,10 @@ public sealed partial class AccessReaderSystem : EntitySystem
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private EmagSystem _emag = default!;
     [Dependency] private TagSystem _tag = default!;
-    [Dependency] private SharedGameTicker _gameTicker = default!;
+    [Dependency] private GameTicker _gameTicker = default!;
     [Dependency] private SharedHandsSystem _handsSystem = default!;
     [Dependency] private SharedContainerSystem _containerSystem = default!;
-    [Dependency] private SharedStationRecordsSystem _recordsSystem = default!;
+    [Dependency] private StationRecordsSystem _recordsSystem = default!;
     [Dependency] private IdentitySystem _identity = default!;
 
     private static readonly ProtoId<TagPrototype> PreventAccessLoggingTag = "PreventAccessLogging";

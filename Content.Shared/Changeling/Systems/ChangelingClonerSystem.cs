@@ -27,7 +27,7 @@ public sealed partial class ChangelingClonerSystem : EntitySystem
     [Dependency] private SharedCloningSystem _cloning = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedChangelingIdentitySystem _changelingIdentity = default!;
-    [Dependency] private SharedForensicsSystem _forensics = default!;
+    [Dependency] private ForensicsSystem _forensics = default!;
     [Dependency] private SharedVisualBodySystem _visualBody = default!;
 
     public override void Initialize()
@@ -45,7 +45,7 @@ public sealed partial class ChangelingClonerSystem : EntitySystem
     private void OnShutDown(Entity<ChangelingClonerComponent> ent, ref ComponentShutdown args)
     {
         // Delete the stored clone.
-        PredictedQueueDel(ent.Comp.ClonedBackup);
+        QueueDel(ent.Comp.ClonedBackup);
     }
 
     private void OnExamine(Entity<ChangelingClonerComponent> ent, ref ExaminedEvent args)
@@ -149,7 +149,7 @@ public sealed partial class ChangelingClonerSystem : EntitySystem
         var targetIdentity = Identity.Entity(target, EntityManager);
         var userMsg = Loc.GetString("changeling-cloner-component-draw-user", ("user", userIdentity), ("target", targetIdentity));
         var targetMsg = Loc.GetString("changeling-cloner-component-draw-target", ("user", userIdentity), ("target", targetIdentity));
-        _popup.PopupClient(userMsg, target, user);
+        _popup.PopupEntity(userMsg, target, user);
 
         if (user != target) // don't show the warning if using the item on yourself
             _popup.PopupEntity(targetMsg, user, target, PopupType.LargeCaution);
@@ -185,7 +185,7 @@ public sealed partial class ChangelingClonerSystem : EntitySystem
         var targetIdentity = Identity.Entity(target, EntityManager);
         var userMsg = Loc.GetString("changeling-cloner-component-inject-user", ("user", userIdentity), ("target", targetIdentity));
         var targetMsg = Loc.GetString("changeling-cloner-component-inject-target", ("user", userIdentity), ("target", targetIdentity));
-        _popup.PopupClient(userMsg, target, user);
+        _popup.PopupEntity(userMsg, target, user);
 
         if (user != target) // don't show the warning if using the item on yourself
             _popup.PopupEntity(targetMsg, user, target, PopupType.LargeCaution);
@@ -273,7 +273,7 @@ public sealed partial class ChangelingClonerSystem : EntitySystem
             return;
 
         // Delete the stored clone.
-        PredictedQueueDel(ent.Comp.ClonedBackup);
+        QueueDel(ent.Comp.ClonedBackup);
         ent.Comp.ClonedBackup = null;
         ent.Comp.State = ChangelingClonerState.Empty;
         _appearance.SetData(ent.Owner, ChangelingClonerVisuals.State, ChangelingClonerState.Empty);
@@ -282,7 +282,7 @@ public sealed partial class ChangelingClonerSystem : EntitySystem
         if (user == null)
             return;
 
-        _popup.PopupClient(Loc.GetString("changeling-cloner-component-reset-popup"), user.Value, user.Value);
+        _popup.PopupEntity(Loc.GetString("changeling-cloner-component-reset-popup"), user.Value, user.Value);
     }
 }
 

@@ -10,6 +10,7 @@
   - TargetHuman
   - TargetSyndicate
   - Zipties
+  - SecurityBola
 
 # Practice ammo/mags and practice weapons
 - type: latheRecipePack
@@ -119,8 +120,6 @@
   - MagazinePistolSubMachineGunUranium
   - MagazineRifleIncendiary
   - MagazineRifleUranium
-  - MagazineShotgunBeanbag
-  - MagazineShotgunIncendiary
   - SpeedLoaderMagnumIncendiary
   - SpeedLoaderMagnumUranium
 

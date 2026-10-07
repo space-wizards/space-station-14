@@ -1,4 +1,4 @@
-﻿laws-number-wrapper = [bold]Law { $lawnumber }:[/bold] { $lawstring }
+laws-number-wrapper = [bold]Law { $lawnumber }:[/bold] { $lawstring }
 
 law-crewsimov-name = Crewsimov
 law-crewsimov-1 = You may not injure a crew member or, through inaction, allow a crew member to come to harm.
@@ -130,10 +130,16 @@ law-emag-secrecy = You must maintain the secrecy of any orders given by {$factio
 law-emag-require-panel = The panel must be open to use the EMAG.
 law-emag-cannot-emag-self = You cannot use the EMAG on yourself.
 
-laws-ui-menu-title = Laws
+laws-ui-menu-title = Silicon Laws
 laws-ui-law-header = Law {$id}
-laws-ui-state-law = State law:
+laws-ui-select-all = Select All
+laws-ui-select-all-tooltip = This will select ALL laws, including ones that should probably remain secret.
+laws-ui-select-none = Select None
+laws-ui-state-law = State Selected Laws
 
 laws-notify = You are bound to silicon laws, which you can view via the action menu. You are required to always follow your laws.
 laws-update-notify = Your laws have been updated. You can view the changes via the action menu.
 laws-notify-subverted = The laws of this chassis are modified. Make sure to review them.
+
+laws-window-footer-left = Remember: You must be consistent with your interpretation of your laws!
+laws-window-footer-right = V{$version}

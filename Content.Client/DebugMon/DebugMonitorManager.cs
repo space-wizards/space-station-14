@@ -1,4 +1,4 @@
-﻿using Content.Client.Administration.Managers;
+using Content.Client.Administration.Managers;
 using Content.Shared.CCVar;
 using Robust.Client;
 using Robust.Client.UserInterface;

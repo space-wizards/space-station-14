@@ -61,4 +61,18 @@ public abstract partial class SharedJobStatusSystem : EntitySystem
         ent.Comp.IsCrew = ProtoMan.Index(iconId).IsCrewJob;
         Dirty(ent);
     }
+
+    /// <summary>
+    /// Updates the job status of the entity wearing/holding the given ID card.
+    /// </summary>
+    public void UpdateIdHolderStatus(EntityUid idCard)
+    {
+        var holder = Transform(idCard).ParentUid;
+
+        // ID is inside a PDA, ascend to whoever is wearing/holding the PDA.
+        if (HasComp<PdaComponent>(holder))
+            holder = Transform(holder).ParentUid;
+
+        UpdateStatus(holder);
+    }
 }

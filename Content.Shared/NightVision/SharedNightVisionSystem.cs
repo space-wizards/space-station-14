@@ -2,6 +2,7 @@ using Content.Shared.Actions;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Overlays;
+using Content.Shared.StatusEffectNew;
 
 namespace Content.Shared.NightVision;
 
@@ -14,7 +15,7 @@ public abstract partial class SharedNightVisionSystem : EntitySystem
     [Dependency] private SharedActionsSystem _actions = default!;
 
     [SubscribeLocalEvent]
-    private void OnStartup(Entity<NightVisionComponent> ent, ref ComponentStartup args)
+    private void OnStartup(Entity<NightVisionComponent> ent, ref MapInitEvent args)
     {
         if (ent.Comp.RelayOverlay)
             return;
@@ -24,7 +25,16 @@ public abstract partial class SharedNightVisionSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnRemove(Entity<NightVisionComponent> ent, ref ComponentRemove args)
+    private void OnRefreshStatusEffect(Entity<NightVisionComponent> ent, ref StatusEffectRelayedEvent<RefreshNightVisionEvent> args)
+    {
+        if (!ent.Comp.Enabled)
+            return;
+
+        args.Args.Entities.Add(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnRemove(Entity<NightVisionComponent> ent, ref ComponentShutdown args)
     {
         if (ent.Comp.RelayOverlay)
             return;

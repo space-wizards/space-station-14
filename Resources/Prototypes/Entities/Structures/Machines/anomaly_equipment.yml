@@ -1,6 +1,6 @@
 - type: entity
+  parent: [ BaseMachinePowered, ConstructibleMachine, StructureHealthMachine ]
   id: MachineAnomalyVessel
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: anomaly vessel
   description: A container able to harness a scan of an anomaly and turn it into research data.
   components:
@@ -37,6 +37,8 @@
     color: "#fca3c0"
   - type: Appearance
   - type: WiresPanel
+  - type: WiresVisuals
+    visibleWhenClosed: true
   - type: AmbientSound
     enabled: false
     range: 3
@@ -62,24 +64,20 @@
           Stable: { state: anomaly-1 }
           Decaying: { state: anomaly-2 }
           Growing: { state: anomaly-3 }
-      enum.WiresVisuals.MaintenancePanelState:
-        enum.WiresVisualLayers.MaintenancePanel:
-          True: { visible: false }
-          False: { visible: true }
   - type: Explosive
     explosionType: Default
     maxIntensity: 20
     intensitySlope: 30
     totalIntensity: 30
     canCreateVacuum: false
+  - type: Damageable
+    damageModifierSet: GlassPlasmaMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 175
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
@@ -116,7 +114,7 @@
 
 - type: entity
   id: MachineAPE
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   name: A.P.E.
   description: An Anomalous Particle Emitter, capable of shooting out unstable particles which can interface with anomalies.
   components:
@@ -151,6 +149,14 @@
         - MachineMask
         layer:
         - MachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 175
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: Rotatable
     rotateWhileAnchored: true
   - type: Machine
@@ -162,7 +168,6 @@
     access: [[ "Research" ]]
   - type: Emitter
     onState: firing
-    powerUseActive: 100
     boltType: AnomalousParticleDelta
     underpoweredState: underpowered
     selectableTypes:
@@ -178,8 +183,15 @@
     fireBurstSize: 1
     fireBurstDelayMin: 2
     fireBurstDelayMax: 6
+  - type: NotifyOnNonFunctioning
+    locUnlocked: ape-unlocked-broadcast
+    radioChannel: Science
+    requirePowered: true
+  - type: PowerState
+    idlePowerDraw: 5
+    workingPowerDraw: 100
   - type: ApcPowerReceiver
-    powerLoad: 100
+    powerLoad: 5
   - type: GuideHelp
     guides:
     - APE
@@ -220,7 +232,7 @@
 
 - type: entity
   id: MachineAnomalyGenerator
-  parent: BaseMachinePowered
+  parent: BaseMachinePowered # StructureHealthMachineMassive
   name: anomaly generator
   description: The peak of pseudoscientific technology.
   placement:
@@ -290,14 +302,10 @@
   - type: Wires
     boardName: wires-board-name-anomalygenerator
     layoutId: AnomalyGenerator
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 500
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Breakage"]
+#  - type: Injurable                        Indestructible because
+#    damageContainer: StructuralInorganic
+#  - type: Damageable
+#    damageModifierSet: PlastitaniumMod
   - type: ActivatableUI
     key: enum.AnomalyGeneratorUiKey.Key
   - type: ActivatableUIRequiresAccess

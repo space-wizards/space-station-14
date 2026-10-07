@@ -184,6 +184,8 @@
         orGroup: GiftPool
       - id: BassGuitarInstrument
         orGroup: GiftPool
+      - id: FretlessBassGuitarInstrument
+        orGroup: GiftPool
       - id: OcarinaInstrument
         orGroup: GiftPool
       - id: PanFluteInstrument

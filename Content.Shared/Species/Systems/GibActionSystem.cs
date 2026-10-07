@@ -49,7 +49,7 @@ public sealed partial class GibActionSystem : EntitySystem
     private void OnGibAction(EntityUid uid, GibActionComponent comp, GibActionEvent args)
     {
         // When they use the action, gib them.
-        _popupSystem.PopupClient(Loc.GetString(comp.PopupText, ("name", uid)), uid, uid);
+        _popupSystem.PopupEntity(Loc.GetString(comp.PopupText, ("name", uid)), uid, uid);
         _gibbing.Gib(uid, user: args.Performer);
     }
 

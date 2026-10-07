@@ -1,5 +1,5 @@
 using Content.Shared.Clothing.EntitySystems;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Components;
 using JetBrains.Annotations;
 
 namespace Content.Shared.Interaction.Events;

@@ -23,7 +23,7 @@
     laws: NTDefault
 
 - type: entity
-  id: AsimovCircuitBoard
+  id: CrewsimovCircuitBoard
   parent: BaseSiliconLawboard
   name: law board (Crewsimov)
   description: An electronics board containing the Crewsimov lawset.

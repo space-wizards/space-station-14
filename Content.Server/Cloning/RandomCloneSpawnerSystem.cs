@@ -12,7 +12,7 @@ public sealed partial class RandomCloneSpawnerSystem : EntitySystem
     [Dependency] private CloningSystem _cloning = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedTransformSystem _transformSystem = default!;
-    [Dependency] private TargetSystem _target = default!;
+    [Dependency] private AliveHumanoidTargetSystem _target = default!;
 
     public override void Initialize()
     {
@@ -31,7 +31,7 @@ public sealed partial class RandomCloneSpawnerSystem : EntitySystem
             return;
         }
 
-        var allHumans = _target.GetAliveHumans();
+        var allHumans = _target.GetMinds();
 
         if (allHumans.Count == 0)
             return;
