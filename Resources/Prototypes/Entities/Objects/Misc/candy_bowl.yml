@@ -13,7 +13,7 @@
   - type: Storage
     maxItemSize: Small
     grid:
-    - 0,0,19,4  # Matching previous BinComponent.MaxItems of 100
+    - 0,0,5,4  # Matching previous BinComponent.MaxItems of 100
     whitelist:
       components:
         - Pill
