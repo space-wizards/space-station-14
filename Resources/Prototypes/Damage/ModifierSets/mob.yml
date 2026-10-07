@@ -79,8 +79,14 @@
   id: Horror
   coefficients: # they take less damage from everything, heat a bit less so.
     Blunt: 0.15
+    Slash: 0.15
     Piercing: 0.15
-    Cold: 0.15
-    Heat: 0.5
-    Poison: 0.15
+    Cold: 0.05
+    Heat: 0.3
+    Poison: 0.05
+    Cellular: 0.05
     Radiation: 0.15
+    Caustic: 0.05
+    Shock: 0.20
+    Asphyxiation: 0.05
+    Bloodloss: 0.05 # bloodloss kills dragons, lets see how that works
