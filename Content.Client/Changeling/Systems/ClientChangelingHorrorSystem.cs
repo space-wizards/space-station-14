@@ -7,7 +7,7 @@ namespace Content.Client.Changeling.Systems;
 /// <summary>
 /// On the client side, we only handle the remaining time alert.
 /// </summary>
-public sealed partial class ChangelingHorrorSystem : SharedChangelingHorrorSystem
+public sealed partial class ClientChangelingHorrorSystem : ChangelingHorrorSystem
 {
     [Dependency] private IGameTiming _timing = default!;
 
@@ -22,10 +22,5 @@ public sealed partial class ChangelingHorrorSystem : SharedChangelingHorrorSyste
         // do maths
         var time = Math.Max((ent.Comp.TimeBudget - (_timing.CurTime - ent.Comp.InitialTime)).TotalSeconds, 0d);
         args.Amount = (int)time;
-    }
-
-    protected override void MakeGlobal(EntityUid ent)
-    {
-        // does nothing on the client
     }
 }

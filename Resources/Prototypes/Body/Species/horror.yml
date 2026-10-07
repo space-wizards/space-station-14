@@ -91,6 +91,8 @@
   name: shambling abomination # no more Urist McHorror
   description: Its gaping maw open, an ever-expanding, all consuming mass of flesh stands before you.
   components:
+  - type: HumanoidProfile
+    examinable: false
   - type: Hands
     showInHands: false # hides the arm blades
   # it speaks like a SPOOKY MONSTER!!!!
@@ -107,17 +109,17 @@
         Blunt: -2
         Piercing: -2
         Slash: -2
-  - type: MeleeWeapon
+  - type: MeleeWeapon # Same as ArmbladeHorror,
     soundHit:
       collection: AlienClaw
-    angle: 30
-    animation: WeaponArcSlash
-    altDisarm: false
+    wideAnimationRotation: 90
+    attackRate: 1
     damage:
       types:
-        Slash: 16 # a load of damage
-        Piercing: 12
-        Structural: 30 # stronk, better than a fireaxe
+        Slash: 14
+        Piercing: 14
+        Caustic: 8
+        Structural: 20
   - type: Tag
     tags:
     - DoorBumpOpener
@@ -131,7 +133,7 @@
   - type: Prying
     pryPowered: true
     force: true
-    speedModifier: 4.0 # faster than the speed at which they can break down walls
+    speedModifier: 5.0 # faster than the speed at which they can break down walls
     useSound:
       path: /Audio/Items/crowbar.ogg
   - type: Vocal
@@ -149,6 +151,8 @@
         Genetic: -50
     - !type:ModifyBleed
         amount: -50 # bleeding is evil
+    - !type:ModifyBloodLevel # reasonable blood restore
+      amount: 150
   - type: PermanentStatusEffects
     statusEffects:
     - StatusEffectHorrorFormArmblades

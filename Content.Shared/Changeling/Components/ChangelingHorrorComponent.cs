@@ -15,12 +15,6 @@ namespace Content.Shared.Changeling.Components;
 public sealed partial class ChangelingHorrorComponent : Component
 {
     /// <summary>
-    /// Station-wide announcement sound that is played when the changeling enters its horror form.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public SoundSpecifier? SpawnAnnouncementSound;
-
-    /// <summary>
     /// Local sound that is played when a changeling enters its horror form.
     /// </summary>
     [DataField, AutoNetworkedField]
@@ -30,7 +24,7 @@ public sealed partial class ChangelingHorrorComponent : Component
     /// The screech vfx to spawn when the changeling turns into an horror
     /// </summary>
     [DataField]
-    public EntProtoId SpawnScreech = "EffectScreech";
+    public EntProtoId SpawnScreech = "AdminInstantEffectScreechLarge";
 
     /// <summary>
     /// The instant at which the changeling entered horror form
@@ -51,34 +45,16 @@ public sealed partial class ChangelingHorrorComponent : Component
     public ProtoId<AlertPrototype> TimeAlert = "ChangelingHorrorTime";
 
     /// <summary>
-    /// Screech that is invoked when entering the horror form
-    /// </summary>
-    [DataField]
-    public EntProtoId SpawnScreechVfx = "EffectScreechChangelingHorrorSpawn";
-
-    /// <summary>
-    /// The disarming range of the spawn screech
-    /// </summary>
-    [DataField]
-    public float SpawnScreechRange = 30f;
-
-    /// <summary>
-    /// Entity effects that are applied to persons who heard the screech.
-    /// </summary>
-    [DataField]
-    public List<EntityEffect>? SpawnScreechEffects;
-
-    /// <summary>
     /// How many seconds you are given for free when transforming (so wholesome!)
     /// </summary>
     [DataField]
-    public double GracePeriod = 5d;
+    public TimeSpan GracePeriod = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// How many seconds of transformation you are given for each DNA point.
     /// </summary>
     [DataField]
-    public double SecondPerDNA = 3d;
+    public TimeSpan SecondPerDNA = TimeSpan.FromSeconds(3);
 
     /// <summary>
     /// Effects applied to the changeling upon transforming
@@ -98,4 +74,9 @@ public sealed partial class ChangelingHorrorComponent : Component
     [DataField]
     public TimeSpan StunTime = TimeSpan.FromSeconds(10);
 
+    /// <summary>
+    /// Minimum amount of DNA needed to transform into this horror form.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int MinimumDna = 10;
 }

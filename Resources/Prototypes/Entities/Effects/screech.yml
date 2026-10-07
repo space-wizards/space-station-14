@@ -12,9 +12,27 @@
     - HideContextMenu
 
 - type: entity
-  # way bigger and will be given a PVS override
-  id: EffectScreechChangelingHorrorSpawn
+  parent: AdminInstantEffectBase
+  id: AdminInstantEffectScreechLarge
+  suffix: Screech, Horror
   components:
+  - type: ScreechOnTrigger
+    vfx: EffectScreechLarge
+    range: 30
+    effects:
+    - !type:MovementSpeedModifier # Very small slowdown as a sorta "Oh fuck something happened", also maybe will let you catch someone off guard
+      walkSpeedModifier: 0.90
+      sprintSpeedModifier: 0.90
+      time: 5
+
+- type: entity
+  # way bigger and will be given a PVS override
+  id: EffectScreechLarge
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SingularityDistortion # Global PVS
+    intensity: 0
+    falloffPower: 0
   - type: TimedDespawn
     lifetime: 6.0
   - type: ScreechShockWave

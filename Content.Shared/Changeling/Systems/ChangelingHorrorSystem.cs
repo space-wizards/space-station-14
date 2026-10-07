@@ -8,7 +8,6 @@ using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
-using Content.Shared.Screech;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.Stunnable;
@@ -23,7 +22,7 @@ namespace Content.Shared.Changeling.Systems;
 /// <summary>
 /// Handles transforming to / from the horror form, including the timed limit & the handing out of actions.
 /// </summary>
-public abstract partial class SharedChangelingHorrorSystem : EntitySystem
+public abstract partial class ChangelingHorrorSystem : EntitySystem
 {
     [Dependency] private INetManager _net = default!;
     [Dependency] private SharedChangelingIdentitySystem _identitySystem = default!;
@@ -36,7 +35,6 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
     [Dependency] private ChangelingTransformSystem _transform = default!;
     [Dependency] private SharedStunSystem _stuns = default!;
     [Dependency] private SharedPopupSystem _popups = default!;
-    [Dependency] private ScreechSystem _screech = default!;
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
 
     // constants
@@ -61,7 +59,7 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
             // calculate the timeout
             if (_timing.CurTime - comp.InitialTime > comp.TimeBudget)
             {
-                if (comp.LastIdentity != null && identities.ConsumedIdentities.Where(k => k.Identity == comp.LastIdentity.Value).Any())
+                if (comp.LastIdentity != null && identities.ConsumedIdentities.Any(k => k.Identity == comp.LastIdentity.Value))
                 {
                     // we force the transformation, this will call all cleanup code in OnBeforeTransform
                     var tComp = EnsureComp<ChangelingTransformComponent>(uid);
@@ -84,8 +82,8 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
                     var tComp = EnsureComp<ChangelingTransformComponent>(uid);
                     _transform.TransformIntoNow((uid, tComp), identity.Identity.Value);
                 }
-                var selfMessage = Loc.GetString("changeling-horror-force-transform-self", ("user", Identity.Entity(uid, EntityManager)));
-                var othersMessage = Loc.GetString("changeling-horror-force-transform-others", ("user", Identity.Entity(uid, EntityManager)));
+                var selfMessage = Loc.GetString("changeling-horror-force-transform-self", ("user", Identity.Name(uid, EntityManager)));
+                var othersMessage = Loc.GetString("changeling-horror-force-transform-others", ("user", Identity.Name(uid, EntityManager)));
                 _popups.PopupEntity(
                 selfMessage,
                 othersMessage,
@@ -105,26 +103,21 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnChangelingTransformIntoEvent(Entity<ChangelingHorrorComponent> ent, ref ChangelingAttemptTransformIntoEvent args)
     {
+        // Stores are not properly networked.
+        if (_net.IsClient)
+        {
+            args.Cancelled = true;
+            return;
+        }
 
         // if we are trying to transform into horror form, check for DNA
         if (TryComp<StoreComponent>(args.Changeling, out var store))
         {
-            // the horror mode transformation will cause some slight desync but that's a problem for later
-            // since stores aren't properly networked
-            if (_net.IsClient)
-            {
-                // we return without a popup
-                args.Cancelled = true;
-                return;
-            }
-
             if (store.Balance.ContainsKey(_currency))
             {
                 var k = store.Balance[_currency];
-                if (k >= FixedPoint2.New(1d)) // you need at least one dna point
-                {
+                if (k >= FixedPoint2.New(ent.Comp.MinimumDna)) // you need at least one dna point
                     return;
-                }
             }
         }
 
@@ -141,12 +134,12 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
     {
         // this event fires before the transformation (but after the doafter)
         if (HasComp<ChangelingHorrorComponent>(args.StoredIdentity))
-            return; // we shouldn't be transforming into an horror!
+            return; // we shouldn't be transforming into a horror!
 
         // enable actions again
         foreach (var action in _actions.GetActions(ent.Owner))
         {
-            if (TryComp<ChangelingHorrorDisableComponent>(action.Owner, out var comp))
+            if (HasComp<ChangelingHorrorDisableComponent>(action.Owner))
             {
                 _actions.SetEnabled((action.Owner, action.Comp), true);
             }
@@ -156,13 +149,13 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
         _alerts.ClearAlert(ent.Owner, ent.Comp.TimeAlert);
 
         // Add dna points back
-        if (TryComp<StoreComponent>(ent.Owner, out var _))
+        if (TryComp<StoreComponent>(ent.Owner, out var storeComp))
         {
             // do fancy math to add back DNA based on remaining time
             Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> dico = new() {
-                {_currency, TimeToDNA(ent.Comp.TimeBudget - (_timing.CurTime - ent.Comp.InitialTime), ent.Comp.SecondPerDNA, ent.Comp.GracePeriod) }
+                {_currency, TimeToDNA(ent.Comp.TimeBudget - (_timing.CurTime - ent.Comp.InitialTime), ent.Comp.SecondPerDNA.TotalSeconds, ent.Comp.GracePeriod.TotalSeconds) }
                 };
-            _stores.TryAddCurrency(dico, ent.Owner, null);
+            _stores.TryAddCurrency(dico, ent.Owner, storeComp);
         }
     }
 
@@ -176,18 +169,43 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
         var identity = _identitySystem.GrantIdentity((ent.Owner, ent.Comp), idEnt);
         if (identity.HasValue)
         {
-            AddComp(identity.Value, new ChangelingUncountedIdentityComponent());
-            AddComp(identity.Value, new ChangelingUnremovableIdentityComponent());
+            EnsureComp<ChangelingUncountedIdentityComponent>(identity.Value);
+            EnsureComp<ChangelingUnremovableIdentityComponent>(identity.Value);
         }
 
         QueueDel(idEnt); // we dont need to keep this entity any longer
+    }
+
+    [SubscribeLocalEvent]
+    private void OnBeforeTransform(Entity<ChangelingTransformComponent> ent, ref BeforeChangelingTransformEvent args)
+    {
+        if (HasComp<ChangelingHorrorComponent>(args.StoredIdentity))
+            return;
+
+        // Turn actions on/off
+        foreach (var action in _actions.GetActions(ent.Owner))
+        {
+            if (TryComp<ChangelingHorrorDisableComponent>(action.Owner, out var comp))
+            {
+                if (comp.ToggleOff)
+                {
+                    if (action.Comp.Toggled) // we perform the action. lets really hope this toggles it off, okay?
+                        _actions.PerformAction((ent.Owner, null), (action.Owner, action.Comp));
+
+                    // we force it, just in case
+                    _actions.SetToggled((action.Owner, action.Comp), false);
+                }
+
+                _actions.SetEnabled((action.Owner, action.Comp), false);
+            }
+        }
     }
 
     /// <summary>
     /// This fonction should only be executed when the changeling transforms into its horror form
     /// </summary>
     [SubscribeLocalEvent]
-    protected virtual void OnAfterTransform(Entity<ChangelingHorrorComponent> ent, ref AfterChangelingTransformEvent ev)
+    private void OnAfterTransform(Entity<ChangelingHorrorComponent> ent, ref AfterChangelingTransformEvent ev)
     {
         // fires after the transformation
         // transformed into a changeling horror, spawn VFX station-wide, toggle actions, etc
@@ -196,7 +214,7 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
 
         // calculate timing
         var now = _timing.CurTime;
-        var transformationTime = TimeSpan.FromSeconds(ent.Comp.GracePeriod);// you get 5 free seconds!
+        var transformationTime = ent.Comp.GracePeriod; // you get some free seconds!
 
         if (TryComp<StoreComponent>(ent.Owner, out var store))
         {
@@ -207,8 +225,8 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
                 Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> dico = new() {
                     {_currency, -k }
                 };
-                _stores.TryAddCurrency(dico, ent.Owner, null);
-                transformationTime = DNAToTime(k, ent.Comp.SecondPerDNA, ent.Comp.GracePeriod);
+                _stores.TryAddCurrency(dico, ent.Owner, store);
+                transformationTime = DNAToTime(k, ent.Comp.SecondPerDNA.TotalSeconds, ent.Comp.GracePeriod.TotalSeconds);
             }
         }
 
@@ -227,35 +245,10 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
         if (TryComp<CuffableComponent>(ent.Owner, out _) && _cuffable.TryGetLastCuff(ent.Owner, out var cuff))
             _cuffable.Uncuff(ent.Owner, ent.Owner, cuff.Value);
 
-        // spawn an evil-ass screech VFX
-        // no sound since it will be played manually
-        var screechEnt = _screech.Screech(ent.Owner, ent.Comp.SpawnScreechRange, ent.Comp.SpawnScreechVfx, null, ent.Comp.SpawnScreechEffects);
-
-        if (screechEnt.HasValue)
-            MakeGlobal(screechEnt.Value);
-
         // play a spawn sound
         _audio.PlayPredicted(ent.Comp.SpawnSound, ent.Owner, null);
 
-        // Turn actions on/off
-        foreach (var action in _actions.GetActions(ent.Owner))
-        {
-            if (TryComp<ChangelingHorrorDisableComponent>(action.Owner, out var comp))
-            {
-                if (comp.ToggleOff)
-                {
-                    if (action.Comp.Toggled)
-                    {   // we perform the action. lets really hope this toggles it off, okay?
-                        _actions.PerformAction((ent.Owner, null), (action.Owner, action.Comp));
-                    }
-
-                    // we force it, just in case
-                    _actions.SetToggled((action.Owner, action.Comp), false);
-                }
-
-                _actions.SetEnabled((action.Owner, action.Comp), false);
-            }
-        }
+        PredictedSpawnAttachedTo(ent.Comp.SpawnScreech, Transform(ent.Owner).Coordinates);
     }
 
     [SubscribeLocalEvent]
@@ -265,7 +258,6 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
     }
     #endregion
     #region helpers
-    protected abstract void MakeGlobal(EntityUid ent);
     /// <summary>
     /// Converts an amount of DNA currency into horror mode time.
     /// </summary>

@@ -50,10 +50,14 @@
   id: ArmbladeHorror
   suffix: Horror
   components:
+  - type: Prying
+    speedModifier: 5
+    pryPowered: true
+    force: true
   - type: MeleeWeapon
     damage:
       types:
-        Slash: 16 # a load of damage
-        Piercing: 12
-        Caustic: 10
-        Structural: 30 # stronk, better than a fireaxe
+        Slash: 14 # a load of damage
+        Piercing: 14
+        Caustic: 8
+        Structural: 20 # stronk, better than a fireaxe
