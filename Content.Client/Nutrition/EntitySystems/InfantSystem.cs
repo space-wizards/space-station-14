@@ -1,4 +1,4 @@
-﻿using Content.Shared.Nutrition.AnimalHusbandry;
+using Content.Shared.Nutrition.AnimalHusbandry;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Nutrition.EntitySystems;
@@ -6,9 +6,9 @@ namespace Content.Client.Nutrition.EntitySystems;
 /// <summary>
 /// This handles visuals for <see cref="InfantComponent"/>
 /// </summary>
-public sealed class InfantSystem : EntitySystem
+public sealed partial class InfantSystem : EntitySystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

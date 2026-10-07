@@ -1,23 +1,20 @@
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.SprayPainter.Prototypes;
 using Robust.Client.GameObjects;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Atmos.EntitySystems;
 
 /// <summary>
-/// Used to change the appearance of gas canisters.
+/// Used to change the appearance of gas canisters when painted.
 /// </summary>
-public sealed class GasCanisterAppearanceSystem : VisualizerSystem<GasCanisterComponent>
+public sealed partial class GasCanisterAppearanceSystem : VisualizerSystem<GasCanisterComponent>
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
     protected override void OnAppearanceChange(EntityUid uid, GasCanisterComponent component, ref AppearanceChangeEvent args)
     {
-        if (!AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.Prototype, out var protoName, args.Component) || args.Sprite is not { } old)
+        if (!args.TryGetData<string>(PaintableVisuals.Prototype, out var protoName) || args.Sprite is null)
             return;
 
-        if (!_prototypeManager.HasIndex(protoName))
+        if (!ProtoMan.HasIndex(protoName))
             return;
 
         // Create the given prototype and get its first layer.

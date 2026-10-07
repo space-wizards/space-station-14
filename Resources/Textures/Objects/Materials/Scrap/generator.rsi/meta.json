@@ -1,57 +1,65 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Made by Beck Thompson using assets from https://github.com/Baystation12/Baystation12/blob/caa635edb97c58301ccdc64757eba323b6673cf3/icons/obj/structures/portgen.dmi",
+    "copyright": "Made by Beck Thompson using assets from https://github.com/Baystation12/Baystation12/blob/caa635edb97c58301ccdc64757eba323b6673cf3/icons/obj/structures/portgen.dmi, tank inhands by TiniestShark (Github)",
     "size": {
-      "x": 32,
-      "y": 32
+        "x": 32,
+        "y": 32
     },
     "states": [
-      {
-        "name": "old_generator_plasma"
-      },
-      {
-        "name": "old_generator_plasma_fuel_leak"
-      },
-      {
-        "name": "generator_frame"
-      },
-      {
-        "name": "uranium_generator"
-      },
-      {
-        "name": "uranium_generator_fuel_tank"
-      },
-      {
-        "name": "red_x"
-      },
-      {
-        "name": "nothing"
-      },
-      {
-        "name": "rad_outline",
-        "delays": [
-            [
-            0.3,
-            0.3,
-            0.3,
-            0.3
+        {
+            "name": "old_generator_plasma"
+        },
+        {
+            "name": "old_generator_plasma_fuel_leak"
+        },
+        {
+            "name": "generator_frame"
+        },
+        {
+            "name": "uranium_generator"
+        },
+        {
+            "name": "uranium_generator_fuel_tank"
+        },
+        {
+            "name": "fuel-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "fuel-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "red_x"
+        },
+        {
+            "name": "nothing"
+        },
+        {
+            "name": "rad_outline",
+            "delays": [
+                [
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3
+                ]
             ]
-        ]
-      },
-      {
-        "name": "rad_dripping",
-        "delays": [
-            [
-            2.0,
-            0.05,
-            0.05,
-            0.05,
-            0.05,
-            0.05,
-            0.05
+        },
+        {
+            "name": "rad_dripping",
+            "delays": [
+                [
+                    2.0,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05
+                ]
             ]
-        ]
-      }
+        }
     ]
-  }
+}

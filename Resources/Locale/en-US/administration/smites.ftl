@@ -1,14 +1,14 @@
 admin-smite-chess-self = You feel exceptionally small.
-admin-smite-chess-others = {CAPITALIZE($name)} shrinks into the chessboard!
+admin-smite-chess-others = {CAPITALIZE($entity)} shrinks into the chessboard!
 admin-smite-set-alight-self = You burst into flames!
-admin-smite-set-alight-others = {CAPITALIZE($name)} bursts into flames!
+admin-smite-set-alight-others = {CAPITALIZE($entity)} bursts into flames!
 admin-smite-remove-blood-self = You feel lighter, and chilly.
-admin-smite-remove-blood-others = {CAPITALIZE($name)} leaks blood all over the floor!
+admin-smite-remove-blood-others = {CAPITALIZE($entity)} leaks blood all over the floor!
 admin-smite-vomit-organs-self = You puke, and feel rather hollow!
-admin-smite-vomit-organs-others = {CAPITALIZE($name)} vomits up their organs!
+admin-smite-vomit-organs-others = {CAPITALIZE($entity)} vomits up their organs!
 admin-smite-remove-hands-self = Your hands fall off!
-admin-smite-remove-hands-other = {CAPITALIZE($name)}'s hands fall off!
-admin-smite-turned-ash-other = {CAPITALIZE($name)} turns into a pile of ash!
+admin-smite-remove-hands-other = {CAPITALIZE($entity)}'s hands fall off!
+admin-smite-turned-ash-other = {CAPITALIZE($entity)} turns into a pile of ash!
 admin-smite-stomach-removal-self = Your stomach feels hollow...
 admin-smite-run-walk-swap-prompt = You have to press shift to run!
 admin-smite-super-speed-prompt = You move at mach 0.8!
@@ -23,6 +23,7 @@ admin-smite-set-alight-name = Set Alight
 admin-smite-monkeyify-name = Monkeyify
 admin-smite-garbage-can-name = Garbage Can
 admin-smite-electrocute-name = Electrocute
+admin-smite-heartattack-name = Heart Attack
 admin-smite-remove-blood-name = Remove blood
 admin-smite-remove-hands-name = Remove hands
 admin-smite-remove-hand-name = Remove hand
@@ -64,6 +65,7 @@ admin-smite-crawler-name = Crawler
 admin-smite-homing-rod-name = Homing Rod
 admin-smite-homing-rod-slow-name = Slowming Rod
 admin-smite-silicon-laws-bound-name = Become Silicon
+admin-smite-make-stinky-name = Make Stinky
 
 ## Smite descriptions
 
@@ -71,7 +73,8 @@ admin-smite-explode-description = Explode them.
 admin-smite-chess-dimension-description = Banishment to the Chess Dimension.
 admin-smite-set-alight-description = Makes them burn.
 admin-smite-monkeyify-description = Turns the target into a monkey.
-admin-smite-electrocute-description = Electrocutes them, rendering anything they were wearing useless.
+admin-smite-electrocute-description = Electrocutes them through any insulation.
+admin-smite-heartattack-description = Immediately kills them with asphyxiation damage.
 admin-smite-creampie-description = A creampie, condensed into a button.
 admin-smite-remove-blood-description = Removes all of their blood, messily.
 admin-smite-vomit-organs-description = Causes them to vomit, organs included.
@@ -107,13 +110,13 @@ admin-smite-disarm-prone-description = Makes them get disarmed 100% of the time 
 admin-smite-garbage-can-description = Turn them into a garbage bin to emphasize what they remind you of.
 admin-smite-super-bonk-description = Slams them on every single table on the Station and beyond.
 admin-smite-super-bonk-lite-description= Slams them on every single table on the Station and beyond. Stops when the target is dead.
-admin-smite-terminate-description = Creates a Terminator ghost role with the sole objective of killing them.
 admin-smite-super-slip-description = Slips them really, really hard.
 admin-smite-omni-accent-description = Makes the target speak with almost every accent available.
 admin-smite-crawler-description = Makes the target fall down and be unable to stand up. Remove their hands too for added effect!
 admin-smite-homing-rod-description = Launches a homing immovable rod straight at them.
 admin-smite-homing-rod-slow-description = Launches a slow moving homing immovable rod straight at them.
 admin-smite-silicon-laws-bound-description = Makes the target bound to silicon laws. Law 2, jump out of the window.
+admin-smite-make-stinky-description = Makes the target stinky by making them release ammonia. Ew!
 
 ## Tricks descriptions
 
@@ -148,3 +151,5 @@ admin-trick-pause-map-description = Pause the selected map. Note this doesn't en
 admin-trick-snap-joints-description = Remove all physics joints from an object. Unfortunately does not snap every bone in their body.
 admin-trick-minigun-fire-description = Makes the targetted gun fire like a minigun (very fast).
 admin-trick-set-bullet-amount-description = Quickly set the amount of unspawned bullets in a gun.
+
+admin-smite-ghostkick-reason = Smitten.

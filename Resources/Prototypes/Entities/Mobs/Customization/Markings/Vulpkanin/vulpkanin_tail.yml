@@ -60,3 +60,82 @@
       state: vulp
     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
       state: vulp-fade
+
+- type: marking
+  id: VulpTailCoyote
+  bodyPart: Tail
+  groupWhitelist: [ Vulpkanin ]
+  sprites:
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: coyote
+
+# Animated
+- type: marking
+  id: VulpTailFennecAnimated
+  bodyPart: Tail
+  groupWhitelist: []
+  sprites:
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: fennec-wagging
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: fennec-wagging-tip
+
+- type: marking
+  id: VulpTailFluffyAnimated
+  bodyPart: Tail
+  groupWhitelist: []
+  sprites:
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: fluffy-wagging
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: fluffy-wagging-tip
+
+- type: marking
+  id: VulpTailHuskyAnimated
+  bodyPart: Tail
+  groupWhitelist: []
+  sprites:
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: husky-wagging
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: husky-wagging-inner
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: husky-wagging-outer
+
+- type: marking
+  id: VulpTailLongAnimated
+  bodyPart: Tail
+  groupWhitelist: []
+  sprites:
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: long-wagging
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: long-wagging-tip
+
+- type: marking
+  id: VulpTailVulpAnimated
+  bodyPart: Tail
+  groupWhitelist: []
+  sprites:
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: vulp-wagging
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: vulp-wagging-tip
+
+- type: marking
+  id: VulpTailVulpFadeAnimated
+  bodyPart: Tail
+  groupWhitelist: []
+  sprites:
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: vulp-wagging
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: vulp-wagging-fade
+
+- type: marking
+  id: VulpTailCoyoteAnimated
+  bodyPart: Tail
+  groupWhitelist: []
+  sprites:
+  - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    state: coyote-wagging

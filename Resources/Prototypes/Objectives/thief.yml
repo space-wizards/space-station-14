@@ -4,7 +4,7 @@
   id: BaseThiefObjective
   components:
   - type: Objective
-    issuer: objective-issuer-thief
+    issuer: Thief
   - type: RoleRequirement
     roles:
     - ThiefRole
@@ -73,6 +73,17 @@
     maxCollectionSize: 6
   - type: Objective
     difficulty: 1.0
+
+- type: entity
+  parent: BaseThiefStealCollectionObjective
+  id: HeadHardsuitStealCollectionObjective
+  components:
+  - type: StealCondition
+    stealGroup: HeadHardsuit
+    minCollectionSize: 1
+    maxCollectionSize: 2
+  - type: Objective
+    difficulty: 3
 
 - type: entity
   parent: BaseThiefStealCollectionObjective
@@ -176,7 +187,6 @@
     minCollectionSize: 7
     maxCollectionSize: 12
     verifyMapExistence: false
-    checkStealAreas: false
   - type: Objective
     difficulty: 0.3
 

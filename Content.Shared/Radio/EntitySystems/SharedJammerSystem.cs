@@ -1,3 +1,4 @@
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -10,11 +11,11 @@ using Content.Shared.Power;
 
 namespace Content.Shared.Radio.EntitySystems;
 
-public abstract class SharedJammerSystem : EntitySystem
+public abstract partial class SharedJammerSystem : EntitySystem
 {
-    [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
-    [Dependency] private readonly SharedDeviceNetworkJammerSystem _jammer = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private ItemToggleSystem _itemToggle = default!;
+    [Dependency] private SharedDeviceNetworkJammerSystem _jammer = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -33,7 +34,7 @@ public abstract class SharedJammerSystem : EntitySystem
             EnsureComp<ActiveRadioJammerComponent>(entity);
             EnsureComp<DeviceNetworkJammerComponent>(entity, out var jammingComp);
             _jammer.SetRange((entity, jammingComp), GetCurrentRange(entity));
-            _jammer.AddJammableNetwork((entity, jammingComp), DeviceNetworkComponent.DeviceNetIdDefaults.Wireless.ToString());
+            _jammer.AddJammableNetwork((entity, jammingComp), (int) DeviceNetIdDefaults.Wireless);
 
             // Add excluded frequencies using the system method
             foreach (var freq in entity.Comp.FrequenciesExcluded)
@@ -52,7 +53,7 @@ public abstract class SharedJammerSystem : EntitySystem
 
         var state = Loc.GetString(args.Activated ? "radio-jammer-component-on-state" : "radio-jammer-component-off-state");
         var message = Loc.GetString("radio-jammer-component-on-use", ("state", state));
-        _popup.PopupPredicted(message, args.User.Value, args.User.Value);
+        _popup.PopupEntity(message, args.User.Value, args.User.Value);
     }
 
     private void OnRefreshChargeRate(Entity<RadioJammerComponent> entity, ref RefreshChargeRateEvent args)
@@ -88,7 +89,7 @@ public abstract class SharedJammerSystem : EntitySystem
                     // The range should be updated when it turns on again!
                     _jammer.TrySetRange(entity.Owner, GetCurrentRange(entity));
 
-                    _popup.PopupClient(Loc.GetString(setting.Message), user, user);
+                    _popup.PopupEntity(Loc.GetString(setting.Message), user, user);
                 },
                 Text = Loc.GetString(setting.Name),
             };

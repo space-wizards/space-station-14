@@ -1,10 +1,12 @@
 using System.Numerics;
+using Content.IntegrationTests.Fixtures;
 using Content.Shared.Buckle;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Standing;
+using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Buckle
@@ -12,7 +14,7 @@ namespace Content.IntegrationTests.Tests.Buckle
     [TestFixture]
     [TestOf(typeof(BuckleComponent))]
     [TestOf(typeof(StrapComponent))]
-    public sealed partial class BuckleTest
+    public sealed partial class BuckleTest : GameTest
     {
         private const string BuckleDummyId = "BuckleDummy";
         private const string StrapDummyId = "StrapDummy";
@@ -50,7 +52,7 @@ namespace Content.IntegrationTests.Tests.Buckle
         [Test]
         public async Task BuckleUnbuckleCooldownRangeTest()
         {
-            await using var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
 
             var testMap = await pair.CreateTestMap();
@@ -228,14 +230,86 @@ namespace Content.IntegrationTests.Tests.Buckle
                     Assert.That(strap.BuckledEntities, Is.Empty);
                 });
             });
+        }
 
-            await pair.CleanReturnAsync();
+        [Test]
+        public async Task BuckleAndUnbuckleSnapClientRenderTransformTest()
+        {
+            var map = await Pair.CreateTestMap();
+            EntityUid human = default;
+            EntityUid chair = default;
+            NetEntity netHuman = default;
+            NetEntity netChair = default;
+
+            await Server.WaitAssertion(() =>
+            {
+                human = SEntMan.SpawnEntity(BuckleDummyId, map.GridCoords);
+                chair = SEntMan.SpawnEntity(StrapDummyId, map.GridCoords);
+                netHuman = SEntMan.GetNetEntity(human);
+                netChair = SEntMan.GetNetEntity(chair);
+            });
+
+            await Pair.RunTicksSync(5);
+
+            await Server.WaitAssertion(() =>
+            {
+                var buckle = SEntMan.GetComponent<BuckleComponent>(human);
+                Assert.That(SEntMan.System<SharedBuckleSystem>()
+                    .TryBuckle(human, human, chair, buckle, popup: false), Is.True);
+            });
+
+            var applied = false;
+            for (var i = 0; i < 5 && !applied; i++)
+            {
+                await Pair.RunTicksSync(1);
+                await Client.WaitAssertion(() =>
+                {
+                    var clientHuman = CEntMan.GetEntity(netHuman);
+                    var clientChair = CEntMan.GetEntity(netChair);
+                    var buckle = CEntMan.GetComponent<BuckleComponent>(clientHuman);
+                    var transformSystem = CEntMan.System<TransformSystem>();
+                    var xform = CEntMan.GetComponent<TransformComponent>(clientHuman);
+                    applied = buckle.Buckled && xform.ParentUid == clientChair;
+                    if (!applied)
+                        return;
+
+                    Assert.That(transformSystem.TryGetRenderTransformDebugData(clientHuman, out _), Is.False);
+                    Assert.That(transformSystem.GetRenderWorldPosition(clientHuman),
+                        Is.EqualTo(transformSystem.GetWorldPosition(clientHuman)));
+                });
+            }
+
+            Assert.That(applied, Is.True, "the authoritative buckle state was not applied!!!");
+
+            await Server.WaitAssertion(() =>
+                SEntMan.System<SharedBuckleSystem>().Unbuckle(human, human));
+
+            applied = false;
+            for (var i = 0; i < 5 && !applied; i++)
+            {
+                await Pair.RunTicksSync(1);
+                await Client.WaitAssertion(() =>
+                {
+                    var clientHuman = CEntMan.GetEntity(netHuman);
+                    var buckle = CEntMan.GetComponent<BuckleComponent>(clientHuman);
+                    var transformSystem = CEntMan.System<TransformSystem>();
+                    applied = !buckle.Buckled;
+                    if (!applied)
+                        return;
+
+                    Assert.That(transformSystem.TryGetRenderTransformDebugData(clientHuman, out _), Is.False);
+                    Assert.That(transformSystem.GetRenderWorldPosition(clientHuman),
+                        Is.EqualTo(transformSystem.GetWorldPosition(clientHuman)));
+                });
+            }
+
+            Assert.That(applied, Is.True, "the authoritative unbuckle state was not applied");
         }
 
         [Test]
         public async Task BuckledDyingDropItemsTest()
         {
-            await using var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
 
             var testMap = await pair.CreateTestMap();
@@ -298,14 +372,12 @@ namespace Content.IntegrationTests.Tests.Buckle
                 buckleSystem.Unbuckle(human, human);
                 Assert.That(buckle.Buckled, Is.False);
             });
-
-            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task ForceUnbuckleBuckleTest()
         {
-            await using var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
 
             var testMap = await pair.CreateTestMap();
@@ -373,7 +445,6 @@ namespace Content.IntegrationTests.Tests.Buckle
                     Assert.That(buckle.Buckled);
                 });
             });
-            await pair.CleanReturnAsync();
         }
     }
 }

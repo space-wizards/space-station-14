@@ -12,18 +12,16 @@ namespace Content.Shared.Nutrition.EntitySystems;
 
 public sealed partial class IngestionSystem
 {
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
-    private EntityQuery<UtensilComponent> _utensilsQuery;
+    [Dependency] private EntityQuery<UtensilComponent> _utensilsQuery = default!;
 
     public void InitializeUtensils()
     {
         SubscribeLocalEvent<UtensilComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(ToolOpenableSystem) });
 
         SubscribeLocalEvent<EdibleComponent, GetUtensilsEvent>(OnGetEdibleUtensils);
-
-        _utensilsQuery = GetEntityQuery<UtensilComponent>();
     }
 
     /// <summary>
@@ -45,7 +43,7 @@ public sealed partial class IngestionSystem
         //Prevents food usage with a wrong utensil
         if (ev.Types != UtensilType.None && (ev.Types & utensil.Comp.Types) == 0)
         {
-            _popup.PopupClient(Loc.GetString("ingestion-try-use-wrong-utensil", ("verb", GetEdibleVerb(target)), ("food", target), ("utensil", utensil.Owner)), user, user);
+            _popup.PopupEntity(Loc.GetString("ingestion-try-use-wrong-utensil", ("verb", GetEdibleVerb(target)), ("food", target), ("utensil", utensil.Owner)), user, user);
             return true;
         }
 
@@ -65,11 +63,7 @@ public sealed partial class IngestionSystem
         if (!Resolve(entity, ref entity.Comp))
             return;
 
-        // TODO: Once we have predicted randomness delete this for something sane...
-        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(entity).Id, GetNetEntity(userUid).Id);
-        var rand = new System.Random(seed);
-
-        if (!rand.Prob(entity.Comp.BreakChance))
+        if (!SharedRandomExtensions.PredictedProb(_timing, entity.Comp.BreakChance, GetNetEntity(entity), GetNetEntity(userUid)))
             return;
 
         _audio.PlayPredicted(entity.Comp.BreakSound, userUid, userUid, AudioParams.Default.WithVolume(-2f));
@@ -126,7 +120,7 @@ public sealed partial class IngestionSystem
         if (!required || (usedTypes & requiredTypes) == requiredTypes)
             return true;
 
-        _popup.PopupClient(Loc.GetString("ingestion-you-need-to-hold-utensil", ("utensil", requiredTypes ^ usedTypes)), entity, entity);
+        _popup.PopupEntity(Loc.GetString("ingestion-you-need-to-hold-utensil", ("utensil", requiredTypes ^ usedTypes)), entity, entity);
         return false;
 
     }

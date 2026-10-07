@@ -3,11 +3,10 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Materials;
 
-public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
+public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -24,7 +23,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         if (!_sprite.LayerMapTryGet((uid, args.Sprite), MaterialStorageVisualLayers.Inserting, out var layer, false))
             return;
 
-        if (!_appearance.TryGetData<bool>(uid, MaterialStorageVisuals.Inserting, out var inserting, args.Component))
+        if (!args.TryGetData<bool>(MaterialStorageVisuals.Inserting, out var inserting))
             return;
 
         if (inserting && TryComp<InsertingMaterialStorageComponent>(uid, out var insertingComp))

@@ -1,0 +1,100 @@
+using System.Linq;
+using Content.Server.StationEvents.Components;
+using Content.Server.VentHorde.Components;
+using Content.Server.VentHorde.Systems;
+using Content.Shared.EntityTable;
+using Content.Shared.GameTicking.Components;
+using Content.Shared.Pinpointer;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
+
+namespace Content.Server.StationEvents.Events;
+
+/// <summary>
+/// Variant of <see cref="VentCrittersRule"/> that selects a single vent and spawns all entities there.
+/// </summary>
+/// <remarks>
+/// Do NOT copy paste this class to make a new mob event, create a new game rule entity using <see cref="VentHordeRuleComponent"/>.
+/// </remarks>
+public sealed partial class VentHordeRule : StationEventSystem<VentHordeRuleComponent>
+{
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private NavMapSystem _navMap = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private EntityTableSystem _table = default!;
+    [Dependency] private VentHordeSystem _horde = default!;
+    [Dependency] private IGameTiming _timing = default!;
+
+    protected override void Added(Entity<VentHordeRuleComponent, GameRuleComponent> ent, ref GameRuleAddedEvent args)
+    {
+        var ventHorde = ent.Comp1;
+        // Choose location and make sure it's not null
+        ventHorde.ChosenVent = ChooseVent();
+
+        if (ventHorde.ChosenVent is not { } vent)
+        {
+            Log.Warning($"Unable to find a valid vent for {ToPrettyString(args.Rule)}!");
+            ForceEndSelf((ent.Owner, ent.Comp2));
+            return;
+        }
+
+        // Get the event component so we can format the announcement
+        if (TryComp<StationEventComponent>(ent, out var stationEventComp) && stationEventComp.StartAnnouncement != null)
+        {
+            // Get the nearest beacon
+            var mapLocation = _transform.ToMapCoordinates(Transform(vent).Coordinates);
+            var nearestBeacon = _navMap.GetNearestBeaconString(mapLocation, onlyName: true);
+
+            // Format the announcement with the location, if the string doesn't have them it'll still work fine
+            // time is not said on purpose to keep the players on their toes.
+            // also because we cannot tell the end time inside of Added().
+            stationEventComp.StartAnnouncement =
+                Loc.GetString(stationEventComp.StartAnnouncement,
+                    ("location", nearestBeacon));
+        }
+
+        base.Added(ent, ref args);
+    }
+
+    protected override void Started(Entity<VentHordeRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
+    {
+        base.Started(ent, ref args);
+
+        if (!Exists(ent.Comp1.ChosenVent))
+        {
+            Log.Warning($"Chosen vent for {args.RuleId} does not exist!");
+            ForceEndSelf((ent.Owner, ent.Comp2));
+            return;
+        }
+
+        if (!TryComp<StationEventComponent>(ent, out var stationEventComp))
+            return;
+
+        var ventHorde = ent.Comp1;
+
+        // We grab when the gamerule is expected to end and subtract the current time from it to get the duration.
+        var duration = stationEventComp.EndTime - _timing.CurTime ?? TimeSpan.Zero;
+
+        var spawns = _table.GetSpawns(ventHorde.Table);
+
+        if (ventHorde.ChosenVent == null)
+            return;
+
+        // And start the spawn at the chosen vent.
+        // The duration is the same as the time until expected gamerule end time, but that is only for convenience.
+        // The spawn can happen early in certain circumstances anyway.
+        _horde.StartHordeSpawn(ventHorde.ChosenVent.Value, spawns.ToList(), duration);
+    }
+
+    private EntityUid? ChooseVent()
+    {
+        var validLocations = Station.GetEntitiesWithComponentOnStation<VentCritterSpawnLocationComponent>(true);
+        validLocations.RemoveWhere(uid => HasComp<VentHordeSpawnerComponent>(uid));
+
+        // Pick one at random
+        if (validLocations.Count != 0)
+            return _random.Pick(validLocations);
+
+        return null;
+    }
+}
