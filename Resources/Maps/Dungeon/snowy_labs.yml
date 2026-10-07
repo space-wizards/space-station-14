@@ -8797,7 +8797,7 @@ entities:
     - type: Transform
       parent: 1653
       pos: 39.5,1.5
-- proto: FilingCabinetDrawerRandom
+- proto: filingCabinetDrawerRandom
   entities:
   - uid: 1279
     components:
@@ -9201,7 +9201,7 @@ entities:
     - type: Transform
       parent: 1653
       pos: 0.5,22.5
-- proto: HydroponicsSoil
+- proto: hydroponicsSoil
   entities:
   - uid: 654
     components:

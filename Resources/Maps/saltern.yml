@@ -28477,7 +28477,7 @@ entities:
         9418:
         - - ArtifactAnalyzerSender
           - ArtifactAnalyzerReceiver
-- proto: ComputerBodyScanner
+- proto: computerBodyScanner
   entities:
   - uid: 7285
     components:
@@ -33124,7 +33124,7 @@ entities:
       pos: 7.5,24.5
     - type: FaxMachine
       name: Captain's office
-- proto: FilingCabinetDrawerRandom
+- proto: filingCabinetDrawerRandom
   entities:
   - uid: 4637
     components:
@@ -48852,7 +48852,7 @@ entities:
       parent: 31
       rot: 1.5707963267948966 rad
       pos: -13.5,-37.5
-- proto: HydroponicsSoil
+- proto: hydroponicsSoil
   entities:
   - uid: 9666
     components:
@@ -61529,7 +61529,7 @@ entities:
     - type: Transform
       parent: 31
       pos: 38.48186,-17.514906
-- proto: TrayScanner
+- proto: trayScanner
   entities:
   - uid: 8901
     components:

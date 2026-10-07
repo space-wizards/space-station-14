@@ -7525,7 +7525,7 @@ entities:
       parent: 1653
       rot: -1.5707963267948966 rad
       pos: 2.5,43.5
-- proto: ComputerBodyScanner
+- proto: computerBodyScanner
   entities:
   - uid: 1546
     components:
@@ -7836,7 +7836,7 @@ entities:
     - type: Transform
       parent: 1653
       pos: 39.5,1.5
-- proto: FilingCabinetDrawerRandom
+- proto: filingCabinetDrawerRandom
   entities:
   - uid: 464
     components:

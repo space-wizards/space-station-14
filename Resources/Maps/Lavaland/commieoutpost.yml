@@ -449,7 +449,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: HydroponicsSoil
+- proto: hydroponicsSoil
   entities:
   - uid: 116
     components:

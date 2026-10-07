@@ -58115,7 +58115,7 @@ entities:
     - type: Transform
       parent: 1
       pos: 21.5,45.5
-- proto: FilingCabinetDrawerRandom
+- proto: filingCabinetDrawerRandom
   entities:
   - uid: 640
     components:

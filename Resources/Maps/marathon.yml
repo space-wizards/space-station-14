@@ -59846,7 +59846,7 @@ entities:
     - type: Transform
       parent: 30
       pos: 13.5,-22.5
-- proto: ComputerBodyScanner
+- proto: computerBodyScanner
   entities:
   - uid: 7584
     components:
@@ -69299,7 +69299,7 @@ entities:
     - type: Transform
       parent: 30
       pos: 43.5,37.5
-- proto: FilingCabinetDrawer
+- proto: filingCabinetDrawer
   entities:
   - uid: 12856
     components:
@@ -69311,7 +69311,7 @@ entities:
     - type: Transform
       parent: 30
       pos: 23.5,15.5
-- proto: FilingCabinetDrawerRandom
+- proto: filingCabinetDrawerRandom
   entities:
   - uid: 11017
     components:
@@ -107531,7 +107531,7 @@ entities:
     - type: Transform
       parent: 30
       pos: 34.5,30.5
-- proto: HydroponicsSoil
+- proto: hydroponicsSoil
   entities:
   - uid: 17963
     components:
@@ -134342,7 +134342,7 @@ entities:
     - type: Transform
       parent: 30
       pos: 44.5157,21.682869
-- proto: TrayScanner
+- proto: trayScanner
   entities:
   - uid: 5669
     components:

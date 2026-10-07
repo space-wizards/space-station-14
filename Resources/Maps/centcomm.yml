@@ -58021,7 +58021,7 @@ entities:
     - type: Transform
       parent: 1668
       pos: -38.2898,9.5166025
-- proto: TrayScanner
+- proto: trayScanner
   entities:
   - uid: 6778
     components:

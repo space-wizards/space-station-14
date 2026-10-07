@@ -70573,7 +70573,7 @@ entities:
       parent: 60
       rot: 1.5707963267948966 rad
       pos: -16.5,27.5
-- proto: ComputerBodyScanner
+- proto: computerBodyScanner
   entities:
   - uid: 627
     components:
@@ -79164,7 +79164,7 @@ entities:
       pos: 2.5,3.5
     - type: FaxMachine
       name: Bridge
-- proto: FilingCabinetDrawerRandom
+- proto: filingCabinetDrawerRandom
   entities:
   - uid: 1942
     components:
@@ -147176,7 +147176,7 @@ entities:
     - type: Transform
       parent: 60
       pos: -20.474174,-44.60662
-- proto: TrayScanner
+- proto: trayScanner
   entities:
   - uid: 1674
     components:

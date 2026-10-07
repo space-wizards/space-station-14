@@ -1993,7 +1993,7 @@ entities:
     - type: Transform
       parent: 1653
       pos: 10.026349,24.557583
-- proto: HydroponicsSoil
+- proto: hydroponicsSoil
   entities:
   - uid: 1
     components:

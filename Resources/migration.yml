@@ -1159,3 +1159,10 @@ ClothingHeadHatWizard: ClothingHeadHatWizardBlue
 ClothingOuterWizard: ClothingOuterWizardBlue
 ClothingHeadHatRedwizard: ClothingHeadHatWizardRed
 ClothingHeadHatVioletwizard: ClothingHeadHatWizardViolet
+
+# 2026-10-07
+computerBodyScanner: ComputerBodyScanner
+filingCabinetDrawer: FilingCabinetDrawer
+filingCabinetDrawerRandom: FilingCabinetDrawerRandom
+hydroponicsSoil: HydroponicsSoil
+trayScanner: TrayScanner

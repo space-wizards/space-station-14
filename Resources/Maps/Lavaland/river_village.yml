@@ -3883,7 +3883,7 @@ entities:
     - type: Transform
       pos: 67.5,19.5
       parent: 1
-- proto: FilingCabinetDrawerRandom
+- proto: filingCabinetDrawerRandom
   entities:
   - uid: 1432
     components:
