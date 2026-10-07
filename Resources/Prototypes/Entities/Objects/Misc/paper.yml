@@ -28,7 +28,7 @@
   - type: Injurable
   - type: AtmosExposed
   - type: Temperature
-  - type: TemperatureTransform
+  - type: EntityEffectOnTemperature
     entries:
     - temperatureRange: 330, 2000
       effects:
