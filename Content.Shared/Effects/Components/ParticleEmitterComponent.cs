@@ -9,7 +9,7 @@ namespace Content.Shared.Effects.Components;
 public sealed partial class ParticleEmitterComponent : Component
 {
     [DataField(required: true)]
-    public EntProtoId? EffectPrototype;
+    public EntProtoId EffectPrototype;
 
     /// <summary>
     /// Interval in seconds between spawned effects while moving.
