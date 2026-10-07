@@ -26,7 +26,7 @@
                     HorizontalAlignment="Right"
                     Access="Public" />
             </BoxContainer>
-            <controls:Separator
+            <PanelContainer
                 Name="Stride"
                 Access="Public"
                 StyleClasses="LowDivider"/>
@@ -95,7 +95,7 @@
             Name="Buttons"
             Access="Public"
             Orientation="Vertical">
-            <controls:Separator StyleClasses="LowDivider"/>
+            <PanelContainer StyleClasses="LowDivider"/>
             <!--  Buttons  -->
             <BoxContainer Margin="3">
                 <Button
