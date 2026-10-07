@@ -160,7 +160,7 @@ public sealed partial class CCVars
     ///     Role bans, whitelists, playtime requirements, and antag restrictions always apply.
     /// </summary>
     public static readonly CVarDef<MinimumJobFallback>
-        GameMinimumJobFallback = CVarDef.Create("game.minimum_job_fallback", MinimumJobFallback.SameDepartment,
+        GameMinimumJobFallback = CVarDef.Create("game.minimum_job_fallback", MinimumJobFallback.None,
             CVar.ARCHIVE | CVar.SERVERONLY);
 
     /// <summary>
@@ -347,10 +347,10 @@ public sealed partial class CCVars
         CVarDef.Create("game.ipintel_alert_admin_warn_rating", 0f, CVar.SERVERONLY);
 
     /// <summary>
-    ///     Make people bonk when trying to climb certain objects like tables.
+    ///     Should clumsy people bonk when trying to climb certain objects like tables?
     /// </summary>
     public static readonly CVarDef<bool> GameTableBonk =
-        CVarDef.Create("game.table_bonk", false, CVar.REPLICATED);
+        CVarDef.Create("game.table_bonk", true, CVar.REPLICATED);
 
     /// <summary>
     ///     Whether or not status icons are rendered for everyone.
@@ -465,6 +465,19 @@ public sealed partial class CCVars
     /// </remarks>
     public static readonly CVarDef<string> NewCharacterJobs =
         CVarDef.Create("game.new_character_jobs", "Passenger", CVar.REPLICATED);
+
+    /// <summary>
+    /// If true, shows a new player indicator over the heads of newly joined players.
+    /// Only visible to whitelisted players.
+    /// </summary>
+    public static readonly CVarDef<bool> ShowNewPlayerIcons =
+        CVarDef.Create("game.show_new_player_icons", true, CVar.REPLICATED | CVar.CLIENT | CVar.ARCHIVE);
+
+    /// <summary>
+    /// The minutes under which a new player will have an indicator above their sprite, when <see cref="ShowNewPlayerIcons"/> is true.
+    /// </summary>
+    public static readonly CVarDef<float> NewPlayerTimeTotalMinutes =
+        CVarDef.Create("game.new_player_time_total_minutes", 90f, CVar.REPLICATED | CVar.SERVER);
 
     /// <summary>
     /// Determines whether wall-mounted entities are hidden when viewed from outside their facing arc.

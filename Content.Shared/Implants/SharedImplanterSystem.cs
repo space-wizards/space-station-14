@@ -34,7 +34,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private SharedForensicsSystem _forensics = default!;
+    [Dependency] private ForensicsSystem _forensics = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
 
     [Dependency] private EntityQuery<SubdermalImplantComponent> _implantCompQuery;
@@ -64,7 +64,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         if (ent.Comp.Implant != null)
             ent.Comp.ImplanterSlot.StartingItem = ent.Comp.Implant;
 
-        _itemSlots.AddItemSlot(ent, ImplanterComponent.ImplanterSlotId, ent.Comp.ImplanterSlot);
+        _itemSlots.AddItemSlot(ent.Owner, ImplanterComponent.ImplanterSlotId, ent.Comp.ImplanterSlot);
     }
 
     private void OnMapInit(Entity<ImplanterComponent> ent, ref MapInitEvent args)

@@ -24,6 +24,7 @@ public partial class MobStateSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeEvents();
     }
 

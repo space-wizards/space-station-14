@@ -363,7 +363,7 @@ namespace Content.Server.Voting.Managers
             if (voteType == StandardVoteType.Preset)
             {
                 var presets = GetGamePresets();
-                if (presets.Count == 1 && presets.Select(x => x.Key).Single() == _entityManager.System<GameTicker>().Preset?.ID)
+                if (presets.Count == 1 && presets.Select(x => x.Key).Single() == _entityManager.System<ServerGameTicker>().Preset?.ID)
                     return false;
             }
 

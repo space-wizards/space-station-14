@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: MachineParticleAcceleratorEndCapCircuitboard
   parent: BaseMachineCircuitboard
   name: PA end cap board
