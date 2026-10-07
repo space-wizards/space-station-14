@@ -1,7 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
 using Content.Server.Medical.Components;
-using Content.Server.Medical.HealthAnalyzer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
@@ -9,6 +8,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Medical.Cryogenics;
+using Content.Shared.Medical.HealthAnalyzer;
 
 namespace Content.Server.Medical;
 
@@ -17,7 +17,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
     [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private GasCanisterSystem _gasCanisterSystem = default!;
     [Dependency] private GasAnalyzerSystem _gasAnalyzerSystem = default!;
-    [Dependency] private ServerHealthAnalyzerSystem _healthAnalyzerSystem = default!;
+    [Dependency] private HealthAnalyzerSystem _healthAnalyzerSystem = default!;
     [Dependency] private NodeContainerSystem _nodeContainer = default!;
     [Dependency] private DamageableSystem _damageable = default!;
 
