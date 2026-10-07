@@ -147,6 +147,7 @@
       - MobState
       - Door
       - Wall
+  - type: AntiRottingContainer
   - type: Tag
     tags:
     - CannotSuicide
