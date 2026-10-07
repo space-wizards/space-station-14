@@ -31,9 +31,10 @@
   - type: TemperatureTransform
     entries:
     - temperatureRange: 330, 2000
-      table: !type:AllSelector
-        children:
-        - id: Ash
+      effects:
+      - !type:SpawnEntity
+        entity: Ash
+      - !type:DeleteEntity
   - type: Edible
     delay: 7
     forceFeedDelay: 7
