@@ -10,7 +10,7 @@ namespace Content.Server.StationEvents.Components;
 /// <summary>
 ///     Solar Flare event specific configuration
 /// </summary>
-[RegisterComponent, Access(typeof(SolarFlareRule))]
+[RegisterComponent, AutoGenerateComponentPause, Access(typeof(SolarFlareRule))]
 public sealed partial class SolarFlareRuleComponent : Component
 {
     /// <summary>
@@ -18,6 +18,9 @@ public sealed partial class SolarFlareRuleComponent : Component
     /// </summary>
     [ViewVariables]
     public EntityUid? AffectedStation;
+
+    [DataField, AutoPausedField]
+    public TimeSpan EffectTimer = TimeSpan.Zero;
 
     #region Radio
 

@@ -53,13 +53,13 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
 
     private static readonly SolarFlareDoorAction[] SolarFlareActions = Enum.GetValues<SolarFlareDoorAction>();
     private static readonly AirAlarmMode[] AirAlarmModes = Enum.GetValues<AirAlarmMode>();
+
     private static readonly SecurityStatus[] CrimeStatuses = Enum.GetValues<SecurityStatus>()
         .Where(status => status != SecurityStatus.None)
         .ToArray();
 
-    private float _effectTimer;
-
-    protected override void Added(Entity<SolarFlareRuleComponent, GameRuleComponent> solarFlare, ref GameRuleAddedEvent args)
+    protected override void Added(Entity<SolarFlareRuleComponent, GameRuleComponent> solarFlare,
+        ref GameRuleAddedEvent args)
     {
         if (TryComp<StationEventComponent>(solarFlare, out var stationEvent))
         {
@@ -68,8 +68,12 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
             var scrambledAnnouncement = new StringBuilder(announcement.Length);
             for (float i = 0; i < announcement.Length; i++)
             {
+                // Power of 4 gives almost no scramble in the first half, then quickly reaches 100% scramble.
+                // So you can easily see it's the solar flare announcement still.
                 if (RobustRandom.Prob(MathF.Pow(i / announcement.Length, 4)))
                 {
+                    // Filter out the first 32 special (boring) characters with no representation in our font.
+                    // They all appear as the unknown symbol indicator.
                     scrambledAnnouncement.Append(Convert.ToChar(RobustRandom.NextByte(32, 255)));
                 }
                 else
@@ -104,9 +108,11 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
             .GetEntitiesWithComponentOnStation<PoweredLightComponent>(true, out var station)
             .Select(e => e.Owner)
             .ToHashSet();
+
         solarFlareComp.AffectedAirlocks = Station.GetEntitiesWithComponentOnStation<AirlockComponent>(true)
             .Select(e => e.Owner)
             .ToHashSet();
+
         solarFlareComp.AffectedAirAlarms = Station.GetEntitiesWithComponentOnStation<AirAlarmComponent>(true)
             .Select(e => e.Owner)
             .ToHashSet();
@@ -131,9 +137,11 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
             .GetEntitiesWithComponentOnStation<VendingMachineComponent>(true)
             .Select(e => e.Owner)
             .ToHashSet();
+
         solarFlareComp.AffectedLocks = Station.GetEntitiesWithComponentOnStation<LockComponent>(false)
             .Select(e => e.Owner)
             .ToHashSet();
+
         solarFlareComp.AffectedLinkSources = Station
             .GetEntitiesWithComponentOnStation<DeviceLinkSourceComponent>(false)
             .Select(e => e.Owner)
@@ -141,17 +149,22 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
             .ToHashSet();
     }
 
-    protected override void ActiveTick(EntityUid solarFlare, SolarFlareRuleComponent solarFlareComp, GameRuleComponent gameRuleComp, float frameTime)
+    protected override void ActiveTick(
+        EntityUid solarFlare,
+        SolarFlareRuleComponent solarFlareComp,
+        GameRuleComponent gameRuleComp,
+        float frameTime)
     {
         base.ActiveTick(solarFlare, solarFlareComp, gameRuleComp, frameTime);
 
-        _effectTimer -= frameTime;
-        if (!(_effectTimer < 0))
+        solarFlareComp.EffectTimer -= TimeSpan.FromSeconds(frameTime);
+        if (solarFlareComp.EffectTimer > TimeSpan.Zero)
         {
             return;
         }
 
-        _effectTimer += 1;
+        solarFlareComp.EffectTimer += TimeSpan.FromSeconds(1);
+
         foreach (var light in solarFlareComp.AffectedLights)
         {
             if (RobustRandom.Prob(solarFlareComp.LightBreakChance)
@@ -216,7 +229,8 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
             _airAlarm.SetMode(airAlarm, string.Empty, RobustRandom.Pick(AirAlarmModes), false, airAlarmComp);
         }
 
-        var totalChangeCriminalRecordChance = solarFlareComp.ChangeCriminalRecordChance * solarFlareComp.AffectedStationRecords.Count;
+        var totalChangeCriminalRecordChance =
+            solarFlareComp.ChangeCriminalRecordChance * solarFlareComp.AffectedStationRecords.Count;
         if (solarFlareComp.AffectedStationRecords.Count >= 1
             && RobustRandom.Prob(totalChangeCriminalRecordChance))
         {
