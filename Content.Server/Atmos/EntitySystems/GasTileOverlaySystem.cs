@@ -218,7 +218,7 @@ public sealed partial class GasTileOverlaySystem : SharedGasTileOverlaySystem
 
         if (tile.Hotspot.Valid)
             newByteTemp.SetTemperature(tile.Hotspot.Temperature);
-        else if (!tile.Space && tile.Air?.TotalMoles <= 5f)
+        else if (!tile.Space && tile.Air?.TotalMoles <= ThermalByte.MinimalPressureThreshold)
             newByteTemp.SetVacuum();
         else if (!tile.Space && tile.Air != null)
             newByteTemp = new(tile.Air.Temperature);

@@ -84,7 +84,6 @@ public struct GasChunkEnumerator<T> where T : struct, IEquatable<T>
             }
 
             gas = _tileData[_index];
-
             if (!gas.Equals(default))
                 return true;
         }
