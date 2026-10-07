@@ -1,5 +1,5 @@
+using System.Text;
 using JetBrains.Annotations;
-using Content.Shared.Utility;
 using Robust.Client.UserInterface.RichText;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -29,7 +29,16 @@ public sealed partial class ScrambleTag : IMarkupTagHandler
             return string.Empty;
 
         var seed = (int) (_timing.CurTime.TotalMilliseconds / rate);
+        var rand = new Random(seed + node.GetHashCode());
+        var charOptions = chars.ToCharArray();
         var realLength = MathF.Min(length.Value, MaxScrambleLength);
-        return ScrambleUtility.Generate((int) realLength, chars, seed + node.GetHashCode());
+        var sb = new StringBuilder();
+        for (var i = 0; i < realLength; i++)
+        {
+            var index = rand.Next() % charOptions.Length;
+            sb.Append(charOptions[index]);
+        }
+
+        return sb.ToString();
     }
 }
