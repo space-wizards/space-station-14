@@ -106,9 +106,6 @@ public sealed partial class GasTileVacuumOverlay : Overlay
                     var (_, _, gridEntToWorld, worldToGridLocal) = _xformSys.GetWorldPositionRotationMatrixWithInv(grid.Owner);
                     var gridEntToViewportLocal = gridEntToWorld * worldToViewportLocal;
 
-                    if (!Matrix3x2.Invert(gridEntToViewportLocal, out _))
-                        continue;
-
                     // Draw commands (like DrawRect) will be using grid coordinates from here
                     worldHandle.SetTransform(gridEntToViewportLocal);
 
