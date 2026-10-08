@@ -289,7 +289,15 @@ public abstract partial class SharedConveyorController : VirtualController
         conveyorRot += bestConveyor.Comp!.Angle;
 
         if (comp.State == ConveyorState.Reverse)
-            conveyorRot += comp.ConveyorCorner ? -HalfPI : MathF.PI;
+        {
+            conveyorRot += comp.CornerDirection switch
+            {
+                ConveyorCornerDirection.Left => HalfPI,
+                ConveyorCornerDirection.Right => -HalfPI,
+                _ => MathF.PI
+            };
+        }
+
         var conveyorDirection = conveyorRot.ToWorldVec();
         direction = conveyorDirection;
 
