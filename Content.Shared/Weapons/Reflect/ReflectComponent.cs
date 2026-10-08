@@ -44,7 +44,7 @@ public sealed partial class ReflectComponent : Component
     public float ReflectProb = 0.25f;
 
     /// <summary>
-    /// Probability for a projectile to be reflected.
+    /// Projectile spread. The projectile will be randomly rotated within this angle upon being reflected.
     /// </summary>
     [DataField, AutoNetworkedField]
     public Angle Spread = Angle.FromDegrees(45);

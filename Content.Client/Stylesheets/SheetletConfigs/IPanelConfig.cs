@@ -6,4 +6,6 @@ public interface IPanelConfig : ISheetletConfig
 {
     public ResPath GeometricPanelBorderPath { get; }
     public ResPath BlackPanelDarkThinBorderPath { get; }
+    public Color DeepPanelBackgroundColor { get; }
+    public Color DeepPanelBorderColor { get; }
 }

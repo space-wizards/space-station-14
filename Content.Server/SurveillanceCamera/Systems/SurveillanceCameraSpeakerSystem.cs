@@ -1,8 +1,8 @@
 using Content.Server.Chat.Systems;
-using Content.Server.Speech;
 using Content.Server.SurveillanceCamera.Systems;
-using Content.Shared.Speech;
 using Content.Shared.Chat;
+using Content.Shared.Speech;
+using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 

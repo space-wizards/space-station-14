@@ -232,7 +232,8 @@
   - type: Computer
     board: CargoShuttleConsoleCircuitboard
   - type: StealTarget
-    stealGroup: CargoShuttleConsoleCircuitboard
+    stealGroup:
+    - CargoShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -457,9 +458,112 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: CrewMonitor
-  - type: WirelessNetworkConnection
+    prefix: device-address-prefix-crew-monitor
+  - type: WirelessNetwork
     range: 1200
   - type: AmbientMusicMarkerMedical
+
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerStationTeleportersControl
+  name: station teleporters control console
+  description: Used to monitor station teleport system operations.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: teleporters_station
+    - map: ["computerLayerKeys"]
+      state: telesci_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3493c2"
+  - type: Computer
+    board: StationTeleportersControlCircuitboard
+  - type: ActivatableUIRequiresAccess
+  - type: ActivatableUI
+    key: enum.StationTeleporterConsoleUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.StationTeleporterConsoleUIKey.Key:
+        type: StationTeleporterConsoleBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: StationTeleporterConsole
+    portalColor: "#81ddeb"
+  - type: Storage
+    grid:
+    - 0,0,4,2
+    maxItemSize: Small
+    openOnActivate: false
+    storageOpenSound: /Audio/Machines/door_lock_off.ogg
+    storageCloseSound: /Audio/Machines/door_lock_on.ogg
+    storageInsertSound: /Audio/Machines/id_insert.ogg
+    storageRemoveSound: /Audio/Machines/id_swipe.ogg
+    whitelist:
+      tags:
+      - FitInTeleporterConsole
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
+      board: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
+  - type: AccessReader
+    access: [["Command"]]
+  - type: Lock
+    unlockOnClick: false
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - storagebase
+
+
+- type: entity
+  parent: ComputerStationTeleportersControl
+  id: ComputerStationTeleportersControlFilled
+  suffix: Autofilled, Nanotrasen Network
+  components:
+  - type: StationTeleporterConsole
+    autoLinkKey: Nanotrasen
+
+- type: entity
+  parent: ComputerStationTeleportersControl
+  id: ComputerSyndicateTeleportersControl
+  name: syndicate teleporters control console
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: teleporters_syndicate
+    - map: ["computerLayerKeys"]
+      state: syndie_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: PointLight
+    color: "#c61414"
+  - type: Computer
+    board: SyndicateTeleportersControlCircuitboard
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+  - type: StationTeleporterConsole
+    portalColor: "#c61414"
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -680,10 +784,6 @@
     radius: 1.5
     energy: 4.0
     color: "#3c5eb5"
-  - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
-  - type: Injurable
-    damageContainer: StructuralInorganic
 
 - type: entity
   parent: ComputerComms
@@ -899,12 +999,12 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 200
   - type: DeviceLinkSource
     range: 200
     ports:
-      - OrderSender
+    - OrderSender
   - type: GuideHelp
     guides:
     - Cargo
@@ -1198,10 +1298,6 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: Pai
-  - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: GuideHelp
     guides:
     - Cloning
@@ -1289,7 +1385,8 @@
     - type: AccessReader
       access: [["Salvage"]]
     - type: StealTarget
-      stealGroup: SalvageExpeditionsComputerCircuitboard
+      stealGroup:
+      - SalvageExpeditionsComputerCircuitboard
 
 - type: entity
   parent: BaseComputer
@@ -1315,7 +1412,8 @@
     deviceNetId: Wired
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
-  - type: WiredNetworkConnection
+    prefix: device-address-prefix-camera-monitor
+  - type: WiredNetwork
   - type: DeviceNetworkRequiresPower
   - type: SurveillanceCameraMonitor
   - type: ActivatableUI
@@ -1354,7 +1452,8 @@
     deviceNetId: Wireless
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
-  - type: WirelessNetworkConnection
+    prefix: device-address-prefix-camera-monitor
+  - type: WirelessNetwork
     range: 200
   - type: DeviceNetworkRequiresPower
   - type: Speech
@@ -1383,7 +1482,7 @@
     deviceNetId: Wireless
     receiveFrequencyId: Mothership
     transmitFrequencyId: Mothership
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 2000
 
 - type: entity
@@ -1506,7 +1605,7 @@
       prefix: device-address-prefix-sensor-monitor
       sendBroadcastAttemptEvent: true
       examinableAddress: true
-    - type: WiredNetworkConnection
+    - type: WiredNetwork
     - type: DeviceList
     - type: AtmosDevice
 

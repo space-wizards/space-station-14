@@ -32,14 +32,18 @@ public sealed partial class WallMountComponent : Component, IComponentTreeEntry<
     [DataField, AutoNetworkedField]
     public bool DirectionalVisibility = true;
 
+    /// <inheritdoc/>
     [ViewVariables]
     public EntityUid? TreeUid { get; set; }
 
+    /// <inheritdoc/>
     [ViewVariables]
     public DynamicTree<ComponentTreeEntry<WallMountComponent>>? Tree { get; set; }
 
+    /// <inheritdoc/>
     [ViewVariables]
     public bool AddToTree => Arc < Math.Tau && DirectionalVisibility;
 
+    /// <inheritdoc/>
     public bool TreeUpdateQueued { get; set; }
 }
