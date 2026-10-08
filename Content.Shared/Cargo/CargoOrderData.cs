@@ -27,7 +27,6 @@ namespace Content.Shared.Cargo
         /// </summary>
         [DataField]
         public string Requester { get; private set; }
-
         // public String RequesterRank; // TODO Figure out how to get Character ID card data
         // public int RequesterId;
 

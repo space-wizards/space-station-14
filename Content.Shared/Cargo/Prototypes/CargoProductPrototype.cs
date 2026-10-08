@@ -159,7 +159,7 @@ namespace Content.Shared.Cargo.Prototypes
         public EntProtoId<ContainerManagerComponent> Entity;
         [DataField(required: true)]
         /// <summary>
-        /// Component for spawning entities.
+        /// What container in <see cref="Entity"/> the product should be inserted into.
         /// </summary>
         public string ContainerId = string.Empty;
         [DataField(required: true)]

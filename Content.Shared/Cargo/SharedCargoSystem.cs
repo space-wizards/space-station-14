@@ -252,19 +252,19 @@ public abstract partial class SharedCargoSystem : EntitySystem
             if (!ShouldOrderItem(item))
                 continue;
 
-            if (!ProtoMan.TryIndex<CargoProductPrototype>(item.Product, out var productProto))
+            if (!ProtoMan.Resolve(item.Product, out var productProto))
                 continue;
 
             if (!item.WithContainer || productProto.Container == null)
             {
                 for (int i = 0; i < item.Quantity - item.NumOrdered; i++)
                 {
-                    containers.Add(new CargoOrderContainerData("", "", item));
+                    containers.Add(new CargoOrderContainerData(null, null, item));
                 }
                 continue;
             }
 
-            if (!ProtoMan.TryIndex<CargoCratePrototype>(productProto.Container, out var crate))
+            if (!ProtoMan.Resolve(productProto.Container, out var crate))
                 continue;
 
             PackItemIntoCrates(ref item, crate, containers);
@@ -341,8 +341,8 @@ public abstract partial class SharedCargoSystem : EntitySystem
     {
         if (!ProtoMan.TryIndex<CargoProductPrototype>(item.Product, out var proto))
             return false;
-        return container.Container != ""
-            && (EntProtoId)container.Container == crate.Entity
+        return container.Container != null
+            && container.Container == crate.Entity
             && GetContainerItemCount(container) <= container.MaxItems - item.Quantity * GetItemEntityCount(item)
             && container.CrateRequired == crate.Required;
     }

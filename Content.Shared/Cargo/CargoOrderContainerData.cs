@@ -11,12 +11,12 @@ public sealed partial class CargoOrderContainerData
     /// The ID of the cargo crate of the container.
     /// </summary>
     [DataField]
-    public string Container;
+    public EntProtoId? Container;
 
     /// <summary>
     /// The ID of the component which entities are inserted
     /// </summary>
-    public string ContainerID = string.Empty;
+    public string? ContainerID;
 
     /// <summary>
     /// The max amount of items which can be spawned inside this container
@@ -54,8 +54,8 @@ public sealed partial class CargoOrderContainerData
     public int Cost;
 
     public CargoOrderContainerData(
-        string container,
-        string containerID,
+        EntProtoId? container,
+        string? containerID,
         CargoOrderItemData? item = null,
         bool crateRequired = false,
         int maxItems = 30,

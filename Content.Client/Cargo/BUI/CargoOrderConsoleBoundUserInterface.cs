@@ -135,10 +135,7 @@ namespace Content.Client.Cargo.BUI
         {
             base.UpdateState(state);
 
-            if (
-                state is not CargoConsoleInterfaceState cState
-                || !EntMan.TryGetComponent<CargoOrderConsoleComponent>(Owner, out var orderConsole)
-            )
+            if (state is not CargoConsoleInterfaceState cState || !EntMan.TryGetComponent<CargoOrderConsoleComponent>(Owner, out var orderConsole))
                 return;
             var station = EntMan.GetEntity(cState.Station);
 
