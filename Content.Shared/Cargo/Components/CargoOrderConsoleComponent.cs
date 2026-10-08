@@ -156,12 +156,10 @@ public enum CargoOrderConsoleMode : byte
     /// Place orders directly
     /// </summary>
     DirectOrder,
-
     /// <summary>
     /// Print a slip to be inserted into a DirectOrder console
     /// </summary>
     PrintSlip,
-
     /// <summary>
     /// Transfers the order to the primary account
     /// </summary>

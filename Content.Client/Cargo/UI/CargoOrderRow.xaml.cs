@@ -14,6 +14,7 @@ namespace Content.Client.Cargo.UI
         {
             RobustXamlLoader.Load(this);
         }
+
         public void SetApproveVisible(bool visible)
         {
             Approve.Visible = visible;

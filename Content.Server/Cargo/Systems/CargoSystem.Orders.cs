@@ -101,13 +101,8 @@ public sealed partial class CargoSystem
             return;
         }
 
-        var order = new CargoOrderData(
-            GenerateOrderId(orderDatabase),
-            args.Basket,
-            args.Requester,
-            args.Reason,
-            ent.Comp.Account
-        );
+        var id = GenerateOrderId(orderDatabase);
+        var order = new CargoOrderData(id, args.Basket, args.Requester, args.Reason, ent.Comp.Account);
 
         if (!TryAddOrder(stationUid.Value, order, orderDatabase))
         {
@@ -203,7 +198,6 @@ public sealed partial class CargoSystem
         if (!_emag.CheckFlag(ent.Owner, EmagType.Interaction))
         {
             order.SetApproverData(_identity.GetIdentityShortInfo(player, ent.Owner));
-
             var message = GetApprovedRadioMessage(order);
             _radio.SendRadioMessage(ent.Owner, message, account.RadioChannel, ent.Owner, escapeMarkup: false);
             if (CargoOrderConsoleComponent.BaseAnnouncementChannel != account.RadioChannel)
@@ -307,7 +301,8 @@ public sealed partial class CargoSystem
     )
     {
         // Make an order
-        var order = new CargoOrderData(GenerateOrderId(orderDatabase), basket, sender, description, account);
+        var id = GenerateOrderId(orderDatabase);
+        var order = new CargoOrderData(id, basket, sender, description, account);
         order.Visible = false;
 
         // Approve it now
@@ -330,7 +325,7 @@ public sealed partial class CargoSystem
         );
 
         // Add it to the list
-        return TryAddOrder(dbUid, order, orderDatabase) && TryFulfillOrder(stationData, order, orderDatabase);
+        return TryAddOrder(dbUid, order, orderDatabase);
     }
 
     public void TryDeliverAllUndeliveredOrders(Entity<StationCargoOrderDatabaseComponent> ent)
@@ -342,25 +337,28 @@ public sealed partial class CargoSystem
 
         foreach (var order in ent.Comp.Orders)
         {
+            // Don't deliver unapproved orders
             if (!order.Approved)
                 continue;
 
+            // If the order has been delivered remove from active and add to history
             if (!order.Basket.Any(item => item.NumOrdered < item.Quantity))
             {
                 toDeliver.Add(order);
                 continue;
             }
 
+            // If the order is already taken by something i.e. telepad
             if (order.Assigned && TryGetEntity(order.AssignedEntity, out var _))
                 continue;
 
+            // If something can take the order i.e. telepad
             if (TryExternalFulfillment((ent, stationData), order))
                 continue;
 
-            if (
-                TryFulfillOrder((ent, stationData), order, ent.Comp)
-                && order.Basket.All(item => item.NumOrdered == item.Quantity)
-            )
+            // Try to deliver the order
+            // This can partially deliver the order but will return false
+            if (TryFulfillOrder((ent, stationData), order, ent.Comp))
                 toDeliver.Add(order);
         }
 
@@ -389,13 +387,7 @@ public sealed partial class CargoSystem
             return;
         }
 
-        var order = new CargoOrderData(
-            GenerateOrderId(orderDatabase),
-            slip.Basket,
-            slip.Requester,
-            slip.Reason,
-            slip.Account
-        );
+        var order = new CargoOrderData(GenerateOrderId(orderDatabase), slip.Basket, slip.Requester, slip.Reason, slip.Account);
 
         if (!TryAddOrder(stationUid.Value, order, orderDatabase))
         {
@@ -483,7 +475,12 @@ public sealed partial class CargoSystem
         // Try to fulfill from any station where possible, if the pad is not occupied.
         foreach (var trade in GetTradeStations(stationData))
         {
-            foreach (var pad in GetFreeCargoPallets(trade).Shuffle())
+            var tradePads = GetCargoPallets(trade, BuySellType.Buy);
+
+            var freePads = GetFreeCargoPallets(trade, tradePads);
+
+            _random.Shuffle(freePads);
+            foreach (var pad in freePads)
             {
                 var coordinates = new EntityCoordinates(trade, pad.Transform.LocalPosition);
 
@@ -532,10 +529,11 @@ public sealed partial class CargoSystem
     {
         containerEntity = EntityUid.Invalid;
 
+        // If product is one entity i.e. crate fill entity or single object
         if (container.IsSingleProduct || container.Container == "")
         {
             var first = container.Products.First();
-            if (!ProtoMan.TryIndex<CargoProductPrototype>(first.Source.Product, out var singleProto))
+            if (!ProtoMan.Resolve(first.Source.Product, out var singleProto))
                 return false;
             containerEntity = Spawn(singleProto.SpawnList.First(), spawn);
             first.Source.NumOrdered++;
@@ -551,16 +549,16 @@ public sealed partial class CargoSystem
 
         foreach (var item in container.Products)
         {
-            if (!ProtoMan.TryIndex<CargoProductPrototype>(item.Source.Product, out var productProto))
-                return false;
+            if (!ProtoMan.Resolve(item.Source.Product, out var productProto))
+                continue;
 
-            if (!_container.TryGetContainer(containerEntity, container.ContainerID, out var slot))
+            if (container.Container == null || !_container.TryGetContainer(containerEntity, container.ContainerID!, out var slot))
             {
                 DebugTools.Assert(
                     false,
-                    $"Failed to find container slot for cargo product. Check the container definition. {productProto.Name}: {(EntProtoId)container.Container}"
+                    $"Failed to find container slot for cargo product. Check the container definition. {productProto.Name}: {container.Container}"
                 );
-                return false;
+                continue;
             }
 
             for (int i = 0; i < item.Quantity; i++)
@@ -572,7 +570,7 @@ public sealed partial class CargoSystem
                     {
                         DebugTools.Assert(
                             false,
-                            $"Failed to insert cargo product into its specified container. This indicates an error in the cargo product definition's YAML as the product should be insertable into its container. {productProto.Name}: {(EntProtoId)container.Container}"
+                            $"Failed to insert cargo product into its specified container. This indicates an error in the cargo product definition's YAML as the product should be insertable into its container. {productProto.Name}: {container.Container}"
                         );
                     }
                 }
