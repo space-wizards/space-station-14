@@ -340,5 +340,43 @@ public sealed partial class MetabolizerSystem : EntitySystem
 
         return ent.Comp.MetabolizerTypes.Add(metabolizer);
     }
+
+    /// <summary>
+    /// Checks if the given organ has the given metabolizer.
+    /// </summary>
+    /// <param name="targetOrgan">The organ we are checking.</param>
+    /// <param name="targetMetabolizer">The metabolizer we are checking for.</param>
+    /// <returns>Returns true if the organ has the given metabolizer, false if the organ doesn't (this includes it not being a metabolizer at all)</returns>
+    public bool HasMetabolizer(Entity<MetabolizerComponent?> targetOrgan, ProtoId<MetabolizerTypePrototype> targetMetabolizer)
+    {
+        if (!Resolve(targetOrgan.Owner, ref targetOrgan.Comp, false))
+            return false;
+
+        if (targetOrgan.Comp.MetabolizerTypes is null)
+            return false;
+
+        if (!targetOrgan.Comp.MetabolizerTypes.Contains(targetMetabolizer))
+            return false;
+
+        return true;
+    }
+
+    /// <summary>
+    /// Checks if a given body has a metabolizer of the target type.
+    /// </summary>
+    /// <param name="targetBody">The body we are checking for the metabolizer.</param>
+    /// <param name="targetMetabolizer">The metabolizer we are checking for.</param>
+    /// <returns></returns>
+    public bool BodyHasMetabolizer(EntityUid targetBody, ProtoId<MetabolizerTypePrototype> targetMetabolizer)
+    {
+        var metabolisms = _body.EnumerateOrgans<MetabolizerComponent>(targetBody);
+        foreach (var organ in metabolisms)
+        {
+            if (HasMetabolizer((organ, organ.Comp2), targetMetabolizer))
+                return true;
+        }
+
+        return false;
+    }
 }
 

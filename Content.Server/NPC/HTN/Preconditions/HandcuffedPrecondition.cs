@@ -1,4 +1,4 @@
-using Content.Server.Cuffs;
+using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
 
 namespace Content.Server.NPC.HTN.Preconditions;
@@ -6,13 +6,13 @@ namespace Content.Server.NPC.HTN.Preconditions;
 public sealed partial class HandcuffedPrecondition : HTNPrecondition
 {
     [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private SharedCuffableSystem _cuffable = default!;
 
     [DataField]
     public bool ReactOnlyWhenFullyCuffed = true;
 
     public override bool IsMet(NPCBlackboard blackboard)
     {
-        var cuffable = _entManager.System<CuffableSystem>();
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
         if (!_entManager.TryGetComponent<CuffableComponent>(owner, out var cuffComp))
@@ -20,7 +20,7 @@ public sealed partial class HandcuffedPrecondition : HTNPrecondition
 
         var target = (owner, cuffComp);
 
-        return cuffable.IsCuffed(target, ReactOnlyWhenFullyCuffed);
+        return _cuffable.IsCuffed(target, ReactOnlyWhenFullyCuffed);
     }
 
 }

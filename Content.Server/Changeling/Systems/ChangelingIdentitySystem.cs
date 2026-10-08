@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Server.Changeling.Systems;
 
-public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
+public sealed partial class ChangelingIdentitySystem : SharedChangelingIdentitySystem
 {
     public override void Initialize()
     {

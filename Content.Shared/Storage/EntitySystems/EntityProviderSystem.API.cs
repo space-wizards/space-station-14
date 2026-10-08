@@ -1,0 +1,264 @@
+using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Popups;
+using Content.Shared.Storage.Components;
+using Content.Shared.Storage.Events;
+using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
+
+namespace Content.Shared.Storage.EntitySystems;
+
+public sealed partial class EntityProviderSystem
+{
+    /// <summary>
+    /// Attempts to insert an entity back into the entityStorage of the provider.
+    /// They will be saved as an entity and are prioritized over spawning new entities of their kind.
+    /// </summary>
+    /// <param name="provider">The entity providing the entityProvider storage.</param>
+    /// <param name="target">The entity attempted to be put into the provider.</param>
+    /// <param name="user">The user attempting to insert the entity into the provider. Leave null to avoid popups.</param>
+    /// <returns>Returns true if it was inserted successfully, otherwise false.</returns>
+    [PublicAPI]
+    public bool TryInsertIntoProvider(Entity<EntityProviderComponent> provider, EntityUid target, EntityUid? user = null)
+    {
+        if (!provider.Comp.CanReceive
+            || IsProviderFull(provider, user)
+            || _whitelist.IsWhitelistFailOrNull(provider.Comp.Whitelist, target))
+        {
+            return false;
+        }
+
+        // This event allows for a deeper check than a whitelist/blacklist.
+        var ev = new EntityProviderInsertCheckEvent();
+        RaiseLocalEvent(target, ref ev);
+
+        if (ev.FailureMessage != null)
+        {
+            _popup.PopupEntity(ev.FailureMessage, provider, user, PopupType.Medium);
+            return false;
+        }
+
+        var meta = MetaData(target);
+        if (meta.EntityPrototype == null)
+            return false;
+
+        if (!provider.Comp.EntityCounter.TryAdd(meta.EntityPrototype, 1))
+            provider.Comp.EntityCounter[meta.EntityPrototype]++;
+
+        _container.Insert(target, provider.Comp.Container);
+
+        if (user.HasValue) // This ensures not causing multiple sounds when refilled via storage.
+            _audio.PlayPredicted(provider.Comp.SingularTransferSound, provider, user.Value);
+
+        HandleAppearance(provider.AsNullable());
+        Dirty(provider);
+        return true;
+    }
+
+    /// <summary>
+    /// Try to get an entity from the provider and spawn it.
+    /// </summary>
+    /// <remarks> This will prioritize getting an already spawned entity before spawning a new one. </remarks>
+    /// <param name="provider">The entity providing the entityProvider storage.</param>
+    /// <param name="protoId">The entity prototype ID to be spawned.</param>
+    /// <param name="entity">The uid of the spawned entity.</param>
+    /// <returns>Returns true when it was able to spawn it, otherwise false.</returns>
+    [PublicAPI]
+    public bool TryGetEntity(Entity<EntityProviderComponent?> provider, EntProtoId protoId, [NotNullWhen(true)] out EntityUid? entity)
+    {
+        entity = null;
+
+        if (!TryGetEntities(provider, protoId, out var entities, 1))
+            return false;
+
+        entity = entities[0];
+
+        return true;
+    }
+
+    /// <summary>
+    /// Try to get a list of entities of the same kind from the provider and spawn them.
+    /// </summary>
+    /// <remarks> This will prioritize getting already spawned entities before spawning new ones. </remarks>
+    /// <param name="provider">The entity providing the entityProvider storage.</param>
+    /// <param name="protoId">The entity prototype ID to be spawned.</param>
+    /// <param name="entities">The uid list of the spawned entities.</param>
+    /// <param name="requestedAmount">The amount of entities to spawn. If null, it'll spawn all of them.</param>
+    /// <returns>Returns true when it was able to spawn them, otherwise false.</returns>
+    [PublicAPI]
+    public bool TryGetEntities(
+        Entity<EntityProviderComponent?> provider,
+        EntProtoId protoId,
+        [NotNullWhen(true)] out List<EntityUid>? entities,
+        int? requestedAmount = null)
+    {
+        entities = null;
+
+        if (requestedAmount <= 0
+            || !Resolve(provider, ref provider.Comp)
+            || !provider.Comp.EntityCounter.TryGetValue(protoId, out var amountInEntityProvider))
+        {
+            return false;
+        }
+
+        requestedAmount = requestedAmount == null ? amountInEntityProvider : Math.Min(requestedAmount.Value, amountInEntityProvider);
+
+        // Prioritize already spawned entities before spawning new ones.
+        entities = new List<EntityUid>(GetEntitiesFromContainer(provider, protoId, requestedAmount));
+
+        requestedAmount -= entities.Count; // We don't need to spawn already spawned ones, so reduce the amount.
+        amountInEntityProvider -= entities.Count;
+
+        while (requestedAmount > 0)
+        {
+            var spawned = PredictedSpawnInContainerOrDrop(protoId, provider, ContainerId);
+            entities.Add(spawned);
+            amountInEntityProvider--;
+            requestedAmount--;
+        }
+
+        if (amountInEntityProvider == 0)
+            provider.Comp.EntityCounter.Remove(protoId);
+        else
+            provider.Comp.EntityCounter[protoId] = amountInEntityProvider;
+
+        Dirty(provider);
+
+        if (provider.Comp.DeleteIfEmpty && provider.Comp.EntityCounter.Count == 0)
+            QueueDel(provider);
+
+        HandleAppearance(provider);
+        return true;
+    }
+
+    /// <summary>
+    /// Returns a readonly Dictionary containing the EntProtoIds and their corresponding stored amounts.
+    /// This cannot be used for editing, only for knowing what and how much is stored.
+    /// </summary>
+    /// <param name="provider">The entity providing the entityProvider storage.</param>
+    /// <param name="entityCounter">The dictionary containing the stored entities.</param>
+    /// <returns>Returns true if the provider has one, otherwise false.</returns>
+    [PublicAPI]
+    public bool TryGetEntityCounter(Entity<EntityProviderComponent?> provider, [NotNullWhen(true)] out IReadOnlyDictionary<EntProtoId, int>? entityCounter)
+    {
+        entityCounter = null;
+        if (!Resolve(provider, ref provider.Comp))
+            return false;
+
+        entityCounter = provider.Comp.EntityCounter;
+        return true;
+    }
+
+    /// <summary>
+    /// Attempts to spawn entities of a kind, and then eject them from the provider.
+    /// </summary>
+    /// <remarks> This will prioritize ejecting already spawned entities before spawning new ones. </remarks>
+    /// <param name="provider">The entity providing the entityProvider storage.</param>
+    /// <param name="protoId">The entity prototype ID to be spawned.</param>
+    /// <param name="entities">The uid list of the spawned and ejected entities.</param>
+    /// <param name="requestedAmount">The amount of entities to spawn and eject. If null, it'll spawn all of them.</param>
+    /// <param name="user">The user ejecting the entities.</param>
+    /// <returns>Returns true when the entities were spawned and ejected, otherwise false.</returns>
+    [PublicAPI]
+    public bool TryEjectEntities(
+        Entity<EntityProviderComponent?> provider,
+        EntProtoId protoId,
+        [NotNullWhen(true)] out List<EntityUid>? entities,
+        int? requestedAmount = null,
+        EntityUid? user = null)
+    {
+        entities = null;
+        if (!Resolve(provider, ref provider.Comp) || !TryGetEntities(provider, protoId, out entities, requestedAmount))
+            return false;
+
+        if (entities.Count == 0)
+        {
+            var message = Loc.GetString("comp-entity-provider-no-ejected");
+            _popup.PopupEntity(message, provider, user, PopupType.Medium);
+            return false;
+        }
+
+        foreach (var entity in entities)
+        {
+            _container.Remove(entity, provider.Comp.Container);
+        }
+
+        var sound = requestedAmount == 1 ? provider.Comp.SingularTransferSound : provider.Comp.PluralTransferSound;
+        _audio.PlayPredicted(sound, provider, user);
+        return true;
+    }
+
+    /// <summary>
+    /// Attempts to spawn an entity of a kind and eject it.
+    /// </summary>
+    /// <remarks> This will prioritize ejecting an already spawned entity before spawning a new one. </remarks>
+    /// <param name="provider">The entity providing the entityProvider storage.</param>
+    /// <param name="protoId">The entity prototype ID to be spawned.</param>
+    /// <param name="entity">The entity that were and ejected.</param>
+    /// <param name="requestedAmount">The amount of entities to spawn and eject. If null, it'll spawn all of them.</param>
+    /// <param name="user">The user ejecting the entities.</param>
+    /// <returns>Returns true when the entities were spawned and ejected, otherwise false.</returns>
+    public bool TryEjectEntity(
+        Entity<EntityProviderComponent?> provider,
+        EntProtoId protoId,
+        [NotNullWhen(true)] out EntityUid? entity,
+        int? requestedAmount = null,
+        EntityUid? user = null
+    )
+    {
+        entity = null;
+        if (!TryEjectEntities(provider, protoId, out var uids, requestedAmount, user))
+            return false;
+
+        if (uids.Count == 0)
+            return false;
+
+        entity = uids[0];
+        return true;
+    }
+
+    /// <summary>
+    /// Attempts to spawn an entity of a kind, and then eject them to the hands of the user from the provider.
+    /// </summary>
+    /// <remarks> This will prioritize ejecting an already spawned entity before spawning a new one. </remarks>
+    /// <param name="provider">The entity providing the entityProvider storage.</param>
+    /// <param name="protoId">The entity prototype ID to be spawned.</param>
+    /// <param name="entity">The spawned and ejected entity.</param>
+    /// <param name="user">The user ejecting and picking up the entity.</param>
+    /// <returns>Returns true when the entity was spawned and ejected regardless whether the user picked it up, otherwise false.</returns>
+    [PublicAPI]
+    public bool TryEjectEntityToHand(
+        Entity<EntityProviderComponent?> provider,
+        EntProtoId protoId,
+        [NotNullWhen(true)] out EntityUid? entity,
+        EntityUid user)
+    {
+        entity = null;
+        if (!Resolve(provider, ref provider.Comp) || !TryEjectEntity(provider, protoId, out entity, 1, user))
+            return false;
+
+        _hands.TryPickupAnyHand(user, entity.Value);
+        return true;
+    }
+
+    /// <summary>
+    /// Attempts to switch the selected entity prototype id.
+    /// </summary>
+    /// <param name="provider">The provider whose selected entity is to change.</param>
+    /// <param name="protoId">The new entity prototype id to be selected.</param>
+    /// <param name="user">The user who caused the switch. If null, no sound will be played.</param>
+    /// <returns>True if it was able to select it, false if it didn't contain said prototype id or is not a provider.</returns>
+    [PublicAPI]
+    public bool TrySelectEntity(Entity<EntityProviderComponent?> provider, EntProtoId protoId, EntityUid? user)
+    {
+        if (!Resolve(provider, ref provider.Comp) || !provider.Comp.EntityCounter.ContainsKey(protoId))
+            return false;
+
+        provider.Comp.SelectedEntityProtoId = protoId;
+        Dirty(provider);
+
+        if (user.HasValue)
+            _audio.PlayPredicted(provider.Comp.SingularTransferSound, provider, user);
+
+        return true;
+    }
+}

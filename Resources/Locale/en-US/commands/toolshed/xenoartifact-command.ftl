@@ -26,4 +26,4 @@ command-spawnartifactwithnode-spawn-artifact-item-hint = use hand-held artifact
 command-spawnartifactwithnode-spawn-artifact-structure-hint = use structure-like stationary artifact
 command-spawnartifactwithnode-spawn-artifact-type-hint = <artifact entity proto id>
 
-command-xenoartifact-common-node-hint = depth {$depth} node {$nodeId} trigger {$nodeDetail}
+command-xenoartifact-common-node-hint = depth {$depth} node {$nodeId} trigger: '{$trigger}', effect: '{$effect}'
