@@ -9,7 +9,6 @@ using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Containers;
 using Content.Shared.EntityTable;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Tools.Components;
@@ -172,7 +171,7 @@ public sealed class CargoTest : GameTest
                         );
                     }
 
-                    if (proto.HasComponent<StackComponent>(_sCompFact))
+                    if (proto.HasComp<StackComponent>(_sCompFact))
                     {
                         Assert.That(
                             staticPriceComp.Price,

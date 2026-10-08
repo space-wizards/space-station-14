@@ -28,6 +28,9 @@ changeling-catalog-mute-sting-desc = Causes the target to be incapable of speech
 changeling-catalog-armblade-sting-name = Armblade Sting
 changeling-catalog-armblade-sting-desc = Causes the target to spontaneously grow a dulled armblade after a lengthy delay. Instant with increased duration when used on corpses. Can be used on self.
 
+changeling-catalog-hemotoxin-sting-name = Hemotoxin Sting
+changeling-catalog-hemotoxin-sting-desc = Causes extreme damage to the blood cells of the target. Very noticeable but very deadly if left untreated. Can be used on self.
+
 changeling-catalog-screech-name = Screech [TEMPORARY]
 changeling-catalog-screech-desc = We let out a powerful screech that disarms people who hear it without adequate ear protection. THIS ACTION WILL BE MOVED TO THE HORROR FORM WHEN IT IS IMPLEMENTED.
 
