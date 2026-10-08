@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Explosion.EntitySystems;
-using Content.Server.Shuttles.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
@@ -9,6 +8,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Lock;
 using Content.Shared.Mind.Components;
 using Content.Shared.Resist.Components;
+using Content.Shared.Shuttles.Components;
 using Content.Shared.Station.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
@@ -85,7 +85,7 @@ public sealed partial class BluespaceLockerSystem : EntitySystem
 
         // Close target if it is open
         if (target.Value.storageComponent.Open)
-            _entityStorage.CloseStorage(target.Value.uid, target.Value.storageComponent);
+            _entityStorage.CloseStorage((target.Value.uid, target.Value.storageComponent));
 
         // Apply bluespace effects if target is not a bluespace locker, otherwise let it handle it
         if (target.Value.bluespaceLockerComponent == null)
@@ -351,7 +351,7 @@ public sealed partial class BluespaceLockerSystem : EntitySystem
             if (Resolve(target.Value.uid, ref lockComponent, false) && lockComponent.Locked)
                 _lockSystem.Unlock(target.Value.uid, target.Value.uid, lockComponent);
 
-            _entityStorage.OpenStorage(target.Value.uid, target.Value.storageComponent);
+            _entityStorage.OpenStorage((target.Value.uid, target.Value.storageComponent));
         }
 
         // Bluespace effects

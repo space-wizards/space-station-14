@@ -1,63 +1,40 @@
 - type: cargoProduct
-  id: ServiceJanitorial
+  id: ServiceBarSupply
   icon:
-    sprite: Objects/Specific/Janitorial/spray_bottle.rsi
-    state: cleaner
-  product: CrateServiceJanitorialSupplies
-  cost: 560
-  category: cargoproduct-category-name-service
-  group: market
-
-- type: cargoProduct
-  id: ServiceCleanerGrenades
-  icon:
-    sprite: Objects/Weapons/Grenades/janitor.rsi
+    sprite: Objects/Consumable/Drinks/beerglass.rsi
     state: icon
-  product: CrateServiceCleanerGrenades
-  cost: 400
+  product: CrateServiceBarSupply
+  cost: 750
   category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
-  id: ServiceLightsReplacement
+  id: ServiceCook
   icon:
-    sprite: Objects/Power/light_bulb.rsi
-    state: normal
-  product: CrateServiceReplacementLights
-  cost: 600
+    sprite: Objects/Consumable/Food/ingredients.rsi
+    state: flour-big
+  product: CrateServiceCooking
+  cost: 750
   category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
-  id: ServiceLightsHoliday
+  id: ServiceCookGetmore
   icon:
-    sprite: Objects/Power/light_bulb.rsi
-    state: normal
-  product: CrateServiceHolidayLights
-  cost: 800
+    sprite: Objects/Consumable/Food/snacks.rsi
+    state: raisins
+  product: CrateServiceGetMore
+  cost: 750
   category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
-  id: ServiceLightsColorful
+  id: ServiceDinnerware
   icon:
-    sprite: Objects/Power/light_bulb.rsi
-    state: normal
-  product: CrateServiceColorfulLights
-  cost: 800
-  category: cargoproduct-category-name-service
-  group: market
-
-- type: cargoProduct
-  id: MousetrapBoxes
-  icon:
-    sprite: Objects/Devices/mousetrap.rsi
-    state: mousetrap
-  product: BoxMousetrap
-  container:
-    entity: WrappedParcel
-    containerId: contents
-  cost: 500
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: tin
+  product: CrateServiceDinnerware
+  cost: 750
   category: cargoproduct-category-name-service
   group: market
 
@@ -162,26 +139,6 @@
   group: market
 
 - type: cargoProduct
-  id: ServiceBoxes
-  icon:
-    sprite: Objects/Storage/boxes.rsi
-    state: box
-  product: CrateServiceBox
-  cost: 400
-  category: cargoproduct-category-name-service
-  group: market
-
-- type: cargoProduct
-  id: ServiceJanitorBiosuit
-  icon:
-    sprite: Clothing/Head/Hoods/Bio/janitor.rsi
-    state: icon
-  product: CrateJanitorBiosuit
-  cost: 800
-  category: cargoproduct-category-name-service
-  group: market
-
-- type: cargoProduct
   id: ServiceFoodCartHot
   icon:
     sprite: Objects/Specific/Kitchen/food_carts.rsi
@@ -208,26 +165,6 @@
     state: icon
   product: PetCarrier
   cost: 500
-  category: cargoproduct-category-name-service
-  group: market
-
-- type: cargoProduct
-  id: JanitorExplosive
-  icon:
-    sprite: Clothing/Head/Helmets/janitor_bombsuit.rsi
-    state: icon
-  product: ClosetJanitorBombFilled
-  cost: 1000
-  category: cargoproduct-category-name-service
-  group: market
-
-- type: cargoProduct
-  id: ServiceJanitorTrolley
-  icon:
-    sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
-    state: icon-cart
-  product: JanitorialTrolley
-  cost: 300
   category: cargoproduct-category-name-service
   group: market
 

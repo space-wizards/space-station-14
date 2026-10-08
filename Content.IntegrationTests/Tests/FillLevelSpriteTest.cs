@@ -2,7 +2,6 @@ using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
@@ -33,7 +32,7 @@ public sealed class FillLevelSpriteTest : GameTest
             var protos = protoMan.EnumeratePrototypes<EntityPrototype>()
                 .Where(p => !p.Abstract)
                 .Where(p => !pair.IsTestPrototype(p))
-                .Where(p => p.TryGetComponent<SolutionContainerVisualsComponent>(out _, componentFactory))
+                .Where(p => p.TryComp<SolutionContainerVisualsComponent>(out _, componentFactory))
                 .OrderBy(p => p.ID)
                 .ToList();
 
@@ -41,9 +40,9 @@ public sealed class FillLevelSpriteTest : GameTest
             {
                 foreach (var proto in protos)
                 {
-                    Assert.That(proto.TryGetComponent<SolutionContainerVisualsComponent>(out var visuals, componentFactory));
-                    Assert.That(proto.TryGetComponent<SpriteComponent>(out var sprite, componentFactory));
-                    if (!proto.HasComponent<AppearanceComponent>(componentFactory))
+                    Assert.That(proto.TryComp<SolutionContainerVisualsComponent>(out var visuals, componentFactory));
+                    Assert.That(proto.TryComp<SpriteComponent>(out var sprite, componentFactory));
+                    if (!proto.HasComp<AppearanceComponent>(componentFactory))
                     {
                         Assert.Fail(@$"{proto.ID} has SolutionContainerVisualsComponent but no AppearanceComponent.");
                     }
