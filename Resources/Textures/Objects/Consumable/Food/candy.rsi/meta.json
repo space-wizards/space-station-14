@@ -8,38 +8,6 @@
     },
     "states": [
         {
-            "name": "apple"
-        },
-        {
-            "name": "bunny"
-        },
-        {
-            "name": "chocolate-inhand-right",
-            "directions": 4
-        },
-        {
-            "name": "chocolate-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "cocoa"
-        },
-        {
-            "name": "coin"
-        },
-        {
-            "name": "corn"
-        },
-        {
-            "name": "dice"
-        },
-        {
-            "name": "egg"
-        },
-        {
-            "name": "orange"
-        },
-        {
             "name": "swirl_lollipop"
         },
         {

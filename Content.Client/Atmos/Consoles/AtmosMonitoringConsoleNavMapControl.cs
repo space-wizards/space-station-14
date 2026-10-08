@@ -204,7 +204,7 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
                     if (atmosPipeData == 0)
                         continue;
 
-                    var mask = (ulong)SharedNavMapSystem.AllDirMask << tileIdx * SharedNavMapSystem.Directions;
+                    var mask = (ulong)NavMapSystem.AllDirMask << tileIdx * NavMapSystem.Directions;
 
                     if ((atmosPipeData & mask) == 0)
                         continue;
@@ -214,16 +214,16 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
                     tile = tile with { Y = -tile.Y };
 
                     // Calculate the draw point offsets
-                    var vertLineOrigin = (atmosPipeData & northMask << tileIdx * SharedNavMapSystem.Directions) > 0 ?
+                    var vertLineOrigin = (atmosPipeData & northMask << tileIdx * NavMapSystem.Directions) > 0 ?
                         new Vector2(grid.TileSize * layerFraction, -grid.TileSize * 1f) : origin;
 
-                    var vertLineTerminus = (atmosPipeData & southMask << tileIdx * SharedNavMapSystem.Directions) > 0 ?
+                    var vertLineTerminus = (atmosPipeData & southMask << tileIdx * NavMapSystem.Directions) > 0 ?
                         new Vector2(grid.TileSize * layerFraction, -grid.TileSize * 0f) : origin;
 
-                    var horizLineOrigin = (atmosPipeData & eastMask << tileIdx * SharedNavMapSystem.Directions) > 0 ?
+                    var horizLineOrigin = (atmosPipeData & eastMask << tileIdx * NavMapSystem.Directions) > 0 ?
                         new Vector2(grid.TileSize * 1f, -grid.TileSize * layerFraction) : origin;
 
-                    var horizLineTerminus = (atmosPipeData & westMask << tileIdx * SharedNavMapSystem.Directions) > 0 ?
+                    var horizLineTerminus = (atmosPipeData & westMask << tileIdx * NavMapSystem.Directions) > 0 ?
                         new Vector2(grid.TileSize * 0f, -grid.TileSize * layerFraction) : origin;
 
                     // Scale up the vectors and convert to vector2i so we can merge them

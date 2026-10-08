@@ -44,9 +44,6 @@
             "name": "grape"
         },
         {
-            "name": "happy"
-        },
-        {
             "name": "meat"
         },
         {
@@ -76,12 +73,6 @@
         },
         {
             "name": "plain-slice"
-        },
-        {
-            "name": "plate"
-        },
-        {
-            "name": "plate-small"
         },
         {
             "name": "plump"

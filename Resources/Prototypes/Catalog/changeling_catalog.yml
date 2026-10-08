@@ -147,6 +147,21 @@
   productAction: ActionChangelingStingArmblade
 
 - type: listing
+  id: ChangelingStingHemotoxin
+  name: changeling-catalog-hemotoxin-sting-name
+  description: changeling-catalog-hemotoxin-sting-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: hemotoxin_sting }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 15
+  categories:
+  - ChangelingStoreCombat
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingStingHemotoxin
+
+- type: listing
   id: ChangelingLastResort
   name: changeling-catalog-last-resort-name
   description: changeling-catalog-last-resort-desc

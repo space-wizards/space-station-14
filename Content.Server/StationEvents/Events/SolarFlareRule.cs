@@ -19,7 +19,9 @@ using Content.Shared.Light.Components;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Content.Shared.Atmos.Monitor.Components;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Components;
+using Content.Shared.DeviceLinking.Systems;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Lock;
 using Content.Shared.VendingMachines.Components;
 using Content.Shared.Whitelist;
@@ -46,7 +48,7 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
     [Dependency] private StationRecordsSystem _stationRecords = default!;
     [Dependency] private VendingMachineSystem _vendingMachine = default!;
     [Dependency] private LockSystem _lock = default!;
-    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
     [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
 
     [Dependency] private EntityQuery<HeadsetComponent> _headsetQuery;
@@ -231,7 +233,7 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
             }
 
             airAlarmComp.AutoMode = false;
-            _airAlarm.SetMode(airAlarm, string.Empty, RobustRandom.Pick(AirAlarmModes), false, airAlarmComp);
+            _airAlarm.SetMode(airAlarm, DeviceAddress.Invalid, RobustRandom.Pick(AirAlarmModes), false, airAlarmComp);
         }
 
         var totalChangeCriminalRecordChance =
