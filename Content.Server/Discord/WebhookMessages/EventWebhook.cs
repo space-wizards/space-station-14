@@ -1,4 +1,4 @@
-﻿using Robust.Server;
+using Robust.Server;
 
 namespace Content.Server.Discord.WebhookMessages;
 

@@ -75,6 +75,6 @@ public sealed partial class BotanyProduceSystem : EntitySystem
             _plantTray.AdjustNutrient(ent.AsNullable(), nutrientBonus);
         }
 
-        PredictedQueueDel(args.Produce.Owner);
+        QueueDel(args.Produce.Owner);
     }
 }

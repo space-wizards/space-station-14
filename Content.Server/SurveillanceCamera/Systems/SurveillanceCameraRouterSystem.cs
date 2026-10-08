@@ -1,5 +1,6 @@
-using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.ActionBlocker;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;
 using Content.Shared.SurveillanceCamera;
@@ -145,7 +146,7 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
     }
 
     // Adds a monitor to the set of routes.
-    private void AddMonitorToRoute(Entity<SurveillanceCameraRouterComponent?> ent, string address)
+    private void AddMonitorToRoute(Entity<SurveillanceCameraRouterComponent?> ent, DeviceAddress address)
     {
         if (!_query.Resolve(ref ent) || ent.Comp == null)
             return;
@@ -153,7 +154,7 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
         ent.Comp.MonitorRoutes.Add(address);
     }
 
-    private void RemoveMonitorFromRoute(Entity<SurveillanceCameraRouterComponent?> ent, string address)
+    private void RemoveMonitorFromRoute(Entity<SurveillanceCameraRouterComponent?> ent, DeviceAddress address)
     {
         if (!_query.Resolve(ref ent) || ent.Comp == null)
             return;

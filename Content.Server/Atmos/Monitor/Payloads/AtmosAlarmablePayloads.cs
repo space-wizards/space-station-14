@@ -1,4 +1,4 @@
-﻿using Content.Shared.Atmos.Monitor;
+using Content.Shared.Atmos.Monitor;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
@@ -32,7 +32,7 @@ public partial record struct AtmosAlarmPayload : IAtmosAlarmableSourcePayload
 public partial record struct AtmosAlarmableSyncAlertsPayload : IAtmosAlarmableSourcePayload
 {
     [DataField]
-    public Dictionary<string, AtmosAlarmType> AlarmStates = new();
+    public Dictionary<DeviceAddress, AtmosAlarmType> AlarmStates = new();
 
     [DataField]
     public HashSet<ProtoId<TagPrototype>> Source { get; set; } = new();

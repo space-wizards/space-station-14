@@ -188,6 +188,8 @@
     angle: 0
     animation: WeaponArcThrust
     wideAnimationRotation: 90
+    soundHit:
+      collection: AlienClaw
   - type: Item
     size: Small
     sprite: Objects/Fun/Foam/foam_blade.rsi
