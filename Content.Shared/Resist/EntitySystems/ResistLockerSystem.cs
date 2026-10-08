@@ -23,33 +23,67 @@ public sealed partial class ResistLockerSystem : EntitySystem
     [Dependency] private WeldableSystem _weldable = default!;
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
 
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ResistLockerComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
-        SubscribeLocalEvent<ResistLockerComponent, ResistLockerDoAfterEvent>(OnDoAfter);
-    }
-
+    [SubscribeLocalEvent]
     private void OnRelayMovement(Entity<ResistLockerComponent> ent, ref ContainerRelayMovementEntityEvent args)
     {
         if (ent.Comp.IsResisting)
             return;
 
-        if (!HasComp<EntityStorageComponent>(ent.Owner))
+        if (!TryComp<EntityStorageComponent>(ent, out var storageComp) || !storageComp.OpenOnMove)
             return;
 
         if (!_actionBlocker.CanMove(args.Entity))
             return;
 
-        if (TryComp<LockComponent>(ent.Owner, out var lockComponent) && lockComponent.Locked || _weldable.IsWelded(ent.Owner))
-            AttemptResist(ent, args.Entity);
+        if (TryComp<LockComponent>(ent, out var lockComp) && lockComp.Locked || _weldable.IsWelded(ent.Owner))
+            AttemptResist(ent.Owner, args.Entity);
     }
 
-    private void AttemptResist(Entity<ResistLockerComponent> ent, EntityUid user)
+    // TODO: Convert to DoAfterAttemptEvent
+    [SubscribeLocalEvent]
+    private void OnDoAfter(Entity<ResistLockerComponent> ent, ref DoAfterEvent args)
     {
-        var doAfterEventArgs = new DoAfterArgs(EntityManager, user, ent.Comp.ResistTime, new ResistLockerDoAfterEvent(), ent.Owner, target: ent.Owner)
+        if (args.Handled)
+            return;
+
+        ent.Comp.IsResisting = false;
+        Dirty(ent);
+
+        if (args.Target != ent.Owner)
+            return;
+
+        if (args.Cancelled)
+        {
+            _popup.PopupEntity(Loc.GetString("resist-locker-component-resist-interrupted"), args.User, args.User, PopupType.Medium);
+            return;
+        }
+
+        if (TryComp<EntityStorageComponent>(ent, out var storageComp))
+        {
+            WeldableComponent? weldable = null;
+            if (_weldable.IsWelded(ent, weldable))
+                _weldable.SetWeldedState(ent, false, weldable);
+
+            _lock.Unlock(ent, args.User);
+
+            if (storageComp.OpenOnMove)
+                _entityStorage.TryOpenStorage(args.User, ent);
+        }
+
+        args.Handled = true;
+    }
+
+    private void AttemptResist(Entity<ResistLockerComponent?, EntityStorageComponent?> ent, EntityUid user)
+    {
+        if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2))
+            return;
+
+        var doAfterEventArgs = new DoAfterArgs(EntityManager,
+            user,
+            ent.Comp1.ResistTime,
+            new ResistLockerDoAfterEvent(),
+            ent.Owner,
+            target: ent.Owner)
         {
             BreakOnMove = true,
             BreakOnDamage = true,
@@ -60,39 +94,8 @@ public sealed partial class ResistLockerSystem : EntitySystem
         if (!_doAfter.TryStartDoAfter(doAfterEventArgs))
             return;
 
-        ent.Comp.IsResisting = true;
-        Dirty(ent);
-        _popup.PopupClient(Loc.GetString("resist-locker-component-start-resisting"), user, user, PopupType.Large);
-    }
-
-    private void OnDoAfter(Entity<ResistLockerComponent> ent, ref ResistLockerDoAfterEvent args)
-    {
-        if (args.Cancelled)
-        {
-            ent.Comp.IsResisting = false;
-            Dirty(ent);
-            _popup.PopupClient(Loc.GetString("resist-locker-component-resist-interrupted"), args.Args.User, args.Args.User, PopupType.Medium);
-            return;
-        }
-
-        if (args.Handled || args.Args.Target == null)
-            return;
-
-        ent.Comp.IsResisting = false;
-        Dirty(ent);
-
-        if (HasComp<EntityStorageComponent>(ent.Owner))
-        {
-            WeldableComponent? weldable = null;
-            if (_weldable.IsWelded(ent.Owner, weldable))
-                _weldable.SetWeldedState(ent.Owner, false, weldable);
-
-            if (TryComp<LockComponent>(args.Args.Target.Value, out var lockComponent))
-                _lock.Unlock(ent.Owner, args.Args.User, lockComponent);
-
-            _entityStorage.TryOpenStorage(args.Args.User, ent.Owner);
-        }
-
-        args.Handled = true;
+        ent.Comp1.IsResisting = true;
+        Dirty(ent, ent.Comp1);
+        _popup.PopupEntity(Loc.GetString("resist-locker-component-start-resisting"), user, user, PopupType.Large);
     }
 }

@@ -1,13 +1,13 @@
-using Content.Shared.Popups;
-using Content.Shared.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Events;
+using Content.Shared.Popups;
 using Content.Shared.Resist.Components;
 using Content.Shared.Storage;
+using Content.Shared.Storage.Components;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Resist.EntitySystems;
@@ -23,16 +23,7 @@ public sealed partial class EscapeInventorySystem : EntitySystem
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
 
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<CanEscapeInventoryComponent, MoveInputEvent>(OnRelayMovement);
-        SubscribeLocalEvent<CanEscapeInventoryComponent, EscapeInventoryEvent>(OnEscape);
-        SubscribeLocalEvent<CanEscapeInventoryComponent, DroppedEvent>(OnDropped);
-    }
-
+    [SubscribeLocalEvent]
     private void OnRelayMovement(Entity<CanEscapeInventoryComponent> ent, ref MoveInputEvent args)
     {
         if (!args.HasDirectionalMovement)
@@ -45,7 +36,7 @@ public sealed partial class EscapeInventorySystem : EntitySystem
         // Make sure there's nothing stopped the removal (like being glued).
         if (!_container.CanRemove(ent.Owner, container))
         {
-            _popup.PopupClient(Loc.GetString("escape-inventory-component-failed-resisting"), ent.Owner, ent.Owner);
+            _popup.PopupEntity(Loc.GetString("escape-inventory-component-failed-resisting"), ent.Owner, ent.Owner);
             return;
         }
 
@@ -56,6 +47,30 @@ public sealed partial class EscapeInventorySystem : EntitySystem
         {
             AttemptEscape(ent, container.Owner);
         }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnEscape(Entity<CanEscapeInventoryComponent> ent, ref EscapeInventoryEvent args)
+    {
+        ent.Comp.DoAfter = null;
+        Dirty(ent);
+
+        if (args.Handled || args.Cancelled)
+            return;
+
+        _container.AttachParentToContainerOrGrid((ent.Owner, Transform(ent.Owner)));
+        args.Handled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnDropped(Entity<CanEscapeInventoryComponent> ent, ref DroppedEvent args)
+    {
+        if (ent.Comp.DoAfter == null)
+            return;
+
+        _doAfter.Cancel(ent.Comp.DoAfter);
+        ent.Comp.DoAfter = null;
+        Dirty(ent);
     }
 
     private void AttemptEscape(Entity<CanEscapeInventoryComponent> ent, EntityUid container, float multiplier = 1f)
@@ -73,30 +88,7 @@ public sealed partial class EscapeInventorySystem : EntitySystem
         if (!_doAfter.TryStartDoAfter(doAfterEventArgs, out ent.Comp.DoAfter))
             return;
 
-        _popup.PopupClient(Loc.GetString("escape-inventory-component-start-resisting"), ent.Owner, ent.Owner);
+        _popup.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting"), ent.Owner, ent.Owner);
         _popup.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting-target"), container, container);
-
-        Dirty(ent);
-    }
-
-    private void OnEscape(Entity<CanEscapeInventoryComponent> ent, ref EscapeInventoryEvent args)
-    {
-        ent.Comp.DoAfter = null;
-
-        if (args.Handled || args.Cancelled)
-            return;
-
-        _container.AttachParentToContainerOrGrid((ent.Owner, Transform(ent.Owner)));
-        args.Handled = true;
-    }
-
-    private void OnDropped(Entity<CanEscapeInventoryComponent> ent, ref DroppedEvent args)
-    {
-        if (ent.Comp.DoAfter == null)
-            return;
-
-        _doAfter.Cancel(ent.Comp.DoAfter);
-        ent.Comp.DoAfter = null;
-        Dirty(ent);
     }
 }
