@@ -1,7 +1,6 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
@@ -26,7 +25,7 @@ public sealed partial class EscapeInventorySystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnRelayMovement(Entity<CanEscapeInventoryComponent> ent, ref MoveInputEvent args)
     {
-        if (!args.HasDirectionalMovement)
+        if (!args.HasDirectionalMovement || ent.Comp.IsEscaping)
             return;
 
         if (!_container.TryGetContainingContainer((ent.Owner, null, null), out var container)
@@ -40,55 +39,63 @@ public sealed partial class EscapeInventorySystem : EntitySystem
             return;
         }
 
-        if (_hands.IsHolding(container.Owner, ent.Owner, out _)
-            || HasComp<StorageComponent>(container.Owner)
-            || HasComp<InventoryComponent>(container.Owner)
-            || HasComp<SecretStashComponent>(container.Owner))
-        {
+        if (IsEscapeContainer(ent.Owner, container.Owner))
             AttemptEscape(ent, container.Owner);
-        }
     }
 
     [SubscribeLocalEvent]
     private void OnEscape(Entity<CanEscapeInventoryComponent> ent, ref EscapeInventoryEvent args)
     {
-        ent.Comp.DoAfter = null;
-        Dirty(ent);
+        if (ent.Comp.DoAfterIndex is { } doAfterIndex && doAfterIndex != args.DoAfter.Index)
+            return;
+
+        if (ent.Comp.DoAfterIndex != null)
+        {
+            ent.Comp.DoAfterIndex = null;
+            DirtyField(ent, ent.Comp, nameof(CanEscapeInventoryComponent.DoAfterIndex));
+        }
 
         if (args.Handled || args.Cancelled)
             return;
 
-        _container.AttachParentToContainerOrGrid((ent.Owner, Transform(ent.Owner)));
-        args.Handled = true;
+        args.Handled = _container.TryRemoveFromContainer(ent.Owner);
     }
 
     [SubscribeLocalEvent]
-    private void OnDropped(Entity<CanEscapeInventoryComponent> ent, ref DroppedEvent args)
+    private void OnDoAfterAttempt(Entity<CanEscapeInventoryComponent> ent, ref DoAfterAttemptEvent<EscapeInventoryEvent> args)
     {
-        if (ent.Comp.DoAfter == null)
-            return;
-
-        _doAfter.Cancel(ent.Comp.DoAfter);
-        ent.Comp.DoAfter = null;
-        Dirty(ent);
+        if (!_container.TryGetContainingContainer((ent.Owner, null, null), out var container)
+            || !IsEscapeContainer(ent.Owner, container.Owner)
+            || !_container.CanRemove(ent.Owner, container))
+        {
+            args.Cancel();
+        }
     }
 
-    private void AttemptEscape(Entity<CanEscapeInventoryComponent> ent, EntityUid container, float multiplier = 1f)
+    private void AttemptEscape(Entity<CanEscapeInventoryComponent> ent, EntityUid container)
     {
-        if (ent.Comp.IsEscaping)
-            return;
-
-        var doAfterEventArgs = new DoAfterArgs(EntityManager, ent.Owner, ent.Comp.BaseResistTime * multiplier, new EscapeInventoryEvent(), ent.Owner, target: container)
+        var doAfterEventArgs = new DoAfterArgs(EntityManager, ent.Owner, ent.Comp.BaseResistTime, new EscapeInventoryEvent(), ent.Owner, target: container)
         {
             BreakOnMove = true,
             BreakOnDamage = true,
-            NeedHand = false
+            AttemptFrequency = AttemptFrequency.EveryTick,
         };
 
-        if (!_doAfter.TryStartDoAfter(doAfterEventArgs, out ent.Comp.DoAfter))
+        if (!_doAfter.TryStartDoAfter(doAfterEventArgs, out var doAfterId)
+            || !_doAfter.IsRunning(doAfterId))
             return;
 
+        ent.Comp.DoAfterIndex = doAfterId.Value.Index;
+        DirtyField(ent, ent.Comp, nameof(CanEscapeInventoryComponent.DoAfterIndex));
         _popup.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting"), ent.Owner, ent.Owner);
         _popup.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting-target"), container, container);
+    }
+
+    private bool IsEscapeContainer(EntityUid entity, EntityUid container)
+    {
+        return _hands.IsHolding(container, entity, out _)
+               || HasComp<StorageComponent>(container)
+               || HasComp<InventoryComponent>(container)
+               || HasComp<SecretStashComponent>(container);
     }
 }
