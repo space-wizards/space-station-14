@@ -1,9 +1,9 @@
-using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Cloning.CloningConsole;
 using Content.Shared.Database;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.MedicalScanner.Components;
 using Content.Shared.Mind;
@@ -25,11 +25,17 @@ public sealed partial class CloningConsoleSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private ISharedPlayerManager _playerManager = default!;
     [Dependency] private MobStateSystem _mobState = default!;
-    [Dependency] private SharedCloningPodSystem _cloningPod = default!;
-    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private CloningPodSystem _cloningPod = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
+
+    [Dependency] private EntityQuery<DeviceLinkSourceComponent> _deviceLinkSourceQuery;
+    [Dependency] private EntityQuery<MedicalScannerComponent> _scannerQuery;
+    [Dependency] private EntityQuery<CloningPodComponent> _podQuery;
+    [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery;
+    [Dependency] private EntityQuery<ActiveCloningPodComponent> _activePodQuery;
 
     [SubscribeLocalEvent]
     private void OnInit(Entity<CloningConsoleComponent> ent, ref ComponentInit args)
@@ -63,50 +69,64 @@ public sealed partial class CloningConsoleSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<CloningConsoleComponent> ent, ref MapInitEvent args)
     {
-        if (!TryComp<DeviceLinkSourceComponent>(ent.Owner, out var receiver))
+        if (!_deviceLinkSourceQuery.TryComp(ent.Owner, out var receiver))
             return;
 
-        foreach (var port in receiver.Outputs.Values.SelectMany(ports => ports))
+        foreach (var (sourcePort, ports) in receiver.Outputs)
         {
-            if (TryComp<MedicalScannerComponent>(port, out var scanner))
+            foreach (var port in ports)
             {
-                ent.Comp.GeneticScanner = port;
-                scanner.ConnectedConsole = ent.Owner;
-                Dirty(port, scanner);
-            }
+                if (sourcePort == ent.Comp.ScannerPort && _scannerQuery.TryComp(port, out var scanner))
+                {
+                    ent.Comp.GeneticScanner = port;
+                    scanner.ConnectedConsole = ent.Owner;
+                    Dirty(port, scanner);
+                }
 
-            if (TryComp<CloningPodComponent>(port, out var pod))
-            {
-                ent.Comp.CloningPod = port;
-                pod.ConnectedConsole = ent.Owner;
-                Dirty(port, pod);
+                if (sourcePort == ent.Comp.PodPort && _podQuery.TryComp(port, out var pod))
+                {
+                    ent.Comp.CloningPod = port;
+                    pod.ConnectedConsole = ent.Owner;
+                    Dirty(port, pod);
+                }
             }
         }
+
+        RecheckConnections(ent.AsNullable(), ent.Comp.CloningPod, ent.Comp.GeneticScanner);
     }
 
     [SubscribeLocalEvent]
     private void OnNewLink(Entity<CloningConsoleComponent> ent, ref NewLinkEvent args)
     {
-        if (TryComp<MedicalScannerComponent>(args.Sink, out var scanner) && args.SourcePort == ent.Comp.ScannerPort)
+        if (args.Source != ent.Owner)
+            return;
+
+        var relevant = false;
+        if (_scannerQuery.TryComp(args.Sink, out var scanner) && args.SourcePort == ent.Comp.ScannerPort)
         {
+            relevant = true;
             ent.Comp.GeneticScanner = args.Sink;
             scanner.ConnectedConsole = ent.Owner;
             Dirty(args.Sink, scanner);
         }
 
-        if (TryComp<CloningPodComponent>(args.Sink, out var pod) && args.SourcePort == ent.Comp.PodPort)
+        if (_podQuery.TryComp(args.Sink, out var pod) && args.SourcePort == ent.Comp.PodPort)
         {
+            relevant = true;
             ent.Comp.CloningPod = args.Sink;
             pod.ConnectedConsole = ent.Owner;
             Dirty(args.Sink, pod);
         }
 
+        if (!relevant)
+            return;
+
         Dirty(ent);
-        RecheckConnections(ent.Owner, ent.Comp.CloningPod, ent.Comp.GeneticScanner);
+        RecheckConnections(ent.AsNullable(), ent.Comp.CloningPod, ent.Comp.GeneticScanner);
     }
 
     [SubscribeLocalEvent]
-    private void OnPortDisconnected(Entity<CloningConsoleComponent> ent, ref PortDisconnectedEvent args)
+    private void OnPortDisconnected(Entity<CloningConsoleComponent> ent, ref SourcePortDisconnectedEvent args)
     {
         if (args.Port == ent.Comp.ScannerPort)
             ent.Comp.GeneticScanner = null;
@@ -115,7 +135,7 @@ public sealed partial class CloningConsoleSystem : EntitySystem
             ent.Comp.CloningPod = null;
 
         Dirty(ent);
-        UpdateUserInterface(ent);
+        RecheckConnections(ent.AsNullable(), ent.Comp.CloningPod, ent.Comp.GeneticScanner);
     }
 
     [SubscribeLocalEvent]
@@ -159,7 +179,7 @@ public sealed partial class CloningConsoleSystem : EntitySystem
     /// </summary>
     public void TryClone(Entity<CloningConsoleComponent?> ent, Entity<CloningPodComponent?> entPod, Entity<MedicalScannerComponent?> entScanner)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp) || !Resolve(entPod.Owner, ref entPod.Comp) || !Resolve(entScanner.Owner, ref entScanner.Comp))
+        if (!Resolve(ent, ref ent.Comp) || !Resolve(entPod, ref entPod.Comp) || !Resolve(entScanner, ref entScanner.Comp))
             return;
 
         if (!Transform(entPod.Owner).Anchored || !Transform(entScanner.Owner).Anchored)
@@ -168,8 +188,7 @@ public sealed partial class CloningConsoleSystem : EntitySystem
         if (!ent.Comp.CloningPodInRange || !ent.Comp.GeneticScannerInRange)
             return;
 
-        var body = entScanner.Comp.BodyContainer.ContainedEntity;
-
+        var body = entScanner.Comp.BodyContainer?.ContainedEntity;
         if (body is null)
             return;
 
@@ -188,15 +207,17 @@ public sealed partial class CloningConsoleSystem : EntitySystem
     /// </summary>
     public void RecheckConnections(Entity<CloningConsoleComponent?> ent, EntityUid? cloningPod, EntityUid? scanner)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp))
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
+        ent.Comp.GeneticScannerInRange = false;
         if (scanner != null && Exists(scanner.Value))
         {
             Transform(scanner.Value).Coordinates.TryDistance(EntityManager, Transform(ent.Owner).Coordinates, out var scannerDistance);
             ent.Comp.GeneticScannerInRange = scannerDistance <= ent.Comp.MaxDistance;
         }
 
+        ent.Comp.CloningPodInRange = false;
         if (cloningPod != null && Exists(cloningPod.Value))
         {
             Transform(cloningPod.Value).Coordinates.TryDistance(EntityManager, Transform(ent.Owner).Coordinates, out var podDistance);
@@ -215,7 +236,7 @@ public sealed partial class CloningConsoleSystem : EntitySystem
         var scanBodyInfo = Loc.GetString("generic-unknown");
         var scannerConnected = false;
         var scannerInRange = consoleComponent.GeneticScannerInRange;
-        if (consoleComponent.GeneticScanner != null && TryComp<MedicalScannerComponent>(consoleComponent.GeneticScanner, out var scanner))
+        if (consoleComponent.GeneticScanner != null && _scannerQuery.TryComp(consoleComponent.GeneticScanner, out var scanner))
         {
             scannerConnected = true;
             EntityUid? scanBody = null;
@@ -223,7 +244,7 @@ public sealed partial class CloningConsoleSystem : EntitySystem
                 scanBody = scanner.BodyContainer.ContainedEntity;
 
             // Get state.
-            if (scanBody == null || !HasComp<MobStateComponent>(scanBody))
+            if (scanBody == null || !_mobStateQuery.HasComp(scanBody))
             {
                 clonerStatus = ClonerStatus.ScannerEmpty;
             }
@@ -252,7 +273,7 @@ public sealed partial class CloningConsoleSystem : EntitySystem
         var clonerConnected = false;
         var clonerMindPresent = false;
         var clonerInRange = consoleComponent.CloningPodInRange;
-        if (consoleComponent.CloningPod != null && TryComp<CloningPodComponent>(consoleComponent.CloningPod, out var clonePod)
+        if (consoleComponent.CloningPod != null && _podQuery.TryComp(consoleComponent.CloningPod, out var clonePod)
         && Transform(consoleComponent.CloningPod.Value).Anchored)
         {
             clonerConnected = true;
@@ -261,7 +282,7 @@ public sealed partial class CloningConsoleSystem : EntitySystem
                 cloneBody = clonePod.BodyContainer.ContainedEntity;
 
             clonerMindPresent = clonePod.Status == CloningPodStatus.Cloning;
-            if (HasComp<ActiveCloningPodComponent>(consoleComponent.CloningPod))
+            if (_activePodQuery.HasComp(consoleComponent.CloningPod.Value))
             {
                 if (cloneBody != null)
                     cloneBodyInfo = Identity.Name(cloneBody.Value, EntityManager);

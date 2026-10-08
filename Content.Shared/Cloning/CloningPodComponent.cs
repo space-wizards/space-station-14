@@ -25,13 +25,19 @@ public sealed partial class CloningPodComponent : Component
     /// Container slot for a body being cloned.
     /// </summary>
     [ViewVariables]
-    public ContainerSlot BodyContainer;
+    public ContainerSlot? BodyContainer;
 
     /// <summary>
-    /// How long the cloning has been going on for.
+    /// Game time at which the current cloning cycle finishes.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan NextUpdate = TimeSpan.Zero;
+
+    /// <summary>
+    /// Start of the current power outage during cloning, if any.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
+    public TimeSpan? PowerLostAt;
 
     /// <summary>
     /// Amount of biomass used in cloning.

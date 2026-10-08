@@ -22,7 +22,7 @@ public sealed partial class MedicalScannerComponent : Component
     /// Slot containing the body being scanned.
     /// </summary>
     [ViewVariables]
-    public ContainerSlot BodyContainer;
+    public ContainerSlot? BodyContainer;
 
     /// <summary>
     /// Reference to the connected console, if any.

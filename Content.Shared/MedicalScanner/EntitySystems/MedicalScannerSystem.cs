@@ -3,8 +3,8 @@ using Content.Shared.Body;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Cloning;
 using Content.Shared.Destructible;
-using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.DragDrop;
 using Content.Shared.MedicalScanner.Components;
 using Content.Shared.Mobs.Components;
@@ -21,7 +21,7 @@ namespace Content.Shared.MedicalScanner.EntitySystems;
 /// </summary>
 public sealed partial class MedicalScannerSystem : EntitySystem
 {
-    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
     [Dependency] private ActionBlockerSystem _blocker = default!;
     [Dependency] private ClimbSystem _climb = default!;
     [Dependency] private CloningConsoleSystem _cloningConsole = default!;
@@ -30,8 +30,10 @@ public sealed partial class MedicalScannerSystem : EntitySystem
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
 
-    private const float UpdateRate = 1f;
-    private float _updateDif;
+    [Dependency] private EntityQuery<BodyComponent> _bodyQuery;
+    [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery;
+    [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
+    [Dependency] private EntityQuery<CloningConsoleComponent> _consoleQuery;
 
     [SubscribeLocalEvent]
     private void OnCanDragDropOn(Entity<MedicalScannerComponent> ent, ref CanDropTargetEvent args)
@@ -45,10 +47,10 @@ public sealed partial class MedicalScannerSystem : EntitySystem
     /// </summary>
     public bool CanScannerInsert(Entity<MedicalScannerComponent?> ent, EntityUid target)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp))
+        if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        return HasComp<BodyComponent>(target);
+        return _bodyQuery.HasComp(target);
     }
 
     [SubscribeLocalEvent]
@@ -138,8 +140,11 @@ public sealed partial class MedicalScannerSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnPortDisconnected(Entity<MedicalScannerComponent> ent, ref PortDisconnectedEvent args)
+    private void OnPortDisconnected(Entity<MedicalScannerComponent> ent, ref SinkPortDisconnectedEvent args)
     {
+        if (args.Port != ent.Comp.ScannerPort)
+            return;
+
         ent.Comp.ConnectedConsole = null;
         Dirty(ent);
     }
@@ -147,7 +152,7 @@ public sealed partial class MedicalScannerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnAnchorChanged(Entity<MedicalScannerComponent> ent, ref AnchorStateChangedEvent args)
     {
-        if (ent.Comp.ConnectedConsole == null || !TryComp<CloningConsoleComponent>(ent.Comp.ConnectedConsole, out var console))
+        if (ent.Comp.ConnectedConsole == null || !_consoleQuery.TryComp(ent.Comp.ConnectedConsole.Value, out var console))
             return;
 
         if (args.Anchored)
@@ -164,12 +169,12 @@ public sealed partial class MedicalScannerSystem : EntitySystem
     {
         if (_powerReceiver.IsPowered(ent.Owner))
         {
-            var body = ent.Comp.BodyContainer.ContainedEntity;
+            var body = ent.Comp.BodyContainer?.ContainedEntity;
             if (body == null)
                 return MedicalScannerStatus.Open;
 
             // Is not alive or dead or critical.
-            if (!TryComp<MobStateComponent>(body.Value, out var state))
+            if (!_mobStateQuery.TryComp(body.Value, out var state))
                 return MedicalScannerStatus.Yellow;
 
             return GetStatusFromDamageState((body.Value, state));
@@ -179,7 +184,7 @@ public sealed partial class MedicalScannerSystem : EntitySystem
 
     public static bool IsOccupied(MedicalScannerComponent scannerComponent)
     {
-        return scannerComponent.BodyContainer.ContainedEntity != null;
+        return scannerComponent.BodyContainer?.ContainedEntity != null;
     }
 
     private MedicalScannerStatus GetStatusFromDamageState(Entity<MobStateComponent> ent)
@@ -198,19 +203,13 @@ public sealed partial class MedicalScannerSystem : EntitySystem
 
     private void UpdateAppearance(Entity<MedicalScannerComponent> ent)
     {
-        if (TryComp<AppearanceComponent>(ent.Owner, out var appearance))
+        if (_appearanceQuery.TryComp(ent.Owner, out var appearance))
             _appearance.SetData(ent.Owner, MedicalScannerVisuals.Status, GetStatus(ent), appearance);
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-
-        _updateDif += frameTime;
-        if (_updateDif < UpdateRate)
-            return;
-
-        _updateDif -= UpdateRate;
 
         var query = EntityQueryEnumerator<MedicalScannerComponent>();
         while (query.MoveNext(out var uid, out var scanner))
@@ -221,13 +220,13 @@ public sealed partial class MedicalScannerSystem : EntitySystem
 
     public void InsertBody(Entity<MedicalScannerComponent?> ent, EntityUid toInsert)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp))
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (ent.Comp.BodyContainer.ContainedEntity != null)
+        if (ent.Comp.BodyContainer == null)
             return;
 
-        if (!HasComp<BodyComponent>(toInsert))
+        if (!_bodyQuery.HasComp(toInsert))
             return;
 
         _container.Insert(toInsert, ent.Comp.BodyContainer);
@@ -236,10 +235,10 @@ public sealed partial class MedicalScannerSystem : EntitySystem
 
     public void EjectBody(Entity<MedicalScannerComponent?> ent)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp))
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (ent.Comp.BodyContainer.ContainedEntity is not { Valid: true } contained)
+        if (ent.Comp.BodyContainer?.ContainedEntity is not { Valid: true } contained)
             return;
 
         _container.Remove(contained, ent.Comp.BodyContainer);

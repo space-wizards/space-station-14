@@ -22,6 +22,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Cloning;
 
+/// <inheritdoc/>
 public sealed partial class CloningSystem : SharedCloningSystem
 {
     [Dependency] private InventorySystem _inventory = default!;

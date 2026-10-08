@@ -2,8 +2,8 @@ using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
-using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
@@ -27,7 +27,7 @@ namespace Content.Shared.Cloning;
 /// Base system for managing shared logic of cloning pods,
 /// including mind tracking, status updates, event handling, and pod-console linkage.
 /// </summary>
-public abstract partial class SharedCloningPodSystem : EntitySystem
+public abstract partial class CloningPodSystem : EntitySystem
 {
     [Dependency] private CloningConsoleSystem _cloningConsole = default!;
     [Dependency] private DamageableSystem _damageable = default!;
@@ -40,12 +40,19 @@ public abstract partial class SharedCloningPodSystem : EntitySystem
     [Dependency] private SharedChatSystem _chat = default!;
     [Dependency] private SharedCloningSystem _cloning = default!;
     [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
     [Dependency] private SharedMaterialStorageSystem _material = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
+
+    [Dependency] private EntityQuery<ActiveCloningPodComponent> _activePodQuery;
+    [Dependency] private EntityQuery<CloningPodComponent> _podQuery;
+    [Dependency] private EntityQuery<DamageableComponent> _damageableQuery;
+    [Dependency] private EntityQuery<MindContainerComponent> _mindContainerQuery;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery;
+    [Dependency] private EntityQuery<CloningConsoleComponent> _consoleQuery;
 
     /// Tracks which minds are waiting to be transferred into a clone.
     public readonly Dictionary<MindComponent, EntityUid> ClonesWaitingForMind = [];
@@ -63,10 +70,10 @@ public abstract partial class SharedCloningPodSystem : EntitySystem
     /// <returns>True if the cloning process was started, false otherwise.</returns>
     public bool TryCloning(Entity<CloningPodComponent?> ent, EntityUid bodyToClone, Entity<MindComponent> mindEnt, float failChanceModifier = 1)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp))
+        if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        if (HasComp<ActiveCloningPodComponent>(ent.Owner))
+        if (_activePodQuery.HasComp(ent.Owner))
             return false;
 
         var mind = mindEnt.Comp;
@@ -74,7 +81,7 @@ public abstract partial class SharedCloningPodSystem : EntitySystem
         {
             if (Exists(clone) &&
                 !_mobState.IsDead(clone) &&
-                TryComp<MindContainerComponent>(clone, out var cloneMindComp) &&
+                _mindContainerQuery.TryComp(clone, out var cloneMindComp) &&
                 (cloneMindComp.Mind == null || cloneMindComp.Mind == mindEnt))
                 return false; // Mind already has clone.
 
@@ -88,7 +95,7 @@ public abstract partial class SharedCloningPodSystem : EntitySystem
         if (mind.UserId == null || !_playerManager.TryGetSessionById(mind.UserId.Value, out var client))
             return false; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
 
-        if (!TryComp<PhysicsComponent>(bodyToClone, out var physics))
+        if (!_physicsQuery.TryComp(bodyToClone, out var physics))
             return false;
 
         var cloningCost = (int)Math.Round(physics.FixturesMass);
@@ -108,7 +115,7 @@ public abstract partial class SharedCloningPodSystem : EntitySystem
         // end of biomass checks.
 
         // genetic damage checks.
-        if (TryComp<DamageableComponent>(bodyToClone, out var damageable) &&
+        if (_damageableQuery.TryComp(bodyToClone, out var damageable) &&
             _damageable.GetAllDamage((bodyToClone, damageable)).DamageDict.TryGetValue("Cellular", out var cellularDmg))
         {
             var chance = Math.Clamp((float)(cellularDmg / 100), 0, 1);
@@ -120,6 +127,8 @@ public abstract partial class SharedCloningPodSystem : EntitySystem
             if (SharedRandomExtensions.PredictedProb(_timing, chance, GetNetEntity(ent)))
             {
                 ent.Comp.FailedClone = true;
+                ent.Comp.NextUpdate = _timing.CurTime + ent.Comp.CloningTime;
+                ent.Comp.PowerLostAt = null;
                 UpdateStatus((ent.Owner, ent.Comp), CloningPodStatus.Gore);
                 AddComp<ActiveCloningPodComponent>(ent.Owner);
                 _material.TryChangeMaterialAmount(ent.Owner, ent.Comp.RequiredMaterial, -cloningCost);
@@ -141,6 +150,9 @@ public abstract partial class SharedCloningPodSystem : EntitySystem
         cloneMindReturn.Mind = mind;
         cloneMindReturn.Parent = ent.Owner;
 
+        if (ent.Comp.BodyContainer == null)
+            return false;
+
         _container.Insert(mob.Value, ent.Comp.BodyContainer);
         ClonesWaitingForMind.Add(mind, mob.Value);
 
@@ -148,6 +160,8 @@ public abstract partial class SharedCloningPodSystem : EntitySystem
         ent.Comp.UsedBiomass = cloningCost;
 
         AddComp<ActiveCloningPodComponent>(ent.Owner);
+        ent.Comp.NextUpdate = _timing.CurTime + ent.Comp.CloningTime;
+        ent.Comp.PowerLostAt = null;
         OpenEui(mindEnt, mind, client);
         UpdateStatus((ent.Owner, ent.Comp), CloningPodStatus.NoMind);
         Dirty(ent);
@@ -179,7 +193,7 @@ public abstract partial class SharedCloningPodSystem : EntitySystem
     {
         if (!ClonesWaitingForMind.TryGetValue(mind, out var entity) ||
             !Exists(entity) ||
-            !TryComp<MindContainerComponent>(entity, out var mindComp) ||
+            !_mindContainerQuery.TryComp(entity, out var mindComp) ||
             mindComp.Mind != null)
             return;
 
@@ -193,8 +207,8 @@ public abstract partial class SharedCloningPodSystem : EntitySystem
     {
         if (ent.Comp.Parent == EntityUid.Invalid ||
             !Exists(ent.Comp.Parent) ||
-            !TryComp<CloningPodComponent>(ent.Comp.Parent, out var cloningPodComponent) ||
-            ent.Owner != cloningPodComponent.BodyContainer.ContainedEntity)
+            !_podQuery.TryComp(ent.Comp.Parent, out var cloningPodComponent) ||
+            ent.Owner != cloningPodComponent.BodyContainer?.ContainedEntity)
         {
             RemComp<BeingClonedComponent>(ent.Owner);
             return;
@@ -204,8 +218,11 @@ public abstract partial class SharedCloningPodSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnPortDisconnected(Entity<CloningPodComponent> ent, ref PortDisconnectedEvent args)
+    private void OnPortDisconnected(Entity<CloningPodComponent> ent, ref SinkPortDisconnectedEvent args)
     {
+        if (ent.Comp.PodPort != args.Port)
+            return;
+
         ent.Comp.ConnectedConsole = null;
         Dirty(ent);
     }
@@ -213,7 +230,7 @@ public abstract partial class SharedCloningPodSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnAnchor(Entity<CloningPodComponent> ent, ref AnchorStateChangedEvent args)
     {
-        if (ent.Comp.ConnectedConsole == null || !TryComp<CloningConsoleComponent>(ent.Comp.ConnectedConsole, out var console))
+        if (ent.Comp.ConnectedConsole == null || !_consoleQuery.TryComp(ent.Comp.ConnectedConsole.Value, out var console))
             return;
 
         if (args.Anchored)

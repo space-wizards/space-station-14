@@ -9,15 +9,18 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Cloning;
 using Content.Shared.Emag.Components;
 using Content.Shared.Mind;
+using Content.Shared.Power;
 using Robust.Server.Containers;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Cloning;
 
-public sealed partial class CloningPodSystem : SharedCloningPodSystem
+/// <inheritdoc/>
+public sealed partial class ServerCloningPodSystem : CloningPodSystem
 {
     [Dependency] private AtmosphereSystem _atmosphere = default!;
     [Dependency] private ContainerSystem _container = default!;
@@ -28,6 +31,10 @@ public sealed partial class CloningPodSystem : SharedCloningPodSystem
     [Dependency] private PuddleSystem _puddle = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IGameTiming _timing = default!;
+
+    [Dependency] private EntityQuery<EmaggedComponent> _emaggedQuery;
+    [Dependency] private EntityQuery<ActiveCloningPodComponent> _activePodQuery;
 
     private readonly ProtoId<ReagentPrototype> _bloodId = "Blood";
 
@@ -37,21 +44,47 @@ public sealed partial class CloningPodSystem : SharedCloningPodSystem
         _euiManager.OpenEui(new AcceptCloningEui(mindEnt, mind, this), client);
     }
 
+    [SubscribeLocalEvent]
+    private void OnPowerChanged(Entity<CloningPodComponent> ent, ref PowerChangedEvent args)
+    {
+        if (!_activePodQuery.HasComp(ent.Owner))
+            return;
+
+        UpdatePowerTimer(ent, args.Powered, _timing.CurTime);
+    }
+
+    private void UpdatePowerTimer(Entity<CloningPodComponent> ent, bool powered, TimeSpan curTime)
+    {
+        if (!powered)
+        {
+            ent.Comp.PowerLostAt ??= curTime;
+            return;
+        }
+
+        if (ent.Comp.PowerLostAt is not { } powerLostAt)
+            return;
+
+        ent.Comp.NextUpdate += curTime - powerLostAt;
+        ent.Comp.PowerLostAt = null;
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
+        var curTime = _timing.CurTime;
         var query = EntityQueryEnumerator<ActiveCloningPodComponent, CloningPodComponent>();
         while (query.MoveNext(out var uid, out var _, out var cloning))
         {
-            if (!_powerReceiver.IsPowered(uid))
+            var powered = _powerReceiver.IsPowered(uid);
+            UpdatePowerTimer((uid, cloning), powered, curTime);
+            if (!powered)
                 continue;
 
-            if (cloning.BodyContainer.ContainedEntity == null && !cloning.FailedClone)
+            if (cloning.BodyContainer?.ContainedEntity == null && !cloning.FailedClone)
                 continue;
 
-            cloning.NextUpdate += TimeSpan.FromSeconds(frameTime);
-            if (cloning.NextUpdate < cloning.CloningTime)
+            if (curTime < cloning.NextUpdate)
                 continue;
 
             if (cloning.FailedClone)
@@ -66,12 +99,13 @@ public sealed partial class CloningPodSystem : SharedCloningPodSystem
         if (!Resolve(ent.Owner, ref ent.Comp))
             return;
 
-        if (ent.Comp.BodyContainer.ContainedEntity is not { Valid: true } entity || ent.Comp.NextUpdate < ent.Comp.CloningTime)
+        if (ent.Comp.BodyContainer?.ContainedEntity is not { Valid: true } entity || _timing.CurTime < ent.Comp.NextUpdate)
             return;
 
         RemComp<BeingClonedComponent>(entity);
         _container.Remove(entity, ent.Comp.BodyContainer);
         ent.Comp.NextUpdate = TimeSpan.Zero;
+        ent.Comp.PowerLostAt = null;
         ent.Comp.UsedBiomass = 0;
         UpdateStatus((ent.Owner, ent.Comp), CloningPodStatus.Idle);
         RemCompDeferred<ActiveCloningPodComponent>(ent.Owner);
@@ -82,12 +116,13 @@ public sealed partial class CloningPodSystem : SharedCloningPodSystem
     {
         ent.Comp.FailedClone = false;
         ent.Comp.NextUpdate = TimeSpan.Zero;
+        ent.Comp.PowerLostAt = null;
         UpdateStatus(ent, CloningPodStatus.Idle);
         var transform = Transform(ent.Owner);
         var indices = _transform.GetGridTilePositionOrDefault((ent.Owner, transform));
         var tileMix = _atmosphere.GetTileMixture(transform.GridUid, null, indices, true);
 
-        if (HasComp<EmaggedComponent>(ent.Owner))
+        if (_emaggedQuery.HasComp(ent.Owner))
         {
             _audio.PlayPvs(ent.Comp.ScreamSound, ent.Owner);
             Spawn(ent.Comp.MobSpawnId, transform.Coordinates);
@@ -105,7 +140,7 @@ public sealed partial class CloningPodSystem : SharedCloningPodSystem
         }
         _puddle.TrySpillAt(ent.Owner, bloodSolution, out _);
 
-        if (!HasComp<EmaggedComponent>(ent.Owner))
+        if (!_emaggedQuery.HasComp(ent.Owner))
             _material.SpawnMultipleFromMaterial(_random.Next(1, (int)(ent.Comp.UsedBiomass / 2.5)), ent.Comp.RequiredMaterial, Transform(ent.Owner).Coordinates);
 
         ent.Comp.UsedBiomass = 0;
