@@ -43,7 +43,7 @@
   parent: BaseGhostRoleAlert
   id: Wizard
   icons:
-  - sprite: Clothing/Head/Hats/wizardhat.rsi
+  - sprite: Clothing/Head/Hats/wizard_blue.rsi
     state: icon
   name: ghost-alert-wizard-name
 
