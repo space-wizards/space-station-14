@@ -18,7 +18,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.SubFloor;
 
-public sealed partial class TrayScannerSystem : SharedTrayScannerSystem
+public sealed partial class TRayScannerSystem : SharedTRayScannerSystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IPlayerManager _player = default!;
@@ -30,7 +30,7 @@ public sealed partial class TrayScannerSystem : SharedTrayScannerSystem
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private TrayScanRevealSystem _trayScanReveal = default!;
     [Dependency] private IInputManager _inputManager = default!;
-    [Dependency] private EntityQuery<TrayScannerComponent> _trayScannerQuery = default!;
+    [Dependency] private EntityQuery<TRayScannerComponent> _trayScannerQuery = default!;
     [Dependency] private EntityQuery<SubFloorHideComponent> _subFloorHideQuery = default!;
 
     private const string TRayAnimationKey = "trays";
@@ -41,7 +41,7 @@ public sealed partial class TrayScannerSystem : SharedTrayScannerSystem
     public override void Initialize()
     {
         base.Initialize();
-        Subs.ItemStatus<TrayScannerComponent>(OnCollectItemStatus);
+        Subs.ItemStatus<TRayScannerComponent>(OnCollectItemStatus);
     }
 
     public override void Update(float frameTime)
@@ -191,7 +191,7 @@ public sealed partial class TrayScannerSystem : SharedTrayScannerSystem
     }
 
     #region UI
-    private Control OnCollectItemStatus(Entity<TrayScannerComponent> entity)
+    private Control OnCollectItemStatus(Entity<TRayScannerComponent> entity)
     {
         _inputManager.TryGetKeyBinding((ContentKeyFunctions.AltUseItemInHand), out var binding);
         return new StatusControl(entity, binding?.GetKeyString() ?? "");
@@ -200,10 +200,10 @@ public sealed partial class TrayScannerSystem : SharedTrayScannerSystem
     private sealed class StatusControl : PollingItemStatusControl<StatusControl.TRayData>
     {
         private readonly RichTextLabel _label;
-        private readonly TrayScannerComponent _scanner;
+        private readonly TRayScannerComponent _scanner;
         private readonly string _keyBindingName;
 
-        public StatusControl(TrayScannerComponent scanner, string keyBindingName)
+        public StatusControl(TRayScannerComponent scanner, string keyBindingName)
         {
             _scanner = scanner;
             _keyBindingName = keyBindingName;
