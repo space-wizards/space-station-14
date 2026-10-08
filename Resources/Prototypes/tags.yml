@@ -1347,6 +1347,9 @@
   id: SolarFlareDeviceLinkSourceTarget # Makes SolarFlareRule skip invoking ports from abundant devices that almost never link to anything.
 
 - type: Tag
+  id: SolarFlareVendingMachineBlacklist # Prevents important vending machines from throwing items during solar flares.
+
+- type: Tag
   id: SolarTrackerElectronics # ConstructionGraph: SolarPanel
 
 - type: Tag
