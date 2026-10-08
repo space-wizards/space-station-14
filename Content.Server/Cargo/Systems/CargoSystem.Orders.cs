@@ -837,9 +837,9 @@ public sealed partial class CargoSystem
         IEnumerable<CargoOrderData> orders;
 
         if (onlyShowThisAccount || account != bank.PrimaryAccount)
-            orders = station.Comp.Orders.Where(order => order.Account == account);
+            orders = allOrders.Where(order => order.Account == account);
         else
-            orders = station.Comp.Orders;
+            orders = allOrders;
 
         return [.. orders.Where(order => order.Visible && (approved == null || order.Approved == approved))];
     }
