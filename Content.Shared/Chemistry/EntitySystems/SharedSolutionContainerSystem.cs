@@ -86,7 +86,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         base.Initialize();
 
         InitializeRelays();
-        InitializeContainerManager();
 
         SubscribeLocalEvent<SolutionComponent, ComponentGetState>(OnSolutionGetState);
         SubscribeLocalEvent<SolutionComponent, ComponentHandleState>(OnSolutionHandleState);
@@ -436,20 +435,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         var splitSol = solution.SplitSolution(quantity / stackCount);
         solution.SplitSolution(quantity - splitSol.Volume);
-        UpdateChemicals(soln);
-        return splitSol;
-    }
-
-    /// <summary>
-    /// Splits a solution without the specified reagent(s).
-    /// </summary>
-    [Obsolete("Use SplitSolutionWithout with params ProtoId<ReagentPrototype>")]
-    public Solution SplitSolutionWithout(Entity<SolutionComponent> soln, FixedPoint2 quantity, params string[] reagents)
-    {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
-
-        var splitSol = solution.SplitSolutionWithout(quantity, reagents);
         UpdateChemicals(soln);
         return splitSol;
     }

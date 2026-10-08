@@ -51,6 +51,9 @@ public abstract partial class SharedBorgSystem
 
     private void OnWhitelistExamine(Entity<BorgModuleWhitelistComponent> ent, ref ExaminedEvent args)
     {
+        if (ent.Comp.WhitelistInfo is null)
+            return;
+
         using (args.PushGroup(nameof(BorgModuleComponent), 1))
         {
             args.PushMarkup(Loc.GetString(ent.Comp.WhitelistInfo));
@@ -110,17 +113,18 @@ public abstract partial class SharedBorgSystem
 
                 var handId = $"{GetNetEntity(module.Owner)}-hand-{i}";
                 if (itemModuleComp.StoredItems.TryGetValue(handId, out var item))
+                {
                     _container.Remove(item, container, destination: coordinates);
+                    itemModuleComp.StoredItems.Remove(handId);
+                }
             }
-
-            itemModuleComp.StoredItems.Clear();
         }
 
         UninstallModule((chassis, chassisComp), module.AsNullable());
 
         // Default modules should not be dropped so let's remove them.
         if (TryComp<BorgModuleComponent>(module, out var moduleComp) && moduleComp.DefaultModule)
-            PredictedQueueDel(module);
+            QueueDel(module);
     }
 
     #endregion
