@@ -89,10 +89,7 @@ public sealed partial class CargoSystem
             {
                 telepad.CurrentOrders.Remove(currentOrder);
             }
-            else if (
-                IsLinkedToConsole(uid, GetEntity(currentOrder.ApprovingConsole))
-                && FulfillOrder(containers.First(), xform.Coordinates, telepad.PrinterOutput)
-            )
+            else if (FulfillOrder(containers.First(), xform.Coordinates, telepad.PrinterOutput))
             {
                 if (currentOrder.Basket.All(item => item.NumOrdered >= item.Quantity))
                     telepad.CurrentOrders.Remove(currentOrder);

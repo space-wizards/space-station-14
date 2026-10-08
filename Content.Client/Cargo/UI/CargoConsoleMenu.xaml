@@ -29,7 +29,10 @@
                             <!--  Account  -->
                             <Label StyleClasses="LabelKeyText" Text="{Loc 'cargo-console-menu-account-name-label'}" />
 
-                            <controls:Separator Margin="0,-2" StyleClasses="LowDivider" Orientation="Vertical" />
+                            <controls:Separator
+                                Margin="0,-2"
+                                Orientation="Vertical"
+                                StyleClasses="LowDivider" />
 
                             <RichTextLabel
                                 Name="AccountNameLabel"
@@ -39,7 +42,10 @@
                             <!--  Balance  -->
                             <Label StyleClasses="LabelKeyText" Text="{Loc 'cargo-console-menu-points-label'}" />
 
-                            <controls:Separator Margin="0,-2" StyleClasses="LowDivider" Orientation="Vertical" />
+                            <controls:Separator
+                                Margin="0,-2"
+                                Orientation="Vertical"
+                                StyleClasses="LowDivider" />
 
                             <RichTextLabel
                                 Name="PointsLabel"
@@ -49,7 +55,10 @@
                             <!--  Orders Count/Capacity  -->
                             <Label StyleClasses="LabelKeyText" Text="{Loc 'cargo-console-menu-order-capacity-label'}" />
 
-                            <controls:Separator Margin="0,-2,0,-1" Orientation="Vertical" StyleClasses="LowDivider" />
+                            <controls:Separator
+                                Margin="0,-2,0,-1"
+                                Orientation="Vertical"
+                                StyleClasses="LowDivider" />
 
                             <Label
                                 Name="ShuttleCapacityLabel"
@@ -89,7 +98,11 @@
                     </ScrollContainer>
                 </BoxContainer>
 
-              <controls:Separator StyleClasses="LowDivider" Margin="0 -8" Orientation="Vertical" MinHeight="2"/>
+                <controls:Separator
+                    MinHeight="2"
+                    Margin="0,-8"
+                    Orientation="Vertical"
+                    StyleClasses="LowDivider" />
 
                 <!--  Right Part  -->
                 <BoxContainer
@@ -196,10 +209,10 @@
             </BoxContainer>
             <!--  Orders Tab  -->
             <BoxContainer
+                Name="OrdersTab"
                 Margin="8,4,8,6"
                 Orientation="Horizontal"
-                VerticalExpand="True"
-                Name="OrdersTab">
+                VerticalExpand="True">
                 <BoxContainer HorizontalExpand="True" Orientation="Vertical">
                     <!--  Requests Part  -->
                     <BoxContainer
@@ -328,7 +341,7 @@
         <!--  TODO: Create customControls element  -->
         <BoxContainer VerticalAlignment="Bottom" Orientation="Vertical">
 
-            <controls:Separator StyleClasses="LowDivider"/>
+            <controls:Separator StyleClasses="LowDivider" />
 
             <BoxContainer
                 Margin="12,0,6,2"
