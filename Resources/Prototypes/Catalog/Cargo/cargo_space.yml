@@ -3,8 +3,11 @@
   icon:
     sprite: Clothing/Head/Helmets/eva.rsi
     state: icon
-  product: CrateEvaKit
-  cost: 5000
+  products:
+  - ClothingOuterHardsuitEVA
+  - ClothingHeadHelmetEVA
+  container: CrateCommandSecure
+  cost: 2500
   category: cargoproduct-category-name-space
   group: market
 
