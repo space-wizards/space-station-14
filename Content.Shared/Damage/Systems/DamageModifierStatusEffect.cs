@@ -1,9 +1,9 @@
-﻿using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Components;
 using Content.Shared.StatusEffectNew;
 
 namespace Content.Shared.Damage.Systems;
 
-public sealed class DamageModifierStatusEffectSystem : EntitySystem
+public sealed partial class DamageModifierStatusEffectSystem : EntitySystem
 {
     public override void Initialize()
     {

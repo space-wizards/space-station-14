@@ -118,8 +118,8 @@ public abstract partial class SharedSmartFridgeSystem : EntitySystem
         if (_accessReader.IsAllowed(user, machine))
             return true;
 
-        _popup.PopupPredicted(Loc.GetString("smart-fridge-component-try-eject-access-denied"), machine, user);
         _audio.PlayPredicted(machine.Comp.SoundDeny, machine, user);
+        _popup.PopupEntity(Loc.GetString("smart-fridge-component-try-eject-access-denied"), machine, user);
         return false;
     }
 
@@ -131,7 +131,7 @@ public abstract partial class SharedSmartFridgeSystem : EntitySystem
         if (!ent.Comp.ContainedEntries.TryGetValue(args.Entry, out var contained))
         {
             _audio.PlayPredicted(ent.Comp.SoundDeny, ent, args.Actor);
-            _popup.PopupPredicted(Loc.GetString("smart-fridge-component-try-eject-unknown-entry"), ent, args.Actor);
+            _popup.PopupEntity(Loc.GetString("smart-fridge-component-try-eject-unknown-entry"), ent, args.Actor);
             return;
         }
 
@@ -148,7 +148,7 @@ public abstract partial class SharedSmartFridgeSystem : EntitySystem
         }
 
         _audio.PlayPredicted(ent.Comp.SoundDeny, ent, args.Actor);
-        _popup.PopupPredicted(Loc.GetString("smart-fridge-component-try-eject-out-of-stock"), ent, args.Actor);
+        _popup.PopupEntity(Loc.GetString("smart-fridge-component-try-eject-out-of-stock"), ent, args.Actor);
     }
 
     private void OnGetAltVerb(Entity<SmartFridgeComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)

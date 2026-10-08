@@ -48,6 +48,17 @@
   - WeaponSprayNozzle
   - ClothingBackpackWaterTank
   - MegaSprayBottle
+  - TrashBagHolding
+  - BoxLighttube
+  - BoxExteriorLighttube
+  - BoxLedLighttube
+  - BoxSodiumLighttube
+  - BoxLightbulb
+  - BoxDimLightbulb
+  - BoxWarmLightbulb
+  - BoxLedLightbulb
+  - BoxLightMixed
+  - BoxLedLightMixed
 
 - type: latheRecipePack
   id: Instruments

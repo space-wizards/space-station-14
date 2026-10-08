@@ -37,15 +37,16 @@ public sealed partial class NetProbeCartridgeSystem : EntitySystem
         // Check if device is already present in list
         foreach (var probedDevice in component.ProbedDevices)
         {
-            if (probedDevice.Address == networkComponent.Address)
+            if (probedDevice.Address == DeviceLocalizationHelpers.GetAddressFromId(networkComponent))
                 return;
         }
 
         // Play scanning sound with slightly randomized pitch
         // Why is there no NextFloat(float min, float max)???
-        var audioParams = AudioParams.Default.WithVolume(-2f).WithVariation(0.2f);
+        var audioParams = component.SoundScan?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVolume(-2f).WithVariation(0.2f);
         _audioSystem.PlayPredicted(component.SoundScan, target, args.Args.User, audioParams);
-        _popupSystem.PopupPredictedCursor(Loc.GetString("net-probe-scan", ("device", target)), args.Args.User);
+        _popupSystem.PopupCursor(Loc.GetString("net-probe-scan", ("device", target)), args.Args.User);
 
         // Limit the amount of saved probe results to 9
         // This is hardcoded because the UI doesn't support a dynamic number of results
@@ -54,9 +55,9 @@ public sealed partial class NetProbeCartridgeSystem : EntitySystem
 
         var device = new ProbedNetworkDevice(
             Name(target),
-            networkComponent.Address,
-            networkComponent.ReceiveFrequency?.FrequencyToString() ?? string.Empty,
-            networkComponent.DeviceNetId.DeviceNetIdToLocalizedName()
+            DeviceLocalizationHelpers.GetAddressFromId(networkComponent),
+            DeviceLocalizationHelpers.FrequencyToString(networkComponent.ReceiveFrequency),
+            DeviceLocalizationHelpers.DeviceNetIdToLocalizedName(networkComponent.DeviceNetId, Loc)
         );
 
         component.ProbedDevices.Add(device);

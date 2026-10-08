@@ -52,7 +52,8 @@
   - type: Physics
     canCollide: false
   - type: StealTarget
-    stealGroup: LAMP
+    stealGroup:
+    - LAMP
 
 - type: entity
   name: lamp
@@ -228,7 +229,7 @@
   - type: Damageable
     damageModifierSet: Metallic
   - type: Injurable
-    damageContainer: StructuralInorganic
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -267,7 +268,7 @@
   - type: Damageable
     damageModifierSet: Metallic
   - type: Injurable
-    damageContainer: StructuralInorganic
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:

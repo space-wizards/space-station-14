@@ -30,6 +30,7 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
 using PullerComponent = Content.Shared.Movement.Pulling.Components.PullerComponent;
 
@@ -39,6 +40,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private EntityLookupSystem _entityLookup = default!;
     [Dependency] private MeleeWeaponSystem _meleeWeapon = default!;
@@ -50,7 +52,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private SharedJitteringSystem _jittering = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedStunSystem _stun = default!;
-    [Dependency] private SharedStutteringSystem _stuttering = default!;
+    [Dependency] private StutteringSystem _stuttering = default!;
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private TurfSystem _turf = default!;
@@ -235,6 +237,9 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         if (!_random.Prob(electrified.Probability))
             return false;
 
+        if (electrified.ShockDelay != null && electrified.NextShock > _timing.CurTime)
+            return false;
+
         EnsureComp<ActivatedElectrifiedComponent>(uid);
         _appearance.SetData(uid, ElectrifiedVisuals.ShowSparks, true);
 
@@ -259,6 +264,8 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
                     electrified.SiemensCoefficient
                 );
             }
+            if (lastRet)
+                electrified.NextShock = _timing.CurTime + electrified.ShockDelay;
             return lastRet;
         }
 
@@ -507,6 +514,9 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         {
             return;
         }
-        _audio.PlayPvs(electrified.ShockNoises, targetUid, AudioParams.Default.WithVolume(electrified.ShockVolume));
+
+        var audioParams = electrified.ShockNoises?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVolume(electrified.ShockVolume);
+        _audio.PlayPvs(electrified.ShockNoises, targetUid, audioParams);
     }
 }

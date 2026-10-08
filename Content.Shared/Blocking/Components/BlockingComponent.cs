@@ -9,7 +9,7 @@ namespace Content.Shared.Blocking.Components;
 /// <summary>
 /// This component goes on an item that you want to use to block
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class BlockingComponent : Component
 {
     /// <summary>
@@ -24,10 +24,10 @@ public sealed partial class BlockingComponent : Component
     public EntityUid? User;
 
     /// <summary>
-    /// Is it currently blocking?
+    /// Is it currently raised and using its <see cref="ActiveBlockFraction"/>?
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool IsBlocking;
+    public bool IsRaised;
 
     /// <summary>
     /// The shape of the blocking fixture that will be dynamically spawned

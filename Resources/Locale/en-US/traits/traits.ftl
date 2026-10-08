@@ -52,7 +52,7 @@ trait-french-name = French accent
 trait-french-desc = Your accent seems to have a certain «je ne sais quoi».
 
 trait-spanish-name = Spanish accent
-trait-spanish-desc = Hola señor, donde esta la biblioteca.
+trait-spanish-desc = Hola señor, ¿dónde está la biblioteca?
 
 trait-scottish-name = Scottish accent
 trait-scottish-desc = Ye're speaking like ae proper Scot!
@@ -65,3 +65,6 @@ trait-hemophilia-desc = Your body fails to make blood clots.
 
 trait-impaired-mobility-name = Impaired Mobility
 trait-impaired-mobility-desc = You have difficulty moving without a mobility aid.
+
+trait-blink-dyspraxia-name = Blink Dyspraxia
+trait-blink-dyspraxia-desc = Your eyelids lack coordination. Blinking requires conscious effort, and sometimes your eyes just refuse to sync up.

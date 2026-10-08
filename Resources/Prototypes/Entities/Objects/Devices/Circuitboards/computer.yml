@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseItem
   id: BaseComputerCircuitboard
   name: computer board
@@ -221,7 +221,8 @@
     - type: ComputerBoard
       prototype: ComputerSalvageExpedition
     - type: StealTarget
-      stealGroup: SalvageExpeditionsComputerCircuitboard
+      stealGroup:
+      - SalvageExpeditionsComputerCircuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -234,7 +235,8 @@
   - type: ComputerBoard
     prototype: ComputerShuttleCargo
   - type: StealTarget
-    stealGroup: CargoShuttleConsoleCircuitboard
+    stealGroup:
+    - CargoShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -560,6 +562,26 @@
       state: cpu_science
     - type: ComputerBoard
       prototype: StationAiUploadComputer
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: StationTeleportersControlCircuitboard
+  name: teleporters control console board
+  description: A computer printed circuit board for a teleporter control console.
+  components:
+  - type: Sprite
+    state: cpu_command
+  - type: ComputerBoard
+    prototype: ComputerStationTeleportersControl
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SyndicateTeleportersControlCircuitboard
+  name: syndicate teleporters control console board
+  description: A computer printed circuit board for a teleporter control console.
+  components:
+  - type: ComputerBoard
+    prototype: ComputerSyndicateTeleportersControl
 
 - type: entity
   parent: BaseComputerCircuitboard

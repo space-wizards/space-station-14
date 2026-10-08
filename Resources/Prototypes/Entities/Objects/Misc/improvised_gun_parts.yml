@@ -36,3 +36,19 @@
       tags:
       - RifleStock
       - Wooden
+
+- type: entity
+  parent: BaseItem
+  id: GlassLens
+  name: glass lens
+  description: It does fancy things to photons so that you can see better.
+  components:
+  - type: Item
+    storedRotation: -90
+    size: Tiny
+  - type: Sprite
+    sprite: Objects/Misc/lens.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - GlassLens

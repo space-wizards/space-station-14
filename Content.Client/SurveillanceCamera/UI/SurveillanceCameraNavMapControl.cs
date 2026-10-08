@@ -1,9 +1,11 @@
+using Content.Client.Pinpointer.UI;
+using Content.Client.Resources;
+using Content.Shared.DeviceNetwork;
+using Content.Shared.SurveillanceCamera.Components;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Map;
-using Content.Client.Pinpointer.UI;
-using Content.Client.Resources;
-using Content.Shared.SurveillanceCamera.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.SurveillanceCamera.UI;
 
@@ -22,9 +24,9 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
     private readonly Texture _selectedTexture;
     private readonly Texture _invalidTexture;
 
-    private string _activeCameraAddress = string.Empty;
-    private HashSet<string> _availableSubnets = [];
-    private (Dictionary<NetEntity, CameraMarker> Cameras, string ActiveAddress, HashSet<string> AvailableSubnets) _lastState;
+    private DeviceAddress _activeCameraAddress = DeviceAddress.Invalid;
+    private HashSet<ProtoId<DeviceFrequencyPrototype>> _availableSubnets = [];
+    private (Dictionary<NetEntity, CameraMarker> Cameras, DeviceAddress ActiveAddress, HashSet<ProtoId<DeviceFrequencyPrototype>> AvailableSubnets) _lastState;
 
     public bool EnableCameraSelection { get; set; }
 
@@ -47,7 +49,7 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
         };
     }
 
-    public void SetActiveCameraAddress(string address)
+    public void SetActiveCameraAddress(DeviceAddress address)
     {
         if (_activeCameraAddress == address)
             return;
@@ -56,7 +58,7 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
         ForceNavMapUpdate();
     }
 
-    public void SetAvailableSubnets(HashSet<string> subnets)
+    public void SetAvailableSubnets(HashSet<ProtoId<DeviceFrequencyPrototype>> subnets)
     {
         if (_availableSubnets.SetEquals(subnets))
             return;
@@ -97,7 +99,7 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
             Texture texture;
             Color color;
 
-            if (string.IsNullOrEmpty(marker.Address))
+            if (marker.Address == DeviceAddress.Invalid)
             {
                 color = CameraInvalidColor;
                 texture = _invalidTexture;
