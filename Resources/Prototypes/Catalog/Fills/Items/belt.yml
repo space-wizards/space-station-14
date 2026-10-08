@@ -45,7 +45,7 @@
         - id: Multitool
         - id: HolofanProjector
         - id: GasAnalyzer
-        - id: TrayScanner
+        - id: TRayScanner
 
 - type: entityTable
   id: BeltSecurityEntityTable

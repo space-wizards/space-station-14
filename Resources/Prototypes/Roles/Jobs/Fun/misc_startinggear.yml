@@ -153,7 +153,7 @@
   storage:
     back:
     - GasAnalyzer
-    - TrayScanner
+    - TRayScanner
     - AccessConfiguratorUniversal
     - Multitool
 

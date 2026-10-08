@@ -42,7 +42,7 @@
     back:
     - RCD
     - GasAnalyzer
-    - TrayScanner
+    - TRayScanner
     - HolofanProjector
     - PartRodMetal
     - SheetPlasteel # End of first line

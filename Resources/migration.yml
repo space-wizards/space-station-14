@@ -1163,9 +1163,12 @@ ClothingHeadHatVioletwizard: ClothingHeadHatWizardViolet
 # 2026-10-07
 computerBodyScanner: ComputerBodyScanner
 filingCabinet: FilingCabinet
+filingCabinetRandom: FilingCabinetRandom
 filingCabinetDrawer: FilingCabinetDrawer
 filingCabinetDrawerRandom: FilingCabinetDrawerRandom
 filingCabinetTall: FilingCabinetTall
 filingCabinetTallRandom: FilingCabinetTallRandom
 hydroponicsSoil: HydroponicsSoil
-trayScanner: TrayScanner
+hydroponicsTray: HydroponicsTray
+trayScanner: TRayScanner
+voicesensor: VoiceSensor
