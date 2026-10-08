@@ -140,6 +140,7 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
 
         solarFlareComp.AffectedVendingMachines = Station
             .GetEntitiesWithComponentOnStation<VendingMachineComponent>(true)
+            .Where(e => _entityWhitelist.IsWhitelistFail(solarFlareComp.VendingMachineBlacklist, e))
             .Select(e => e.Owner)
             .ToHashSet();
 
@@ -149,8 +150,8 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
 
         solarFlareComp.AffectedLinkSources = Station
             .GetEntitiesWithComponentOnStation<DeviceLinkSourceComponent>(false)
+            .Where(e => _entityWhitelist.IsWhitelistPass(solarFlareComp.DeviceLinkSourceWhitelist, e))
             .Select(e => e.Owner)
-            .Where(e => _entityWhitelist.IsWhitelistFail(solarFlareComp.DeviceLinkSourceBlacklist, e))
             .ToHashSet();
     }
 

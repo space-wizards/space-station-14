@@ -42,7 +42,6 @@
   - type: Tag
     tags:
     - ForceNoFixRotations # Don't want the fixrotations command to target these
-    - SolarFlareLinkSourceBlacklist
   - type: Door
     openDrawDepth: BlastDoors
     closedDrawDepth: BlastDoors

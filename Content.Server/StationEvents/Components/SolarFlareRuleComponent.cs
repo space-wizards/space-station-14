@@ -170,8 +170,14 @@ public sealed partial class SolarFlareRuleComponent : Component
     #endregion
 
     /// <summary>
-    ///     A blacklist of device link source prototypes that will not be affected by the solar flare event.
+    ///     A whitelist of device link sources that will activate their links during the solar flare.
     /// </summary>
     [DataField]
-    public EntityWhitelist DeviceLinkSourceBlacklist = new();
+    public EntityWhitelist? DeviceLinkSourceWhitelist;
+
+    /// <summary>
+    ///     A blacklist for vending machines that will not throw items during the solar flare.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? VendingMachineBlacklist;
 }

@@ -1344,7 +1344,7 @@
   id: Soap # Storage whitelist: BorgModuleCustodial, ClothingBeltJanitor. CargoBounty: BountySoap
 
 - type: Tag
-  id: SolarFlareLinkSourceBlacklist # Makes SolarFlareRule skip invoking abundant link source devices that almost never link to anything.
+  id: SolarFlareDeviceLinkSourceTarget # Makes SolarFlareRule skip invoking ports from abundant devices that almost never link to anything.
 
 - type: Tag
   id: SolarTrackerElectronics # ConstructionGraph: SolarPanel
