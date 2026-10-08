@@ -90,7 +90,7 @@ public abstract partial class SharedAlertTeleportSystem : EntitySystem
     /// <param name="target">The target to which <c>ent</c> will teleport when the alert is pressed</param>
     /// <param name="alert">The alert that <c>ent</c> will receive</param>
     /// <param name="cooldown">Alert lifetime</param>
-    public void AddAlertTeleport(Entity<AlertTeleportComponent> ent, EntityUid target, ProtoId<AlertPrototype> alert, TimeSpan cooldown)
+    public void AddTeleportAlert(Entity<AlertTeleportComponent> ent, EntityUid target, ProtoId<AlertPrototype> alert, TimeSpan cooldown)
     {
         var targetCoords = _transform.GetMapCoordinates(target);
 
@@ -126,11 +126,11 @@ public abstract partial class SharedAlertTeleportSystem : EntitySystem
     /// <param name="cooldown">Alert lifetime</param>
     /// <param name="sound">The sound that the entities will receive when the alert is received</param>
     public void MakeTeleportAlert<T>(EntityUid target, ProtoId<AlertPrototype> alert, TimeSpan cooldown, SoundSpecifier? sound = null) where T : Component
-    {
+    { 
         var query = EntityQueryEnumerator<T, AlertTeleportComponent>();
         while (query.MoveNext(out var uid, out var _, out var alertTeleport))
         {
-            AddAlertTeleport((uid, alertTeleport), target, alert, cooldown);
+            AddTeleportAlert((uid, alertTeleport), target, alert, cooldown);
             _audioSystem.PlayEntity(sound, uid, uid);
         }
     }
