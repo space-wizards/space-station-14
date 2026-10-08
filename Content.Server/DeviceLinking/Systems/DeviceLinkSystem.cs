@@ -11,6 +11,8 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
 {
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
 
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -100,8 +102,13 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
 
         SetInvokeCounter(sink.Comp, invokeCounter + 1);
 
-        //Just skip using device networking if the source or the sink doesn't support it
-        if (!HasComp<DeviceNetworkComponent>(source) || !TryComp<DeviceNetworkComponent>(sink, out var sinkNetwork))
+        // Just skip using device networking if the source or the sink doesn't support it, or if they're on different networks.
+        // TODO: better support devices with multiple networks
+        if (!_deviceNetworkQuery.TryComp(source, out var sourceNetwork)
+            || !_deviceNetworkQuery.TryComp(sink, out var sinkNetwork)
+            || sourceNetwork.DeviceNetId != sinkNetwork.DeviceNetId
+            || sourceNetwork.TransmitFrequency == null
+            || sourceNetwork.TransmitFrequency != sinkNetwork.ReceiveFrequency)
         {
             var eventArgs = new SignalReceivedEvent(sinkPort, source);
             RaiseLocalEvent(sink, ref eventArgs);
@@ -144,8 +151,13 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
 
         SetInvokeCounter(sink.Comp, invokeCounter + 1);
 
-        //Just skip using device networking if the source or the sink doesn't support it
-        if (!HasComp<DeviceNetworkComponent>(source) || !TryComp<DeviceNetworkComponent>(sink, out var sinkNetwork))
+        // Just skip using device networking if the source or the sink doesn't support it, or if they're on different networks.
+        // TODO: better support devices with multiple networks
+        if (!_deviceNetworkQuery.TryComp(source, out var sourceNetwork)
+            || !_deviceNetworkQuery.TryComp(sink, out var sinkNetwork)
+            || sourceNetwork.DeviceNetId != sinkNetwork.DeviceNetId
+            || sourceNetwork.TransmitFrequency == null
+            || sourceNetwork.TransmitFrequency != sinkNetwork.ReceiveFrequency)
         {
             var eventArgs = new SignalReceivedEvent(sinkPort, source);
             RaiseLocalEvent(sink, ref eventArgs);
