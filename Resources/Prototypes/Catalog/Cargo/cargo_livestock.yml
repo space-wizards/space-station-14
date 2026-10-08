@@ -156,7 +156,7 @@
     sprite: Objects/Misc/monkeycube.rsi
     state: box_slime
   product: SlimeCubeBox
-  container: SteelCrate
+  container: CrateSteel
   cost: 2000
   category: cargoproduct-category-name-livestock
   group: market
