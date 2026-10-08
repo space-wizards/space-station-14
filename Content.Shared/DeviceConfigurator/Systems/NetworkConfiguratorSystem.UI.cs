@@ -61,19 +61,11 @@ public sealed partial class NetworkConfiguratorSystem
         DirtyField(configurator.AsNullable(), nameof(NetworkConfiguratorComponent.ActiveDeviceList));
         DirtyField(targetUid.Value, list, nameof(DeviceListComponent.Configurators));
 
-        if (_uiSystem.TryOpenUi(configurator.Owner, NetworkConfiguratorUiKey.Configure, userUid, true))
-        {
-            if (_uiSystem.TryGetOpenUi(configurator.Owner, NetworkConfiguratorUiKey.Configure, out var bui))
-                bui.Update();
-
-            /*_uiSystem.SetUiState(configurator.Owner,
-                NetworkConfiguratorUiKey.Configure,
-                new DeviceListUserInterfaceState(
-                    _deviceListSystem.GetDeviceList(configurator.Comp.ActiveDeviceList.Value)
-                        .Select(v => (v.Key, MetaData(v.Value.Item1).EntityName))
-                        .ToHashSet()
-                ));*/
-        }
+        if (!_uiSystem.TryOpenUi(configurator.Owner, NetworkConfiguratorUiKey.Configure, userUid, true))
+            return;
+        
+        if (_uiSystem.TryGetOpenUi(configurator.Owner, NetworkConfiguratorUiKey.Configure, out var bui))
+            bui.Update();
     }
 
     /// <summary>
