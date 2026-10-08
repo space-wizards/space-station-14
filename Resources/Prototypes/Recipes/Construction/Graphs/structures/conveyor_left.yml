@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: ConveyorCornerGraph
+  id: ConveyorLeftGraph
   start: start
   graph:
 
@@ -18,7 +18,7 @@
       value: false
   
   - node: entity
-    entity: ConveyorBeltCorner
+    entity: ConveyorBeltLeft
     actions:
     - !type:SetAnchor
       value: true

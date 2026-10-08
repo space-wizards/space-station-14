@@ -633,8 +633,14 @@
 
 - type: construction
   parent: BaseStructureFullTileDirectional
-  id: ConveyorBeltCorner
-  graph: ConveyorCornerGraph
+  id: ConveyorBeltLeft
+  graph: ConveyorLeftGraph
+  targetNode: entity
+
+- type: construction
+  parent: BaseStructureFullTileDirectional
+  id: ConveyorBeltRight
+  graph: ConveyorRightGraph
   targetNode: entity
 
 - type: construction
