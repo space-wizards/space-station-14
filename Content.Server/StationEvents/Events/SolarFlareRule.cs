@@ -51,12 +51,18 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
 
     [Dependency] private EntityQuery<HeadsetComponent> _headsetQuery;
 
-    private static readonly SolarFlareDoorAction[] SolarFlareActions = Enum.GetValues<SolarFlareDoorAction>();
     private static readonly AirAlarmMode[] AirAlarmModes = Enum.GetValues<AirAlarmMode>();
 
     private static readonly SecurityStatus[] CrimeStatuses = Enum.GetValues<SecurityStatus>()
         .Where(status => status != SecurityStatus.None)
         .ToArray();
+
+    /// <remarks>
+    /// Filter out special (boring) characters with no representation in our font.
+    /// They all appear as the unknown symbol indicator.
+    /// </remarks>
+    private static readonly int[] ValidAnnouncementScrambleCharacters =
+        [.. Enumerable.Range(32, 96), .. Enumerable.Range(160, 96)];
 
     protected override void Added(Entity<SolarFlareRuleComponent, GameRuleComponent> solarFlare,
         ref GameRuleAddedEvent args)
@@ -72,15 +78,14 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
                 // So you can easily see it's the solar flare announcement still.
                 if (RobustRandom.Prob(MathF.Pow(i / announcement.Length, 4)))
                 {
-                    // Filter out the first 32 special (boring) characters with no representation in our font.
-                    // They all appear as the unknown symbol indicator.
-                    scrambledAnnouncement.Append(Convert.ToChar(RobustRandom.NextByte(32, 255)));
+                    scrambledAnnouncement.Append((char)RobustRandom.Pick(ValidAnnouncementScrambleCharacters));
                 }
                 else
                 {
                     scrambledAnnouncement.Append(announcement[(int)i]);
                 }
             }
+
 
             stationEvent.StartAnnouncement = scrambledAnnouncement.ToString();
         }
@@ -176,7 +181,8 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
 
         foreach (var airlock in solarFlareComp.AffectedAirlocks)
         {
-            if (!RobustRandom.Prob(solarFlareComp.DoorAffectChance))
+            var action = PickDoorAction(solarFlareComp);
+            if (action is null)
             {
                 continue;
             }
@@ -185,8 +191,6 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
             {
                 continue;
             }
-
-            var action = RobustRandom.Pick(SolarFlareActions);
 
             switch (action)
             {
@@ -200,17 +204,17 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
                 case SolarFlareDoorAction.Bolt:
                     if (TryComp(airlock, out DoorBoltComponent? boltComp))
                     {
-                        _door.SetBoltsDown((airlock, boltComp), true);
+                        _door.SetBoltsDown((airlock, boltComp), !boltComp.BoltsDown);
                     }
 
                     break;
-                case SolarFlareDoorAction.EnableEmergencyAccess:
-                    _airlock.SetEmergencyAccess((airlock, airlockComp), true);
+                case SolarFlareDoorAction.EmergencyAccess:
+                    _airlock.SetEmergencyAccess((airlock, airlockComp), !airlockComp.EmergencyAccess);
                     break;
                 case SolarFlareDoorAction.Electrify:
                     if (TryComp(airlock, out ElectrifiedComponent? electrifiedComp))
                     {
-                        _electrocution.SetElectrified((airlock, electrifiedComp), true);
+                        _electrocution.SetElectrified((airlock, electrifiedComp), !electrifiedComp.Enabled);
                     }
 
                     break;
@@ -281,6 +285,47 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
         }
     }
 
+    /// <summary>
+    /// Picks a random door action to perform based on the weighted chances in the solar flare component.
+    /// </summary>
+    /// <param name="solarFlareComp"></param>
+    /// <returns>The randomly selected door action, or null if no action is selected.</returns>
+    private SolarFlareDoorAction? PickDoorAction(SolarFlareRuleComponent solarFlareComp)
+    {
+        var totalChance = solarFlareComp.DoorToggleChance
+                          + solarFlareComp.DoorBoltChance
+                          + solarFlareComp.DoorEmergencyAccessChance
+                          + solarFlareComp.DoorElectrifyChance;
+
+        if (!RobustRandom.Prob(totalChance))
+        {
+            return null;
+        }
+
+        var roll = RobustRandom.NextFloat(totalChance);
+
+        if (roll < solarFlareComp.DoorToggleChance)
+        {
+            return SolarFlareDoorAction.Toggle;
+        }
+
+        roll -= solarFlareComp.DoorToggleChance;
+
+        if (roll < solarFlareComp.DoorBoltChance)
+        {
+            return SolarFlareDoorAction.Bolt;
+        }
+
+        roll -= solarFlareComp.DoorBoltChance;
+
+        if (roll < solarFlareComp.DoorEmergencyAccessChance)
+        {
+            return SolarFlareDoorAction.EmergencyAccess;
+        }
+
+        return SolarFlareDoorAction.Electrify;
+    }
+
     [SubscribeLocalEvent]
     private void OnRadioReceiveAttempt(ref RadioReceiveAttemptEvent args)
     {
@@ -308,7 +353,7 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
     {
         Toggle,
         Bolt,
-        EnableEmergencyAccess,
+        EmergencyAccess,
         Electrify,
     }
 }

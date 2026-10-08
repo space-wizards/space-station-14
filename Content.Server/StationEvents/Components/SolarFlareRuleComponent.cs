@@ -43,7 +43,7 @@ public sealed partial class SolarFlareRuleComponent : Component
     ///     List of extra channels that can be random disabled on top of the starting channels.
     /// </summary>
     /// <remarks>
-    ///     Channels are not removed from this, so its possible to roll the same channel multiple times.
+    ///     Channels are not removed from this, so it's possible to roll the same channel multiple times.
     /// </remarks>
     [DataField]
     public List<ProtoId<RadioChannelPrototype>> ExtraChannels = new();
@@ -52,7 +52,7 @@ public sealed partial class SolarFlareRuleComponent : Component
     ///     Number of times to roll a channel from ExtraChannels.
     /// </summary>
     /// <remarks>
-    ///     Channels are not removed from it, so its possible to roll the same channel multiple times.
+    ///     Channels are not removed from it, so it's possible to roll the same channel multiple times.
     /// </remarks>
     [DataField]
     public uint ExtraCount;
@@ -114,10 +114,28 @@ public sealed partial class SolarFlareRuleComponent : Component
     public float LightBreakChance;
 
     /// <summary>
-    ///     Chance per second to apply a random action on a door during event.
+    ///     Chance per second to toggle a door during the event.
     /// </summary>
     [DataField]
-    public float DoorAffectChance;
+    public float DoorToggleChance;
+
+    /// <summary>
+    ///     Chance per second to bolt a door during the event.
+    /// </summary>
+    [DataField]
+    public float DoorBoltChance;
+
+    /// <summary>
+    ///     Chance per second to enable emergency access on a door during the event.
+    /// </summary>
+    [DataField]
+    public float DoorEmergencyAccessChance;
+
+    /// <summary>
+    ///     Chance per second to electrify a door during the event.
+    /// </summary>
+    [DataField]
+    public float DoorElectrifyChance;
 
     /// <summary>
     ///     Chance per second for each air alarm to have its mode randomized.

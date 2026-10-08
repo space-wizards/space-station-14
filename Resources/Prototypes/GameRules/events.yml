@@ -433,7 +433,10 @@
     - Supply
     extraCount: 2
     lightBreakChance: 0.0003
-    doorAffectChance: 0.001
+    doorToggleChance: 0.00050
+    doorBoltChance: 0.00017
+    doorEmergencyAccessChance: 0.00017
+    doorElectrifyChance: 0.00017
     airAlarmModeChangeChance: 0.004
     changeCriminalRecordChance: 0.0003
     vendChance: 0.001
