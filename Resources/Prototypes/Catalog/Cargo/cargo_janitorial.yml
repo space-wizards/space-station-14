@@ -54,7 +54,7 @@
     sprite: Objects/Devices/mousetrap.rsi
     state: mousetrap
   product: BoxMousetrap
-  container: SteelCrate
+  container: CrateSteel
   cost: 500
   category: cargoproduct-category-name-janitorial
   group: market
