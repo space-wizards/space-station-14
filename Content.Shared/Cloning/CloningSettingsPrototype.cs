@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Cloning;
 
 /// <summary>
-/// Settings for cloning a humanoid.
+/// Settings for cloning entities.
 /// Used to decide which components should be copied.
 /// </summary>
 [Prototype]
@@ -91,18 +91,10 @@ public sealed partial class CloningSettingsPrototype : IPrototype, IInheritingPr
     /// <summary>
     /// Components to copy from the original to the clone using CopyComp.
     /// This makes a deepcopy of all datafields, including information the clone might not own!
-    /// If you need to exclude data or do additional component initialization, then subscribe to CloningEvent instead!
+    /// If you need to exclude data, then add an ITypeCopier to CloningContext.
     /// Components in this list that the original does not have will be removed from the clone.
     /// </summary>
     [DataField]
     [AlwaysPushInheritance]
     public HashSet<string> Components = new();
-
-    /// <summary>
-    /// Components to remove from the clone and copy over manually using a CloneEvent raised on the original.
-    /// Use this when the component cannot be copied using CopyComp, for example when having an EntityUid as a datafield.
-    ///</summary>
-    [DataField]
-    [AlwaysPushInheritance]
-    public HashSet<string> EventComponents = new();
 }
