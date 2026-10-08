@@ -8,17 +8,11 @@ namespace Content.Shared.Damage.Systems;
 /// </summary>
 public sealed partial class DamageOnLandSystem : EntitySystem
 {
-    [Dependency] private DamageableSystem _damageableSystem = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<DamageOnLandComponent, LandEvent>(DamageOnLand);
-    }
-
+    [SubscribeLocalEvent]
     private void DamageOnLand(Entity<DamageOnLandComponent> ent, ref LandEvent args)
     {
-        _damageableSystem.TryChangeDamage(ent.Owner, ent.Comp.Damage, ent.Comp.IgnoreResistances);
+        _damageable.TryChangeDamage(ent.Owner, ent.Comp.Damage, ent.Comp.IgnoreResistances);
     }
 }

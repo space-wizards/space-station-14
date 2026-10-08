@@ -12,7 +12,7 @@ public sealed partial class DamageOnLandComponent : Component
     /// Whether to ignore damage modifiers.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool IgnoreResistances = false;
+    public bool IgnoreResistances;
 
     /// <summary>
     /// The amount of damage to deal when this entity lands.

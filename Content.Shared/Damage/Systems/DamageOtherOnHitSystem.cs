@@ -22,17 +22,9 @@ public sealed partial class DamageOtherOnHitSystem : EntitySystem
     [Dependency] private SharedCameraRecoilSystem _sharedCameraRecoil = default!;
     [Dependency] private SharedColorFlashEffectSystem _color = default!;
     [Dependency] private SharedGunSystem _guns = default!;
-    [Dependency] private INetManager _netManager = default!;
+    [Dependency] private INetManager _net = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<DamageOtherOnHitComponent, DamageExamineEvent>(OnDamageExamine);
-        SubscribeLocalEvent<DamageOtherOnHitComponent, AttemptPacifiedThrowEvent>(OnAttemptPacifiedThrow);
-        SubscribeLocalEvent<DamageOtherOnHitComponent, ThrowDoHitEvent>(OnDoHit);
-    }
-
+    [SubscribeLocalEvent]
     private void OnDamageExamine(Entity<DamageOtherOnHitComponent> ent, ref DamageExamineEvent args)
     {
         _damageExamine.AddDamageExamine(args.Message, _damageable.ApplyUniversalAllModifiers(ent.Comp.Damage * _damageable.UniversalThrownDamageModifier), Loc.GetString("damage-throw"));
@@ -41,15 +33,17 @@ public sealed partial class DamageOtherOnHitSystem : EntitySystem
     /// <summary>
     /// Prevent players with the Pacified status effect from throwing things that deal damage.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnAttemptPacifiedThrow(Entity<DamageOtherOnHitComponent> ent, ref AttemptPacifiedThrowEvent args)
     {
         args.Cancel("pacified-cannot-throw");
     }
 
+    [SubscribeLocalEvent]
     private void OnDoHit(Entity<DamageOtherOnHitComponent> ent, ref ThrowDoHitEvent args)
     {
         // Thrown collisions are not predicted.
-        if (_netManager.IsClient)
+        if (_net.IsClient)
             return;
 
         if (TerminatingOrDeleted(args.Target))
@@ -65,10 +59,10 @@ public sealed partial class DamageOtherOnHitSystem : EntitySystem
             _color.RaiseEffect(Color.Red, new List<EntityUid> { args.Target }, Filter.Pvs(args.Target, entityManager: EntityManager));
 
         _guns.PlayImpactSound(args.Target, dmg, null, false);
-        if (TryComp<PhysicsComponent>(ent.Owner, out var body) && body.LinearVelocity.LengthSquared() > 0f)
-        {
-            var direction = body.LinearVelocity.Normalized();
-            _sharedCameraRecoil.KickCamera(args.Target, direction);
-        }
+        if (!TryComp<PhysicsComponent>(ent.Owner, out var body) || !(body.LinearVelocity.LengthSquared() > 0f))
+            return;
+
+        var direction = body.LinearVelocity.Normalized();
+        _sharedCameraRecoil.KickCamera(args.Target, direction);
     }
 }
