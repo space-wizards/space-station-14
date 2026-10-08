@@ -57,13 +57,16 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
     {
         base.Update(frameTime);
         var enumerator = EntityQueryEnumerator<ChangelingHorrorComponent, ChangelingIdentityComponent>();
+
+        var curtime = _timing.CurTime;
+
         while (enumerator.MoveNext(out var uid, out var comp, out var identities))
         {
             if (IsPaused(uid))
                 continue;
 
             // calculate the timeout
-            if (_timing.CurTime - comp.InitialTime > comp.TimeBudget)
+            if (curtime - comp.InitialTime > comp.TimeBudget)
             {
                 if (comp.LastIdentity != null && identities.ConsumedIdentities.Any(k => k.Identity == comp.LastIdentity.Value))
                 {
@@ -247,6 +250,8 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
         ent.Comp.TimeBudget = transformationTime;
         ent.Comp.InitialTime = now;
         ent.Comp.LastIdentity = ev.PreviousIdentity;
+
+        Dirty(ent);
 
         // this alert will display the time
         _alerts.ShowAlert(ent.Owner, ent.Comp.TimeAlert);

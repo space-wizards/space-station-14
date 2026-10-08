@@ -137,8 +137,6 @@
   - type: Vocal
     emoteSounds: null # there should be a way to not make them scream but oh well
   - type: ChangelingHorror # marks them as a changeling horror
-    spawnAnnouncementSound:
-      path: /Audio/Effects/Screech/changeling_screech_strong.ogg
     spawnEffects:
     - !type:EvenHealthChange # why not
       damage:

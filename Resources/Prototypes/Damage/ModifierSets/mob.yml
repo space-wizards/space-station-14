@@ -81,12 +81,8 @@
     Blunt: 0.15
     Slash: 0.15
     Piercing: 0.15
-    Cold: 0.05
+    Cold: 0.3
     Heat: 0.3
-    Poison: 0.05
-    Cellular: 0.05
     Radiation: 0.15
-    Caustic: 0.05
-    Shock: 0.20
-    Asphyxiation: 0.05
-    Bloodloss: 0.05 # bloodloss kills dragons, lets see how that works
+    Caustic: 0.3
+    Shock: 0.3

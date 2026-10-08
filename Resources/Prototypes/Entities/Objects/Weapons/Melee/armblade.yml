@@ -58,10 +58,10 @@
     attackRate: 1.3
     damage:
       types:
-        Slash: 14 # a load of damage
-        Piercing: 14
-        Caustic: 8
-        Structural: 20 # stronk, better than a fireaxe
+        Slash: 10
+        Piercing: 10
+        Caustic: 5
+        Structural: 15 # stronk, better than a fireaxe
   - type: Item
     inhandVisuals:
       left:
