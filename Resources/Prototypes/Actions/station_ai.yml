@@ -8,9 +8,10 @@
   - type: Action
     priority: -9
     itemIconStyle: BigAction
-    icon:
-      sprite: Interface/Actions/actions_ai.rsi
-      state: ai_core
+  - type: Sprite
+    sprite: Interface/Actions/actions_ai.rsi
+    layers:
+    - state: ai_core
   - type: InstantAction
     event: !type:JumpToCoreEvent
 
@@ -23,9 +24,10 @@
   - type: Action
     priority: -3
     itemIconStyle: NoItem
-    icon:
-      sprite: Interface/Actions/actions_ai.rsi
-      state: state_laws
     useDelay: 0.5
+  - type: Sprite
+    sprite: Interface/Actions/actions_ai.rsi
+    layers:
+    - state: state_laws
   - type: InstantAction
     event: !type:ToggleLawsScreenEvent

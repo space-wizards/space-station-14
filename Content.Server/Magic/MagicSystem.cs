@@ -1,6 +1,7 @@
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.Magic;
 using Content.Shared.Magic.Events;
 using Content.Shared.Mind;
@@ -12,16 +13,12 @@ namespace Content.Server.Magic;
 public sealed partial class MagicSystem : SharedMagicSystem
 {
     [Dependency] private ChatSystem _chat = default!;
-    [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private ServerGameTicker _gameTicker = default!;
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private SharedMindSystem _mind = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForSurvivorAntagTag = "InvalidForSurvivorAntag";
-
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
+    private static readonly EntProtoId SurvivorGameRule = "Survivor";
 
     public override void OnVoidApplause(VoidApplauseSpellEvent ev)
     {
@@ -46,9 +43,7 @@ public sealed partial class MagicSystem : SharedMagicSystem
         if (_mind.TryGetMind(ev.Performer, out var mind, out _) && !_tag.HasTag(mind, InvalidForSurvivorAntagTag))
             _tag.AddTag(mind, InvalidForSurvivorAntagTag);
 
-        EntProtoId survivorRule = "Survivor";
-
         if (!_gameTicker.IsGameRuleActive<SurvivorRuleComponent>())
-            _gameTicker.StartGameRule(survivorRule);
+            _gameTicker.StartGameRule(SurvivorGameRule);
     }
 }

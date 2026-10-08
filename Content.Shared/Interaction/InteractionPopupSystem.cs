@@ -127,18 +127,16 @@ public sealed partial class InteractionPopupSystem : EntitySystem
             _popupSystem.PopupEntity(msgOthers, uid, Filter.PvsExcept(user, entityManager: EntityManager), true);
         }
 
+        _popupSystem.PopupEntity(msg, uid, user);
+
         if (!predict)
         {
-            _popupSystem.PopupEntity(msg, uid, user);
-
             if (component.SoundPerceivedByOthers)
                 _audio.PlayPvs(sfx, target);
             else
                 _audio.PlayEntity(sfx, Filter.Entities(user, target), target, false);
             return;
         }
-
-        _popupSystem.PopupClient(msg, uid, user);
 
         if (sfx == null)
             return;

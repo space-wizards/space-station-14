@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Client.Graphics;
 using Content.Shared.Light.Components;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
@@ -18,10 +19,10 @@ public sealed partial class SunShadowOverlay : Overlay
 
     [Dependency] private IClyde _clyde = default!;
     [Dependency] private IEntityManager _entManager = default!;
-    [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private IPrototypeManager _protoManager = default!;
     private readonly EntityLookupSystem _lookup;
-    private readonly SharedTransformSystem _xformSys;
+    private readonly SharedMapSystem _mapSys;
+    private readonly TransformSystem _xformSys;
 
     private readonly HashSet<Entity<SunShadowCastComponent>> _shadows = new();
 
@@ -30,7 +31,8 @@ public sealed partial class SunShadowOverlay : Overlay
     public SunShadowOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _xformSys = _entManager.System<SharedTransformSystem>();
+        _xformSys = _entManager.System<TransformSystem>();
+        _mapSys = _entManager.System<SharedMapSystem>();
         _lookup = _entManager.System<EntityLookupSystem>();
         ZIndex = AfterLightTargetOverlay.ContentZIndex + 1;
     }
@@ -46,7 +48,7 @@ public sealed partial class SunShadowOverlay : Overlay
             return;
 
         _grids.Clear();
-        _mapManager.FindGridsIntersecting(args.MapId,
+        _mapSys.FindGridsIntersecting(args.MapId,
             args.WorldBounds.Enlarged(SunShadowComponent.MaxLength),
             ref _grids);
 
@@ -118,7 +120,7 @@ public sealed partial class SunShadowOverlay : Overlay
                     foreach (var ent in _shadows)
                     {
                         var xform = _entManager.GetComponent<TransformComponent>(ent.Owner);
-                        var (worldPos, worldRot) = _xformSys.GetWorldPositionRotation(xform);
+                        var (worldPos, worldRot) = _xformSys.GetRenderWorldPositionRotation((ent.Owner, xform));
                         // Need no rotation on matrix as sun shadow direction doesn't care.
                         var worldMatrix = Matrix3x2.CreateTranslation(worldPos);
                         var renderMatrix = Matrix3x2.Multiply(worldMatrix, invMatrix);

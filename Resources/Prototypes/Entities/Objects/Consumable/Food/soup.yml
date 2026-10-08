@@ -563,7 +563,7 @@
   - type: FlavorProfile
     flavors:
       - jelly
-      - mushrooms
+      - mushroom
   - type: Sprite
     layers:
     - state: bowl
@@ -594,6 +594,9 @@
         Quantity: 15
       - ReagentId: Vodka
         Quantity: 5
+  - type: Tag
+    tags:
+    - FinishedMeal
 
 # Soup
 
@@ -821,6 +824,7 @@
   - type: Tag
     tags:
     - ChiliBowl
+    - FinishedMeal
 
 
 - type: entity
@@ -855,6 +859,7 @@
   - type: Tag
     tags:
     - ChiliBowl
+    - FinishedMeal
 
 - type: entity
   name: chili con carnival
@@ -875,6 +880,7 @@
   - type: Tag
     tags:
     - ChiliBowl
+    - FinishedMeal
 
 - type: entity
   name: monkey's delight
@@ -1147,7 +1153,7 @@
     storedOffset: 0,2
   - type: FlavorProfile
     flavors:
-      - mushrooms
+      - mushroom
       - electrons
   - type: Sprite
     layers:

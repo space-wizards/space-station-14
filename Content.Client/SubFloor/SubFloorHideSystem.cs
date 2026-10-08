@@ -32,34 +32,28 @@ public sealed partial class SubFloorHideSystem : SharedSubFloorHideSystem
         }
     }
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<SubFloorHideComponent, AppearanceChangeEvent>(OnAppearanceChanged);
-        SubscribeNetworkEvent<ShowSubfloorRequestEvent>(OnRequestReceived);
-        SubscribeLocalEvent<LocalPlayerDetachedEvent>(OnPlayerDetached);
-    }
-
+    [SubscribeLocalEvent]
     private void OnPlayerDetached(LocalPlayerDetachedEvent ev)
     {
         // Vismask resets so need to reset this.
         ShowAll = false;
     }
 
+    [SubscribeNetworkEvent]
     private void OnRequestReceived(ShowSubfloorRequestEvent ev)
     {
         // When client receives request Queue an update on all vis.
         UpdateAll();
     }
 
+    [SubscribeLocalEvent]
     private void OnAppearanceChanged(EntityUid uid, SubFloorHideComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        _appearance.TryGetData<bool>(uid, SubFloorVisuals.Covered, out var covered, args.Component);
-        _appearance.TryGetData<bool>(uid, SubFloorVisuals.ScannerRevealed, out var scannerRevealed, args.Component);
+        args.TryGetData<bool>(SubFloorVisuals.Covered, out var covered);
+        args.TryGetData<bool>(SubFloorVisuals.ScannerRevealed, out var scannerRevealed);
 
         scannerRevealed &= !ShowAll; // no transparency for show-subfloor mode.
 
@@ -91,7 +85,8 @@ public sealed partial class SubFloorHideSystem : SharedSubFloorHideSystem
         {
             // Allows sandbox mode to make wires visible over other stuff.
             component.OriginalDrawDepth ??= args.Sprite.DrawDepth;
-            _sprite.SetDrawDepth((uid, args.Sprite), (int)Shared.DrawDepth.DrawDepth.Overdoors);
+            var drawDepthDifference = Shared.DrawDepth.DrawDepth.ThickPipe - (Shared.DrawDepth.DrawDepth.Overdoors + 1);
+            _sprite.SetDrawDepth((uid, args.Sprite), args.Sprite.DrawDepth - drawDepthDifference);
         }
         else if (scannerRevealed)
         {
@@ -99,8 +94,8 @@ public sealed partial class SubFloorHideSystem : SharedSubFloorHideSystem
             if (component.OriginalDrawDepth is not null)
                 return;
             component.OriginalDrawDepth = args.Sprite.DrawDepth;
-            var drawDepthDifference = Shared.DrawDepth.DrawDepth.ThickPipe - Shared.DrawDepth.DrawDepth.Puddles;
-            _sprite.SetDrawDepth((uid, args.Sprite), args.Sprite.DrawDepth - (drawDepthDifference - 1));
+            var drawDepthDifference = Shared.DrawDepth.DrawDepth.ThickPipe - (Shared.DrawDepth.DrawDepth.Puddles + 1);
+            _sprite.SetDrawDepth((uid, args.Sprite), args.Sprite.DrawDepth - drawDepthDifference);
         }
         else if (component.OriginalDrawDepth.HasValue)
         {

@@ -39,92 +39,38 @@
     - BoxCardboard
 
 - type: entity
-  name: mousetrap box
-  parent: BoxCardboard
-  id: BoxMousetrap
-  description: This box is filled with mousetraps. Try not to get your hand stuck in one.
+  parent: BoxBaseHug
+  id: BoxHug
+  name: box of hugs
+  description: A special box for sensitive people.
   components:
-  - type: EntityTableContainerFill
-    containers:
-      storagebase:
-        id: Mousetrap
-        amount: 4
+  - type: PhysicalComposition # Half of the "regular" cardboard box
+    materialComposition:
+      Cardboard: 50
   - type: Sprite
     layers:
-      - state: box
-      - state: mousetraps
+    - state: box_hug
+    - state: heart
+  - type: Tag
+    tags:
+    - BoxCardboard
+    - BoxHug
 
 - type: entity
-  name: lightbulb box
   parent: BoxCardboard
-  id: BoxLightbulb
-  description: This box is shaped on the inside so that only light tubes and bulbs fit.
+  id: BoxLighttubeHoliday
+  name: holiday lighttube box
   components:
   - type: Sprite
     layers:
-      - state: box
-      - state: light
+    - state: box
+    - state: light
   - type: Storage
     grid:
     - 0,0,5,3
     whitelist:
       components:
       - LightBulb
-  - type: EntityTableContainerFill
-    containers:
-      storagebase:
-        id: LightBulb
-        amount: 12
-
-- type: entity
-  name: lightbulb box warm
-  parent: BoxLightbulb
-  id: BoxWarmLightbulb
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      storagebase:
-        id: WarmLightBulb
-        amount: 12
-
-- type: entity
-  name: lighttube box
-  parent: BoxLightbulb
-  id: BoxLighttube
-  components:
-  - type: Sprite
-    layers:
-      - state: box
-      - state: lighttube
-  - type: EntityTableContainerFill
-    containers:
-      storagebase:
-        id: LightTube
-        amount: 12
-
-- type: entity
-  name: mixed lights box
-  parent: BoxLightbulb
-  id: BoxLightMixed
-  components:
-  - type: Sprite
-    layers:
-      - state: box
-      - state: lightmixed
-  - type: EntityTableContainerFill
-    containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: LightTube
-          amount: 6
-        - id: LightBulb
-          amount: 6
-
-- type: entity
-  name: holiday lighttube box
-  parent: BoxLightbulb
-  id: BoxLighttubeHoliday
-  components:
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
@@ -236,7 +182,7 @@
     containers:
       storagebase:
         id: Brutepack
-        amount: 3
+        amount: 2
 
 - type: entity
   name: inflatable wall box
@@ -267,9 +213,9 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        - id: ClothingShoesBootsPerformer
-        - id: ClothingUniformJumpskirtPerformer
-        - id: ClothingHeadPerformerWig
+        - id: ClothingUniformJumpskirtVirtualSinger
+        - id: ClothingShoesBootsVirtualSinger
+        - id: ClothingHeadVirtualSingerWig
         - id: FoodMealMemoryleek
           amount: 2
 
@@ -307,7 +253,7 @@
     whitelist:
       tags:
         - TrashBag
-        - TrashBagBlue
+        - TrashBagHolding
   - type: Sprite
     layers:
       - state: box
