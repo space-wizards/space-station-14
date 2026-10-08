@@ -5,8 +5,8 @@ using Content.Shared.Light.Components;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
-using Content.Shared.Station;
 using Content.Shared.Station.Components;
+using Content.Shared.Station.Systems;
 using Color = Robust.Shared.Maths.Color;
 
 namespace Content.Shared.Light.EntitySystems;
@@ -22,7 +22,7 @@ public sealed partial class EmergencyLightSystem : EntitySystem
     [Dependency] private SharedBatterySystem _battery = default!;
     [Dependency] private SharedPointLightSystem _pointLight = default!;
     [Dependency] private SharedPowerReceiverSystem _receiver = default!;
-    [Dependency] private SharedStationSystem _station = default!;
+    [Dependency] private StationSystem _station = default!;
 
     [Dependency] private EntityQuery<StationMemberComponent> _stationMemberQuery;
 
@@ -98,16 +98,17 @@ public sealed partial class EmergencyLightSystem : EntitySystem
             _pointLight.SetColor(uid, level.EmergencyLightColor);
             _appearance.SetData(uid, EmergencyLightVisuals.Color, level.EmergencyLightColor, appearance);
 
-            if (level.ForceEnableEmergencyLights && !light.ForciblyEnabled)
+            switch (level.ForceEnableEmergencyLights)
             {
-                light.ForciblyEnabled = true;
-                TurnOn((uid, light));
-            }
-            else if (!level.ForceEnableEmergencyLights && light.ForciblyEnabled)
-            {
-                // Previously forcibly enabled, and we went down an alert level.
-                light.ForciblyEnabled = false;
-                UpdateState((uid, light));
+                case true when !light.ForciblyEnabled:
+                    light.ForciblyEnabled = true;
+                    TurnOn((uid, light));
+                    break;
+                case false when light.ForciblyEnabled:
+                    // Previously forcibly enabled, and we went down an alert level.
+                    light.ForciblyEnabled = false;
+                    UpdateState((uid, light));
+                    break;
             }
 
             Dirty(uid, light);
