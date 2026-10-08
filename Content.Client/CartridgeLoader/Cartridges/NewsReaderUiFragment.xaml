@@ -46,12 +46,29 @@
                 Name="PageTextContainer"
                 MinSize="0 0"
                 Orientation="Vertical"
+                HorizontalExpand="True"
                 SizeFlagsStretchRatio="2"
                 VerticalExpand="True">
+                <RichTextLabel Margin="8,8,8,8" Name="PageText" VerticalAlignment="Top"/>
+                <BoxContainer Name="CommentsSection" Orientation="Vertical" Margin="8,4,8,8" HorizontalExpand="True">
+                    <controls:Separator StyleClasses="LowDivider" Margin="0 4"/>
+                    <Label Name="CommentsHeader" StyleClasses="LabelSmall" FontColorOverride="#b1b1b2" Margin="0 2 0 4"/>
+                    <BoxContainer Name="CommentsContainer" Orientation="Vertical" HorizontalExpand="True"/>
+                </BoxContainer>
             </BoxContainer>
-            <RichTextLabel Margin="8,8,8,8" Name="PageText" VerticalAlignment="Top"/>
         </ScrollContainer>
     </PanelContainer>
+    <BoxContainer Name="ReactionsContainer" Orientation="Horizontal" HorizontalExpand="True" Margin="5,4,5,2">
+        <Button Name="ReactionUpvote" HorizontalExpand="True" ToggleMode="True" StyleClasses="OpenRight" ToolTip="{Loc 'news-read-ui-reaction-upvote-tooltip'}"/>
+        <Button Name="ReactionDownvote" HorizontalExpand="True" ToggleMode="True" StyleClasses="OpenBoth" ToolTip="{Loc 'news-read-ui-reaction-downvote-tooltip'}"/>
+        <Button Name="ReactionLaugh" HorizontalExpand="True" ToggleMode="True" StyleClasses="OpenBoth" ToolTip="{Loc 'news-read-ui-reaction-laugh-tooltip'}"/>
+        <Button Name="ReactionShock" HorizontalExpand="True" ToggleMode="True" StyleClasses="OpenBoth" ToolTip="{Loc 'news-read-ui-reaction-shock-tooltip'}"/>
+        <Button Name="ReactionHeart" HorizontalExpand="True" ToggleMode="True" StyleClasses="OpenLeft" ToolTip="{Loc 'news-read-ui-reaction-heart-tooltip'}"/>
+    </BoxContainer>
+    <BoxContainer Name="CommentInputContainer" Orientation="Horizontal" HorizontalExpand="True" Margin="5,2,5,2">
+        <LineEdit Name="CommentInput" HorizontalExpand="True" PlaceHolder="{Loc 'news-read-ui-comment-placeholder'}"/>
+        <Button Name="CommentSubmit" Text="{Loc 'news-read-ui-comment-submit'}" MinWidth="56" Margin="4,0,0,0"/>
+    </BoxContainer>
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="5,5,5,5">
         <Button
             Name="NotificationSwitch"
@@ -62,3 +79,4 @@
         <RichTextLabel Margin="5,2,2,2" Name="Author" VerticalAlignment="Top" HorizontalAlignment="Right"/>
     </BoxContainer>
 </cartridges:NewsReaderUiFragment>
+

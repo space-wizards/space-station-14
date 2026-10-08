@@ -36,3 +36,33 @@ news-write-ui-richtext-tooltip = News articles support rich text
 
 news-pda-notification-header = New news article
 news-publish-admin-announcement = {$actor} published news article {$title} by {$author}
+
+news-read-ui-reaction-upvote = ▲
+news-read-ui-reaction-downvote = ▼
+news-read-ui-reaction-laugh = ☺
+news-read-ui-reaction-shock = ‼
+news-read-ui-reaction-heart = ♥
+news-read-ui-reaction-upvote-tooltip = Upvote
+news-read-ui-reaction-downvote-tooltip = Downvote
+news-read-ui-reaction-laugh-tooltip = Laugh
+news-read-ui-reaction-shock-tooltip = Shock
+news-read-ui-reaction-heart-tooltip = Heart
+news-read-ui-reaction-button-format = {$symbol} {$count}
+
+news-read-ui-comments-header = Comments ({$count})
+news-read-ui-comments-header-locked = Comments ({$count}) [Locked]
+news-read-ui-no-comments = No comments yet.
+news-read-ui-comment-placeholder = Write a comment...
+news-read-ui-comments-locked-placeholder = Comments are locked on this article
+news-read-ui-comments-full-placeholder = Comment limit reached
+news-read-ui-comment-submit = Post
+news-read-ui-comment-author-job = {$author} ({$job})
+news-read-ui-comment-meta = [color=#a8b8d0][bold]{$author}[/bold][/color] [color=#808080]({$time})[/color]
+
+news-write-ui-lock-comments-checkbox = Lock comments on this article
+news-write-ui-comments-button = Comments ({$count})
+news-write-ui-lock-comments-text = Lock Thread
+news-write-ui-unlock-comments-text = Unlock Thread
+news-write-ui-reactions-summary = {$upSymbol}{$up} {$downSymbol}{$down} {$laughSymbol}{$laugh} {$shockSymbol}{$shock} {$heartSymbol}{$heart}
+
+

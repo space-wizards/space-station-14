@@ -116,6 +116,7 @@ public sealed partial class ArticleEditorPanel : Control
         PreviewLabel.SetMarkup("");
         TitleField.Text = "";
         ContentField.TextRope = Rope.Leaf.Empty;
+        LockCommentsCheckBox.Pressed = false;
         ArticleDraftUpdated?.Invoke(string.Empty, string.Empty);
     }
 

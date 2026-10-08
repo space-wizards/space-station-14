@@ -41,6 +41,9 @@
                 <RichTextLabel Name="PreviewLabel" VerticalAlignment="Top" Margin="9 3" MaxWidth="360"/>
             </ScrollContainer>
         </Control>
+        <BoxContainer Orientation="Horizontal" Margin="12 4 12 0">
+            <CheckBox Name="LockCommentsCheckBox" Text="{Loc 'news-write-ui-lock-comments-checkbox'}" Access="Public"/>
+        </BoxContainer>
         <BoxContainer Orientation="Horizontal" Margin="12 5 12 8">
             <Control>
                 <Button Name="ButtonCancel" SetHeight="32" SetWidth="85"

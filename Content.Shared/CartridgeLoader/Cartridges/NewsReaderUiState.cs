@@ -10,13 +10,20 @@ public sealed class NewsReaderBoundUserInterfaceState : BoundUserInterfaceState
     public int TargetNum;
     public int TotalNum;
     public bool NotificationOn;
+    public HashSet<NewsReactionType> ActiveReactions;
 
-    public NewsReaderBoundUserInterfaceState(NewsArticle article, int targetNum, int totalNum, bool notificationOn)
+    public NewsReaderBoundUserInterfaceState(
+        NewsArticle article,
+        int targetNum,
+        int totalNum,
+        bool notificationOn,
+        HashSet<NewsReactionType>? activeReactions = null)
     {
         Article = article;
         TargetNum = targetNum;
         TotalNum = totalNum;
         NotificationOn = notificationOn;
+        ActiveReactions = activeReactions ?? new HashSet<NewsReactionType>();
     }
 }
 

@@ -18,7 +18,12 @@ public sealed class NewsWriterBoundUserInterfaceState : BoundUserInterfaceState
     public readonly string DraftTitle;
     public readonly string DraftContent;
 
-    public NewsWriterBoundUserInterfaceState(NewsArticle[] articles, bool publishEnabled, TimeSpan nextPublish, string draftTitle, string draftContent)
+    public NewsWriterBoundUserInterfaceState(
+        NewsArticle[] articles,
+        bool publishEnabled,
+        TimeSpan nextPublish,
+        string draftTitle,
+        string draftContent)
     {
         Articles = articles;
         PublishEnabled = publishEnabled;
@@ -28,20 +33,27 @@ public sealed class NewsWriterBoundUserInterfaceState : BoundUserInterfaceState
     }
 }
 
+/// <summary>
+/// Sent from the news writer UI to publish a new article.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class NewsWriterPublishMessage : BoundUserInterfaceMessage
 {
     public readonly string Title;
     public readonly string Content;
+    public readonly bool CommentsLocked;
 
-
-    public NewsWriterPublishMessage(string title, string content)
+    public NewsWriterPublishMessage(string title, string content, bool commentsLocked = false)
     {
         Title = title;
         Content = content;
+        CommentsLocked = commentsLocked;
     }
 }
 
+/// <summary>
+/// Sent from the news writer UI to delete an existing article by index.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class NewsWriterDeleteMessage : BoundUserInterfaceMessage
 {
@@ -50,6 +62,36 @@ public sealed class NewsWriterDeleteMessage : BoundUserInterfaceMessage
     public NewsWriterDeleteMessage(int num)
     {
         ArticleNum = num;
+    }
+}
+
+/// <summary>
+/// Sent from the news writer UI to lock or unlock reader comments on an article.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class NewsWriterToggleLockCommentsMessage : BoundUserInterfaceMessage
+{
+    public readonly int ArticleNum;
+
+    public NewsWriterToggleLockCommentsMessage(int articleNum)
+    {
+        ArticleNum = articleNum;
+    }
+}
+
+/// <summary>
+/// Sent from the news writer UI to delete a specific reader comment on an article.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class NewsWriterDeleteCommentMessage : BoundUserInterfaceMessage
+{
+    public readonly int ArticleNum;
+    public readonly int CommentId;
+
+    public NewsWriterDeleteCommentMessage(int articleNum, int commentId)
+    {
+        ArticleNum = articleNum;
+        CommentId = commentId;
     }
 }
 
@@ -75,3 +117,5 @@ public sealed class NewsWriterSaveDraftMessage : BoundUserInterfaceMessage
 public sealed class NewsWriterRequestDraftMessage : BoundUserInterfaceMessage
 {
 }
+
+

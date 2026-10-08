@@ -26,6 +26,8 @@ public sealed class NewsWriterBoundUserInterface : BoundUserInterface
 
         _menu.ArticleEditorPanel.PublishButtonPressed += OnPublishButtonPressed;
         _menu.DeleteButtonPressed += OnDeleteButtonPressed;
+        _menu.ToggleLockCommentsButtonPressed += OnToggleLockCommentsButtonPressed;
+        _menu.DeleteCommentButtonPressed += OnDeleteCommentButtonPressed;
 
         _menu.CreateButtonPressed += OnCreateButtonPressed;
         _menu.ArticleEditorPanel.ArticleDraftUpdated += OnArticleDraftUpdated;
@@ -61,8 +63,9 @@ public sealed class NewsWriterBoundUserInterface : BoundUserInterface
             ? stringContent
             : $"{stringContent[..(SharedNewsSystem.MaxContentLength - 3)]}...";
 
+        var commentsLocked = _menu.ArticleEditorPanel.LockCommentsCheckBox.Pressed;
 
-        SendMessage(new NewsWriterPublishMessage(name, content));
+        SendMessage(new NewsWriterPublishMessage(name, content, commentsLocked));
     }
 
     private void OnDeleteButtonPressed(int articleNum)
@@ -71,6 +74,22 @@ public sealed class NewsWriterBoundUserInterface : BoundUserInterface
             return;
 
         SendMessage(new NewsWriterDeleteMessage(articleNum));
+    }
+
+    private void OnToggleLockCommentsButtonPressed(int articleNum)
+    {
+        if (_menu == null)
+            return;
+
+        SendMessage(new NewsWriterToggleLockCommentsMessage(articleNum));
+    }
+
+    private void OnDeleteCommentButtonPressed(int articleNum, int commentId)
+    {
+        if (_menu == null)
+            return;
+
+        SendMessage(new NewsWriterDeleteCommentMessage(articleNum, commentId));
     }
 
     private void OnCreateButtonPressed()
@@ -83,3 +102,4 @@ public sealed class NewsWriterBoundUserInterface : BoundUserInterface
         SendMessage(new NewsWriterSaveDraftMessage(title, content));
     }
 }
+

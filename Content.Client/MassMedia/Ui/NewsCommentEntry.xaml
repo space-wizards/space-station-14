@@ -1,0 +1,28 @@
+<Control xmlns="https://spacestation14.io"
+         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+         Margin="0 2 0 2"
+         HorizontalExpand="True">
+    <PanelContainer HorizontalExpand="True">
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BackgroundColor="#202025"
+                              ContentMarginLeftOverride="6"
+                              ContentMarginRightOverride="6"
+                              ContentMarginTopOverride="4"
+                              ContentMarginBottomOverride="4" />
+        </PanelContainer.PanelOverride>
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <RichTextLabel Name="MetaLabel" HorizontalExpand="True" VerticalAlignment="Center" />
+                <controls:ConfirmButton Name="DeleteButton"
+                                        Text="{Loc 'news-write-ui-delete-text'}"
+                                        SetHeight="18"
+                                        SetWidth="48"
+                                        HorizontalAlignment="Right"
+                                        StyleClasses="ButtonSmall negative"
+                                        Visible="False" />
+            </BoxContainer>
+            <RichTextLabel Name="ContentLabel" HorizontalExpand="True" Margin="0 2 0 0" />
+        </BoxContainer>
+    </PanelContainer>
+</Control>

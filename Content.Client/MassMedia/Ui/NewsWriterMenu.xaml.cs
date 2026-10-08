@@ -14,8 +14,11 @@ public sealed partial class NewsWriterMenu : FancyWindow
     [Dependency] private IGameTiming _gameTiming = default!;
 
     private TimeSpan? _nextPublish;
+    private readonly HashSet<int> _expandedArticleIds = new();
 
     public event Action<int>? DeleteButtonPressed;
+    public event Action<int>? ToggleLockCommentsButtonPressed;
+    public event Action<int, int>? DeleteCommentButtonPressed;
 
     public event Action? CreateButtonPressed;
 
@@ -34,7 +37,12 @@ public sealed partial class NewsWriterMenu : FancyWindow
         ButtonCreate.OnPressed += OnCreate;
     }
 
-    public void UpdateUI(NewsArticle[] articles, bool publishEnabled, TimeSpan nextPublish, string draftTitle, string draftContent)
+    public void UpdateUI(
+        NewsArticle[] articles,
+        bool publishEnabled,
+        TimeSpan nextPublish,
+        string draftTitle,
+        string draftContent)
     {
         ArticlesContainer.Children.Clear();
         ArticleCount.Text = Loc.GetString("news-write-ui-article-count-text", ("count", articles.Length));
@@ -50,7 +58,11 @@ public sealed partial class NewsWriterMenu : FancyWindow
                 PublicationTime = article.ShareTime,
                 ArtcileNumber = i
             };
-            control.OnDeletePressed += () => DeleteButtonPressed?.Invoke(control.ArtcileNumber);
+            control.PopulateArticleDetails(article, _expandedArticleIds.Contains(article.ArticleId));
+            control.OnDeletePressed += OnCardDeletePressed;
+            control.OnToggleLockCommentsPressed += OnCardToggleLockCommentsPressed;
+            control.OnDeleteCommentPressed += OnCardDeleteCommentPressed;
+            control.OnCommentsExpandedChanged += OnCardCommentsExpandedChanged;
 
             ArticlesContainer.AddChild(control);
         }
@@ -60,6 +72,29 @@ public sealed partial class NewsWriterMenu : FancyWindow
 
         ArticleEditorPanel.TitleField.Text = draftTitle;
         ArticleEditorPanel.ContentField.TextRope = new Rope.Leaf(draftContent);
+    }
+
+    private void OnCardDeletePressed(int articleNum)
+    {
+        DeleteButtonPressed?.Invoke(articleNum);
+    }
+
+    private void OnCardToggleLockCommentsPressed(int articleNum)
+    {
+        ToggleLockCommentsButtonPressed?.Invoke(articleNum);
+    }
+
+    private void OnCardDeleteCommentPressed(int articleNum, int commentId)
+    {
+        DeleteCommentButtonPressed?.Invoke(articleNum, commentId);
+    }
+
+    private void OnCardCommentsExpandedChanged(int articleId, bool expanded)
+    {
+        if (expanded)
+            _expandedArticleIds.Add(articleId);
+        else
+            _expandedArticleIds.Remove(articleId);
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
