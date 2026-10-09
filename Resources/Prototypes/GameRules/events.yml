@@ -432,8 +432,22 @@
     - Service
     - Supply
     extraCount: 2
-    lightBreakChancePerSecond: 0.0003
-    doorToggleChancePerSecond: 0.001
+    lightBreakChance: 0.0003
+    doorToggleChance: 0.00050
+    doorBoltChance: 0.00017
+    doorEmergencyAccessChance: 0.00017
+    doorElectrifyChance: 0.00017
+    airAlarmModeChangeChance: 0.004
+    changeCriminalRecordChance: 0.0003
+    vendChance: 0.001
+    lockToggleChance: 0.001
+    linkPortInvokeChance: 0.01
+    deviceLinkSourceWhitelist:
+      tags:
+      - SolarFlareDeviceLinkSourceTarget
+    vendingMachineBlacklist:
+      tags:
+      - SolarFlareVendingMachineBlacklist
   - type: DynamicRuleCost
     cost: 10
 

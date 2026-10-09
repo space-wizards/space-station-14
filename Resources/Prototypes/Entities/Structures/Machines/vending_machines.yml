@@ -2101,6 +2101,9 @@
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Tag
+    tags:
+      - SolarFlareVendingMachineBlacklist
   - type: AccessReader
     access: [["Chemistry"]]
   - type: GuideHelp
