@@ -218,3 +218,14 @@
       collection: gib # Same as ActionRetractableItemArmblade
     despawnSound:
       collection: gib # Same as ActionRetractableItemArmblade
+
+# The horror form needs to be handless; this serves as a very hacky fix for it.
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectHorrorFormArmblades
+  name: forced armblade
+  components:
+  - type: ForcedItemStatusEffect
+    handItems:
+    - ArmbladeHorror
+    - ArmbladeHorror

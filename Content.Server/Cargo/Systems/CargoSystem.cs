@@ -1,5 +1,4 @@
 using Content.Server.Cargo.Components;
-using Content.Server.DeviceLinking.Systems;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Stack;
@@ -9,6 +8,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Labels.Components;
 using Content.Shared.Mobs.Components;
@@ -62,7 +62,6 @@ public sealed partial class CargoSystem : SharedCargoSystem
     {
         base.Initialize();
         InitializeShuttle();
-        InitializeTelepad();
         InitializeBounty();
         InitializeFunds();
     }
@@ -71,7 +70,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
     {
         base.Update(frameTime);
         UpdateConsole();
-        UpdateTelepad(frameTime);
+        UpdateTelepad();
         UpdateBounty();
     }
 }
