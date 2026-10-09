@@ -27,9 +27,21 @@ public sealed partial class DynamicRuleComponent : Component
     [DataField]
     public float BudgetPerSecond;
 
+    /// <summary>
+    /// The starting budget. Only stored for reference/debugging
+    /// </summary>
+    [ViewVariables]
+    public float StartingBudget;
+
+    /// <summary>
+    /// Minimum budget per second to pick
+    /// </summary>
     [DataField]
     public float MinBudgetPerSecond = 0.05f;
 
+    /// <summary>
+    /// Maximum budget per second to pick
+    /// </summary>
     [DataField]
     public float MaxBudgetPerSecond = 0.1f;
 
@@ -64,7 +76,13 @@ public sealed partial class DynamicRuleComponent : Component
     public TimeSpan MaxRuleInterval = TimeSpan.FromMinutes(15);
 
     /// <summary>
-    /// A table of rules that are picked from.
+    /// A table of rules that are picked from roundstart
+    /// </summary>
+    [DataField]
+    public EntityTableSelector RoundStartTable = new NoneSelector();
+
+    /// <summary>
+    /// A table of rules that are picked from during the round.
     /// </summary>
     [DataField]
     public EntityTableSelector Table = new NoneSelector();
