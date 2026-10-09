@@ -896,7 +896,7 @@
     projectileSpeed: 10
     fireRate: 1.5
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+      path: /Audio/Effects/gateway_off.ogg
   - type: BatteryAmmoProvider
     proto: AnomalousParticleDeltaStrong
     fireCost: 200
@@ -911,7 +911,7 @@
     - proto: AnomalousParticleSigmaStrong
       fireCost: 400
   - type: BatterySelfRecharger
-    autoRechargeRate: 25
+    autoRechargeRate: 50
   - type: Construction
     graph: UpgradeWeaponPistolCHIMPSyndicate
     node: start
