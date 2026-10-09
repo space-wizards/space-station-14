@@ -316,3 +316,15 @@
     sprite: Clothing/Ears/Headsets/ninja.rsi
   - type: EmpResistance
     strengthMultiplier: 0
+
+- type: entity
+  parent: ClothingHeadsetGrey
+  id: ClothingHeadsetSyndicateCovert
+  name: passenger headset
+  suffix: Syndicate
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySyndie
+

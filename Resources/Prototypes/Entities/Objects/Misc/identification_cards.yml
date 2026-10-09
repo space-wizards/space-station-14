@@ -1073,6 +1073,14 @@
       enum.AgentIDCardUiKey.Key:
         type: AgentIDCardBoundUserInterface
 
+- type: entity # Used for reinforcements, means that someone isn't immediately outed because they forget to change their ID on spawning
+  parent: SyndicateIDCardAdaptive
+  id: SyndicateIDCardAdaptivePassenger
+  suffix: Adaptive, Passenger Icon
+  components:
+  - type: IdCard
+    jobIcon: JobIconPassenger
+
 - type: entity
   parent: [ SyndicateIDCard, BaseSyndicateContraband ]
   id: SyndiOperativeIDCard
