@@ -53,7 +53,7 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
             _vendingSystem.EjectRandom(vendor.AsNullable(), true); // ensures the vending noise plays for the first ejected item
             for (var j = 1; j < toEject; j++)
             {
-                _vendingSystem.EjectRandom(vendor.AsNullable(), true, true); // handles ejecting the other items
+                _vendingSystem.EjectRandom(vendor.AsNullable(), true, true);
             }
         }
     }
