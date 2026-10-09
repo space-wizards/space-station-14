@@ -105,12 +105,12 @@
     eyes: ClothingEyesHudMedical
     pocket2: PillCanisterBicaridine
   inhand:
-    - PaperWrittenSyndicateInstructions
     - MedkitCombatFilled
   storage:
     back:
     - SyndicateFlippo
     - EncryptionKeySyndie
+    - MagazinePistolHighCapacity
     - EncryptionKeyMedical
     - DefibrillatorSyndicate
     - CigPackSyndicate
@@ -127,14 +127,14 @@
     pocket1: WeaponPistolCobra
     pocket2: VoiceMaskImplanter
   inhand:
-    - PaperWrittenSyndicateInstructions
     - ClothingBackpackChameleonFillAgent
   storage:
     back:
     - SyndicateFlippo
     - EncryptionKeySyndie
-    - RadioHandheld
-    - RadioHandheld
+    - BodyBagFolded
+    - Syringe
+    - ChemistryBottleMuteToxin
 
 - type: startingGear
   parent: SyndicateReinforcementClothing
@@ -144,7 +144,6 @@
     outerClothing: ClothingOuterCoatJensenSyndie
     pocket2: C4
   inhand:
-    - PaperWrittenSyndicateInstructions
     - ToolboxSyndicateFilled
   storage:
     back:
