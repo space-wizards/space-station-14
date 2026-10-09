@@ -35,16 +35,17 @@ public sealed partial class FaxWindow : DefaultWindow
     /// <summary>
     /// Updates the window with new state.
     /// </summary>
-    /// <param name="printDisabled">Whether the print buttons are disabled, this includes all buttons which can print for this fax</param>
+    /// <param name="copyDisabled">Whether the copy button is disabled.</param>
+    /// <param name="fileDisabled">Whether printing from a file is disabled.</param>
     /// <param name="sendDisabled">Whether the send button is disabled.</param>
     /// <param name="faxName">The name of the fax machine.</param>
     /// <param name="paper">Readable name of the paper enity inside the fax machine, or null if there is none.</param>
     /// <param name="knownFaxes">Dictionary of known fax machine names by their address.</param>
     /// <param name="destination">Currently selected fax address to send to.</param>
-    public void Update(bool printDisabled, bool sendDisabled, string faxName, string? paper, Dictionary<DeviceAddress, string> knownFaxes, DeviceAddress? destination)
+    public void Update(bool copyDisabled, bool fileDisabled, bool sendDisabled, string faxName, string? paper, Dictionary<DeviceAddress, string> knownFaxes, DeviceAddress? destination)
     {
-        CopyButton.Disabled = printDisabled;
-        FileButton.Disabled = printDisabled;
+        CopyButton.Disabled = copyDisabled;
+        FileButton.Disabled = fileDisabled;
         SendButton.Disabled = sendDisabled;
         FromLabel.Text = faxName;
 

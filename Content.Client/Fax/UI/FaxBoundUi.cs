@@ -104,6 +104,7 @@ public sealed partial class FaxBoundUi(EntityUid owner, Enum uiKey) : BoundUserI
         var noPaper = paper == null;
 
         _window.Update(cooldown || noPaper,
+            cooldown,
             cooldown || noPaper || fax.DestinationAddress == null,
             fax.Name,
             EntMan.GetComponentOrNull<MetaDataComponent>(paper)?.EntityName,

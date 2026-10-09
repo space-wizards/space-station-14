@@ -186,11 +186,15 @@ public abstract partial class FaxSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnItemRemoved(Entity<FaxMachineComponent> fax, ref EntRemovedFromContainerMessage args)
     {
-        if (Timing.ApplyingState || !fax.Comp.Initialized || args.Container.ID != fax.Comp.PaperSlot.ID)
+        if (!fax.Comp.Initialized || args.Container.ID != fax.Comp.PaperSlot.ID)
             return;
 
-        FinishInsert(fax);
-        UpdateAppearance(fax);
+        if (!Timing.ApplyingState)
+        {
+            FinishInsert(fax);
+            UpdateAppearance(fax);
+        }
+
         UpdateUserInterface(fax);
     }
 
@@ -571,7 +575,7 @@ public abstract partial class FaxSystem : EntitySystem
         if (!_cloning.TryClone(sendEntity.Value, null, fax.Comp.Settings, out var sent))
             return;
 
-        if (fax.Comp.AddSenderInfo)
+        if (fax.Comp.AddSenderInfo && HasComp<PaperComponent>(sent.Value))
         {
             var faxMachineAddress = TryComp<DeviceNetworkComponent>(fax, out var deviceNetworkComponent)
                 ? DeviceLocalizationHelpers.GetAddressFromId(deviceNetworkComponent)
