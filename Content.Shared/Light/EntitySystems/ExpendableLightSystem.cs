@@ -48,11 +48,14 @@ public sealed partial class ExpendableLightSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnInteractUsing(Entity<ExpendableLightComponent> ent, ref InteractUsingEvent args)
     {
-        if (args.Handled) return;
+        if (args.Handled)
+            return;
 
-        if (!TryComp(args.Used, out StackComponent? stack)) return;
+        if (!TryComp(args.Used, out StackComponent? stack))
+            return;
 
-        if (stack.StackTypeId != ent.Comp.RefuelMaterialID) return;
+        if (stack.StackTypeId != ent.Comp.RefuelMaterialID)
+            return;
 
         switch (ent.Comp.CurrentState)
         {
@@ -155,24 +158,24 @@ public sealed partial class ExpendableLightSystem : EntitySystem
     public bool TryActivate(Entity<ExpendableLightComponent> ent, EntityUid? user = null)
     {
         var component = ent.Comp;
-        if (!component.Activated && component.CurrentState == ExpendableLightState.Unlit)
+        if (component.Activated || component.CurrentState != ExpendableLightState.Unlit)
+            return true;
+
+        if (TryComp<ItemComponent>(ent, out var item))
         {
-            if (TryComp<ItemComponent>(ent, out var item))
-            {
-                _item.SetHeldPrefix(ent, "lit", component: item);
-            }
-
-            var ignite = new IgnitionEvent(true);
-            RaiseLocalEvent(ent, ref ignite);
-
-            component.CurrentState = ExpendableLightState.Lit;
-
-            component.StateExpiryTime = _timing.CurTime + component.GlowDuration;
-
-            UpdateSounds(ent, user);
-            UpdateVisualizer(ent);
-            Dirty(ent);
+            _item.SetHeldPrefix(ent, "lit", component: item);
         }
+
+        var ignite = new IgnitionEvent(true);
+        RaiseLocalEvent(ent, ref ignite);
+
+        component.CurrentState = ExpendableLightState.Lit;
+
+        component.StateExpiryTime = _timing.CurTime + component.GlowDuration;
+
+        UpdateSounds(ent, user);
+        UpdateVisualizer(ent);
+        Dirty(ent);
         return true;
     }
 
