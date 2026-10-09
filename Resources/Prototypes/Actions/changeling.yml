@@ -20,6 +20,8 @@
       collection: gib # Placeholder
     retractSounds:
       collection: gib # Placeholder
+  - type: ChangelingHorrorDisable
+    toggleOff: true
 
 - type: entity
   parent: BaseAction
@@ -528,7 +530,7 @@
     selfMessage: changeling-cocoon-success
   - type: DoAfterArgs
     examineText: changeling-cocoon-doafter
-    delay: 10
+    delay: 5
     breakOnMove: true
     breakOnDamage: true
   - type: EntityTargetAction
