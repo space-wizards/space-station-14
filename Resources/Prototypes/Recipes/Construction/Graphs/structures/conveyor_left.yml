@@ -1,0 +1,30 @@
+- type: constructionGraph
+  id: ConveyorLeftGraph
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: entity
+      steps:
+      - material: ConveyorBeltStack
+        amount: 1
+        doAfter: 2
+
+  - node: item
+    entity: ConveyorBeltAssembly
+    actions:
+    - !type:SetAnchor
+      value: false
+  
+  - node: entity
+    entity: ConveyorBeltLeft
+    actions:
+    - !type:SetAnchor
+      value: true
+    - !type:SnapToGrid
+    edges:
+    - to: item
+      steps:
+      - tool: Prying
+        doAfter: 3

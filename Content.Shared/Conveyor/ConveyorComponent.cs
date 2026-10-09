@@ -28,6 +28,13 @@ public sealed partial class ConveyorComponent : Component
     [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public ConveyorState State;
 
+    /// <summary>
+    ///     If and how the reverse direction should turn.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
+    public ConveyorCornerDirection CornerDirection;
+
     [ViewVariables, AutoNetworkedField]
     public bool Powered;
 
@@ -53,5 +60,13 @@ public enum ConveyorState : byte
     Off,
     Forward,
     Reverse
+}
+
+[Serializable, NetSerializable]
+public enum ConveyorCornerDirection : byte
+{
+    None,
+    Left,
+    Right
 }
 
