@@ -1,4 +1,4 @@
-﻿using Content.Shared.SensorMonitoring;
+using Content.Shared.SensorMonitoring;
 using Robust.Shared.Collections;
 using ConsoleUIState = Content.Shared.SensorMonitoring.SensorMonitoringConsoleBoundInterfaceState;
 using Content.Shared.DeviceNetwork.Components;
@@ -53,7 +53,6 @@ public sealed partial class SensorMonitoringConsoleSystem
             {
                 streams.Clear();
                 var name = MetaData(ent).EntityName;
-                var address = Comp<DeviceNetworkComponent>(ent).Address;
 
                 foreach (var (streamName, stream) in data.Streams)
                 {
@@ -70,7 +69,7 @@ public sealed partial class SensorMonitoringConsoleSystem
                 {
                     NetId = data.NetId,
                     Name = name,
-                    Address = address,
+                    Address = Comp<DeviceNetworkComponent>(ent),
                     DeviceType = data.DeviceType,
                     Streams = streams.ToArray()
                 });

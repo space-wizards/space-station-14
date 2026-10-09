@@ -176,8 +176,8 @@ public abstract partial class SharedPuddleSystem : EntitySystem
 
     private void OnAnchorChanged(Entity<PuddleComponent> entity, ref AnchorStateChangedEvent args)
     {
-        if (!args.Anchored)
-            PredictedQueueDel(entity.Owner);
+        if (!args.Anchored && !args.Detaching)
+            QueueDel(entity.Owner);
     }
 
     // Workaround for https://github.com/space-wizards/space-station-14/pull/35314
@@ -196,13 +196,13 @@ public abstract partial class SharedPuddleSystem : EntitySystem
             if (!_turf.IsSpace(change.NewTile))
                 continue;
 
-            var anchored = _map.GetAnchoredEntitiesEnumerator(ev.Entity, ev.Entity.Comp, change.GridIndices);
+            var anchored = _map.GetAnchoredEntities(ev.Entity, ev.Entity.Comp, change.GridIndices);
             while (anchored.MoveNext(out var ent))
             {
                 if (!_puddleQuery.HasComponent(ent))
                     continue;
 
-                PredictedQueueDel(ent);
+                QueueDel(ent);
             }
         }
     }

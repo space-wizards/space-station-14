@@ -29,7 +29,7 @@ public abstract partial class SharedStackSystem
         var stackId = ProtoMan.Index(stackEnt.Comp.StackTypeId);
         var entityUid = PredictedSpawnNextToOrDrop(stackId.Spawn, stackEnt.Owner);
 
-        SetCount(entityUid, 1);
+        SetCount((entityUid, null), 1);
         return entityUid;
     }
 
@@ -261,7 +261,7 @@ public abstract partial class SharedStackSystem
 
         // Queue delete stack if count reaches zero.
         if (ent.Comp.Count <= 0)
-            PredictedQueueDel(ent.Owner);
+            QueueDel(ent.Owner);
     }
 
     /// <inheritdoc cref="SetCount(Entity{StackComponent?}, int)"/>

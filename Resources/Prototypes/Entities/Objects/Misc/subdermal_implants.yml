@@ -49,7 +49,7 @@
     enabled: false
     radius: 2.5
     softness: 5
-    mask: /Textures/Effects/LightMasks/cone.png
+    lightMask: ConeSingle
     autoRot: true
   - type: UnpoweredFlashlight
 
@@ -96,7 +96,8 @@
       deviceNetId: Wireless
       transmitFrequencyId: SuitSensor
     - type: StationLimitedNetwork
-    - type: WirelessNetworkConnection
+    - type: StationTracker
+    - type: WirelessNetwork
       range: 500
 
 #Traitor implants
@@ -397,11 +398,9 @@
   components:
   - type: SubdermalImplant
     implantAction: FakeMindShieldToggleAction
-    implantComponents:
-    - type: FakeMindShield # TODO: put the component on the implant and use implant relay events for the status icon
   - type: ItemLayersColor
     color: "#3661ff"
-  - type: FakeMindShieldImplant
+  - type: FakeMindShield
 
 # Sec and Command implants
 
@@ -412,9 +411,11 @@
   description: This implant will ensure loyalty to Nanotrasen and prevent mind control devices.
   categories: [ HideSpawnMenu ]
   components:
-  - type: ItemLayersColor
-    color: "#5cb6ff"
-  - type: MindShieldImplant
+   - type: ItemLayersColor
+     color: "#5cb6ff"
+   - type: SubdermalImplant
+   - type: MindShieldImplant
+   - type: MindShield
 
 # Centcomm implants
 
