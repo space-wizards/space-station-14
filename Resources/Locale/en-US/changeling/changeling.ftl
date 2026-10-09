@@ -18,9 +18,14 @@ changeling-devour-begin-consume-others = { CAPITALIZE(POSS-ADJ($user)) } uncanny
 changeling-devour-consume-complete-self = Our uncanny mouth retreats, biomass consumed.
 changeling-devour-consume-complete-others = { CAPITALIZE(POSS-ADJ($user)) } uncanny mouth retreats.
 
+changeling-devour-doafter-windup = [color=red]{ CAPITALIZE(POSS-ADJ($user)) } face is splitting open, preparing to feast![/color]
+changeling-devour-doafter = [color=red]{ CAPITALIZE(SUBJECT($user)) } { CONJUGATE-BE($user) } tearing into the flesh of {$target}![/color]
+
 # transformation
 changeling-transform-attempt-self = Our bones snap, muscles tear, one flesh becomes another.
 changeling-transform-attempt-others = { CAPITALIZE(POSS-ADJ($user)) } bones snap, muscles tear, body shifts into another.
+
+changeling-transform-doafter = [color=red]The surface of { POSS-ADJ($user) } skin is melting, taking another shape.[/color]
 
 # transformation BUI
 changeling-transform-bui-select-entity = {$entity}
@@ -46,10 +51,11 @@ changeling-biodegrade-used-popup-self = We vomit acid over our {$restraint}!
 changeling-takeover-not-dead = This body yet lives! We cannot infest it alive.
 changeling-takeover-is-changeling = This body rejects our attempts to take over!
 changeling-takeover-start-others = {CAPITALIZE(THE($user))} begins to crawl inside the corpse!
-changeling-takeover-success-self = We have successfully infested the body and assumed its form.
+changeling-takeover-doafter = [color=red]{ CAPITALIZE(SUBJECT($user)) } { CONJUGATE-BE($user) } crawling inside of {$target}![/color]
 
 # stings
 changeling-sting-success = We silently sting {THE($target)}!
+changeling-sting-hemotoxin = You feel sharp pain in your chest!
 
 # mindshield
 changeling-fake-mindshield-enabled = We emit fake mindshield waves.
@@ -59,4 +65,14 @@ changeling-fake-mindshield-disabled = We stop emitting fake mindshield waves.
 changeling-not-enough-chemicals = We don't have enough Chemicals.
 
 # other
+changeling-action-fail-generic = We cannot do this right now.
 changeling-paused-map-name = Changeling identity storage map
+changeling-cocoon-success = We encase {THE($target)} in a fleshy tomb.
+changeling-cocoon-doafter = [color=red]{ CAPITALIZE(SUBJECT($user)) } { CONJUGATE-BE($user) } covering { THE($target) } in a fleshy mass![/color]
+
+# horror transformation
+changeling-horror-alert-time-name = Remaining time
+changeling-horror-alert-time-desc = When this counter reaches 0, we will have exhausted our strength.
+changeling-horror-force-transform-self = Our energy depleted, we cannot maintain this form anymore.
+changeling-horror-force-transform-others = { CAPITALIZE(POSS-ADJ($user)) } flesh rapidly shrivels away and dies.
+changeling-horror-transform-fail = We do not have enough DNA stored to reveal ourselves.

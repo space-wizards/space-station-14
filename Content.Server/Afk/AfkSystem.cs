@@ -2,6 +2,7 @@ using Content.Server.Administration.Managers;
 using Content.Server.GameTicking;
 using Content.Shared.Afk.Events;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
 using Content.Shared.Instruments;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -21,7 +22,7 @@ public sealed partial class AfkSystem : EntitySystem
     [Dependency] private IAfkManager _afkManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private GameTicker _ticker = default!;
+    [Dependency] private ServerGameTicker _ticker = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
 
     /// <summary>

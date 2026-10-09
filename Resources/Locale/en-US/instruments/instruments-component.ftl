@@ -52,6 +52,36 @@ instruments-component-menu-midi-min-volume-slider-label = MIDI Input Min Volume
 # SwappableInstrumentComponent
 swappable-instrument-component-style-set = Style set to "{$style}"
 
+swappable-instrument-style-electro = Electro
+swappable-instrument-style-bubbles = Bubbles
+swappable-instrument-style-square = Square
+swappable-instrument-style-standard = Standard
+swappable-instrument-style-tango = Tango
+swappable-instrument-style-soprano = Soprano
+swappable-instrument-style-alto = Alto
+swappable-instrument-style-tenor = Tenor
+swappable-instrument-style-baritone = Baritone
+swappable-instrument-style-clean = Clean
+swappable-instrument-style-jazz = Jazz
+swappable-instrument-style-muted = Muted
+swappable-instrument-style-fingered = Fingered
+swappable-instrument-style-pick = Pick
+swappable-instrument-style-slap = Slap
+swappable-instrument-style-slap-extra-funky = Slap (XTra Funky)
+swappable-instrument-style-fretless = Fretless
+swappable-instrument-style-overdrive = Overdrive
+swappable-instrument-style-distortion = Distortion
+swappable-instrument-style-harmonics = Harmonics
+swappable-instrument-style-nylon = Nylon
+swappable-instrument-style-steel = Steel
+swappable-instrument-style-classical = Classical
+swappable-instrument-style-bluegrass = Bluegrass
+swappable-instrument-style-aah = Aah
+swappable-instrument-style-ooh = Ooh
+swappable-instrument-style-kweh = Kweh
+swappable-instrument-style-waa = Waa
+swappable-instrument-style-wah = Wah
+
 instruments-component-menu-midi-channel-acoustic-grand-piano = Acoustic Grand Piano
 instruments-component-menu-midi-channel-bright-acoustic-piano = Bright Acoustic Piano
 instruments-component-menu-midi-channel-electric-grand-piano = Electric Grand Piano
