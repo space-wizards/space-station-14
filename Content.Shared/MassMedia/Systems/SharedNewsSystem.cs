@@ -36,7 +36,7 @@ public struct NewsComment
     public int CommentId;
 
     /// <summary>
-    /// Formatted name and job title from the commenting PDA's inserted ID card, or null if anonymous.
+    /// Real name of the player who posted the comment, or null if unavailable.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public string? Author;
@@ -132,5 +132,4 @@ public readonly record struct NewsArticleDeletedEvent;
 /// </summary>
 [ByRefEvent]
 public readonly record struct NewsArticleUpdatedEvent(int ArticleId);
-
 

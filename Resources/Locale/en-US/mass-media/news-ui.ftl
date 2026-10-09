@@ -23,7 +23,6 @@ news-write-ui-article-count-text = {$count} Articles
 news-write-ui-footer-text = News#Manager™ Authoring System
 news-write-ui-new-article = New Article
 news-write-ui-article-name-label = Title:
-news-write-no-access-popup = No access
 news-writer-text-length-exceeded = Text exceeds maximum length
 news-write-ui-richtext-tooltip = News articles support rich text
     The following rich text tags are supported:
@@ -63,5 +62,4 @@ news-write-ui-comments-button = Comments ({$count})
 news-write-ui-lock-comments-text = Lock Thread
 news-write-ui-unlock-comments-text = Unlock Thread
 news-write-ui-reactions-summary = {$upSymbol}{$up} {$downSymbol}{$down} {$laughSymbol}{$laugh} {$shockSymbol}{$shock} {$heartSymbol}{$heart}
-
 
