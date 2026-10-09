@@ -1,5 +1,3 @@
-using Content.Shared.Clothing.Components;
-using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IgnitionSource;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -10,6 +8,7 @@ using Content.Shared.Stacks;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -19,7 +18,6 @@ namespace Content.Shared.Light.EntitySystems;
 public sealed partial class ExpendableLightSystem : EntitySystem
 {
     [Dependency] private SharedItemSystem _item = default!;
-    [Dependency] private ClothingSystem _clothing = default!;
     [Dependency] private TagSystem _tagSystem = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
@@ -27,6 +25,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
     [Dependency] private NameModifierSystem _nameModifier = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private EntityQuery<ItemComponent> _itemQuery;
+    [Dependency] private INetManager _net = default!;
 
     private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
 
@@ -156,7 +155,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
     /// <summary>
     /// Enables the light if it is not active. Once active it cannot be turned off.
     /// </summary>	   
-    public bool TryActivate(Entity<ExpendableLightComponent> ent, EntityUid? user = null)
+    public bool TryActivate(Entity<ExpendableLightComponent> ent, EntityUid user)
     {
         var component = ent.Comp;
         if (component.Activated || component.CurrentState != ExpendableLightState.Unlit)
@@ -174,7 +173,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
 
         component.StateExpiryTime = _timing.CurTime + component.GlowDuration;
 
-        UpdateSounds(ent, user);
+        PlayIgniteSound(ent, user);
         UpdateVisualizer(ent);
         Dirty(ent);
         return true;
@@ -205,7 +204,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
                 _nameModifier.RefreshNameModifiers(ent.Owner);
                 _tagSystem.AddTag(ent, TrashTag);
 
-                UpdateSounds(ent);
+                PlayDieOutSound(ent);
                 UpdateVisualizer(ent);
 
                 if (TryComp<ItemComponent>(ent, out var item))
@@ -244,30 +243,24 @@ public sealed partial class ExpendableLightSystem : EntitySystem
         }
     }
 
-    private void UpdateSounds(Entity<ExpendableLightComponent> ent, EntityUid? user = null)
+    private void PlayDieOutSound(Entity<ExpendableLightComponent> ent)
     {
         var component = ent.Comp;
+        if (_net.IsServer)
+            _audio.PlayPvs(component.DieSound, ent);
+        component.PlayingStream = _audio.Stop(component.PlayingStream);
+    }
 
-        switch (component.CurrentState)
+    private void PlayIgniteSound(Entity<ExpendableLightComponent> ent, EntityUid user)
+    {
+        var component = ent.Comp;
+        _audio.PlayPredicted(component.LitSound, ent, user);
+
+        if (component.PlayingStream == null && component.LoopedSound != null)
         {
-            case ExpendableLightState.Lit:
-                _audio.PlayPredicted(component.LitSound, ent, user);
-
-                if (component.PlayingStream == null && component.LoopedSound != null)
-                {
-                    var audioParams = component.LoopedSound.Params.WithLoop(true);
-                    var stream = _audio.PlayPredicted(component.LoopedSound, ent, user, audioParams);
-                    component.PlayingStream = stream?.Entity;
-                }
-                break;
-
-            case ExpendableLightState.Fading:
-                break;
-
-            default:
-                _audio.PlayPredicted(component.DieSound, ent, user);
-                component.PlayingStream = _audio.Stop(component.PlayingStream);
-                break;
+            var audioParams = component.LoopedSound.Params.WithLoop(true);
+            var stream = _audio.PlayPredicted(component.LoopedSound, ent, user, audioParams);
+            component.PlayingStream = stream?.Entity;
         }
     }
 }
