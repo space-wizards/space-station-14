@@ -176,7 +176,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 200
   - type: DeviceLinkSink
     ports:
@@ -192,8 +192,14 @@
     lastSignals:
       DoorStatus: false
       DoorBoltStatus: false
-  - type: SoundOnOverload
-  - type: SpawnOnOverload
+  - type: EntityEffectOnDeviceOverload
+    effects:
+    - !type:SpawnEntity
+      entity: EffectSparks
+      predicted: false
+    - !type:PlaySound
+      sound: /Audio/Items/Defib/defib_zap.ogg
+      predicted: false
   - type: RCDDeconstructable
     cost: 6
     delay: 8

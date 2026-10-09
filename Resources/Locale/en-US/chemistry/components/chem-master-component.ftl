@@ -28,7 +28,6 @@ chem-master-window-pills-number-label = Count:
 chem-master-window-dose-label = Dose (u):
 chem-master-window-create-button = Create
 chem-master-window-bottles-label = Bottles:
-chem-master-window-unknown-reagent-text = Unknown reagent
 chem-master-window-sort-type-none = Sort by: Oldest First
 chem-master-window-sort-type-alphabetical = Sort by: Alphabetical
 chem-master-window-sort-type-quantity = Sort by: Quantity
