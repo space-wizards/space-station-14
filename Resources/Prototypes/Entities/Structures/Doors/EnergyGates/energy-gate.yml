@@ -71,8 +71,7 @@
     node: energyGate
   - type: DirectionalArrowIndicator
   - type: IconSmooth
-    key: walls
-    mode: NoSprite
+    key: doors
   - type: PointLight
     energy: 2.2
     color: "#cc3a41"
@@ -126,3 +125,4 @@
     energy: 2.2
     color: "#50abff"
     radius: 2.2
+  - type: AmbientMusicMarkerArrivals

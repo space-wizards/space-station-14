@@ -261,7 +261,7 @@ public abstract partial class SharedStackSystem
 
         // Queue delete stack if count reaches zero.
         if (ent.Comp.Count <= 0)
-            PredictedQueueDel(ent.Owner);
+            QueueDel(ent.Owner);
     }
 
     /// <inheritdoc cref="SetCount(Entity{StackComponent?}, int)"/>
