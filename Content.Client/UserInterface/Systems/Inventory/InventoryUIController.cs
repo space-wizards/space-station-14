@@ -341,7 +341,7 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
         }
 
         // Set green / red overlay at 50% transparency
-        var hoverEntity = _entities.SpawnEntity("hoverentity", MapCoordinates.Nullspace);
+        var hoverEntity = _entities.SpawnEntity("HoverEntity", MapCoordinates.Nullspace);
         var hoverSprite = _entities.GetComponent<SpriteComponent>(hoverEntity);
         var fits = _inventorySystem.CanEquip(player.Value, held.Value, control.SlotName, out _, slotDef, containerSlot: container);
 

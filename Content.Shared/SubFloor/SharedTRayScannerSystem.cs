@@ -12,7 +12,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.SubFloor;
 
-public abstract partial class SharedTrayScannerSystem : EntitySystem
+public abstract partial class SharedTRayScannerSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
@@ -26,16 +26,16 @@ public abstract partial class SharedTrayScannerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TrayScannerComponent, ActivateInWorldEvent>(OnTrayScannerActivate);
-        SubscribeLocalEvent<TrayScannerComponent, GetVerbsEvent<AlternativeVerb>>(OnAddSwitchModeVerb);
-        SubscribeLocalEvent<TrayScannerComponent, GotEquippedHandEvent>(OnTrayHandEquipped);
-        SubscribeLocalEvent<TrayScannerComponent, GotUnequippedHandEvent>(OnTrayHandUnequipped);
-        SubscribeLocalEvent<TrayScannerComponent, GotEquippedEvent>(OnTrayEquipped);
-        SubscribeLocalEvent<TrayScannerComponent, GotUnequippedEvent>(OnTrayUnequipped);
-        SubscribeLocalEvent<TrayScannerUserComponent, GetVisMaskEvent>(OnUserGetVis);
+        SubscribeLocalEvent<TRayScannerComponent, ActivateInWorldEvent>(OnTrayScannerActivate);
+        SubscribeLocalEvent<TRayScannerComponent, GetVerbsEvent<AlternativeVerb>>(OnAddSwitchModeVerb);
+        SubscribeLocalEvent<TRayScannerComponent, GotEquippedHandEvent>(OnTrayHandEquipped);
+        SubscribeLocalEvent<TRayScannerComponent, GotUnequippedHandEvent>(OnTrayHandUnequipped);
+        SubscribeLocalEvent<TRayScannerComponent, GotEquippedEvent>(OnTrayEquipped);
+        SubscribeLocalEvent<TRayScannerComponent, GotUnequippedEvent>(OnTrayUnequipped);
+        SubscribeLocalEvent<TRayScannerUserComponent, GetVisMaskEvent>(OnUserGetVis);
     }
 
-    private void OnAddSwitchModeVerb(Entity<TrayScannerComponent> scanner, ref GetVerbsEvent<AlternativeVerb> args)
+    private void OnAddSwitchModeVerb(Entity<TRayScannerComponent> scanner, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || !args.Using.HasValue || !scanner.Comp.Enabled)
             return;
@@ -63,7 +63,7 @@ public abstract partial class SharedTrayScannerSystem : EntitySystem
         };
     }
 
-    private void SwitchMode(Entity<TrayScannerComponent> scanner, EntityUid? userUid)
+    private void SwitchMode(Entity<TRayScannerComponent> scanner, EntityUid? userUid)
     {
         if (!userUid.HasValue)
             return;
@@ -80,7 +80,7 @@ public abstract partial class SharedTrayScannerSystem : EntitySystem
         _audio.PlayPredicted(scanner.Comp.SoundSwitchMode, scanner, userUid, AudioParams.Default.WithVolume(1.5f).WithPitchScale(pitch));
     }
 
-    private void OnUserGetVis(Entity<TrayScannerUserComponent> scanner, ref GetVisMaskEvent args)
+    private void OnUserGetVis(Entity<TRayScannerUserComponent> scanner, ref GetVisMaskEvent args)
     {
         args.VisibilityMask |= (int)VisibilityFlags.Subfloor;
     }
@@ -90,7 +90,7 @@ public abstract partial class SharedTrayScannerSystem : EntitySystem
         if (_netMan.IsClient)
             return;
 
-        var comp = EnsureComp<TrayScannerUserComponent>(user);
+        var comp = EnsureComp<TRayScannerUserComponent>(user);
         comp.Count++;
 
         if (comp.Count > 1)
@@ -104,7 +104,7 @@ public abstract partial class SharedTrayScannerSystem : EntitySystem
         if (_netMan.IsClient)
             return;
 
-        if (!TryComp(user, out TrayScannerUserComponent? comp))
+        if (!TryComp(user, out TRayScannerUserComponent? comp))
             return;
 
         comp.Count--;
@@ -112,31 +112,31 @@ public abstract partial class SharedTrayScannerSystem : EntitySystem
         if (comp.Count > 0)
             return;
 
-        RemComp<TrayScannerUserComponent>(user);
+        RemComp<TRayScannerUserComponent>(user);
         _eye.RefreshVisibilityMask(user);
     }
 
-    private void OnTrayHandUnequipped(Entity<TrayScannerComponent> ent, ref GotUnequippedHandEvent args)
+    private void OnTrayHandUnequipped(Entity<TRayScannerComponent> ent, ref GotUnequippedHandEvent args)
     {
         OnUnequip(args.User);
     }
 
-    private void OnTrayHandEquipped(Entity<TrayScannerComponent> ent, ref GotEquippedHandEvent args)
+    private void OnTrayHandEquipped(Entity<TRayScannerComponent> ent, ref GotEquippedHandEvent args)
     {
         OnEquip(args.User);
     }
 
-    private void OnTrayUnequipped(Entity<TrayScannerComponent> ent, ref GotUnequippedEvent args)
+    private void OnTrayUnequipped(Entity<TRayScannerComponent> ent, ref GotUnequippedEvent args)
     {
         OnUnequip(args.EquipTarget);
     }
 
-    private void OnTrayEquipped(Entity<TrayScannerComponent> ent, ref GotEquippedEvent args)
+    private void OnTrayEquipped(Entity<TRayScannerComponent> ent, ref GotEquippedEvent args)
     {
         OnEquip(args.EquipTarget);
     }
 
-    private void OnTrayScannerActivate(Entity<TrayScannerComponent> ent, ref ActivateInWorldEvent args)
+    private void OnTrayScannerActivate(Entity<TRayScannerComponent> ent, ref ActivateInWorldEvent args)
     {
         if (args.Handled || !args.Complex)
             return;

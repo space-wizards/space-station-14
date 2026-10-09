@@ -1,7 +1,7 @@
 # Job
 
 - type: listing
-  id: uplinkGatfruitSeeds
+  id: UplinkGatfruitSeeds
   name: uplink-gatfruit-seeds-name
   description: uplink-gatfruit-seeds-desc
   productEntity: GatfruitSeeds
@@ -18,7 +18,7 @@
     - Botanist
 
 - type: listing
-  id: uplinkHolyHandGrenade
+  id: UplinkHolyHandGrenade
   name: uplink-holy-hand-grenade-name
   description: uplink-holy-hand-grenade-desc
   productEntity: HolyHandGrenade
@@ -35,7 +35,7 @@
     - Chaplain
 
 - type: listing
-  id: uplinkRevolverCapGunFake
+  id: UplinkRevolverCapGunFake
   name: uplink-revolver-cap-gun-fake-name
   description: uplink-revolver-cap-gun-fake-desc
   productEntity: RevolverCapGunFake
@@ -88,7 +88,7 @@
     - Clown
 
 - type: listing
-  id: uplinkHotPotato
+  id: UplinkHotPotato
   name: uplink-hot-potato-name
   description: uplink-hot-potato-desc
   discountCategory: usualDiscounts
@@ -125,7 +125,7 @@
       - Science
 
 - type: listing
-  id: uplinkProximityMine
+  id: UplinkProximityMine
   name: uplink-proximity-mine-name
   description: uplink-proximity-mine-desc
   productEntity: WetFloorSignMineExplosive
@@ -239,7 +239,7 @@
     - MedicalDoctor
 
 - type: listing
-  id: uplinkBriefcaseGun
+  id: UplinkBriefcaseGun
   name: uplink-briefcase-gun-name
   description: uplink-briefcase-gun-desc
   productEntity: WeaponSubMachineGunBriefcase
