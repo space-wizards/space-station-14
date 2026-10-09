@@ -11,6 +11,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Verbs;
 
 /// <summary>
 /// System for vapes
@@ -25,6 +26,38 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private IngestionSystem _ingestion = default!;
         [Dependency] private ExplosionSystem _explosionSystem = default!;
         [Dependency] private PopupSystem _popupSystem = default!;
+
+        /// <summary>
+        /// Checks if the interacting user can use the vape, and adds the interaction verb if they can.
+        /// </summary>
+        [SubscribeLocalEvent]
+        private void OnVerb(Entity<VapeComponent> entity, ref GetVerbsEvent<ActivationVerb> args)
+        {
+            if (!args.CanInteract || !args.CanComplexInteract || !args.CanAccess)
+            {
+                return;
+            }
+
+            var user = args.User;
+
+            if (!_solutionContainerSystem.TryGetRefillableSolution(entity.Owner, out _, out var solution)
+                || !HasComp<BloodstreamComponent>(user))
+            {
+                return;
+            }
+
+            bool isEmpty = solution.Contents.Count == 0;
+
+            var verb = new ActivationVerb()
+            {
+                Act = () => TryUseVape(entity, user, user),
+                Text = Loc.GetString("vape-component-verb-text"),
+                Message = Loc.GetString(!isEmpty ? "vape-component-verb-description-enabled" : "vape-component-verb-description-empty", ("item", entity.Owner)),
+                Disabled = isEmpty,
+            };
+
+            args.Verbs.Add(verb);
+        }
 
         [SubscribeLocalEvent]
         private void OnVapeActivatedEvent(Entity<VapeComponent> entity, ref ActivateInWorldEvent args)
