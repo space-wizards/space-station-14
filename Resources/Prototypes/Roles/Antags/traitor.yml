@@ -85,13 +85,12 @@
   id: SyndicateOperativeClothing
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
-    back: ClothingBackpack
+    back: ClothingBackpackSatchel
     shoes: ClothingShoesBootsSyndieFilled
     gloves: ClothingHandsGlovesColorBlack
     ears: ClothingHeadsetAltSyndicate
     id: SyndiCovertPDA
     pocket1: WeaponPistolViper
-
 
 - type: startingGear
   parent: SyndicateOperativeClothing
@@ -109,6 +108,7 @@
     - PaperWrittenSyndicateInstructions
   storage:
     back:
+    - SyndicateFlippo
     - EncryptionKeySyndie
     - EncryptionKeyMedical
     - DefibrillatorSyndicate
@@ -130,6 +130,7 @@
     - PaperWrittenSyndicateInstructions
   storage:
     back:
+    - SyndicateFlippo
     - EncryptionKeySyndie
     - RadioHandheld
     - RadioHandheld
@@ -146,6 +147,7 @@
     - PaperWrittenSyndicateInstructions
   storage:
     back:
+    - SyndicateFlippo
     - EncryptionKeySyndie
     - SyndicateJawsOfLife
     - CameraBug
