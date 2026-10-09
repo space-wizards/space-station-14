@@ -1,3 +1,4 @@
+using Content.Shared.Conditions.UnifiedConditions;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Content.Shared.Doors.Components;
@@ -7,20 +8,12 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class DoorBolted : IGraphCondition
+    public sealed partial class DoorBolted : GraphCondition, IDoorBoltedCondition
     {
         [DataField("value")]
         public bool Value { get; private set; } = true;
 
-        public bool Condition(EntityUid uid, IEntityManager entityManager)
-        {
-            if (!entityManager.TryGetComponent(uid, out DoorBoltComponent? airlock))
-                return true;
-
-            return airlock.BoltsDown == Value;
-        }
-
-        public bool DoExamine(ExaminedEvent args)
+        public override bool DoExamine(ExaminedEvent args)
         {
             var entity = args.Examined;
 
@@ -40,7 +33,7 @@ namespace Content.Server.Construction.Conditions
             return false;
         }
 
-        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        public override IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
         {
             yield return new ConstructionGuideEntry()
             {

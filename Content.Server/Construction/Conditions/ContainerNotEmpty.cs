@@ -1,3 +1,5 @@
+using Content.Shared.Conditions.Satisfier;
+using Content.Shared.Conditions.UnifiedConditions;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
@@ -9,23 +11,14 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class ContainerNotEmpty : IGraphCondition
+    public sealed partial class ContainerNotEmpty : GraphCondition,IContainerContentsCountCondition
     {
         [DataField("container")] public string Container { get; private set; } = string.Empty;
         [DataField("examineText")] public string? ExamineText { get; private set; }
         [DataField("guideText")] public string? GuideText { get; private set; }
         [DataField("guideIcon")] public SpriteSpecifier? GuideIcon { get; private set; }
 
-        public bool Condition(EntityUid uid, IEntityManager entityManager)
-        {
-            var containerSystem = entityManager.EntitySysManager.GetEntitySystem<ContainerSystem>();
-            if (!containerSystem.TryGetContainer(uid, Container, out var container))
-                return false;
-
-            return container.ContainedEntities.Count != 0;
-        }
-
-        public bool DoExamine(ExaminedEvent args)
+        public override bool DoExamine(ExaminedEvent args)
         {
             if (ExamineText == null)
                 return false;
@@ -43,7 +36,7 @@ namespace Content.Server.Construction.Conditions
             return true;
         }
 
-        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        public override IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
         {
             if (GuideText == null)
                 yield break;

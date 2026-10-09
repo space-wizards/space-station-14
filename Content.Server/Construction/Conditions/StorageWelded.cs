@@ -1,3 +1,4 @@
+using Content.Shared.Conditions.UnifiedConditions;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using Content.Shared.Storage.Components;
@@ -8,7 +9,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class StorageWelded : IGraphCondition
+    public sealed partial class StorageWelded : GraphCondition, IStorageWeldedCondition
     {
         [DataField("welded")]
         public bool Welded { get; private set; } = true;
@@ -18,7 +19,7 @@ namespace Content.Server.Construction.Conditions
             return entityManager.System<WeldableSystem>().IsWelded(uid) == Welded;
         }
 
-        public bool DoExamine(ExaminedEvent args)
+        public override bool DoExamine(ExaminedEvent args)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
             var entity = args.Examined;
@@ -40,7 +41,7 @@ namespace Content.Server.Construction.Conditions
             return false;
         }
 
-        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        public override IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
         {
             yield return new ConstructionGuideEntry()
             {

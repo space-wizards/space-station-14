@@ -10,7 +10,7 @@ namespace Content.Shared.Construction
         private ConstructionGraphStep[] _steps = Array.Empty<ConstructionGraphStep>();
 
         [DataField("conditions", serverOnly: true)]
-        private IGraphCondition[] _conditions = Array.Empty<IGraphCondition>();
+        private GraphCondition[] _conditions = Array.Empty<GraphCondition>();
 
         [DataField("completed", serverOnly: true)]
         private IGraphAction[] _completed = Array.Empty<IGraphAction>();
@@ -19,7 +19,7 @@ namespace Content.Shared.Construction
         public string Target { get; private set; } = string.Empty;
 
         [ViewVariables]
-        public IReadOnlyList<IGraphCondition> Conditions => _conditions;
+        public IReadOnlyList<GraphCondition> Conditions => _conditions;
 
         [ViewVariables]
         public IReadOnlyList<IGraphAction> Completed => _completed;

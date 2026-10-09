@@ -1,3 +1,5 @@
+using Content.Shared.Conditions.HelperConditions;
+using Content.Shared.Conditions.UnifiedConditions;
 using Content.Shared.Construction;
 using Content.Shared.Doors.Components;
 using Content.Shared.Examine;
@@ -7,20 +9,15 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class DoorWelded : IGraphCondition
+    public sealed partial class DoorWelded : GraphCondition, IWithInverted, IDoorStateCondition
     {
+
+        public bool Inverted => !Welded;
+
         [DataField("welded")]
         public bool Welded { get; private set; } = true;
 
-        public bool Condition(EntityUid uid, IEntityManager entityManager)
-        {
-            if (!entityManager.TryGetComponent(uid, out DoorComponent? doorComponent))
-                return false;
-
-            return doorComponent.State == DoorState.Welded;
-        }
-
-        public bool DoExamine(ExaminedEvent args)
+        public override bool DoExamine(ExaminedEvent args)
         {
             var entity = args.Examined;
 
@@ -41,7 +38,7 @@ namespace Content.Server.Construction.Conditions
             return false;
         }
 
-        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        public override IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
         {
             yield return new ConstructionGuideEntry()
             {
@@ -50,5 +47,8 @@ namespace Content.Server.Construction.Conditions
                     : "construction-guide-condition-door-unweld",
             };
         }
+
+
+        public DoorState TargetState => DoorState.Welded;
     }
 }

@@ -1,3 +1,5 @@
+using Content.Shared.Conditions.HelperConditions;
+using Content.Shared.Conditions.UnifiedConditions;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using Content.Shared.Lock;
@@ -7,20 +9,14 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class Locked : IGraphCondition
+    public sealed partial class Locked : GraphCondition, ILockedCondition, IWithInverted
     {
+        public bool Inverted => !IsLocked;
+
         [DataField("locked")]
         public bool IsLocked { get; private set; } = true;
 
-        public bool Condition(EntityUid uid, IEntityManager entityManager)
-        {
-            if (!entityManager.TryGetComponent(uid, out LockComponent? lockcomp))
-                return true;
-
-            return lockcomp.Locked == IsLocked;
-        }
-
-        public bool DoExamine(ExaminedEvent args)
+        public override bool DoExamine(ExaminedEvent args)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
             var entity = args.Examined;
@@ -41,7 +37,7 @@ namespace Content.Server.Construction.Conditions
             return false;
         }
 
-        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        public override IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
         {
             yield return new ConstructionGuideEntry()
             {
@@ -50,5 +46,7 @@ namespace Content.Server.Construction.Conditions
                     : "construction-step-condition-wire-panel-unlock"
             };
         }
+
+
     }
 }

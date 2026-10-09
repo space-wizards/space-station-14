@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Construction.Components;
 using Content.Server.Temperature.Components;
+using Content.Shared.Conditions;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Components;
 using Content.Shared.Construction.EntitySystems;
@@ -27,6 +28,8 @@ namespace Content.Server.Construction
     public sealed partial class ConstructionSystem
     {
         [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private SharedConditionEvaluationSystem _sharedConditionEvaluationSystem = default!;
+
 #if EXCEPTION_TOLERANCE
         [Dependency] private IRuntimeLog _runtimeLog = default!;
 #endif
@@ -439,17 +442,17 @@ namespace Content.Server.Construction
         }
 
         /// <summary>
-        ///     Checks whether a number of <see cref="IGraphCondition"/>s are true for a given entity.
+        ///     Checks whether a number of <see cref="GraphConditionBase"/>s are true for a given entity.
         /// </summary>
         /// <param name="uid">The entity to pass to the conditions.</param>
         /// <param name="conditions">The conditions to evaluate.</param>
         /// <remarks>This method is short-circuiting; if a condition evaluates to false, we stop checking the rest of conditions.</remarks>
         /// <returns>Whether all conditions evaluate to true for the given entity.</returns>
-        public bool CheckConditions(EntityUid uid, IEnumerable<IGraphCondition> conditions)
+        public bool CheckConditions(EntityUid uid, IEnumerable<GraphCondition> conditions)
         {
             foreach (var condition in conditions)
             {
-                if (!condition.Condition(uid, EntityManager))
+                if (!_sharedConditionEvaluationSystem.IsConditionSatisfied(condition, uid, null))
                     return false;
             }
 

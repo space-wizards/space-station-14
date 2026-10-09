@@ -1,4 +1,7 @@
 using Content.Server.Ame.Components;
+using Content.Shared.Conditions;
+using Content.Shared.Conditions.Satisfier;
+using Content.Shared.Conditions.UnifiedConditions;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Content.Shared.Examine;
@@ -7,10 +10,11 @@ namespace Content.Server.Construction.Conditions;
 
 [UsedImplicitly]
 [DataDefinition]
-public sealed partial class AmeShieldIntegrity : IGraphCondition
+public sealed partial class AmeShieldIntegrity : GraphCondition, IAmeShieldIntegrityCondition, IConditionWithDefaultSatisfactionRule
 {
+
     [DataField]
-    public float IntegrityThreshold = 80;
+    public float IntegrityThreshold { get; set; } = 80;
 
     /// <summary>
     /// If true, checks for the integrity being above the threshold.
@@ -31,13 +35,15 @@ public sealed partial class AmeShieldIntegrity : IGraphCondition
         return shield.CoreIntegrity < IntegrityThreshold;
     }
 
-    public bool DoExamine(ExaminedEvent args)
+    public override bool DoExamine(ExaminedEvent args)
     {
         return false;
     }
 
-    public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+    public override IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
     {
         yield return new ConstructionGuideEntry();
     }
+
+    public WithThreshold.Comparator Comparator => CheckAbove?WithThreshold.Comparator.GreaterEqual:WithThreshold.Comparator.Less;
 }
