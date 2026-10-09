@@ -26,7 +26,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
-    [Dependency] private SharedWiresSystem _wires = default!;
+    [Dependency] private WiresSystem _wires = default!;
 
     public override void Initialize()
     {
