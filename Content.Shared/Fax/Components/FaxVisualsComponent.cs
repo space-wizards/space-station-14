@@ -29,5 +29,5 @@ public sealed partial class FaxVisualsComponent : Component
 public enum FaxMachineVisuals : byte
 {
     VisualState,
-    Inserting,
+    Inserting
 }

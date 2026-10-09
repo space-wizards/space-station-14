@@ -41,8 +41,8 @@ public sealed partial class FaxMachineComponent : Component
     {
         Components =
         [
-            "Paper",
-        ],
+            "Paper"
+        ]
     };
 
     /// <summary>

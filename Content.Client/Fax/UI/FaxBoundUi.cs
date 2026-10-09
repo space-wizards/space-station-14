@@ -8,7 +8,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Fax.UI;
 
 [UsedImplicitly]
-public sealed partial class FaxBoundUi : BoundUserInterface
+public sealed partial class FaxBoundUi(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [Dependency] private IFileDialogManager _fileDialogManager = default!;
     [Dependency] private FaxSystem _fax = default!;
@@ -16,11 +16,7 @@ public sealed partial class FaxBoundUi : BoundUserInterface
     [ViewVariables]
     private FaxWindow? _window;
 
-    private bool _dialogIsOpen = false;
-
-    public FaxBoundUi(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
+    private bool _dialogIsOpen;
 
     protected override void Open()
     {

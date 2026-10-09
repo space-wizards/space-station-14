@@ -389,8 +389,8 @@ public abstract partial class FaxSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Makes fax print from a file from the computer. A timeout is set after copying,
-    ///     which is shared by the send button.
+    /// Makes fax print from a file from the computer. A timeout is set after copying,
+    /// which is shared by the send button.
     /// </summary>
     private void PrintFile(Entity<FaxMachineComponent> fax, string content, bool officePaper, string? label = null, EntityUid? actor = null)
     {
@@ -518,8 +518,8 @@ public abstract partial class FaxSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Copies the paper in the fax. A timeout is set after copying,
-    ///     which is shared by the send button.
+    /// Copies the paper in the fax. A timeout is set after copying,
+    /// which is shared by the send button.
     /// </summary>
     private void Copy(Entity<FaxMachineComponent> fax, EntityUid? actor)
     {
@@ -547,8 +547,8 @@ public abstract partial class FaxSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Sends message to addressee if paper is set and a known fax is selected
-    ///     A timeout is set after sending, which is shared by the copy button.
+    /// Sends message to addressee if paper is set and a known fax is selected
+    /// A timeout is set after sending, which is shared by the copy button.
     /// </summary>
     private void Send(Entity<FaxMachineComponent> fax, EntityUid? user)
     {
@@ -607,8 +607,8 @@ public abstract partial class FaxSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Accepts a new message and adds it to the queue to print
-    ///     If has parameter "notifyAdmins" also output a special message to admin chat.
+    /// Accepts a new message and adds it to the queue to print
+    /// If has parameter "notifyAdmins" also output a special message to admin chat.
     /// </summary>
     [PublicAPI]
     public void Receive(Entity<FaxMachineComponent?> fax, FaxPayload payload)
@@ -728,18 +728,11 @@ public readonly partial record struct FaxPrintout(string Content, string Name)
 }
 
 [Serializable, NetSerializable]
-public sealed class FaxFileMessage : BoundUserInterfaceMessage
+public sealed class FaxFileMessage(string? label, string content, bool officePaper) : BoundUserInterfaceMessage
 {
-    public string? Label;
-    public string Content;
-    public bool OfficePaper;
-
-    public FaxFileMessage(string? label, string content, bool officePaper)
-    {
-        Label = label;
-        Content = content;
-        OfficePaper = officePaper;
-    }
+    public string? Label = label;
+    public string Content = content;
+    public bool OfficePaper = officePaper;
 }
 
 public static class FaxFileMessageValidation
@@ -758,11 +751,7 @@ public sealed class FaxSendMessage : BoundUserInterfaceMessage;
 public sealed class FaxRefreshMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
-public sealed class FaxDestinationMessage : BoundUserInterfaceMessage
+public sealed class FaxDestinationMessage(DeviceAddress address) : BoundUserInterfaceMessage
 {
-    public DeviceAddress Address { get; }
-    public FaxDestinationMessage(DeviceAddress address)
-    {
-        Address = address;
-    }
+    public DeviceAddress Address { get; } = address;
 }

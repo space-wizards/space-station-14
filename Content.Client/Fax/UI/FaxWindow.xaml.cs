@@ -15,7 +15,7 @@ public sealed partial class FaxWindow : DefaultWindow
     public event Action? RefreshButtonPressed;
     public event Action<DeviceAddress>? PeerSelected;
 
-    public bool OfficePaper = false;
+    public bool OfficePaper;
 
     public FaxWindow()
     {
@@ -89,9 +89,8 @@ public sealed partial class FaxWindow : DefaultWindow
     {
         OfficePaper = !OfficePaper;
 
-        if(OfficePaper)
-            PaperButton.Text = Loc.GetString("fax-machine-ui-paper-button-office");
-        else
-            PaperButton.Text = Loc.GetString("fax-machine-ui-paper-button-normal");
+        PaperButton.Text = Loc.GetString(OfficePaper 
+            ? "fax-machine-ui-paper-button-office"
+            : "fax-machine-ui-paper-button-normal");
     }
 }

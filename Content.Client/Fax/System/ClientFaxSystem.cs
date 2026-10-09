@@ -55,9 +55,9 @@ public sealed partial class ClientFaxSystem : FaxSystem
                             KeyFrames =
                             {
                                 new AnimationTrackSpriteFlick.KeyFrame(state, 0f)
-                            },
-                        },
-                    },
+                            }
+                        }
+                    }
                 },
                 nameof(FaxState.Inserting));
         }
@@ -81,9 +81,9 @@ public sealed partial class ClientFaxSystem : FaxSystem
                             KeyFrames =
                             {
                                 new AnimationTrackSpriteFlick.KeyFrame(fax.Comp.PrintingState, 0f)
-                            },
-                        },
-                    },
+                            }
+                        }
+                    }
                 },
                 nameof(FaxState.Printing));
         }
