@@ -1,13 +1,13 @@
-using Content.Server.DeviceLinking.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Systems;
 
 namespace Content.Server.Power.EntitySystems;
 
 /// <summary>
-/// handles device link signals for power devices, such as APC, SMES units and substations
+/// handles device link signals for power devices, such as APC and substations
 /// </summary>
 public sealed partial class PowerDeviceSignalControlSystem : EntitySystem
 {

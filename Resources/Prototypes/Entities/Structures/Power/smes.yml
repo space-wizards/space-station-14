@@ -68,7 +68,6 @@
       maxChargeRate: 5000
       supplyRampTolerance: 5000
       supplyRampRate: 1000
-    - type: BatterySignalControl
     - type: PointLight
       radius: 1.2
       energy: 3.0
@@ -102,7 +101,7 @@
       prefix: device-address-prefix-smes
       sendBroadcastAttemptEvent: true
       examinableAddress: true
-    - type: WiredNetworkConnection
+    - type: WiredNetwork
     - type: GuideHelp
       guides:
       - PowerStorage

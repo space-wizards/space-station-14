@@ -25,7 +25,10 @@
             min: 1
             max: 2
   - type: IconSmooth
-    base: uwindow
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: uwindow
   - type: Construction
     graph: Window
     node: uraniumWindow
@@ -126,15 +129,15 @@
   - type: Sprite
     drawdepth: WallTops
     sprite: Structures/Windows/window-diagonal-uranium.rsi
-    state: state0
   - type: Tag
     tags:
     - Diagonal
     - Window
   - type: IconSmooth
-    mode: Diagonal
-    key: walls
-    base: state
+    states:
+    - !type:DiagonalSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: state
   - type: Icon
     sprite: Structures/Windows/window-diagonal-uranium.rsi
     state: state0
