@@ -65,7 +65,7 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
             var sensor = new SensorData
             {
                 Name = netSensor.Name,
-                Address = netSensor.Address,
+                Address = netSensor.Address.ToString(),
                 DeviceType = netSensor.DeviceType
             };
 
