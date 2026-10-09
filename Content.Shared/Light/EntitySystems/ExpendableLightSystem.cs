@@ -28,6 +28,14 @@ public sealed partial class ExpendableLightSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
 
     private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
+    private EntityQuery<ItemComponent> _itemQuery;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        _itemQuery = GetEntityQuery<ItemComponent>();
+    }
 
     /// <summary>
     /// Checks if any light needs it's state updated.
@@ -161,7 +169,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
         if (component.Activated || component.CurrentState != ExpendableLightState.Unlit)
             return true;
 
-        if (TryComp<ItemComponent>(ent, out var item))
+        if (_itemQuery.TryComp(ent, out var item))
         {
             _item.SetHeldPrefix(ent, "lit", component: item);
         }
