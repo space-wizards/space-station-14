@@ -1,4 +1,4 @@
-﻿damage-force-say-message-wrap = {$message}-{$suffix}
+damage-force-say-message-wrap = {$message}-{$suffix}
 damage-force-say-message-wrap-no-suffix = {$message}-
 
 damage-force-say-1 = GACK!

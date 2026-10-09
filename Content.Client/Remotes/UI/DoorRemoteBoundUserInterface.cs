@@ -53,7 +53,8 @@ public sealed partial class DoorRemoteBoundUserInterface(EntityUid owner, Enum u
                 IconSpecifier = RadialMenuIconSpecifier.With(modeOption.Icon),
                 ToolTip = Loc.GetString(modeOption.Tooltip),
                 BackgroundColor = optionCustomColor,
-                HoverBackgroundColor = optionHoverCustomColor
+                HoverBackgroundColor = optionHoverCustomColor,
+                Order = i
             };
             options.Add(option);
         }

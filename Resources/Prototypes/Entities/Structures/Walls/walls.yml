@@ -59,6 +59,10 @@
   - type: Occluder # Breaks on diagonal walls
   - type: PlacementReplacement
     key: walls
+  - type: StructureAlignerPylon
+    pylons:
+    - Door
+    - Firelock
 
 - type: entity
   abstract: true
@@ -70,9 +74,11 @@
     tags:
     - Diagonal
   - type: IconSmooth
-    mode: Diagonal
     key: walls
-    base: state
+    states:
+    - !type:DiagonalSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: state
   - type: Airtight
     noAirWhenFullyAirBlocked: false
     airBlockedDirection:
@@ -129,7 +135,10 @@
             max: 1
   - type: IconSmooth
     key: walls
-    base: brick
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: brick
 
 - type: entity
   parent: [ BaseWall, StructureHealthWallWeak ]
@@ -156,10 +165,12 @@
             volume: -4
       - &ChangeNodeGirder !type:ChangeConstructionNodeBehavior
         node: girder
-      - *SoundMetalSlam
   - type: IconSmooth
     key: walls
-    base: brass
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: brass
 
 - type: entity
   parent: [ BaseWall, StructureHealthWallWeak ]
@@ -177,7 +188,6 @@
   - type: Construction
     graph: Girder
     node: meatWall
-  - type: Damageable
   - type: Injurable
     damageContainer: StructuralBiological
   - type: Destructible
@@ -194,8 +204,11 @@
         sound:
           collection: gib
   - type: IconSmooth
-    key: meatwalls
-    base: meat
+    key: walls
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: meat
 
 - type: entity
   parent: [ BaseWall, BaseStructureHealth ]
@@ -216,7 +229,42 @@
       - *SpawnGirder
   - type: IconSmooth
     key: walls
-    base: debug
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: debug
+
+- type: entity
+  parent: WallDebug
+  id: WallDebugA
+  name: debug wall
+  suffix: DEBUG, AltA
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/debugalt.rsi
+  - type: Icon
+    sprite: Structures/Walls/debugalt.rsi
+  - type: IconSmooth
+    key: walls
+    states:
+    - !type:CardinalCornerSpriteSmoothing
+      mask: [ walls ]
+      altMask: [ windows, grilles, marble, doors ]
+      base: debug
+
+- type: entity
+  parent: WallDebugA
+  id: WallDebugB
+  name: debug wall
+  suffix: DEBUG, AltB
+  components:
+  - type: IconSmooth
+    key: marble
+    states:
+    - !type:CardinalCornerSpriteSmoothing
+      mask: [ marble ]
+      altMask: [ windows, grilles, walls, doors ]
+      base: debug
 
 - type: entity
   parent: [ BaseWall, StructureHealthWallWeak ]
@@ -258,7 +306,10 @@
         density: 4000
   - type: IconSmooth
     key: walls
-    base: gold
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: gold
 
 - type: entity
   parent: [ BaseWall, StructureHealthWallWeak ]
@@ -289,7 +340,10 @@
           SheetPlasma1: *BaseWallSpawn
   - type: IconSmooth
     key: walls
-    base: plasma
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: plasma
   - type: RadiationBlocker
     resistance: 5
 
@@ -305,7 +359,10 @@
     sprite: Structures/Walls/plastitanium.rsi
   - type: IconSmooth
     key: walls
-    base: plastitanium
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: plastitanium
   - type: Fixtures
     fixtures:
       fix1:
@@ -319,6 +376,9 @@
         density: 4000
   - type: RadiationBlocker
     resistance: 5
+  - type: Tag
+    tags:
+    - SmeltingImmune
 
 - type: entity
   parent: [ WallPlastitaniumIndestructible, StructureHealthWallStrong ]
@@ -345,12 +405,15 @@
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/plastitanium-diagonal.rsi
-    state: state0
   - type: Icon
     sprite: Structures/Walls/plastitanium-diagonal.rsi
     state: state0
   - type: RadiationBlocker
     resistance: 5
+  - type: Tag
+    tags:
+    - Diagonal
+    - SmeltingImmune
 
 - type: entity
   parent: [ WallPlastitaniumDiagonalIndestructible, StructureHealthWallStrong ]
@@ -388,7 +451,7 @@
     graph: Girder
     node: reinforcedWall
   - type: Damageable
-    damageModifierSet: PlasteelMod
+    damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
     - trigger: *DamageWallStrong
@@ -401,7 +464,10 @@
           SheetPlasteel1: *BaseWallSpawn
   - type: IconSmooth
     key: walls
-    base: reinf_over
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: reinf_over
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -437,17 +503,20 @@
   suffix: rusted
   components:
   - type: Sprite
-    sprite: Structures/Walls/solid_rust.rsi
+    sprite: Structures/Walls/solid-rust.rsi
   - type: Icon
-    sprite: Structures/Walls/solid_rust.rsi
+    sprite: Structures/Walls/solid-rust.rsi
     state: rgeneric
   - type: Construction
     graph: Girder
     node: reinforcedWallRust
   - type: IconSmooth
     key: walls
-    base: reinf_over
-  # Rusted walls should be made weaker through a damage mod status effect.
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: reinf_over
+    # Rusted walls should be made weaker through a damage mod status effect.
 
 - type: entity
   parent: [ WallDiagonalBase, StructureHealthWallStrong ]
@@ -457,12 +526,11 @@
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/reinforced-diagonal.rsi
-    state: state0
   - type: Icon
     sprite: Structures/Walls/reinforced-diagonal.rsi
     state: state0
   - type: Damageable
-    damageModifierSet: PlasteelMod
+    damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
     - trigger: *DamageWallStrong
@@ -472,30 +540,6 @@
       - *SpawnPlasteel
   - type: RadiationBlocker
     resistance: 5
-
-- type: entity
-  parent: [ BaseWall, StructureHealthWallStrong ]
-  id: WallMarble
-  name: marble wall
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/marble.rsi
-  - type: Icon
-    sprite: Structures/Walls/marble.rsi
-  - type: Damageable
-    damageModifierSet: RockMod
-  - type: Destructible
-    thresholds:
-    - trigger: *DamageWallStrong
-      behaviors:
-      - *SoundMetalSlam
-      - *SpawnGirder
-      - *SpawnPlasteel
-  - type: IconSmooth
-    key: walls
-    base: wall
-  - type: StaticPrice
-    price: 150
 
 - type: entity
   parent: BaseWall
@@ -508,8 +552,12 @@
   - type: Icon
     sprite: Structures/Walls/marble.rsi
   - type: IconSmooth
-    key: walls
-    base: wall
+    key: marble
+    states:
+    - !type:CardinalCornerSpriteSmoothing
+      mask: [ marble ]
+      altMask: [ walls, windows, grilles, doors ]
+      base: wall
   - type: Fixtures
     fixtures:
       fix1:
@@ -523,6 +571,26 @@
         density: 4000
   - type: RadiationBlocker
     resistance: 5
+
+- type: entity
+  parent: [ WallMarbleIndestructible, StructureHealthWallStrong ]
+  id: WallMarble
+  name: marble wall
+  suffix: ""
+  components:
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: Damageable
+    damageModifierSet: RockMod
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageWallStrong
+      behaviors:
+      - *SoundMetalSlam
+      - *SpawnGirder
+      - *SpawnPlasteel
+  - type: StaticPrice
+    price: 150
 
 - type: entity
   parent: [ BaseWall, StructureHealthWallWeak ]
@@ -553,7 +621,10 @@
           IngotSilver1: *BaseWallSpawn
   - type: IconSmooth
     key: walls
-    base: silver
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: silver
 
 #shuttle walls
 - type: entity
@@ -564,7 +635,6 @@
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/shuttle-diagonal.rsi
-    state: state0
   - type: Icon
     sprite: Structures/Walls/shuttle-diagonal.rsi
     state: state0
@@ -591,7 +661,7 @@
         - WallLayer
         density: 2000
   - type: Damageable
-    damageModifierSet: PlasteelMod
+    damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
     - trigger: *DamageWallStrong
@@ -613,7 +683,7 @@
   name: shuttle wall
   components:
   - type: Damageable
-    damageModifierSet: PlasteelMod
+    damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
     - trigger: *DamageWallStrong
@@ -635,7 +705,10 @@
     node: shuttleWall
   - type: IconSmooth
     key: walls
-    base: state
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: state
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -680,7 +753,7 @@
     delay: 8
     fx: EffectRCDDeconstruct8
   - type: Damageable
-    damageModifierSet: SteelMod
+    damageModifierSet: SteelStaticMod
   - type: Destructible
     thresholds:
     - trigger: &DamageWallNormal
@@ -694,7 +767,10 @@
           SheetSteel1: *BaseWallSpawn
   - type: IconSmooth
     key: walls
-    base: solid
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: solid
 
 - type: entity
   parent: [ WallDiagonalBase, StructureHealthWall ]
@@ -704,7 +780,6 @@
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/solid-diagonal.rsi
-    state: state0
   - type: Icon
     sprite: Structures/Walls/solid-diagonal.rsi
     state: state0
@@ -722,16 +797,19 @@
   suffix: rusted
   components:
   - type: Sprite
-    sprite: Structures/Walls/solid_rust.rsi
+    sprite: Structures/Walls/solid-rust.rsi
   - type: Icon
-    sprite: Structures/Walls/solid_rust.rsi
+    sprite: Structures/Walls/solid-rust.rsi
     state: full
   - type: Construction
     graph: Girder
     node: wallrust
   - type: IconSmooth
     key: walls
-    base: solid
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: solid
   # Rusted walls should be made weaker through a damage mod status effect.
 
 - type: entity
@@ -740,7 +818,7 @@
   name: exodermis wall
   components:
   - type: Damageable
-    damageModifierSet: SteelMod
+    damageModifierSet: SteelStaticMod
   - type: Destructible
     thresholds:
     - trigger: *DamageWallNormal
@@ -754,7 +832,10 @@
     sprite: Structures/Walls/exo.rsi
   - type: IconSmooth
     key: walls
-    base: solid
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: solid
   - type: Construction
     graph: Girder
     node: wallChitin
@@ -774,7 +855,7 @@
     sprite: Structures/Walls/exo.rsi
     state: rgeneric
   - type: Damageable
-    damageModifierSet: PlasteelMod
+    damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
     - trigger: *DamageWallStrong
@@ -800,7 +881,10 @@
     resistance: 5
   - type: IconSmooth
     key: walls
-    base: reinf_over
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: reinf_over
   - type: Construction
     graph: Girder
     node: reinforcedWallChitin
@@ -816,7 +900,10 @@
     sprite: Structures/Walls/exo-borg.rsi
   - type: IconSmooth
     key: walls
-    base: xenoborg
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: xenoborg
 
 - type: entity
   parent: WallPlastitaniumDiagonal
@@ -845,7 +932,7 @@
     graph: Girder
     node: uraniumWall
   - type: Damageable
-    damageModifierSet: PlasteelMod
+    damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
     - trigger: *DamageWallWeak
@@ -868,7 +955,10 @@
         density: 6000
   - type: IconSmooth
     key: walls
-    base: uranium
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: uranium
   - type: RadiationBlocker
     resistance: 6
 
@@ -903,7 +993,10 @@
           MaterialWoodPlank1: *BaseWallSpawn
   - type: IconSmooth
     key: walls
-    base: wood
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: wood
 
 - type: entity
   parent: [ BaseWall, StructureHealthBarrier ]
@@ -936,7 +1029,10 @@
           MaterialWebSilk1: *BaseWallSpawn
   - type: IconSmooth
     key: webs
-    base: wall
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors, webs ]
+      base: wall
   - type: Construction
     graph: WebStructures
     node: wall
@@ -951,7 +1047,7 @@
   - type: Icon
     sprite: Structures/Walls/mining.rsi
   - type: Damageable
-    damageModifierSet: SteelMod
+    damageModifierSet: SteelStaticMod
   - type: Destructible
     thresholds:
     - trigger: *DamageWallNormal
@@ -960,7 +1056,10 @@
       - *SpawnGirder
   - type: IconSmooth
     key: walls
-    base: mining
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: mining
   - type: Appearance
 
 - type: entity
@@ -971,12 +1070,11 @@
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/mining-diagonal.rsi
-    state: state0
   - type: Icon
     sprite: Structures/Walls/mining-diagonal.rsi
     state: state0
   - type: Damageable
-    damageModifierSet: SteelMod
+    damageModifierSet: SteelStaticMod
   - type: Destructible
     thresholds:
     - trigger: *DamageWallNormal
@@ -1056,7 +1154,10 @@
       - *SoundBreakStone
   - type: IconSmooth
     key: walls
-    base: concrete
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: concrete
 
 # Cardboard
 
@@ -1114,7 +1215,10 @@
           path: /Audio/Effects/poster_broken.ogg
   - type: IconSmooth
     key: cards
-    base: card
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ cards ]
+      base: card
   - type: Occluder
   - type: BlockWeather
   - type: SunShadowCast

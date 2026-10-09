@@ -238,3 +238,12 @@
   completetime: 2
   materials:
     Cloth: 300
+
+- type: latheRecipe
+  id: Binoculars
+  result: Binoculars
+  completetime: 2
+  materials:
+    Steel: 400
+    Plastic: 200
+    Glass: 200

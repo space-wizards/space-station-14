@@ -1,3 +1,4 @@
+using Content.Shared.Popups;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -22,4 +23,10 @@ public sealed partial class ActionUserWhitelistComponent : Component
     /// </summary>
     [DataField]
     public LocId? OnFailPopup;
+
+    /// <summary>
+    /// What type the fail popup should appear as.
+    /// </summary>
+    [DataField]
+    public PopupType OnFailPopupType = PopupType.SmallCaution;
 }
