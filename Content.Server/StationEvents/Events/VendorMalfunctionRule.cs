@@ -30,26 +30,21 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
         var vendingMachines = Station.GetEntitiesWithComponentOnStation<VendingMachineComponent>(true).ToList();
         RobustRandom.Shuffle(vendingMachines);
 
-        // target number of vending machines to hit is `toDispense`.
         // this loop goes through the shuffled list of vending machines, and hits the first `toDispense` hittable machines,
-        // skipping any unpowered/broken machines.
+        // skipping any unpowered/broken machines (stops if there are zero `toDispense` remaining).
+        // Rolls to toggle contra inventory, rolls number of items to eject + ejects desired item quantity.
         foreach (var vendor in vendingMachines)
         {
-            // give up if we've reached our quota of machines to hit.
             if (toDispense == 0)
                 break;
 
-            // make sure the vendor is powered and isn't broken
             if (vendor.Comp.Broken || !_vendingSystem.IsPowered(vendor, EntityManager)) continue;
 
-            // this vending machine has been hit (even if nothing ultimately happens), decrement toDispense.
             toDispense--;
 
-            // roll to enable contraband inventory
             if (RobustRandom.NextDouble() < ent.Comp1.ContrabandChance)
                 _vendingSystem.SetContraband(vendor, true);
 
-            // roll for the quantity of items to eject, skip if we roll 0
             var toEject = ent.Comp1.ItemsToEject.Next(RobustRandom);
             if (toEject <= 0)
                 continue;
