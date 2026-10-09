@@ -1,17 +1,23 @@
 - type: vendingMachineInventory
   id: JaniDrobeInventory
-  startingInventory:
-    ClothingUniformJumpsuitJanitor: 2
-    ClothingUniformJumpskirtJanitor: 2
-    ClothingHandsGlovesJanitor: 2
-    ClothingShoesColorBlack: 2
-    ClothingHeadHatPurplesoft: 2
-    ClothingBeltJanitor: 2
-    ClothingHeadsetService: 2
-    ClothingOuterWinterJani: 2
-    ClothingNeckScarfStripedPurple: 3
-  contrabandInventory:
-    ToyFigurineJanitor: 1
-  emaggedInventory:
-    ClothingUniformJumpskirtJanimaid: 2
-    ClothingUniformJumpskirtJanimaidmini: 1
+  categories:
+  - name: vending-machine-category-uniforms
+    icon: { entity: ClothingUniformJumpsuitJanitor }
+    startingInventory:
+      ClothingUniformJumpsuitJanitor: 2
+      ClothingUniformJumpskirtJanitor: 2
+    emaggedInventory:
+      ClothingUniformJumpskirtJanimaid: 2
+      ClothingUniformJumpskirtJanimaidmini: 1
+  - name: vending-machine-category-equipment
+    icon: { entity: ClothingBeltJanitor }
+    startingInventory:
+      ClothingHandsGlovesJanitor: 2
+      ClothingShoesColorBlack: 2
+      ClothingHeadHatPurplesoft: 2
+      ClothingBeltJanitor: 2
+      ClothingHeadsetService: 2
+      ClothingOuterWinterJani: 2
+      ClothingNeckScarfStripedPurple: 3
+    contrabandInventory:
+      ToyFigurineJanitor: 1

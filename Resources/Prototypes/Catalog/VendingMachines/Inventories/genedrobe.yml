@@ -1,11 +1,20 @@
 - type: vendingMachineInventory
   id: GeneDrobeInventory
-  startingInventory:
-    ClothingBackpackGenetics: 2
-    ClothingBackpackSatchelGenetics: 2
-    ClothingBackpackDuffelGenetics: 2
-    ClothingUniformJumpsuitGenetics: 2
-    ClothingUniformJumpskirtGenetics: 2
-    ClothingOuterCoatLabGene: 2
-    ClothingOuterWinterGen: 2
-    ClothingShoesColorWhite: 2
+  categories:
+  - name: vending-machine-category-bags
+    icon: { entity: ClothingBackpackGenetics }
+    startingInventory:
+      ClothingBackpackGenetics: 2
+      ClothingBackpackSatchelGenetics: 2
+      ClothingBackpackDuffelGenetics: 2
+  - name: vending-machine-category-uniforms
+    icon: { entity: ClothingUniformJumpsuitGenetics }
+    startingInventory:
+      ClothingUniformJumpsuitGenetics: 2
+      ClothingUniformJumpskirtGenetics: 2
+  - name: vending-machine-category-equipment
+    icon: { entity: ClothingOuterCoatLabGene }
+    startingInventory:
+      ClothingOuterCoatLabGene: 2
+      ClothingOuterWinterGen: 2
+      ClothingShoesColorWhite: 2
