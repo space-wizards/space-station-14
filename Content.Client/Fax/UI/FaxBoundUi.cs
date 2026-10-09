@@ -1,6 +1,7 @@
 using System.IO;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Fax;
+using Content.Shared.Fax.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
@@ -10,6 +11,7 @@ namespace Content.Client.Fax.UI;
 public sealed partial class FaxBoundUi : BoundUserInterface
 {
     [Dependency] private IFileDialogManager _fileDialogManager = default!;
+    [Dependency] private FaxSystem _fax = default!;
 
     [ViewVariables]
     private FaxWindow? _window;
@@ -65,7 +67,7 @@ public sealed partial class FaxBoundUi : BoundUserInterface
             }
         }
 
-        SendMessage(new FaxFileMessage(
+        SendPredictedMessage(new FaxFileMessage(
             label?[..Math.Min(label.Length, FaxFileMessageValidation.MaxLabelSize)],
             content[..Math.Min(content.Length, FaxFileMessageValidation.MaxContentSize)],
             _window.OfficePaper));
@@ -73,31 +75,42 @@ public sealed partial class FaxBoundUi : BoundUserInterface
 
     private void OnSendButtonPressed()
     {
-        SendMessage(new FaxSendMessage());
+        SendPredictedMessage(new FaxSendMessage());
     }
 
     private void OnCopyButtonPressed()
     {
-        SendMessage(new FaxCopyMessage());
+        SendPredictedMessage(new FaxCopyMessage());
     }
 
     private void OnRefreshButtonPressed()
     {
-        SendMessage(new FaxRefreshMessage());
+        SendPredictedMessage(new FaxRefreshMessage());
     }
 
     private void OnPeerSelected(DeviceAddress address)
     {
-        SendMessage(new FaxDestinationMessage(address));
+        SendPredictedMessage(new FaxDestinationMessage(address));
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    public override void Update()
     {
-        base.UpdateState(state);
+        base.Update();
 
-        if (_window == null || state is not FaxUiState cast)
+        if (_window == null)
             return;
 
-        _window.UpdateState(cast);
+        if (!EntMan.TryGetComponent<FaxMachineComponent>(Owner, out var fax))
+            return;
+
+        _fax.TryGetInserted((Owner, fax), out var paper);
+        var cooldown = _fax.PrintCooldown((Owner, fax));
+
+        _window.Update(cooldown,
+            cooldown || fax.DestinationAddress == null,
+            fax.Name,
+            EntMan.GetComponentOrNull<MetaDataComponent>(paper)?.EntityName,
+            fax.KnownFaxes,
+            fax.DestinationAddress);
     }
 }

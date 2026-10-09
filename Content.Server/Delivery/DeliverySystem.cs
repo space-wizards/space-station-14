@@ -61,7 +61,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
 
         _appearance.SetData(ent, DeliveryVisuals.JobIcon, entry.JobIcon);
 
-        _label.Label(ent, ent.Comp.RecipientName);
+        _label.Label(ent.Owner, ent.Comp.RecipientName);
 
         if (TryComp<FingerprintReaderComponent>(ent, out var reader) && entry.Fingerprint != null)
         {
