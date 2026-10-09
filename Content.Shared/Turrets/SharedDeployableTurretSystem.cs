@@ -4,7 +4,6 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Timing.Components;
 using Content.Shared.Timing.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Events;
@@ -25,7 +24,7 @@ public abstract partial class SharedDeployableTurretSystem : EntitySystem
     [Dependency] private AccessReaderSystem _accessReader = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
-    [Dependency] private SharedWiresSystem _wires = default!;
+    [Dependency] private WiresSystem _wires = default!;
     [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()

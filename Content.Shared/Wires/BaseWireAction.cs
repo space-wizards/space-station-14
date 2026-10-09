@@ -43,7 +43,7 @@ public abstract partial class BaseWireAction : IWireAction
     public virtual StatusLightState? GetLightState(Wire wire) => null;
 
     public IEntityManager EntityManager = default!;
-    public SharedWiresSystem WiresSystem = default!;
+    public WiresSystem WiresSystem = default!;
     public SharedPowerReceiverSystem PowerReceiverSystem = default!;
 
     // not virtual so implementors are aware that they need a nullable here
@@ -55,7 +55,7 @@ public abstract partial class BaseWireAction : IWireAction
         _adminLogger = IoCManager.Resolve<ISharedAdminLogManager>();
         EntityManager = IoCManager.Resolve<IEntityManager>();
 
-        WiresSystem = EntityManager.EntitySysManager.GetEntitySystem<SharedWiresSystem>();
+        WiresSystem = EntityManager.EntitySysManager.GetEntitySystem<WiresSystem>();
         PowerReceiverSystem = EntityManager.EntitySysManager.GetEntitySystem<SharedPowerReceiverSystem>();
     }
 

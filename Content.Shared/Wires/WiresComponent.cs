@@ -8,7 +8,7 @@ namespace Content.Shared.Wires;
 ///     Component that stores the wires on an entity, and the state of the wires.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedWiresSystem))]
+[Access(typeof(WiresSystem))]
 public sealed partial class WiresComponent : Component
 {
     /// <summary>

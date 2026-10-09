@@ -5,7 +5,8 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Wires;
 
-public sealed partial class WiresSystem : SharedWiresSystem
+/// <inheritdoc/>
+public sealed partial class ServerWiresSystem : WiresSystem
 {
     [Dependency] private ConstructionSystem _construction = default!;
     [Dependency] private IRobustRandom _random = default!;
@@ -59,9 +60,7 @@ public sealed partial class WiresSystem : SharedWiresSystem
         foreach (var parentLayout in ProtoMan.EnumerateParents<WireLayoutPrototype>(ent.Comp.LayoutId))
         {
             if (parentLayout.Wires != null)
-            {
                 wireActions.AddRange(parentLayout.Wires);
-            }
 
             dummyWires += parentLayout.DummyWires;
         }
@@ -99,13 +98,9 @@ public sealed partial class WiresSystem : SharedWiresSystem
 
                 var wireType = wire.Action.GetType();
                 if (types.ContainsKey(wireType))
-                {
                     types[wireType] += 1;
-                }
                 else
-                {
                     types.Add(wireType, 1);
-                }
 
                 // don't care about the result, this should've
                 // been handled in layout creation

@@ -26,7 +26,10 @@ public sealed partial class CutWireOnMapInitSystem : EntitySystem
 
             // Cut the wire
             if (targetWire.Action == null || targetWire.Action.Cut(EntityUid.Invalid, targetWire))
+            {
                 targetWire.IsCut = true;
+                Dirty(entity.Owner, panel);
+            }
         }
 
         // Our work here is done

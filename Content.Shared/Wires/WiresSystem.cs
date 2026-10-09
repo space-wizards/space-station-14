@@ -29,7 +29,7 @@ namespace Content.Shared.Wires;
 /// <summary>
 /// System that handles the wires on an entity. It is responsible for creating, updating, and destroying wires.
 /// </summary>
-public abstract partial class SharedWiresSystem : EntitySystem
+public abstract partial class WiresSystem : EntitySystem
 {
     [Dependency] private ActivatableUISystem _activatableUI = default!;
     [Dependency] private IGameTiming _timing = default!;
@@ -472,14 +472,21 @@ public abstract partial class SharedWiresSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnRejuvenate(Entity<WiresComponent> ent, ref RejuvenateEvent args)
     {
+        var changed = false;
         foreach (var wire in ent.Comp.WiresList)
         {
+            var wasCut = wire.IsCut;
+
             // Rejuvenate has no user so we mend as the entity having the wire.
             if (wire.Action == null || wire.Action.Mend(ent, wire))
                 wire.IsCut = false;
 
+            changed |= wasCut != wire.IsCut;
             wire.Action?.Update(wire);
         }
+
+        if (changed)
+            Dirty(ent);
 
         // If we don't update the interface wires will be desynced on client.
         UpdateUserInterface(ent.Owner);
