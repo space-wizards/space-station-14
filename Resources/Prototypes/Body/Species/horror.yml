@@ -118,10 +118,9 @@
         Piercing: 14
         Caustic: 8
         Structural: 20
-  - type: Tag
-    tags:
-    - DoorBumpOpener
-    - StunImmune
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepThud
   - type: SlowOnDamage
     speedModifierThresholds:
       140: 0.7
@@ -154,9 +153,11 @@
   - type: PermanentStatusEffects
     statusEffects:
     - StatusEffectHorrorFormArmblades
-  - type: ActionGrant
-    actions:
-    - ActionChangelingScreech
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - StunImmune
+    - FootstepSound
 
 
 - type: entity

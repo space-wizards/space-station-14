@@ -20,7 +20,7 @@ public sealed partial class ClientChangelingHorrorSystem : ChangelingHorrorSyste
         }
 
         // do maths
-        var time = Math.Max((ent.Comp.TimeBudget - (_timing.CurTime - ent.Comp.InitialTime)).TotalSeconds, 0d);
+        var time = Math.Max((ent.Comp.EndTime - _timing.CurTime).TotalSeconds, 0d);
         args.Amount = (int)time;
     }
 }

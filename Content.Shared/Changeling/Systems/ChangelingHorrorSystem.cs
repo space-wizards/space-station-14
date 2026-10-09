@@ -1,18 +1,13 @@
-using System.Linq;
 using System.Numerics;
 using Content.Shared.Actions;
 using Content.Shared.Alert;
 using Content.Shared.Changeling.Components;
-using Content.Shared.Coordinates;
 using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
-using Content.Shared.IdentityManagement;
-using Content.Shared.Popups;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
-using Content.Shared.Stunnable;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -35,12 +30,9 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedCuffableSystem _cuffable = default!;
-    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] protected IGameTiming Timing = default!;
     [Dependency] private SharedStoreSystem _stores = default!;
     [Dependency] private AlertsSystem _alerts = default!;
-    [Dependency] private ChangelingTransformSystem _transform = default!;
-    [Dependency] private SharedStunSystem _stuns = default!;
-    [Dependency] private SharedPopupSystem _popups = default!;
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
 
     // constants
@@ -52,61 +44,6 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
     /// The horror form's prototype
     /// </summary>
     private readonly EntProtoId _protoId = "MobHorror";
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-        var enumerator = EntityQueryEnumerator<ChangelingHorrorComponent, ChangelingIdentityComponent>();
-
-        var curtime = _timing.CurTime;
-
-        while (enumerator.MoveNext(out var uid, out var comp, out var identities))
-        {
-            if (IsPaused(uid))
-                continue;
-
-            // calculate the timeout
-            if (curtime - comp.InitialTime > comp.TimeBudget)
-            {
-                if (comp.LastIdentity != null && identities.ConsumedIdentities.Any(k => k.Identity == comp.LastIdentity.Value))
-                {
-                    // we force the transformation, this will call all cleanup code in OnBeforeTransform
-                    var tComp = EnsureComp<ChangelingTransformComponent>(uid);
-                    _transform.TransformIntoNow((uid, tComp), comp.LastIdentity.Value);
-                }
-                else
-                {
-                    // we try to find a non-horror identity
-                    var id = identities.ConsumedIdentities.Where(k => !HasComp<ChangelingHorrorComponent>(k.Identity));
-
-                    if (!id.Any())
-                        continue;
-
-                    var identity = id.First();
-
-                    if (!identity.Identity.HasValue)
-                        continue;
-
-                    // we force the transformation, this will call all cleanup code in OnBeforeTransform
-                    var tComp = EnsureComp<ChangelingTransformComponent>(uid);
-                    _transform.TransformIntoNow((uid, tComp), identity.Identity.Value);
-                }
-                var selfMessage = Loc.GetString("changeling-horror-force-transform-self", ("user", Identity.Name(uid, EntityManager)));
-                var othersMessage = Loc.GetString("changeling-horror-force-transform-others", ("user", Identity.Name(uid, EntityManager)));
-                _popups.PopupEntity(
-                selfMessage,
-                othersMessage,
-                uid,
-                uid,
-                PopupType.MediumCaution);
-
-                // we apply a stun penality, you should transform back yourself!
-                _stuns.TryAddStunDuration(uid, comp.StunTime);
-                _stuns.TryKnockdown(uid, comp.StunTime);
-            }
-        }
-    }
-
     #region transformation
 
     [SubscribeLocalEvent]
@@ -162,7 +99,7 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
         {
             // do fancy math to add back DNA based on remaining time
             Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> dico = new() {
-                {_currency, TimeToDNA(ent.Comp.TimeBudget - (_timing.CurTime - ent.Comp.InitialTime), ent.Comp.SecondPerDNA.TotalSeconds, ent.Comp.GracePeriod.TotalSeconds) }
+                {_currency, TimeToDNA(ent.Comp.EndTime - Timing.CurTime, ent.Comp.SecondPerDNA.TotalSeconds, ent.Comp.GracePeriod.TotalSeconds) }
                 };
             _stores.TryAddCurrency(dico, ent.Owner, storeComp);
         }
@@ -230,7 +167,6 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
             return; // this shouldn't happen...
 
         // calculate timing
-        var now = _timing.CurTime;
         var transformationTime = ent.Comp.GracePeriod; // you get some free seconds!
 
         if (TryComp<StoreComponent>(ent.Owner, out var store))
@@ -247,8 +183,7 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
             }
         }
 
-        ent.Comp.TimeBudget = transformationTime;
-        ent.Comp.InitialTime = now;
+        ent.Comp.EndTime = Timing.CurTime + transformationTime;
         ent.Comp.LastIdentity = ev.PreviousIdentity;
 
         Dirty(ent);

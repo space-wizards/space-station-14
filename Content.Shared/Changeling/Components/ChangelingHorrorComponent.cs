@@ -4,6 +4,7 @@ using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Changeling.Components;
 
@@ -27,16 +28,10 @@ public sealed partial class ChangelingHorrorComponent : Component
     public EntProtoId SpawnScreech = "AdminInstantEffectScreechLarge";
 
     /// <summary>
-    /// The instant at which the changeling entered horror form
+    /// The time at which the changeling will leave horror form.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public TimeSpan InitialTime = TimeSpan.Zero;
-
-    /// <summary>
-    /// The amount of time it can stay transformed, converted from its DNA
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public TimeSpan TimeBudget = TimeSpan.Zero;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    public TimeSpan EndTime = TimeSpan.Zero;
 
     /// <summary>
     /// Alert that is displayed to show the amount of time remaining in the horror form
