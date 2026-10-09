@@ -892,16 +892,24 @@
       visible: false
       map: [ "enum.GunVisualLayers.MagUnshaded" ]
       shader: unshaded
+  - type: Gun
+    projectileSpeed: 10
+    fireRate: 1.5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: BatteryAmmoProvider
+    proto: AnomalousParticleDeltaStrong
+    fireCost: 200
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: AnomalousParticleDeltaStrong
-      fireCost: 100
+      fireCost: 400
     - proto: AnomalousParticleEpsilonStrong
-      fireCost: 100
+      fireCost: 400
     - proto: AnomalousParticleZetaStrong
-      fireCost: 100
+      fireCost: 400
     - proto: AnomalousParticleSigmaStrong
-      fireCost: 100
+      fireCost: 400
   - type: BatterySelfRecharger
     autoRechargeRate: 25
   - type: Construction
@@ -916,15 +924,15 @@
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: AnomalousParticleDeltaStrong
-      fireCost: 100
+      fireCost: 200
     - proto: AnomalousParticleEpsilonStrong
-      fireCost: 100
+      fireCost: 200
     - proto: AnomalousParticleOmegaStrong
-      fireCost: 100
+      fireCost: 200
     - proto: AnomalousParticleZetaStrong
-      fireCost: 100
+      fireCost: 200
     - proto: AnomalousParticleSigmaStrong
-      fireCost: 100
+      fireCost: 200
 
 - type: entity
   name: eye of a behonker

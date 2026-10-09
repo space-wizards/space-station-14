@@ -26,9 +26,9 @@
   productEntity: ClothingBackpackDuffelSyndicateFilledCHIMP
   discountCategory: rareDiscounts
   discountDownTo:
-    Telecrystal: 2
+    Telecrystal: 4
   cost:
-    Telecrystal: 3
+    Telecrystal: 5
   categories:
   - UplinkObjective
   conditions:
