@@ -36,7 +36,7 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
 
     public void Update(BotanyAnalyzerState state)
     {
-        if (!_entityManager.TryGetEntity(state.Target, out var target))
+        if (!_entityManager.TryGetEntity(state.Target, out var target) || !_entityManager.EntityExists(target.Value))
             return;
 
         EntityUid? plantEntity = null;
@@ -101,7 +101,7 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         UpdateDelta(YieldDelta, plant.Yield, prototypePlant.Yield);
         UpdateDelta(LifespanDelta, plant.Lifespan, prototypePlant.Lifespan);
         UpdateDelta(MaturationDelta, plant.Maturation, prototypePlant.Maturation, invert: true);
-        UpdateDelta(ProductionDelta, plant.Production, prototypePlant.Production);
+        UpdateDelta(ProductionDelta, plant.Production, prototypePlant.Production, invert: true);
         UpdateDelta(PotencyDelta, plant.Potency, prototypePlant.Potency);
     }
 
@@ -120,21 +120,27 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
 
     private void UpdateConditions(EntityUid? plantEntity, EntProtoId? prototypeId, PlantComponent plant)
     {
-        if (!_botanySystem.TryGetPlantComponent<PlantAtmosphericComponent>(plantEntity, prototypeId, out var atmospheric))
-            return;
+        var hasAtmospheric = _botanySystem.TryGetPlantComponent<PlantAtmosphericComponent>(plantEntity, prototypeId, out var atmospheric);
+        Temperature.Visible = hasAtmospheric;
+        Pressure.Visible = hasAtmospheric;
+        if (hasAtmospheric && atmospheric != null)
+        {
+            UpdateCondition(Temperature,
+                "botany-ui-temperature",
+                atmospheric.LowHeatTolerance,
+                atmospheric.HighHeatTolerance,
+                "units-kelvin");
+            UpdateCondition(Pressure,
+                "botany-ui-pressure",
+                atmospheric.LowPressureTolerance,
+                atmospheric.HighPressureTolerance,
+                "units-k-pascal");
+        }
 
-        UpdateCondition(Temperature,
-            "botany-ui-temperature",
-            atmospheric.LowHeatTolerance,
-            atmospheric.HighHeatTolerance,
-            "units-kelvin");
-        UpdateCondition(Pressure,
-            "botany-ui-pressure",
-            atmospheric.LowPressureTolerance,
-            atmospheric.HighPressureTolerance,
-            "units-k-pascal");
-
-        if (!_botanySystem.TryGetPlantComponent<PlantGrowthComponent>(plantEntity, prototypeId, out var growth))
+        var hasGrowth = _botanySystem.TryGetPlantComponent<PlantGrowthComponent>(plantEntity, prototypeId, out var growth);
+        Water.Visible = hasGrowth;
+        Nutrients.Visible = hasGrowth;
+        if (!hasGrowth || growth == null)
             return;
 
         var waterConsumption = growth.WaterConsumption;
@@ -191,34 +197,22 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
 
     private void UpdateGases(EntityUid? plantEntity, EntProtoId? prototypeId)
     {
+        Consumed.ShowEmptyMessage();
+        Exuded.ShowEmptyMessage();
         if (!_botanySystem.TryGetPlantComponent<PlantConsumeExudeGasComponent>(plantEntity, prototypeId, out var gases))
             return;
 
-        Consumed.ClearDisplay();
-        var consumed = gases.ConsumeGasses
-            .Where(x => x.Value > 0f)
-            .Select(x => new GasEntry(x.Key, x.Value))
-            .ToArray();
-        foreach (var gas in consumed)
+        foreach (var (gas, amount) in gases.ConsumeGasses)
         {
-            Consumed.AddGas(gas);
+            if (amount > 0f)
+                Consumed.AddGas(new GasEntry(gas, amount));
         }
 
-        if (consumed.Length == 0)
-            Consumed.ShowEmptyMessage();
-
-        Exuded.ClearDisplay();
-        var exuded = gases.ExudeGasses
-            .Where(x => x.Value > 0f)
-            .Select(x => new GasEntry(x.Key, x.Value))
-            .ToArray();
-        foreach (var gas in exuded)
+        foreach (var (gas, amount) in gases.ExudeGasses)
         {
-            Exuded.AddGas(gas);
+            if (amount > 0f)
+                Exuded.AddGas(new GasEntry(gas, amount));
         }
-
-        if (exuded.Length == 0)
-            Exuded.ShowEmptyMessage();
     }
 
     private string GetGrowthType(EntityUid? plantEntity, EntProtoId? prototypeId)
@@ -232,15 +226,11 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
 
     private void UpdateChemicals(EntityUid? plantEntity, EntProtoId? prototypeId, PlantComponent plant)
     {
-        Chemicals.ClearDisplay();
+        Chemicals.ShowEmptyMessage();
 
         if (!_botanySystem.TryGetPlantComponent<PlantChemicalsComponent>(plantEntity, prototypeId, out var plantChemicals)
             || plantChemicals.Chemicals.Count == 0)
-        {
-            if (Chemicals.ChildCount == 0)
-                Chemicals.ShowEmptyMessage();
             return;
-        }
 
         foreach (var (reagent, quantity) in plantChemicals.Chemicals)
         {
