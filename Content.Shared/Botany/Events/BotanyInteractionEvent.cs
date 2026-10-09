@@ -61,6 +61,7 @@ public sealed class TrayShovelAttemptEvent(Entity<ShovelComponent> shovel, Entit
 public struct PlantAnalyzerAttemptEvent(EntityUid user)
 {
     public EntityUid User { get; } = user;
+    public EntityUid? Target;
     public EntityUid? PlantData;
     public EntProtoId? PlantProtoId;
     public bool Handled;

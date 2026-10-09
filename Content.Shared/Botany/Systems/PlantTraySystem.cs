@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Botany.Components;
+using Content.Shared.Botany.Events;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
@@ -100,6 +101,16 @@ public sealed partial class PlantTraySystem : EntitySystem
             return;
 
         args.Args.Handled = _interaction.InteractUsing(args.Args.User, args.Args.Used, ent, args.Args.ClickLocation);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPlantAnalyzerAttempt(Entity<PlantTrayComponent> ent, ref PlantAnalyzerAttemptEvent args)
+    {
+        if (!TryGetPlant(ent.AsNullable(), out var plant))
+            return;
+
+        RaiseLocalEvent(plant.Value, ref args);
+        args.Target ??= plant.Value;
     }
 
     /// <summary>

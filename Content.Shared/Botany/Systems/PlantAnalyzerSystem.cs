@@ -26,9 +26,24 @@ public sealed partial class PlantAnalyzerSystem : EntitySystem
     [Dependency] private PlantSystem _plant = default!;
 
     [SubscribeLocalEvent]
+    private void OnPlantChanged(ref PlantMutationsChangedEvent args)
+    {
+        UpdatePlantUi(args.Plant);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnSpeciesChanged(ref PlantSpeciesChangedEvent args)
+    {
+        ReplacePlantUi(args.OldPlant, args.NewPlant, args.NewPrototype);
+    }
+
+    [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<PlantAnalyzerComponent> ent, ref AfterInteractEvent args)
     {
         if (args.Handled || args.Target is not { } target || !args.CanReach)
+            return;
+
+        if (!TryAnalyze(ref target, args.User, out _))
             return;
 
         args.Handled = _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager,
@@ -72,9 +87,7 @@ public sealed partial class PlantAnalyzerSystem : EntitySystem
         if (args.Handled || args.Cancelled || args.Args.Target is not { } target)
             return;
 
-        var analyze = new PlantAnalyzerAttemptEvent(args.Args.User);
-        RaiseLocalEvent(target, ref analyze);
-        if (!analyze.Handled)
+        if (!TryAnalyze(ref target, args.Args.User, out var analyze))
             return;
 
         _audio.PlayPredicted(ent.Comp.ScanningEndSound, ent.Owner, args.Args.User);
@@ -90,6 +103,17 @@ public sealed partial class PlantAnalyzerSystem : EntitySystem
         UpdateAnalyzerUi(ent);
 
         args.Handled = true;
+    }
+
+    private bool TryAnalyze(ref EntityUid target, EntityUid user, out PlantAnalyzerAttemptEvent analyze)
+    {
+        analyze = new PlantAnalyzerAttemptEvent(user);
+        RaiseLocalEvent(target, ref analyze);
+        if (!analyze.Handled)
+            return false;
+
+        target = analyze.Target ?? target;
+        return true;
     }
 
     [SubscribeLocalEvent]

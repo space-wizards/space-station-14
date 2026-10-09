@@ -56,6 +56,9 @@ public sealed partial class PlantSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnPlantAnalyzerAttempt(Entity<PlantComponent> ent, ref PlantAnalyzerAttemptEvent args)
     {
+        if (args.Handled)
+            return;
+
         args.PlantData = ent.Owner;
         args.PlantProtoId = MetaData(ent.Owner).EntityPrototype?.ID;
         args.Handled = true;

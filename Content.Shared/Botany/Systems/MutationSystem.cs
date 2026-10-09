@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Atmos;
 using Content.Shared.Botany.Components;
+using Content.Shared.Botany.Events;
 using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
@@ -23,7 +24,6 @@ public sealed partial class PlantMutationSystem : EntitySystem
     [Dependency] private BotanySystem _botany = default!;
     [Dependency] private ISerializationManager _serialization = default!;
     [Dependency] private PlantSystem _plant = default!;
-    [Dependency] private PlantAnalyzerSystem _plantAnalyzer = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
 
@@ -60,7 +60,8 @@ public sealed partial class PlantMutationSystem : EntitySystem
             }
         }
 
-        _plantAnalyzer.UpdatePlantUi(ent.Owner);
+        var ev = new PlantMutationsChangedEvent(ent.Owner);
+        RaiseLocalEvent(ref ev);
     }
 
     /// <summary>
@@ -97,7 +98,8 @@ public sealed partial class PlantMutationSystem : EntitySystem
             _plant.PlantingPlant(newPlantUid);
 
         _plant.ForceUpdate(newPlantUid);
-        _plantAnalyzer.ReplacePlantUi(oldPlant.Owner, newPlantUid, newPlantProto);
+        var ev = new PlantSpeciesChangedEvent(oldPlant.Owner, newPlantUid, newPlantProto);
+        RaiseLocalEvent(ref ev);
         QueueDel(oldPlant);
     }
 

@@ -39,6 +39,9 @@ public sealed partial class BotanyProduceSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnPlantAnalyzerAttempt(Entity<ProduceComponent> ent, ref PlantAnalyzerAttemptEvent args)
     {
+        if (args.Handled)
+            return;
+
         args.PlantData = ent.Comp.PlantData;
         args.PlantProtoId = ent.Comp.PlantProtoId;
         args.Handled = true;
