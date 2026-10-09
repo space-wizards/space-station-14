@@ -259,7 +259,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     /// <summary>
     /// Returns true if the identity is "safe" (see <see cref="GetSafeIdentityCount"/>)
     /// </summary>
-    private bool IsSafe(EntityUid ent)
+    public bool IsSafe(EntityUid ent)
     {
         var ev = new IsIdentitySafeEvent();
         RaiseLocalEvent(ent, ref ev);

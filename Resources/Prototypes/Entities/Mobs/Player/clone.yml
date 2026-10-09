@@ -36,6 +36,7 @@
   - DetailExaminable
   - Dna
   - Fingerprint
+  - FootstepModifier # Footstep sounds!
   - Grammar # Pronouns
   - HumanoidProfile # Age, Sex, Gender
   - InnerBodyAnomalyVisuals # How you look with anomalies

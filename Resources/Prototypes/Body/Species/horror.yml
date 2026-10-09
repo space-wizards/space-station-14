@@ -153,6 +153,10 @@
   - type: PermanentStatusEffects
     statusEffects:
     - StatusEffectHorrorFormArmblades
+  - type: ActionGrant # Not cloned, this is used for giving the ability to horror forms that were spawned in rather than transformed into.
+    removeOnShutdown: true
+    actions:
+    - ActionChangelingScreech
   - type: Tag
     tags:
     - DoorBumpOpener

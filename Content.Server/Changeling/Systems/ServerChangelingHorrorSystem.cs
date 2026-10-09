@@ -9,6 +9,7 @@ namespace Content.Server.Changeling.Systems;
 
 public sealed partial class ServerChangelingHorrorSystem : ChangelingHorrorSystem
 {
+    [Dependency] private ChangelingIdentitySystem _identitySystem = default!;
     [Dependency] private ChangelingTransformSystem _transform = default!;
     [Dependency] private SharedStunSystem _stuns = default!;
     [Dependency] private SharedPopupSystem _popups = default!;
@@ -25,7 +26,7 @@ public sealed partial class ServerChangelingHorrorSystem : ChangelingHorrorSyste
             // calculate the timeout
             if (curtime > comp.EndTime)
             {
-                if (comp.LastIdentity != null)
+                if (comp.LastIdentity != null && identities.ConsumedIdentities.Any(k => k.Identity == comp.LastIdentity.Value))
                 {
                     // we force the transformation, this will call all cleanup code in OnBeforeTransform
                     var tComp = EnsureComp<ChangelingTransformComponent>(uid);
@@ -34,7 +35,7 @@ public sealed partial class ServerChangelingHorrorSystem : ChangelingHorrorSyste
                 else
                 {
                     // we try to find a non-horror identity
-                    var id = identities.ConsumedIdentities.Where(k => !HasComp<ChangelingHorrorComponent>(k.Identity));
+                    var id = identities.ConsumedIdentities.Where(k => k.Identity != null && _identitySystem.IsSafe(k.Identity.Value));
 
                     if (!id.Any())
                         continue;
