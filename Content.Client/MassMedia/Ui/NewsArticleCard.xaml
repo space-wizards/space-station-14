@@ -21,12 +21,11 @@
             <Control HorizontalExpand="True"/>
             <Label FontColorOverride="#b1b1b2" StyleClasses="LabelSmall" Name="PublishTimeLabel" Margin="6 4 10 4"/>
         </BoxContainer>
-        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="10 0 6 6">
-            <Button Name="ToggleCommentsButton" SetHeight="20" StyleClasses="ButtonSmall OpenRight" Access="Public"/>
-            <Button Name="LockCommentsButton" SetHeight="20" StyleClasses="ButtonSmall OpenLeft" Access="Public"/>
-            <Control HorizontalExpand="True"/>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="10 0 10 6">
+            <Button Name="ToggleCommentsButton" HorizontalExpand="True" MinWidth="110" SetHeight="20" ClipText="False" StyleClasses="ButtonSmall OpenRight" Access="Public"/>
+            <Button Name="LockCommentsButton" MinWidth="90" SetHeight="20" ClipText="False" StyleClasses="ButtonSmall OpenLeft" Access="Public"/>
             <controls:ConfirmButton Name="DeleteButton" Text="{Loc news-write-ui-delete-text}"
-                    HorizontalAlignment="Right" Margin="8 0 0 0" SetHeight="20" SetWidth="52" Access="Public"
+                    HorizontalAlignment="Right" Margin="8 0 0 0" SetHeight="20" MinWidth="52" Access="Public"
                     StyleClasses="ButtonSmall negative" />
         </BoxContainer>
         <BoxContainer Name="CommentsContainer" Orientation="Vertical" HorizontalExpand="True" Margin="10 0 10 6" Visible="False"/>

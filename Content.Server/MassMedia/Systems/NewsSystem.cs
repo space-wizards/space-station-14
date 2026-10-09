@@ -35,13 +35,11 @@ namespace Content.Server.MassMedia.Systems;
 
 public sealed partial class NewsSystem : SharedNewsSystem
 {
-    [Dependency] private AccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private PopupSystem _popup = default!;
     [Dependency] private ServerStationSystem _station = default!;
     [Dependency] private ServerGameTicker _ticker = default!;
     [Dependency] private IChatManager _chatManager = default!;
@@ -49,7 +47,6 @@ public sealed partial class NewsSystem : SharedNewsSystem
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IBaseServer _baseServer = default!;
     [Dependency] private IdentitySystem _identity = default!;
-    [Dependency] private SharedIdCardSystem _idCard = default!;
 
     private WebhookIdentifier? _webhookId = null;
     private Color _webhookEmbedColor;
@@ -136,30 +133,28 @@ public sealed partial class NewsSystem : SharedNewsSystem
             return;
 
         var article = articles[msg.ArticleNum];
-        if (TryCheckConsoleAccess(ent, msg.Actor))
+
+        _adminLogger.Add(
+            LogType.Chat, LogImpact.Medium,
+            $"{ToPrettyString(msg.Actor):actor} deleted news article {article.Title} by {article.Author}: {article.Content}"
+        );
+
+        articles.RemoveAt(msg.ArticleNum);
+
+        // Clean up any per-PDA reactions associated with the deleted article without closure variable capture.
+        var keysToRemove = new ValueList<(int ArticleId, NetEntity LoaderUid)>();
+        foreach (var key in stationNews.PdaReactions.Keys)
         {
-            _adminLogger.Add(
-                LogType.Chat, LogImpact.Medium,
-                $"{ToPrettyString(msg.Actor):actor} deleted news article {article.Title} by {article.Author}: {article.Content}"
-            );
-
-            articles.RemoveAt(msg.ArticleNum);
-
-            // Clean up any per-PDA reactions associated with the deleted article without closure variable capture.
-            var keysToRemove = new ValueList<(int ArticleId, NetEntity LoaderUid)>();
-            foreach (var key in stationNews.PdaReactions.Keys)
-            {
-                if (key.ArticleId == article.ArticleId)
-                    keysToRemove.Add(key);
-            }
-
-            foreach (var key in keysToRemove)
-            {
-                stationNews.PdaReactions.Remove(key);
-            }
-
-            _audio.PlayPvs(ent.Comp.ConfirmSound, ent);
+            if (key.ArticleId == article.ArticleId)
+                keysToRemove.Add(key);
         }
+
+        foreach (var key in keysToRemove)
+        {
+            stationNews.PdaReactions.Remove(key);
+        }
+
+        _audio.PlayPvs(ent.Comp.ConfirmSound, ent);
 
         var args = new NewsArticleDeletedEvent();
         var query = EntityQueryEnumerator<NewsReaderCartridgeComponent>();
@@ -180,9 +175,6 @@ public sealed partial class NewsSystem : SharedNewsSystem
 
         var articles = stationNews.Articles;
         if (msg.ArticleNum < 0 || msg.ArticleNum >= articles.Count)
-            return;
-
-        if (!TryCheckConsoleAccess(ent, msg.Actor))
             return;
 
         var article = articles[msg.ArticleNum];
@@ -208,9 +200,6 @@ public sealed partial class NewsSystem : SharedNewsSystem
 
         var articles = stationNews.Articles;
         if (msg.ArticleNum < 0 || msg.ArticleNum >= articles.Count)
-            return;
-
-        if (!TryCheckConsoleAccess(ent, msg.Actor))
             return;
 
         var article = articles[msg.ArticleNum];
@@ -252,9 +241,6 @@ public sealed partial class NewsSystem : SharedNewsSystem
     private void OnWriteUiPublishMessage(Entity<NewsWriterComponent> ent, ref NewsWriterPublishMessage msg)
     {
         if (!ent.Comp.PublishEnabled)
-            return;
-
-        if (!CanUse(msg.Actor, ent.Owner))
             return;
 
         ent.Comp.PublishEnabled = false;
@@ -418,7 +404,7 @@ public sealed partial class NewsSystem : SharedNewsSystem
                 break;
 
             case NewsReaderCommentMessageEvent commentMsg:
-                HandleReaderComment(ent, loaderUid, args.Actor, commentMsg.Comment);
+                HandleReaderComment(ent, args.Actor, commentMsg.Comment);
                 break;
         }
     }
@@ -468,7 +454,6 @@ public sealed partial class NewsSystem : SharedNewsSystem
 
     private void HandleReaderComment(
         Entity<NewsReaderCartridgeComponent> ent,
-        EntityUid loaderUid,
         EntityUid actor,
         string rawComment)
     {
@@ -496,7 +481,9 @@ public sealed partial class NewsSystem : SharedNewsSystem
             ? trimmed
             : $"{trimmed[..MaxCommentLength]}...";
 
-        var author = GetPdaAuthorName(loaderUid);
+        // Use the player's real name rather than any PDA/ID card name: IDs can be forged, and
+        // security and admins need comments to be attributable to the person who wrote them.
+        var author = Name(actor);
 
         var comment = new NewsComment
         {
@@ -512,34 +499,10 @@ public sealed partial class NewsSystem : SharedNewsSystem
         _adminLogger.Add(
             LogType.Chat,
             LogImpact.Low,
-            $"{ToPrettyString(actor):actor} commented on news article {article.Title} as {author ?? "Anonymous"}: {content}");
+            $"{ToPrettyString(actor):actor} commented on news article {article.Title}: {content}");
 
         BroadcastArticleUpdated(article.ArticleId);
         UpdateWriterDevices();
-    }
-
-    /// <summary>
-    /// Gets the author string from the ID card inserted into the given PDA (<paramref name="loaderUid"/>),
-    /// or null if no ID card with a name is inserted.
-    /// </summary>
-    private string? GetPdaAuthorName(EntityUid loaderUid)
-    {
-        if (!_idCard.TryGetIdCard(loaderUid, out var idCard) ||
-            string.IsNullOrWhiteSpace(idCard.Comp.FullName))
-        {
-            return null;
-        }
-
-        // FullName only permits read/write access, so copy it before invoking methods on it.
-        string fullName = idCard.Comp.FullName;
-        fullName = fullName.Trim();
-        if (!string.IsNullOrWhiteSpace(idCard.Comp.LocalizedJobTitle))
-        {
-            var jobTitle = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(idCard.Comp.LocalizedJobTitle.Trim());
-            return Loc.GetString("news-read-ui-comment-author-job", ("author", fullName), ("job", jobTitle));
-        }
-
-        return fullName;
     }
 
     private void BroadcastArticleUpdated(int articleId)
@@ -649,29 +612,6 @@ public sealed partial class NewsSystem : SharedNewsSystem
         {
             UpdateWriterUi((owner, comp));
         }
-    }
-
-    /// <summary>
-    /// Verifies that <paramref name="actor"/> has access to use the news writer console,
-    /// playing a denial sound and popup if access is denied.
-    /// </summary>
-    private bool TryCheckConsoleAccess(Entity<NewsWriterComponent> ent, EntityUid actor)
-    {
-        if (CanUse(actor, ent.Owner))
-            return true;
-
-        _popup.PopupEntity(Loc.GetString("news-write-no-access-popup"), ent, PopupType.SmallCaution);
-        _audio.PlayPvs(ent.Comp.NoAccessSound, ent);
-        return false;
-    }
-
-    private bool CanUse(EntityUid user, EntityUid console)
-    {
-        if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent))
-        {
-            return _accessReaderSystem.IsAllowed(user, console, accessReaderComponent);
-        }
-        return true;
     }
 
     private void OnNewsWriterDraftUpdatedMessage(Entity<NewsWriterComponent> ent, ref NewsWriterSaveDraftMessage args)

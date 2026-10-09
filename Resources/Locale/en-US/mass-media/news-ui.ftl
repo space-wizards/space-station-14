@@ -56,7 +56,6 @@ news-read-ui-comment-placeholder = Write a comment...
 news-read-ui-comments-locked-placeholder = Comments are locked on this article
 news-read-ui-comments-full-placeholder = Comment limit reached
 news-read-ui-comment-submit = Post
-news-read-ui-comment-author-job = {$author} ({$job})
 news-read-ui-comment-meta = [color=#a8b8d0][bold]{$author}[/bold][/color] [color=#808080]({$time})[/color]
 
 news-write-ui-lock-comments-checkbox = Lock comments on this article

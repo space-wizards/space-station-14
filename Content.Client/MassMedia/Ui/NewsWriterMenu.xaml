@@ -4,8 +4,8 @@
     xmlns:ui="clr-namespace:Content.Client.MassMedia.Ui"
     xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     Title="{Loc 'news-write-ui-default-title'}"
-    MinSize="348 443"
-    SetSize="348 443">
+    MinSize="420 443"
+    SetSize="420 520">
 
     <ui:ArticleEditorPanel Name="ArticleEditorPanel" HorizontalAlignment="Left" VerticalExpand="True"
                            MinWidth="410" MinHeight="370" Margin="0 0 0 30" Access="Public" Visible="False"/>
