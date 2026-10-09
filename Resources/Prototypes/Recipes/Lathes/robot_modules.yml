@@ -24,8 +24,8 @@
 # Generic
 - type: latheRecipe
   parent: BaseBorgModuleRecipe
-  id: BorgModuleTool
-  result: BorgModuleTool
+  id: BorgModuleArtistry
+  result: BorgModuleArtistry
 
 - type: latheRecipe
   parent: BaseBorgModuleRecipe
@@ -44,8 +44,13 @@
 
 - type: latheRecipe
   parent: BaseBorgModuleRecipe
-  id: BorgModuleArtistry
-  result: BorgModuleArtistry
+  id: BorgModuleMusique
+  result: BorgModuleMusique
+
+- type: latheRecipe
+  parent: BaseBorgModuleRecipe
+  id: BorgModuleTool
+  result: BorgModuleTool
 
 # Cargo Modules
 

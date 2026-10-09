@@ -1,4 +1,5 @@
-using Content.Shared.FixedPoint;
+using Content.Shared.DeviceNetwork;
+using Content.Shared.Radio.EntitySystems;
 using Robust.Shared.Serialization;
 using Robust.Shared.GameStates;
 
@@ -9,9 +10,12 @@ namespace Content.Shared.Radio.Components;
 /// Suit sensors will also stop working.
 /// </summary>
 [NetworkedComponent, RegisterComponent]
-[AutoGenerateComponentState]
+[AutoGenerateComponentState, Access(typeof(JammerSystem))]
 public sealed partial class RadioJammerComponent : Component
 {
+    /// <summary>
+    /// Configuration for one selectable radio jammer power setting.
+    /// </summary>
     [DataDefinition]
     public partial struct RadioJamSetting
     {
@@ -51,7 +55,7 @@ public sealed partial class RadioJammerComponent : Component
     /// Frequencies that are NOT jammed by this jammer.
     /// </summary>
     [DataField]
-    public HashSet<FixedPoint2> FrequenciesExcluded = [];
+    public HashSet<DeviceFrequency> FrequenciesExcluded = [];
 
     /// <summary>
     /// Index of the currently selected setting.
@@ -61,6 +65,9 @@ public sealed partial class RadioJammerComponent : Component
     public int SelectedPowerLevel = 1;
 }
 
+/// <summary>
+/// Charge level displayed for a radio jammer.
+/// </summary>
 [Serializable, NetSerializable]
 public enum RadioJammerChargeLevel : byte
 {
@@ -69,12 +76,18 @@ public enum RadioJammerChargeLevel : byte
     High
 }
 
+/// <summary>
+/// Appearance layers used by a radio jammer.
+/// </summary>
 [Serializable, NetSerializable]
 public enum RadioJammerLayers : byte
 {
     LED
 }
 
+/// <summary>
+/// Appearance data keys used by a radio jammer.
+/// </summary>
 [Serializable, NetSerializable]
 public enum RadioJammerVisuals : byte
 {

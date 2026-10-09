@@ -1,4 +1,4 @@
-﻿using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Medical.SuitSensors;
 
 namespace Content.Shared.Medical.CrewMonitoring;
@@ -9,5 +9,5 @@ namespace Content.Shared.Medical.CrewMonitoring;
 public partial record struct BroadcastSuitSensorStatePayload : INetworkPayload
 {
     [DataField]
-    public Dictionary<string, SuitSensorStatus> SensorStatus = new();
+    public Dictionary<DeviceAddress, SuitSensorStatus> SensorStatus = new();
 }

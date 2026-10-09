@@ -264,7 +264,7 @@ public sealed partial class PlantSystem : EntitySystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        PredictedQueueDel(ent);
+        QueueDel(ent);
     }
 
     /// <summary>

@@ -1,4 +1,4 @@
-﻿using Content.Shared.ActionBlocker;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Chat;
 using Content.Shared.Movement.Events;
 using Content.Shared.StepTrigger.Systems;
@@ -49,7 +49,7 @@ public sealed partial class ChasmSystem : EntitySystem
                 DebugTools.Assert($"{ToPrettyString(chasm.FallingInto)} is missing {nameof(ChasmComponent)}");
             }
 
-            PredictedQueueDel(uid);
+            QueueDel(uid);
         }
     }
 

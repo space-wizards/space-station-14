@@ -18,7 +18,7 @@
     sendBroadcastAttemptEvent: true
     examinableAddress: true
   - type: DeviceList
-  - type: WiredNetworkConnection
+  - type: WiredNetwork
   - type: DeviceNetworkRequiresPower
   - type: AtmosDevice
   - type: AtmosAlarmable
