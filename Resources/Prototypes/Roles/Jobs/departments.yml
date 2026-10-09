@@ -66,7 +66,6 @@
   - ChiefMedicalOfficer
   - MedicalDoctor
   - MedicalIntern
-  - Psychologist
   - Paramedic
 
 - type: department
@@ -112,6 +111,7 @@
   - Reporter
   - ServiceWorker
   - TramDriver
+  - Psychologist
 
 - type: department
   id: Silicon

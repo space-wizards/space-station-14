@@ -237,7 +237,7 @@
   id: ClothingOuterHardsuitVoidParamedStealObjective
   components:
   - type: NotJobRequirement
-    jobs: [ MedicalDoctor, Paramedic, Chemist, Psychologist ]
+    jobs: [ MedicalDoctor, Paramedic, Chemist]
   - type: StealCondition
     stealGroup: ClothingOuterHardsuitVoidParamed
   - type: Objective
@@ -248,7 +248,7 @@
   id: MedicalTechFabCircuitboardStealObjective
   components:
   - type: NotJobRequirement
-    jobs: [ MedicalDoctor, Paramedic, Chemist, Psychologist ]
+    jobs: [ MedicalDoctor, Paramedic, Chemist]
   - type: StealCondition
     stealGroup: MedicalTechFabCircuitboard
   - type: Objective
