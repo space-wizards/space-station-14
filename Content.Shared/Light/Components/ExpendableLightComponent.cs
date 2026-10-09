@@ -16,7 +16,6 @@ namespace Content.Shared.Light.Components;
 [Access(typeof(ExpendableLightSystem))]
 public sealed partial class ExpendableLightComponent : Component
 {
-
     [ViewVariables(VVAccess.ReadOnly)]
     [AutoNetworkedField]
     public ExpendableLightState CurrentState = ExpendableLightState.Unlit;
@@ -101,19 +100,19 @@ public sealed partial class ExpendableLightComponent : Component
     /// The sprite layer shader used while the expendable light is lit.
     /// </summary>
     [DataField]
-    public string? SpriteShaderLit = null;
+    public string? SpriteShaderLit;
 
     /// <summary>
     /// The sprite layer shader used after the expendable light has burnt out.
     /// </summary>
     [DataField]
-    public string? SpriteShaderSpent = null;
+    public string? SpriteShaderSpent;
 
     /// <summary>
     /// The color emited by expendable lights while they are lit.
     /// </summary>
     [DataField]
-    public Color? GlowColorLit = null;
+    public Color? GlowColorLit;
 
     /// <summary>
     /// The sound that plays when the expendable light is lit.
@@ -130,7 +129,6 @@ public sealed partial class ExpendableLightComponent : Component
     /// <summary>
     /// Time when next change of CurrentState happens. It's current time + how long light will spend in current state.
     /// </summary>
-
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField, AutoNetworkedField]
     public TimeSpan StateExpiryTime = TimeSpan.Zero;
