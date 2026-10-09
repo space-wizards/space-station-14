@@ -669,13 +669,13 @@ public abstract partial class FaxSystem : EntitySystem
             if (!fax.Comp.PrintingQueue.TryDequeue(out var queued))
                 return;
 
+            DirtyField(fax.AsNullable(), nameof(FaxMachineComponent.PrintingQueue));
             printout = GetEntity(queued.Printout);
         } while (printout == EntityUid.Invalid); // Error handling for badly predicted or deleted entities!
 
         _xForm.SetCoordinates(printout, Transform(fax).Coordinates);
 
         AdminLogger.Add(LogType.Action, LogImpact.Low, $"\"{fax.Comp.Name}\" {ToPrettyString(fax):tool} printed {ToPrettyString(printout):subject}: {_paperSystem.GetContent(printout)}");
-        DirtyField(fax.AsNullable(), nameof(FaxMachineComponent.PrintingQueue));
         UpdateUserInterface(fax);
     }
 

@@ -99,11 +99,12 @@ public sealed partial class FaxBoundUi(EntityUid owner, Enum uiKey) : BoundUserI
         if (!EntMan.TryGetComponent<FaxMachineComponent>(Owner, out var fax))
             return;
 
-        _fax.TryGetInserted((Owner, fax), out var paper);
+        var paper = _fax.GetInserted((Owner, fax));
         var cooldown = _fax.PrintCooldown((Owner, fax));
+        var noPaper = paper == null;
 
-        _window.Update(cooldown,
-            cooldown || fax.DestinationAddress == null,
+        _window.Update(cooldown || noPaper,
+            cooldown || noPaper || fax.DestinationAddress == null,
             fax.Name,
             EntMan.GetComponentOrNull<MetaDataComponent>(paper)?.EntityName,
             fax.KnownFaxes,
