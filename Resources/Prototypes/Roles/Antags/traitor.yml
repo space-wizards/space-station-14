@@ -82,25 +82,24 @@
     - DeathAcidifierImplanter
 
 - type: startingGear
-  id: SyndicateOperativeClothing
+  id: SyndicateReinforcementClothing
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
-    back: ClothingBackpackSatchel
+    back: ClothingBackpackDuffel
     shoes: ClothingShoesBootsSyndieFilled
     gloves: ClothingHandsGlovesColorBlack
-    ears: ClothingHeadsetAltSyndicate
+    ears: ClothingHeadsetSyndicateCovert
     id: SyndiCovertPDA
     pocket1: WeaponPistolViper
 
 - type: startingGear
-  parent: SyndicateOperativeClothing
+  parent: SyndicateReinforcementClothing
   id: SyndicateReinforcementMedic
   equipment:
     head: ClothingHeadHatSurgcapPurple
     mask: ClothingMaskSterile
     gloves: ClothingHandsGlovesLatex
     belt: ClothingBeltMedicalFilled
-    back: ClothingBackpackDuffelMedical
     eyes: ClothingEyesHudMedical
     pocket2: PillCanisterBicaridine
   inhand:
@@ -120,7 +119,7 @@
     - AdvancedJetInjector
 
 - type: startingGear
-  parent: SyndicateOperativeClothing
+  parent: SyndicateReinforcementClothing
   id: SyndicateReinforcementSpy
   equipment:
     pocket1: WeaponPistolCobra
@@ -136,7 +135,7 @@
     - RadioHandheld
 
 - type: startingGear
-  parent: SyndicateOperativeClothing
+  parent: SyndicateReinforcementClothing
   id: SyndicateReinforcementThief
   equipment:
     eyes: ClothingEyesGlassesHiddenSecurity
