@@ -28,13 +28,11 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
             return;
         }
 
-        // get a list of all vending machines on the target station, and then shuffle it.
+        // get list of all vending machines on the target station, and then shuffle it so we get a random sample later on
         var vendingMachines = Station.GetEntitiesWithComponentOnStation<VendingMachineComponent>(true).ToList();
         RobustRandom.Shuffle(vendingMachines);
 
-        // this loop goes through the shuffled list of vending machines, and hits the first `toDispense` hittable machines,
-        // skipping any unpowered/broken machines (stops if there are zero `toDispense` remaining).
-        // Rolls to toggle contra inventory, rolls number of items to eject + ejects desired item quantity.
+        // finds valid vending machines (powered + not broken), maybe toggles contra inventory, ejects some contents
         foreach (var vendor in vendingMachines)
         {
             if (toDispense == 0)

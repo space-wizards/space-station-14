@@ -11,19 +11,19 @@ namespace Content.Server.StationEvents.Components;
 public sealed partial class VendorMalfunctionRuleComponent : Component
 {
     /// <summary>
-    /// quantity of machines which may be affected by this event
+    /// quantity of machines which may be affected by this event. minimum should be at least 1.
     /// </summary>
     [DataField]
     public MinMax AffectedMachines;
 
     /// <summary>
-    /// chance of the 'contraband' inventory of the vending machine being enabled
+    /// chance of the 'contraband' inventory of the vending machine being enabled.
     /// </summary>
     [DataField] 
     public float ContrabandChance;
 
     /// <summary>
-    /// quantity of items to be ejected by affected machines
+    /// quantity of items to be ejected by affected machines.
     /// </summary>
     [DataField]
     public MinMax ItemsToEject;
