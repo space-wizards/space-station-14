@@ -15,19 +15,19 @@ public sealed partial class BureaucraticErrorRuleComponent : Component
     public List<ProtoId<JobPrototype>> IgnoredJobs = new();
 
     /// <summary>
-    /// chance of rolling the event subtype which closes all roles besides one which now has infinite slots.
+    /// Chance of rolling the event subtype which closes all roles besides one which now has infinite slots.
     /// </summary>
     [DataField]
     public float CloseAllButOneChance = 0.25f;
 
     /// <summary>
-    /// the proportion of jobs to adjust slots of in the 'adjust individual jobs' variant of the rule
+    /// The proportion of jobs to adjust slots of in the 'adjust individual jobs' variant of the rule.
     /// </summary>
     [DataField]
     public MinMax ProportionOfJobsToAdjust = new MinMax(0.2f, 0.3f);
 
     /// <summary>
-    /// minimum/maximum slot quantity adjustment for the jobs which get adjusted by this rule
+    /// Minimum/maximum slot quantity adjustment for the jobs which get adjusted by this rule.
     /// </summary>
     [DataField]
     public MinMax JobSlotAdjustment = new MinMax(-3, 5);

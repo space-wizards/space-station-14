@@ -31,7 +31,7 @@ public sealed partial class BluespaceArtifactRuleComponent : Component
     };
 
     /// <summary>
-    /// how many artifacts should be spawned?
+    /// How many artifacts should be spawned?
     /// </summary>
     [DataField]
     public MinMax AmountToSpawn = new MinMax(1, 1);

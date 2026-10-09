@@ -14,7 +14,7 @@ public sealed partial class AnomalySpawnRuleComponent : Component
     public EntProtoId AnomalySpawnerPrototype = "RandomAnomalySpawner";
 
     /// <summary>
-    /// how many anomalies should be spawned?
+    /// How many anomalies should be spawned?
     /// </summary>
     [DataField]
     public MinMax AmountToSpawn = new MinMax(1, 1);

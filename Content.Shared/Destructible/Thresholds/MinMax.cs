@@ -18,9 +18,9 @@ public partial struct MinMax
     }
 
     /// <summary>
-    /// wrapper for RobustRandom.Next using the values in this minMax (adding 1 to Max to make it inclusive)
+    /// Returns a random integer within this range, including both bounds.
     /// </summary>
-    /// <param name="random">RobustRandom instance to use</param>
+    /// <param name="random">The random number generator to use.</param>
     /// <returns>Random value between <see cref="Min"/> (inclusive) and <see cref="Max"/> (inclusive)</returns>
     /// <seealso cref="IRobustRandom.Next(int, int)"/>
     public readonly int Next(IRobustRandom random)
@@ -29,9 +29,9 @@ public partial struct MinMax
     }
 
     /// <summary>
-    /// wrapper for RobustRandom.NextFloat using the values in this minMax.
+    /// Returns a random float within this range, including <see cref="Min"/> and excluding <see cref="Max"/>.
     /// </summary>
-    /// <param name="random">RobustRandom instance to use</param>
+    /// <param name="random">The random number generator to use.</param>
     /// <returns>Random value between <see cref="Min"/> (inclusive) and <see cref="Max"/> (exclusive)</returns>
     /// <seealso cref="IRobustRandom.NextFloat(float, float)"/>
     public readonly float NextFloat(IRobustRandom random)

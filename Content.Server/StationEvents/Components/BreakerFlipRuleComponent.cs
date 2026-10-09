@@ -8,7 +8,7 @@ namespace Content.Server.StationEvents.Components;
 public sealed partial class BreakerFlipRuleComponent : Component
 {
     /// <summary>
-    /// range of how many APCs should be hit by this game rule
+    /// The range of APCs affected by this game rule.
     /// </summary>
     [DataField]
     public MinMax AffectedQuantity = new MinMax(3, 6);
