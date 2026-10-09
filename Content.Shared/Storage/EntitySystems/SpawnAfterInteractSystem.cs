@@ -63,7 +63,7 @@ public sealed partial class SpawnAfterInteractSystem : EntitySystem
         PredictedSpawnAtPosition(ent.Comp.Prototype, coords);
 
         if (ent.Comp.RemoveOnInteract && !HasComp<StackComponent>(ent))
-            PredictedQueueDel(ent);
+            QueueDel(ent);
     }
 
     private bool CanSpawn(EntityCoordinates coords)

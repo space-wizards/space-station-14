@@ -8,16 +8,10 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// </summary>
 public sealed partial class HasStatusEffectPrecondition : HTNPrecondition
 {
-    private StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
     [DataField(required: true)]
     public EntProtoId StatusEffect;
-
-    public override void Initialize(IEntitySystemManager sysManager)
-    {
-        base.Initialize(sysManager);
-        _statusEffects =  sysManager.GetEntitySystem<StatusEffectsSystem>();
-    }
 
     public override bool IsMet(NPCBlackboard blackboard)
     {

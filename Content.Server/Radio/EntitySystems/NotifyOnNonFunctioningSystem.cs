@@ -1,10 +1,10 @@
-using Content.Server.Pinpointer;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Radio.Components;
 using Content.Shared.Construction;
 using Content.Shared.Destructible;
 using Content.Shared.Lock;
+using Content.Shared.Pinpointer;
 using Content.Shared.Power.EntitySystems;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;

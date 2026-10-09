@@ -10,3 +10,40 @@
   - type: Tag
     tags:
     - HideContextMenu
+
+- type: entity
+  parent: AdminInstantEffectBase
+  id: AdminInstantEffectScreechLarge
+  suffix: Screech, Horror
+  components:
+  - type: ScreechOnTrigger
+    vfx: EffectScreechLarge
+    range: 30
+    effects:
+    - !type:MovementSpeedModifier # Very small slowdown as a sorta "Oh fuck something happened", also maybe will let you catch someone off guard
+      walkSpeedModifier: 0.90
+      sprintSpeedModifier: 0.90
+      time: 5
+  - type: Sprite
+    sprite: Actions/Implants/implants.rsi
+    state: freedom
+
+- type: entity
+  # way bigger and will be given a PVS override
+  id: EffectScreechLarge
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SingularityDistortion # Global PVS
+    intensity: 0
+    falloffPower: 0
+  - type: TimedDespawn
+    lifetime: 6.0
+  - type: ScreechShockWave
+    fadeTime: 5.5
+    downScale: 0.8
+    waveStrength: 2
+    waveSpeed: 15
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+    - HideContextMenu
