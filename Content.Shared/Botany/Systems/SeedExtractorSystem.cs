@@ -49,7 +49,7 @@ public sealed partial class SeedExtractorSystem : EntitySystem
         args.Handled = true;
 
         var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
-        var amount = ent.Comp.BaseSeeds.NextFloat(random, 1); // preserving prior behaviour from before NextFloat refactor
+        var amount = ent.Comp.BaseSeeds.Next(random);
         var coords = Transform(ent).Coordinates;
 
         for (var i = 0; i < amount; i++)
