@@ -26,16 +26,9 @@ public sealed partial class ExpendableLightSystem : EntitySystem
     [Dependency] private SharedStackSystem _stackSystem = default!;
     [Dependency] private NameModifierSystem _nameModifier = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private EntityQuery<ItemComponent> _itemQuery;
 
     private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
-    private EntityQuery<ItemComponent> _itemQuery;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _itemQuery = GetEntityQuery<ItemComponent>();
-    }
 
     /// <summary>
     /// Checks if any light needs it's state updated.
@@ -275,11 +268,6 @@ public sealed partial class ExpendableLightSystem : EntitySystem
                 _audio.PlayPredicted(component.DieSound, ent, user);
                 component.PlayingStream = _audio.Stop(component.PlayingStream);
                 break;
-        }
-
-        if (TryComp<ClothingComponent>(ent, out var clothing))
-        {
-            _clothing.SetEquippedPrefix(ent, component.Activated ? "Activated" : string.Empty, clothing);
         }
     }
 }
