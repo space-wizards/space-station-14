@@ -91,6 +91,8 @@
     ears: ClothingHeadsetSyndicateCovert
     id: SyndiCovertPDA
     pocket1: WeaponPistolViper
+  inhand:
+    - PaperWrittenSyndicateInstructions
 
 - type: startingGear
   parent: SyndicateReinforcementClothing
@@ -103,8 +105,8 @@
     eyes: ClothingEyesHudMedical
     pocket2: PillCanisterBicaridine
   inhand:
-    - MedkitCombatFilled
     - PaperWrittenSyndicateInstructions
+    - MedkitCombatFilled
   storage:
     back:
     - SyndicateFlippo
@@ -125,8 +127,8 @@
     pocket1: WeaponPistolCobra
     pocket2: VoiceMaskImplanter
   inhand:
-    - ClothingBackpackChameleonFillAgent
     - PaperWrittenSyndicateInstructions
+    - ClothingBackpackChameleonFillAgent
   storage:
     back:
     - SyndicateFlippo
@@ -142,8 +144,8 @@
     outerClothing: ClothingOuterCoatJensenSyndie
     pocket2: C4
   inhand:
-    - ToolboxSyndicateFilled
     - PaperWrittenSyndicateInstructions
+    - ToolboxSyndicateFilled
   storage:
     back:
     - SyndicateFlippo
