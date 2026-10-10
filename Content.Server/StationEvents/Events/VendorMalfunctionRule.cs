@@ -25,23 +25,23 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
         var vendingMachines = Station.GetEntitiesWithComponentOnStation<VendingMachineComponent>(true).ToList();
         RobustRandom.Shuffle(vendingMachines);
 
-        var toHit = Math.Max(ent.Comp1.MinimumToAffect, (int)(ent.Comp1.AffectedMachines.NextFloat(RobustRandom) * vendingMachines.Count));
-        if (toHit <= 0)
+        var toDispense = Math.Max(ent.Comp1.MinimumToAffect, (int)(ent.Comp1.AffectedMachines.NextFloat(RobustRandom) * vendingMachines.Count));
+        if (toDispense <= 0)
         {
-            Log.Error($"Gamerule {ToPrettyString(ent)} selected an invalid quantity of machines to affect: {toHit} (AffectedMachines [{ent.Comp1.AffectedMachines.Min},{ent.Comp1.AffectedMachines.Max}], minToAffect {ent.Comp1.MinimumToAffect})");
+            Log.Error($"Gamerule {ToPrettyString(ent)} selected an invalid quantity of machines to affect: {toDispense} (AffectedMachines [{ent.Comp1.AffectedMachines.Min},{ent.Comp1.AffectedMachines.Max}], minToAffect {ent.Comp1.MinimumToAffect})");
             return;
         }
 
         // finds valid vending machines (powered + not broken), maybe toggles contra inventory, ejects some contents
         foreach (var vendor in vendingMachines)
         {
-            if (toHit <= 0)
+            if (toDispense <= 0)
                 break;
 
             if (vendor.Comp.Broken || !_vendingSystem.IsPowered(vendor, EntityManager))
                 continue;
 
-            toHit--;
+            toDispense--;
 
             if (RobustRandom.NextDouble() < ent.Comp1.ContrabandChance)
                 _vendingSystem.SetContraband(vendor, true);
