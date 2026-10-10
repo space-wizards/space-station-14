@@ -1,26 +1,23 @@
 using Content.Shared.Anomaly;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Anomaly.Ui;
 
+/// <summary>
+/// A BUI for the anomaly scanner, wraps an <see cref="AnomalyScannerMenu"/>.
+/// </summary>
+/// <seealso cref="AnomalyScannerComponent"/>
 [UsedImplicitly]
-public sealed class AnomalyScannerBoundUserInterface : BoundUserInterface
+public sealed class AnomalyScannerBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     private AnomalyScannerMenu? _menu;
-
-    public AnomalyScannerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-
-    }
 
     protected override void Open()
     {
         base.Open();
 
-        _menu = new AnomalyScannerMenu();
-        _menu.OpenCentered();
-        _menu.OnClose += Close;
+        _menu = this.CreateWindow<AnomalyScannerMenu>();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -37,13 +34,4 @@ public sealed class AnomalyScannerBoundUserInterface : BoundUserInterface
         _menu.NextPulseTime = msg.NextPulseTime;
         _menu.UpdateMenu();
     }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-        _menu?.Dispose();
-    }
 }
-
