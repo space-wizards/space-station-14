@@ -1,0 +1,14 @@
+- files: ["RobotoMono-Bold.ttf"]
+  license: "Apache-2.0"
+  copyright: "Created by Google. Copyright 2015 The Roboto Mono Project Authors (https://github.com/googlefonts/robotomono)"
+  source: "https://fonts.google.com/specimen/Roboto+Mono"
+
+- files: ["RobotoMono-Italic.ttf"]
+  license: "Apache-2.0"
+  copyright: "Created by Google. Copyright 2015 The Roboto Mono Project Authors (https://github.com/googlefonts/robotomono)"
+  source: "https://fonts.google.com/specimen/Roboto+Mono"
+
+- files: ["RobotoMono-Regular.ttf"]
+  license: "Apache-2.0"
+  copyright: "Created by Google. Copyright 2015 The Roboto Mono Project Authors (https://github.com/googlefonts/robotomono)"
+  source: "https://fonts.google.com/specimen/Roboto+Mono"
