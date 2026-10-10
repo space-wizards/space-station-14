@@ -1,4 +1,5 @@
 using Content.Shared.Ghost.Components;
+using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Roles.Components;
@@ -15,6 +16,18 @@ public sealed partial class ParadoxCloneRoleSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ParadoxCloneRoleComponent, MindRelayedEvent<RefreshNameModifiersEvent>>(OnRefreshNameModifiers);
+        SubscribeLocalEvent<ParadoxCloneRoleComponent, GetBriefingEvent>(OnGetBriefing);
+    }
+
+    /// <summary>
+    ///     Tells the clone their own exact age so others don't metagame the manifest.
+    /// </summary>
+    private void OnGetBriefing(Entity<ParadoxCloneRoleComponent> ent, ref GetBriefingEvent args)
+    {
+        if (!TryComp<HumanoidProfileComponent>(args.Mind.Comp.OwnedEntity, out var profile))
+            return;
+
+        args.Append(Loc.GetString("paradox-clone-role-briefing-age", ("age", profile.Age)));
     }
 
     private void OnRefreshNameModifiers(Entity<ParadoxCloneRoleComponent> ent, ref MindRelayedEvent<RefreshNameModifiersEvent> args)
