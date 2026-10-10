@@ -8,7 +8,6 @@ ame-window-title = Antimatter Control Unit
 ame-window-engine-status-label = Engine Status:
 ame-window-engine-injection-status-not-injecting-label = Not Injecting
 ame-window-engine-injection-status-injecting-label = Injecting...
-ame-window-toggle-injection-button = Toggle Injection
 ame-window-fuel-status-label = Fuel Status:
 ame-window-fuel-not-inserted-text = No fuel inserted
 ame-window-injection-amount-label = Injection amount:

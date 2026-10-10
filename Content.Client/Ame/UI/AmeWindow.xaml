@@ -1,16 +1,15 @@
 <DefaultWindow xmlns="https://spacestation14.io"
+            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
             Title="{Loc 'ame-window-title'}"
             MinSize="250 250">
     <GridContainer Columns="2">
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'ame-window-engine-status-label'}" />
-            <Label Text=" " />
-            <Label Name="InjectionStatus" Text="{Loc 'ame-window-engine-injection-status-not-injecting-label'}" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Button Name="ToggleInjection"
-                    Text="{Loc 'ame-window-toggle-injection-button'}"
-                    StyleClasses="OpenBoth"
+            <controls:SwitchButton Name="ToggleInjection"
+                    OffStateText="{Loc 'ame-window-engine-injection-status-not-injecting-label'}"
+                    OnStateText="{Loc 'ame-window-engine-injection-status-injecting-label'}"
                     Disabled="True" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
