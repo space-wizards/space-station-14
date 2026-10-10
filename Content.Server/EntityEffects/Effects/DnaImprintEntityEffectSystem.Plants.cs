@@ -35,7 +35,7 @@ public sealed partial class DnaImprintEntityEffectSystem
             return;
 
         var imprint = EnsureComp<NPCImprintedComponent>(args.Produce);
-        imprint.Leader = ent.Comp.Leader;
+        SetLeader((args.Produce, imprint), ent.Comp.Leader);
         imprint.Friendly.UnionWith(ent.Comp.Friendly);
         imprint.Target.UnionWith(ent.Comp.Target);
         UpdateBehavior(args.Produce);

@@ -1,6 +1,7 @@
 using Content.Server.NPC;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
+using Content.Server.NPC.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
@@ -19,13 +20,16 @@ namespace Content.Server.EntityEffects.Effects;
 public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HTNComponent, DnaImprint>
 {
     [Dependency] private SharedSolutionContainerSystem _solutions = default!;
-    [Dependency] private HTNSystem _htn = default!;
+    [Dependency] private NPCPointCommandSystem _pointCommands = default!;
     [Dependency] private IRobustRandom _random = default!;
+
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<DNALeaderComponent, AfterPointedAtEvent>(OnPointedAt);
+        SubscribeLocalEvent<NPCImprintedComponent, ComponentStartup>(OnImprintStartup);
+        SubscribeLocalEvent<NPCImprintedComponent, ComponentShutdown>(OnImprintShutdown);
         SubscribeLocalEvent<NPCImprintedComponent, AttackAttemptEvent>(OnAttackAttempt);
         InitializePlants();
     }
@@ -79,8 +83,7 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
             var leader = _random.Pick(donors);
             if (imprint.Leader != leader)
             {
-                EnsureComp<DNALeaderComponent>(leader);
-                imprint.Leader = leader;
+                SetLeader((uid, imprint), leader);
                 changed = true;
             }
         }
@@ -104,7 +107,7 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
         htn.Blackboard.Remove<EntityUid>(NPCBlackboard.CurrentOrderedTarget);
         htn.RootTask = new HTNCompoundTask { Task = "ImprintedCompound" };
         htn.ConstantlyReplan = true;
-        ResetPlan(htn);
+        _pointCommands.ResetPlan(htn);
     }
 
     private bool IsNpc(EntityUid uid)
@@ -112,14 +115,7 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
 
     private void OnPointedAt(Entity<DNALeaderComponent> ent, ref AfterPointedAtEvent args)
     {
-        var query = EntityQueryEnumerator<NPCImprintedComponent, HTNComponent>();
-        while (query.MoveNext(out var uid, out var imprint, out var htn))
-        {
-            if (!IsNpc(uid) || imprint.Leader != ent.Owner || uid == args.Pointed || imprint.Friendly.Contains(args.Pointed))
-                continue;
-            htn.Blackboard.SetValue(NPCBlackboard.CurrentOrderedTarget, args.Pointed);
-            ResetPlan(htn);
-        }
+        _pointCommands.CommandFollowers(ent.Comp.Followers, args.Pointed);
     }
 
     private void OnAttackAttempt(Entity<NPCImprintedComponent> ent, ref AttackAttemptEvent args)
@@ -128,16 +124,26 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
             args.Cancel();
     }
 
-    private void ResetPlan(HTNComponent htn)
+    private void OnImprintStartup(Entity<NPCImprintedComponent> ent, ref ComponentStartup args)
     {
-        htn.PlanningToken?.Cancel();
-        htn.PlanningToken = null;
-        htn.PlanningJob = null;
-        if (htn.Plan != null)
-        {
-            _htn.ShutdownTask(htn.Plan.CurrentOperator, htn.Blackboard, HTNOperatorStatus.Failed);
-            _htn.ShutdownPlan(htn);
-        }
-        _htn.Replan(htn);
+        SetLeader(ent, ent.Comp.Leader);
+    }
+
+    private void OnImprintShutdown(Entity<NPCImprintedComponent> ent, ref ComponentShutdown args)
+    {
+        SetLeader(ent, null);
+    }
+
+    /// <summary>
+    /// Changes the leader and updates the follower list.
+    /// </summary>
+    public void SetLeader(Entity<NPCImprintedComponent> ent, EntityUid? leader)
+    {
+        if (TryComp<DNALeaderComponent>(ent.Comp.Leader, out var oldLeader))
+            oldLeader.Followers.Remove(ent.Owner);
+
+        ent.Comp.Leader = leader;
+        if (leader is { } uid && !TerminatingOrDeleted(uid))
+            EnsureComp<DNALeaderComponent>(uid).Followers.Add(ent.Owner);
     }
 }

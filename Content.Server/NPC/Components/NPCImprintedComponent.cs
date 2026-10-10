@@ -6,6 +6,7 @@ public sealed partial class NPCImprintedComponent : Component
 {
     /// <summary>
     /// The entity this NPC is following and attacking point targets from.
+    /// Use DnaImprintEntityEffectSystem.SetLeader to update this.
     /// </summary>
     [DataField]
     public EntityUid? Leader;
