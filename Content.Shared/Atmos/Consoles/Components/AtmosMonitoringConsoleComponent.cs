@@ -242,9 +242,9 @@ public enum AtmosPipeChunkDataFacing : byte
 {
     // Values represent bit shift offsets when retrieving data in the tile array.
     North = 0,
-    South = SharedNavMapSystem.ArraySize,
-    East = SharedNavMapSystem.ArraySize * 2,
-    West = SharedNavMapSystem.ArraySize * 3,
+    South = NavMapSystem.ArraySize,
+    East = NavMapSystem.ArraySize * 2,
+    West = NavMapSystem.ArraySize * 3,
 }
 
 /// <summary>

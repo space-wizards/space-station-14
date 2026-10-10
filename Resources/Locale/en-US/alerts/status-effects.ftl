@@ -15,3 +15,6 @@ alerts-vow-silence-desc = You have taken a vow forbidding verbal or written comm
 
 alerts-blind-name = Blind
 alerts-blind-desc = You can't quite make out what's happening around you.
+
+alerts-frail-name = [color=yellow]Frailty[/color]
+alerts-mild-frail-desc = You're [color=yellow]frail[/color]! You take more damage from [color=white]{ damage-group-brute }[/color] and [color=white]{ damage-group-burn }[/color]

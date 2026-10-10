@@ -13,6 +13,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat.Melee;
 public sealed partial class MeleeOperator : HTNOperator, IHtnConditionalShutdown
 {
     [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private SharedCombatModeSystem _combatModeSystem = default!;
 
     /// <summary>
     /// When to shut the task down.
@@ -63,7 +64,7 @@ public sealed partial class MeleeOperator : HTNOperator, IHtnConditionalShutdown
     public void ConditionalShutdown(NPCBlackboard blackboard)
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
-        _entManager.System<SharedCombatModeSystem>().SetInCombatMode(owner, false);
+        _combatModeSystem.SetInCombatMode(owner, false);
         _entManager.RemoveComponent<NPCMeleeCombatComponent>(owner);
         blackboard.Remove<EntityUid>(TargetKey);
     }
@@ -78,7 +79,6 @@ public sealed partial class MeleeOperator : HTNOperator, IHtnConditionalShutdown
     public override void PlanShutdown(NPCBlackboard blackboard)
     {
         base.PlanShutdown(blackboard);
-
         ConditionalShutdown(blackboard);
     }
 

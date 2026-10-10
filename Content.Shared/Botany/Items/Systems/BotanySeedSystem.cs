@@ -39,6 +39,17 @@ public sealed partial class BotanySeedSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
+    private void OnPlantAnalyzerAttempt(Entity<SeedComponent> ent, ref PlantAnalyzerAttemptEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.PlantData = ent.Comp.PlantData;
+        args.PlantProtoId = ent.Comp.PlantProtoId;
+        args.Handled = true;
+    }
+
+    [SubscribeLocalEvent]
     private void OnPlantingSeedAttempt(Entity<PlantTrayComponent> ent, ref PlantingSeedAttemptEvent args)
     {
         if (args.Cancelled)
@@ -70,7 +81,7 @@ public sealed partial class BotanySeedSystem : EntitySystem
             _itemSlots.TryEjectToHands(args.Seed, paperLabel.LabelSlot, args.User);
 
         _plantTray.PlantingPlantInTray(ent.Owner, plantUid, args.Seed.Comp.HealthOverride);
-        PredictedQueueDel(args.Seed);
+        QueueDel(args.Seed);
 
         if (plantData.PlantLogImpact != null)
         {
