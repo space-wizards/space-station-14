@@ -2,26 +2,17 @@
 
 - type: entity
   abstract: true
-  parent: [ BaseMachine, StructureHealthMachineWeak ]
-  id: BaseGenerator
-  description: A high efficiency thermoelectric generator.
+  parent: StructureHealthMachineWeak
+  id: CoreGenerator
   name: generator
+  description: A high efficiency thermoelectric generator.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: AmbientSound
     range: 5
     sound:
       path: /Audio/Ambience/Objects/engine_hum.ogg
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.4,-0.5,0.4,0.3"
-        density: 190
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
   - type: Sprite
     sprite: Structures/Power/power.rsi
     state: generator
@@ -41,7 +32,6 @@
     supplyRate: 3000
     supplyRampRate: 500
     supplyRampTolerance: 500
-  - type: Anchorable # Reduces anchor time to 1 second
   - type: Damageable
     damageModifierSet: SteelMod
   - type: PacifismDangerousAttack
@@ -73,12 +63,29 @@
     guides:
     - ShuttleCraft
 
+- type: entity
+  abstract: true
+  parent: [ CoreGenerator, BaseMachine ]
+  id: BaseGenerator
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.5,0.4,0.3"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+
 # Base Wallmount Generator
 
 - type: entity
   abstract: true
+  parent: [ CoreGenerator, BaseWallmount ]
   id: BaseGeneratorWallmount
-  parent: [ BaseGenerator, BaseWallmount ]
   name: wallmount generator
   description: A high efficiency thermoelectric generator stuffed in a wall cabinet.
   components:
@@ -124,8 +131,8 @@
 
 - type: entity
   parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
-  categories: [ HideSpawnMenu ]
   id: BaseGeneratorWallmountFrame
+  categories: [ HideSpawnMenu ]
   name: wallmount generator frame
   description: A construction frame for a wallmount generator.
   components:
