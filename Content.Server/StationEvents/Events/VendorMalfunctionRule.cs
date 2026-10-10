@@ -38,7 +38,8 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
             if (toDispense == 0)
                 break;
 
-            if (vendor.Comp.Broken || !_vendingSystem.IsPowered(vendor, EntityManager)) continue;
+            if (vendor.Comp.Broken || !_vendingSystem.IsPowered(vendor, EntityManager))
+                continue;
 
             toDispense--;
 
@@ -48,6 +49,7 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
             var toEject = ent.Comp1.ItemsToEject.Next(RobustRandom);
             if (toEject <= 0)
                 continue;
+
             _vendingSystem.EjectRandom(vendor.AsNullable(), true); // ensures the vending noise plays for the first ejected item
             for (var j = 1; j < toEject; j++)
             {
