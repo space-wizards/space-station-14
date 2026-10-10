@@ -1,0 +1,26 @@
+# Content from README suggests its this specific version, which lists no copyright author (just OFL-1.1), but the
+# current Google Fonts website does, so that's where I'll take them from.
+#
+# https://github.com/notofonts/noto-fonts/tree/8ef14e6c606a7a0ef3943b9ca01fd49445620d79/unhinted
+
+- files: ["NotoSansDisplay-Bold.ttf"]
+  license: "OFL-1.1"
+  copyright: "Copyright 2012 Google Inc. All Rights Reserved."
+  source: "https://fonts.google.com/noto/specimen/Noto+Emoji"
+
+- files: ["NotoSansDisplay-BoldItalic.ttf"]
+  license: "OFL-1.1"
+  copyright: "Copyright 2012 Google Inc. All Rights Reserved."
+  source: "https://fonts.google.com/noto/specimen/Noto+Emoji"
+
+- files: ["NotoSansDisplay-Italic.ttf"]
+  license: "OFL-1.1"
+  copyright: "Copyright 2012 Google Inc. All Rights Reserved."
+  source: "https://fonts.google.com/noto/specimen/Noto+Emoji"
+
+- files: ["NotoSansDisplay-Regular.ttf"]
+  license: "OFL-1.1"
+  copyright: "Copyright 2012 Google Inc. All Rights Reserved."
+  source: "https://fonts.google.com/noto/specimen/Noto+Emoji"
+
+
