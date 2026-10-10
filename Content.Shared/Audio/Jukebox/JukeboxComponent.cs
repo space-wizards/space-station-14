@@ -37,6 +37,15 @@ public sealed partial class JukeboxComponent : Component
 
     [ViewVariables]
     public float SelectAccumulator;
+
+    [ViewVariables]
+    public int JukeboxVolumeMax;
+
+    [ViewVariables]
+    public int JukeboxVolumeMin = -10;
+
+    [DataField, AutoNetworkedField]
+    public int JukeboxVolume = -5;
 }
 
 [Serializable, NetSerializable]
@@ -78,3 +87,9 @@ public enum JukeboxVisualLayers : byte
 {
     Base
 }
+
+[Serializable, NetSerializable]
+public sealed class JukeboxVolumeDownMessage : BoundUserInterfaceMessage;
+
+[Serializable, NetSerializable]
+public sealed class JukeboxVolumeUpMessage : BoundUserInterfaceMessage;
