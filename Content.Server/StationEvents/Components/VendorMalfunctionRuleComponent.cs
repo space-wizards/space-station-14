@@ -11,7 +11,7 @@ namespace Content.Server.StationEvents.Components;
 public sealed partial class VendorMalfunctionRuleComponent : Component
 {
     /// <summary>
-    /// quantity of machines which may be affected by this event. minimum should be at least 1.
+    /// percentage of machines which may be affected by this event. minimum should be greater than zero
     /// </summary>
     [DataField]
     public MinMax AffectedMachines;

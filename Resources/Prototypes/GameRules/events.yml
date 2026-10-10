@@ -460,8 +460,8 @@
     duration: 1
   - type: VendorMalfunctionRule
     affectedMachines:
-      min: 5
-      max: 15
+      min: 0.05
+      max: 0.2
     contrabandChance: 0.5
     itemsToEject:
       min: 1
