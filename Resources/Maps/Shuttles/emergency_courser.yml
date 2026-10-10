@@ -78,7 +78,8 @@ entities:
         path: /Audio/Effects/alert.ogg
     - type: DeviceNetwork
       transmitFrequencyId: ShuttleTimer
-      deviceNetId: Wireless
+      deviceNets:
+      - Wireless
       deviceLists: []
       configurators: []
     - type: GridAtmosphere

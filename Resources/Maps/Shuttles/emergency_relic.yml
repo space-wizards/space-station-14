@@ -86,7 +86,8 @@ entities:
     - type: RadiationGridResistance
     - type: DeviceNetwork
       transmitFrequencyId: ShuttleTimer
-      deviceNetId: Wireless
+      deviceNets:
+      - Wireless
       deviceLists: []
       configurators: []
     - type: ImplicitRoof
