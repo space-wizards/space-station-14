@@ -10,6 +10,7 @@ using Content.Shared.EntityEffects.Effects;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind.Components;
+using Content.Shared.NPC.Components;
 using Content.Shared.Pointing;
 using Robust.Shared.Player;
 using Robust.Shared.Random;

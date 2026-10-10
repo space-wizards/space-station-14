@@ -1,4 +1,4 @@
-namespace Content.Server.NPC.Components;
+namespace Content.Shared.NPC.Components;
 
 /// <summary>
 /// Component for people who have been imprinted as a leader.
@@ -9,6 +9,6 @@ public sealed partial class DNALeaderComponent : Component
     /// <summary>
     /// List of imprinted followers.
     /// </summary>
-    [ViewVariables]
+    [DataField]
     public readonly HashSet<EntityUid> Followers = new();
 }
