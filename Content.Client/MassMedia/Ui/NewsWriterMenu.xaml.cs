@@ -56,7 +56,7 @@ public sealed partial class NewsWriterMenu : FancyWindow
                 Title = article.Title,
                 Author = article.Author ?? Loc.GetString("news-read-ui-no-author"),
                 PublicationTime = article.ShareTime,
-                ArtcileNumber = i
+                ArticleNumber = i
             };
             control.PopulateArticleDetails(article, _expandedArticleIds.Contains(article.ArticleId));
             control.OnDeletePressed += OnCardDeletePressed;

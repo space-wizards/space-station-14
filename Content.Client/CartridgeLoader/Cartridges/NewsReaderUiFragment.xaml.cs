@@ -17,7 +17,7 @@ public sealed partial class NewsReaderUiFragment : BoxContainer
 {
     public event Action? OnNextButtonPressed;
     public event Action? OnPrevButtonPressed;
-    public event Action? OnNotificationSwithPressed;
+    public event Action? OnNotificationSwitchPressed;
     public event Action<NewsReactionType>? OnReactionPressed;
     public event Action<string>? OnCommentSubmitted;
 
@@ -27,7 +27,7 @@ public sealed partial class NewsReaderUiFragment : BoxContainer
 
         Next.OnPressed += _ => OnNextButtonPressed?.Invoke();
         Prev.OnPressed += _ => OnPrevButtonPressed?.Invoke();
-        NotificationSwitch.OnPressed += _ => OnNotificationSwithPressed?.Invoke();
+        NotificationSwitch.OnPressed += _ => OnNotificationSwitchPressed?.Invoke();
 
         ReactionUpvote.OnPressed += _ => OnReactionPressed?.Invoke(NewsReactionType.Upvote);
         ReactionDownvote.OnPressed += _ => OnReactionPressed?.Invoke(NewsReactionType.Downvote);
@@ -186,5 +186,4 @@ public sealed partial class NewsReaderUiFragment : BoxContainer
         NotificationSwitch.Text = Loc.GetString(notificationOn ? "news-read-ui-notification-on" : "news-read-ui-notification-off");
     }
 }
-
 

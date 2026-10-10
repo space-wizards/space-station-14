@@ -17,7 +17,7 @@ public sealed partial class NewsArticleCard : Control
     public Action<int>? OnToggleLockCommentsPressed;
     public Action<int, int>? OnDeleteCommentPressed;
     public Action<int, bool>? OnCommentsExpandedChanged;
-    public int ArtcileNumber;
+    public int ArticleNumber;
     public int ArticleId;
 
     public string? Title
@@ -49,8 +49,8 @@ public sealed partial class NewsArticleCard : Control
     public NewsArticleCard()
     {
         RobustXamlLoader.Load(this);
-        DeleteButton.OnPressed += _ => OnDeletePressed?.Invoke(ArtcileNumber);
-        LockCommentsButton.OnPressed += _ => OnToggleLockCommentsPressed?.Invoke(ArtcileNumber);
+        DeleteButton.OnPressed += _ => OnDeletePressed?.Invoke(ArticleNumber);
+        LockCommentsButton.OnPressed += _ => OnToggleLockCommentsPressed?.Invoke(ArticleNumber);
         ToggleCommentsButton.OnPressed += _ =>
         {
             CommentsContainer.Visible = !CommentsContainer.Visible;
@@ -118,8 +118,7 @@ public sealed partial class NewsArticleCard : Control
 
     private void InvokeDeleteComment(int commentId)
     {
-        OnDeleteCommentPressed?.Invoke(ArtcileNumber, commentId);
+        OnDeleteCommentPressed?.Invoke(ArticleNumber, commentId);
     }
 }
-
 
