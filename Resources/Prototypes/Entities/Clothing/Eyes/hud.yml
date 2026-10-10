@@ -246,7 +246,7 @@
     coverage: EYES
 
 - type: entity
-  parent: [ClothingEyesHudBase, ShowSecurityIcons, BaseSyndicateContraband, ClothingEyesHudSyndicate]
+  parent: ClothingEyesHudSyndicate
   id: ClothingEyesHudSyndicateAgent
   name: syndicate medical visor
   description: The Syndicate Corpsman's professional heads-up display, designed for quick diagnosis of their team's status.
