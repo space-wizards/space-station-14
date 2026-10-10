@@ -33,7 +33,8 @@ public sealed class StationPowerTests : GameTest
         "Relic",
         "Snowball",
         "Sushi",
-        "Tram2"
+        "Tram2",
+        "Gear"
     ];
 
     public override PoolSettings PoolSettings => new ()
