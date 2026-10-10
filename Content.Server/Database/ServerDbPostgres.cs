@@ -23,7 +23,6 @@ namespace Content.Server.Database
         private readonly DbContextOptions<PostgresServerDbContext> _options;
         private readonly ISawmill _notifyLog;
         private readonly SemaphoreSlim _prefsSemaphore;
-        private readonly Task _dbReadyTask;
 
         private int _msLag;
 
@@ -41,7 +40,7 @@ namespace Content.Server.Database
             _notifyLog = notifyLog;
             _prefsSemaphore = new SemaphoreSlim(concurrency, concurrency);
 
-            _dbReadyTask = Task.Run(async () =>
+            DbReadyTask = Task.Run(async () =>
             {
                 await using var ctx = new PostgresServerDbContext(_options);
                 try
@@ -391,7 +390,7 @@ WHERE to_tsvector('english'::regconfig, a.message) @@ websearch_to_tsquery('engl
         {
             LogDbOp(name);
 
-            await _dbReadyTask;
+            await DbReadyTask;
             await _prefsSemaphore.WaitAsync(cancel);
 
             if (_msLag > 0)
