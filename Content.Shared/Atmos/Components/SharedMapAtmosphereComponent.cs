@@ -7,16 +7,22 @@ namespace Content.Shared.Atmos.Components;
 [NetworkedComponent]
 public abstract partial class SharedMapAtmosphereComponent : Component
 {
-    [ViewVariables] public SharedGasTileOverlaySystem.GasOverlayData OverlayData;
+    [ViewVariables] public SharedGasTileOverlaySystem.SharedFireData FireData;
+    [ViewVariables] public SharedGasTileOverlaySystem.SharedVisibleGasData VisibleGasData;
+    [ViewVariables] public SharedGasTileOverlaySystem.SharedGasTemperatureData GasTemperatureData;
 }
 
 [Serializable, NetSerializable]
 public sealed class MapAtmosphereComponentState : ComponentState
 {
-    public SharedGasTileOverlaySystem.GasOverlayData Overlay;
+    public SharedGasTileOverlaySystem.SharedFireData SharedFireData;
+    public SharedGasTileOverlaySystem.SharedVisibleGasData SharedVisibleGasData;
+    public SharedGasTileOverlaySystem.SharedGasTemperatureData SharedGasTemperatureData;
 
-    public MapAtmosphereComponentState(SharedGasTileOverlaySystem.GasOverlayData overlay)
+    public MapAtmosphereComponentState(SharedGasTileOverlaySystem.SharedFireData sharedFireData, SharedGasTileOverlaySystem.SharedVisibleGasData sharedVisibleGasData, SharedGasTileOverlaySystem.SharedGasTemperatureData sharedGasTemperatureData)
     {
-        Overlay = overlay;
+        SharedFireData = sharedFireData;
+        SharedVisibleGasData = sharedVisibleGasData;
+        SharedGasTemperatureData = sharedGasTemperatureData;
     }
 }
