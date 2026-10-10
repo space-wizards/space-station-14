@@ -33,6 +33,24 @@ public sealed partial class CargoBountyConsoleComponent : Component
     public SoundSpecifier PrintSound = new SoundPathSpecifier("/Audio/Machines/printer.ogg");
 
     /// <summary>
+    /// The sound made when the bounty is claimed.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier ClaimAddSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping2.ogg");
+
+    /// <summary>
+    /// The sound made when the bounty claim is removed.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier ClaimRemoveSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping3.ogg");
+
+    /// <summary>
+    /// The sound made when the bounty claim is added then removed in one press.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier ClaimAddRemoveSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping4.ogg");
+
+    /// <summary>
     /// The sound made when the bounty is skipped.
     /// </summary>
     [DataField]
@@ -61,12 +79,14 @@ public sealed partial class CargoBountyConsoleComponent : Component
 public sealed class CargoBountyConsoleState : BoundUserInterfaceState
 {
     public List<CargoBountyData> Bounties;
+    public List<string> Statuses;
     public List<CargoBountyHistoryData> History;
     public TimeSpan UntilNextSkip;
 
-    public CargoBountyConsoleState(List<CargoBountyData> bounties, List<CargoBountyHistoryData> history, TimeSpan untilNextSkip)
+    public CargoBountyConsoleState(List<CargoBountyData> bounties, List<string> statuses, List<CargoBountyHistoryData> history, TimeSpan untilNextSkip)
     {
         Bounties = bounties;
+        Statuses = statuses;
         History = history;
         UntilNextSkip = untilNextSkip;
     }
@@ -91,5 +111,29 @@ public sealed class BountySkipMessage : BoundUserInterfaceMessage
     public BountySkipMessage(string bountyId)
     {
         BountyId = bountyId;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class BountyClaimedMessage : BoundUserInterfaceMessage
+{
+    public string BountyId;
+
+    public BountyClaimedMessage(string bountyId)
+    {
+        BountyId = bountyId;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class BountySetStatusMessage : BoundUserInterfaceMessage
+{
+    public string BountyId;
+    public int Status;
+
+    public BountySetStatusMessage(string bountyId, int status)
+    {
+        BountyId = bountyId;
+        Status = status;
     }
 }
