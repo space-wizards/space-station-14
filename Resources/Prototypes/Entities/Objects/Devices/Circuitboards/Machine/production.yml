@@ -520,6 +520,18 @@
         Cable: 2
 
 - type: entity
+  id: PdaMessengerServerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: PDA messenger server machine board
+  description: A machine printed circuit board for a PDA messenger server.
+  components:
+    - type: MachineBoard
+      prototype: PdaMessengerServer
+      stackRequirements:
+        Steel: 1
+        Cable: 2
+
+- type: entity
   id: CryoPodMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: cryo pod machine board

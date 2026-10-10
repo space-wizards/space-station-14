@@ -5,6 +5,7 @@ device-frequency-prototype-name-crew-monitor = Crew Monitor
 device-frequency-prototype-name-lights = Smart Lights
 device-frequency-prototype-name-mailing-units = Mailing Units
 device-frequency-prototype-name-pdas = PDAs
+device-frequency-prototype-name-pda-messenger-server = PDA Messenger Server
 device-frequency-prototype-name-fax = Fax
 device-frequency-prototype-name-basic-device = Basic Devices
 device-frequency-prototype-name-cyborg-control = Cyborg Control
@@ -56,6 +57,7 @@ device-address-prefix-camera-router = CMR-
 device-address-prefix-camera-router-wireless = CMW-
 device-address-prefix-camera = CAM-
 device-address-prefix-crew-monitoring-server = CMS-
+device-address-prefix-pda-messenger-server = PMS-
 
 device-address-examine-message = The device's address is {$address}.
 

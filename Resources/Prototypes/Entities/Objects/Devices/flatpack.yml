@@ -274,6 +274,15 @@
 
 - type: entity
   parent: BaseFlatpack
+  id: PdaMessengerServerFlatpack
+  name: PDA messenger server flatpack
+  description: A flatpack used for constructing a PDA messenger server.
+  components:
+  - type: Flatpack
+    entity: PdaMessengerServer
+
+- type: entity
+  parent: BaseFlatpack
   id: HydroponicsTrayFlatpack
   name: hydroponics tray flatpack
   description: A flatpack used for constructing a hydroponics tray.
