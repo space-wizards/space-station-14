@@ -38,6 +38,8 @@
           weight: 0.5
         - id: MobCatKitten
           weight: 0.25
+        - id: MobCatroach
+          weight: 0.25
         - id: MobBingus
           weight: 0.005
 
