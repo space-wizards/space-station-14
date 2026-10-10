@@ -1,6 +1,7 @@
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
@@ -61,7 +62,7 @@ public sealed partial class DeviceNetworkJammerSystem : EntitySystem
     /// Returns the set of networks that this entity can jam.
     /// </summary>
     [PublicAPI]
-    public IReadOnlySet<int> GetJammableNetworks(Entity<DeviceNetworkJammerComponent> ent)
+    public IReadOnlySet<ProtoId<DeviceNetworkPrototype>> GetJammableNetworks(Entity<DeviceNetworkJammerComponent> ent)
     {
         return ent.Comp.JammableNetworks;
     }
@@ -70,17 +71,24 @@ public sealed partial class DeviceNetworkJammerSystem : EntitySystem
     /// Enables this entity to jam packets on the specified network.
     /// </summary>
     [PublicAPI]
-    public void AddJammableNetwork(Entity<DeviceNetworkJammerComponent> ent, int networkId)
+    public void AddJammableNetwork(Entity<DeviceNetworkJammerComponent> ent, ProtoId<DeviceNetworkPrototype> networkId)
     {
         if (ent.Comp.JammableNetworks.Add(networkId))
             DirtyField(ent.AsNullable(), nameof(DeviceNetworkJammerComponent.JammableNetworks));
+    }
+
+    [PublicAPI]
+    public void AddJammableNetworks(Entity<DeviceNetworkJammerComponent> ent, HashSet<ProtoId<DeviceNetworkPrototype>> networks)
+    {
+        ent.Comp.JammableNetworks.UnionWith(networks);
+        DirtyField(ent.AsNullable(), nameof(DeviceNetworkJammerComponent.JammableNetworks));
     }
 
     /// <summary>
     /// Stops this entity from jamming packets on the specified network.
     /// </summary>
     [PublicAPI]
-    public void RemoveJammableNetwork(Entity<DeviceNetworkJammerComponent> ent, int networkId)
+    public void RemoveJammableNetwork(Entity<DeviceNetworkJammerComponent> ent, ProtoId<DeviceNetworkPrototype> networkId)
     {
         if (ent.Comp.JammableNetworks.Remove(networkId))
             DirtyField(ent.AsNullable(), nameof(DeviceNetworkJammerComponent.JammableNetworks));

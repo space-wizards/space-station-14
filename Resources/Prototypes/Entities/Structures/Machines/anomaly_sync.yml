@@ -8,7 +8,8 @@
   - type: Machine
     board: AnomalySynchronizerCircuitboard
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
   - type: WirelessNetwork
     range: 100
   - type: DeviceNetworkRequiresPower

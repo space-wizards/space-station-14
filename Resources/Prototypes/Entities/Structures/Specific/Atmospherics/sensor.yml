@@ -3,7 +3,8 @@
   abstract: true
   components:
   - type: DeviceNetwork
-    deviceNetId: AtmosDevices
+    deviceNets:
+    - AtmosDevices
     receiveFrequencyId: AtmosMonitor
     transmitFrequencyId: AtmosMonitor
     prefix: device-address-prefix-sensor

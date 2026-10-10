@@ -16,7 +16,8 @@
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
-    deviceNetId: AtmosDevices
+    deviceNets:
+    - AtmosDevices
     receiveFrequencyId: AtmosMonitor
   - type: DeviceNetworkRequiresPower
   - type: InteractionOutline

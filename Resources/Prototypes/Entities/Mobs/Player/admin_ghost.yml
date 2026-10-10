@@ -89,7 +89,8 @@
   - type: GeneralStationRecordConsole
     canDeleteEntries: true
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: CrewMonitor
     transmitFrequencyId: ShuttleTimer
   - type: WirelessNetwork

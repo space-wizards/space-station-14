@@ -47,7 +47,7 @@ public sealed partial class SuitSensorSystem : SharedSuitSensorSystem
             }
 
             // Clear the connected server if its address isn't on the network
-            if (!_deviceNetworkSystem.IsAddressPresent(device.DeviceNetId, sensor.ConnectedServer))
+            if (!_deviceNetworkSystem.IsAddressPresent((uid, device), sensor.ConnectedServer))
             {
                 sensor.ConnectedServer = null;
                 continue;

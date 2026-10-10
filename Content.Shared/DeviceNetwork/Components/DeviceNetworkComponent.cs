@@ -5,19 +5,21 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.DeviceNetwork.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
-[Access(typeof(DeviceNetworkSystem), typeof(DeviceNet))]
+[Access(typeof(DeviceNetworkSystem))]
 public sealed partial class DeviceNetworkComponent : Component
 {
     /// <summary>
-    /// Default device network ID to connect to.
+    /// All types of networks this device can connect to.
     /// </summary>
-    [DataField("deviceNetId")]
-    public DeviceNetIdDefaults NetIdEnum { get; set; }
+    [DataField(required: true), AutoNetworkedField]
+    public ProtoId<DeviceNetworkPrototype>[] DeviceNets;
 
     /// <summary>
-    /// The numeric identifier of the device network this device uses.
+    /// An array of all currently connected networks.
+    /// Should have the same size as <see cref="DeviceNets"/>
     /// </summary>
-    public int DeviceNetId => (int) NetIdEnum;
+    [DataField, AutoNetworkedField]
+    public Dictionary<ProtoId<DeviceNetworkPrototype>, EntityUid> ConnectedNets = new();
 
     /// <summary>
     /// The device address paired with its optional localized prefix.
@@ -83,7 +85,7 @@ public sealed partial class DeviceNetworkComponent : Component
     /// <summary>
     /// Whether the device should attempt to join the network on map init.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool AutoConnect = true;
 
     /// <summary>

@@ -63,7 +63,7 @@ public sealed partial class NetworkConfiguratorSystem
 
         if (!_uiSystem.TryOpenUi(configurator.Owner, NetworkConfiguratorUiKey.Configure, userUid, true))
             return;
-        
+
         if (_uiSystem.TryGetOpenUi(configurator.Owner, NetworkConfiguratorUiKey.Configure, out var bui))
             bui.Update();
     }
@@ -133,15 +133,15 @@ public sealed partial class NetworkConfiguratorSystem
     [SubscribeLocalEvent]
     private void OnRemoveDevice(Entity<NetworkConfiguratorComponent> ent, ref NetworkConfiguratorRemoveDeviceMessage args)
     {
-        if (ent.Comp.Devices.TryGetValue(args.Address.AddressId, out var removedDevice))
+        if (ent.Comp.Devices.TryGetValue(args.Address, out var removedDevice))
         {
             _adminLogger.Add(LogType.DeviceLinking,
                 LogImpact.Low,
                 $"{ToPrettyString(args.Actor):actor} removed buffered device {ToPrettyString(removedDevice):subject} from {ToPrettyString(ent):tool}");
         }
 
-        ent.Comp.Devices.Remove(args.Address.AddressId);
-        ent.Comp.NamedDevices.Remove(args.Address.AddressId);
+        ent.Comp.Devices.Remove(args.Address);
+        ent.Comp.NamedDevices.Remove(args.Address);
         DirtyFields(ent.AsNullable(), null, nameof(NetworkConfiguratorComponent.Devices), nameof(NetworkConfiguratorComponent.NamedDevices));
 
         if (_linkedDeviceQuery.TryComp(removedDevice, out var device))

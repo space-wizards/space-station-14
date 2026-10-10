@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.IntegrationTests.Fixtures;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Content.Shared.DeviceNetwork.Components;
@@ -21,6 +22,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
   id: DummyNetworkDevice
   components:
     - type: DeviceNetwork
+      deviceNets: []
       transmitFrequency: 100
       receiveFrequency: 100
 
@@ -29,7 +31,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
   id: DummyWiredNetworkDevice
   components:
     - type: DeviceNetwork
-      deviceNetId: Wired
+      deviceNets:
+      - Wired
       transmitFrequency: 0
       receiveFrequency: 0
     - type: WiredNetwork
@@ -42,7 +45,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
     - type: DeviceNetwork
       transmitFrequency: 100
       receiveFrequency: 100
-      deviceNetId: Wireless
+      deviceNets:
+      - Wireless
     - type: WirelessNetwork
       range: 100
         ";

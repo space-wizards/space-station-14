@@ -1,4 +1,5 @@
 using Content.Shared.DeviceLinking.Systems;
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -46,6 +47,13 @@ public sealed partial class DeviceLinkSourceComponent : Component
     /// </summary>
     [DataField]
     public float Range = 30f;
+
+    /// <summary>
+    /// A device network to use to send signals.
+    /// Setting this to null forces the device to broadcast the signal across all connected networks.
+    /// </summary>
+    [DataField]
+    public ProtoId<DeviceNetworkPrototype>? SignalNetwork = "Wireless";
 }
 
 /// <summary>

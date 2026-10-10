@@ -456,7 +456,8 @@
           type: WiresBoundUserInterface
   - type: CrewMonitoringConsole
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: CrewMonitor
     prefix: device-address-prefix-crew-monitor
   - type: WirelessNetwork
@@ -638,7 +639,8 @@
   - type: AnalysisConsole
   - type: DeviceList
   - type: DeviceNetwork
-    deviceNetId: Wired
+    deviceNets:
+    - Wired
   - type: DeviceLinkSource
     range: 5
     ports:
@@ -772,7 +774,8 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     transmitFrequencyId: ShuttleTimer
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key
@@ -1001,7 +1004,8 @@
   - type: AccessReader
     access: [["Cargo"]]
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: BasicDevice
   - type: WirelessNetwork
     range: 200
@@ -1267,7 +1271,8 @@
   - type: CloningConsole
   - type: DeviceList
   - type: DeviceNetwork
-    deviceNetId: Wired
+    deviceNets:
+    - Wired
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -1413,7 +1418,8 @@
   - type: Computer
     board: SurveillanceCameraMonitorCircuitboard
   - type: DeviceNetwork
-    deviceNetId: Wired
+    deviceNets:
+    - Wired
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
     prefix: device-address-prefix-camera-monitor
@@ -1453,7 +1459,8 @@
   - type: Computer
     board: SurveillanceWirelessCameraMonitorCircuitboard
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
     prefix: device-address-prefix-camera-monitor
@@ -1483,7 +1490,8 @@
   - type: Computer
     board: XenoborgCameraMonitorCircuitboard
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: Mothership
     transmitFrequencyId: Mothership
   - type: WirelessNetwork
@@ -1603,7 +1611,8 @@
         enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
     - type: DeviceNetwork
-      deviceNetId: AtmosDevices
+      deviceNets:
+      - AtmosDevices
       receiveFrequencyId: AtmosMonitor
       transmitFrequencyId: AtmosMonitor
       prefix: device-address-prefix-sensor-monitor
@@ -1651,7 +1660,8 @@
     workingPowerDraw: 1000
   - type: UIPowerState
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: RoboticsConsole
     transmitFrequencyId: CyborgControl
   - type: Computer
@@ -1699,7 +1709,8 @@
     idlePowerDraw: 50
     workingPowerDraw: 1000
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: Mothership
     transmitFrequencyId: Xenoborg
   - type: Computer

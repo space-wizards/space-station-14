@@ -281,7 +281,8 @@
     - type: Transform
       noRot: false
     - type: DeviceNetwork
-      deviceNetId: AtmosDevices
+      deviceNets:
+      - AtmosDevices
       receiveFrequencyId: AtmosMonitor
       transmitFrequencyId: AtmosMonitor
       sendBroadcastAttemptEvent: true

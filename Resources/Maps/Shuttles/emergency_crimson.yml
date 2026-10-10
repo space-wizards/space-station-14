@@ -67,7 +67,8 @@ entities:
       fixtures: {}
     - type: DeviceNetwork
       transmitFrequencyId: ShuttleTimer
-      deviceNetId: Wireless
+      deviceNets:
+      - Wireless
       deviceLists: []
       configurators: []
     - type: Gravity

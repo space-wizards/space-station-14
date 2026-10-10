@@ -135,7 +135,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
 
         var address = _deviceNetwork.GetAddress(target);
         var addressId = target.Comp.Address;
-        if (target.Comp.Address == 0)
+        if (target.Comp.Address == DeviceAddress.Invalid)
         {
             // This primarily checks if the entity in question is pre-map init or not.
             // This is because otherwise, anything that uses DeviceNetwork will not
