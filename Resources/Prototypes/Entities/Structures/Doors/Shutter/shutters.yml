@@ -72,7 +72,8 @@
     resistance: 2
   - type: DoorSignalControl
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: BasicDevice
   - type: WirelessNetwork
     range: 200

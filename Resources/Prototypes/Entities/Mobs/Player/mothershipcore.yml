@@ -93,7 +93,8 @@
     allowBorgControl: false
     radioChannel: Xenoborg
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: Mothership
     transmitFrequencyId: Mothership
   - type: WirelessNetwork

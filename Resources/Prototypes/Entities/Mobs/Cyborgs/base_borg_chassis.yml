@@ -268,7 +268,8 @@
   components:
   - type: BorgTransponder
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: CyborgControl
     transmitFrequencyId: RoboticsConsole
     savableAddress: false

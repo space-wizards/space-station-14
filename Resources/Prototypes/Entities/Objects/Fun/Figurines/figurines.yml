@@ -26,7 +26,8 @@
   - type: Speech
     speechSounds: Pai # it just sounds better
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: BasicDevice
   - type: WirelessNetwork
     range: 200

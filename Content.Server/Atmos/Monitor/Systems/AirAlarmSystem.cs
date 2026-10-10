@@ -191,7 +191,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
                 continue;
             }
 
-            _atmosDevNet.Deregister(uid, deviceNet.Data.AddressId);
+            _atmosDevNet.Deregister(uid, deviceNet.Address);
         }
 
         component.ScrubberData.Clear();
@@ -271,7 +271,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
             var addr = DeviceAddress.Invalid;
             if (TryComp<DeviceNetworkComponent>(uid, out var netConn))
             {
-                addr = netConn.Data.AddressId;
+                addr = netConn.Address;
             }
 
             _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(args.Actor)} changed {ToPrettyString(uid)} mode to {args.Mode}");
@@ -390,7 +390,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
         var addr = DeviceAddress.Invalid;
         if (TryComp<DeviceNetworkComponent>(uid, out var netConn))
         {
-            addr = netConn.Data.AddressId;
+            addr = netConn.Address;
         }
 
         if (component.AutoMode)

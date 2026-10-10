@@ -109,7 +109,8 @@
       - !type:ChangeConstructionNodeBehavior
         node: machineFrame
   - type: DeviceNetwork
-    deviceNetId: Wired
+    deviceNets:
+    - Wired
     receiveFrequencyId: TurretControl
     transmitFrequencyId: Turret
     sendBroadcastAttemptEvent: true

@@ -4,4 +4,4 @@ namespace Content.Shared.DeviceNetwork.Events;
 /// Raised when the <see cref="DeviceData.ReceiveFrequency"/> was changed.
 /// </summary>
 [ByRefEvent]
-public record struct DeviceReceiveFrequencyChangedEvent(uint? OldFrequency, uint? NewFrequency);
+public record struct DeviceReceiveFrequencyChangedEvent(DeviceFrequency? OldFrequency, DeviceFrequency? NewFrequency);

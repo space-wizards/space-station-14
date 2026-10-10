@@ -22,6 +22,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
   id: DummyNetworkDevice
   components:
     - type: DeviceNetwork
+      deviceNets: []
       transmitFrequency: 100
       receiveFrequency: 100
 
@@ -30,7 +31,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
   id: DummyWiredNetworkDevice
   components:
     - type: DeviceNetwork
-      deviceNetId: Wired
+      deviceNets:
+      - Wired
       transmitFrequency: 0
       receiveFrequency: 0
     - type: WiredNetwork
@@ -43,7 +45,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
     - type: DeviceNetwork
       transmitFrequency: 100
       receiveFrequency: 100
-      deviceNetId: Wireless
+      deviceNets:
+      - Wireless
     - type: WirelessNetwork
       range: 100
         ";
@@ -89,7 +92,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                     Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
                     Assert.That(networkComponent2.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
 
-                    Assert.That(networkComponent1.Data.AddressId, Is.Not.EqualTo(networkComponent2.Data.AddressId));
+                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
                 });
 
                 deviceNetSystem.SendPacket(device1, networkComponent2.Address, ref payload, networkComponent2.ReceiveFrequency.Value);
@@ -138,7 +141,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                     Assert.That(networkComponent2.ReceiveFrequency, Is.Not.Null);
                     Assert.That(networkComponent2.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
 
-                    Assert.That(networkComponent1.Data.AddressId, Is.Not.EqualTo(networkComponent2.Data.AddressId));
+                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
                 });
 
                 var payload = new TestPayload
@@ -210,7 +213,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                     Assert.That(networkComponent2.ReceiveFrequency, Is.Not.Null);
                     Assert.That(networkComponent2.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
 
-                    Assert.That(networkComponent1.Data.AddressId, Is.Not.EqualTo(networkComponent2.Data.AddressId));
+                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
                 });
 
                 var payload = new TestPayload

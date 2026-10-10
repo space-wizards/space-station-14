@@ -9,7 +9,7 @@ namespace Content.Shared.DeviceNetwork.Events;
 /// </summary>
 [ByRefEvent]
 public record struct BeforePacketSentEvent(
-    int NetId,
+    ProtoId<DeviceNetworkPrototype> NetId,
     DeviceAddress? Address,
     DeviceFrequency Frequency,
     DeviceAddress SenderAddress,

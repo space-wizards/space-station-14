@@ -16,7 +16,8 @@
     - map: ["computerLayerScreen"]
       state: television_wallscreen
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
   - type: WirelessNetwork

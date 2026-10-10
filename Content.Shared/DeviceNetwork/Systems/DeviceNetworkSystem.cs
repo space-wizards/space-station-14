@@ -1,7 +1,8 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Components.Networks;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Examine;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -17,13 +18,14 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _protoMan = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private MetaDataSystem _metaSystem = default!;
     [Dependency] private SharedTransformSystem _transformSystem = default!;
 
     [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceQuery;
+    [Dependency] private EntityQuery<DeviceNetworkManagerComponent> _deviceManagerQuery;
 
-    // Basically a cache of devices to connect them together faster.
-    // TODO make DeviceNets smarter and make them entities
-    private readonly Dictionary<int, DeviceNet> _networks = new(4);
+    private readonly HashSet<int> _occupiedAddresses = new();
 
     private Device[] _deviceCache = [];
 
@@ -56,7 +58,12 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
         }
 
         if (ent.Comp.AutoConnect)
+        {
+            if (ent.Comp.Address != DeviceAddress.Invalid)
+                _occupiedAddresses.Add(ent.Comp.Address.AddressId);
+
             ConnectDevice(ent.AsNullable());
+        }
 
         DirtyFields(ent.AsNullable(),
             null,
@@ -67,68 +74,19 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnNetworkShutdown(Entity<DeviceNetworkComponent> ent, ref ComponentShutdown args)
     {
-        if (TryGetNetwork(ent.Comp.DeviceNetId, out var network))
-            RemoveFromNetwork(ent.AsNullable(), network);
-    }
-
-    /// <summary>
-    /// Try to find a device on a network using its address.
-    /// </summary>
-    private bool TryGetDevice(int netId, int address, [NotNullWhen(true)] out Device? device)
-    {
-        device = null;
-        if (!TryGetNetwork(netId, out var network)
-            || !network.Devices.TryGetValue(address, out var foundDevice))
-            return false;
-
-        device = foundDevice;
-        return true;
-    }
-
-    /// <summary>
-    /// Tries to get an already existing device network, and creates a new network if it doesn't exist.
-    /// </summary>
-    /// <returns>False if the manager is not initialized.</returns>
-    private bool TryEnsureNetwork(int netId, [NotNullWhen(true)] out DeviceNet? network)
-    {
-        network = null;
-
-        if (_networks.TryGetValue(netId, out var deviceNet))
-        {
-            network = deviceNet;
-            return true;
-        }
-
-        var newDeviceNet = new DeviceNet();
-        _networks[netId] = newDeviceNet;
-        network = newDeviceNet;
-        return true;
-    }
-
-    /// <summary>
-    /// Tries to get an already existing network.
-    /// </summary>
-    /// <returns>False if the manager is not initialized, or the network wasn't found.</returns>
-    private bool TryGetNetwork(int netId, [NotNullWhen(true)] out DeviceNet? network)
-    {
-        network = null;
-
-        if (!_networks.TryGetValue(netId, out var deviceNet))
-            return false;
-
-        network = deviceNet;
-        return true;
+        DisconnectDevice(ent.AsNullable());
     }
 
     private void SendPacket<T>(ref DeviceNetworkPacketEvent<T> packet) where T : INetworkPayload
     {
-        if (!TryEnsureNetwork(packet.NetId, out var network))
+        // If we fail to get the network, sending the packet is useless since nothing will receive it.
+        if (!TryGetNetwork(packet.Sender.AsNullable(), packet.NetId, out var network))
             return;
 
         if (packet.Address == null)
         {
             // Broadcast to all listening devices
-            if (!network.ListeningDevices.TryGetValue(packet.Frequency, out var devices)
+            if (!network.Value.Comp.ListeningDevices.TryGetValue(packet.Frequency, out var devices)
                 || !CheckRecipientsList(packet, ref devices))
                 return;
 
@@ -140,12 +98,12 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
         {
             var totalDevices = 0;
             var hasTargetedDevice = false;
-            if (network.ReceiveAllDevices.TryGetValue(packet.Frequency, out var devices))
+            if (network.Value.Comp.ReceiveAllDevices.TryGetValue(packet.Frequency, out var devices))
             {
                 totalDevices += devices.Count;
             }
 
-            if (!TryGetDevice(packet.NetId, packet.Address.Value, out var device))
+            if (!TryGetDevice(network.Value, packet.Address.Value, out var device))
                 return;
 
             if (!device.Value.ReceiveAll &&

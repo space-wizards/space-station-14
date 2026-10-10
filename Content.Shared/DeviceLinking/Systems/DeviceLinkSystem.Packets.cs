@@ -1,7 +1,6 @@
 ﻿using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DeviceLinking.Payloads;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using JetBrains.Annotations;
@@ -109,13 +108,12 @@ public sealed partial class DeviceLinkSystem
             InvokedPort = sinkPort,
         };
 
-        // Force using wireless network so things like atmos devices are able to send signals.
         _deviceNetwork.SendPacket(
             source.Owner,
             sinkNetwork.Address,
             ref payload,
             sinkNetwork.ReceiveFrequency,
-            (int) DeviceNetIdDefaults.Wireless);
+            source.Comp.SignalNetwork);
     }
 
     /// <summary>
@@ -157,11 +155,12 @@ public sealed partial class DeviceLinkSystem
             Payload = data,
         };
 
-        // Force using wireless network so things like atmos devices are able to send signals
-        // TODO allow devices to connect to multiple device networks,
-        // then allow the devices to customize the device net they will use to communicate signals.
-        var network = (int) DeviceNetIdDefaults.Wireless;
-        _deviceNetwork.SendPacket(source.Owner, sinkNetwork.Address, ref payload, sinkNetwork.ReceiveFrequency, network);
+        _deviceNetwork.SendPacket(
+            source.Owner,
+            sinkNetwork.Address,
+            ref payload,
+            sinkNetwork.ReceiveFrequency,
+            source.Comp.SignalNetwork);
     }
 
     /// <summary>

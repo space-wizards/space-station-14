@@ -42,7 +42,8 @@
         sound:
           collection: MetalBreak
   - type: DeviceNetwork
-    deviceNetId: Wired
+    deviceNets:
+    - Wired
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
     prefix: device-address-prefix-camera-router
@@ -186,7 +187,8 @@
         sound:
           collection: MetalBreak
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
     prefix: device-address-prefix-camera-router-wireless
@@ -224,7 +226,8 @@
   name: xenoborg camera wireless router
   components:
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: Mothership
     transmitFrequencyId: Mothership
   - type: WirelessNetwork

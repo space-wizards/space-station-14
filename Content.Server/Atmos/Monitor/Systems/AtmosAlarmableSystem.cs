@@ -183,9 +183,9 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
             return;
         }
 
-        if (!alarmable.NetworkAlarmStates.TryAdd(devNet.Data.AddressId, alarmType))
+        if (!alarmable.NetworkAlarmStates.TryAdd(devNet.Address, alarmType))
         {
-            alarmable.NetworkAlarmStates[devNet.Data.AddressId] = alarmType;
+            alarmable.NetworkAlarmStates[devNet.Address] = alarmType;
         }
 
         var payload = new AtmosAlarmPayload

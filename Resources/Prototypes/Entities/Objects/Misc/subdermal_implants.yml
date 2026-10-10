@@ -85,7 +85,8 @@
       mode: SensorCords
       activationContainer: "implant"
     - type: DeviceNetwork
-      deviceNetId: Wireless
+      deviceNets:
+      - Wireless
       transmitFrequencyId: SuitSensor
     - type: StationLimitedNetwork
     - type: StationTracker

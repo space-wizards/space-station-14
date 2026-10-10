@@ -38,7 +38,8 @@
     graph: SignalSwitchGraph
     node: SignalSwitchNode
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
   - type: WirelessNetwork
     range: 200
   - type: DeviceLinkSource
@@ -91,7 +92,8 @@
     graph: SignalButtonGraph
     node: SignalButtonNode
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
   - type: WirelessNetwork
     range: 200
   - type: DeviceLinkSource
@@ -135,7 +137,8 @@
   - type: Rotatable
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
-    deviceNetId: Apc
+    deviceNets:
+    - Apc
     transmitFrequencyId: SmartLight # assuming people want to use it for light switches.
   - type: ApcNetworkConnection
   - type: ApcNetSwitch
