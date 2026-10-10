@@ -17,8 +17,6 @@
     soundGroups:
       Brute:
         collection: GlassSmack
-  - type: WallMount
-    arc: 360 # interact despite grilles
   - type: Tag
     tags:
     - ForceFixRotations
@@ -148,8 +146,6 @@
     snap:
     - Window
   components:
-  - type: WallMount
-    arc: 360 # interact despite grilles
   - type: Tag
     tags:
     - Window
