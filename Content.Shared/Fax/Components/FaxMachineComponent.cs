@@ -3,6 +3,7 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.Paper;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -160,6 +161,9 @@ public sealed partial class FaxPrintout
     [DataField]
     public string? Label { get; private set; }
 
+    [DataField]
+    public ICommonSession? LabelApplier { get; private set; }
+
     [DataField(required: true)]
     public string Content { get; private set; } = default!;
 
@@ -182,11 +186,12 @@ public sealed partial class FaxPrintout
     {
     }
 
-    public FaxPrintout(string content, string name, string? label = null, string? prototypeId = null, string? stampState = null, List<StampDisplayInfo>? stampedBy = null, bool locked = false, string? senderFaxName = null)
+    public FaxPrintout(string content, string name, string? label = null, ICommonSession? labelApplier = null, string? prototypeId = null, string? stampState = null, List<StampDisplayInfo>? stampedBy = null, bool locked = false, string? senderFaxName = null)
     {
         Content = content;
         Name = name;
         Label = label;
+        LabelApplier = labelApplier;
         PrototypeId = prototypeId ?? "";
         StampState = stampState;
         StampedBy = stampedBy ?? new List<StampDisplayInfo>();

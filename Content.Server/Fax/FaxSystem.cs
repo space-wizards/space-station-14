@@ -37,6 +37,7 @@ public sealed partial class FaxSystem : EntitySystem
 {
     [Dependency] private IChatManager _chat = default!;
     [Dependency] private IAdminManager _adminManager = default!;
+    [Dependency] private ActorSystem _actor = default!;
     [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private PopupSystem _popupSystem = default!;
@@ -403,7 +404,7 @@ public sealed partial class FaxSystem : EntitySystem
 
         var name = Loc.GetString("fax-machine-printed-paper-name");
 
-        var printout = new FaxPrintout(args.Content, name, args.Label, prototype);
+        var printout = new FaxPrintout(args.Content, name, args.Label, _actor.GetSession(args.Actor), prototype);
         component.PrintingQueue.Enqueue(printout);
         component.SendTimeoutRemaining += component.SendTimeout;
 
@@ -445,6 +446,7 @@ public sealed partial class FaxSystem : EntitySystem
         var printout = new FaxPrintout(paper.Content,
                                        nameMod?.BaseName ?? metadata.EntityName,
                                        labelComponent?.CurrentLabel,
+                                       labelComponent?.LabelApplier,
                                        metadata.EntityPrototype?.ID ?? component.PrintPaperId,
                                        paper.StampState,
                                        paper.StampedBy,
@@ -504,6 +506,7 @@ public sealed partial class FaxSystem : EntitySystem
                     paper.Content,
                     nameMod?.BaseName ?? metadata.EntityName,
                     labelComponent?.CurrentLabel,
+                    labelComponent?.LabelApplier,
                     metadata.EntityPrototype.ID,
                     paper.StampState,
                     paper.StampedBy,
@@ -576,7 +579,7 @@ public sealed partial class FaxSystem : EntitySystem
 
         if (printout.Label is { } label)
         {
-            _labelSystem.Label(printed, label);
+            _labelSystem.Label(printed, label, labelApplier: printout.LabelApplier);
         }
 
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"\"{component.FaxName}\" {ToPrettyString(uid):tool} printed {ToPrettyString(printed):subject}: {printout.Content}");
