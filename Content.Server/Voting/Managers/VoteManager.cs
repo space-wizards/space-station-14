@@ -211,7 +211,7 @@ namespace Content.Server.Voting.Managers
             var start = _timing.RealTime;
             var end = start + options.Duration;
             var reg = new VoteReg(id, entries, options.Title, options.InitiatorText,
-                options.InitiatorPlayer, start, end, options.VoterEligibility, options.DisplayVotes, options.TargetEntity);
+                options.InitiatorPlayer, start, end, options.VoterEligibility, options.SelectedVoters, options.DisplayVotes, options.TargetEntity);
 
             var handle = new VoteHandle(this, reg);
 
@@ -247,7 +247,7 @@ namespace Content.Server.Voting.Managers
             msg.VoteId = v.Id;
             msg.VoteActive = !v.Finished;
 
-            if (!CheckVoterEligibility(player, v.VoterEligibility))
+            if (!CheckVoterEligibility(player, v.VoterEligibility, v.SelectedVoters))
             {
                 msg.VoteActive = false;
                 player.Channel.SendMessage(msg);
@@ -385,7 +385,7 @@ namespace Content.Server.Voting.Managers
             // Remove ineligible votes that somehow slipped through
             foreach (var playerVote in v.CastVotes)
             {
-                if (!CheckVoterEligibility(playerVote.Key, v.VoterEligibility))
+                if (!CheckVoterEligibility(playerVote.Key, v.VoterEligibility, v.SelectedVoters))
                 {
                     v.Entries[playerVote.Value].Votes -= 1;
                     v.CastVotes.Remove(playerVote.Key);
@@ -425,7 +425,7 @@ namespace Content.Server.Voting.Managers
             DirtyCanCallVoteAll();
         }
 
-        public bool CheckVoterEligibility(ICommonSession player, VoterEligibility eligibility)
+        public bool CheckVoterEligibility(ICommonSession player, VoterEligibility eligibility, HashSet<ICommonSession>? selectedVoters = null)
         {
             if (eligibility == VoterEligibility.All)
                 return true;
@@ -451,6 +451,11 @@ namespace Content.Server.Voting.Managers
                 var playtime = _playtimeManager.GetPlayTimes(player);
                 if (!playtime.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out TimeSpan overallTime) || overallTime < TimeSpan.FromHours(_cfg.GetCVar(CCVars.VotekickEligibleVoterPlaytime)))
                     return false;
+            }
+
+            if (eligibility == VoterEligibility.SelectedPlayers)
+            {
+                return selectedVoters != null && selectedVoters.Contains(player);
             }
 
             return true;
@@ -504,6 +509,7 @@ namespace Content.Server.Voting.Managers
             public readonly TimeSpan EndTime;
             public readonly HashSet<ICommonSession> VotesDirty = new();
             public readonly VoterEligibility VoterEligibility;
+            public readonly HashSet<ICommonSession> SelectedVoters;
             public readonly bool DisplayVotes;
             public readonly NetEntity? TargetEntity;
 
@@ -516,7 +522,7 @@ namespace Content.Server.Voting.Managers
             public ICommonSession? Initiator { get; }
 
             public VoteReg(int id, VoteEntry[] entries, string title, string initiatorText,
-                ICommonSession? initiator, TimeSpan start, TimeSpan end, VoterEligibility voterEligibility, bool displayVotes, NetEntity? targetEntity)
+                ICommonSession? initiator, TimeSpan start, TimeSpan end, VoterEligibility voterEligibility, HashSet<ICommonSession> selectedVoters, bool displayVotes, NetEntity? targetEntity)
             {
                 Id = id;
                 Entries = entries;
@@ -526,6 +532,7 @@ namespace Content.Server.Voting.Managers
                 StartTime = start;
                 EndTime = end;
                 VoterEligibility = voterEligibility;
+                SelectedVoters = selectedVoters;
                 DisplayVotes = displayVotes;
                 TargetEntity = targetEntity;
             }
@@ -549,6 +556,7 @@ namespace Content.Server.Voting.Managers
         {
             All,
             Ghost, // Player needs to be a ghost
+            SelectedPlayers, // Player must belong to a special list of players
             GhostMinimumPlaytime, // Player needs to be a ghost, with a minimum playtime and deathtime as defined by votekick CCvars.
             MinimumPlaytime //Player needs to have a minimum playtime and deathtime as defined by votekick CCvars.
         }
