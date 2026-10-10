@@ -10,8 +10,10 @@
     drawdepth: SmallObjects
     state: candy_bowl0
   - type: Appearance
-  - type: Bin
-    maxItems: 100
+  - type: Storage
+    maxItemSize: Small
+    grid:
+    - 0,0,5,4  # Matching previous BinComponent.MaxItems of 100
     whitelist:
       components:
         - Pill
@@ -19,7 +21,12 @@
         - FoodSnack
   - type: ContainerContainer
     containers:
-      bin-container: !type:Container
+      storagebase: !type:Container
+        ents: []
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
   - type: Damageable
   - type: Injurable
     damageContainer: Inorganic
@@ -45,8 +52,8 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:
-            min: 1
-            max: 2
+            min: -1
+            max: 0
       - !type:EmptyAllContainersBehaviour
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
