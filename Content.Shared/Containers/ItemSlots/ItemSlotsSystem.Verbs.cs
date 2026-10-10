@@ -28,7 +28,7 @@ public sealed partial class ItemSlotsSystem
                 AlternativeVerb verb = new()
                 {
                     IconEntity = GetNetEntity(usingEntity),
-                    Act = () => TryInsert(ent, slot, usingEntity, user, excludeUserAudio: true)
+                    Act = () => TryInsertFromHandWithDoAfter(ent, slot, usingEntity, user)
                 };
 
                 if (slot.InsertVerbText != null)
@@ -76,7 +76,7 @@ public sealed partial class ItemSlotsSystem
             AlternativeVerb verb = new()
             {
                 IconEntity = GetNetEntity(slot.Item),
-                Act = () => TryEjectToHands(ent, slot, user, excludeUserAudio: true)
+                Act = () => TryEjectToHandsWithDoAfter(ent, slot, user)
             };
 
             if (slot.EjectVerbText == null)
@@ -116,15 +116,13 @@ public sealed partial class ItemSlotsSystem
             InteractionVerb takeVerb = new()
             {
                 IconEntity = GetNetEntity(slot.Item),
-                Act = () => TryEjectToHands(ent, slot, user, excludeUserAudio: true)
+                Act = () => TryEjectToHandsWithDoAfter(ent, slot, user),
+                Text = slot.EjectVerbText == null
+                    ? Loc.GetString("take-item-verb-text", ("subject", verbSubject))
+                    : Loc.GetString(slot.EjectVerbText),
+                Priority = slot.Priority
             };
 
-            if (slot.EjectVerbText == null)
-                takeVerb.Text = Loc.GetString("take-item-verb-text", ("subject", verbSubject));
-            else
-                takeVerb.Text = Loc.GetString(slot.EjectVerbText);
-
-            takeVerb.Priority = slot.Priority;
             args.Verbs.Add(takeVerb);
         }
 
@@ -144,7 +142,7 @@ public sealed partial class ItemSlotsSystem
             InteractionVerb insertVerb = new()
             {
                 IconEntity = GetNetEntity(usingEntity),
-                Act = () => TryInsert(ent, slot, usingEntity, user, excludeUserAudio: true)
+                Act = () => TryInsertFromHandWithDoAfter(ent, slot, usingEntity, user)
             };
 
             if (slot.InsertVerbText != null)
