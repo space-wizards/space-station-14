@@ -79,6 +79,7 @@
           True: { visible: True }
           False: { visible: False }
   - type: AnimationPlayer
+  - type: TrayScanReveal
   - type: Damageable
     damageModifierSet: RodMetalMod
   - type: Destructible
