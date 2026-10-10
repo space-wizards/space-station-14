@@ -31,18 +31,18 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
         // get list of all vending machines on the target station, and then shuffle it so we get a random sample later on
         var vendingMachines = Station.GetEntitiesWithComponentOnStation<VendingMachineComponent>(true).ToList();
         RobustRandom.Shuffle(vendingMachines);
-        toDispense *= vendingMachines.Count;
+        var toHit = Math.Max(ent.Comp1.MinimumToAffect, (int)(toDispense * vendingMachines.Count));
 
         // finds valid vending machines (powered + not broken), maybe toggles contra inventory, ejects some contents
         foreach (var vendor in vendingMachines)
         {
-            if (toDispense == 0)
+            if (toHit <= 0)
                 break;
 
             if (vendor.Comp.Broken || !_vendingSystem.IsPowered(vendor, EntityManager))
                 continue;
 
-            toDispense--;
+            toHit--;
 
             if (RobustRandom.NextDouble() < ent.Comp1.ContrabandChance)
                 _vendingSystem.SetContraband(vendor, true);
