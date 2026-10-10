@@ -88,15 +88,19 @@
       sprite: Objects/Specific/Janitorial/advmop.rsi
     - type: Absorbent
       pickupAmount: 100
+    - type: SolutionContainerManager
+      solutions:
+        absorbed:
+          maxVol: 500
     - type: SolutionRegeneration
       generated:
         reagents:
         - ReagentId: Water
-          Quantity: 5
+          Quantity: 25
     - type: SolutionPurge
       preserve:
       - Water
-      quantity: 10
+      quantity: 50
     - type: Tag
       tags:
         - Mop
