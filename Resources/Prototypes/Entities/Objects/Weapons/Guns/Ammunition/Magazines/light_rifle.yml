@@ -8,6 +8,7 @@
   - type: Tag
     tags:
       - MagazineLightRifle
+      - MagazineRifleAll
   - type: BallisticAmmoProvider
     mayTransfer: true
     whitelist:
