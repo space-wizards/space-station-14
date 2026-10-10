@@ -9,13 +9,14 @@ namespace Content.Shared.Labels.Components;
 [Access(typeof(SharedHandLabelerSystem))]
 public sealed partial class HandLabelerComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite), Access(Other = AccessPermissions.ReadWriteExecute)]
+    public const int MaxLabelLength = 50;
+
+    [Access(Other = AccessPermissions.ReadWriteExecute)]
     [DataField]
     public string AssignedLabel = string.Empty;
 
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
-    public int MaxLabelChars = 50;
+    public int MaxLabelChars = MaxLabelLength;
 
     /// <summary>
     /// Blacklist for entities that can be labeled.

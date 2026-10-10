@@ -4,10 +4,9 @@ using Content.Shared.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
-using Robust.Shared.Player;
+using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using static Content.Shared.Paper.PaperComponent;
 using Robust.Shared.Prototypes;
@@ -53,7 +52,7 @@ public sealed partial class PaperSystem : EntitySystem
     {
         if (!string.IsNullOrEmpty(entity.Comp.Content))
         {
-            SetContent(entity, Loc.GetString(entity.Comp.Content));
+            SetContent(entity.AsNullable(), Loc.GetString(entity.Comp.Content));
         }
     }
 
@@ -188,7 +187,7 @@ public sealed partial class PaperSystem : EntitySystem
 
         if (args.Text.Length <= entity.Comp.ContentSize)
         {
-            SetContent(entity, args.Text);
+            SetContent(entity.AsNullable(), args.Text);
 
             var paperStatus = string.IsNullOrWhiteSpace(args.Text) ? PaperStatus.Blank : PaperStatus.Written;
 
@@ -277,27 +276,59 @@ public sealed partial class PaperSystem : EntitySystem
         }
     }
 
-    public void SetContent(EntityUid entity, string content)
+    /// <summary>
+    /// Sets the content of a piece of paper.
+    /// </summary>
+    /// <param name="paper">Paper we are setting the content of</param>
+    /// <param name="content">Content for the paper</param>
+    /// <param name="logMissing">Should we assert if the <see cref="PaperComponent"/> is missing?</param>
+    public void SetContent(Entity<PaperComponent?> paper, string content, bool logMissing = false)
     {
-        if (!TryComp<PaperComponent>(entity, out var paper))
+        if (!_paperQuery.Resolve(paper, ref paper.Comp, logMissing))
             return;
-        SetContent((entity, paper), content);
+
+        paper.Comp.Content = content;
+        Dirty(paper);
+        UpdatePaper((paper, paper.Comp));
     }
 
-    public void SetContent(Entity<PaperComponent> entity, string content)
+    /// <summary>
+    /// Adds additional content to a piece of paper at the end of the current content.
+    /// </summary>
+    /// <param name="paper">Paper we are adding content to.</param>
+    /// <param name="content">Content being added</param>
+    public void AddContent(Entity<PaperComponent?> paper, string content)
     {
-        entity.Comp.Content = content;
-        Dirty(entity);
-        UpdateUserInterface(entity);
-
-        if (!TryComp<AppearanceComponent>(entity, out var appearance))
+        if (!_paperQuery.Resolve(paper, ref paper.Comp))
             return;
 
-        var status = string.IsNullOrWhiteSpace(content)
+        paper.Comp.Content += content;
+        Dirty(paper);
+        UpdatePaper((paper, paper.Comp));
+    }
+
+    private void UpdatePaper(Entity<PaperComponent> paper)
+    {
+        UpdateUserInterface((paper, paper.Comp));
+        var status = string.IsNullOrWhiteSpace(paper.Comp.Content)
             ? PaperStatus.Blank
             : PaperStatus.Written;
 
-        _appearance.SetData(entity, PaperVisuals.Status, status, appearance);
+        _appearance.SetData(paper, PaperVisuals.Status, status);
+    }
+
+    /// <summary>
+    /// Attempts to get the content on a piece of paper.
+    /// </summary>
+    /// <param name="paper">Paper we want the content of.</param>
+    /// <returns>Returns paper content or an empty string if this isn't paper.</returns>
+    [PublicAPI]
+    public string GetContent(Entity<PaperComponent?> paper)
+    {
+        if (!_paperQuery.Resolve(paper, ref paper.Comp, false))
+            return "";
+
+        return paper.Comp.Content;
     }
 
     private void UpdateUserInterface(Entity<PaperComponent> entity)
