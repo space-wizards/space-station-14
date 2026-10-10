@@ -60,6 +60,12 @@ public sealed partial class CCVars
         CVarDef.Create("afk.confirm_sound", "/Audio/Items/airhorn.ogg", CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
+    ///     Whether the AFK confirmation window's sound is muted client-side.
+    /// </summary>
+    public static readonly CVarDef<bool> AfkConfirmSoundEnabled =
+        CVarDef.Create("afk.confirm_sound_enabled", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
     ///     Flavor limit. This is to ensure that having a large mass of flavors in
     ///     some food object won't spam a user with flavors.
     /// </summary>
