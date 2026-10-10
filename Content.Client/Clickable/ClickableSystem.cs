@@ -1,9 +1,14 @@
 using System.Numerics;
+using System.Runtime.InteropServices;
 using Content.Client.Sprite;
+using Robust.Client.ComponentTrees;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Utility;
 using Robust.Shared.Graphics;
+using Robust.Shared.Map;
+using Robust.Shared.Threading;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Clickable;
 
@@ -13,12 +18,111 @@ namespace Content.Client.Clickable;
 public sealed partial class ClickableSystem : EntitySystem
 {
     [Dependency] private IClickMapManager _clickMapManager = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IParallelManager _parallel = default!;
     [Dependency] private SharedTransformSystem _transforms = default!;
     [Dependency] private SpriteSystem _sprites = default!;
+    [Dependency] private SpriteTreeSystem _spriteTree = default!;
 
     [Dependency] private EntityQuery<ClickableComponent> _clickableQuery = default!;
     [Dependency] private EntityQuery<TransformComponent> _xformQuery = default!;
     [Dependency] private EntityQuery<FadingSpriteComponent> _fadingSpriteQuery = default!;
+
+    private readonly ClickableEntityComparer _comparer = new();
+    private readonly HashSet<Entity<SpriteComponent, TransformComponent>> _queryResults = new();
+    private readonly List<ClickableCandidate> _candidates = new();
+    private readonly List<(EntityUid Uid, int Depth, uint RenderOrder, float Bottom)> _foundEntities = new();
+    private readonly List<EntityUid> _cachedClickableEntities = new();
+    private readonly List<ClickableResult> _clickResults = new();
+    private ClickableCheckJob _clickableCheckJob = default!;
+    private MapCoordinates _cachedCoordinates;
+    private IEye? _cachedEye;
+    private bool _cachedExcludeFaded;
+    private uint _cachedFrame;
+    private bool _cacheValid;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        _clickableCheckJob = new ClickableCheckJob(this, _candidates, _clickResults);
+    }
+
+    public EntityUid? GetClickedEntity(MapCoordinates coordinates, IEye? eye)
+    {
+        var entities = GetClickableEntities(coordinates, eye);
+        return entities.Count == 0 ? null : entities[0];
+    }
+
+    public IReadOnlyList<EntityUid> GetClickableEntities(MapCoordinates coordinates, IEye? eye, bool excludeFaded = true)
+    {
+        /*
+         * TODO:
+         * 1. Stuff like MeleeWeaponSystem need an easy way to hook into viewport specific entities / entities under mouse
+         * 2. Cleanup the mess around InteractionOutlineSystem + below the keybind click detection.
+         */
+
+        if (eye == null)
+            return Array.Empty<EntityUid>();
+
+        if (_cacheValid &&
+            _cachedFrame == _timing.CurFrame &&
+            _cachedEye == eye &&
+            _cachedExcludeFaded == excludeFaded &&
+            _cachedCoordinates.Equals(coordinates))
+        {
+            return _cachedClickableEntities;
+        }
+
+        // Find all the entities intersecting our click.
+        _queryResults.Clear();
+        _spriteTree.QueryAabb(
+            _queryResults,
+            coordinates.MapId,
+            Box2.CenteredAround(coordinates.Position, new Vector2(1, 1)));
+
+        _candidates.Clear();
+        _foundEntities.Clear();
+        _cachedClickableEntities.Clear();
+        _clickResults.Clear();
+        foreach (var entity in _queryResults)
+        {
+            _candidates.Add(new ClickableCandidate(entity.Owner, entity.Comp1, entity.Comp2));
+            _clickResults.Add(default);
+        }
+
+        _clickableCheckJob.WorldPos = coordinates.Position;
+        _clickableCheckJob.Eye = eye;
+        _clickableCheckJob.ExcludeFaded = excludeFaded;
+        _parallel.ProcessNow(_clickableCheckJob, _candidates.Count);
+
+        for (var i = 0; i < _candidates.Count; i++)
+        {
+            var result = _clickResults[i];
+            if (!result.Clicked)
+                continue;
+
+            _foundEntities.Add((result.Uid, result.Depth, result.RenderOrder, result.Bottom));
+        }
+
+        if (_foundEntities.Count != 0)
+        {
+            // Do drawdepth & y-sorting. First index is the top-most sprite (opposite of normal render order).
+            _foundEntities.Sort(_comparer);
+
+            foreach (var entity in _foundEntities)
+            {
+                _cachedClickableEntities.Add(entity.Uid);
+            }
+        }
+
+        _cachedCoordinates = coordinates;
+        _cachedEye = eye;
+        _cachedExcludeFaded = excludeFaded;
+        _cachedFrame = _timing.CurFrame;
+        _cacheValid = true;
+
+        return _cachedClickableEntities;
+    }
 
     /// <summary>
     /// Used to check whether a click worked. Will first check if the click falls inside of some explicit bounding
@@ -88,9 +192,11 @@ public sealed partial class ClickableSystem : EntitySystem
             return true;
 
         // Next check each individual sprite layer using automatically computed click maps.
-        foreach (var spriteLayer in sprite.AllLayers)
+        var layers = sprite.LayerData;
+        for (var i = 0; i < layers.Count; i++)
         {
-            if (spriteLayer is not SpriteComponent.Layer layer || !_sprites.IsVisible(layer))
+            var layer = layers[i];
+            if (!_sprites.IsVisible(layer))
             {
                 continue;
             }
@@ -164,5 +270,81 @@ public sealed partial class ClickableSystem : EntitySystem
         };
 
         return boundsForDir.Contains(modLocalPos);
+    }
+
+    private readonly record struct ClickableCandidate(EntityUid Uid, SpriteComponent Sprite, TransformComponent Transform);
+
+    private struct ClickableResult
+    {
+        public bool Clicked;
+        public EntityUid Uid;
+        public int Depth;
+        public uint RenderOrder;
+        public float Bottom;
+    }
+
+    private sealed class ClickableCheckJob : IParallelRobustJob
+    {
+        private readonly List<ClickableCandidate> _candidates;
+        private readonly List<ClickableResult> _results;
+        private readonly ClickableSystem _clickable;
+        public Vector2 WorldPos;
+        public IEye Eye = default!;
+        public bool ExcludeFaded;
+
+        public ClickableCheckJob(
+            ClickableSystem clickable,
+            List<ClickableCandidate> candidates,
+            List<ClickableResult> results)
+        {
+            _clickable = clickable;
+            _candidates = candidates;
+            _results = results;
+        }
+
+        public int BatchSize => 16;
+
+        public void Execute(int index)
+        {
+            var candidate = _candidates[index];
+            ref var result = ref CollectionsMarshal.AsSpan(_results)[index];
+
+            if (!_clickable.CheckClick(
+                    (candidate.Uid, null, candidate.Sprite, candidate.Transform),
+                    WorldPos,
+                    Eye,
+                    ExcludeFaded,
+                    out result.Depth,
+                    out result.RenderOrder,
+                    out result.Bottom))
+            {
+                return;
+            }
+
+            result.Clicked = true;
+            result.Uid = candidate.Uid;
+        }
+    }
+
+    private sealed class ClickableEntityComparer : IComparer<(EntityUid Uid, int Depth, uint RenderOrder, float Bottom)>
+    {
+        public int Compare(
+            (EntityUid Uid, int Depth, uint RenderOrder, float Bottom) x,
+            (EntityUid Uid, int Depth, uint RenderOrder, float Bottom) y)
+        {
+            var cmp = y.Depth.CompareTo(x.Depth);
+            if (cmp != 0)
+                return cmp;
+
+            cmp = y.RenderOrder.CompareTo(x.RenderOrder);
+            if (cmp != 0)
+                return cmp;
+
+            cmp = -y.Bottom.CompareTo(x.Bottom);
+            if (cmp != 0)
+                return cmp;
+
+            return y.Uid.CompareTo(x.Uid);
+        }
     }
 }
