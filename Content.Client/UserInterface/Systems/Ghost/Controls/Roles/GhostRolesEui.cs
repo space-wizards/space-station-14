@@ -13,7 +13,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
     {
         private readonly GhostRolesWindow _window;
         private GhostRoleRulesWindow? _windowRules = null;
-        private uint _windowRulesId = 0;
+        private NetEntity _windowRulesId = NetEntity.Invalid;
 
         public GhostRolesEui()
         {

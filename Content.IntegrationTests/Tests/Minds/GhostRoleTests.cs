@@ -8,7 +8,6 @@ using Content.Shared.Mind;
 using Content.Shared.Players;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Minds;
 
@@ -25,7 +24,6 @@ public sealed class GhostRoleTests : GameTest
           components:
           - type: MindContainer
           - type: GhostRole
-          - type: GhostTakeoverAvailable
           - type: MobState
 
         - type: entity
@@ -127,7 +125,7 @@ public sealed class GhostRoleTests : GameTest
         // Take the ghost role
         await server.WaitPost(() =>
         {
-            var id = entMan.GetComponent<GhostRoleComponent>(ghostRole).Identifier;
+            var id = entMan.GetNetEntity(ghostRole);
             entMan.EntitySysManager.GetEntitySystem<GhostRoleSystem>().Takeover(session, id);
         });
 
@@ -185,7 +183,7 @@ public sealed class GhostRoleTests : GameTest
             Assert.That(ghostTwo, Is.Not.EqualTo(ghostRole));
             Assert.That(session.ContentData()?.Mind, Is.EqualTo(ghostRoleMindId));
 
-            if(adminGhost)
+            if (adminGhost)
             {
                 // aghost case, the ghost role mind should be owned by the ghost role entity,
                 // the ghost role mind is visiting the new ghost
