@@ -4,15 +4,22 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Labels.Components;
 
 /// <summary>
-/// Specifies the paper type (see textures/storage/crates/labels.rsi to see currently supported paper types)  to show on crates this label is attached to.
+/// Specifies the type and color of the paper to show on entities this label is attached to.
+/// Paper sprites are expected to be greyscaled and recolorable!
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(LabelSystem))]
 public sealed partial class PaperLabelTypeComponent : Component
 {
     /// <summary>
-    /// The type of label to show.
+    /// The type of label to display.
     /// </summary>
     [DataField]
-    public string PaperType = "Paper";
+    public PaperLabelType LabelType = PaperLabelType.Paper;
+
+    /// <summary>
+    /// The color of this paper label.
+    /// </summary>
+    [DataField]
+    public Color Color = Color.White;
 }
