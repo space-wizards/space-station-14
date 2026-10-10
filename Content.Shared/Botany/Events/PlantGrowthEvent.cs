@@ -21,6 +21,11 @@ public record struct PlantHarvestAttemptEvent(EntityUid User, EntityUid Target, 
 public readonly record struct PlantHarvestedEvent(EntityUid User, EntityUid Target);
 
 /// <summary>
+/// Raised on a plant after each of its produce entities has been spawned and initialized.
+/// </summary>
+[ByRefEvent]
+public readonly record struct PlantProduceSpawnedEvent(EntityUid Produce);
+
 /// Raised after processing a plant's random mutations.
 /// </summary>
 [ByRefEvent]

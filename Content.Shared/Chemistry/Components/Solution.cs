@@ -512,8 +512,10 @@ namespace Content.Shared.Chemistry.Components
         ///     Attempts to remove an amount of reagent from the solution.
         /// </summary>
         /// <param name="toRemove">The reagent to be removed.</param>
+        /// <param name="removedReagents">Optional list to receive consumed reagents. </param>
         /// <returns>How much reagent was actually removed. Zero if the reagent is not present on the solution.</returns>
-        public FixedPoint2 RemoveReagent(ReagentQuantity toRemove, bool preserveOrder = false, bool ignoreReagentData = false)
+        public FixedPoint2 RemoveReagent(ReagentQuantity toRemove, bool preserveOrder = false, bool ignoreReagentData = false,
+            List<ReagentQuantity>? removedReagents = null)
         {
             if (toRemove.Quantity <= FixedPoint2.Zero)
                 return FixedPoint2.Zero;
@@ -556,6 +558,9 @@ namespace Content.Shared.Chemistry.Components
                 var split = ((long)toRemove.Quantity.Value) * curQuantity.Value / totalRemoveVolume;
 
                 var splitQuantity = FixedPoint2.FromCents((int)split);
+
+                if (splitQuantity > FixedPoint2.Zero)
+                    removedReagents?.Add(new ReagentQuantity(reagent, FixedPoint2.Min(curQuantity, splitQuantity)));
 
                 var newQuantity = curQuantity - splitQuantity;
                 _heatCapacityDirty = true;
