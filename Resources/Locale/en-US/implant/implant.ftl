@@ -14,6 +14,8 @@ implanter-set-draw-window = Set Implant Draw
 implanter-set-draw-info = Select the implant type this implanter should remove:
 implanter-set-draw-type = Implant type:
 
+implanter-start-draw-button = Start
+
 implanter-draw-text = Draw
 implanter-inject-text = Inject
 
