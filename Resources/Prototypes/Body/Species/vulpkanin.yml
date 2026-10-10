@@ -138,6 +138,111 @@
           32:
             sprite: Mobs/Species/Vulpkanin/displacement.rsi
             state: belt
+  - type: AttachedVisuals
+    attachments:
+    - attachment: InhandLeft
+      container: left
+      order: 100
+    - attachment: InhandRight
+      container: right
+      order: 100
+    - attachment: EquippedBack
+      container: back
+      order: 70
+      speciesOverride: vulpkanin
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            state: back
+    - attachment: EquippedBelt
+      container: belt
+      order: 65
+      speciesOverride: vulpkanin
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            state: belt
+    - attachment: EquippedId
+      container: id
+      order: 60
+      speciesOverride: vulpkanin
+    - attachment: EquippedSuitStorage
+      container: suitstorage
+      order: 55
+      speciesOverride: vulpkanin
+    - attachment: EquippedHead
+      container: head
+      order: 50
+      speciesOverride: vulpkanin
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            state: head
+    - attachment: EquippedEars
+      container: ears
+      order: 45
+      speciesOverride: vulpkanin
+    - attachment: EquippedEyes
+      container: eyes
+      order: 40
+      speciesOverride: vulpkanin
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            state: eyes
+    - attachment: EquippedMask
+      container: mask
+      order: 35
+      speciesOverride: vulpkanin
+    - attachment: EquippedNeck
+      container: neck
+      order: 30
+      speciesOverride: vulpkanin
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            state: neck
+    - attachment: EquippedGloves
+      container: gloves
+      order: 25
+      speciesOverride: vulpkanin
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            state: hand
+    - attachment: EquippedOuterClothing
+      container: outerclothing
+      order: 20
+      speciesOverride: vulpkanin
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            state: outerwear
+    - attachment: EquippedJumpsuit
+      container: jumpsuit
+      order: 15
+      speciesOverride: vulpkanin
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            state: jumpsuit
+    - attachment: EquippedShoes
+      container: shoes
+      order: 10
+      speciesOverride: vulpkanin
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            state: shoes
 
 - type: entity
   parent:
