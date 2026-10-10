@@ -1,0 +1,213 @@
+- type: entity
+  parent: BaseItem
+  id: BaseRot
+  name: rot
+  description: A rotten mess.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/rot.rsi
+    state: rot
+  - type: Tag
+    tags:
+    - Recyclable
+    - Trash
+  - type: Appearance
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+  - type: ExtinguishableSetCollisionWake
+  - type: Flammable
+    fireSpread: true
+    alwaysCombustible: true
+    canExtinguish: true
+    damage:
+      types:
+        Heat: 1
+  - type: FireVisuals
+    sprite: Effects/fire.rsi
+    normalState: fire
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 60
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Ash:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    
+- type: entity
+  parent: BaseRot
+  id: BaseInorganicRot
+  name: inorganic rot
+  description: A rotten mess with pices of plastic and metal in it.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/rot.rsi
+    state: trash_rot
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+  - type: Tag
+    tags:
+    - Trash
+    
+- type: entity
+  parent: BaseRot
+  id: Rot
+  components:
+  - type: Perishable
+    # rots in 1 minutes and basicaly every time rerols it's chance to become infested
+    rotAfter: 60
+    # don't want rot giving off ammonia only bodies
+    molsPerSecondPerUnitMass: 0
+  - type: RotInto
+    entity: RotInfestationSpawner
+    # once it would say bloated, turn into the rotten prototype
+    stage: 1
+  - type: Item
+    heldPrefix: rot
+
+- type: entity
+  parent: BaseInorganicRot
+  id: InorganicRot
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/rot.rsi
+    state: trash_rot
+  - type: Perishable
+    # rots in 2 minutes and basicaly every time rerols it's chance to become infested
+    rotAfter: 120
+    # don't want rot giving off ammonia only bodies
+    molsPerSecondPerUnitMass: 0
+  - type: RotInto
+    entity: InorganicRotInfestationSpawner
+    # once it would say bloated, turn into the rotten prototype
+    stage: 1
+  - type: Item
+    heldPrefix: trash_rot
+    
+- type: entity
+  parent: BaseRot
+  id: SpiderInfestedRot
+  name: spider infested rot
+  description: A rotten mess, infested by spiders.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/rot.rsi
+    state: spider_rot
+  - type: Perishable
+    #rots in 5 minutes, basicaly uses rot mechanic for hatching
+    rotAfter: 300
+    molsPerSecondPerUnitMass: 0
+  - type: RotInto
+    entity: MobGiantSpiderAngry
+    stage: 1
+  - type: Item
+    heldPrefix: spider_rot
+
+- type: entity
+  parent: BaseRot
+  id: SpaceTickInfesteRot
+  name: space tick infested rot
+  description: A rotten mess, infested by spiders.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/rot.rsi
+    state: space_tick_rot
+  - type: Perishable
+    #rots in 5 minutes, basicaly uses rot mechanic for hatching
+    rotAfter: 300
+    molsPerSecondPerUnitMass: 0
+  - type: RotInto
+    entity: MobTick
+    stage: 1
+  - type: Item
+    heldPrefix: space_tick_rot
+
+
+# tabels that used for rot infetation rolling
+- type: entityTable
+  id: RotInfestationGambler
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector #basicaly has 90% chance to roll itself and 10% to become infested, so it's would feel much more random when it's become infested
+      weight: 90
+      children:
+      - id: Rot
+    - !type:GroupSelector
+      weight: 7
+      children:
+      - id: SpaceTickInfesteRot
+    - !type:GroupSelector
+      weight: 3
+      children:
+      - id: SpiderInfestedRot
+
+- type: entityTable
+  id: InorganicRotInfestationGambler
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector #basicaly has 90% chance to roll itself and 10% to become infested, so it's would feel much more random when it's become infested
+      weight: 90
+      children:
+      - id: InorganicRot
+    - !type:GroupSelector
+      weight: 7
+      children:
+      - id: SpaceTickInfesteRot
+    - !type:GroupSelector
+      weight: 3
+      children:
+      - id: SpiderInfestedRot
+
+#spawners
+
+- type: entity
+  parent: MarkerBase
+  id: RotInfestationSpawner
+  name: Infested Rot Spawner
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Misc/rot.rsi
+          state: rot
+    - type: EntityTableSpawner
+      offset: 0.2
+      table: !type:NestedSelector
+        tableId: RotInfestationGambler
+  placement:
+    mode: AlignTileAny
+
+- type: entity
+  parent: MarkerBase
+  id: InorganicRotInfestationSpawner
+  name: Inorganic Infested Rot Spawner
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Misc/rot.rsi
+          state: trash_rot
+    - type: EntityTableSpawner
+      offset: 0.2
+      table: !type:NestedSelector
+        tableId: InorganicRotInfestationGambler
+  placement:
+    mode: AlignTileAny
