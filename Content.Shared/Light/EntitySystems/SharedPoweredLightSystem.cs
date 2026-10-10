@@ -20,6 +20,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Light.EntitySystems;
 
+/// <summary>
+/// System for handling PoweredLightComponent events.
+/// </summary>
 public abstract partial class SharedPoweredLightSystem : EntitySystem
 {
     [Dependency] protected IGameTiming GameTiming = default!;
@@ -294,7 +297,7 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
                     {
                         light.LastThunk = time;
                         Dirty(uid, light);
-                        _audio.PlayPredicted(light.TurnOnSound, uid, user: user, light.TurnOnSound.Params.AddVolume(-10f));
+                        _audio.PlayPredicted(light.TurnOnSound, uid, user: user, light.TurnOnSound.Params.AddVolume(-6f));
                     }
                 }
                 else

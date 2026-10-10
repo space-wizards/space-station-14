@@ -1,9 +1,9 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.DeviceLinking.Components;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Popups;
+using JetBrains.Annotations;
 using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -14,17 +14,15 @@ namespace Content.Shared.DeviceLinking.Systems;
 
 public sealed partial class DeviceLinkSystem : EntitySystem
 {
-    [Dependency] private SharedPopupSystem _popupSystem = default!;
-    [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
 
-    [Dependency] private EntityQuery<DeviceLinkSinkComponent> _deviceLinkSinkQuery = default!;
-    [Dependency] private EntityQuery<DeviceLinkSourceComponent> _deviceLinkSourceQuery = default!;
-    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
-
-    private static readonly ProtoId<DeviceNetworkPrototype> WirelessNetwork = "Wireless";
+    [Dependency] private EntityQuery<DeviceLinkSinkComponent> _deviceLinkSinkQuery;
+    [Dependency] private EntityQuery<DeviceLinkSourceComponent> _deviceLinkSourceQuery;
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery;
 
     [SubscribeLocalEvent]
     private void OnGetState(Entity<DeviceLinkSourceComponent> ent, ref ComponentGetState args)
@@ -36,7 +34,17 @@ public sealed partial class DeviceLinkSystem : EntitySystem
             netOutputs.Add(key, set);
         }
 
-        args.State = new DeviceLinkSourceComponentState(netOutputs, ent.Comp.LastSignals, GetNetEntityDictionary(ent.Comp.LinkedPorts));
+        var linkedPorts = new Dictionary<NetEntity, HashSet<DeviceLink>>(ent.Comp.LinkedPorts.Count);
+        foreach (var (sink, links) in ent.Comp.LinkedPorts)
+        {
+            linkedPorts.Add(GetNetEntity(sink), [.. links]);
+        }
+
+        args.State = new DeviceLinkSourceComponentState(
+            netOutputs,
+            new Dictionary<ProtoId<SourcePortPrototype>, bool>(ent.Comp.LastSignals),
+            linkedPorts,
+            [.. ent.Comp.Ports]);
     }
 
     [SubscribeLocalEvent]
@@ -48,7 +56,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         var outputs = new Dictionary<ProtoId<SourcePortPrototype>, HashSet<EntityUid>>(state.Outputs.Count);
         foreach (var (key, output) in state.Outputs)
         {
-            var netSet = GetEntitySet(output);
+            var netSet = EnsureEntitySet<DeviceLinkSinkComponent>(output, ent.Owner);
             var set = new HashSet<EntityUid>(netSet.Count);
             foreach (var uid in netSet)
             {
@@ -59,16 +67,19 @@ public sealed partial class DeviceLinkSystem : EntitySystem
             outputs.Add(key, set);
         }
 
-        var linked = new Dictionary<EntityUid, HashSet<(ProtoId<SourcePortPrototype> Source, ProtoId<SinkPortPrototype> Sink)>>(state.LinkedPorts.Count);
+        var linked = new Dictionary<EntityUid, HashSet<DeviceLink>>(state.LinkedPorts.Count);
+        // Prediction must never mutate the cached state used for the next rollback.
         foreach (var (net, value) in state.LinkedPorts)
         {
-            if (TryGetEntity(net, out var uid))
-                linked.Add(uid.Value, value);
+            var uid = EnsureEntity<DeviceLinkSinkComponent>(net, ent.Owner);
+            if (uid.IsValid())
+                linked.Add(uid, [.. value]);
         }
 
         ent.Comp.Outputs = outputs;
         ent.Comp.LinkedPorts = linked;
-        ent.Comp.LastSignals = state.LastSignals;
+        ent.Comp.LastSignals = new Dictionary<ProtoId<SourcePortPrototype>, bool>(state.LastSignals);
+        ent.Comp.Ports = [.. state.Ports];
     }
 
     /// <summary>
@@ -97,7 +108,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
 
             foreach (var link in invalidLinks)
             {
-                Log.Warning($"Device source {ToPrettyString(source)} contains invalid links to entity {ToPrettyString(sink)}: {link.SourcePort}->{link.SinkPort}");
+                Log.Warning($"Device source {ToPrettyString(source)} contains invalid links to entity {ToPrettyString(sink)}: {link.Source}->{link.Sink}");
                 links.Remove(link);
             }
 
@@ -157,6 +168,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     /// <remarks>
     /// The return value of this function goes up by one every time a sink is invoked, and goes down by one every tick.
     /// </remarks>
+    [PublicAPI]
     public int GetEffectiveInvokeCounter(DeviceLinkSinkComponent sink)
     {
         // Shouldn't be possible but just to be safe.
@@ -169,6 +181,16 @@ public sealed partial class DeviceLinkSystem : EntitySystem
             return 0;
 
         return Math.Max(0, sink.InvokeCounter - (int)tickDelta);
+    }
+
+    /// <summary>
+    /// Sets <see cref="DeviceLinkSinkComponent.InvokeLimit"/> to a new value and dirties it.
+    /// </summary>
+    [PublicAPI]
+    public void SetInvokeLimit(Entity<DeviceLinkSinkComponent> sink, int value)
+    {
+        sink.Comp.InvokeLimit = value;
+        DirtyField(sink.AsNullable(), nameof(DeviceLinkSinkComponent.InvokeLimit));
     }
 
     private void SetInvokeCounter(Entity<DeviceLinkSinkComponent> sink, int value)

@@ -27,12 +27,12 @@ public abstract partial class SharedArtifactAnalyzerSystem : EntitySystem
         SubscribeLocalEvent<ArtifactAnalyzerComponent, ItemRemovedEvent>(OnItemRemoved);
         SubscribeLocalEvent<ArtifactAnalyzerComponent, NewLinkEvent>(OnNewLinkAnalyzer);
         SubscribeLocalEvent<ArtifactAnalyzerComponent, LinkAttemptEvent>(OnLinkAttemptAnalyzer);
-        SubscribeLocalEvent<ArtifactAnalyzerComponent, PortDisconnectedEvent>(OnPortDisconnectedAnalyzer);
+        SubscribeLocalEvent<ArtifactAnalyzerComponent, SinkPortDisconnectedEvent>(OnPortDisconnectedAnalyzer);
 
         SubscribeLocalEvent<AnalysisConsoleComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AnalysisConsoleComponent, NewLinkEvent>(OnNewLinkConsole);
         SubscribeLocalEvent<AnalysisConsoleComponent, LinkAttemptEvent>(OnLinkAttemptConsole);
-        SubscribeLocalEvent<AnalysisConsoleComponent, PortDisconnectedEvent>(OnPortDisconnectedConsole);
+        SubscribeLocalEvent<AnalysisConsoleComponent, SourcePortDisconnectedEvent>(OnPortDisconnectedConsole);
     }
 
     private void OnItemPlaced(Entity<ArtifactAnalyzerComponent> ent, ref ItemPlacedEvent args)
@@ -100,7 +100,7 @@ public abstract partial class SharedArtifactAnalyzerSystem : EntitySystem
             args.Cancelled = true; // can only link to one device at a time
     }
 
-    private void OnPortDisconnectedConsole(Entity<AnalysisConsoleComponent> ent, ref PortDisconnectedEvent args)
+    private void OnPortDisconnectedConsole(Entity<AnalysisConsoleComponent> ent, ref SourcePortDisconnectedEvent args)
     {
         if (args.Port != ent.Comp.LinkingPort || ent.Comp.AnalyzerEntity == null)
             return;
@@ -109,7 +109,7 @@ public abstract partial class SharedArtifactAnalyzerSystem : EntitySystem
         Dirty(ent);
     }
 
-    private void OnPortDisconnectedAnalyzer(Entity<ArtifactAnalyzerComponent> ent, ref PortDisconnectedEvent args)
+    private void OnPortDisconnectedAnalyzer(Entity<ArtifactAnalyzerComponent> ent, ref SinkPortDisconnectedEvent args)
     {
         if (args.Port != ent.Comp.LinkingPort || ent.Comp.Console == null)
             return;

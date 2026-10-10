@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Content.Shared.Database;
+﻿using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Popups;
@@ -11,16 +10,15 @@ namespace Content.Shared.DeviceLinking.Systems;
 public sealed partial class DeviceLinkSystem
 {
     /// <summary>
-    /// Returns the links of a source
+    /// Returns the links of a source.
     /// </summary>
-    /// <returns>A list of sink and source port ids that are linked together</returns>
+    /// <returns>A list of sink and source port ids that are linked together.</returns>
     public HashSet<DeviceLink> GetLinks(Entity<DeviceLinkSourceComponent?> source, EntityUid sinkUid)
     {
         if (!_deviceLinkSourceQuery.Resolve(source.Owner, ref source.Comp) || !source.Comp.LinkedPorts.TryGetValue(sinkUid, out var links))
-            return new HashSet<DeviceLink>();
+            return [];
 
-        // TODO fix this when DeviceLinkSourceComponent will store DeviceLinks inside
-        return links.Select(x => new DeviceLink(x.Source, x.Sink)).ToHashSet();
+        return [.. links];
     }
 
     /// <summary>
@@ -29,16 +27,16 @@ public sealed partial class DeviceLinkSystem
     public HashSet<EntityUid> GetLinkedSinks(Entity<DeviceLinkSourceComponent?> source, ProtoId<SourcePortPrototype> port)
     {
         if (!_deviceLinkSourceQuery.Resolve(source, ref source.Comp) || !source.Comp.Outputs.TryGetValue(port, out var linked))
-            return new HashSet<EntityUid>(); // not a source or not linked
+            return []; // not a source or not linked
 
-        return new HashSet<EntityUid>(linked); // clone to prevent modifying the original
+        return [.. linked]; // clone to prevent modifying the original
     }
 
     /// <summary>
-    /// Returns the default links for the given list of source port prototypes
+    /// Returns the default links for the given list of source port prototypes.
     /// </summary>
-    /// <param name="sources">The list of source port prototypes to get the default links for</param>
-    /// <returns>A list of sink and source port ids</returns>
+    /// <param name="sources">The list of source port prototypes to get the default links for.</param>
+    /// <returns>A list of sink and source port ids.</returns>
     public List<DeviceLink> GetDefaults(HashSet<ProtoId<SourcePortPrototype>> sources)
     {
         var defaults = new List<DeviceLink>();
@@ -58,7 +56,7 @@ public sealed partial class DeviceLinkSystem
     }
 
     /// <summary>
-    /// Links the given source and sink by their default links
+    /// Links the given source and sink by their default links.
     /// </summary>
     public void LinkDefaults(
         EntityUid? userId,
@@ -79,13 +77,13 @@ public sealed partial class DeviceLinkSystem
         SaveLinks(userId, source, sink, defaults);
 
         if (userId != null)
-            _popupSystem.PopupCursor(Loc.GetString("signal-linking-verb-success", ("machine", source)), userId.Value);
+            _popup.PopupCursor(Loc.GetString("signal-linking-verb-success", ("machine", source)), userId.Value);
     }
 
 
     /// <summary>
     /// Saves multiple links between a source and a sink device.
-    /// Ignores links where either the source or sink port aren't present
+    /// Ignores links where either the source or sink port aren't present.
     /// </summary>
     public void SaveLinks(
         EntityUid? userId,
@@ -100,7 +98,7 @@ public sealed partial class DeviceLinkSystem
         if (!InRange(source, sink, source.Comp.Range))
         {
             if (userId != null)
-                _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-out-of-range"), userId.Value);
+                _popup.PopupCursor(Loc.GetString("signal-linker-component-out-of-range"), userId.Value);
 
             return;
         }
@@ -108,8 +106,8 @@ public sealed partial class DeviceLinkSystem
         RemoveSinkFromSource(source, sink);
         foreach (var (sourcePort, sinkPort) in links)
         {
-            DebugTools.Assert(ProtoMan.HasIndex<SourcePortPrototype>(sourcePort));
-            DebugTools.Assert(ProtoMan.HasIndex<SinkPortPrototype>(sinkPort));
+            DebugTools.Assert(ProtoMan.HasIndex(sourcePort));
+            DebugTools.Assert(ProtoMan.HasIndex(sinkPort));
 
             if (!source.Comp.Ports.Contains(sourcePort) || !sink.Comp.Ports.Contains(sinkPort))
                 continue;
@@ -131,7 +129,7 @@ public sealed partial class DeviceLinkSystem
     }
 
     /// <summary>
-    /// Removes every link from the given sink
+    /// Removes every link from the given sink.
     /// </summary>
     public void RemoveAllFromSink(Entity<DeviceLinkSinkComponent?> sink)
     {
@@ -145,7 +143,7 @@ public sealed partial class DeviceLinkSystem
     }
 
     /// <summary>
-    /// Removes all links between a source and a sink
+    /// Removes all links between a source and a sink.
     /// </summary>
     public void RemoveSinkFromSource(
         Entity<DeviceLinkSourceComponent?> source,
@@ -188,8 +186,8 @@ public sealed partial class DeviceLinkSystem
         {
             foreach (var (sourcePort, sinkPort) in ports)
             {
-                var sourceEv = new PortDisconnectedEvent(sourcePort);
-                var sinkEv = new PortDisconnectedEvent(sinkPort);
+                var sourceEv = new SourcePortDisconnectedEvent(sourcePort);
+                var sinkEv = new SinkPortDisconnectedEvent(sinkPort);
                 RaiseLocalEvent(source, ref sourceEv);
                 RaiseLocalEvent(sink, ref sinkEv);
             }
@@ -207,9 +205,9 @@ public sealed partial class DeviceLinkSystem
     }
 
     /// <summary>
-    /// Adds or removes a link depending on if it's already present
+    /// Adds or removes a link depending on if it's already present.
     /// </summary>
-    /// <returns>True if the link was successfully added or removed</returns>
+    /// <returns>True if the link was successfully added or removed.</returns>
     public bool ToggleLink(
         EntityUid? userId,
         Entity<DeviceLinkSourceComponent?> source,
@@ -221,26 +219,29 @@ public sealed partial class DeviceLinkSystem
             || !_deviceLinkSinkQuery.Resolve(sink.Owner, ref sink.Comp))
             return false;
 
-        var outputs = source.Comp.Outputs.GetOrNew(sourcePort);
-        var linkedPorts = source.Comp.LinkedPorts.GetOrNew(sink);
-
-        if (linkedPorts.Contains(new DeviceLink(sourcePort, sinkPort)))
+        if (source.Comp.LinkedPorts.TryGetValue(sink, out var existingLinkedPorts)
+            && existingLinkedPorts.Contains(new DeviceLink(sourcePort, sinkPort)))
         {
             if (userId != null)
                 _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"{ToPrettyString(userId.Value):actor} unlinked {ToPrettyString(source):source} {sourcePort} and {ToPrettyString(sink):sink} {sinkPort}");
             else
                 _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"unlinked {ToPrettyString(source):source} {sourcePort} and {ToPrettyString(sink):sink} {sinkPort}");
 
-            var sourceEv = new PortDisconnectedEvent(sourcePort);
-            var sinkEv = new PortDisconnectedEvent(sinkPort);
+            var sourceEv = new SourcePortDisconnectedEvent(sourcePort);
+            var sinkEv = new SinkPortDisconnectedEvent(sinkPort);
             RaiseLocalEvent(source, ref sourceEv);
             RaiseLocalEvent(sink, ref sinkEv);
 
-            outputs.Remove(sink);
-            linkedPorts.Remove(new DeviceLink(sourcePort, sinkPort));
+            if (source.Comp.Outputs.TryGetValue(sourcePort, out var existingOutputs))
+                existingOutputs.Remove(sink);
 
-            if (linkedPorts.Count != 0)
+            existingLinkedPorts.Remove(new DeviceLink(sourcePort, sinkPort));
+
+            if (existingLinkedPorts.Count != 0)
+            {
+                Dirty(source);
                 return true;
+            }
 
             source.Comp.LinkedPorts.Remove(sink);
             sink.Comp.LinkedSources.Remove(source);
@@ -253,6 +254,9 @@ public sealed partial class DeviceLinkSystem
 
             if (!CanLink(userId, source, sink, sourcePort, sinkPort))
                 return false;
+
+            var outputs = source.Comp.Outputs.GetOrNew(sourcePort);
+            var linkedPorts = source.Comp.LinkedPorts.GetOrNew(sink);
 
             outputs.Add(sink);
             linkedPorts.Add(new DeviceLink(sourcePort, sinkPort));
@@ -268,21 +272,21 @@ public sealed partial class DeviceLinkSystem
     }
 
     /// <summary>
-    /// Adds or removes a link depending on if it's already present
+    /// Adds or removes a link depending on if it's already present.
     /// </summary>
-    /// <returns>True if the link was successfully added or removed</returns>
+    /// <returns>True if the link was successfully added or removed.</returns>
     public bool ToggleLink(
         EntityUid? userId,
         Entity<DeviceLinkSourceComponent?> source,
         Entity<DeviceLinkSinkComponent?> sink,
         DeviceLink link)
     {
-        return ToggleLink(userId, source, sink, link.SourcePort, link.SinkPort);
+        return ToggleLink(userId, source, sink, link.Source, link.Sink);
     }
 
     /// <summary>
     /// Checks if a source and a sink can be linked by allowing other systems to veto the link
-    /// and by optionally checking if they are in range of each other
+    /// and by optionally checking if they are in range of each other.
     /// </summary>
     /// <returns></returns>
     private bool CanLink(
@@ -299,7 +303,7 @@ public sealed partial class DeviceLinkSystem
         if (checkRange && !InRange(source, sinkUid, source.Comp.Range))
         {
             if (userId.HasValue)
-                _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-out-of-range"), userId.Value);
+                _popup.PopupCursor(Loc.GetString("signal-linker-component-out-of-range"), userId.Value);
 
             return false;
         }
@@ -309,14 +313,14 @@ public sealed partial class DeviceLinkSystem
         RaiseLocalEvent(source, ref linkAttemptEvent, true);
         if (linkAttemptEvent.Cancelled && userId.HasValue)
         {
-            _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", sourcePort)), userId.Value);
+            _popup.PopupCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", sourcePort)), userId.Value);
             return false;
         }
 
         RaiseLocalEvent(sinkUid, ref linkAttemptEvent, true);
         if (linkAttemptEvent.Cancelled && userId.HasValue)
         {
-            _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", sourcePort)), userId.Value);
+            _popup.PopupCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", sourcePort)), userId.Value);
             return false;
         }
 
@@ -348,7 +352,7 @@ public sealed partial class DeviceLinkSystem
 
         var locString = removed ? "signal-linker-component-unlinked-port" : "signal-linker-component-linked-port";
 
-        _popupSystem.PopupCursor(Loc.GetString(locString,
+        _popup.PopupCursor(Loc.GetString(locString,
             ("machine1", sourceUid),
             ("port1", PortName<SourcePortPrototype>(source)),
             ("machine2", sinkUid),

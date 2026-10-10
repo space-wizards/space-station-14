@@ -10,7 +10,7 @@ using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Systems;
 using Content.Shared.UserInterface;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map.Events;
@@ -36,12 +36,12 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
     [Dependency] private INetManager _net = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
 
-    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
-    [Dependency] private EntityQuery<DeviceLinkSinkComponent> _deviceLinkSinkQuery = default!;
-    [Dependency] private EntityQuery<DeviceLinkSourceComponent> _deviceLinkSourceQuery = default!;
-    [Dependency] private EntityQuery<DeviceListComponent> _deviceListQuery = default!;
-    [Dependency] private EntityQuery<NetworkConfiguratorComponent> _networkConfigQuery = default!;
-    [Dependency] private EntityQuery<LinkedDeviceNetworkComponent> _linkedDeviceQuery = default!;
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery;
+    [Dependency] private EntityQuery<DeviceLinkSinkComponent> _deviceLinkSinkQuery;
+    [Dependency] private EntityQuery<DeviceLinkSourceComponent> _deviceLinkSourceQuery;
+    [Dependency] private EntityQuery<DeviceListComponent> _deviceListQuery;
+    [Dependency] private EntityQuery<NetworkConfiguratorComponent> _networkConfigQuery;
+    [Dependency] private EntityQuery<LinkedDeviceNetworkComponent> _linkedDeviceQuery;
 
     [SubscribeLocalEvent]
     private void OnMapSave(BeforeSerializationEvent ev)
@@ -134,8 +134,8 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
             return;
 
         var address = _deviceNetwork.GetAddress(target);
-        var addressId = target.Comp.Data.AddressId;
-        if (target.Comp.Data.AddressId == 0)
+        var addressId = target.Comp.Address;
+        if (target.Comp.Address == 0)
         {
             // This primarily checks if the entity in question is pre-map init or not.
             // This is because otherwise, anything that uses DeviceNetwork will not
@@ -334,10 +334,11 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
         foreach (var invalidDevice in _invalidDevicesCache)
         {
             configurator.Comp.Devices.Remove(invalidDevice.Item1);
+            configurator.Comp.NamedDevices.Remove(invalidDevice.Item1);
             DebugTools.Assert($"{ToPrettyString(configurator)} contained an invalid link to entity {invalidDevice}!");
         }
 
-        DirtyField(configurator.AsNullable(), nameof(NetworkConfiguratorComponent.Devices));
+        DirtyFields(configurator.AsNullable(), null,  nameof(NetworkConfiguratorComponent.Devices), nameof(NetworkConfiguratorComponent.NamedDevices));
     }
 
     /// <summary>
@@ -353,7 +354,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
             return;
 
         var name = Identity.Name(target, EntityManager, configurator);
-        addressId ??= target.Comp.Data.AddressId;
+        addressId ??= target.Comp.Address;
         configurator.Comp.Devices.Add(addressId.Value, target);
         configurator.Comp.NamedDevices.Add(addressId.Value, (target.Comp.Prefix, name));
         DirtyFields(configurator, null, nameof(NetworkConfiguratorComponent.Devices), nameof(NetworkConfiguratorComponent.NamedDevices));

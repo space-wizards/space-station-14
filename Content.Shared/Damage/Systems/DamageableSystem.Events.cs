@@ -1,4 +1,5 @@
 using Content.Shared.CCVar;
+using Content.Shared.Cloning.Events;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
@@ -189,7 +190,8 @@ public sealed partial class DamageableSystem
     {
         args.State = new DamageableComponentState(
             _netMan.IsServer ? ent.Comp.Damage : ent.Comp.Damage.Clone(),
-            ent.Comp.DamageModifierSetId
+            ent.Comp.DamageModifierSetId,
+            ent.Comp.Displacement
         );
     }
 
@@ -199,6 +201,7 @@ public sealed partial class DamageableSystem
             return;
 
         ent.Comp.DamageModifierSetId = state.ModifierSetId;
+        ent.Comp.Displacement = state.Displacement;
 
         // Has the damage actually changed?
         var newDamage = state.Damage.Clone();

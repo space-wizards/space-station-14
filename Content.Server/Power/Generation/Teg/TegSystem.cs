@@ -1,4 +1,4 @@
-﻿using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Audio;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Server.NodeContainer.Nodes;

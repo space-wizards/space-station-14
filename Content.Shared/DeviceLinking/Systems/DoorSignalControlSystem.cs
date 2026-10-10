@@ -1,5 +1,6 @@
 using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Payloads;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Systems;
@@ -10,17 +11,24 @@ namespace Content.Shared.DeviceLinking.Systems;
 [UsedImplicitly]
 public sealed partial class DoorSignalControlSystem : EntitySystem
 {
-    [Dependency] private SharedDoorSystem _doorSystem = default!;
-    [Dependency] private DeviceLinkSystem _signalSystem = default!;
+    [Dependency] private SharedDoorSystem _door = default!;
+    [Dependency] private DeviceLinkSystem _signal = default!;
 
-    [Dependency] private EntityQuery<DoorComponent> _doorQuery = default!;
-    [Dependency] private EntityQuery<DoorBoltComponent> _doorBoltQuery = default!;
+    [Dependency] private EntityQuery<DoorComponent> _doorQuery;
+    [Dependency] private EntityQuery<DoorBoltComponent> _doorBoltQuery;
 
     [SubscribeLocalEvent]
     private void OnInit(Entity<DoorSignalControlComponent> ent, ref ComponentInit args)
     {
-        _signalSystem.EnsureSinkPorts(ent.Owner, ent.Comp.OpenPort, ent.Comp.ClosePort, ent.Comp.TogglePort);
-        _signalSystem.EnsureSourcePort(ent.Owner, ent.Comp.OutOpen);
+        _signal.EnsureSinkPorts(ent.Owner, ent.Comp.OpenPort, ent.Comp.ClosePort, ent.Comp.TogglePort);
+
+        if (HasComp<DoorBoltComponent>(ent.Owner))
+            _signal.EnsureSinkPort(ent.Owner, ent.Comp.InBolt);
+
+        _signal.EnsureSourcePort(ent.Owner, ent.Comp.OutOpen);
+
+        if (HasComp<DoorBoltComponent>(ent.Owner))
+            _signal.EnsureSourcePort(ent.Owner, ent.Comp.OutBolt);
     }
 
     [SubscribeLocalEvent]
@@ -32,16 +40,16 @@ public sealed partial class DoorSignalControlSystem : EntitySystem
         if (args.Port == ent.Comp.OpenPort)
         {
             if (door.State == DoorState.Closed)
-                _doorSystem.TryOpen(ent.Owner, door);
+                _door.TryOpen(ent.Owner, door);
         }
         else if (args.Port == ent.Comp.ClosePort)
         {
             if (door.State == DoorState.Open)
-                _doorSystem.TryClose(ent.Owner, door);
+                _door.TryClose(ent.Owner, door);
         }
         else if (args.Port == ent.Comp.TogglePort)
         {
-            _doorSystem.TryToggleDoor(ent.Owner, door);
+            _door.TryToggleDoor(ent.Owner, door);
         }
         else if (args.Port == ent.Comp.InBolt)
         {
@@ -49,7 +57,7 @@ public sealed partial class DoorSignalControlSystem : EntitySystem
                 return;
 
             // If it's a pulse toggle, otherwise set bolts to high/low.
-            _doorSystem.SetBoltsDown((ent.Owner, bolts), !bolts.BoltsDown);
+            _door.SetBoltsDown((ent.Owner, bolts), !bolts.BoltsDown);
         }
     }
 
@@ -66,7 +74,7 @@ public sealed partial class DoorSignalControlSystem : EntitySystem
                 return;
 
             if (door.State == DoorState.Closed)
-                _doorSystem.TryOpen(ent.Owner, door);
+                _door.TryOpen(ent.Owner, door);
         }
         else if (args.Port == ent.Comp.ClosePort)
         {
@@ -74,14 +82,12 @@ public sealed partial class DoorSignalControlSystem : EntitySystem
                 return;
 
             if (door.State == DoorState.Open)
-                _doorSystem.TryClose(ent.Owner, door);
+                _door.TryClose(ent.Owner, door);
         }
         else if (args.Port == ent.Comp.TogglePort)
         {
             if (state != SignalState.Low)
-            {
-                _doorSystem.TryToggleDoor(ent.Owner, door);
-            }
+                _door.TryToggleDoor(ent.Owner, door);
         }
         else if (args.Port == ent.Comp.InBolt)
         {
@@ -91,15 +97,11 @@ public sealed partial class DoorSignalControlSystem : EntitySystem
             // If it's a pulse toggle, otherwise set bolts to high/low.
             bool bolt;
             if (state == SignalState.Momentary)
-            {
                 bolt = !bolts.BoltsDown;
-            }
             else
-            {
                 bolt = state == SignalState.High;
-            }
 
-            _doorSystem.SetBoltsDown((ent.Owner, bolts), bolt);
+            _door.SetBoltsDown((ent.Owner, bolts), bolt);
         }
     }
 
@@ -110,15 +112,21 @@ public sealed partial class DoorSignalControlSystem : EntitySystem
         {
             case DoorState.Closed:
                 // only ever say the door is closed when it is completely airtight
-                _signalSystem.SendSignal(ent.Owner, ent.Comp.OutOpen, false);
+                _signal.SendSignal(ent.Owner, ent.Comp.OutOpen, false);
                 break;
             case DoorState.Open:
             case DoorState.Opening:
             case DoorState.Closing:
             case DoorState.Emagging:
                 // say the door is open whenever it would be letting air pass
-                _signalSystem.SendSignal(ent.Owner, ent.Comp.OutOpen, true);
+                _signal.SendSignal(ent.Owner, ent.Comp.OutOpen, true);
                 break;
         }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnBoltsChanged(Entity<DoorSignalControlComponent> ent, ref DoorBoltsChangedEvent args)
+    {
+        _signal.SendSignal(ent.Owner, ent.Comp.OutBolt, args.BoltsDown);
     }
 }

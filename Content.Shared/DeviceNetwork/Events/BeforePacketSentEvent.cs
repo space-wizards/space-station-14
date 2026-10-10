@@ -7,12 +7,9 @@ namespace Content.Shared.DeviceNetwork.Events;
 /// Event raised before a device network packet is sent.
 /// Subscribed to by other systems to prevent the packet from being sent.
 /// </summary>
-/// <remarks>
-/// It's recommended to make a new device network type to add and remove the entity from it on some event subscriptions.
-/// </remarks>
 [ByRefEvent]
 public record struct BeforePacketSentEvent(
-    ProtoId<DeviceNetworkPrototype> NetId,
+    int NetId,
     DeviceAddress? Address,
     DeviceFrequency Frequency,
     DeviceAddress SenderAddress,

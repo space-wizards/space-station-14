@@ -1,4 +1,4 @@
-﻿using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.Serialization;
 using ConsoleUIState = Content.Shared.SensorMonitoring.SensorMonitoringConsoleBoundInterfaceState;
 

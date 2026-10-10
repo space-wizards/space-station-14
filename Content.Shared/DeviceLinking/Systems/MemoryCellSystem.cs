@@ -1,5 +1,6 @@
 using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Payloads;
 
 namespace Content.Shared.DeviceLinking.Systems;
 
@@ -37,10 +38,18 @@ public sealed partial class MemoryCellSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnSignalReceived(Entity<MemoryCellComponent> ent, ref SignalReceivedEvent args)
     {
+        var state = SignalState.Momentary;
+
         if (args.Port == ent.Comp.InputPort)
-            ent.Comp.InputState = SignalState.Momentary;
+        {
+            ent.Comp.InputState = state;
+            DirtyField(ent.AsNullable(), nameof(MemoryCellComponent.InputState));
+        }
         else if (args.Port == ent.Comp.EnablePort)
-            ent.Comp.EnableState = SignalState.Momentary;
+        {
+            ent.Comp.EnableState = state;
+            DirtyField(ent.AsNullable(), nameof(MemoryCellComponent.EnableState));
+        }
 
         UpdateOutput(ent);
     }
@@ -51,18 +60,21 @@ public sealed partial class MemoryCellSystem : EntitySystem
         var state = args.Data.State;
 
         if (args.Port == ent.Comp.InputPort)
+        {
             ent.Comp.InputState = state;
+            DirtyField(ent.AsNullable(), nameof(MemoryCellComponent.InputState));
+        }
         else if (args.Port == ent.Comp.EnablePort)
+        {
             ent.Comp.EnableState = state;
+            DirtyField(ent.AsNullable(), nameof(MemoryCellComponent.EnableState));
+        }
 
         UpdateOutput(ent);
     }
 
     private void UpdateOutput(Entity<MemoryCellComponent, DeviceLinkSourceComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp2))
-            return;
-
         if (ent.Comp1.EnableState == SignalState.Low)
             return;
 
@@ -71,6 +83,7 @@ public sealed partial class MemoryCellSystem : EntitySystem
             return;
 
         ent.Comp1.LastOutput = value;
+        DirtyField(ent, ent.Comp1, nameof(MemoryCellComponent.LastOutput));
         _deviceLink.SendSignal((ent.Owner, ent.Comp2), ent.Comp1.OutputPort, value);
     }
 }

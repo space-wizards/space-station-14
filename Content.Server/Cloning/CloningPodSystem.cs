@@ -70,7 +70,7 @@ public sealed partial class CloningPodSystem : EntitySystem
         SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
         SubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
         SubscribeLocalEvent<CloningPodComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<CloningPodComponent, PortDisconnectedEvent>(OnPortDisconnected);
+        SubscribeLocalEvent<CloningPodComponent, SinkPortDisconnectedEvent>(OnPortDisconnected);
         SubscribeLocalEvent<CloningPodComponent, AnchorStateChangedEvent>(OnAnchor);
         SubscribeLocalEvent<CloningPodComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<CloningPodComponent, GotEmaggedEvent>(OnEmagged);
@@ -107,9 +107,11 @@ public sealed partial class CloningPodSystem : EntitySystem
         }
         UpdateStatus(clonedComponent.Parent, CloningPodStatus.Cloning, cloningPodComponent);
     }
-    private void OnPortDisconnected(Entity<CloningPodComponent> ent, ref PortDisconnectedEvent args)
+
+    private void OnPortDisconnected(Entity<CloningPodComponent> ent, ref SinkPortDisconnectedEvent args)
     {
-        ent.Comp.ConnectedConsole = null;
+        if (ent.Comp.PodPort == args.Port)
+            ent.Comp.ConnectedConsole = null;
     }
 
     private void OnAnchor(Entity<CloningPodComponent> ent, ref AnchorStateChangedEvent args)

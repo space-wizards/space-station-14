@@ -372,7 +372,7 @@ public sealed partial class AtmosMonitoringConsoleSystem : SharedAtmosMonitoring
         // Remove all stale values for the tile
         foreach (var (index, atmosPipeData) in chunk.AtmosPipeData)
         {
-            var mask = (ulong)SharedNavMapSystem.AllDirMask << tileIdx * SharedNavMapSystem.Directions;
+            var mask = (ulong)NavMapSystem.AllDirMask << tileIdx * NavMapSystem.Directions;
             chunk.AtmosPipeData[index] = atmosPipeData & ~mask;
         }
 
@@ -434,7 +434,7 @@ public sealed partial class AtmosMonitoringConsoleSystem : SharedAtmosMonitoring
             var pipeDirection = pipeNode.CurrentPipeDirection;
 
             chunk.AtmosPipeData.TryGetValue(subnet, out var atmosPipeData);
-            atmosPipeData |= (ulong)pipeDirection << tileIdx * SharedNavMapSystem.Directions;
+            atmosPipeData |= (ulong)pipeDirection << tileIdx * NavMapSystem.Directions;
             chunk.AtmosPipeData[subnet] = atmosPipeData;
         }
     }

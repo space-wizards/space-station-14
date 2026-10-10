@@ -1,9 +1,11 @@
 using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Payloads;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Components;
+using Content.Shared.Timing.Systems;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio.Systems;
 
@@ -18,7 +20,7 @@ public sealed partial class LogicGateSystem : EntitySystem
     [Dependency] private SharedToolSystem _tool = default!;
     [Dependency] private UseDelaySystem _useDelay = default!;
 
-    [Dependency] private EntityQuery<UseDelayComponent> _useDelayQuery = default!;
+    [Dependency] private EntityQuery<UseDelayComponent> _useDelayQuery;
 
     private readonly int _gateCount = Enum.GetValues<LogicGate>().Length;
 
@@ -29,13 +31,10 @@ public sealed partial class LogicGateSystem : EntitySystem
         {
             // handle momentary pulses - high when received then low the next tick
             if (comp.StateA == SignalState.Momentary)
-            {
                 comp.StateA = SignalState.Low;
-            }
+
             if (comp.StateB == SignalState.Momentary)
-            {
                 comp.StateB = SignalState.Low;
-            }
 
             // output most likely changed so update it
             UpdateOutput((uid, comp));
@@ -73,12 +72,13 @@ public sealed partial class LogicGateSystem : EntitySystem
         var gate = (int) ent.Comp.Gate;
         gate = ++gate % _gateCount;
         ent.Comp.Gate = (LogicGate) gate;
+        DirtyField(ent.AsNullable(), nameof(LogicGateComponent.Gate));
 
         // since gate changed the output probably has too, update it
         UpdateOutput(ent);
 
         // notify the user
-        _audio.PlayPvs(ent.Comp.CycleSound, ent.Owner);
+        _audio.PlayPredicted(ent.Comp.CycleSound, ent.Owner, args.User);
         var msg = Loc.GetString("logic-gate-cycle", ("gate", ent.Comp.Gate.ToString().ToUpper()));
         _popup.PopupEntity(msg, ent.Owner, args.User);
         _appearance.SetData(ent.Owner, LogicGateVisuals.Gate, ent.Comp.Gate);
@@ -94,11 +94,13 @@ public sealed partial class LogicGateSystem : EntitySystem
         if (args.Port == ent.Comp.InputPortA)
         {
             ent.Comp.StateA = SignalState.Momentary;
+            DirtyField(ent.AsNullable(), nameof(LogicGateComponent.StateA));
             _appearance.SetData(ent.Owner, LogicGateVisuals.InputA, false); //If A == High => Sets input A sprite to True
         }
         else if (args.Port == ent.Comp.InputPortB)
         {
             ent.Comp.StateB = SignalState.Momentary;
+            DirtyField(ent.AsNullable(), nameof(LogicGateComponent.StateB));
             _appearance.SetData(ent.Owner, LogicGateVisuals.InputB, false); //If B == High => Sets input B sprite to True
         }
 
@@ -114,11 +116,13 @@ public sealed partial class LogicGateSystem : EntitySystem
         if (args.Port == ent.Comp.InputPortA)
         {
             ent.Comp.StateA = state;
+            DirtyField(ent.AsNullable(), nameof(LogicGateComponent.StateA));
             _appearance.SetData(ent.Owner, LogicGateVisuals.InputA, state == SignalState.High); //If A == High => Sets input A sprite to True
         }
         else if (args.Port == ent.Comp.InputPortB)
         {
             ent.Comp.StateB = state;
+            DirtyField(ent.AsNullable(), nameof(LogicGateComponent.StateB));
             _appearance.SetData(ent.Owner, LogicGateVisuals.InputB, state == SignalState.High); //If B == High => Sets input B sprite to True
         }
 
@@ -160,11 +164,12 @@ public sealed partial class LogicGateSystem : EntitySystem
         _appearance.SetData(ent.Owner, LogicGateVisuals.Output, output);
 
         // only send a payload if it actually changed
-        if (output != ent.Comp.LastOutput)
-        {
-            ent.Comp.LastOutput = output;
+        if (output == ent.Comp.LastOutput)
+            return;
 
-            _deviceLink.SendSignal(ent.Owner, ent.Comp.OutputPort, output);
-        }
+        ent.Comp.LastOutput = output;
+        DirtyField(ent.AsNullable(), nameof(LogicGateComponent.LastOutput));
+
+        _deviceLink.SendSignal(ent.Owner, ent.Comp.OutputPort, output);
     }
 }

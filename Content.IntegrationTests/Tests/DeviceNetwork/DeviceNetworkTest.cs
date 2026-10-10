@@ -5,6 +5,7 @@ using Content.Shared.DeviceNetwork.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Systems;
 
 namespace Content.IntegrationTests.Tests.DeviceNetwork
 {
@@ -76,8 +77,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 Assert.That(entityManager.TryGetComponent(device1, out networkComponent1), Is.True);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(networkComponent1.Data.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent1.Data.AddressId, Is.Not.EqualTo(DeviceAddress.Invalid));
+                    Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
                 });
 
                 device2 = entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace);
@@ -85,13 +86,13 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 Assert.That(entityManager.TryGetComponent(device2, out networkComponent2), Is.True);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(networkComponent1.Data.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent2.Data.AddressId, Is.Not.EqualTo(DeviceAddress.Invalid));
+                    Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent2.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
 
                     Assert.That(networkComponent1.Data.AddressId, Is.Not.EqualTo(networkComponent2.Data.AddressId));
                 });
 
-                deviceNetSystem.SendPacket(device1, networkComponent2.Data.AddressId, ref payload, networkComponent2.Data.ReceiveFrequency.Value);
+                deviceNetSystem.SendPacket(device1, networkComponent2.Address, ref payload, networkComponent2.ReceiveFrequency.Value);
                 Assert.That(payload, Is.EqualTo(deviceNetTestSystem.LastPayload));
             });
         }
@@ -125,8 +126,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 });
                 Assert.Multiple(() =>
                 {
-                    Assert.That(networkComponent1.Data.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent1.Data.AddressId, Is.Not.EqualTo(DeviceAddress.Invalid));
+                    Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
                 });
 
                 device2 = entityManager.SpawnEntity("WirelessNetworkDeviceDummy", new MapCoordinates(new Vector2(0, 50), testMap.MapId));
@@ -134,8 +135,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 Assert.That(entityManager.TryGetComponent(device2, out networkComponent2), Is.True);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(networkComponent2.Data.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent2.Data.AddressId, Is.Not.EqualTo(DeviceAddress.Invalid));
+                    Assert.That(networkComponent2.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent2.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
 
                     Assert.That(networkComponent1.Data.AddressId, Is.Not.EqualTo(networkComponent2.Data.AddressId));
                 });
@@ -147,7 +148,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                     TestBool = true
                 };
 
-                deviceNetSystem.SendPacket(device1, networkComponent2.Data.AddressId, ref payload, networkComponent2.Data.ReceiveFrequency.Value);
+                deviceNetSystem.SendPacket(device1, networkComponent2.Address, ref payload, networkComponent2.ReceiveFrequency.Value);
 
                 Assert.That(payload, Is.EqualTo(deviceNetTestSystem.LastPayload));
 
@@ -160,7 +161,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                     TestBool = true
                 };
 
-                deviceNetSystem.SendPacket(device1, networkComponent2.Data.AddressId, ref secondPayload, networkComponent2.Data.ReceiveFrequency.Value);
+                deviceNetSystem.SendPacket(device1, networkComponent2.Address, ref secondPayload, networkComponent2.ReceiveFrequency.Value);
                 Assert.That(secondPayload, Is.Not.EqualTo(deviceNetTestSystem.LastPayloadSecond));
             });
         }
@@ -197,8 +198,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 });
                 Assert.Multiple(() =>
                 {
-                    Assert.That(networkComponent1.Data.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent1.Data.AddressId, Is.Not.EqualTo(DeviceAddress.Invalid));
+                    Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
                 });
 
                 device2 = entityManager.SpawnEntity("DummyWiredNetworkDevice", coordinates);
@@ -206,8 +207,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 Assert.That(entityManager.TryGetComponent(device2, out networkComponent2), Is.True);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(networkComponent2.Data.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent2.Data.AddressId, Is.Not.EqualTo(DeviceAddress.Invalid));
+                    Assert.That(networkComponent2.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent2.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
 
                     Assert.That(networkComponent1.Data.AddressId, Is.Not.EqualTo(networkComponent2.Data.AddressId));
                 });
@@ -219,11 +220,11 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                     TestBool = true
                 };
 
-                deviceNetSystem.SendPacket(device1, networkComponent2.Data.AddressId, ref payload, networkComponent2.Data.ReceiveFrequency.Value);
+                deviceNetSystem.SendPacket(device1, networkComponent2.Address, ref payload, networkComponent2.ReceiveFrequency.Value);
 
                 entityManager.SpawnEntity("CableApcExtension", coordinates);
 
-                deviceNetSystem.SendPacket(device1, networkComponent2.Data.AddressId, ref payload, networkComponent2.Data.ReceiveFrequency.Value);
+                deviceNetSystem.SendPacket(device1, networkComponent2.Address, ref payload, networkComponent2.ReceiveFrequency.Value);
 
                 Assert.That(payload, Is.EqualTo(deviceNetTestSystem.LastPayload));
             });

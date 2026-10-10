@@ -63,7 +63,7 @@ public readonly partial struct LocDeviceAddress(DeviceAddress addressId, LocId? 
 
     public static implicit operator LocDeviceAddress(DeviceNetworkComponent component)
     {
-        return new LocDeviceAddress(component.Data.AddressId, component.Prefix);
+        return new LocDeviceAddress(component.Address, component.Prefix);
     }
 
     public bool Equals(LocDeviceAddress? other)

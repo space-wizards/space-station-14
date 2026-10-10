@@ -12,6 +12,8 @@ public sealed class DeviceLinkingTest : GameTest
 {
     private const string PortTesterProtoId = "DeviceLinkingSinkPortTester";
 
+    private const string PortOutputName = "Output";
+
     [TestPrototypes]
     private const string Prototypes = $@"
 - type: entity
@@ -19,7 +21,7 @@ public sealed class DeviceLinkingTest : GameTest
   components:
   - type: DeviceLinkSource
     ports:
-    - Output
+    - {PortOutputName}
 ";
 
     private static string[] _entitiesWithDeviceLinkSink = GameDataScrounger.EntitiesWithComponent("DeviceLinkSink");
@@ -65,10 +67,10 @@ public sealed class DeviceLinkingTest : GameTest
                     deviceLinkSys.SaveLinks(null,
                         (sourceEnt, sourceComp),
                         (sinkEnt, sinkComp),
-                        [("Output", port.Id)]);
+                        [(PortOutputName, port.Id)]);
 
                     // Send a signal to the port
-                    Assert.DoesNotThrow(() => { deviceLinkSys.InvokePort((sourceEnt, sourceComp), "Output"); },
+                    Assert.DoesNotThrow(() => { deviceLinkSys.InvokePort((sourceEnt, sourceComp), PortOutputName); },
                         $"Exception thrown while triggering port {port.Id} of the sink device.");
 
                     mapSys.DeleteMap(mapId);

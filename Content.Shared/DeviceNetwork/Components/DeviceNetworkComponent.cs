@@ -5,15 +5,43 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.DeviceNetwork.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
-[Access(typeof(DeviceNetworkSystem))]
+[Access(typeof(DeviceNetworkSystem), typeof(DeviceNet))]
 public sealed partial class DeviceNetworkComponent : Component
 {
-    [DataField]
-    public ProtoId<DeviceNetworkPrototype> DeviceNetId = "Private";
+    /// <summary>
+    /// Default device network ID to connect to.
+    /// </summary>
+    [DataField("deviceNetId")]
+    public DeviceNetIdDefaults NetIdEnum { get; set; }
 
-    /// <inheritdoc cref="DeviceData"/>
-    [IncludeDataField, AutoNetworkedField]
-    public DeviceData Data;
+    /// <summary>
+    /// The numeric identifier of the device network this device uses.
+    /// </summary>
+    public int DeviceNetId => (int) NetIdEnum;
+
+    /// <summary>
+    /// The device address paired with its optional localized prefix.
+    /// </summary>
+    public LocDeviceAddress LocAddress => new(Address, Prefix);
+
+    /// <summary>
+    /// The frequency that this device is listening on.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public DeviceFrequency? ReceiveFrequency;
+
+    /// <summary>
+    /// The address ID of the device, either on the network it is currently connected to or whatever address it
+    /// most recently used.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public DeviceAddress Address = DeviceAddress.Invalid;
+
+    /// <summary>
+    /// Whether the device should listen for all device messages, regardless of the intended recipient.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ReceiveAll;
 
     /// <summary>
     /// The frequency that this device going to try to transmit on.
@@ -65,34 +93,9 @@ public sealed partial class DeviceNetworkComponent : Component
     public bool SavableAddress = true;
 
     /// <summary>
-    ///     If true, the address was customized and should be preserved across networks. If false, a randomly
-    ///     generated address will be created whenever this device connects to a network.
+    /// If true, the address was customized and should be preserved across networks. If false, a randomly
+    /// generated address will be created whenever this device connects to a network.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool CustomAddress;
-
-    #region Obsolete
-
-    [Obsolete("Access this field through DeviceNetworkComponent.Data instead")]
-    public DeviceFrequency? ReceiveFrequency
-    {
-        get => Data.ReceiveFrequency;
-        set => Data.ReceiveFrequency = value;
-    }
-
-    [Obsolete("Access this field through DeviceNetworkComponent.Data instead")]
-    public DeviceAddress Address
-    {
-        get => Data.AddressId;
-        set => Data.AddressId = value;
-    }
-
-    [Obsolete("Access this field through DeviceNetworkComponent.Data instead")]
-    public bool ReceiveAll
-    {
-        get => Data.ReceiveAll;
-        set => Data.ReceiveAll = value;
-    }
-
-    #endregion
 }

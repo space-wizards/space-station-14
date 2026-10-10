@@ -5,19 +5,10 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.NetworkConfigurator;
 
-public sealed class NetworkConfiguratorListBoundUserInterface : BoundUserInterface
+public sealed class NetworkConfiguratorListBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private NetworkConfiguratorListMenu? _listMenu;
-
-    public NetworkConfiguratorListBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
-
-    public void OnRemoveButtonPressed(LocDeviceAddress address)
-    {
-        SendPredictedMessage(new NetworkConfiguratorRemoveDeviceMessage(address));
-    }
 
     protected override void Open()
     {
@@ -42,5 +33,10 @@ public sealed class NetworkConfiguratorListBoundUserInterface : BoundUserInterfa
     private void OnClearButtonPressed()
     {
         SendPredictedMessage(new NetworkConfiguratorListClearDevicesMessage());
+    }
+
+    private void OnRemoveButtonPressed(DeviceAddress address)
+    {
+        SendPredictedMessage(new NetworkConfiguratorRemoveDeviceMessage(address));
     }
 }

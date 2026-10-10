@@ -1,6 +1,6 @@
 ﻿using Content.Shared.Database;
 using Content.Shared.DeviceConfigurator.Components;
-using Content.Shared.IdentityManagement;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Popups;
 
 namespace Content.Shared.DeviceConfigurator.Systems;
@@ -18,7 +18,7 @@ public sealed partial class NetworkConfiguratorSystem
             !AccessCheck(targetUid.Value, userUid, configurator))
             return;
 
-        _uiSystem.OpenUi(configurator.Owner, NetworkConfiguratorUiKey.Link, userUid);
+        _uiSystem.OpenUi(configurator.Owner, NetworkConfiguratorUiKey.Link, userUid, true);
         configurator.Comp.DeviceLinkTarget = targetUid;
         DirtyField(configurator.AsNullable(), nameof(NetworkConfiguratorComponent.DeviceLinkTarget));
 
@@ -61,19 +61,11 @@ public sealed partial class NetworkConfiguratorSystem
         DirtyField(configurator.AsNullable(), nameof(NetworkConfiguratorComponent.ActiveDeviceList));
         DirtyField(targetUid.Value, list, nameof(DeviceListComponent.Configurators));
 
-        if (_uiSystem.TryOpenUi(configurator.Owner, NetworkConfiguratorUiKey.Configure, userUid))
-        {
-            if (_uiSystem.TryGetOpenUi(configurator.Owner, NetworkConfiguratorUiKey.Configure, out var bui))
-                bui.Update();
-
-            /*_uiSystem.SetUiState(configurator.Owner,
-                NetworkConfiguratorUiKey.Configure,
-                new DeviceListUserInterfaceState(
-                    _deviceListSystem.GetDeviceList(configurator.Comp.ActiveDeviceList.Value)
-                        .Select(v => (v.Key, MetaData(v.Value.Item1).EntityName))
-                        .ToHashSet()
-                ));*/
-        }
+        if (!_uiSystem.TryOpenUi(configurator.Owner, NetworkConfiguratorUiKey.Configure, userUid, true))
+            return;
+        
+        if (_uiSystem.TryGetOpenUi(configurator.Owner, NetworkConfiguratorUiKey.Configure, out var bui))
+            bui.Update();
     }
 
     /// <summary>
@@ -86,6 +78,9 @@ public sealed partial class NetworkConfiguratorSystem
 
         if (_uiSystem.TryGetOpenUi(ent.Owner, NetworkConfiguratorUiKey.List, out var bui))
             bui.Update();
+
+        if (_uiSystem.TryGetOpenUi(ent.Owner, NetworkConfiguratorUiKey.Configure, out var configure))
+            configure.Update();
     }
 
     /// <summary>
@@ -94,6 +89,9 @@ public sealed partial class NetworkConfiguratorSystem
     [SubscribeLocalEvent]
     private void OnUiClosed(Entity<NetworkConfiguratorComponent> ent, ref BoundUIClosedEvent args)
     {
+        if (_gameTiming.ApplyingState)
+            return;
+
         if (!args.UiKey.Equals(NetworkConfiguratorUiKey.Configure)
             && !args.UiKey.Equals(NetworkConfiguratorUiKey.Link)
             && !args.UiKey.Equals(NetworkConfiguratorUiKey.List))
@@ -113,8 +111,7 @@ public sealed partial class NetworkConfiguratorSystem
         {
             ent.Comp.ActiveDeviceLink = null;
             ent.Comp.DeviceLinkTarget = null;
-            DirtyField(ent.AsNullable(), nameof(NetworkConfiguratorComponent.ActiveDeviceLink));
-            DirtyField(ent.AsNullable(), nameof(NetworkConfiguratorComponent.DeviceLinkTarget));
+            DirtyFields(ent.AsNullable(), null, nameof(NetworkConfiguratorComponent.ActiveDeviceLink), nameof(NetworkConfiguratorComponent.DeviceLinkTarget));
         }
 
         DirtyField(ent.AsNullable(), nameof(NetworkConfiguratorComponent.ActiveDeviceList));
@@ -145,6 +142,8 @@ public sealed partial class NetworkConfiguratorSystem
 
         ent.Comp.Devices.Remove(args.Address.AddressId);
         ent.Comp.NamedDevices.Remove(args.Address.AddressId);
+        DirtyFields(ent.AsNullable(), null, nameof(NetworkConfiguratorComponent.Devices), nameof(NetworkConfiguratorComponent.NamedDevices));
+
         if (_linkedDeviceQuery.TryComp(removedDevice, out var device))
         {
             device.Configurators.Remove(ent);
@@ -152,7 +151,6 @@ public sealed partial class NetworkConfiguratorSystem
         }
 
         UpdateListUiState(ent);
-        DirtyField(ent.AsNullable(), nameof(NetworkConfiguratorComponent.Devices));
     }
 
     [SubscribeLocalEvent]
@@ -288,7 +286,7 @@ public sealed partial class NetworkConfiguratorSystem
             _ => "error"
         };
 
-        _popupSystem.PopupCursor(Loc.GetString(resultText), actor, PopupType.Medium);
+        _popupSystem.PopupCursor(resultText, actor, PopupType.Medium);
 
         if (_uiSystem.TryGetOpenUi(ent.Owner, NetworkConfiguratorUiKey.Configure, out var bui))
             bui.Update();
@@ -339,7 +337,7 @@ public sealed partial class NetworkConfiguratorSystem
 
         ClearDevices(ent);
 
-        foreach (var (addr, (device, name)) in _deviceListSystem.GetDeviceList(ent.Comp.ActiveDeviceList.Value))
+        foreach (var (_, (device, _)) in _deviceListSystem.GetDeviceList(ent.Comp.ActiveDeviceList.Value))
         {
             AddDevice(ent.AsNullable(), device);
         }
@@ -372,15 +370,23 @@ public sealed partial class NetworkConfiguratorSystem
         if (!Resolve(conf.Owner, ref conf.Comp))
             return;
 
+        var removedAddresses = new List<DeviceAddress>();
         foreach (var (addr, dev) in conf.Comp.Devices)
         {
             if (device.Owner != dev)
                 continue;
 
+            removedAddresses.Add(addr);
+        }
+
+        foreach (var addr in removedAddresses)
+        {
             conf.Comp.Devices.Remove(addr);
             conf.Comp.NamedDevices.Remove(addr);
-            DirtyFields(conf, null, nameof(NetworkConfiguratorComponent.Devices), nameof(NetworkConfiguratorComponent.NamedDevices));
         }
+
+        if (removedAddresses.Count > 0)
+            DirtyFields(conf, null, nameof(NetworkConfiguratorComponent.Devices), nameof(NetworkConfiguratorComponent.NamedDevices));
 
         UpdateListUiState(conf!);
     }

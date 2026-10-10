@@ -1,7 +1,10 @@
 ﻿using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Payloads;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.DeviceLinking.Systems;
@@ -14,7 +17,8 @@ public sealed partial class DeviceLinkSystem
     /// </summary>
     /// <param name="ent">The source that invokes the port</param>
     /// <param name="port">The port to invoke</param>
-    public void InvokePort(Entity<DeviceLinkSourceComponent?> ent, string port)
+    [PublicAPI]
+    public void InvokePort(Entity<DeviceLinkSourceComponent?> ent, [ForbidLiteral] ProtoId<SourcePortPrototype> port)
     {
         if (!_deviceLinkSourceQuery.Resolve(ent.Owner, ref ent.Comp)
             || !ent.Comp.Outputs.TryGetValue(port, out var sinks))
@@ -43,7 +47,11 @@ public sealed partial class DeviceLinkSystem
     /// <param name="ent">The source that invokes the port</param>
     /// <param name="port">The port to invoke</param>
     /// <param name="data">Optional data to send along</param>
-    public void InvokePort<T>(Entity<DeviceLinkSourceComponent?> ent, string port, ref T data) where T : ISignalNetworkPayload
+    [PublicAPI]
+    public void InvokePort<T>(
+        Entity<DeviceLinkSourceComponent?> ent,
+        [ForbidLiteral] ProtoId<SourcePortPrototype> port,
+        ref T data) where T : ISignalNetworkPayload
     {
         if (!_deviceLinkSourceQuery.Resolve(ent.Owner, ref ent.Comp)
             || !ent.Comp.Outputs.TryGetValue(port, out var sinks))
@@ -63,6 +71,51 @@ public sealed partial class DeviceLinkSystem
                     InvokeDirect(ent!, (sinkUid, sinkComponent), sink, ref data);
             }
         }
+    }
+
+    /// <summary>
+    /// Raises an event on or sends a network packet directly to a sink from a source.
+    /// </summary>
+    private void InvokeDirect(
+        Entity<DeviceLinkSourceComponent> source,
+        Entity<DeviceLinkSinkComponent?> sink,
+        ProtoId<SinkPortPrototype> sinkPort)
+    {
+        if (!_deviceLinkSinkQuery.Resolve(sink, ref sink.Comp))
+            return;
+
+        var invokeCounter = GetEffectiveInvokeCounter(sink.Comp);
+        if (invokeCounter > sink.Comp.InvokeLimit)
+        {
+            SetInvokeCounter(sink!, 0);
+            var args = new DeviceLinkOverloadedEvent();
+            RaiseLocalEvent(sink, ref args);
+            RemoveAllFromSink(sink);
+            return;
+        }
+
+        SetInvokeCounter(sink!, invokeCounter + 1);
+
+        //Just skip using device networking if the source or the sink doesn't support it
+        if (!_deviceNetworkQuery.HasComp(source) || !_deviceNetworkQuery.TryComp(sink, out var sinkNetwork))
+        {
+            var eventArgs = new SignalReceivedEvent(sinkPort, source);
+            RaiseLocalEvent(sink, ref eventArgs);
+            return;
+        }
+
+        var payload = new SignalPayload
+        {
+            InvokedPort = sinkPort,
+        };
+
+        // Force using wireless network so things like atmos devices are able to send signals.
+        _deviceNetwork.SendPacket(
+            source.Owner,
+            sinkNetwork.Address,
+            ref payload,
+            sinkNetwork.ReceiveFrequency,
+            (int) DeviceNetIdDefaults.Wireless);
     }
 
     /// <summary>
@@ -104,59 +157,18 @@ public sealed partial class DeviceLinkSystem
             Payload = data,
         };
 
-        // force using wireless network so things like atmos devices are able to send signals
-        _deviceNetworkSystem.SendPacket(source.Owner, sinkNetwork.Data.AddressId, ref payload, sinkNetwork.Data.ReceiveFrequency, WirelessNetwork);
-    }
-
-    /// <summary>
-    /// Raises an event on or sends a network packet directly to a sink from a source.
-    /// </summary>
-    private void InvokeDirect(
-        Entity<DeviceLinkSourceComponent> source,
-        Entity<DeviceLinkSinkComponent?> sink,
-        ProtoId<SinkPortPrototype> sinkPort)
-    {
-        if (!_deviceLinkSinkQuery.Resolve(sink, ref sink.Comp))
-            return;
-
-        var invokeCounter = GetEffectiveInvokeCounter(sink.Comp);
-        if (invokeCounter > sink.Comp.InvokeLimit)
-        {
-            SetInvokeCounter(sink!, 0);
-            var args = new DeviceLinkOverloadedEvent();
-            RaiseLocalEvent(sink, ref args);
-            RemoveAllFromSink(sink);
-            return;
-        }
-
-        SetInvokeCounter(sink!, invokeCounter + 1);
-
-        //Just skip using device networking if the source or the sink doesn't support it
-        if (!_deviceNetworkQuery.HasComp(source) || !_deviceNetworkQuery.TryComp(sink, out var sinkNetwork))
-        {
-            var eventArgs = new SignalReceivedEvent(sinkPort, source);
-            RaiseLocalEvent(sink, ref eventArgs);
-            return;
-        }
-
-        var payload = new SignalPayload
-        {
-            InvokedPort = sinkPort,
-        };
-
-        // Force using wireless network so things like atmos devices are able to send signals.
-        _deviceNetworkSystem.SendPacket(
-            source.Owner,
-            sinkNetwork.Data.AddressId,
-            ref payload,
-            sinkNetwork.Data.ReceiveFrequency,
-            WirelessNetwork);
+        // Force using wireless network so things like atmos devices are able to send signals
+        // TODO allow devices to connect to multiple device networks,
+        // then allow the devices to customize the device net they will use to communicate signals.
+        var network = (int) DeviceNetIdDefaults.Wireless;
+        _deviceNetwork.SendPacket(source.Owner, sinkNetwork.Address, ref payload, sinkNetwork.ReceiveFrequency, network);
     }
 
     /// <summary>
     /// Helper function that invokes a port with a high/low binary logic signal.
     /// </summary>
-    public void SendSignal(Entity<DeviceLinkSourceComponent?> ent, string port, bool signal)
+    [PublicAPI]
+    public void SendSignal(Entity<DeviceLinkSourceComponent?> ent, [ForbidLiteral] ProtoId<SourcePortPrototype> port, bool signal)
     {
         if (!_deviceLinkSourceQuery.Resolve(ent.Owner, ref ent.Comp))
             return;
@@ -176,7 +188,8 @@ public sealed partial class DeviceLinkSystem
     /// This is not to be confused with sending a low signal, this is the complete absence of anything.
     /// Use if the device is in an invalid state and has no reasonable output signal.
     /// </summary>
-    public void ClearSignal(Entity<DeviceLinkSourceComponent?> ent, string port)
+    [PublicAPI]
+    public void ClearSignal(Entity<DeviceLinkSourceComponent?> ent, [ForbidLiteral] ProtoId<SourcePortPrototype> port)
     {
         if (!_deviceLinkSourceQuery.Resolve(ent, ref ent.Comp))
             return;
@@ -187,7 +200,7 @@ public sealed partial class DeviceLinkSystem
 
     /// <summary>
     /// Checks if the payload has a port defined and if the port is present on the sink.
-    /// Raises a <see cref="SignalReceivedEvent"/> containing the payload when the check passes
+    /// Raises a <see cref="SignalReceivedEvent"/> containing the payload when the check passes.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnPacketReceived(Entity<DeviceLinkSinkComponent> ent, ref DeviceNetworkPacketEvent<SignalPayload> args)

@@ -24,7 +24,8 @@
     - WhitelistChameleon
     - WhitelistChameleonIdCard
   - type: StealTarget
-    stealGroup: IDCard
+    stealGroup:
+    - IDCard
 
 #IDs with layers
 
@@ -70,7 +71,8 @@
     - WhitelistChameleonIdCard
     - HighRiskItem
   - type: StealTarget
-    stealGroup: CaptainIDCard
+    stealGroup:
+    - CaptainIDCard
 
 - type: entity
   parent: IDCardStandard
@@ -674,8 +676,8 @@
       state: Bartender
   - type: PresetIdCard
     job: Bartender
-    name: Pun Pun
-  - type: Tag #  Ignore Chameleon tags
+    name: id-card-preset-pun
+  - type: Tag # Ignore Chameleon tags
     tags:
     - DoorBumpOpener
 
@@ -953,29 +955,39 @@
 #Antags
 
 - type: entity
-  parent: [PassengerIDCard, BaseChameleon]
+  parent: [IDCardStandard, BaseChameleon]
   id: AgentIDCard
+  name: passenger ID card
   suffix: Agent
   components:
+  - type: Sprite
+    layers:
+    - state: default
+    - sprite: *icon-rsi
+      offset: *icon-offset
+      state: Passenger
   - type: Access
     tags:
     - Maintenance
     - SyndicateAgent
+  - type: AccessStealer
   - type: AgentIDCard
     iconGroups:
     - CommandIconGroup
     - SecurityIconGroup
-    - ResearchIconGroup
     - CargoIconGroup
     - EngineeringIconGroup
     - MedicalIconGroup
+    - ScienceIconGroup
     - ServiceIconGroup
+    - TheatreIconGroup
     - CivilianIconGroup
-    - EntertainerIconGroup
     - SiliconIconGroup
-    - BlankIconGroup
-    - ThreatIconGroup
     - CentCommIconGroup
+    - TaskForceIconGroup
+    - AntagonistIconGroup
+    - MiscIconGroup
+    - BlankIconGroup
   - type: UIRequiresLock
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
@@ -1030,6 +1042,38 @@
     - SyndicateAgent
 
 - type: entity
+  parent: SyndicateIDCard
+  id: SyndicateIDCardAdaptive
+  name: syndicate ID card
+  suffix: Adaptive
+  components:
+  - type: AgentIDCard
+    iconGroups:
+    - CommandIconGroup
+    - SecurityIconGroup
+    - CargoIconGroup
+    - EngineeringIconGroup
+    - MedicalIconGroup
+    - ScienceIconGroup
+    - ServiceIconGroup
+    - TheatreIconGroup
+    - CivilianIconGroup
+    - SiliconIconGroup
+    - CentCommIconGroup
+    - TaskForceIconGroup
+    - AntagonistIconGroup
+    - MiscIconGroup
+    - BlankIconGroup
+  - type: UIRequiresLock
+  - type: ActivatableUI
+    key: enum.AgentIDCardUiKey.Key
+    verbText: agent-id-open-ui-verb
+  - type: UserInterface
+    interfaces:
+      enum.AgentIDCardUiKey.Key:
+        type: AgentIDCardBoundUserInterface
+
+- type: entity
   parent: [ SyndicateIDCard, BaseSyndicateContraband ]
   id: SyndiOperativeIDCard
   name: syndicate operative ID card
@@ -1044,7 +1088,7 @@
     - sprite: *icon-rsi
       offset: *icon-offset
       state: SyndicateOperative
-  - type: AgentIDCard
+  - type: AccessStealer
   - type: IdCard
     jobIcon: JobIconSyndicateOperative
 
@@ -1102,7 +1146,7 @@
       state: Ninja
   - type: Item
     heldPrefix: green
-  - type: AgentIDCard
+  - type: AccessStealer
   - type: IdCard
     jobIcon: JobIconNinja
   - type: Access
@@ -1373,21 +1417,24 @@
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
+  - type: AccessStealer
   - type: AgentIDCard
     iconGroups:
     - CommandIconGroup
     - SecurityIconGroup
-    - ResearchIconGroup
     - CargoIconGroup
     - EngineeringIconGroup
     - MedicalIconGroup
+    - ScienceIconGroup
     - ServiceIconGroup
+    - TheatreIconGroup
     - CivilianIconGroup
-    - EntertainerIconGroup
     - SiliconIconGroup
-    - BlankIconGroup
-    - ThreatIconGroup
     - CentCommIconGroup
+    - TaskForceIconGroup
+    - AntagonistIconGroup
+    - MiscIconGroup
+    - BlankIconGroup
     - AdminIconGroup
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key

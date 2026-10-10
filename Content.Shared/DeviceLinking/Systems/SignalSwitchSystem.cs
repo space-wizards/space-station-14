@@ -28,6 +28,7 @@ public sealed partial class SignalSwitchSystem : EntitySystem
             return;
 
         ent.Comp.State = !ent.Comp.State;
+        DirtyField(ent.AsNullable(), nameof(SignalSwitchComponent.State));
         _deviceLink.InvokePort(ent.Owner, ent.Comp.State ? ent.Comp.OnPort : ent.Comp.OffPort);
 
         // only send status if it's a toggle switch and not a button

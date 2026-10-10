@@ -1,6 +1,6 @@
-﻿using Content.Server.StationEvents.Events;
+using Content.Server.StationEvents.Events;
+using Content.Shared.Destructible.Thresholds;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.StationEvents.Components;
 
@@ -11,14 +11,15 @@ namespace Content.Server.StationEvents.Components;
 [RegisterComponent, Access(typeof(BluespaceArtifactRule))]
 public sealed partial class BluespaceArtifactRuleComponent : Component
 {
-    [DataField("artifactSpawnerPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ArtifactSpawnerPrototype = "RandomArtifactSpawner";
+    [DataField]
+    public EntProtoId ArtifactSpawnerPrototype = "RandomArtifactSpawner";
 
-    [DataField("artifactFlashPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ArtifactFlashPrototype = "EffectFlashBluespace";
+    [DataField]
+    public EntProtoId ArtifactFlashPrototype = "EffectFlashBluespace";
 
-    [DataField("possibleSightings")]
-    public List<string> PossibleSighting = new()
+    // TODO: use LocalizedDataset, ideally when gamerules are more composable
+    [DataField]
+    public List<LocId> PossibleSightings = new()
     {
         "bluespace-artifact-sighting-1",
         "bluespace-artifact-sighting-2",
@@ -28,4 +29,10 @@ public sealed partial class BluespaceArtifactRuleComponent : Component
         "bluespace-artifact-sighting-6",
         "bluespace-artifact-sighting-7"
     };
+
+    /// <summary>
+    /// How many artifacts should be spawned?
+    /// </summary>
+    [DataField]
+    public MinMax AmountToSpawn = new MinMax(1, 1);
 }

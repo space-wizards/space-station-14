@@ -1,5 +1,6 @@
 using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Payloads;
 
 namespace Content.Shared.DeviceLinking.Systems;
 
@@ -27,6 +28,7 @@ public sealed partial class EdgeDetectorSystem : EntitySystem
             return;
 
         ent.Comp.State = state;
+        DirtyField(ent.AsNullable(), nameof(EdgeDetectorComponent.State));
 
         var port = state == SignalState.High ? ent.Comp.OutputHighPort : ent.Comp.OutputLowPort;
         _deviceLink.InvokePort(ent.Owner, port);

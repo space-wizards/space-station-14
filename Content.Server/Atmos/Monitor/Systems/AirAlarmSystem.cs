@@ -1,7 +1,6 @@
 using Content.Server.Atmos.Monitor.Components;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Server.Popups;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
@@ -10,9 +9,7 @@ using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Database;
-using Content.Shared.Interaction;
 using Content.Shared.Power;
-using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using System.Linq;
 using Content.Server.Atmos.Monitor.Payloads;
@@ -519,28 +516,27 @@ public sealed partial class AirAlarmSystem : EntitySystem
         if (!controller.CanSync)
             return;
 
-        if (!_deviceNetworkQuery.TryComp(args.Sender, out var deviceComp))
-            return;
+        var senderAddress = args.Sender.Comp.LocAddress;
 
         // Save into component.
         // Sync data to interface.
         switch (args.Data.Payload)
         {
             case GasVentPumpData ventData:
-                if (!controller.VentData.TryAdd(deviceComp, ventData))
-                    controller.VentData[deviceComp] = ventData;
+                if (!controller.VentData.TryAdd(senderAddress, ventData))
+                    controller.VentData[senderAddress] = ventData;
                 break;
             case GasVentScrubberData scrubberData:
-                if (!controller.ScrubberData.TryAdd(deviceComp, scrubberData))
-                    controller.ScrubberData[deviceComp] = scrubberData;
+                if (!controller.ScrubberData.TryAdd(senderAddress, scrubberData))
+                    controller.ScrubberData[senderAddress] = scrubberData;
                 break;
             case AtmosMonitorData sensorData:
-                if (!controller.SensorData.TryAdd(deviceComp, sensorData))
-                    controller.SensorData[deviceComp] = sensorData;
+                if (!controller.SensorData.TryAdd(senderAddress, sensorData))
+                    controller.SensorData[senderAddress] = sensorData;
                 break;
         }
 
-        controller.KnownDevices.Add(deviceComp);
+        controller.KnownDevices.Add(senderAddress);
         UpdateUI(uid, controller);
     }
 
@@ -649,7 +645,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
         _ui.SetUiState(
             uid,
             SharedAirAlarmInterfaceKey.Key,
-            new AirAlarmUIState((devNet.Data.AddressId, devNet.Prefix), deviceCount, pressure, temperature, dataToSend, alarm.CurrentMode, highestAlarm.Value, alarm.AutoMode, alarm.PanicWireCut));
+            new AirAlarmUIState((devNet.Address, devNet.Prefix), deviceCount, pressure, temperature, dataToSend, alarm.CurrentMode, highestAlarm.Value, alarm.AutoMode, alarm.PanicWireCut));
     }
 
     private const float Delay = 8f;

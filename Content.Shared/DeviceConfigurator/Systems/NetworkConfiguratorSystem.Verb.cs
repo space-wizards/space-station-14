@@ -25,7 +25,7 @@ public sealed partial class NetworkConfiguratorSystem
     }
 
     /// <summary>
-    /// Either adds a device to the device list or shows the config ui if the target is ant entity with a device list
+    /// Either adds a device to the device list or shows the config ui if the target is ant entity with a device list.
     /// </summary>
     private void OnUsed(Entity<NetworkConfiguratorComponent> configurator, EntityUid? target, EntityUid user, bool canReach = true)
     {
@@ -64,7 +64,7 @@ public sealed partial class NetworkConfiguratorSystem
     }
 
     /// <summary>
-    /// Adds the interaction verb which is either configuring device lists or saving a device onto the configurator
+    /// Adds the interaction verb which is either configuring device lists or saving a device onto the configurator.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnAddInteractVerb(Entity<NetworkConfiguratorComponent> ent, ref GetVerbsEvent<UtilityVerb> args)
@@ -101,7 +101,7 @@ public sealed partial class NetworkConfiguratorSystem
     /// Powerful. Funny alt interact using.
     /// Adds an alternative verb for saving a device on the configurator for entities with the <see cref="DeviceListComponent"/>.
     /// Allows alt clicking entities with a network configurator that would otherwise trigger a different action like entities
-    /// with a <see cref="DeviceListComponent"/>
+    /// with a <see cref="DeviceListComponent"/>.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnAddAlternativeSaveDeviceVerb(Entity<DeviceNetworkComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)

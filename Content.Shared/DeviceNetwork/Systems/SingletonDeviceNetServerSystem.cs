@@ -1,21 +1,21 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Power;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.DeviceNetwork.Components;
-using Content.Shared.Station;
+using Content.Shared.Power;
+using Content.Shared.Station.Systems;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
 /// <summary>
 /// Keeps one active server entity per station. Activates another available one if the currently active server becomes unavailable
-/// Server in this context means an entity that manages the devicenet packets like the <see cref="Content.Server.Medical.CrewMonitoring.CrewMonitoringServerSystem"/>
+/// Server in this context means an entity that manages the devicenet packets like the <see cref="Content.Server.Medical.CrewMonitorin.CrewMonitoringServerSystem"/>.
 /// </summary>
 public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
 {
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
-    [Dependency] private SharedStationSystem _stationSystem = default!;
+    [Dependency] private StationSystem _stationSystem = default!;
 
     /// <summary>
-    /// Returns whether the given entity is an active server or not
+    /// Returns whether the given entity is an active server or not.
     /// </summary>
     public bool IsActiveServer(EntityUid serverId, SingletonDeviceNetServerComponent? serverComponent = default)
     {
@@ -26,7 +26,7 @@ public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
     /// Returns the address of the currently active server for the given station id if there is one.<br/>
     /// What kind of server you're trying to get the active instance of is determined by the component type parameter TComp.<br/>
     /// <br/>
-    /// Setting TComp to <see cref="CrewMonitoringServerComponent"/>, for example, gives you the address of an entity containing the crew monitoring server component.<br/>
+    /// Setting TComp to <see cref="Content.Server.Medical.CrewMonitoring"/>, for example, gives you the address of an entity containing the crew monitoring server component.<br/>
     /// </summary>
     /// <param name="stationId">The entityUid of the station</param>
     /// <param name="address">The address of the active server if it exists</param>
@@ -55,18 +55,18 @@ public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
 
             last = (uid, server, device);
 
-            if (!server.Active || device.Data.AddressId == 0)
+            if (!server.Active || device.Address == 0)
                 continue;
 
             address = device.Data.AddressId;
             return true;
         }
 
-        //If there was no active server for the station make the last available inactive one active
+        // If there was no active server for the station make the last available inactive one active
         if (last.HasValue)
         {
             ConnectServer((last.Value.id, last.Value.server, last.Value.device));
-            address = last.Value.device.Data.AddressId;
+            address = last.Value.device.Address;
             return true;
         }
 
@@ -75,7 +75,7 @@ public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Disconnects the server losing power
+    /// Disconnects the server losing power.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnPowerChanged(Entity<SingletonDeviceNetServerComponent> ent, ref PowerChangedEvent args)
@@ -103,7 +103,7 @@ public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Disconnects a server from the device network and clears the currently active server
+    /// Disconnects a server from the device network and clears the currently active server.
     /// </summary>
     private void DisconnectServer(Entity<SingletonDeviceNetServerComponent?, DeviceNetworkComponent?> ent)
     {
@@ -120,13 +120,13 @@ public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
 }
 
 /// <summary>
-/// Raised when a server gets activated and connected to the device net
+/// Raised when a server gets activated and connected to the device net.
 /// </summary>
 [ByRefEvent]
 public record struct DeviceNetServerConnectedEvent;
 
 /// <summary>
-/// Raised when a server gets disconnected
+/// Raised when a server gets disconnected.
 /// </summary>
 [ByRefEvent]
 public record struct DeviceNetServerDisconnectedEvent;

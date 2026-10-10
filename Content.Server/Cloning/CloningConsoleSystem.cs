@@ -40,7 +40,7 @@ namespace Content.Server.Cloning
             SubscribeLocalEvent<CloningConsoleComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<CloningConsoleComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<CloningConsoleComponent, NewLinkEvent>(OnNewLink);
-            SubscribeLocalEvent<CloningConsoleComponent, PortDisconnectedEvent>(OnPortDisconnected);
+            SubscribeLocalEvent<CloningConsoleComponent, SourcePortDisconnectedEvent>(OnPortDisconnected);
             SubscribeLocalEvent<CloningConsoleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         }
 
@@ -105,7 +105,7 @@ namespace Content.Server.Cloning
             RecheckConnections(uid, component.CloningPod, component.GeneticScanner, component);
         }
 
-        private void OnPortDisconnected(EntityUid uid, CloningConsoleComponent component, ref PortDisconnectedEvent args)
+        private void OnPortDisconnected(EntityUid uid, CloningConsoleComponent component, ref SourcePortDisconnectedEvent args)
         {
             if (args.Port == CloningConsoleComponent.ScannerPort)
                 component.GeneticScanner = null;

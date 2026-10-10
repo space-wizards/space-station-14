@@ -8,7 +8,7 @@ namespace Content.Client.NetworkConfigurator;
 [GenerateTypedNameReferences]
 public sealed partial class NetworkConfiguratorDeviceList : ScrollContainer
 {
-    public event Action<LocDeviceAddress>? OnRemoveAddress;
+    public event Action<DeviceAddress>? OnRemoveAddress;
 
     public void UpdateState(Dictionary<DeviceAddress, (LocId? AddressPrefix, string Name)> devices, bool ui)
     {
@@ -54,7 +54,7 @@ public sealed partial class NetworkConfiguratorDeviceList : ScrollContainer
         if (ui)
         {
             row.AddChild(removeButton);
-            removeButton.OnPressed += _ => OnRemoveAddress?.Invoke(fullAddress);
+            removeButton.OnPressed += _ => OnRemoveAddress?.Invoke(fullAddress.AddressId);
         }
 
         return row;
