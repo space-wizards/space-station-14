@@ -353,6 +353,8 @@
   name: plastitanium wall
   suffix: indestructible
   components:
+  - type: Damageable
+    damageModifierSet: Indestructible
   - type: Sprite
     sprite: Structures/Walls/plastitanium.rsi
   - type: Icon
@@ -402,6 +404,8 @@
   name: plastitanium wall
   suffix: diagonal, indestructible
   components:
+  - type: Damageable
+    damageModifierSet: Indestructible
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/plastitanium-diagonal.rsi
@@ -547,6 +551,8 @@
   name: marble wall
   suffix: indestructible
   components:
+  - type: Damageable
+    damageModifierSet: Indestructible
   - type: Sprite
     sprite: Structures/Walls/marble.rsi
   - type: Icon
