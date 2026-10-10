@@ -1,6 +1,6 @@
 using Content.Server.Administration;
-using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Administration;
+using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Mind.Components;
 using Robust.Shared.Console;
 

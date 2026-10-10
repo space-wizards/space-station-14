@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
-using Content.Server.Ghost.Roles.Components;
 using Content.Server.NPC.Systems;
+using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonLayers;

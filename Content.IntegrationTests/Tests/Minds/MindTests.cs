@@ -2,13 +2,13 @@
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.Server.Ghost.Roles;
-using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
+using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Players;
