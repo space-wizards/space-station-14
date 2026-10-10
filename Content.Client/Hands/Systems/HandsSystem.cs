@@ -110,11 +110,13 @@ namespace Content.Client.Hands.Systems
             string handId,
             bool doDropInteraction = true,
             bool log = true,
-            EntityCoordinates? targetDropLocation = null
+            EntityCoordinates? targetDropLocation = null,
+            bool force = false
         )
         {
             TryGetHeldItem(ent, handId, out var held);
-            base.DoDrop(ent, handId, doDropInteraction, log, targetDropLocation);
+            base.DoDrop(ent, handId, doDropInteraction, log, targetDropLocation, force);
+
 
             if (held == null || IsHolding(ent, held.Value))
                 return;
