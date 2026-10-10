@@ -1,6 +1,5 @@
 - type: microwaveMealRecipe
   id: RecipeAloeCream
-  name: microwave-meal-recipe-aloe-cream-name
   result: AloeCream
   time: 10
   group: Medicinal
@@ -9,7 +8,6 @@
 
 - type: microwaveMealRecipe
   id: RecipeMedicatedSuture
-  name: microwave-meal-recipe-medicated-suture-name
   result: MedicatedSuture
   time: 10
   group: Medicinal
@@ -24,7 +22,6 @@
 
 - type: microwaveMealRecipe
   id: RecipeRegenerativeMesh
-  name: microwave-meal-recipe-regenerative-mesh-name
   result: RegenerativeMesh
   time: 10
   group: Medicinal
