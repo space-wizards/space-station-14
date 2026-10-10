@@ -21,3 +21,15 @@
   ignoreActionBlocker: true
   force: true
   hiddenFromChatWindow: true
+
+- type: autoEmote
+  id: NaturalSneeze
+  emote: Sneeze
+  interval: 50.0
+  chance: 0.005
+
+- type: autoEmote
+  id: NaturalCough
+  emote: Cough
+  interval: 50.0
+  chance: 0.005
