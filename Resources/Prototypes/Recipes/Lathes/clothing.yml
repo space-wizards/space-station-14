@@ -158,6 +158,87 @@
   id: ClothingUniformJumpsuitCentcomOfficial
   result: ClothingUniformJumpsuitCentcomOfficial
 
+# Dresses
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtBlackElegantDress
+  result: ClothingUniformJumpskirtBlackElegantDress
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtBlueElegantDress
+  result: ClothingUniformJumpskirtBlueElegantDress
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtBlueTurtleneckDress
+  result: ClothingUniformJumpskirtBlueTurtleneckDress
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtCyanStripedDress
+  result: ClothingUniformJumpskirtCyanStripedDress
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtGreenElegantDress
+  result: ClothingUniformJumpskirtGreenElegantDress
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtGreenStripedDress
+  result: ClothingUniformJumpskirtGreenStripedDress
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtGreenTurtleneckDress
+  result: ClothingUniformJumpskirtGreenTurtleneckDress
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtOrangeStripedDress
+  result: ClothingUniformJumpskirtOrangeStripedDress
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtPinkStripedDress
+  result: ClothingUniformJumpskirtPinkStripedDress
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtPurpleElegantDress
+  result: ClothingUniformJumpskirtPurpleElegantDress
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtPurpleTurtleneckDress
+  result: ClothingUniformJumpskirtPurpleTurtleneckDress
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtRedElegantDress
+  result: ClothingUniformJumpskirtRedElegantDress
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtRedStripedDress
+  result: ClothingUniformJumpskirtRedStripedDress
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtRedTurtleneckDress
+  result: ClothingUniformJumpskirtRedTurtleneckDress
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtYellowOldDress
+  result: ClothingUniformJumpskirtYellowOldDress
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtYellowTurtleneckDress
+  result: ClothingUniformJumpskirtYellowTurtleneckDress
+
 ## CE
 
 - type: latheRecipe
