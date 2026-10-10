@@ -1,4 +1,6 @@
 using Content.Client.Examine;
+using Content.Client.Stylesheets.Stylesheets;
+using Content.Client.Stylesheets.Palette;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -7,16 +9,9 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
 [CommonSheetlet]
-public sealed class ExamineButtonSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class ExamineButtonSheetlet : Sheetlet<NanotrasenStylesheet>
 {
-    // Examine button colors
-    // TODO: FIX!!
-    private static readonly Color ExamineButtonColorContext = Color.Transparent;
-    private static readonly Color ExamineButtonColorContextHover = Color.DarkSlateGray;
-    private static readonly Color ExamineButtonColorContextPressed = Color.LightSlateGray;
-    private static readonly Color ExamineButtonColorContextDisabled = Color.FromHex("#5A5A5A");
-
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public override StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)
     {
         var buttonContext = new StyleBoxTexture { Texture = Texture.White };
 
@@ -28,19 +23,19 @@ public sealed class ExamineButtonSheetlet : Sheetlet<PalettedStylesheet>
             E<ExamineButton>()
                 .Class(ExamineButton.StyleClassExamineButton)
                 .PseudoNormal()
-                .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContext),
+                .Prop(Control.StylePropertyModulateSelf, Palettes.AlphaModulate.Base.WithAlpha(0f)),
             E<ExamineButton>()
                 .Class(ExamineButton.StyleClassExamineButton)
                 .PseudoHovered()
-                .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContextHover),
+                .Prop(Control.StylePropertyModulateSelf, Palettes.Emerald.Element),
             E<ExamineButton>()
                 .Class(ExamineButton.StyleClassExamineButton)
                 .PseudoPressed()
-                .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContextPressed),
+                .Prop(Control.StylePropertyModulateSelf, Palettes.Emerald.PressedElement),
             E<ExamineButton>()
                 .Class(ExamineButton.StyleClassExamineButton)
                 .PseudoDisabled()
-                .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContextDisabled),
+                .Prop(Control.StylePropertyModulateSelf, sheet.PrimaryPalette.BackgroundDark),
         ];
     }
 }
