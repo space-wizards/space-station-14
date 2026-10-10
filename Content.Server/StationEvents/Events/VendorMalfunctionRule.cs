@@ -24,7 +24,7 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
         var toDispense = ent.Comp1.AffectedMachines.NextFloat(RobustRandom);
         if (toDispense <= 0)
         {
-            Log.Error($"Gamerule {ToPrettyString(ent)} selected an invalid number of machines to affect: {toDispense}");
+            Log.Error($"Gamerule {ToPrettyString(ent)} selected an invalid proportion of machines to affect: {toDispense}");
             return;
         }
 
