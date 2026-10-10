@@ -33,11 +33,13 @@ namespace Content.Client.Lobby.UI
             DefaultState.Visible = false;
             CharacterSetupState.Visible = false;
 
+            JoinRoundPanel.Orphan();
             switch (state)
             {
                 case LobbyGuiState.Default:
                     DefaultState.Visible = true;
                     RightSide.Visible = true;
+                    JoinRoundStripeBack.AddChild(JoinRoundPanel);
                     break;
                 case LobbyGuiState.CharacterSetup:
                     CharacterSetupState.Visible = true;
@@ -51,6 +53,15 @@ namespace Content.Client.Lobby.UI
                     }
 
                     UserInterfaceManager.GetUIController<LobbyUIController>().ReloadCharacterSetup();
+
+                    if (CharacterSetupState.ChildCount > 0 && CharacterSetupState.GetChild(0) is CharacterSetupGui characterSetupGui)
+                    {
+                        characterSetupGui.JoinRoundStripeBack.AddChild(JoinRoundPanel);
+                    }
+                    else
+                    {
+                        JoinRoundStripeBack.AddChild(JoinRoundPanel);
+                    }
 
                     break;
             }
