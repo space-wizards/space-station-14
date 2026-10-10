@@ -3200,6 +3200,37 @@
         Base: cat2_dead
 
 - type: entity
+  name: catroach
+  id: MobCatroach
+  parent: MobCat
+  description: A cat that has been dressed up as a cockroach. It does not seem to mind.
+  components:
+  - type: Sprite
+    sprite: Mobs/Animals/catroach.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: catroach
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: catroach-moving
+    noMovementLayers:
+      movement:
+        state: catroach
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: catroach
+      Critical:
+        Base: catroach_dead
+      Dead:
+        Base: catroach_dead
+  - type: Speech
+    speechSounds: Cat
+    speechVerb: SmallMob
+    allowedEmotes: ['Chitter']
+
+- type: entity
   name: syndicat
   id: MobCatSyndy
   parent: MobCatSpace
