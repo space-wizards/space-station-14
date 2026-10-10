@@ -10,5 +10,5 @@ public sealed partial class DNALeaderComponent : Component
     /// List of imprinted followers.
     /// </summary>
     [DataField]
-    public readonly HashSet<EntityUid> Followers = new();
+    public HashSet<EntityUid> Followers = new();
 }
