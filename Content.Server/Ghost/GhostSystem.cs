@@ -458,11 +458,14 @@ namespace Content.Server.Ghost
             return ghostBoo.Handled;
         }
 
+        /// <inheritdoc cref="SpawnGhost(Entity{MindComponent?},EntityCoordinates?,bool,EntProtoId?)"/>
+        /// <param name="targetEntity">Entity whose position the ghost will be spawned at.</param>
         public EntityUid? SpawnGhost(Entity<MindComponent?> mind, EntityUid targetEntity,
-            bool canReturn = false)
+            bool canReturn = false,
+            EntProtoId? ghostProto = null)
         {
             _transformSystem.TryGetMapOrGridCoordinates(targetEntity, out var spawnPosition);
-            return SpawnGhost(mind, spawnPosition, canReturn);
+            return SpawnGhost(mind, spawnPosition, canReturn, ghostProto);
         }
 
         private bool IsValidSpawnPosition(EntityCoordinates? spawnPosition)
@@ -474,8 +477,15 @@ namespace Content.Server.Ghost
             return !TerminatingOrDeleted(spawnPosition.Value.EntityId);
         }
 
+        /// <summary>
+        /// Spawns a ghost for the given mind and transfers (or visits, if <paramref name="canReturn"/> is true) it.
+        /// </summary>
+        /// <param name="ghostProto">
+        /// The ghost prototype to spawn. Defaults to <see cref="ServerGameTicker.ObserverPrototypeName"/>.
+        /// </param>
         public EntityUid? SpawnGhost(Entity<MindComponent?> mind, EntityCoordinates? spawnPosition = null,
-            bool canReturn = false)
+            bool canReturn = false,
+            EntProtoId? ghostProto = null)
         {
             if (!Resolve(mind, ref mind.Comp))
                 return null;
@@ -495,7 +505,7 @@ namespace Content.Server.Ghost
                 }
             }
 
-            var ghost = SpawnAtPosition(ServerGameTicker.ObserverPrototypeName, spawnPosition.Value);
+            var ghost = SpawnAtPosition(ghostProto ?? ServerGameTicker.ObserverPrototypeName, spawnPosition.Value);
             var ghostComponent = Comp<GhostComponent>(ghost);
 
             if (TryComp<GhostSpriteStateComponent>(ghost, out var state))  // If more TryComps are added this should be turned into an event
