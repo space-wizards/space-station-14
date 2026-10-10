@@ -38,6 +38,8 @@
   - type: WarpPoint
     follow: true
     location: location-immovable-rod
+  - type: GhostAlertOnSpawn
+    alert: ImmovableRod
 
 - type: entity
   parent: ImmovableRod
