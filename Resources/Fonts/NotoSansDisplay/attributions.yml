@@ -5,22 +5,22 @@
 
 - files: ["NotoSansDisplay-Bold.ttf"]
   license: "OFL-1.1"
-  copyright: "Copyright 2012 Google Inc. All Rights Reserved."
+  copyright: "Copyright 2015 Google Inc. All Rights Reserved."
   source: "https://fonts.google.com/noto/specimen/Noto+Emoji"
 
 - files: ["NotoSansDisplay-BoldItalic.ttf"]
   license: "OFL-1.1"
-  copyright: "Copyright 2012 Google Inc. All Rights Reserved."
+  copyright: "Copyright 2015 Google Inc. All Rights Reserved."
   source: "https://fonts.google.com/noto/specimen/Noto+Emoji"
 
 - files: ["NotoSansDisplay-Italic.ttf"]
   license: "OFL-1.1"
-  copyright: "Copyright 2012 Google Inc. All Rights Reserved."
+  copyright: "Copyright 2015 Google Inc. All Rights Reserved."
   source: "https://fonts.google.com/noto/specimen/Noto+Emoji"
 
 - files: ["NotoSansDisplay-Regular.ttf"]
   license: "OFL-1.1"
-  copyright: "Copyright 2012 Google Inc. All Rights Reserved."
+  copyright: "Copyright 2015 Google Inc. All Rights Reserved."
   source: "https://fonts.google.com/noto/specimen/Noto+Emoji"
 
 

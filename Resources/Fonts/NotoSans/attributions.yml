@@ -1,34 +1,34 @@
 - files: ["NotoSans-Bold.ttf"]
-  license: "OFL-1.1"
-  copyright: "Copyright 2022 The Noto Project Authors (https://github.com/notofonts/)"
+  license: "Apache-2.0"
+  copyright: "Copyright 2012 Google Inc. All Rights Reserved."
   source: "https://notofonts.github.io/"
 
 - files: ["NotoSans-BoldItalic.ttf"]
-  license: "OFL-1.1"
-  copyright: "Copyright 2022 The Noto Project Authors (https://github.com/notofonts/)"
+  license: "Apache-2.0"
+  copyright: "Copyright 2012 Google Inc. All Rights Reserved."
   source: "https://notofonts.github.io/"
 
 - files: ["NotoSans-Italic.ttf"]
-  license: "OFL-1.1"
-  copyright: "Copyright 2022 The Noto Project Authors (https://github.com/notofonts/)"
+  license: "Apache-2.0"
+  copyright: "Copyright 2012 Google Inc. All Rights Reserved."
   source: "https://notofonts.github.io/"
 
 - files: ["NotoSans-Regular.ttf"]
-  license: "OFL-1.1"
-  copyright: "Copyright 2022 The Noto Project Authors (https://github.com/notofonts/)"
+  license: "Apache-2.0"
+  copyright: "Copyright 2012 Google Inc. All Rights Reserved."
   source: "https://notofonts.github.io/"
 
 - files: ["NotoSansSymbols2-Regular.ttf"]
   license: "OFL-1.1"
-  copyright: "Copyright 2022 The Noto Project Authors (https://github.com/notofonts/)"
+  copyright: "Copyright 2017 Google Inc. All Rights Reserved."
   source: "https://notofonts.github.io/"
 
 - files: ["NotoSansSymbols-Bold.ttf"]
   license: "OFL-1.1"
-  copyright: "Copyright 2022 The Noto Project Authors (https://github.com/notofonts/)"
+  copyright: "Copyright 2016 Google LLC. All Rights Reserved."
   source: "https://notofonts.github.io/"
 
 - files: ["NotoSansSymbols-Regular.ttf"]
   license: "OFL-1.1"
-  copyright: "Copyright 2022 The Noto Project Authors (https://github.com/notofonts/)"
+  copyright: "Copyright 2016 Google LLC. All Rights Reserved."
   source: "https://notofonts.github.io/"

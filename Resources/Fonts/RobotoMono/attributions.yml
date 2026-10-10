@@ -1,15 +1,3 @@
-# It is unclear whether this is OFL or Apache, as they use both in their fonts and have
-# switched between them.
-#
-# I will assume that the LICENSE.txt file here is the one that came with the font from google's website,
-# and is thus the appropriate license (Apache) for the time that this was downloaded. Apache-2.0 was the version
-# for the longest time, and is probably in use around the time this was downloaded.
-#
-# I will be using the copyright line from the OFL version (merged with the text in ATTRIBUTION.TXT, with the Apache-2.0 license.
-#
-# See: github.com/googlefonts/RobotoMono/blob/main/OFL.txt
-# See: https://github.com/googlefonts/RobotoMono/pull/53
-
 - files: ["RobotoMono-Bold.ttf"]
   license: "Apache-2.0"
   copyright: "Created by Google. Copyright 2015 The Roboto Mono Project Authors (https://github.com/googlefonts/robotomono)"
