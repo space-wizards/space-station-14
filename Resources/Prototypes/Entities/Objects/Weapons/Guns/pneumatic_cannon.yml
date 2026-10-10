@@ -106,6 +106,58 @@
         ents: []
 
 - type: entity
+  id: LauncherDelivery
+  parent: BaseStorageItem
+  name: mail cannon
+  description: For express delivery.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
+    layers:
+    - state: icon
+  - type: Storage
+    maxItemSize: Huge # Fits delivery packages
+    grid:
+    - 0,0,7,3
+    quickInsert: true
+    whitelist:
+      components:
+      - Delivery
+      tags:
+      - Paper
+      - Document
+      - BoxCardboard
+      - Folder
+      - LetterDelivery
+      - PackageDelivery
+      - Parcel
+      - Present
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Effects/thunk.ogg
+    soundEmpty:
+      path: /Audio/Items/hiss.ogg
+    clumsyProof: true
+  - type: ContainerAmmoProvider
+    container: storagebase
+  - type: Item
+    size: Huge
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
+    quickEquip: false
+    slots:
+    - Back
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+
+- type: entity
   name: experimental pie cannon
   parent: BaseWeaponBattery
   id: BorgLauncherCreamPie
