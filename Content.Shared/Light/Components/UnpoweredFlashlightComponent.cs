@@ -18,12 +18,6 @@ public sealed partial class UnpoweredFlashlightComponent : Component
     [DataField, AutoNetworkedField]
     public bool LightOn;
 
-    [DataField]
-    public EntProtoId ToggleAction = "ActionToggleLight";
-
-    [DataField, AutoNetworkedField]
-    public EntityUid? ToggleActionEntity;
-
     /// <summary>
     ///  <see cref="ColorPalettePrototype"/> ID that determines the list
     /// of colors to select from when we get emagged

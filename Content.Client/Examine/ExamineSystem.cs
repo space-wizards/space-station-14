@@ -279,7 +279,7 @@ namespace Content.Client.Examine
                     continue;
 
                 var richLabel = new RichTextLabel() { Margin = new Thickness(4, 4, 0, 4)};
-                richLabel.SetMessage(message);
+                richLabel.SetMessage(message, tagsAllowed: null);
                 vBox.AddChild(richLabel);
                 break;
             }
