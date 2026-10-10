@@ -293,6 +293,8 @@ public sealed partial class FaxSystem : EntitySystem
     private void OnFileButtonPressed(EntityUid uid, FaxMachineComponent component, FaxFileMessage args)
     {
         args.Label = args.Label?[..Math.Min(args.Label.Length, FaxFileMessageValidation.MaxLabelSize)];
+        // Text files often use CRLF line endings, and the paper renderer draws a stray CR as a space.
+        args.Content = args.Content.ReplaceLineEndings("\n");
         args.Content = args.Content[..Math.Min(args.Content.Length, FaxFileMessageValidation.MaxContentSize)];
         PrintFile(uid, component, args);
     }
