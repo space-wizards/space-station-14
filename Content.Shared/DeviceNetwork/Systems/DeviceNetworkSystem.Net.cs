@@ -153,7 +153,7 @@ public sealed partial class DeviceNetworkSystem
         else
         {
             // Randomly generate a new address if the existing random one is invalid. Otherwise, keep the existing address
-            if (deviceComp.Address == 0 || _occupiedAddresses.Contains(deviceComp.Address))
+            if (deviceComp.Address == DeviceAddress.Invalid || _occupiedAddresses.Contains(deviceComp.Address.AddressId))
             {
                 deviceComp.Address = GenerateValidAddressId();
                 _occupiedAddresses.Add(deviceComp.Address.AddressId);
