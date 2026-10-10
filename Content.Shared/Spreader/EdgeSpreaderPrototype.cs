@@ -9,7 +9,16 @@ namespace Content.Shared.Spreader;
 public sealed partial class EdgeSpreaderPrototype : IPrototype
 {
     [IdDataField] public string ID { get; private set; } = string.Empty;
-    [DataField(required:true)] public int UpdatesPerSecond;
+    
+    /// <summary>
+    /// How many tiles can this spread to within its spread interval?
+    /// </summary>
+    [DataField(required:true)] public int UpdatesPerInterval;
+
+    /// <summary>
+    /// Time in seconds between each spread.
+    /// </summary>
+    [DataField(required: true)] public float SpreadInterval = 1f;
 
     /// <summary>
     /// If true, this spreader can't spread onto spaced tiles like lattice.
