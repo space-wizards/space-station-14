@@ -42,3 +42,29 @@
         Piercing: 5
         Caustic: 2.5
         Structural: 6
+
+# stronger version of the armblade
+# TODO: BALANCE THIS THING!!!!
+- type: entity
+  parent: Armblade
+  id: ArmbladeHorror
+  suffix: Horror
+  components:
+  - type: Prying
+    speedModifier: 5
+    pryPowered: true
+    force: true
+  - type: MeleeWeapon
+    attackRate: 1.3
+    damage:
+      types:
+        Slash: 10
+        Piercing: 10
+        Caustic: 5
+        Structural: 15 # stronk, better than a fireaxe
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: null
+      right:
+      - state: null

@@ -22,6 +22,7 @@
     - id: SnakeSpawnHorde
     - id: SpiderClownSpawnHorde
     - id: SpiderSpawnHorde
+    - id: VendorMalfunction
     - id: VentClog
 
 - type: entityTable
@@ -83,6 +84,16 @@
     delay:
       min:  10
       max:  20
+
+- type: entity
+  abstract: true
+  parent: BaseGameRule
+  id: BaseStationEventVeryShortDelay
+  components:
+  - type: GameRule
+    delay:
+      min:  5
+      max:  10
 
 - type: entity
   id: BaseStationEventShortDelay
@@ -150,20 +161,22 @@
     cost: 10
 
 - type: entity
-  id: BreakerFlip
   parent: BaseGameRule
+  id: BreakerFlip
   components:
   - type: StationEvent
     weight: 7
     duration: 1
     minimumPlayers: 15
+    startAudio:
+      path: /Audio/Announcements/announce.ogg
   - type: BreakerFlipRule
   - type: DynamicRuleCost
     cost: 10
 
 - type: entity
-  id: BureaucraticError
   parent: BaseGameRule
+  id: BureaucraticError
   components:
   - type: StationEvent
     startAnnouncement: station-event-bureaucratic-error-announcement
@@ -436,6 +449,27 @@
     doorToggleChancePerSecond: 0.001
   - type: DynamicRuleCost
     cost: 10
+
+- type: entity
+  parent: BaseStationEventVeryShortDelay
+  id: VendorMalfunction
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-vendor-malfunction-announcement
+    startAudio:
+      path: /Audio/Announcements/announce.ogg
+    weight: 5
+    duration: 1
+  - type: VendorMalfunctionRule
+    affectedMachines:
+      min: 5
+      max: 15
+    contrabandChance: 0.5
+    itemsToEject:
+      min: 1
+      max: 6
+  - type: DynamicRuleCost
+    cost: 5
 
 - type: entity
   id: VentClog
