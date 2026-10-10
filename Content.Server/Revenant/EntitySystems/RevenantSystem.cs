@@ -51,7 +51,7 @@ public sealed partial class RevenantSystem : EntitySystem
 
         SubscribeLocalEvent<RevenantComponent, ComponentStartup>(OnStartup);
 
-        SubscribeLocalEvent<RevenantComponent, DamageChangedEvent>(OnDamage);
+        SubscribeLocalEvent<RevenantComponent, DamageDealtEvent>(OnDamage);
         SubscribeLocalEvent<RevenantComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RevenantComponent, StatusEffectAddedEvent>(OnStatusAdded);
         SubscribeLocalEvent<RevenantComponent, StatusEffectEndedEvent>(OnStatusEnded);
@@ -109,13 +109,13 @@ public sealed partial class RevenantSystem : EntitySystem
         }
     }
 
-    private void OnDamage(EntityUid uid, RevenantComponent component, DamageChangedEvent args)
+    private void OnDamage(Entity<RevenantComponent> ent, ref DamageDealtEvent args)
     {
-        if (!HasComp<CorporealComponent>(uid) || args.DamageDelta == null)
+        if (!HasComp<CorporealComponent>(ent))
             return;
 
-        var essenceDamage = args.DamageDelta.GetTotal().Float() * component.DamageToEssenceCoefficient * -1;
-        ChangeEssenceAmount(uid, essenceDamage, component);
+        var essenceDamage = args.Total.Float() * ent.Comp.DamageToEssenceCoefficient * -1;
+        ChangeEssenceAmount(ent, essenceDamage, ent.Comp);
     }
 
     public bool ChangeEssenceAmount(EntityUid uid, FixedPoint2 amount, RevenantComponent? component = null, bool allowDeath = true, bool regenCap = false)
