@@ -21,13 +21,11 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
     {
         base.Started(ent, ref args);
 
-        var toDispense = ent.Comp1.AffectedMachines.NextFloat(RobustRandom);
-
         // get list of all vending machines on the target station, and then shuffle it so we get a random sample later on
         var vendingMachines = Station.GetEntitiesWithComponentOnStation<VendingMachineComponent>(true).ToList();
         RobustRandom.Shuffle(vendingMachines);
 
-        var toHit = Math.Max(ent.Comp1.MinimumToAffect, (int)(toDispense * vendingMachines.Count));
+        var toHit = Math.Max(ent.Comp1.MinimumToAffect, (int)(ent.Comp1.AffectedMachines.NextFloat(RobustRandom) * vendingMachines.Count));
         if (toHit <= 0)
         {
             Log.Error($"Gamerule {ToPrettyString(ent)} selected an invalid quantity of machines to affect: {toHit} (AffectedMachines [{ent.Comp1.AffectedMachines.Min},{ent.Comp1.AffectedMachines.Max}], minToAffect {ent.Comp1.MinimumToAffect})");

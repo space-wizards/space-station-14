@@ -1,0 +1,38 @@
+- type: constructionGraph
+  id: makeshiftID
+  start: start
+  graph:
+    - node: start
+      edges:
+      - to: makeshiftIDbasecard
+        steps:
+        - material: Plastic
+          amount: 1
+        - tag: SmallAIChip
+          name: construction-graph-tag-super-compact-ai-chip
+          icon:
+            sprite: Objects/Misc/potatoai_chip.rsi
+            state: icon
+        - material: Manipulator
+          amount: 2
+          doAfter: 5
+
+    - node: makeshiftIDbasecard
+      entity: FakeIDBase
+      edges:
+      - to: makeshiftIDsoldered
+        steps:
+        - tool: Welding
+          doAfter: 5
+
+    - node: makeshiftIDsoldered
+      entity: FakeIDSoldered
+      edges:
+      - to: makeshiftIDcomplete
+        steps:
+        - material: Cable
+          amount: 5
+          doAfter: 10
+
+    - node: makeshiftIDcomplete
+      entity: FakeIDCard

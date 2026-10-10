@@ -72,7 +72,7 @@
       prefix: device-address-prefix-teg
       sendBroadcastAttemptEvent: true
       examinableAddress: true
-    - type: WiredNetworkConnection
+    - type: WiredNetwork
 
     - type: PowerSupplier
       # Have practically irrelevant supply ramping.
