@@ -33,9 +33,12 @@ public sealed partial class ThiefBackpackMenu : FancyWindow
         var selectedNumber = 0;
         foreach (var (set, info) in state.Sets)
         {
-            var child = new ThiefBackpackSet(info, _spriteSystem);
+            var child = new ThiefBackpackSet(info, _spriteSystem)
+            {
+                Pressed = info.Selected
+            };
 
-            child.SetButton.OnButtonDown += (args) =>
+            child.OnToggled += (args) =>
             {
                 OnSetChange?.Invoke(set);
             };
