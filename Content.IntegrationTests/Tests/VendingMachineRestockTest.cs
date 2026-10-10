@@ -165,18 +165,21 @@ namespace Content.IntegrationTests.Tests
                 // which are spawned by EntityTableContainerFill on a CargoProduct.
                 foreach (var proto in prototypeManager.EnumeratePrototypes<CargoProductPrototype>())
                 {
-                    // If the cargo product's product is the restock itself, just remove it.
-                    restockEntities.Remove(proto.Product.Id);
-
-                    // Check if the product is an entity which spawns a restock.
-                    if (entitiesWhichSpawnRestocks.TryGetValue(proto.Product.Id, out var restocksSpawnedByProduct))
+                    foreach (var product in proto.SpawnList)
                     {
-                        foreach (var entry in restocksSpawnedByProduct)
-                        {
-                            restockEntities.Remove(entry);
-                        }
+                        // If the cargo product's product is the restock itself, just remove it.
+                        restockEntities.Remove(product.Id);
 
-                        entitiesWhichSpawnRestocks.Remove(proto.Product.Id);
+                        // Check if the product is an entity which spawns a restock.
+                        if (entitiesWhichSpawnRestocks.TryGetValue(product.Id, out var restocksSpawnedByProduct))
+                        {
+                            foreach (var entry in restocksSpawnedByProduct)
+                            {
+                                restockEntities.Remove(entry);
+                            }
+
+                            entitiesWhichSpawnRestocks.Remove(product.Id);
+                        }
                     }
                 }
                 // Any entities left in restockEntities are restocks which can't be bought from Cargo.

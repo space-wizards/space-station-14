@@ -13,8 +13,9 @@
   icon:
     sprite: Clothing/Head/Hardsuits/luxury.rsi
     state: icon
-  product: CrateCargoLuxuryHardsuit
-  cost: 15000
+  product: ClothingOuterHardsuitLuxury
+  container: CratePirate
+  cost: 14000
   category: cargoproduct-category-name-cargo
   group: market
 
@@ -23,8 +24,9 @@
   icon:
     sprite: Objects/Misc/ParcelWrap/parcel_wrap.rsi
     state: brown
-  product: CrateCargoParcelWrap
-  cost: 750
+  product: ParcelWrap
+  container: CrateSteel
+  cost: 250
   category: cargoproduct-category-name-cargo
   group: market
 
@@ -33,8 +35,9 @@
   icon:
     sprite: Objects/Weapons/Melee/crusher_dagger.rsi
     state: icon
-  product: CrateCrusherDagger
-  cost: 2500
+  product: WeaponCrusherDagger
+  container: CrateSteel
+  cost: 600
   category: cargoproduct-category-name-cargo
   group: market
 

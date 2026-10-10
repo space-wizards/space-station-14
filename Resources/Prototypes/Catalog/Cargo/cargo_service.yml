@@ -3,38 +3,57 @@
   icon:
     sprite: Objects/Consumable/Drinks/beerglass.rsi
     state: icon
-  product: CrateServiceBarSupply
-  cost: 750
+  product: BoxCleanerGrenades
+  container: CratePlastic
+  cost: 400
   category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
   id: ServiceCook
   icon:
-    sprite: Objects/Consumable/Food/ingredients.rsi
-    state: flour-big
-  product: CrateServiceCooking
-  cost: 750
+    sprite: Objects/Power/light_bulb.rsi
+    state: normal
+  products:
+  - BoxLighttube
+  - BoxLightbulb
+  container: CrateSteel
+  cost: 600
   category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
   id: ServiceCookGetmore
   icon:
-    sprite: Objects/Consumable/Food/snacks.rsi
-    state: raisins
-  product: CrateServiceGetMore
-  cost: 750
+    sprite: Objects/Power/light_bulb.rsi
+    state: normal
+  product: BoxLighttubeHoliday
+  container: CrateSteel
+  cost: 400
   category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
   id: ServiceDinnerware
   icon:
-    sprite: Objects/Consumable/Food/plates.rsi
-    state: tin
-  product: CrateServiceDinnerware
-  cost: 750
+    sprite: Objects/Power/light_bulb.rsi
+    state: normal
+  products:
+  - BoxLightbulbColorfulMixed
+  - BoxLighttubeColorfulMixed
+  container: CrateSteel
+  cost: 800
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: MousetrapBoxes
+  icon:
+    sprite: Objects/Devices/mousetrap.rsi
+    state: mousetrap
+  product: BoxMousetrap
+  container: CrateSteel
+  cost: 500
   category: cargoproduct-category-name-service
   group: market
 
@@ -83,18 +102,31 @@
   icon:
     sprite: Structures/Machines/fax_machine.rsi
     state: icon
-  product: CrateServiceFaxMachine
-  cost: 2000
+  product: FaxMachineFlatpack
+  container: CrateSteel
+  cost: 1500
   category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
-  id: ServicePersonnel
+  id: ServicePersonnelPDA
+  icon:
+    sprite: Objects/Devices/pda.rsi
+    state: pda
+  product: BoxPDA
+  container: CrateCommandSecure
+  cost: 500
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: ServicePersonnelID
   icon:
     sprite: Objects/Misc/id_cards.rsi
     state: default
-  product: CrateServicePersonnel
-  cost: 1000
+  product: BoxID
+  container: CrateCommandSecure
+  cost: 500
   category: cargoproduct-category-name-service
   group: market
 
@@ -139,6 +171,29 @@
   group: market
 
 - type: cargoProduct
+  id: ServiceBoxes
+  icon:
+    sprite: Objects/Storage/boxes.rsi
+    state: box
+  product: CrateServiceBox
+  cost: 400
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: ServiceJanitorBiosuit
+  icon:
+    sprite: Clothing/Head/Hoods/Bio/janitor.rsi
+    state: icon
+  products:
+  - ClothingOuterBioJanitor
+  - ClothingHeadHatHoodBioJanitor
+  container: CratePlastic
+  cost: 600
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
   id: ServiceFoodCartHot
   icon:
     sprite: Objects/Specific/Kitchen/food_carts.rsi
@@ -169,11 +224,37 @@
   group: market
 
 - type: cargoProduct
+  id: JanitorExplosive
+  icon:
+    sprite: Clothing/Head/Helmets/janitor_bombsuit.rsi
+    state: icon
+  products:
+  - ClothingOuterSuitJanitorBomb
+  - ClothingHeadHelmetJanitorBombSuit
+  container: CrateSteel
+  cost: 1000
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: ServiceJanitorTrolley
+  icon:
+    sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
+    state: icon-cart
+  product: JanitorialTrolley
+  cost: 300
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
   id: ServiceCandles
   icon:
     sprite: Objects/Misc/candles.rsi
     state: candle-big
-  product: CrateCandles
-  cost: 500
+  products:
+  - BoxCandle
+  - BoxCandleSmall
+  container: CrateSteel
+  cost: 200
   category: cargoproduct-category-name-service
   group: market

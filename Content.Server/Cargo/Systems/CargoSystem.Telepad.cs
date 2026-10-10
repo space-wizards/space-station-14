@@ -34,23 +34,12 @@ public sealed partial class CargoSystem
     [SubscribeLocalEvent]
     private void OnShutdown(Entity<CargoTelepadComponent> ent, ref ComponentShutdown args)
     {
-        if (ent.Comp.CurrentOrders.Count == 0
-            || _station.GetStations().Count == 0)
-            return;
-
-        if (_station.GetOwningStation(ent) is not { } station)
-        {
-            station = _random.Pick(_station.GetStations().Where(x => _orderQuery.HasComp(x.Owner)).ToList());
-        }
-
-        if (!_orderQuery.TryComp(station, out var orderDatabase)
-            || !TryComp<StationDataComponent>(station, out var data))
-            return;
-
         foreach (var order in ent.Comp.CurrentOrders)
         {
-            TryFulfillOrder((station, data), order.Account, order, orderDatabase);
+            order.Assigned = false;
+            order.AssignedEntity = null;
         }
+        ent.Comp.CurrentOrders.Clear();
     }
 
     [SubscribeLocalEvent]
@@ -94,14 +83,15 @@ public sealed partial class CargoSystem
                 continue;
 
             var currentOrder = telepad.CurrentOrders.First();
-            if (currentOrder.NumDispatched >= currentOrder.OrderQuantity)
+            var containers = PackOrderIntoContainers(currentOrder);
+
+            if (currentOrder.Basket.All(item => item.NumOrdered >= item.Quantity))
             {
                 telepad.CurrentOrders.Remove(currentOrder);
             }
-            else if (FulfillOrder(currentOrder, currentOrder.Account, xform.Coordinates, telepad.PrinterOutput))
+            else if (FulfillOrder(containers.First(), xform.Coordinates, telepad.PrinterOutput))
             {
-                currentOrder.NumDispatched++;
-                if (currentOrder.NumDispatched >= currentOrder.OrderQuantity)
+                if (currentOrder.Basket.All(item => item.NumOrdered >= item.Quantity))
                     telepad.CurrentOrders.Remove(currentOrder);
 
                 var teleportSound = telepad.TeleportSound;
