@@ -10,10 +10,10 @@ public sealed partial class TegGeneratorComponent : Component
 {
     /// <summary>
     /// When transferring energy from the hot to cold side,
-    /// determines how much of that energy can be extracted as electricity.
+    /// determines how efficient the process is compared to Chambadal-Novikov efficiency.
     /// </summary>
     /// <remarks>
-    /// A value of 0.9 means that 90% of energy transferred goes to electricity.
+    /// A value of 0.9 means that the engine is 10% less efficient than would be otherwise predicted.
     /// </remarks>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("thermalEfficiency")]
