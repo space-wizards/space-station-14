@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Armor;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Clothing.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Gibbing;
@@ -9,14 +10,18 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
+using Content.Shared.Kitchen.Components;
+using Content.Shared.Kitchen.EntitySystems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Strip;
 using Content.Shared.Strip.Components;
+using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Inventory;
@@ -34,6 +39,8 @@ public abstract partial class InventorySystem
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private SharedStrippableSystem _strippable = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
 
     private static readonly ProtoId<ItemSizePrototype> PocketableItemSize = "Small";
 
@@ -626,6 +633,24 @@ public abstract partial class InventorySystem
             // TODO: Give me an API that can tell the difference between a virtual item and an electropak being removed.
             if (!HasComp<AttachedClothingComponent>(item))
                 args.Giblets.Add(item);
+        }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnBeingGrinded(Entity<InventoryComponent> ent, ref BeingGrindedEvent args)
+    {
+        foreach (var item in GetHandOrInventoryEntities((ent, null, ent)))
+        {
+            if (!HasComp<ExtractableComponent>(item) ||
+                !HasComp<FitsInDispenserComponent>(item))
+            {
+                var randCoords = _random.NextVector2(.5f);
+                _transform.DropNextTo(item, args.Grinder);
+                _throwing.TryThrow(item, randCoords);
+                continue;
+            }
+
+            _containerSystem.Insert(item, args.InputContainer);
         }
     }
 }
