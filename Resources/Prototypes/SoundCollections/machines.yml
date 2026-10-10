@@ -47,3 +47,8 @@
   id: ServerFans
   files:
   - /Audio/Ambience/Objects/server_fans.ogg
+
+- type: soundCollection
+  id: MailReceive
+  files:
+  - /Audio/Machines/mail_receive.ogg
