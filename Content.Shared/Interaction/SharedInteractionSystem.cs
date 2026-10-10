@@ -182,7 +182,7 @@ namespace Content.Shared.Interaction
                 return;
 
             // Key shouldn't ever be null.
-            if (!aUiComp.Key.Equals(ev.UiKey))
+            if (!ev.UiKey.Equals(aUiComp.Key))
                 return;
 
             if (aUiComp.SingleUser && aUiComp.CurrentSingleUser != null && aUiComp.CurrentSingleUser != ev.Actor)
