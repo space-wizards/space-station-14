@@ -159,7 +159,7 @@ public sealed partial class MicrowaveComponent : Component
     /// How many items the microwave can hold.
     /// </summary>
     [DataField]
-    public int Capacity = 10;
+    public int Capacity = 12;
 
     /// <summary>
     /// The largest item size that can fit in the microwave.
