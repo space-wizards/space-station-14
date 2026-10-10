@@ -44,7 +44,7 @@
     id: VisitorPDA
     belt: ClothingBeltChiefEngineerFilled
     back: ClothingBackpackDuffelEngineering
-    ears: ClothingHeadsetCE
+    ears: ClothingHeadsetAltEngineering
     outerClothing: ClothingOuterVestHazard
     pocket1: WeaponDisabler
 
@@ -58,7 +58,7 @@
     id: VisitorPDA
     belt: ClothingBeltChiefEngineerFilled
     back: ClothingBackpackSatchelEngineering
-    ears: ClothingHeadsetCE
+    ears: ClothingHeadsetAltEngineering
     outerClothing: ClothingOuterWinterCE
     pocket1: WeaponDisabler
 
@@ -72,7 +72,7 @@
     neck: ClothingCloakCmo
     id: VisitorPDA
     back: ClothingBackpackMedical
-    ears: ClothingHeadsetCMO
+    ears: ClothingHeadsetAltMedical
     belt: ClothingBeltMedicalFilled
     outerClothing: ClothingOuterCoatLabCmo
     pocket1: WeaponDisabler
@@ -87,7 +87,7 @@
     neck: ClothingNeckMantleCMO
     id: VisitorPDA
     back: ClothingBackpackSatchelMedical
-    ears: ClothingHeadsetCMO
+    ears: ClothingHeadsetAltMedical
     belt: ClothingBeltMedicalFilled
     outerClothing: ClothingOuterCoatLabCmo
     pocket1: WeaponDisabler
@@ -167,7 +167,7 @@
     neck: ClothingNeckCloakRd
     id: VisitorPDA
     back: ClothingBackpackScience
-    ears: ClothingHeadsetRD
+    ears: ClothingHeadsetAltScience
     outerClothing: ClothingOuterCoatRD
     pocket1: WeaponDisabler
 
@@ -181,7 +181,7 @@
     neck: ClothingNeckMantleRD
     id: VisitorPDA
     back: ClothingBackpackSatchelScience
-    ears: ClothingHeadsetRD
+    ears: ClothingHeadsetAltScience
     outerClothing: ClothingOuterCoatRD
     pocket1: WeaponDisabler
 
@@ -194,7 +194,7 @@
     neck: ClothingNeckCloakQm
     id: VisitorPDA
     back: ClothingBackpackCargo
-    ears: ClothingHeadsetQM
+    ears: ClothingHeadsetAltCargo
     outerClothing: ClothingOuterWinterQM
     pocket1: WeaponDisabler
     pocket2: AppraisalTool
@@ -208,7 +208,7 @@
     neck: ClothingNeckMantleQM
     id: VisitorPDA
     back: ClothingBackpackSatchelCargo
-    ears: ClothingHeadsetQM
+    ears: ClothingHeadsetAltCargo
     outerClothing: ClothingOuterWinterQM
     pocket1: WeaponDisabler
     pocket2: AppraisalTool

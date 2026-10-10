@@ -1159,3 +1159,9 @@ ClothingHeadHatWizard: ClothingHeadHatWizardBlue
 ClothingOuterWizard: ClothingOuterWizardBlue
 ClothingHeadHatRedwizard: ClothingHeadHatWizardRed
 ClothingHeadHatVioletwizard: ClothingHeadHatWizardViolet
+
+# 2026-09-27
+ClothingHeadsetQM: ClothingHeadsetAltCargo
+ClothingHeadsetCE: ClothingHeadsetAltEngineering
+ClothingHeadsetCMO: ClothingHeadsetAltMedical
+ClothingHeadsetRD: ClothingHeadsetAltScience
