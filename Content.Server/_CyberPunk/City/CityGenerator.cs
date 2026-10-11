@@ -31,6 +31,12 @@ namespace Content.Server._CyberPunk.City;
 /// </para>
 /// <para>
 /// Last, the city is wired from the solar plant: high-voltage cable under the sidewalks to a substation by every
+/// block, medium-voltage cable on to an APC in every building, and low-voltage cable round its rooms. Then the
+/// residences are furnished: a WFC pass sets out each home's furniture, and one router and a programmable or
+/// security computer, with data cable joining them.
+/// </para>
+/// <para>
+/// Last, the city is wired from the solar plant: high-voltage cable under the sidewalks to a substation by every
 /// block, medium-voltage cable on to an APC in every building, and low-voltage cable round its rooms.
 /// </para>
 /// </remarks>
@@ -371,6 +377,7 @@ public static partial class CityGenerator
         plan.Spawn = (cx * Pitch + Avenue / 2, cy * Pitch + Avenue / 2);
         DigTunnels(plan);
         Wire(plan, bank, regions);
+        Populate(plan, rng.Fork(8));
         return plan;
     }
 

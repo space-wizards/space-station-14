@@ -41,32 +41,8 @@ public static partial class CityGenerator
     {
         var size = plan.Size;
         var (roomOf, rooms) = FindRooms(plan);
+        var (buildings, doors) = BuildingsAndDoors(plan, roomOf, rooms);
 
-        // Rooms joined by doors make a building.
-        var doors = rooms.Select(_ => new List<(int Door, int Room)>()).ToArray();
-        var joined = new CityBlockGenerator.UnionFind(rooms.Count);
-        for (var i = 0; i < plan.Structures.Length; i++)
-        {
-            if (plan.Structures[i] != CityStructure.Door)
-                continue;
-
-            var (x, y) = (i % size, i / size);
-            foreach (var (dx, dy) in new[] { (1, 0), (0, 1) })
-            {
-                if (!plan.Contains(x - dx, y - dy) || !plan.Contains(x + dx, y + dy))
-                    continue;
-
-                var (a, b) = (roomOf[i - dy * size - dx], roomOf[i + dy * size + dx]);
-                if (a < 0 || b < 0 || a == b)
-                    continue;
-
-                doors[a].Add((i, b));
-                doors[b].Add((i, a));
-                joined.Join(a, b);
-            }
-        }
-
-        var buildings = Enumerable.Range(0, rooms.Count).GroupBy(joined.Find).Select(g => g.ToList()).ToList();
         var regionBuildings = regions.Select(_ => new List<List<int>>()).ToArray();
         foreach (var building in buildings)
         {
@@ -401,6 +377,41 @@ public static partial class CityGenerator
             CityFloor.Asphalt => 3,
             _ => 2,
         };
+    }
+
+    /// <summary>
+    /// Joins rooms through their doors into buildings.
+    /// </summary>
+    /// <returns>Every building's rooms, and the doors out of each room.</returns>
+    private static (List<List<int>> Buildings, List<(int Door, int Room)>[] Doors) BuildingsAndDoors(
+        CityPlan plan, int[] roomOf, List<List<int>> rooms)
+    {
+        var doors = rooms.Select(_ => new List<(int Door, int Room)>()).ToArray();
+        var joined = new CityBlockGenerator.UnionFind(rooms.Count);
+        var size = plan.Size;
+        for (var i = 0; i < plan.Structures.Length; i++)
+        {
+            if (plan.Structures[i] != CityStructure.Door)
+                continue;
+
+            var (x, y) = (i % size, i / size);
+            foreach (var (dx, dy) in new[] { (1, 0), (0, 1) })
+            {
+                if (!plan.Contains(x - dx, y - dy) || !plan.Contains(x + dx, y + dy))
+                    continue;
+
+                var (a, b) = (roomOf[i - dy * size - dx], roomOf[i + dy * size + dx]);
+                if (a < 0 || b < 0 || a == b)
+                    continue;
+
+                doors[a].Add((i, b));
+                doors[b].Add((i, a));
+                joined.Join(a, b);
+            }
+        }
+
+        var buildings = Enumerable.Range(0, rooms.Count).GroupBy(joined.Find).Select(g => g.ToList()).ToList();
+        return (buildings, doors);
     }
 
     /// <summary>

@@ -89,12 +89,63 @@ public sealed partial class CitySystem : EntitySystem
         (CityCable.High, "CableHV"),
         (CityCable.Medium, "CableMV"),
         (CityCable.Low, "CableApcExtension"),
+        (CityCable.Data, "CableData"),
     };
 
     private static readonly Dictionary<CityFixture, EntProtoId> FixtureIds = new()
     {
         [CityFixture.Apc] = "APCBasic",
         [CityFixture.Terminal] = "CableTerminal",
+    };
+
+    /// <summary>What each residence object becomes: furniture, routers and computers.</summary>
+    private static readonly Dictionary<CityObject, EntProtoId> ObjectIds = new()
+    {
+        [CityObject.Bed] = "Bed",
+        [CityObject.Mattress] = "Mattress",
+        [CityObject.Sofa] = "ComfyChair",
+        [CityObject.Chair] = "ChairWood",
+        [CityObject.Stool] = "Stool",
+        [CityObject.Table] = "TableWood",
+        [CityObject.Dresser] = "Dresser",
+        [CityObject.Bookshelf] = "Bookshelf",
+        [CityObject.Sink] = "Sink",
+        [CityObject.Toilet] = "ToiletEmpty",
+        [CityObject.Plant] = "PottedPlant0",
+        [CityObject.EndTable] = "TableEnd",
+        [CityObject.Router] = "NetworkRouter",
+        [CityObject.Computer] = "ComputerProgrammable",
+        [CityObject.SecurityComputer] = "ComputerProgrammableSecurity",
+    };
+
+    /// <summary>The carpet each residence colour becomes.</summary>
+    private static readonly Dictionary<CityCarpet, EntProtoId> CarpetIds = new()
+    {
+        [CityCarpet.Red] = "Carpet",
+        [CityCarpet.Black] = "CarpetBlack",
+        [CityCarpet.Pink] = "CarpetPink",
+        [CityCarpet.Blue] = "CarpetBlue",
+        [CityCarpet.Green] = "CarpetGreen",
+        [CityCarpet.Orange] = "CarpetOrange",
+        [CityCarpet.SkyBlue] = "CarpetSBlue",
+        [CityCarpet.Purple] = "CarpetPurple",
+        [CityCarpet.Cyan] = "CarpetCyan",
+        [CityCarpet.White] = "CarpetWhite",
+    };
+
+    /// <summary>The curtains each residence colour becomes.</summary>
+    private static readonly Dictionary<CityCarpet, EntProtoId> CurtainIds = new()
+    {
+        [CityCarpet.Red] = "CurtainsRed",
+        [CityCarpet.Black] = "CurtainsBlack",
+        [CityCarpet.Pink] = "CurtainsPink",
+        [CityCarpet.Blue] = "CurtainsBlue",
+        [CityCarpet.Green] = "CurtainsGreen",
+        [CityCarpet.Orange] = "CurtainsOrange",
+        [CityCarpet.SkyBlue] = "CurtainsSkyBlue",
+        [CityCarpet.Purple] = "CurtainsPurple",
+        [CityCarpet.Cyan] = "CurtainsCyan",
+        [CityCarpet.White] = "CurtainsWhite",
     };
 
     /// <summary>The plan's directions, in order, as the way an entity faces.</summary>
@@ -243,6 +294,21 @@ public sealed partial class CitySystem : EntitySystem
         foreach (var (kind, x, y, direction) in plan.Fixtures)
         {
             spawns.Add((FixtureIds[kind], new Vector2i(x, y), Facings[direction].ToAngle()));
+        }
+
+        foreach (var (kind, x, y, direction) in plan.Objects)
+        {
+            spawns.Add((ObjectIds[kind], new Vector2i(x, y), Facings[direction].ToAngle()));
+        }
+
+        foreach (var (colour, x, y) in plan.Carpets)
+        {
+            spawns.Add((CarpetIds[colour], new Vector2i(x, y), Angle.Zero));
+        }
+
+        foreach (var (colour, x, y) in plan.Curtains)
+        {
+            spawns.Add((CurtainIds[colour], new Vector2i(x, y), Angle.Zero));
         }
 
         _pending.Clear();

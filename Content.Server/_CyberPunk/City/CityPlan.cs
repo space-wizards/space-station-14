@@ -102,6 +102,7 @@ public enum CityCable : byte
     High = 1,
     Medium = 2,
     Low = 4,
+    Data = 8,
 }
 
 /// <summary>Power fittings that face a way: a wall-mounted APC, or a cable terminal feeding an SMES.</summary>
@@ -109,6 +110,49 @@ public enum CityFixture : byte
 {
     Apc,
     Terminal,
+}
+
+/// <summary>What stands inside a residence, by tile: furniture, and its router and computer.</summary>
+public enum CityObject : byte
+{
+    /// <summary>Nothing; used only by the interior pass's WFC tiles, never spawned.</summary>
+    None,
+    Bed,
+    Mattress,
+    Sofa,
+    Chair,
+    Stool,
+    Table,
+    Dresser,
+    Bookshelf,
+    Sink,
+    Toilet,
+    Plant,
+    /// <summary>The little table standing beside the bed.</summary>
+    EndTable,
+    /// <summary>The one router every residence has.</summary>
+    Router,
+    /// <summary>A programmable computer, or a security one standing in for it.</summary>
+    Computer,
+    SecurityComputer,
+}
+
+/// <summary>
+/// The colours a home's soft furnishings come in: every colour the cloth-dyers of the city stock, for carpets
+/// and curtains that match each other.
+/// </summary>
+public enum CityCarpet : byte
+{
+    Red,
+    Black,
+    Pink,
+    Blue,
+    Green,
+    Orange,
+    SkyBlue,
+    Purple,
+    Cyan,
+    White,
 }
 
 /// <summary>
@@ -134,6 +178,15 @@ public sealed class CityPlan
 
     /// <summary>Power fittings, each with the direction it faces as an index into the WFC directions.</summary>
     public readonly List<(CityFixture Kind, int X, int Y, int Direction)> Fixtures = new();
+
+    /// <summary>What stands inside residences, each with the direction it faces as an index into the WFC directions.</summary>
+    public readonly List<(CityObject Kind, int X, int Y, int Direction)> Objects = new();
+
+    /// <summary>Carpet laid on the floors of residences, by tile and colour.</summary>
+    public readonly List<(CityCarpet Colour, int X, int Y)> Carpets = new();
+
+    /// <summary>Curtains hung on residence windows, by tile and colour.</summary>
+    public readonly List<(CityCarpet Colour, int X, int Y)> Curtains = new();
 
     public CityPlan(int districts)
     {

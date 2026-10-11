@@ -42,3 +42,9 @@
         - FullTileMask
         layer:
         - WallLayer
+
+- type: entity
+  parent: TableWood
+  id: TableEnd
+  name: end table
+  description: A little table for the bits and pieces that live beside a bed.
