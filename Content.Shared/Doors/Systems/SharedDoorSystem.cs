@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
@@ -49,6 +50,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     [Dependency] private SharedMapSystem _mapSystem = default!;
     [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
     [Dependency] private WeldableSystem _weldSystem = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
 
     public static readonly ProtoId<TagPrototype> DoorBumpTag = "DoorBumpOpener";
 
@@ -555,6 +557,12 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 _damageableSystem.TryChangeDamage(entity, door.CrushDamage, origin: uid);
 
             _stunSystem.TryUpdateParalyzeDuration(entity, stunTime);
+
+            var entityPosition = _transformSystem.GetWorldPosition(entity);
+            var doorPosition = _transformSystem.GetWorldPosition(uid);
+            var entityDirection = entityPosition - doorPosition;
+            // Shove entity away, more if closer to door center, to always land just outside the door.
+            PhysicsSystem.ApplyLinearImpulse(entity, (2f * entityDirection.Normalized() - entityDirection) * 300f);
         }
 
         if (door.CurrentlyCrushing.Count == 0)
