@@ -1,3 +1,5 @@
+using Content.Server.EntityEffects.Effects;
+
 namespace Content.Server.NPC.Components;
 
 /// <summary>The current leader and remembered friendly and hostile entities of an imprinted NPC.</summary>
@@ -9,6 +11,7 @@ public sealed partial class NPCImprintedComponent : Component
     /// Use DnaImprintEntityEffectSystem.SetLeader to update this.
     /// </summary>
     [DataField]
+    [Access(typeof(DnaImprintEntityEffectSystem))]
     public EntityUid? Leader;
 
 
