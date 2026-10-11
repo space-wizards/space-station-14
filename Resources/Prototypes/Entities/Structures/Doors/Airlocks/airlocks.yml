@@ -12,7 +12,6 @@
   parent: Airlock
   id: AirlockFreezer
   name: freezer airlock
-  suffix: Freezer
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/service-freezer.rsi
@@ -60,7 +59,6 @@
   parent: Airlock
   id: AirlockEngineering
   name: engineering airlock
-  suffix: Engineering
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/engineering-base.rsi
@@ -71,7 +69,6 @@
   parent: AirlockEngineering
   id: AirlockAtmospherics
   name: atmospherics airlock
-  suffix: Atmospherics
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/engineering-atmos.rsi
@@ -80,7 +77,6 @@
   parent: Airlock
   id: AirlockCargo
   name: cargo airlock
-  suffix: Cargo
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/cargo-base.rsi
@@ -91,7 +87,6 @@
   parent: Airlock
   id: AirlockSalvage
   name: salvage airlock
-  suffix: Salvage
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/cargo-salvage.rsi
@@ -102,7 +97,6 @@
   parent: Airlock
   id: AirlockHydroponics
   name: hydroponics airlock
-  suffix: Hydroponics
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/service-botany.rsi
@@ -113,7 +107,6 @@
   parent: Airlock
   id: AirlockMedical
   name: medical airlock
-  suffix: Medical
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/medical-base.rsi
@@ -124,7 +117,6 @@
   parent: AirlockMedical
   id: AirlockVirology
   name: virology airlock
-  suffix: Virology
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/medical-viro.rsi
@@ -133,7 +125,6 @@
   parent: AirlockMedical
   id: AirlockChemistry
   name: chemistry airlock
-  suffix: Chemistry
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/medical-chem.rsi
@@ -142,7 +133,6 @@
   parent: Airlock
   id: AirlockScience
   name: science airlock
-  suffix: Science
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/science-base.rsi
@@ -153,7 +143,6 @@
   parent: Airlock
   id: AirlockCommand
   name: command airlock
-  suffix: Command
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/command-base.rsi
@@ -166,7 +155,6 @@
   parent: Airlock
   id: AirlockSecurity
   name: security airlock
-  suffix: Security
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/security-base.rsi
@@ -185,14 +173,13 @@
   parent: AirlockSecurity # if you get syndie door somehow it counts as sec
   id: AirlockSyndicate
   name: syndicate airlock
-  suffix: Syndicate
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/syndicate-base.rsi
 
 - type: entity
   parent: AirlockCargo
-  id: AirlockMining
+  id: AirlockMining #idk why we even have this
   suffix: Mining(Salvage)
   components:
   - type: Sprite
@@ -206,7 +193,6 @@
   parent: AirlockCommand # if you get centcom door somehow it counts as command, also inherit panel
   id: AirlockCentralCommand
   name: central command airlock
-  suffix: Central Command
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/centcomm-base.rsi
@@ -282,7 +268,6 @@
   parent: Airlock
   id: AirlockHatchSyndicate
   name: syndicate hatch
-  suffix: Syndicate
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/airlock-hatch-syndicate.rsi
@@ -292,7 +277,6 @@
   parent: AirlockGlass
   id: AirlockEngineeringGlass
   name: engineering glass airlock
-  suffix: Engineering
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/engineering-base.rsi
@@ -303,7 +287,6 @@
   parent: AirlockGlass
   id: AirlockMaintGlass
   name: maintenance glass airlock
-  suffix: Maintenance
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/airlock-maints.rsi
@@ -312,7 +295,6 @@
   parent: AirlockEngineeringGlass
   id: AirlockAtmosphericsGlass
   name: atmospherics glass airlock
-  suffix: Atmospherics
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/engineering-atmos.rsi
@@ -321,7 +303,6 @@
   parent: AirlockGlass
   id: AirlockCargoGlass
   name: cargo glass airlock
-  suffix: Cargo
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/cargo-base.rsi
@@ -332,7 +313,6 @@
   parent: AirlockGlass
   id: AirlockSalvageGlass
   name: salvage glass airlock
-  suffix: Salvage
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/cargo-salvage.rsi
@@ -343,7 +323,6 @@
   parent: AirlockGlass
   id: AirlockHydroponicsGlass
   name: hydroponics glass airlock
-  suffix: Hydroponics
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/service-botany.rsi
@@ -354,7 +333,6 @@
   parent: AirlockGlass
   id: AirlockMedicalGlass
   name: medical glass airlock
-  suffix: Medical
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/medical-base.rsi
@@ -365,7 +343,6 @@
   parent: AirlockMedicalGlass
   id: AirlockChemistryGlass
   name: chemistry glass airlock
-  suffix: Chemistry
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/medical-chem.rsi
@@ -374,7 +351,6 @@
   parent: AirlockMedicalGlass
   id: AirlockVirologyGlass
   name: virology glass airlock
-  suffix: Virology
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/medical-viro.rsi
@@ -383,7 +359,6 @@
   parent: AirlockGlass
   id: AirlockScienceGlass
   name: science glass airlock
-  suffix: Science
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/science-base.rsi
@@ -394,7 +369,6 @@
   parent: AirlockGlass
   id: AirlockCommandGlass
   name: command glass airlock
-  suffix: Command
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/command-base.rsi
@@ -407,7 +381,6 @@
   parent: AirlockGlass
   id: AirlockSecurityGlass
   name: security glass airlock
-  suffix: Security
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/security-base.rsi
@@ -418,7 +391,6 @@
   parent: AirlockSecurityGlass # see standard
   id: AirlockSyndicateGlass
   name: syndicate glass airlock
-  suffix: Syndicate
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/syndicate-base.rsi
@@ -426,7 +398,7 @@
 - type: entity
   parent: AirlockCargoGlass
   id: AirlockMiningGlass
-  suffix: Mining(Salvage)
+  suffix: Mining(Salvage), Glass #idk, just go with it
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/cargo-mining.rsi
@@ -437,7 +409,6 @@
   parent: AirlockCommandGlass # see standard
   id: AirlockCentralCommandGlass
   name: central command glass airlock
-  suffix: Central Command
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/centcomm-base.rsi
@@ -445,11 +416,10 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockStandardGlass
-  name: service glass airlock #TODO check this
-  suffix: Service
+  name: service glass airlock
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/airlock-base.rsi
+    sprite: Structures/Doors/Airlocks/Glass/airlock-base.rsi # there is no unuiqe sprite for service glass airlock, strange
 
 - type: entity
   parent: Airlock

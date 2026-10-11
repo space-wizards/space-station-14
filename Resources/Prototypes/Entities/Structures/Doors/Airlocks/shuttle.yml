@@ -97,7 +97,6 @@
   parent: AirlockShuttle
   id: AirlockGlassShuttle
   name: docking glass airlock
-  suffix: Glass
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/shuttle-base.rsi
@@ -134,7 +133,6 @@
   parent: AirlockGlassShuttle
   id: AirlockGlassShuttleSyndicate
   name: syndicate docking glass airlock
-  suffix: Syndicate, Glass
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/shuttle-syndicate.rsi
@@ -143,7 +141,6 @@
   parent: AirlockShuttle
   id: AirlockShuttleSyndicate
   name: syndicate docking airlock
-  suffix: Syndicate
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/shuttle-syndicate.rsi
