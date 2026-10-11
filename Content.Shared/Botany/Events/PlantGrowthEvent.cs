@@ -26,6 +26,7 @@ public readonly record struct PlantHarvestedEvent(EntityUid User, EntityUid Targ
 [ByRefEvent]
 public readonly record struct PlantProduceSpawnedEvent(EntityUid Produce);
 
+/// <summary>
 /// Raised after processing a plant's random mutations.
 /// </summary>
 [ByRefEvent]
