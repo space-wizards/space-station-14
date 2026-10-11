@@ -26,4 +26,4 @@ jobs:
 
     - name: Check for BOMs
       run: |
-        echo ${{ steps.changed-files.outputs.all_changed_files }} | grep -rlP '^\xEF\xBB\xBF'
+        echo ${{ steps.changed-files.outputs.all_changed_files }} | xargs grep -rlP '^\xEF\xBB\xBF'
