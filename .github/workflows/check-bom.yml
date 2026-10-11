@@ -22,6 +22,7 @@ jobs:
       with:
         files: |
           **.cs
+          **.json
           **.yml
 
     - name: Check for BOMs
