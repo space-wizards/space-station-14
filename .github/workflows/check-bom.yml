@@ -30,4 +30,6 @@ jobs:
 
     - name: Complain
       if: failure()
-      run: echo "You have committed files with UTF-8 (BOM) encoding. If you are using Rider, Settings > Editor > File Encodings, and set the \"Create UTF-8 Files\" to \"With No BOM\" \nFollow the steps here https://youtrack.jetbrains.com/articles/SUPPORT-A-3222/Rider-doesnt-change-encoding-for-files "
+      run: |
+        echo "You have committed files with UTF-8 (BOM) encoding. If you are using Rider, Settings > Editor > File Encodings, and set the \"Create UTF-8 Files\" to \"With No BOM\" \nFollow the steps here https://youtrack.jetbrains.com/articles/SUPPORT-A-3222/Rider-doesnt-change-encoding-for-files "
+        exit 1
