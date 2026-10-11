@@ -1,0 +1,6 @@
+- type: guideEntry
+  id: BoltstationRules
+  name: guide-entry-rules-boltstation
+  ruleEntry: true
+  priority: 10
+  text: "/ServerInfo/Guidebook/ServerRules/BoltstationRules.xml"
