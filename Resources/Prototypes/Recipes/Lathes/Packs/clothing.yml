@@ -140,6 +140,7 @@
   - ClothingUniformJumpskirtMime
   - ClothingUniformJumpsuitMusician
   - ClothingUniformJumpsuitTramDriver
+  - ClothingUniformJumpskirtTramDriver
 
 - type: latheRecipePack
   id: WinterCoats

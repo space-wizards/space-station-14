@@ -629,6 +629,11 @@
   result: ClothingUniformJumpsuitTramDriver
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtTramDriver
+  result: ClothingUniformJumpskirtTramDriver
+
+- type: latheRecipe
   parent: BaseCoatRecipe
   id: ClothingOuterSuitTramDriver
   result: ClothingOuterSuitTramDriver
