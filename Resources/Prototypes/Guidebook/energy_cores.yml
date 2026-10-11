@@ -1,0 +1,4 @@
+- type: guideEntry
+  id: EnergyCoresGuide
+  name: guide-entry-energy-cores
+  text: /ServerInfo/Guidebook/Engineering/EnergyCores.xml

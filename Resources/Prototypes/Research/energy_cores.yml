@@ -1,0 +1,12 @@
+- type: technology
+  id: EnergyCores
+  name: research-technology-energy-cores
+  icon:
+    sprite: Structures/Power/energy_core.rsi
+    state: off
+  discipline: Industrial
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - EnergyCoreMachineCircuitboard
+  - EnergyCoreCircuitboard

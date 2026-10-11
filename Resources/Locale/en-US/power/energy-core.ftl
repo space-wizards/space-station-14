@@ -1,0 +1,25 @@
+energy-core-window-title = Energy core
+energy-core-enabled = Running
+energy-core-starting = Spinning up
+energy-core-stopping = Spinning down
+energy-core-disabled = Stopped
+energy-core-start = Start
+energy-core-stop = Stop
+energy-core-fuel = Uranium reserve: { $energy } MJ
+energy-core-temperature = Core: { $temperature } K; restart below { $restart } K
+energy-core-supply = Delivered to grid: { $power } kW
+energy-core-target = Requested output: { $power } kW
+energy-core-heat = Heat generation: { $power } kW
+energy-core-flow = Coolant flow: { $flow } mol/s
+energy-core-inlet = Inlet: { $temperature } K / { $pressure } kPa
+energy-core-outlet = Outlet: { $temperature } K / { $pressure } kPa
+energy-core-examine = Core temperature: [color=orange]{ $temperature } K[/color]. Requested output: { $power } kW.
+research-technology-energy-cores = Shuttle energy cores
+energy-core-dismantle-unsafe = Stop the core and cool it below the restart temperature before dismantling it.
+guide-entry-energy-cores = Energy cores
+energy-core-disconnected = No powered reactor link
+energy-core-radiation = Radiation source: { $radiation } rad/s
+signal-port-name-energy-core-control = Reactor control
+signal-port-description-energy-core-control = Links a console to one energy core.
+energy-core-reaction = Fission: { $power } kW; decay heat: { $decay } kW
+energy-core-conversion = Conversion: { $efficiency }%; buffer: { $energy } kJ

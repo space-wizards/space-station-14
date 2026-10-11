@@ -1,0 +1,19 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               Title="{Loc 'energy-core-window-title'}" MinWidth="420">
+    <BoxContainer Orientation="Vertical" SeparationOverride="8" Margin="8">
+        <Label Name="Status" />
+        <Label Name="Fuel" />
+        <Label Name="Temperature" />
+        <Label Name="Supply" />
+        <Label Name="Target" />
+        <Slider Name="OutputSlider" MinValue="0" MaxValue="300" Rounded="True" HorizontalExpand="True" />
+        <Label Name="Heat" />
+        <Label Name="Reaction" />
+        <Label Name="Conversion" />
+        <Label Name="Radiation" />
+        <Label Name="Flow" />
+        <Label Name="Inlet" />
+        <Label Name="Outlet" />
+        <Button Name="PowerButton" Text="{Loc 'energy-core-start'}" />
+    </BoxContainer>
+</DefaultWindow>

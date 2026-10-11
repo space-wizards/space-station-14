@@ -1,0 +1,10 @@
+- type: sourcePort
+  id: EnergyCoreSender
+  name: signal-port-name-energy-core-control
+  description: signal-port-description-energy-core-control
+  defaultLinks: [EnergyCoreReceiver]
+
+- type: sinkPort
+  id: EnergyCoreReceiver
+  name: signal-port-name-energy-core-control
+  description: signal-port-description-energy-core-control

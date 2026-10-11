@@ -1,0 +1,24 @@
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: EnergyCoreMachineCircuitboard
+  name: energy core machine board
+  description: A machine board for a uranium-fuelled shuttle energy core.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: EnergyCore
+    stackRequirements:
+      Manipulator: 2
+      CableHV: 10
+      Plasteel: 10
+      Glass: 5
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: EnergyCoreCircuitboard
+  name: energy core control console board
+  description: A computer board for a uranium reactor control console.
+  components:
+  - type: ComputerBoard
+    prototype: ComputerEnergyCoreControl

@@ -1,0 +1,25 @@
+- type: entity
+  id: MultiTilePipePort
+  name: machine pipe terminal
+  categories: [HideSpawnMenu]
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    drawdepth: ThinPipe
+    layers:
+    - state: pipeHalf
+      map: [enum.PipeVisualLayers.Pipe]
+  - type: Appearance
+  - type: PipeAppearance
+  - type: PipeRestrictOverlap
+  - type: NodeContainer
+    nodes:
+      pipe: !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+        volume: 1
+  - type: Tag
+    tags:
+    - HideContextMenu

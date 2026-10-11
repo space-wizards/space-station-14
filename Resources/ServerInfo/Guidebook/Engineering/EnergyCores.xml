@@ -1,0 +1,38 @@
+<Document>
+  # Energy core
+
+    A compact uranium-fuelled shuttle reactor, gravity source and angular stabilizer. Build it with a standard machine frame and an energy core machine board researched in Industrial technology. Insert uranium sheets into the stand; the newly built machine is empty.
+
+  <GuideEntityEmbed Entity="EnergyCore"/>
+  # Installation and fuel
+
+  Place an HV cable under the core's anchor tile and connect it to the shuttle's power network (normally the SMES input). Supply the console through the normal APC network; keep some battery charge available for startup.
+  Load ordinary uranium sheets directly into the core by clicking it with the stack in your hand. Do not put fuel into the console or pipes. Capacity is 30 sheets; split a stack if it exceeds the remaining space. Raw uranium ore is not accepted.
+  Select the console with a multitool and link its Reactor control output to the core's Reactor control input. Link range is 10 tiles; one console controls one core.
+
+  # Cooling circuit
+
+    Use primary-layer pipes from an atmos pipe dispenser. The platform has real pipe terminals at its blue inlet and orange outlet. Place a pipe immediately outside each visible terminal, pointing into it, and wrench the pipe down. No pipes need to be hidden underneath the reactor.
+    In the default orientation, the terminals are two tiles left/right and one tile south of the anchor. External pipes go three tiles left/right and one tile south of the anchor. Both terminals and the platform rotate together. Provide flooring or lattice under the terminals so they can anchor.
+    Run the orange outlet through a cooler or a space radiator and return the cooled gas to the blue inlet. The built-in circulator moves up to 200 litres per second and overcomes up to 3000 kPa of pressure difference. It remains available after shutdown to cool the core.
+    Fill the loop by wrenching a gas canister onto a connector port connected to the pipes. Keep its release valve closed: that valve vents to the room, not to the pipe network. Nitrogen is a convenient starting coolant. Use radiators (HeatExchanger) connected to ordinary primary-layer pipes in space, preferably on lattice. A length of ordinary pipe in space is not a radiator.
+    Any gas or mixture can carry heat. Coolant is not fuel and is neither consumed nor replaced by the core. Its heat capacity depends on its composition and number of moles. Hot return gas can heat the core; vacuum cannot cool it. Normal atmospheric reactions still apply to reactive mixtures elsewhere in the pipe circuit.
+    A closed loop retains all its gas. Without an external cooler the entire loop eventually heats up, even with the circulator running. Higher gas temperature also raises pressure according to the gas equation.
+
+  # Controls and fuel
+
+    Build and power a separate energy core control console, then link its reactor-control port to the core with a multitool. Use the console to start or stop the core and select 0–300 kW. Startup takes 5 seconds; the core spins in place. Electrical output stops immediately when switched off, while the rotor slows down for 4 seconds.
+    Uranium produces heat first; electricity is extracted from heat flowing from the hot core to the coolant. A cold core needs time to warm up. Vacuum, a blocked loop or return gas hotter than the core cannot generate electricity. A hotter return, lower gas inventory or a gas with lower heat capacity reduces the available electrical power. The console shows actual reaction power, decay heat and conversion efficiency.
+    The slider sets the nominal reactor rating and the maximum electrical output, not a guaranteed supply. The automatic heat-exchanger bypass follows this rating. Conversion is limited by the temperature difference: its upper bound is 65% of the Carnot efficiency (1 - cold temperature / hot temperature), with both temperatures in kelvin. Finite heat capacity and the amount of gas actually circulated further limit the transfer. Unconverted heat enters the coolant. A 600 kJ electrical buffer bridges the atmos and electrical ticks; it cannot create energy. When it fills, further heat goes to the coolant. Stopping dissipates the remaining buffer into the core.
+    Fuel yield is compressed for a round: one sheet contains 17.143 MJ of effective thermal energy, preserving the previous fuel budget. The 35% nominal rating corresponds to approximately 6 MJ of electricity per sheet under suitable cooling, not a fixed conversion efficiency. At a settled 50/100/300 kW setting, the reference consumption is 0.5/1/3 sheets per minute (120/60/20 seconds per sheet). Startup also costs fuel. Poor cooling reduces useful electricity per sheet; temperature feedback can reduce both reaction power and consumption. The minimum running burn remains equivalent to a 10 kW rating (0.1 sheet/minute), including at zero output, to support gravity and stabilization.
+    Reaction power responds over about 2 seconds rather than changing instantly. Above 900 K negative temperature feedback suppresses heat generation. Six percent of the released fuel energy goes into an effective decay inventory, which releases heat with a 30-second time constant even after shutdown or fuel exhaustion. These response times model a reactor on the timescale of a shift; they are not real isotope half-lives.
+    The reference cooling test uses nitrogen entering at 293 K and 6000 kPa, enough loop volume to sustain the circulator's rated flow, and the default atmos speedup. The external cooler must continuously remove the rejected heat; a warm or undersized loop will not sustain the rating.
+    The core has its own heat capacity of 20 kJ/K. It shuts down at 1100 K or when fuel runs out. Cool it below 650 K before restarting. Switching off does not reset its temperature. Watch the console's temperature, flow and pressure readings, and start at low output while testing a new cooling loop.
+
+  # Radiation
+
+  Fresh uranium in a stopped core emits no radiation, matching ordinary uranium sheets in this build. The running source follows actual fission power, with a reference intensity of 8 rad/s at the full nominal thermal rating. The accumulated decay inventory also contributes radiation after shutdown or fuel exhaustion and fades with time. These are source intensities: distance, intervening radiation blockers and protective equipment determine exposure.
+  Keep the reactor away from occupied areas, use radiation shielding and a radiation suit, and monitor it from the console. Losing the console or its power does not stop the reactor or its cooling loop.
+  This is a lumped thermal reactor and heat-engine model using the game's ideal-gas pressure, gas heat capacities and native pipe circulation. It conserves the energy of fuel, stored decay heat, core, coolant and electrical output. It does not simulate neutron transport, isotope breeding, steam phase changes or individual turbine stages. Fuel yield, response times, radiation and circulator mechanics remain gameplay abstractions.
+
+</Document>

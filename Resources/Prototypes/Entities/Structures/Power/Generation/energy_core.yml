@@ -1,0 +1,102 @@
+- type: entity
+  parent: [BaseMachine, ConstructibleMachine, BaseConstructibleMachineDestructible]
+  id: EnergyCore
+  name: energy core
+  description: A uranium-powered shuttle generator with a closed gas cooling circuit. The blue port is the inlet; the orange port is the outlet.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+    noRot: false
+  - type: Rotatable
+  - type: Appearance
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 200
+        mask:
+        - FullTileMask
+        layer:
+        - FullTileLayer
+  - type: EnergyCore
+  - type: MultiTilePiping
+    ports:
+      inlet:
+        offset: -2, -1
+        rotation: -90
+      outlet:
+        offset: 2, -1
+        rotation: 90
+  - type: RadiationSource
+    intensity: 0
+    slope: 0.5
+  - type: DeviceLinkSink
+    ports: [EnergyCoreReceiver]
+  - type: AtmosDevice
+    joinSystem: true
+  - type: MaterialStorage
+    storageLimit: 3000
+    materialWhiteList: [Uranium]
+  - type: Machine
+    board: EnergyCoreMachineCircuitboard
+  - type: Sprite
+    sprite: Structures/Power/energy_core.rsi
+    layers:
+    - state: off
+      offset: 0, 0.375
+      map: [enum.EnergyCoreVisuals.State]
+    - state: off
+      color: "#FFFFFF00"
+      visible: false
+      map: [enum.ThrusterVisualLayers.ThrustOn]
+  - type: GenericVisualizer
+    visuals:
+      enum.EnergyCoreVisuals.State:
+        enum.EnergyCoreVisuals.State:
+          Disabled: { state: off }
+          Enabled: { state: running }
+          Starting: { state: starting }
+          Stopping: { state: stopping }
+  - type: ApcPowerReceiver
+    needsPower: false
+    powerLoad: 0
+  - type: GravityGenerator
+  - type: Thruster
+    thrusterType: Angular
+    requireSpace: false
+    thrust: 2000
+    enabled: false
+    canToggle: false
+    basePowerLoad: 0
+  - type: PowerSupplier
+    enabled: false
+    supplyRate: 0
+    supplyRampRate: 1000000
+    supplyRampTolerance: 1000
+  - type: AmbientSound
+    enabled: false
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/engine_hum.ogg
+  - type: NodeContainer
+    nodes:
+      output: !type:CableDeviceNode
+        nodeGroupID: HVPower
+      inlet: !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: None
+        volume: 100
+      outlet: !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: None
+        volume: 100
+  - type: PowerMonitoringDevice
+    group: Generator
+    loadNode: output
+    sprite: Structures/Power/energy_core.rsi
+    state: off
+  - type: GuideHelp
+    guides: [EnergyCoresGuide]

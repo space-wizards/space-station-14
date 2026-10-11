@@ -1,0 +1,14 @@
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: EnergyCoreMachineCircuitboard
+  result: EnergyCoreMachineCircuitboard
+  materials:
+    Steel: 500
+    Glass: 1000
+    Gold: 500
+    Uranium: 500
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: EnergyCoreCircuitboard
+  result: EnergyCoreCircuitboard

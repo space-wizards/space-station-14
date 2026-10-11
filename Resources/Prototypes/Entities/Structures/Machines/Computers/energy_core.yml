@@ -1,0 +1,36 @@
+- type: entity
+  parent: BaseComputer
+  id: ComputerEnergyCoreControl
+  name: energy core control console
+  description: Controls a linked uranium reactor. Connect it to an energy core with a multitool.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/computers/energy_core.rsi
+    layers:
+    - state: computer
+      map: [computerLayerBody]
+    - state: generic_keyboard
+      map: [computerLayerKeyboard]
+    - state: core-screen
+      map: [computerLayerScreen]
+    - state: generic_keys
+      map: [computerLayerKeys]
+    - state: generic_panel_open
+      map: [enum.WiresVisualLayers.MaintenancePanel]
+  - type: Computer
+    board: EnergyCoreCircuitboard
+  - type: DeviceLinkSource
+    range: 10
+    ports: [EnergyCoreSender]
+  - type: EnergyCoreConsole
+  - type: ActivatableUI
+    key: enum.EnergyCoreUiKey.Key
+  - type: ActivatableUIRequiresAnchor
+  - type: UserInterface
+    interfaces:
+      enum.EnergyCoreUiKey.Key:
+        type: EnergyCoreBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: GuideHelp
+    guides: [EnergyCoresGuide]

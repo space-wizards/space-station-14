@@ -269,6 +269,7 @@
     - CameraBoards
     - MechBoards
     - ShuttleBoards
+    - EnergyCoreBoards
   - type: EmagLatheRecipes
     emagDynamicPacks:
     - SecurityBoards
