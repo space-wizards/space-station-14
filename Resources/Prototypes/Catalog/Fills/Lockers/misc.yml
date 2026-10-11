@@ -84,7 +84,6 @@
     - !type:NestedSelector
       tableId: MaintenancePlushies
       prob: 0.02
-
     # Weapons
     - !type:NestedSelector
       tableId: MaintWeaponTable
@@ -92,6 +91,10 @@
     # Syndie Loot
     - !type:NestedSelector
       tableId: SyndieMaintLoot
+      prob: 0.05
+    # Lootbox
+    - !type:NestedSelector
+      tableId: LootboxMaintsSpawnTable
       prob: 0.05
     # Recursive
     - id: ClosetMaintenanceFilledRandom

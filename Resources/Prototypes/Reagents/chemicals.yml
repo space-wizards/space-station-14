@@ -96,6 +96,9 @@
       effects:
       - !type:ArtifactUnlock
         minScale: 5
+        conditions:
+        - !type:TagCondition
+          tag: XenoArtifact
 
 - type: reagent
   parent: Artifexium

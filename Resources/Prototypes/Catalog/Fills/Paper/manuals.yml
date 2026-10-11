@@ -27,7 +27,7 @@
 - type: entity
   id: PaperAgrichemManual
   name: NT "AgriChem Is Fun" manual
-  description: The single sheet of instructions that came in the kit. 
+  description: The single sheet of instructions that came in the kit.
   parent: Paper
   components:
   - type: Paper
@@ -41,3 +41,17 @@
   components:
   - type: Paper
     content: book-text-combat-bakery-kit
+
+- type: entity
+  id: PaperLootboxInformation
+  name: lock box delivery procedures
+  description: An inspirational memo on appropriate delivery procedures that seems to have been mixed in with its contents.
+  parent: Paper
+  components:
+  - type: Paper
+    contentSize: 12000
+    content: book-text-lootbox-manual
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#329632FF'
+      stampedName: stamp-lootbox-logistics

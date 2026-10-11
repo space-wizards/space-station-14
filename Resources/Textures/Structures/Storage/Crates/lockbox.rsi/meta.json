@@ -17,6 +17,12 @@
       "name": "closed"
     },
     {
+      "name": "dirt"
+    },
+    {
+      "name": "dirt-closed"
+    },
+    {
       "name": "overlay"
     },
     {
