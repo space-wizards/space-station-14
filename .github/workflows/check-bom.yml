@@ -11,7 +11,7 @@ concurrency:
 jobs:
   build:
     name: BOM Check
-    #if: github.event.pull_request.draft == false
+    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v7
@@ -30,4 +30,4 @@ jobs:
 
     - name: Complain
       if: failure()
-      run: echo "You have committed files with UTF-8 (BOM) encoding. If you are using Rider, Settings > Editor > File Encodings, and set the \"Create UTF-8 Files\" to \"With No BOM\""
+      run: echo "You have committed files with UTF-8 (BOM) encoding. If you are using Rider, Settings > Editor > File Encodings, and set the \"Create UTF-8 Files\" to \"With No BOM\" \nFollow the steps here https://youtrack.jetbrains.com/articles/SUPPORT-A-3222/Rider-doesnt-change-encoding-for-files "
