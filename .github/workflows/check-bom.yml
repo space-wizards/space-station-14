@@ -15,6 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v7
+      with:
+        fetch-depth: 2
+        persist-credentials: true
 
     - name: Get changed files
       id: changed-files
@@ -28,7 +31,7 @@ jobs:
 
     - name: Check for BOMs
       run: |
-        ! grep -lP $'^\xEF\xBB\xBF' ${{ steps.changed-files.outputs.all_changed_files }}
+        ! grep -lP $'^\xEF\xBB\xBF' "${{ steps.changed-files.outputs.all_changed_files }}"
 
     - name: Complain
       if: failure()
