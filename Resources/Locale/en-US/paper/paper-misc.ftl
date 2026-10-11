@@ -79,6 +79,6 @@ book-text-reinforcement-initiation = [color=red][head=3]WELCOME TO THE SYNDICATE
 
     - [italic]Do Not[/italic] reveal your identity to the enemies of the Syndicate unless ordered to by your commander. Consider equipping civilian clothing to blend in.
 
-    - Ensure your adaptive Syndicate ID Card properly displays your false identity, ask your commander how to do this if you failed to remember from basic training.
+    - Ensure your adaptive Syndicate ID Card properly displays your false identity, ask your commander how to do this if you have failed to remember your training.
 
     - Above all, remember:[bold] DEATH TO NANOTRASEN. [/bold]
