@@ -1,4 +1,4 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceNetwork;
 using Robust.Shared.Serialization;

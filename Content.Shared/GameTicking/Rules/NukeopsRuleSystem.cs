@@ -1,4 +1,4 @@
-﻿using Content.Shared.Antag;
+using Content.Shared.Antag;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.NPC.Components;

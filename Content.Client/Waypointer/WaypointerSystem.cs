@@ -1,4 +1,4 @@
-﻿using Content.Shared.Actions.Components;
+using Content.Shared.Actions.Components;
 using Content.Shared.Waypointer;
 using Content.Shared.Waypointer.Components;
 using Content.Shared.Waypointer.Events;

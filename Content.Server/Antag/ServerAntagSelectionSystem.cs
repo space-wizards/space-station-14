@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
