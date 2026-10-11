@@ -1,4 +1,4 @@
-﻿name: BOM Check
+name: BOM Check
 
 on:
   pull_request:
