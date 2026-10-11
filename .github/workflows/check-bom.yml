@@ -1,0 +1,29 @@
+﻿name: BOM Check
+
+on:
+  pull_request:
+    types: [ opened, reopened, synchronize, ready_for_review ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true  # We only care about latest.
+
+jobs:
+  build:
+    name: BOM Check
+    #if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v7
+
+    - name: Get changed files
+      id: changed-files
+      uses: tj-actions/changed-files@v47.0.6
+      with:
+        files: |
+          **.cs
+          **.yml
+
+    - name: Check for BOMs
+      run: |
+        echo ${{ steps.changed-files.outputs.all_changed_files }} | grep -rlP '^\xEF\xBB\xBF'
