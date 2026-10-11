@@ -35,28 +35,29 @@ public sealed partial class GravityGeneratorSystem : SharedGravityGeneratorSyste
 
     private void OnActivated(Entity<GravityGeneratorComponent> ent, ref ChargedMachineActivatedEvent args)
     {
-        ent.Comp.GravityActive = true;
-        Dirty(ent, ent.Comp);
-
-        var xform = Transform(ent);
-
-        if (TryComp(xform.ParentUid, out GravityComponent? gravity))
-        {
-            _gravitySystem.EnableGravity(xform.ParentUid, gravity);
-        }
+        SetActive((ent.Owner, ent.Comp), true);
     }
 
     private void OnDeactivated(Entity<GravityGeneratorComponent> ent, ref ChargedMachineDeactivatedEvent args)
     {
-        ent.Comp.GravityActive = false;
-        Dirty(ent, ent.Comp);
+        SetActive((ent.Owner, ent.Comp), false);
+    }
 
+    public void SetActive(Entity<GravityGeneratorComponent?> ent, bool active)
+    {
+        if (!Resolve(ent, ref ent.Comp) || ent.Comp.GravityActive == active)
+            return;
+
+        ent.Comp.GravityActive = active;
+        Dirty(ent);
         var xform = Transform(ent);
+        if (!TryComp<GravityComponent>(xform.ParentUid, out var gravity))
+            return;
 
-        if (TryComp(xform.ParentUid, out GravityComponent? gravity))
-        {
+        if (active)
+            _gravitySystem.EnableGravity(xform.ParentUid, gravity);
+        else
             _gravitySystem.RefreshGravity(xform.ParentUid, gravity);
-        }
     }
 
     private void OnParentChanged(EntityUid uid, GravityGeneratorComponent component, ref EntParentChangedMessage args)

@@ -458,6 +458,18 @@ public sealed partial class ThrusterSystem : EntitySystem
         UpdatePowerLoad((uid, component));
     }
 
+    public void SetEnabled(Entity<ThrusterComponent?> ent, bool enabled)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        ent.Comp.Enabled = enabled;
+        if (CanEnable(ent, ent.Comp))
+            EnableThruster(ent, ent.Comp);
+        else
+            DisableThruster(ent, ent.Comp);
+    }
+
     public bool CanEnable(EntityUid uid, ThrusterComponent component)
     {
         if (!component.Enabled)
