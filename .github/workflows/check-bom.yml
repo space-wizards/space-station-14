@@ -26,4 +26,8 @@ jobs:
 
     - name: Check for BOMs
       run: |
-        grep -lP $'^\xEF\xBB\xBF' ${{ steps.changed-files.outputs.all_changed_files }}
+        ! grep -lP $'^\xEF\xBB\xBF' ${{ steps.changed-files.outputs.all_changed_files }}
+
+    - name: Complain
+      if: failure()
+      run: echo "You have committed files with UTF-8 (BOM) encoding. If you are using Rider, Settings > Editor > File Encodings, and set the \"Create UTF-8 Files\" to \"With No BOM\""
