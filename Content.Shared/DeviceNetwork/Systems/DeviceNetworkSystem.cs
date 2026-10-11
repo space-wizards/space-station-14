@@ -5,6 +5,7 @@ using Content.Shared.Examine;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.DeviceNetwork.Systems;
@@ -19,6 +20,7 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
     [Dependency] private IPrototypeManager _protoMan = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private INetManager _net = default!;
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private MetaDataSystem _metaSystem = default!;
     [Dependency] private SharedTransformSystem _transformSystem = default!;
 
@@ -28,6 +30,14 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
     private readonly HashSet<int> _occupiedAddresses = new();
 
     private Device[] _deviceCache = [];
+
+    [SubscribeLocalEvent]
+    private void OnBeforePacketReceived(Entity<DeviceNetworkComponent> ent, ref BeforePacketSentEvent args)
+    {
+        if (ent.Comp.JammedTimeout != null
+            && _timing.CurTime < ent.Comp.JammedTimeout.Value)
+            args.Cancelled = true;
+    }
 
     [SubscribeLocalEvent]
     private void OnExamine(Entity<DeviceNetworkComponent> ent, ref ExaminedEvent args)

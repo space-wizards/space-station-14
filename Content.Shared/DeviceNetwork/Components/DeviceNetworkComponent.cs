@@ -1,10 +1,12 @@
 using Content.Shared.DeviceNetwork.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.DeviceNetwork.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
 [Access(typeof(DeviceNetworkSystem))]
 public sealed partial class DeviceNetworkComponent : Component
 {
@@ -15,8 +17,7 @@ public sealed partial class DeviceNetworkComponent : Component
     public ProtoId<DeviceNetworkPrototype>[] DeviceNets;
 
     /// <summary>
-    /// An array of all currently connected networks.
-    /// Should have the same size as <see cref="DeviceNets"/>
+    /// All currently connected networks.
     /// </summary>
     [DataField, AutoNetworkedField]
     public Dictionary<ProtoId<DeviceNetworkPrototype>, EntityUid> ConnectedNets = new();
@@ -100,4 +101,11 @@ public sealed partial class DeviceNetworkComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool CustomAddress;
+
+    /// <summary>
+    /// Time until which this device is jammed, meaning it cannot send any packets.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoNetworkedField, AutoPausedField]
+    public TimeSpan? JammedTimeout;
 }

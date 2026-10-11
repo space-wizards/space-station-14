@@ -42,6 +42,10 @@ public sealed partial class DeviceNetworkSystem
         if (frequency == null)
             return false;
 
+        if (ent.Comp.JammedTimeout != null
+            && _timing.CurTime < ent.Comp.JammedTimeout.Value)
+            return false;
+
         if (network != null)
         {
             // Unsupported network type

@@ -94,7 +94,8 @@ public sealed partial class DeviceNetworkSystem
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
-        if (!ent.Comp.ConnectedNets.TryGetValue(netId, out var netUid) || !_deviceManagerQuery.TryComp(netUid, out var netComp))
+        if (!ent.Comp.ConnectedNets.TryGetValue(netId, out var netUid)
+            || !_deviceManagerQuery.TryComp(netUid, out var netComp))
             return false;
 
         network = (netUid, netComp);
