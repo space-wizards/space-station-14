@@ -31,21 +31,29 @@ public sealed partial class ImprintedTargetOperator : HTNOperator
         }
         else
         {
+            var range = blackboard.GetValueOrDefault<float>(
+                blackboard.GetVisionRadiusKey(_entities), _entities);
             var nearest = float.PositiveInfinity;
             var coordinates = new EntityCoordinates(owner, Vector2.Zero);
             foreach (var target in imprint.Target)
             {
-                if (_entities.Deleted(target) || imprint.Friendly.Contains(target) ||
-                    _entities.TryGetComponent<MobStateComponent>(target, out var targetState) && targetState.CurrentState > MobState.Critical ||
-                    !coordinates.TryDistance(_entities, new EntityCoordinates(target, Vector2.Zero), out var distance) || distance >= nearest)
+                if (!CanTarget(target, imprint))
                     continue;
+
+                if (!coordinates.TryDistance(_entities, new EntityCoordinates(target, Vector2.Zero), out var distance) ||
+                    distance > range || distance >= nearest)
+                    continue;
+
                 nearest = distance;
                 selected = target;
             }
-            if (selected == null && blackboard.TryGetValue<EntityUid>(NPCBlackboard.CurrentOrderedTarget, out var ordered, _entities) &&
-                !imprint.Friendly.Contains(ordered) &&
-                (!_entities.TryGetComponent<MobStateComponent>(ordered, out var state) || state.CurrentState == MobState.Alive))
+
+            if (selected == null &&
+                blackboard.TryGetValue<EntityUid>(NPCBlackboard.CurrentOrderedTarget, out var ordered, _entities) &&
+                CanTarget(ordered, imprint))
+            {
                 selected = ordered;
+            }
         }
 
         if (selected is not { } entity)
@@ -60,5 +68,14 @@ public sealed partial class ImprintedTargetOperator : HTNOperator
             effects["TargetCoordinates"] = new EntityCoordinates(entity, Vector2.Zero);
         }
         return Task.FromResult<(bool, Dictionary<string, object>?)>((true, effects));
+    }
+
+    private bool CanTarget(EntityUid target, NPCImprintedComponent imprint)
+    {
+        if (_entities.Deleted(target) || imprint.Friendly.Contains(target))
+            return false;
+
+        return !_entities.TryGetComponent<MobStateComponent>(target, out var state) ||
+               state.CurrentState != MobState.Dead;
     }
 }
