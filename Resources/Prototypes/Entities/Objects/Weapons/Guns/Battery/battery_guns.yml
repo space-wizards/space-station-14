@@ -894,24 +894,24 @@
       shader: unshaded
   - type: Gun
     projectileSpeed: 10
-    fireRate: 1.5
+    fireRate: 0.75
     soundGunshot:
       path: /Audio/Effects/gateway_off.ogg
   - type: BatteryAmmoProvider
-    proto: AnomalousParticleDeltaStrong
-    fireCost: 200
+    proto: AnomalousParticleDelta
+    fireCost: 210
   - type: BatteryWeaponFireModes
     fireModes:
-    - proto: AnomalousParticleDeltaStrong
-      fireCost: 400
-    - proto: AnomalousParticleEpsilonStrong
-      fireCost: 400
-    - proto: AnomalousParticleZetaStrong
-      fireCost: 400
-    - proto: AnomalousParticleSigmaStrong
-      fireCost: 400
+    - proto: AnomalousParticleDelta
+      fireCost: 210
+    - proto: AnomalousParticleEpsilon
+      fireCost: 210
+    - proto: AnomalousParticleZeta
+      fireCost: 210
+    - proto: AnomalousParticleSigma
+      fireCost: 210
   - type: BatterySelfRecharger
-    autoRechargeRate: 50
+    autoRechargeRate: 15
   - type: Construction
     graph: UpgradeWeaponPistolCHIMPSyndicate
     node: start
@@ -924,15 +924,15 @@
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: AnomalousParticleDeltaStrong
-      fireCost: 200
+      fireCost: 210
     - proto: AnomalousParticleEpsilonStrong
-      fireCost: 200
+      fireCost: 210
     - proto: AnomalousParticleOmegaStrong
-      fireCost: 200
+      fireCost: 210
     - proto: AnomalousParticleZetaStrong
-      fireCost: 200
+      fireCost: 210
     - proto: AnomalousParticleSigmaStrong
-      fireCost: 200
+      fireCost: 210
 
 - type: entity
   name: eye of a behonker
