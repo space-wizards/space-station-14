@@ -970,6 +970,7 @@
     tags:
     - Maintenance
     - SyndicateAgent
+  - type: AccessStealer
   - type: AgentIDCard
     iconGroups:
     - CommandIconGroup
@@ -1041,6 +1042,38 @@
     - SyndicateAgent
 
 - type: entity
+  parent: SyndicateIDCard
+  id: SyndicateIDCardAdaptive
+  name: syndicate ID card
+  suffix: Adaptive
+  components:
+  - type: AgentIDCard
+    iconGroups:
+    - CommandIconGroup
+    - SecurityIconGroup
+    - CargoIconGroup
+    - EngineeringIconGroup
+    - MedicalIconGroup
+    - ScienceIconGroup
+    - ServiceIconGroup
+    - TheatreIconGroup
+    - CivilianIconGroup
+    - SiliconIconGroup
+    - CentCommIconGroup
+    - TaskForceIconGroup
+    - AntagonistIconGroup
+    - MiscIconGroup
+    - BlankIconGroup
+  - type: UIRequiresLock
+  - type: ActivatableUI
+    key: enum.AgentIDCardUiKey.Key
+    verbText: agent-id-open-ui-verb
+  - type: UserInterface
+    interfaces:
+      enum.AgentIDCardUiKey.Key:
+        type: AgentIDCardBoundUserInterface
+
+- type: entity
   parent: [ SyndicateIDCard, BaseSyndicateContraband ]
   id: SyndiOperativeIDCard
   name: syndicate operative ID card
@@ -1055,7 +1088,7 @@
     - sprite: *icon-rsi
       offset: *icon-offset
       state: SyndicateOperative
-  - type: AgentIDCard
+  - type: AccessStealer
   - type: IdCard
     jobIcon: JobIconSyndicateOperative
 
@@ -1113,7 +1146,7 @@
       state: Ninja
   - type: Item
     heldPrefix: green
-  - type: AgentIDCard
+  - type: AccessStealer
   - type: IdCard
     jobIcon: JobIconNinja
   - type: Access
@@ -1384,6 +1417,7 @@
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
+  - type: AccessStealer
   - type: AgentIDCard
     iconGroups:
     - CommandIconGroup

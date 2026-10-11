@@ -1,3 +1,5 @@
+using Robust.Shared.Prototypes;
+
 namespace Content.Shared.Botany.Events;
 
 /// <summary>
@@ -17,3 +19,15 @@ public record struct PlantHarvestAttemptEvent(EntityUid User, EntityUid Target, 
 /// </summary>
 [ByRefEvent]
 public readonly record struct PlantHarvestedEvent(EntityUid User, EntityUid Target);
+
+/// <summary>
+/// Raised after processing a plant's random mutations.
+/// </summary>
+[ByRefEvent]
+public readonly record struct PlantMutationsChangedEvent(EntityUid Plant);
+
+/// <summary>
+/// Raised when a plant entity is replaced by a new species entity.
+/// </summary>
+[ByRefEvent]
+public readonly record struct PlantSpeciesChangedEvent(EntityUid OldPlant, EntityUid NewPlant, EntProtoId NewPrototype);

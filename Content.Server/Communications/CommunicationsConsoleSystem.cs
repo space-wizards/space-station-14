@@ -1,6 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
-using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Server.Popups;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Systems;

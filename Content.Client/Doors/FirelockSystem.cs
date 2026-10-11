@@ -88,7 +88,6 @@ public sealed partial class FirelockSystem : SharedFirelockSystem
 
         var warningLightsVisible =
             state == DoorState.Closed
-            || state == DoorState.Welded
             || state == DoorState.Denying;
 
         if (_sprite.LayerMapTryGet((ent, args.Sprite), FirelockVisualLayersPressure.Base, out var pressureLayerIndex, logMissing: false))
