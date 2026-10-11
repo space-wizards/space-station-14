@@ -1,16 +1,12 @@
 # Airlocks
 - type: entity
-  parent: Airlock
+  parent: AirlockService
   id: AirlockServiceLocked
   suffix: Service, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsService ]
-  - type: Wires
-    layoutId: AirlockService
-  - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/service-base.rsi
 
 - type: entity
   parent: AirlockServiceLocked

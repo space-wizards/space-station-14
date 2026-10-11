@@ -94,8 +94,9 @@
     - DoNotAlign
 
 - type: entity
-  id: AirlockGlassShuttle
   parent: AirlockShuttle
+  id: AirlockGlassShuttle
+  name: docking glass airlock
   suffix: Glass
   components:
   - type: Sprite
@@ -130,8 +131,9 @@
     node: assembly
 
 - type: entity
-  id: AirlockGlassShuttleSyndicate
   parent: AirlockGlassShuttle
+  id: AirlockGlassShuttleSyndicate
+  name: syndicate docking glass airlock
   suffix: Syndicate, Glass
   components:
   - type: Sprite
@@ -140,6 +142,7 @@
 - type: entity
   parent: AirlockShuttle
   id: AirlockShuttleSyndicate
+  name: syndicate docking airlock
   suffix: Syndicate
   components:
   - type: Sprite
@@ -148,7 +151,7 @@
 - type: entity
   parent: AirlockShuttle
   id: AirlockShuttleXenoborg
-  name: docking mechadermis airlock
+  name: mechadermis docking airlock
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/shuttle-xenoborg.rsi

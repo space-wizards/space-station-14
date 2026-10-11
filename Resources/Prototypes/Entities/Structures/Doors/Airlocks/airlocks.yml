@@ -1,6 +1,17 @@
 - type: entity
   parent: Airlock
+  id: AirlockService
+  name: service airlock
+  components:
+  - type: Wires
+    layoutId: AirlockService
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/service-base.rsi
+
+- type: entity
+  parent: Airlock
   id: AirlockFreezer
+  name: freezer airlock
   suffix: Freezer
   components:
   - type: Sprite
@@ -48,6 +59,7 @@
 - type: entity
   parent: Airlock
   id: AirlockEngineering
+  name: engineering airlock
   suffix: Engineering
   components:
   - type: Sprite
@@ -58,6 +70,7 @@
 - type: entity
   parent: AirlockEngineering
   id: AirlockAtmospherics
+  name: atmospherics airlock
   suffix: Atmospherics
   components:
   - type: Sprite
@@ -66,6 +79,7 @@
 - type: entity
   parent: Airlock
   id: AirlockCargo
+  name: cargo airlock
   suffix: Cargo
   components:
   - type: Sprite
@@ -76,6 +90,7 @@
 - type: entity
   parent: Airlock
   id: AirlockSalvage
+  name: salvage airlock
   suffix: Salvage
   components:
   - type: Sprite
@@ -86,6 +101,7 @@
 - type: entity
   parent: Airlock
   id: AirlockHydroponics
+  name: hydroponics airlock
   suffix: Hydroponics
   components:
   - type: Sprite
@@ -96,6 +112,7 @@
 - type: entity
   parent: Airlock
   id: AirlockMedical
+  name: medical airlock
   suffix: Medical
   components:
   - type: Sprite
@@ -106,6 +123,7 @@
 - type: entity
   parent: AirlockMedical
   id: AirlockVirology
+  name: virology airlock
   suffix: Virology
   components:
   - type: Sprite
@@ -114,6 +132,7 @@
 - type: entity
   parent: AirlockMedical
   id: AirlockChemistry
+  name: chemistry airlock
   suffix: Chemistry
   components:
   - type: Sprite
@@ -122,6 +141,7 @@
 - type: entity
   parent: Airlock
   id: AirlockScience
+  name: science airlock
   suffix: Science
   components:
   - type: Sprite
@@ -132,6 +152,7 @@
 - type: entity
   parent: Airlock
   id: AirlockCommand
+  name: command airlock
   suffix: Command
   components:
   - type: Sprite
@@ -144,6 +165,7 @@
 - type: entity
   parent: Airlock
   id: AirlockSecurity
+  name: security airlock
   suffix: Security
   components:
   - type: Sprite
@@ -154,7 +176,7 @@
 - type: entity
   parent: Airlock
   id: AirlockMaint
-  name: maintenance access
+  name: maintenance airlock
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
@@ -162,6 +184,7 @@
 - type: entity
   parent: AirlockSecurity # if you get syndie door somehow it counts as sec
   id: AirlockSyndicate
+  name: syndicate airlock
   suffix: Syndicate
   components:
   - type: Sprite
@@ -182,6 +205,7 @@
 - type: entity
   parent: AirlockCommand # if you get centcom door somehow it counts as command, also inherit panel
   id: AirlockCentralCommand
+  name: central command airlock
   suffix: Central Command
   components:
   - type: Sprite
@@ -257,7 +281,7 @@
 - type: entity
   parent: Airlock
   id: AirlockHatchSyndicate
-  name: airtight hatch
+  name: syndicate hatch
   suffix: Syndicate
   components:
   - type: Sprite
@@ -267,6 +291,7 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockEngineeringGlass
+  name: engineering glass airlock
   suffix: Engineering
   components:
   - type: Sprite
@@ -277,6 +302,7 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockMaintGlass
+  name: maintenance glass airlock
   suffix: Maintenance
   components:
   - type: Sprite
@@ -285,6 +311,7 @@
 - type: entity
   parent: AirlockEngineeringGlass
   id: AirlockAtmosphericsGlass
+  name: atmospherics glass airlock
   suffix: Atmospherics
   components:
   - type: Sprite
@@ -293,6 +320,7 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockCargoGlass
+  name: cargo glass airlock
   suffix: Cargo
   components:
   - type: Sprite
@@ -303,6 +331,7 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockSalvageGlass
+  name: salvage glass airlock
   suffix: Salvage
   components:
   - type: Sprite
@@ -313,6 +342,7 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockHydroponicsGlass
+  name: hydroponics glass airlock
   suffix: Hydroponics
   components:
   - type: Sprite
@@ -323,6 +353,7 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockMedicalGlass
+  name: medical glass airlock
   suffix: Medical
   components:
   - type: Sprite
@@ -333,6 +364,7 @@
 - type: entity
   parent: AirlockMedicalGlass
   id: AirlockChemistryGlass
+  name: chemistry glass airlock
   suffix: Chemistry
   components:
   - type: Sprite
@@ -341,6 +373,7 @@
 - type: entity
   parent: AirlockMedicalGlass
   id: AirlockVirologyGlass
+  name: virology glass airlock
   suffix: Virology
   components:
   - type: Sprite
@@ -349,6 +382,7 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockScienceGlass
+  name: science glass airlock
   suffix: Science
   components:
   - type: Sprite
@@ -359,6 +393,7 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockCommandGlass
+  name: command glass airlock
   suffix: Command
   components:
   - type: Sprite
@@ -371,6 +406,7 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockSecurityGlass
+  name: security glass airlock
   suffix: Security
   components:
   - type: Sprite
@@ -381,6 +417,7 @@
 - type: entity
   parent: AirlockSecurityGlass # see standard
   id: AirlockSyndicateGlass
+  name: syndicate glass airlock
   suffix: Syndicate
   components:
   - type: Sprite
@@ -399,6 +436,7 @@
 - type: entity
   parent: AirlockCommandGlass # see standard
   id: AirlockCentralCommandGlass
+  name: central command glass airlock
   suffix: Central Command
   components:
   - type: Sprite
@@ -407,6 +445,7 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockStandardGlass
+  name: service glass airlock #TODO check this
   suffix: Service
   components:
   - type: Sprite

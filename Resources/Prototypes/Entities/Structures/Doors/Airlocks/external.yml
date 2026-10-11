@@ -61,6 +61,7 @@
 - type: entity
   parent: AirlockExternal
   id: AirlockExternalGlass
+  name: external glass airlock
   suffix: Glass
   components:
   - type: Door
