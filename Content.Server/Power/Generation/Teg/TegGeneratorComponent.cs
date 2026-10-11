@@ -77,8 +77,31 @@ public sealed partial class TegGeneratorComponent : Component
     public float VolumeMax = -4;
 
     /// <summary>
-    /// Smoothing factor used to smooth out power generation.
+    /// How much energy the teg has stored internally.
     /// </summary>
-    [DataField]
-    public float PowerSmoothingFactor = 0.2f;
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("storedEnergy")]
+    public float StoredEnergy = 0;
+
+    /// <summary>
+    /// Fraction of stored energy that should be released as electricity per second.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("storedEnergyDischargeRate")]
+    public float StoredEnergyDischargeRate = 0.05f;
+
+    /// <summary>
+    /// Upper bound for wattage at which the teg discharges linearly instead of exponentially.
+    /// Allows for the internal energy buffer to fully empty.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("linearDischargeThreshold")]
+    public float LinearDischargeThreshold = 5000f;
+
+    /// <summary>
+    /// How many watts the teg produces when discharging linearly.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("linearDischargeRate")]
+    public float LinearDischargeRate = 5000f;
 }

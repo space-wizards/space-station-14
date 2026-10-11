@@ -173,16 +173,23 @@ public sealed partial class TegSystem : EntitySystem
             }
         }
 
+        // Calculate energy discharge
+        var dischargeEnergy = MathF.Min(component.StoredEnergy, component.StoredEnergy * component.StoredEnergyDischargeRate * args.dt);
+        if (dischargeEnergy / args.dt < component.LinearDischargeThreshold)
+        {
+            dischargeEnergy = MathF.Min(component.StoredEnergy, component.LinearDischargeRate * args.dt);
+        }
+
+        // Provide power to the grid
+        supplier.MaxSupply = dischargeEnergy / args.dt;
+
+        // Remove the energy we just provided to the grid from the internal buffer
+        component.StoredEnergy -= dischargeEnergy;
+
+        // Add generated usable energy to the internal buffer
+        component.StoredEnergy += electricalEnergy;
+
         component.LastGeneration = electricalEnergy;
-
-        // Turn energy (at atmos tick rate) into wattage.
-        var power = electricalEnergy / args.dt;
-
-        // Add ramp factor. This magics slight power into existence, but allows us to ramp up.
-        // Also apply an exponential moving average to smooth out fluttering, as it was causing
-        // seizures.
-        supplier.MaxSupply = component.PowerSmoothingFactor * (power * component.RampFactor) +
-                             (1 - component.PowerSmoothingFactor) * supplier.MaxSupply;
 
         var circAComp = Comp<TegCirculatorComponent>(circA);
         var circBComp = Comp<TegCirculatorComponent>(circB);
