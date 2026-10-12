@@ -188,7 +188,7 @@ public sealed partial class GunComponent : Component
     [AutoNetworkedField]
     public int ShotCounter = 0;
 
-    /// <summary>
+   /// <summary>
     /// The base value for how many times it shoots per second.
     /// </summary>
     [DataField]
