@@ -106,9 +106,6 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
     [SubscribeLocalEvent]
     private void OnPointAttempt(Entity<DNALeaderComponent> ent, ref PointAttemptEvent args)
     {
-        if (!_combatMode.IsInCombatMode(ent.Owner))
-            return;
-
         _pointCommands.ClearTarget(ent.Comp.Followers);
     }
 
