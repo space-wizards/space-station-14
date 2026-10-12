@@ -36,7 +36,7 @@ public sealed partial class ExpendableLightComponent : Component
 
     /// <summary>
     /// How long light will spend in fully glowing state when it's activated. After this time it will start fading out.
-    /// Warning: It should only be used in the Unlit state, it does not update in other states. Use <see cref="FadeOutDuration"/> if you need to know when change to next state happens.
+    /// Only used in the Unlit state, it does not update in other states. Use <see cref="StateExpiryTime"/> for the next state transition.
     /// </summary>
     [DataField]
     [AutoNetworkedField]
@@ -134,6 +134,9 @@ public sealed partial class ExpendableLightComponent : Component
     public TimeSpan StateExpiryTime = TimeSpan.Zero;
 }
 
+/// <summary>
+/// Appearance data keys for the expendable light's state and active light behavior.
+/// </summary>
 [Serializable, NetSerializable]
 public enum ExpendableLightVisuals : byte
 {
@@ -141,6 +144,9 @@ public enum ExpendableLightVisuals : byte
     Behavior
 }
 
+/// <summary>
+/// Lifecycle stages of an expendable light, from activation through fading to exhaustion.
+/// </summary>
 [Serializable, NetSerializable]
 public enum ExpendableLightState : byte
 {

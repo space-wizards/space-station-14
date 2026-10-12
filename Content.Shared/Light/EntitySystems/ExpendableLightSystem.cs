@@ -32,7 +32,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
     private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
 
     /// <summary>
-    /// Checks if any light needs it's state updated.
+    /// Checks if any light needs its state updated.
     /// </summary>
     public override void Update(float frameTime)
     {
@@ -59,47 +59,56 @@ public sealed partial class ExpendableLightSystem : EntitySystem
         if (stack.StackTypeId != ent.Comp.RefuelMaterialID)
             return;
 
+        var fuelTime = ent.Comp.RefuelMaterialTime;
+        if (fuelTime <= TimeSpan.Zero)
+            return;
+
+        var remainingGlowTime = ent.Comp.CurrentState switch
+        {
+            ExpendableLightState.Unlit => ent.Comp.GlowDuration,
+            ExpendableLightState.Lit => ent.Comp.StateExpiryTime - _timing.CurTime,
+            ExpendableLightState.Fading => ent.Comp.StateExpiryTime - _timing.CurTime - ent.Comp.FadeOutDuration,
+            ExpendableLightState.Dead => TimeSpan.Zero,
+            _ => ent.Comp.RefuelMaximumDuration,
+        };
+
+        // Fading has already consumed part of the fade-out reserve before restoring full brightness.
+        if (remainingGlowTime + fuelTime > ent.Comp.RefuelMaximumDuration
+            || !_stackSystem.TryUse((args.Used, stack), 1))
+            return;
+
         switch (ent.Comp.CurrentState)
         {
             case ExpendableLightState.Dead:
                 ent.Comp.CurrentState = ExpendableLightState.Unlit;
                 _tagSystem.RemoveTag(ent, TrashTag);
-                ent.Comp.GlowDuration = ent.Comp.RefuelMaterialTime;
+                ent.Comp.GlowDuration = fuelTime;
 
                 _nameModifier.RefreshNameModifiers(ent.Owner);
                 UpdateVisualizer(ent);
                 break;
 
             case ExpendableLightState.Unlit:
-                if (ent.Comp.GlowDuration + ent.Comp.RefuelMaterialTime >= ent.Comp.RefuelMaximumDuration) // light cannot hold more fuel
-                    return;
-
-                ent.Comp.GlowDuration += ent.Comp.RefuelMaterialTime;
+                ent.Comp.GlowDuration += fuelTime;
                 break;
 
             case ExpendableLightState.Fading:
-                var glowTimeLeft = ent.Comp.StateExpiryTime - _timing.CurTime; // how long until the light goes out
-                if (glowTimeLeft + ent.Comp.RefuelMaterialTime > ent.Comp.FadeOutDuration) //enough fuel to go from fading into lit state
+                var newGlowTime = remainingGlowTime + fuelTime;
+                if (newGlowTime > TimeSpan.Zero)
                 {
-                    var newGlowTime = glowTimeLeft + ent.Comp.RefuelMaterialTime - ent.Comp.FadeOutDuration;
                     ent.Comp.CurrentState = ExpendableLightState.Lit;
                     ent.Comp.StateExpiryTime = _timing.CurTime + newGlowTime;
                     UpdateVisualizer(ent);
                 }
                 else
-                    ent.Comp.StateExpiryTime += ent.Comp.RefuelMaterialTime;
+                    ent.Comp.StateExpiryTime += fuelTime;
                 break;
 
             case ExpendableLightState.Lit:
-                var timeLeft = ent.Comp.StateExpiryTime - _timing.CurTime;
-                if (timeLeft + ent.Comp.RefuelMaterialTime >= ent.Comp.RefuelMaximumDuration) // light cannot hold more fuel
-                    return;
-
-                ent.Comp.StateExpiryTime += ent.Comp.RefuelMaterialTime;
+                ent.Comp.StateExpiryTime += fuelTime;
                 break;
         }
         Dirty(ent);
-        _stackSystem.ReduceCount((args.Used, stack), 1);
         args.Handled = true;
     }
 
@@ -113,7 +122,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnExpLightStartup(Entity<ExpendableLightComponent> ent, ref ComponentStartup args)
     {
-        _item.SetHeldPrefix(ent, "unlit");
+        _item.SetHeldPrefix(ent, ent.Comp.Activated ? "lit" : "unlit");
     }
 
     [SubscribeLocalEvent]
@@ -156,8 +165,8 @@ public sealed partial class ExpendableLightSystem : EntitySystem
     /// </summary>
     public bool TryActivate(Entity<ExpendableLightComponent> ent, EntityUid user)
     {
-        if (ent.Comp.Activated || ent.Comp.CurrentState != ExpendableLightState.Unlit)
-            return true;
+        if (ent.Comp.CurrentState != ExpendableLightState.Unlit)
+            return false;
 
         _item.SetHeldPrefix(ent, "lit");
 
@@ -175,22 +184,29 @@ public sealed partial class ExpendableLightSystem : EntitySystem
 
     private void UpdateLight(Entity<ExpendableLightComponent> ent)
     {
-        if (ent.Comp.StateExpiryTime == TimeSpan.Zero || _timing.CurTime < ent.Comp.StateExpiryTime) // Checks if any timer is expired
+        if (_timing.CurTime < ent.Comp.StateExpiryTime)
             return;
 
         switch (ent.Comp.CurrentState) // State change time
         {
             case ExpendableLightState.Lit:
                 ent.Comp.CurrentState = ExpendableLightState.Fading;
-                ent.Comp.StateExpiryTime = _timing.CurTime + ent.Comp.FadeOutDuration;
+                ent.Comp.StateExpiryTime += ent.Comp.FadeOutDuration;
 
-                UpdateVisualizer(ent);
-                break;
+                if (_timing.CurTime < ent.Comp.StateExpiryTime)
+                {
+                    UpdateVisualizer(ent);
+                    break;
+                }
+
+                goto case ExpendableLightState.Fading;
 
             case ExpendableLightState.Fading:
-            default:
                 ent.Comp.CurrentState = ExpendableLightState.Dead;
                 ent.Comp.StateExpiryTime = TimeSpan.Zero;
+
+                var ignite = new IgnitionEvent(false);
+                RaiseLocalEvent(ent, ref ignite);
 
                 _nameModifier.RefreshNameModifiers(ent.Owner);
                 _tagSystem.AddTag(ent, TrashTag);
@@ -200,6 +216,9 @@ public sealed partial class ExpendableLightSystem : EntitySystem
 
                 _item.SetHeldPrefix(ent, "unlit");
                 break;
+
+            default:
+                return;
         }
 
         Dirty(ent);
@@ -223,9 +242,8 @@ public sealed partial class ExpendableLightSystem : EntitySystem
                 break;
 
             case ExpendableLightState.Dead:
+            case ExpendableLightState.Unlit:
                 _appearance.SetData(ent, ExpendableLightVisuals.Behavior, string.Empty, appearance);
-                var ignite = new IgnitionEvent(false);
-                RaiseLocalEvent(ent, ref ignite);
                 break;
         }
     }
