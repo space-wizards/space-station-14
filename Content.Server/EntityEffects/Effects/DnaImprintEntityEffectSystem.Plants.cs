@@ -12,12 +12,7 @@ public sealed partial class DnaImprintEntityEffectSystem
 {
     [Dependency] private PlantSystem _plants = default!;
 
-    private void InitializePlants()
-    {
-        SubscribeLocalEvent<PlantComponent, EntityEffectEvent<DnaImprint>>(OnPlantImprint);
-        SubscribeLocalEvent<NPCImprintedComponent, PlantProduceSpawnedEvent>(OnProduceSpawned);
-    }
-
+    [SubscribeLocalEvent]
     private void OnPlantImprint(Entity<PlantComponent> ent, ref EntityEffectEvent<DnaImprint> args)
     {
         if (!HasComp<NPCImprintedComponent>(ent) ||
@@ -28,6 +23,7 @@ public sealed partial class DnaImprintEntityEffectSystem
         Imprint(ent, solution, args.Effect);
     }
 
+    [SubscribeLocalEvent]
     private void OnProduceSpawned(Entity<NPCImprintedComponent> ent, ref PlantProduceSpawnedEvent args)
     {
         if (ent.Comp.Leader == null && ent.Comp.Friendly.Count == 0 && ent.Comp.Target.Count == 0 ||

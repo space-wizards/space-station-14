@@ -24,17 +24,6 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
     [Dependency] private NPCPointCommandSystem _pointCommands = default!;
     [Dependency] private IRobustRandom _random = default!;
 
-
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<DNALeaderComponent, AfterPointedAtEvent>(OnPointedAt);
-        SubscribeLocalEvent<NPCImprintedComponent, ComponentStartup>(OnImprintStartup);
-        SubscribeLocalEvent<NPCImprintedComponent, ComponentShutdown>(OnImprintShutdown);
-        SubscribeLocalEvent<NPCImprintedComponent, AttackAttemptEvent>(OnAttackAttempt);
-        InitializePlants();
-    }
-
     protected override void Effect(Entity<HTNComponent> ent, ref EntityEffectEvent<DnaImprint> args)
     {
         var effect = args.Effect;
@@ -114,25 +103,43 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
     private bool IsNpc(EntityUid uid)
         => !HasComp<ActorComponent>(uid) && !(TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind);
 
+    [SubscribeLocalEvent]
     private void OnPointedAt(Entity<DNALeaderComponent> ent, ref AfterPointedAtEvent args)
     {
         _pointCommands.CommandFollowers(ent.Comp.Followers, args.Pointed);
     }
 
+    [SubscribeLocalEvent]
     private void OnAttackAttempt(Entity<NPCImprintedComponent> ent, ref AttackAttemptEvent args)
     {
         if (IsNpc(ent) && args.Target is { } target && ent.Comp.Friendly.Contains(target))
             args.Cancel();
     }
 
+    [SubscribeLocalEvent]
     private void OnImprintStartup(Entity<NPCImprintedComponent> ent, ref ComponentStartup args)
     {
         SetLeader(ent, ent.Comp.Leader);
     }
 
+    [SubscribeLocalEvent]
     private void OnImprintShutdown(Entity<NPCImprintedComponent> ent, ref ComponentShutdown args)
     {
         SetLeader(ent, null);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnLeaderShutdown(Entity<DNALeaderComponent> ent, ref ComponentShutdown args)
+    {
+        foreach (var follower in ent.Comp.Followers)
+        {
+            if (TryComp<NPCImprintedComponent>(follower, out var imprint) && imprint.Leader == ent.Owner)
+            {
+                imprint.Leader = null;
+                if (TryComp<HTNComponent>(follower, out var htn))
+                    _pointCommands.ResetPlan(htn);
+            }
+        }
     }
 
     /// <summary>
