@@ -1,12 +1,15 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
+using Content.Server.Destructible;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Events;
 using Content.Shared.Body;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Content.Shared.Destructible;
+using Content.Shared.Gibbing;
 using Content.Shared.Parallax;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
@@ -19,6 +22,7 @@ using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -32,10 +36,12 @@ namespace Content.Server.Shuttles.Systems;
 public sealed partial class ShuttleSystem
 {
     [Dependency] private EntityQuery<BodyComponent> _bodyQuery = default!;
+    [Dependency] private EntityQuery<DestructibleComponent> _destructibleQuery = default!;
     [Dependency] private EntityQuery<FTLSmashImmuneComponent> _immuneQuery = default!;
     [Dependency] private EntityQuery<MapGridComponent> _mapGridQuery = default!;
     [Dependency] private EntityQuery<MapComponent> _mapQuery = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private SharedDestructibleSystem _destructible = default!;
 
     private readonly SoundSpecifier _startupSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_begin.ogg")
     {
@@ -498,7 +504,7 @@ public sealed partial class ShuttleSystem
             }
             else
             {
-                FTLDock((uid, xform), config);
+                FTLDock((uid, xform), config, target.EntityId);
             }
 
             mapId = mapCoordinates.MapId;
@@ -718,7 +724,7 @@ public sealed partial class ShuttleSystem
 
         if (config != null)
         {
-            FTLDock((shuttleUid, shuttleXform), config);
+            FTLDock((shuttleUid, shuttleXform), config, targetUid);
             return true;
         }
 
@@ -729,7 +735,7 @@ public sealed partial class ShuttleSystem
     /// <summary>
     /// Forces an FTL dock.
     /// </summary>
-    public void FTLDock(Entity<TransformComponent> shuttle, DockingConfig config)
+    public void FTLDock(Entity<TransformComponent> shuttle, DockingConfig config, EntityUid dockingGrid)
     {
         // Set position
         var mapCoordinates = _transform.ToMapCoordinates(config.Coordinates);
@@ -740,6 +746,92 @@ public sealed partial class ShuttleSystem
         foreach (var (dockAUid, dockBUid, dockA, dockB) in config.Docks)
         {
             _dockSystem.Dock((dockAUid, dockA), (dockBUid, dockB));
+        }
+
+        // VRMMMM BRRRP DRRRR PPRPTTT!!!!!
+
+        if (TryComp<ShuttleComponent>(shuttle.Owner, out var comp))
+            if (comp.Bulldoze)
+            {
+                if (TryComp<FixturesComponent>(shuttle, out var fixtures))
+                {
+                    DockBulldoze(shuttle, comp, fixtures, dockingGrid);
+                }
+            }
+
+    }
+
+    private void DockBulldoze(EntityUid shuttle, ShuttleComponent shuttleComp, FixturesComponent fixturesComp, EntityUid dockingGrid)
+    {
+        var gridTransform = Transform(shuttle);
+        var grids = new List<Entity<MapGridComponent>>();
+        var shuttleGrid = _gridQuery.GetComponent(shuttle);
+        var shuttleAABB = shuttleGrid.LocalAABB;
+        var entMatrix = _transform.GetWorldMatrix(shuttle);
+        var transform = new Transform(gridTransform.LocalPosition, gridTransform.LocalRotation.Theta);
+        _mapSystem.FindGridsIntersecting(gridTransform.MapID, entMatrix.TransformBox(shuttleAABB), ref grids);
+
+        foreach (var grid in grids)
+        {
+            // we dont want to be bulldozing the station
+            if (grid.Owner == dockingGrid)
+                continue;
+
+            // we dont want to bulldoze ourselves
+            if (grid.Owner == shuttle)
+                continue;
+
+            if (TerminatingOrDeleted(grid) || EntityManager.IsQueuedForDeletion(grid))
+                continue;
+
+            if (!HasComp<TransformComponent>(grid.Owner))
+                continue;
+
+            var otherTransform = Transform(grid.Owner);
+            var invMatrix = _transform.GetInvWorldMatrix(shuttle);
+            HashSet<EntityUid> toKill = new();
+            // atom-smash all overlapping tiles
+            foreach (var fixture in fixturesComp.Fixtures.Values)
+            {
+                // just in case the grid decides to die mid crushing because all of its tiles are gone
+                if (TerminatingOrDeleted(grid) || EntityManager.IsQueuedForDeletion(grid))
+                    continue;
+
+                var shape = (PolygonShape)fixture.Shape;
+                // made it bigger cuz shenanigans with rotation
+                var box = shape.ComputeAABB(transform, 0).Enlarged(0.1f);
+
+                var tiles = _mapSystem.GetTilesIntersecting(grid.Owner, grid.Comp, box);
+
+                while (tiles.MoveNext(out var tile))
+                {
+                    // kill all anchored entities. DOOM!!!!
+                    var anchoredEnumerator = _mapSystem.GetAnchoredEntities(grid.Owner, grid.Comp, tile.GridIndices);
+                    while (anchoredEnumerator.MoveNext(out var anchored))
+                    {
+                        toKill.Add(anchored.Value);
+                    }
+                    _mapSystem.SetTile(tile.GridUid, grid, tile.GridIndices, Tile.Empty);
+                }
+
+            }
+
+            // we only kill anchored entities
+            foreach (var evilEnt in toKill)
+            {
+                if (_immuneQuery.HasComponent(evilEnt))
+                {
+                    continue;
+                }
+
+                if (_destructibleQuery.HasComponent(evilEnt))
+                {
+                    _destructible.DestroyEntity(evilEnt);
+                    continue;
+                }
+
+                QueueDel(evilEnt);
+            }
         }
     }
 
