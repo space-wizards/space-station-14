@@ -45,8 +45,8 @@
     description: cargo-gift-pizza-small
     dest: cargo-gift-dest-bar
     gifts:
-      FoodPizza: 1              # 4 pizzas
-      FoodSoftdrinks: 1
+      FoodPizza: 1      # 4 pizzas (32 slices total)
+      FoodSoftdrinks: 1 # 16 sodas
 
 - type: entity
   id: GiftsPizzaPartyLarge
@@ -196,6 +196,7 @@
     dest: cargo-gift-dest-sec
     gifts:
       SecurityArmor: 3
+      SecurityHelmet: 3
       ArmorySmg: 1
       ArmoryShotgun: 1
       ArmoryLaser: 1
