@@ -10,13 +10,9 @@ public sealed partial class ClientRandomIconSmoothSystem : SharedRandomIconSmoot
     [SubscribeLocalEvent]
     private void OnAppearanceChange(Entity<RandomIconSmoothComponent> ent, ref AppearanceChangeEvent args)
     {
-        if (!TryComp<IconSmoothComponent>(ent, out var smooth))
-            return;
-
         if (!args.TryGetData<string>(RandomIconSmoothState.State, out var state))
             return;
 
-        smooth.StateBase = state;
-        _iconSmooth.SetStateBase(ent, smooth, state);
+        _iconSmooth.SetStateBase(ent.Owner, ent.Comp.Index, state);
     }
 }
