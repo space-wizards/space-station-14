@@ -270,6 +270,23 @@ public abstract partial class SharedCargoSystem : EntitySystem
             PackItemIntoCrates(ref item, crate, containers);
             basket[j] = item;
         }
+
+        var parcel = (ProtoId<CargoCratePrototype>)"WrappedParcel";
+        foreach (var container in containers)
+        {
+            if (
+                !container.IsSingleProduct
+                && GetContainerItemCount(container) == 1
+                && !container.CrateRequired
+                && ProtoMan.Resolve<CargoCratePrototype>(parcel, out var parcelProto))
+            {
+                container.Container = parcelProto.Entity;
+                container.ContainerID = parcelProto.ContainerId;
+                container.Cost = parcelProto.Cost;
+                container.MaxItems = parcelProto.MaxItems;
+            }
+        }
+
         return containers;
     }
 
@@ -316,21 +333,6 @@ public abstract partial class SharedCargoSystem : EntitySystem
             containers.Add(container);
             remaining -= batch * GetItemEntityCount(item);
         }
-        var parcel = (ProtoId<CargoCratePrototype>)"WrappedParcel";
-        foreach (var container in containers)
-        {
-            if (
-                !container.IsSingleProduct
-                && GetContainerItemCount(container) == 1
-                && !container.CrateRequired
-                && ProtoMan.Resolve<CargoCratePrototype>(parcel, out var parcelProto))
-            {
-                container.Container = parcelProto.Entity;
-                container.ContainerID = parcelProto.ContainerId;
-                container.Cost = parcelProto.Cost;
-                container.MaxItems = parcelProto.MaxItems;
-            }
-        }
     }
 
     private bool CanFitInContainer(
@@ -354,7 +356,7 @@ public abstract partial class SharedCargoSystem : EntitySystem
 
     public int GetItemEntityCount(CargoOrderItemData item)
     {
-        if (!ProtoMan.TryIndex<CargoProductPrototype>(item.Product, out var proto))
+        if (!ProtoMan.TryIndex(item.Product, out var proto))
         {
             return 1;
         }
