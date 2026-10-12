@@ -2,8 +2,7 @@ using System.Numerics;
 using Content.Shared.CardboardBox;
 using Content.Shared.CardboardBox.Components;
 using Content.Shared.Examine;
-using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Robust.Client.GameObjects;
 
@@ -15,8 +14,7 @@ public sealed partial class CardboardBoxSystem : SharedCardboardBoxSystem
     [Dependency] private ExamineSystemShared _examine = default!;
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private TransformSystem _transform = default!;
-
-    [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery;
+    [Dependency] private MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
@@ -63,7 +61,7 @@ public sealed partial class CardboardBoxSystem : SharedCardboardBoxSystem
 
             // no effect for non-mobs that have MobMover, such as mechs and vehicles,
             // nor mobs that are no longer concious
-            if (!_mobStateQuery.TryComp(mob, out var mobComp) || mobComp.CurrentState != MobState.Alive)
+            if (!_mobState.IsAlive(mob))
                 continue;
 
             var ent = Spawn(box.Effect, mapPos);

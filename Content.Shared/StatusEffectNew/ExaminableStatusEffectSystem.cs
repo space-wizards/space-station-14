@@ -1,7 +1,6 @@
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.StatusEffectNew.Components;
 
 namespace Content.Shared.StatusEffectNew;
@@ -11,12 +10,13 @@ namespace Content.Shared.StatusEffectNew;
 /// </summary>
 public sealed partial class ExaminableStatusEffectSystem : EntitySystem
 {
+    [Dependency] private MobStateSystem _mobState = default!;
+
     [SubscribeLocalEvent]
     private void OnExaminedEvent(Entity<ExaminableStatusEffectComponent> ent, ref StatusEffectRelayedEvent<ExaminedEvent> args)
     {
         // Early-out for effect requiring a concious mob
-        if (ent.Comp.RequiresConciousness
-            && (!TryComp<MobStateComponent>(args.AppliedTo, out var mob) || mob.CurrentState != MobState.Alive))
+        if (ent.Comp.RequiresConciousness && !_mobState.IsAlive(args.AppliedTo))
             return;
 
         using (args.Args.PushGroup(nameof(ExaminableStatusEffectSystem)))
