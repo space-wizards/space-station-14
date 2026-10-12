@@ -117,6 +117,8 @@ namespace Content.Client.Input
             aghost.AddFunction(ContentKeyFunctions.TryPullObject);
             aghost.AddFunction(ContentKeyFunctions.MovePulledObject);
             aghost.AddFunction(ContentKeyFunctions.ReleasePulledObject);
+            aghost.AddFunction(ContentKeyFunctions.RotateObjectClockwise);
+            aghost.AddFunction(ContentKeyFunctions.RotateObjectCounterclockwise);
 
             var ghost = contexts.New("ghost", "human");
             ghost.AddFunction(EngineKeyFunctions.MoveUp);
