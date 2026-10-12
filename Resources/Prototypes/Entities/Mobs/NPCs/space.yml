@@ -405,11 +405,11 @@
     - state: space_sheep_bare
       map: [ "enum.DamageStateVisualLayers.Base" ]
       visible: true
-      sprite: Mobs/Animals/sheep.rsi
+      sprite: Mobs/Animals/spacesheep.rsi
     - state: space_sheep_wool_glowmask
       map: [ "wooly" ]
       visible: true
-      sprite: Mobs/Animals/sheep.rsi
+      sprite: Mobs/Animals/spacesheep.rsi
   - type: GenericVisualizer
     visuals:
       enum.ShearableVisuals.Shearable:
@@ -440,7 +440,7 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: space_sheep_harvested
+        Base: space_sheep_bare
       Critical:
         Base: space_sheep_dead
       Dead:

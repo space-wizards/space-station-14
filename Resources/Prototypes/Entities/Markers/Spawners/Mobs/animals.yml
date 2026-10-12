@@ -113,7 +113,7 @@
     layers:
     - state: green
     - state: cow
-      sprite: Mobs/Animals/cow.rsi
+      sprite: Mobs/Animals/Farm/cow.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobCow
@@ -155,7 +155,7 @@
     layers:
     - state: green
     - state: goat
-      sprite: Mobs/Animals/goat.rsi
+      sprite: Mobs/Animals/Farm/goat.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobGoat
@@ -284,9 +284,9 @@
     layers:
     - state: green
     - state: sheep_bare
-      sprite: Mobs/Animals/sheep.rsi
+      sprite: Mobs/Animals/Farm/sheep.rsi
     - state: sheep_wool
-      sprite: Mobs/Animals/sheep.rsi
+      sprite: Mobs/Animals/Farm/sheep.rsi
   - type: EntityTableSpawner
     table:
       id: MobSheep
@@ -300,9 +300,9 @@
     layers:
     - state: green
     - state: sheep_bare
-      sprite: Mobs/Animals/sheep.rsi
+      sprite: Mobs/Animals/Farm/sheep.rsi
     - state: sheep_wool
-      sprite: Mobs/Animals/sheep.rsi
+      sprite: Mobs/Animals/Farm/sheep.rsi
   - type: EntityTableSpawner
     table:
       id: MobSheepRainbow
@@ -316,9 +316,9 @@
     layers:
     - state: green
     - state: space_sheep_bare
-      sprite: Mobs/Animals/sheep.rsi
+      sprite: Mobs/Animals/spacesheep.rsi
     - state: space_sheep_wool_glowmask
-      sprite: Mobs/Animals/sheep.rsi
+      sprite: Mobs/Animals/spacesheep.rsi
   - type: EntityTableSpawner
     table:
       id: MobSheepSpace
@@ -332,9 +332,9 @@
     layers:
     - state: green
     - state: sheep_bare
-      sprite: Mobs/Animals/sheep.rsi
+      sprite: Mobs/Animals/Farm/sheep.rsi
     - state: sheep_wool
-      sprite: Mobs/Animals/sheep.rsi
+      sprite: Mobs/Animals/Farm/sheep.rsi
   - type: EntityTableSpawner
     table: !type:GroupSelector
       children:
