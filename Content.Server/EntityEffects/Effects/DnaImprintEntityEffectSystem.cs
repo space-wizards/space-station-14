@@ -71,7 +71,7 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
         if (effect.Leader)
         {
             var leader = _random.Pick(donors);
-            if (imprint.Leader != leader)
+            if (imprint.Leader == null)
             {
                 SetLeader((uid, imprint), leader);
                 changed = true;
