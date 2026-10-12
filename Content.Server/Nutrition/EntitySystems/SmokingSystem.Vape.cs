@@ -34,9 +34,7 @@ namespace Content.Server.Nutrition.EntitySystems
         private void OnVerb(Entity<VapeComponent> entity, ref GetVerbsEvent<ActivationVerb> args)
         {
             if (!args.CanInteract || !args.CanComplexInteract || !args.CanAccess)
-            {
                 return;
-            }
 
             var user = args.User;
 
@@ -46,7 +44,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
             }
 
-            bool isEmpty = solution.Contents.Count == 0;
+            var isEmpty = solution.Contents.Count == 0;
 
             var verb = new ActivationVerb()
             {
