@@ -9,11 +9,11 @@
       HydroponicsToolClippers: 4
       HydroponicsToolScythe: 4
       HydroponicsToolHatchet: 4
+      PlantAnalyzer: 4
       PlantBag: 3
       Bucket: 3
       MortarAndPestle: 1
       HandheldJuicer: 1
-    # TODO: Plant analyzer.
   - name: vending-machine-category-chemicals
     icon: { entity: ChemistryBottleRobustHarvest }
     startingInventory:

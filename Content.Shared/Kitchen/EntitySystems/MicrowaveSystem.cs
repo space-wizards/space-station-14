@@ -1,7 +1,7 @@
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Destructible;
-using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Item;
 using Content.Shared.Kitchen.Components;
@@ -35,7 +35,7 @@ public abstract partial class MicrowaveSystem : EntitySystem
     [Dependency] private INetManager _net = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private RecipeSystem _recipes = default!;
-    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedItemSystem _item = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;

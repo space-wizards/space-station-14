@@ -8,25 +8,7 @@
     },
     "states": [
         {
-            "name": "hdd1"
-        },
-        {
-            "name": "hdd2"
-        },
-        {
             "name": "micro_mani"
-        },
-        {
-            "name": "rom1"
-        },
-        {
-            "name": "rom2"
-        },
-        {
-            "name": "romos1"
-        },
-        {
-            "name": "romos2"
         },
         {
             "name": "scan_module",
