@@ -1,4 +1,4 @@
-using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Botany.Events;
 
@@ -6,25 +6,28 @@ namespace Content.Shared.Botany.Events;
 /// Event of plant growing ticking.
 /// </summary>
 [ByRefEvent]
-[Serializable, NetSerializable]
-public readonly record struct PlantGrowEvent(NetEntity Tray);
+public readonly record struct PlantGrowEvent(EntityUid Tray);
 
 /// <summary>
-/// Event raised when a harvest is attempted.
+/// Event raised when a harvest is attempted. Cancel to prevent the harvest.
 /// </summary>
 [ByRefEvent]
-public sealed class DoHarvestEvent(EntityUid user, EntityUid target) : CancellableEntityEventArgs
-{
-    public EntityUid User { get; } = user;
-    public EntityUid Target { get; } = target;
-}
+public record struct PlantHarvestAttemptEvent(EntityUid User, EntityUid Target, EntityUid? Used = null, bool Cancelled = false);
 
 /// <summary>
-/// Event raised after a harvest is attempted.
+/// Event raised after a plant has been harvested.
 /// </summary>
 [ByRefEvent]
-public sealed class AfterDoHarvestEvent(EntityUid user, EntityUid target) : CancellableEntityEventArgs
-{
-    public EntityUid User { get; } = user;
-    public EntityUid Target { get; } = target;
-}
+public readonly record struct PlantHarvestedEvent(EntityUid User, EntityUid Target);
+
+/// <summary>
+/// Raised after processing a plant's random mutations.
+/// </summary>
+[ByRefEvent]
+public readonly record struct PlantMutationsChangedEvent(EntityUid Plant);
+
+/// <summary>
+/// Raised when a plant entity is replaced by a new species entity.
+/// </summary>
+[ByRefEvent]
+public readonly record struct PlantSpeciesChangedEvent(EntityUid OldPlant, EntityUid NewPlant, EntProtoId NewPrototype);

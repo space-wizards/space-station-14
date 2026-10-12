@@ -7,4 +7,4 @@ namespace Content.Shared.Actions.Events;
 /// Allowed to have side effects like modifying the action components.
 /// </summary>
 [ByRefEvent]
-public record struct ActionAttemptEvent(EntityUid User, bool Cancelled = false, string? Reason = null, PopupType Type = PopupType.SmallCaution);
+public record struct ActionAttemptEvent(EntityUid User, EntityUid? Target, bool Cancelled = false, string? Reason = null, PopupType Type = PopupType.SmallCaution);

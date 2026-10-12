@@ -1,4 +1,4 @@
-﻿using Content.Shared.Item;
+using Content.Shared.Item;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 

@@ -1,6 +1,7 @@
 using Content.Shared.Interaction;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Systems;
 using Content.Shared.Verbs;
+using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
 using Robust.Shared.Timing;
@@ -14,13 +15,7 @@ public sealed partial class NodeScannerSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<NodeScannerComponent, BeforeRangedInteractEvent>(OnBeforeRangedInteract);
-        SubscribeLocalEvent<NodeScannerComponent, GetVerbsEvent<UtilityVerb>>(AddScanVerb);
-    }
+    [Dependency] private SharedXenoArtifactSystem _artifact = default!;
 
     /// <inheritdoc />
     public override void Update(float frameTime)
@@ -43,7 +38,27 @@ public sealed partial class NodeScannerSystem : EntitySystem
         }
     }
 
-    private void OnBeforeRangedInteract(EntityUid uid, NodeScannerComponent component, BeforeRangedInteractEvent args)
+    /// <summary> Disconnect if artifact is destroyed </summary>
+    [SubscribeLocalEvent]
+    private void OnArtifactRemoved(Entity<NodeScannerConnectedComponent> ent, ref XenoArtifactDestroyedEvent args)
+    {
+        RemCompDeferred(ent, ent.Comp);
+    }
+
+    /// <summary> Detach if scanner is disconnected, or destroyed. </summary>
+    [SubscribeLocalEvent]
+    private void OnScannerRemoved(Entity<NodeScannerConnectedComponent> ent, ref ComponentRemove args)
+    {
+        var artifact = ent.Comp.AttachedTo;
+        if (!TerminatingOrDeleted(artifact))
+        {
+            _artifact.TryDetachEntity((artifact, null), ent);
+        }
+    }
+
+    /// <summary> Attach scanner if target is fitting. </summary>
+    [SubscribeLocalEvent]
+    private void OnBeforeRangedInteract(Entity<NodeScannerComponent> ent, ref BeforeRangedInteractEvent args)
     {
         if (args.Handled || !args.CanReach || args.Target is not { } target || !HasComp<XenoArtifactComponent>(target))
             return;
@@ -52,22 +67,26 @@ public sealed partial class NodeScannerSystem : EntitySystem
             ? (target, unlockingComponent)
             : (target, null);
 
-        Attach((uid, component), unlockingEnt, args.User);
+        Attach(ent, unlockingEnt, args.User);
 
         args.Handled = true;
     }
 
-    private void AddScanVerb(EntityUid uid, NodeScannerComponent component, GetVerbsEvent<UtilityVerb> args)
+    /// <summary> Add `scan` verb if target is fitting. </summary>
+    [SubscribeLocalEvent]
+    private void AddScanVerb(Entity<NodeScannerComponent> ent, ref GetVerbsEvent<UtilityVerb> args)
     {
         if (!args.CanAccess)
             return;
 
-        if (!TryComp<XenoArtifactUnlockingComponent>(args.Target, out var unlockingComponent))
+        var target = args.Target;
+        if (!TryComp<XenoArtifactUnlockingComponent>(target, out var unlockingComponent))
             return;
 
+        var user = args.User;
         var verb = new UtilityVerb
         {
-            Act = () => Attach((uid, component), (args.Target, unlockingComponent), args.User),
+            Act = () => Attach(ent, (target, unlockingComponent), user),
             Text = Loc.GetString("node-scan-tooltip")
         };
 
@@ -80,16 +99,21 @@ public sealed partial class NodeScannerSystem : EntitySystem
         EntityUid actor
     )
     {
-        if (TryComp(device, out UseDelayComponent? useDelay)
-            && !_useDelay.TryResetDelay((device, useDelay), true))
+        if (!_useDelay.TryResetDelay(device.Owner, true))
             return;
 
         var connected = EnsureComp<NodeScannerConnectedComponent>(device);
+
         EntityUid artifact = unlockingEnt;
         if (connected.AttachedTo != artifact)
         {
+            // Remove connection from previous scanner.
+            if (connected.AttachedTo.Valid)
+                _artifact.TryDetachEntity(connected.AttachedTo, device);
+
             connected.AttachedTo = artifact;
             Dirty(device, connected);
+            _artifact.TryAttachEntity(artifact, device);
         }
 
         _ui.TryOpenUi((device, null), NodeScannerUiKey.Key, actor, predicted: true);

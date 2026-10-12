@@ -7,13 +7,21 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.EntityTable.EntitySelectors;
 
+/// <summary>
+/// An extensible table for configurable entity selection, both random and deterministic.
+/// </summary>
+/// <remarks>
+/// This is currently the favored way to select multiple entities - generally for spawning.
+/// With its children, it supports returning multiple entities, nested selectors,
+/// groups of entities, conditions, and probabilistic spawns.
+/// </remarks>
 [ImplicitDataDefinitionForInheritors, UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
 public abstract partial class EntityTableSelector
 {
     /// <summary>
     /// Key for <see cref="EntityTableContext"/>, under which additional scoped conditions should be stored.
     /// </summary>
-    public const string AdditionalConditionsKey = "AdditionalConditions";
+    public static readonly EntityTableContextKey<List<EntityTableCondition>> AdditionalConditionsKey = new("AdditionalConditions");
 
     /// <summary>
     /// The number of times this selector is run
@@ -144,7 +152,7 @@ public abstract partial class EntityTableSelector
     /// </summary>
     private bool TryGetConditions(EntityTableContext ctx, [NotNullWhen(true)] out List<EntityTableCondition>? conditions)
     {
-        var hasAdditionalConditions = ctx.TryGetData<List<EntityTableCondition>>(AdditionalConditionsKey, out var additionalConditions);
+        var hasAdditionalConditions = ctx.TryGetData(AdditionalConditionsKey, out var additionalConditions);
 
         if (Conditions.Count == 0 && !hasAdditionalConditions)
         {

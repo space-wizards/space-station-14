@@ -1,5 +1,5 @@
 using Content.Server.Administration.Managers;
-using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Emag.Systems;
@@ -35,14 +35,6 @@ public sealed partial class BorgSystem : SharedBorgSystem
     [Dependency] private DamageableSystem _damageable = default!;
 
     public static readonly ProtoId<JobPrototype> BorgJobId = "Borg";
-
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        InitializeTransponder();
-    }
 
     public override bool CanPlayerBeBorged(ICommonSession session)
     {

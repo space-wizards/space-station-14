@@ -446,6 +446,10 @@
         visualType: Small
         messages: [ "capsaicin-effect-light-burn" ]
         probability: 0.05
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectNightVision
+        time: 2
+        type: Add
 
 - type: reagent
   id: Caninase
