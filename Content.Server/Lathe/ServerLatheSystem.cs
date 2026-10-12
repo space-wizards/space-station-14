@@ -30,7 +30,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Lathe
 {
     [UsedImplicitly]
-    public sealed partial class LatheSystem : SharedLatheSystem
+    public sealed partial class ServerLatheSystem : LatheSystem
     {
         [Dependency] private IAdminLogManager _adminLogger = default!;
         [Dependency] private AtmosphereSystem _atmosphere = default!;

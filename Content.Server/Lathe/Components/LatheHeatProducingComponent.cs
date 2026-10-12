@@ -7,7 +7,7 @@ namespace Content.Server.Lathe.Components;
 /// This is used for a <see cref="LatheComponent"/> that releases heat into the surroundings while producing items.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(LatheSystem))]
+[Access(typeof(ServerLatheSystem))]
 public sealed partial class LatheHeatProducingComponent : Component
 {
     /// <summary>

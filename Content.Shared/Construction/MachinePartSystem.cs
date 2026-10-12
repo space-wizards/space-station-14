@@ -11,7 +11,7 @@ namespace Content.Shared.Construction
     /// </summary>
     public sealed partial class MachinePartSystem : EntitySystem
     {
-        [Dependency] private SharedLatheSystem _lathe = default!;
+        [Dependency] private LatheSystem _lathe = default!;
         [Dependency] private SharedConstructionSystem _construction = default!;
 
         public override void Initialize()

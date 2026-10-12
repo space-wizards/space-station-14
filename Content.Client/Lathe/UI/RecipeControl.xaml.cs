@@ -13,9 +13,9 @@ public sealed partial class RecipeControl : Control
     public Func<string> TooltipTextSupplier;
 
     private ProtoId<LatheRecipePrototype> _recipeId;
-    private LatheSystem _latheSystem;
+    private ClientLatheSystem _latheSystem;
 
-    public RecipeControl(LatheSystem latheSystem, LatheRecipePrototype recipe, Func<string> tooltipTextSupplier, bool canProduce, Control displayControl)
+    public RecipeControl(ClientLatheSystem latheSystem, LatheRecipePrototype recipe, Func<string> tooltipTextSupplier, bool canProduce, Control displayControl)
     {
         RobustXamlLoader.Load(this);
 

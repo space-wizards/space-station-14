@@ -22,7 +22,7 @@ public sealed partial class LatheMenu : FancyWindow
     [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     private readonly SpriteSystem _spriteSystem;
-    private readonly LatheSystem _lathe;
+    private readonly ClientLatheSystem _lathe;
     private readonly MaterialStorageSystem _materialStorage;
     /// Map from RecipeListData to the control for any controls created so far
     private readonly Dictionary<RecipeListData, RecipeControl> _dataToControls = new();
@@ -48,7 +48,7 @@ public sealed partial class LatheMenu : FancyWindow
         IoCManager.InjectDependencies(this);
 
         _spriteSystem = _entityManager.System<SpriteSystem>();
-        _lathe = _entityManager.System<LatheSystem>();
+        _lathe = _entityManager.System<ClientLatheSystem>();
         _materialStorage = _entityManager.System<MaterialStorageSystem>();
 
         SearchBar.OnTextChanged += _ =>
@@ -209,7 +209,7 @@ public sealed partial class LatheMenu : FancyWindow
             if (!_prototypeManager.Resolve(id, out var proto))
                 continue;
 
-            var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, multiplier);
+            var adjustedAmount = LatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, multiplier);
             var sheetVolume = _materialStorage.GetSheetVolume(proto);
 
             var unit = Loc.GetString(proto.Unit);

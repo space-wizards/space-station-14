@@ -10,7 +10,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Lathe;
 
-public sealed partial class LatheSystem : SharedLatheSystem
+public sealed partial class ClientLatheSystem : LatheSystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;

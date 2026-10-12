@@ -26,7 +26,7 @@ namespace Content.Shared.Lathe;
 /// <summary>
 /// This handles...
 /// </summary>
-public abstract partial class SharedLatheSystem : EntitySystem
+public abstract partial class LatheSystem : EntitySystem
 {
     [Dependency] protected IGameTiming Timing = default!;
     [Dependency] protected SharedAppearanceSystem Appearance = default!;
