@@ -1,6 +1,6 @@
+using System.Linq;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
 
@@ -47,7 +47,7 @@ namespace Content.Shared.Cargo.Prototypes
                 {
                     _name = Loc.GetString(nameLoc);
                 }
-                else if (IoCManager.Resolve<IPrototypeManager>().Resolve(Product, out var prototype))
+                else if (Product.Count() > 0 && IoCManager.Resolve<IPrototypeManager>().Resolve(Product.First(), out var prototype))
                 {
                     _name = prototype.Name;
                 }
@@ -71,7 +71,7 @@ namespace Content.Shared.Cargo.Prototypes
                 {
                     _description = Loc.GetString(descLoc);
                 }
-                else if (IoCManager.Resolve<IPrototypeManager>().Resolve(Product, out var prototype))
+                else if (Product.Count() > 0 && IoCManager.Resolve<IPrototypeManager>().Resolve(Product.First(), out var prototype))
                 {
                     _description = prototype.Description;
                 }
@@ -87,16 +87,20 @@ namespace Content.Shared.Cargo.Prototypes
         public SpriteSpecifier Icon { get; private set; } = SpriteSpecifier.Invalid;
 
         /// <summary>
-        ///     The entity prototype ID of the product.
+        ///     The entity prototype ID of the product or products.
         /// </summary>
-        [DataField]
-        public EntProtoId Product { get; private set; } = string.Empty;
+        /// <remarks>
+        ///     If <see cref='Container'> is not set this should only contain one element as only the first in the list will spawn.
+        ///     If <see cref='Container'> is set, this can have multiple elements and will spawn in the same crate together.
+        /// <remarks>
+        [DataField(required: true, customTypeSerializer: typeof(AbstractPrototypeIdArraySerializer<EntityPrototype>))]
+        public string[] Product { get; private set; }
 
         /// <summary>
-        /// The entity to spawn and insert the product into. If null, just the product is spawned.
+        ///     The prototype of the container to be spawned
         /// </summary>
         [DataField]
-        public CargoProductContainer? Container;
+        public ProtoId<CargoCratePrototype>? Container;
 
         /// <summary>
         ///     The point cost of the product.
@@ -117,10 +121,16 @@ namespace Content.Shared.Cargo.Prototypes
         public ProtoId<CargoMarketPrototype> Group { get; private set; } = "market";
     }
 
-    /// <see cref="CargoProductPrototype.Container"/>
-    [DataDefinition, Serializable, NetSerializable]
-    public sealed partial class CargoProductContainer
+    [Prototype]
+    public sealed partial class CargoCratePrototype : IPrototype
     {
+        /// <summary>
+        /// ID of prototype.
+        /// </summary>
+        [ViewVariables]
+        [IdDataField]
+        public string ID { get; private set; } = default!;
+
         /// <summary>
         /// What entity to spawn as the container.
         /// </summary>
@@ -131,6 +141,25 @@ namespace Content.Shared.Cargo.Prototypes
         /// What container in <see cref="Entity"/> the product should be inserted into.
         /// </summary>
         [DataField(required: true)]
-        public string ContainerId;
+        public string ContainerId = string.Empty;
+
+        /// <summary>
+        /// Max amount of items that can spawn in a container.
+        /// </summary>
+        [DataField(required: true)]
+        public int MaxItems;
+
+        /// <summary>
+        /// Whether or not this container is required for the item to spawn into.
+        /// If not required, the item may spawn in a parcel when the only item in a container
+        /// </summary>
+        [DataField]
+        public bool Required = false;
+
+        /// <summary>
+        /// Whether or not this container is required for the item to spawn into.
+        /// </summary>
+        [DataField]
+        public int Cost;
     }
 }
