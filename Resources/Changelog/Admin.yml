@@ -1248,15 +1248,8 @@ Entries:
   url: https://github.com/space-wizards/space-station-14/pull/39046
 - author: slarticodefast
   changes:
-  - &o0
-    message: The listplayers command now requires PII permissions due to showing IP addresses.
+  - message: The listplayers command now requires PII permissions due to showing IP addresses.
     type: Tweak
-  id: 169
-  time: '2025-09-13T15:53:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40324
-- author: slarticodefast
-  changes:
-  - *o0
   id: 170
   time: '2025-09-16T07:59:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40395
@@ -1736,6 +1729,7 @@ Entries:
     type: Add
   id: 233
   time: '2026-07-26T09:36:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44812
 - author: Centronias
   changes:
   - message: Satiation reduction command "unsatiate"
@@ -1750,5 +1744,6 @@ Entries:
     type: Remove
   id: 234
   time: '2026-08-08T22:59:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34166
 Name: Admin
 Order: 3

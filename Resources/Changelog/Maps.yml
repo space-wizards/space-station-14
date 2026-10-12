@@ -1181,6 +1181,7 @@ Entries:
     type: Tweak
   id: 154
   time: '2026-07-27T00:00:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44889
 - author: Emisse
   changes:
   - message: Several job slots have been tweaked across the board to accommodate a smaller maxpop.
@@ -1189,6 +1190,7 @@ Entries:
     type: Remove
   id: 155
   time: '2026-07-29T14:47:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44996
 - author: SuperDicq
   changes:
   - message: Added Sushi Station!
@@ -1197,36 +1199,42 @@ Entries:
     type: Tweak
   id: 156
   time: '2026-08-01T17:20:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45064
 - author: ProPeperos
   changes:
   - message: On all Cargo shuttles - Tweaked atmos systems and small fixes
     type: Tweak
   id: 157
   time: '2026-08-01T19:47:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44125
 - author: ProPeperos
   changes:
   - message: On Fland - Reworked the TEG room + small tweaks around atmos.
     type: Tweak
   id: 158
   time: '2026-08-01T19:47:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44751
 - author: ProPeperos
   changes:
   - message: On Bagel - Replaced some pressure pumps to manual valves in atmos
     type: Tweak
   id: 159
   time: '2026-08-01T20:12:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44010
 - author: ProPeperos
   changes:
   - message: On Box station - Added AI restoration console in RD office and minor issue fixes
     type: Add
   id: 160
   time: '2026-08-03T18:19:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45099
 - author: ProPeperos
   changes:
   - message: On Elkridge - Added AI restoration console to RD office and other issue fixes
     type: Add
   id: 161
   time: '2026-08-03T18:36:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45111
 - author: ProPeperos
   changes:
   - message: On Bagel - Moved exosuit fabricator and material silo in science and other minor tweaks and fixes.
@@ -1235,6 +1243,7 @@ Entries:
     type: Add
   id: 162
   time: '2026-08-03T18:42:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45096
 - author: ProPeperos
   changes:
   - message: On Plasma - Added missing AI Restoration computer and other issue fixes
@@ -1245,18 +1254,21 @@ Entries:
     type: Fix
   id: 163
   time: '2026-08-03T21:20:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45125
 - author: ProPeperos
   changes:
   - message: On Packed - You will no longer spawn in cryogenics pod at round start and other tweaks and fixes
     type: Fix
   id: 164
   time: '2026-08-05T19:30:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45160
 - author: ProPeperos
   changes:
   - message: On Elkridge - You will no longer spawn in cryogenics pod at round start
     type: Fix
   id: 165
   time: '2026-08-05T20:08:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45161
 - author: Spessmann
   changes:
   - message: On Snowball added wheelchairs to med
@@ -1265,46 +1277,54 @@ Entries:
     type: Remove
   id: 166
   time: '2026-08-09T04:34:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45131
 - author: ProPeperos
   changes:
   - message: Updated Box to comply with the Respritening.
     type: Tweak
   id: 167
   time: '2026-08-22T23:10:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45567
 - author: ProPeperos
   changes:
   - message: Updated Snowball to comply with the Respritening.
     type: Tweak
   id: 168
   time: '2026-08-22T23:10:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45571
 - author: SuperDicq
   changes:
   - message: Updated Sushi Station to comply with the Respritening.
     type: Tweak
   id: 169
   time: '2026-08-22T23:10:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45532
 - author: ScarKy0
   changes:
   - message: Updated event shuttles to comply with the Respritening.
     type: Tweak
   id: 170
   time: '2026-08-22T23:11:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45566
 - author: ketufaispikinut
   changes:
   - message: Added energy gates to Elkridge's arrivals.
     type: Add
   id: 171
   time: '2026-08-22T23:11:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45575
 - author: ScarKy0
   changes:
   - message: Updated Marathon to comply with the Respritening.
     type: Tweak
   id: 172
   time: '2026-08-22T23:13:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45557
 - author: ProPeperos
   changes:
   - message: Updated Packed to comply with the Respritening.
     type: Tweak
   id: 173
   time: '2026-08-22T23:13:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45568
 Order: 2

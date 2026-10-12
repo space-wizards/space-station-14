@@ -32,6 +32,12 @@ public sealed partial class WeldableSystem : EntitySystem
         return _query.Resolve(uid, ref component, false) && component.IsWelded;
     }
 
+    [SubscribeLocalEvent]
+    private void OnMapInit(Entity<WeldableComponent> ent, ref ComponentInit args)
+    {
+        UpdateAppearance(ent, ent.Comp);
+    }
+
     private void OnExamine(EntityUid uid, WeldableComponent component, ExaminedEvent args)
     {
         if (component.IsWelded && component.WeldedExamineMessage != null)

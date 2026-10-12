@@ -1,12 +1,14 @@
+using Content.Shared.DeviceLinking.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.DeviceLinking.Components;
 
 /// <summary>
-/// A component for a random gate, which outputs a signal with a given probability.
+/// Outputs a signal with a given probability.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState(fieldDeltas: true), Access(typeof(RandomGateSystem))]
 public sealed partial class RandomGateComponent : Component
 {
     /// <summary>

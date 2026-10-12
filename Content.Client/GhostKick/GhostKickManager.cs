@@ -1,4 +1,4 @@
-﻿using Content.Shared.GhostKick;
+using Content.Shared.GhostKick;
 using Robust.Client;
 using Robust.Shared;
 using Robust.Shared.Configuration;

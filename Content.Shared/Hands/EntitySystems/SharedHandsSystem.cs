@@ -512,9 +512,14 @@ public abstract partial class SharedHandsSystem
         return held != null;
     }
 
+    /// <summary>
+    /// Checks if the specified hand of the entity is empty.
+    /// Assumes that the entity has hands, and that the given hand exists.
+    /// </summary>
+    /// <returns>false if hand is holding something. true if hand is empty (or doesn't exist).</returns>
     public bool HandIsEmpty(Entity<HandsComponent?> ent, string handId)
     {
-        return GetHeldItem(ent, handId) == null;
+        return !TryGetHeldItem(ent, handId, out _);
     }
 
     /// <summary>
@@ -551,8 +556,11 @@ public abstract partial class SharedHandsSystem
     /// Unremoveable items will cause a hand to not be freeable.
     /// </summary>
     /// <param name="except">The hand this entity is in will be ignored when counting.</param>
-    public int CountFreeableHands(Entity<HandsComponent> hands, EntityUid? except = null)
+    public int CountFreeableHands(Entity<HandsComponent?> hands, EntityUid? except = null)
     {
+        if (!Resolve(hands, ref hands.Comp, false))
+            return 0;
+
         var freeable = 0;
         foreach (var name in hands.Comp.Hands.Keys)
         {

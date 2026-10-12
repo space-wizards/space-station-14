@@ -10,11 +10,11 @@ using Content.Server.Administration.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
-using Content.Server.Spawners.Components;
-using Content.Server.Station.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Maps;
 using Content.Shared.Roles;
+using Content.Shared.Shuttles.Components;
+using Content.Shared.Spawners.Components;
 using Content.Shared.Station.Components;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
@@ -333,7 +333,7 @@ namespace Content.IntegrationTests.Tests
             var mapLoader = entManager.System<MapLoaderSystem>();
             var mapSystem = entManager.System<SharedMapSystem>();
             var protoManager = server.ResolveDependency<IPrototypeManager>();
-            var ticker = entManager.EntitySysManager.GetEntitySystem<GameTicker>();
+            var ticker = entManager.EntitySysManager.GetEntitySystem<ServerGameTicker>();
             var shuttleSystem = entManager.EntitySysManager.GetEntitySystem<ShuttleSystem>();
             var cfg = server.ResolveDependency<IConfigurationManager>();
 
