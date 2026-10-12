@@ -1,14 +1,14 @@
 - type: entity
-  name: cow
   parent: [ BaseMobRuminant, SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible, BaseExaminableHunger ]
   id: MobCow
+  name: cow
   description: Moo.
   components:
   - type: Sprite
     sprite: Mobs/Animals/Farm/cow.rsi
     drawdepth: Mobs
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: alive
   - type: Tag
     tags:
@@ -26,8 +26,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.40
         density: 400
         mask:

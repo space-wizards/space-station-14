@@ -1,14 +1,14 @@
 - type: entity
-  name: chicken
-  parent: [SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible, BaseExaminableHunger]
+  parent: [ SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible, BaseExaminableHunger ]
   id: MobChicken
+  name: chicken
   description: Comes before an egg, and IS a dinosaur!
   components:
   - type: Sprite
     sprite: Mobs/Animals/Farm/chicken.rsi
     drawdepth: Mobs
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+    - map: [ "enum.DamageStateVisualLayers.Base", "movement" ]
       state: chicken-0
   - type: SpriteMovement
     movementLayers:
@@ -20,8 +20,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 8
         mask:
@@ -102,9 +101,8 @@
   id: MobChicken1
   components:
   - type: Sprite
-    sprite: Mobs/Animals/Farm/chicken.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+    - map: [ "enum.DamageStateVisualLayers.Base", "movement" ]
       state: chicken-1
   - type: SpriteMovement
     movementLayers:
@@ -127,9 +125,8 @@
   id: MobChicken2
   components:
   - type: Sprite
-    sprite: Mobs/Animals/Farm/chicken.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+    - map: [ "enum.DamageStateVisualLayers.Base", "movement" ]
       state: chicken-2
   - type: SpriteMovement
     movementLayers:
@@ -148,8 +145,8 @@
         Base: dead-2
 
 - type: entity
-  id: FoodEggChickenFertilized
   parent: FoodEgg
+  id: FoodEggChickenFertilized
   suffix: Fertilized, Chicken
   components:
   - type: TimedSpawner
@@ -159,5 +156,5 @@
     - MobChicken2
     intervalSeconds: 20
     allowContainerPlacement: true
-  - type: TimedDespawn #delete the egg after the chicken spawns
+  - type: TimedDespawn # Delete the egg after the chick spawns.
     lifetime: 21

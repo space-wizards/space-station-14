@@ -1,20 +1,19 @@
 - type: entity
-  name: pig
-  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible]
+  parent: [ SimpleMobBase, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible ]
   id: MobPig
+  name: pig
   description: Oink.
   components:
   - type: Sprite
     sprite: Mobs/Animals/Farm/pig.rsi
     drawdepth: Mobs
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: alive
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 250
         mask:

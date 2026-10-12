@@ -1,20 +1,19 @@
 - type: entity
-  name: goat
   parent: [ BaseMobRuminant, SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible, BaseExaminableHunger ]
   id: MobGoat
+  name: goat
   description: Her spine consists of long sharp segments, no wonder she is so grumpy.
   components:
   - type: Sprite
     sprite: Mobs/Animals/Farm/goat.rsi
     drawdepth: Mobs
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: alive
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 150
         mask:
@@ -22,8 +21,7 @@
         layer:
         - MobLayer
   - type: Tag
-    tags:
-    # let moths eat wool directly
+    tags: # let moths eat wool directly
     - ClothMade
     - DoorBumpOpener
     - Goat

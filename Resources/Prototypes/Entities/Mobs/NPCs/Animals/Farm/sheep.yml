@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [BaseMobRuminant, BaseSlicingRefinableButchering, BaseExaminableHunger]
+  parent: [ BaseMobRuminant, BaseSlicingRefinableButchering, BaseExaminableHunger ]
   id: MobSheepBase
   name: sheepBase
   description: A sheep.
@@ -30,8 +30,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.35
         density: 150
         mask:
@@ -39,8 +38,7 @@
         layer:
         - MobLayer
   - type: Tag
-    tags:
-    # let moths eat wool directly
+    tags: # let moths eat wool directly
     - ClothMade
     - DoorBumpOpener
     - Sheep
