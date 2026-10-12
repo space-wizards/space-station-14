@@ -1,6 +1,6 @@
 - type: gameMap
   id: gear
-  mapName: 'gear'
+  mapName: 'Gear'
   mapPath: /Maps/gear.yml
   minPlayers: 40
   maxPlayers: 80 #big map
