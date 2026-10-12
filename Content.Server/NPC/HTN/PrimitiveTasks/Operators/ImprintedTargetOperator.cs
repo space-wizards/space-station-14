@@ -5,6 +5,8 @@ using Content.Server.NPC.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.Map;
+using Content.Shared.Interaction;
+using Content.Shared.Physics;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
@@ -12,6 +14,8 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 public sealed partial class ImprintedTargetOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entities = default!;
+
+    [Dependency] private SharedInteractionSystem _interaction = default!;
 
     [DataField]
     public bool Leader;
@@ -42,6 +46,9 @@ public sealed partial class ImprintedTargetOperator : HTNOperator
 
                 if (!coordinates.TryDistance(_entities, new EntityCoordinates(target, Vector2.Zero), out var distance) ||
                     distance > range || distance >= nearest)
+                    continue;
+
+                if (!_interaction.InRangeUnobstructed(owner, target, range, CollisionGroup.Opaque))
                     continue;
 
                 nearest = distance;
