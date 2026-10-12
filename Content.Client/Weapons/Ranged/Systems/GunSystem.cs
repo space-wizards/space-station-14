@@ -137,7 +137,6 @@ public sealed partial class GunSystem : SharedGunSystem
             var targetWorldRot = a.angle + _xform.GetWorldRotation(relativeXform);
             var delta = targetWorldRot - _xform.GetWorldRotation(xform);
             _xform.SetLocalRotationNoLerp(ent, xform.LocalRotation + delta, xform);
-            // Without this the effect renders at its spawn rotation until the next tick.
             _xform.SnapRenderTransform(ent);
 
             sprite[EffectLayers.Unshaded].AutoAnimated = false;
@@ -329,8 +328,7 @@ public sealed partial class GunSystem : SharedGunSystem
         }
 
         var ent = Spawn(message.Prototype, coordinates);
-        TransformSystem.SetWorldRotationNoLerp(ent, message.Angle);
-        // Without this the effect renders at its spawn rotation until the next tick.
+        _xform.SetWorldRotationNoLerp(ent, message.Angle);
         _xform.SnapRenderTransform(ent);
 
         if (tracked != null)
