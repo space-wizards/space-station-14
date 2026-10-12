@@ -7,13 +7,13 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Cloning;
+namespace Content.Shared.Cloning.Components;
 
 /// <summary>
 /// Component for cloning pods; manages cloning process, state, and cloning pod interactions.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
-public sealed partial class CloningPodComponent : Component
+public sealed partial class CloningPodComponent : Robust.Shared.GameObjects.Component
 {
     /// <summary>
     /// DeviceLink sink port identifier for this pod.

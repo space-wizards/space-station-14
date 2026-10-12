@@ -1,5 +1,6 @@
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
+using Content.Shared.Cloning.Components;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DeviceLinking.Events;
@@ -12,8 +13,10 @@ using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Random.Helpers;
+using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
@@ -31,6 +34,7 @@ public abstract partial class CloningPodSystem : EntitySystem
 {
     [Dependency] private CloningConsoleSystem _cloningConsole = default!;
     [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
     [Dependency] private EmagSystem _emag = default!;
     [Dependency] private IConfigurationManager _configManager = default!;
     [Dependency] private IGameTiming _timing = default!;
@@ -40,7 +44,6 @@ public abstract partial class CloningPodSystem : EntitySystem
     [Dependency] private SharedChatSystem _chat = default!;
     [Dependency] private SharedCloningSystem _cloning = default!;
     [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private DeviceLinkSystem _deviceLink = default!;
     [Dependency] private SharedMaterialStorageSystem _material = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
@@ -48,17 +51,137 @@ public abstract partial class CloningPodSystem : EntitySystem
     [Dependency] private SharedTransformSystem _transform = default!;
 
     [Dependency] private EntityQuery<ActiveCloningPodComponent> _activePodQuery;
+    [Dependency] private EntityQuery<CloningConsoleComponent> _consoleQuery;
     [Dependency] private EntityQuery<CloningPodComponent> _podQuery;
     [Dependency] private EntityQuery<DamageableComponent> _damageableQuery;
     [Dependency] private EntityQuery<MindContainerComponent> _mindContainerQuery;
     [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery;
-    [Dependency] private EntityQuery<CloningConsoleComponent> _consoleQuery;
 
     /// Tracks which minds are waiting to be transferred into a clone.
     public readonly Dictionary<MindComponent, EntityUid> ClonesWaitingForMind = [];
     private readonly ProtoId<CloningSettingsPrototype> _settingsId = "CloningPod";
 
     private const float EasyModeCloningCost = 0.7f;
+
+    /// <inheritdoc/>
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var curTime = _timing.CurTime;
+        var query = EntityQueryEnumerator<ActiveCloningPodComponent, CloningPodComponent>();
+        while (query.MoveNext(out var uid, out var _, out var cloning))
+        {
+            var powered = _powerReceiver.IsPowered(uid);
+            UpdatePowerTimer((uid, cloning), powered, curTime);
+            if (!powered)
+                continue;
+
+            if (cloning.BodyContainer?.ContainedEntity == null && !cloning.FailedClone)
+                continue;
+
+            if (curTime < cloning.NextUpdate)
+                continue;
+
+            if (cloning.FailedClone)
+                EndFailedCloning((uid, cloning));
+            else
+                Eject((uid, cloning));
+        }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnComponentInit(Entity<CloningPodComponent> ent, ref ComponentInit args)
+    {
+        ent.Comp.BodyContainer = _container.EnsureContainer<ContainerSlot>(ent.Owner, "clonepod-bodyContainer");
+        _deviceLink.EnsureSinkPorts(ent.Owner, ent.Comp.PodPort);
+    }
+
+    [SubscribeLocalEvent]
+    private void HandleMindAdded(Entity<BeingClonedComponent> ent, ref MindAddedMessage message)
+    {
+        if (ent.Comp.Parent == EntityUid.Invalid ||
+            !Exists(ent.Comp.Parent) ||
+            !_podQuery.TryComp(ent.Comp.Parent, out var cloningPodComponent) ||
+            ent.Owner != cloningPodComponent.BodyContainer?.ContainedEntity)
+        {
+            RemComp<BeingClonedComponent>(ent.Owner);
+            return;
+        }
+
+        UpdateStatus((ent.Comp.Parent, cloningPodComponent), CloningPodStatus.Cloning);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPortDisconnected(Entity<CloningPodComponent> ent, ref SinkPortDisconnectedEvent args)
+    {
+        if (ent.Comp.PodPort != args.Port)
+            return;
+
+        ent.Comp.ConnectedConsole = null;
+        Dirty(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnAnchor(Entity<CloningPodComponent> ent, ref AnchorStateChangedEvent args)
+    {
+        if (ent.Comp.ConnectedConsole == null || !_consoleQuery.TryComp(ent.Comp.ConnectedConsole.Value, out var console))
+            return;
+
+        if (args.Anchored)
+        {
+            _cloningConsole.RecheckConnections(ent.Comp.ConnectedConsole.Value, ent.Owner, console.GeneticScanner);
+            return;
+        }
+
+        _cloningConsole.UpdateUserInterface((ent.Comp.ConnectedConsole.Value, console));
+    }
+
+    [SubscribeLocalEvent]
+    private void OnExamined(Entity<CloningPodComponent> ent, ref ExaminedEvent args)
+    {
+        if (!args.IsInDetailsRange || !_powerReceiver.IsPowered(ent.Owner))
+            return;
+
+        args.PushMarkup(Loc.GetString("cloning-pod-biomass", ("number", _material.GetMaterialAmount(ent.Owner, ent.Comp.RequiredMaterial))));
+    }
+
+    /// <summary>
+    /// On emag, spawns a failed clone when cloning process fails which attacks nearby crew.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnEmagged(Entity<CloningPodComponent> ent, ref GotEmaggedEvent args)
+    {
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+            return;
+
+        if (_emag.CheckFlag(ent.Owner, EmagType.Interaction))
+            return;
+
+        if (!_powerReceiver.IsPowered(ent.Owner))
+            return;
+
+        _popup.PopupEntity(Loc.GetString("cloning-pod-component-upgrade-emag-requirement"), ent.Owner);
+        args.Handled = true;
+    }
+
+    /// <summary>
+    /// Clears mind transfer records on round reset.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void Reset(RoundRestartCleanupEvent ev)
+    {
+        ClonesWaitingForMind.Clear();
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPowerChanged(Entity<CloningPodComponent> ent, ref PowerChangedEvent args)
+    {
+        if (!_activePodQuery.HasComp(ent.Owner))
+            return;
+
+        UpdatePowerTimer(ent, args.Powered, _timing.CurTime);
+    }
 
     /// <summary>
     /// Tries to start the cloning process for the specified mind and pod.
@@ -68,6 +191,7 @@ public abstract partial class CloningPodSystem : EntitySystem
     /// <param name="mindEnt">The mind entity.</param>
     /// <param name="failChanceModifier">The chance modifier for the cloning process.</param>
     /// <returns>True if the cloning process was started, false otherwise.</returns>
+    [PublicAPI]
     public bool TryCloning(Entity<CloningPodComponent?> ent, EntityUid bodyToClone, Entity<MindComponent> mindEnt, float failChanceModifier = 1)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -172,6 +296,7 @@ public abstract partial class CloningPodSystem : EntitySystem
     /// <summary>
     /// Updates the visual and logic status of the cloning pod.
     /// </summary>
+    [PublicAPI]
     public void UpdateStatus(Entity<CloningPodComponent> ent, CloningPodStatus status)
     {
         ent.Comp.Status = status;
@@ -179,16 +304,10 @@ public abstract partial class CloningPodSystem : EntitySystem
         _appearance.SetData(ent.Owner, CloningPodVisuals.Status, ent.Comp.Status);
     }
 
-    [SubscribeLocalEvent]
-    private void OnComponentInit(Entity<CloningPodComponent> ent, ref ComponentInit args)
-    {
-        ent.Comp.BodyContainer = _container.EnsureContainer<ContainerSlot>(ent.Owner, "clonepod-bodyContainer");
-        _deviceLink.EnsureSinkPorts(ent.Owner, ent.Comp.PodPort);
-    }
-
     /// <summary>
     /// Transfers a mind into its cloned body once the clone is ready.
     /// </summary>
+    [PublicAPI]
     public void TransferMindToClone(EntityUid mindId, MindComponent mind)
     {
         if (!ClonesWaitingForMind.TryGetValue(mind, out var entity) ||
@@ -202,82 +321,45 @@ public abstract partial class CloningPodSystem : EntitySystem
         ClonesWaitingForMind.Remove(mind);
     }
 
-    [SubscribeLocalEvent]
-    private void HandleMindAdded(Entity<BeingClonedComponent> ent, ref MindAddedMessage message)
+    /// <summary>
+    /// Ejects the cloned body from the pod.
+    /// </summary>
+    [PublicAPI]
+    public void Eject(Entity<CloningPodComponent?> ent)
     {
-        if (ent.Comp.Parent == EntityUid.Invalid ||
-            !Exists(ent.Comp.Parent) ||
-            !_podQuery.TryComp(ent.Comp.Parent, out var cloningPodComponent) ||
-            ent.Owner != cloningPodComponent.BodyContainer?.ContainedEntity)
-        {
-            RemComp<BeingClonedComponent>(ent.Owner);
-            return;
-        }
-
-        UpdateStatus((ent.Comp.Parent, cloningPodComponent), CloningPodStatus.Cloning);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnPortDisconnected(Entity<CloningPodComponent> ent, ref SinkPortDisconnectedEvent args)
-    {
-        if (ent.Comp.PodPort != args.Port)
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return;
 
-        ent.Comp.ConnectedConsole = null;
+        if (ent.Comp.BodyContainer?.ContainedEntity is not { Valid: true } entity || _timing.CurTime < ent.Comp.NextUpdate)
+            return;
+
+        RemCompDeferred<BeingClonedComponent>(entity);
+        _container.Remove(entity, ent.Comp.BodyContainer);
+        ent.Comp.NextUpdate = TimeSpan.Zero;
+        ent.Comp.PowerLostAt = null;
+        ent.Comp.UsedBiomass = 0;
+        UpdateStatus((ent.Owner, ent.Comp), CloningPodStatus.Idle);
+        RemCompDeferred<ActiveCloningPodComponent>(ent.Owner);
         Dirty(ent);
     }
 
-    [SubscribeLocalEvent]
-    private void OnAnchor(Entity<CloningPodComponent> ent, ref AnchorStateChangedEvent args)
+    private void UpdatePowerTimer(Entity<CloningPodComponent> ent, bool powered, TimeSpan curTime)
     {
-        if (ent.Comp.ConnectedConsole == null || !_consoleQuery.TryComp(ent.Comp.ConnectedConsole.Value, out var console))
-            return;
-
-        if (args.Anchored)
+        if (!powered)
         {
-            _cloningConsole.RecheckConnections(ent.Comp.ConnectedConsole.Value, ent.Owner, console.GeneticScanner);
+            ent.Comp.PowerLostAt ??= curTime;
             return;
         }
 
-        _cloningConsole.UpdateUserInterface((ent.Comp.ConnectedConsole.Value, console));
-    }
-
-    [SubscribeLocalEvent]
-    private void OnExamined(Entity<CloningPodComponent> ent, ref ExaminedEvent args)
-    {
-        if (!args.IsInDetailsRange || !_powerReceiver.IsPowered(ent.Owner))
+        if (ent.Comp.PowerLostAt is not { } powerLostAt)
             return;
 
-        args.PushMarkup(Loc.GetString("cloning-pod-biomass", ("number", _material.GetMaterialAmount(ent.Owner, ent.Comp.RequiredMaterial))));
+        ent.Comp.NextUpdate += curTime - powerLostAt;
+        ent.Comp.PowerLostAt = null;
+        Dirty(ent);
     }
 
-    /// <summary>
-    /// On emag, spawns a failed clone when cloning process fails which attacks nearby crew.
-    /// </summary>
-    [SubscribeLocalEvent]
-    private void OnEmagged(Entity<CloningPodComponent> ent, ref GotEmaggedEvent args)
-    {
-        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
-            return;
-
-        if (_emag.CheckFlag(ent.Owner, EmagType.Interaction))
-            return;
-
-        if (!_powerReceiver.IsPowered(ent.Owner))
-            return;
-
-        _popup.PopupEntity(Loc.GetString("cloning-pod-component-upgrade-emag-requirement"), ent.Owner);
-        args.Handled = true;
-    }
-
-    /// <summary>
-    /// Clears mind transfer records on round reset.
-    /// </summary>
-    [SubscribeLocalEvent]
-    public void Reset(RoundRestartCleanupEvent ev)
-    {
-        ClonesWaitingForMind.Clear();
-    }
+    protected virtual void EndFailedCloning(Entity<CloningPodComponent> ent) { }
 
     // TODO: SharedEuiManager so that we can just directly open the eui from shared.
     protected virtual void OpenEui(Entity<MindComponent> mindEnt, MindComponent mind, ICommonSession client) { }

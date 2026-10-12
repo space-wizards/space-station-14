@@ -2,13 +2,13 @@ using Content.Shared.DeviceLinking;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Cloning;
+namespace Content.Shared.Cloning.Components;
 
 /// <summary>
 /// Component for cloning console UI. Stores references and state for connected cloning machines.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class CloningConsoleComponent : Component
+public sealed partial class CloningConsoleComponent : Robust.Shared.GameObjects.Component
 {
     /// <summary>
     /// DeviceLink source port name for medical scanner.

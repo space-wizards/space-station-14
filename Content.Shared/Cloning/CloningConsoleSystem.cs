@@ -1,5 +1,6 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Cloning.CloningConsole;
+using Content.Shared.Cloning.Components;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
@@ -12,6 +13,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.UserInterface;
+using JetBrains.Annotations;
 using Robust.Shared.Player;
 
 namespace Content.Shared.Cloning;
@@ -159,6 +161,7 @@ public sealed partial class CloningConsoleSystem : EntitySystem
     /// <summary>
     /// Updates the state of the user interface for the cloning console.
     /// </summary>
+    [PublicAPI]
     public void UpdateUserInterface(Entity<CloningConsoleComponent> ent)
     {
         if (!_ui.HasUi(ent.Owner, CloningConsoleUiKey.Key))
@@ -177,6 +180,7 @@ public sealed partial class CloningConsoleSystem : EntitySystem
     /// <summary>
     /// Attempts to start a cloning operation given the relevant entities.
     /// </summary>
+    [PublicAPI]
     public void TryClone(Entity<CloningConsoleComponent?> ent, Entity<CloningPodComponent?> entPod, Entity<MedicalScannerComponent?> entScanner)
     {
         if (!Resolve(ent, ref ent.Comp) || !Resolve(entPod, ref entPod.Comp) || !Resolve(entScanner, ref entScanner.Comp))
@@ -205,6 +209,7 @@ public sealed partial class CloningConsoleSystem : EntitySystem
     /// <summary>
     /// Checks distance connections between the console and machines, and updates states accordingly.
     /// </summary>
+    [PublicAPI]
     public void RecheckConnections(Entity<CloningConsoleComponent?> ent, EntityUid? cloningPod, EntityUid? scanner)
     {
         if (!Resolve(ent, ref ent.Comp))

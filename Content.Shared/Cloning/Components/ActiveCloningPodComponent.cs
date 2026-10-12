@@ -1,6 +1,6 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Cloning;
+namespace Content.Shared.Cloning.Components;
 
 /// <summary>
 /// Shrimply a tracking component for pods that are cloning.

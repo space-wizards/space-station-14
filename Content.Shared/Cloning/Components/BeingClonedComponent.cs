@@ -1,12 +1,12 @@
 using Content.Shared.Mind;
 
-namespace Content.Shared.Cloning;
+namespace Content.Shared.Cloning.Components;
 
 /// <summary>
 /// Added to a body that is being cloned. Tracks mind and parent pod entity.
 /// </summary>
 [RegisterComponent]
-public sealed partial class BeingClonedComponent : Component
+public sealed partial class BeingClonedComponent : Robust.Shared.GameObjects.Component
 {
     /// <summary>
     /// The mind associated with the body being cloned, if any.

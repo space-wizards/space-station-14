@@ -2,6 +2,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Body;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Cloning;
+using Content.Shared.Cloning.Components;
 using Content.Shared.Destructible;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DeviceLinking.Systems;
@@ -12,6 +13,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Verbs;
+using JetBrains.Annotations;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.MedicalScanner.EntitySystems;
@@ -35,22 +37,23 @@ public sealed partial class MedicalScannerSystem : EntitySystem
     [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
     [Dependency] private EntityQuery<CloningConsoleComponent> _consoleQuery;
 
+    /// <inheritdoc/>
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<MedicalScannerComponent>();
+        while (query.MoveNext(out var uid, out var scanner))
+        {
+            UpdateAppearance((uid, scanner));
+        }
+    }
+
     [SubscribeLocalEvent]
     private void OnCanDragDropOn(Entity<MedicalScannerComponent> ent, ref CanDropTargetEvent args)
     {
         args.Handled = true;
         args.CanDrop |= CanScannerInsert(ent.AsNullable(), args.Dragged);
-    }
-
-    /// <summary>
-    /// Checks if a given entity can be inserted into the scanner.
-    /// </summary>
-    public bool CanScannerInsert(Entity<MedicalScannerComponent?> ent, EntityUid target)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return false;
-
-        return _bodyQuery.HasComp(target);
     }
 
     [SubscribeLocalEvent]
@@ -165,26 +168,77 @@ public sealed partial class MedicalScannerSystem : EntitySystem
         Dirty(ent);
     }
 
-    private MedicalScannerStatus GetStatus(Entity<MedicalScannerComponent> ent)
+    /// <summary>
+    /// Checks if a given entity can be inserted into the scanner.
+    /// </summary>
+    [PublicAPI]
+    public bool CanScannerInsert(Entity<MedicalScannerComponent?> ent, EntityUid target)
     {
-        if (_powerReceiver.IsPowered(ent.Owner))
-        {
-            var body = ent.Comp.BodyContainer?.ContainedEntity;
-            if (body == null)
-                return MedicalScannerStatus.Open;
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
 
-            // Is not alive or dead or critical.
-            if (!_mobStateQuery.TryComp(body.Value, out var state))
-                return MedicalScannerStatus.Yellow;
-
-            return GetStatusFromDamageState((body.Value, state));
-        }
-        return MedicalScannerStatus.Off;
+        return _bodyQuery.HasComp(target);
     }
 
+    /// <summary>
+    /// Checks if the scanner is occupied by an entity.
+    /// </summary>
+    [PublicAPI]
     public static bool IsOccupied(MedicalScannerComponent scannerComponent)
     {
         return scannerComponent.BodyContainer?.ContainedEntity != null;
+    }
+
+    /// <summary>
+    /// Inserts a body into the medical scanner.
+    /// </summary>
+    [PublicAPI]
+    public void InsertBody(Entity<MedicalScannerComponent?> ent, EntityUid toInsert)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        if (ent.Comp.BodyContainer == null)
+            return;
+
+        if (!_bodyQuery.HasComp(toInsert))
+            return;
+
+        _container.Insert(toInsert, ent.Comp.BodyContainer);
+        UpdateAppearance((ent.Owner, ent.Comp));
+    }
+
+    /// <summary>
+    /// Ejects the contained body from the medical scanner.
+    /// </summary>
+    [PublicAPI]
+    public void EjectBody(Entity<MedicalScannerComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        if (ent.Comp.BodyContainer?.ContainedEntity is not { Valid: true } contained)
+            return;
+
+        _container.Remove(contained, ent.Comp.BodyContainer);
+        _climb.ForciblySetClimbing(contained, ent.Owner);
+        UpdateAppearance((ent.Owner, ent.Comp));
+    }
+
+    private MedicalScannerStatus GetStatus(Entity<MedicalScannerComponent> ent)
+    {
+        if (!_powerReceiver.IsPowered(ent.Owner))
+            return MedicalScannerStatus.Off;
+
+        var body = ent.Comp.BodyContainer?.ContainedEntity;
+        if (body == null)
+            return MedicalScannerStatus.Open;
+
+        // Is not alive or dead or critical.
+        if (!_mobStateQuery.TryComp(body.Value, out var state))
+            return MedicalScannerStatus.Yellow;
+
+        return GetStatusFromDamageState((body.Value, state));
     }
 
     private MedicalScannerStatus GetStatusFromDamageState(Entity<MobStateComponent> ent)
@@ -205,44 +259,5 @@ public sealed partial class MedicalScannerSystem : EntitySystem
     {
         if (_appearanceQuery.TryComp(ent.Owner, out var appearance))
             _appearance.SetData(ent.Owner, MedicalScannerVisuals.Status, GetStatus(ent), appearance);
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<MedicalScannerComponent>();
-        while (query.MoveNext(out var uid, out var scanner))
-        {
-            UpdateAppearance((uid, scanner));
-        }
-    }
-
-    public void InsertBody(Entity<MedicalScannerComponent?> ent, EntityUid toInsert)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return;
-
-        if (ent.Comp.BodyContainer == null)
-            return;
-
-        if (!_bodyQuery.HasComp(toInsert))
-            return;
-
-        _container.Insert(toInsert, ent.Comp.BodyContainer);
-        UpdateAppearance((ent.Owner, ent.Comp));
-    }
-
-    public void EjectBody(Entity<MedicalScannerComponent?> ent)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return;
-
-        if (ent.Comp.BodyContainer?.ContainedEntity is not { Valid: true } contained)
-            return;
-
-        _container.Remove(contained, ent.Comp.BodyContainer);
-        _climb.ForciblySetClimbing(contained, ent.Owner);
-        UpdateAppearance((ent.Owner, ent.Comp));
     }
 }
