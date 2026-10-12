@@ -131,30 +131,35 @@ namespace Content.Shared.Cargo.Prototypes
         [IdDataField]
         public string ID { get; private set; } = default!;
 
-        [DataField(required: true)]
         /// <summary>
         /// What entity to spawn as the container.
         /// </summary>
-        public EntProtoId<ContainerManagerComponent> Entity;
         [DataField(required: true)]
+        public EntProtoId<ContainerManagerComponent> Entity;
+
         /// <summary>
         /// What container in <see cref="Entity"/> the product should be inserted into.
         /// </summary>
-        public string ContainerId = string.Empty;
         [DataField(required: true)]
+        public string ContainerId = string.Empty;
+
         /// <summary>
         /// Max amount of items that can spawn in a container.
         /// </summary>
+        [DataField(required: true)]
         public int MaxItems;
-        [DataField]
+
         /// <summary>
         /// Whether or not this container is required for the item to spawn into.
+        /// If not required, the item may spawn in a parcel when the only item in a container
         /// </summary>
+        [DataField]
         public bool Required = false;
-        [DataField]
+
         /// <summary>
         /// Whether or not this container is required for the item to spawn into.
         /// </summary>
+        [DataField]
         public int Cost;
     }
 }
