@@ -177,7 +177,9 @@ public sealed partial class TegSystem : EntitySystem
         var dischargeEnergy = MathF.Min(component.StoredEnergy, component.StoredEnergy * component.StoredEnergyDischargeRate * args.dt);
         if (dischargeEnergy / args.dt < component.LinearDischargeThreshold)
         {
-            dischargeEnergy = MathF.Min(component.StoredEnergy, component.LinearDischargeRate * args.dt);
+            var maxLinearStorage = component.LinearDischargeThreshold / component.StoredEnergyDischargeRate;
+            var targetDischargeRatio = MathF.Sqrt(component.StoredEnergy / maxLinearStorage);
+            dischargeEnergy = MathF.Min(component.StoredEnergy, component.LinearDischargeThreshold * targetDischargeRatio * args.dt);
         }
 
         // Provide power to the grid

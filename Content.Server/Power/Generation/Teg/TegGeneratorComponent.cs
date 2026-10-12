@@ -97,11 +97,4 @@ public sealed partial class TegGeneratorComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("linearDischargeThreshold")]
     public float LinearDischargeThreshold = 5000f;
-
-    /// <summary>
-    /// How many watts the teg produces when discharging linearly.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("linearDischargeRate")]
-    public float LinearDischargeRate = 5000f;
 }
