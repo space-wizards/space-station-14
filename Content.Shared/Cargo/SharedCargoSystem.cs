@@ -358,7 +358,7 @@ public abstract partial class SharedCargoSystem : EntitySystem
         {
             return 1;
         }
-        return proto.SpawnList.Count;
+        return proto.Product.Count();
     }
 }
 

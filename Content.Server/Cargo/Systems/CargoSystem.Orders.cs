@@ -535,7 +535,7 @@ public sealed partial class CargoSystem
             var first = container.Products.First();
             if (!ProtoMan.Resolve(first.Source.Product, out var singleProto))
                 return false;
-            containerEntity = Spawn(singleProto.SpawnList.First(), spawn);
+            containerEntity = Spawn(singleProto.Product.First(), spawn);
             first.Source.NumOrdered++;
             _transform.Unanchor(containerEntity, Transform(containerEntity));
             return true;
@@ -563,7 +563,7 @@ public sealed partial class CargoSystem
 
             for (int i = 0; i < item.Quantity; i++)
             {
-                foreach (var product in productProto.SpawnList)
+                foreach (var product in productProto.Product)
                 {
                     var itemEntity = Spawn(product, spawn);
                     if (!_container.Insert(itemEntity, slot, force: true))

@@ -33,7 +33,7 @@
   icon:
     sprite: Clothing/Head/Hoods/Bio/scientist.rsi
     state: icon
-  products:
+  product:
   - ClothingOuterBioScientist
   - ClothingHeadHatHoodBioScientist
   container: CrateScienceSecure

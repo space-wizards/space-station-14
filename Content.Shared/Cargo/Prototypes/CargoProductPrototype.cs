@@ -1,7 +1,6 @@
 using System.Linq;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
 
@@ -48,7 +47,7 @@ namespace Content.Shared.Cargo.Prototypes
                 {
                     _name = Loc.GetString(nameLoc);
                 }
-                else if (SpawnList.Count > 0 && IoCManager.Resolve<IPrototypeManager>().Resolve(SpawnList.First(), out var prototype))
+                else if (Product.Count() > 0 && IoCManager.Resolve<IPrototypeManager>().Resolve(Product.First(), out var prototype))
                 {
                     _name = prototype.Name;
                 }
@@ -72,7 +71,7 @@ namespace Content.Shared.Cargo.Prototypes
                 {
                     _description = Loc.GetString(descLoc);
                 }
-                else if (SpawnList.Count > 0 && IoCManager.Resolve<IPrototypeManager>().Resolve(SpawnList.First(), out var prototype))
+                else if (Product.Count() > 0 && IoCManager.Resolve<IPrototypeManager>().Resolve(Product.First(), out var prototype))
                 {
                     _description = prototype.Description;
                 }
@@ -88,35 +87,17 @@ namespace Content.Shared.Cargo.Prototypes
         public SpriteSpecifier Icon { get; private set; } = SpriteSpecifier.Invalid;
 
         /// <summary>
-        ///     The entity prototype ID of the product.
+        ///     The entity prototype ID of the product or products.
         /// </summary>
-        [DataField]
-        public EntProtoId? Product { get; private set; }
+        /// <remarks>
+        ///     If <see cref='Container'> is not set this should only contain one element as only the first in the list will spawn.
+        ///     If <see cref='Container'> is set, this can have multiple elements and will spawn in the same crate together.
+        /// <remarks>
+        [DataField(required: true, customTypeSerializer: typeof(AbstractPrototypeIdArraySerializer<EntityPrototype>))]
+        public string[] Product { get; private set; }
 
         /// <summary>
-        ///     List of entity prototypes to spawn. If not set, falls back to <see cref="Product"/>.
-        /// </summary>
-        [DataField]
-        public List<EntProtoId>? Products { get; private set; }
-
-        /// <summary>
-        ///     Resolved list of entities to spawn. Always use this instead of <see cref="Product"/> directly.
-        /// </summary>
-        public List<EntProtoId> SpawnList
-        {
-            get
-            {
-                if (Products != null)
-                    return Products;
-                if (Product != null)
-                    return new List<EntProtoId> { Product.Value };
-                throw new InvalidOperationException($"CargoProductPrototype {ID} has neither Product nor Products defined.");
-            }
-        }
-
-
-        /// <summary>
-        /// The prototype of the container to be spawned
+        ///     The prototype of the container to be spawned
         /// </summary>
         [DataField]
         public ProtoId<CargoCratePrototype>? Container;

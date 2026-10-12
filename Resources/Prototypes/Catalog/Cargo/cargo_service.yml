@@ -14,7 +14,7 @@
   icon:
     sprite: Objects/Power/light_bulb.rsi
     state: normal
-  products:
+  product:
   - BoxLighttube
   - BoxLightbulb
   container: CrateSteel
@@ -38,7 +38,7 @@
   icon:
     sprite: Objects/Power/light_bulb.rsi
     state: normal
-  products:
+  product:
   - BoxLightbulbColorfulMixed
   - BoxLighttubeColorfulMixed
   container: CrateSteel
@@ -185,7 +185,7 @@
   icon:
     sprite: Clothing/Head/Hoods/Bio/janitor.rsi
     state: icon
-  products:
+  product:
   - ClothingOuterBioJanitor
   - ClothingHeadHatHoodBioJanitor
   container: CratePlastic
@@ -228,7 +228,7 @@
   icon:
     sprite: Clothing/Head/Helmets/janitor_bombsuit.rsi
     state: icon
-  products:
+  product:
   - ClothingOuterSuitJanitorBomb
   - ClothingHeadHelmetJanitorBombSuit
   container: CrateSteel
@@ -251,7 +251,7 @@
   icon:
     sprite: Objects/Misc/candles.rsi
     state: candle-big
-  products:
+  product:
   - BoxCandle
   - BoxCandleSmall
   container: CrateSteel
