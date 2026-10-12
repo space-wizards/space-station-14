@@ -1098,6 +1098,7 @@
       state: SyndicateOperative
   - type: AccessStealer
   - type: IdCard
+    jobTitle: job-name-syndicate-operative
     jobIcon: JobIconSyndicateOperative
 
 - type: entity
@@ -1116,6 +1117,7 @@
       offset: *icon-offset
       state: SyndicateCorpsman
   - type: IdCard
+    jobTitle: job-name-syndicate-corpsman
     jobIcon: JobIconSyndicateCorpsman
 
 - type: entity
@@ -1134,6 +1136,7 @@
       offset: *icon-offset
       state: SyndicateCommander
   - type: IdCard
+    jobTitle: job-name-syndicate-commander
     jobIcon: JobIconSyndicateCommander
 
 - type: entity
