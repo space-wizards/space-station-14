@@ -44,12 +44,13 @@ public sealed partial class NPCPointCommandSystem : EntitySystem
     /// <summary>
     /// Allows NPC to immediately start a new plan.
     /// </summary>
-    public void ResetPlans(HashSet<EntityUid> followers)
+    public void ClearTarget(HashSet<EntityUid> followers)
     {
         foreach (var follower in followers)
         {
             if (TerminatingOrDeleted(follower) || !TryComp<HTNComponent>(follower, out var htn))
                 continue;
+            htn.Blackboard.Remove<EntityUid>(NPCBlackboard.CurrentOrderedTarget);
             ResetPlan(htn);
         }
     }

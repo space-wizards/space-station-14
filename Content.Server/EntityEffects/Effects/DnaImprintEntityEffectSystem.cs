@@ -109,7 +109,7 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
         if (!_combatMode.IsInCombatMode(ent.Owner))
             return;
 
-        _pointCommands.ResetPlans(ent.Comp.Followers);
+        _pointCommands.ClearTarget(ent.Comp.Followers);
     }
 
 
