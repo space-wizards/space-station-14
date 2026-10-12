@@ -15,7 +15,7 @@ using Content.Shared.Pointing;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using ChemistrySolution = Content.Shared.Chemistry.Components.Solution;
-
+using Content.Shared.CombatMode;
 namespace Content.Server.EntityEffects.Effects;
 
 public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HTNComponent, DnaImprint>
@@ -23,7 +23,7 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
     [Dependency] private SharedSolutionContainerSystem _solutions = default!;
     [Dependency] private NPCPointCommandSystem _pointCommands = default!;
     [Dependency] private IRobustRandom _random = default!;
-
+    [Dependency] private SharedCombatModeSystem _combatMode = default!;
     protected override void Effect(Entity<HTNComponent> ent, ref EntityEffectEvent<DnaImprint> args)
     {
         var effect = args.Effect;
@@ -104,8 +104,21 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
         => !HasComp<ActorComponent>(uid) && !(TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind);
 
     [SubscribeLocalEvent]
+    private void OnPointAttempt(Entity<DNALeaderComponent> ent, ref PointAttemptEvent args)
+    {
+        if (!_combatMode.IsInCombatMode(ent.Owner))
+            return;
+
+        _pointCommands.ResetPlans(ent.Comp.Followers);
+    }
+
+
+    [SubscribeLocalEvent]
     private void OnPointedAt(Entity<DNALeaderComponent> ent, ref AfterPointedAtEvent args)
     {
+        if (!_combatMode.IsInCombatMode(ent.Owner))
+            return;
+
         _pointCommands.CommandFollowers(ent.Comp.Followers, args.Pointed);
     }
 

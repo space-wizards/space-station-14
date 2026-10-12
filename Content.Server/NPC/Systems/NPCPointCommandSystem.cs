@@ -22,7 +22,6 @@ public sealed partial class NPCPointCommandSystem : EntitySystem
                 continue;
 
             htn.Blackboard.SetValue(NPCBlackboard.CurrentOrderedTarget, target);
-            ResetPlan(htn);
         }
     }
 
@@ -40,6 +39,19 @@ public sealed partial class NPCPointCommandSystem : EntitySystem
             _htn.ShutdownPlan(htn);
         }
         _htn.Replan(htn);
+    }
+
+    /// <summary>
+    /// Allows NPC to immediately start a new plan.
+    /// </summary>
+    public void ResetPlans(HashSet<EntityUid> followers)
+    {
+        foreach (var follower in followers)
+        {
+            if (TerminatingOrDeleted(follower) || !TryComp<HTNComponent>(follower, out var htn))
+                continue;
+            ResetPlan(htn);
+        }
     }
 
 }
