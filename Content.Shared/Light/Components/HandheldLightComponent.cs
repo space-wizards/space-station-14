@@ -45,12 +45,6 @@ public sealed partial class HandheldLightComponent : Component
     [DataField]
     public bool ToggleOnInteract = true;
 
-    [DataField]
-    public EntityUid? ToggleActionEntity;
-
-    [DataField]
-    public EntityUid? SelfToggleActionEntity;
-
     public const int StatusLevels = 6;
 
     /// <summary>

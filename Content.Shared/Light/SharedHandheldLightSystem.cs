@@ -1,4 +1,3 @@
-using Content.Shared.Actions;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.Item;
@@ -15,7 +14,6 @@ public abstract partial class SharedHandheldLightSystem : EntitySystem
 {
     [Dependency] private SharedItemSystem _itemSys = default!;
     [Dependency] private ClothingSystem _clothingSys = default!;
-    [Dependency] private SharedActionsSystem _actionSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
 
@@ -47,9 +45,12 @@ public abstract partial class SharedHandheldLightSystem : EntitySystem
 
     private void OnExamine(EntityUid uid, HandheldLightComponent component, ExaminedEvent args)
     {
+        using var _ = args.PushGroup(nameof(HandheldLightComponent));
+
         args.PushMarkup(component.Activated
             ? Loc.GetString("handheld-light-component-on-examine-is-on-message")
             : Loc.GetString("handheld-light-component-on-examine-is-off-message"));
+        args.PushMarkup(Loc.GetString("flashlight-toggle-examine-keybind"));
     }
 
     public void SetActivated(EntityUid uid, bool activated, HandheldLightComponent? component = null, bool makeNoise = true)
@@ -87,10 +88,17 @@ public abstract partial class SharedHandheldLightSystem : EntitySystem
             _clothingSys.SetEquippedPrefix(uid, prefix);
         }
 
-        if (component.ToggleActionEntity != null)
-            _actionSystem.SetToggled(component.ToggleActionEntity, component.Activated);
-
         _appearance.SetData(uid, ToggleableVisuals.Enabled, component.Activated, appearance);
+    }
+
+    public bool TryToggleLight(Entity<HandheldLightComponent?> ent, EntityUid user)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        return ent.Comp.Activated
+            ? TurnOff((ent, ent.Comp))
+            : TurnOn(user, (ent, ent.Comp));
     }
 
     private void AddToggleLightVerb(Entity<HandheldLightComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
