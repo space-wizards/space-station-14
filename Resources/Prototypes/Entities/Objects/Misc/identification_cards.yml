@@ -988,6 +988,8 @@
     - AntagonistIconGroup
     - MiscIconGroup
     - BlankIconGroup
+  - type: IdCard
+    jobIcon: JobIconPassenger
   - type: UIRequiresLock
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
