@@ -8,9 +8,17 @@
     - !type:HTNPrimitiveTask
       operator: !type:ImprintedTargetOperator
         leader: true
+    - !type:HTNPrimitiveTask
+      operator: !type:SetBoolOperator
+        targetKey: NavSmash
+        value: false
     - !type:HTNCompoundTask
       task: FollowCompound
   - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:SetBoolOperator
+        targetKey: NavSmash
+        value: false
     - !type:HTNCompoundTask
       task: IdleCompound
 
@@ -28,6 +36,10 @@
   - tasks:
     - !type:HTNPrimitiveTask
       operator: !type:ImprintedTargetOperator
+    - !type:HTNPrimitiveTask
+      operator: !type:SetBoolOperator
+        targetKey: NavSmash
+        value: true
     - !type:HTNPrimitiveTask
       operator: !type:MoveToOperator
         shutdownState: PlanFinished
