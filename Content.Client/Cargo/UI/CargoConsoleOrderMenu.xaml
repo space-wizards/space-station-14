@@ -10,11 +10,10 @@
 
             <Label StyleClasses="LabelKeyText" Text="{Loc 'cargo-console-order-menu-description-label'}" />
 
-            <RichTextLabel
-                Name="Description"
-                MaxWidth="460"
-                Access="Public"
-                HorizontalExpand="True" />
+            <RichTextLabel Name="Description"
+                           MaxWidth="460"
+                           Access="Public"
+                           HorizontalExpand="True" />
 
             <Label StyleClasses="LabelKeyText" Text="{Loc 'cargo-console-order-menu-cost-label'}" />
 
@@ -22,18 +21,17 @@
 
             <Label StyleClasses="LabelKeyText" Text="{Loc 'cargo-console-order-menu-amount-label'}" />
 
-            <SpinBox
-                Name="Amount"
-                Access="Public"
-                HorizontalExpand="True"
-                Value="1" />
+            <SpinBox Name="Amount"
+                     Access="Public"
+                     HorizontalExpand="True"
+                     Value="1" />
         </GridContainer>
         <Control VerticalExpand="True" />
         <controls:Separator Margin="0,6,0,2" StyleClasses="LowDivider" />
-        <Button
-            Name="SubmitButton"
-            VerticalAlignment="Bottom"
-            Access="Public"
-            Text="{Loc 'cargo-console-order-menu-submit-button'}" />
+        <Button Name="SubmitButton"
+                VerticalAlignment="Bottom"
+                Access="Public"
+                Text="{Loc 'cargo-console-order-menu-submit-button'}" />
     </BoxContainer>
 </DefaultWindow>
+

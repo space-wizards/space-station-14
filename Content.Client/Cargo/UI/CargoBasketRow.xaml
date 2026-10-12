@@ -2,43 +2,37 @@
     <PanelContainer HorizontalExpand="True">
 
         <!--  Icon & Name  -->
-        <BoxContainer
-            Margin="4,0"
-            HorizontalExpand="True"
-            Orientation="Horizontal">
+        <BoxContainer Margin="4,0"
+                      HorizontalExpand="True"
+                      Orientation="Horizontal">
 
-            <TextureRect
-                Name="Icon"
-                Access="Public"
-                MinSize="32 32"
-                RectClipContent="True" />
+            <TextureRect Name="Icon"
+                         Access="Public"
+                         MinSize="32 32"
+                         RectClipContent="True" />
 
-            <Label
-                Name="ProductName"
-                Access="Public"
-                ClipText="True"
-                HorizontalExpand="True" />
+            <Label Name="ProductName"
+                   Access="Public"
+                   ClipText="True"
+                   HorizontalExpand="True" />
         </BoxContainer>
     </PanelContainer>
-    <SpinBox
-        Name="Amount"
-        MinWidth="100"
-        Access="Public" />
-    <BoxContainer
-        MinWidth="60"
-        HorizontalAlignment="Right"
-        Orientation="Horizontal">
+    <SpinBox Name="Amount"
+             MinWidth="100"
+             Access="Public" />
+    <BoxContainer MinWidth="60"
+                  HorizontalAlignment="Right"
+                  Orientation="Horizontal">
         <Control HorizontalExpand="True" />
-        <Label
-            Name="PointCost"
-            HorizontalAlignment="Right"
-            Access="Public"
-            Align="Right" />
+        <Label Name="PointCost"
+               HorizontalAlignment="Right"
+               Access="Public"
+               Align="Right" />
         <Control MinWidth="5" />
     </BoxContainer>
-    <Button
-        Name="Remove"
-        HorizontalAlignment="Right"
-        Access="Public"
-        Text="{Loc 'cargo-console-menu-cart-remove'}" />
+    <Button Name="Remove"
+            HorizontalAlignment="Right"
+            Access="Public"
+            Text="{Loc 'cargo-console-menu-cart-remove'}" />
 </BoxContainer>
+
