@@ -14,7 +14,7 @@ namespace Content.Server.Nuke
     {
         [Dependency] private IRobustRandom _random = default!;
         [Dependency] private ChatSystem _chatSystem = default!;
-        [Dependency] private StationSystem _station = default!;
+        [Dependency] private ServerStationSystem _station = default!;
         [Dependency] private PaperSystem _paper = default!;
         [Dependency] private FaxSystem _faxSystem = default!;
 

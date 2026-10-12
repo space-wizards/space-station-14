@@ -204,9 +204,6 @@ public sealed partial class GasTileVisibleGasOverlay : Overlay
 
                 return true;
             });
-
-        drawHandle.UseShader(null);
-        drawHandle.SetTransform(Matrix3x2.Identity);
     }
 
     private void DrawMapOverlay(

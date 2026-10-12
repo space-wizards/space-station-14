@@ -37,6 +37,9 @@ public sealed class ReclaimerLoopTest : InteractionTest
 
         var reclaimComp = Comp<MaterialReclaimerComponent>(Target);
 
+        // Put a floor tile down
+        await InteractUsing(FloorTileId);
+
         // Power the reclaimer
         await SpawnEntity(ApcId, SEntMan.GetCoordinates(TargetCoords));
         await RunTicks(1);
@@ -48,9 +51,6 @@ public sealed class ReclaimerLoopTest : InteractionTest
 
         // Check that reclaimer enabled
         Assume.That(reclaimComp.Enabled, "The reclaimer did not get or stay enabled");
-
-        // Put a floor tile down
-        await InteractUsing(FloorTileId);
 
         // Reclaimer can't reclaim materials? Job's done.
         if (!reclaimComp.ReclaimMaterials)

@@ -1,4 +1,4 @@
-﻿using Content.Shared.DeviceNetwork.Payloads;
+using Content.Shared.DeviceNetwork.Payloads;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.DeviceNetwork.Components;

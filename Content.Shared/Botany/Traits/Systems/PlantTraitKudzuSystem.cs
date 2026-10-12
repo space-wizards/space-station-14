@@ -17,7 +17,7 @@ public sealed partial class PlantTraitKudzuSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnPlantGrow(Entity<PlantTraitKudzuComponent> ent, ref PlantGrowEvent args)
     {
-        var trayUid = GetEntity(args.Tray);
+        var trayUid = args.Tray;
         if (!_trayQuery.TryComp(trayUid, out var trayComp))
             return;
 
@@ -27,7 +27,7 @@ public sealed partial class PlantTraitKudzuSystem : EntitySystem
         // Handle kudzu transformation.
         if (trayComp.WeedLevel >= ent.Comp.WeedLevelThreshold)
         {
-            EntityManager.PredictedSpawn(ent.Comp.KudzuPrototype, _transform.GetMapCoordinates(ent.Owner));
+            PredictedSpawn(ent.Comp.KudzuPrototype, _transform.GetMapCoordinates(ent.Owner));
             RemComp<PlantTraitKudzuComponent>(ent.Owner);
             _plantHolder.KillPlant(ent.Owner);
         }

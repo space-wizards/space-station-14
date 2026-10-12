@@ -1,4 +1,4 @@
-using Content.Server.Hands.Systems;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Wieldable;
 using Content.Shared.Wieldable.Components;
 
@@ -12,6 +12,8 @@ namespace Content.Server.NPC.HTN.Preconditions;
 public sealed partial class WieldedPrecondition : HTNPrecondition
 {
     [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
+    [Dependency] private SharedWieldableSystem _wieldableSystem = default!;
 
     /// <summary>
     /// The wield state to check for.
@@ -26,8 +28,7 @@ public sealed partial class WieldedPrecondition : HTNPrecondition
         if (!blackboard.TryGetValue<string>(NPCBlackboard.ActiveHand, out var activeHand, _entManager))
             return false;
 
-        var handsSystem = _entManager.System<HandsSystem>();
-        if (!handsSystem.TryGetHeldItem(owner, activeHand, out var heldEntity))
+        if (!_handsSystem.TryGetHeldItem(owner, activeHand, out var heldEntity))
             return false;
 
         if (!_entManager.TryGetComponent<WieldableComponent>(heldEntity, out var wieldable))
@@ -39,7 +40,6 @@ public sealed partial class WieldedPrecondition : HTNPrecondition
         if (wieldable.Wielded)
             return false;
 
-        var wieldableSystem = _entManager.System<SharedWieldableSystem>();
-        return wieldableSystem.CanWield((heldEntity.Value, wieldable), owner, quiet: true);
+        return _wieldableSystem.CanWield((heldEntity.Value, wieldable), owner, quiet: true);
     }
 }

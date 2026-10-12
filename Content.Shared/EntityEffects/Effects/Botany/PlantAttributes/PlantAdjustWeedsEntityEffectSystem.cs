@@ -13,7 +13,7 @@ public sealed partial class PlantAdjustWeedsEntityEffectSystem : EntityEffectSys
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantAdjustWeeds> args)
     {
-        if (!_plantTray.TryGetAlivePlant(entity.AsNullable()))
+        if (!_plantTray.HasAlivePlant(entity.AsNullable()))
             return;
 
         _plantTray.AdjustWeed(entity.AsNullable(), args.Effect.Amount);
