@@ -24,14 +24,16 @@ public sealed partial class ExpendableLightSystem : EntitySystem
     [Dependency] private SharedStackSystem _stackSystem = default!;
     [Dependency] private NameModifierSystem _nameModifier = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private EntityQuery<ItemComponent> _itemQuery;
     [Dependency] private INetManager _net = default!;
+
+    [Dependency] private EntityQuery<StackComponent> _stackQuery;
+    [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
 
     private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
 
     /// <summary>
     /// Checks if any light needs it's state updated.
-    /// </summary>	
+    /// </summary>
     public override void Update(float frameTime)
     {
         var query = EntityQueryEnumerator<ExpendableLightComponent>();
@@ -44,14 +46,14 @@ public sealed partial class ExpendableLightSystem : EntitySystem
 
     /// <summary>
     /// Light refueling logic
-    /// </summary>	
+    /// </summary>
     [SubscribeLocalEvent]
     private void OnInteractUsing(Entity<ExpendableLightComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
             return;
 
-        if (!TryComp(args.Used, out StackComponent? stack))
+        if (!_stackQuery.TryComp(args.Used, out var stack))
             return;
 
         if (stack.StackTypeId != ent.Comp.RefuelMaterialID)
@@ -71,6 +73,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
             case ExpendableLightState.Unlit:
                 if (ent.Comp.GlowDuration + ent.Comp.RefuelMaterialTime >= ent.Comp.RefuelMaximumDuration) // light cannot hold more fuel
                     return;
+
                 ent.Comp.GlowDuration += ent.Comp.RefuelMaterialTime;
                 break;
 
@@ -98,7 +101,6 @@ public sealed partial class ExpendableLightSystem : EntitySystem
         Dirty(ent);
         _stackSystem.ReduceCount((args.Used, stack), 1);
         args.Handled = true;
-
     }
 
     [SubscribeLocalEvent]
@@ -111,10 +113,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnExpLightStartup(Entity<ExpendableLightComponent> ent, ref ComponentStartup args)
     {
-        if (TryComp<ItemComponent>(ent, out var item))
-        {
-            _item.SetHeldPrefix(ent, "unlit", component: item);
-        }
+        _item.SetHeldPrefix(ent, "unlit");
     }
 
     [SubscribeLocalEvent]
@@ -154,24 +153,19 @@ public sealed partial class ExpendableLightSystem : EntitySystem
 
     /// <summary>
     /// Enables the light if it is not active. Once active it cannot be turned off.
-    /// </summary>	   
+    /// </summary>
     public bool TryActivate(Entity<ExpendableLightComponent> ent, EntityUid user)
     {
-        var component = ent.Comp;
-        if (component.Activated || component.CurrentState != ExpendableLightState.Unlit)
+        if (ent.Comp.Activated || ent.Comp.CurrentState != ExpendableLightState.Unlit)
             return true;
 
-        if (_itemQuery.TryComp(ent, out var item))
-        {
-            _item.SetHeldPrefix(ent, "lit", component: item);
-        }
+        _item.SetHeldPrefix(ent, "lit");
 
         var ignite = new IgnitionEvent(true);
         RaiseLocalEvent(ent, ref ignite);
 
-        component.CurrentState = ExpendableLightState.Lit;
-
-        component.StateExpiryTime = _timing.CurTime + component.GlowDuration;
+        ent.Comp.CurrentState = ExpendableLightState.Lit;
+        ent.Comp.StateExpiryTime = _timing.CurTime + ent.Comp.GlowDuration;
 
         PlayIgniteSound(ent, user);
         UpdateVisualizer(ent);
@@ -181,25 +175,22 @@ public sealed partial class ExpendableLightSystem : EntitySystem
 
     private void UpdateLight(Entity<ExpendableLightComponent> ent)
     {
-        var component = ent.Comp;
-
-        if (component.StateExpiryTime == TimeSpan.Zero || _timing.CurTime < component.StateExpiryTime) // Checks if any timer is expired
+        if (ent.Comp.StateExpiryTime == TimeSpan.Zero || _timing.CurTime < ent.Comp.StateExpiryTime) // Checks if any timer is expired
             return;
 
-        switch (component.CurrentState) // State change time
+        switch (ent.Comp.CurrentState) // State change time
         {
             case ExpendableLightState.Lit:
-                component.CurrentState = ExpendableLightState.Fading;
+                ent.Comp.CurrentState = ExpendableLightState.Fading;
+                ent.Comp.StateExpiryTime = _timing.CurTime + ent.Comp.FadeOutDuration;
 
-                component.StateExpiryTime = _timing.CurTime + component.FadeOutDuration;
                 UpdateVisualizer(ent);
-                Dirty(ent);
                 break;
 
             case ExpendableLightState.Fading:
             default:
-                component.CurrentState = ExpendableLightState.Dead;
-                component.StateExpiryTime = TimeSpan.Zero;
+                ent.Comp.CurrentState = ExpendableLightState.Dead;
+                ent.Comp.StateExpiryTime = TimeSpan.Zero;
 
                 _nameModifier.RefreshNameModifiers(ent.Owner);
                 _tagSystem.AddTag(ent, TrashTag);
@@ -207,32 +198,28 @@ public sealed partial class ExpendableLightSystem : EntitySystem
                 PlayDieOutSound(ent);
                 UpdateVisualizer(ent);
 
-                if (TryComp<ItemComponent>(ent, out var item))
-                {
-                    _item.SetHeldPrefix(ent, "unlit", component: item);
-                }
-                Dirty(ent);
+                _item.SetHeldPrefix(ent, "unlit");
                 break;
         }
+
+        Dirty(ent);
     }
 
     private void UpdateVisualizer(Entity<ExpendableLightComponent> ent)
     {
-        var component = ent.Comp;
-
-        if (!TryComp<AppearanceComponent>(ent, out var appearance))
+        if (!_appearanceQuery.TryComp(ent, out var appearance))
             return;
 
-        _appearance.SetData(ent, ExpendableLightVisuals.State, component.CurrentState, appearance);
+        _appearance.SetData(ent, ExpendableLightVisuals.State, ent.Comp.CurrentState, appearance);
 
-        switch (component.CurrentState)
+        switch (ent.Comp.CurrentState)
         {
             case ExpendableLightState.Lit:
-                _appearance.SetData(ent, ExpendableLightVisuals.Behavior, component.TurnOnBehaviourID, appearance);
+                _appearance.SetData(ent, ExpendableLightVisuals.Behavior, ent.Comp.TurnOnBehaviourID, appearance);
                 break;
 
             case ExpendableLightState.Fading:
-                _appearance.SetData(ent, ExpendableLightVisuals.Behavior, component.FadeOutBehaviourID, appearance);
+                _appearance.SetData(ent, ExpendableLightVisuals.Behavior, ent.Comp.FadeOutBehaviourID, appearance);
                 break;
 
             case ExpendableLightState.Dead:
@@ -245,22 +232,21 @@ public sealed partial class ExpendableLightSystem : EntitySystem
 
     private void PlayDieOutSound(Entity<ExpendableLightComponent> ent)
     {
-        var component = ent.Comp;
         if (_net.IsServer)
-            _audio.PlayPvs(component.DieSound, ent);
-        component.PlayingStream = _audio.Stop(component.PlayingStream);
+            _audio.PlayPvs(ent.Comp.DieSound, ent);
+
+        ent.Comp.PlayingStream = _audio.Stop(ent.Comp.PlayingStream);
     }
 
     private void PlayIgniteSound(Entity<ExpendableLightComponent> ent, EntityUid user)
     {
-        var component = ent.Comp;
-        _audio.PlayPredicted(component.LitSound, ent, user);
+        _audio.PlayPredicted(ent.Comp.LitSound, ent, user);
 
-        if (component.PlayingStream == null && component.LoopedSound != null)
-        {
-            var audioParams = component.LoopedSound.Params.WithLoop(true);
-            var stream = _audio.PlayPredicted(component.LoopedSound, ent, user, audioParams);
-            component.PlayingStream = stream?.Entity;
-        }
+        if (ent.Comp.PlayingStream != null || ent.Comp.LoopedSound == null)
+            return;
+
+        var audioParams = ent.Comp.LoopedSound.Params.WithLoop(true);
+        var stream = _audio.PlayPredicted(ent.Comp.LoopedSound, ent, user, audioParams);
+        ent.Comp.PlayingStream = stream?.Entity;
     }
 }
