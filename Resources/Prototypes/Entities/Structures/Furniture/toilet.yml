@@ -241,7 +241,8 @@
   suffix: Dirty Water, StealTarget
   components:
   - type: StealTarget
-    stealGroup: ToiletGoldenDirtyWater
+    stealGroup:
+    - ToiletGoldenDirtyWater
   - type: Solution
     solution:
         reagents:

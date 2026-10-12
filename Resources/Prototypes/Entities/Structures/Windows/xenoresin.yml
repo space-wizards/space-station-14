@@ -9,4 +9,7 @@
   - type: Icon
     sprite: Structures/Windows/exo-resin.rsi
   - type: IconSmooth
-    base: xwindow
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: xwindow

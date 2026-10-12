@@ -13,8 +13,6 @@ namespace Content.Shared.Construction.Steps
         [DataField("material", required:true)]
         public ProtoId<StackPrototype> MaterialPrototypeId { get; private set; }
 
-        [DataField] public int Amount { get; private set; } = 1;
-
         public override void DoExamine(ExaminedEvent examinedEvent)
         {
             var material = IoCManager.Resolve<IPrototypeManager>().Index(MaterialPrototypeId);

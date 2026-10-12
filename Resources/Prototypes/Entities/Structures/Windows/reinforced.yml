@@ -32,7 +32,10 @@
             min: 1
             max: 2
   - type: IconSmooth
-    base: rwindow
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: rwindow
   - type: Construction
     graph: Window
     node: reinforcedWindow
@@ -130,15 +133,15 @@
   components:
   - type: Sprite
     sprite: Structures/Windows/window-base-diagonal-reinf.rsi
-    state: state0
   - type: Tag
     tags:
     - Diagonal
     - Window
   - type: IconSmooth
-    mode: Diagonal
-    key: walls
-    base: state
+    states:
+    - !type:DiagonalSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: state
   - type: Icon
     sprite: Structures/Windows/window-base-diagonal-reinf.rsi
     state: state0

@@ -132,7 +132,7 @@ public sealed partial class ParcelWrappingSystem
         // Consume a `use` on the wrapper, and delete the wrapper if it's empty.
         _charges.TryUseCharges(wrapper.Owner, 1);
         if (_charges.IsEmpty(wrapper.Owner))
-            PredictedQueueDel(wrapper);
+            QueueDel(wrapper);
 
         // Play a wrapping sound.
         _audio.PlayPredicted(wrapper.Comp.WrapSound, target, user);

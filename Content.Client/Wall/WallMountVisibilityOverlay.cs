@@ -148,7 +148,7 @@ public sealed partial class WallMountVisibilityOverlay : Overlay
 
             viewportState.SeenThisFrame.Add(uid);
 
-            var targetAlpha = ComputeTargetAlpha(wallmount, xform, eye, matrix);
+            var targetAlpha = ComputeTargetAlpha(uid, wallmount, xform, eye, matrix);
             UpdateFadeState(uid, originalAlpha, targetAlpha, fadeStep, viewportState);
         }
     }
@@ -156,7 +156,7 @@ public sealed partial class WallMountVisibilityOverlay : Overlay
     /// <summary>
     /// Returns 1 if the entity is within its facing arc relative to the eye, 0 otherwise.
     /// </summary>
-    private float ComputeTargetAlpha(WallMountComponent wallmount, TransformComponent xform, IEye eye, Matrix3x2 matrix)
+    private float ComputeTargetAlpha(EntityUid uid, WallMountComponent wallmount, TransformComponent xform, IEye eye, Matrix3x2 matrix)
     {
         if (!wallmount.DirectionalVisibility || wallmount.Arc >= Math.Tau)
             return 1f;
@@ -168,7 +168,7 @@ public sealed partial class WallMountVisibilityOverlay : Overlay
         if (!_visibility.IsTileBlocked((gridUid, grid), tile))
             return 1f;
 
-        var (pos, rot) = _xform.GetWorldPositionRotation(xform);
+        var (pos, rot) = _xform.GetRenderWorldPositionRotation((uid, xform));
         var facingAngle = rot + eye.Rotation + wallmount.Direction;
 
         var entityScreenPos = Vector2.Transform(pos, matrix);

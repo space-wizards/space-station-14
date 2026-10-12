@@ -101,7 +101,8 @@
   - type: PirateAccent
     # not putting a BlockMovement component here cause that's funny.
   - type: StealTarget
-    stealGroup: CaptainSword
+    stealGroup:
+    - CaptainSword
 
 - type: entity
   name: katana

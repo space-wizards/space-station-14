@@ -222,6 +222,20 @@
     verbText: refined-butchered-verb-name
     tooltipQualityHint: tool-refinable-component-hint-butchering
 
+- type: entity
+  abstract: true
+  id: BaseScrewingRefinable
+  components:
+  - type: ToolRefinable
+    qualityNeeded: Screwing
+    verbText: refined-screw-verb-name
+    verbIcon: Interface/VerbIcons/screwdriver.png
+    verbDefaultTooltip: refined-screwed-verb-message-default
+    toolMissingQualityTooltip: refined-screwed-verb-message-tool
+    popupForUser: refined-screwed-success
+    popupForOther: refined-screwed-success-others
+    tooltipQualityHint: tool-refinable-component-hint-screwing
+
 # For entities with a hidden container slot that can be opened with a tool
 - type: entity
   abstract: true
