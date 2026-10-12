@@ -1,7 +1,7 @@
 - type: itemStatus
   id: AmmoCounter
   priority: 3
-  whitelist: [] # Takes up too much space to show other statuses
+  whitelist: []
 
 - type: itemStatus
   id: Anomaly
@@ -28,7 +28,7 @@
 - type: itemStatus
   id: Flashlight
   priority: 2
-  whitelist: [] # Takes up too much space to show other statuses
+  whitelist: []
 
 - type: itemStatus
   id: GasTank
@@ -53,6 +53,8 @@
 
 - type: itemStatus
   id: Mop
+  priority: 2
+  whitelist: []
 
 - type: itemStatus
   id: MultipleTool
