@@ -1,6 +1,6 @@
 - type: entity
   id: BiomassReclaimer
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   name: biomass reclaimer
   description: Reclaims biomass from corpses. Gruesome.
   placement:
@@ -24,3 +24,11 @@
   - type: GuideHelp
     guides:
     - Cloning
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 175
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak

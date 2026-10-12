@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Administration.BanList;
 using Content.Server.Database;
 using Content.Server.EUI;

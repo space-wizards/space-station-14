@@ -35,14 +35,13 @@ public sealed class PowerStateTest : GameTest
         var pair = Pair;
         var server = pair.Server;
 
-        var mapManager = server.ResolveDependency<IMapManager>();
         var entManager = server.ResolveDependency<IEntityManager>();
         var mapSys = entManager.System<SharedMapSystem>();
 
         await server.WaitAssertion(() =>
         {
             mapSys.CreateMap(out var mapId);
-            var grid = mapManager.CreateGridEntity(mapId);
+            var grid = mapSys.CreateGridEntity(mapId);
 
             mapSys.SetTile(grid, Vector2i.Zero, new Tile(1));
 
@@ -77,14 +76,13 @@ public sealed class PowerStateTest : GameTest
         var pair = Pair;
         var server = pair.Server;
 
-        var mapManager = server.ResolveDependency<IMapManager>();
         var entManager = server.ResolveDependency<IEntityManager>();
         var mapSys = entManager.System<SharedMapSystem>();
 
         await server.WaitAssertion(() =>
         {
             mapSys.CreateMap(out var mapId);
-            var grid = mapManager.CreateGridEntity(mapId);
+            var grid = mapSys.CreateGridEntity(mapId);
 
             mapSys.SetTile(grid, Vector2i.Zero, new Tile(1));
 
@@ -128,14 +126,13 @@ public sealed class PowerStateTest : GameTest
         var pair = Pair;
         var server = pair.Server;
 
-        var mapManager = server.ResolveDependency<IMapManager>();
         var entManager = server.ResolveDependency<IEntityManager>();
         var mapSys = entManager.System<SharedMapSystem>();
 
         await server.WaitAssertion(() =>
         {
             mapSys.CreateMap(out var mapId);
-            var grid = mapManager.CreateGridEntity(mapId);
+            var grid = mapSys.CreateGridEntity(mapId);
 
             mapSys.SetTile(grid, Vector2i.Zero, new Tile(1));
 

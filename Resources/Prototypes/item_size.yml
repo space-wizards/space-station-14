@@ -38,10 +38,18 @@
   defaultShape:
   - 0,0,3,3
 
-# Picture furry gf
+# Items that are so big they only fit in bluespace storages
 - type: itemSize
   id: Ginormous
   weight: 32
   name: item-component-size-Ginormous
   defaultShape:
   - 0,0,5,5
+
+# Picture furry gf
+- type: itemSize
+  id: Colossal
+  weight: 64
+  name: item-component-size-Colossal
+  defaultShape:
+  - 0,0,6,5

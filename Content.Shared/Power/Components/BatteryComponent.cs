@@ -74,6 +74,12 @@ public sealed partial class BatteryComponent : Component
     /// </remarks>
     [ViewVariables, AutoNetworkedField]
     public BatteryState State = BatteryState.Neither;
+
+    /// <summary>
+    /// If it should show the battery percentage in the item status.
+    /// </summary>
+    [DataField]
+    public bool ShowItemStatus = true;
 }
 
 /// <summary>

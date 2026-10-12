@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration;
+using Content.Shared.Administration;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;

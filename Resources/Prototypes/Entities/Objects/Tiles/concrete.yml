@@ -1,0 +1,44 @@
+# Concrete
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemConcrete
+  name: concrete tile
+  components:
+  - type: Sprite
+    state: concrete
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorConcrete
+  - type: Stack
+    stackType: FloorTileConcrete
+
+- type: entity
+  name: concrete mono tile
+  parent: FloorTileItemConcrete
+  id: FloorTileItemConcreteMono
+  components:
+  - type: Sprite
+    state: concrete-mono
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorConcreteMono
+  - type: Stack
+    stackType: FloorTileConcreteMono
+
+- type: entity
+  name: concrete smooth
+  parent: FloorTileItemConcrete
+  id: FloorTileItemConcreteSmooth
+  components:
+  - type: Sprite
+    state: concrete-smooth
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorConcreteSmooth
+  - type: Stack
+    stackType: FloorTileConcreteSmooth

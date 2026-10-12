@@ -1,4 +1,4 @@
-﻿using Content.Client.Stylesheets.SheetletConfigs;
+using Content.Client.Stylesheets.SheetletConfigs;
 using Content.Client.Stylesheets.Stylesheets;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;

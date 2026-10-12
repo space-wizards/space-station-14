@@ -9,7 +9,6 @@ namespace Content.Server.Emoting.Systems;
 
 public sealed partial class BodyEmotesSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private ChatSystem _chat = default!;
 
     public override void Initialize()
@@ -37,7 +36,7 @@ public sealed partial class BodyEmotesSystem : EntitySystem
         if (!TryComp(uid, out HandsComponent? hands) || hands.Count <= 0)
             return false;
 
-        if (!_proto.Resolve(component.SoundsId, out var sounds))
+        if (!ProtoMan.Resolve(component.SoundsId, out var sounds))
             return false;
 
         return _chat.TryPlayEmoteSound(uid, sounds, emote);

@@ -5,7 +5,6 @@ using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Thief;
 using Robust.Server.GameObjects;
 using Robust.Server.Audio;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Thief.Systems;
 
@@ -16,7 +15,6 @@ namespace Content.Server.Thief.Systems;
 public sealed partial class ThiefUndeterminedBackpackSystem : EntitySystem
 {
     [Dependency] private AudioSystem _audio = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private SharedStorageSystem _storage = default!;
@@ -47,7 +45,7 @@ public sealed partial class ThiefUndeterminedBackpackSystem : EntitySystem
 
         foreach (var i in backpack.Comp.SelectedSets)
         {
-            var set = _proto.Index(backpack.Comp.PossibleSets[i]);
+            var set = ProtoMan.Index(backpack.Comp.PossibleSets[i]);
             foreach (var item in set.Content)
             {
                 var ent = Spawn(item, _transform.GetMapCoordinates(backpack.Owner));
@@ -86,7 +84,7 @@ public sealed partial class ThiefUndeterminedBackpackSystem : EntitySystem
 
         for (int i = 0; i < component.PossibleSets.Count; i++)
         {
-            var set = _proto.Index(component.PossibleSets[i]);
+            var set = ProtoMan.Index(component.PossibleSets[i]);
             var selected = component.SelectedSets.Contains(i);
             var info = new ThiefBackpackSetInfo(
                 set.Name,
