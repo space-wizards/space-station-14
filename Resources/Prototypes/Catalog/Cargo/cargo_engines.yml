@@ -69,7 +69,7 @@
   icon:
     sprite: Structures/Power/Generation/PA/control_box.rsi
     state: completed
-  products:
+  product:
   - MachineParticleAcceleratorEndCapCircuitboard
   - MachineParticleAcceleratorEmitterStarboardCircuitboard
   - MachineParticleAcceleratorEmitterForeCircuitboard

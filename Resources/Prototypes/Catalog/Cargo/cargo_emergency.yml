@@ -3,7 +3,7 @@
   icon:
     sprite: Clothing/Head/Helmets/bombsuit.rsi
     state: icon
-  products:
+  product:
     - ClothingOuterSuitBomb
     - ClothingHeadHelmetBombSuit
   container: CrateSecgear
@@ -104,7 +104,7 @@
   icon:
     sprite: Clothing/Head/Hoods/Bio/general.rsi
     state: icon
-  products:
+  product:
   - ClothingOuterBioGeneral
   - ClothingHeadHatHoodBioGeneral
   container: CratePlastic

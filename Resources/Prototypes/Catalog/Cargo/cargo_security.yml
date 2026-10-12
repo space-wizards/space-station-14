@@ -102,7 +102,7 @@
   icon:
     sprite: Clothing/Head/Hoods/Bio/security.rsi
     state: icon
-  products:
+  product:
   - ClothingOuterBioSecurity
   - ClothingHeadHatHoodBioSecurity
   container: CrateSecgear

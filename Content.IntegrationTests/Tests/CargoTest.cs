@@ -54,13 +54,13 @@ public sealed class CargoTest : GameTest
                     if (Ignored.Contains(proto.ID))
                         continue;
 
-                    if (proto.SpawnList.Count == 0)
+                    if (proto.Product.Count() == 0)
                     {
                         Assert.Fail($"CargoProductPrototype {proto.ID} has no products defined.");
                         continue;
                     }
                     List<CargoOrderItemData> basket = [new CargoOrderItemData(proto.ID, 1)];
-                    var entProto = SProtoMan.Index<EntityPrototype>(proto.SpawnList.First());
+                    var entProto = SProtoMan.Index<EntityPrototype>(proto.Product.First());
                     double price = 0;
                     if (entProto.TryGetComponent<EntityTableContainerFillComponent>(out var fill, _sCompFact))
                     {
@@ -112,7 +112,7 @@ public sealed class CargoTest : GameTest
             {
                 foreach (var proto in SProtoMan.EnumeratePrototypes<CargoProductPrototype>())
                 {
-                    if (proto.SpawnList.Count == 0)
+                    if (proto.Product.Count() == 0)
                     {
                         Assert.Fail($"CargoProductPrototype {proto.ID} has no products defined.");
                         continue;

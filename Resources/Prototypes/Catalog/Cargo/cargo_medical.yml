@@ -111,7 +111,7 @@
   icon:
     sprite: Clothing/Head/Hoods/Bio/bio.rsi
     state: icon
-  products:
+  product:
   - ClothingOuterBioVirology
   - ClothingHeadHatHoodBioVirology
   container: CrateMedicalSecure

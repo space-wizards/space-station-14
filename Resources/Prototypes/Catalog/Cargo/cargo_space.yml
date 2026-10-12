@@ -3,7 +3,7 @@
   icon:
     sprite: Clothing/Head/Helmets/eva.rsi
     state: icon
-  products:
+  product:
   - ClothingOuterHardsuitEVA
   - ClothingHeadHelmetEVA
   container: CrateCommandSecure
