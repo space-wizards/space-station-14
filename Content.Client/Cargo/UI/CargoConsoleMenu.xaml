@@ -1,26 +1,23 @@
-<controls:FancyWindow
-    xmlns="https://spacestation14.io"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-    MinSize="600 450"
-    SetSize="995 650">
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                      MinSize="600 450"
+                      SetSize="995 650">
 
     <!--  Main Container  -->
     <BoxContainer Orientation="Vertical" VerticalExpand="True">
 
         <TabContainer Name="TabContainer" VerticalExpand="True">
             <!--  Market Tab  -->
-            <BoxContainer
-                Margin="8,4,8,6"
-                Orientation="Horizontal"
-                VerticalExpand="True">
+            <BoxContainer Margin="8,4,8,6"
+                          Orientation="Horizontal"
+                          VerticalExpand="True">
 
                 <!--  Left Part  -->
-                <BoxContainer
-                    Margin="0,0,8,0"
-                    HorizontalExpand="True"
-                    Orientation="Vertical"
-                    SeparationOverride="4">
+                <BoxContainer Margin="0,0,8,0"
+                              HorizontalExpand="True"
+                              Orientation="Vertical"
+                              SeparationOverride="4">
 
                     <!--  Info  -->
                     <BoxContainer Orientation="Vertical">
@@ -29,42 +26,36 @@
                             <!--  Account  -->
                             <Label StyleClasses="LabelKeyText" Text="{Loc 'cargo-console-menu-account-name-label'}" />
 
-                            <controls:Separator
-                                Margin="0,-2"
-                                Orientation="Vertical"
-                                StyleClasses="LowDivider" />
+                            <controls:Separator Margin="0,-2"
+                                                Orientation="Vertical"
+                                                StyleClasses="LowDivider" />
 
-                            <RichTextLabel
-                                Name="AccountNameLabel"
-                                Margin="4,0"
-                                Text="{Loc 'cargo-console-menu-account-name-none-text'}" />
+                            <RichTextLabel Name="AccountNameLabel"
+                                           Margin="4,0"
+                                           Text="{Loc 'cargo-console-menu-account-name-none-text'}" />
 
                             <!--  Balance  -->
                             <Label StyleClasses="LabelKeyText" Text="{Loc 'cargo-console-menu-points-label'}" />
 
-                            <controls:Separator
-                                Margin="0,-2"
-                                Orientation="Vertical"
-                                StyleClasses="LowDivider" />
+                            <controls:Separator Margin="0,-2"
+                                                Orientation="Vertical"
+                                                StyleClasses="LowDivider" />
 
-                            <RichTextLabel
-                                Name="PointsLabel"
-                                Margin="4,0"
-                                Text="$0" />
+                            <RichTextLabel Name="PointsLabel"
+                                           Margin="4,0"
+                                           Text="$0" />
 
                             <!--  Orders Count/Capacity  -->
                             <Label StyleClasses="LabelKeyText" Text="{Loc 'cargo-console-menu-order-capacity-label'}" />
 
-                            <controls:Separator
-                                Margin="0,-2,0,-1"
-                                Orientation="Vertical"
-                                StyleClasses="LowDivider" />
+                            <controls:Separator Margin="0,-2,0,-1"
+                                                Orientation="Vertical"
+                                                StyleClasses="LowDivider" />
 
-                            <Label
-                                Name="ShuttleCapacityLabel"
-                                Margin="4,0"
-                                Access="Public"
-                                Text="0/0" />
+                            <Label Name="ShuttleCapacityLabel"
+                                   Margin="4,0"
+                                   Access="Public"
+                                   Text="0/0" />
                         </GridContainer>
 
                         <controls:Separator Margin="0,4.5,-8,0" StyleClasses="LowDivider" />
@@ -73,56 +64,49 @@
                     <!--  Search  -->
                     <BoxContainer Margin="0,2,0,0" Orientation="Horizontal">
 
-                        <LineEdit
-                            Name="SearchBar"
-                            HorizontalExpand="True"
-                            PlaceHolder="{Loc 'cargo-console-menu-search-bar-placeholder'}" />
+                        <LineEdit Name="SearchBar"
+                                  HorizontalExpand="True"
+                                  PlaceHolder="{Loc 'cargo-console-menu-search-bar-placeholder'}" />
 
                         <OptionButton Name="Categories" Prefix="{Loc 'cargo-console-menu-categories-label'}" />
                     </BoxContainer>
 
                     <!--  Product list  -->
-                    <ScrollContainer
-                        HScrollEnabled="False"
-                        HorizontalExpand="False"
-                        VerticalExpand="True">
+                    <ScrollContainer HScrollEnabled="False"
+                                     HorizontalExpand="False"
+                                     VerticalExpand="True">
 
-                        <BoxContainer
-                            Name="Products"
-                            HorizontalExpand="True"
-                            Orientation="Vertical"
-                            VerticalExpand="True">
+                        <BoxContainer Name="Products"
+                                      HorizontalExpand="True"
+                                      Orientation="Vertical"
+                                      VerticalExpand="True">
 
                             <!--  Products get added here by code  -->
                         </BoxContainer>
                     </ScrollContainer>
                 </BoxContainer>
 
-                <controls:Separator
-                    MinHeight="2"
-                    Margin="0,-8"
-                    Orientation="Vertical"
-                    StyleClasses="LowDivider" />
+                <controls:Separator MinHeight="2"
+                                    Margin="0,-8"
+                                    Orientation="Vertical"
+                                    StyleClasses="LowDivider" />
 
                 <!--  Right Part  -->
-                <BoxContainer
-                    Name="RightPart"
-                    HorizontalExpand="True"
-                    Orientation="Vertical"
-                    SizeFlagsStretchRatio="0.8">
+                <BoxContainer Name="RightPart"
+                              HorizontalExpand="True"
+                              Orientation="Vertical"
+                              SizeFlagsStretchRatio="0.8">
 
                     <!--  Basket Part  -->
-                    <BoxContainer
-                        Orientation="Vertical"
-                        SizeFlagsStretchRatio="2"
-                        VerticalExpand="True">
+                    <BoxContainer Orientation="Vertical"
+                                  SizeFlagsStretchRatio="2"
+                                  VerticalExpand="True">
 
                         <!--  Title  -->
                         <controls:StripeBack>
-                            <Label
-                                Margin="4"
-                                HorizontalAlignment="Center"
-                                Text="{Loc 'cargo-console-menu-cart-label'}" />
+                            <Label Margin="4"
+                                   HorizontalAlignment="Center"
+                                   Text="{Loc 'cargo-console-menu-cart-label'}" />
                         </controls:StripeBack>
 
                         <PanelContainer Margin="0,-4,0,0" VerticalExpand="True">
@@ -134,47 +118,41 @@
 
                             <BoxContainer Orientation="Vertical">
                                 <ScrollContainer VerticalExpand="True">
-                                    <BoxContainer
-                                        Name="Basket"
-                                        HorizontalExpand="True"
-                                        Orientation="Vertical"
-                                        VerticalExpand="True">
+                                    <BoxContainer Name="Basket"
+                                                  HorizontalExpand="True"
+                                                  Orientation="Vertical"
+                                                  VerticalExpand="True">
 
                                         <!--  Basket added here by code  -->
                                     </BoxContainer>
                                 </ScrollContainer>
-                                <BoxContainer
-                                    VerticalAlignment="Bottom"
-                                    HorizontalExpand="True"
-                                    Orientation="Vertical">
+                                <BoxContainer VerticalAlignment="Bottom"
+                                              HorizontalExpand="True"
+                                              Orientation="Vertical">
                                     <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
                                         <Control MinWidth="5" />
-                                        <Label
-                                            HorizontalAlignment="Left"
-                                            Access="Public"
-                                            Text="{Loc 'cargo-console-menu-cart-container-cost-label'}" />
+                                        <Label HorizontalAlignment="Left"
+                                               Access="Public"
+                                               Text="{Loc 'cargo-console-menu-cart-container-cost-label'}" />
                                         <Control HorizontalExpand="True" />
-                                        <Label
-                                            Name="ContainerCost"
-                                            HorizontalAlignment="Right"
-                                            Access="Public"
-                                            Align="Right"
-                                            Text="0" />
+                                        <Label Name="ContainerCost"
+                                               HorizontalAlignment="Right"
+                                               Access="Public"
+                                               Align="Right"
+                                               Text="0" />
                                         <Control MinWidth="30" />
                                     </BoxContainer>
                                     <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
                                         <Control MinWidth="5" />
-                                        <Label
-                                            HorizontalAlignment="Left"
-                                            Access="Public"
-                                            Text="{Loc 'cargo-console-menu-cart-total-label'}" />
+                                        <Label HorizontalAlignment="Left"
+                                               Access="Public"
+                                               Text="{Loc 'cargo-console-menu-cart-total-label'}" />
                                         <Control HorizontalExpand="True" />
-                                        <Label
-                                            Name="BasketTotal"
-                                            HorizontalAlignment="Right"
-                                            Access="Public"
-                                            Align="Right"
-                                            Text="0" />
+                                        <Label Name="BasketTotal"
+                                               HorizontalAlignment="Right"
+                                               Access="Public"
+                                               Align="Right"
+                                               Text="0" />
                                         <Control MinWidth="30" />
                                     </BoxContainer>
                                 </BoxContainer>
@@ -183,23 +161,24 @@
                                     <BoxContainer Orientation="Horizontal">
                                         <Control MinWidth="5" />
                                         <BoxContainer HorizontalExpand="True" Orientation="Vertical">
-                                            <Label StyleClasses="LabelKeyText" Text="{Loc 'cargo-console-order-menu-requester-label'}" />
+                                            <Label StyleClasses="LabelKeyText"
+                                                   Text="{Loc 'cargo-console-order-menu-requester-label'}" />
 
                                             <LineEdit Name="Requester" Access="Public" />
 
-                                            <Label StyleClasses="LabelKeyText" Text="{Loc 'cargo-console-order-menu-reason-label'}" />
+                                            <Label StyleClasses="LabelKeyText"
+                                                   Text="{Loc 'cargo-console-order-menu-reason-label'}" />
 
                                             <LineEdit Name="Reason" Access="Public" />
                                         </BoxContainer>
                                         <Control MinWidth="5" />
                                     </BoxContainer>
                                     <BoxContainer Margin="6">
-                                        <Button
-                                            Name="Submit"
-                                            Access="Public"
-                                            HorizontalExpand="True"
-                                            StyleClasses="OpenRight"
-                                            Text="{Loc 'cargo-console-menu-cart-submit'}" />
+                                        <Button Name="Submit"
+                                                Access="Public"
+                                                HorizontalExpand="True"
+                                                StyleClasses="OpenRight"
+                                                Text="{Loc 'cargo-console-menu-cart-submit'}" />
                                     </BoxContainer>
                                 </BoxContainer>
                             </BoxContainer>
@@ -208,24 +187,21 @@
                 </BoxContainer>
             </BoxContainer>
             <!--  Orders Tab  -->
-            <BoxContainer
-                Name="OrdersTab"
-                Margin="8,4,8,6"
-                Orientation="Horizontal"
-                VerticalExpand="True">
+            <BoxContainer Name="OrdersTab"
+                          Margin="8,4,8,6"
+                          Orientation="Horizontal"
+                          VerticalExpand="True">
                 <BoxContainer HorizontalExpand="True" Orientation="Vertical">
                     <!--  Requests Part  -->
-                    <BoxContainer
-                        Orientation="Vertical"
-                        SizeFlagsStretchRatio="2"
-                        VerticalExpand="True">
+                    <BoxContainer Orientation="Vertical"
+                                  SizeFlagsStretchRatio="2"
+                                  VerticalExpand="True">
 
                         <!--  Title  -->
                         <controls:StripeBack>
-                            <Label
-                                Margin="4"
-                                HorizontalAlignment="Center"
-                                Text="{Loc 'cargo-console-menu-orders-label'}" />
+                            <Label Margin="4"
+                                   HorizontalAlignment="Center"
+                                   Text="{Loc 'cargo-console-menu-orders-label'}" />
                         </controls:StripeBack>
 
                         <PanelContainer Margin="0,-4,0,0" VerticalExpand="True">
@@ -239,13 +215,12 @@
                             <ScrollContainer VerticalExpand="True">
                                 <BoxContainer Orientation="Vertical">
                                     <BoxContainer Orientation="Horizontal">
-                                        <BoxContainer
-                                            Name="Orders"
-                                            Margin="10,5"
-                                            HorizontalExpand="True"
-                                            Orientation="Vertical"
-                                            SeparationOverride="5"
-                                            VerticalExpand="True">
+                                        <BoxContainer Name="Orders"
+                                                      Margin="10,5"
+                                                      HorizontalExpand="True"
+                                                      Orientation="Vertical"
+                                                      SeparationOverride="5"
+                                                      VerticalExpand="True">
 
                                             <!--  Requests are added here by code  -->
                                         </BoxContainer>
@@ -258,18 +233,16 @@
                 <PanelContainer StyleClasses="LowDivider" />
                 <BoxContainer HorizontalExpand="True" Orientation="Vertical">
                     <!--  History Part  -->
-                    <BoxContainer
-                        Orientation="Vertical"
-                        SeparationOverride="3"
-                        SizeFlagsStretchRatio="2"
-                        VerticalExpand="True">
+                    <BoxContainer Orientation="Vertical"
+                                  SeparationOverride="3"
+                                  SizeFlagsStretchRatio="2"
+                                  VerticalExpand="True">
 
                         <!--  Title  -->
                         <controls:StripeBack>
-                            <Label
-                                Margin="4"
-                                HorizontalAlignment="Center"
-                                Text="{Loc 'cargo-console-menu-orders-history-label'}" />
+                            <Label Margin="4"
+                                   HorizontalAlignment="Center"
+                                   Text="{Loc 'cargo-console-menu-orders-history-label'}" />
                         </controls:StripeBack>
 
                         <PanelContainer Margin="0,-4,0,0" VerticalExpand="True">
@@ -282,13 +255,12 @@
                             <ScrollContainer VerticalExpand="True">
                                 <BoxContainer Orientation="Vertical">
                                     <BoxContainer Orientation="Horizontal">
-                                        <BoxContainer
-                                            Name="OrderHistory"
-                                            Margin="10,5"
-                                            HorizontalExpand="True"
-                                            Orientation="Vertical"
-                                            SeparationOverride="6"
-                                            VerticalExpand="True">
+                                        <BoxContainer Name="OrderHistory"
+                                                      Margin="10,5"
+                                                      HorizontalExpand="True"
+                                                      Orientation="Vertical"
+                                                      SeparationOverride="6"
+                                                      VerticalExpand="True">
 
                                             <!--  Old are added here by code  -->
                                         </BoxContainer>
@@ -304,7 +276,8 @@
             <BoxContainer Margin="15" Orientation="Vertical">
                 <BoxContainer Orientation="Horizontal">
                     <RichTextLabel Name="TransferLimitLabel" Margin="0,0,15,0" />
-                    <RichTextLabel Name="UnlimitedNotifier" Text="{Loc 'cargo-console-menu-account-action-transfer-limit-unlimited-notifier'}" />
+                    <RichTextLabel Name="UnlimitedNotifier"
+                                   Text="{Loc 'cargo-console-menu-account-action-transfer-limit-unlimited-notifier'}" />
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal">
                     <RichTextLabel Margin="0,0,10,0" Text="{Loc 'cargo-console-menu-account-action-select'}" />
@@ -313,26 +286,23 @@
                 <Control MinHeight="5" />
                 <BoxContainer Orientation="Horizontal">
                     <RichTextLabel Name="AmountText" Text="{Loc 'cargo-console-menu-account-action-amount'}" />
-                    <SpinBox
-                        Name="TransferSpinBox"
-                        MinWidth="100"
-                        Value="10" />
+                    <SpinBox Name="TransferSpinBox"
+                             MinWidth="100"
+                             Value="10" />
                 </BoxContainer>
                 <Control MinHeight="15" />
                 <BoxContainer HorizontalAlignment="Center">
-                    <Button
-                        Name="AccountActionButton"
-                        MinWidth="120"
-                        MinHeight="45"
-                        Text="{Loc 'cargo-console-menu-account-action-button'}" />
+                    <Button Name="AccountActionButton"
+                            MinWidth="120"
+                            MinHeight="45"
+                            Text="{Loc 'cargo-console-menu-account-action-button'}" />
                 </BoxContainer>
                 <Control VerticalExpand="True" />
                 <BoxContainer HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                    <Button
-                        Name="AccountLimitToggleButton"
-                        MinWidth="120"
-                        MinHeight="45"
-                        Text="{Loc 'cargo-console-menu-toggle-account-lock-button'}" />
+                    <Button Name="AccountLimitToggleButton"
+                            MinWidth="120"
+                            MinHeight="45"
+                            Text="{Loc 'cargo-console-menu-toggle-account-lock-button'}" />
                 </BoxContainer>
             </BoxContainer>
         </TabContainer>
@@ -343,29 +313,27 @@
 
             <controls:Separator StyleClasses="LowDivider" />
 
-            <BoxContainer
-                Margin="12,0,6,2"
-                VerticalAlignment="Bottom"
-                Orientation="Horizontal">
+            <BoxContainer Margin="12,0,6,2"
+                          VerticalAlignment="Bottom"
+                          Orientation="Horizontal">
 
                 <!--  Footer title  -->
                 <Label StyleClasses="WindowFooterText" Text="{Loc 'cargo-console-menu-flavor-left'}" />
 
                 <!--  Version  -->
-                <Label
-                    Margin="0,0,4,0"
-                    HorizontalAlignment="Right"
-                    HorizontalExpand="True"
-                    StyleClasses="WindowFooterText"
-                    Text="{Loc 'cargo-console-menu-flavor-right'}" />
+                <Label Margin="0,0,4,0"
+                       HorizontalAlignment="Right"
+                       HorizontalExpand="True"
+                       StyleClasses="WindowFooterText"
+                       Text="{Loc 'cargo-console-menu-flavor-right'}" />
 
-                <TextureRect
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    SetSize="19 19"
-                    Stretch="KeepAspectCentered"
-                    StyleClasses="NTLogoDark" />
+                <TextureRect HorizontalAlignment="Right"
+                             VerticalAlignment="Center"
+                             SetSize="19 19"
+                             Stretch="KeepAspectCentered"
+                             StyleClasses="NTLogoDark" />
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>
+
