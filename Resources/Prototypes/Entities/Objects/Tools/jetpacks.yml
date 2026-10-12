@@ -34,7 +34,7 @@
   - type: Jetpack
     moleUsage: 0.00085
   - type: ParticleEmitter
-    effectPrototype: JetpackEffect
+    effectPrototype: JetpackEffectBlue
   - type: Appearance
   - type: GenericVisualizer
     visuals:
