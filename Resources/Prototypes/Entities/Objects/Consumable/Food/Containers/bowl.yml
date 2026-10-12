@@ -17,9 +17,8 @@
     - map: ["enum.SolutionContainerLayers.Fill"]
       state: fill-1
       visible: false
-  - type: Solution
-    solution:
-      maxVol: 50
+  - type: ExaminableSolution
+    solution: food
   - type: MixableSolution
     solution: food
   - type: Edible
@@ -64,6 +63,7 @@
         acts: [ "Destruction" ]
   - type: Tag
     tags:
+    - Dinnerware
     - Trash
 
 - type: entity
