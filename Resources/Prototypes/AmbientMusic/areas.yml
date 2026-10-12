@@ -1,0 +1,74 @@
+- type: ambientMusic
+  id: Morgue
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceSpooky
+  priority: 4
+  conditions:
+  - !type:NearbyComponentsCondition
+    anchored: true
+    count: 2
+    components:
+    - type: Morgue
+    range: 3
+
+- type: ambientMusic
+  id: Maintenance
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceMaintenance
+  priority: 2
+  conditions:
+  - !type:NearbyTilesPercentCondition
+    ignoreAnchored: true
+    percent: 0.25
+    tiles:
+    - Plating
+    range: 2
+
+- type: ambientMusic
+  id: Arrivals
+  sound:
+    params:
+      volume: -13
+    collection: AmbienceArrivals
+  priority: 2
+  allowRepeat: false
+  conditions:
+  - !type:NearbyComponentsCondition
+    anchored: true
+    count: 3
+    components:
+    - type: AmbientMusicMarkerArrivals
+    range: 7
+
+- type: ambientMusic
+  id: Space
+  sound:
+    params:
+      volume: -10
+    collection: AmbienceSpace
+  fadeIn: true
+  interruptable: true
+  priority: 1
+  conditions:
+  - !type:InSpaceCondition
+  - !type:GridInRangeCondition
+    inverted: true
+    range: 3
+  - !type:IsGhostCondition
+    inverted: true
+
+- type: ambientMusic
+  id: Mining
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceMining
+  fadeIn: true
+  interruptable: true
+  priority: 1
+  conditions:
+  - !type:OnMapGridCondition

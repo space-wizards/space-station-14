@@ -2,11 +2,6 @@
   id: DionaThornsHead
   bodyPart: Head
   groupWhitelist: [Diona]
-  coloring:
-    default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: thorns_head
@@ -15,11 +10,6 @@
   id: DionaThornsBody
   bodyPart: Chest
   groupWhitelist: [Diona]
-  coloring:
-    default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: thorns_body

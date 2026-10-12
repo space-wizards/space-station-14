@@ -24,7 +24,8 @@
     - WhitelistChameleon
     - WhitelistChameleonIdCard
   - type: StealTarget
-    stealGroup: IDCard
+    stealGroup:
+    - IDCard
 
 #IDs with layers
 
@@ -70,7 +71,8 @@
     - WhitelistChameleonIdCard
     - HighRiskItem
   - type: StealTarget
-    stealGroup: CaptainIDCard
+    stealGroup:
+    - CaptainIDCard
 
 - type: entity
   parent: IDCardStandard
@@ -674,8 +676,8 @@
       state: Bartender
   - type: PresetIdCard
     job: Bartender
-    name: Pun Pun
-  - type: Tag #  Ignore Chameleon tags
+    name: id-card-preset-pun
+  - type: Tag # Ignore Chameleon tags
     tags:
     - DoorBumpOpener
 
@@ -801,6 +803,24 @@
       offset: *icon-offset
       state: Zookeeper
 
+- type: entity
+  parent: IDCardStandard
+  id: TramDriverIDCard
+  name: tram driver ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: stripe_top
+      color: "#ffc500"
+    - state: stripe_bottom
+      color: "#454a50"
+    - sprite: *icon-rsi
+      offset: *icon-offset
+      state: TramDriver
+  - type: PresetIdCard
+    job: TramDriver
+
 #Supply
 
 - type: entity
@@ -820,6 +840,22 @@
       state: CargoTechnician
   - type: PresetIdCard
     job: CargoTechnician
+
+- type: entity
+  parent: CargoIDCard
+  id: SeniorCourierIDCard
+  name: senior courier ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: stripe_top
+      color: *color-supply-top
+    - state: stripe_bottom
+      color: *color-supply-bottom
+    - sprite: *icon-rsi
+      offset: *icon-offset
+      state: SeniorCourier
 
 - type: entity
   parent: IDCardStandard
@@ -919,15 +955,39 @@
 #Antags
 
 - type: entity
-  parent: [PassengerIDCard, BaseChameleon]
+  parent: [IDCardStandard, BaseChameleon]
   id: AgentIDCard
+  name: passenger ID card
   suffix: Agent
   components:
+  - type: Sprite
+    layers:
+    - state: default
+    - sprite: *icon-rsi
+      offset: *icon-offset
+      state: Passenger
   - type: Access
     tags:
     - Maintenance
     - SyndicateAgent
+  - type: AccessStealer
   - type: AgentIDCard
+    iconGroups:
+    - CommandIconGroup
+    - SecurityIconGroup
+    - CargoIconGroup
+    - EngineeringIconGroup
+    - MedicalIconGroup
+    - ScienceIconGroup
+    - ServiceIconGroup
+    - TheatreIconGroup
+    - CivilianIconGroup
+    - SiliconIconGroup
+    - CentCommIconGroup
+    - TaskForceIconGroup
+    - AntagonistIconGroup
+    - MiscIconGroup
+    - BlankIconGroup
   - type: UIRequiresLock
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
@@ -982,6 +1042,46 @@
     - SyndicateAgent
 
 - type: entity
+  parent: SyndicateIDCard
+  id: SyndicateIDCardAdaptive
+  name: syndicate ID card
+  suffix: Adaptive
+  components:
+  - type: AgentIDCard
+    iconGroups:
+    - CommandIconGroup
+    - SecurityIconGroup
+    - CargoIconGroup
+    - EngineeringIconGroup
+    - MedicalIconGroup
+    - ScienceIconGroup
+    - ServiceIconGroup
+    - TheatreIconGroup
+    - CivilianIconGroup
+    - SiliconIconGroup
+    - CentCommIconGroup
+    - TaskForceIconGroup
+    - AntagonistIconGroup
+    - MiscIconGroup
+    - BlankIconGroup
+  - type: UIRequiresLock
+  - type: ActivatableUI
+    key: enum.AgentIDCardUiKey.Key
+    verbText: agent-id-open-ui-verb
+  - type: UserInterface
+    interfaces:
+      enum.AgentIDCardUiKey.Key:
+        type: AgentIDCardBoundUserInterface
+
+- type: entity # Used for reinforcements, means that someone isn't immediately outed because they forget to change their ID on spawning
+  parent: SyndicateIDCardAdaptive
+  id: SyndicateIDCardAdaptivePassenger
+  suffix: Adaptive, Passenger Icon
+  components:
+  - type: IdCard
+    jobIcon: JobIconPassenger
+
+- type: entity
   parent: [ SyndicateIDCard, BaseSyndicateContraband ]
   id: SyndiOperativeIDCard
   name: syndicate operative ID card
@@ -996,8 +1096,9 @@
     - sprite: *icon-rsi
       offset: *icon-offset
       state: SyndicateOperative
-  - type: AgentIDCard
+  - type: AccessStealer
   - type: IdCard
+    jobTitle: job-name-syndicate-operative
     jobIcon: JobIconSyndicateOperative
 
 - type: entity
@@ -1016,6 +1117,7 @@
       offset: *icon-offset
       state: SyndicateCorpsman
   - type: IdCard
+    jobTitle: job-name-syndicate-corpsman
     jobIcon: JobIconSyndicateCorpsman
 
 - type: entity
@@ -1034,6 +1136,7 @@
       offset: *icon-offset
       state: SyndicateCommander
   - type: IdCard
+    jobTitle: job-name-syndicate-commander
     jobIcon: JobIconSyndicateCommander
 
 - type: entity
@@ -1054,7 +1157,7 @@
       state: Ninja
   - type: Item
     heldPrefix: green
-  - type: AgentIDCard
+  - type: AccessStealer
   - type: IdCard
     jobIcon: JobIconNinja
   - type: Access
@@ -1325,10 +1428,28 @@
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
+  - type: AccessStealer
   - type: AgentIDCard
+    iconGroups:
+    - CommandIconGroup
+    - SecurityIconGroup
+    - CargoIconGroup
+    - EngineeringIconGroup
+    - MedicalIconGroup
+    - ScienceIconGroup
+    - ServiceIconGroup
+    - TheatreIconGroup
+    - CivilianIconGroup
+    - SiliconIconGroup
+    - CentCommIconGroup
+    - TaskForceIconGroup
+    - AntagonistIconGroup
+    - MiscIconGroup
+    - BlankIconGroup
+    - AdminIconGroup
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
-    inHandsOnly: true
+    verbText: agent-id-open-ui-verb
   - type: UserInterface
     interfaces:
       enum.AgentIDCardUiKey.Key:

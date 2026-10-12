@@ -104,6 +104,8 @@ ghost-role-information-salvage-carp-description = Defend the loot inside the sal
 ghost-role-information-sentient-carp-name = Sentient Carp
 ghost-role-information-sentient-carp-description = Help the dragon flood the station with carps!
 
+ghost-role-information-sentient-sharkminnow-name = Sentient Sharkminnow
+
 ghost-role-information-willow-name = Willow the Kangaroo
 ghost-role-information-willow-description = You're a kangaroo named Willow! Willow likes to box.
 
@@ -224,7 +226,7 @@ ghost-role-information-syndicate-reinforcement-name = Syndicate Agent
 ghost-role-information-syndicate-reinforcement-description = Someone needs reinforcements. You, the first person the syndicate could find, will help them.
 ghost-role-information-syndicate-reinforcement-rules = You are a [color={role-type-team-antagonist-color}][bold]{role-type-team-antagonist-name}[/bold][/color] with the agent who summoned you.
 
-ghost-role-information-syndicate-reinforcement-medic-name = Syndicate Medic
+ghost-role-information-syndicate-reinforcement-medic-name = Syndicate Combat Medic
 ghost-role-information-syndicate-reinforcement-medic-description = Someone needs reinforcements. Your task is to keep the agent who called you alive.
 
 ghost-role-information-syndicate-reinforcement-spy-name = Syndicate Spy
@@ -350,3 +352,6 @@ ghost-role-information-wizard-desc = YER A WIZARD! Show the station what your ma
 
 ghost-role-information-emotional-support-scurret-name = Emotional Support Scurret
 ghost-role-information-emotional-support-scurret-description = Support the crew, be adorable, say "wa" a lot.
+
+ghost-role-information-space-changeling-name = Elder Headslug
+ghost-role-information-space-changeling-description = An adult changeling headslug, eager to assimilate crew members and ready to hide within the station. This headslug is especially frail and needs to find a dead body to assume a humanoid appearance.

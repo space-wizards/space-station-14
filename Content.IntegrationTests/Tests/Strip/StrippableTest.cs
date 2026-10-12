@@ -1,4 +1,4 @@
-﻿using Content.IntegrationTests.Tests.Interaction;
+using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Strip.Components;
 using Robust.Shared.GameObjects;
 

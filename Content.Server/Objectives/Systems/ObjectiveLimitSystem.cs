@@ -1,9 +1,11 @@
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Objectives.Components;
+using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 
-public sealed class ObjectiveLimitSystem : EntitySystem
+namespace Content.Server.Objectives.Systems;
+
+public sealed partial class ObjectiveLimitSystem : EntitySystem
 {
     public override void Initialize()
     {

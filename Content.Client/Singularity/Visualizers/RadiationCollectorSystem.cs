@@ -4,7 +4,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Singularity.Visualizers;
 
-public sealed class RadiationCollectorSystem : VisualizerSystem<RadiationCollectorComponent>
+public sealed partial class RadiationCollectorSystem : VisualizerSystem<RadiationCollectorComponent>
 {
     public override void Initialize()
     {
@@ -97,7 +97,7 @@ public sealed class RadiationCollectorSystem : VisualizerSystem<RadiationCollect
         if (!TryComp<AnimationPlayerComponent>(uid, out var animPlayer))
             return;
 
-        if (!AppearanceSystem.TryGetData<RadiationCollectorVisualState>(uid, RadiationCollectorVisuals.VisualState, out var state, args.Component))
+        if (!args.TryGetData<RadiationCollectorVisualState>(RadiationCollectorVisuals.VisualState, out var state))
             state = RadiationCollectorVisualState.Deactive;
 
         UpdateVisuals(uid, state, comp, args.Sprite, animPlayer);

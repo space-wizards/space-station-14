@@ -5,9 +5,11 @@ using Content.Shared.Changeling.Components;
 using Content.Shared.Cloning;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
+using Content.Shared.Store.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
@@ -27,7 +29,6 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedCloningSystem _cloning = default!;
     [Dependency] private SharedVisualBodySystem _visualBody = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private IdentitySystem _identity = default!;
     [Dependency] private SharedChangelingIdentitySystem _changelingIdentity = default!;
@@ -98,6 +99,29 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (!_changelingIdentity.TryGetDataFromIdentity((ent.Owner, identity), targetIdentity.Value, out _))
             return; // this identity does not belong to this player
 
+        // check for things which could prevent us from transforming
+        var evA = new ChangelingAttemptTransformEvent(false, null, targetIdentity.Value);
+        RaiseLocalEvent(ent.Owner, ref evA);
+
+        if (evA.Cancelled)
+        {
+            if (evA.Reason != null)
+                _popup.PopupEntity(evA.Reason, ent.Owner, ent.Owner, PopupType.Large);
+
+            return;
+        }
+
+        var evB = new ChangelingAttemptTransformIntoEvent(false, null, ent.Owner);
+        RaiseLocalEvent(targetIdentity.Value, ref evB);
+
+        if (evB.Cancelled)
+        {
+            if (evB.Reason != null)
+                _popup.PopupEntity(evB.Reason, ent.Owner, ent.Owner, PopupType.Large);
+
+            return;
+        }
+
         TransformInto(ent.AsNullable(), targetIdentity.Value);
     }
 
@@ -110,13 +134,19 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (!TryComp<ChangelingIdentityComponent>(ent, out var identity))
             return;
 
+        if (!ent.Comp.ManualDrop)
+            return; // can't drop identities in this mode
+
         if (identity.CurrentIdentity == targetIdentity)
             return; // don't drop our current identity
+
+        if (HasComp<ChangelingUnremovableIdentityComponent>(targetIdentity.Value))
+            return; // can't drop the horror form
 
         if (!_changelingIdentity.TryGetDataFromIdentity((ent.Owner, identity), targetIdentity.Value, out _))
             return; // this identity does not belong to this player
 
-        _popup.PopupClient(Loc.GetString("changeling-transform-bui-drop-identity-entity-popup", ("entity", targetIdentity.Value)), ent.Owner, PopupType.Large);
+        _popup.PopupEntity(Loc.GetString("changeling-transform-bui-drop-identity-entity-popup", ("entity", targetIdentity.Value)), ent.Owner, ent.Owner, PopupType.Large);
         _changelingIdentity.DropStoredIdentity(ent.Owner, targetIdentity.Value);
     }
 
@@ -124,15 +154,23 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
     /// Transform the changeling into another identity.
     /// This can be any cloneable humanoid and doesn't have to be stored in the ChangelingIdentityComponent,
     /// so make sure to validate the target before.
+    /// Calls <see cref="TransformIntoNow"/> after a doafter.
     /// </summary>
     public void TransformInto(Entity<ChangelingTransformComponent?> ent, EntityUid targetIdentity)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
 
+        if (HasComp<ChangelingHorrorComponent>(targetIdentity))
+        {
+            // the horror transformation is instantaneous
+            TransformIntoNow((ent.Owner, ent.Comp), targetIdentity);
+            return;
+        }
+
         var selfMessage = Loc.GetString("changeling-transform-attempt-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
         var othersMessage = Loc.GetString("changeling-transform-attempt-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        _popup.PopupPredicted(
+        _popup.PopupEntity(
             selfMessage,
             othersMessage,
             ent,
@@ -161,8 +199,10 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
             DuplicateCondition = DuplicateConditions.None,
             RequireCanInteract = false,
             DistanceThreshold = null,
+            ExamineText = ent.Comp.TransformExamine == null ? null : Loc.GetString(ent.Comp.TransformExamine, ("user", Identity.Entity(ent, EntityManager)))
         });
     }
+
 
     private void OnSuccessfulTransform(Entity<ChangelingTransformComponent> ent,
         ref ChangelingTransformDoAfterEvent args)
@@ -175,20 +215,48 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
             ent.Comp.CurrentTransformSound = _audio.Stop(ent.Comp.CurrentTransformSound);
             return;
         }
+
         ent.Comp.CurrentTransformSound = null;
 
         if (args.Target is not { } targetIdentity)
             return;
+
+        // Transform the entity
+        TransformIntoNow(ent, targetIdentity);
+    }
+
+    /// <summary>
+    /// Transforms the changeling into the given identity, but without doafters or popups. Keep in mind they still need a ChangelingTransformComponent
+    /// </summary>
+    public void TransformIntoNow(Entity<ChangelingTransformComponent> ent, EntityUid targetIdentity)
+    {
+        if (!ProtoMan.Resolve(ent.Comp.TransformCloningSettings, out var settings))
+            return;
+
+        var beforeTransformEvent = new BeforeChangelingTransformEvent(targetIdentity);
+        RaiseLocalEvent(ent.Owner, beforeTransformEvent);
+
+        _visualBody.CopyAppearanceFrom(targetIdentity, ent.Owner);
+        _cloning.CloneComponents(targetIdentity, ent.Owner, settings);
+
+        if (settings.CopyStatusEffects)
+            _cloning.CopyStatusEffects(targetIdentity, ent.Owner, settings.StatusEffectWhitelist, settings.StatusEffectBlacklist);
 
         if (TryComp<ChangelingStoredIdentityComponent>(targetIdentity, out var storedIdentity) && storedIdentity.OriginalSession != null)
             _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player})");
         else
             _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\"");
 
-        if (!TryApplyIdentity(args.User, targetIdentity, ent.Comp.TransformCloningSettings))
-            return;
+        _metaData.SetEntityName(ent, Name(targetIdentity), raiseEvents: false); // Don't raise events because we don't want to rename the ID card.
+        _metaData.SetEntityDescription(ent, Description(targetIdentity));
+        _identity.QueueIdentityUpdate(ent); // We have to manually refresh the identity because we did not raise events.
 
+        Dirty(ent);
+
+        EntityUid? oldIdentity = null;
         if (TryComp<ChangelingIdentityComponent>(ent, out var identity)) // in case we ever get changelings that don't store identities
+        {
+            oldIdentity = identity.CurrentIdentity;
             identity.CurrentIdentity = targetIdentity;
 
         Dirty(ent);
@@ -210,9 +278,12 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         _metaData.SetEntityName(target, Name(targetIdentity), raiseEvents: false); // Don't raise events because we don't want to rename the ID card.
         _identity.QueueIdentityUpdate(target); // We have to manually refresh the identity because we did not raise events.
 
-        var afterTransformEvent = new AfterChangelingTransformEvent(targetIdentity);
-        RaiseLocalEvent(target, afterTransformEvent);
-        return true;
+        var afterTransformEvent = new AfterChangelingTransformEvent(targetIdentity, oldIdentity);
+        RaiseLocalEvent(ent.Owner, afterTransformEvent);
+
+        if (oldIdentity != null && !ent.Comp.ManualDrop)
+            _changelingIdentity.DropStoredIdentity(ent.Owner, oldIdentity.Value);
+
     }
 
     private void StorageBeforeTransform(Entity<StorageComponent> ent, ref BeforeChangelingTransformEvent args)

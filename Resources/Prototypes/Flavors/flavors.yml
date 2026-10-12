@@ -20,6 +20,11 @@
   description: flavor-base-sour
 
 - type: flavor
+  id: earthy
+  flavorType: Base
+  description: flavor-base-earthy
+
+- type: flavor
   id: bitter
   flavorType: Base
   description: flavor-base-bitter
@@ -1113,11 +1118,6 @@
   id: monkeybusiness
   flavorType: Complex
   description: flavor-complex-monkey-business
-
-- type: flavor
-  id: neurotoxin
-  flavorType: Complex
-  description: flavor-complex-neurotoxin
 
 - type: flavor
   id: patron

@@ -7,6 +7,7 @@ using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Popups;
@@ -100,6 +101,14 @@ public abstract partial class SharedBuckleSystem
     private void OnParentChanged(Entity<BuckleComponent> ent, ref EntParentChangedMessage args)
     {
         BuckleTransformCheck(ent, args.Transform);
+        AfterBuckleParentChanged(ent, ref args);
+    }
+
+    /// <summary>
+    /// Allows sided buckle systems to handle completed parent changes.
+    /// </summary>
+    protected virtual void AfterBuckleParentChanged(Entity<BuckleComponent> ent, ref EntParentChangedMessage args)
+    {
     }
 
     private void OnInserted(Entity<BuckleComponent> ent, ref EntGotInsertedIntoContainerMessage args)
@@ -175,6 +184,10 @@ public abstract partial class SharedBuckleSystem
 
     private void OnBuckleUpdateCanMove(EntityUid uid, BuckleComponent component, UpdateCanMoveEvent args)
     {
+        // If we're relaying then don't cancel.
+        if (HasComp<RelayInputMoverComponent>(uid))
+            return;
+
         if (component.Buckled)
             args.Cancel();
     }
@@ -237,8 +250,8 @@ public abstract partial class SharedBuckleSystem
         if (_whitelistSystem.IsWhitelistFail(strapComp.Whitelist, buckleUid) ||
             _whitelistSystem.IsWhitelistPass(strapComp.Blacklist, buckleUid))
         {
-            if (popup)
-                _popup.PopupClient(Loc.GetString("buckle-component-cannot-fit-message"), user, PopupType.Medium);
+            if (popup && user != null)
+                _popup.PopupEntity(Loc.GetString("buckle-component-cannot-fit-message"), user.Value, user, PopupType.Medium);
 
             return false;
         }
@@ -255,24 +268,24 @@ public abstract partial class SharedBuckleSystem
         if (!_container.IsInSameOrNoContainer((buckleUid, null, null), (strapUid, null, null)))
             return false;
 
-        if (user != null && !HasComp<HandsComponent>(user))
+        if (user != null && !HasComp<HandsComponent>(user) && strapUid != user)
         {
             if (popup)
-                _popup.PopupClient(Loc.GetString("buckle-component-no-hands-message"), user);
+                _popup.PopupEntity(Loc.GetString("buckle-component-no-hands-message"), user.Value, user);
 
             return false;
         }
 
         if (buckleComp.Buckled && !TryUnbuckle(buckleUid, user, buckleComp))
         {
-            if (popup)
+            if (popup && user != null)
             {
                 var message = Loc.GetString(buckleUid == user
                     ? "buckle-component-already-buckled-message"
                     : "buckle-component-other-already-buckled-message",
                 ("owner", Identity.Entity(buckleUid, EntityManager)));
 
-                _popup.PopupClient(message, user);
+                _popup.PopupEntity(message, user.Value, user);
             }
 
             return false;
@@ -295,7 +308,8 @@ public abstract partial class SharedBuckleSystem
                     : "buckle-component-other-cannot-buckle-message",
                 ("owner", Identity.Entity(buckleUid, EntityManager)));
 
-                _popup.PopupClient(message, user);
+                if (user != null)
+                    _popup.PopupEntity(message, user.Value, user);
             }
 
             return false;
@@ -310,7 +324,8 @@ public abstract partial class SharedBuckleSystem
                     : "buckle-component-other-cannot-buckle-message",
                 ("owner", Identity.Entity(buckleUid, EntityManager)));
 
-                _popup.PopupClient(message, user);
+                if (user != null)
+                    _popup.PopupEntity(message, user.Value, user);
             }
 
             return false;
@@ -459,7 +474,6 @@ public abstract partial class SharedBuckleSystem
         if (buckleXform.ParentUid == strap.Owner && !Terminating(oldBuckledXform.ParentUid))
         {
             _transform.PlaceNextTo((buckle, buckleXform), (strap.Owner, oldBuckledXform));
-            buckleXform.ActivelyLerping = false;
 
             var oldBuckledToWorldRot = _transform.GetWorldRotation(strap);
             _transform.SetWorldRotationNoLerp((buckle, buckleXform), oldBuckledToWorldRot);
@@ -519,7 +533,7 @@ public abstract partial class SharedBuckleSystem
             if (!_interaction.InRangeUnobstructed(user.Value, strap.Owner, buckle.Comp.Range, popup: popup))
                 return false;
 
-            if (user.Value != buckle.Owner && !ActionBlocker.CanComplexInteract(user.Value))
+            if (user.Value != buckle.Owner && !ActionBlocker.CanComplexInteract(user.Value) && user.Value != strap.Owner)
                 return false;
         }
 
