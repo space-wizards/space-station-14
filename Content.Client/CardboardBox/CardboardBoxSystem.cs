@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Shared.CardboardBox;
 using Content.Shared.CardboardBox.Components;
 using Content.Shared.Examine;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Components;
 using Robust.Client.GameObjects;
@@ -60,8 +61,9 @@ public sealed partial class CardboardBoxSystem : SharedCardboardBoxSystem
             if (!_examine.InRangeUnOccluded(sourcePos, mapPos, box.Distance, null))
                 continue;
 
-            // no effect for non-mobs that have MobMover, such as mechs and vehicles.
-            if (!_mobStateQuery.HasComp(mob))
+            // no effect for non-mobs that have MobMover, such as mechs and vehicles,
+            // nor mobs that are no longer concious
+            if (!_mobStateQuery.TryComp(mob, out var mobComp) || mobComp.CurrentState != MobState.Alive)
                 continue;
 
             var ent = Spawn(box.Effect, mapPos);

@@ -1,6 +1,8 @@
 using Content.Shared.Coordinates;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Stealth.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
@@ -49,6 +51,10 @@ public sealed partial class WhistleSystem : EntitySystem
         foreach (var iterator in
             _entityLookup.GetEntitiesInRange<HumanoidProfileComponent>(_transform.GetMapCoordinates(uid), component.Distance))
         {
+            // Avoid avoid pinging dead or unconcious entities
+            if (TryComp<MobStateComponent>(iterator, out var mobstate) && mobstate.CurrentState != MobState.Alive)
+                continue;
+
             //Avoid pinging invisible entities
             if (TryComp(iterator, out stealth) && stealth.Enabled)
                 continue;
