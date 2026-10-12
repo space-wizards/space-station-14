@@ -64,7 +64,7 @@
       - id: ReagentContainerFlour
       - id: BoxMousetrap
     - !type:AllSelector
-      rolls: 3
+      rolls: 5
       children:
       - id: FoodCondimentPacketSalt
       - id: FoodCondimentPacketPepper

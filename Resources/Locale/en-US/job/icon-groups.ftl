@@ -9,6 +9,7 @@ job-icon-group-theatre = Theatre
 job-icon-group-civilian = Civilian
 job-icon-group-silicon = Silicon
 job-icon-group-centcomm = CentComm
+job-icon-group-task-force = Task Force
 job-icon-group-antagonist = Antagonist
 job-icon-group-misc = Misc.
 job-icon-group-blank = Blank
