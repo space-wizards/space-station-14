@@ -172,7 +172,7 @@
 - files:
   - grass1.ogg
   - grass2.ogg
-  license: "CC-BY-SA-3.0"
+  license: "CC-BY-3.0"
   copyright: "By D001447733, split by mirrorcult"
   source: "https://freesound.org/people/D001447733/sounds/464609/"
 
@@ -218,7 +218,7 @@
   - snowstep2.ogg
   - snowstep3.ogg
   - snowstep4.ogg
-  license: "CC-BY-SA-3.0"
+  license: "CC0-1.0"
   copyright: "alexo400, split by EmoGarbage404"
   source: "https://freesound.org/people/alexo400/sounds/543385/"
 
@@ -226,7 +226,7 @@
   - sound_mecha_powerloader_step.ogg
   license: "CC-BY-NC-SA-3.0"
   copyright: "Taken from tgstation"
-  source: "https://github.com/tgstation/tgstation/commit/45123dd06cb6dc7c56e8004c528230682ea559b2"
+  source: "https://github.com/tgstation/tgstation/commit/5cfc65fe3e4dcd196d6a90372e49a377ee3cb83b"
 
 - files:
   - tile1.ogg
