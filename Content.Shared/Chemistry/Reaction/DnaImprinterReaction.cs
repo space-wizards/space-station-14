@@ -10,27 +10,52 @@ namespace Content.Shared.Chemistry.Reaction;
 /// </summary>
 public sealed partial class DnaImprinterReaction : ReactionExtension
 {
+    [DataField]
+    public ProtoId<ReagentPrototype> DnaSource;
+    [DataField]
+    public ProtoId<ReagentPrototype> DnaOutput;
     public override void React(IReadOnlyList<ReagentQuantity> reactants, List<ReagentQuantity> products)
     {
-        string? dna = null;
+        List<(FixedPoint2 Quantity, string? Dna)> dnaQuantities = [];
+        FixedPoint2 inputQuantity = 0;
+        FixedPoint2 outputQuantity = 0;
         foreach (var reactant in reactants)
         {
-            var dnaData = reactant.Reagent.Data?.OfType<DnaData>().FirstOrDefault();
-            if (dnaData == null)
+            if (DnaSource != reactant.Reagent.Prototype)
                 continue;
-            dna = dnaData.DNA;
+            string? dna = reactant.Reagent.Data?.OfType<DnaData>().FirstOrDefault()?.DNA ?? null;
+            dnaQuantities.Add((reactant.Quantity, dna));
+            inputQuantity += reactant.Quantity;
         }
 
-        if (dna == null)
+        if (dnaQuantities.Count <= 0)
             return;
+
 
         for (var i = 0; i < products.Count; i++)
         {
             var product = products[i];
-            var data = product.Reagent.EnsureReagentData();
-            data.Add(new DnaData { DNA = dna });
-            products[i] = new ReagentQuantity(product.Reagent.Prototype, product.Quantity, data);
+            if (product.Reagent.Prototype != DnaOutput) continue;
+            outputQuantity += product.Quantity;
+            products[i] = new ReagentQuantity(product.Reagent.Prototype, 0);  // remove the base product so we can multiple based on the proportions.
         }
+
+        FixedPoint2 outputRatio = outputQuantity / inputQuantity;
+
+        foreach (var dnaQuantity in dnaQuantities)
+        {
+            if (dnaQuantity.Dna == null)
+            {
+                products.Add(new ReagentQuantity(DnaOutput, dnaQuantity.Quantity * outputRatio));
+            }
+            else
+            {
+                products.Add(new ReagentQuantity(DnaOutput, dnaQuantity.Quantity * outputRatio,
+                    new List<ReagentData> { new DnaData { DNA = dnaQuantity.Dna } }));
+            }
+        }
+
+
     }
 
 }

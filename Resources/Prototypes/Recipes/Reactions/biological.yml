@@ -119,6 +119,8 @@
     Blood:
       amount: 5
   extension: !type:DnaImprinterReaction
+    dnaSource: Blood
+    dnaOutput: Miniozine
   products:
     Miniozine: 5
 
@@ -132,6 +134,8 @@
     CopperBlood:
       amount: 5
   extension: !type:DnaImprinterReaction
+    dnaSource: CopperBlood
+    dnaOutput: Miniozine
   products:
     Miniozine: 5
 
@@ -145,6 +149,8 @@
     InsectBlood:
       amount: 5
   extension: !type:DnaImprinterReaction
+    dnaSource: InsectBlood
+    dnaOutput: Miniozine
   products:
     Miniozine: 5
 
@@ -158,6 +164,8 @@
     AmmoniaBlood:
       amount: 5
   extension: !type:DnaImprinterReaction
+    dnaSource: AmmoniaBlood
+    dnaOutput: Miniozine
   products:
     Miniozine: 5
 
@@ -171,6 +179,8 @@
     SulfurBlood:
       amount: 5
   extension: !type:DnaImprinterReaction
+    dnaSource: SulfurBlood
+    dnaOutput: Miniozine
   products:
     Miniozine: 5
 
@@ -184,6 +194,8 @@
     Slime:
       amount: 5
   extension: !type:DnaImprinterReaction
+    dnaSource: Slime
+    dnaOutput: Miniozine
   products:
     Miniozine: 5
 
@@ -197,6 +209,8 @@
     Sap:
       amount: 5
   extension: !type:DnaImprinterReaction
+    dnaSource: Sap
+    dnaOutput: Miniozine
   products:
     Miniozine: 5
 
@@ -210,6 +224,8 @@
     Blood:
       amount: 5
   extension: !type:DnaImprinterReaction
+    dnaSource: Blood
+    dnaOutput: Ragorium
   products:
     Ragorium: 5
 
@@ -223,6 +239,8 @@
     CopperBlood:
       amount: 5
   extension: !type:DnaImprinterReaction
+    dnaSource: CopperBlood
+    dnaOutput: Ragorium
   products:
     Ragorium: 5
 
@@ -236,6 +254,8 @@
     InsectBlood:
       amount: 5
   extension: !type:DnaImprinterReaction
+    dnaSource: InsectBlood
+    dnaOutput: Ragorium
   products:
     Ragorium: 5
 
@@ -249,6 +269,8 @@
     AmmoniaBlood:
       amount: 5
   extension: !type:DnaImprinterReaction
+    dnaSource: AmmoniaBlood
+    dnaOutput: Ragorium
   products:
     Ragorium: 5
 
@@ -262,6 +284,8 @@
     SulfurBlood:
       amount: 5
   extension: !type:DnaImprinterReaction
+    dnaSource: SulfurBlood
+    dnaOutput: Ragorium
   products:
     Ragorium: 5
 
@@ -275,6 +299,8 @@
     Slime:
       amount: 5
   extension: !type:DnaImprinterReaction
+    dnaSource: Slime
+    dnaOutput: Ragorium
   products:
     Ragorium: 5
 
@@ -288,5 +314,7 @@
     Sap:
       amount: 5
   extension: !type:DnaImprinterReaction
+    dnaSource: Sap
+    dnaOutput: Ragorium
   products:
     Ragorium: 5
