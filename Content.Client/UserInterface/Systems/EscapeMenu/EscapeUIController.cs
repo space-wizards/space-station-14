@@ -1,6 +1,6 @@
 using Content.Client.FeedbackPopup;
 using Content.Client.Gameplay;
-using Content.Client.GameTicking.Managers;
+using Content.Client.GameTicking;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Client.UserInterface.Systems.Info;
