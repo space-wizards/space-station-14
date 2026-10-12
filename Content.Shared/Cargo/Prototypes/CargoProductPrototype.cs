@@ -118,8 +118,6 @@ namespace Content.Shared.Cargo.Prototypes
         /// <summary>
         /// The prototype of the container to be spawned
         /// </summary>
-        // This prototype might be redundent as the capacity and access can porbably be gotten from the entity Id.
-        // For livestock crates and setting a lower max items than the capaicty this is currently useful
         [DataField]
         public ProtoId<CargoCratePrototype>? Container;
 
