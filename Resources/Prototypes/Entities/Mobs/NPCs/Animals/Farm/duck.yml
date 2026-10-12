@@ -8,11 +8,11 @@
   description: An adorable mallard duck, it's fluffy and soft!
   components:
   - type: Sprite
+    sprite: Mobs/Animals/Farm/duck.rsi
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: duck-0
-    sprite: Mobs/Animals/Farm/duck.rsi
   - type: Fixtures
     fixtures:
       fix1:

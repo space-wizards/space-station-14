@@ -8,30 +8,11 @@
     },
     "states": [
         {
-            "name": "dead",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "dead"
         },
         {
-            "name": "goat",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "name": "alive",
+            "directions": 4
         }
     ]
 }

@@ -5,11 +5,11 @@
   description: Her spine consists of long sharp segments, no wonder she is so grumpy.
   components:
   - type: Sprite
+    sprite: Mobs/Animals/Farm/goat.rsi
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: goat
-      sprite: Mobs/Animals/Farm/goat.rsi
+      state: alive
   - type: Fixtures
     fixtures:
       fix1:
@@ -39,7 +39,7 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: goat
+        Base: alive
       Critical:
         Base: dead
       Dead:

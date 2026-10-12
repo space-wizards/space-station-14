@@ -5,11 +5,11 @@
   description: Moo.
   components:
   - type: Sprite
+    sprite: Mobs/Animals/Farm/cow.rsi
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: cow
-      sprite: Mobs/Animals/Farm/cow.rsi
+      state: alive
   - type: Tag
     tags:
     - DoorBumpOpener
@@ -37,7 +37,7 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: cow
+        Base: alive
       Critical:
         Base: dead
       Dead:

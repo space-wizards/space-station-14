@@ -5,11 +5,11 @@
   description: Comes before an egg, and IS a dinosaur!
   components:
   - type: Sprite
+    sprite: Mobs/Animals/Farm/chicken.rsi
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: chicken-0
-      sprite: Mobs/Animals/Farm/chicken.rsi
   - type: SpriteMovement
     movementLayers:
       movement:
@@ -102,10 +102,10 @@
   id: MobChicken1
   components:
   - type: Sprite
+    sprite: Mobs/Animals/Farm/chicken.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: chicken-1
-      sprite: Mobs/Animals/Farm/chicken.rsi
   - type: SpriteMovement
     movementLayers:
       movement:
@@ -127,10 +127,10 @@
   id: MobChicken2
   components:
   - type: Sprite
+    sprite: Mobs/Animals/Farm/chicken.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: chicken-2
-      sprite: Mobs/Animals/Farm/chicken.rsi
   - type: SpriteMovement
     movementLayers:
       movement:

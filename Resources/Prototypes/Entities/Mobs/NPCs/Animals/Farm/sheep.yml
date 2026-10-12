@@ -6,17 +6,16 @@
   description: A sheep.
   components:
   - type: Sprite
+    sprite: Mobs/Animals/Farm/sheep.rsi
     drawdepth: Mobs
     layers:
     - state: sheep_bare
       map: [ "enum.DamageStateVisualLayers.Base" ]
       visible: true
-      sprite: Mobs/Animals/Farm/sheep.rsi
     # this wooly layer relates to the shearable component.
     - state: sheep_wool
       map: [ "wooly" ]
       visible: true
-      sprite: Mobs/Animals/Farm/sheep.rsi
   - type: GenericVisualizer
     visuals:
       enum.ShearableVisuals.Shearable:

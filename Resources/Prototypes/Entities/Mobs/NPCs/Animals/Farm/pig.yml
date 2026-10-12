@@ -5,11 +5,11 @@
   description: Oink.
   components:
   - type: Sprite
+    sprite: Mobs/Animals/Farm/pig.rsi
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: pig
-      sprite: Mobs/Animals/Farm/pig.rsi
+      state: alive
   - type: Fixtures
     fixtures:
       fix1:
@@ -40,7 +40,7 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: pig
+        Base: alive
       Critical:
         Base: dead
       Dead:

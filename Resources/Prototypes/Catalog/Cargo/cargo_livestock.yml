@@ -82,7 +82,7 @@
   id: LivestockCow
   icon:
     sprite: Mobs/Animals/Farm/cow.rsi
-    state: cow
+    state: alive
   product: CrateNPCCow
   cost: 3200
   category: cargoproduct-category-name-livestock
@@ -92,7 +92,7 @@
   id: LivestockGoat
   icon:
     sprite: Mobs/Animals/Farm/goat.rsi
-    state: goat
+    state: alive
   product: CrateNPCGoat
   cost: 1200
   category: cargoproduct-category-name-livestock
@@ -191,7 +191,7 @@
   id: LivestockPig
   icon:
     sprite: Mobs/Animals/Farm/pig.rsi
-    state: pig
+    state: alive
   product: CrateNPCPig
   cost: 1100
   category: cargoproduct-category-name-livestock
