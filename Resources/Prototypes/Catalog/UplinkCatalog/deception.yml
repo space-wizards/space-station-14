@@ -4,7 +4,7 @@
   id: UplinkSyndicateIDCard
   name: uplink-syndicate-id-card-name
   description: uplink-syndicate-id-card-desc
-  productEntity: SyndicateIDCard
+  productEntity: SyndicateIDCardAdaptive
   cost:
     Telecrystal: 1
   categories:

@@ -4,7 +4,6 @@ using Content.Shared.Destructible;
 using Content.Shared.Glue;
 using Content.Shared.Lube;
 using Content.Shared.Nutrition;
-using Content.Shared.Prototypes;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Slippery;
 using Content.Shared.StatusEffect;
@@ -21,7 +20,6 @@ public abstract partial class SharedGodmodeSystem : EntitySystem
 
         SubscribeLocalEvent<GodmodeComponent, BeforeDamageChangedEvent>(OnBeforeDamageChanged);
         SubscribeLocalEvent<GodmodeComponent, BeforeStatusEffectAddedEvent>(OnBeforeStatusEffect);
-        SubscribeLocalEvent<GodmodeComponent, BeforeOldStatusEffectAddedEvent>(OnBeforeOldStatusEffect);
         SubscribeLocalEvent<GodmodeComponent, BeforeStaminaDamageEvent>(OnBeforeStaminaDamage);
         SubscribeLocalEvent<GodmodeComponent, IngestibleEvent>(BeforeEdible);
         SubscribeLocalEvent<GodmodeComponent, SlipAttemptEvent>(OnSlipAttempt);
@@ -44,6 +42,8 @@ public abstract partial class SharedGodmodeSystem : EntitySystem
             args.Cancelled = true;
     }
 
+    [SubscribeLocalEvent]
+    [Obsolete("BeforeOldStatusEffectAddedEvent is obsolete.")]
     private void OnBeforeOldStatusEffect(Entity<GodmodeComponent> ent, ref BeforeOldStatusEffectAddedEvent args)
     {
         // Old status effect system doesn't distinguish between good and bad status effects
