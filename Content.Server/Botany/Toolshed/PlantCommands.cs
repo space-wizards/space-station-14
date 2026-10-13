@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Botany.Components;
@@ -14,13 +13,16 @@ using Robust.Shared.Toolshed.Errors;
 using Robust.Shared.Toolshed.Syntax;
 using Robust.Shared.Toolshed.TypeParsers;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Content.Server.Botany.Toolshed;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Spawn | AdminFlags.VarEdit)]
 public sealed partial class PlantCommand : ToolshedCommand
 {
-    private static readonly EntProtoId TrayPrototype = "hydroponicsTray";
+    private static readonly EntProtoId TrayPrototype = "HydroponicsTray";
+
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IComponentFactory _componentFactory = default!;
 
@@ -31,48 +33,14 @@ public sealed partial class PlantCommand : ToolshedCommand
     private PlantSystem? _plant;
     private PlantTraySystem? _plantTray;
 
-    private Entity<PlantComponent?>? SpawnPlant(
-        IInvocationContext ctx,
-        [PipedArgument] EntityCoordinates coordinates,
-        EntProtoId seedPrototype)
-    {
-        var seedProto = _prototypeManager.Index(seedPrototype);
-        if (!seedProto.TryComp<SeedComponent>(out var seedComponent, _componentFactory))
-        {
-            return null;
-        }
-
-        var tray = Spawn(TrayPrototype, coordinates);
-        if (!TryComp<PlantTrayComponent>(tray, out var trayComponent))
-        {
-            return null;
-        }
-
-        var plant = Spawn(seedComponent.PlantProtoId, coordinates);
-        _botany ??= GetSys<BotanySystem>();
-        _botany.ApplyPlantSnapshotData(seedComponent.PlantData, plant);
-        _plantTray ??= GetSys<PlantTraySystem>();
-        _plantTray.PlantingPlantInTray((tray, trayComponent), plant);
-        return plant;
-    }
-
-    private Entity<PlantComponent?>? SpawnPlant(
-        IInvocationContext ctx,
-        [PipedArgument] EntityUid target,
-        EntProtoId seedPrototype)
-    {
-        return SpawnPlant(ctx, Transform(target).Coordinates, seedPrototype);
-    }
-
     [CommandImplementation("spawn")]
     public IEnumerable<Entity<PlantComponent>> SpawnPlant(
         IInvocationContext ctx,
         [PipedArgument] IEnumerable<EntityCoordinates> coordinates,
         [CommandArgument(typeof(PlantSeedPrototypeParser))] EntProtoId seedPrototype)
     {
-        return coordinates
-            .Select(coordinate => SpawnPlant(ctx, coordinate, seedPrototype))
-            .OfType<Entity<PlantComponent>>();
+        return coordinates.Select(coordinate => SpawnPlant(ctx, coordinate, seedPrototype))
+                          .CastNotNullOnly();
     }
 
     [CommandImplementation("spawn")]
@@ -81,35 +49,59 @@ public sealed partial class PlantCommand : ToolshedCommand
         [PipedArgument] IEnumerable<EntityUid> targets,
         [CommandArgument(typeof(PlantSeedPrototypeParser))] EntProtoId seedPrototype)
     {
-        return targets
-            .Select(target => SpawnPlant(ctx, target, seedPrototype))
-            .OfType<Entity<PlantComponent>>();
-
-    }
-
-    private Entity<PlantComponent>? Age(
-        IInvocationContext ctx,
-        [PipedArgument] Entity<PlantComponent> input,
-        int ticks)
-    {
-        if (!TryGetPlant(input, ctx, out var plant, out var holder))
-            return null;
-
-        AgeTicks((input, plant), (input, holder), ticks);
-
-        return input;
+        return targets.Select(target => SpawnPlant(ctx, target, seedPrototype))
+                      .CastNotNullOnly();
     }
 
     [CommandImplementation("age")]
     public IEnumerable<Entity<PlantComponent>> Age(
         IInvocationContext ctx,
         [PipedArgument] IEnumerable<Entity<PlantComponent>> input,
-        [CommandArgument(typeof(PlantTicksParser))] int ticks)
+        int ticks)
     {
-        return input
-            .Select(entity => Age(ctx, entity, ticks))
-            .OfType<Entity<PlantComponent>>();
+        if (ticks <= 0)
+        {
+            ctx.ReportError(new PlantCommandError(
+                $"Cannot age by {ticks}, can only accept positive number."));
+            return [];
+        }
 
+        return input.Select(entity => Age(ctx, entity, ticks))!
+                    .CastNotNullOnly();
+    }
+
+    [CommandImplementation("ageuntilready")]
+    public IEnumerable<Entity<PlantComponent>> AgeUntilReady(
+        IInvocationContext ctx,
+        [PipedArgument] IEnumerable<Entity<PlantComponent>> input)
+    {
+        return input.Select(entity => AgeUntilReady(ctx, entity))!
+                    .CastNotNullOnly();
+    }
+
+    [CommandImplementation("addmutation")]
+    public IEnumerable<Entity<PlantComponent>> AddMutation(
+        IInvocationContext ctx,
+        [PipedArgument] IEnumerable<Entity<PlantComponent>> input,
+        [CommandArgument(typeof(PlantMutationNameParser))]
+        PlantMutationSelector plantMutation
+    )
+    {
+        return input.Select(entity => AddMutation(ctx, entity, plantMutation.TableId, plantMutation.MutationName))!
+                    .CastNotNullOnly();
+    }
+
+    [CommandImplementation("addchem")]
+    public IEnumerable<Entity<PlantComponent>> AddChemical(
+        IInvocationContext ctx,
+        [PipedArgument] IEnumerable<Entity<PlantComponent>> input,
+        ProtoId<ReagentPrototype> reagent,
+        float min,
+        float amount,
+        bool inherent = false)
+    {
+        return input.Select(entity => AddChemical(ctx, entity, reagent, min, amount, inherent))!
+                    .CastNotNullOnly();
     }
 
     public Entity<PlantComponent>? AgeUntilReady(IInvocationContext ctx, [PipedArgument] Entity<PlantComponent> input)
@@ -136,64 +128,10 @@ public sealed partial class PlantCommand : ToolshedCommand
         {
             readyAge = holder.LastHarvest + (int)MathF.Floor(plant.Production) + 1;
         }
-        AgeTicks((input, plant), (input, holder), readyAge - holder.Age);
+
+        TryAgeTicks((input, plant), (input, holder), readyAge - holder.Age);
 
         return input;
-    }
-
-    [CommandImplementation("ageuntilready")]
-    public IEnumerable<Entity<PlantComponent>> AgeUntilReady(
-        IInvocationContext ctx,
-        [PipedArgument] IEnumerable<Entity<PlantComponent>> input)
-    {
-        return input
-            .Select(entity => AgeUntilReady(ctx, entity))
-            .OfType<Entity<PlantComponent>>();
-    }
-
-    public Entity<PlantComponent>? AddMutation(
-        IInvocationContext ctx,
-        [PipedArgument] Entity<PlantComponent> input,
-        ProtoId<RandomPlantMutationListPrototype> tableId,
-        string mutationName)
-    {
-        if (!TryGetPlant(input, ctx, out var plant, out var holder))
-        {
-            return null;
-        }
-
-        var table = _prototypeManager.Index(tableId);
-        var mutation = table.Mutations.FirstOrDefault(candidate =>
-            string.Equals(candidate.Name, mutationName, StringComparison.OrdinalIgnoreCase));
-
-        if (mutation == null)
-        {
-            //This shouldn't ever happen because the parser *should* catch it
-            return null;
-        }
-
-        _mutationSystem ??= GetSys<PlantMutationSystem>();
-        if (!_mutationSystem.TryAddMutation((input, plant), mutation))
-        {
-            ctx.ReportError(new PlantCommandError(
-                $"Mutation '{mutation.Name}' is already present or conflicts with another mutation on entity {input}."));
-            return null;
-        }
-
-        return input;
-    }
-
-    [CommandImplementation("addmutation")]
-    public IEnumerable<Entity<PlantComponent>> AddMutation(
-        IInvocationContext ctx,
-        [PipedArgument] IEnumerable<Entity<PlantComponent>> input,
-        [CommandArgument(typeof(PlantMutationNameParser))]
-        (ProtoId<RandomPlantMutationListPrototype> tableId, string mutationName) mutation
-    )
-    {
-        return input
-            .Select(entity => AddMutation(ctx, entity, mutation.tableId, mutation.mutationName))
-            .OfType<Entity<PlantComponent>>();
     }
 
     public Entity<PlantComponent>? AddChemical(
@@ -214,34 +152,75 @@ public sealed partial class PlantCommand : ToolshedCommand
                 $"Plant entity {input} did not accept added chemicals."));
             return null;
         }
+        
+        return input;
+    }
+
+    public Entity<PlantComponent>? AddMutation(
+        IInvocationContext ctx,
+        [PipedArgument] Entity<PlantComponent> input,
+        ProtoId<RandomPlantMutationListPrototype> tableId,
+        string mutationName)
+    {
+        if (!TryGetPlant(input, ctx, out var plant, out _))
+            return null;
+
+        var table = _prototypeManager.Index(tableId);
+        var mutation = table.Mutations.FirstOrDefault(candidate =>
+            string.Equals(candidate.Name, mutationName, StringComparison.OrdinalIgnoreCase));
+
+        //This shouldn't ever happen because the parser *should* catch it
+        if (mutation == null)
+            return null;
+
+        _mutationSystem ??= GetSys<PlantMutationSystem>();
+        if (!_mutationSystem.TryAddMutation((input, plant), mutation))
+        {
+            ctx.ReportError(new PlantCommandError(
+                $"Mutation '{mutation.Name}' is already present or conflicts with another mutation on entity {input}."));
+            return null;
+        }
 
         return input;
     }
 
-    [CommandImplementation("addchem")]
-    public IEnumerable<Entity<PlantComponent>> AddChemical(
+    private Entity<PlantComponent>? SpawnPlant(
         IInvocationContext ctx,
-        [PipedArgument] IEnumerable<Entity<PlantComponent>> input,
-        ProtoId<ReagentPrototype> reagent,
-        [CommandArgument(typeof(PlantChemQuantityParser))] float min,
-        [CommandArgument(typeof(PlantChemQuantityParser))] float amount,
-        bool inherent = false)
+        [PipedArgument] EntityCoordinates coordinates,
+        EntProtoId seedPrototype)
     {
-        return input
-            .Select(entity => AddChemical(ctx, entity, reagent, min, amount, inherent))
-            .OfType<Entity<PlantComponent>>();
+        var seedProto = _prototypeManager.Index(seedPrototype);
+        if (!seedProto.TryComp<SeedComponent>(out var seedComponent, _componentFactory))
+            return null;
+
+        var tray = Spawn(TrayPrototype, coordinates);
+        if (!TryComp<PlantTrayComponent>(tray, out var trayComponent))
+            return null;
+
+        var plant = Spawn(seedComponent.PlantProtoId, coordinates);
+
+        _botany ??= GetSys<BotanySystem>();
+        _botany.ApplyPlantSnapshotData(seedComponent.PlantData, plant);
+
+        _plantTray ??= GetSys<PlantTraySystem>();
+        _plantTray.PlantingPlantInTray((tray, trayComponent), plant);
+
+        if(!EntityManager.TryGetComponent(plant, out PlantComponent? plantComponent))
+            return null;
+
+        return (plant, plantComponent);
     }
 
     private bool TryGetPlant(
         EntityUid input,
         IInvocationContext ctx,
-        out PlantComponent plant,
-        out PlantHolderComponent holder)
+        [NotNullWhen(true)] out PlantComponent? plant,
+        [NotNullWhen(true)] out PlantHolderComponent? holder)
     {
-        plant = default!;
-        holder = default!;
-        if (!TryComp<PlantComponent>(input, out var plantComponent) ||
-            !TryComp<PlantHolderComponent>(input, out var holderComponent))
+        plant = null;
+        holder = null;
+        if (!TryComp<PlantComponent>(input, out var plantComponent)
+            || !TryComp<PlantHolderComponent>(input, out var holderComponent))
         {
             ctx.ReportError(new PlantCommandError($"Entity {input} is not a plant."));
             return false;
@@ -260,7 +239,20 @@ public sealed partial class PlantCommand : ToolshedCommand
         return true;
     }
 
-    private bool AgeTicks(Entity<PlantComponent> plant, Entity<PlantHolderComponent> holder, int ticks)
+    private Entity<PlantComponent>? Age(
+        IInvocationContext ctx,
+        [PipedArgument] Entity<PlantComponent> input,
+        int ticks)
+    {
+        if (!TryGetPlant(input, ctx, out var plant, out var holder))
+            return null;
+
+        TryAgeTicks((input, plant), (input, holder), ticks);
+
+        return input;
+    }
+
+    private bool TryAgeTicks(Entity<PlantComponent> plant, Entity<PlantHolderComponent> holder, int ticks)
     {
         _plantHolder ??= GetSys<PlantHolderSystem>();
         _plant ??= GetSys<PlantSystem>();
@@ -269,196 +261,148 @@ public sealed partial class PlantCommand : ToolshedCommand
         _plant.ForceUpdate(plant.AsNullable());
         return !Deleted(plant) && !_plantHolder.IsDead(holder.AsNullable());
     }
-}
 
-
-public sealed class PlantCommandError(string message) : ConError
-{
-    public override FormattedMessage DescribeInner()
+    private Entity<PlantComponent>? SpawnPlant(
+        IInvocationContext ctx,
+        [PipedArgument] EntityUid target,
+        EntProtoId seedPrototype)
     {
-        return FormattedMessage.FromUnformatted(message);
+        return SpawnPlant(ctx, Transform(target).Coordinates, seedPrototype);
     }
-}
 
-public sealed class PlantChemQuantityParser : CustomTypeParser<float>
-{
-    public override bool TryParse(ParserContext ctx, out float result)
+    private sealed class PlantCommandError(string message) : ConError
     {
-        var start = ctx.Index;
-
-        if (!Toolshed.TryParse(ctx, out result))
-            return false;
-
-        if (!float.IsFinite(result))
+        public override FormattedMessage DescribeInner()
         {
-            ctx.Error = new PlantCommandError($"Plant chem quantities must be finite");
-            ctx.Error.Contextualize(ctx.Input, (start, ctx.Index));
-            return false;
+            return FormattedMessage.FromUnformatted(message);
         }
+    }
 
-        if (result is >= 0)
+    /// <summary> Parser for toolshed commands that can read out and provide autocomplete for seed prototypes. </summary>
+    public sealed partial class PlantSeedPrototypeParser : CustomTypeParser<EntProtoId>
+    {
+        private static readonly ProtoId<EntityCategoryPrototype> SeedsCategoryId = "Seeds";
+
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IComponentFactory _componentFactory = default!;
+
+        /// <inheritdoc/>
+        public override bool TryParse(ParserContext ctx, out EntProtoId result)
+        {
+            var start = ctx.Index;
+            result = default;
+
+            if (!Toolshed.TryParse(ctx, out EntProtoId? seed))
+                return false;
+
+            if (!_prototypeManager.TryIndex(seed, out var prototype))
+            {
+                ctx.Error = new PlantCommandError(
+                    $"Couldn't find prototype '{result}'");
+                ctx.Error.Contextualize(ctx.Input, (start, ctx.Index));
+                return false;
+            }
+
+            if (!prototype.HasComp<SeedComponent>(_componentFactory))
+            {
+                ctx.Error = new PlantCommandError(
+                    $"Prototype '{result}' isn't a seed.");
+                ctx.Error.Contextualize(ctx.Input, (start, ctx.Index));
+
+                return false;
+            }
+
+            result = seed.Value;
             return true;
+        }
 
-        ctx.Error = new PlantCommandError($"Plant chem quantities must be non-negative");
-        ctx.Error.Contextualize(ctx.Input, (start, ctx.Index));
-        return false;
+        /// <inheritdoc/>
+        public override CompletionResult TryAutocomplete(ParserContext ctx, CommandArgument? arg)
+        {
+            var hint = ToolshedCommand.GetArgHint(arg, typeof(ProtoId<EntityPrototype>));
+            var completionOptions = CompletionHelper.EntityPrototypes(ctx.GetWord(), SeedsCategoryId, _prototypeManager);
+            return CompletionResult.FromHintOptions(completionOptions, hint);
+        }
     }
 
-    public override CompletionResult? TryAutocomplete(
-        ParserContext ctx,
-        CommandArgument? arg)
+    /// <summary>
+    /// Parser for toolshed commands that can read out and provide autocomplete for specific mutations.
+    /// </summary>
+    public sealed partial class PlantMutationNameParser : CustomTypeParser<PlantMutationSelector>
     {
-        return CompletionResult.FromHint($"<quantity: A non-negative value>");
-    }
-}
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
 
-public sealed class PlantTicksParser : CustomTypeParser<int>
-{
-    private const int MaxAgeTicks = 1000;
-    public override bool TryParse(ParserContext ctx, out int result)
-    {
-        var start = ctx.Index;
+        /// <inheritdoc/>
+        public override bool TryParse(
+            ParserContext ctx,
+            [NotNullWhen(true)] out PlantMutationSelector? result)
+        {
+            var start = ctx.Index;
+            result = null;
+            if (!Toolshed.TryParse(ctx, out ProtoId<RandomPlantMutationListPrototype> table))
+            {
+                ctx.Error = new PlantCommandError("Failed to parse plant mutation list.");
+                ctx.Error.Contextualize(ctx.Input, (start, ctx.Index));
+                return false;
+            }
 
-        if (!Toolshed.TryParse(ctx, out result))
-            return false;
+            if (!Toolshed.TryParse<string>(ctx, out var name))
+                return false;
 
-        if (result is >= 0 and <= MaxAgeTicks)
+            result = new(table, name);
+            var foundMutation = _prototypeManager.Index(table)
+                                                 .Mutations
+                                                 .Any(mutation => string.Equals(
+                                                     mutation.Name,
+                                                     name,
+                                                     StringComparison.OrdinalIgnoreCase)
+                                                 );
+            if (!foundMutation)
+            {
+                ctx.Error = new PlantCommandError($"Plant mutation '{name}' is not on list '{table}'.");
+                return false;
+            }
+
             return true;
-
-        ctx.Error = new PlantCommandError(
-            $"Plant growth ticks must be between 0 and {MaxAgeTicks}.");
-
-        ctx.Error.Contextualize(ctx.Input, (start, ctx.Index));
-        return false;
-    }
-
-    public override CompletionResult? TryAutocomplete(
-        ParserContext ctx,
-        CommandArgument? arg)
-    {
-        return CompletionResult.FromHint($"<ticks: 0-{MaxAgeTicks}>");
-    }
-}
-
-public sealed partial class PlantSeedPrototypeParser : CustomTypeParser<EntProtoId>
-{
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
-    [Dependency] private IComponentFactory _componentFactory = default!;
-
-    public override bool TryParse(
-        ParserContext ctx,
-        out EntProtoId result)
-    {
-        var start = ctx.Index;
-
-        EntProtoId? seed;
-
-        if (!Toolshed.TryParse(ctx, out seed))
-        {
-            ctx.Error = new PlantCommandError(
-                $"Error parsing prototype '{seed}'.");
-            ctx.Error.Contextualize(ctx.Input, (start, ctx.Index));
-            result = "";
-            return false;
         }
 
-        result = (EntProtoId)seed;
-
-        if (!_prototypeManager.TryIndex(result, out EntityPrototype? prototype))
+        /// <inheritdoc/>
+        public override CompletionResult TryAutocomplete(ParserContext ctx, CommandArgument? arg)
         {
-            ctx.Error = new PlantCommandError(
-                $"Couldn't find prototype '{result}'");
-            ctx.Error.Contextualize(ctx.Input, (start, ctx.Index));
-            return false;
+            if (!Toolshed.TryParse<ProtoId<RandomPlantMutationListPrototype>>(ctx, out var tableId))
+            {
+                return CompletionResult.FromHintOptions(
+                    _prototypeManager.EnumeratePrototypes<RandomPlantMutationListPrototype>()
+                                     .Select(prototype => new CompletionOption(prototype.ID)),
+                    "<mutation table>"
+                );
+            }
+            var options = _prototypeManager.Index(tableId)
+                                           .Mutations.Select(mutation => mutation.Name)
+                                           .Distinct(StringComparer.OrdinalIgnoreCase)
+                                           .OrderBy(name => name)
+                                           .Select(name => new CompletionOption(
+                                               $"\"{name}\"",
+                                               Flags: CompletionOptionFlags.NoEscape)
+                                           );
+
+            return CompletionResult.FromHintOptions(options, "<mutation name>");
         }
 
-        if (prototype.HasComp<SeedComponent>(_componentFactory))
-            return true;
-
-        ctx.Error = new PlantCommandError(
-            $"Prototype '{result}' isn't a seed.");
-        ctx.Error.Contextualize(ctx.Input, (start, ctx.Index));
-
-        return false;
-    }
-    public override CompletionResult TryAutocomplete(
-        ParserContext ctx,
-        CommandArgument? arg)
-    {
-        var options = _prototypeManager
-            .EnumeratePrototypes<EntityPrototype>()
-            .Where(prototype => prototype.HasComp<SeedComponent>(_componentFactory))
-            .OrderBy(prototype => prototype.ID)
-            .Select(prototype => new CompletionOption(prototype.ID));
-        return CompletionResult.FromHintOptions(options, "<mutation name>");
     }
 }
 
-public sealed partial class PlantMutationNameParser : CustomTypeParser<(ProtoId<RandomPlantMutationListPrototype> tableId, string mutationName)>
+
+/// <summary>
+/// Combination of Id for RandomPlantMutationListPrototype and name of mutation, which should uniquely identify a mutation.
+/// </summary>
+public record PlantMutationSelector(ProtoId<RandomPlantMutationListPrototype> TableId, string MutationName);
+
+static file class LocalExtensions
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
-
-    public override bool TryParse(
-        ParserContext ctx,
-        out (ProtoId<RandomPlantMutationListPrototype> tableId, string mutationName) result)
+    public static IEnumerable<Entity<PlantComponent>> CastNotNullOnly(this IEnumerable<Entity<PlantComponent>?> source)
     {
-        var start = ctx.Index;
-        ProtoId<RandomPlantMutationListPrototype> table;
-        if (!Toolshed.TryParse(ctx, out table))
-        {
-            ctx.Error = new PlantCommandError(
-                $"Plant mutation list is not parsing.");
-            ctx.Error.Contextualize(ctx.Input, (start, ctx.Index));
-            result = (table, "");
-            return false;
-        }
-
-        var mid = ctx.Index;
-        string? name;
-        if (!Toolshed.TryParse(ctx, out name))
-        {
-            ctx.Error = new PlantCommandError(
-                $"Plant mutation is not parsing.");
-            ctx.Error.Contextualize(ctx.Input, (mid, ctx.Index));
-            result = (table, "");
-            return false;
-        }
-
-        result = (table, name);
-        if (!_prototypeManager
-            .Index(table)
-            .Mutations
-            .Any(mutation => string.Equals(
-                mutation.Name,
-                name,
-                StringComparison.OrdinalIgnoreCase)))
-        {
-            ctx.Error = new PlantCommandError(
-                $"Plant mutation '{name}' is not on list '{table}'.");
-            ctx.Error.Contextualize(ctx.Input, (mid, ctx.Index));
-            return false;
-        }
-        return true;
-    }
-    public override CompletionResult? TryAutocomplete(
-        ParserContext ctx,
-        CommandArgument? arg)
-    {
-        if (!Toolshed.TryParse<ProtoId<RandomPlantMutationListPrototype>>(ctx, out var tableId))
-        {
-            return CompletionResult.FromHintOptions(
-                _prototypeManager.EnumeratePrototypes<RandomPlantMutationListPrototype>()
-                .Select(prototype => new CompletionOption(prototype.ID)), "<mutation table>");
-        }
-
-        var options = _prototypeManager.Index(tableId).Mutations
-            .Select(mutation => mutation.Name)
-            .Distinct(StringComparer.OrdinalIgnoreCase)
-            .OrderBy(name => name)
-            .Select(name => new CompletionOption(
-                $"\"{name}\"",
-                Flags: CompletionOptionFlags.NoEscape));
-
-        return CompletionResult.FromHintOptions(options, "<mutation name>");
+        return source.Where(x => x is { Comp: not null })
+                     .Select(x => new Entity<PlantComponent>(x!.Value, x.Value!));
     }
 }
