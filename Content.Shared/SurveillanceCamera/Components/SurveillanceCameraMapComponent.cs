@@ -42,7 +42,7 @@ public partial struct CameraMarker
     /// Network address of the camera.
     /// </summary>
     [DataField]
-    public string Address;
+    public DeviceAddress Address;
 
     /// <summary>
     /// Subnet the camera is connected to.

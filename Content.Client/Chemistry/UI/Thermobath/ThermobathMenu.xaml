@@ -271,7 +271,7 @@
                                             <gfx:StyleBoxFlat BackgroundColor="Transparent" BorderColor="#444444"
                                                               BorderThickness="2" />
                                         </PanelContainer.PanelOverride>
-                                        <controls:OnOffButton Name="PowerButton" IsOn="False" Margin="5" />
+                                        <controls:SwitchButton Name="PowerButton" Pressed="False" Margin="5" />
                                     </PanelContainer>
                                 </BoxContainer>
                             </BoxContainer>

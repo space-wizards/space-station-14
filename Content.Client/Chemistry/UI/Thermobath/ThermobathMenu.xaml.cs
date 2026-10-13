@@ -45,23 +45,23 @@ public sealed partial class ThermobathMenu : FancyWindow
 
         _powerIndicatorStyle = new StyleBoxFlat
         {
-            BackgroundColor = DisabledColor,
+            BackgroundColor = DisabledColor
         };
         PowerIndicator.PanelOverride = _powerIndicatorStyle;
 
         _heatingIndicatorStyle = new StyleBoxFlat
         {
-            BackgroundColor = DisabledColor,
+            BackgroundColor = DisabledColor
         };
         HeatingIndicator.PanelOverride = _heatingIndicatorStyle;
 
         _coolingIndicatorStyle = new StyleBoxFlat
         {
-            BackgroundColor = DisabledColor,
+            BackgroundColor = DisabledColor
         };
         CoolingIndicator.PanelOverride = _coolingIndicatorStyle;
 
-        PowerButton.StateChanged += enabled => OnPowerChanged?.Invoke(enabled);
+        PowerButton.OnToggled += args => OnPowerChanged?.Invoke(args.Pressed);
 
         _setpointInput.IsValid = float.IsFinite;
         _setpointInput.OnValueChanged += OnSetpointInputChanged;
@@ -83,7 +83,7 @@ public sealed partial class ThermobathMenu : FancyWindow
         UpdateStatusIndicators();
     }
 
-    public void SetPowerSwitchState(bool enabled) => PowerButton.IsOn = enabled;
+    public void SetPowerSwitchState(bool enabled) => PowerButton.Pressed = enabled;
 
     public void SetTemperatureLimits(float min, float max)
     {
