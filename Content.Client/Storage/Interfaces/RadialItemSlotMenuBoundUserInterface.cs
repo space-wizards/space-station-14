@@ -1,9 +1,9 @@
 using System.Linq;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Containers.ItemSlots.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Storage.Interfaces;
 
@@ -42,6 +42,12 @@ public sealed partial class RadialItemSlotMenuBoundUserInterface(EntityUid owner
         // e.g. placing an explosive wet floor sign and a normal one into a janitorial trolley in that order will eject the normal one.
         var slots = itemSlots.Slots.Values.Reverse();
 
+        var compactSimilarItemsInRadialMenu = false;
+        if (EntMan.TryGetComponent<ActivatableUIRequiresFilledItemSlotComponent>(Owner, out var requiresFilledItemSlot))
+        {
+            compactSimilarItemsInRadialMenu = requiresFilledItemSlot.CompactSimilarItemsInRadialMenu;
+        }
+
         foreach (var slot in slots)
         {
             if(!slot.HasItem)
@@ -50,7 +56,7 @@ public sealed partial class RadialItemSlotMenuBoundUserInterface(EntityUid owner
             if (!_metaQuery.TryComp(slot.Item.Value, out var meta)
                 || meta.EntityPrototype == null
                 || slot.ID == null
-                || itemSlots.CompactSimilarItemsInRadialMenu && !usedItemNames.Add(meta.EntityName))
+                || compactSimilarItemsInRadialMenu && !usedItemNames.Add(meta.EntityName))
                 continue;
 
             var option = new RadialMenuActionOption<string>(EjectItem, slot.ID)
