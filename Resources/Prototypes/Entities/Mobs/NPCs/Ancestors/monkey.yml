@@ -1,8 +1,9 @@
 - type: entity
   name: monkey
-  id: MobMonkey
+  id: MobBaseMonkey
   parent: MobBaseAncestor
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
+  abstract: true
   components:
   - type: NameIdentifier
     group: Monkey
@@ -12,6 +13,12 @@
   - type: MonkeyAccent
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-primate
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  id: MobMonkey
+  parent: MobBaseMonkey
+  components:
   - type: AlwaysRevolutionaryConvertible
   - type: GhostRole
     prob: 0.05
@@ -19,26 +26,15 @@
     name: ghost-role-information-monkey-name
     description: ghost-role-information-monkey-description
     rules: ghost-role-information-nonantagonist-rules
-  - type: GhostTakeoverAvailable
   - type: PermanentStatusEffects
     statusEffects:
     - StatusEffectClumsyMonkey
 
 - type: entity
-  name: monkey
   id: MobBaseSyndicateMonkey
-  parent: MobBaseAncestor # TODO: fix copy paste from MobMonkey
-  description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
+  parent: MobBaseMonkey
   suffix: syndicate base
   components:
-  - type: NameIdentifier
-    group: Monkey
-  - type: SentienceTarget
-    flavorKind: station-event-random-sentience-flavor-primate
-  - type: Speech
-    speechSounds: Monkey
-    speechVerb: Monkey
-  - type: MonkeyAccent
   - type: NpcFactionMember
     factions:
     - Syndicate
@@ -52,7 +48,6 @@
     - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
-  - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [SyndicateOperativeGearMonkey]
 
