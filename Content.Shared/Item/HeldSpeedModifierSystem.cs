@@ -51,6 +51,7 @@ public sealed partial class HeldSpeedModifierSystem : EntitySystem
 
         ent.Comp.SprintModifier = sprintMod;
         ent.Comp.WalkModifier = walkMod;
+        Dirty(ent);
     }
 
     private void OnRefreshMovementSpeedModifiers(EntityUid uid, HeldSpeedModifierComponent component, HeldRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
