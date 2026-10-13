@@ -1,6 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Botany.Components;
@@ -17,7 +15,7 @@ using Robust.Shared.Toolshed.Syntax;
 using Robust.Shared.Toolshed.TypeParsers;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Toolshed.Botany;
+namespace Content.Server.Botany.Toolshed;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Spawn | AdminFlags.VarEdit)]
 public sealed partial class PlantCommand : ToolshedCommand
