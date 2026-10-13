@@ -24,44 +24,40 @@ public sealed partial class DnaImprinterReaction : ReactionExtension
 
     public override void React(IReadOnlyList<ReagentQuantity> reactants, List<ReagentQuantity> products)
     {
-        var dnaQuantities = new List<(FixedPoint2 Quantity, string? Dna)>();
-        FixedPoint2 inputQuantity = 0;
-        FixedPoint2 outputQuantity = 0;
-
+        var input = FixedPoint2.Zero;
         foreach (var reactant in reactants)
         {
-            if (DnaSource != reactant.Reagent.Prototype)
-                continue;
-
-            var dna = reactant.Reagent.Data?.OfType<DnaData>().FirstOrDefault()?.DNA;
-            dnaQuantities.Add((reactant.Quantity, dna));
-            inputQuantity += reactant.Quantity;
+            if (reactant.Reagent.Prototype == DnaSource)
+                input += reactant.Quantity;
         }
 
-        if (dnaQuantities.Count <= 0)
+        if (input <= FixedPoint2.Zero)
             return;
 
-        for (var i = 0; i < products.Count; i++)
+        var output = FixedPoint2.Zero;
+        for (var i = products.Count - 1; i >= 0; i--)
         {
-            var product = products[i];
-            if (product.Reagent.Prototype != DnaOutput)
+            if (products[i].Reagent.Prototype != DnaOutput)
                 continue;
 
-            outputQuantity += product.Quantity;
-            products[i] = new ReagentQuantity(product.Reagent.Prototype, FixedPoint2.Zero); // remove the base product so we can multiple based on the proportions.
+            output += products[i].Quantity;
+            products.RemoveAt(i);
         }
 
-        if (outputQuantity <= FixedPoint2.Zero)
+        if (output <= FixedPoint2.Zero)
             return;
 
-        var outputRatio = outputQuantity / inputQuantity;
-        foreach (var (quantity, dna) in dnaQuantities)
+        var ratio = output / input;
+        foreach (var reactant in reactants)
         {
-            var outputAmount = quantity * outputRatio;
-            if (dna == null)
-                products.Add(new ReagentQuantity(DnaOutput, outputAmount));
-            else
-                products.Add(new ReagentQuantity(DnaOutput, outputAmount, new List<ReagentData>{ new DnaData { DNA = dna } }));
+            if (reactant.Reagent.Prototype != DnaSource)
+                continue;
+
+            List<ReagentData>? data = null;
+            if (reactant.Reagent.Data?.OfType<DnaData>().FirstOrDefault() is { } dna)
+                data = new List<ReagentData>{ dna.Clone() };
+
+            products.Add(new ReagentQuantity(DnaOutput, reactant.Quantity * ratio, data));
         }
     }
 }
