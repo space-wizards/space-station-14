@@ -16,13 +16,18 @@ public sealed partial class TestDestructibleListenerSystem : EntitySystem
 {
     public readonly List<DamageThresholdReached> ThresholdsReached = [];
 
-    [SubscribeLocalEvent]
-    public void AddThresholdsToList(EntityUid _, DestructibleComponent comp, DamageThresholdReached args)
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<DestructibleComponent, DamageThresholdReached>(AddThresholdsToList);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+    }
+
+    private void AddThresholdsToList(Entity<DestructibleComponent> ent, ref DamageThresholdReached args)
     {
         ThresholdsReached.Add(args);
     }
 
-    [SubscribeLocalEvent]
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
     {
         ThresholdsReached.Clear();
