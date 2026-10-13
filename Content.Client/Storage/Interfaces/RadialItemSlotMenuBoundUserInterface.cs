@@ -27,9 +27,9 @@ public sealed partial class RadialItemSlotMenuBoundUserInterface(EntityUid owner
         var selectableEntities = CreateButtons(itemSlots);
 
         _menu = this.CreateWindow<SimpleRadialMenu>();
+        _menu.Track(Owner);
         _menu.SetButtons(selectableEntities);
-
-        _menu.OpenOverMouseScreenPosition();
+        _menu.Open();
     }
 
     private IEnumerable<RadialMenuOptionBase> CreateButtons(ItemSlotsComponent itemSlots)
