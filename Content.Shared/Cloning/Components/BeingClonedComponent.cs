@@ -1,22 +1,23 @@
 using Content.Shared.Mind;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Cloning.Components;
 
 /// <summary>
 /// Added to a body that is being cloned. Tracks mind and parent pod entity.
 /// </summary>
-[RegisterComponent]
-public sealed partial class BeingClonedComponent : Robust.Shared.GameObjects.Component
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class BeingClonedComponent : Component
 {
     /// <summary>
     /// The mind associated with the body being cloned, if any.
     /// </summary>
-    [ViewVariables]
-    public MindComponent? Mind = default;
+    [ViewVariables, AutoNetworkedField]
+    public MindComponent? Mind = null;
 
     /// <summary>
     /// EntityUid of the cloning pod (parent).
     /// </summary>
-    [ViewVariables]
+    [DataField, AutoNetworkedField]
     public EntityUid Parent;
 }

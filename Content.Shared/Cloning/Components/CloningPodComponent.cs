@@ -13,7 +13,7 @@ namespace Content.Shared.Cloning.Components;
 /// Component for cloning pods; manages cloning process, state, and cloning pod interactions.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
-public sealed partial class CloningPodComponent : Robust.Shared.GameObjects.Component
+public sealed partial class CloningPodComponent : Component
 {
     /// <summary>
     /// DeviceLink sink port identifier for this pod.

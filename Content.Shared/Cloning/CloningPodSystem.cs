@@ -273,6 +273,7 @@ public abstract partial class CloningPodSystem : EntitySystem
         var cloneMindReturn = AddComp<BeingClonedComponent>(mob.Value);
         cloneMindReturn.Mind = mind;
         cloneMindReturn.Parent = ent.Owner;
+        Dirty(mob.Value, cloneMindReturn);
 
         if (ent.Comp.BodyContainer == null)
             return false;

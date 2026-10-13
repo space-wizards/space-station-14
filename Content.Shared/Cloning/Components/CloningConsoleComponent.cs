@@ -8,7 +8,7 @@ namespace Content.Shared.Cloning.Components;
 /// Component for cloning console UI. Stores references and state for connected cloning machines.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class CloningConsoleComponent : Robust.Shared.GameObjects.Component
+public sealed partial class CloningConsoleComponent : Component
 {
     /// <summary>
     /// DeviceLink source port name for medical scanner.
@@ -25,14 +25,14 @@ public sealed partial class CloningConsoleComponent : Robust.Shared.GameObjects.
     /// <summary>
     /// EntityUid of connected genetic scanner (if any).
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
-    public EntityUid? GeneticScanner = null;
+    [DataField, AutoNetworkedField]
+    public EntityUid? GeneticScanner;
 
     /// <summary>
     /// EntityUid of connected cloning pod (if any).
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
-    public EntityUid? CloningPod = null;
+    [DataField, AutoNetworkedField]
+    public EntityUid? CloningPod;
 
     /// <summary>
     /// Maximum distance between console and one if its machines.
@@ -43,12 +43,12 @@ public sealed partial class CloningConsoleComponent : Robust.Shared.GameObjects.
     /// <summary>
     /// Scanner in range for interaction.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [ViewVariables, AutoNetworkedField]
     public bool GeneticScannerInRange = true;
 
     /// <summary>
     /// Cloning pod in range for interaction.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [ViewVariables, AutoNetworkedField]
     public bool CloningPodInRange = true;
 }
