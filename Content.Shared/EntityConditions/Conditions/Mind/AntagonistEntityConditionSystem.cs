@@ -1,4 +1,4 @@
-﻿using Content.Shared.Mind;
+using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 

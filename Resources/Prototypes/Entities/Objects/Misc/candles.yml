@@ -41,6 +41,7 @@
     - type: FireVisuals
       sprite: Objects/Misc/candles.rsi
       normalState: fire-big
+    - type: SpookyExtinguishable
     - type: ToggleableVisuals
       spriteLayer: null
       inhandVisuals:

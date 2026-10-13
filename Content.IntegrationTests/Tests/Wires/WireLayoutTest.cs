@@ -1,4 +1,4 @@
-﻿using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.Doors;
 using Content.Server.Power;
 using Content.Server.Wires;

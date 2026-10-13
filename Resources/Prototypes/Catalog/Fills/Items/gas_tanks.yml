@@ -283,10 +283,14 @@
   suffix: Max Cap, Canister
   components:
   - type: Explosive
-    maxIntensity: 200
+    maxIntensity: 100
+    tileBreakScale: 0.2 # Keeps the can from spacing all the hot gas it has now vented :). If this proves to be too much it can be removed.
   - type: GasTank
-    safetyPressure: 5066.25
-    overpressure: 15198.75
+    maxIntegrity: 15 # 5 times stronger than a gas tank
+    integrity: 15
+    maxReleasePressure: 1013.25
+    safetyPressure: 10132.5 # High enough that liquid tanks don't burst immediately, with an extra 33% wiggle room to work with
+    overpressure: 20265 # Purposefully high because cans react really fucking fast, may need to redo this value if reactions change!
     air:
       volume: 1500
       moles:

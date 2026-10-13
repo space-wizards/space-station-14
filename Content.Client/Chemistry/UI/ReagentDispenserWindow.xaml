@@ -1,7 +1,5 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
-                      xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                      xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
                       xmlns:ui="clr-namespace:Content.Client.Chemistry.UI"
                       Title="{Loc 'reagent-dispenser-bound-user-interface-title'}"
                       MinSize="600 300"
@@ -61,10 +59,7 @@
                              HorizontalExpand="True"
                              VerticalExpand="True"
                              MinHeight="50">
-                <PanelContainer VerticalExpand="True">
-                    <PanelContainer.PanelOverride>
-                        <gfx:StyleBoxFlat BackgroundColor="#1b1b1e" />
-                    </PanelContainer.PanelOverride>
+                <PanelContainer VerticalExpand="True" StyleClasses="PanelDeep">
                     <BoxContainer Name="ContainerInfo"
                                   Orientation="Vertical"
                                   HorizontalExpand="True"

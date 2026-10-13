@@ -142,6 +142,11 @@
   path: "/Textures/Shaders/sharpness.swsl"
 
 - type: shader
+  id: VacuumDesaturation
+  kind: source
+  path: "/Textures/Shaders/vacuum_desaturation.swsl"
+
+- type: shader
   id: XRayVision
   kind: source
   path: "/Textures/Shaders/xrayvision.swsl"

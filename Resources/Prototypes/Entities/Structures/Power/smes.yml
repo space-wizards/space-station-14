@@ -85,8 +85,6 @@
       requirePower: true
       highVoltageNode: input
       mediumVoltageNode: output
-    - type: Damageable
-      damageModifierSet: StructuralMetallicStrong
     - type: Destructible
       thresholds:
       - trigger: !type:DamageTrigger
@@ -103,7 +101,7 @@
       prefix: device-address-prefix-smes
       sendBroadcastAttemptEvent: true
       examinableAddress: true
-    - type: WiredNetworkConnection
+    - type: WiredNetwork
     - type: GuideHelp
       guides:
       - PowerStorage

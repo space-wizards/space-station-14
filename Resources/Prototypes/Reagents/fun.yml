@@ -37,7 +37,8 @@
   metabolisms:
     Digestion:
       effects:
-      - !type:SatiateHunger
+      - !type:Satiate
+        satiationType: Hunger
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Moth ]
@@ -340,7 +341,7 @@
       effects:
       - !type:Emote
         emote: Weh
-        showInChat: true
+        showInChat: false
         showInGuidebook: true
         force: true
         probability: 0.5
@@ -375,7 +376,7 @@
       effects:
       - !type:Emote
         emote: Hew
-        showInChat: true
+        showInChat: false
         showInGuidebook: true
         force: true
         probability: 0.5
@@ -437,7 +438,6 @@
           reagent: Felinase
           min: 10
         emote: Cough
-        showInChat: true
         showInGuidebook: true
         force: true
         probability: 0.05
@@ -446,6 +446,10 @@
         visualType: Small
         messages: [ "capsaicin-effect-light-burn" ]
         probability: 0.05
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectNightVision
+        time: 2
+        type: Add
 
 - type: reagent
   id: Caninase
@@ -488,7 +492,6 @@
           reagent: Caninase
           min: 10
         emote: Cough
-        showInChat: true
         showInGuidebook: true
         force: true
         probability: 0.05

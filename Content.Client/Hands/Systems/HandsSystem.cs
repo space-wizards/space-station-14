@@ -29,6 +29,7 @@ namespace Content.Client.Hands.Systems
 
         [Dependency] private StrippableSystem _stripSys = default!;
         [Dependency] private SpriteSystem _sprite = default!;
+        [Dependency] private TransformSystem _renderTransforms = default!;
         [Dependency] private ExamineSystem _examine = default!;
         [Dependency] private DisplacementMapSystem _displacement = default!;
 
@@ -57,6 +58,13 @@ namespace Content.Client.Hands.Systems
         #region StateHandling
         private void HandleComponentState(Entity<HandsComponent> ent, ref ComponentHandleState args)
         {
+            // No need to update everything if we are only switching hands.
+            if (args.Current is HandsComponentActiveHandDeltaState activeHandState)
+            {
+                SetActiveHand(ent.AsNullable(), activeHandState.ActiveHandId);
+                return;
+            }
+
             if (args.Current is not HandsComponentState state)
                 return;
 
@@ -72,10 +80,18 @@ namespace Content.Client.Hands.Systems
             {
                 AddHand(ent.AsNullable(), handId, state.Hands[handId]);
             }
-            ent.Comp.SortedHands = new (state.SortedHands);
+            ent.Comp.SortedHands = new(state.SortedHands);
 
             SetActiveHand(ent.AsNullable(), state.ActiveHandId);
 
+            ent.Comp.ShowInHands = state.ShowInHands;
+            ent.Comp.HandDisplacement = state.HandDisplacement;
+            ent.Comp.LeftHandDisplacement = state.LeftHandDisplacement;
+            ent.Comp.RightHandDisplacement = state.RightHandDisplacement;
+            ent.Comp.CanBeStripped = state.CanBeStripped;
+
+            // TODO: Ideally this would only update if the displacement data actually changed, but there is no way to compare it since the type is not equatable.
+            UpdateAllHandVisuals((ent.Owner, ent.Comp));
             _stripSys.UpdateUi(ent);
         }
         #endregion
@@ -97,9 +113,15 @@ namespace Content.Client.Hands.Systems
             EntityCoordinates? targetDropLocation = null
         )
         {
+            TryGetHeldItem(ent, handId, out var held);
             base.DoDrop(ent, handId, doDropInteraction, log, targetDropLocation);
 
-            if (TryGetHeldItem(ent, handId, out var held) && TryComp(held, out SpriteComponent? sprite))
+            if (held == null || IsHolding(ent, held.Value))
+                return;
+
+            _renderTransforms.SnapRenderTransform(held.Value, true);
+
+            if (TryComp(held, out SpriteComponent? sprite))
                 sprite.RenderOrder = EntityManager.CurrentTick.Value;
         }
 
@@ -241,6 +263,20 @@ namespace Content.Client.Hands.Systems
 
             if (HasComp<VirtualItemComponent>(args.Entity))
                 OnPlayerHandUnblocked?.Invoke(args.Container.ID);
+        }
+
+        /// <summary>
+        /// Update the players sprite with new in-hand visuals for all held items.
+        /// </summary>
+        private void UpdateAllHandVisuals(Entity<HandsComponent?> ent)
+        {
+            foreach (var handId in EnumerateHands(ent))
+            {
+                if (!TryGetHeldItem(ent, handId, out var held))
+                    continue;
+
+                UpdateHandVisuals(ent, held.Value, handId);
+            }
         }
 
         /// <summary>

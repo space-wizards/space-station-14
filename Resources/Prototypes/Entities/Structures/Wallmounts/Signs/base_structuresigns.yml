@@ -1,20 +1,11 @@
 - type: entity
-  parent: BaseWallmountMetallic
-  id: BaseSign
-  name: base sign
   abstract: true
+  parent: BaseWallmount
+  id: BaseSignIndestructible
   components:
   - type: WallMount
     arc: 360
   - type: Rotatable
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 5
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Sprite
     sprite: Structures/Wallmounts/signs.rsi
     snapCardinals: true
@@ -24,3 +15,36 @@
   - type: Anchorable
     flags:
     - None
+
+- type: entity
+  abstract: true
+  parent: [ BaseWallmountMetallic, BaseSignIndestructible, StructureHealthFurniture ]
+  id: BaseSign
+  name: base sign
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
+
+- type: entity
+  abstract: true
+  parent: [ BaseSignIndestructible, StructureHealthFurnitureWeak ]
+  id: BaseSignWeak
+  components:
+  - type: Damageable
+    damageModifierSet: CardboardMod
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
