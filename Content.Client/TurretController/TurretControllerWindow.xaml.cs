@@ -12,6 +12,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using System.Numerics;
+using Content.Shared.DeviceNetwork;
 
 namespace Content.Client.TurretController;
 
@@ -139,7 +140,7 @@ public sealed partial class TurretControllerWindow : BaseWindow
         RefreshLinkedTurrets(state.TurretStateByAddress);
     }
 
-    public void RefreshLinkedTurrets(Dictionary<string, string> turretStates)
+    public void RefreshLinkedTurrets(Dictionary<LocDeviceAddress, string> turretStates)
     {
         var turretCount = turretStates.Count;
         var hasTurrets = turretCount > 0;

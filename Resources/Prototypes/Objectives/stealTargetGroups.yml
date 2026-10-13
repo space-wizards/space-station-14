@@ -108,6 +108,13 @@
     state: sheetNT
 
 - type: stealTargetGroup
+  id: HeadHardsuit
+  name: steal-target-groups-heads-hardsuits
+  sprite:
+    sprite: Clothing/OuterClothing/Hardsuits/security-red.rsi
+    state: icon
+
+- type: stealTargetGroup
   id: Stamp
   name: steal-target-groups-stamps
   sprite:
