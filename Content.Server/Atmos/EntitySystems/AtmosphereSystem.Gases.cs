@@ -281,7 +281,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         [PublicAPI]
-        public override ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
+        public override ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, float deltaTime=0.5f)
         {
             var reaction = ReactionResult.NoReaction;
             var temperature = mixture.Temperature;
@@ -309,7 +309,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (!doReaction)
                     continue;
 
-                reaction = prototype.React(mixture, holder, this, HeatScale);
+                reaction = prototype.React(mixture, holder, this, HeatScale, deltaTime);
                 if(reaction.HasFlag(ReactionResult.StopReactions))
                     break;
             }

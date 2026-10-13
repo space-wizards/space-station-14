@@ -12,7 +12,7 @@ namespace Content.Server.Atmos.Reactions;
 [UsedImplicitly]
 public sealed partial class FrezonProductionReaction : IGasReactionEffect
 {
-    public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale)
+    public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale, float deltaTime)
     {
         var initialN2 = mixture.GetMoles(Gas.Nitrogen);
         var initialOxy = mixture.GetMoles(Gas.Oxygen);
@@ -27,7 +27,7 @@ public sealed partial class FrezonProductionReaction : IGasReactionEffect
         var oxyLimit = Math.Min(initialOxy, catalystLimit) / Atmospherics.FrezonProductionTritRatio;
 
         // Amount of tritium & oxygen that are reacting
-        var tritBurned = Math.Min(oxyLimit, initialTrit);
+        var tritBurned = Math.Min(oxyLimit, initialTrit) * deltaTime * 2.0f;
         var oxyBurned = tritBurned * Atmospherics.FrezonProductionTritRatio;
 
         var oxyConversion = oxyBurned / Atmospherics.FrezonProductionConversionRate;

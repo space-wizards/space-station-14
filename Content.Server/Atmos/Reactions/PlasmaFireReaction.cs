@@ -9,7 +9,7 @@ namespace Content.Server.Atmos.Reactions
     [DataDefinition]
     public sealed partial class PlasmaFireReaction : IGasReactionEffect
     {
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale)
+        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale, float deltaTime)
         {
             var energyReleased = 0f;
             var oldHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture, true);
@@ -47,6 +47,8 @@ namespace Content.Server.Atmos.Reactions
                     plasmaBurnRate = initialPlasmaMoles * temperatureScale / Atmospherics.PlasmaBurnRateDelta;
                 else
                     plasmaBurnRate = temperatureScale * (initialOxygenMoles / Atmospherics.PlasmaOxygenFullburn) / Atmospherics.PlasmaBurnRateDelta;
+
+                plasmaBurnRate *= deltaTime * 2.0f;
 
                 if (plasmaBurnRate > Atmospherics.MinimumHeatCapacity)
                 {

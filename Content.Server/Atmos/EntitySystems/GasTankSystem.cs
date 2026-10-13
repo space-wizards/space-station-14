@@ -57,7 +57,7 @@ public sealed partial class GasTankSystem : SharedGasTankSystem
             }
         }
 
-        Atmos.React(entity.Comp.Air, entity.Comp);
+        Atmos.React(entity.Comp.Air, entity.Comp, args.dt);
 
         if (entity.Comp.IsConnected || entity.Comp.ReleaseValveOpen)
         {
@@ -155,14 +155,6 @@ public sealed partial class GasTankSystem : SharedGasTankSystem
 
     protected override void SafetyMeasures(Entity<GasTankComponent> entity)
     {
-        if (entity.Comp.ReleaseValveOpen)
-            return;
-
-        ToggleValve(entity);
-        if (entity.Comp.SafetyAlert != null)
-            _popup.PopupEntity(Loc.GetString(entity.Comp.SafetyAlert), entity, PopupType.LargeCaution);
-
-        Dirty(entity);
     }
 
     /// <summary>
