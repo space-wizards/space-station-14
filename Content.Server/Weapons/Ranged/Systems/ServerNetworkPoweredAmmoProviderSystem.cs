@@ -1,12 +1,9 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Database;
-using Content.Shared.DeviceLinking.Events;
-using Content.Shared.Examine;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;
 using Content.Shared.Weapons.Ranged.Components;
-using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -16,55 +13,13 @@ namespace Content.Server.Weapons.Ranged.Systems;
 /// <inheritdoc/>>
 public sealed partial class ServerNetworkPoweredAmmoProviderSystem : NetworkPoweredAmmoProviderSystem
 {
-    [Dependency] private SharedGunSystem _gun = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
-    [Dependency] private PowerStateSystem _powerState = default!;
-
-    /// <summary> Turn off on unanchor. </summary>
-    [SubscribeLocalEvent]
-    private void OnAnchorStateChanged(Entity<NetworkPoweredAmmoProviderComponent> ent, ref AnchorStateChangedEvent args)
-    {
-        if (args.Anchored)
-            return;
-
-        SwitchOff(ent);
-    }
-
-    /// <summary> Handle signals. </summary>
-    [SubscribeLocalEvent]
-    private void OnSignalReceived(Entity<NetworkPoweredAmmoProviderComponent> ent, ref SignalReceivedEvent args)
-    {
-        // must anchor device for signals to work, its network powered after all!
-        if (TryComp<PhysicsComponent>(ent, out var phys) && phys.BodyType != BodyType.Static)
-            return;
-
-        var component = ent.Comp;
-        if (args.Port == component.OffPort)
-        {
-            SwitchOff(ent);
-        }
-        else if (args.Port == component.OnPort)
-        {
-            SwitchOn(ent);
-        }
-        else if (args.Port == component.TogglePort)
-        {
-            if (_powerState.GetWorkingState(ent.Owner))
-            {
-                SwitchOff(ent);
-            }
-            else
-            {
-                SwitchOn(ent);
-            }
-        }
-    }
 
     /// <summary> Turn on/off based on power feed. </summary>
     [SubscribeLocalEvent]
     private void ReceivedChanged(Entity<NetworkPoweredAmmoProviderComponent> ent, ref PowerConsumerReceivedChanged args)
     {
-        if (!_powerState.GetWorkingState(ent.Owner))
+        if (!PowerState.GetWorkingState(ent.Owner))
             return;
 
         SetPoweredState(ent, !(args.ReceivedPower < args.DrawRate));
@@ -74,35 +29,29 @@ public sealed partial class ServerNetworkPoweredAmmoProviderSystem : NetworkPowe
     [SubscribeLocalEvent]
     private void OnApcChanged(Entity<NetworkPoweredAmmoProviderComponent> ent, ref PowerChangedEvent args)
     {
-        if (!_powerState.GetWorkingState(ent.Owner))
+        if (!PowerState.GetWorkingState(ent.Owner))
             return;
 
         SetPoweredState(ent, args.Powered);
     }
 
-    /// <summary> Spawn ammo if we are ON. </summary>
-    [SubscribeLocalEvent]
-    private void OnNetworkTakeAmmo(Entity<NetworkPoweredAmmoProviderComponent> ent, ref TakeAmmoEvent args)
+    /// <inheritdoc/>>
+    public override void SwitchOn(Entity<NetworkPoweredAmmoProviderComponent> ent)
     {
-        var shots = args.Shots;
-        if (shots == 0 || !ent.Comp.IsPowered)
+        if (!TryComp<PowerStateComponent>(ent, out var powerState))
             return;
 
-        var entityCoordinates = args.Coordinates;
+        PowerState.SetWorkingState((ent.Owner, powerState), true);
 
-        for (var i = 0; i < shots; i++)
-        {
-            var ammo = SpawnAtPosition(ent.Comp.Prototype, entityCoordinates);
-            args.Ammo.Add((ammo, _gun.EnsureShootable(ammo)));
-        }
+        SetPoweredState(ent, true);
     }
 
-    /// <summary> Push selected ammo type to examine. </summary>
-    [SubscribeLocalEvent]
-    private void OnExamined(Entity<NetworkPoweredAmmoProviderComponent> ent, ref ExaminedEvent args)
+    /// <inheritdoc/>>
+    public override void SwitchOff(Entity<NetworkPoweredAmmoProviderComponent> ent)
     {
-        var proto = ProtoMan.Index(ent.Comp.Prototype);
-        args.PushMarkup(Loc.GetString("gun-selected-mode-examine", ("color", "yellow"), ("mode", proto.Name)));
+        PowerState.SetWorkingState(ent.Owner, false);
+
+        SetPoweredState(ent, false);
     }
 
     protected override void ToggleActive(Entity<NetworkPoweredAmmoProviderComponent> ent, EntityUid user)
@@ -110,7 +59,7 @@ public sealed partial class ServerNetworkPoweredAmmoProviderSystem : NetworkPowe
         var uid = ent.Owner;
         if (TryComp(uid, out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
         {
-            var isWorking = _powerState.GetWorkingState(ent.Owner);
+            var isWorking = PowerState.GetWorkingState(ent.Owner);
             if (!isWorking)
             {
                 SwitchOn(ent);
@@ -124,8 +73,8 @@ public sealed partial class ServerNetworkPoweredAmmoProviderSystem : NetworkPowe
 
             if (ent.Comp.AdminLogToggleLevel.HasValue)
             {
-                var stateText = isWorking ? "on" : "off";
-                var logLevel = isWorking ? LogImpact.Medium : LogImpact.High;
+                var stateText = isWorking ? "off" : "on";
+                var logLevel = isWorking ? LogImpact.High : LogImpact.Medium;
                 _adminLogger.Add(
                     ent.Comp.AdminLogToggleLevel.Value,
                     logLevel,
@@ -139,39 +88,18 @@ public sealed partial class ServerNetworkPoweredAmmoProviderSystem : NetworkPowe
         }
     }
 
-    /// <summary> Turns device ON, enabling drawing ammo by constantly using power. </summary>
-    public void SwitchOn(Entity<NetworkPoweredAmmoProviderComponent> ent)
-    {
-        if (!TryComp<PowerStateComponent>(ent, out var powerState))
-            return;
-
-        _powerState.SetWorkingState((ent.Owner, powerState), true);
-
-        SetPoweredState(ent, true);
-    }
-
-    /// <summary>
-    /// Turns device OFF, disabling power usage.
-    /// </summary>
-    public void SwitchOff(Entity<NetworkPoweredAmmoProviderComponent> ent)
-    {
-        _powerState.SetWorkingState(ent.Owner, false);
-
-        SetPoweredState(ent, false);
-    }
-
     private void SetPoweredState(Entity<NetworkPoweredAmmoProviderComponent> ent, bool powerState)
     {
         if (ent.Comp.IsPowered == powerState)
             return;
 
 
-        ent.Comp.IsPowered = false;
+        ent.Comp.IsPowered = powerState;
         Dirty(ent);
 
         if (!TryComp<AutoShootGunComponent>(ent, out var autoShoot))
             return;
 
-        _gun.SetEnabled((ent, autoShoot), powerState);
+        Gun.SetEnabled((ent, autoShoot), powerState);
     }
 }
