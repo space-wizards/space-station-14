@@ -47,8 +47,12 @@
     - BoxCandle
     - BodyBagFolded
     - BodyBagFolded
-    - JugBlood # End of first row
-    - JugWater
+    - CompactJugWater
+    - CompactJugBlood # End of first row
+    - FoodBakedBunHotX
+    - FoodBakedBunHotX
+    - FoodBakedBunHotX
+    - FoodBakedBunHotX
     belt:
     - Bible
     - Lantern

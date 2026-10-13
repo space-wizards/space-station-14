@@ -22,6 +22,15 @@
 
 - type: entity
   parent: Jug
+  id: CompactJug
+  name: compact jug
+  description: Used to contain a very large amount of chemicals or solutions. Streamlined with the latest technology to take up as little space as possible.
+  components:
+  - type: Item
+    size: Normal
+
+- type: entity
+  parent: Jug
   id: JugPunctTranex
   suffix: punct & tranex
   components:
@@ -34,6 +43,10 @@
         Quantity: 192
       - ReagentId: TranexamicAcid
         Quantity: 48
+
+- type: entity
+  parent: [ CompactJug, JugPunctTranex ]
+  id: CompactJugPunctTranex
 
 - type: entity
   parent: Jug
@@ -51,6 +64,10 @@
         Quantity: 180
 
 - type: entity
+  parent: [ CompactJug, JugPyraDerma ]
+  id: CompactJugPyraDerma
+
+- type: entity
   parent: Jug
   id: JugDexPlusSaline
   suffix: dex+ & saline
@@ -66,6 +83,10 @@
         Quantity: 120
 
 - type: entity
+  parent: [ CompactJug, JugDexPlusSaline ]
+  id: CompactJugDexPlusSaline
+
+- type: entity
   parent: Jug
   id: JugTrico
   suffix: tricordrazine
@@ -77,6 +98,10 @@
       reagents:
       - ReagentId: Tricordrazine
         Quantity: 240
+
+- type: entity
+  parent: [ CompactJug, JugTrico ]
+  id: CompactJugTrico
 
 - type: entity
   parent: Jug
@@ -92,6 +117,10 @@
         Quantity: 240
 
 - type: entity
+  parent: [ CompactJug, JugBlood ]
+  id: CompactJugBlood
+
+- type: entity
   parent: Jug
   id: JugWater
   suffix: water
@@ -103,6 +132,10 @@
       reagents:
       - ReagentId: Water
         Quantity: 240
+
+- type: entity
+  parent: [ CompactJug, JugWater ]
+  id: CompactJugWater
 
 - type: entity
   parent: Jug
