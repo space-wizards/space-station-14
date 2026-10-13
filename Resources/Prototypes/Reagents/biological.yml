@@ -40,14 +40,14 @@
           types:
             Poison: 0.2
   plantMetabolism:
-    - !type:PlantAdjustWater
-      amount: 0.5
-    - !type:DnaImprint
-      reagent: Blood
-      minScale: 5
-      leader: true
-      friendly: true
-      guidebookText: entity-effect-guidebook-dna-imprint
+  - !type:PlantAdjustWater
+    amount: 0.5
+  - !type:DnaImprint
+    reagent: Blood
+    minScale: 5
+    leader: true
+    friendly: true
+    guidebookText: entity-effect-guidebook-dna-imprint
   footstepSound:
     collection: FootstepBlood
     params:
@@ -64,12 +64,12 @@
   recognizable: true
   physicalDesc: reagent-physical-desc-slimy
   plantMetabolism:
-    - !type:DnaImprint
-      reagent: InsectBlood
-      minScale: 5
-      leader: true
-      friendly: true
-      guidebookText: entity-effect-guidebook-dna-imprint
+  - !type:DnaImprint
+    reagent: InsectBlood
+    minScale: 5
+    leader: true
+    friendly: true
+    guidebookText: entity-effect-guidebook-dna-imprint
 
 - type: reagent
   id: Slime
@@ -105,12 +105,12 @@
     params:
       volume: 6
   plantMetabolism:
-    - !type:DnaImprint
-      reagent: Slime
-      minScale: 5
-      leader: true
-      friendly: true
-      guidebookText: entity-effect-guidebook-dna-imprint
+  - !type:DnaImprint
+    reagent: Slime
+    minScale: 5
+    leader: true
+    friendly: true
+    guidebookText: entity-effect-guidebook-dna-imprint
 
 - type: reagent
   id: Sap
@@ -139,12 +139,12 @@
     params:
       volume: 6
   plantMetabolism:
-    - !type:DnaImprint
-      reagent: Sap
-      minScale: 5
-      leader: true
-      friendly: true
-      guidebookText: entity-effect-guidebook-dna-imprint
+  - !type:DnaImprint
+    reagent: Sap
+    minScale: 5
+    leader: true
+    friendly: true
+    guidebookText: entity-effect-guidebook-dna-imprint
 
 - type: reagent
   parent: Blood
@@ -157,12 +157,12 @@
   recognizable: true
   physicalDesc: reagent-physical-desc-metallic
   plantMetabolism:
-    - !type:DnaImprint
-      reagent: CopperBlood
-      minScale: 5
-      leader: true
-      friendly: true
-      guidebookText: entity-effect-guidebook-dna-imprint
+  - !type:DnaImprint
+    reagent: CopperBlood
+    minScale: 5
+    leader: true
+    friendly: true
+    guidebookText: entity-effect-guidebook-dna-imprint
 
 - type: reagent
   parent: Blood
@@ -175,12 +175,12 @@
   recognizable: true
   physicalDesc: reagent-physical-desc-pungent
   plantMetabolism:
-    - !type:DnaImprint
-      reagent: AmmoniaBlood
-      minScale: 5
-      leader: true
-      friendly: true
-      guidebookText: entity-effect-guidebook-dna-imprint
+  - !type:DnaImprint
+    reagent: AmmoniaBlood
+    minScale: 5
+    leader: true
+    friendly: true
+    guidebookText: entity-effect-guidebook-dna-imprint
 
 - type: reagent
   parent: Blood
@@ -193,12 +193,12 @@
   recognizable: true
   physicalDesc: reagent-physical-desc-strong-smelling
   plantMetabolism:
-    - !type:DnaImprint
-      reagent: SulfurBlood
-      minScale: 5
-      leader: true
-      friendly: true
-      guidebookText: entity-effect-guidebook-dna-imprint
+  - !type:DnaImprint
+    reagent: SulfurBlood
+    minScale: 5
+    leader: true
+    friendly: true
+    guidebookText: entity-effect-guidebook-dna-imprint
 
 - type: reagent
   id: ZombieBlood

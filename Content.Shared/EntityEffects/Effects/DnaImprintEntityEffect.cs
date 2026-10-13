@@ -4,10 +4,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
 
-/// <summary>Remembers the donor of a reagent as a leader, friendly entity, or combat target.</summary>
+/// <summary>
+/// Remembers the donor of a reagent as a leader, friendly entity, or combat target.
+/// </summary>
 public sealed partial class DnaImprint : EntityEffectBase<DnaImprint>
 {
-
     /// <summary>
     /// The reagent this effect is being applied from (needed to find the DNA on it in their bloodstream).
     /// </summary>

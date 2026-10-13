@@ -10,7 +10,7 @@ public sealed partial class NPCPointCommandSystem : EntitySystem
     [Dependency] private HTNSystem _htn = default!;
 
     /// <summary>
-    /// Gives targets to passed.
+    /// Commands followers to attack the target.
     /// </summary>
     public void CommandFollowers(
         HashSet<EntityUid> followers,
@@ -26,7 +26,7 @@ public sealed partial class NPCPointCommandSystem : EntitySystem
     }
 
     /// <summary>
-    /// Allows NPC to immediately start a new plan.
+    /// Forces the NPC to replan immediately.
     /// </summary>
     public void ResetPlan(HTNComponent htn)
     {
@@ -42,7 +42,7 @@ public sealed partial class NPCPointCommandSystem : EntitySystem
     }
 
     /// <summary>
-    /// Allows NPC to immediately start a new plan.
+    /// Clears the ordered target and forces followers to replan.
     /// </summary>
     public void ClearTarget(HashSet<EntityUid> followers)
     {
@@ -50,9 +50,9 @@ public sealed partial class NPCPointCommandSystem : EntitySystem
         {
             if (TerminatingOrDeleted(follower) || !TryComp<HTNComponent>(follower, out var htn))
                 continue;
+
             htn.Blackboard.Remove<EntityUid>(NPCBlackboard.CurrentOrderedTarget);
             ResetPlan(htn);
         }
     }
-
 }

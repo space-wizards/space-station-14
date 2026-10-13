@@ -15,8 +15,10 @@ public sealed partial class DnaImprintEntityEffectSystem
     [SubscribeLocalEvent]
     private void OnPlantImprint(Entity<PlantComponent> ent, ref EntityEffectEvent<DnaImprint> args)
     {
-        if (!HasComp<NPCImprintedComponent>(ent) ||
-            !_plants.TryGetTray(ent.AsNullable(), out var tray) ||
+        if (!HasComp<NPCImprintedComponent>(ent))
+            return;
+
+        if (!_plants.TryGetTray(ent.AsNullable(), out var tray) ||
             !_solutions.TryGetSolution(tray.Owner, tray.Comp.SoilSolutionName, out _, out var solution))
             return;
 
@@ -26,8 +28,10 @@ public sealed partial class DnaImprintEntityEffectSystem
     [SubscribeLocalEvent]
     private void OnProduceSpawned(Entity<NPCImprintedComponent> ent, ref PlantProduceSpawnedEvent args)
     {
-        if (ent.Comp.Leader == null && ent.Comp.Friendly.Count == 0 && ent.Comp.Target.Count == 0 ||
-            !HasComp<HTNComponent>(args.Produce) || !IsNpc(args.Produce))
+        if (!HasComp<HTNComponent>(args.Produce) || !IsNpc(args.Produce))
+            return;
+
+        if (ent.Comp.Leader == null && ent.Comp.Friendly.Count == 0 && ent.Comp.Target.Count == 0)
             return;
 
         var imprint = EnsureComp<NPCImprintedComponent>(args.Produce);

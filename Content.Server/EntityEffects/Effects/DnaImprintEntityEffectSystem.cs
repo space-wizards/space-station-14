@@ -5,6 +5,7 @@ using Content.Server.NPC.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.CombatMode;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects;
 using Content.Shared.Forensics.Components;
@@ -15,7 +16,7 @@ using Content.Shared.Pointing;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using ChemistrySolution = Content.Shared.Chemistry.Components.Solution;
-using Content.Shared.CombatMode;
+
 namespace Content.Server.EntityEffects.Effects;
 
 public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HTNComponent, DnaImprint>
@@ -24,11 +25,14 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
     [Dependency] private NPCPointCommandSystem _pointCommands = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedCombatModeSystem _combatMode = default!;
+
     protected override void Effect(Entity<HTNComponent> ent, ref EntityEffectEvent<DnaImprint> args)
     {
         var effect = args.Effect;
-        if (!IsNpc(ent) || !(effect.Leader || effect.Friendly || effect.Target) ||
-            !TryComp<BloodstreamComponent>(ent, out var bloodstream) ||
+        if (!IsNpc(ent) || !(effect.Leader || effect.Friendly || effect.Target))
+            return;
+
+        if (!TryComp<BloodstreamComponent>(ent, out var bloodstream) ||
             !_solutions.TryGetSolution(ent.Owner, bloodstream.BloodSolutionName, out _, out var solution))
             return;
 
@@ -51,6 +55,7 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
                     dna.Add(donorDna.DNA);
             }
         }
+
         if (dna.Count == 0)
             return;
 
@@ -63,6 +68,7 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
 
             donors.Add(donor);
         }
+
         if (donors.Count == 0)
             return;
 
@@ -77,6 +83,7 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
                 changed = true;
             }
         }
+
         foreach (var donor in donors)
         {
             if (effect.Friendly)
@@ -101,14 +108,15 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
     }
 
     private bool IsNpc(EntityUid uid)
-        => !HasComp<ActorComponent>(uid) && !(TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind);
+    {
+        return !HasComp<ActorComponent>(uid) && !(TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind);
+    }
 
     [SubscribeLocalEvent]
     private void OnPointAttempt(Entity<DNALeaderComponent> ent, ref PointAttemptEvent args)
     {
         _pointCommands.ClearTarget(ent.Comp.Followers);
     }
-
 
     [SubscribeLocalEvent]
     private void OnPointedAt(Entity<DNALeaderComponent> ent, ref AfterPointedAtEvent args)
@@ -143,17 +151,18 @@ public sealed partial class DnaImprintEntityEffectSystem : EntityEffectSystem<HT
     {
         foreach (var follower in ent.Comp.Followers)
         {
-            if (TryComp<NPCImprintedComponent>(follower, out var imprint) && imprint.Leader == ent.Owner)
-            {
-                imprint.Leader = null;
-                if (TryComp<HTNComponent>(follower, out var htn))
-                    _pointCommands.ResetPlan(htn);
-            }
+            if (!TryComp<NPCImprintedComponent>(follower, out var imprint) || imprint.Leader != ent.Owner)
+                continue;
+
+            imprint.Leader = null;
+            if (TryComp<HTNComponent>(follower, out var htn))
+                _pointCommands.ResetPlan(htn);
         }
     }
 
     /// <summary>
     /// Changes the leader and updates the follower list.
+    /// Passing null just detaches the NPC from its current leader.
     /// </summary>
     public void SetLeader(Entity<NPCImprintedComponent> ent, EntityUid? leader)
     {

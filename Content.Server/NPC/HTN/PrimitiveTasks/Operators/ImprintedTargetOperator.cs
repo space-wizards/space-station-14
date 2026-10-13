@@ -2,15 +2,17 @@ using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.NPC.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
-using Robust.Shared.Map;
-using Content.Shared.Interaction;
 using Content.Shared.Physics;
+using Robust.Shared.Map;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
-/// <summary>Selects the leader, or the nearest hunt target followed by a point order.</summary>
+/// <summary>
+/// Selects the leader, or the nearest hunt target followed by a point order.
+/// </summary>
 public sealed partial class ImprintedTargetOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entities = default!;
@@ -35,8 +37,7 @@ public sealed partial class ImprintedTargetOperator : HTNOperator
         }
         else
         {
-            var range = blackboard.GetValueOrDefault<float>(
-                blackboard.GetVisionRadiusKey(_entities), _entities);
+            var range = blackboard.GetValueOrDefault<float>(blackboard.GetVisionRadiusKey(_entities), _entities);
             var nearest = float.PositiveInfinity;
             var coordinates = new EntityCoordinates(owner, Vector2.Zero);
             foreach (var target in imprint.Target)
@@ -68,12 +69,15 @@ public sealed partial class ImprintedTargetOperator : HTNOperator
 
         var effects = new Dictionary<string, object>();
         if (Leader)
+        {
             effects[NPCBlackboard.FollowTarget] = new EntityCoordinates(entity, Vector2.Zero);
+        }
         else
         {
             effects["Target"] = entity;
             effects["TargetCoordinates"] = new EntityCoordinates(entity, Vector2.Zero);
         }
+
         return Task.FromResult<(bool, Dictionary<string, object>?)>((true, effects));
     }
 
