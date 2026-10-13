@@ -19,13 +19,12 @@
       Dead:
         Base: dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3
-    baseSprintSpeed : 7
+    baseWalkSpeed: 3
+    baseSprintSpeed: 7
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.1
         density: 30
         mask:
@@ -42,8 +41,7 @@
     animationThreshold: 1
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
+    - trigger: !type:DamageTypeTrigger
         damageType: Blunt
         damage: 20
       behaviors:

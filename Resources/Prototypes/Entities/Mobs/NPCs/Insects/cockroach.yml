@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [SolutionFood, SolutionTiny, SimpleMobBase, BaseSlicingRefinableButchering, MobNightVision]
+  parent: [ SolutionFood, SolutionTiny, SimpleMobBase, BaseSlicingRefinableButchering, MobNightVision ]
   id: BaseCockroach
   components:
   - type: Sprite
@@ -9,8 +9,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.2
         density: 100
         mask:
@@ -18,8 +17,8 @@
         layer:
         - SmallMobLayer
   - type: MovementSpeedModifier
-    baseWalkSpeed : 2.5
-    baseSprintSpeed : 5
+    baseWalkSpeed: 2.5
+    baseSprintSpeed: 5
   - type: MobState
   - type: MobThresholds
     thresholds:
@@ -88,7 +87,7 @@
   - type: Sprite
     sprite: Mobs/Animals/Insects/cockroach.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: cockroach
   - type: DamageStateVisuals
     states:
@@ -100,8 +99,7 @@
         Base: cockroach_dead
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
+    - trigger: !type:DamageTypeTrigger
         damageType: Blunt
         damage: 10
       behaviors:
@@ -117,14 +115,14 @@
   components:
   - type: Sprite
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: glockroach
   - type: Gun
     fireRate: 2
     useKey: false
     selectedMode: SemiAuto
     availableModes:
-      - SemiAuto
+    - SemiAuto
     soundGunshot: /Audio/Weapons/Guns/Gunshots/pistol.ogg
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifle

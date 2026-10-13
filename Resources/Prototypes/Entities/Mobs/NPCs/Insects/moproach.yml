@@ -1,19 +1,4 @@
 - type: entity
-  parent: SolutionMopNormal
-  id: SolutionMopMoproach
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: SolutionRegeneration
-    generated:
-      reagents:
-        - ReagentId: Water
-          Quantity: 10
-  - type: SolutionPurge
-    preserve:
-      - Water
-    quantity: 10
-
-- type: entity
   parent: MobMothroach
   id: MobMoproach
   name: moproach
@@ -22,7 +7,7 @@
   - type: Sprite
     sprite: Mobs/Animals/Insects/mothroach/moproach.rsi
   - type: MovementSpeedModifier
-    baseSprintSpeed : 5 # extra speed for that moppin'!
+    baseSprintSpeed: 5 # extra speed for that moppin'!
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -50,3 +35,18 @@
   - type: HTN
     rootTask:
       task: MoproachCompound
+
+- type: entity
+  parent: SolutionMopNormal
+  id: SolutionMopMoproach
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SolutionRegeneration
+    generated:
+      reagents:
+      - ReagentId: Water
+        Quantity: 10
+  - type: SolutionPurge
+    preserve:
+    - Water
+    quantity: 10

@@ -8,12 +8,7 @@
     },
     "states": [
         {
-            "name": "dead",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "dead"
         },
         {
             "name": "butterfly",

@@ -12,8 +12,8 @@
       sprite: Mobs/Animals/Insects/butterfly.rsi
   - type: RandomSprite
     available:
-      - enum.DamageStateVisualLayers.Base:
-          butterfly: Rainbow
+    - enum.DamageStateVisualLayers.Base:
+        butterfly: Rainbow
   - type: DamageStateVisuals
     states:
       Alive:
@@ -23,13 +23,12 @@
       Dead:
         Base: dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3
-    baseSprintSpeed : 6
+    baseWalkSpeed: 3
+    baseSprintSpeed: 6
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.2
         density: 7.5
         mask:
@@ -43,8 +42,7 @@
       10: Dead
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
+    - trigger: !type:DamageTypeTrigger
         damageType: Blunt
         damage: 20
       behaviors:
