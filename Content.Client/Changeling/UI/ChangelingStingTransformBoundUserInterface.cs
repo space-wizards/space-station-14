@@ -41,6 +41,9 @@ public sealed partial class ChangelingStingTransformBoundUserInterface(EntityUid
             if (identity.Identity == null)
                 continue;
 
+            if (EntMan.HasComponent<ChangelingHorrorComponent>(identity.Identity.Value))
+                continue;
+
             var option = new RadialMenuActionOption<NetEntity>(SendIdentitySelect, EntMan.GetNetEntity(identity.Identity.Value))
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(identity.Identity.Value),

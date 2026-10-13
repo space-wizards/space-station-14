@@ -18,20 +18,13 @@ public sealed partial class ChangelingTransformationStingSystem : EntitySystem
 
     private readonly Dictionary<EntityUid, (EntityUid Target, EntityUid Action)> _pendingStingTargets = new();
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ChangelingTransformationStingAbilityComponent, ChangelingTransformationStingEvent>(OnTransformationSting);
-        SubscribeLocalEvent<ChangelingTransformComponent, ChangelingStingTransformIdentitySelectMessage>(OnIdentitySelected);
-    }
-
+    [SubscribeLocalEvent]
     private void OnTransformationSting(Entity<ChangelingTransformationStingAbilityComponent> ent, ref ChangelingTransformationStingEvent args)
     {
         if (!TryComp<ChangelingIdentityComponent>(args.Performer, out var identityComp))
             return;
 
-        if (identityComp.ConsumedIdentities.All(data => data.Identity == null))
+        if (!identityComp.ConsumedIdentities.Any(data => data.Identity is { } identity && !HasComp<ChangelingHorrorComponent>(identity)))
         {
             _popup.PopupEntity(Loc.GetString("changeling-sting-transform-no-identities"), args.Performer, args.Performer);
             return;
@@ -43,8 +36,12 @@ public sealed partial class ChangelingTransformationStingSystem : EntitySystem
             _ui.OpenUi(args.Performer, ChangelingTransformUiKey.StingKey, args.Performer);
     }
 
+    [SubscribeLocalEvent]
     private void OnIdentitySelected(Entity<ChangelingTransformComponent> ent, ref ChangelingStingTransformIdentitySelectMessage args)
     {
+        if (args.Actor != ent.Owner)
+            return;
+
         if (!_pendingStingTargets.Remove(args.Actor, out var pending))
             return;
 
@@ -62,6 +59,9 @@ public sealed partial class ChangelingTransformationStingSystem : EntitySystem
         if (!TryGetEntity(args.TargetIdentity, out var targetIdentity))
             return;
 
+        if (HasComp<ChangelingHorrorComponent>(targetIdentity.Value))
+            return;
+
         if (!TryComp<ChangelingTransformationStingAbilityComponent>(action, out var stingComp))
             return;
 
@@ -73,10 +73,11 @@ public sealed partial class ChangelingTransformationStingSystem : EntitySystem
             return;
         }
 
+        if (!_humanoidTransformEffect.RefreshHumanoidTransform(target, effectEnt.Value, targetIdentity.Value))
+            return;
+
         _popup.PopupEntity(Loc.GetString("changeling-sting-success", ("target", Identity.Entity(target, EntityManager))), args.Actor, args.Actor);
         _popup.PopupEntity(Loc.GetString("changeling-sting-transform-target-popup"), target, target, PopupType.MediumCaution);
-
-        _humanoidTransformEffect.RefreshHumanoidTransform(target, effectEnt.Value, targetIdentity.Value);
         _actions.StartUseDelay(action);
     }
 
