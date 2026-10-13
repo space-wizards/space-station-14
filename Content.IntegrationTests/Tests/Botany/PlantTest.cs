@@ -123,7 +123,7 @@ public sealed class PlantTest : GameTest
         var componentFactory = Server.ResolveDependency<IComponentFactory>();
         Assert.That(seed.TryComp<SeedComponent>(out var seedComponent, componentFactory), Is.True);
 
-        var tray = entityManager.SpawnEntity("hydroponicsTray", TestMap!.GridCoords);
+        var tray = entityManager.SpawnEntity("HydroponicsTray", TestMap!.GridCoords);
         var plant = entityManager.SpawnEntity(seedComponent!.PlantProtoId, TestMap.GridCoords);
         Server.System<BotanySystem>().ApplyPlantSnapshotData(seedComponent.PlantData, plant);
         Server.System<PlantTraySystem>().PlantingPlantInTray(tray, plant);
