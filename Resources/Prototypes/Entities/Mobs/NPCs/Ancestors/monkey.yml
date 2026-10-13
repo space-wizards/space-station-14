@@ -1,0 +1,84 @@
+- type: entity
+  name: monkey
+  id: MobMonkey
+  parent: MobBaseAncestor
+  description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
+  components:
+  - type: NameIdentifier
+    group: Monkey
+  - type: Speech
+    speechSounds: Monkey
+    speechVerb: Monkey
+  - type: MonkeyAccent
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-primate
+  - type: AlwaysRevolutionaryConvertible
+  - type: GhostRole
+    prob: 0.05
+    makeSentient: true
+    name: ghost-role-information-monkey-name
+    description: ghost-role-information-monkey-description
+    rules: ghost-role-information-nonantagonist-rules
+  - type: GhostTakeoverAvailable
+  - type: PermanentStatusEffects
+    statusEffects:
+    - StatusEffectClumsyMonkey
+
+- type: entity
+  name: monkey
+  id: MobBaseSyndicateMonkey
+  parent: MobBaseAncestor # TODO: fix copy paste from MobMonkey
+  description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
+  suffix: syndicate base
+  components:
+  - type: NameIdentifier
+    group: Monkey
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-primate
+  - type: Speech
+    speechSounds: Monkey
+    speechVerb: Monkey
+  - type: MonkeyAccent
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: GhostRole
+    prob: 0.05
+    makeSentient: true
+    name: ghost-role-information-monkey-name
+    description: ghost-role-information-monkey-description
+    rules: ghost-role-information-syndicate-reinforcement-rules
+    mindRoles:
+    # This is for syndicate monkeys that randomly gain sentience, thus have no summoner to team with
+    - MindRoleGhostRoleSoloAntagonist
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [SyndicateOperativeGearMonkey]
+
+- type: entity
+  id: MobMonkeySyndicateAgent
+  parent: MobBaseSyndicateMonkey
+  suffix: syndicate agent
+  components:
+    # make the player a traitor once its taken
+  - type: AutoTraitor
+    profile: TraitorReinforcement
+
+- type: entity
+  id: MobMonkeySyndicateAgentNukeops # Reinforcement exclusive to nukeops uplink
+  parent: MobBaseSyndicateMonkey
+  suffix: NukeOps
+  components:
+  - type: NukeOperative
+
+- type: entity
+  name: guidebook monkey
+  parent: MobMonkey
+  categories: [ HideSpawnMenu ]
+  id: MobGuidebookMonkey
+  description: A hopefully helpful monkey whose only purpose in life is for you to click on. Does this count as having a monkey give you a tutorial?
+  components:
+    - type: GuidebookControlsTest
+
