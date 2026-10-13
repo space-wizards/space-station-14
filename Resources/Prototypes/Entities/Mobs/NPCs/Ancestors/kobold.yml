@@ -13,7 +13,7 @@
   - type: Speech
     speechSounds: Lizard
     speechVerb: Reptilian
-    allowedEmotes: ['Thump']
+    allowedEmotes: [ 'Thump' ]
   - type: Vocal
     emoteSounds: MaleReptilian
   - type: BodyEmotes
@@ -52,7 +52,7 @@
   - type: Sprite
     drawdepth: Mobs
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       sprite: Mobs/Animals/Ancestors/kobold.rsi
       state: kobold
     - map: [ "outline" ]
@@ -73,19 +73,19 @@
   - type: RandomSprite
     getAllGroups: true
     available:
-      - enum.DamageStateVisualLayers.Base:
-          kobold: KoboldColors
-      - horns:
-          horns_curled: KoboldHornColors
-          horns_ram: KoboldHornColors
-          horns_short: KoboldHornColors
-          horns_myrsore: KoboldHornColors
-          horns_bighorn: KoboldHornColors
-          horns_argali: KoboldHornColors
-          horns_ayrshire: KoboldHornColors
-          horns_floppy_kobold_ears: Inherit
-          horns_double: Inherit
-          horns_kobold_ears: Inherit
+    - enum.DamageStateVisualLayers.Base:
+        kobold: KoboldColors
+    - horns:
+        horns_curled: KoboldHornColors
+        horns_ram: KoboldHornColors
+        horns_short: KoboldHornColors
+        horns_myrsore: KoboldHornColors
+        horns_bighorn: KoboldHornColors
+        horns_argali: KoboldHornColors
+        horns_ayrshire: KoboldHornColors
+        horns_floppy_kobold_ears: Inherit
+        horns_double: Inherit
+        horns_kobold_ears: Inherit
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -131,8 +131,7 @@
   id: MobKoboldSyndicateAgent
   parent: MobBaseSyndicateKobold
   suffix: syndicate agent
-  components:
-    # make the player a traitor once its taken
+  components: # make the player a traitor once its taken
   - type: AutoTraitor
     profile: TraitorReinforcement
 

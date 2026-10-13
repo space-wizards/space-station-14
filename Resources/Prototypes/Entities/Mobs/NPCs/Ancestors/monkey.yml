@@ -48,8 +48,7 @@
     name: ghost-role-information-monkey-name
     description: ghost-role-information-monkey-description
     rules: ghost-role-information-syndicate-reinforcement-rules
-    mindRoles:
-    # This is for syndicate monkeys that randomly gain sentience, thus have no summoner to team with
+    mindRoles: # This is for syndicate monkeys that randomly gain sentience, thus have no summoner to team with
     - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
@@ -61,8 +60,7 @@
   id: MobMonkeySyndicateAgent
   parent: MobBaseSyndicateMonkey
   suffix: syndicate agent
-  components:
-    # make the player a traitor once its taken
+  components: # make the player a traitor once its taken
   - type: AutoTraitor
     profile: TraitorReinforcement
 
@@ -80,5 +78,5 @@
   id: MobGuidebookMonkey
   description: A hopefully helpful monkey whose only purpose in life is for you to click on. Does this count as having a monkey give you a tutorial?
   components:
-    - type: GuidebookControlsTest
+  - type: GuidebookControlsTest
 
