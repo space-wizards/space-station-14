@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Atmos;
 using Content.Shared.Botany.Components;
+using Content.Shared.Botany.Events;
 using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
@@ -51,6 +52,9 @@ public sealed partial class PlantMutationSystem : EntitySystem
                     TryAddMutation(ent, mutation);
             }
         }
+
+        var ev = new PlantMutationsChangedEvent(ent.Owner);
+        RaiseLocalEvent(ref ev);
     }
 
     /// <summary>
@@ -138,6 +142,8 @@ public sealed partial class PlantMutationSystem : EntitySystem
             _plant.PlantingPlant(newPlantUid);
 
         _plant.ForceUpdate(newPlantUid);
+        var ev = new PlantSpeciesChangedEvent(oldPlant.Owner, newPlantUid, newPlantProto);
+        RaiseLocalEvent(ref ev);
         QueueDel(oldPlant);
     }
 
