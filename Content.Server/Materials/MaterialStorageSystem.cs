@@ -224,11 +224,13 @@ public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
     /// <param name="entity">The entity with storage to eject from.</param>
     /// <param name="coordinates">The position where to spawn the created sheets. If not given, they're spawned next to the entity.</param>
     /// <param name="component">The storage component on <paramref name="entity"/>. Resolved automatically if not given.</param>
+    /// <param name="mergeContacts">If true, spawned stacks will attempt to merge with existing stacks in the area.</param>
     /// <returns>The stack entities that were spawned.</returns>
     public List<EntityUid> EjectAllMaterial(
         EntityUid entity,
         EntityCoordinates? coordinates = null,
-        MaterialStorageComponent? component = null)
+        MaterialStorageComponent? component = null,
+        bool mergeContacts = false)
     {
         if (!Resolve(entity, ref component))
             return new List<EntityUid>();
@@ -240,6 +242,14 @@ public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
         {
             var spawned = EjectMaterial(entity, material, null, coordinates, component);
             allSpawned.AddRange(spawned);
+        }
+
+        if (mergeContacts)
+        {
+            foreach (var stack in allSpawned)
+            {
+                _stackSystem.TryMergeToContacts(stack);
+            }
         }
 
         return allSpawned;

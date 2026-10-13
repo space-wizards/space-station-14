@@ -98,12 +98,12 @@ public sealed partial class DockingSystem : SharedDockingSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnDockingReAnchor(Entity<DockingComponent> entity, ref ReAnchorEvent args)
+    private void OnDockingMove(Entity<DockingComponent> entity, ref MoveEvent args)
     {
         var uid = entity.Owner;
         var component = entity.Comp;
 
-        if (!component.Docked)
+        if (!component.Docked || args.OnlyRotation)
             return;
 
         var otherDock = component.DockedWith;
@@ -417,6 +417,9 @@ public sealed partial class DockingSystem : SharedDockingSystem
 
         var xformA = Transform(dockA);
         var xformB = Transform(dockB);
+
+        if (xformA.GridUid == xformB.GridUid)
+            return false;
 
         if (!xformA.Anchored || !xformB.Anchored)
             return false;

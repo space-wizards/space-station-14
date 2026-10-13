@@ -158,18 +158,25 @@ public sealed partial class IdCardConsoleSystem : SharedIdCardConsoleSystem
         _idCard.TryChangeFullName(targetId, newFullName, player: player);
         _idCard.TryChangeJobTitle(targetId, newJobTitle, player: player);
 
-        if (ProtoMan.TryIndex(newJobProto, out var job)
-            && ProtoMan.Resolve(job.Icon, out var jobIcon))
+        if (ProtoMan.TryIndex(newJobProto, out var job))
         {
-            _idCard.TryChangeJobIcon(targetId, jobIcon, player: player);
-            _idCard.TryChangeJobDepartment(targetId, job);
+            if (ProtoMan.Resolve(job.Icon, out var jobIcon))
+            {
+                _idCard.TryChangeJobIcon(targetId, jobIcon, player: player);
+                _idCard.TryChangeJobDepartment(targetId, job);
+            }
+        }
+        else
+        {
+            // Can't find the job prototype, don't reassign the ID card's proto.
+            newJobProto = null;
         }
 
         UpdateStationRecord(uid, targetId, newFullName, newJobTitle, job);
         if ((!TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
             || keyStorage.Key is not { } key
             || !_record.TryGetRecord<GeneralStationRecord>(key, out _))
-            && newJobProto != string.Empty)
+            && newJobProto != null)
         {
             Comp<IdCardComponent>(targetId).JobPrototype = newJobProto;
         }

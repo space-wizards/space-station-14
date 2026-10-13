@@ -11,6 +11,7 @@
     sprite: Objects/Specific/Janitorial/light_replacer.rsi
   - type: LightReplacer
   - type: EntityProvider
+    canEject: false # Light Replacers have their own, more sophisticated UI.
     whitelist:
       components:
       - LightBulb

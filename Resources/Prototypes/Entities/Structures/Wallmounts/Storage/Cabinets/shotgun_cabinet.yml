@@ -1,9 +1,15 @@
-- type: entity
-  parent: FireAxeCabinet
-  id: ShotGunCabinet
+﻿- type: entity
+  parent: FireAxeCabinetConstructed
+  id: ShotGunCabinetConstructed
   name: shotgun cabinet
+  suffix: Free Access
   description: There is a small label that reads "For Emergency use only" along with details for safe use of the shotgun. As if.
   components:
+  - type: Construction
+    graph: ShotGunCabinetGraph
+    node: done
+    containers:
+    - ItemCabinet
   - type: Sprite
     sprite: Structures/Wallmounts/shotgun_cabinet.rsi
     layers:
@@ -23,6 +29,16 @@
         whitelist:
           tags:
           - WeaponShotgunKammerer
+  - type: Lock
+  - type: AccessReader
+
+- type: entity
+  parent: ShotGunCabinetConstructed
+  id: ShotGunCabinet
+  name: shotgun cabinet
+  suffix: Security
+  description: There is a small label that reads "For Emergency use only" along with details for safe use of the shotgun. As if.
+  components:
   - type: AccessReader
     access: [["Security"], ["Command"]]
 

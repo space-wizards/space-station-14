@@ -108,6 +108,7 @@
         Quantity: 10
   - type: Tag
     tags:
+      - Ingredient
       - ClothMade
       - Gauze
       - RawMaterial
