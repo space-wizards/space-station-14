@@ -563,6 +563,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
             var entityDirection = entityPosition - doorPosition;
             // Shove entity away, more if closer to door center, to always land just outside the door.
             PhysicsSystem.ApplyLinearImpulse(entity, (2f * entityDirection.Normalized() - entityDirection) * 300f);
+            Audio.PlayPredicted(door.CrushSound, uid, entity);
         }
 
         if (door.CurrentlyCrushing.Count == 0)
