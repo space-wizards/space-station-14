@@ -935,6 +935,7 @@
     - Tail
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSpaceNinja
+    toggleOnFirstEquip: true
   - type: Tag
     tags:
     - Hardsuit

@@ -31,6 +31,12 @@ public sealed partial class ToggleableClothingComponent : Component
     public EntProtoId ClothingPrototype;
 
     /// <summary>
+    ///     Whether to toggle the attached clothing the first time this item is equipped.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ToggleOnFirstEquip;
+
+    /// <summary>
     ///     The inventory slot that the clothing is equipped to.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]

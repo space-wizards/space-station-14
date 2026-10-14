@@ -37,6 +37,7 @@ public sealed partial class ToggleableClothingSystem : EntitySystem
         SubscribeLocalEvent<ToggleableClothingComponent, ToggleClothingEvent>(OnToggleClothing);
         SubscribeLocalEvent<ToggleableClothingComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<ToggleableClothingComponent, ComponentRemove>(OnRemoveToggleable);
+        SubscribeLocalEvent<ToggleableClothingComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ToggleableClothingComponent, GotUnequippedEvent>(OnToggleableUnequip);
 
         SubscribeLocalEvent<AttachedClothingComponent, InteractHandEvent>(OnInteractHand);
@@ -141,6 +142,23 @@ public sealed partial class ToggleableClothingSystem : EntitySystem
 
         _containerSystem.Insert(uid, toggleCom.Container);
         args.Handled = true;
+    }
+
+    /// <summary>
+    ///     Called when the suit is equipped for the first time, to ensure that the helmet also gets equipped.
+    /// </summary>
+    private void OnGotEquipped(EntityUid uid, ToggleableClothingComponent component, GotEquippedEvent args)
+    {
+        if (!component.ToggleOnFirstEquip || (args.SlotFlags & component.RequiredFlags) != component.RequiredFlags)
+            return;
+
+        component.ToggleOnFirstEquip = false;
+        Dirty(uid, component);
+
+        if (component.ClothingUid == null || component.Container?.ContainedEntity != component.ClothingUid || _inventorySystem.TryGetSlotEntity(args.EquipTarget, component.Slot, out _))
+            return;
+
+        _inventorySystem.TryEquip(args.EquipTarget, args.EquipTarget, component.ClothingUid.Value, component.Slot, triggerHandContact: true);
     }
 
     /// <summary>
