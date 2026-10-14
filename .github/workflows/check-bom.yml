@@ -23,6 +23,7 @@ jobs:
       id: changed-files
       uses: tj-actions/changed-files@v47.0.6
       with:
+        write_output_files: true 
         files: |
           **.cs
           **.ftl
