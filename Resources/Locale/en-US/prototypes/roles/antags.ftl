@@ -44,13 +44,6 @@ roles-antag-thief-objective = Steal some Nanotrasen property for your personal c
 roles-antag-dragon-name = Space Dragon
 roles-antag-dragon-objective = Create a carp army to take over this quadrant.
 
-roles-antag-survivor-name = Survivor
-# It's a Halo reference
-roles-antag-survivor-objective = Current Objective: Survive
-
-roles-antag-wizard-name = Wizard
-roles-antag-wizard-objective = Use your mastery of the arcane to sow chaos and discord.
-
 roles-antag-mothership-core-name = Xenoborg Core
 roles-antag-mothership-core-objective = Pilot the xenoborg mothership, command the xenoborg army, and manufacture new xenoborgs.
 
