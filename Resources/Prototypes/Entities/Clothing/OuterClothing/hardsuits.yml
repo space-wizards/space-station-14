@@ -887,6 +887,8 @@
     walkModifier: 0.9
     sprintModifier: 0.9
   # phase cloak
+  - type: ItemToggle
+    onUse: false
   - type: ToggleClothing
     action: ActionTogglePhaseCloak
     disableOnUnequip: true
