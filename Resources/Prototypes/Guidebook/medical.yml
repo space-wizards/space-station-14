@@ -6,6 +6,7 @@
   - MedicalDoctor
   - Chemist
   - Cloning
+  - Genetics
   - Cryogenics
 
 - type: guideEntry
@@ -17,6 +18,11 @@
   id: Cloning
   name: guide-entry-cloning
   text: "/ServerInfo/Guidebook/Medical/Cloning.xml"
+
+- type: guideEntry
+  id: Genetics
+  name: guide-entry-genetics
+  text: "/ServerInfo/Guidebook/Medical/Genetics.xml"
 
 - type: guideEntry
   id: Cryogenics

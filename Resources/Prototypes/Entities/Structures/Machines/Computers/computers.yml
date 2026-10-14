@@ -1308,6 +1308,46 @@
 
 - type: entity
   parent: BaseComputerAiAccess
+  id: ComputerGeneticsConsole
+  name: genetics console
+  description: A console for analyzing and altering a patient's genetic sequences.
+  components:
+  - type: GeneticsConsole
+  - type: DeviceList
+  - type: DeviceNetwork
+    deviceNetId: Wired
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: dna
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: Computer
+    board: GeneticsConsoleComputerCircuitboard
+  - type: DeviceLinkSource
+    range: 4
+    ports:
+      - GeneticsScannerSender
+  - type: ActivatableUI
+    key: enum.GeneticsConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+        enum.GeneticsConsoleUiKey.Key:
+          type: GeneticsConsoleBoundUserInterface
+        enum.WiresUiKey.Key:
+          type: WiresBoundUserInterface
+  - type: GuideHelp
+    guides:
+    - Genetics
+
+- type: entity
+  parent: BaseComputerAiAccess
   id: ComputerSalvageJobBoard
   name: salvage job board
   description: Console for accessing salvage jobs, if you're tough enough.

@@ -157,3 +157,8 @@ reagent-desc-haloperidol = Removes most stimulating and hallucinogenic drugs. Re
 
 reagent-name-heparin = heparin
 reagent-desc-heparin = Commonly used as an anticoagulant medication. Causes blood to have difficulty forming clots. Can cause internal bleeding when overdosed.
+
+reagent-name-mutadone = mutadone
+reagent-desc-mutadone = A chemical that removes all genetic mutations from the subject.
+
+reagent-effect-guidebook-remove-all-genetic-mutations = Removes all genetic mutations

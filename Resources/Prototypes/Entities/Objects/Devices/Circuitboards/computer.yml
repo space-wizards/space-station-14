@@ -486,6 +486,17 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: GeneticsConsoleComputerCircuitboard
+  name: genetics console computer board
+  description: A computer printed circuit board for a genetics console.
+  components:
+    - type: Sprite
+      state: cpu_medical
+    - type: ComputerBoard
+      prototype: ComputerGeneticsConsole
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: ComputerIFFCircuitboard
   name: IFF console board
   description: Allows you to control the IFF characteristics of this vessel.

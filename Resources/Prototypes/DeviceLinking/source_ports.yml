@@ -75,6 +75,12 @@
   defaultLinks: [ MedicalScannerReceiver ]
 
 - type: sourcePort
+  id: GeneticsScannerSender
+  name: signal-port-name-genetics-scanner-sender
+  description: signal-port-description-genetics-scanner-sender
+  defaultLinks: [ MedicalScannerReceiver ]
+
+- type: sourcePort
   id: ArtifactAnalyzerSender
   name: signal-port-name-artifact-analyzer-sender
   description: signal-port-description-artifact-analyzer-sender

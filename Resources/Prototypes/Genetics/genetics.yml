@@ -1,0 +1,26 @@
+- type: geneticMutation
+  id: GeneticMutationRapidStride
+  name: genetics-mutation-rapid-stride-name
+  description: genetics-mutation-rapid-stride-description
+  sequence: ATGCCGTATGCAATGC
+  instability: 35
+  walkSpeedModifier: 1.05
+  sprintSpeedModifier: 1.15
+
+- type: geneticMutation
+  id: GeneticMutationHeavyFrame
+  name: genetics-mutation-heavy-frame-name
+  description: genetics-mutation-heavy-frame-description
+  sequence: CGTATACGCCGTAATG
+  instability: 40
+  walkSpeedModifier: 0.9
+  sprintSpeedModifier: 0.9
+
+- type: geneticMutation
+  id: GeneticMutationLightStep
+  name: genetics-mutation-light-step-name
+  description: genetics-mutation-light-step-description
+  sequence: TGACGATCTAGCTGAC
+  instability: 30
+  walkSpeedModifier: 1.1
+  sprintSpeedModifier: 1.05

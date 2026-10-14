@@ -22,6 +22,19 @@
     revertOnDeath: true
 
 - type: polymorph
+  id: GeneticsMonkeyToHuman
+  configuration:
+    entity: MobHuman
+    forced: true
+    inventory: Transfer
+    transferName: false
+    transferDamage: true
+    transferHumanoidAppearance: false
+    revertOnCrit: false
+    revertOnDeath: false
+    revertOnDelete: false
+
+- type: polymorph
   id: WizardForcedCarp
   configuration:
     entity: MobCarpMagic

@@ -1,0 +1,14 @@
+- type: entity
+  id: GeneticMutationInjector
+  name: genetic mutation injector
+  description: A syringe containing genetic mutation data.
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/implanter.rsi
+    state: implanter0
+  - type: Item
+    size: Small
+  - type: UseDelay
+    delay: 0.5
+  - type: GeneticMutationInjector

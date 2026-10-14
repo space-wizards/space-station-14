@@ -58,6 +58,10 @@
   result: SolarControlComputerCircuitboard
 
 # Medical
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseMedicalComputerRecipeCategory ]
+  id: GeneticsConsoleComputerCircuitboard
+  result: GeneticsConsoleComputerCircuitboard
 
 # Science
 - type: latheRecipe

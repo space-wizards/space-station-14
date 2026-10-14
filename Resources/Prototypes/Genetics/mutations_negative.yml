@@ -1,0 +1,184 @@
+- type: geneticMutation
+  id: GeneticMutationEpilepsy
+  name: genetics-mutation-epilepsy-name
+  description: genetics-mutation-epilepsy-description
+  sequence: GATCAGATCAGATCAG
+  instability: 15
+  epilepsyMinInterval: 20
+  epilepsyMaxInterval: 60
+  epilepsyStunDuration: 2
+
+- type: geneticMutation
+  id: GeneticMutationTourette
+  name: genetics-mutation-tourette-name
+  description: genetics-mutation-tourette-description
+  sequence: TCAGATCAGATCAGAT
+  instability: 10
+  touretteMinInterval: 15
+  touretteMaxInterval: 45
+  touretteExclamations:
+  - "SHIT!"
+  - "FUCK!"
+  - "DAMN!"
+  - "ARGH!"
+  - "GAH!"
+  - "AAUGH!"
+  - "NYAGH!"
+  - "BLARGH!"
+
+- type: geneticMutation
+  id: GeneticMutationNarcolepsy
+  name: genetics-mutation-narcolepsy-name
+  description: genetics-mutation-narcolepsy-description
+  sequence: AGATCAGATCAGATCA
+  instability: 20
+  narcolepsyMinInterval: 30
+  narcolepsyMaxInterval: 90
+  narcolepsySleepDuration: 5
+
+- type: geneticMutation
+  id: GeneticMutationGlassJaw
+  name: genetics-mutation-glass-jaw-name
+  description: genetics-mutation-glass-jaw-description
+  sequence: CAGATCAGATCAGATC
+  instability: 5
+  bruteDamageMultiplier: 1.5
+
+- type: geneticMutation
+  id: GeneticMutationParanoia
+  name: genetics-mutation-paranoia-name
+  description: genetics-mutation-paranoia-description
+  sequence: GATGATGATGATGATG
+  instability: 10
+  paranoiaMinInterval: 20
+  paranoiaMaxInterval: 50
+
+- type: geneticMutation
+  id: GeneticMutationClumsiness
+  name: genetics-mutation-clumsiness-name
+  description: genetics-mutation-clumsiness-description
+  sequence: TATATAGCGCATCGAT
+  instability: 10
+  grantsClumsiness: true
+
+- type: geneticMutation
+  id: GeneticMutationNoises
+  name: genetics-mutation-noises-name
+  description: genetics-mutation-noises-description
+  sequence: GCATCGATTATATAGC
+  instability: 5
+  grantsRandomNoises: true
+  noisesMinInterval: 20
+  noisesMaxInterval: 60
+
+- type: geneticMutation
+  id: GeneticMutationAcidFlesh
+  name: genetics-mutation-acid-flesh-name
+  description: genetics-mutation-acid-flesh-description
+  sequence: GACTGACTGACTGACT
+  instability: -40
+  bruteDamageMultiplier: 1.25
+
+- type: geneticMutation
+  id: GeneticMutationBlindness
+  name: genetics-mutation-blindness-name
+  description: genetics-mutation-blindness-description
+  sequence: ACTGACTGACTGACTG
+  instability: -40
+  grantsBlindness: true
+
+- type: geneticMutation
+  id: GeneticMutationCough
+  name: genetics-mutation-cough-name
+  description: genetics-mutation-cough-description
+  sequence: GTACGTACGTACGTAC
+  instability: -30
+  grantsCough: true
+  minorNegativeMinInterval: 20
+  minorNegativeMaxInterval: 60
+
+- type: geneticMutation
+  id: GeneticMutationDeafness
+  name: genetics-mutation-deafness-name
+  description: genetics-mutation-deafness-description
+  sequence: TACGTACGTACGTACG
+  instability: -40
+  grantsDeafness: true
+
+- type: geneticMutation
+  id: GeneticMutationMute
+  name: genetics-mutation-mute-name
+  description: genetics-mutation-mute-description
+  sequence: ACGTGACTACGTGACT
+  instability: -30
+  grantsMute: true
+
+- type: geneticMutation
+  id: GeneticMutationIlliteracy
+  name: genetics-mutation-illiteracy-name
+  description: genetics-mutation-illiteracy-description
+  sequence: CATGCATGCATGCATG
+  instability: -30
+  grantsIlliteracy: true
+
+- type: geneticMutation
+  id: GeneticMutationNearsighted
+  name: genetics-mutation-nearsighted-name
+  description: genetics-mutation-nearsighted-description
+  sequence: GCATGCATGCATGCAT
+  instability: -30
+  grantsNearsighted: true
+
+- type: geneticMutation
+  id: GeneticMutationRadioactive
+  name: genetics-mutation-radioactive-name
+  description: genetics-mutation-radioactive-description
+  sequence: ATGCATGCATGCATGC
+  instability: -30
+  bruteDamageMultiplier: 1.1
+
+- type: geneticMutation
+  id: GeneticMutationSpastic
+  name: genetics-mutation-spastic-name
+  description: genetics-mutation-spastic-description
+  sequence: TGCATGCATGCATGCA
+  instability: -30
+  sprintSpeedModifier: 0.8
+
+- type: geneticMutation
+  id: GeneticMutationSpatialInstability
+  name: genetics-mutation-spatial-instability-name
+  description: genetics-mutation-spatial-instability-description
+  sequence: GATCGATCGATCGATC
+  instability: -30
+  grantsTwoLeftFeet: true
+  minorNegativeMinInterval: 30
+  minorNegativeMaxInterval: 90
+  minorNegativeDuration: 1.5
+
+- type: geneticMutation
+  id: GeneticMutationStuttering
+  name: genetics-mutation-stuttering-name
+  description: genetics-mutation-stuttering-description
+  sequence: CGATCGATCGATCGAT
+  instability: -30
+  grantsStuttering: true
+
+- type: geneticMutation
+  id: GeneticMutationTwoLeftFeet
+  name: genetics-mutation-two-left-feet-name
+  description: genetics-mutation-two-left-feet-description
+  sequence: ATCGATCGATCGATCG
+  instability: -30
+  grantsTwoLeftFeet: true
+  minorNegativeMinInterval: 25
+  minorNegativeMaxInterval: 60
+  minorNegativeDuration: 1
+
+- type: geneticMutation
+  id: GeneticMutationUnintelligible
+  name: genetics-mutation-unintelligible-name
+  description: genetics-mutation-unintelligible-description
+  sequence: CGTACGTACGTACGTA
+  instability: -40
+  grantsScrambledAccent: true

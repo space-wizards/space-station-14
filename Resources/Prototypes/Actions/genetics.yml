@@ -1,0 +1,62 @@
+- type: entity
+  parent: BaseAction
+  id: ActionGeneticTelepathy
+  name: action-genetics-telepathy-name
+  description: action-genetics-telepathy-description
+  components:
+  - type: Action
+    useDelay: 5
+  - type: Sprite
+    sprite: Interface/Actions/voice-mask.rsi
+    layers:
+    - state: icon
+  - type: EntityTargetAction
+    range: 12
+    event: !type:GeneticTelepathyActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionGeneticTelekinesis
+  name: action-genetics-telekinesis-name
+  description: action-genetics-telekinesis-description
+  components:
+  - type: Action
+    useDelay: 2
+  - type: Sprite
+    sprite: Interface/Actions/actions_ai.rsi
+    layers:
+    - state: camera_light
+  - type: EntityTargetAction
+    range: 6
+    event: !type:GeneticTelekinesisActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionGeneticShockTouch
+  name: action-genetics-shock-touch-name
+  description: action-genetics-shock-touch-description
+  components:
+  - type: Action
+    useDelay: 10
+  - type: Sprite
+    sprite: Interface/Actions/voice-mask.rsi
+    layers:
+    - state: icon
+  - type: EntityTargetAction
+    range: 1.5
+    event: !type:GeneticShockTouchActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionGeneticSpeciesShiftRevert
+  name: action-genetics-species-shift-revert-name
+  description: action-genetics-species-shift-revert-description
+  components:
+  - type: Action
+    useDelay: 60
+  - type: Sprite
+    sprite: Interface/Actions/night_vision.rsi
+    layers:
+    - state: icon
+  - type: InstantAction
+    event: !type:GeneticSpeciesShiftRevertActionEvent

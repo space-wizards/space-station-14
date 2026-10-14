@@ -1,0 +1,105 @@
+- type: geneticMutation
+  id: GeneticMutationChameleon
+  name: genetics-mutation-chameleon-name
+  description: genetics-mutation-chameleon-description
+  sequence: TGCATGCATGCATGCA
+  instability: 25
+  grantsChameleon: true
+
+- type: geneticMutation
+  id: GeneticMutationSizeSmall
+  name: genetics-mutation-size-small-name
+  description: genetics-mutation-size-small-description
+  sequence: CATGCATGCATGCATG
+  instability: 15
+  scaleModifier: 0.75
+
+- type: geneticMutation
+  id: GeneticMutationSizeLarge
+  name: genetics-mutation-size-large-name
+  description: genetics-mutation-size-large-description
+  sequence: GCATGCATGCATGCAT
+  instability: 15
+  scaleModifier: 1.35
+
+- type: geneticMutation
+  id: GeneticMutationSpeciesShift
+  name: genetics-mutation-species-shift-name
+  description: genetics-mutation-species-shift-description
+  sequence: ATGATGATGATGATGA
+  instability: 20
+  grantsSpeciesShift: true
+
+- type: geneticMutation
+  id: GeneticMutationBioluminescence
+  name: genetics-mutation-bioluminescence-name
+  description: genetics-mutation-bioluminescence-description
+  sequence: TGATGATGATGATGAT
+  instability: 10
+  lightRadius: 2
+  lightEnergy: 1.0
+
+- type: geneticMutation
+  id: GeneticMutationAnimalHearing
+  name: genetics-mutation-animal-hearing-name
+  description: genetics-mutation-animal-hearing-description
+  sequence: GCGTATGCATGCGTAT
+  instability: 10
+  grantsAnimalHearing: true
+
+- type: geneticMutation
+  id: GeneticMutationSnail
+  name: genetics-mutation-snail-name
+  description: genetics-mutation-snail-description
+  sequence: TGCGTATGCGTATGCG
+  instability: 5
+  walkSpeedModifier: 0.5
+  sprintSpeedModifier: 0.5
+
+- type: geneticMutation
+  id: GeneticMutationChav
+  name: genetics-mutation-chav-name
+  description: genetics-mutation-chav-description
+  sequence: AGCTAGCTAGCTAGCT
+  instability: -10
+  grantsMobsterAccent: true
+
+- type: geneticMutation
+  id: GeneticMutationElvis
+  name: genetics-mutation-elvis-name
+  description: genetics-mutation-elvis-description
+  sequence: CAGTCAGTCAGTCAGT
+  instability: -10
+  grantsAllCapsAccent: true
+
+- type: geneticMutation
+  id: GeneticMutationPigLatin
+  name: genetics-mutation-pig-latin-name
+  description: genetics-mutation-pig-latin-description
+  sequence: TCGATCGATCGATCGA
+  instability: 0
+  grantsBackwardsAccent: true
+
+- type: geneticMutation
+  id: GeneticMutationSwedish
+  name: genetics-mutation-swedish-name
+  description: genetics-mutation-swedish-description
+  sequence: GATCGATCGATCGATC
+  instability: -10
+  grantsMothAccent: true
+
+- type: geneticMutation
+  id: GeneticMutationAntiGlow
+  name: genetics-mutation-anti-glow-name
+  description: genetics-mutation-anti-glow-description
+  sequence: GTACGTACGTACGTAC
+  instability: -10
+  grantsAntiGlow: true
+
+- type: geneticMutation
+  id: GeneticMutationWacky
+  name: genetics-mutation-wacky-name
+  description: genetics-mutation-wacky-description
+  sequence: CTAGCTAGCTAGCTAG
+  instability: 0
+  grantsOwOAccent: true

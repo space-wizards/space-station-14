@@ -1,0 +1,216 @@
+- type: geneticMutation
+  id: GeneticMutationHulk
+  name: genetics-mutation-hulk-name
+  description: genetics-mutation-hulk-description
+  sequence: ATGCTAGCTAGCTAGC
+  instability: 55
+  sprintSpeedModifier: 0.85
+  meleeBruteBonus: 20
+  canBreakWalls: true
+
+- type: geneticMutation
+  id: GeneticMutationXRay
+  name: genetics-mutation-xray-name
+  description: genetics-mutation-xray-description
+  sequence: GCTAGCTAGCTAGCTA
+  instability: 50
+  grantsXRay: true
+
+- type: geneticMutation
+  id: GeneticMutationTelekinesis
+  name: genetics-mutation-telekinesis-name
+  description: genetics-mutation-telekinesis-description
+  sequence: TAGCTAGCTAGCTAGC
+  instability: 45
+  telekinesisRange: 4
+
+- type: geneticMutation
+  id: GeneticMutationRegeneration
+  name: genetics-mutation-regeneration-name
+  description: genetics-mutation-regeneration-description
+  sequence: CGATCGATCGATCGAT
+  instability: 40
+  regenerationBrute: 2
+  regenerationBurn: 2
+  regenerationInterval: 10
+
+- type: geneticMutation
+  id: GeneticMutationTelepathy
+  name: genetics-mutation-telepathy-name
+  description: genetics-mutation-telepathy-description
+  sequence: ATCGATCGATCGATCG
+  instability: 35
+  grantsTelepathy: true
+
+- type: geneticMutation
+  id: GeneticMutationFireResistance
+  name: genetics-mutation-fire-resistance-name
+  description: genetics-mutation-fire-resistance-description
+  sequence: TACGTACGTACGTACG
+  instability: 30
+  fireResistance: 0.6
+
+- type: geneticMutation
+  id: GeneticMutationColdResistance
+  name: genetics-mutation-cold-resistance-name
+  description: genetics-mutation-cold-resistance-description
+  sequence: GTACGTACGTACGTAC
+  instability: 30
+  coldResistance: 0.6
+
+- type: geneticMutation
+  id: GeneticMutationAdaptiveVision
+  name: genetics-mutation-adaptive-vision-name
+  description: genetics-mutation-adaptive-vision-description
+  sequence: ACGTACGTACGTACGT
+  instability: 25
+  grantsAdaptiveVision: true
+
+- type: geneticMutation
+  id: GeneticMutationRadiationResistance
+  name: genetics-mutation-radiation-resistance-name
+  description: genetics-mutation-radiation-resistance-description
+  sequence: CGCGCGCGATATATCG
+  instability: 30
+  radiationResistance: 0.5
+
+- type: geneticMutation
+  id: GeneticMutationThickSkin
+  name: genetics-mutation-thick-skin-name
+  description: genetics-mutation-thick-skin-description
+  sequence: GCGCGCGCTATATATG
+  instability: 20
+  bruteDamageModifier: 0.75
+
+- type: geneticMutation
+  id: GeneticMutationNobleGas
+  name: genetics-mutation-noble-gas-name
+  description: genetics-mutation-noble-gas-description
+  sequence: TATATATGCGCGCGCA
+  instability: 35
+  grantsPlasmaBreathing: true
+
+- type: geneticMutation
+  id: GeneticMutationIronLungs
+  name: genetics-mutation-iron-lungs-name
+  description: genetics-mutation-iron-lungs-description
+  sequence: ATATATATCGCGCGCG
+  instability: 40
+  grantsNoBreathing: true
+
+- type: geneticMutation
+  id: GeneticMutationAntenna
+  name: genetics-mutation-antenna-name
+  description: genetics-mutation-antenna-description
+  sequence: GATCGATCGATCGATC
+  instability: 10
+  grantsAnimalHearing: true
+
+- type: geneticMutation
+  id: GeneticMutationCryokinesis
+  name: genetics-mutation-cryokinesis-name
+  description: genetics-mutation-cryokinesis-description
+  sequence: AAGCTTCGATCGATCG
+  instability: 25
+  coldResistance: 0.6
+
+- type: geneticMutation
+  id: GeneticMutationGeladikinesis
+  name: genetics-mutation-geladikinesis-name
+  description: genetics-mutation-geladikinesis-description
+  sequence: CGATGCTAGCTAGCTA
+  instability: 10
+  coldResistance: 0.35
+
+- type: geneticMutation
+  id: GeneticMutationInsulated
+  name: genetics-mutation-insulated-name
+  description: genetics-mutation-insulated-description
+  sequence: TCGATCGATCGATCGA
+  instability: 25
+  grantsInsulation: true
+
+- type: geneticMutation
+  id: GeneticMutationLaserEyes
+  name: genetics-mutation-laser-eyes-name
+  description: genetics-mutation-laser-eyes-description
+  sequence: GCTAGATCGATCGATC
+  instability: 35
+  grantsXRay: true
+  meleeBruteBonus: 5
+
+- type: geneticMutation
+  id: GeneticMutationMindreader
+  name: genetics-mutation-mindreader-name
+  description: genetics-mutation-mindreader-description
+  sequence: TAGCGATCGATCGATC
+  instability: 25
+  grantsTelepathy: true
+
+- type: geneticMutation
+  id: GeneticMutationOlfaction
+  name: genetics-mutation-olfaction-name
+  description: genetics-mutation-olfaction-description
+  sequence: GCGATATCGCGATATC
+  instability: 10
+  grantsAnimalHearing: true
+
+- type: geneticMutation
+  id: GeneticMutationPressureAdaptation
+  name: genetics-mutation-pressure-adaptation-name
+  description: genetics-mutation-pressure-adaptation-description
+  sequence: ATCGGCTAATCGGCTA
+  instability: 10
+  fireResistance: 0.25
+  coldResistance: 0.25
+
+- type: geneticMutation
+  id: GeneticMutationShockTouch
+  name: genetics-mutation-shock-touch-name
+  description: genetics-mutation-shock-touch-description
+  sequence: TTAACCGGTTAACCGG
+  instability: 10
+  meleeBruteBonus: 5
+  grantsShockTouch: true
+
+- type: geneticMutation
+  id: GeneticMutationTemperatureAdaptation
+  name: genetics-mutation-temperature-adaptation-name
+  description: genetics-mutation-temperature-adaptation-description
+  sequence: CCGGTTAACCGGTTAA
+  instability: 25
+  fireResistance: 0.4
+  coldResistance: 0.4
+
+- type: geneticMutation
+  id: GeneticMutationThermalVision
+  name: genetics-mutation-thermal-vision-name
+  description: genetics-mutation-thermal-vision-description
+  sequence: GATCTAGCGATCTAGC
+  instability: 25
+  grantsAdaptiveVision: true
+
+- type: geneticMutation
+  id: GeneticMutationVoid
+  name: genetics-mutation-void-name
+  description: genetics-mutation-void-description
+  sequence: CTAGGATCCTAGGATC
+  instability: 5
+  coldResistance: 0.25
+
+- type: geneticMutation
+  id: GeneticMutationWebbing
+  name: genetics-mutation-webbing-name
+  description: genetics-mutation-webbing-description
+  sequence: ACGTCCGTAGCTAGTC
+  instability: 10
+  walkSpeedModifier: 0.9
+  sprintSpeedModifier: 0.9
+
+- type: geneticMutation
+  id: GeneticMutationClever
+  name: genetics-mutation-clever-name
+  description: genetics-mutation-clever-description
+  sequence: GGCATACCTGATCGTA
+  instability: 10
+  grantsTelepathy: true

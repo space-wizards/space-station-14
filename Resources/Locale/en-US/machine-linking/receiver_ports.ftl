@@ -55,6 +55,9 @@ signal-port-description-pod-receiver = Cloning pod signal receiver
 signal-port-name-med-scanner-sender = Medical scanner
 signal-port-description-med-scanner-sender = Medical scanner signal sender
 
+signal-port-name-genetics-scanner-sender = Genetics console
+signal-port-description-genetics-scanner-sender = Genetics console signal sender
+
 signal-port-name-med-scanner-receiver = Medical scanner
 signal-port-description-med-scanner-receiver = Medical scanner signal receiver
 

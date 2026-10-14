@@ -81,6 +81,8 @@
 - type: latheRecipePack
   id: MedicalBoardsStatic
   recipes:
+  - MedicalScannerMachineCircuitboard
+  - GeneticsConsoleComputerCircuitboard
   - ElectrolysisUnitMachineCircuitboard
   - CentrifugeMachineCircuitboard
   - ChemDispenserMachineCircuitboard

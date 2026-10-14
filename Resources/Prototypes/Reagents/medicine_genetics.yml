@@ -1,0 +1,12 @@
+- type: reagent
+  id: Mutadone
+  name: reagent-name-mutadone
+  group: Medicine
+  desc: reagent-desc-mutadone
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: medicine
+  color: "#5096c8"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:RemoveAllGeneticMutations
