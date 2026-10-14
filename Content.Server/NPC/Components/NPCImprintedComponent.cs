@@ -16,7 +16,6 @@ public sealed partial class NPCImprintedComponent : Component
     [Access(typeof(DnaImprintEntityEffectSystem))]
     public EntityUid? Leader;
 
-
     /// <summary>
     /// A list of entities this NPC is friendly to - if hostile it won't attack them.
     /// </summary>
