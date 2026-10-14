@@ -32,7 +32,7 @@ public sealed partial class RehydratableSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
-        FixedPoint2 quantity = 0;
+        var quantity = FixedPoint2.Zero;
         foreach (var catalyst in ent.Comp.CatalystPrototypes)
         {
             quantity += _solutions.GetTotalPrototypeQuantity(ent.Owner, catalyst);
