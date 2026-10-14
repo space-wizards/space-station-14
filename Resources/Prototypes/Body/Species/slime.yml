@@ -144,6 +144,7 @@
     groups:
       Flammable: [ Touch ]
       Extinguish: [ Touch ]
+      Acidic: [ Touch ]
     reactions:
     - reagents: [ Water, SpaceCleaner ]
       methods: [ Touch ]
@@ -155,7 +156,7 @@
       - !type:HealthChange
         damage:
           types:
-            Heat: 0.05
+            Heat: 0.1
       - !type:PopupMessage
         type: Local
         visualType: Large
