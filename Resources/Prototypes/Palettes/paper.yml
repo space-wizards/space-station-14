@@ -1,0 +1,9 @@
+- type: palette
+  id: Paper
+  name: palette-paper
+  colors:
+    white: "#FFFFFF"
+    captain: "#e6e6fa"
+    invoice: "#9ef5ff"
+    bounty: "#f7e574"
+    cnc: "#cccccc"

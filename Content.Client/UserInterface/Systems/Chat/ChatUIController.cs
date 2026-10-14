@@ -9,7 +9,6 @@ using Content.Client.Chat.UI;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Ghost;
-using Content.Client.Mind;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Client.UserInterface.Systems.Gameplay;
@@ -18,7 +17,6 @@ using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Codewords;
 using Content.Shared.Damage.ForceSay;
-using Content.Shared.Decals;
 using Content.Shared.Input;
 using Content.Shared.Radio;
 using Robust.Client.GameObjects;
@@ -29,6 +27,7 @@ using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.ColorNaming;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Input.Binding;
@@ -51,6 +50,7 @@ public sealed partial class ChatUIController : UIController
     [Dependency] private IEntityManager _ent = default!;
     [Dependency] private IInputManager _input = default!;
     [Dependency] private IClientNetManager _net = default!;
+    [Dependency] private IPaletteManager _palette = default!;
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IStateManager _state = default!;
@@ -65,8 +65,8 @@ public sealed partial class ChatUIController : UIController
     [UISystemDependency] private readonly TypingIndicatorSystem _typingIndicator = default!;
 
     private SharedChatSystem? _sharedChatSys;
-    private static readonly ProtoId<ColorPalettePrototype> ChatNamePalette = "ChatNames";
-    private string[] _chatNameColors = default!;
+    private static readonly ProtoId<PalettePrototype> ChatNamePalette = "ChatNames";
+    private List<string> _chatNameColors = new();
     private bool _chatNameColorsEnabled;
     public bool ChatNameColorsEnabled { get; private set; }
 
@@ -235,11 +235,12 @@ public sealed partial class ChatUIController : UIController
         gameplayStateLoad.OnScreenLoad += OnScreenLoad;
         gameplayStateLoad.OnScreenUnload += OnScreenUnload;
 
-        var nameColors = _prototypeManager.Index(ChatNamePalette).Colors.Values.ToArray();
-        _chatNameColors = new string[nameColors.Length];
-        for (var i = 0; i < nameColors.Length; i++)
+        var colorList = _palette.GetPaletteColors(ChatNamePalette);
+
+        _chatNameColors.Clear();
+        foreach (var color in colorList)
         {
-            _chatNameColors[i] = nameColors[i].ToHex();
+            _chatNameColors.Add(color.ToHex());
         }
 
         _config.OnValueChanged(CCVars.ChatWindowOpacity, OnChatWindowOpacityChanged);
@@ -1022,7 +1023,7 @@ public sealed partial class ChatUIController : UIController
     /// <returns>Hex value of the color</returns>
     public string GetNameColor(string name)
     {
-        var colorIdx = Math.Abs(name.GetHashCode() % _chatNameColors.Length);
+        var colorIdx = Math.Abs(name.GetHashCode() % _chatNameColors.Count);
         return _chatNameColors[colorIdx];
     }
 
