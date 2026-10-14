@@ -103,6 +103,14 @@ public sealed partial class ShuttleSystem
         var worldPoints = args.WorldPoints;
         var worldNormal = args.WorldNormal;
 
+        var meImmune = component.Invulnerable;
+        var otherImmune = component.Harmless;
+        if (TryComp<ShuttleComponent>(args.OtherEntity, out var comp))
+        {
+            meImmune |= comp.Harmless;
+            otherImmune |= comp.Invulnerable;
+        }
+
         for (var i = 0; i < worldPoints.Length; i++)
         {
             var worldPoint = worldPoints[i];
@@ -141,7 +149,7 @@ public sealed partial class ShuttleSystem
             _audio.PlayPvs(_shuttleImpactSound, coordinates, audioParams);
 
             // if we're not enabled, stop after playing sound
-            if (!_enabled)
+            if (!_enabled || (meImmune && otherImmune))
                 continue;
 
             // Convert the collision point directly to tile indices
@@ -182,8 +190,11 @@ public sealed partial class ShuttleSystem
             var totalInertia = ourVelocity * ourMass + otherVelocity * otherMass;
             var inelasticVel = totalInertia / (ourMass + otherMass);
 
-            DoGridImpact((args.OurEntity, ourGrid, ourXform, ourBody), args.OurFixture, inelasticVel, ourVelocity, ourTile, ourTiles, toUsEnergy);
-            DoGridImpact((args.OtherEntity, otherGrid, otherXform, otherBody), args.OtherFixture, inelasticVel, otherVelocity, otherTile, otherTiles, toOtherEnergy);
+            if (!meImmune)
+                DoGridImpact((args.OurEntity, ourGrid, ourXform, ourBody), args.OurFixture, inelasticVel, ourVelocity, ourTile, ourTiles, toUsEnergy);
+
+            if (!otherImmune)
+                DoGridImpact((args.OtherEntity, otherGrid, otherXform, otherBody), args.OtherFixture, inelasticVel, otherVelocity, otherTile, otherTiles, toOtherEnergy);
         }
     }
 
