@@ -36,7 +36,7 @@ public sealed partial class CCVars
     /// <summary>
     ///     Whether the arrivals shuttle should bulldoze grids when docking
     /// </summary>
-    public static readonly CVarDef<bool> ArrivalsShuttleBulldozes =
+    public static readonly CVarDef<bool> ArrivalsShuttleBulldoze =
         CVarDef.Create("shuttle.arrivals_bulldozes", true);
 
     /// <summary>
