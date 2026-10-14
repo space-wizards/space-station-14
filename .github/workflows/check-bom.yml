@@ -36,5 +36,5 @@ jobs:
     - name: Complain
       if: failure()
       run: |
-        echo "You have committed files with UTF-8 (BOM) encoding. If you are using Rider, Settings > Editor > File Encodings, and set the \"Create UTF-8 Files\" to \"With No BOM\" \nFollow the steps here https://youtrack.jetbrains.com/articles/SUPPORT-A-3222/Rider-doesnt-change-encoding-for-files "
+        echo "It looks like there are UTF-8 (BOM) encoded files in your commits. UTF-8 BOM encoded files are largely undesirable and can bring severe and hard-to-find problems with things like serialization. \nOne of the causes for this might be your Rider setup - you can fix it by going into `Settings > Editor > File Encodings`, and set the \"Create UTF-8 Files\" to \"With No BOM\" \nFollow the steps here https://youtrack.jetbrains.com/articles/SUPPORT-A-3222/Rider-doesnt-change-encoding-for-files " \n For this check to pass, please change files, listed in previous block, to use UTF-8 encoding instead. 
         exit 1
