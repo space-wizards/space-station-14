@@ -1,32 +1,27 @@
 - type: entity
-  parent: BaseItem
+  parent: BaseStorageItem
   id: CandyBowl
   name: "candy bowl"
   description: Grab as much as you can fit in your pockets!
   components:
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-3
   - type: Sprite
     sprite: Objects/Misc/candy_bowl.rsi
-    noRot: true
     drawdepth: SmallObjects
     state: candy_bowl0
   - type: Appearance
   - type: Storage
     maxItemSize: Small
     grid:
-    - 0,0,5,4  # Matching previous BinComponent.MaxItems of 100
+    - 0,0,4,3
     whitelist:
       components:
-        - Pill
+      - Pill
       tags:
-        - FoodSnack
-  - type: ContainerContainer
-    containers:
-      storagebase: !type:Container
-        ents: []
-  - type: UserInterface
-    interfaces:
-      enum.StorageUiKey.Key:
-        type: StorageBoundUserInterface
+      - FoodSnack
   - type: Damageable
   - type: Injurable
     damageContainer: Inorganic
@@ -68,7 +63,6 @@
         - TabletopMachineMask
         restitution: 0.3
         friction: 0.2
-  - type: InteractionOutline
   - type: ItemMapper
     sprite: Objects/Misc/candy_bowl.rsi
     mapLayers:
