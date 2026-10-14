@@ -10,6 +10,7 @@ namespace Content.Shared.Radiation.Components;
 public sealed partial class RadiationSourceComponent : Component
 {
     /// <summary>
+    /// Radiation intensity in center of the source in rads per second.
     /// From there radiation rays will travel over distance and loose intensity
     /// when hit radiation blocker.
     /// </summary>
