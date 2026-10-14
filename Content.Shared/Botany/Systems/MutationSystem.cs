@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Atmos;
 using Content.Shared.Botany.Components;
+using Content.Shared.Botany.Events;
 using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
@@ -58,6 +59,9 @@ public sealed partial class PlantMutationSystem : EntitySystem
                 }
             }
         }
+
+        var ev = new PlantMutationsChangedEvent(ent.Owner);
+        RaiseLocalEvent(ref ev);
     }
 
     /// <summary>
@@ -86,6 +90,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
         _botany.DeletePlantSnapshot(snapshot);
 
         ChemicalsSpeciesChange(newPlantUid, newPlantProto);
+        PlantSpeciesChange(newPlantUid, newPlantProto);
 
         if (_plant.TryGetTray(oldPlant.Owner, out var trayEnt))
             _plantTray.PlantingPlantInTray(trayEnt.AsNullable(), newPlantUid);
@@ -93,6 +98,8 @@ public sealed partial class PlantMutationSystem : EntitySystem
             _plant.PlantingPlant(newPlantUid);
 
         _plant.ForceUpdate(newPlantUid);
+        var ev = new PlantSpeciesChangedEvent(oldPlant.Owner, newPlantUid, newPlantProto);
+        RaiseLocalEvent(ref ev);
         QueueDel(oldPlant);
     }
 
@@ -119,6 +126,23 @@ public sealed partial class PlantMutationSystem : EntitySystem
         }
 
         Dirty(plantUid, oldPlantChemicals);
+    }
+
+    /// <summary>
+    /// Copies information from the PlantComponent on a prototype over to a given plant.
+    /// </summary>
+    /// <remarks>
+    /// <see cref="PlantComponent.GrowthStages"/> must stay true for the given plant.
+    /// TODO: better support excluding fields depending on clone context.
+    /// </remarks>
+    private void PlantSpeciesChange(EntityUid plantUid, EntProtoId plantProto)
+    {
+        if (!_botany.TryGetPlantComponent<PlantComponent>(null, plantProto, out var newSpecies)
+            || !_plantQuery.TryComp(plantUid, out var plant))
+            return;
+
+        plant.GrowthStages = newSpecies.GrowthStages;
+        DirtyField(plantUid, plant, nameof(PlantComponent.GrowthStages));
     }
 
     /// <summary>

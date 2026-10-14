@@ -55,6 +55,7 @@ changeling-takeover-doafter = [color=red]{ CAPITALIZE(SUBJECT($user)) } { CONJUG
 
 # stings
 changeling-sting-success = We silently sting {THE($target)}!
+changeling-sting-hemotoxin = You feel sharp pain in your chest!
 
 # mindshield
 changeling-fake-mindshield-enabled = We emit fake mindshield waves.
@@ -64,4 +65,14 @@ changeling-fake-mindshield-disabled = We stop emitting fake mindshield waves.
 changeling-not-enough-chemicals = We don't have enough Chemicals.
 
 # other
+changeling-action-fail-generic = We cannot do this right now.
 changeling-paused-map-name = Changeling identity storage map
+changeling-cocoon-success = We encase {THE($target)} in a fleshy tomb.
+changeling-cocoon-doafter = [color=red]{ CAPITALIZE(SUBJECT($user)) } { CONJUGATE-BE($user) } covering { THE($target) } in a fleshy mass![/color]
+
+# horror transformation
+changeling-horror-alert-time-name = Remaining time
+changeling-horror-alert-time-desc = When this counter reaches 0, we will have exhausted our strength.
+changeling-horror-force-transform-self = Our energy depleted, we cannot maintain this form anymore.
+changeling-horror-force-transform-others = { CAPITALIZE(POSS-ADJ($user)) } flesh rapidly shrivels away and dies.
+changeling-horror-transform-fail = We do not have enough DNA stored to reveal ourselves.

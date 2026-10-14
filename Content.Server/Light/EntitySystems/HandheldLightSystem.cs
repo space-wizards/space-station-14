@@ -181,7 +181,6 @@ namespace Content.Server.Light.EntitySystems
 
             _lights.SetEnabled(ent, false, pointLightComponent);
             SetActivated(ent, false, ent, makeNoise);
-            ent.Comp.Level = null;
             _activeLights.Remove(ent);
             return true;
         }
