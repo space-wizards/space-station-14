@@ -48,7 +48,7 @@ namespace Content.Server.Atmos.Reactions
                 else
                     plasmaBurnRate = temperatureScale * (initialOxygenMoles / Atmospherics.PlasmaOxygenFullburn) / Atmospherics.PlasmaBurnRateDelta;
 
-                plasmaBurnRate *= deltaTime * 2.0f;
+                plasmaBurnRate *= deltaTime / AtmosphereSystem.defaultTickRate;
 
                 if (plasmaBurnRate > Atmospherics.MinimumHeatCapacity)
                 {
