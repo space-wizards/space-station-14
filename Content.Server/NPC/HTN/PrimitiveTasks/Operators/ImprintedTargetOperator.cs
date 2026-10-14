@@ -16,7 +16,6 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 public sealed partial class ImprintedTargetOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entities = default!;
-
     [Dependency] private SharedInteractionSystem _interaction = default!;
 
     [DataField]
