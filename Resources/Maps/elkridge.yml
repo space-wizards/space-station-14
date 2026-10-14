@@ -6143,10 +6143,6 @@ entities:
       parent: 2
       rot: 1.5707963267948966 rad
       pos: 29.5,8.5
-    - type: LinkedDeviceNetwork
-      deviceLists: []
-      configurators:
-      - invalid
   - uid: 9614
     components:
     - type: Transform
