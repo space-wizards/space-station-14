@@ -1,0 +1,10 @@
+- type: entity
+  id: StrapOverlayVisual
+  categories: [ HideSpawnMenu ]
+  save: false
+  components:
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: Sprite
+    noRot: true

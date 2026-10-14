@@ -72,6 +72,10 @@
         {
             "name": "dispover-ready",
             "directions": 4
+        },
+        {
+            "name": "overlay",
+            "directions": 4
         }
     ]
 }
