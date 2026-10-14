@@ -1,6 +1,8 @@
 using System.Collections.Frozen;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Shared.ActionBlocker;
+using Content.Shared.CCVar;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Popups;
 using Content.Shared.Radio;
@@ -8,6 +10,7 @@ using Content.Shared.Speech;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -40,16 +43,19 @@ public abstract partial class SharedChatSystem : EntitySystem
         = new SoundPathSpecifier("/Audio/Announcements/announce.ogg");
 
     public static readonly ProtoId<RadioChannelPrototype> CommonChannel = "Common";
+    public bool ChatNameLinks { get; private set; }
 
     public static readonly string DefaultChannelPrefix = $"{RadioChannelPrefix}{DefaultChannelKey}";
     public static readonly ProtoId<SpeechVerbPrototype> DefaultSpeechVerb = "Default";
 
-    [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] protected IConfigurationManager Config = default!;
     [Dependency] private INetManager _net = default!;
+    [Dependency] protected IRobustRandom Random = default!;
+    [Dependency] private ISharedPlayerManager _player = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     /// <summary>
     /// Cache of the keycodes for faster lookup.
@@ -63,8 +69,11 @@ public abstract partial class SharedChatSystem : EntitySystem
         DebugTools.Assert(ProtoMan.HasIndex(CommonChannel));
 
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeReload);
+        SubscribeAllEvent<ChatLinkClickedRequestEvent>(OnChatMessageLinkClicked);
         CacheRadios();
         CacheEmotes();
+
+        Subs.CVar(Config, CCVars.ChatNameLinks, v => ChatNameLinks = v, true);
     }
 
     protected virtual void OnPrototypeReload(PrototypesReloadedEventArgs obj)
@@ -74,6 +83,20 @@ public abstract partial class SharedChatSystem : EntitySystem
 
         if (obj.WasModified<EmotePrototype>())
             CacheEmotes();
+    }
+
+    private void OnChatMessageLinkClicked(ChatLinkClickedRequestEvent msg, EntitySessionEventArgs args)
+    {
+        if (!ChatNameLinks)
+            return;
+
+        if (GetEntity(msg.Target) is not { Valid: true } target || !Exists(target))
+            return;
+
+        if (args.SenderSession.AttachedEntity is not { Valid: true } ent)
+            return;
+
+        ClickMessageSender(target, ent);
     }
 
     private void CacheRadios()
@@ -161,7 +184,7 @@ public abstract partial class SharedChatSystem : EntitySystem
         if (input.StartsWith(RadioCommonPrefix))
         {
             output = SanitizeMessageCapital(input[1..].TrimStart());
-            channel = ProtoMan.Index<RadioChannelPrototype>(CommonChannel);
+            channel = ProtoMan.Index(CommonChannel);
             return true;
         }
 
@@ -273,7 +296,10 @@ public abstract partial class SharedChatSystem : EntitySystem
         return trimmed;
     }
 
-    public static string InjectTagInsideTag(ChatMessage message, string outerTag, string innerTag, string? tagParameter)
+    /// <summary>
+    /// Injects a tag inside the first found instance of a specific <paramref name="outerTag"/> string in a <see cref="ChatMessage"/>.
+    /// </summary>
+    public static string InjectTagInsideTag(ChatMessage message, string outerTag, string innerTag, string? tagValue = null, params (string Key, string Value)[]? tagParameters)
     {
         var rawmsg = message.WrappedMessage;
         var tagStart = rawmsg.IndexOf($"[{outerTag}]");
@@ -282,9 +308,14 @@ public abstract partial class SharedChatSystem : EntitySystem
             return rawmsg;
         tagStart += outerTag.Length + 2;
 
-        string innerTagProcessed = tagParameter != null ? $"[{innerTag}={tagParameter}]" : $"[{innerTag}]";
-
         rawmsg = rawmsg.Insert(tagEnd, $"[/{innerTag}]");
+        if (tagValue != null)
+            innerTag = $"{innerTag}=\"{FormattedMessage.EscapeText(tagValue)}\"";
+
+        var innerTagProcessed = tagParameters == null
+            ? $"[{innerTag}]"
+            : $"[{innerTag} {string.Join(" ", tagParameters.Select(t => $"{FormattedMessage.EscapeText(t.Key)}=\"{FormattedMessage.RemoveMarkupPermissive(t.Value)}\""))}]";
+
         rawmsg = rawmsg.Insert(tagStart, innerTagProcessed);
 
         return rawmsg;
@@ -302,6 +333,62 @@ public abstract partial class SharedChatSystem : EntitySystem
         rawmsg = Regex.Replace(rawmsg, "(?i)(" + targetString + ")(?-i)(?![^[]*])", $"[{tag}={tagParameter}]$1[/{tag}]");
 #pragma warning restore RA0026
         return rawmsg;
+    }
+
+    /// <inheritdoc cref="CanClickMessageSender(EntityUid,EntityUid?)"/>
+    public bool CanClickMessageSender(NetEntity target, EntityUid? ent = null)
+    {
+        return CanClickMessageSender(GetEntity(target), ent);
+    }
+
+    /// <summary>
+    /// Checks whether an entity can click a chat message link.
+    /// </summary>
+    /// <param name="target">Target of the message link</param>
+    /// <param name="ent">Entity that is attempting to click the chat message, defaults to attached player entity if null.</param>
+    /// <returns>True if the entity is able to click the link</returns>
+    public bool CanClickMessageSender(EntityUid target, EntityUid? ent = null)
+    {
+        ent ??= _player.LocalEntity;
+        if (ent == null)
+            return false;
+
+        if (!CanClick(target, ent.Value))
+            return false;
+
+        var ev = new ClickEntityLinkEvent(target, true);
+        RaiseLocalEvent(ent.Value, ref ev);
+        return ev.Handled;
+    }
+
+    private bool CanClick(EntityUid target, EntityUid ent)
+    {
+        if (!ChatNameLinks)
+            return false;
+
+        if (ent == target)
+            return false;
+
+        return true;
+    }
+
+    /// <summary>
+    /// Teleports an entity to a target via <see cref="ClickEntityLinkEvent"/>
+    /// </summary>
+    /// <param name="target">Target we are attempted to teleport to</param>
+    /// <param name="ent">Entity that is attempting to warp</param>
+    /// <returns>True if warp was successful.</returns>
+    public void ClickMessageSender(EntityUid target, EntityUid? ent = null)
+    {
+        ent ??= _player.LocalEntity;
+        if (ent == null)
+            return;
+
+        if (!CanClick(target, ent.Value))
+            return;
+
+        var ev = new ClickEntityLinkEvent(target, false);
+        RaiseLocalEvent(ent.Value, ref ev);
     }
 
     public static string GetStringInsideTag(ChatMessage message, string tag)
@@ -364,6 +451,7 @@ public abstract partial class SharedChatSystem : EntitySystem
     /// <param name="shell"></param>
     /// <param name="player">The player doing the speaking.</param>
     /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>. If this is set, the event will not get raised.</param>
+    /// <param name="checkRadioPrefix">Whether or not <paramref name="message"/> should be parsed with consideration of radio channel prefix text at start the start.</param>
     /// <param name="ignoreActionBlocker">If set to true, action blocker will not be considered for whether an entity can send this message.</param>
     public virtual void TrySendInGameICMessage(
         EntityUid source,
@@ -406,12 +494,14 @@ public abstract partial class SharedChatSystem : EntitySystem
     /// <param name="playSound">Play the announcement sound.</param>
     /// <param name="announcementSound">Sound to play.</param>
     /// <param name="colorOverride">Optional color for the announcement message.</param>
+    /// <param name="signature">Optional signature shown below the announcement message.</param>
     public virtual void DispatchGlobalAnnouncement(
         string message,
         string? sender = null,
         bool playSound = true,
         SoundSpecifier? announcementSound = null,
-        Color? colorOverride = null
+        Color? colorOverride = null,
+        string? signature = null
         )
     { }
 
@@ -425,6 +515,7 @@ public abstract partial class SharedChatSystem : EntitySystem
     /// <param name="playSound">Play the announcement sound.</param>
     /// <param name="announcementSound">Sound to play.</param>
     /// <param name="colorOverride">Optional color for the announcement message.</param>
+    /// <param name="signature">Optional signature shown below the announcement message.</param>
     public virtual void DispatchFilteredAnnouncement(
         Filter filter,
         string message,
@@ -432,7 +523,8 @@ public abstract partial class SharedChatSystem : EntitySystem
         string? sender = null,
         bool playSound = true,
         SoundSpecifier? announcementSound = null,
-        Color? colorOverride = null)
+        Color? colorOverride = null,
+        string? signature = null)
     { }
 
     /// <summary>
@@ -444,13 +536,15 @@ public abstract partial class SharedChatSystem : EntitySystem
     /// <param name="playDefaultSound">Play the announcement sound.</param>
     /// <param name="announcementSound">Sound to play.</param>
     /// <param name="colorOverride">Optional color for the announcement message.</param>
+    /// <param name="signature">Optional signature shown below the announcement message.</param>
     public virtual void DispatchStationAnnouncement(
         EntityUid source,
         string message,
         string? sender = null,
         bool playDefaultSound = true,
         SoundSpecifier? announcementSound = null,
-        Color? colorOverride = null)
+        Color? colorOverride = null,
+        string? signature = null)
     { }
 }
 

@@ -10,13 +10,13 @@ public sealed partial class RandomArtifactSpriteSystem : VisualizerSystem<Random
         if (args.Sprite == null)
             return;
 
-        if (!AppearanceSystem.TryGetData<int>(uid, SharedArtifactsVisuals.SpriteIndex, out var spriteIndex, args.Component))
+        if (!args.TryGetData<int>(SharedArtifactsVisuals.SpriteIndex, out var spriteIndex))
             return;
 
-        if (!AppearanceSystem.TryGetData<bool>(uid, SharedArtifactsVisuals.IsUnlocking, out var isUnlocking, args.Component))
+        if (!args.TryGetData<bool>(SharedArtifactsVisuals.IsUnlocking, out var isUnlocking))
             isUnlocking = false;
 
-        if (!AppearanceSystem.TryGetData<bool>(uid, SharedArtifactsVisuals.IsActivated, out var isActivated, args.Component))
+        if (!args.TryGetData<bool>(SharedArtifactsVisuals.IsActivated, out var isActivated))
             isActivated = false;
 
         var spriteIndexStr = spriteIndex.ToString("D2");

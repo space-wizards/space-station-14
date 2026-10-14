@@ -1,4 +1,4 @@
-﻿using Content.Shared.Traits.Assorted;
+using Content.Shared.Traits.Assorted;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;

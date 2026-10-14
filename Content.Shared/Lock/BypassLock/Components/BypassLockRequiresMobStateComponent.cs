@@ -1,4 +1,4 @@
-﻿using Content.Shared.Lock.BypassLock.Systems;
+using Content.Shared.Lock.BypassLock.Systems;
 using Content.Shared.Mobs;
 using Robust.Shared.GameStates;
 

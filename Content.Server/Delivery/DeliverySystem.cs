@@ -25,7 +25,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private StationRecordsSystem _records = default!;
-    [Dependency] private StationSystem _station = default!;
+    [Dependency] private ServerStationSystem _station = default!;
     [Dependency] private FingerprintReaderSystem _fingerprintReader = default!;
     [Dependency] private LabelSystem _label = default!;
     [Dependency] private SharedContainerSystem _container = default!;

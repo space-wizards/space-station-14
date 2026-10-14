@@ -1,4 +1,4 @@
-﻿- type: soundCollection
+- type: soundCollection
   id: SadTrombone
   files:
     - /Audio/Effects/sadtrombone.ogg

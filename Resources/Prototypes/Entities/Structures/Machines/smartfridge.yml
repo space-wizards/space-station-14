@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: [BaseStructureDynamic, ConstructibleMachine, BaseMachinePowered, BaseConstructibleMachineDestructible]
   id: SmartFridge
   name: SmartFridge
