@@ -509,8 +509,6 @@ public sealed class GeneticsConsoleSystem : EntitySystem
                     genome.HalfKnownPositions.TryGetValue(mutation.ID, out var halfPositions)
                         ? halfPositions
                         : new HashSet<int>()));
-                
-                // Memory is saved only via explicit SaveToMemory action — not auto-saved
             }
 
         }

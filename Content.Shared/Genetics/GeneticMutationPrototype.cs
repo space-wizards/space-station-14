@@ -34,32 +34,27 @@ public sealed partial class GeneticMutationPrototype : IPrototype
     [DataField]
     public int Instability;
 
-    // Movement
     [DataField]
     public float WalkSpeedModifier = 1f;
 
     [DataField]
     public float SprintSpeedModifier = 1f;
 
-    // Hulk
     [DataField]
     public float MeleeBruteBonus = 0f;
 
     [DataField]
     public bool CanBreakWalls = false;
 
-    // Vision
     [DataField]
     public bool GrantsXRay = false;
 
     [DataField]
     public bool GrantsAdaptiveVision = false;
 
-    // Telekinesis
     [DataField]
     public float TelekinesisRange = 0f;
 
-    // Regeneration
     [DataField]
     public float RegenerationBrute = 0f;
 
@@ -69,14 +64,12 @@ public sealed partial class GeneticMutationPrototype : IPrototype
     [DataField]
     public float RegenerationInterval = 10f;
 
-    // Telepathy
     [DataField]
     public bool GrantsTelepathy = false;
 
     [DataField]
     public bool GrantsShockTouch;
 
-    // Damage resistance
     [DataField]
     public float FireResistance = 0f;
 
@@ -86,45 +79,33 @@ public sealed partial class GeneticMutationPrototype : IPrototype
     [DataField]
     public float RadiationResistance = 0f;
 
-    /// <summary>
-    /// Flat multiplier applied to all brute damage taken. Values below 1 reduce damage; above 1 increase it.
-    /// Note: GlassJaw uses BruteDamageMultiplier (>1). This field is for resistances (<1).
-    /// </summary>
     [DataField]
     public float BruteDamageModifier = 1f;
 
-    // Scale
     [DataField]
     public float ScaleModifier = 0f;
 
-    // Bioluminescence
     [DataField]
     public float LightRadius = 0f;
 
     [DataField]
     public float LightEnergy = 0f;
 
-    // Chameleon
     [DataField]
     public bool GrantsChameleon = false;
 
-    // SpeciesShift
     [DataField]
     public bool GrantsSpeciesShift = false;
 
-    // Noble Gas — can breathe plasma instead of oxygen
     [DataField]
     public bool GrantsPlasmaBreathing = false;
 
-    // Iron Lungs — does not need to breathe at all
     [DataField]
     public bool GrantsNoBreathing = false;
 
-    // Animal Hearing — passive; hear sounds slightly further
     [DataField]
     public bool GrantsAnimalHearing = false;
 
-    // Epilepsy
     [DataField]
     public float EpilepsyMinInterval = 0f;
 
@@ -134,7 +115,6 @@ public sealed partial class GeneticMutationPrototype : IPrototype
     [DataField]
     public float EpilepsyStunDuration = 0f;
 
-    // Tourette
     [DataField]
     public float TouretteMinInterval = 0f;
 
@@ -144,7 +124,6 @@ public sealed partial class GeneticMutationPrototype : IPrototype
     [DataField]
     public List<string> TouretteExclamations = new();
 
-    // Narcolepsy
     [DataField]
     public float NarcolepsyMinInterval = 0f;
 
@@ -154,22 +133,18 @@ public sealed partial class GeneticMutationPrototype : IPrototype
     [DataField]
     public float NarcolepsySleepDuration = 0f;
 
-    // GlassJaw — takes extra brute damage
     [DataField]
     public float BruteDamageMultiplier = 1f;
 
-    // Paranoia
     [DataField]
     public float ParanoiaMinInterval = 0f;
 
     [DataField]
     public float ParanoiaMaxInterval = 0f;
 
-    // Clumsiness
     [DataField]
     public bool GrantsClumsiness = false;
 
-    // Random Noises (moos, squeaks, etc.)
     [DataField]
     public bool GrantsRandomNoises = false;
 
@@ -179,7 +154,6 @@ public sealed partial class GeneticMutationPrototype : IPrototype
     [DataField]
     public float NoisesMaxInterval = 0f;
 
-    // Classic /tg/ genetics effects supported by SS14 systems.
     [DataField]
     public bool GrantsBlindness;
 

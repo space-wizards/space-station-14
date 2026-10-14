@@ -158,7 +158,6 @@ public sealed class SharedGeneticsSystem : EntitySystem
         component.HalfKnownPositions.TryGetValue(mutationId, out var halfKnown);
         halfKnown ??= new HashSet<int>();
 
-        // First reveal one strand of a pair; a later analysis can reveal the full pair.
         var unknown = new List<int>();
         for (var i = 0; i < sequence.Length; i++)
         {
@@ -333,10 +332,8 @@ public sealed class SharedGeneticsSystem : EntitySystem
 
             args.ModifySpeed(prototype.WalkSpeedModifier, prototype.SprintSpeedModifier);
 
-            // SizeSmall/SizeLarge speed modifier
             if (prototype.ScaleModifier > 0f)
             {
-                // small = 0.75 scale => +0.1, large = 1.35 => -0.1
                 if (prototype.ScaleModifier < 1f)
                     args.ModifySpeed(1.1f, 1.1f);
                 else if (prototype.ScaleModifier > 1f)

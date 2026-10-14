@@ -50,7 +50,6 @@ public sealed class GeneticMutationInjectorSystem : EntitySystem
 
         args.Handled = true;
 
-        // Self-inject: instant
         if (args.User == target)
         {
             if (_genetics.TryApplyMutationFromInjector(target, component.MutationId))
@@ -61,7 +60,6 @@ public sealed class GeneticMutationInjectorSystem : EntitySystem
             return;
         }
 
-        // Other target: DoAfter 3s
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, TimeSpan.FromSeconds(3), 
             new InjectorDoAfterEvent(), uid, target: target, used: uid)
         {

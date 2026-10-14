@@ -8,11 +8,6 @@ using Content.Shared.Mobs.Systems;
 
 namespace Content.Server.Genetics;
 
-/// <summary>
-/// Deals cellular damage when a subject's genetic instability exceeds the threshold,
-/// mirroring /tg/ genetics: >100 instability = 15 cellular damage every 10 s;
-/// reaching 150 cellular damage triggers death via lethal damage, not a direct state change.
-/// </summary>
 public sealed class GeneticInstabilitySystem : EntitySystem
 {
     private const int InstabilityDamageThreshold = 100;
@@ -41,8 +36,6 @@ public sealed class GeneticInstabilitySystem : EntitySystem
                 continue;
             }
 
-            // Ensure the mob won't be killed prematurely by normal damage before we get a chance
-            // to deal genetic death — raise the dead threshold to accommodate CellularDeathThreshold.
             PreserveGeneticDeathThreshold(uid, genetics);
 
             if (_mobState.IsDead(uid))
@@ -54,17 +47,14 @@ public sealed class GeneticInstabilitySystem : EntitySystem
 
             genetics.UnstableDamageTimer -= DamageInterval;
 
-            // Deal cellular damage each tick
             var cellularDmg = new DamageSpecifier();
             cellularDmg.DamageDict.Add("Cellular", FixedPoint2.New(DamagePerTick));
             _damageable.TryChangeDamage(uid, cellularDmg, ignoreResistances: true);
 
-            // Check if we've hit the death threshold via accumulated cellular damage
             var currentDamage = _damageable.GetAllDamage(uid);
             if (currentDamage.DamageDict.TryGetValue("Cellular", out var cellularTotal) &&
                 cellularTotal >= FixedPoint2.New(CellularDeathThreshold))
             {
-                // Kill by dealing enough damage to exceed the normal dead threshold
                 var deathDmg = new DamageSpecifier();
                 deathDmg.DamageDict.Add("Cellular", FixedPoint2.New(1000));
                 _damageable.TryChangeDamage(uid, deathDmg, ignoreResistances: true, interruptsDoAfters: true);
@@ -82,7 +72,6 @@ public sealed class GeneticInstabilitySystem : EntitySystem
         genetics.OriginalDeadThreshold = threshold.Value;
         genetics.HasOriginalDeadThreshold = true;
 
-        // Make sure the entity can accumulate enough cellular damage to trigger genetic death
         var required = FixedPoint2.New(CellularDeathThreshold + 50);
         if (threshold.Value < required)
             _mobThreshold.SetMobStateThreshold(uid, required, MobState.Dead);

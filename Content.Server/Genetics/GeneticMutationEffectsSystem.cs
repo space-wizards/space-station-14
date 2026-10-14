@@ -170,8 +170,6 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
         }
     }
 
-    // ── Update ─────────────────────────────────────────────────────────────
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -208,8 +206,6 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
         }
     }
 
-    // ── Damage modifier hook ────────────────────────────────────────────────
-
     private void OnDamageModify(EntityUid uid, GeneticMutationComponent comp, DamageModifyEvent args)
     {
         foreach (var mutationId in comp.ActiveMutations)
@@ -217,23 +213,18 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
             if (!_proto.TryIndex<GeneticMutationPrototype>(mutationId, out var proto))
                 continue;
 
-            // GlassJaw — extra brute damage
             if (proto.BruteDamageMultiplier != 1f)
                 ApplyDictModifier(args.Damage.DamageDict, "Brute", proto.BruteDamageMultiplier);
 
-            // ThickSkin — reduced brute damage
             if (proto.BruteDamageModifier != 1f && proto.BruteDamageModifier < 1f)
                 ApplyDictModifier(args.Damage.DamageDict, "Brute", proto.BruteDamageModifier);
 
-            // FireResistance
             if (proto.FireResistance > 0f)
                 ApplyDictModifier(args.Damage.DamageDict, "Heat", 1f - proto.FireResistance);
 
-            // ColdResistance
             if (proto.ColdResistance > 0f)
                 ApplyDictModifier(args.Damage.DamageDict, "Cold", 1f - proto.ColdResistance);
 
-            // RadiationResistance
             if (proto.RadiationResistance > 0f)
                 ApplyDictModifier(args.Damage.DamageDict, "Radiation", 1f - proto.RadiationResistance);
         }
@@ -248,8 +239,6 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
         if (dict.TryGetValue(damageType, out var existing))
             dict[damageType] = existing * multiplier;
     }
-
-    // ── Per-frame processors ────────────────────────────────────────────────
 
     private void ProcessRegeneration(EntityUid uid, GeneticMutationComponent comp, float frameTime)
     {
@@ -512,8 +501,6 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
             _respirator.UpdateSaturation(uid, respirator.MaxSaturation - respirator.Saturation, respirator);
     }
 
-    // ── Apply / Remove ──────────────────────────────────────────────────────
-
     public void ApplyMutationEffects(EntityUid uid, string mutationId, GeneticMutationComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
@@ -521,7 +508,6 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
         if (!_proto.TryIndex<GeneticMutationPrototype>(mutationId, out var proto))
             return;
 
-        // Bioluminescence — spawn a child light entity
         if (proto.LightRadius > 0f && comp.BioluminescenceLight == null)
         {
             var light = Spawn(null, Transform(uid).Coordinates);
@@ -540,7 +526,6 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
                 _pointLight.SetEnabled(glow, false, light);
         }
 
-        // XRay — disable FoV entirely
         if (proto.GrantsXRay && !comp.XRayActive)
         {
             if (TryComp<EyeComponent>(uid, out _))
@@ -548,7 +533,6 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
             comp.XRayActive = true;
         }
 
-        // AdaptiveVision (NightVision)
         if (proto.GrantsAdaptiveVision && !comp.AdaptiveVisionActive)
         {
             comp.AdaptiveVisionAdded = !HasComp<NightVisionComponent>(uid);
@@ -643,14 +627,12 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
             comp.NearsightedAdded = true;
         }
 
-        // Scale — apply visual scale via ScaleVisualsSystem
         if (proto.ScaleModifier > 0f && Math.Abs(comp.AppliedScale - 1f) < 0.01f)
         {
             comp.AppliedScale = proto.ScaleModifier;
             _scaleVisuals.SetSpriteScale(uid, new Vector2(proto.ScaleModifier, proto.ScaleModifier));
         }
 
-        // Telekinesis — bypass interaction range checks (act at any distance)
         if (proto.TelekinesisRange > 0f && !comp.TelekinesisApplied)
         {
             _tag.AddTag(uid, TelekinesisTag);
@@ -658,7 +640,6 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
             comp.TelekinesisApplied = true;
         }
 
-        // Telepathy — grant a component that marks the entity as a telepath
         if (proto.GrantsTelepathy && !comp.TelepathyApplied)
         {
             EnsureComp<GeneticTelepathyComponent>(uid);
@@ -669,14 +650,12 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
         if (proto.GrantsShockTouch)
             _actions.AddAction(uid, ref comp.ShockTouchAction, "ActionGeneticShockTouch");
 
-        // AnimalHearing — extend hearing range by modifying ContentEye zoom so more world is visible
         if (proto.GrantsAnimalHearing && !comp.AnimalHearingApplied)
         {
             _eye.SetZoom(uid, new Vector2(0.8f, 0.8f), ignoreLimits: true);
             comp.AnimalHearingApplied = true;
         }
 
-        // SpeciesShift — randomise the entity's humanoid appearance while keeping their name
         if (proto.GrantsSpeciesShift && !comp.SpeciesShiftApplied)
         {
             if (TryComp<HumanoidProfileComponent>(uid, out var humanoid))
@@ -691,7 +670,6 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
             }
         }
 
-        // Clumsiness
         if (proto.GrantsClumsiness && !comp.ClumsinessApplied)
         {
             EnsureComp<ClumsyCatchStatusEffectComponent>(uid);
@@ -701,7 +679,6 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
             comp.ClumsinessApplied = true;
         }
 
-        // Initialise timers (only if not already running to avoid reset on re-scan)
         if (proto.EpilepsyStunDuration > 0f && comp.EpilepsyTimer <= 0f)
             comp.EpilepsyTimer = _random.NextFloat(proto.EpilepsyMinInterval, proto.EpilepsyMaxInterval);
         if (proto.TouretteExclamations.Count > 0 && comp.TouretteTimer <= 0f)
@@ -723,7 +700,6 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
         if (!_proto.TryIndex<GeneticMutationPrototype>(mutationId, out var proto))
             return;
 
-        // Bioluminescence
         if (proto.LightRadius > 0f && comp.BioluminescenceLight != null)
         {
             QueueDel(comp.BioluminescenceLight.Value);
@@ -737,7 +713,6 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
                 _pointLight.SetEnabled(glow, true, light);
         }
 
-        // XRay — restore FoV only if no other active XRay mutations
         if (proto.GrantsXRay && comp.XRayActive)
         {
             var stillHasXRay = false;
@@ -758,7 +733,6 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
             }
         }
 
-        // AdaptiveVision
         if (proto.GrantsAdaptiveVision && comp.AdaptiveVisionActive)
         {
             comp.AdaptiveVisionActive = false;
@@ -767,7 +741,6 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
             comp.AdaptiveVisionAdded = false;
         }
 
-        // Scale — restore to 1:1
         if (proto.ScaleModifier > 0f && Math.Abs(comp.AppliedScale - proto.ScaleModifier) < 0.01f)
         {
             comp.AppliedScale = 1f;
@@ -785,7 +758,6 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
                 _scaleVisuals.SetSpriteScale(uid, Vector2.One);
         }
 
-        // Hulk — remove bonus melee damage
         if (proto.MeleeBruteBonus > 0f && TryComp<BonusMeleeDamageComponent>(uid, out _))
         {
             var stillHasHulk = false;
@@ -802,7 +774,6 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
                 RemComp<BonusMeleeDamageComponent>(uid);
         }
 
-        // Telekinesis
         if (proto.TelekinesisRange > 0f && comp.TelekinesisApplied)
         {
             var stillHasTk = false;
@@ -825,7 +796,6 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
             }
         }
 
-        // Telepathy
         if (proto.GrantsTelepathy && comp.TelepathyApplied)
         {
             var stillHasTelepath = false;
@@ -854,7 +824,6 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
             comp.ShockTouchAction = null;
         }
 
-        // AnimalHearing — restore default zoom
         if (proto.GrantsAnimalHearing && comp.AnimalHearingApplied)
         {
             var stillHasHearing = false;
@@ -874,7 +843,6 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
             }
         }
 
-        // SpeciesShift — restore original appearance if saved
         if (proto.GrantsSpeciesShift && comp.SpeciesShiftApplied)
         {
             if (comp.SpeciesShiftOriginalProfile != null && HasComp<HumanoidProfileComponent>(uid))
@@ -889,7 +857,6 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
             comp.SpeciesShiftRevertAction = null;
         }
 
-        // Clumsiness
         if (proto.GrantsClumsiness && comp.ClumsinessApplied)
         {
             var stillHasClumsy = false;
@@ -912,7 +879,6 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
             }
         }
 
-        // Chameleon — restore visibility if was invisible
         if (proto.GrantsChameleon && comp.ChameleonInvisible)
         {
             SetChameleonVisible(uid, comp, true);
