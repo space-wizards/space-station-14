@@ -537,6 +537,15 @@
     clothingVisuals:
       head:
       - state: equipped-HELMET
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 1
+        Slash: 1
+        Piercing: 1
+        Heat: 1
+        Radiation: 1
+    showArmorOnExamine: false # Looks odd but we don't want 'reduced by 0%' either.
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
