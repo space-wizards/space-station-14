@@ -13,13 +13,14 @@ namespace Content.Shared.Chemistry.Components;
 public sealed partial class RehydratableComponent : Component
 {
     /// <summary>
-    /// The reagent(s) which must be present to count as hydrated.
+    /// The reagents any of which count as a catalyst for hydration.
     /// </summary>
     [DataField("catalysts")]
-    public HashSet<ProtoId<ReagentPrototype>> CatalystPrototypes = new(){ "Water", "Holywater" };
+    public HashSet<ProtoId<ReagentPrototype>> CatalystPrototypes = new() { "Water", "Holywater" };
 
     /// <summary>
-    /// The minimum amount of catalyst that must be present to be hydrated. If there are multiple valid catalysts, the total amount of all catalysts in the solution will be compared to CatalystMinimum.
+    /// The minimum amount of catalyst that must be present to be hydrated.
+    /// If there are multiple catalysts, their combined amount is compared against this value.
     /// </summary>
     [DataField]
     public FixedPoint2 CatalystMinimum = FixedPoint2.Zero;

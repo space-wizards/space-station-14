@@ -318,7 +318,7 @@ namespace Content.Shared.Chemistry.Components
         }
 
         /// <summary>
-        /// overload of <see cref="GetTotalPrototypeQuantity(Robust.Shared.Prototypes.ProtoId{Content.Shared.Chemistry.Reagent.ReagentPrototype}[])"/>
+        /// Overload of <see cref="GetTotalPrototypeQuantity(ProtoId{ReagentPrototype}[])"/>
         /// using a set instead of an array of ids (allows for potentially faster internal .Contains operations than an array)
         /// </summary>
         public FixedPoint2 GetTotalPrototypeQuantity(ISet<ProtoId<ReagentPrototype>> prototypes)
@@ -329,6 +329,7 @@ namespace Content.Shared.Chemistry.Components
                 if (prototypes.Contains(reagent.Prototype))
                     total += quantity;
             }
+
             return total;
         }
 

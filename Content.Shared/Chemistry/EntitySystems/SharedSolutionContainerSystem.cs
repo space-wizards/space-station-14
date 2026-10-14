@@ -371,11 +371,11 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
     /// <summary>
-    /// gets the sum total quantity of all reagents from the given set of reagent prototypes found within this solution.
+    /// Gets the combined quantity of all the given reagent prototypes across every solution of the entity.
     /// </summary>
-    /// <param name="owner">solution to check</param>
-    /// <param name="reagents">set of the reagents we want to find</param>
-    /// <returns>sum volume of the given reagents within this solution</returns>
+    /// <param name="owner">The entity whose solutions are checked.</param>
+    /// <param name="reagents">The reagent prototypes to sum the quantities of.</param>
+    /// <returns>The combined quantity of the given reagents across the entity's solutions.</returns>
     public FixedPoint2 GetTotalPrototypeQuantity(Entity<SolutionManagerComponent?> owner, ISet<ProtoId<ReagentPrototype>> reagents)
     {
         var reagentQuantity = FixedPoint2.New(0);
@@ -386,6 +386,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                 reagentQuantity += solution.Comp.Solution.GetTotalPrototypeQuantity(reagents);
             }
         }
+
         return reagentQuantity;
     }
 
