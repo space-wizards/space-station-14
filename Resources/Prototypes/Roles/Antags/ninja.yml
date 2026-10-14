@@ -44,7 +44,6 @@
     jumpsuit: ClothingUniformJumpsuitNinja
     back: ClothingBackpackSatchelNinja
     mask: ClothingMaskNinja
-    head: ClothingHeadHelmetHardsuitSpaceNinja
     eyes: ClothingEyesVisorNinja
     gloves: ClothingHandsGlovesSpaceNinja
     outerClothing: ClothingOuterHardsuitSpaceNinja
