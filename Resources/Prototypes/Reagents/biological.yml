@@ -362,6 +362,7 @@
   desc: reagent-desc-miniozine
   group: Medicine
   physicalDesc: reagent-physical-desc-enigmatic
+  contrabandSeverity: Syndicate
   flavor: magical
   color: "#d44e99"
   metabolisms:
@@ -381,6 +382,7 @@
   desc: reagent-desc-ragorium
   group: Toxins
   physicalDesc: reagent-physical-desc-enigmatic
+  contrabandSeverity: Major
   flavor: metallic
   color: "#b32e35"
   metabolisms:
