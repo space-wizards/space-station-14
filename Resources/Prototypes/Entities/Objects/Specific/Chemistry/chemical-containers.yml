@@ -21,7 +21,7 @@
     - ChemDispensable
 
 - type: entity
-  parent: Jug
+  parent: [ Jug, BaseCentcommContraband ]
   id: CompactJug
   name: compact jug
   description: Used to contain a very large amount of chemicals or solutions. Streamlined with the latest technology to take up as little space as possible.
