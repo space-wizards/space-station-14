@@ -1174,7 +1174,7 @@
   id: PowerCage # Storage whitelist: PowerCageRecharger, ShuttleGunPerforator
 
 - type: Tag
-  id: PowerCell # Storage whitelist: BountyLaserGun, ClothingOuterSuitSpaceNinja, BaseWeaponPowerCell, PowerCellRecharger, WeaponCapacitorRecharger,
+  id: PowerCell # Storage whitelist: BountyLaserGun, ClothingOuterHardsuitSpaceNinja, BaseWeaponPowerCell, PowerCellRecharger, WeaponCapacitorRecharger,
                 # TurboItemRecharger, ShuttleGunSvalinnMachineGun. ConstructionGraph: WallmountSubstation
                 # Could potentially be replaced by whitelisting PowerCellComponent.
 
