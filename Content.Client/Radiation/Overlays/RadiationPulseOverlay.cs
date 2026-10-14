@@ -70,8 +70,6 @@ namespace Content.Client.Radiation.Overlays
                 worldHandle.UseShader(shd);
                 worldHandle.DrawRect(Box2.CenteredAround(instance.CurrentMapCoords.Position, new Vector2(instance.Range, instance.Range) * 2f), Color.White);
             }
-
-            worldHandle.UseShader(null);
         }
 
         //Queries all pulses on the map and either adds or removes them from the list of rendered pulses based on whether they should be drawn (in range? on the same z-level/map? pulse entity still exists?)

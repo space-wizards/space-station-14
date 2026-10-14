@@ -1,8 +1,12 @@
-﻿using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 
 namespace Content.Shared.EntityEffects.Effects.Damage;
 
+/// <summary>
+/// Deals stamina damage to this entity.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class StaminaDamageEntityEffectSystem : EntityEffectSystem<StaminaComponent, StaminaDamage>
 {
     [Dependency] private SharedStaminaSystem _stamina = default!;
@@ -13,6 +17,7 @@ public sealed partial class StaminaDamageEntityEffectSystem : EntityEffectSystem
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class StaminaDamage : EntityEffectBase<StaminaDamage>
 {
     /// <summary>
