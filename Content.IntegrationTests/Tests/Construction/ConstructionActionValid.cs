@@ -3,6 +3,9 @@ using Content.IntegrationTests.Fixtures;
 using Content.Server.Construction.Completions;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
+using Content.Shared.EntityEffects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Construction
@@ -10,40 +13,7 @@ namespace Content.IntegrationTests.Tests.Construction
     [TestFixture]
     public sealed class ConstructionActionValid : GameTest
     {
-        private bool IsValid(IGraphAction action, IPrototypeManager protoMan, out string prototype)
-        {
-            switch (action)
-            {
-                case SpawnPrototype spawn:
-                    prototype = spawn.Prototype;
-                    return protoMan.TryIndex<EntityPrototype>(spawn.Prototype, out _);
-                case SpawnPrototypeAtContainer spawn:
-                    prototype = spawn.Prototype;
-                    return protoMan.TryIndex<EntityPrototype>(spawn.Prototype, out _);
-                case ConditionalAction conditional:
-                    var valid = IsValid(conditional.Action, protoMan, out var protoA) & IsValid(conditional.Else, protoMan, out var protoB);
-
-                    if (!string.IsNullOrEmpty(protoA) && string.IsNullOrEmpty(protoB))
-                    {
-                        prototype = protoA;
-                    }
-
-                    else if (string.IsNullOrEmpty(protoA) && !string.IsNullOrEmpty(protoB))
-                    {
-                        prototype = protoB;
-                    }
-
-                    else
-                    {
-                        prototype = $"{protoA}, {protoB}";
-                    }
-
-                    return valid;
-                default:
-                    prototype = string.Empty;
-                    return true;
-            }
-        }
+        [Dependency] private SharedEntityEffectsSystem _effects = default!;
 
         [Test]
         public async Task ConstructionGraphSpawnPrototypeValid()
@@ -62,22 +32,25 @@ namespace Content.IntegrationTests.Tests.Construction
                 {
                     foreach (var node in graph.Nodes.Values)
                     {
-                        foreach (var action in node.Actions)
+                        foreach (var effect in node.Actions)
                         {
-                            if (IsValid(action, protoMan, out var prototype)) continue;
+                            if (_effects.TryApplyEffect(new EntityUid(), effect))
+                                continue;
 
                             valid = false;
-                            message.Append($"Invalid entity prototype \"{prototype}\" on graph action in node \"{node.Name}\" of graph \"{graph.ID}\"\n");
+                            message.Append($"Invalid entity prototype \"{effect}\" on graph action in node \"{node.Name}\" of graph \"{graph.ID}\"\n");
+
                         }
 
                         foreach (var edge in node.Edges)
                         {
-                            foreach (var action in edge.Completed)
+                            foreach (var effect in edge.Completed)
                             {
-                                if (IsValid(action, protoMan, out var prototype)) continue;
+                                if (_effects.TryApplyEffect(new EntityUid(), effect))
+                                    continue;
 
                                 valid = false;
-                                message.Append($"Invalid entity prototype \"{prototype}\" on graph action in edge \"{edge.Target}\" of node \"{node.Name}\" of graph \"{graph.ID}\"\n");
+                                message.Append($"Invalid entity prototype \"{effect}\" on graph action in edge \"{edge.Target}\" of node \"{node.Name}\" of graph \"{graph.ID}\"\n");
                             }
                         }
                     }

@@ -10,7 +10,8 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public sealed partial class PlaySound : IGraphAction
     {
-        [DataField("sound", required: true)] public SoundSpecifier Sound { get; private set; } = default!;
+        [DataField("sound", required: true)]
+        public SoundSpecifier Sound { get; private set; } = default!;
 
         [DataField("AudioParams")]
         public AudioParams AudioParams = AudioParams.Default;
