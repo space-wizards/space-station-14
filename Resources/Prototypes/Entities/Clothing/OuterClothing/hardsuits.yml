@@ -921,6 +921,13 @@
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot
+        ent: null
+        showEnts: false
+        occludes: true
+      toggleable-clothing: !type:ContainerSlot
+        ent: null
+        showEnts: false
+        occludes: true
   - type: ItemSlots
     slots:
       cell_slot:
