@@ -248,15 +248,18 @@ namespace Content.Shared.Atmos
         public const float PlasmaMinimumBurnTemperature = 100f + T0C;
         public const float PlasmaUpperTemperature = 1370f + T0C;
         public const float PlasmaOxygenFullburn = 10f;
-        public const float PlasmaBurnRateDelta = 9f;
+        /// <summary>
+        ///     For every mol of plasma present, burn at most 1 / X mols of plasma per second.
+        /// </summary>
+        public const float PlasmaBurnRateDelta = 4.5f;
 
         /// <summary>
         ///     This is calculated to help prevent singlecap bombs (Overpowered tritium/oxygen single tank bombs)
         /// </summary>
-        public const float MinimumTritiumOxyburnEnergy = 143000f;
+        public const float MinimumTritiumOxyburnEnergy = 286000f;
 
         public const float TritiumBurnOxyFactor = 100f;
-        public const float TritiumBurnTritFactor = 10f;
+        public const float TritiumBurnTritFactor = 20f;
         public const float TritiumBurnFuelRatio = 2f;
 
         public const float FrezonCoolLowerTemperature = 23.15f;
@@ -273,7 +276,10 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float FrezonNitrogenCoolRatio = 5;
         public const float FrezonCoolEnergyReleased = -600e3f;
-        public const float FrezonCoolRateModifier = 20f;
+        /// <summary>
+        ///     Remove 1 / X mol of frezon per second per mol of frezon present.
+        /// </summary>
+        public const float FrezonCoolRateModifier = 10f;
 
         public const float FrezonProductionMaxEfficiencyTemperature = 73.15f;
 
@@ -288,19 +294,19 @@ namespace Content.Shared.Atmos
         public const float FrezonProductionTritRatio = 50.0f;
 
         /// <summary>
-        ///     1 / X of the tritium is converted into Frezon each tick
+        ///     1 / X of the tritium is converted into Frezon each second
         /// </summary>
-        public const float FrezonProductionConversionRate = 50f;
+        public const float FrezonProductionConversionRate = 25f;
 
         /// <summary>
-        ///     The maximum portion of the N2O that can decompose each reaction tick. (50%)
+        ///     The maximum portion of the N2O that can decompose each second (50% per 0.5s tick)
         /// </summary>
-        public const float N2ODecompositionRate = 2f;
+        public const float N2ODecompositionRate = 1f;
 
         /// <summary>
-        ///     Divisor for Ammonia Oxygen reaction so that it doesn't happen instantaneously.
+        ///     Remove 1 / X mols of ammonia for each mol of ammonia present.
         /// </summary>
-        public const float AmmoniaOxygenReactionRate = 10f;
+        public const float AmmoniaOxygenReactionRate = 2.5f;
 
         /// <summary>
         ///     Determines at what pressure the ultra-high pressure red icon is displayed.

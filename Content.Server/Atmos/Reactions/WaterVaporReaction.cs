@@ -34,10 +34,10 @@ namespace Content.Server.Atmos.Reactions
                 return ReactionResult.NoReaction;
 
             // Remove the moles from the mixture...
-            mixture.AdjustMoles(GasId, -MolesPerUnit * deltaTime / AtmosphereSystem.defaultTickRate);
+            mixture.AdjustMoles(GasId, -MolesPerUnit);
 
             var tileRef = atmosphereSystem.GetTileRef(tile);
-            atmosphereSystem.Puddle.TrySpillAt(tileRef, new Solution(Reagent, FixedPoint2.New(MolesPerUnit * deltaTime * 2.0f)), out _, sound: false);
+            atmosphereSystem.Puddle.TrySpillAt(tileRef, new Solution(Reagent, FixedPoint2.New(MolesPerUnit)), out _, sound: false);
 
             return ReactionResult.Reacting;
         }

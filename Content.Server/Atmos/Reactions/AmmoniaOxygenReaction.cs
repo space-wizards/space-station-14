@@ -19,7 +19,7 @@ public sealed partial class AmmoniaOxygenReaction : IGasReactionEffect
         var fOxygen = nOxygen/nTotal;
         var rate = MathF.Pow(fAmmonia, 2) * MathF.Pow(fOxygen, 2);
 
-        var deltaMoles = nAmmonia / Atmospherics.AmmoniaOxygenReactionRate * 2 * rate * deltaTime / AtmosphereSystem.defaultTickRate;
+        var deltaMoles = nAmmonia / Atmospherics.AmmoniaOxygenReactionRate * rate * deltaTime;
 
         if (deltaMoles <= 0 || nAmmonia - deltaMoles < 0)
             return ReactionResult.NoReaction;

@@ -15,7 +15,7 @@ public sealed partial class N2ODecompositionReaction : IGasReactionEffect
     {
         var cacheN2O = mixture.GetMoles(Gas.NitrousOxide);
 
-        var burnedFuel = cacheN2O / Atmospherics.N2ODecompositionRate * deltaTime / AtmosphereSystem.defaultTickRate;
+        var burnedFuel = cacheN2O / Atmospherics.N2ODecompositionRate * deltaTime;
 
         if (burnedFuel <= 0 || cacheN2O - burnedFuel < 0)
             return ReactionResult.NoReaction;

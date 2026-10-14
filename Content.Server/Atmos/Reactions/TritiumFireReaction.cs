@@ -20,9 +20,9 @@ namespace Content.Server.Atmos.Reactions
             var initialTrit = mixture.GetMoles(Gas.Tritium);
 
             if (mixture.GetMoles(Gas.Oxygen) < initialTrit ||
-                Atmospherics.MinimumTritiumOxyburnEnergy > (temperature * oldHeatCapacity * heatScale))
+                (Atmospherics.MinimumTritiumOxyburnEnergy * deltaTime) > (temperature * oldHeatCapacity * heatScale))
             {
-                burnedFuel = mixture.GetMoles(Gas.Oxygen) / Atmospherics.TritiumBurnOxyFactor * deltaTime / AtmosphereSystem.defaultTickRate;
+                burnedFuel = mixture.GetMoles(Gas.Oxygen) / Atmospherics.TritiumBurnOxyFactor;
                 if (burnedFuel > initialTrit)
                     burnedFuel = initialTrit;
 
@@ -32,7 +32,7 @@ namespace Content.Server.Atmos.Reactions
             else
             {
                 // Limit the amount of fuel burned by the limiting reactant, either our initial tritium or the amount of oxygen available given the burn ratio.
-                burnedFuel = Math.Min(initialTrit, mixture.GetMoles(Gas.Oxygen) / Atmospherics.TritiumBurnFuelRatio) / Atmospherics.TritiumBurnTritFactor * deltaTime / AtmosphereSystem.defaultTickRate;
+                burnedFuel = Math.Min(initialTrit, mixture.GetMoles(Gas.Oxygen) / Atmospherics.TritiumBurnFuelRatio) / Atmospherics.TritiumBurnTritFactor * deltaTime;
                 mixture.AdjustMoles(Gas.Tritium, -burnedFuel);
                 mixture.AdjustMoles(Gas.Oxygen, -burnedFuel / Atmospherics.TritiumBurnFuelRatio);
                 energyReleased += (Atmospherics.FireHydrogenEnergyReleased * burnedFuel * (Atmospherics.TritiumBurnTritFactor - 1));

@@ -27,7 +27,7 @@ public sealed partial class FrezonProductionReaction : IGasReactionEffect
         var oxyLimit = Math.Min(initialOxy, catalystLimit) / Atmospherics.FrezonProductionTritRatio;
 
         // Amount of tritium & oxygen that are reacting
-        var tritBurned = Math.Min(oxyLimit, initialTrit) * deltaTime / AtmosphereSystem.defaultTickRate;
+        var tritBurned = Math.Min(oxyLimit, initialTrit) * deltaTime;
         var oxyBurned = tritBurned * Atmospherics.FrezonProductionTritRatio;
 
         var oxyConversion = oxyBurned / Atmospherics.FrezonProductionConversionRate;
