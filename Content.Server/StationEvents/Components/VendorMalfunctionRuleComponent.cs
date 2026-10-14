@@ -17,7 +17,7 @@ public sealed partial class VendorMalfunctionRuleComponent : Component
     public MinMax AffectedMachines = new MinMax(0.05f, 0.2f);
 
     /// <summary>
-    /// Minimum number of machines to hit if AffectedMachines somehow ends up at zero. Should be at least 1.
+    /// Minimum number of machines to hit. Should be at least 1.
     /// </summary>
     [DataField]
     public int MinimumToAffect = 5;
