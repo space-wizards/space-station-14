@@ -613,6 +613,12 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
             return;
         }
 
+        if (ConfigManager.GetCVar(CCVars.EmergencyShuttleBulldoze))
+        {
+            var comp = EnsureComp<ShuttleComponent>(shuttle.Value);
+            comp.Bulldoze = true;
+        }
+
         ent.Comp2.ShuttleIndex += Comp<MapGridComponent>(shuttle.Value).LocalAABB.Width + ShuttleSpawnBuffer;
 
         // Update indices for all centcomm comps pointing to same map
