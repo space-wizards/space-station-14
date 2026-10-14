@@ -16,7 +16,7 @@ public sealed partial class RehydratableComponent : Component
     /// The reagent(s) which must be present to count as hydrated.
     /// </summary>
     [DataField("catalysts")]
-    public List<ProtoId<ReagentPrototype>> CatalystPrototypes = new(){ "Water", "Holywater" };
+    public HashSet<ProtoId<ReagentPrototype>> CatalystPrototypes = new(){ "Water", "Holywater" };
 
     /// <summary>
     /// The minimum amount of catalyst that must be present to be hydrated. If there are multiple valid catalysts, the total amount of all catalysts in the solution will be compared to CatalystMinimum.

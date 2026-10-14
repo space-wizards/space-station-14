@@ -371,6 +371,25 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
     /// <summary>
+    /// gets the sum total quantity of all reagents from the given set of reagent prototypes found within this solution.
+    /// </summary>
+    /// <param name="owner">solution to check</param>
+    /// <param name="reagents">set of the reagents we want to find</param>
+    /// <returns>sum volume of the given reagents within this solution</returns>
+    public FixedPoint2 GetTotalPrototypeQuantity(Entity<SolutionManagerComponent?> owner, ISet<ProtoId<ReagentPrototype>> reagents)
+    {
+        var reagentQuantity = FixedPoint2.New(0);
+        if (Exists(owner))
+        {
+            foreach (var (_, solution) in EnumerateSolutions(owner))
+            {
+                reagentQuantity += solution.Comp.Solution.GetTotalPrototypeQuantity(reagents);
+            }
+        }
+        return reagentQuantity;
+    }
+
+    /// <summary>
     /// Dirties a solution entity that has been modified and prompts updates to chemical reactions and overflow state.
     /// Should be invoked whenever a solution entity is modified.
     /// </summary>
