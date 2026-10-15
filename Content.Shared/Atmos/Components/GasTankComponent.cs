@@ -9,6 +9,7 @@ namespace Content.Shared.Atmos.Components;
 public sealed partial class GasTankComponent : GasMaxPressureHolderComponent
 {
     private const float DefaultLowPressure = Atmospherics.OneAtmosphere;
+    private const float DefaultTankIntegrity = 100f;
 
     public bool IsLowPressure => Air.Pressure <= TankLowPressure;
 
@@ -60,4 +61,10 @@ public sealed partial class GasTankComponent : GasMaxPressureHolderComponent
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan NextDirtyTime;
+
+    public GasTankComponent()
+    {
+        MaxIntegrity = DefaultTankIntegrity;
+        Integrity = DefaultTankIntegrity;
+    }
 }
