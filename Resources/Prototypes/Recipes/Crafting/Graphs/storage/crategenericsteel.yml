@@ -23,7 +23,7 @@
               welded: false
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 5
             - !type:EmptyAllContainers
             - !type:DeleteEntity

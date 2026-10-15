@@ -30,13 +30,13 @@
         locked: false
       completed:
       - !type:SpawnEntity
-        prototype: SheetSteel1
-        amount: 5
+        entity: SheetSteel1
+        number: 5
       - !type:SpawnEntity
-        prototype: CableApcStack1
-        amount: 2
+        entity: CableApcStack1
+        number: 2
       - !type:SpawnEntity
-        prototype: FreezerElectronics
-        amount: 1
+        entity: FreezerElectronics
+        number: 1
       - !type:EmptyAllContainers
       - !type:DeleteEntity

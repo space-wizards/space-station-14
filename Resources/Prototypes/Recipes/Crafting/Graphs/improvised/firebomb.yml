@@ -24,9 +24,9 @@
     - to: start
       completed:
       - !type:SpawnEntity
-        prototype: DrinkColaCanEmpty
+        entity: DrinkColaCanEmpty
       - !type:SpawnEntity
-        prototype: Igniter
+        entity: Igniter
       - !type:DeleteEntity {}
       steps:
       - tool: Prying
@@ -68,8 +68,8 @@
     - to: fuel
       completed:
       - !type:SpawnEntity
-        prototype: CableApcStack1
-        amount: 5
+        entity: CableApcStack1
+        number: 5
       steps:
       - tool: Cutting
         doAfter: 2

@@ -40,13 +40,13 @@
         doAfter: 1
       completed:
       - !type:SpawnEntity
-        prototype: SheetSteel1
+        entity: SheetSteel1
         amount: 2
       - !type:SpawnEntity
-        prototype: CableMVStack1
+        entity: CableMVStack1
         amount: 5
       - !type:SpawnEntity
-        prototype: ModularReceiver
+        entity: ModularReceiver
       - !type:DeleteEntity
 
   - node: mslaserframescrewed
@@ -92,7 +92,7 @@
         doAfter: 1
       completed:
       - !type:SpawnEntity
-        prototype: GlassLens
+        entity: GlassLens
         amount: 2
 
   - node: mslasercelled

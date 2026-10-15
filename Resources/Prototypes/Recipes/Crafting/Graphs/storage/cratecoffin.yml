@@ -20,7 +20,7 @@
               doAfter: 5
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
-              amount: 5
+              entity: MaterialWoodPlank1
+              number: 5
             - !type:EmptyAllContainers
             - !type:DeleteEntity

@@ -21,8 +21,8 @@
         welded: false
       completed:
       - !type:SpawnEntity
-        prototype: SheetSteel1
-        amount: 4
+        entity: SheetSteel1
+        number: 4
       - !type:EmptyAllContainers
       - !type:DeleteEntity
 
@@ -53,11 +53,11 @@
         locked: false
       completed:
       - !type:SpawnEntity
-        prototype: SheetPlasteel1
-        amount: 4
+        entity: SheetPlasteel1
+        number: 4
       - !type:SpawnEntity
-        prototype: CableApcStack1
-        amount: 2
+        entity: CableApcStack1
+        number: 2
       - !type:EmptyAllContainers
       - !type:DeleteEntity
 
@@ -93,14 +93,14 @@
         locked: false
       completed:
       - !type:SpawnEntity
-        prototype: SheetPlasteel1
-        amount: 4
+        entity: SheetPlasteel1
+        number: 4
       - !type:SpawnEntity
-        prototype: CableApcStack1
-        amount: 2
+        entity: CableApcStack1
+        number: 2
       - !type:SpawnEntity
-        prototype: FreezerElectronics
-        amount: 1
+        entity: FreezerElectronics
+        number: 1
       - !type:EmptyAllContainers
       - !type:DeleteEntity
 
@@ -134,13 +134,13 @@
         locked: false
       completed:
       - !type:SpawnEntity
-        prototype: SheetSteel1
+        entity: SheetSteel1
         amount: 10
       - !type:SpawnEntity
-        prototype: CableApcStack1
+        entity: CableApcStack1
         amount: 5
       - !type:SpawnEntity
-        prototype: SheetPlasteel1
+        entity: SheetPlasteel1
         amount: 10
       - !type:EmptyAllContainers
       - !type:DeleteEntity
@@ -168,7 +168,7 @@
         welded: false
       completed:
       - !type:SpawnEntity
-        prototype: SheetSteel1
+        entity: SheetSteel1
         amount: 4
       - !type:EmptyAllContainers
       - !type:DeleteEntity
