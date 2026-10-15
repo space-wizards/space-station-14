@@ -241,6 +241,33 @@
     Tricordrazine: 2
 
 - type: reaction
+  id: ApotheosoticExtract
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    ApotheosoticEnzymes:
+      amount: 10
+  products:
+    ApotheosoticExtract: 5
+    Benzene: 3
+    Fluorine: 2
+
+- type: reaction
+  id: Omnizine
+  reactants:
+    ApotheosoticExtract:
+      amount: 3
+    Bicardine:
+      amount: 1
+    Diphenhydramine:
+      amount: 1
+    Sigynate:
+      amount: 1
+  products:
+    Omnizine: 3
+
+- type: reaction
   id: HeartbreakerToxin
   reactants:
     DexalinPlus:

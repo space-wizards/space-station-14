@@ -893,6 +893,50 @@
           Brute: -2
 
 - type: reagent
+  id: ApotheosoticEnzymes
+  name: reagent-name-apotheosotic-enzymes
+  group: Medicine
+  desc: reagent-desc-apotheosotic-enzymes
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: magical
+  color: "#fcf7f9"
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:EvenHealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Omnizine
+          max: 0
+        damage:
+          Burn: -2
+          Toxin: -2
+          Airloss: -2
+          Brute: -2
+          - !type:HealthChange
+      - !type:HealthChange
+        damage:
+          Cellular: 0.5
+
+- type: reagent
+  id: ApotheosoticExtract
+  name: reagent-name-apotheosotic-extract
+  group: Medicine
+  desc: reagent-desc-apotheosotic-extract
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: chalky
+  color: "#fcf7f9"
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:EvenHealthChange
+        damage:
+          Burn: -0.5
+          Toxin: -0.5
+          Airloss: -0.5
+          Brute: -0.5
+
+- type: reagent
   id: Ultravasculine
   name: reagent-name-ultravasculine
   group: Medicine
