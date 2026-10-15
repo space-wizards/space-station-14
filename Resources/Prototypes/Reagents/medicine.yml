@@ -913,10 +913,10 @@
           Toxin: -2
           Airloss: -2
           Brute: -2
-          - !type:HealthChange
       - !type:HealthChange
         damage:
-          Cellular: 0.5
+          types:
+            Cellular: 0.5
 
 - type: reagent
   id: ApotheosoticExtract
