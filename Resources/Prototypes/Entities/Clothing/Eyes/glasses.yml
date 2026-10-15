@@ -67,7 +67,6 @@
     enabled: false # Disabled by default
     relayOverlay: true
     scanlinesIntensity: 2
-    showTiles: true
     action: ActionToggleMesons
     tileOverlayColor: "#CEF0D130"
 
