@@ -1,6 +1,7 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
+using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Electrocution;
 using Content.Shared.Actions;
@@ -18,6 +19,7 @@ using Content.Shared.Genetics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Item;
 using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -35,8 +37,10 @@ using Content.Shared.Tag;
 using Content.Shared.Traits.Assorted;
 using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
@@ -53,6 +57,7 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
     [Dependency] private SharedStunSystem _stun = default!;
     [Dependency] private StatusEffectsSystem _statusEffect = default!;
     [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private IChatManager _chatManager = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedGeneticsSystem _genetics = default!;
     [Dependency] private VisibilitySystem _visibility = default!;
@@ -74,17 +79,20 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
     private static readonly EntProtoId ClumsyStatusEffect = "StatusEffectClumsyAll";
     private const string TelekinesisTag = "BypassInteractionRangeChecks";
     private const string TelepathyRadioChannel = "Binary";
+    private const string StunImmunityTag = "StunImmune";
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<GeneticMutationComponent, DamageModifyEvent>(OnDamageModify);
+        SubscribeLocalEvent<GeneticMutationComponent, DamageDealtEvent>(OnDamageDealt);
         SubscribeLocalEvent<GeneticMutationComponent, GeneticMutationAppliedEvent>(OnMutationApplied);
         SubscribeLocalEvent<GeneticMutationComponent, GeneticMutationRemovedEvent>(OnMutationRemoved);
+        SubscribeLocalEvent<GeneticMutationComponent, ShotAttemptedEvent>(OnShootAttempt);
         SubscribeLocalEvent<GeneticMutationComponent, GeneticTelepathyActionEvent>(OnTelepathyAction);
         SubscribeLocalEvent<GeneticMutationComponent, GeneticTelekinesisActionEvent>(OnTelekinesisAction);
         SubscribeLocalEvent<GeneticMutationComponent, GeneticShockTouchActionEvent>(OnShockTouchAction);
-        SubscribeLocalEvent<GeneticMutationComponent, GeneticSpeciesShiftRevertActionEvent>(OnSpeciesShiftRevertAction);
+        SubscribeLocalEvent<GeneticMutationComponent, GeneticSpeciesShiftActionEvent>(OnSpeciesShiftAction);
         SubscribeLocalEvent<GetMeleeDamageEvent>(OnGetMeleeDamage);
     }
 
@@ -96,6 +104,28 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
     private void OnMutationRemoved(Entity<GeneticMutationComponent> entity, ref GeneticMutationRemovedEvent args)
     {
         RemoveMutationEffects(entity.Owner, args.MutationId, entity.Comp);
+    }
+
+    private void OnDamageDealt(Entity<GeneticMutationComponent> entity, ref DamageDealtEvent args)
+    {
+        if (!entity.Comp.MutadoneRecoveryActive ||
+            args.Damage.GetTotal() <= FixedPoint2.Zero ||
+            !TryComp<ActorComponent>(entity.Owner, out var actor))
+            return;
+
+        _chatManager.DispatchServerMessage(
+            actor.PlayerSession,
+            Loc.GetString("genetics-mutadone-damage-message"));
+    }
+
+    private void OnShootAttempt(Entity<GeneticMutationComponent> entity, ref ShotAttemptedEvent args)
+    {
+        if (!entity.Comp.ActiveMutations.Any(id =>
+                _proto.TryIndex<GeneticMutationPrototype>(id, out var prototype) && prototype.CanBreakWalls))
+            return;
+
+        _popup.PopupEntity(Loc.GetString("genetics-hulk-cannot-use-guns"), entity.Owner, entity.Owner);
+        args.Cancel();
     }
 
     private void OnTelepathyAction(Entity<GeneticMutationComponent> entity, ref GeneticTelepathyActionEvent args)
@@ -137,21 +167,32 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
             args.Handled = true;
     }
 
-    private void OnSpeciesShiftRevertAction(
+    private void OnSpeciesShiftAction(
         Entity<GeneticMutationComponent> entity,
-        ref GeneticSpeciesShiftRevertActionEvent args)
+        ref GeneticSpeciesShiftActionEvent args)
     {
-        if (!entity.Comp.SpeciesShiftApplied || entity.Comp.SpeciesShiftOriginalProfile == null)
+        if (!entity.Comp.SpeciesShiftApplied || !RandomizeSpeciesShift(entity.Owner))
             return;
 
-        _visualBody.ApplyProfileTo(entity.Owner, entity.Comp.SpeciesShiftOriginalProfile);
-        _humanoidProfile.ApplyProfileTo(entity.Owner, entity.Comp.SpeciesShiftOriginalProfile);
-        entity.Comp.SpeciesShiftOriginalProfile = null;
-        entity.Comp.SpeciesShiftApplied = false;
-        if (entity.Comp.SpeciesShiftRevertAction is { } action)
-            _actions.RemoveAction((entity.Owner, null), (action, null));
-        entity.Comp.SpeciesShiftRevertAction = null;
         args.Handled = true;
+    }
+
+    private bool RandomizeSpeciesShift(EntityUid uid)
+    {
+        if (!TryComp<HumanoidProfileComponent>(uid, out var humanoid))
+            return false;
+
+        ProtoId<SpeciesPrototype>[] species = { "Human", "Felinid", "SlimePerson" };
+        var alternatives = species
+            .Where(id => id != humanoid.Species)
+            .ToArray();
+        if (alternatives.Length == 0)
+            return false;
+
+        var profile = HumanoidCharacterProfile.RandomWithSpecies(_random.Pick(alternatives));
+        _visualBody.ApplyProfileTo(uid, profile);
+        _humanoidProfile.ApplyProfileTo(uid, profile);
+        return true;
     }
 
     private void OnGetMeleeDamage(ref GetMeleeDamageEvent args)
@@ -166,7 +207,8 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
                 continue;
 
             args.Damage.DamageDict.TryGetValue("Blunt", out var blunt);
-            args.Damage.DamageDict["Blunt"] = blunt + FixedPoint2.New(prototype.MeleeBruteBonus);
+            args.Damage.DamageDict["Blunt"] = blunt + FixedPoint2.New(
+                prototype.CanBreakWalls ? Math.Max(prototype.MeleeBruteBonus, 100f) : prototype.MeleeBruteBonus);
         }
     }
 
@@ -508,6 +550,21 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
         if (!_proto.TryIndex<GeneticMutationPrototype>(mutationId, out var proto))
             return;
 
+        if (proto.CanBreakWalls && !comp.HulkEffectsApplied)
+        {
+            if (_visualBody.TryGatherMarkingsData(uid, null, out var profiles, out _, out _))
+            {
+                comp.HulkOriginalOrganProfiles = profiles;
+                var greenProfiles = profiles.ToDictionary(
+                    pair => pair.Key,
+                    pair => pair.Value with { SkinColor = Color.Green });
+                _visualBody.ApplyProfiles(uid, greenProfiles);
+            }
+
+            comp.HulkAddedStunImmunity = _tag.AddTag(uid, StunImmunityTag);
+            comp.HulkEffectsApplied = true;
+        }
+
         if (proto.LightRadius > 0f && comp.BioluminescenceLight == null)
         {
             var light = Spawn(null, Transform(uid).Coordinates);
@@ -660,13 +717,25 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
         {
             if (TryComp<HumanoidProfileComponent>(uid, out var humanoid))
             {
-                comp.SpeciesShiftOriginalProfile = HumanoidCharacterProfile.DefaultWithSpecies(humanoid.Species, humanoid.Sex);
-                var profile = HumanoidCharacterProfile.RandomWithSpecies(
-                    _random.Pick(new[] { "Human", "Felinid", "SlimePerson" }));
-                _visualBody.ApplyProfileTo(uid, profile);
-                _humanoidProfile.ApplyProfileTo(uid, profile);
-                comp.SpeciesShiftApplied = true;
-                _actions.AddAction(uid, ref comp.SpeciesShiftRevertAction, "ActionGeneticSpeciesShiftRevert");
+                comp.SpeciesShiftOriginalProfile = HumanoidCharacterProfile
+                    .DefaultWithSpecies(humanoid.Species, humanoid.Sex)
+                    .WithName(MetaData(uid).EntityName)
+                    .WithAge(humanoid.Age)
+                    .WithVoice(humanoid.Voice)
+                    .WithGender(humanoid.Gender);
+                _visualBody.TryGatherMarkingsData(
+                    uid,
+                    null,
+                    out var originalProfiles,
+                    out _,
+                    out var originalMarkings);
+                comp.SpeciesShiftOriginalOrganProfiles = originalProfiles;
+                comp.SpeciesShiftOriginalMarkings = originalMarkings;
+                if (RandomizeSpeciesShift(uid))
+                {
+                    comp.SpeciesShiftApplied = true;
+                    _actions.AddAction(uid, ref comp.SpeciesShiftAction, "ActionGeneticSpeciesShift");
+                }
             }
         }
 
@@ -699,6 +768,22 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
             return;
         if (!_proto.TryIndex<GeneticMutationPrototype>(mutationId, out var proto))
             return;
+
+        if (proto.CanBreakWalls &&
+            !comp.ActiveMutations.Any(id =>
+                _proto.TryIndex<GeneticMutationPrototype>(id, out var active) && active.CanBreakWalls))
+        {
+            if (comp.HulkOriginalOrganProfiles != null)
+            {
+                _visualBody.ApplyProfiles(uid, comp.HulkOriginalOrganProfiles);
+                comp.HulkOriginalOrganProfiles = null;
+            }
+
+            if (comp.HulkAddedStunImmunity)
+                _tag.RemoveTag(uid, StunImmunityTag);
+            comp.HulkAddedStunImmunity = false;
+            comp.HulkEffectsApplied = false;
+        }
 
         if (proto.LightRadius > 0f && comp.BioluminescenceLight != null)
         {
@@ -850,11 +935,17 @@ public sealed class GeneticMutationEffectsSystem : EntitySystem
                 _visualBody.ApplyProfileTo(uid, comp.SpeciesShiftOriginalProfile);
                 _humanoidProfile.ApplyProfileTo(uid, comp.SpeciesShiftOriginalProfile);
             }
+            if (comp.SpeciesShiftOriginalOrganProfiles != null)
+                _visualBody.ApplyProfiles(uid, comp.SpeciesShiftOriginalOrganProfiles);
+            if (comp.SpeciesShiftOriginalMarkings != null)
+                _visualBody.ApplyMarkings(uid, comp.SpeciesShiftOriginalMarkings);
             comp.SpeciesShiftOriginalProfile = null;
+            comp.SpeciesShiftOriginalOrganProfiles = null;
+            comp.SpeciesShiftOriginalMarkings = null;
             comp.SpeciesShiftApplied = false;
-            if (comp.SpeciesShiftRevertAction is { } action)
+            if (comp.SpeciesShiftAction is { } action)
                 _actions.RemoveAction((uid, null), (action, null));
-            comp.SpeciesShiftRevertAction = null;
+            comp.SpeciesShiftAction = null;
         }
 
         if (proto.GrantsClumsiness && comp.ClumsinessApplied)

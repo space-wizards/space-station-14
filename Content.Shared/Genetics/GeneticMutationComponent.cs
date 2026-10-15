@@ -1,5 +1,10 @@
+using Content.Shared.Body;
 using Content.Shared.FixedPoint;
+using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Markings;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
+using Robust.Shared.Prototypes;
 using Robust.Shared.GameStates;
 using System.Numerics;
 
@@ -162,14 +167,35 @@ public sealed partial class GeneticMutationComponent : Component
     public EntityUid? ShockTouchAction;
 
     [DataField]
-    public EntityUid? SpeciesShiftRevertAction;
+    public bool AnimalHearingApplied;
 
     [DataField]
-    public bool AnimalHearingApplied;
+    public bool MutadoneRecoveryActive;
+
+    [DataField]
+    public bool MutadoneWarningShown;
+
+    [DataField]
+    public bool HulkAddedStunImmunity;
+
+    [DataField]
+    public bool HulkEffectsApplied;
+
+    [DataField]
+    public Dictionary<ProtoId<OrganCategoryPrototype>, OrganProfileData>? HulkOriginalOrganProfiles;
 
     [DataField]
     public bool SpeciesShiftApplied;
 
     [DataField]
     public HumanoidCharacterProfile? SpeciesShiftOriginalProfile;
+
+    [DataField]
+    public Dictionary<ProtoId<OrganCategoryPrototype>, OrganProfileData>? SpeciesShiftOriginalOrganProfiles;
+
+    [DataField]
+    public Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>>? SpeciesShiftOriginalMarkings;
+
+    [DataField]
+    public EntityUid? SpeciesShiftAction;
 }

@@ -5,7 +5,7 @@
   sequence: ATGCTAGCTAGCTAGC
   instability: 55
   sprintSpeedModifier: 0.85
-  meleeBruteBonus: 20
+  meleeBruteBonus: 100
   canBreakWalls: true
 
 - type: geneticMutation

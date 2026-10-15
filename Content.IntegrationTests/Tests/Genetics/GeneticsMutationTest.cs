@@ -2,7 +2,10 @@ using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.Server.Genetics;
 using Content.Server.Polymorph.Systems;
+using Content.Shared.Body;
 using Content.Shared.Damage.Systems;
+using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects;
 using Content.Shared.FixedPoint;
 using Content.Shared.Genetics;
 using Content.Shared.Humanoid;
@@ -10,7 +13,9 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Overlays;
 using Content.Shared.Polymorph;
+using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Genetics;
@@ -249,7 +254,15 @@ public sealed class GeneticsMutationTest : GameTest
             Assert.That(genome.TelekinesisAction, Is.Not.Null);
             Assert.That(genome.TelepathyAction, Is.Not.Null);
             Assert.That(genome.ShockTouchAction, Is.Not.Null);
-            Assert.That(genome.SpeciesShiftRevertAction, Is.Not.Null);
+            Assert.That(genome.SpeciesShiftAction, Is.Not.Null);
+            var shiftEvent = new GeneticSpeciesShiftActionEvent();
+            SEntMan.EventBus.RaiseLocalEvent(subject, shiftEvent);
+            Assert.That(shiftEvent.Handled, Is.True);
+            Assert.That(genome.SpeciesShiftAction, Is.Not.Null);
+
+            shiftEvent = new GeneticSpeciesShiftActionEvent();
+            SEntMan.EventBus.RaiseLocalEvent(subject, shiftEvent);
+            Assert.That(shiftEvent.Handled, Is.True);
 
             foreach (var actionMutationId in new[]
                      {
@@ -265,7 +278,61 @@ public sealed class GeneticsMutationTest : GameTest
             Assert.That(genome.TelekinesisAction, Is.Null);
             Assert.That(genome.TelepathyAction, Is.Null);
             Assert.That(genome.ShockTouchAction, Is.Null);
-            Assert.That(genome.SpeciesShiftRevertAction, Is.Null);
+            Assert.That(genome.SpeciesShiftAction, Is.Null);
+        });
+    }
+
+    [Test]
+    public async Task HulkMutationAddsGreenSkinAndStunImmunityThenRestoresThem()
+    {
+        EntityUid subject = default;
+        await Server.WaitAssertion(() => subject = SSpawn("MobHuman"));
+
+        await Server.WaitAssertion(() =>
+        {
+            var genetics = Server.System<SharedGeneticsSystem>();
+            _ = Server.System<GeneticMutationEffectsSystem>();
+            var visualBody = Server.System<SharedVisualBodySystem>();
+            var tags = Server.System<TagSystem>();
+            var stunImmuneTag = new ProtoId<TagPrototype>("StunImmune");
+
+            Assert.That(visualBody.TryGatherMarkingsData(subject, null, out var originalProfiles, out _, out _), Is.True);
+            Assert.That(genetics.TryApplyMutationFromInjector(subject, "GeneticMutationHulk"), Is.True);
+            Assert.That(tags.HasTag(subject, stunImmuneTag), Is.True);
+            Assert.That(visualBody.TryGatherMarkingsData(subject, null, out var greenProfiles, out _, out _), Is.True);
+            Assert.That(greenProfiles.Values.All(profile => profile.SkinColor == Color.Green), Is.True);
+
+            Assert.That(genetics.TryRemoveMutation(subject, "GeneticMutationHulk"), Is.True);
+            Assert.That(tags.HasTag(subject, stunImmuneTag), Is.False);
+            Assert.That(visualBody.TryGatherMarkingsData(subject, null, out var restoredProfiles, out _, out _), Is.True);
+            Assert.That(restoredProfiles, Is.EqualTo(originalProfiles));
+        });
+    }
+
+    [Test]
+    public async Task MutadoneRemovesActiveMutationEffects()
+    {
+        EntityUid subject = default;
+        await Server.WaitAssertion(() => subject = SSpawn("MobHuman"));
+
+        await Server.WaitAssertion(() =>
+        {
+            var genetics = Server.System<SharedGeneticsSystem>();
+            var effects = Server.System<SharedEntityEffectsSystem>();
+            _ = Server.System<GeneticMutationEffectsSystem>();
+            var tags = Server.System<TagSystem>();
+            var stunImmuneTag = new ProtoId<TagPrototype>("StunImmune");
+            var genome = genetics.EnsureGenome(subject);
+
+            Assert.That(genetics.TryApplyMutationFromInjector(subject, "GeneticMutationHulk"), Is.True);
+            Assert.That(genome.ActiveMutations, Does.Contain("GeneticMutationHulk"));
+            Assert.That(tags.HasTag(subject, stunImmuneTag), Is.True);
+
+            effects.ApplyEffects(subject, new EntityEffect[] { new RemoveAllGeneticMutations() });
+
+            Assert.That(genome.ActiveMutations, Is.Empty);
+            Assert.That(genome.MutadoneRecoveryActive, Is.True);
+            Assert.That(tags.HasTag(subject, stunImmuneTag), Is.False);
         });
     }
 

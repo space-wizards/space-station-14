@@ -1,3 +1,10 @@
+using Content.Shared.Body;
+using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Markings;
+using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Preferences;
+using Robust.Shared.Prototypes;
+
 namespace Content.Server.Genetics;
 
 [RegisterComponent]
@@ -26,4 +33,13 @@ public sealed partial class GeneticsConsoleComponent : Component
 
     [DataField]
     public string? LastJokerMutationId;
+
+    [DataField]
+    public HumanoidCharacterProfile? StoredEnzymeProfile;
+
+    [DataField]
+    public Dictionary<ProtoId<OrganCategoryPrototype>, OrganProfileData>? StoredOrganProfiles;
+
+    [DataField]
+    public Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>>? StoredMarkings;
 }

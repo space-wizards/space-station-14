@@ -28,6 +28,8 @@ public sealed partial class GeneticsConsoleWindow : DefaultWindow
     private Action<string>? _onCreateInjector;
     private Action? _onHumanize;
     private Action? _onScramble;
+    private Action? _onStoreEnzymes;
+    private Action? _onInjectEnzymes;
 
     public GeneticsConsoleWindow()
     {
@@ -47,7 +49,9 @@ public sealed partial class GeneticsConsoleWindow : DefaultWindow
         Action<GeneticsMutationUiEntry, GeneticsConsoleAction, string, string> onMutationAction,
         Action<string> onCreateInjector,
         Action onHumanize,
-        Action onScramble)
+        Action onScramble,
+        Action onStoreEnzymes,
+        Action onInjectEnzymes)
     {
         var genomeSignature = string.Join("|", state.Mutations.Select(mutation => $"{mutation.Id}:{mutation.Sequence}"));
         if (_subjectName != state.SubjectName || _subjectGenomeSignature != genomeSignature)
@@ -63,6 +67,8 @@ public sealed partial class GeneticsConsoleWindow : DefaultWindow
         _onCreateInjector = onCreateInjector;
         _onHumanize = onHumanize;
         _onScramble = onScramble;
+        _onStoreEnzymes = onStoreEnzymes;
+        _onInjectEnzymes = onInjectEnzymes;
 
         ScannerStatus.Text = !state.ScannerConnected
             ? Loc.GetString("genetics-console-no-scanner")
@@ -116,12 +122,29 @@ public sealed partial class GeneticsConsoleWindow : DefaultWindow
         PopulateMutationSelector(state);
         PopulateSelectedMutation(state);
         PopulateStorage(state, onCreateInjector);
-        PopulateFeatures(state, onCreateInjector);
+        PopulateEnzymes(state);
+        PopulateFeatures(state);
 
         AnalyzeButton.Text = state.JokerCooldown > 0
             ? Loc.GetString("genetics-console-joker-cooldown-button", ("seconds", state.JokerCooldown))
             : Loc.GetString("genetics-console-joker");
         AnalyzeButton.Disabled |= state.JokerCooldown > 0;
+    }
+
+    private void PopulateEnzymes(GeneticsConsoleBoundUserInterfaceState state)
+    {
+        EnzymesSubjectLabel.Text = state.SubjectName == null
+            ? Loc.GetString("genetics-console-enzymes-no-subject")
+            : Loc.GetString("genetics-console-enzymes-subject", ("name", state.SubjectName));
+        EnzymesStoredLabel.Text = state.StoredEnzymeDetails ?? Loc.GetString("genetics-console-enzymes-empty");
+        StoreEnzymesButton.Disabled = !state.IsHumanoidSubject || state.SubjectName == null;
+        InjectEnzymesButton.Disabled = state.StoredEnzymeName == null ||
+                                       !state.IsHumanoidSubject ||
+                                       state.SubjectName == null;
+        StoreEnzymesButton.OnPressed -= OnStoreEnzymesPressed;
+        InjectEnzymesButton.OnPressed -= OnInjectEnzymesPressed;
+        StoreEnzymesButton.OnPressed += OnStoreEnzymesPressed;
+        InjectEnzymesButton.OnPressed += OnInjectEnzymesPressed;
     }
 
     private void PopulateMutationSelector(GeneticsConsoleBoundUserInterfaceState state)
@@ -477,10 +500,20 @@ public sealed partial class GeneticsConsoleWindow : DefaultWindow
             _onCreateInjector?.Invoke($"{id}:mutator");
     }
 
-    private void PopulateFeatures(GeneticsConsoleBoundUserInterfaceState state, Action<string> onCreateInjector)
+    private void PopulateFeatures(GeneticsConsoleBoundUserInterfaceState state)
     {
         FeaturesList.Children.Clear();
-        foreach (var mutation in state.Mutations)
+        var discoveredCount = state.Mutations.Count(mutation => mutation.Discovered);
+        var activeCount = state.Mutations.Count(mutation => mutation.Active);
+        FeaturesSummaryLabel.Text = Loc.GetString(
+            "genetics-console-features-summary",
+            ("discovered", discoveredCount),
+            ("total", state.Mutations.Count),
+            ("active", activeCount));
+
+        foreach (var mutation in state.Mutations.OrderByDescending(entry => entry.Active)
+                     .ThenByDescending(entry => entry.Discovered)
+                     .ThenBy(entry => entry.Name))
         {
             var row = new BoxContainer
             {
@@ -488,7 +521,24 @@ public sealed partial class GeneticsConsoleWindow : DefaultWindow
                 HorizontalExpand = true,
                 Margin = new Thickness(4),
             };
-            row.AddChild(new Label { Text = mutation.Name, HorizontalExpand = true });
+            var title = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal };
+            var status = new Label
+            {
+                Text = Loc.GetString(mutation.Active
+                    ? "genetics-console-feature-active"
+                    : mutation.Discovered
+                        ? "genetics-console-feature-discovered"
+                        : "genetics-console-feature-unknown"),
+                HorizontalExpand = true,
+            };
+            status.ModulateSelfOverride = mutation.Active
+                ? Color.FromHex("#65d48a")
+                : mutation.Discovered
+                    ? Color.FromHex("#60c5d3")
+                    : Color.FromHex("#89909a");
+            title.AddChild(new Label { Text = mutation.Name, HorizontalExpand = true });
+            title.AddChild(status);
+            row.AddChild(title);
             if (mutation.Discovered)
             {
                 row.AddChild(new Label
@@ -496,15 +546,10 @@ public sealed partial class GeneticsConsoleWindow : DefaultWindow
                     Text = $"{mutation.Description} ({Loc.GetString("genetics-console-mutation-instability", ("value", mutation.Instability))})",
                     HorizontalExpand = true,
                 });
-                
-                var buttonRow = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal };
-                
                 var apply = new Button
                 {
-                    Text = Loc.GetString(mutation.Active
-                        ? "genetics-console-applied"
-                        : "genetics-console-apply"),
-                    Disabled = mutation.Active,
+                    Text = Loc.GetString("genetics-console-apply"),
+                    Disabled = mutation.Active || state.SubjectName == null,
                     HorizontalExpand = true,
                 };
                 apply.OnPressed += _ => _onMutationAction?.Invoke(
@@ -512,29 +557,11 @@ public sealed partial class GeneticsConsoleWindow : DefaultWindow
                     GeneticsConsoleAction.Apply,
                     string.Empty,
                     string.Empty);
-                buttonRow.AddChild(apply);
-                
-                var activator = new Button
-                {
-                    Text = "Activator (5m)",
-                    HorizontalExpand = true,
-                };
-                activator.OnPressed += _ => onCreateInjector($"{mutation.Id}:activator");
-                buttonRow.AddChild(activator);
-                
-                var mutator = new Button
-                {
-                    Text = "Mutator (∞)",
-                    HorizontalExpand = true,
-                };
-                mutator.OnPressed += _ => onCreateInjector($"{mutation.Id}:mutator");
-                buttonRow.AddChild(mutator);
-                
-                row.AddChild(buttonRow);
+                row.AddChild(apply);
             }
             else
             {
-                row.AddChild(new Label { Text = Loc.GetString("genetics-console-feature-undiscovered") });
+                row.AddChild(new Label { Text = Loc.GetString("genetics-console-feature-hidden-description") });
             }
 
             FeaturesList.AddChild(row);
@@ -571,6 +598,16 @@ public sealed partial class GeneticsConsoleWindow : DefaultWindow
     private void OnScramblePressed(BaseButton.ButtonEventArgs args)
     {
         _onScramble?.Invoke();
+    }
+
+    private void OnStoreEnzymesPressed(BaseButton.ButtonEventArgs args)
+    {
+        _onStoreEnzymes?.Invoke();
+    }
+
+    private void OnInjectEnzymesPressed(BaseButton.ButtonEventArgs args)
+    {
+        _onInjectEnzymes?.Invoke();
     }
 
     private static Color NucleotideColor(char nucleotide)

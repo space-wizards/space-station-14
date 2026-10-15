@@ -37,7 +37,9 @@ public sealed class GeneticsConsoleBoundUserInterface : BoundUserInterface
             OnMutationAction,
             OnCreateInjector,
             () => SendMessage(new GeneticsConsoleMessage(GeneticsConsoleAction.HumanizeMonkey, string.Empty)),
-            () => SendMessage(new GeneticsConsoleMessage(GeneticsConsoleAction.ScrambleDna, string.Empty)));
+            () => SendMessage(new GeneticsConsoleMessage(GeneticsConsoleAction.ScrambleDna, string.Empty)),
+            () => SendMessage(new GeneticsConsoleMessage(GeneticsConsoleAction.StoreEnzymes, string.Empty)),
+            () => SendMessage(new GeneticsConsoleMessage(GeneticsConsoleAction.InjectEnzymes, string.Empty)));
     }
 
     private void OnMutationAction(
@@ -75,6 +77,8 @@ public sealed class GeneticsConsoleBoundUserInterface : BoundUserInterface
                left.ResultMessage == right.ResultMessage &&
                left.MaxMemorySlots == right.MaxMemorySlots &&
                left.JokerCooldown == right.JokerCooldown &&
+               left.StoredEnzymeName == right.StoredEnzymeName &&
+               left.StoredEnzymeDetails == right.StoredEnzymeDetails &&
                left.Mutations.Count == right.Mutations.Count &&
                left.Memory.Count == right.Memory.Count &&
                left.Mutations.Zip(right.Mutations).All(pair =>

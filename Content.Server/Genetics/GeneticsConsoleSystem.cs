@@ -9,6 +9,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Genetics;
 using Content.Shared.Genetics.GeneticsConsole;
 using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Markings;
 using Content.Shared.Mobs;
 using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
@@ -172,6 +173,50 @@ public sealed class GeneticsConsoleSystem : EntitySystem
                 _damageable.TryChangeDamage(scrambleTarget, scrambleDamage, ignoreResistances: true);
                 _genetics.ScrambleGenome(scrambleTarget);
                 component.LastResult = Loc.GetString("genetics-console-scramble-success");
+                break;
+
+            case GeneticsConsoleAction.StoreEnzymes:
+                if (!TryGetSubject(component, out var enzymeSource) ||
+                    !TryComp<HumanoidProfileComponent>(enzymeSource, out var sourceProfile))
+                    break;
+
+                component.StoredEnzymeProfile = HumanoidCharacterProfile
+                    .DefaultWithSpecies(sourceProfile.Species, sourceProfile.Sex)
+                    .WithName(MetaData(enzymeSource).EntityName)
+                    .WithAge(sourceProfile.Age)
+                    .WithVoice(sourceProfile.Voice)
+                    .WithGender(sourceProfile.Gender);
+                component.StoredOrganProfiles = null;
+                component.StoredMarkings = null;
+                if (_visualBody.TryGatherMarkingsData(
+                        enzymeSource,
+                        null,
+                        out var enzymeProfiles,
+                        out _,
+                        out var enzymeMarkings))
+                {
+                    component.StoredOrganProfiles = enzymeProfiles;
+                    component.StoredMarkings = enzymeMarkings;
+                }
+                component.LastResult = Loc.GetString("genetics-console-enzymes-saved");
+                break;
+
+            case GeneticsConsoleAction.InjectEnzymes:
+                if (component.StoredEnzymeProfile == null ||
+                    !TryGetSubject(component, out var enzymeTarget) ||
+                    !HasComp<VisualBodyComponent>(enzymeTarget))
+                    break;
+
+                _visualBody.ApplyProfileTo(enzymeTarget, component.StoredEnzymeProfile);
+                _humanoidProfile.ApplyProfileTo(enzymeTarget, component.StoredEnzymeProfile);
+                _metaData.SetEntityName(enzymeTarget, component.StoredEnzymeProfile.Name);
+                if (component.StoredOrganProfiles != null)
+                    _visualBody.ApplyProfiles(enzymeTarget, component.StoredOrganProfiles);
+                if (component.StoredMarkings != null)
+                    _visualBody.ApplyMarkings(enzymeTarget, component.StoredMarkings);
+                component.LastResult = Loc.GetString(
+                    "genetics-console-enzymes-injected",
+                    ("name", component.StoredEnzymeProfile.Name));
                 break;
 
             case GeneticsConsoleAction.Analyze:
@@ -395,7 +440,9 @@ public sealed class GeneticsConsoleSystem : EntitySystem
                 new List<GeneticsMutationUiEntry>(),
                 GetMemoryEntries(component),
                 component.MaxMemorySlots,
-                (int) Math.Ceiling(component.JokerCooldownRemaining));
+                (int) Math.Ceiling(component.JokerCooldownRemaining),
+                component.StoredEnzymeProfile?.Name,
+                GetStoredEnzymeDetails(component));
         }
 
         var instability = _genetics.GetInstability(subject);
@@ -528,7 +575,9 @@ public sealed class GeneticsConsoleSystem : EntitySystem
             entries,
             GetMemoryEntries(component),
             component.MaxMemorySlots,
-            (int) Math.Ceiling(component.JokerCooldownRemaining));
+            (int) Math.Ceiling(component.JokerCooldownRemaining),
+            component.StoredEnzymeProfile?.Name,
+            GetStoredEnzymeDetails(component));
     }
 
     private static bool IsCandidateStrand(string sequence, int expectedLength)
@@ -558,5 +607,18 @@ public sealed class GeneticsConsoleSystem : EntitySystem
         }
 
         return entries;
+    }
+
+    private string? GetStoredEnzymeDetails(GeneticsConsoleComponent component)
+    {
+        if (component.StoredEnzymeProfile is not { } profile)
+            return null;
+
+        return Loc.GetString(
+            "genetics-console-enzymes-stored",
+            ("name", profile.Name),
+            ("species", _humanoidProfile.GetSpeciesRepresentation(profile.Species)),
+            ("age", profile.Age),
+            ("gender", profile.Gender.ToString()));
     }
 }

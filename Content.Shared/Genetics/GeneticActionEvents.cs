@@ -11,7 +11,7 @@ public sealed partial class GeneticTelekinesisActionEvent : EntityTargetActionEv
 {
 }
 
-public sealed partial class GeneticSpeciesShiftRevertActionEvent : InstantActionEvent
+public sealed partial class GeneticSpeciesShiftActionEvent : InstantActionEvent
 {
 }
 

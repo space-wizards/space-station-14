@@ -91,12 +91,26 @@
             </BoxContainer>
 
             <BoxContainer Orientation="Vertical" Margin="8" VerticalExpand="True">
-                <Label Text="{Loc 'genetics-console-enzymes-title'}" StyleClasses="LabelKeyText" />
-                <Label Text="{Loc 'genetics-console-enzymes-empty'}" />
+                <PanelContainer StyleClasses="PanelInsetDark" HorizontalExpand="True">
+                    <BoxContainer Orientation="Vertical" Margin="12" SeparationOverride="8">
+                        <Label Text="{Loc 'genetics-console-enzymes-title'}" StyleClasses="LabelKeyText" />
+                        <Label Text="{Loc 'genetics-console-enzymes-description'}" />
+                        <Label Name="EnzymesSubjectLabel" StyleClasses="LabelKeyText" />
+                        <Label Name="EnzymesStoredLabel" />
+                        <BoxContainer Orientation="Horizontal" SeparationOverride="8">
+                            <Button Name="StoreEnzymesButton" Text="{Loc 'genetics-console-enzymes-save'}" HorizontalExpand="True" />
+                            <Button Name="InjectEnzymesButton" Text="{Loc 'genetics-console-enzymes-inject'}" HorizontalExpand="True" />
+                        </BoxContainer>
+                    </BoxContainer>
+                </PanelContainer>
             </BoxContainer>
 
             <ScrollContainer HScrollEnabled="False" Margin="8" VerticalExpand="True" HorizontalExpand="True">
-                <BoxContainer Name="FeaturesList" Orientation="Vertical" HorizontalExpand="True" />
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="6">
+                    <Label Text="{Loc 'genetics-console-features-title'}" StyleClasses="LabelKeyText" />
+                    <Label Name="FeaturesSummaryLabel" />
+                    <BoxContainer Name="FeaturesList" Orientation="Vertical" HorizontalExpand="True" />
+                </BoxContainer>
             </ScrollContainer>
         </TabContainer>
     </BoxContainer>

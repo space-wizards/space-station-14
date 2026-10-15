@@ -1,4 +1,5 @@
 using Robust.Shared.Serialization;
+using Content.Shared.Preferences;
 
 namespace Content.Shared.Genetics.GeneticsConsole;
 
@@ -20,6 +21,8 @@ public sealed class GeneticsConsoleBoundUserInterfaceState : BoundUserInterfaceS
     public readonly List<GeneticsMemoryUiEntry> Memory;
     public readonly int MaxMemorySlots;
     public readonly int JokerCooldown;
+    public readonly string? StoredEnzymeName;
+    public readonly string? StoredEnzymeDetails;
 
     public GeneticsConsoleBoundUserInterfaceState(
         bool scannerConnected,
@@ -36,7 +39,9 @@ public sealed class GeneticsConsoleBoundUserInterfaceState : BoundUserInterfaceS
         List<GeneticsMutationUiEntry> mutations,
         List<GeneticsMemoryUiEntry> memory,
         int maxMemorySlots,
-        int jokerCooldown = 0)
+        int jokerCooldown = 0,
+        string? storedEnzymeName = null,
+        string? storedEnzymeDetails = null)
     {
         ScannerConnected = scannerConnected;
         ScannerInRange = scannerInRange;
@@ -53,6 +58,8 @@ public sealed class GeneticsConsoleBoundUserInterfaceState : BoundUserInterfaceS
         Memory = memory;
         MaxMemorySlots = maxMemorySlots;
         JokerCooldown = jokerCooldown;
+        StoredEnzymeName = storedEnzymeName;
+        StoredEnzymeDetails = storedEnzymeDetails;
     }
 }
 
@@ -134,7 +141,9 @@ public enum GeneticsConsoleAction : byte
     CreateInjector,
     HumanizeMonkey,
     Analyze,
-    ScrambleDna
+    ScrambleDna,
+    StoreEnzymes,
+    InjectEnzymes
 }
 
 [Serializable, NetSerializable]

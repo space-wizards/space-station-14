@@ -48,15 +48,15 @@
 
 - type: entity
   parent: BaseAction
-  id: ActionGeneticSpeciesShiftRevert
-  name: action-genetics-species-shift-revert-name
-  description: action-genetics-species-shift-revert-description
+  id: ActionGeneticSpeciesShift
+  name: action-genetics-species-shift-name
+  description: action-genetics-species-shift-description
   components:
   - type: Action
-    useDelay: 60
+    useDelay: 5
   - type: Sprite
     sprite: Interface/Actions/night_vision.rsi
     layers:
     - state: icon
   - type: InstantAction
-    event: !type:GeneticSpeciesShiftRevertActionEvent
+    event: !type:GeneticSpeciesShiftActionEvent
