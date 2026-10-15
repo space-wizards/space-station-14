@@ -91,10 +91,10 @@ reagent-name-omnizine = omnizine
 reagent-desc-omnizine = A soothing milky liquid with an iridescent gleam. A well known conspiracy theory says that its origins remain a mystery because revealing the secrets of its production would render most commercial pharmaceuticals obsolete.
 
 reagent-name-apotheosotic-enzymes = apotheosotic enzymes
-reagent-desc-apotheosotic-enzymes = A plant extract that gives regenerative powers rivaling that of the gods.  Mortal bodies don't handle it well without refinement.
+reagent-desc-apotheosotic-enzymes = An abrasive sickly-white extract, though it can shut any wound, it's indiscriminate in what it "fixes" attacking even the genetic coding of the body.
 
 reagent-name-apotheosotic-extract = apotheosotic extract
-reagent-desc-apotheosotic-extract = Refined from apotheosotic enzymes, highly useful in synthesizing advanced medicines.
+reagent-desc-apotheosotic-extract = A clumpy powder derived from apotheosotic enzymes, highly useful in manufacturing advanced medicines.
 
 reagent-name-ultravasculine = ultravasculine
 reagent-desc-ultravasculine = A complicated anti-toxin solution that quickly flushes out toxin while causing minor stress on the body. Reacts with histamine, duplicating itself while flushing it out. Overdose causes extreme pain.
