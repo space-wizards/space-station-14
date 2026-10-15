@@ -2483,6 +2483,7 @@
     name: seeds-sunflower-name
     packetPrototype: SunflowerSeeds
     productPrototypes: [ FoodSunflower ]
+    mutationPrototypes: [ SolarflowerPlants, ShadowflowerPlants ]
   - type: Plant
     lifespan: 20
     maturation: 6
@@ -2540,6 +2541,10 @@
         min: 1
         max: 10
         potencyDivisor: 10
+      SolarOil:
+        min: 1
+        max: 15
+        potencyDivisor: 5
 
 - type: entity
   parent: BasePlant
@@ -2574,3 +2579,7 @@
         min: 1
         max: 10
         potencyDivisor: 10
+      Nyctalon:
+        min: 1
+        max: 15
+        potencyDivisor: 5

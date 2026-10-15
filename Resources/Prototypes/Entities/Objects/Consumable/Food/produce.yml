@@ -2807,7 +2807,7 @@
         - MobLayer
 
 - type: entity
-  parent: [ FoodProduceBase, BaseSlicingRefinable ]
+  parent: FoodProduceBase
   name: sunflower
   id: FoodSunflower
   description: A bulky flower filled with natural oils.
@@ -2837,7 +2837,7 @@
     - Flower
 
 - type: entity
-  parent: [ FoodProduceBase, BaseSlicingRefinable ]
+  parent: FoodProduceBase
   id: FoodSolarflower
   name: solarflower
   description: A bulky flower with a glistening glow.
@@ -2870,7 +2870,7 @@
     molsPerSecondPerUnitMass: 0
     forceRotProgression: true
   - type: RotInto
-    entity: LampflowerCoreRot
+    entity: FoodSolarflowerCoreRot
     stage: 1
   - type: Tag
     tags:
@@ -2878,9 +2878,9 @@
 
 - type: entity
   parent: FoodInjectableBase
-  id: FoodLampflowerCoreRot
-  name: empty lampflower core
-  description: The empty core of a lampflower, its light has gone out.
+  id: FoodSolarflowerCoreRot
+  name: empty solarflower core
+  description: The empty core of a solarflower, its light has gone out.
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lampflower.rsi
@@ -2896,7 +2896,7 @@
       - Recyclable
 
 - type: entity
-  parent: [ FoodProduceBase, BaseSlicingRefinable ]
+  parent: FoodProduceBase
   id: FoodShadowflower
   name: shadowflower
   description:  A bulky flower with a core of darkness.

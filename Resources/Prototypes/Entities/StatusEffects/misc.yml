@@ -232,3 +232,12 @@
     handItems:
     - ArmbladeHorror
     - ArmbladeHorror
+
+- type: entity
+  parent: StatusEffectBase
+  id: StatusEffectGlowing
+  name: Glowing
+  components:
+  - type: PointLight
+    radius: 6.0
+    color: "#fffb00"
