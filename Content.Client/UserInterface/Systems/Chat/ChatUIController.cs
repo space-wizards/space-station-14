@@ -57,8 +57,8 @@ public sealed partial class ChatUIController : UIController
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IReplayRecordingManager _replayRecording = default!;
 
-    [UISystemDependency] private readonly ChatSystem _chatSys = default!;
-    [UISystemDependency] private readonly CodewordSystem _codeword = default!;
+    [UISystemDependency] private readonly ChatSystem? _chatSys = default!;
+    [UISystemDependency] private readonly CodewordSystem? _codeword = default!;
     [UISystemDependency] private readonly ExamineSystem _examine = default!;
     [UISystemDependency] private readonly GhostSystem _ghost = default!;
     [UISystemDependency] private readonly TransformSystem _transform = default!;
@@ -133,6 +133,11 @@ public sealed partial class ChatUIController : UIController
     /// </summary>
     private readonly Dictionary<EntityUid, SpeechBubbleQueueData> _queuedSpeechBubbles
         = new();
+
+    /// <summary>
+    ///     The typing preview bubble currently displayed on screen, if any.
+    /// </summary>
+    private PreviewBubble? _previewBubble;
 
     private readonly HashSet<ChatBox> _chats = new();
     public IReadOnlySet<ChatBox> Chats => _chats;
@@ -833,12 +838,16 @@ public sealed partial class ChatUIController : UIController
             msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, highlight, "color", _highlightsColor);
         }
 
-        // Color any codewords for minds that have roles that use them
-        foreach (var data in _codeword.GetPlayerCodewords(_player.LocalUser))
+        // In case we get messages outside of systems being init.
+        if (_codeword != null)
         {
-            foreach (var codeword in data.Codewords)
+            // Color any codewords for minds that have roles that use them
+            foreach (var data in _codeword.GetPlayerCodewords(_player.LocalUser))
             {
-                msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, codeword, "color", data.Color.ToHex());
+                foreach (var codeword in data.Codewords)
+                {
+                    msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, codeword, "color", data.Color.ToHex());
+                }
             }
         }
 
@@ -926,6 +935,66 @@ public sealed partial class ChatUIController : UIController
     public void NotifyChatFocus(bool isFocused)
     {
         _typingIndicator?.ClientChangedChatFocus(isFocused);
+    }
+
+    /// <summary>
+    ///     Called by <see cref="ChatBox"/> every time the player's chat input text changes.
+    ///     Creates or updates a "typing preview" speech bubble above the player's character.
+    /// </summary>
+    /// <param name="box">
+    ///     The current chat input box.
+    /// </param>
+    public void UpdateTypingPreview(ChatBox box)
+    {
+        var text = box.ChatInput.Input.Text;
+
+        if (!_config.GetCVar(CCVars.ChatTypingPreviewEnabled)
+            || _player.LocalEntity is not { } player
+            || string.IsNullOrEmpty(text))
+        {
+            ClearTypingPreview();
+            return;
+        }
+
+        // If no preview bubble exists, create one.
+        if (_previewBubble == null)
+        {
+            _previewBubble = new PreviewBubble(player);
+            _speechBubbleRoot.AddChild(_previewBubble);
+        }
+
+        // For an existing bubble, update its text.
+        var heightDelta = _previewBubble.UpdateText(text);
+        if (heightDelta != 0 && _activeSpeechBubbles.TryGetValue(player, out var activeBubbles))
+        {
+            foreach (var bubble in activeBubbles)
+            {
+                bubble.VerticalOffset += heightDelta;
+            }
+        }
+    }
+
+    /// <summary>
+    ///     Removes and disposes the typing preview bubble if one is currently shown.
+    ///     Also shifts real speech bubbles back down to close the gap left by the removed preview.
+    /// </summary>
+    public void ClearTypingPreview()
+    {
+        if (_previewBubble == null)
+            return;
+
+        if (_previewBubble.ContentSize.Y > 0
+            && _player.LocalEntity is { } player
+            && _activeSpeechBubbles.TryGetValue(player, out var activeBubbles))
+        {
+            foreach (var bubble in activeBubbles)
+            {
+                bubble.VerticalOffset -= _previewBubble.ContentSize.Y;
+            }
+        }
+
+        _previewBubble.Dispose();
+        _previewBubble = null;
     }
 
     public void Repopulate()

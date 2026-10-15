@@ -19,7 +19,7 @@
     deviceNetId: Wireless
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 200
   - type: DeviceNetworkRequiresPower
   - type: Speech

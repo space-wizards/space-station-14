@@ -3,7 +3,10 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+
+#pragma warning disable CS0618 // This IS the obsolete component, this warning is redundant.
 using static Content.Shared.Decals.DecalGridComponent;
+#pragma warning restore CS0618
 
 namespace Content.Shared.Decals
 {
@@ -18,7 +21,7 @@ namespace Content.Shared.Decals
     {
         [Access(Other = AccessPermissions.ReadExecute)]
         [DataField(serverOnly: true)]
-        public DecalGridChunkCollection ChunkCollection = new(new ());
+        public DecalGridChunkCollection ChunkCollection = new(new());
 
         /// <summary>
         ///     Dictionary mapping decals to their corresponding grid chunks.
@@ -34,7 +37,7 @@ namespace Content.Shared.Decals
         [Serializable, NetSerializable]
         public sealed partial class DecalChunk
         {
-            [IncludeDataField(customTypeSerializer:typeof(DictionarySerializer<ushort, Decal>))]
+            [IncludeDataField(customTypeSerializer: typeof(DictionarySerializer<ushort, Decal>))]
             public Dictionary<ushort, Decal> Decals;
 
             [NonSerialized]
