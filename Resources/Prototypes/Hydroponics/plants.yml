@@ -2470,3 +2470,107 @@
         min: 1
         max: 10
         potencyDivisor: 10
+
+- type: entity
+  parent: BasePlant
+  id: SunflowerPlants
+  categories: [HideSpawnMenu]
+  name: sunflower
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/sunflower.rsi
+  - type: PlantData
+    name: seeds-sunflower-name
+    packetPrototype: SunflowerSeeds
+    productPrototypes: [ FoodSunflower ]
+  - type: Plant
+    lifespan: 20
+    maturation: 6
+    production: 6
+    yield: 1
+    potency: 25
+    growthStages: 4
+  - type: PlantGrowth
+    nutrientConsumption: 0.5
+  - type: PlantChemicals
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Vitamin:
+        min: 1
+        max: 10
+        potencyDivisor: 10
+      Oil:
+        min: 1
+        max: 15
+        potencyDivisor: 5
+
+- type: entity
+  parent: BasePlant
+  id: SolarflowerPlants
+  categories: [HideSpawnMenu]
+  name: solarflower
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/solarflower.rsi
+  - type: PlantData
+    name: seeds-solarflower-name
+    packetPrototype: SolarflowerSeeds
+    productPrototypes: [ FoodSolarflower ]
+  - type: Plant
+    lifespan: 20
+    maturation: 6
+    production: 6
+    yield: 1
+    potency: 25
+    growthStages: 4
+  - type: PlantAtmospheric
+    highHeatTolerance: 313 # 40°C
+  - type: PlantGrowth
+    nutrientConsumption: 0.5
+  - type: PlantChemicals
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Vitamin:
+        min: 1
+        max: 10
+        potencyDivisor: 10
+
+- type: entity
+  parent: BasePlant
+  id: ShadowflowerPlants
+  categories: [HideSpawnMenu]
+  name: shadowflower
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/shadowflower.rsi
+  - type: PlantData
+    name: seeds-shadowflower-name
+    packetPrototype: ShadowflowerSeeds
+    productPrototypes: [ FoodShadowflower ]
+  - type: Plant
+    lifespan: 20
+    maturation: 6
+    production: 6
+    yield: 1
+    potency: 25
+    growthStages: 4
+  - type: PlantAtmospheric
+    lowHeatTolerance: 283 # 10°C
+  - type: PlantGrowth
+    nutrientConsumption: 0.5
+  - type: PlantChemicals
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Vitamin:
+        min: 1
+        max: 10
+        potencyDivisor: 10

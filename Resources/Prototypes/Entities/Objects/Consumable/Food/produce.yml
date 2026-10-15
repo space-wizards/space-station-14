@@ -2805,3 +2805,122 @@
         - MobMask
         layer:
         - MobLayer
+
+- type: entity
+  parent: [ FoodProduceBase, BaseSlicingRefinable ]
+  name: sunflower
+  id: FoodSunflower
+  description: A bulky flower filled with natural oils.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - oily
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 10
+      - ReagentId: Oil
+        Quantity: 15
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/sunflower.rsi
+  - type: Produce
+    plantId: SunflowerPlants
+  - type: FoodSequenceElement
+    entries:
+      Taco: Sunflower
+      Burger: Sunflower
+  - type: Tag
+    tags:
+    - Flower
+
+- type: entity
+  parent: [ FoodProduceBase, BaseSlicingRefinable ]
+  id: FoodSolarflower
+  name: solarflower
+  description: A bulky flower with a glistening glow.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - oily
+      - spicy
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 10
+
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/solarflower.rsi
+  - type: Produce
+    plantId: SolarflowerPlants
+  - type: FoodSequenceElement
+    entries:
+      Taco: Solarflower
+      Burger: Solarflower
+  - type: PointLight
+    radius: 6.0
+    color: "#fffb00"
+  - type: Perishable    # lots of point lights are laggy, so rot after 10 minutes to reduce that.
+    rotAfter: 600
+    molsPerSecondPerUnitMass: 0
+    forceRotProgression: true
+  - type: RotInto
+    entity: LampflowerCoreRot
+    stage: 1
+  - type: Tag
+    tags:
+    - Flower
+
+- type: entity
+  parent: FoodInjectableBase
+  id: FoodLampflowerCoreRot
+  name: empty lampflower core
+  description: The empty core of a lampflower, its light has gone out.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/lampflower.rsi
+    state: corerot
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Vitamin
+        Quantity: 10
+  - type: Tag
+    tags:
+      - Trash
+      - Recyclable
+
+- type: entity
+  parent: [ FoodProduceBase, BaseSlicingRefinable ]
+  id: FoodShadowflower
+  name: shadowflower
+  description:  A bulky flower with a core of darkness.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - oily
+      - cold
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 10
+
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/shadowflower.rsi
+  - type: Produce
+    plantId: ShadowflowerPlants
+  - type: FoodSequenceElement
+    entries:
+      Taco: Shadowflower
+      Burger: Shadowflower
+  - type: Tag
+    tags:
+    - Flower

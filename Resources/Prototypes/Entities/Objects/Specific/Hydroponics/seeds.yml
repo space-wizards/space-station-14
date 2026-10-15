@@ -757,3 +757,33 @@
       plantId: BloonionPlants
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/bloonion.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of sunflower seeds
+  id: SunflowerSeeds
+  components:
+    - type: Seed
+      plantId: SunflowerPlants
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/sunflower.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of solarflower seeds
+  id: SolarflowerSeeds
+  components:
+    - type: Seed
+      plantId: SolarflowerPlants
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/solarflower.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of shadowflower seeds
+  id: ShadowflowerSeeds
+  components:
+    - type: Seed
+      plantId: ShadowflowerPlants
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/shadowflower.rsi

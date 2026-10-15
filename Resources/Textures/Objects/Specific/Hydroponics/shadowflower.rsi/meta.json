@@ -1,0 +1,53 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by Mehnix",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "dead"
+      },
+      {
+        "name": "harvest",
+        "delays":
+        [
+            [
+                0.20,
+                0.20,
+                0.20,
+                0.20
+            ]
+        ]
+      },
+      {
+        "name": "produce",
+        "delays":
+        [
+            [
+                0.20,
+                0.20,
+                0.20,
+                0.20
+            ]
+        ]
+      },
+      {
+        "name": "seed"
+      },
+      {
+        "name": "stage-1"
+      },
+      {
+        "name": "stage-2"
+      },
+      {
+        "name": "stage-3"
+      },
+      {
+        "name": "stage-4"
+      }
+    ]
+  }
