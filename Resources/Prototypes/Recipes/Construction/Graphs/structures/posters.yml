@@ -24,4 +24,4 @@
 
   - node: removed
     actions:
-    - !type:DestroyEntity {}
+    - !type:DestroyEntity
