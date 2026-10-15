@@ -81,6 +81,11 @@ public sealed partial class VendingMachineMenu : FancyWindow
     {
         _listItems.Clear();
 
+        var categoryName = _selectedCategory?.Name ?? "vending-machine-category-all";
+        SearchBar.PlaceHolder = CategoryPanel.Visible
+            ? _loc.GetString("vending-machine-component-search-category-filter", ("category", _loc.GetString(categoryName)))
+            : _loc.GetString("vending-machine-component-search-filter");
+
         var hasInventory = _amounts.Count > 0;
         SearchBar.Visible = hasInventory;
         VendingContents.Visible = hasInventory;

@@ -19,9 +19,8 @@
                           HorizontalExpand="True" Margin="4 4" />
                 <controls:SearchListContainer Name="VendingContents" VerticalExpand="True" Margin="4 4" />
                 <Label Name="OutOfStockLabel" Text="{Loc 'vending-machine-component-try-eject-out-of-stock'}"
-                       Visible="False"
-                       Margin="4 4" HorizontalExpand="True" VerticalExpand="True" HorizontalAlignment="Center"
-                       VerticalAlignment="Center" />
+                       Visible="False" Margin="4 4" HorizontalExpand="True" VerticalExpand="True"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" />
             </BoxContainer>
         </BoxContainer>
         <!-- Footer -->
