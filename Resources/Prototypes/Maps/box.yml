@@ -16,7 +16,7 @@
           emergencyShuttlePath: /Maps/Shuttles/emergency_box.yml
         - type: StationJobs
           availableJobs:
-            # TOTAL: 65 job slots
+            # TOTAL: 66 job slots
             # Command (7)
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -38,11 +38,12 @@
             AtmosphericTechnician: [ 1, 2 ]
             StationEngineer: [ 2, 4 ]
             TechnicalAssistant: [ 0, 2 ]
-            # Medical (8)
+            # Medical (9)
             Chemist: [ 1, 2 ]
             MedicalDoctor: [ 2, 3 ]
             Paramedic: [ 0, 1 ]
             MedicalIntern: [ 0, 2 ]
+            Psychologist: [ 0, 1 ]
             # Science (6)
             Scientist: [ 2, 4 ]
             ResearchAssistant: [ 0, 2 ]
