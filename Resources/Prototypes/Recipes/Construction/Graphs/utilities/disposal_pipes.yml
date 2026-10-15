@@ -86,7 +86,7 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
       - !type:DestroyEntity
       steps:
@@ -97,7 +97,7 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 2
       - !type:DestroyEntity
@@ -109,7 +109,7 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 2
       - !type:DestroyEntity
@@ -121,10 +121,10 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 2
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: CableApcStack1 # I have no idea why this does not work
       - !type:DestroyEntity
       steps:
@@ -135,7 +135,7 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 2
       - !type:DestroyEntity
@@ -148,7 +148,7 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 2
       - !type:DestroyEntity
@@ -160,7 +160,7 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 2
       - !type:DestroyEntity
@@ -173,7 +173,7 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 2
       - !type:DestroyEntity
@@ -189,7 +189,7 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 2
       - !type:DestroyEntity
@@ -205,7 +205,7 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 2
       - !type:DestroyEntity
@@ -221,7 +221,7 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 2
       - !type:DestroyEntity
@@ -238,7 +238,7 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 2
       - !type:DestroyEntity
@@ -251,10 +251,10 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 2
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: CableApcStack1
       - !type:DestroyEntity
       steps:
@@ -265,10 +265,10 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 2
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: CableApcStack1
       - !type:DestroyEntity
       steps:

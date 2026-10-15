@@ -53,7 +53,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 10
           steps:
@@ -64,7 +64,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetPlasma
               amount: 10
           steps:
@@ -75,7 +75,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: IngotGold1
               amount: 10
           steps:
@@ -86,7 +86,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: IngotSilver1
               amount: 10
           steps:
@@ -97,7 +97,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetPaper1
               amount: 10
           steps:
@@ -111,10 +111,10 @@
           - !type:PlaySound
             playAtPosition: true
             sound: /Audio/Items/Toys/ToyFall2.ogg
-          - !type:SpawnPrototype
+          - !type:SpawnEntity
                 prototype: MaterialCardboard1
                 amount: 8
-          - !type:DeleteEntity {}
+          - !type:DeleteEntity
           steps:
             - tool: Slicing
               doAfter: 2

@@ -22,7 +22,7 @@
         doAfter: 0.5
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 5
       - !type:DeleteEntity
@@ -43,7 +43,7 @@
       - tool: Cutting
         doAfter: 0.5
         completed:
-        - !type:SpawnPrototype
+        - !type:SpawnEntity
           prototype: CableApcStack1
     - to: caseWithTrigger
       steps:

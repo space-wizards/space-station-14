@@ -57,5 +57,5 @@
       - tool: Cutting
         doAfter: 0.5
         completed:
-        - !type:SpawnPrototype
+        - !type:SpawnEntity
           prototype: CableDetStack1

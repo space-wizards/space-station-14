@@ -98,7 +98,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
           steps:
             - tool: Screwing
@@ -109,7 +109,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
           steps:
             - tool: Screwing
@@ -120,7 +120,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
           steps:
             - tool: Screwing
@@ -131,7 +131,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetBrass1
           steps:
             - tool: Screwing
@@ -142,7 +142,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 2
           steps:
@@ -154,7 +154,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 2
           steps:
@@ -166,7 +166,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 2
           steps:
@@ -178,7 +178,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 2
           steps:
@@ -190,7 +190,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 3
           steps:
@@ -202,7 +202,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialSheetMeat1
               amount: 2
           steps:
@@ -214,10 +214,10 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetPlastic1
               amount: 1
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: PartRodMetal1
               amount: 2
           steps:
@@ -229,7 +229,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 2
           steps:
@@ -241,7 +241,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialCardboard1
               amount: 3
             - !type:PlaySound
@@ -256,7 +256,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 4
           steps:
@@ -268,10 +268,10 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 2
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialCloth1
               amount: 1
           steps:
@@ -285,10 +285,10 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 2
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialCloth1
               amount: 1
           steps:

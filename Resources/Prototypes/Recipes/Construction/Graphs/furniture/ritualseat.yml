@@ -20,7 +20,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
                 prototype: MaterialWoodPlank1
                 amount: 2
           steps:
@@ -41,7 +41,7 @@
       edges:
         - to: chairRitual
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: OrganSkeletonPersonHead
               amount: 1
           steps:

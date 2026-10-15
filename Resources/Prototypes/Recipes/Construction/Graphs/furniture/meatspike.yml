@@ -4,7 +4,7 @@
   graph:
   - node: start
     actions:
-    - !type:DeleteEntity {}
+    - !type:DeleteEntity
     edges:
     - to: MeatSpike
       completed:
@@ -26,7 +26,7 @@
         container: body
         examineText: comp-kitchen-spike-deconstruct-occupied
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 15
       steps:

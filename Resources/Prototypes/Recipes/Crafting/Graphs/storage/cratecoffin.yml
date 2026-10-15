@@ -19,7 +19,7 @@
             - tool: Prying
               doAfter: 5
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 5
             - !type:EmptyAllContainers

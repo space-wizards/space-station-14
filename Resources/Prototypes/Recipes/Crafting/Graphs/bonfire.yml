@@ -16,7 +16,7 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: MaterialWoodPlank1
         amount: 10
       - !type:DeleteEntity { }
@@ -38,7 +38,7 @@
     edges:
     - to: bonfire
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: MaterialWoodPlank1
         amount: 2
       steps:

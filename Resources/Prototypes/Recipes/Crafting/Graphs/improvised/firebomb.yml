@@ -23,9 +23,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: DrinkColaCanEmpty
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: Igniter
       - !type:DeleteEntity {}
       steps:
@@ -67,7 +67,7 @@
     edges:
     - to: fuel
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: CableApcStack1
         amount: 5
       steps:

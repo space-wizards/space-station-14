@@ -18,10 +18,10 @@
       edges:
         - to: start
           completed:
-          - !type:SpawnPrototype
+          - !type:SpawnEntity
                 prototype: MaterialBananium1
                 amount: 6
-          - !type:DeleteEntity {}
+          - !type:DeleteEntity
           steps:
             - tool: Welding
               doAfter: 5

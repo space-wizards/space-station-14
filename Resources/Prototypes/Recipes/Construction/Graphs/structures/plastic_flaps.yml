@@ -19,7 +19,7 @@
     edges:
       - to: start
         completed:
-          - !type:SpawnPrototype
+          - !type:SpawnEntity
             prototype: SheetPlastic
             amount: 5
         steps:
@@ -38,7 +38,7 @@
     edges:
       - to: start
         completed:
-          - !type:SpawnPrototype
+          - !type:SpawnEntity
             prototype: SheetPlastic
             amount: 5
         steps:

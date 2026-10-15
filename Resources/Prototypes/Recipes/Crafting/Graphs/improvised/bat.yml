@@ -9,13 +9,13 @@
             - material: WoodPlank
               amount: 5
               doAfter: 4
-        
+
     - node: incompleteBat
       entity: IncompleteBaseBallBat
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 5
             - !type:DeleteEntity {}
@@ -30,6 +30,6 @@
           steps:
             - tool: Slicing
               doAfter: 4
-        
+
     - node: bat
       entity: BaseBallBat

@@ -4,7 +4,7 @@
   graph:
   - node: start
     actions: # This action on the start node ensures we delete regardless of how we get here (sometimes reduces code duplication)
-    - !type:DeleteEntity {}
+    - !type:DeleteEntity
     edges:
     - to: assembly
       steps:

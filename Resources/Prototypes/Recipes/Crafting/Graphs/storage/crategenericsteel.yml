@@ -22,7 +22,7 @@
             - !type:StorageWelded
               welded: false
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 5
             - !type:EmptyAllContainers

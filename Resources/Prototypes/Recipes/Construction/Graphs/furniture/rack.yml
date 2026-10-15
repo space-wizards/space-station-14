@@ -4,7 +4,7 @@
   graph:
     - node: start
       actions:
-        - !type:DeleteEntity {}
+        - !type:DeleteEntity
       edges:
         - to: Rack
           completed:
@@ -19,7 +19,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 2
           steps:

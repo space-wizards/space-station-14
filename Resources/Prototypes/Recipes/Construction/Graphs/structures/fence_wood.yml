@@ -62,10 +62,10 @@
             - tool: Prying
               doAfter: 5.0
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 2
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
     - node: end
       entity: FenceWoodHighEnd
       edges:
@@ -74,10 +74,10 @@
             - tool: Prying
               doAfter: 2.5
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 2
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
     - node: corner
       entity: FenceWoodHighCorner
       edges:
@@ -86,10 +86,10 @@
             - tool: Prying
               doAfter: 5.0
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 2
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
     - node: tjunction
       entity: FenceWoodHighTJunction
       edges:
@@ -98,10 +98,10 @@
             - tool: Prying
               doAfter: 5.0
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 2
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
     - node: gate
       entity: FenceWoodHighGate
       edges:
@@ -110,10 +110,10 @@
             - tool: Prying
               doAfter: 5.0
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 2
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
     - node: straight_small
       entity: FenceWoodSmallStraight
       edges:
@@ -122,10 +122,10 @@
             - tool: Prying
               doAfter: 2.5
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
     - node: end_small
       entity: FenceWoodSmallEnd
       edges:
@@ -134,10 +134,10 @@
             - tool: Prying
               doAfter: 1.25
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
     - node: corner_small
       entity: FenceWoodSmallCorner
       edges:
@@ -146,10 +146,10 @@
             - tool: Prying
               doAfter: 2.5
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
     - node: tjunction_small
       entity: FenceWoodSmallTJunction
       edges:
@@ -158,10 +158,10 @@
             - tool: Prying
               doAfter: 2.5
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
     - node: gate_small
       entity: FenceWoodSmallGate
       edges:
@@ -170,7 +170,7 @@
             - tool: Prying
               doAfter: 2.5
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity

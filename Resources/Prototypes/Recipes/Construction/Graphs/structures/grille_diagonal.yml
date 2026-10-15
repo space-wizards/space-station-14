@@ -21,7 +21,7 @@
           completed:
             - !type:AdminLog
               message: "A grille was cut"
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: PartRodMetal1
               amount: 2
             - !type:DeleteEntity

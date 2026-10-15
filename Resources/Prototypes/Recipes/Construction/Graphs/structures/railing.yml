@@ -38,7 +38,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: PartRodMetal1
               amount: 1
             - !type:DeleteEntity
@@ -51,7 +51,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: PartRodMetal1
               amount: 2
             - !type:DeleteEntity
@@ -64,7 +64,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: PartRodMetal1
               amount: 1
             - !type:DeleteEntity
@@ -77,7 +77,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: PartRodMetal1
               amount: 2
             - !type:DeleteEntity

@@ -29,13 +29,13 @@
       - !type:Locked
         locked: false
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 5
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: CableApcStack1
         amount: 2
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: FreezerElectronics
         amount: 1
       - !type:EmptyAllContainers

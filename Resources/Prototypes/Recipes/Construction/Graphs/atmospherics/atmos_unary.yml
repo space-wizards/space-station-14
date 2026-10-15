@@ -38,7 +38,7 @@
       - !type:EntityAnchored
         anchored: false
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 2
       - !type:DeleteEntity
@@ -57,7 +57,7 @@
       - !type:EntityAnchored
         anchored: false
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 2
       - !type:DeleteEntity
@@ -76,7 +76,7 @@
       - !type:EntityAnchored
         anchored: false
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 2
       - !type:DeleteEntity
@@ -95,7 +95,7 @@
       - !type:EntityAnchored
         anchored: false
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 2
       - !type:DeleteEntity

@@ -39,13 +39,13 @@
       - tool: Cutting
         doAfter: 1
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 2
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: CableMVStack1
         amount: 5
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: ModularReceiver
       - !type:DeleteEntity
 
@@ -91,7 +91,7 @@
       - tool: Cutting
         doAfter: 1
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: GlassLens
         amount: 2
 

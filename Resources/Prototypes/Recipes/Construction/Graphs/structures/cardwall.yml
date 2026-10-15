@@ -17,10 +17,10 @@
       - !type:PlaySound
         playAtPosition: true
         sound: /Audio/Items/Toys/ToyFall2.ogg
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
             prototype: MaterialCardboard1
             amount: 3
-      - !type:DeleteEntity {}
+      - !type:DeleteEntity
       steps:
       - tool: Slicing
         doAfter: 1.2

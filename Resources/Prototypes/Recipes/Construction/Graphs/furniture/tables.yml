@@ -4,7 +4,7 @@
   graph:
     - node: start
       actions:
-        - !type:DeleteEntity {}
+        - !type:DeleteEntity
       edges:
         - to: TableFrame
           completed:
@@ -37,7 +37,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
                 prototype: PartRodMetal
                 amount: 2
           steps:
@@ -100,7 +100,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 1
           steps:
@@ -117,7 +117,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 1
           steps:
@@ -135,7 +135,7 @@
       edges:
         - to: TableFrame
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 1
           steps:
@@ -147,7 +147,7 @@
       edges:
         - to: TableFrame
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetPlasteel1
               amount: 1
           steps:
@@ -161,7 +161,7 @@
       edges:
         - to: TableFrame
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetGlass1
               amount: 1
           steps:
@@ -173,7 +173,7 @@
       edges:
         - to: TableFrame
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialCardboard1
               amount: 3
           steps:
@@ -185,7 +185,7 @@
       edges:
         - to: TableFrame
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetRGlass1
               amount: 1
           steps:
@@ -197,7 +197,7 @@
       edges:
         - to: TableFrame
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetPGlass1
               amount: 1
           steps:
@@ -209,7 +209,7 @@
       edges:
         - to: TableFrame
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetBrass1
               amount: 1
           steps:
@@ -221,7 +221,7 @@
       edges:
         - to: TableFrame
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 1
           steps:
@@ -289,7 +289,7 @@
       edges:
         - to: TableWood
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialCloth1
               amount: 1
           steps:
@@ -301,7 +301,7 @@
       edges:
         - to: TableWood
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: FloorCarpetItemBlack
               amount: 1
           steps:
@@ -313,7 +313,7 @@
       edges:
         - to: TableWood
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: FloorCarpetItemBlue
               amount: 1
           steps:
@@ -325,7 +325,7 @@
       edges:
         - to: TableWood
           completed:
-          - !type:SpawnPrototype
+          - !type:SpawnEntity
             prototype: FloorCarpetItemSkyBlue
             amount: 1
           steps:
@@ -337,7 +337,7 @@
       edges:
         - to: TableWood
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: FloorCarpetItemCyan
               amount: 1
           steps:
@@ -349,7 +349,7 @@
       edges:
         - to: TableWood
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: FloorCarpetItemGreen
               amount: 1
           steps:
@@ -361,7 +361,7 @@
       edges:
         - to: TableWood
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: FloorCarpetItemOrange
               amount: 1
           steps:
@@ -373,7 +373,7 @@
       edges:
         - to: TableWood
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: FloorCarpetItemPurple
               amount: 1
           steps:
@@ -385,7 +385,7 @@
       edges:
         - to: TableWood
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: FloorCarpetItemPink
               amount: 1
           steps:
@@ -397,7 +397,7 @@
       edges:
         - to: TableWood
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: FloorCarpetItemRed
               amount: 1
           steps:
@@ -409,7 +409,7 @@
       edges:
         - to: TableWood
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: FloorCarpetItemWhite
               amount: 1
           steps:
@@ -421,7 +421,7 @@
       edges:
         - to: CounterMetalFrame
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 1
           steps:
@@ -433,7 +433,7 @@
       edges:
         - to: CounterWoodFrame
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 1
           steps:
@@ -445,7 +445,7 @@
       edges:
       - to: TableFrame
         completed:
-        - !type:SpawnPrototype
+        - !type:SpawnEntity
           prototype: SheetSteel1
           amount: 1
         steps:

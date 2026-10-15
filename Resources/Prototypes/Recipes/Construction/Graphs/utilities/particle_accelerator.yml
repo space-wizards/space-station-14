@@ -31,7 +31,7 @@
           conditions:
             - !type:EntityAnchored {}
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: CableApcStack1
           steps:
             - tool: Cutting
@@ -81,7 +81,7 @@
           conditions:
             - !type:EntityAnchored {}
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: CableApcStack1
           steps:
             - tool: Cutting
@@ -131,7 +131,7 @@
           conditions:
             - !type:EntityAnchored {}
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: CableApcStack1
           steps:
             - tool: Cutting
@@ -180,7 +180,7 @@
           conditions:
             - !type:EntityAnchored {}
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: CableApcStack1
           steps:
             - tool: Cutting
@@ -229,7 +229,7 @@
           conditions:
             - !type:EntityAnchored {}
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: CableApcStack1
           steps:
             - tool: Cutting
@@ -278,7 +278,7 @@
           conditions:
             - !type:EntityAnchored {}
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: CableApcStack1
           steps:
             - tool: Cutting
@@ -327,7 +327,7 @@
           conditions:
             - !type:EntityAnchored {}
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: CableApcStack1
           steps:
             - tool: Cutting

@@ -29,7 +29,7 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: PartRodMetal1
         amount: 1
       steps: &UnscrewStep
@@ -41,7 +41,7 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: CableApcStack1
         amount: 2
       steps: *UnscrewStep
@@ -51,7 +51,7 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: BikeHorn
         amount: 1
       steps: *UnscrewStep

@@ -35,7 +35,7 @@
     edges:
     - to: cable
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: CableApcStack1
         amount: 5
       steps:

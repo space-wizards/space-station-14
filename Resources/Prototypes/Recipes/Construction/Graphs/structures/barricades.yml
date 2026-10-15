@@ -16,10 +16,10 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 3 #returns 1 less as one breaks
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
           conditions:
             - !type:EntityAnchored
               anchored: true
@@ -62,10 +62,10 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 3 #returns 1 less as one breaks
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
           conditions:
             - !type:EntityAnchored
               anchored: true
@@ -89,7 +89,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 2 #returns 1 less as one breaks
             - !type:DeleteEntity { }
