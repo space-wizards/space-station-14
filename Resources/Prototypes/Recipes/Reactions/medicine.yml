@@ -247,25 +247,24 @@
   - Centrifuge
   reactants:
     ApotheosoticEnzymes:
-      amount: 10
+      amount: 6
   products:
-    ApotheosoticExtract: 5
-    Benzene: 3
-    Fluorine: 2
+    ApotheosoticExtract: 4
+    Benzene: 2
 
 - type: reaction
   id: Omnizine
   reactants:
     ApotheosoticExtract:
       amount: 3
-    Bicaridine:
+    PolypyryliumOligomers:
       amount: 1
     Diphenhydramine:
       amount: 1
     Sigynate:
       amount: 1
   products:
-    Omnizine: 6
+    Omnizine: 4
 
 - type: reaction
   id: HeartbreakerToxin
