@@ -17,7 +17,6 @@ public abstract partial class SharedRadiationSystem : EntitySystem
             return;
 
         entity.Comp.Intensity = intensity;
-        Dirty(entity);
     }
 
     /// <summary>
@@ -31,6 +30,5 @@ public abstract partial class SharedRadiationSystem : EntitySystem
             return;
 
         ent.Comp.Intensity = MathF.Max(0f, ent.Comp.Intensity + intensityChange);
-        Dirty(ent);
     }
 }
