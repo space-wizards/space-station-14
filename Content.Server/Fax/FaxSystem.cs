@@ -504,7 +504,7 @@ public sealed partial class FaxSystem : EntitySystem
         if (component.AddSenderInfo)
         {
             var faxMachineAddress = TryComp<DeviceNetworkComponent>(uid, out var deviceNetworkComponent)
-                ? deviceNetworkComponent.Address
+                ? deviceNetworkComponent.Address.ToString()
                 : Loc.GetString("device-address-unknown");
 
             var time = _gameTicker.RoundDuration();
