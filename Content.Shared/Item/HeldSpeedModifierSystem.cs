@@ -43,7 +43,9 @@ public sealed partial class HeldSpeedModifierSystem : EntitySystem
         return (walkMod, sprintMod);
     }
 
-    /// <summary> Changes movement speed modifier. </summary>
+    /// <summary>
+    /// Changes movement speed modifier.
+    /// </summary>
     public void ChangeModifiers(Entity<HeldSpeedModifierComponent?> ent, float walkMod, float sprintMod)
     {
         if (!Resolve(ent, ref ent.Comp))

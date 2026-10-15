@@ -266,7 +266,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     [PublicAPI]
     public void ChangeSpeedModifier(Entity<ToolComponent?> tool, float toolSpeedModifier)
     {
-        if(!Resolve(tool, ref tool.Comp))
+        if (!Resolve(tool, ref tool.Comp))
             return;
 
         tool.Comp.SpeedModifier = toolSpeedModifier;

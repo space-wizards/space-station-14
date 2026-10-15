@@ -435,7 +435,7 @@ public sealed partial class PolymorphSystem : EntitySystem
 
     /// <summary>
     /// Attempts to add provided value to duration of polymorph.
-    /// Returns false if entity is not polymorphed, true otherwise.
+    /// Returns false if entity is not polymorphed or has no duration limit, true otherwise.
     /// </summary>
     public bool TryAddDuration(Entity<PolymorphedEntityComponent?> ent, int duration)
     {
@@ -443,6 +443,9 @@ public sealed partial class PolymorphSystem : EntitySystem
             return true;
 
         if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        if (ent.Comp.Configuration.Duration == null)
             return false;
 
         ent.Comp.Configuration.Duration += duration;
