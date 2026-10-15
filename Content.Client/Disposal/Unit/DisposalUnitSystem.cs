@@ -15,14 +15,6 @@ public sealed partial class DisposalUnitSystem : SharedDisposalUnitSystem
 
     private const string AnimationKey = "disposal_unit_animation";
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<DisposalUnitComponent, AfterAutoHandleStateEvent>(OnHandleState);
-        SubscribeLocalEvent<DisposalUnitComponent, AppearanceChangeEvent>(OnAppearanceChange);
-    }
-
     protected override void OnComponentInit(Entity<DisposalUnitComponent> ent, ref ComponentInit args)
     {
         base.OnComponentInit(ent, ref args);
@@ -55,28 +47,19 @@ public sealed partial class DisposalUnitSystem : SharedDisposalUnitSystem
         ent.Comp.FlushingAnimation = anim;
     }
 
-    private void OnHandleState(EntityUid uid, DisposalUnitComponent component, ref AfterAutoHandleStateEvent args)
+    [SubscribeLocalEvent]
+    private void OnHandleState(Entity<DisposalUnitComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        UpdateUI((uid, component));
+        UpdateUI(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnAppearanceChange(Entity<DisposalUnitComponent> ent, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        UpdateState(ent, args.Sprite, args.Component);
-    }
-
-    /// <summary>
-    /// Updates the animation of a disposal unit.
-    /// </summary>
-    /// <param name="ent">The disposal unit.</param>
-    /// <param name="sprite">The disposal unit's sprite.</param>
-    /// <param name="appearance">The disposal unit's appearance.</param>
-    private void UpdateState(Entity<DisposalUnitComponent> ent, SpriteComponent sprite, AppearanceComponent appearance)
-    {
-        if (!_appearanceSystem.TryGetData<bool>(ent, DisposalUnitVisuals.IsFlushing, out var isFlushing, appearance))
+        if (!args.TryGetData<bool>(DisposalUnitVisuals.IsFlushing, out var isFlushing))
             return;
 
         // This is a transient state so not too worried about replaying in range.

@@ -279,7 +279,7 @@
   description: A flatpack used for constructing a hydroponics tray.
   components:
   - type: Flatpack
-    entity: hydroponicsTray
+    entity: HydroponicsTray
   - type: Sprite
     layers:
     - state: hydroponics-tray
