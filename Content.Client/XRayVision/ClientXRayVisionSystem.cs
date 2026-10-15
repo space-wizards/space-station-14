@@ -8,7 +8,7 @@ using Robust.Shared.Player;
 namespace Content.Client.XRayVision;
 
 /// <inheritdoc/>
-public sealed partial class XRayVisionSystem : SharedXRayVisionSystem
+public sealed partial class ClientXRayVisionSystem : XRayVisionSystem
 {
     [Dependency] private IOverlayManager _overlayMan = default!;
     [Dependency] private IPlayerManager _player = default!;
@@ -73,7 +73,7 @@ public sealed partial class XRayVisionSystem : SharedXRayVisionSystem
             return;
         }
 
-        _overlay.SetParameters(xray.TileOverlayColor, xray.EntityOverlayColor, xray.ShowTiles, xray.ScanlinesIntensity);
+        _overlay.SetParameters(xray.TileOverlayColor, xray.ScanlinesIntensity);
 
         if (!_overlayMan.HasOverlay<XRayVisionOverlay>())
             _overlayMan.AddOverlay(_overlay);

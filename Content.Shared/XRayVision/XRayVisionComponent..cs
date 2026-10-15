@@ -7,9 +7,10 @@ namespace Content.Shared.XRayVision;
 
 /// <summary>
 /// Enables the xray fullscreen overlay for the entity it is attached to or the wearer.
-/// Shows tiles and whitelisted entities behind walls with a scanline shader.
+/// Shows tiles behind walls with a scanline shader.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[Access(typeof(XRayVisionSystem))]
 public sealed partial class XRayVisionComponent : Component
 {
     /// <summary>
@@ -38,7 +39,7 @@ public sealed partial class XRayVisionComponent : Component
     /// <summary>
     /// Reference to the action entity
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? ActionEntity;
 
     /// <summary>
@@ -46,18 +47,6 @@ public sealed partial class XRayVisionComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public Color TileOverlayColor = new(1f, 1f, 1f, 0.2f);
-
-    /// <summary>
-    /// Color of the scanline overlay applied to hidden entities.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public Color EntityOverlayColor = new(1f, 1f, 1f, 0.25f);
-
-    /// <summary>
-    /// Whether tiles behind walls should be shown with the scanline shader.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool ShowTiles;
 
     /// <summary>
     /// Scanline effect intensity.

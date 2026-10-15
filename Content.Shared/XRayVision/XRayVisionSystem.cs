@@ -8,9 +8,11 @@ namespace Content.Shared.XRayVision;
 /// Shows/hides the <see cref="XRayVisionOverlay"/> based on whether the observed
 /// entity has a <see cref="XRayVisionComponent"/> equipped.
 /// </summary>
-public abstract partial class SharedXRayVisionSystem : EntitySystem
+public abstract partial class XRayVisionSystem : EntitySystem
 {
     [Dependency] private SharedActionsSystem _actions = default!;
+
+    [Dependency] private EntityQuery<XRayVisionComponent> _xrayVisionQuery;
 
     [SubscribeLocalEvent]
     private void OnStartup(Entity<XRayVisionComponent> ent, ref ComponentStartup args)
@@ -20,16 +22,18 @@ public abstract partial class SharedXRayVisionSystem : EntitySystem
 
         RefreshOverlay(ent);
         _actions.AddAction(ent, ref ent.Comp.ActionEntity, ent.Comp.Action);
+        Dirty(ent);
     }
 
     [SubscribeLocalEvent]
-    private void OnRemove(Entity<XRayVisionComponent> ent, ref ComponentRemove args)
+    private void OnShutdown(Entity<XRayVisionComponent> ent, ref ComponentShutdown args)
     {
         if (ent.Comp.RelayOverlay)
             return;
 
         RefreshOverlay(ent);
         _actions.RemoveAction(ent.Owner, ent.Comp.ActionEntity);
+        Dirty(ent);
     }
 
     [SubscribeLocalEvent]
@@ -40,6 +44,7 @@ public abstract partial class SharedXRayVisionSystem : EntitySystem
 
         RefreshOverlay(args.EquipTarget);
         _actions.AddAction(args.EquipTarget, ref ent.Comp.ActionEntity, ent.Comp.Action, ent);
+        Dirty(ent);
     }
 
     [SubscribeLocalEvent]
@@ -71,7 +76,7 @@ public abstract partial class SharedXRayVisionSystem : EntitySystem
     {
         var ent = args.Action.Comp.Container;
 
-        if (!TryComp<XRayVisionComponent>(ent, out var xrayComp))
+        if (!_xrayVisionQuery.TryComp(ent, out var xrayComp))
             return;
 
         SetEnabled(ent.Value, !xrayComp.Enabled, args.Performer);

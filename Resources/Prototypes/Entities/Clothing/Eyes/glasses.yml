@@ -69,7 +69,7 @@
     scanlinesIntensity: 2
     showTiles: true
     action: ActionToggleMesons
-    tileOverlayColor: "#CEF5D150"
+    tileOverlayColor: "#CEF0D130"
 
 - type: entity
   parent: [ClothingEyesBase, BaseEngineeringContraband, BaseMeson]
