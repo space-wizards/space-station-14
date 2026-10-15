@@ -265,7 +265,7 @@
     Sigynate:
       amount: 1
   products:
-    Omnizine: 3
+    Omnizine: 6
 
 - type: reaction
   id: HeartbreakerToxin
