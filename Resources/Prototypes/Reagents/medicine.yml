@@ -899,7 +899,7 @@
   desc: reagent-desc-apotheosotic-enzymes
   physicalDesc: reagent-physical-desc-opaque
   flavor: magical
-  color: "#fcf7f9"
+  color: "#faf5ef"
   metabolisms:
     Bloodstream:
       effects:
@@ -925,7 +925,7 @@
   desc: reagent-desc-apotheosotic-extract
   physicalDesc: reagent-physical-desc-opaque
   flavor: chalky
-  color: "#fcf7f9"
+  color: "#fffff0"
   metabolisms:
     Bloodstream:
       effects:
