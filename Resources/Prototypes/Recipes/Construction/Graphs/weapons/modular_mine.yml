@@ -37,6 +37,7 @@
     entity: LandMineModularUnarmed
     actions:
     - !type:PlaySound
+      playAtPosition: true
       sound: /Audio/Machines/button.ogg
     edges:
     - to: emptyCase
@@ -58,6 +59,7 @@
   - node: mine
     actions:
     - !type:PlaySound
+      playAtPosition: true
       sound: /Audio/Machines/button.ogg
     - !type:AdminLog
       message: "A mine was crafted"

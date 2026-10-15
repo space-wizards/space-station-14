@@ -10,6 +10,7 @@
         doAfter: 2
       completed:
       - !type:PlaySound
+        playAtPosition: true
         sound:
           path: /Audio/Effects/poster_broken.ogg
 

@@ -8,6 +8,7 @@
     - to: meatball cooked
       completed:
       - !type:PlaySound
+        playAtPosition: true
         sound: /Audio/Effects/sizzle.ogg
       steps:
       - minTemperature: 335

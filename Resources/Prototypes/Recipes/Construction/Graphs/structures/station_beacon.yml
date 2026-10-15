@@ -9,6 +9,7 @@
           - tool: Pulsing
           completed:
           - !type:PlaySound
+            playAtPosition: true
             sound: /Audio/Effects/unwrap.ogg
 
     - node: complete

@@ -245,6 +245,7 @@
               prototype: MaterialCardboard1
               amount: 3
             - !type:PlaySound
+              playAtPosition: true
               sound: /Audio/Items/Toys/ToyFall2.ogg
           steps:
             - tool: Slicing

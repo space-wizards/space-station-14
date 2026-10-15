@@ -15,6 +15,7 @@
     - to: start
       completed:
       - !type:PlaySound
+        playAtPosition: true
         sound: /Audio/Items/Toys/ToyFall2.ogg
       - !type:SpawnPrototype
             prototype: MaterialCardboard1
