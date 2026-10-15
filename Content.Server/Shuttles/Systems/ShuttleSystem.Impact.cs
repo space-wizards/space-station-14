@@ -190,11 +190,8 @@ public sealed partial class ShuttleSystem
             var totalInertia = ourVelocity * ourMass + otherVelocity * otherMass;
             var inelasticVel = totalInertia / (ourMass + otherMass);
 
-            if (!meImmune)
-                DoGridImpact((args.OurEntity, ourGrid, ourXform, ourBody), args.OurFixture, inelasticVel, ourVelocity, ourTile, ourTiles, toUsEnergy);
-
-            if (!otherImmune)
-                DoGridImpact((args.OtherEntity, otherGrid, otherXform, otherBody), args.OtherFixture, inelasticVel, otherVelocity, otherTile, otherTiles, toOtherEnergy);
+            DoGridImpact((args.OurEntity, ourGrid, ourXform, ourBody), args.OurFixture, inelasticVel, ourVelocity, ourTile, ourTiles, toUsEnergy, !meImmune);
+            DoGridImpact((args.OtherEntity, otherGrid, otherXform, otherBody), args.OtherFixture, inelasticVel, otherVelocity, otherTile, otherTiles, toOtherEnergy, !otherImmune);
         }
     }
 
@@ -204,7 +201,8 @@ public sealed partial class ShuttleSystem
                               Vector2 velocity,
                               Vector2i tile,
                               int tiles,
-                              float energy)
+                              float energy,
+                              bool destructive)
     {
         // for readability to not have .Comp1 .Comp2 for everything
         var (_, grid, xform, body) = ent;
@@ -219,7 +217,8 @@ public sealed partial class ShuttleSystem
         _physics.ApplyLinearImpulse(ent, deltaV * body.FixturesMass, body: body);
 
         // process tile and entity damage
-        ProcessImpactZone(ent, grid, tile, energy, deltaV.Normalized(), radius);
+        if (destructive)
+            ProcessImpactZone(ent, grid, tile, energy, deltaV.Normalized(), radius);
 
         // throw every entity on grid if the impulse is not negligible
         if (deltaV.Length() > _minImpulseVelocity)
