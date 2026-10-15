@@ -285,12 +285,19 @@ public sealed partial class AtmosAlertsComputerSystem : SharedAtmosAlertsCompute
                         alarmRegionSeeds.Add(_mapSystem.CoordinatesToTile(entXform.GridUid.Value, mapGrid, _transformSystem.GetMapCoordinates(option.Uid, sensorXform)));
                 }
 
-                var regionProperties = new NavMapSystem.NavMapRegionProperties(netEnt, AtmosAlertsComputerUiKey.Key, alarmRegionSeeds);
-                _navMapSystem.AddOrUpdateNavMapRegion(gridUid, navMap, netEnt, regionProperties);
+                if (alarmRegionSeeds.Count > 0)
+                {
+                    var regionProperties = new NavMapSystem.NavMapRegionProperties(netEnt, AtmosAlertsComputerUiKey.Key, alarmRegionSeeds);
+                    _navMapSystem.AddOrUpdateNavMapRegion(gridUid, navMap, netEnt, regionProperties);
+                }
+                else
+                {
+                    _navMapSystem.RemoveNavMapRegion(gridUid, navMap, netEnt);
+                }
             }
             else
             {
-                _navMapSystem.RemoveNavMapRegion(entXform.GridUid.Value, navMap, netEnt);
+                _navMapSystem.RemoveNavMapRegion(gridUid, navMap, netEnt);
             }
 
             alarmStateData.Add(entry);
