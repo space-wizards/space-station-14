@@ -897,7 +897,7 @@
   name: reagent-name-apotheosotic-enzymes
   group: Medicine
   desc: reagent-desc-apotheosotic-enzymes
-  physicalDesc: reagent-physical-desc-opaque
+  physicalDesc: reagent-physical-desc-sticky
   flavor: magical
   color: "#faf5ef"
   metabolisms:
@@ -923,7 +923,7 @@
   name: reagent-name-apotheosotic-extract
   group: Medicine
   desc: reagent-desc-apotheosotic-extract
-  physicalDesc: reagent-physical-desc-opaque
+  physicalDesc: reagent-physical-desc-chalky
   flavor: chalky
   color: "#fffff0"
   metabolisms:
