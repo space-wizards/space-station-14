@@ -244,7 +244,7 @@
   id: ApotheosoticExtract
   source: true
   requiredMixerCategories:
-  - Centrifuge
+  - Electrolysis
   reactants:
     ApotheosoticEnzymes:
       amount: 6
