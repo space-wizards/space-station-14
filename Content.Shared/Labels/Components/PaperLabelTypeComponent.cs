@@ -7,7 +7,7 @@ namespace Content.Shared.Labels.Components;
 /// Specifies the paper type (see textures/storage/crates/labels.rsi to see currently supported paper types)  to show on crates this label is attached to.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(LabelSystem))]
+[Access(typeof(SharedLabelSystem))]
 public sealed partial class PaperLabelTypeComponent : Component
 {
     /// <summary>

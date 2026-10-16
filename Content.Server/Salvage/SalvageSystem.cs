@@ -29,7 +29,7 @@ namespace Content.Server.Salvage
         [Dependency] private BiomeSystem _biome = default!;
         [Dependency] private DungeonSystem _dungeon = default!;
         [Dependency] private GravitySystem _gravity = default!;
-        [Dependency] private LabelSystem _labelSystem = default!;
+        [Dependency] private SharedLabelSystem _labelSystem = default!;
         [Dependency] private MapLoaderSystem _loader = default!;
         [Dependency] private MetaDataSystem _metaData = default!;
         [Dependency] private RadioSystem _radioSystem = default!;

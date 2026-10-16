@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Cargo.Components;
+using Content.Server.Paper;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
@@ -680,6 +681,17 @@ public sealed partial class CargoSystem
         // We need an arbitrary unique ID to identify orders, since they may
         // want to be cancelled later.
         return ++orderDb.NumOrdersCreated;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnCargoSlipCopied(Entity<CargoSlipComponent> original, ref PaperCopiedEvent evt)
+    {
+        var slip = EnsureComp<CargoSlipComponent>(evt.Copy);
+        slip.Product = original.Comp.Product;
+        slip.Requester = original.Comp.Requester;
+        slip.Reason = original.Comp.Reason;
+        slip.OrderQuantity = original.Comp.OrderQuantity;
+        slip.Account = original.Comp.Account;
     }
 
     private void UpdateConsole()

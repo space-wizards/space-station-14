@@ -8,7 +8,7 @@ namespace Content.Shared.Labels.Components;
 ///     This component allows you to attach and remove a piece of paper to an entity.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(LabelSystem))]
+[Access(typeof(SharedLabelSystem))]
 public sealed partial class PaperLabelComponent : Component
 {
     /// <summary>
