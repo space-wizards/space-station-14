@@ -1,10 +1,7 @@
-using Content.Shared.Administration.Logs;
 using Content.Shared.Bible.Components;
-using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Robust.Shared.Network;
 using Robust.Shared.Player;
 
 namespace Content.Shared.Prayer;
@@ -12,8 +9,6 @@ namespace Content.Shared.Prayer;
 public abstract partial class PrayerSystem : EntitySystem
 {
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private INetManager _net = default!;
 
     [SubscribeLocalEvent]
     private void AddPrayVerb(Entity<PrayableComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
@@ -21,7 +16,7 @@ public abstract partial class PrayerSystem : EntitySystem
         var user = args.User;
 
         // if the user doesn't have an actor then don't add the verb
-        if (!TryComp(user, out ActorComponent? actor))
+        if (!TryComp<ActorComponent>(user, out var actor))
             return;
 
         // this is to prevent ghosts from using it
@@ -50,33 +45,13 @@ public abstract partial class PrayerSystem : EntitySystem
         args.Verbs.Add(prayerVerb);
     }
 
-    protected virtual void OpenPrayerDialog(Entity<PrayableComponent> ent, EntityUid user, ICommonSession session) { }
-
     /// <summary>
-    /// Subtly messages a player by giving them a popup and a chat message. Server only.
+    /// Sends a message to the admin channel with a message and username.
     /// </summary>
-    /// <param name="target">The IPlayerSession that you want to send the message to</param>
-    /// <param name="source">The IPlayerSession that sent the message</param>
-    /// <param name="messageString">The main message sent to the player via the chatbox</param>
-    /// <param name="popupMessage">The popup to notify the player, also prepended to the messageString</param>
-    public void SendSubtleMessage(ICommonSession target,
-        ICommonSession? source,
-        string messageString,
-        string popupMessage)
-    {
-        if (!_net.IsServer || target.AttachedEntity is not { } targetEntity)
-            return;
+    /// <param name="ent">Prayable entity used to make the prayer</param>
+    /// <param name="sender">The IPlayerSession who sent the original message</param>
+    /// <param name="message">Message to be sent to the admin chat</param>
+    public virtual void Pray(Entity<PrayableComponent> ent, ICommonSession sender, string message) { }
 
-        var message = popupMessage == "" ? "" : popupMessage + (messageString == "" ? "" : $" \"{messageString}\"");
-
-        _popup.PopupEntity(popupMessage, targetEntity, target, PopupType.Large);
-        _net.ServerSendMessage(new MsgChatMessage
-        {
-            Message = new ChatMessage(ChatChannel.Local, messageString, message, NetEntity.Invalid, null),
-        },
-            target.Channel);
-        _adminLogger.Add(LogType.AdminMessage,
-            LogImpact.Low,
-            $"{ToPrettyString(targetEntity):player} received subtle message from {source?.Name ?? "unknown source"}: {message}");
-    }
+    protected virtual void OpenPrayerDialog(Entity<PrayableComponent> ent, EntityUid user, ICommonSession session) { }
 }
