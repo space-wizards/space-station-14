@@ -244,7 +244,7 @@
   id: ApotheosoticExtract
   source: true
   requiredMixerCategories:
-  - Electrolysis
+  - Electrolysis # Maybe swap this to centrifuge once there are some centrifuge QoL improvements
   reactants:
     ApotheosoticEnzymes:
       amount: 6
