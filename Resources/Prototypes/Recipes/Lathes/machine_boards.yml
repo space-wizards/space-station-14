@@ -450,6 +450,11 @@
   result: TelecomServerCircuitboard
 
 - type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseEngineeringMachineRecipeCategory ]
+  id: PdaMessengerServerMachineCircuitboard
+  result: PdaMessengerServerMachineCircuitboard
+
+- type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseSecurityMachineRecipeCategory ]
   id: SurveillanceCameraRouterCircuitboard
   result: SurveillanceCameraRouterCircuitboard
