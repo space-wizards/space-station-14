@@ -42,7 +42,7 @@ public abstract partial class SharedMapTextComponent : Component
 [Serializable, NetSerializable]
 public sealed class MapTextComponentState : ComponentState
 {
-    public string? Text { get; init;}
+    public string Text { get; init;} = default!;
     public LocId LocText { get; init;}
     public Color Color { get; init;}
     public string FontId { get; init; } = default!;
