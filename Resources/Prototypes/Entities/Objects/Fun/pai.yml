@@ -102,6 +102,7 @@
     tags:
     - SiliconEmotes
   - type: Item
+    size: Tiny
     inhandVisuals:
       left:
       - state: base-inhand-left
@@ -146,6 +147,7 @@
   - type: Vocal
     emoteSounds: UnisexSiliconSyndicate
   - type: Item
+    size: Tiny
     inhandVisuals:
       left:
       - state: syndi-inhand-left
@@ -167,6 +169,7 @@
       map: ["screen"]
   - type: Appearance
   - type: Item
+    size: Tiny
     inhandVisuals:
       left:
       - state: gold-inhand-left
@@ -204,6 +207,7 @@
     graph: PotatoAI
     node: potatoai
   - type: Item
+    size: Tiny
     inhandVisuals:
       left:
       - state: potato-inhand-left

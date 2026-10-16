@@ -439,7 +439,7 @@
     layers:
     - state: junk-pai
   - type: Item
-    size: Small
+    size: Tiny
     heldPrefix: "pai"
   - type: PhysicalComposition
     materialComposition:
@@ -456,7 +456,7 @@
     layers:
     - state: junk-pai-gold
   - type: Item
-    size: Small
+    size: Tiny
     heldPrefix: "gold"
   - type: PhysicalComposition
     materialComposition:
