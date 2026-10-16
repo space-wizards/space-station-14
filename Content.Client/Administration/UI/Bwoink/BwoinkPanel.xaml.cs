@@ -176,7 +176,11 @@ namespace Content.Client.Administration.UI.Bwoink
                 }
 
                 if (participants.TryGetValue(name, out var participant))
-                    parts[0] = $"Participant {participant.index}" + (participant.isAdmin ? " (admin)" : "");
+                    parts[0] = Loc.GetString("admin-ahelp-anonymous-player-name") +
+                               $" {participant.index}"
+                               + (participant.isAdmin
+                                   ? " " + Loc.GetString("admin-ahelp-anonymous-admin-decorator")
+                                   : "");
 
                 messagesText[i] = string.Join(": ", parts);
             }
