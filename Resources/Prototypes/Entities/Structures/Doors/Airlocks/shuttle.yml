@@ -132,7 +132,7 @@
 - type: entity
   parent: AirlockGlassShuttle
   id: AirlockGlassShuttleSyndicate
-  name: syndicate docking glass airlock
+  suffix: Syndicate, Locked External
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/shuttle-syndicate.rsi
@@ -140,7 +140,7 @@
 - type: entity
   parent: AirlockShuttle
   id: AirlockShuttleSyndicate
-  name: syndicate docking airlock
+  suffix: Syndicate, Locked External
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/shuttle-syndicate.rsi

@@ -1,8 +1,11 @@
 - type: entity
   parent: Airlock
   id: AirlockService
-  name: service airlock
+  suffix: Service
   components:
+  - type: Label
+    currentLabel: Service # idk if this will work but lets see
+    # localizedLabel: airlock-name-service # use this later for proper localization
   - type: Wires
     layoutId: AirlockService
   - type: Sprite
@@ -12,7 +15,10 @@
   parent: Airlock
   id: AirlockFreezer
   name: freezer airlock
+  suffix: Freezer
   components:
+  - type: Label
+    currentLabel: Freezer
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/service-freezer.rsi
     layers:
@@ -58,8 +64,10 @@
 - type: entity
   parent: Airlock
   id: AirlockEngineering
-  name: engineering airlock
+  suffix: Engi
   components:
+  - type: Label
+    currentLabel: Engineering
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/engineering-base.rsi
   - type: Wires
@@ -68,8 +76,10 @@
 - type: entity
   parent: AirlockEngineering
   id: AirlockAtmospherics
-  name: atmospherics airlock
+  suffix: Atmos
   components:
+  - type: Label
+    currentLabel: Atmospherics
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/engineering-atmos.rsi
 
@@ -77,7 +87,10 @@
   parent: Airlock
   id: AirlockCargo
   name: cargo airlock
+  suffix: Cargo
   components:
+  - type: Label
+    currentLabel: Cargo # or Supply? idk TODO check which one to use
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/cargo-base.rsi
   - type: Wires
@@ -86,8 +99,10 @@
 - type: entity
   parent: Airlock
   id: AirlockSalvage
-  name: salvage airlock
+  suffix: Salvage
   components:
+  - type: Label
+    currentLabel: Salvage
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/cargo-salvage.rsi
   - type: Wires
@@ -96,8 +111,10 @@
 - type: entity
   parent: Airlock
   id: AirlockHydroponics
-  name: hydroponics airlock
+  suffix: Botany # or Hydroponics? even the id is hydroponics... but everyone is useing Botany as a name
   components:
+  - type: Label
+    currentLabel: Botany # change to hydro if needed
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/service-botany.rsi
   - type: Wires
@@ -106,8 +123,10 @@
 - type: entity
   parent: Airlock
   id: AirlockMedical
-  name: medical airlock
+  suffix: Medical
   components:
+  - type: Label
+    currentLabel: Medical
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/medical-base.rsi
   - type: Wires
@@ -116,24 +135,30 @@
 - type: entity
   parent: AirlockMedical
   id: AirlockVirology
-  name: virology airlock
+  suffix: Virology
   components:
+  - type: Label
+    currentLabel: Virology
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/medical-viro.rsi
 
 - type: entity
   parent: AirlockMedical
   id: AirlockChemistry
-  name: chemistry airlock
+  suffix: Chemistry
   components:
+  - type: Label
+    currentLabel: Chemistry
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/medical-chem.rsi
 
 - type: entity
   parent: Airlock
   id: AirlockScience
-  name: science airlock
+  suffix: Science
   components:
+  - type: Label
+    currentLabel: Science
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/science-base.rsi
   - type: Wires
@@ -142,8 +167,10 @@
 - type: entity
   parent: Airlock
   id: AirlockCommand
-  name: command airlock
+  suffix: Command
   components:
+  - type: Label
+    currentLabel: Command
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/command-base.rsi
   - type: WiresPanelSecurity
@@ -154,8 +181,10 @@
 - type: entity
   parent: Airlock
   id: AirlockSecurity
-  name: security airlock
+  suffix: Security
   components:
+  - type: Label
+    currentLabel: Security
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/security-base.rsi
   - type: Wires
@@ -164,24 +193,28 @@
 - type: entity
   parent: Airlock
   id: AirlockMaint
-  name: maintenance airlock
+  suffix: Maint
   components:
+  - type: Label
+    currentLabel: Maintenance
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
 
 - type: entity
   parent: AirlockSecurity # if you get syndie door somehow it counts as sec
   id: AirlockSyndicate
-  name: syndicate airlock
+  suffix: Syndicate # no label for syndicate just because they are quite rare
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/syndicate-base.rsi
 
 - type: entity
   parent: AirlockCargo
-  id: AirlockMining #idk why we even have this
-  suffix: Mining(Salvage)
+  id: AirlockMining # idk why we even have this, we don't use it for mapping stations on wizden
+  suffix: UNUSED, Mining # remove UNUSED when you find n use for it
   components:
+  - type: Label
+    currentLabel: Mining
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/cargo-mining.rsi
   - type: Wires
@@ -193,14 +226,17 @@
   parent: AirlockCommand # if you get centcom door somehow it counts as command, also inherit panel
   id: AirlockCentralCommand
   name: central command airlock
+  suffix: Central Command
   components:
+  - type: Label
+    currentLabel: Central Command
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/centcomm-base.rsi
 
 - type: entity
   parent: Airlock
   id: AirlockHatch
-  name: airtight hatch
+  name: airtight hatch # unuiqe airlock that opens in 4 directions
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/airlock-hatch.rsi
@@ -210,7 +246,7 @@
 - type: entity
   parent: Airlock
   id: AirlockXenoborg
-  name: mechadermis airlock
+  name: mechadermis airlock # unuiqe airlock you can't make
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/exo-xenoborg.rsi
@@ -255,19 +291,21 @@
     group: null
 
 - type: entity
-  parent: Airlock
+  parent: AirlockHatch # parenting to hatch for the name
   id: AirlockHatchMaintenance
-  name: maintenance hatch
+  suffix: Maint
   components:
+  - type: Label
+    currentLabel: Maintenance
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/airlock-hatch-maints.rsi
   - type: Paintable
     group: null
 
 - type: entity
-  parent: Airlock
+  parent: AirlockHatch
   id: AirlockHatchSyndicate
-  name: syndicate hatch
+  suffix: Syndicate
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/airlock-hatch-syndicate.rsi
@@ -276,8 +314,10 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockEngineeringGlass
-  name: engineering glass airlock
+  suffix: Engi
   components:
+  - type: Label
+    currentLabel: Engineering
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/engineering-base.rsi
   - type: Wires
@@ -286,24 +326,30 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockMaintGlass
-  name: maintenance glass airlock
+  suffix: Maint
   components:
+  - type: Label
+    currentLabel: Maintenance
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/airlock-maints.rsi
 
 - type: entity
   parent: AirlockEngineeringGlass
   id: AirlockAtmosphericsGlass
-  name: atmospherics glass airlock
+  suffix: Atmos
   components:
+  - type: Label
+    currentLabel: Atmospherics
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/engineering-atmos.rsi
 
 - type: entity
   parent: AirlockGlass
   id: AirlockCargoGlass
-  name: cargo glass airlock
+  suffix: Cargo
   components:
+  - type: Label
+    currentLabel: Cargo
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/cargo-base.rsi
   - type: Wires
@@ -312,8 +358,10 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockSalvageGlass
-  name: salvage glass airlock
+  suffix: Salvage
   components:
+  - type: Label
+    currentLabel: Salvage
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/cargo-salvage.rsi
   - type: Wires
@@ -322,8 +370,10 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockHydroponicsGlass
-  name: hydroponics glass airlock
+  suffix: Botany
   components:
+  - type: Label
+    currentLabel: Botany
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/service-botany.rsi
   - type: Wires
@@ -332,8 +382,10 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockMedicalGlass
-  name: medical glass airlock
+  suffix: Medical
   components:
+  - type: Label
+    currentLabel: Medical
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/medical-base.rsi
   - type: Wires
@@ -342,24 +394,30 @@
 - type: entity
   parent: AirlockMedicalGlass
   id: AirlockChemistryGlass
-  name: chemistry glass airlock
+  name: Chemistry
   components:
+  - type: Label
+    currentLabel: Chemistry
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/medical-chem.rsi
 
 - type: entity
   parent: AirlockMedicalGlass
   id: AirlockVirologyGlass
-  name: virology glass airlock
+  suffix: Virology
   components:
+  - type: Label
+    currentLabel: Virology
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/medical-viro.rsi
 
 - type: entity
   parent: AirlockGlass
   id: AirlockScienceGlass
-  name: science glass airlock
+  suffix: Science
   components:
+  - type: Label
+    currentLabel: Science
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/science-base.rsi
   - type: Wires
@@ -368,8 +426,10 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockCommandGlass
-  name: command glass airlock
+  suffix: Command
   components:
+  - type: Label
+    currentLabel: Command
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/command-base.rsi
   - type: WiresPanelSecurity
@@ -380,8 +440,10 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockSecurityGlass
-  name: security glass airlock
+  suffix: Security
   components:
+  - type: Label
+    currentLabel: Security
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/security-base.rsi
   - type: Wires
@@ -390,7 +452,7 @@
 - type: entity
   parent: AirlockSecurityGlass # see standard
   id: AirlockSyndicateGlass
-  name: syndicate glass airlock
+  suffix: Syndicate
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/syndicate-base.rsi
@@ -398,8 +460,10 @@
 - type: entity
   parent: AirlockCargoGlass
   id: AirlockMiningGlass
-  suffix: Mining(Salvage), Glass #idk, just go with it
+  suffix: UNUSED, Mining #remove UNUSED if you find a use for it
   components:
+  - type: Label
+    currentLabel: Mining
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/cargo-mining.rsi
   - type: Paintable
@@ -408,24 +472,29 @@
 - type: entity
   parent: AirlockCommandGlass # see standard
   id: AirlockCentralCommandGlass
-  name: central command glass airlock
+  suffix: Central Command
   components:
+  - type: Label
+    currentLabel: Central Command
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/centcomm-base.rsi
 
 - type: entity
   parent: AirlockGlass
   id: AirlockStandardGlass
-  name: service glass airlock
+  suffix: Service # idk if that is needed TODO check
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/airlock-base.rsi # there is no unuiqe sprite for service glass airlock, strange
+
+## Map Specific ##
+# Exo Station
 
 - type: entity
   parent: Airlock
   id: AirlockXeno
   suffix: Exo
-  name: exodermis airlock
+  name: exodermis airlock # unuiqe airlock you can't make
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/exo-base.rsi
