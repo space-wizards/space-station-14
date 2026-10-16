@@ -21,7 +21,7 @@ public sealed partial class StashableSystem : EntitySystem
         // If we don't have a StashableComponent, we obtain the size provided by ItemComponent.
         if (!Resolve(ent.Owner, ref ent.Comp))
         {
-            TryGetBaseItemSize(ent.Owner, out var defaultSize);
+            _item.TryGetItemSize(ent.Owner, out var defaultSize);
             return defaultSize;
         }
 
@@ -32,28 +32,11 @@ public sealed partial class StashableSystem : EntitySystem
         }
 
         // Otherwise, obtain the item's base size, and return the next smallest size (if one exists)
-        if (TryGetBaseItemSize(ent.Owner, out var baseSize))
+        if (_item.TryGetItemSize(ent.Owner, out var baseSize))
         {
             return _item.GetSizeSmaller((ProtoId<ItemSizePrototype>) baseSize) ?? baseSize;
         }
 
         return baseSize; // fallback if things go horribly wrong
-    }
-
-    /// <summary>
-    /// Attempts to obtain the base size of the item (assuming it has an <see cref="ItemComponent"/> attached to it).
-    /// </summary>
-    /// <param name="ent">The entity which may or may not have an ItemComponent attached to it</param>
-    /// <param name="itemSize">Will either be the size of the item (from ItemComponent), or the largest possible size (if it had no ItemComponent)</param>
-    /// <returns>True if there was an ItemComponent (returns size from the component), false if no ItemComponent (uses largest size as fallback)</returns>
-    private bool TryGetBaseItemSize(Entity<ItemComponent?> ent, out ItemSizePrototype itemSize)
-    {
-        if (!Resolve(ent.Owner, ref ent.Comp))
-        {
-            itemSize = _item.GetLargestSize();
-            return false;
-        }
-        itemSize = _item.GetSizePrototype(ent.Comp.Size);
-        return true;
     }
 }
