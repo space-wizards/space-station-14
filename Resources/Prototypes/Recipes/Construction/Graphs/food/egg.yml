@@ -7,7 +7,7 @@
     edges:
     - to: explode
       completed:
-      - !type:DamageEntity
+      - !type:HealthChange
         damage:
           types:
             Blunt: 10
