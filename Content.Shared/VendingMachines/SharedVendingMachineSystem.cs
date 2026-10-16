@@ -38,7 +38,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OpenVendingUIActionEvent(Entity<VendingMachineComponent> entity, ref OpenVendingUIActionEvent args)
+    private void OnOpenVendingUIAction(Entity<VendingMachineComponent> entity, ref OpenVendingUIActionEvent args)
     {
         UISystem.TryToggleUi(entity.Owner, VendingMachineUiKey.Key,args.Performer);
         args.Handled = true;
