@@ -5,16 +5,16 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Storage.EntitySystems;
 
 /// <summary>
-/// This handles obtaining effective sizes of the items for use with stashing said items.
+/// This system handles obtaining effective sizes of items for use with <see cref="SecretStashSystem"/>.
 /// </summary>
 public sealed partial class StashableSystem : EntitySystem
 {
     [Dependency] private SharedItemSystem _item = default!;
 
     /// <summary>
-    /// Returns a size override for this item (if applicable) for use with SecretStashSystem.
+    /// Returns the size which an item should be considered as having for stashing purposes.
     /// </summary>
-    /// <param name="ent">entity which may or may not have a StashableComponent attached to it</param>
+    /// <param name="ent">entity which may or may not have a <see cref="StashableComponent"/> attached to it</param>
     /// <returns>The effective size of the item for use with stashing said item.</returns>
     public ItemSizePrototype GetStashableSizePrototype(Entity<StashableComponent?> ent)
     {
