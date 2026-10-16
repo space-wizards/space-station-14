@@ -36,7 +36,7 @@ public sealed class EntityTableContext : IEnumerable
     public void SetData<T>(EntityTableContextKey<T> key, T data) where T : notnull
     {
         _data[key.Key] = data;
-    }
+    } 
 
     /// <summary>
     /// Add method duplicates <see cref="SetData{T}"/>, is used for object initializer.
