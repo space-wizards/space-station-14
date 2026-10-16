@@ -1,10 +1,10 @@
 using System.Linq;
-using Content.Server.Pinpointer;
 using Content.Server.StationEvents.Components;
 using Content.Server.VentHorde.Components;
 using Content.Server.VentHorde.Systems;
 using Content.Shared.EntityTable;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.Pinpointer;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
