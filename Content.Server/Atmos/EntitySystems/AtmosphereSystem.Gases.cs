@@ -10,8 +10,6 @@ namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
-        public const float defaultTickRate = 0.5f;
-
         private GasReactionPrototype[] _gasReactions = [];
 
         /// <summary>
@@ -283,16 +281,11 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         [PublicAPI]
-        public override ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, float deltaTime=defaultTickRate)
+        public override ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, float deltaTime)
         {
             var reaction = ReactionResult.NoReaction;
             var temperature = mixture.Temperature;
             var energy = GetThermalEnergy(mixture);
-
-            if (deltaTime > defaultTickRate)
-            {
-                deltaTime = defaultTickRate;
-            }
 
             foreach (var prototype in GasReactions)
             {

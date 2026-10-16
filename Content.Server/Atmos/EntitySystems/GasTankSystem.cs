@@ -155,6 +155,14 @@ public sealed partial class GasTankSystem : SharedGasTankSystem
 
     protected override void SafetyMeasures(Entity<GasTankComponent> entity)
     {
+        if (entity.Comp.ReleaseValveOpen)
+            return;
+
+        ToggleValve(entity);
+        if (entity.Comp.SafetyAlert != null)
+            _popup.PopupEntity(Loc.GetString(entity.Comp.SafetyAlert), entity, PopupType.LargeCaution);
+
+        Dirty(entity);
     }
 
     /// <summary>

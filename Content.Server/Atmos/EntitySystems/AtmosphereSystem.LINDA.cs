@@ -100,7 +100,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             if(tile.Air != null)
-                React(tile.Air, tile);
+                React(tile.Air, tile, RealAtmosTime());
 
             InvalidateVisuals(ent, tile);
 

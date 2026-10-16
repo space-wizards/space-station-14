@@ -253,12 +253,6 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float PlasmaBurnRateDelta = 4.5f;
 
-        /// <summary>
-        ///     This is calculated to help prevent singlecap bombs (Overpowered tritium/oxygen single tank bombs)
-        /// </summary>
-        public const float MinimumTritiumOxyburnEnergy = 286000f;
-
-        public const float TritiumBurnOxyFactor = 100f;
         public const float TritiumBurnTritFactor = 20f;
         public const float TritiumBurnFuelRatio = 2f;
 
