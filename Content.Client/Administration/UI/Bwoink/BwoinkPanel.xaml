@@ -5,7 +5,6 @@
     HorizontalExpand="True">
     <OutputPanel Name="TextOutput" VerticalExpand="true" />
     <RichTextLabel Name="TypingIndicator" Access="Public" />
-    <Button Visible="False" Name="PlayerLogs" StyleClasses="OpenRight" />
     <BoxContainer Align="End" Orientation="Horizontal" SetHeight="30" >
         <TextureButton Name="CopyLog"
                        TexturePath="/Textures/Interface/Bwoink/clipboard.png"
