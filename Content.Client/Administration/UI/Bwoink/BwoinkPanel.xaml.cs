@@ -134,11 +134,11 @@ namespace Content.Client.Administration.UI.Bwoink
             if (count == 0)
                 return;
 
-            var messages = new List<FormattedMessage>();
+            var messages = new List<FormattedMessage>(count);
             for (var i = 0; i < count; i++)
                 messages.Add(TextOutput.GetMessage(i));
 
-            var messagesText = messages.ConvertAll(m => m.ToString());
+            var messagesText = messages.ConvertAll(m => m.ToString()).ToArray();
 
             if (Anonymize.Pressed)
                 _AnonymizeNames(messages, messagesText);
@@ -152,7 +152,7 @@ namespace Content.Client.Administration.UI.Bwoink
         /// </summary>
         /// <param name="messages">The formatted messages in the window.</param>
         /// <param name="messagesText">The text value, which will be edited.</param>
-        private void _AnonymizeNames(List<FormattedMessage> messages, List<string> messagesText)
+        private void _AnonymizeNames(List<FormattedMessage> messages, string[] messagesText)
         {
             var messagesMarkup = messages.ConvertAll(m => m.ToMarkup());
 
