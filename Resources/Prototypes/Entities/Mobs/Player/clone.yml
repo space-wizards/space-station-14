@@ -38,7 +38,6 @@
   - Fingerprint
   - FootstepModifier # Footstep sounds!
   - Grammar # Pronouns
-  - HumanoidProfile # Age, Sex, Gender
   - InnerBodyAnomalyVisuals # How you look with anomalies
   - MeleeWeapon # Attack animation, damage and sound
   - NpcFactionMember
@@ -75,6 +74,7 @@
   - StutteringAccent
   eventComponents:
   - Damageable # Sprites and damage modifier
+  - HumanoidProfile # Age, Sex, Gender
   - Flammable # Displacements
   - CreamPied # Displacements
   - Hands # displacements
@@ -121,6 +121,7 @@
   parent: [BaseClone, Antag]
   forceCloning: false
   copyEquipment: null
+  copyHands: false
   copyInternalStorage: false
   copyImplants: false
 
@@ -212,3 +213,21 @@
   - PlantTraitSampled
   eventComponents:
   - PlantHolder
+
+# For very beauracracy
+- type: cloningSettings
+  id: Paper
+  components:
+  - Paper
+  - Label
+
+# For very important beauracracy
+- type: cloningSettings
+  parent: [ParadoxCloningSettings, Paper]
+  id: FaxCentcomm
+  components:
+  - GhostRole
+  - GhostTakeoverAvailable
+  - Solution # Not in a parent because this should be a setting TODO solutions refactor.
+  eventComponents:
+  - Nuke

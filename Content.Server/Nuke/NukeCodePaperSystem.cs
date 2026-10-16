@@ -3,6 +3,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.Fax;
 using Content.Shared.Fax.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.Fax;
 using Content.Shared.Paper;
 using Content.Shared.Station.Components;
 using Robust.Shared.Random;
@@ -16,7 +17,7 @@ namespace Content.Server.Nuke
         [Dependency] private ChatSystem _chatSystem = default!;
         [Dependency] private ServerStationSystem _station = default!;
         [Dependency] private PaperSystem _paper = default!;
-        [Dependency] private FaxSystem _faxSystem = default!;
+        [Dependency] private ServerFaxSystem _faxSystem = default!;
 
         public override void Initialize()
         {
@@ -49,32 +50,31 @@ namespace Content.Server.Nuke
         public bool SendNukeCodes(EntityUid station)
         {
             if (!HasComp<StationDataComponent>(station))
-            {
                 return false;
-            }
 
             var faxes = EntityQueryEnumerator<FaxMachineComponent>();
             var wasSent = false;
             while (faxes.MoveNext(out var faxEnt, out var fax))
             {
                 if (!fax.ReceiveNukeCodes || !TryGetRelativeNukeCode(faxEnt, out var paperContent, station))
-                {
                     continue;
-                }
 
-                var printout = new FaxPrintout(
-                    paperContent,
-                    Loc.GetString("nuke-codes-fax-paper-name"),
-                    null,
-                    null,
-                    "paper_stamp-centcom",
-                    new List<StampDisplayInfo>
-                    {
-                        new StampDisplayInfo { StampedName = Loc.GetString("stamp-component-stamped-name-centcom"), StampedColor = Color.FromHex("#BB3232") },
-                    }
-                );
-                _faxSystem.Receive(faxEnt, printout, null, fax);
+                var payload = _faxSystem.GetPayload(
+                    new FaxPrintout(paperContent,
+                        Loc.GetString("nuke-codes-fax-paper-name"),
+                        null,
+                        null,
+                        "paper_stamp-centcom",
+                        [
+                            new()
+                            {
+                                StampedName = Loc.GetString("stamp-component-stamped-name-centcom"),
+                                StampedColor = Color.FromHex("#BB3232")
+                            },
+                        ]
+                    ));
 
+                _faxSystem.Receive((faxEnt, fax), payload);
                 wasSent = true;
             }
 

@@ -106,7 +106,7 @@ public sealed partial class ForensicPadSystem : EntitySystem
         if (args.Args.Target != null)
         {
             var label = Identity.Name(args.Args.Target.Value, EntityManager);
-            _label.Label(pad, label);
+            _label.Label(pad.Owner, label);
         }
 
         pad.Comp.Sample = args.Sample;

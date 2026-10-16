@@ -1,10 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Labels.Components;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Paper;
+using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 
@@ -16,6 +16,7 @@ public sealed partial class LabelSystem : EntitySystem
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
 
+    private static readonly LocId LabelFormat = "comp-label-format";
     public const string ContainerName = "paper_label";
 
     public override void Initialize()
@@ -56,26 +57,23 @@ public sealed partial class LabelSystem : EntitySystem
     /// <remarks>
     /// If <paramref name="text"/> is <see langword="null"/> or an empty string, the <see cref="LabelComponent"/> will be removed.
     /// </remarks>
-    /// <param name="uid">EntityUid to change label on</param>
+    /// <param name="entity">EntityUid to change label on</param>
     /// <param name="text">intended label text (null to remove)</param>
-    /// <param name="label">label component for resolve</param>
-    /// <param name="metadata">metadata component for resolve</param>
-    // TODO - Change signature to `Label(Entity<LabelComponent?> ent, string? text)`
-    public void Label(EntityUid uid, string? text, MetaDataComponent? metadata = null, LabelComponent? label = null)
+    public void Label(Entity<LabelComponent?> entity, string? text)
     {
         // If setting the label to be blank, just remove the label.
         if (string.IsNullOrEmpty(text))
         {
-            RemoveLabel((uid, label));
+            RemoveLabel(entity);
             return;
         }
 
-        label = EnsureComp<LabelComponent>(uid);
+        entity.Comp ??= EnsureComp<LabelComponent>(entity);
 
-        label.CurrentLabel = FormattedMessage.EscapeText(text);
-        _nameModifier.RefreshNameModifiers(uid);
+        entity.Comp.CurrentLabel = FormattedMessage.EscapeText(text);
+        _nameModifier.RefreshNameModifiers(entity.Owner);
 
-        Dirty(uid, label);
+        Dirty(entity);
     }
 
     /// <summary>
@@ -128,7 +126,7 @@ public sealed partial class LabelSystem : EntitySystem
     {
         // We need to check lifestage so labels queued for deferred removal don't get applied.
         if (!string.IsNullOrEmpty(entity.Comp.CurrentLabel) && entity.Comp.LifeStage < ComponentLifeStage.Stopping)
-            args.AddModifier("comp-label-format", extraArgs: ("label", entity.Comp.CurrentLabel));
+            args.AddModifier(LabelFormat, extraArgs: ("label", entity.Comp.CurrentLabel));
     }
 
     private void OnComponentInit(Entity<PaperLabelComponent> ent, ref ComponentInit args)
@@ -194,6 +192,28 @@ public sealed partial class LabelSystem : EntitySystem
         _appearance.SetData(ent, PaperLabelVisuals.HasLabel, slot.HasItem, ent.Comp2);
         if (TryComp<PaperLabelTypeComponent>(slot.Item, out var type))
             _appearance.SetData(ent, PaperLabelVisuals.LabelType, type.PaperType, ent.Comp2);
+    }
+
+    /// <inheritdoc cref="GetLabel(string,string)"/>
+    [PublicAPI]
+    public string GetLabel(Entity<LabelComponent> entity)
+    {
+        return GetLabel(entity, entity.Comp.CurrentLabel);
+    }
+
+    /// <inheritdoc cref="GetLabel(string,string)"/>
+    [PublicAPI]
+    public string GetLabel(EntityUid uid, string? label)
+    {
+        return GetLabel(MetaData(uid).EntityName, label);
+    }
+    /// <summary>
+    /// Returns a name with an applied label as if applied by <see cref="LabelSystem"/>
+    /// </summary>
+    [PublicAPI]
+    public string GetLabel(string name, string? label)
+    {
+        return label == null ? name : Loc.GetString(LabelFormat, ("baseName", name), ("label", label));
     }
 
     /// <summary>
