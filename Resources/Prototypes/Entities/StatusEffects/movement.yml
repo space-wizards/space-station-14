@@ -81,6 +81,7 @@
   - type: StunnedStatusEffect
   - type: ExaminableStatusEffect
     messageId: status-effect-examine-stunned
+    requiresConciousness: true
 
 - type: entity
   parent: MobStatusEffectDebuff

@@ -35,15 +35,15 @@ survivor-round-end-alive-on-shuttle-count =
 objective-issuer-swf = [color=turquoise]The Space Wizards Federation[/color]
 
 wizard-title = Wizard
-wizard-description = There's a Wizard on the station! You never know what they might do.
+wizard-description = There's a wizard on the station! You never know what they might do.
 
 roles-antag-wizard-name = Wizard
-roles-antag-wizard-objective = Teach them a lesson they'll never forget.
+roles-antag-wizard-objective = Use your mastery of the arcane to sow chaos and discord.
 
 wizard-role-greeting =
-    It's wizard time, fireball!
-    There's been tensions between the Space Wizards Federation and NanoTrasen. You've been selected by the Space Wizards Federation to pay a visit to the station and "remind them" why spellcasters are not to be trifled with.
-    Cause mayhem and destruction! What you do is up to you, but remember that the Space Wizards want you to make it out alive.
+    It's wizard time!
+    Tensions between the Space Wizards Federation and Nanotrasen are on the rise. You've been selected to pay a visit to one of Nanotrasen's space stations and "remind" them why wizards are not to be trifled with.
+    Cause mayhem and destruction! What you do is up to you, but remember that your superiors want you to make it out alive.
 
 wizard-round-end-name = wizard
 

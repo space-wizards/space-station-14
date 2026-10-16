@@ -63,7 +63,7 @@ public sealed partial class SolutionInjectOnCollideSystem : EntitySystem
 
     private void DoInjection(Entity<BaseSolutionInjectOnEventComponent> injectorEntity, EntityUid target, EntityUid? source = null)
     {
-        TryInjectTargets(injectorEntity, [target], source);
+        TryInjectTargets(injectorEntity, new HashSet<EntityUid>() { target }, source);
     }
 
     /// <summary>
@@ -79,7 +79,7 @@ public sealed partial class SolutionInjectOnCollideSystem : EntitySystem
     /// </list>
     /// </remarks>
     /// <returns>true if at least one target was successfully injected, otherwise false</returns>
-    private bool TryInjectTargets(Entity<BaseSolutionInjectOnEventComponent> injector, IReadOnlyList<EntityUid> targets, EntityUid? user = null)
+    private bool TryInjectTargets(Entity<BaseSolutionInjectOnEventComponent> injector, IReadOnlySet<EntityUid> targets, EntityUid? user = null)
     {
         // Make sure we have at least one target
         if (targets.Count == 0)

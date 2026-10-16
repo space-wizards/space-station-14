@@ -717,7 +717,7 @@
     predicted: true
 
 - type: entity
-  parent: [ BaseUniquePet, MobSpiderAnimated ]
+  parent: [ BaseUniquePet, MobSpiderBase ]
   id: MobSpiderShiva
   name: Shiva
   description: The first defender of the station.
@@ -975,4 +975,9 @@
       gender: male
   - type: Loadout
     prototypes: [ MobPollyGear ]
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-organic
+  - type: Tag
+    tags:
+    - CannotSuicide
 
