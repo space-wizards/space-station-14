@@ -132,7 +132,7 @@ public abstract partial class MicrowaveSystem
 
         ingredientsToSpend.AddSolid(itemProto, -1);
         Container.Remove(item, container);
-        PredictedQueueDel(item);
+        QueueDel(item);
     }
 
     /// <summary>

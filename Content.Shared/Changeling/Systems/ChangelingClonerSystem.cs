@@ -45,7 +45,7 @@ public sealed partial class ChangelingClonerSystem : EntitySystem
     private void OnShutDown(Entity<ChangelingClonerComponent> ent, ref ComponentShutdown args)
     {
         // Delete the stored clone.
-        PredictedQueueDel(ent.Comp.ClonedBackup);
+        QueueDel(ent.Comp.ClonedBackup);
     }
 
     private void OnExamine(Entity<ChangelingClonerComponent> ent, ref ExaminedEvent args)
@@ -273,7 +273,7 @@ public sealed partial class ChangelingClonerSystem : EntitySystem
             return;
 
         // Delete the stored clone.
-        PredictedQueueDel(ent.Comp.ClonedBackup);
+        QueueDel(ent.Comp.ClonedBackup);
         ent.Comp.ClonedBackup = null;
         ent.Comp.State = ChangelingClonerState.Empty;
         _appearance.SetData(ent.Owner, ChangelingClonerVisuals.State, ChangelingClonerState.Empty);

@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Kitchen;
 
 /// <summary>
-///    A microwave-based cooking recipe to produce an entity.
+/// A microwave-based cooking recipe to produce an entity.
 /// </summary>
 [Prototype]
 public sealed partial class MicrowaveMealRecipePrototype : IPrototype
@@ -16,17 +16,6 @@ public sealed partial class MicrowaveMealRecipePrototype : IPrototype
     [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = default!;
-
-    /// <summary>
-    /// The name of the recipe.
-    /// </summary>
-    /// <remarks>
-    /// This is used to sort recipes in alphabetical order in the guidebook.
-    /// </remarks>
-    [DataField("name")]
-    private LocId _name = string.Empty;
-
-    public string Name => Loc.GetString(_name);
 
     /// <summary>
     /// The guidebook grouping for this recipe.
@@ -157,9 +146,9 @@ public partial record struct CookingIngredients
     }
 
     /// <summary>
-    ///    Count the number of ingredients in a recipe for sorting the recipe list.
-    ///    This makes sure that where ingredient lists overlap, the more complex
-    ///    recipe is picked first.
+    /// Count the number of ingredients in a recipe for sorting the recipe list.
+    /// This makes sure that where ingredient lists overlap, the more complex
+    /// recipe is picked first.
     /// </summary>
     public readonly FixedPoint2 Count()
     {

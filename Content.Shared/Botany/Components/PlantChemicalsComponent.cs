@@ -10,7 +10,7 @@ namespace Content.Shared.Botany.Components;
 /// <summary>
 /// Component for defining what reagents harvested produce will contain for this plant species.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true, raiseAfterAutoHandleState: true)]
 [Access(typeof(PlantChemicalsSystem), typeof(PlantMutationSystem))]
 public sealed partial class PlantChemicalsComponent : Component
 {
