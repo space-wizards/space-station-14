@@ -1,4 +1,5 @@
 using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using Content.Shared.Power.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
@@ -10,6 +11,17 @@ public abstract partial class CableMultitoolSystem : EntitySystem
 {
     [Dependency] private SharedToolSystem _tool = default!;
     [Dependency] private ExamineSystemShared _examine = default!;
+
+    [SubscribeLocalEvent]
+    private void OnAfterInteractUsing(Entity<CableComponent> ent, ref AfterInteractUsingEvent args)
+    {
+        if (args.Handled || args.Target is null || !args.CanReach ||
+            !_tool.HasQuality(args.Used, SharedToolSystem.PulseQuality))
+            return;
+
+        ExamineCable(ent, args.User);
+        args.Handled = true;
+    }
 
     [SubscribeLocalEvent]
     private void OnGetExamineVerbs(Entity<CableComponent> ent, ref GetVerbsEvent<ExamineVerb> args)

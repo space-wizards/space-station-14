@@ -9,7 +9,6 @@ namespace Content.Shared.Power.Components;
 /// Allows the attached entity to be destroyed by a cutting tool, dropping a piece of cable.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access]
 public sealed partial class CableComponent : Component
 {
     [DataField]
@@ -31,4 +30,3 @@ public sealed partial class CableComponent : Component
     [DataField]
     public TimeSpan CuttingDelay = TimeSpan.FromSeconds(1);
 }
-

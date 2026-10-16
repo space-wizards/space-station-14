@@ -1,11 +1,8 @@
 using Content.Server.Power.NodeGroups;
-using Content.Server.Tools;
 using Content.Shared.Examine;
-using Content.Shared.Interaction;
 using Content.Shared.NodeContainer;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
-using Content.Shared.Tools.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Power.EntitySystems;
@@ -13,20 +10,8 @@ namespace Content.Server.Power.EntitySystems;
 /// <inheritdoc/>
 public sealed partial class ServerCableMultitoolSystem : CableMultitoolSystem
 {
-    [Dependency] private ToolSystem _tool = default!;
     [Dependency] private PowerNetSystem _powerNet = default!;
     [Dependency] private ExamineSystemShared _examine = default!;
-
-    [SubscribeLocalEvent]
-    private void OnAfterInteractUsing(Entity<CableComponent> ent, ref AfterInteractUsingEvent args)
-    {
-        if (args.Handled || args.Target is null || !args.CanReach ||
-            !_tool.HasQuality(args.Used, SharedToolSystem.PulseQuality))
-            return;
-
-        ExamineCable(ent, args.User);
-        args.Handled = true;
-    }
 
     protected override void ExamineCable(Entity<CableComponent> ent, EntityUid user)
     {
