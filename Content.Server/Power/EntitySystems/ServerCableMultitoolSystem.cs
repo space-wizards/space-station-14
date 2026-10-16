@@ -10,6 +10,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Power.EntitySystems;
 
+/// <inheritdoc/>
 public sealed partial class ServerCableMultitoolSystem : CableMultitoolSystem
 {
     [Dependency] private ToolSystem _tool = default!;
