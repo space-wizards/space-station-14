@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CombatMode;
 using Content.Shared.Cuffs;
-using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
@@ -14,7 +13,7 @@ using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.VirtualItem;
-using Content.Shared.Mind.Components;
+using Content.Shared.Mind;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
@@ -34,6 +33,7 @@ public abstract partial class SharedStrippableSystem : EntitySystem
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private SharedHandsSystem _handsSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedMindSystem _mindSystem = default!;
 
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
 
@@ -361,7 +361,7 @@ public abstract partial class SharedStrippableSystem : EntitySystem
 
         _handsSystem.PickupOrDrop(user, item, animateUser: stealth, animate: !stealth);
         // Entities that have never been mind-controlled (mannequins, unpossessed animals) don't need to alert admins.
-        var impact = TryComp<MindContainerComponent>(target, out var mindContainer) && mindContainer.LastMind != null
+        var impact = _mindSystem.TryGetLastMind(target, out _)
             ? LogImpact.High
             : LogImpact.Low;
         _adminLogger.Add(LogType.Stripping, impact, $"{ToPrettyString(user):actor} has stripped the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s {slot} slot");
@@ -580,7 +580,7 @@ public abstract partial class SharedStrippableSystem : EntitySystem
         _handsSystem.TryDrop(target, item, checkActionBlocker: false);
         _handsSystem.PickupOrDrop(user, item, animateUser: stealth, animate: !stealth, handsComp: user.Comp);
         // Entities that have never been mind-controlled (mannequins, unpossessed animals) don't need to alert admins.
-        var impact = TryComp<MindContainerComponent>(target, out var mindContainer) && mindContainer.LastMind != null
+        var impact = _mindSystem.TryGetLastMind(target.Owner, out _)
             ? LogImpact.High
             : LogImpact.Low;
         _adminLogger.Add(LogType.Stripping, impact, $"{ToPrettyString(user):actor} has stripped the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
