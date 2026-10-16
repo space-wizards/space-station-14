@@ -365,7 +365,7 @@
     edges:
     - to: highSecurity
       completed:
-      - !type:AttemptElectrocute
+      - !type:Electrocute
       - !type:GivePrototype
         prototype: PartRodMetal1
         amount: 2
