@@ -8,7 +8,6 @@ using Content.Server.Tools;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
-using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Emag.Systems;
