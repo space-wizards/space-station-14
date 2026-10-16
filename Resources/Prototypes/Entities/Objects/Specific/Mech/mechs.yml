@@ -104,14 +104,14 @@
         !type:DamageTrigger
         damage: 400
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
     - trigger:
         !type:DamageTrigger
         damage: 275
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
 

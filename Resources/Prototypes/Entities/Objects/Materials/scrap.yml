@@ -21,7 +21,7 @@
         !type:DamageTrigger
         damage: 150
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: Tag
     tags:
@@ -47,7 +47,7 @@
         !type:DamageTrigger
         damage: 150
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: Tag
     tags:

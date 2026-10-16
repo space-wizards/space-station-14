@@ -34,7 +34,7 @@
         !type:DamageTrigger
         damage: 80
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Effects/poster_broken.ogg
 

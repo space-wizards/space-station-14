@@ -20,12 +20,12 @@
         !type:DamageTrigger
         damage: 40
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
           params:
             volume: -4
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetSteel1:
             min: 3

@@ -44,22 +44,22 @@
         damageType: Heat
         damage: 5
       behaviors:
-      - !type:SolutionExplosionBehavior
+      - !type:SolutionExplosion
         solution: tank
     - trigger:
         !type:DamageTypeTrigger
         damageType: Piercing
         damage: 5
       behaviors:
-      - !type:SolutionExplosionBehavior
+      - !type:SolutionExplosion
         solution: tank
     - trigger:
         !type:DamageTrigger
         damage: 20
       behaviors:
-      - !type:SpillBehavior
+      - !type:Spill
         solution: tank
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
 

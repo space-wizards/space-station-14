@@ -37,18 +37,18 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: GlassBreak
           params:
             volume: -4
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardGlass:
             min: 1
             max: 2
-      - !type:EmptyAllContainersBehaviour
-      - !type:DoActsBehavior
+      - !type:EmptyAllContainers
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: Fixtures
     fixtures:

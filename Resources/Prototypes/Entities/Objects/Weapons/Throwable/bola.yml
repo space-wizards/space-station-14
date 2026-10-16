@@ -22,10 +22,10 @@
         !type:DamageTrigger
         damage: 15
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: DamageOnLand
     damage:

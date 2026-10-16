@@ -32,8 +32,8 @@
     - trigger: !type:DamageTrigger
         damage: 60
       behaviors:
-      - !type:EmptyAllContainersBehaviour
-      - !type:PlaySoundBehavior
+      - !type:EmptyAllContainers
+      - !type:PlaySound
         sound:
           collection: MetalGlassBreak
 

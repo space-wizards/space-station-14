@@ -55,7 +55,7 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           FloorCarpetItemRed: &BaseCarpetSpawn
             min: 1
@@ -75,7 +75,7 @@
     thresholds:
     - trigger: *DamageFurnitureWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           FloorCarpetItemBlack: *BaseCarpetSpawn
 
@@ -93,7 +93,7 @@
     thresholds:
     - trigger: *DamageFurnitureWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           FloorCarpetItemPink: *BaseCarpetSpawn
 
@@ -111,7 +111,7 @@
     thresholds:
     - trigger: *DamageFurnitureWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           FloorCarpetItemBlue: *BaseCarpetSpawn
 
@@ -129,7 +129,7 @@
     thresholds:
     - trigger: *DamageFurnitureWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           FloorCarpetItemGreen: *BaseCarpetSpawn
 
@@ -147,7 +147,7 @@
     thresholds:
     - trigger: *DamageFurnitureWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           FloorCarpetItemOrange: *BaseCarpetSpawn
 
@@ -165,7 +165,7 @@
     thresholds:
     - trigger: *DamageFurnitureWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           FloorCarpetItemSkyBlue: *BaseCarpetSpawn
 
@@ -183,7 +183,7 @@
     thresholds:
     - trigger: *DamageFurnitureWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           FloorCarpetItemPurple: *BaseCarpetSpawn
 
@@ -201,7 +201,7 @@
     thresholds:
     - trigger: *DamageFurnitureWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           FloorCarpetItemCyan: *BaseCarpetSpawn
 
@@ -219,7 +219,7 @@
     thresholds:
     - trigger: *DamageFurnitureWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           FloorCarpetItemWhite: *BaseCarpetSpawn
 
@@ -249,7 +249,7 @@
     thresholds:
     - trigger: *DamageFurnitureWeak
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: TrayScanReveal
 
@@ -287,7 +287,7 @@
     thresholds:
     - trigger: *DamageFurnitureWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialCardboard: *BaseCarpetSpawn
   - type: ToolRefinable

@@ -23,7 +23,7 @@
         !type:DamageTrigger
         damage: 60
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Effects/cig_snuff.ogg # Temporary but fits weirdly well
   - type: RCDDeconstructable

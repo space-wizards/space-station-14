@@ -37,7 +37,7 @@
         !type:DamageTrigger
         damage: 275
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetPlasteel1:
             min: 1
@@ -162,7 +162,7 @@
         !type:DamageTrigger
         damage: 275
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetPlasteel1:
             min: 1

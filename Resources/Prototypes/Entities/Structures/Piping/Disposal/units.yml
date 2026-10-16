@@ -93,12 +93,12 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
           params:
             volume: -6
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetPlastic1:
             min: 0
@@ -106,10 +106,10 @@
           SheetSteel1:
             min: 0
             max: 1
-      - !type:EmptyContainersBehaviour
+      - !type:EmptyContainers
         containers:
         - DisposalUnitComponent
-      - !type:ChangeConstructionNodeBehavior
+      - !type:ChangeConstructionNode
         node: frame
   - type: Appearance
   - type: UserInterface

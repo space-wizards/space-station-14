@@ -43,7 +43,7 @@
         !type:DamageTrigger
         damage: 80
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           path: /Audio/Effects/break_stone.ogg
   - type: AlwaysHot

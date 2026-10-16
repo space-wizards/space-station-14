@@ -22,12 +22,12 @@
         !type:DamageTrigger
         damage: 30
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
           params:
             volume: -6
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           PartRodMetal1:
             min: 0

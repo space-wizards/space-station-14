@@ -75,7 +75,7 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
   - type: GuideHelp
@@ -147,7 +147,7 @@
         !type:DamageTrigger
         damage: 175
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
   - type: GuideHelp

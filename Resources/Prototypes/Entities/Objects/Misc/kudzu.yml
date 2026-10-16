@@ -57,7 +57,7 @@
         !type:DamageTrigger
         damage: 10
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: TemperatureDamage
     heatDamage:
@@ -207,7 +207,7 @@
         !type:DamageTrigger
         damage: 40
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: DamageContacts
     damage:

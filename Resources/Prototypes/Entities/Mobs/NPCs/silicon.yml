@@ -90,12 +90,12 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:TriggerBehavior
+      - !type:Trigger
     - trigger:
         !type:DamageTrigger
         damage: 120
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   - type: GuideHelp
     guides:

@@ -44,18 +44,18 @@
         !type:DamageTrigger
         damage: 1
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: desecration
-      - !type:SpillBehavior
+      - !type:Spill
         solution: food
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           Eggshells:
             min: 1
             max: 1
           # Wow double-yolk you're so lucky!
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   # all below are for egg cooking/exploding
   - type: AtmosExposed

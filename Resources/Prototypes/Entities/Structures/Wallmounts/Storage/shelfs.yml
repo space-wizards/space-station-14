@@ -34,7 +34,7 @@
         !type:DamageTrigger
         damage: 60
       behaviors:
-      - !type:EmptyContainersBehaviour
+      - !type:EmptyContainers
         containers:
         - storagebase
 
@@ -73,7 +73,7 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:EmptyContainersBehaviour
+      - !type:EmptyContainers
         containers:
         - storagebase
 
@@ -90,10 +90,10 @@
     thresholds:
     - trigger: *DamageContainerWeak
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: WoodDestroyHeavy
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialWoodPlank1:
             min: 1
@@ -117,10 +117,10 @@
     thresholds:
     - trigger: *DamageContainerWeak
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetSteel1:
             min: 2
@@ -144,10 +144,10 @@
     thresholds:
     - trigger: *DamageContainerWeak
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: WindowShatter
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardGlass:
             min: 0
@@ -180,10 +180,10 @@
     thresholds:
     - trigger: *DamageContainerNormal
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: WoodDestroyHeavy
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialWoodPlank:
             min: 2
@@ -206,10 +206,10 @@
     thresholds:
     - trigger: *DamageContainerNormal
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetPlasteel1:
             min: 2
@@ -238,10 +238,10 @@
     thresholds:
     - trigger: *DamageContainerNormal
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: WindowShatter
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetPlastic1:
             min: 1
@@ -280,10 +280,10 @@
     thresholds:
     - trigger: *DamageContainerWeak
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: WoodDestroyHeavy
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialWoodPlank1:
             min: 1
@@ -319,10 +319,10 @@
     thresholds:
     - trigger: *DamageContainerWeak
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetSteel1:
             min: 1
@@ -370,10 +370,10 @@
     thresholds:
     - trigger: *DamageContainerNormal
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetPlasteel1:
             min: 1

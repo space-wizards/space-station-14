@@ -43,10 +43,10 @@
         !type:DamageTrigger
         damage: 275
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:SpillBehavior
+      - !type:Spill
         solution: drainBuffer
 
 - type: entity

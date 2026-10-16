@@ -61,7 +61,7 @@
         !type:DamageTrigger
         damage: 175
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: WindowShatter
   - type: ApcPowerReceiver
@@ -152,7 +152,7 @@
         !type:DamageTrigger
         damage: 175
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: WindowShatter
   - type: PhysicalComposition

@@ -51,10 +51,10 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:ExplodeBehavior
+      - !type:Explode
   - type: Explosive
     explosionType: Default
     # Same as AME, but numbers still picked from a hat.
@@ -143,7 +143,7 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
 
@@ -298,10 +298,10 @@
         !type:DamageTrigger
         damage: 275
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalGlassBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         offset: 0
         spawn:
           GeneratorRTGDamaged:
@@ -333,10 +333,10 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetSteel1:
             min: 1

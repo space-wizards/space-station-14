@@ -52,7 +52,7 @@ public sealed partial class MindTests : GameTest
         damageType: Blunt
         damage: 400
         behaviors:
-        - !type:GibBehavior { }
+        - !type:Gib { }
 ";
 
     [Test]

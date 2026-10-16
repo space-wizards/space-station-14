@@ -35,7 +35,7 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
     [Dependency] private PuddleSystem _puddle = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
-    [Dependency] private SharedDestructibleSystem _destructible = default!;
+    [Dependency] private DestructibleSystem _destructible = default!;
     [Dependency] private DamageableSystem _damage = default!;
 
     [SubscribeLocalEvent]

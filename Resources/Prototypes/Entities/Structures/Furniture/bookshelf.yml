@@ -23,10 +23,10 @@
         !type:DamageTrigger
         damage: 40
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: WoodDestroyHeavy
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialWoodPlank:
             min: 2

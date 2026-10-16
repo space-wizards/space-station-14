@@ -44,12 +44,12 @@
         !type:DamageTrigger
         damage: 275
       behaviors:
-      - !type:ChangeConstructionNodeBehavior
+      - !type:ChangeConstructionNode
         node: machineFrame
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetPlasma1:
             min: 1
@@ -113,10 +113,10 @@
     thresholds:
     - trigger: *DamageMachineStrong
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetPlasteel1:
             min: 1

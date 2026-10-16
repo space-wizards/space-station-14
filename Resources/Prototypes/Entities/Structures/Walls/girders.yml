@@ -41,12 +41,12 @@
         !type:DamageTrigger
         damage: 80
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetSteel1:
             min: 0
             max: 2
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
   - type: StaticPrice
@@ -72,17 +72,17 @@
         !type:DamageTrigger
         damage: 30
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetPlasteel1:
             min: 0
             max: 2
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
           params:
             volume: -4
-      - !type:ChangeConstructionNodeBehavior
+      - !type:ChangeConstructionNode
         node: girder
   - type: StaticPrice
     price: 130

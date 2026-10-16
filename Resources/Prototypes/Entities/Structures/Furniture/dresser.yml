@@ -16,12 +16,12 @@
         !type:DamageTrigger
         damage: 60
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           MaterialWoodPlank1:
             min: 3
             max: 3
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: WoodDestroy
   - type: Storage

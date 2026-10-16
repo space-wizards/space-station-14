@@ -75,10 +75,10 @@
         !type:DamageTrigger
         damage: 140
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
-      - !type:DumpCanisterBehavior
+      - !type:DumpCanister
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures
@@ -165,7 +165,7 @@
       thresholds:
       - trigger: *DamageContainerStrong
         behaviors:
-        - !type:SpawnEntitiesBehavior
+        - !type:SpawnEntities
           spawn:
             StorageCanisterBroken:
               min: 1
@@ -206,7 +206,7 @@
     thresholds:
     - trigger: *DamageContainerStrong
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           AirCanisterBroken:
             min: 1
@@ -243,7 +243,7 @@
     thresholds:
     - trigger: *DamageContainerStrong
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           OxygenCanisterBroken:
             min: 1
@@ -295,7 +295,7 @@
       thresholds:
       - trigger: *DamageContainerStrong
         behaviors:
-        - !type:SpawnEntitiesBehavior
+        - !type:SpawnEntities
           spawn:
             NitrogenCanisterBroken:
               min: 1
@@ -347,7 +347,7 @@
       thresholds:
       - trigger: *DamageContainerStrong
         behaviors:
-        - !type:SpawnEntitiesBehavior
+        - !type:SpawnEntities
           spawn:
             CarbonDioxideCanisterBroken:
               min: 1
@@ -401,7 +401,7 @@
       thresholds:
       - trigger: *DamageContainerStrong
         behaviors:
-        - !type:SpawnEntitiesBehavior
+        - !type:SpawnEntities
           spawn:
             PlasmaCanisterBroken:
               min: 1
@@ -440,7 +440,7 @@
       thresholds:
       - trigger: *DamageContainerStrong
         behaviors:
-        - !type:SpawnEntitiesBehavior
+        - !type:SpawnEntities
           spawn:
             TritiumCanisterBroken:
               min: 1
@@ -479,7 +479,7 @@
       thresholds:
       - trigger: *DamageContainerStrong
         behaviors:
-        - !type:SpawnEntitiesBehavior
+        - !type:SpawnEntities
           spawn:
             WaterVaporCanisterBroken:
               min: 1
@@ -516,7 +516,7 @@
       thresholds:
       - trigger: *DamageContainerStrong
         behaviors:
-        - !type:SpawnEntitiesBehavior
+        - !type:SpawnEntities
           spawn:
             AmmoniaCanisterBroken:
               min: 1
@@ -555,7 +555,7 @@
       thresholds:
       - trigger: *DamageContainerStrong
         behaviors:
-        - !type:SpawnEntitiesBehavior
+        - !type:SpawnEntities
           spawn:
             NitrousOxideCanisterBroken:
               min: 1
@@ -594,7 +594,7 @@
     thresholds:
     - trigger: *DamageContainerStrong
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           FrezonCanisterBroken:
             min: 1
@@ -634,10 +634,10 @@
           !type:DamageTrigger
           damage: 60
         behaviors:
-        - !type:PlaySoundBehavior
+        - !type:PlaySound
           sound:
             collection: MetalBreak
-        - !type:SpawnEntitiesBehavior
+        - !type:SpawnEntities
           spawn:
             SheetPlasteel1:
               min: 1

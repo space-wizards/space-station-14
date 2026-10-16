@@ -96,10 +96,10 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: GlassBreak
-      - !type:ChangeConstructionNodeBehavior
+      - !type:ChangeConstructionNode
         node: assembly
   - type: ContainerFill
     containers:
@@ -181,7 +181,7 @@
     thresholds:
     - trigger: *DamageDoorWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardGlass:
             min: 1
@@ -207,7 +207,7 @@
     thresholds:
     - trigger: *DamageDoorWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardGlassPlasma:
             min: 1
@@ -235,7 +235,7 @@
     thresholds:
     - trigger: *DamageDoorWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           ShardGlassUranium:
             min: 1

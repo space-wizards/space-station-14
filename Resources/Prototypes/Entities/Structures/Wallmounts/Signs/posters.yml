@@ -11,7 +11,7 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           PosterBroken:
             min: 1

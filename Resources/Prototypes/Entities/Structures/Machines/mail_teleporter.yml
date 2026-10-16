@@ -34,9 +34,9 @@
     - trigger: !type:DamageTrigger
         damage: 275
       behaviors:
-      - !type:ChangeConstructionNodeBehavior
+      - !type:ChangeConstructionNode
         node: machineFrame
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: MetalBreak
   - type: ApcPowerReceiver

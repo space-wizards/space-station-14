@@ -49,12 +49,12 @@
         !type:DamageTrigger
         damage: 2
       behaviors:
-      - !type:PlaySoundBehavior
+      - !type:PlaySound
         sound:
           collection: desecration
-      - !type:SpillBehavior
+      - !type:Spill
         solution: food
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
   # packet contents can be splashed when open
   - type: MeleeWeapon

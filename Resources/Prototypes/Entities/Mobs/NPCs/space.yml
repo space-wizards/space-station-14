@@ -562,8 +562,8 @@
         damageType: Blunt
         damage: 40
       behaviors:
-      - !type:GibBehavior
-        recursive: false
+      - !type:Gib
+        dropGiblets: false
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 3

@@ -36,7 +36,7 @@
         !type:DamageTrigger
         damage: 80
       behaviors:
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           SheetPlastic1:
             min: 1

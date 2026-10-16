@@ -16,7 +16,7 @@ public sealed partial class FleetingClothingSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private ClothingSystem _clothing = default!;
-    [Dependency] private SharedDestructibleSystem _destructibleSystem = default!;
+    [Dependency] private DestructibleSystem _destructibleSystem = default!;
 
     public override void Initialize()
     {

@@ -32,12 +32,12 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - &SoundWoodDestroy !type:PlaySoundBehavior
+      - &SoundWoodDestroy !type:PlaySound
         sound:
           collection: WoodDestroy
           params:
             volume: -4
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           Log:
             min: 1
@@ -72,7 +72,7 @@
         damage: 40
       behaviors:
       - *SoundWoodDestroy
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntities
         spawn:
           Log:
             min: 1

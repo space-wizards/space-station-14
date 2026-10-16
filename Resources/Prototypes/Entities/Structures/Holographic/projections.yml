@@ -31,7 +31,7 @@
         !type:DamageTrigger
         damage: 30
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
 
 - type: entity
@@ -59,7 +59,7 @@
         !type:DamageTrigger
         damage: 30
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
 
 - type: entity
@@ -95,7 +95,7 @@
         !type:DamageTrigger
         damage: 10
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
 
 - type: entity
@@ -133,7 +133,7 @@
           !type:DamageTrigger
           damage: 30
         behaviors:
-        - !type:DoActsBehavior
+        - !type:DoActs
           acts: [ "Destruction" ]
 
 - type: entity
@@ -204,5 +204,5 @@
         !type:DamageTrigger
         damage: 60
       behaviors:
-      - !type:DoActsBehavior
+      - !type:DoActs
         acts: [ "Destruction" ]
