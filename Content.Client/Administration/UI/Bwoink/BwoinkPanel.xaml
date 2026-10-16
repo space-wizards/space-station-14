@@ -9,14 +9,15 @@
     <BoxContainer Align="End" Orientation="Horizontal" SetHeight="30" >
         <TextureButton Name="CopyLog"
                        TexturePath="/Textures/Interface/Bwoink/clipboard.png"
+                       ToolTip="{Loc 'admin-ahelp-copy-buffer'}"
                        HorizontalAlignment="Right"
                        VerticalAlignment="Center"
                        Margin="2"
                        Scale="0.75 0.75" />
         <CheckBox Name="Anonymize"
                   Access="Public"
-                  Text="Anonymize"
-                  ToolTip="Replace usernames with placeholders."
+                  Text="{Loc 'admin-ahelp-anonymize'}"
+                  ToolTip="{Loc 'admin-ahelp-anonymize-tooltip'}"
                   HorizontalAlignment="Right"
                   VerticalAlignment="Center" />
     </BoxContainer>
