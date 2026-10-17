@@ -97,6 +97,15 @@ public sealed partial class GasFilterSystem : SharedGasFilterSystem
     {
         args.GasMixtures ??= new List<(string, GasMixture?)>();
 
+        var filterOutletName = ent.Comp.FilteredGasOnFilterOutlet
+            ? Loc.GetString("gas-analyzer-window-text-side-outlet")
+            : Loc.GetString("gas-analyzer-window-text-front-outlet");
+        var passthroughOutletName = ent.Comp.FilteredGasOnFilterOutlet
+            ? Loc.GetString("gas-analyzer-window-text-front-outlet")
+            : Loc.GetString("gas-analyzer-window-text-side-outlet");
+        var filterOutletLabel = Loc.GetString("gas-analyzer-window-text-filter-outlet",
+            ("outlet", filterOutletName));
+
         // multiply by volume fraction to make sure to send only the gas inside the analyzed pipe element, not the whole pipe system
         if (_nodeContainer.TryGetNode(ent.Owner, ent.Comp.Inlet, out PipeNode? inlet))
         {
@@ -116,28 +125,28 @@ public sealed partial class GasFilterSystem : SharedGasFilterSystem
         {
             if (filterNode.Air.Volume == 0f)
             {
-                args.GasMixtures.Add(($"{filterNode.CurrentPipeDirection} {Loc.GetString("gas-analyzer-window-text-outlet")}", null));
+                args.GasMixtures.Add((filterOutletLabel, null));
             }
             else
             {
                 var filterNodeAirLocal = filterNode.Air.Clone();
                 filterNodeAirLocal.Multiply(filterNode.Volume / filterNode.Air.Volume);
                 filterNodeAirLocal.Volume = filterNode.Volume;
-                args.GasMixtures.Add(($"{filterNode.CurrentPipeDirection} {Loc.GetString("gas-analyzer-window-text-outlet")}", filterNodeAirLocal));
+                args.GasMixtures.Add((filterOutletLabel, filterNodeAirLocal));
             }
         }
         if (_nodeContainer.TryGetNode(ent.Owner, ent.Comp.Outlet, out PipeNode? outlet))
         {
             if (outlet.Air.Volume == 0f)
             {
-                args.GasMixtures.Add(($"{outlet.CurrentPipeDirection} {Loc.GetString("gas-analyzer-window-text-outlet")}", null));
+                args.GasMixtures.Add((passthroughOutletName, null));
             }
             else
             {
                 var outletAirLocal = outlet.Air.Clone();
                 outletAirLocal.Multiply(outlet.Volume / outlet.Air.Volume);
                 outletAirLocal.Volume = outlet.Volume;
-                args.GasMixtures.Add(($"{outlet.CurrentPipeDirection} {Loc.GetString("gas-analyzer-window-text-outlet")}", outletAirLocal));
+                args.GasMixtures.Add((passthroughOutletName, outletAirLocal));
             }
         }
 
