@@ -9,7 +9,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.Construction
 {
     [TestFixture]
-    public sealed class ConstructionActionValid : GameTest
+    public sealed partial class ConstructionActionValid : GameTest
     {
         [Dependency] private SharedEntityEffectsSystem _effects = default!;
 
