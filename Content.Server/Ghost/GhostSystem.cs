@@ -74,6 +74,11 @@ namespace Content.Server.Ghost
         [Dependency] private NameModifierSystem _nameMod = default!;
         [Dependency] private GhostSpriteStateSystem _ghostState = default!;
 
+        private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(5);
+        private TimeSpan _lastUpdateTime = TimeSpan.Zero;
+
+        private EntityUid? _currentMostFollowed;
+
         [Dependency] private EntityQuery<GhostComponent> _ghostQuery = default!;
         [Dependency] private EntityQuery<FollowerComponent> _followerQuery = default!;
         [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
@@ -109,6 +114,40 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<ToggleGhostVisibilityToAllEvent>(OnToggleGhostVisibilityToAll);
 
             SubscribeLocalEvent<GhostComponent, GetVisMaskEvent>(OnGhostVis);
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            if (_lastUpdateTime + UpdateInterval > GameTiming.CurTime)
+            {
+                return;
+            }
+
+            _lastUpdateTime = GameTiming.CurTime;
+
+            var newMostFollowed = _followerSystem.GetMostGhostFollowed();
+            if (newMostFollowed == _currentMostFollowed)
+            {
+                return;
+            }
+
+            _currentMostFollowed = newMostFollowed;
+
+            var allPlayerData = _player.GetAllPlayerData();
+
+            foreach (var sessionData in allPlayerData)
+            {
+                var session = _player.GetSessionById(sessionData.UserId);
+                var uid = session.AttachedEntity;
+                if (!_ghostQuery.HasComp(uid))
+                {
+                    continue;
+                }
+
+                SendGhostnadoResponse(uid.Value, session, false);
+            }
         }
 
         private void OnGhostVis(Entity<GhostComponent> ent, ref GetVisMaskEvent args)
@@ -310,11 +349,21 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            if (_followerSystem.GetMostGhostFollowed() is not {} target)
-                return;
+            SendGhostnadoResponse(player, args.SenderSession, msg.Warp);
+        }
 
-            // If there is a ghostnado happening you almost definitely wanna join it, so we automatically follow instead of just warping.
-            _followerSystem.StartFollowingEntity(player, target);
+        private void SendGhostnadoResponse(EntityUid player, ICommonSession session, bool warp)
+        {
+            var target = _currentMostFollowed;
+
+            var response = new GhostnadoResponseEvent(target is not null);
+
+            if (warp && target is not null)
+            {
+                _followerSystem.StartFollowingEntity(player, target.Value);
+            }
+
+            RaiseNetworkEvent(response, session);
         }
         /// <summary>
         /// Request to warp to a random player with at least one ghost follower.
@@ -328,10 +377,10 @@ namespace Content.Server.Ghost
             }
 
             var following = _followerQuery.CompOrNull(player)?.Following;
-            if (_followerSystem.GetRandomGhostFollowed(except:following) is not {} target)
+            if (_followerSystem.GetRandomGhostFollowed(except:following) is null)
                 return;
 
-            _followerSystem.StartFollowingEntity(player, target);
+            SendGhostnadoResponse(player, args.SenderSession, msg.Warp);
         }
 
         /// <summary>

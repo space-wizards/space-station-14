@@ -35,6 +35,7 @@ namespace Content.Client.Ghost
         public event Action<GhostComponent>? PlayerAttached;
         public event Action? PlayerDetached;
         public event Action<GhostWarpsResponseEvent>? GhostWarpsResponse;
+        public event Action<GhostnadoResponseEvent>? GhostnadoResponse;
         public event Action<GhostUpdateGhostRoleCountEvent>? GhostRoleCountUpdated;
 
         [SubscribeLocalEvent]
@@ -156,6 +157,17 @@ namespace Content.Client.Ghost
             }
 
             GhostWarpsResponse?.Invoke(msg);
+        }
+
+        [SubscribeNetworkEvent]
+        private void OnGhostnadoResponse(GhostnadoResponseEvent msg)
+        {
+            if (!IsGhost)
+            {
+                return;
+            }
+
+            GhostnadoResponse?.Invoke(msg);
         }
 
         [SubscribeNetworkEvent]
