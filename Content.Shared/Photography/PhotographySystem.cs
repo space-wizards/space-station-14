@@ -33,10 +33,11 @@ public sealed partial class PhotographySystem : EntitySystem
 
         using (args.PushGroup(nameof(PhotographComponent)))
         {
-            if (string.IsNullOrEmpty(ent.Comp.NameText))
-                args.PushText(Loc.GetString("photograph-name-text-empty"));
-            else
-                args.PushText(ent.Comp.NameText);
+            string nameText = string.IsNullOrEmpty(ent.Comp.NameText)
+                ? Loc.GetString("photograph-name-text-empty")
+                : ent.Comp.NameText;
+            args.PushText(Loc.GetString("photograph-examine", ("text", nameText)));
+
             if (ent.Comp.Description != null)
                 // TODO: For some weird reason ExamineSystem is adding a new line at the end of message we are pushing with each examine.
                 // I'm not soaping this PR even more, so for now I'll just bandaid that by sending a clone to prevent it from getting modified.
