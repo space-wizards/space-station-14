@@ -60,10 +60,8 @@
         Piercing: 8
   - type: Reactive
     groups:
-      Flammable:
-      - Touch
-      Extinguish:
-      - Touch
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
   - type: Insulated
     coefficient: 0.5 # rat king touches more wires, see?
   - type: NoSlip
@@ -97,8 +95,7 @@
     - id: ClothingHeadHatFancyCrown #how did that get there?
       amount: 1
   - type: Tool
-    qualities:
-    - Slicing
+    qualities: [ Slicing ]
   - type: MobPrice
     price: 2500 # rat wealth
   - type: NpcFactionMember
@@ -245,10 +242,8 @@
         Piercing: 3
   - type: Reactive
     groups:
-      Flammable:
-      - Touch
-      Extinguish:
-      - Touch
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
   - type: Insulated
     coefficient: 0.2 # they don't make da roolz, but they sneaky
   - type: NoSlip

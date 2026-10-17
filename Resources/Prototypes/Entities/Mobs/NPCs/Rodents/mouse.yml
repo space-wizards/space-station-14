@@ -116,8 +116,7 @@
   - type: Speech
     speechSounds: Squeak
     speechVerb: SmallMob
-    allowedEmotes:
-    - 'Squeak'
+    allowedEmotes: [ 'Squeak' ]
   - type: Vocal
     emoteSounds: Mouse
     wilhelmProbability: 0.001

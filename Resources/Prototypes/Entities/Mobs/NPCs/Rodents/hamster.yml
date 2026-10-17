@@ -105,8 +105,7 @@
   - type: Speech
     speechVerb: SmallMob
     speechSounds: Squeak
-    allowedEmotes:
-    - 'Squeak'
+    allowedEmotes: [ 'Squeak' ]
   - type: ReplacementAccent
     accent: mouse
   - type: Edible
