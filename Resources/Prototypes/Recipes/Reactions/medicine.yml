@@ -247,18 +247,17 @@
   - Electrolysis # Maybe swap this to centrifuge once there are some centrifuge QoL improvements
   reactants:
     ApotheosoticEnzymes:
-      amount: 6
+      amount: 4
+    Phalanximine:
+      amount: 1
   products:
-    ApotheosoticExtract: 4
-    Benzene: 2
+    ApotheosoticExtract: 5
 
 - type: reaction
   id: Omnizine
   reactants:
     ApotheosoticExtract:
-      amount: 3
-    PolypyryliumOligomers:
-      amount: 1
+      amount: 5
     Diphenhydramine:
       amount: 1
     Sigynate:

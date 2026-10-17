@@ -930,11 +930,24 @@
     Bloodstream:
       effects:
       - !type:EvenHealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: ApotheosoticExtract
+          max: 5
         damage:
-          Burn: -0.5
-          Toxin: -0.5
-          Airloss: -0.5
-          Brute: -0.5
+          Burn: -1
+          Toxin: -1
+          Airloss: -1
+          Brute: -1
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: ApotheosoticExtract
+          min: 5
+        damage:
+          types:
+            Caustic: 2
+            Poison: 2
 
 - type: reagent
   id: Ultravasculine
