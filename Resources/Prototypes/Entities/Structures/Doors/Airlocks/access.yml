@@ -243,6 +243,15 @@
       board: [ DoorElectronicsSalvage ]
 
 - type: entity
+  parent: AirlockSalvage
+  id: AirlockCargoSalvageLocked
+  suffix: Cargo, Salvage, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCargoSalvage ]
+
+- type: entity
   parent: AirlockMining
   id: AirlockMiningLocked
   suffix: Mining(Salvage), Locked
@@ -639,6 +648,15 @@
       board: [ DoorElectronicsAtmospherics ]
 
 - type: entity
+  parent: AirlockAtmosphericsGlass
+  id: AirlockAtmosphericsEngineeringGlassLocked
+  suffix: Atmospherics, Engineering, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsAtmosphericsEngineering ]
+
+- type: entity
   parent: AirlockCargoGlass
   id: AirlockCargoGlassLocked
   suffix: Cargo, Locked
@@ -657,6 +675,15 @@
       board: [ DoorElectronicsSalvage ]
 
 - type: entity
+  parent: AirlockSalvageGlass
+  id: AirlockCargoSalvageGlassLocked
+  suffix: Cargo, Salvage, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCargoSalvage ]
+
+- type: entity
   parent: AirlockMiningGlass
   id: AirlockMiningGlassLocked
   suffix: Mining(Salvage), Locked
@@ -673,6 +700,15 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsChemistry ]
+
+- type: entity
+  parent: AirlockChemistryGlass
+  id: AirlockChemistryGlassMedicalLocked
+  suffix: Medical, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMedical ]
 
 - type: entity
   parent: AirlockMedicalGlass

@@ -33,10 +33,26 @@
     containers:
       entity_storage: !type:AllSelector
         children:
-          - !type:NestedSelector
-            tableId: FillSalvageSpecialistHardsuitSpatio
-          - !type:NestedSelector
-            tableId: LockerFillSalvageSpecialist
+        - !type:NestedSelector
+          tableId: FillSalvageSpecialistHardsuitSpatio
+        - !type:NestedSelector
+          tableId: LockerFillSalvageSpecialist
+
+- type: entity
+  parent: LockerSalvageSpecialist
+  id: LockerSalvageSpecialistFilledHardsuitCargoAccess
+  suffix: Filled, Cargo Access, Hardsuit
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: FillSalvageSpecialistHardsuitSpatio
+        - !type:NestedSelector
+          tableId: LockerFillSalvageSpecialist
+  - type: AccessReader
+    access: [["Salvage"], ["Cargo"]]
 
 - type: entity
   id: LockerSalvageSpecialistFilled
