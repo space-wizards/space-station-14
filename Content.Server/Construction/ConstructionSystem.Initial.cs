@@ -305,12 +305,10 @@ namespace Content.Server.Construction
             // We have step completed steps!
             foreach (var step in steps)
             {
-                Log.Info("peforming" + step.Completed);
                 _construction.PerformActions(newEntity, user, step.Completed);
             }
 
             // And we also have edge completed effects!
-            Log.Info("peforming" + edge.Completed);
             _construction.PerformActions(newEntity, user, edge.Completed);
 
             return newEntity;
