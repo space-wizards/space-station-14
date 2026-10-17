@@ -1,7 +1,6 @@
 using Content.Server.Construction;
 using Content.Shared.Construction;
 using Content.Shared.EntityEffects;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.EntityEffects.Effects;
 
