@@ -4,12 +4,10 @@ namespace Content.Shared.EntityEffects.Effects.Construction;
 
 public sealed partial class SetWiresPanelSecurityEntityEffectSystem : EntityEffectSystem<WiresPanelSecurityComponent, SetWiresPanelSecurity>
 {
-    [Dependency] private EntityManager _entMan = default!;
-
     protected override void Effect(Entity<WiresPanelSecurityComponent> entity, ref EntityEffectEvent<SetWiresPanelSecurity> args)
     {
         var ev = new WiresPanelSecurityEvent(args.Effect.Examine, args.Effect.WiresAccessible);
-        _entMan.EventBus.RaiseLocalEvent(entity.Owner, ev);
+        EntityManager.EventBus.RaiseLocalEvent(entity.Owner, ev);
     }
 }
 

@@ -5,8 +5,6 @@ namespace Content.Shared.EntityEffects.Effects;
 /// </summary>
 public sealed partial class RaiseEventEntityEffectSystem : EntityEffectSystem<TransformComponent, RaiseEvent>
 {
-    [Dependency] private EntityManager _entMan = default!;
-
     protected override void Effect(Entity<TransformComponent> entity, ref EntityEffectEvent<RaiseEvent> args)
     {
         var directed = args.Effect.Directed;
@@ -16,10 +14,10 @@ public sealed partial class RaiseEventEntityEffectSystem : EntityEffectSystem<Tr
             return;
 
         if(directed)
-            _entMan.EventBus.RaiseLocalEvent(entity, (object)args.Effect.Event);
+            EntityManager.EventBus.RaiseLocalEvent(entity, (object)args.Effect.Event);
 
         if(broadcast)
-            _entMan.EventBus.RaiseEvent(EventSource.Local, (object)args.Effect.Event);
+            EntityManager.EventBus.RaiseEvent(EventSource.Local, (object)args.Effect.Event);
     }
 }
 
