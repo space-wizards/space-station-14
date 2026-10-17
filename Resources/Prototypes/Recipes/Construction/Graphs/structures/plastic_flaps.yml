@@ -20,8 +20,8 @@
       - to: start
         completed:
           - !type:SpawnEntity
-            prototype: SheetPlastic
-            amount: 5
+            entity: SheetPlastic
+            number: 5
         steps:
           - tool: Anchoring
             doAfter: 10
@@ -39,8 +39,8 @@
       - to: start
         completed:
           - !type:SpawnEntity
-            prototype: SheetPlastic
-            amount: 5
+            entity: SheetPlastic
+            number: 5
         steps:
           - tool: Anchoring
             doAfter: 10

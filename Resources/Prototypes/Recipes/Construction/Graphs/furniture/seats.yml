@@ -99,7 +99,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
           steps:
             - tool: Screwing
               doAfter: 1
@@ -110,7 +110,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
           steps:
             - tool: Screwing
               doAfter: 1
@@ -121,7 +121,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
           steps:
             - tool: Screwing
               doAfter: 1
@@ -132,7 +132,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetBrass1
+              entity: SheetBrass1
           steps:
             - tool: Screwing
               doAfter: 1
@@ -143,7 +143,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 2
           steps:
             - tool: Screwing
@@ -155,7 +155,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 2
           steps:
             - tool: Screwing
@@ -167,7 +167,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 2
           steps:
             - tool: Screwing
@@ -179,7 +179,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 2
           steps:
             - tool: Screwing
@@ -191,7 +191,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
+              entity: MaterialWoodPlank1
               amount: 3
           steps:
             - tool: Screwing
@@ -203,7 +203,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: MaterialSheetMeat1
+              entity: MaterialSheetMeat1
               amount: 2
           steps:
             - tool: Screwing
@@ -215,10 +215,10 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetPlastic1
+              entity: SheetPlastic1
               amount: 1
             - !type:SpawnEntity
-              prototype: PartRodMetal1
+              entity: PartRodMetal1
               amount: 2
           steps:
             - tool: Screwing
@@ -230,7 +230,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 2
           steps:
             - tool: Screwing
@@ -242,7 +242,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: MaterialCardboard1
+              entity: MaterialCardboard1
               amount: 3
             - !type:PlaySound
               playAtPosition: true
@@ -257,7 +257,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
+              entity: MaterialWoodPlank1
               amount: 4
           steps:
             - tool: Screwing
@@ -269,10 +269,10 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 2
             - !type:SpawnEntity
-              prototype: MaterialCloth1
+              entity: MaterialCloth1
               amount: 1
           steps:
             - tool: Cutting
@@ -286,10 +286,10 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 2
             - !type:SpawnEntity
-              prototype: MaterialCloth1
+              entity: MaterialCloth1
               amount: 1
           steps:
             - tool: Cutting

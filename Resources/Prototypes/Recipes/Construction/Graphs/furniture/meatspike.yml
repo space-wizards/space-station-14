@@ -27,7 +27,7 @@
         examineText: comp-kitchen-spike-deconstruct-occupied
       completed:
       - !type:SpawnEntity
-        prototype: SheetSteel1
+        entity: SheetSteel1
         amount: 15
       steps:
       - tool: Screwing

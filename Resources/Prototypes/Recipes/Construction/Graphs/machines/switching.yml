@@ -6,11 +6,11 @@
   - node: start
     actions:
       - !type:SpawnEntity
-        prototype: SheetSteel1
-        amount: 2
+        entity: SheetSteel1
+        number: 2
       - !type:SpawnEntity
-        prototype: CableApcStack1
-        amount: 1
+        entity: CableApcStack1
+        number: 1
       - !type:DeleteEntity
     edges:
       - to: LeverNode

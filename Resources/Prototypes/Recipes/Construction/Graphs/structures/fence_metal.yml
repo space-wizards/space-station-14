@@ -33,7 +33,7 @@
     - to: broken
       completed:
       - !type:SpawnEntity
-        prototype: PartRodMetal1
+        entity: PartRodMetal1
         amount: 1
       steps:
       - tool: Welding
@@ -47,7 +47,7 @@
     - to: start
       completed:
       - !type:SpawnEntity
-        prototype: PartRodMetal1
+        entity: PartRodMetal1
         amount: 5
       - !type:DeleteEntity
       steps:
@@ -62,7 +62,7 @@
     - to: start
       completed:
       - !type:SpawnEntity
-        prototype: PartRodMetal1
+        entity: PartRodMetal1
         amount: 5
       - !type:DeleteEntity
       steps:
@@ -77,7 +77,7 @@
     - to: start
       completed:
       - !type:SpawnEntity
-        prototype: PartRodMetal1
+        entity: PartRodMetal1
         amount: 5
       - !type:DeleteEntity
       steps:
@@ -92,7 +92,7 @@
     - to: start
       completed:
       - !type:SpawnEntity
-        prototype: PartRodMetal1
+        entity: PartRodMetal1
         amount: 1
       - !type:DeleteEntity
       steps:

@@ -44,7 +44,7 @@
               doAfter: 2.0
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 2
             - !type:DeleteEntity
     - node: bulbLight
@@ -59,7 +59,7 @@
               doAfter: 2.0
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 1
             - !type:DeleteEntity
     - node: groundLight
@@ -74,7 +74,7 @@
               doAfter: 4.0
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 5
             - !type:DeleteEntity
     - node: strobeLight
@@ -89,7 +89,7 @@
               doAfter: 2.0
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 1
             - !type:DeleteEntity
     - node: emergencyLight
@@ -101,9 +101,9 @@
               doAfter: 2.0
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 1
             - !type:SpawnEntity
-              prototype: SheetGlass1
+              entity: SheetGlass1
               amount: 1
             - !type:DeleteEntity

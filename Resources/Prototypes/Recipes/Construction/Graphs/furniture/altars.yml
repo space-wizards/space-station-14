@@ -19,8 +19,8 @@
         - to: start
           completed:
           - !type:SpawnEntity
-                prototype: MaterialBananium1
-                amount: 6
+             entity: MaterialBananium1
+             number: 6
           - !type:DeleteEntity
           steps:
             - tool: Welding

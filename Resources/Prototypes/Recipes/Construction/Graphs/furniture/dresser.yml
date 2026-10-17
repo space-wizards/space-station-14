@@ -19,7 +19,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank
+              entity: MaterialWoodPlank
               amount: 3
           steps:
             - tool: Prying

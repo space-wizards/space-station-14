@@ -36,7 +36,7 @@
         anchored: false
       completed:
       - !type:SpawnEntity
-        prototype: SheetPlasteel1
+        entity: SheetPlasteel1
         amount: 2
       - !type:DeleteEntity
       steps:
@@ -66,7 +66,7 @@
     - to: electronics
       completed:
       - !type:SpawnEntity
-        prototype: CableApcStack1
+        entity: CableApcStack1
         amount: 5
       steps:
       - tool: Cutting
@@ -90,7 +90,7 @@
     - to: wired
       completed:
       - !type:SpawnEntity
-        prototype: SheetPlasteel1
+        entity: SheetPlasteel1
         amount: 2
       steps:
       - tool: Prying
@@ -142,7 +142,7 @@
     - to: skeletonWelded
       completed:
       - !type:SpawnEntity
-        prototype: IngotSilver1
+        entity: IngotSilver1
         amount: 2
       steps:
       - tool: Prying
@@ -168,7 +168,7 @@
     - to: skeletonSilver
       completed:
         - !type:SpawnEntity
-          prototype: SheetRGlass1
+          entity: SheetRGlass1
           amount: 2
       steps:
       - tool: Prying

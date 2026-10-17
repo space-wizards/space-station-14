@@ -18,8 +18,8 @@
         - to: start
           completed:
           - !type:SpawnEntity
-                prototype: PartRodMetal1
-                amount: 2
+            entity: PartRodMetal1
+            number: 2
           - !type:DeleteEntity
           steps:
             - tool: Cutting

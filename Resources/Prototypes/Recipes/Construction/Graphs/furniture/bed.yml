@@ -39,10 +39,10 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 2
             - !type:SpawnEntity
-              prototype: MaterialCloth1
+              entity: MaterialCloth1
               amount: 2
           steps:
             - tool: Screwing
@@ -53,7 +53,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
+              entity: MaterialWoodPlank1
               amount: 10
           steps:
             - tool: Screwing
@@ -64,10 +64,10 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetPlasteel1
+              entity: SheetPlasteel1
               amount: 2
             - !type:SpawnEntity
-              prototype: MaterialDurathread1
+              entity: MaterialDurathread1
               amount: 2
           steps:
             - tool: Screwing

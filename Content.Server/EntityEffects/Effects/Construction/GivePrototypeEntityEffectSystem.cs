@@ -1,5 +1,6 @@
 using Content.Server.Stack;
 using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects.Construction;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Stacks;
@@ -45,13 +46,4 @@ public sealed partial class GivePrototypeEntityEffectSystem : EntityEffectSystem
             }
         }
     }
-}
-
-public sealed partial class GivePrototype : EntityEffectBase<GivePrototype>
-{
-    [DataField(required:true)]
-    public EntProtoId Prototype;
-
-    [DataField]
-    public int Amount = 1;
 }

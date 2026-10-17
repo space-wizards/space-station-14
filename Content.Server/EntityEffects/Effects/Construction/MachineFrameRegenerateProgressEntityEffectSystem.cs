@@ -1,6 +1,7 @@
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects.Construction;
 
 namespace Content.Server.EntityEffects.Effects.Construction;
 
@@ -13,5 +14,3 @@ public sealed partial class MachineFrameRegenerateProgressEntityEffectSystem : E
         _machine.RegenerateProgress(entity.Comp);
     }
 }
-
-public sealed partial class MachineFrameRegenerateProgress : EntityEffectBase<MachineFrameRegenerateProgress>;

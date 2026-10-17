@@ -22,10 +22,10 @@
           completed:
             - !type:EmptyAllContainers
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank
+              entity: MaterialWoodPlank
               amount: 5
             - !type:SpawnEntity
-              prototype: PartRodMetal
+              entity: PartRodMetal
               amount: 2
           steps:
             - tool: Screwing

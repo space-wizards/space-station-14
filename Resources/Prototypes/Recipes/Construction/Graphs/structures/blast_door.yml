@@ -32,7 +32,7 @@
               anchored: false
           completed:
             - !type:SpawnEntity
-              prototype: SheetPlasteel1
+              entity: SheetPlasteel1
               amount: 10
             - !type:DeleteEntity
           steps:
@@ -55,7 +55,7 @@
         - to: frame1
           completed:
             - !type:SpawnEntity
-              prototype: CableApcStack1
+              entity: CableApcStack1
               amount: 5
           steps:
             - tool: Cutting

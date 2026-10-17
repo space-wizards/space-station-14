@@ -21,8 +21,8 @@
         - to: start
           completed:
             - !type:SpawnEntity
-                prototype: MaterialWoodPlank1
-                amount: 2
+               entity: MaterialWoodPlank1
+               number: 2
           steps:
             - tool: Screwing
               doAfter: 1
@@ -42,8 +42,8 @@
         - to: chairRitual
           completed:
             - !type:SpawnEntity
-              prototype: OrganSkeletonPersonHead
-              amount: 1
+              entity: OrganSkeletonPersonHead
+              number: 1
           steps:
             - tool: Prying
               doAfter: 1

@@ -17,7 +17,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
+              entity: MaterialWoodPlank1
               amount: 3 #returns 1 less as one breaks
             - !type:DeleteEntity
           conditions:
@@ -63,7 +63,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
+              entity: MaterialWoodPlank1
               amount: 3 #returns 1 less as one breaks
             - !type:DeleteEntity
           conditions:
@@ -90,7 +90,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
+              entity: MaterialWoodPlank1
               amount: 2 #returns 1 less as one breaks
             - !type:DeleteEntity { }
           conditions:

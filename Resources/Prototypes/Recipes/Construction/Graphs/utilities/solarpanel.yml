@@ -19,7 +19,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SolarAssemblyFlatpack
+              entity: SolarAssemblyFlatpack
               amount: 1
             - !type:DeleteEntity
           steps:
@@ -76,7 +76,7 @@
             - !type:SnapToGrid
               southRotation: true
             - !type:SpawnEntity
-              prototype: SheetPGlass1
+              entity: SheetPGlass1
               amount: 2
           conditions:
             - !type:EntityAnchored
@@ -93,7 +93,7 @@
             - !type:SnapToGrid
               southRotation: true
             - !type:SpawnEntity
-              prototype: SheetUGlass1
+              entity: SheetUGlass1
               amount: 2
           conditions:
             - !type:EntityAnchored
@@ -110,7 +110,7 @@
             - !type:SnapToGrid
               southRotation: true
             - !type:SpawnEntity
-              prototype: SheetGlass1
+              entity: SheetGlass1
               amount: 2
           conditions:
             - !type:EntityAnchored
@@ -127,7 +127,7 @@
             - !type:SnapToGrid
               southRotation: true
             - !type:SpawnEntity
-              prototype: ShardGlass
+              entity: ShardGlass
               amount: 2
           conditions:
             - !type:EntityAnchored
@@ -144,7 +144,7 @@
         - !type:SnapToGrid
           southRotation: true
         - !type:SpawnEntity
-          prototype: ShardGlassPlasma
+          entity: ShardGlassPlasma
           amount: 2
         conditions:
         - !type:EntityAnchored
@@ -161,7 +161,7 @@
         - !type:SnapToGrid
           southRotation: true
         - !type:SpawnEntity
-          prototype: ShardGlassUranium
+          entity: ShardGlassUranium
           amount: 2
         conditions:
         - !type:EntityAnchored
@@ -178,10 +178,10 @@
             - !type:SnapToGrid
               southRotation: true
             - !type:SpawnEntity
-              prototype: SheetGlass1
+              entity: SheetGlass1
               amount: 2
             - !type:SpawnEntity
-              prototype: SolarTrackerElectronics
+              entity: SolarTrackerElectronics
               amount: 1
           conditions:
             - !type:EntityAnchored

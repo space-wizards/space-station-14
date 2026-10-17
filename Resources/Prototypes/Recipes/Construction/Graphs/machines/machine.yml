@@ -5,7 +5,7 @@
     - node: start
       actions:
         - !type:SpawnEntity
-          prototype: SheetSteel1
+          entity: SheetSteel1
         - !type:DeleteEntity
       edges:
         - to: missingWires
@@ -35,8 +35,8 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
-              amount: 5
+              entity: SheetSteel1
+              number: 5
             - !type:DeleteEntity
           steps:
             - tool: Screwing
@@ -85,7 +85,7 @@
               examineText: construction-condition-machine-container-empty
           completed:
             - !type:SpawnEntity
-              prototype: CableApcStack1
+              entity: CableApcStack1
           steps:
             - tool: Cutting
               doAfter: 0.25
@@ -116,6 +116,6 @@
               doAfter: 5
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
-              amount: 3
+              entity: SheetSteel1
+              number: 3
             - !type:DeleteEntity

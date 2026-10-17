@@ -38,8 +38,8 @@
         - to: start
           completed:
             - !type:SpawnEntity
-                prototype: PartRodMetal
-                amount: 2
+              entity: PartRodMetal
+              number: 2
           steps:
             - tool: Anchoring
               doAfter: 1
@@ -101,8 +101,8 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
-              amount: 1
+              entity: MaterialWoodPlank1
+              number: 1
           steps:
             - tool: Anchoring
               doAfter: 1
@@ -118,8 +118,8 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
-              amount: 1
+              entity: SheetSteel1
+              number: 1
           steps:
           - tool: Anchoring
             doAfter: 1
@@ -136,8 +136,8 @@
         - to: TableFrame
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
-              amount: 1
+              entity: SheetSteel1
+              number: 1
           steps:
             - tool: Anchoring
               doAfter: 1
@@ -148,8 +148,8 @@
         - to: TableFrame
           completed:
             - !type:SpawnEntity
-              prototype: SheetPlasteel1
-              amount: 1
+              entity: SheetPlasteel1
+              number: 1
           steps:
             - tool: Welding
               doAfter: 3
@@ -162,8 +162,8 @@
         - to: TableFrame
           completed:
             - !type:SpawnEntity
-              prototype: SheetGlass1
-              amount: 1
+              entity: SheetGlass1
+              number: 1
           steps:
             - tool: Anchoring
               doAfter: 1
@@ -174,7 +174,7 @@
         - to: TableFrame
           completed:
             - !type:SpawnEntity
-              prototype: MaterialCardboard1
+              entity: MaterialCardboard1
               amount: 3
           steps:
             - tool: Slicing
@@ -186,8 +186,8 @@
         - to: TableFrame
           completed:
             - !type:SpawnEntity
-              prototype: SheetRGlass1
-              amount: 1
+              entity: SheetRGlass1
+              number: 1
           steps:
             - tool: Anchoring
               doAfter: 1
@@ -198,8 +198,8 @@
         - to: TableFrame
           completed:
             - !type:SpawnEntity
-              prototype: SheetPGlass1
-              amount: 1
+              entity: SheetPGlass1
+              number: 1
           steps:
             - tool: Anchoring
               doAfter: 1
@@ -210,8 +210,8 @@
         - to: TableFrame
           completed:
             - !type:SpawnEntity
-              prototype: SheetBrass1
-              amount: 1
+              entity: SheetBrass1
+              number: 1
           steps:
             - tool: Prying
               doAfter: 1
@@ -222,8 +222,8 @@
         - to: TableFrame
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
-              amount: 1
+              entity: MaterialWoodPlank1
+              number: 1
           steps:
             - tool: Prying
               doAfter: 1
@@ -290,8 +290,8 @@
         - to: TableWood
           completed:
             - !type:SpawnEntity
-              prototype: MaterialCloth1
-              amount: 1
+              entity: MaterialCloth1
+              number: 1
           steps:
             - tool: Prying
               doAfter: 1
@@ -302,8 +302,8 @@
         - to: TableWood
           completed:
             - !type:SpawnEntity
-              prototype: FloorCarpetItemBlack
-              amount: 1
+              entity: FloorCarpetItemBlack
+              number: 1
           steps:
             - tool: Prying
               doAfter: 1
@@ -314,8 +314,8 @@
         - to: TableWood
           completed:
             - !type:SpawnEntity
-              prototype: FloorCarpetItemBlue
-              amount: 1
+              entity: FloorCarpetItemBlue
+              number: 1
           steps:
             - tool: Prying
               doAfter: 1
@@ -326,7 +326,7 @@
         - to: TableWood
           completed:
           - !type:SpawnEntity
-            prototype: FloorCarpetItemSkyBlue
+            entity: FloorCarpetItemSkyBlue
             amount: 1
           steps:
           - tool: Prying
@@ -338,8 +338,8 @@
         - to: TableWood
           completed:
             - !type:SpawnEntity
-              prototype: FloorCarpetItemCyan
-              amount: 1
+              entity: FloorCarpetItemCyan
+              number: 1
           steps:
             - tool: Prying
               doAfter: 1
@@ -350,8 +350,8 @@
         - to: TableWood
           completed:
             - !type:SpawnEntity
-              prototype: FloorCarpetItemGreen
-              amount: 1
+              entity: FloorCarpetItemGreen
+              number: 1
           steps:
             - tool: Prying
               doAfter: 1
@@ -362,8 +362,8 @@
         - to: TableWood
           completed:
             - !type:SpawnEntity
-              prototype: FloorCarpetItemOrange
-              amount: 1
+              entity: FloorCarpetItemOrange
+              number: 1
           steps:
             - tool: Prying
               doAfter: 1
@@ -374,8 +374,8 @@
         - to: TableWood
           completed:
             - !type:SpawnEntity
-              prototype: FloorCarpetItemPurple
-              amount: 1
+              entity: FloorCarpetItemPurple
+              number: 1
           steps:
             - tool: Prying
               doAfter: 1
@@ -386,8 +386,8 @@
         - to: TableWood
           completed:
             - !type:SpawnEntity
-              prototype: FloorCarpetItemPink
-              amount: 1
+              entity: FloorCarpetItemPink
+              number: 1
           steps:
             - tool: Prying
               doAfter: 1
@@ -398,8 +398,8 @@
         - to: TableWood
           completed:
             - !type:SpawnEntity
-              prototype: FloorCarpetItemRed
-              amount: 1
+              entity: FloorCarpetItemRed
+              number: 1
           steps:
             - tool: Prying
               doAfter: 1
@@ -410,8 +410,8 @@
         - to: TableWood
           completed:
             - !type:SpawnEntity
-              prototype: FloorCarpetItemWhite
-              amount: 1
+              entity: FloorCarpetItemWhite
+              number: 1
           steps:
             - tool: Prying
               doAfter: 1
@@ -422,8 +422,8 @@
         - to: CounterMetalFrame
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
-              amount: 1
+              entity: SheetSteel1
+              number: 1
           steps:
             - tool: Anchoring
               doAfter: 1
@@ -434,8 +434,8 @@
         - to: CounterWoodFrame
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
-              amount: 1
+              entity: MaterialWoodPlank1
+              number: 1
           steps:
             - tool: Prying
               doAfter: 1
@@ -446,8 +446,8 @@
       - to: TableFrame
         completed:
         - !type:SpawnEntity
-          prototype: SheetSteel1
-          amount: 1
+          entity: SheetSteel1
+          number: 1
         steps:
         - tool: Anchoring
           doAfter: 1

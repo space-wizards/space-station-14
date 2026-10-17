@@ -23,8 +23,8 @@
     - to: start
       completed:
       - !type:SpawnEntity
-        prototype: SheetSteel1
-        amount: 5
+        entity: SheetSteel1
+        number: 5
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -44,7 +44,7 @@
         doAfter: 0.5
         completed:
         - !type:SpawnEntity
-          prototype: CableApcStack1
+          entity: CableApcStack1
     - to: caseWithTrigger
       steps:
       - component: PayloadTrigger

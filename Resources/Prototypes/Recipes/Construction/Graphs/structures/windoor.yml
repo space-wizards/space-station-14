@@ -53,7 +53,7 @@
         anchored: false
       completed:
       - !type:SpawnEntity
-        prototype: SheetSteel1
+        entity: SheetSteel1
         amount: 4
       - !type:DeleteEntity
       steps:
@@ -77,7 +77,7 @@
         anchored: false
       completed:
       - !type:SpawnEntity
-        prototype: SheetGlass1
+        entity: SheetGlass1
         amount: 5
       steps:
       - tool: Screwing
@@ -100,7 +100,7 @@
     - to: glass
       completed:
       - !type:SpawnEntity
-        prototype: CableApcStack1
+        entity: CableApcStack1
         amount: 5
       steps:
       - tool: Cutting
@@ -160,7 +160,7 @@
         anchored: false
       completed:
       - !type:SpawnEntity
-        prototype: SheetPGlass1
+        entity: SheetPGlass1
         amount: 5
       steps:
       - tool: Screwing
@@ -183,7 +183,7 @@
     - to: pglass
       completed:
       - !type:SpawnEntity
-        prototype: CableApcStack1
+        entity: CableApcStack1
         amount: 5
       steps:
       - tool: Cutting
@@ -243,7 +243,7 @@
         anchored: false
       completed:
       - !type:SpawnEntity
-        prototype: SheetUGlass1
+        entity: SheetUGlass1
         amount: 5
       steps:
       - tool: Screwing
@@ -266,7 +266,7 @@
     - to: uglass
       completed:
       - !type:SpawnEntity
-        prototype: CableApcStack1
+        entity: CableApcStack1
         amount: 5
       steps:
       - tool: Cutting

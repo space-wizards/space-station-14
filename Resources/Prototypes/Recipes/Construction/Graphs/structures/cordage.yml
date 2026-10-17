@@ -19,7 +19,7 @@
     - to: start
       completed:
       - !type:SpawnEntity
-        prototype: CableDetStack1
+        entity: CableDetStack1
         amount: 1
       - !type:DeleteEntity
       steps:

@@ -32,7 +32,7 @@
         anchored: false
       completed:
       - !type:SpawnEntity
-        prototype: SheetSteel1
+        entity: SheetSteel1
         amount: 4
       - !type:DeleteEntity
       steps:
@@ -56,7 +56,7 @@
     - to: assembly
       completed:
       - !type:SpawnEntity
-        prototype: CableApcStack1
+        entity: CableApcStack1
         amount: 5
       steps:
       - tool: Cutting
@@ -108,7 +108,7 @@
         pickup: true
         emptyAtUser: true
       - !type:SpawnEntity
-        prototype: SheetRGlass1
+        entity: SheetRGlass1
         amount: 1
       steps:
       - tool: Prying
@@ -132,7 +132,7 @@
       - !type:AllWiresCut
       completed:
       - !type:SpawnEntity
-        prototype: SheetRGlass1
+        entity: SheetRGlass1
         amount: 1
       steps:
       - tool: Prying

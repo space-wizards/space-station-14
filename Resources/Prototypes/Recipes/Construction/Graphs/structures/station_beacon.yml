@@ -21,7 +21,7 @@
             doAfter: 1
           completed:
           - !type:SpawnEntity
-            prototype: SheetSteel1
-            amount: 1
+            entity: SheetSteel1
+            number: 1
           - !type:DeleteEntity
 

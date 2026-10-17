@@ -15,7 +15,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 1
             - !type:DeleteEntity
           steps:
@@ -34,7 +34,7 @@
         - to: frame
           completed:
             - !type:SpawnEntity
-              prototype: CableApcStack1
+              entity: CableApcStack1
               amount: 2
           steps:
             - tool: Cutting
@@ -52,7 +52,7 @@
         - to: frame_cable
           completed:
             - !type:SpawnEntity
-              prototype: SheetPlastic
+              entity: SheetPlastic
               amount: 2
           steps:
             - tool: Cutting
@@ -92,7 +92,7 @@
         - to: frame_unit
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 1
             - !type:EmptyAllContainers
           conditions:
@@ -122,7 +122,7 @@
         - to: frame_mailing
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 1
             - !type:EmptyAllContainers
           conditions:

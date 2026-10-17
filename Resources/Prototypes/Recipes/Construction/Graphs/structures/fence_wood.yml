@@ -63,7 +63,7 @@
               doAfter: 5.0
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
+              entity: MaterialWoodPlank1
               amount: 2
             - !type:DeleteEntity
     - node: end
@@ -75,7 +75,7 @@
               doAfter: 2.5
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
+              entity: MaterialWoodPlank1
               amount: 2
             - !type:DeleteEntity
     - node: corner
@@ -87,7 +87,7 @@
               doAfter: 5.0
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
+              entity: MaterialWoodPlank1
               amount: 2
             - !type:DeleteEntity
     - node: tjunction
@@ -99,7 +99,7 @@
               doAfter: 5.0
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
+              entity: MaterialWoodPlank1
               amount: 2
             - !type:DeleteEntity
     - node: gate
@@ -111,7 +111,7 @@
               doAfter: 5.0
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
+              entity: MaterialWoodPlank1
               amount: 2
             - !type:DeleteEntity
     - node: straight_small
@@ -123,7 +123,7 @@
               doAfter: 2.5
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
+              entity: MaterialWoodPlank1
               amount: 1
             - !type:DeleteEntity
     - node: end_small
@@ -135,7 +135,7 @@
               doAfter: 1.25
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
+              entity: MaterialWoodPlank1
               amount: 1
             - !type:DeleteEntity
     - node: corner_small
@@ -147,7 +147,7 @@
               doAfter: 2.5
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
+              entity: MaterialWoodPlank1
               amount: 1
             - !type:DeleteEntity
     - node: tjunction_small
@@ -159,7 +159,7 @@
               doAfter: 2.5
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
+              entity: MaterialWoodPlank1
               amount: 1
             - !type:DeleteEntity
     - node: gate_small
@@ -171,6 +171,6 @@
               doAfter: 2.5
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
+              entity: MaterialWoodPlank1
               amount: 1
             - !type:DeleteEntity

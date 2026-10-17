@@ -28,7 +28,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 4
           steps:
             - tool: Screwing
@@ -39,7 +39,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 4
           steps:
             - tool: Screwing
@@ -50,7 +50,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 3
           steps:
             - tool: Screwing

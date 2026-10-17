@@ -58,4 +58,4 @@
         doAfter: 0.5
         completed:
         - !type:SpawnEntity
-          prototype: CableDetStack1
+          entity: CableDetStack1

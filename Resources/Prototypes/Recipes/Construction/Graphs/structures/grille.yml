@@ -24,7 +24,7 @@
             - !type:AdminLog # Needs a log for start of attempt in addition to the completion log
               message: "A grille was cut"
             - !type:SpawnEntity
-              prototype: PartRodMetal1
+              entity: PartRodMetal1
               amount: 2
             - !type:DeleteEntity
           steps:
@@ -37,7 +37,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: PartRodMetal1
+              entity: PartRodMetal1
               amount: 1
             - !type:DeleteEntity
           steps:

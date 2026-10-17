@@ -27,7 +27,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 3
             - !type:DeleteEntity
           conditions:
@@ -52,7 +52,7 @@
         - to: frame1
           completed:
             - !type:SpawnEntity
-              prototype: CableApcStack1
+              entity: CableApcStack1
               amount: 2
           conditions:
             - !type:EntityAnchored
@@ -99,7 +99,7 @@
         - to: frame2
           completed:
             - !type:SpawnEntity
-              prototype: DoorElectronics
+              entity: DoorElectronics
               amount: 1
           conditions:
             - !type:EntityAnchored
@@ -131,7 +131,7 @@
         - to: frame4
           completed:
             - !type:SpawnEntity
-              prototype: SheetGlass1
+              entity: SheetGlass1
               amount: 2
           steps:
             - tool: Screwing
@@ -161,7 +161,7 @@
         - to: frame4
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 2
           steps:
             - tool: Screwing

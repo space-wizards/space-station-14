@@ -54,8 +54,8 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
-              amount: 10
+              entity: MaterialWoodPlank1
+              number: 10
           steps:
             - tool: Anchoring
               doAfter: 8
@@ -65,8 +65,8 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetPlasma
-              amount: 10
+              entity: SheetPlasma
+              number: 10
           steps:
             - tool: Anchoring
               doAfter: 8
@@ -76,8 +76,8 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: IngotGold1
-              amount: 10
+              entity: IngotGold1
+              number: 10
           steps:
             - tool: Anchoring
               doAfter: 8
@@ -87,8 +87,8 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: IngotSilver1
-              amount: 10
+              entity: IngotSilver1
+              number: 10
           steps:
             - tool: Anchoring
               doAfter: 8
@@ -98,8 +98,8 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetPaper1
-              amount: 10
+              entity: SheetPaper1
+              number: 10
           steps:
             - tool: Anchoring
               doAfter: 8
@@ -112,8 +112,8 @@
             playAtPosition: true
             sound: /Audio/Items/Toys/ToyFall2.ogg
           - !type:SpawnEntity
-                prototype: MaterialCardboard1
-                amount: 8
+             entity: MaterialCardboard1
+             number: 8
           - !type:DeleteEntity
           steps:
             - tool: Slicing

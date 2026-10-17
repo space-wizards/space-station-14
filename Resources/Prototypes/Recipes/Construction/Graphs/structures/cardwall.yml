@@ -18,8 +18,8 @@
         playAtPosition: true
         sound: /Audio/Items/Toys/ToyFall2.ogg
       - !type:SpawnEntity
-            prototype: MaterialCardboard1
-            amount: 3
+        entity: MaterialCardboard1
+        number: 3
       - !type:DeleteEntity
       steps:
       - tool: Slicing

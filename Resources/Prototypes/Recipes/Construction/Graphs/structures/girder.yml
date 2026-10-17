@@ -19,7 +19,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 2
             - !type:DeleteEntity
           conditions:
@@ -276,7 +276,7 @@
             - !type:SnapToGrid
               southRotation: true
             - !type:SpawnEntity
-              prototype: SheetPlasteel1
+              entity: SheetPlasteel1
               amount: 2
           conditions:
             - !type:EntityAnchored { }
@@ -290,7 +290,7 @@
         - to: reinforcedGirder
           completed:
             - !type:SpawnEntity
-              prototype: SheetPlasteel1
+              entity: SheetPlasteel1
               amount: 2
           steps:
             - tool: Cutting
@@ -342,7 +342,7 @@
         - to: reinforcedGirder
           completed:
             - !type:SpawnEntity
-              prototype: SheetPlasteel1
+              entity: SheetPlasteel1
               amount: 2
           steps:
             - tool: Cutting
@@ -394,10 +394,10 @@
         - to: reinforcedGirder
           completed:
             - !type:SpawnEntity
-              prototype: SheetPlasteel1
+              entity: SheetPlasteel1
               amount: 2
             - !type:SpawnEntity
-              prototype: PartRodMetal1
+              entity: PartRodMetal1
               amount: 4
           steps:
             - tool: Welding
@@ -451,10 +451,10 @@
         - to: reinforcedGirder
           completed:
             - !type:SpawnEntity
-              prototype: SheetPlasteel1
+              entity: SheetPlasteel1
               amount: 1
             - !type:SpawnEntity
-              prototype: SheetSteel1
+              entity: SheetSteel1
               amount: 1
           steps:
           #To-Do: Add deconstruct visuals

@@ -1,11 +1,10 @@
 using Content.Server.Construction;
 using Content.Server.Mech.Systems;
 using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects.Construction;
 using Content.Shared.Mech.Components;
 using Content.Shared.Power.Components;
-using Robust.Server.Containers;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.EntityEffects.Effects.Construction;
 
@@ -60,13 +59,4 @@ public sealed partial class BuildMechEntityEffectSystem : EntityEffectSystem<Tra
         _entMan.EventBus.RaiseLocalEvent(mech, entChangeEv, broadcast: true);
         _entMan.QueueDeleteEntity(entity.Owner);
     }
-}
-
-public sealed partial class BuildMech : EntityEffectBase<BuildMech>
-{
-    [DataField(required: true)]
-    public EntProtoId MechPrototype;
-
-    [DataField]
-    public string Container = "battery-container";
 }

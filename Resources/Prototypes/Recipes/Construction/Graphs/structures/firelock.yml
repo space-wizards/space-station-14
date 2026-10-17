@@ -28,7 +28,7 @@
     - to: start
       completed:
       - !type:SpawnEntity
-        prototype: SheetPlasteel1
+        entity: SheetPlasteel1
         amount: 3
       - !type:DeleteEntity
       conditions:
@@ -56,7 +56,7 @@
     - to: frame1
       completed:
       - !type:SpawnEntity
-        prototype: CableApcStack1
+        entity: CableApcStack1
         amount: 2
       conditions:
       - !type:EntityAnchored
@@ -149,7 +149,7 @@
     - to: frame4
       completed:
       - !type:SpawnEntity
-        prototype: SheetGlass1
+        entity: SheetGlass1
         amount: 2
       steps:
       - tool: Prying

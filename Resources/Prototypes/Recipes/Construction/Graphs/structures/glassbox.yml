@@ -32,7 +32,7 @@
               doAfter: 5
           completed:
             - !type:SpawnEntity
-              prototype: MaterialWoodPlank1
+              entity: MaterialWoodPlank1
               amount: 10
 
     - node: boxMissingTrigger
@@ -56,7 +56,7 @@
               doAfter: 0.25
           completed:
             - !type:SpawnEntity
-              prototype: CableApcStack1
+              entity: CableApcStack1
               amount: 2
 
     - node: boxTriggerUnsecured
@@ -76,7 +76,7 @@
               doAfter: 0.5
           completed:
             - !type:SpawnEntity
-              prototype: SignalTrigger
+              entity: SignalTrigger
               amount: 1
 
     - node: boxMissingRGlass
@@ -113,7 +113,7 @@
               doAfter: 2
           completed:
             - !type:SpawnEntity
-              prototype: SheetRGlass1
+              entity: SheetRGlass1
               amount: 5
 
     - node: brokenGlassBox
@@ -125,7 +125,7 @@
               doAfter: 2
           completed:
             - !type:SpawnEntity
-              prototype: ShardGlassReinforced
+              entity: ShardGlassReinforced
               amount: 1
 
     - node: glassBox
@@ -150,11 +150,11 @@
           completed:
             - !type:EmptyAllContainers
             - !type:SpawnEntity
-              prototype: CableApcStack1
+              entity: CableApcStack1
               amount: 2
             - !type:SpawnEntity
-              prototype: SignalTrigger
+              entity: SignalTrigger
               amount: 1
             - !type:SpawnEntity
-              prototype: SheetRGlass1
+              entity: SheetRGlass1
               amount: 5

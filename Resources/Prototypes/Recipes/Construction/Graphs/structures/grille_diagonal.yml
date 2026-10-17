@@ -22,7 +22,7 @@
             - !type:AdminLog
               message: "A grille was cut"
             - !type:SpawnEntity
-              prototype: PartRodMetal1
+              entity: PartRodMetal1
               amount: 2
             - !type:DeleteEntity
           steps:

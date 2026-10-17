@@ -39,7 +39,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: PartRodMetal1
+              entity: PartRodMetal1
               amount: 1
             - !type:DeleteEntity
           steps:
@@ -52,7 +52,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: PartRodMetal1
+              entity: PartRodMetal1
               amount: 2
             - !type:DeleteEntity
           steps:
@@ -65,7 +65,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: PartRodMetal1
+              entity: PartRodMetal1
               amount: 1
             - !type:DeleteEntity
           steps:
@@ -78,7 +78,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              prototype: PartRodMetal1
+              entity: PartRodMetal1
               amount: 2
             - !type:DeleteEntity
           steps:

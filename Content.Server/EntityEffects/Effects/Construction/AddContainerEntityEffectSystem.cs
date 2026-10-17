@@ -1,5 +1,6 @@
 using Content.Server.Construction;
 using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects.Construction;
 
 namespace Content.Server.EntityEffects.Effects.Construction;
 
@@ -15,11 +16,4 @@ public sealed partial class AddContainerEntityEffectSystem : EntityEffectSystem<
     {
         _construction.AddContainer(entity, args.Effect.Container);
     }
-}
-
-/// <inheritdoc cref="EntityEffect"/>
-public sealed partial class AddContainer : EntityEffectBase<AddContainer>
-{
-    [DataField(required: true)]
-    public string Container;
 }

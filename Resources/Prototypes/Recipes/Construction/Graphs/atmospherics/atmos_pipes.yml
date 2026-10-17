@@ -45,7 +45,7 @@
         anchored: false
       completed:
       - !type:SpawnEntity
-        prototype: SheetSteel1
+        entity: SheetSteel1
         amount: 1
       - !type:DeleteEntity
       steps:
@@ -62,7 +62,7 @@
         anchored: false
       completed:
       - !type:SpawnEntity
-        prototype: SheetSteel1
+        entity: SheetSteel1
         amount: 1
       - !type:DeleteEntity
       steps:
@@ -79,7 +79,7 @@
         anchored: false
       completed:
       - !type:SpawnEntity
-        prototype: SheetSteel1
+        entity: SheetSteel1
         amount: 1
       - !type:DeleteEntity
       steps:
@@ -96,7 +96,7 @@
         anchored: false
       completed:
       - !type:SpawnEntity
-        prototype: SheetSteel1
+        entity: SheetSteel1
         amount: 1
       - !type:DeleteEntity
       steps:
@@ -113,7 +113,7 @@
         anchored: false
       completed:
       - !type:SpawnEntity
-        prototype: SheetSteel1
+        entity: SheetSteel1
         amount: 1
       - !type:DeleteEntity
       steps:

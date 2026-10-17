@@ -8,8 +8,8 @@
     - to: disposableTurret
       completed:
       - !type:SpawnEntity
-            prototype: ToolboxElectricalTurret
-            amount: 1
+        entity: ToolboxElectricalTurret
+        number: 1
       - !type:DeleteEntity
       steps:
         - tool: Screwing
