@@ -1832,6 +1832,8 @@
     emoteSounds: MaleReptilian
   - type: BodyEmotes
     soundsId: ReptilianBodyEmotes
+  - type: Deathgasp
+    prototype: KoboldDeathgasp
   - type: TypingIndicator
     proto: lizard
   - type: InteractionPopup
