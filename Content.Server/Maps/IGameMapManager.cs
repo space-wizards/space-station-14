@@ -49,7 +49,6 @@ public interface IGameMapManager
     /// Select the given map regardless of eligibility
     /// </summary>
     /// <param name="gameMap">map prototype</param>
-    /// <returns>success or failure</returns>
     void SelectMap(string gameMap);
 
     /// <summary>
@@ -60,8 +59,7 @@ public interface IGameMapManager
     /// <summary>
     /// Selects the map at the front of the rotation queue
     /// </summary>
-    /// <returns>selected map</returns>
-    void SelectMapFromRotationQueue(bool markAsPlayed = false);
+    void SelectMapFromRotationQueue();
 
     /// <summary>
     /// Selects the map by following rules set in the config
