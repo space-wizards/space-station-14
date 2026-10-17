@@ -99,3 +99,4 @@ ion-law-error-dataset-empty-or-not-found = THE FILE YOU ARE LOOKING FOR COULD NO
 ion-law-error-fallback-dataset-empty-or-not-found = SYSTEM RESTORE POINT FAILED
 ion-law-error-no-selector-selected = THE SELECTED RESOURCE WAS MOVED OR DELETED
 ion-law-error-no-bool-value = THIS SENTENCE IS FALSE
+ion-law-error-max-recursion = STACK OVERFLOW
