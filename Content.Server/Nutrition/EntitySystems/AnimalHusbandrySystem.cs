@@ -9,12 +9,11 @@ using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Nutrition.AnimalHusbandry;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
-using Content.Shared.Nutrition.Prototypes;
 using Content.Shared.Storage;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -36,24 +35,20 @@ public sealed partial class AnimalHusbandrySystem : EntitySystem
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private NameModifierSystem _nameMod = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
 
     private readonly HashSet<EntityUid> _failedAttempts = new();
     private readonly HashSet<EntityUid> _birthQueue = new();
 
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<ReproductiveComponent, MindAddedMessage>(OnMindAdded);
-        SubscribeLocalEvent<InfantComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
-    }
-
     // we express EZ-pass terminate the pregnancy if a player takes the role
+    [SubscribeLocalEvent]
     private void OnMindAdded(EntityUid uid, ReproductiveComponent component, MindAddedMessage args)
     {
         component.Gestating = false;
         component.GestationEndTime = null;
     }
 
+    [SubscribeLocalEvent]
     private void OnRefreshNameModifiers(Entity<InfantComponent> entity, ref RefreshNameModifiersEvent args)
     {
         // This check may seem redundant, but it makes sure that the prefix is removed before the component is removed
@@ -107,6 +102,9 @@ public sealed partial class AnimalHusbandrySystem : EntitySystem
             return false;
 
         if (!IsValidPartner(uid, partner, component))
+            return false;
+
+        if (!_container.IsInSameOrNoContainer(uid, partner))
             return false;
 
         // if the partner is valid, yet it fails the random check
@@ -214,7 +212,10 @@ public sealed partial class AnimalHusbandrySystem : EntitySystem
         var spawns = EntitySpawnCollection.GetSpawns(component.Offspring, _random);
         foreach (var spawn in spawns)
         {
-            var offspring = Spawn(spawn, spawnPosition.Value.Offset(_random.NextVector2(0.3f)));
+            var offspring = _container.IsEntityOrParentInContainer(uid)
+                ? SpawnNextToOrDrop(spawn, uid)
+                : Spawn(spawn, spawnPosition.Value.Offset(_random.NextVector2(0.3f)));
+
             if (component.MakeOffspringInfant)
             {
                 var infant = AddComp<InfantComponent>(offspring);
