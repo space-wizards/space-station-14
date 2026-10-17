@@ -132,7 +132,7 @@
 - type: entity
   parent: AirlockGlassShuttle
   id: AirlockGlassShuttleSyndicate
-  suffix: Syndicate, Locked External
+  suffix: Syndicate
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/shuttle-syndicate.rsi
@@ -140,7 +140,7 @@
 - type: entity
   parent: AirlockShuttle
   id: AirlockShuttleSyndicate
-  suffix: Syndicate, Locked External
+  suffix: Syndicate
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/shuttle-syndicate.rsi
@@ -149,6 +149,7 @@
   parent: AirlockShuttle
   id: AirlockShuttleXenoborg
   name: mechadermis docking airlock
+  suffix: Xenoborg
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/shuttle-xenoborg.rsi

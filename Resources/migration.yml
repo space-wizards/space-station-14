@@ -1159,3 +1159,7 @@ ClothingHeadHatWizard: ClothingHeadHatWizardBlue
 ClothingOuterWizard: ClothingOuterWizardBlue
 ClothingHeadHatRedwizard: ClothingHeadHatWizardRed
 ClothingHeadHatVioletwizard: ClothingHeadHatWizardViolet
+
+# 2026-10-17
+AirlockChapelStandardGlassLocked: AirlockChapelGlassLocked
+AirlockStandardGlass: AirlockGlass

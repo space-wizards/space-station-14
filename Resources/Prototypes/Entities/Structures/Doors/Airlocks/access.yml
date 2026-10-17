@@ -299,7 +299,7 @@
 - type: entity
   parent: AirlockScience
   id: AirlockMedicalScienceLocked
-  suffix: Medical-Science, Locked
+  suffix: Science-Medical, Locked
   components:
   - type: ContainerFill
     containers:
@@ -425,7 +425,7 @@
 - type: entity
   parent: AirlockSecurity
   id: AirlockArmoryLocked
-  suffix: Security-Armory, Locked # same as brig
+  suffix: Security-Armory, Locked Armory # same as brig
   components:
   - type: ContainerFill
     containers:
@@ -436,7 +436,7 @@
 - type: entity
   parent: AirlockSecurity
   id: AirlockVaultLocked
-  suffix: Vault, Locked Security-Command
+  suffix: Security-Vault, Locked Security-Command
   components:
   - type: ContainerFill
     containers:
@@ -445,7 +445,7 @@
 - type: entity
   parent: AirlockCommand
   id: AirlockEVALocked
-  suffix: EVA, Locked Ext-Com
+  suffix: EVA, Locked Ext-Comm
   components:
   - type: ContainerFill
     containers:
@@ -610,17 +610,6 @@
       board: [ DoorElectronicsChapel ]
 
 - type: entity
-  parent: AirlockStandardGlass
-  id: AirlockChapelStandardGlassLocked # TODO: this is a dupe, migrate to AirlockChapelGlassLocked
-  suffix: Chapel, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsChapel ]
-  - type: Wires
-    layoutId: AirlockService
-
-- type: entity
   parent: AirlockEngineeringGlass
   id: AirlockEngineeringGlassLocked
   suffix: Engi, Locked
@@ -713,7 +702,7 @@
 - type: entity
   parent: AirlockScienceGlass
   id: AirlockMedicalScienceGlassLocked
-  suffix: Medical-Science, Locked
+  suffix: Science-Medical, Locked
   components:
   - type: ContainerFill
     containers:
@@ -885,7 +874,7 @@
 - type: entity
   parent: AirlockXeno
   id: AirlockXenoMaintLocked
-  suffix: Maintenance, Locked
+  suffix: Exo, Maintenance, Locked
   components:
   - type: ContainerFill
     containers:
@@ -1061,7 +1050,7 @@
 - type: entity
   parent: [AirlockMaintSprite, AirlockArmoryLocked]
   id: AirlockMaintArmoryLocked
-  suffix: Armory-Maint, Locked
+  suffix: Security-Armory-Maint, Locked Armory
 
 - type: entity
   parent: [AirlockMaintSprite, AirlockEVALocked]
@@ -1102,7 +1091,7 @@
 - type: entity
   parent: AirlockShuttle
   id: AirlockExternalShuttleLocked
-  suffix: Locked
+  suffix: Locked External
   components:
   - type: ContainerFill
     containers:
@@ -1140,7 +1129,7 @@
 - type: entity
   parent: AirlockGlassShuttle
   id: AirlockExternalGlassShuttleLocked
-  suffix: Locked
+  suffix: Locked External
   components:
   - type: ContainerFill
     containers:

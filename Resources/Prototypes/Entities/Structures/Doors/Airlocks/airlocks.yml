@@ -14,7 +14,6 @@
 - type: entity
   parent: Airlock
   id: AirlockFreezer
-  name: freezer airlock
   suffix: Freezer
   components:
   - type: Label
@@ -86,7 +85,6 @@
 - type: entity
   parent: Airlock
   id: AirlockCargo
-  name: cargo airlock
   suffix: Cargo
   components:
   - type: Label
@@ -193,7 +191,7 @@
 - type: entity
   parent: Airlock
   id: AirlockMaint
-  suffix: Maint
+  suffix: Maintenance
   components:
   - type: Label
     currentLabel: Maintenance
@@ -225,7 +223,6 @@
 - type: entity
   parent: AirlockCommand # if you get centcom door somehow it counts as command, also inherit panel
   id: AirlockCentralCommand
-  name: central command airlock
   suffix: Central Command
   components:
   - type: Label
@@ -247,6 +244,7 @@
   parent: Airlock
   id: AirlockXenoborg
   name: mechadermis airlock # unuiqe airlock you can't make
+  suffix: Xenoborg
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/exo-xenoborg.rsi
@@ -394,7 +392,7 @@
 - type: entity
   parent: AirlockMedicalGlass
   id: AirlockChemistryGlass
-  name: Chemistry
+  suffix: Chemistry
   components:
   - type: Label
     currentLabel: Chemistry
@@ -478,17 +476,6 @@
     currentLabel: Central Command
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/centcomm-base.rsi
-
-- type: entity
-  parent: AirlockGlass
-  id: AirlockStandardGlass
-  suffix: Service # idk if that is needed TODO check
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/airlock-base.rsi # there is no unuiqe sprite for service glass airlock, strange
-
-## Map Specific ##
-# Exo Station
 
 - type: entity
   parent: Airlock
