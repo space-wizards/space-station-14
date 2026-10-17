@@ -1,3 +1,4 @@
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
@@ -29,4 +30,10 @@ public sealed class RequestShootEvent : EntityEventArgs
     /// If true, the gun will continue firing until a stop event is sent from the client.
     /// </summary>
     public bool Continuous;
+
+    /// <summary>
+    /// If the client wishes to shoot via the alt fire component.
+    /// Requires <see cref="GunAltFireComponent"/>.
+    /// </summary>
+    public bool AltFire;
 }
