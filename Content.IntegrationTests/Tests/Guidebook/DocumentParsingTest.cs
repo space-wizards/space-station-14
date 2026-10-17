@@ -136,6 +136,27 @@ whitespace before newlines are ignored.
         Assert.That(val, Is.EqualTo(@"<>\>=""=<-_?*3.0//"));
     }
 
+    [Test]
+    public async Task EscapedNewlineAtLineEnd()
+    {
+        var pair = Pair;
+        var client = pair.Client;
+        await client.WaitIdleAsync();
+        var parser = client.ResolveDependency<DocumentParsingManager>();
+
+        Control ctrl = default!;
+        await client.WaitPost(() =>
+        {
+            ctrl = new Control();
+            Assert.That(parser.TryAddMarkup(ctrl, "first line\\n\n  second line\\n\n- list item"));
+        });
+
+        // The list after the last escaped newline must still start its own control.
+        Assert.That(ctrl.ChildCount, Is.EqualTo(2));
+        var richText = ctrl.GetChild(0) as RichTextLabel;
+        Assert.That(richText?.GetFormattedMessage()?.ToString(), Is.EqualTo("first line\nsecond line\n"));
+    }
+
     public sealed class TestControl : Control, IDocumentTag
     {
         public Dictionary<string, string> Params = default!;
