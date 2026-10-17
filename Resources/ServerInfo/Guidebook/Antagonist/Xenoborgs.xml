@@ -16,7 +16,9 @@
   ## Objectives
 
   Your main objective is to kill and harvest all sentient brains in the station and bring them to the mothership core. These can be both real brains, and positronic brains.
-  Collect materials to create more xenoborg bodies.
+  
+  Steal power from the station using xenoborg extractors to produce xenoborg crystals to create more xenoborg bodies.
+  
   Protect the Mothership at all costs.
 
   ## The Mothership Core
@@ -28,7 +30,7 @@
 
   ### Adding crew to your ranks:
   <Box>
-    <GuideEntityEmbed Entity="MachineArtifactCrusher" Caption="body crusher"/>
+    <GuideEntityEmbed Entity="MachineArtifactCrusherXenoborg" Caption="body crusher"/>
   </Box>
   As the mothership, you must grow your army of borgs. To do so, you must convert all the sentient beings you can find. This can be achieved in the following manner:
   - 1. Have your Xenoborgs bring dead crew to your shop, placing them in the body crusher
@@ -61,17 +63,17 @@
   [bold]Starting exclusive modules:[/bold]
   <Box>
     <GuideEntityEmbed Entity="XenoborgModuleAccessBreaker" Caption="access breaker xenoborg module"/>
-    <GuideEntityEmbed Entity="XenoborgModuleFireExtinguisher" Caption="fire extinguisher xenoborg module"/>
   </Box>
 
   [bold]The Engineer Xenoborg also starts with some engineering modules, such as:[/bold]
   <Box>
-    <GuideEntityEmbed Entity="BorgModuleAdvancedTool" Caption="advanced tool cyborg module"/>
-    <GuideEntityEmbed Entity="BorgModuleConstruction" Caption="construction cyborg module"/>
+    <GuideEntityEmbed Entity="XenoborgModuleAdvancedTool" Caption="advanced tool cyborg module"/>
+    <GuideEntityEmbed Entity="XenoborgModuleConstruction" Caption="construction cyborg module"/>
   </Box>
+
+  [bold]Upgrade exclusive modules:[/bold]
   <Box>
-    <GuideEntityEmbed Entity="BorgModuleRCD" Caption="engineering cyborg module"/>
-    <GuideEntityEmbed Entity="BorgModuleCable" Caption="cable cyborg module"/>
+    <GuideEntityEmbed Entity="XenoborgModuleDoorControl" Caption="door control xenoborg module"/>
   </Box>
 
   ### The Heavy Xenoborg
@@ -88,7 +90,7 @@
 
   [bold]Upgrade exclusive modules:[/bold]
   <Box>
-    <GuideEntityEmbed Entity="XenoborgModuleHeavyLaser" Caption="heavy laser xenoborg module"/>
+    <GuideEntityEmbed Entity="XenoborgModuleHeavyLaser" Caption="laser cannon xenoborg module"/>
   </Box>
 
   ### The Scout Xenoborg
@@ -125,11 +127,32 @@
 
   [bold]Upgrade exclusive modules:[/bold]
   <Box>
-    <GuideEntityEmbed Entity="XenoborgModuleSuperCloakDevice" Caption="cloaking device xenoborg module"/>
+    <GuideEntityEmbed Entity="XenoborgModuleSuperCloakDevice" Caption="invisibility device xenoborg module"/>
   </Box>
 
-  ## Preparation
-  Before launching an attack, each xenoborg will need to aid the mothership in collection materials to create empty xenoborgs. Before FTLing near the station, make sure the IFF is off. This can be done in any way but will require teamwork to ensure speed. The safest way to collect materials is from space debris, where scrap and refined materials can be harvested and given to the Mothership Core. Once enough materials are collected, the Xenoborgs then must try to collect sentient brains without being detected. The longer the threat is unknown, the more dangerous the xenoborgs become.
+  ## Xenoborg extractors
+  <Box>
+    <GuideEntityEmbed Entity="XenoborgExtractor" Caption="xenoborg extractor"/>
+    <GuideEntityEmbed Entity="MaterialXenoborgCrystal" Caption="xenoborg crystal"/>
+  </Box>
+  The extractor is a machine necessary for the xenoborgs to grow their army. It steals power from cables connected to it in order to produce xenoborg crystals.
+
+  The mothership core can produce a xenoborg extractor flatpack for 10 steel.
+
+  When anchored it will start draining power from the high voltage cable under it.
+
+  It will produce a xenoborg crystal everytime its internal battery fills up.
+
+  It consumes 240kW and it takes 15 seconds to produce one xenoborg crystal.
+
+  [bold]Attention![/bold] It will trigger the rogue power consuming device alert! Anyone using the power monitor device will know something is wrong.
+
+  ## Preparation and Tactics
+  Before FTLing near the station, make sure the IFF is off.
+
+  Before launching an attack, xenoborgs should discuss strategy and decide which targets to strike first.
+
+  Xenoborgs should try to collect sentient brains without being detected. The longer the threat is unknown, the more dangerous the xenoborgs become.
 
   ## Mothership and Xenoborg lawsets
   The Mothership and Xenoborgs have unique laws that define their purpose to self replicate and protect the Mothership.

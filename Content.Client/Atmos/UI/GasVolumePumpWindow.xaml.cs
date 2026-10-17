@@ -19,17 +19,14 @@ namespace Content.Client.Atmos.UI
     [GenerateTypedNameReferences]
     public sealed partial class GasVolumePumpWindow : FancyWindow
     {
-        public bool PumpStatus = true;
-
-        public event Action? ToggleStatusButtonPressed;
+        public event Action<bool>? ToggleStatusButtonPressed;
         public event Action<string>? PumpTransferRateChanged;
 
         public GasVolumePumpWindow()
         {
             RobustXamlLoader.Load(this);
 
-            ToggleStatusButton.OnPressed += _ => SetPumpStatus(!PumpStatus);
-            ToggleStatusButton.OnPressed += _ => ToggleStatusButtonPressed?.Invoke();
+            ToggleStatusButton.OnToggled += _ => ToggleStatusButtonPressed?.Invoke(ToggleStatusButton.Pressed);
 
             PumpTransferRateInput.OnTextChanged += _ => SetTransferRateButton.Disabled = false;
             SetTransferRateButton.OnPressed += _ =>
@@ -52,15 +49,7 @@ namespace Content.Client.Atmos.UI
 
         public void SetPumpStatus(bool enabled)
         {
-            PumpStatus = enabled;
-            if (enabled)
-            {
-                ToggleStatusButton.Text = Loc.GetString("comp-gas-pump-ui-status-enabled");
-            }
-            else
-            {
-                ToggleStatusButton.Text = Loc.GetString("comp-gas-pump-ui-status-disabled");
-            }
+            ToggleStatusButton.Pressed = enabled;
         }
     }
 }

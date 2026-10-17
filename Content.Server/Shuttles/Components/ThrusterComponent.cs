@@ -11,10 +11,22 @@ namespace Content.Server.Shuttles.Components
     public sealed partial class ThrusterComponent : Component
     {
         /// <summary>
+        /// If the thruster can be toggled on or off via interaction
+        /// </summary>
+        [DataField]
+        public bool CanToggle = true;
+
+        /// <summary>
         /// Whether the thruster has been force to be enabled / disabled (e.g. VV, interaction, etc.)
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;
+
+        /// <summary>
+        /// Base power for the <see cref="ApcPowerReceiverComponent"/>, scaled by thruster setting.
+        /// </summary>
+        [DataField]
+        public float BasePowerLoad = 1500;
 
         /// <summary>
         /// This determines whether the thruster is actually enabled for the purposes of thrust
@@ -23,7 +35,13 @@ namespace Content.Server.Shuttles.Components
 
         // Need to serialize this because RefreshParts isn't called on Init and this will break post-mapinit maps!
         [ViewVariables(VVAccess.ReadWrite), DataField("thrust")]
-        public float Thrust = 100f;
+        public float Thrust = 160000f;
+
+        /// <summary>
+        /// Throttles the influence of gyroscopes on small shuttles. The default value is roughly half the inertia of the standard 4-door cargo shuttle.
+        /// </summary>
+        [DataField]
+        public float InertiaThreshold = 850000f;
 
         [DataField("thrusterType")]
         public ThrusterType Type = ThrusterType.Linear;

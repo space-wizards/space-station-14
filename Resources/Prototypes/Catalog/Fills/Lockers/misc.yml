@@ -1,8 +1,11 @@
 - type: entity
   id: LockerSyndicatePersonalFilled
-  suffix: Filled
+  suffix: Nukie, Filled
   parent: LockerSyndicatePersonal
+  description: It's a personal storage unit for operative gear.
   components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:AllSelector
@@ -15,119 +18,25 @@
         - id: ClothingHeadsetAltSyndicate
         - id: ClothingEyesHudSyndicate
 
-- type: entityTable
-  id: FillLockerEmergencyStandard
-  table: !type:AllSelector
-    children:
-    - id: ClothingMaskBreath
-    - id: ClothingOuterSuitEmergency
-    - !type:GroupSelector
-      children:
-      - id: EmergencyOxygenTankFilled
-      - id: OxygenTankFilled
-    - id: ToolboxEmergencyFilled
-      prob: 0.5
-    - id: MedkitOxygenFilled
-      prob: 0.2
-    - id: WeaponFlareGun
-      prob: 0.1
-    - id: BoxMRE
-      prob: 0.1
-
 - type: entity
-  id: ClosetEmergencyFilledRandom
-  parent: ClosetEmergency
-  suffix: Filled, Random
+  id: LockerSyndicateWallFilled
+  suffix: Nukie, Filled
+  parent: LockerWallSyndicate
+  description: It's a personal storage unit for operative gear.
   components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:NestedSelector
-        tableId: FillLockerEmergencyStandard
-
-- type: entity
-  id: ClosetWallEmergencyFilledRandom
-  parent: ClosetWallEmergency
-  suffix: Filled, Random
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:NestedSelector
-        tableId: FillLockerEmergencyStandard
-
-- type: entityTable
-  id: FillLockerEmergencyN2Standard
-  table: !type:AllSelector
-    children:
-    - id: ClothingMaskBreath
-    - id: ClothingOuterSuitEmergency
-    - id: BoxMRE
-      prob: 0.1
-    - id: ToolboxEmergencyFilled
-      prob: 0.05
-    - !type:GroupSelector
-      children:
-      - id: EmergencyNitrogenTankFilled
-        weight: 4
-      - id: NitrogenTankFilled
-
-- type: entity
-  id: ClosetEmergencyN2FilledRandom
-  parent: ClosetEmergencyN2
-  suffix: Filled, Random
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:NestedSelector
-        tableId: FillLockerEmergencyN2Standard
-
-- type: entity
-  parent: ClosetWallEmergencyN2
-  id: ClosetWallEmergencyN2FilledRandom
-  suffix: Filled, Random
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:NestedSelector
-        tableId: FillLockerEmergencyN2Standard
-
-- type: entityTable
-  id: FillLockerFireStandard
-  table: !type:AllSelector
-    children:
-    - id: ClothingOuterSuitFire
-    - id: ClothingHeadHelmetFire
-    - id: ClothingMaskGas
-    - !type:GroupSelector
-      children:
-      - id: EmergencyOxygenTankFilled
-      - id: OxygenTankFilled
-    - id: CrowbarRed
-    - !type:GroupSelector
-      children:
-      - id: FireExtinguisher
-        weight: 98
-      - id: SprayBottleWater #It's just budget cut after budget cut man
-        weight: 2
-
-- type: entity
-  id: ClosetFireFilled
-  parent: ClosetFire
-  suffix: Filled
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:NestedSelector
-        tableId: FillLockerFireStandard
-
-- type: entity
-  id: ClosetWallFireFilledRandom
-  parent: ClosetWallFire
-  suffix: Filled
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:NestedSelector
-        tableId: FillLockerFireStandard
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingBeltMilitaryWebbing
+        - id: ClothingHandsGlovesCombat
+        - id: JetpackBlackFilled
+        - id: ClothingUniformJumpsuitOperative
+        - id: ClothingUniformJumpskirtOperative
+        - id: ClothingHeadsetAltSyndicate
+        - id: ClothingEyesHudSyndicate
 
 - type: entityTable
   id: SyndieMaintLoot
@@ -172,6 +81,10 @@
       prob: 0.10
       rolls: !type:RangeNumberSelector
         range: 1, 2
+    - !type:NestedSelector
+      tableId: MaintenancePlushies
+      prob: 0.02
+
     # Weapons
     - !type:NestedSelector
       tableId: MaintWeaponTable
@@ -183,6 +96,19 @@
     # Recursive
     - id: ClosetMaintenanceFilledRandom
       prob: 0.01
+
+- type: entityTable
+  id: MaintenancePlushies
+  table: !type:GroupSelector
+    children:
+    - id: PlushieLizardJobBoxer
+    - id: PlushieLizardJobClown
+    - id: PlushieLizardJobLibrarian
+    - id: PlushieLizardJobMime
+    - id: PlushieLizardJobMusician
+    - id: PlushieLizardJobPassenger
+    - id: PlushieLizardJobReporter
+    - id: PlushieLizardJobZookeeper
 
 - type: entity
   id: ClosetMaintenanceFilledRandom

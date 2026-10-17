@@ -2,18 +2,17 @@ using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
 using Content.Shared.Holiday;
 using Robust.Shared.Configuration;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Holiday
 {
-    public sealed class HolidaySystem : EntitySystem
+    public sealed partial class HolidaySystem : EntitySystem
     {
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private IConfigurationManager _configManager = default!;
+        [Dependency] private IChatManager _chatManager = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
 
         [ViewVariables]
         private readonly List<HolidayPrototype> _currentHolidays = new();
@@ -40,7 +39,7 @@ namespace Content.Server.Holiday
 
             var now = DateTime.Now;
 
-            foreach (var holiday in _prototypeManager.EnumeratePrototypes<HolidayPrototype>())
+            foreach (var holiday in ProtoMan.EnumeratePrototypes<HolidayPrototype>())
             {
                 if (holiday.ShouldCelebrate(now))
                 {
@@ -74,7 +73,7 @@ namespace Content.Server.Holiday
 
         public bool IsCurrentlyHoliday(string holiday)
         {
-            if (!_prototypeManager.TryIndex(holiday, out HolidayPrototype? prototype))
+            if (!ProtoMan.TryIndex(holiday, out HolidayPrototype? prototype))
                 return false;
 
             return _currentHolidays.Contains(prototype);
@@ -89,7 +88,8 @@ namespace Content.Server.Holiday
 
         private void OnRunLevelChanged(GameRunLevelChangedEvent eventArgs)
         {
-            if (!_enabled) return;
+            if (!_enabled)
+                return;
 
             switch (eventArgs.New)
             {

@@ -1,79 +1,39 @@
-using Content.Shared.Alert;
 using Content.Shared.Atmos;
-using Content.Shared.Damage;
-using Content.Shared.FixedPoint;
-using Robust.Shared.Prototypes;
+using Content.Shared.Temperature.HeatContainer;
+using Content.Shared.Temperature.Systems;
 
 namespace Content.Shared.Temperature.Components;
 
 /// <summary>
 /// Handles changing temperature,
-/// informing others of the current temperature,
-/// and taking fire damage from high temperature.
+/// informing others of the current temperature.
 /// </summary>
 [RegisterComponent]
-public sealed partial class TemperatureComponent : Component
+[Access(typeof(SharedTemperatureSystem))]
+public sealed partial class TemperatureComponent : Component, IHeatContainer
 {
     /// <summary>
-    /// Surface temperature which is modified by the environment.
+    /// The specific heat capacity of this entity in J/(kg*K). Humans are about 3kJ/(kg*K)
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float CurrentTemperature = Atmospherics.T20C;
+    [DataField]
+    public float SpecificHeat = 3000f;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float HeatDamageThreshold = 360f;
+    [DataField]
+    public float HeatCapacity { get; set; }
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float ColdDamageThreshold = 260f;
+    [DataField]
+    public float Temperature { get; set; } = Atmospherics.T20C;
 
     /// <summary>
-    /// Overrides HeatDamageThreshold if the entity's within a parent with the TemperatureDamageThresholdsComponent component.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float? ParentHeatDamageThreshold;
-
-    /// <summary>
-    /// Overrides ColdDamageThreshold if the entity's within a parent with the TemperatureDamageThresholdsComponent component.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float? ParentColdDamageThreshold;
-
-    /// <summary>
-    /// Heat capacity per kg of mass.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float SpecificHeat = 50f;
-
-    /// <summary>
-    /// How well does the air surrounding you merge into your body temperature?
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float AtmosTemperatureTransferEfficiency = 0.1f;
-
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public DamageSpecifier ColdDamage = new();
-
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public DamageSpecifier HeatDamage = new();
-
-    /// <summary>
-    /// Temperature won't do more than this amount of damage per second.
+    /// Thermal Conductivity in W/(K*m^2).
+    /// Human skin is about 0.3 W/(m*K)
+    /// Divide that by the thickness of skin of about 2mm giving us a final value of 150
+    /// Source: https://pmc.ncbi.nlm.nih.gov/articles/PMC8953946/
     /// </summary>
     /// <remarks>
-    /// Okay it genuinely reaches this basically immediately for a plasma fire.
+    /// This value should be multiplied by a surface area value based on the amount of area in contact.
+    /// For Atmospherics, this is typically 2m^2, the surface area of the average body.
     /// </remarks>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public FixedPoint2 DamageCap = FixedPoint2.New(8);
-
-    /// <summary>
-    /// Used to keep track of when damage starts/stops. Useful for logs.
-    /// </summary>
     [DataField]
-    public bool TakingDamage;
-
-    [DataField]
-    public ProtoId<AlertPrototype> HotAlert = "Hot";
-
-    [DataField]
-    public ProtoId<AlertPrototype> ColdAlert = "Cold";
+    public float ThermalConductivity = 150f;
 }

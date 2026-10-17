@@ -3,18 +3,16 @@ using Content.Shared.Construction.Components;
 using Content.Shared.Examine;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Construction
 {
     /// <summary>
     /// Deals with machine parts and machine boards.
     /// </summary>
-    public sealed class MachinePartSystem : EntitySystem
+    public sealed partial class MachinePartSystem : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _prototype = default!;
-        [Dependency] private readonly SharedLatheSystem _lathe = default!;
-        [Dependency] private readonly SharedConstructionSystem _construction = default!;
+        [Dependency] private SharedLatheSystem _lathe = default!;
+        [Dependency] private SharedConstructionSystem _construction = default!;
 
         public override void Initialize()
         {
@@ -32,8 +30,8 @@ namespace Content.Shared.Construction
                 args.PushMarkup(Loc.GetString("machine-board-component-on-examine-label"));
                 foreach (var (material, amount) in component.StackRequirements)
                 {
-                    var stack = _prototype.Index(material);
-                    var name = _prototype.Index(stack.Spawn).Name;
+                    var stack = ProtoMan.Index(material);
+                    var name = ProtoMan.Index(stack.Spawn).Name;
 
                     args.PushMarkup(Loc.GetString("machine-board-component-required-element-entry-text",
                         ("amount", amount),
@@ -58,18 +56,18 @@ namespace Content.Shared.Construction
             }
         }
 
-        public Dictionary<string, int> GetMachineBoardMaterialCost(Entity<MachineBoardComponent> entity, int coefficient = 1)
+        public bool TryGetMachineBoardMaterialCost(Entity<MachineBoardComponent> entity, out Dictionary<string, int> materials, int coefficient = 1)
         {
             var (_, comp) = entity;
 
-            var materials = new Dictionary<string, int>();
+            materials = new Dictionary<string, int>();
 
             foreach (var (stackId, amount) in comp.StackRequirements)
             {
-                var stackProto = _prototype.Index(stackId);
-                var defaultProto = _prototype.Index(stackProto.Spawn);
+                var stackProto = ProtoMan.Index(stackId);
+                var defaultProto = ProtoMan.Index(stackProto.Spawn);
 
-                if (defaultProto.TryGetComponent<PhysicalCompositionComponent>(out var physComp, EntityManager.ComponentFactory))
+                if (defaultProto.TryComp<PhysicalCompositionComponent>(out var physComp, EntityManager.ComponentFactory))
                 {
                     foreach (var (mat, matAmount) in physComp.MaterialComposition)
                     {
@@ -89,9 +87,14 @@ namespace Content.Shared.Construction
                         materials[mat] += matAmount * amount * coefficient;
                     }
                 }
+                else
+                {
+                    // The item has no material cost, so we cannot get the full cost.
+                    return false;
+                }
             }
 
-            var genericPartInfo = comp.ComponentRequirements.Values.Concat(comp.ComponentRequirements.Values);
+            var genericPartInfo = comp.ComponentRequirements.Values.Concat(comp.TagRequirements.Values);
             foreach (var info in genericPartInfo)
             {
                 var amount = info.Amount;
@@ -109,8 +112,8 @@ namespace Content.Shared.Construction
                         materials[mat] += matAmount * amount * coefficient;
                     }
                 }
-                else if (_prototype.Resolve(defaultProtoId, out var defaultProto) &&
-                         defaultProto.TryGetComponent<PhysicalCompositionComponent>(out var physComp, EntityManager.ComponentFactory))
+                else if (ProtoMan.Resolve(defaultProtoId, out var defaultProto) &&
+                         defaultProto.TryComp<PhysicalCompositionComponent>(out var physComp, EntityManager.ComponentFactory))
                 {
                     foreach (var (mat, matAmount) in physComp.MaterialComposition)
                     {
@@ -118,9 +121,15 @@ namespace Content.Shared.Construction
                         materials[mat] += matAmount * amount * coefficient;
                     }
                 }
+                else
+                {
+                    // The item has no material cost, so we cannot get the full cost.
+                    return false;
+                }
             }
 
-            return materials;
+            // We were able to construct all elements of the recipe.
+            return true;
         }
     }
 }

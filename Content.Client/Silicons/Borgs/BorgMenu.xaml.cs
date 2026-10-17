@@ -17,11 +17,11 @@ namespace Content.Client.Silicons.Borgs;
 [GenerateTypedNameReferences]
 public sealed partial class BorgMenu : FancyWindow
 {
-    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
-    [Dependency] private readonly IEntityManager _entity = default!;
+    [Dependency] private IConfigurationManager _cfgManager = default!;
+    [Dependency] private IEntityManager _entity = default!;
     private readonly NameModifierSystem _nameModifier;
     private readonly PowerCellSystem _powerCell;
-    private readonly PredictedBatterySystem _battery;
+    private readonly SharedBatterySystem _battery;
 
     public Action? BrainButtonPressed;
     public Action? EjectBatteryButtonPressed;
@@ -44,7 +44,7 @@ public sealed partial class BorgMenu : FancyWindow
 
         _nameModifier = _entity.System<NameModifierSystem>();
         _powerCell = _entity.System<PowerCellSystem>();
-        _battery = _entity.System<PredictedBatterySystem>();
+        _battery = _entity.System<SharedBatterySystem>();
 
         _maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
 

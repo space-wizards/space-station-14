@@ -6,11 +6,11 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 2.5h
+      time: 4h
   startingGear: SecurityOfficerGear
   icon: "JobIconSecurityOfficer"
   supervisors: job-supervisors-hos
-  canBeAntag: false
+  guides: [ Security ] # TODO: should have a more specific guidebook page instead of using the department itself
   access:
   - Security
   - Brig

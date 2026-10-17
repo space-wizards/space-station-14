@@ -39,6 +39,8 @@
     - id: PlushieArachind
     - id: PlushiePenguin
     - id: PlushieVulp
+    - id: PlushieSheep
+    - id: PlushieSpaceSheep
     - !type:GroupSelector
       children:
       - id: PlushieBee
@@ -294,6 +296,7 @@
     - id: NukeDiskFake
     - id: DiceBag
     - id: SpectralLocator
+    - id: Magic9Ball
     - id: BarberScissors
     - id: SprayFlowerPin
     - id: ClothingShoesSkates

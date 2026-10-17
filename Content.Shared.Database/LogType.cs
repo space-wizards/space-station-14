@@ -478,4 +478,14 @@ public enum LogType
     /// Events relating to midi playback.
     /// </summary>
     Instrument = 103,
+
+    /// <summary>
+    /// Events related to players connecting/disconnecting.
+    /// </summary>
+    Connection = 104,
+
+    /// <summary>
+    /// Silicon law changes.
+    /// </summary>
+    SiliconLaw = 105,
 }

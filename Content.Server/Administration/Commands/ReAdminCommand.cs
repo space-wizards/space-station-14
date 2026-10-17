@@ -5,9 +5,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AnyCommand]
-    public sealed class ReAdminCommand : LocalizedCommands
+    public sealed partial class ReAdminCommand : LocalizedCommands
     {
-        [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private IAdminManager _adminManager = default!;
 
         public override string Command => "readmin";
 

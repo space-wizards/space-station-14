@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Power.Components;
+using Content.Shared.Power;
+
+namespace Content.Shared.Power.Components;
 
 /// <summary>
 /// Component for a powered machine that slowly powers on and off over a period of time.

@@ -12,12 +12,12 @@ using Robust.Shared.Console;
 namespace Content.Server.Singularity
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class StartSingularityEngineCommand : LocalizedEntityCommands
+    public sealed partial class StartSingularityEngineCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly EmitterSystem _emitterSystem = default!;
-        [Dependency] private readonly MultipartMachineSystem _multipartSystem = default!;
-        [Dependency] private readonly ParticleAcceleratorSystem  _paSystem = default!;
-        [Dependency] private readonly RadiationCollectorSystem _radCollectorSystem = default!;
+        [Dependency] private EmitterSystem _emitterSystem = default!;
+        [Dependency] private MultipartMachineSystem _multipartSystem = default!;
+        [Dependency] private ParticleAcceleratorSystem  _paSystem = default!;
+        [Dependency] private RadiationCollectorSystem _radCollectorSystem = default!;
 
         public override string Command => "startsingularityengine";
 

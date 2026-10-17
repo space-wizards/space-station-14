@@ -22,17 +22,32 @@ public sealed partial class BinomialNumberSelector : NumberSelector
     [DataField]
     public float Chance = .5f;
 
-    public override int Get(System.Random rand)
+    public override int Get(IRobustRandom rand)
     {
-        var random = IoCManager.Resolve<IRobustRandom>();
         int count = 0;
 
         for (int i = 0; i < Trials; i++)
         {
-            if (random.Prob(Chance))
+            if (rand.Prob(Chance))
                 count++;
         }
         return count;
         // get binomialed motherfucker
+    }
+
+    public override float Odds()
+    {
+        if (Chance >= 1f)
+            return 1;
+
+        return 1 - MathF.Pow(1 - Chance, Trials);
+    }
+
+    public override float Average()
+    {
+        if (Chance >= 1f)
+            return Trials;
+
+        return Trials * Chance;
     }
 }

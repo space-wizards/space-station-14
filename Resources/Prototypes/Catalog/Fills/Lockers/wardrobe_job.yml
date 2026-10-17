@@ -52,7 +52,7 @@
       - id: Flare
       - id: BarberScissors
       - id: FlippoLighter
-      - id: trayScanner
+      - id: TRayScanner
       - id: Wristwatch
       - id: ClothingNeckBling
       - id: ClothingMultipleHeadphones
@@ -267,6 +267,8 @@
     - id: ClothingUniformJumpsuitChaplain
     - id: ClothingShoesColorBlack
     - id: ClothingUniformJumpskirtChaplain
+    - id: PlushieLizardJobChaplain
+      prob: 0.02
 
 - type: entity
   id: WardrobeSecurityFilled
@@ -313,6 +315,8 @@
     - id: ClothingUniformJumpskirtCargo
     - id: ClothingHandsGlovesFingerless
     - id: AppraisalTool
+    - id: PlushieLizardJobCargotechnician
+      prob: 0.02
 
 - type: entity
   id: WardrobeSalvageFilled

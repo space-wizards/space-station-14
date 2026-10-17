@@ -6,12 +6,17 @@ using Robust.Shared.Configuration;
 
 namespace Content.Shared.Shuttles.Systems;
 
-public abstract class SharedEmergencyShuttleSystem : EntitySystem
+public abstract partial class SharedEmergencyShuttleSystem : EntitySystem
 {
-    [Dependency] protected readonly IConfigurationManager ConfigManager = default!;
-    [Dependency] protected readonly SharedPopupSystem Popup = default!;
+    [Dependency] protected IConfigurationManager ConfigManager = default!;
+    [Dependency] protected SharedPopupSystem Popup = default!;
 
     private bool _emergencyEarlyLaunchAllowed;
+
+    /// <summary>
+    /// Has the emergency shuttle arrived?
+    /// </summary>
+    public bool EmergencyShuttleArrived { get; protected set; }
 
     public override void Initialize()
     {
@@ -31,6 +36,15 @@ public abstract class SharedEmergencyShuttleSystem : EntitySystem
         args.Cancel();
 
         if (!args.Silent)
-            Popup.PopupClient(Loc.GetString("emergency-shuttle-console-no-early-launches"), ent, args.User);
+            Popup.PopupEntity(Loc.GetString("emergency-shuttle-console-no-early-launches"), ent, args.User);
+    }
+
+    /// <summary>
+    ///     Attempts to get the EntityUid of the emergency shuttle
+    /// </summary>
+    public EntityUid? GetShuttle()
+    {
+        AllEntityQuery<EmergencyShuttleComponent>().MoveNext(out var shuttle, out _);
+        return shuttle;
     }
 }

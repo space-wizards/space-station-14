@@ -8,9 +8,9 @@ namespace Content.Server.Xenoarchaeology.Artifact.XAT;
 /// <summary>
 /// System for checking if pressure-related xeno artifact node should be triggered.
 /// </summary>
-public sealed class XATPressureSystem : BaseQueryUpdateXATSystem<XATPressureComponent>
+public sealed partial class XATPressureSystem : BaseQueryUpdateXATSystem<XATPressureComponent>
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
 
     /// <inheritdoc />
     protected override void UpdateXAT(Entity<XenoArtifactComponent> artifact, Entity<XATPressureComponent, XenoArtifactNodeComponent> node, float frameTime)

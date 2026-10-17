@@ -1,5 +1,6 @@
-﻿using Content.Shared.Popups;
+using Content.Shared.Popups;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
@@ -11,9 +12,9 @@ namespace Content.Shared.EntityEffects.Effects.Transform;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PopupMessageEntityEffectSystem : EntityEffectSystem<TransformComponent, PopupMessage>
 {
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     protected override void Effect(Entity<TransformComponent> entity, ref EntityEffectEvent<PopupMessage> args)
     {
@@ -23,7 +24,7 @@ public sealed partial class PopupMessageEntityEffectSystem : EntityEffectSystem<
 
         var msg = Loc.GetString(_random.Pick(args.Effect.Messages), ("entity", entity));
 
-        switch ((args.Effect.Method, args.Effect.Type))
+        switch (args.Effect.Method, args.Effect.Type)
         {
             case (PopupMethod.PopupEntity, PopupRecipients.Local):
                 _popup.PopupEntity(msg, entity, entity, args.Effect.VisualType);
@@ -36,6 +37,17 @@ public sealed partial class PopupMessageEntityEffectSystem : EntityEffectSystem<
                 break;
             case (PopupMethod.PopupCoordinates, PopupRecipients.Pvs):
                 _popup.PopupCoordinates(msg, Transform(entity).Coordinates, args.Effect.VisualType);
+                break;
+            case (PopupMethod.PopupEntity, PopupRecipients.PvsExceptTarget):
+                _popup.PopupEntity(msg, entity, Filter.PvsExcept(entity), true, args.Effect.VisualType);
+                break;
+            case (PopupMethod.PopupCoordinates, PopupRecipients.PvsExceptTarget):
+                _popup.PopupCoordinates(
+                    msg,
+                    Transform(entity).Coordinates,
+                    Filter.PvsExcept(entity),
+                    true,
+                    args.Effect.VisualType);
                 break;
         }
     }
@@ -76,6 +88,7 @@ public enum PopupRecipients : byte
 {
     Pvs,
     Local,
+    PvsExceptTarget,
 }
 
 [Serializable, NetSerializable]

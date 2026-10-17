@@ -8,18 +8,11 @@ namespace Content.Client.Fax.System;
 /// <summary>
 /// Visualizer for the fax machine which displays the correct sprite based on the inserted entity.
 /// </summary>
-public sealed class FaxVisualsSystem : EntitySystem
+public sealed partial class FaxVisualsSystem : EntitySystem
 {
-    [Dependency] private readonly AnimationPlayerSystem _player = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private AnimationPlayerSystem _player = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<FaxMachineComponent, AppearanceChangeEvent>(OnAppearanceChanged);
-    }
-
+    [SubscribeLocalEvent]
     private void OnAppearanceChanged(EntityUid uid, FaxMachineComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -28,27 +21,26 @@ public sealed class FaxVisualsSystem : EntitySystem
         if (_player.HasRunningAnimation(uid, "faxecute"))
             return;
 
-        if (_appearance.TryGetData(uid, FaxMachineVisuals.VisualState, out FaxMachineVisualState visuals) &&
-            visuals == FaxMachineVisualState.Inserting)
-        {
-            _player.Play(uid,
-                new Animation()
+        if (!args.TryGetData(FaxMachineVisuals.VisualState, out FaxMachineVisualState visuals)
+            || visuals != FaxMachineVisualState.Inserting)
+            return;
+
+        _player.Play(uid,
+            new Animation()
+            {
+                Length = TimeSpan.FromSeconds(2.4),
+                AnimationTracks =
                 {
-                    Length = TimeSpan.FromSeconds(2.4),
-                    AnimationTracks =
+                    new AnimationTrackSpriteFlick()
                     {
-                        new AnimationTrackSpriteFlick()
+                        LayerKey = FaxMachineVisuals.VisualState,
+                        KeyFrames =
                         {
-                            LayerKey = FaxMachineVisuals.VisualState,
-                            KeyFrames =
-                            {
-                                new AnimationTrackSpriteFlick.KeyFrame(component.InsertingState, 0f),
-                                new AnimationTrackSpriteFlick.KeyFrame("icon", 2.4f),
-                            },
+                            new AnimationTrackSpriteFlick.KeyFrame(component.InsertingState, 0f)
                         },
                     },
                 },
-                "faxecute");
-        }
+            },
+            "faxecute");
     }
 }

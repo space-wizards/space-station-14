@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration.Logs;
+using Content.Server.Administration.Logs;
 using Content.Server.Audio;
 using Content.Server.Power.Components;
 using Content.Shared.Database;
@@ -10,12 +10,12 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Power.EntitySystems;
 
-public sealed class PowerChargeSystem : SharedPowerChargeSystem
+public sealed partial class PowerChargeSystem : SharedPowerChargeSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly AmbientSoundSystem _ambientSoundSystem = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private AmbientSoundSystem _ambientSoundSystem = default!;
 
     public override void Initialize()
     {

@@ -1,4 +1,7 @@
+using Content.Shared.Body;
 using Content.Shared.Humanoid.Markings;
+using Content.Shared.Humanoid.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Humanoid;
@@ -12,56 +15,29 @@ public enum HumanoidMarkingModifierKey
 [Serializable, NetSerializable]
 public sealed class HumanoidMarkingModifierMarkingSetMessage : BoundUserInterfaceMessage
 {
-    public MarkingSet MarkingSet { get; }
-    public bool ResendState { get; }
+    public Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> Markings { get; }
 
-    public HumanoidMarkingModifierMarkingSetMessage(MarkingSet set, bool resendState)
+    public HumanoidMarkingModifierMarkingSetMessage(Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> markings)
     {
-        MarkingSet = set;
-        ResendState = resendState;
+        Markings = markings;
     }
-}
-
-[Serializable, NetSerializable]
-public sealed class HumanoidMarkingModifierBaseLayersSetMessage : BoundUserInterfaceMessage
-{
-    public HumanoidMarkingModifierBaseLayersSetMessage(HumanoidVisualLayers layer, CustomBaseLayerInfo? info, bool resendState)
-    {
-        Layer = layer;
-        Info = info;
-        ResendState = resendState;
-    }
-
-    public HumanoidVisualLayers Layer { get; }
-    public CustomBaseLayerInfo? Info { get; }
-    public bool ResendState { get; }
 }
 
 [Serializable, NetSerializable]
 public sealed class HumanoidMarkingModifierState : BoundUserInterfaceState
 {
-    // TODO just use the component state, remove the BUI state altogether.
     public HumanoidMarkingModifierState(
-        MarkingSet markingSet,
-        string species,
-        Sex sex,
-        Color skinColor,
-        Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> customBaseLayers
+        Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> markings,
+        Dictionary<ProtoId<OrganCategoryPrototype>, OrganMarkingData> organData,
+        Dictionary<ProtoId<OrganCategoryPrototype>, OrganProfileData> organProfileData
     )
     {
-        MarkingSet = markingSet;
-        Species = species;
-        Sex = sex;
-        SkinColor = skinColor;
-        CustomBaseLayers = customBaseLayers;
+        Markings = markings;
+        OrganData = organData;
+        OrganProfileData = organProfileData;
     }
 
-    public MarkingSet MarkingSet { get; }
-    public string Species { get; }
-    public Sex Sex { get; }
-    public Color SkinColor { get; }
-    public Color EyeColor { get; }
-    public Color? HairColor { get; }
-    public Color? FacialHairColor { get; }
-    public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> CustomBaseLayers { get; }
+    public Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> Markings { get; }
+    public Dictionary<ProtoId<OrganCategoryPrototype>, OrganMarkingData> OrganData { get; }
+    public Dictionary<ProtoId<OrganCategoryPrototype>, OrganProfileData> OrganProfileData { get; }
 }

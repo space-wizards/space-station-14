@@ -6,7 +6,6 @@ using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Construction.Completions;
 
@@ -17,10 +16,10 @@ namespace Content.Server.Construction.Completions;
 [UsedImplicitly, DataDefinition]
 public sealed partial class BuildMech : IGraphAction
 {
-    [DataField("mechPrototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string MechPrototype = string.Empty;
+    [DataField(required: true)]
+    public EntProtoId MechPrototype;
 
-    [DataField("container")]
+    [DataField]
     public string Container = "battery-container";
 
     // TODO use or generalize ConstructionSystem.ChangeEntity();
@@ -48,7 +47,7 @@ public sealed partial class BuildMech : IGraphAction
 
         var cell = container.ContainedEntities[0];
 
-        if (!entityManager.TryGetComponent<PredictedBatteryComponent>(cell, out var batteryComponent))
+        if (!entityManager.TryGetComponent<BatteryComponent>(cell, out var batteryComponent))
         {
             Logger.Warning($"Mech construct entity {uid} had an invalid entity in container \"{Container}\"! Aborting build mech action.");
             return;

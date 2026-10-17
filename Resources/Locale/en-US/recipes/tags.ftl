@@ -48,10 +48,10 @@ construction-graph-tag-payload = payload
 construction-graph-tag-empty-can = an empty can
 construction-graph-tag-igniter = an igniter
 construction-graph-tag-modular-receiver = modular receiver
-construction-graph-tag-power-cell-small = power cell small
+construction-graph-tag-power-cell-small = small power cell
 construction-graph-tag-power-cell = power cell
 construction-graph-tag-potato-battery = a potato battery
-construction-graph-tag-super-compact-ai-chip = a super-compact AI chip
+construction-graph-tag-super-compact-ai-chip = a makeshift microcontroller
 
 # other
 construction-graph-tag-light-bulb = light bulb
@@ -73,6 +73,9 @@ construction-graph-tag-apron = an apron
 construction-graph-tag-utility-belt = a utility belt
 soil-construction-graph-any-mushroom = any mushroom
 construction-graph-tag-mop-basic = mop
+construction-graph-tag-paper = office paper
+construction-graph-tag-core-pinpointer-piece = piece of core pinpointer
+construction-graph-tag-glass-lens = glass lens
 
 # toys
 construction-graph-tag-rubber-ducky = a rubber ducky
@@ -152,3 +155,6 @@ construction-graph-tag-spationaut-hardsuit = spationaut hardsuit
 
 # clothing
 construction-graph-tag-backpack = backpack
+
+# chemistry
+construction-graph-tag-centrifuge-compatible = centrifugable container

@@ -305,7 +305,7 @@
       sprite: Clothing/Ears/Headsets/wizard.rsi
 
 - type: entity
-  parent: [ClothingHeadset, BaseMajorContraband]
+  parent: [ClothingHeadset, BaseHighlyIllegalContraband]
   id: ClothingHeadsetNinja
   name: green headset
   description: Who could refuse to wear this stylish black and green headset?
@@ -314,3 +314,17 @@
     sprite: Clothing/Ears/Headsets/ninja.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/ninja.rsi
+  - type: EmpResistance
+    strengthMultiplier: 0
+
+- type: entity
+  parent: ClothingHeadsetGrey
+  id: ClothingHeadsetSyndicateCovert
+  name: passenger headset
+  suffix: Syndicate
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySyndie
+

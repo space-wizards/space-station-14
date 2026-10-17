@@ -1,10 +1,10 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Rejuvenate;
 using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.StatusEffectNew;
 
@@ -14,13 +14,12 @@ namespace Content.Shared.StatusEffectNew;
 /// </summary>
 public sealed partial class StatusEffectsSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
-    private EntityQuery<StatusEffectContainerComponent> _containerQuery;
-    private EntityQuery<StatusEffectComponent> _effectQuery;
+    [Dependency] private EntityQuery<StatusEffectContainerComponent> _containerQuery = default!;
+    [Dependency] private EntityQuery<StatusEffectComponent> _effectQuery = default!;
 
     public override void Initialize()
     {
@@ -34,9 +33,6 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         SubscribeLocalEvent<StatusEffectContainerComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
 
         SubscribeLocalEvent<RejuvenateRemovedStatusEffectComponent, StatusEffectRelayedEvent<RejuvenateEvent>>(OnRejuvenate);
-
-        _containerQuery = GetEntityQuery<StatusEffectContainerComponent>();
-        _effectQuery = GetEntityQuery<StatusEffectComponent>();
     }
 
     public override void Update(float frameTime)
@@ -57,7 +53,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
             if (effect.AppliedTo is null)
                 continue;
 
-            PredictedQueueDel(ent);
+            QueueDel(ent);
         }
     }
 
@@ -78,6 +74,9 @@ public sealed partial class StatusEffectsSystem : EntitySystem
 
     private void OnEntityInserted(Entity<StatusEffectContainerComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         if (args.Container.ID != StatusEffectContainerComponent.ContainerId)
             return;
 
@@ -117,7 +116,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
     private void OnRejuvenate(Entity<RejuvenateRemovedStatusEffectComponent> ent,
         ref StatusEffectRelayedEvent<RejuvenateEvent> args)
     {
-        PredictedQueueDel(ent.Owner);
+        QueueDel(ent.Owner);
     }
 
     /// <summary>
@@ -142,10 +141,10 @@ public sealed partial class StatusEffectsSystem : EntitySystem
 
     public bool CanAddStatusEffect(EntityUid uid, EntProtoId effectProto)
     {
-        if (!_proto.Resolve(effectProto, out var effectProtoData))
+        if (!ProtoMan.Resolve(effectProto, out var effectProtoData))
             return false;
 
-        if (!effectProtoData.TryGetComponent<StatusEffectComponent>(out var effectProtoComp, Factory))
+        if (!effectProtoData.TryComp<StatusEffectComponent>(out var effectProtoComp, Factory))
             return false;
 
         if (!_whitelist.CheckBoth(uid, effectProtoComp.Blacklist, effectProtoComp.Whitelist))
@@ -201,7 +200,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
 
         var endTime = delay == null ? _timing.CurTime + duration : _timing.CurTime + delay + duration;
         SetStatusEffectEndTime((effect.Value, effectComp), endTime);
-        var startTime = delay == null ? TimeSpan.Zero : _timing.CurTime + delay.Value;
+        var startTime = delay == null ? _timing.CurTime : _timing.CurTime + delay.Value;
         SetStatusEffectStartTime(effect.Value, startTime);
 
         TryApplyStatusEffect((statusEffect.Value, effectComp));

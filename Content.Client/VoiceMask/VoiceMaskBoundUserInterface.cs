@@ -5,9 +5,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.VoiceMask;
 
-public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
+public sealed partial class VoiceMaskBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private readonly IPrototypeManager _protomanager = default!;
+    [Dependency] private IPrototypeManager _protomanager = default!;
 
     [ViewVariables]
     private VoiceMaskNameChangeWindow? _window;
@@ -26,11 +26,23 @@ public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
 
         _window.OnNameChange += OnNameSelected;
         _window.OnVerbChange += verb => SendMessage(new VoiceMaskChangeVerbMessage(verb));
+        _window.OnToggle += OnToggle;
+        _window.OnAccentToggle += OnAccentToggle;
     }
 
     private void OnNameSelected(string name)
     {
         SendMessage(new VoiceMaskChangeNameMessage(name));
+    }
+
+    private void OnToggle()
+    {
+        SendMessage(new VoiceMaskToggleMessage());
+    }
+
+    private void OnAccentToggle()
+    {
+        SendMessage(new VoiceMaskAccentToggleMessage());
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -40,7 +52,7 @@ public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
             return;
         }
 
-        _window.UpdateState(cast.Name, cast.Verb);
+        _window.UpdateState(cast.Name, cast.Verb, cast.Active, cast.AccentHide, cast.TitleText);
     }
 
     protected override void Dispose(bool disposing)

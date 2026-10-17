@@ -17,6 +17,7 @@ steal-target-groups-weapon-energy-magnum = energy magnum
 steal-target-groups-figurines = figurine
 steal-target-groups-heads-cloaks = head's cloak
 steal-target-groups-heads-bedsheets = head's bedsheet
+steal-target-groups-heads-hardsuits = head's hardsuit
 steal-target-groups-stamps = stamp
 steal-target-groups-door-remotes = door remote
 steal-target-groups-encryption-keys = encryption key
@@ -25,6 +26,7 @@ steal-target-groups-mail = mail
 steal-target-groups-id-cards = ID Card
 steal-target-groups-officer-handguns = security officer's handgun
 steal-target-groups-lamps = LAMP
+steal-target-groups-huds = HUD
 
 # Thief single item
 steal-target-groups-forensic-scanner = forensic scanner
@@ -39,7 +41,6 @@ steal-target-groups-fire-axe = fireaxe
 steal-target-groups-ame-part-flatpack =  AME flatpack
 steal-target-groups-salvage-expeditions-computer-circuitboard = salvage expeditions computer board
 steal-target-groups-cargo-shuttle-console-circuitboard = cargo shuttle console board
-steal-target-groups-clothing-eyes-hud-beer = beer goggles
 steal-target-groups-bible = bible
 steal-target-groups-clothing-neck-goldmedal = gold medal of crewmanship
 steal-target-groups-clothing-neck-clownmedal = clown medal

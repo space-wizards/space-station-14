@@ -4,7 +4,9 @@
   id: BrokenBottle
   description: In Space Glasgow this is called a conversation starter.
   components:
-  - type: Sharp
+  - type: Tool
+    qualities:
+    - Slicing
   - type: Execution
     doAfterDuration: 4.0
   - type: MeleeWeapon

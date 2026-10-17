@@ -8,24 +8,6 @@
 
 - type: stack
   parent: BaseTileStack
-  id: FloorTileWhiteOffset
-  name: stack-offset-white-steel-tile
-  spawn: FloorTileItemWhiteOffset
-
-- type: stack
-  parent: BaseTileStack
-  id: FloorTileWhiteDiagonalMini
-  name: stack-white-steel-diagonal-mini-tile
-  spawn: FloorTileItemWhiteDiagonalMini
-
-- type: stack
-  parent: BaseTileStack
-  id: FloorTileWhiteDiagonal
-  name: stack-white-steel-diagonal-tile
-  spawn: FloorTileItemWhiteDiagonal
-
-- type: stack
-  parent: BaseTileStack
   id: FloorTileWhiteHerringbone
   name: stack-white-steel-herringbone
   spawn: FloorTileItemWhiteHerringbone
@@ -53,3 +35,15 @@
   id: FloorTileWhitePavementVertical
   name: stack-white-steel-vertical-pavement
   spawn: FloorTileItemWhitePavementVertical
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileWhiteVerticalSlatsBordered
+  name: stack-white-steel-vertical-slats-tile-bordered
+  spawn: FloorTileItemWhiteVerticalSlatsBordered
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileWhiteHorizontalSlatsBordered
+  name: stack-white-steel-horizontal-slats-tile-bordered
+  spawn: FloorTileItemWhiteHorizontalSlatsBordered

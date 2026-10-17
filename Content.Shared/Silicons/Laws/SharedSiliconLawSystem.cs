@@ -1,5 +1,6 @@
 using Content.Shared.Emag.Systems;
 using Content.Shared.Mind;
+using Content.Shared.Overlays;
 using Content.Shared.Popups;
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Stunnable;
@@ -13,10 +14,19 @@ namespace Content.Shared.Silicons.Laws;
 /// </summary>
 public abstract partial class SharedSiliconLawSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
-    [Dependency] private readonly EmagSystem _emag = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedStunSystem _stunSystem = default!;
+    [Dependency] private EmagSystem _emag = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+
+    /// <summary>
+    /// Minimum length of generated ion storm law identifiers.
+    /// </summary>
+    public const int IonStormIdentifierMinLength = 3;
+    /// <summary>
+    /// Maximum length of generated ion storm law identifiers.
+    /// </summary>
+    public const int IonStormIdentifierMaxLength = 10;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -36,7 +46,7 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         // prevent self-emagging
         if (uid == args.UserUid)
         {
-            _popup.PopupClient(Loc.GetString("law-emag-cannot-emag-self"), uid, args.UserUid);
+            _popup.PopupEntity(Loc.GetString("law-emag-cannot-emag-self"), uid, args.UserUid);
             return;
         }
 
@@ -44,7 +54,7 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
             TryComp<WiresPanelComponent>(uid, out var panel) &&
             !panel.Open)
         {
-            _popup.PopupClient(Loc.GetString("law-emag-require-panel"), uid, args.UserUid);
+            _popup.PopupEntity(Loc.GetString("law-emag-require-panel"), uid, args.UserUid);
             return;
         }
 
@@ -53,7 +63,10 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
 
         component.OwnerName = Name(args.UserUid);
 
-        NotifyLawsChanged(uid, component.EmaggedSound);
+        if (!TryComp<SiliconLawProviderComponent>(uid, out var lawcomp))
+            return;
+            
+        NotifyLawsChanged((uid, lawcomp), component.EmaggedSound);
         if(_mind.TryGetMind(uid, out var mindId, out _))
             EnsureSubvertedSiliconRole(mindId);
 
@@ -62,19 +75,35 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         args.Handled = true;
     }
 
-    public virtual void NotifyLawsChanged(EntityUid uid, SoundSpecifier? cue = null)
+    public virtual void NotifyLawsChanged(Entity<SiliconLawProviderComponent> ent, SoundSpecifier? cue = null)
     {
 
     }
 
     protected virtual void EnsureSubvertedSiliconRole(EntityUid mindId)
     {
-
+        if (TryComp<MindComponent>(mindId, out var mind))
+        {
+            var owner = mind.OwnedEntity;
+            if (TryComp<ShowCrewIconsComponent>(owner, out var crewIconComp))
+            {
+                crewIconComp.UncertainCrewBorder = true;
+                Dirty(owner.Value, crewIconComp);
+            }
+        }
     }
 
     protected virtual void RemoveSubvertedSiliconRole(EntityUid mindId)
     {
-
+        if (TryComp<MindComponent>(mindId, out var mind))
+        {
+            var owner = mind.OwnedEntity;
+            if (TryComp<ShowCrewIconsComponent>(owner, out var crewIconComp))
+            {
+                crewIconComp.UncertainCrewBorder = false;
+                Dirty(owner.Value, crewIconComp);
+            }
+        }
     }
 }
 

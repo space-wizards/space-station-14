@@ -7,10 +7,24 @@
     - to: boxcardboard
       steps:
       - material: Cardboard
-        amount: 1
+        amount: 2
         doAfter: 4
   - node: boxcardboard
     entity: BoxCardboard
+
+- type: constructionGraph
+  id: BoxCardboardSmall
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: boxcardboardsmall
+      steps:
+      - material: Cardboard
+        amount: 1
+        doAfter: 4
+  - node: boxcardboardsmall
+    entity: BoxCardboardSmall
 
 - type: constructionGraph
   id: ToteBase

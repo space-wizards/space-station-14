@@ -2,7 +2,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Numerics;
-using Content.Client.Administration.UI.CustomControls;
+using Content.Client.Stylesheets;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -40,11 +41,11 @@ public sealed partial class BanPanel : DefaultWindow
     private readonly Dictionary<string, List<(Button, IPrototype)>> _roleCheckboxes = new();
     private readonly ISawmill _banPanelSawmill;
 
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
-    [Dependency] private readonly IEntityManager _entMan = default!;
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private ILogManager _logManager = default!;
+    [Dependency] private IEntityManager _entMan = default!;
+    [Dependency] private IPrototypeManager _protoMan = default!;
 
     private const string ExpandedArrow = "▼";
     private const string ContractedArrow = "▶";
@@ -218,7 +219,7 @@ public sealed partial class BanPanel : DefaultWindow
             }
         });
         RolesContainer.AddChild(outerContainer);
-        RolesContainer.AddChild(new HSeparator());
+        RolesContainer.AddChild(new Separator { StyleClasses = { StyleClass.LowDivider } });
     }
 
     private Button CreateRoleGroupHeader(string groupName, BoxContainer header, Color color, GridContainer innerContainer)

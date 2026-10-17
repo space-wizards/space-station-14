@@ -1,23 +1,14 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Shared.Medical.Cryogenics;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Medical.Cryogenics;
 
-public sealed class CryoPodSystem : SharedCryoPodSystem
+public sealed partial class CryoPodSystem : SharedCryoPodSystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<CryoPodComponent, AppearanceChangeEvent>(OnAppearanceChange);
-        SubscribeLocalEvent<InsideCryoPodComponent, ComponentStartup>(OnCryoPodInsertion);
-        SubscribeLocalEvent<InsideCryoPodComponent, ComponentRemove>(OnCryoPodRemoval);
-    }
-
+    [SubscribeLocalEvent]
     private void OnCryoPodInsertion(EntityUid uid, InsideCryoPodComponent component, ComponentStartup args)
     {
         if (!TryComp<SpriteComponent>(uid, out var spriteComponent))
@@ -29,6 +20,7 @@ public sealed class CryoPodSystem : SharedCryoPodSystem
         _sprite.SetOffset((uid, spriteComponent), new Vector2(0, 1));
     }
 
+    [SubscribeLocalEvent]
     private void OnCryoPodRemoval(EntityUid uid, InsideCryoPodComponent component, ComponentRemove args)
     {
         if (!TryComp<SpriteComponent>(uid, out var spriteComponent))
@@ -39,15 +31,14 @@ public sealed class CryoPodSystem : SharedCryoPodSystem
         _sprite.SetOffset((uid, spriteComponent), component.PreviousOffset);
     }
 
+    [SubscribeLocalEvent]
     private void OnAppearanceChange(EntityUid uid, CryoPodComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
-        {
             return;
-        }
 
-        if (!_appearance.TryGetData<bool>(uid, CryoPodVisuals.ContainsEntity, out var isOpen, args.Component)
-            || !_appearance.TryGetData<bool>(uid, CryoPodVisuals.IsOn, out var isOn, args.Component))
+        if (!args.TryGetData<bool>(CryoPodVisuals.ContainsEntity, out var isOpen)
+            || !args.TryGetData<bool>(CryoPodVisuals.IsOn, out var isOn))
         {
             return;
         }
@@ -63,6 +54,11 @@ public sealed class CryoPodSystem : SharedCryoPodSystem
             _sprite.LayerSetRsiState((uid, args.Sprite), CryoPodVisualLayers.Cover, isOn ? "cover-on" : "cover-off");
             _sprite.LayerSetVisible((uid, args.Sprite), CryoPodVisualLayers.Cover, true);
         }
+    }
+
+    protected override void UpdateUi(Entity<CryoPodComponent> cryoPod)
+    {
+        // Atmos and health scanner aren't predicted currently...
     }
 }
 

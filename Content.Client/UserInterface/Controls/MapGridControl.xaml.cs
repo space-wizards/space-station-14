@@ -17,8 +17,8 @@ namespace Content.Client.UserInterface.Controls;
 [Virtual]
 public partial class MapGridControl : LayoutContainer
 {
-    [Dependency] protected readonly IEntityManager EntManager = default!;
-    [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] protected IEntityManager EntManager = default!;
+    [Dependency] protected IGameTiming Timing = default!;
 
     protected static readonly Color BackingColor = new Color(0.08f, 0.08f, 0.08f);
 
@@ -225,7 +225,7 @@ public partial class MapGridControl : LayoutContainer
         var signalText = Loc.GetString("shuttle-console-no-signal");
         var dimensions = handle.GetDimensions(_largerFont, signalText, 1f);
         var position = MidPointVector - dimensions / 2f;
-        handle.DrawString(_largerFont, position, Loc.GetString("shuttle-console-no-signal"), greyColor);
+        handle.DrawString(_largerFont, position, Loc.GetString("shuttle-console-no-signal"), 1, greyColor, TextOutline.Default);
     }
 
     protected override void Draw(DrawingHandleScreen handle)

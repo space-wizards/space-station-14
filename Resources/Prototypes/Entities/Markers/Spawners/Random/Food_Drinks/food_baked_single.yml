@@ -1,96 +1,100 @@
 - type: entity
+  parent: MarkerBase
   id: RandomFoodBakedSingle
   name: random baked food spawner
   suffix: Single Serving
-  parent: MarkerBase
   placement:
     mode: AlignTileAny
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Objects/Consumable/Food/Baked/pie.rsi
-        state: plain-slice
-  - type: RandomSpawner
-    prototypes:
-      - FoodBreadPlainSlice
-      - FoodBreadMeatSlice
-      - FoodBreadBananaSlice
-      - FoodBreadCreamcheeseSlice
-      - FoodBreadMoldySlice
-      - FoodBreadGarlicSlice
-      - FoodBreadCornSlice
-      - FoodBreadSausageSlice
-      - FoodBreadButteredToast
-      - FoodBreadJellySlice
-      - FoodBreadFrenchToast
-      - FoodBreadTwoSlice
-      - FoodBreadVolcanicSlice
-      - FoodBreadTofuSlice
-      - FoodBreadBaguetteSlice
-      - FoodCakeBlueberrySlice
-      - FoodCakePlainSlice
-      - FoodCakeCarrotSlice
-      - FoodCakeCheeseSlice
-      - FoodCakeOrangeSlice
-      - FoodCakeLimeSlice
-      - FoodCakeLemonSlice
-      - FoodCakeChocolateSlice
-      - FoodCakeAppleSlice
-      - FoodCakeSlimeSlice
-      - FoodCakePumpkinSlice
-      - FoodCakeChristmasSlice
-      - FoodCakeVanillaSlice
-      - FoodCakeBirthdaySlice
-      - FoodCakeBerryDelightSlice
-      - FoodCakeCottonSlice
-      - FoodBakedMuffin
-      - FoodBakedMuffinBerry
-      - FoodBakedMuffinCherry
-      - FoodBakedMuffinBluecherry
-      - FoodBakedMuffinChocolate
-      - FoodBakedMuffinBanana
-      - FoodBakedBunHoney
-      - FoodBakedBunHotX
-      - FoodBakedBunMeat
-      - FoodBakedCookie
-      - FoodBakedCookieOatmeal
-      - FoodBakedCookieRaisin
-      - FoodBakedCookieSugar
-      - FoodBakedGrilledCheeseSandwich
-      - FoodBakedGrilledCheeseSandwichCotton
-      - FoodBakedNugget
-      - FoodBakedPancake
-      - FoodBakedPancakeBb
-      - FoodBakedPancakeCc
-      - FoodBakedWaffle
-      - FoodBakedWaffleSoy
-      - FoodBakedWaffleSoylent
-      - FoodBakedWaffleRoffle
-      - FoodBakedPretzel
-      - FoodBakedCannoli
-      - FoodPieAppleSlice
-      - FoodPieBaklavaSlice
-      - FoodPieClafoutisSlice
-      - FoodPieMeatSlice
-      - FoodPieCherrySlice
-      - FoodPieFrostySlice
-      - FoodTartGrape
-      - FoodTartCoco
-      - FoodBakedBrownie
-      - FoodPieBananaCreamSlice
-      - FoodTartMimeSlice
-    chance: 0.8
+    - state: red
+    - sprite: Objects/Consumable/Food/Baked/pie.rsi
+      state: plain-slice
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 0.95
+        prob: 0.8
+        children:
+        - id: FoodBreadPlainSlice
+        - id: FoodBreadMeatSlice
+        - id: FoodBreadBananaSlice
+        - id: FoodBreadCreamcheeseSlice
+        - id: FoodBreadMoldySlice
+        - id: FoodBreadGarlicSlice
+        - id: FoodBreadCornSlice
+        - id: FoodBreadSausageSlice
+        - id: FoodBreadButteredToast
+        - id: FoodBreadJellySlice
+        - id: FoodBreadFrenchToast
+        - id: FoodBreadTwoSlice
+        - id: FoodBreadVolcanicSlice
+        - id: FoodBreadTofuSlice
+        - id: FoodBreadBaguetteSlice
+        - id: FoodCakeBlueberrySlice
+        - id: FoodCakePlainSlice
+        - id: FoodCakeCarrotSlice
+        - id: FoodCakeCheeseSlice
+        - id: FoodCakeOrangeSlice
+        - id: FoodCakeLimeSlice
+        - id: FoodCakeLemonSlice
+        - id: FoodCakeChocolateSlice
+        - id: FoodCakeAppleSlice
+        - id: FoodCakeSlimeSlice
+        - id: FoodCakePumpkinSlice
+        - id: FoodCakeChristmasSlice
+        - id: FoodCakeVanillaSlice
+        - id: FoodCakeBirthdaySlice
+        - id: FoodCakeBerryDelightSlice
+        - id: FoodCakeCottonSlice
+        - id: FoodBakedMuffin
+        - id: FoodBakedMuffinBerry
+        - id: FoodBakedMuffinCherry
+        - id: FoodBakedMuffinBluecherry
+        - id: FoodBakedMuffinChocolate
+        - id: FoodBakedMuffinBanana
+        - id: FoodBakedBunHoney
+        - id: FoodBakedBunHotX
+        - id: FoodBakedBunMeat
+        - id: FoodBakedCookie
+        - id: FoodBakedCookieOatmeal
+        - id: FoodBakedCookieRaisin
+        - id: FoodBakedCookieSugar
+        - id: FoodBakedGrilledCheeseSandwich
+        - id: FoodBakedGrilledCheeseSandwichCotton
+        - id: FoodBakedNugget
+        - id: FoodBakedPancake
+        - id: FoodBakedPancakeBb
+        - id: FoodBakedPancakeCc
+        - id: FoodBakedWaffle
+        - id: FoodBakedWaffleSoy
+        - id: FoodBakedWaffleSoylent
+        - id: FoodBakedWaffleRoffle
+        - id: FoodBakedPretzel
+        - id: FoodBakedCannoli
+        - id: FoodPieAppleSlice
+        - id: FoodPieBaklavaSlice
+        - id: FoodPieClafoutisSlice
+        - id: FoodPieMeatSlice
+        - id: FoodPieCherrySlice
+        - id: FoodPieFrostySlice
+        - id: FoodTartGrape
+        - id: FoodTartCoco
+        - id: FoodBakedBrownie
+        - id: FoodPieBananaCreamSlice
+        - id: FoodTartMimeSlice
+      - !type:GroupSelector #rare
+        weight: 0.05
+        children:
+        - id: FoodBreadMeatSpiderSlice
+        - id: FoodBreadMimanaSlice
+        - id: FoodCakeBrainSlice
+        - id: FoodCakeClownSlice
+        - id: FoodCakeSpacemanSlice
+        - id: FoodTartGapple
+        - id: FoodBreadMeatXenoSlice
+        - id: FoodPieXenoSlice
+        - id: FoodBakedCannabisBrownie
     offset: 0.0
-    #rare
-    rarePrototypes:
-      - FoodBreadMeatSpiderSlice
-      - FoodBreadMimanaSlice
-      - FoodCakeBrainSlice
-      - FoodCakeClownSlice
-      - FoodCakeSpacemanSlice
-      - FoodTartGapple
-      - FoodBreadMeatXenoSlice
-      - FoodPieXenoSlice
-      - FoodBakedCannabisBrownie
-    rareChance: 0.05

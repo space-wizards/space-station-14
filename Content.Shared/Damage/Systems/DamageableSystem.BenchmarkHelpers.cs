@@ -1,4 +1,4 @@
-﻿using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Components;
 
 namespace Content.Shared.Damage.Systems;
 
@@ -11,7 +11,7 @@ public sealed partial class DamageableSystem
     {
         foreach (var (uid, damageable) in damageables)
         {
-            TryChangeDamage((uid, damageable), damage);
+            ChangeDamage((uid, damageable), damage);
         }
     }
 }

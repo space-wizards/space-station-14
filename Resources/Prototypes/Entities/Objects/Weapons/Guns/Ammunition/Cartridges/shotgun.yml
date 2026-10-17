@@ -115,7 +115,7 @@
     state: "practice"
 
 - type: entity
-  parent: [ BaseShellShotgun, BaseSecurityContraband ]
+  parent: [ SolutionAmmo, SolutionToolVeryTiny, BaseShellShotgun, BaseSecurityContraband ]
   id: ShellTranquilizer
   name: shell (.50 tranquilizer)
   description: The standard cartridge used by most modern shotguns. Tranquilizer ammunition contains a single ballistic syringe loaded with a strong sedative that harmlessly puts targets to sleep.
@@ -131,12 +131,11 @@
   - type: CartridgeAmmo
     proto: PelletShotgunTranquilizer
   - type: ChemicalAmmo
-  - type: SolutionContainerManager
-    solutions:
-      ammo:
-        reagents:
-        - ReagentId: ChloralHydrate
-          Quantity: 7
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: ChloralHydrate
+        Quantity: 7.5
   - type: SolutionTransfer
     maxTransferAmount: 7
   - type: SpentAmmoVisuals

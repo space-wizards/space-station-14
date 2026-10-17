@@ -24,7 +24,7 @@ public sealed class SpaceHeaterBoundUserInterface : BoundUserInterface
 
         _window = this.CreateWindow<SpaceHeaterWindow>();
 
-        _window.ToggleStatusButton.OnPressed += _ => OnToggleStatusButtonPressed();
+        _window.ToggleStatusButton.OnToggled += _ => OnToggleStatusButtonPressed();
         _window.IncreaseTempRange.OnPressed += _ => OnTemperatureRangeChanged(_window.TemperatureChangeDelta);
         _window.DecreaseTempRange.OnPressed += _ => OnTemperatureRangeChanged(-_window.TemperatureChangeDelta);
         _window.ModeSelector.OnItemSelected += OnModeChanged;
@@ -34,7 +34,6 @@ public sealed class SpaceHeaterBoundUserInterface : BoundUserInterface
 
     private void OnToggleStatusButtonPressed()
     {
-        _window?.SetActive(!_window.Active);
         SendMessage(new SpaceHeaterToggleMessage());
     }
 

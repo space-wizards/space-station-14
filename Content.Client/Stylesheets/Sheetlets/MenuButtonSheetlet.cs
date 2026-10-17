@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Client.Stylesheets.Fonts;
 using Content.Client.Stylesheets.SheetletConfigs;
 using Content.Client.Stylesheets.Stylesheets;
@@ -74,6 +74,8 @@ public sealed class MenuButtonSheetlet<T> : Sheetlet<T> where T : PalettedStyles
         };
 
         ButtonSheetlet<T>.MakeButtonRules<MenuButton>(rules, cfg.ButtonPalette, null);
+        ButtonSheetlet<T>.MakeButtonRules<MenuButton>(rules, cfg.PositiveButtonPalette, StyleClass.Positive);
+        ButtonSheetlet<T>.MakeButtonRules<MenuButton>(rules, cfg.NegativeButtonPalette, StyleClass.Negative);
 
         return rules.ToArray();
     }

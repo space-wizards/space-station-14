@@ -72,7 +72,7 @@ public sealed partial class AtmosphereSystem
                 newGridAtmos = AddComp<GridAtmosphereComponent>(newGrid);
 
             // We assume the tiles on the new grid have the same coordinates as they did on the old grid...
-            var enumerator = _mapSystem.GetAllTilesEnumerator(newGrid, mapGrid);
+            var enumerator = _mapSystem.GetAllTiles(newGrid, mapGrid);
 
             while (enumerator.MoveNext(out var tile))
             {
@@ -324,7 +324,7 @@ public sealed partial class AtmosphereSystem
             atmos.InvalidatedCoords.Add(indices);
         }
 
-        var enumerator = _map.GetAllTilesEnumerator(uid, grid);
+        var enumerator = _map.GetAllTiles(uid, grid);
         while (enumerator.MoveNext(out var tile))
         {
             atmos.InvalidatedCoords.Add(tile.Value.GridIndices);

@@ -76,10 +76,6 @@
           primed:
             True: { visible: true }
             False: { visible: false }
-        enum.WiresVisualLayers.MaintenancePanel:
-          enum.WiresVisualLayers.MaintenancePanel:
-            True: { visible: true }
-            False: { visible: false }
     - type: PointLight
       color: "#0063C7"
       radius: 1.1
@@ -115,10 +111,6 @@
           primed:
             True: { visible: true }
             False: { visible: false }
-        enum.WiresVisualLayers.MaintenancePanel:
-          enum.WiresVisualLayers.MaintenancePanel:
-            True: { visible: true }
-            False: { visible: false }
     - type: PointLight
       color: "#C7001B"
       radius: 1.1
@@ -126,8 +118,8 @@
     - type: Explosive
       explosionType: HardBomb
       totalIntensity: 4000.0
-      intensitySlope: 3
-      maxIntensity: 400
+      intensitySlope: 10
+      maxIntensity: 75
     - type: StaticPrice
       price: 10000 # Good luck!
 

@@ -1,12 +1,12 @@
-﻿using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.Console;
 
 namespace Content.Client.Ghost;
 
-public sealed class GhostToggleSelfVisibility : LocalizedEntityCommands
+public sealed partial class GhostToggleSelfVisibility : LocalizedEntityCommands
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override string Command => "toggleselfghost";
 

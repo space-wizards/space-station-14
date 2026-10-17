@@ -27,6 +27,10 @@ public sealed class LabelSheetlet : Sheetlet<PalettedStylesheet>
                 .Font(sheet.BaseFont.GetFont(20, FontKind.Bold))
                 .FontColor(sheet.HighlightPalette.Text),
             E<Label>()
+                .Class(StyleClass.LabelSubHeading)
+                .Font(sheet.BaseFont.GetFont(14, FontKind.Italic))
+                .FontColor(sheet.HighlightPalette.TextDark),
+            E<Label>()
                 .Class(StyleClass.LabelSubText)
                 .Font(sheet.BaseFont.GetFont(10))
                 .FontColor(Color.DarkGray),
@@ -69,10 +73,10 @@ public sealed class LabelSheetlet : Sheetlet<PalettedStylesheet>
                 .Class(StyleClass.LabelMonospaceText)
                 .Prop(Label.StylePropertyFont, robotoMonoBold11),
             E<Label>()
-                .Class(StyleClass.LabelMonospaceHeading)
+                .Class(StyleClass.LabelMonospaceSubHeading)
                 .Prop(Label.StylePropertyFont, robotoMonoBold12),
             E<Label>()
-                .Class(StyleClass.LabelMonospaceSubHeading)
+                .Class(StyleClass.LabelMonospaceHeading)
                 .Prop(Label.StylePropertyFont, robotoMonoBold14),
         ];
     }

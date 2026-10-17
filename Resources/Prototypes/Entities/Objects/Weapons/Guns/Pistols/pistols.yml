@@ -48,6 +48,7 @@
         whitelist:
           tags:
             - MagazinePistol
+            - MagazinePistolHighCapacity
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
@@ -74,13 +75,19 @@
   id: WeaponPistolViper
   description: A common handgun illegally modified by the Syndicate. The Viper sports a selector switch between semi-auto and ‘rock and roll’. The standard sidearm for any soldier who fights under the three serpents. Feeds from .35 pistol magazines.
   components:
+  - type: Gun
+    minAngle: 2
+    maxAngle: 25
+    angleIncrease: 2
+    angleDecay: 20
+    selectedMode: FullAuto # Override of BaseWeaponPistol to default to full-auto
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
   - type: ItemSlots
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: MagazinePistol
+        startingItem: MagazinePistolHighCapacity
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
         priority: 2
@@ -109,11 +116,11 @@
   description: A cyborg-mounted weapon system based on the Viper pistol. Creates ammunition on the fly from an internal fabricator, which slowly self-charges.
   components:
   - type: Gun
-    fireRate: 5
+    fireRate: 6
     selectedMode: SemiAuto
     availableModes:
-      - SemiAuto
-      - FullAuto
+    - SemiAuto
+    - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
   - type: Sprite
@@ -126,14 +133,16 @@
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
-  - type: BatteryAmmoProvider
-    proto: BulletPistol
-    fireCost: 100
-  - type: PredictedBattery
-    maxCharge: 1000
-    startingCharge: 1000
-  - type: PredictedBatterySelfRecharger
-    autoRechargeRate: 25
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - CartridgePistol
+    capacity: 10
+    proto: CartridgePistol
+    cycleable: false # No synthesizing ammo for your syndicate masters.
+  - type: BallisticAmmoSelfRefiller
+    autoRefillRate: 2s
+    affectedByEmp: true
   - type: AmmoCounter
 
 - type: entity
@@ -154,6 +163,10 @@
   - type: ChamberMagazineAmmoProvider
     boltClosed: null
   - type: Gun
+    minAngle: 2
+    maxAngle: 8
+    angleIncrease: 1
+    angleDecay: 14
     fireRate: 4
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
@@ -204,13 +217,18 @@
   - type: Item
     storedOffset: 0,-2
   - type: Gun
+    minAngle: 2
+    maxAngle: 17
+    angleIncrease: 2
+    angleDecay: 14
     fireRate: 5
     availableModes:
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
   - type: StealTarget
-    stealGroup: OfficerHandgun
+    stealGroup:
+    - OfficerHandgun
 
 - type: entity
   name: N1984
