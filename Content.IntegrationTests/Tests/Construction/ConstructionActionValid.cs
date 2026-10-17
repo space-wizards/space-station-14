@@ -1,7 +1,5 @@
 using System.Text;
 using Content.IntegrationTests.Fixtures;
-using Content.Server.Construction.Completions;
-using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.EntityEffects;
 using Robust.Shared.GameObjects;

@@ -459,7 +459,7 @@ namespace Content.Server.Construction
         }
 
         /// <summary>
-        ///     Performs a number of <see cref="IGraphAction"/>s for a given entity, with an optional user entity.
+        ///     Performs a number of <see cref="EntityEffect"/>s for a given entity, with an optional user entity.
         /// </summary>
         /// <param name="uid">The entity to perform the actions on.</param>
         /// <param name="userUid">An optional user entity to pass into the actions.</param>
