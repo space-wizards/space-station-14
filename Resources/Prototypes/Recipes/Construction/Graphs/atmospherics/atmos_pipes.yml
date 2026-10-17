@@ -46,7 +46,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 1
+        number: 1
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -63,7 +63,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 1
+        number: 1
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -80,7 +80,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 1
+        number: 1
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -97,7 +97,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 1
+        number: 1
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -114,7 +114,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 1
+        number: 1
       - !type:DeleteEntity
       steps:
       - tool: Welding

@@ -99,7 +99,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -111,7 +111,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -123,7 +123,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:SpawnEntity
         entity: CableApcStack1 # I have no idea why this does not work
       - !type:DestroyEntity
@@ -137,7 +137,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -150,7 +150,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -162,7 +162,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -175,7 +175,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -191,7 +191,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -207,7 +207,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -223,7 +223,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -240,7 +240,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -253,7 +253,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:SpawnEntity
         entity: CableApcStack1
       - !type:DestroyEntity
@@ -267,7 +267,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:SpawnEntity
         entity: CableApcStack1
       - !type:DestroyEntity

@@ -33,7 +33,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 4
+        number: 4
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -57,7 +57,7 @@
       completed:
       - !type:SpawnEntity
         entity: CableApcStack1
-        amount: 5
+        number: 5
       steps:
       - tool: Cutting
         doAfter: 2.5
@@ -109,7 +109,7 @@
         emptyAtUser: true
       - !type:SpawnEntity
         entity: SheetRGlass1
-        amount: 1
+        number: 1
       steps:
       - tool: Prying
         doAfter: 5
@@ -133,7 +133,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetRGlass1
-        amount: 1
+        number: 1
       steps:
       - tool: Prying
         doAfter: 2

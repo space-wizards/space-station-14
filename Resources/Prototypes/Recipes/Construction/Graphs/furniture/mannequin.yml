@@ -23,10 +23,10 @@
             - !type:EmptyAllContainers
             - !type:SpawnEntity
               entity: MaterialWoodPlank
-              amount: 5
+              number: 5
             - !type:SpawnEntity
               entity: PartRodMetal
-              amount: 2
+              number: 2
           steps:
             - tool: Screwing
               doAfter: 3

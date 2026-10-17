@@ -41,10 +41,10 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:SpawnEntity
         entity: CableMVStack1
-        amount: 5
+        number: 5
       - !type:SpawnEntity
         entity: ModularReceiver
       - !type:DeleteEntity
@@ -93,7 +93,7 @@
       completed:
       - !type:SpawnEntity
         entity: GlassLens
-        amount: 2
+        number: 2
 
   - node: mslasercelled
     entity: WeaponMakeshiftLaserFrame

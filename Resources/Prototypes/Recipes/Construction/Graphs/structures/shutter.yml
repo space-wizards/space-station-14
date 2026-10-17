@@ -28,7 +28,7 @@
           completed:
             - !type:SpawnEntity
               entity: SheetSteel1
-              amount: 3
+              number: 3
             - !type:DeleteEntity
           conditions:
             - !type:EntityAnchored
@@ -53,7 +53,7 @@
           completed:
             - !type:SpawnEntity
               entity: CableApcStack1
-              amount: 2
+              number: 2
           conditions:
             - !type:EntityAnchored
               anchored: true
@@ -100,7 +100,7 @@
           completed:
             - !type:SpawnEntity
               entity: DoorElectronics
-              amount: 1
+              number: 1
           conditions:
             - !type:EntityAnchored
               anchored: true
@@ -132,7 +132,7 @@
           completed:
             - !type:SpawnEntity
               entity: SheetGlass1
-              amount: 2
+              number: 2
           steps:
             - tool: Screwing
               doAfter: 1
@@ -162,7 +162,7 @@
           completed:
             - !type:SpawnEntity
               entity: SheetSteel1
-              amount: 2
+              number: 2
           steps:
             - tool: Screwing
               doAfter: 1

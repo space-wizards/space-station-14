@@ -93,7 +93,7 @@
           completed:
             - !type:SpawnEntity
               entity: CableApcStack1
-              amount: 5
+              number: 5
           steps:
             - tool: Cutting
 
@@ -114,7 +114,7 @@
           completed:
             - !type:SpawnEntity
               entity: SheetGlass1
-              amount: 2
+              number: 2
           steps:
             - tool: Prying
               doAfter: 1
@@ -139,7 +139,7 @@
           completed:
             - !type:SpawnEntity
               entity: ShardGlass
-              amount: 2
+              number: 2
           steps:
             - tool: Prying
               doAfter: 2

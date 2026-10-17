@@ -45,7 +45,7 @@
           completed:
             - !type:SpawnEntity
               entity: SheetSteel1
-              amount: 2
+              number: 2
             - !type:DeleteEntity
     - node: bulbLight
       entity: PoweredSmallLightEmpty
@@ -60,7 +60,7 @@
           completed:
             - !type:SpawnEntity
               entity: SheetSteel1
-              amount: 1
+              number: 1
             - !type:DeleteEntity
     - node: groundLight
       entity: PoweredLightPostSmallEmpty
@@ -75,7 +75,7 @@
           completed:
             - !type:SpawnEntity
               entity: SheetSteel1
-              amount: 5
+              number: 5
             - !type:DeleteEntity
     - node: strobeLight
       entity: PoweredStrobeLightEmpty
@@ -90,7 +90,7 @@
           completed:
             - !type:SpawnEntity
               entity: SheetSteel1
-              amount: 1
+              number: 1
             - !type:DeleteEntity
     - node: emergencyLight
       entity: EmergencyLight
@@ -102,8 +102,8 @@
           completed:
             - !type:SpawnEntity
               entity: SheetSteel1
-              amount: 1
+              number: 1
             - !type:SpawnEntity
               entity: SheetGlass1
-              amount: 1
+              number: 1
             - !type:DeleteEntity

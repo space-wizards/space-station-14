@@ -40,7 +40,7 @@
           completed:
             - !type:SpawnEntity
               entity: PartRodMetal1
-              amount: 1
+              number: 1
             - !type:DeleteEntity
           steps:
             - tool: Screwing
@@ -53,7 +53,7 @@
           completed:
             - !type:SpawnEntity
               entity: PartRodMetal1
-              amount: 2
+              number: 2
             - !type:DeleteEntity
           steps:
             - tool: Screwing
@@ -66,7 +66,7 @@
           completed:
             - !type:SpawnEntity
               entity: PartRodMetal1
-              amount: 1
+              number: 1
             - !type:DeleteEntity
           steps:
             - tool: Screwing
@@ -79,7 +79,7 @@
           completed:
             - !type:SpawnEntity
               entity: PartRodMetal1
-              amount: 2
+              number: 2
             - !type:DeleteEntity
           steps:
             - tool: Screwing

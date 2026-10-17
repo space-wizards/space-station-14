@@ -175,7 +175,7 @@
           completed:
             - !type:SpawnEntity
               entity: MaterialCardboard1
-              amount: 3
+              number: 3
           steps:
             - tool: Slicing
               doAfter: 2
@@ -327,7 +327,7 @@
           completed:
           - !type:SpawnEntity
             entity: FloorCarpetItemSkyBlue
-            amount: 1
+            number: 1
           steps:
           - tool: Prying
             doAfter: 1

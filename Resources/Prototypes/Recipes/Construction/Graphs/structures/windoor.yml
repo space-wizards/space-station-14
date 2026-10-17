@@ -54,7 +54,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 4
+        number: 4
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -78,7 +78,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetGlass1
-        amount: 5
+        number: 5
       steps:
       - tool: Screwing
         doAfter: 2
@@ -101,7 +101,7 @@
       completed:
       - !type:SpawnEntity
         entity: CableApcStack1
-        amount: 5
+        number: 5
       steps:
       - tool: Cutting
         doAfter: 1
@@ -161,7 +161,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetPGlass1
-        amount: 5
+        number: 5
       steps:
       - tool: Screwing
         doAfter: 2
@@ -184,7 +184,7 @@
       completed:
       - !type:SpawnEntity
         entity: CableApcStack1
-        amount: 5
+        number: 5
       steps:
       - tool: Cutting
         doAfter: 1
@@ -244,7 +244,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetUGlass1
-        amount: 5
+        number: 5
       steps:
       - tool: Screwing
         doAfter: 2
@@ -267,7 +267,7 @@
       completed:
       - !type:SpawnEntity
         entity: CableApcStack1
-        amount: 5
+        number: 5
       steps:
       - tool: Cutting
         doAfter: 1

@@ -16,7 +16,7 @@
           completed:
             - !type:SpawnEntity
               entity: SheetSteel1
-              amount: 1
+              number: 1
             - !type:DeleteEntity
           steps:
             - tool: Screwing
@@ -35,7 +35,7 @@
           completed:
             - !type:SpawnEntity
               entity: CableApcStack1
-              amount: 2
+              number: 2
           steps:
             - tool: Cutting
               doAfter: 1
@@ -53,7 +53,7 @@
           completed:
             - !type:SpawnEntity
               entity: SheetPlastic
-              amount: 2
+              number: 2
           steps:
             - tool: Cutting
               doAfter: 1
@@ -93,7 +93,7 @@
           completed:
             - !type:SpawnEntity
               entity: SheetSteel1
-              amount: 1
+              number: 1
             - !type:EmptyAllContainers
           conditions:
             - !type:EntityAnchored
@@ -123,7 +123,7 @@
           completed:
             - !type:SpawnEntity
               entity: SheetSteel1
-              amount: 1
+              number: 1
             - !type:EmptyAllContainers
           conditions:
             - !type:EntityAnchored

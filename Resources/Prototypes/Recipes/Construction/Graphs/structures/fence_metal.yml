@@ -34,7 +34,7 @@
       completed:
       - !type:SpawnEntity
         entity: PartRodMetal1
-        amount: 1
+        number: 1
       steps:
       - tool: Welding
         doAfter: 4.0
@@ -48,7 +48,7 @@
       completed:
       - !type:SpawnEntity
         entity: PartRodMetal1
-        amount: 5
+        number: 5
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -63,7 +63,7 @@
       completed:
       - !type:SpawnEntity
         entity: PartRodMetal1
-        amount: 5
+        number: 5
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -78,7 +78,7 @@
       completed:
       - !type:SpawnEntity
         entity: PartRodMetal1
-        amount: 5
+        number: 5
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -93,7 +93,7 @@
       completed:
       - !type:SpawnEntity
         entity: PartRodMetal1
-        amount: 1
+        number: 1
       - !type:DeleteEntity
       steps:
       - tool: Cutting

@@ -20,7 +20,7 @@
           completed:
             - !type:SpawnEntity
               entity: MaterialWoodPlank
-              amount: 3
+              number: 3
           steps:
             - tool: Prying
               doAfter: 3

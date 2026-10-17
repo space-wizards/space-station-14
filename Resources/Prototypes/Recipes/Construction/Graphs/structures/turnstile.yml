@@ -23,7 +23,7 @@
       completed:
       - !type:SpawnEntity
         entity: PartRodMetal1
-        amount: 4
+        number: 4
       - !type:DeleteEntity
       steps:
       - tool: Welding

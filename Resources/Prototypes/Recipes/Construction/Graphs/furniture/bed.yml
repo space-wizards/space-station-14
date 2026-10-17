@@ -40,10 +40,10 @@
           completed:
             - !type:SpawnEntity
               entity: SheetSteel1
-              amount: 2
+              number: 2
             - !type:SpawnEntity
               entity: MaterialCloth1
-              amount: 2
+              number: 2
           steps:
             - tool: Screwing
               doAfter: 1
@@ -54,7 +54,7 @@
           completed:
             - !type:SpawnEntity
               entity: MaterialWoodPlank1
-              amount: 10
+              number: 10
           steps:
             - tool: Screwing
               doAfter: 1
@@ -65,10 +65,10 @@
           completed:
             - !type:SpawnEntity
               entity: SheetPlasteel1
-              amount: 2
+              number: 2
             - !type:SpawnEntity
               entity: MaterialDurathread1
-              amount: 2
+              number: 2
           steps:
             - tool: Screwing
               doAfter: 1

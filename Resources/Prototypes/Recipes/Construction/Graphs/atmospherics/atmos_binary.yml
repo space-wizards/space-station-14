@@ -76,7 +76,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -93,7 +93,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -110,7 +110,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -127,7 +127,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -144,7 +144,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -161,7 +161,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -178,7 +178,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -195,7 +195,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:DeleteEntity
       steps:
       - tool: Screwing
@@ -213,7 +213,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:DeleteEntity
       steps:
       - tool: Screwing
@@ -231,7 +231,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:DeleteEntity
       steps:
       - tool: Screwing

@@ -135,13 +135,13 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 10
+        number: 10
       - !type:SpawnEntity
         entity: CableApcStack1
-        amount: 5
+        number: 5
       - !type:SpawnEntity
         entity: SheetPlasteel1
-        amount: 10
+        number: 10
       - !type:EmptyAllContainers
       - !type:DeleteEntity
 
@@ -169,6 +169,6 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 4
+        number: 4
       - !type:EmptyAllContainers
       - !type:DeleteEntity

@@ -83,7 +83,7 @@
         number: 2
       - !type:SpawnEntity
         entity: CableApcStack1
-        amount: 2
+        number: 2
   - node: power_sensor
     entity: PowerSensor
     edges:
@@ -96,7 +96,7 @@
         entity: Multitool
       - !type:SpawnEntity
         entity: CableApcStack1
-        amount: 2
+        number: 2
   - node: memory_cell
     entity: MemoryCell
     edges:
@@ -109,7 +109,7 @@
         entity: MicroManipulatorStockPart
       - !type:SpawnEntity
         entity: CableApcStack1
-        amount: 2
+        number: 2
   - node: random_gate
     entity: RandomGate
     edges:
@@ -120,7 +120,7 @@
       completed:
       - !type:SpawnEntity
         entity: CableApcStack1
-        amount: 1
+        number: 1
       - !type:SpawnEntity
         entity: PartRodMetal1
-        amount: 1
+        number: 1

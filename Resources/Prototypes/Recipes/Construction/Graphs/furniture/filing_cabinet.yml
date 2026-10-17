@@ -29,7 +29,7 @@
           completed:
             - !type:SpawnEntity
               entity: SheetSteel1
-              amount: 4
+              number: 4
           steps:
             - tool: Screwing
               doAfter: 4
@@ -40,7 +40,7 @@
           completed:
             - !type:SpawnEntity
               entity: SheetSteel1
-              amount: 4
+              number: 4
           steps:
             - tool: Screwing
               doAfter: 4
@@ -51,7 +51,7 @@
           completed:
             - !type:SpawnEntity
               entity: SheetSteel1
-              amount: 3
+              number: 3
           steps:
             - tool: Screwing
               doAfter: 4

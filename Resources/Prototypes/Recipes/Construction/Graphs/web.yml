@@ -140,7 +140,7 @@
       completed:
       - !type:SpawnEntity
         entity: MaterialWebSilk1
-        amount: 6
+        number: 6
       steps:
       - tool: Cutting
         doAfter: 3

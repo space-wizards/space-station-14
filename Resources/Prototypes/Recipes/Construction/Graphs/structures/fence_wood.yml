@@ -64,7 +64,7 @@
           completed:
             - !type:SpawnEntity
               entity: MaterialWoodPlank1
-              amount: 2
+              number: 2
             - !type:DeleteEntity
     - node: end
       entity: FenceWoodHighEnd
@@ -76,7 +76,7 @@
           completed:
             - !type:SpawnEntity
               entity: MaterialWoodPlank1
-              amount: 2
+              number: 2
             - !type:DeleteEntity
     - node: corner
       entity: FenceWoodHighCorner
@@ -88,7 +88,7 @@
           completed:
             - !type:SpawnEntity
               entity: MaterialWoodPlank1
-              amount: 2
+              number: 2
             - !type:DeleteEntity
     - node: tjunction
       entity: FenceWoodHighTJunction
@@ -100,7 +100,7 @@
           completed:
             - !type:SpawnEntity
               entity: MaterialWoodPlank1
-              amount: 2
+              number: 2
             - !type:DeleteEntity
     - node: gate
       entity: FenceWoodHighGate
@@ -112,7 +112,7 @@
           completed:
             - !type:SpawnEntity
               entity: MaterialWoodPlank1
-              amount: 2
+              number: 2
             - !type:DeleteEntity
     - node: straight_small
       entity: FenceWoodSmallStraight
@@ -124,7 +124,7 @@
           completed:
             - !type:SpawnEntity
               entity: MaterialWoodPlank1
-              amount: 1
+              number: 1
             - !type:DeleteEntity
     - node: end_small
       entity: FenceWoodSmallEnd
@@ -136,7 +136,7 @@
           completed:
             - !type:SpawnEntity
               entity: MaterialWoodPlank1
-              amount: 1
+              number: 1
             - !type:DeleteEntity
     - node: corner_small
       entity: FenceWoodSmallCorner
@@ -148,7 +148,7 @@
           completed:
             - !type:SpawnEntity
               entity: MaterialWoodPlank1
-              amount: 1
+              number: 1
             - !type:DeleteEntity
     - node: tjunction_small
       entity: FenceWoodSmallTJunction
@@ -160,7 +160,7 @@
           completed:
             - !type:SpawnEntity
               entity: MaterialWoodPlank1
-              amount: 1
+              number: 1
             - !type:DeleteEntity
     - node: gate_small
       entity: FenceWoodSmallGate
@@ -172,5 +172,5 @@
           completed:
             - !type:SpawnEntity
               entity: MaterialWoodPlank1
-              amount: 1
+              number: 1
             - !type:DeleteEntity

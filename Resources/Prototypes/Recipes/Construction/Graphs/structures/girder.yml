@@ -20,7 +20,7 @@
           completed:
             - !type:SpawnEntity
               entity: SheetSteel1
-              amount: 2
+              number: 2
             - !type:DeleteEntity
           conditions:
             - !type:EntityAnchored
@@ -277,7 +277,7 @@
               southRotation: true
             - !type:SpawnEntity
               entity: SheetPlasteel1
-              amount: 2
+              number: 2
           conditions:
             - !type:EntityAnchored { }
           steps:
@@ -291,7 +291,7 @@
           completed:
             - !type:SpawnEntity
               entity: SheetPlasteel1
-              amount: 2
+              number: 2
           steps:
             - tool: Cutting
               doAfter: 1
@@ -343,7 +343,7 @@
           completed:
             - !type:SpawnEntity
               entity: SheetPlasteel1
-              amount: 2
+              number: 2
           steps:
             - tool: Cutting
               doAfter: 1
@@ -395,10 +395,10 @@
           completed:
             - !type:SpawnEntity
               entity: SheetPlasteel1
-              amount: 2
+              number: 2
             - !type:SpawnEntity
               entity: PartRodMetal1
-              amount: 4
+              number: 4
           steps:
             - tool: Welding
               doAfter: 10
@@ -452,10 +452,10 @@
           completed:
             - !type:SpawnEntity
               entity: SheetPlasteel1
-              amount: 1
+              number: 1
             - !type:SpawnEntity
               entity: SheetSteel1
-              amount: 1
+              number: 1
           steps:
           #To-Do: Add deconstruct visuals
             - tool: Welding

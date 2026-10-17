@@ -20,7 +20,7 @@
           completed:
             - !type:SpawnEntity
               entity: SolarAssemblyFlatpack
-              amount: 1
+              number: 1
             - !type:DeleteEntity
           steps:
             - tool: Screwing
@@ -77,7 +77,7 @@
               southRotation: true
             - !type:SpawnEntity
               entity: SheetPGlass1
-              amount: 2
+              number: 2
           conditions:
             - !type:EntityAnchored
               anchored: true
@@ -94,7 +94,7 @@
               southRotation: true
             - !type:SpawnEntity
               entity: SheetUGlass1
-              amount: 2
+              number: 2
           conditions:
             - !type:EntityAnchored
               anchored: true
@@ -111,7 +111,7 @@
               southRotation: true
             - !type:SpawnEntity
               entity: SheetGlass1
-              amount: 2
+              number: 2
           conditions:
             - !type:EntityAnchored
               anchored: true
@@ -128,7 +128,7 @@
               southRotation: true
             - !type:SpawnEntity
               entity: ShardGlass
-              amount: 2
+              number: 2
           conditions:
             - !type:EntityAnchored
               anchored: true
@@ -145,7 +145,7 @@
           southRotation: true
         - !type:SpawnEntity
           entity: ShardGlassPlasma
-          amount: 2
+          number: 2
         conditions:
         - !type:EntityAnchored
           anchored: true
@@ -162,7 +162,7 @@
           southRotation: true
         - !type:SpawnEntity
           entity: ShardGlassUranium
-          amount: 2
+          number: 2
         conditions:
         - !type:EntityAnchored
           anchored: true
@@ -179,10 +179,10 @@
               southRotation: true
             - !type:SpawnEntity
               entity: SheetGlass1
-              amount: 2
+              number: 2
             - !type:SpawnEntity
               entity: SolarTrackerElectronics
-              amount: 1
+              number: 1
           conditions:
             - !type:EntityAnchored
               anchored: true

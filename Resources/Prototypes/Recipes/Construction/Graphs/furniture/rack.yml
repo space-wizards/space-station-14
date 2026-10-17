@@ -21,7 +21,7 @@
           completed:
             - !type:SpawnEntity
               entity: SheetSteel1
-              amount: 2
+              number: 2
           steps:
             - tool: Screwing
               doAfter: 1

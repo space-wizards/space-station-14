@@ -22,7 +22,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:EmptyAllContainers
       - !type:DeleteEntity
 
@@ -50,7 +50,7 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 2
+        number: 2
       - !type:EmptyAllContainers
       - !type:DeleteEntity
 
@@ -83,10 +83,10 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 5
+        number: 5
       - !type:SpawnEntity
         entity: SheetGlass1
-        amount: 2
+        number: 2
       - !type:EmptyAllContainers
       - !type:DeleteEntity
 
@@ -119,9 +119,9 @@
       completed:
       - !type:SpawnEntity
         entity: SheetSteel1
-        amount: 5
+        number: 5
       - !type:SpawnEntity
         entity: SheetGlass1
-        amount: 2
+        number: 2
       - !type:EmptyAllContainers
       - !type:DeleteEntity

@@ -18,7 +18,7 @@
           completed:
             - !type:SpawnEntity
               entity: SheetSteel1
-              amount: 5
+              number: 5
             - !type:EmptyAllContainers
             - !type:DestroyEntity
           conditions:
