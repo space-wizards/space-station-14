@@ -56,6 +56,8 @@ namespace Content.Server.Voting.Managers
             switch (voteType)
             {
                 case StandardVoteType.Restart:
+                    if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby) // Cancels the vote if it's in the lobby
+                        return;
                     CreateRestartVote(initiator);
                     break;
                 case StandardVoteType.Preset:
@@ -75,7 +77,6 @@ namespace Content.Server.Voting.Managers
             if (timeoutVote)
                 TimeoutStandardVote(voteType);
         }
-
         private void CreateRestartVote(ICommonSession? initiator)
         {
 
