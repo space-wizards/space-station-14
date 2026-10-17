@@ -6,7 +6,7 @@
     edges:
     - to: frame1
       completed:
-      - !type:SnapToGrid { }
+      - !type:SnapToGrid
       steps:
       - material: Plasteel
         amount: 3

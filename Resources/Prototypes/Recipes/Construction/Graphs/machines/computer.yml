@@ -53,7 +53,7 @@
           conditions:
             - !type:EntityAnchored { }
           completed:
-            - !type:EmptyAllContainers {}
+            - !type:EmptyAllContainers
           steps:
             - tool: Prying
 
@@ -77,7 +77,7 @@
     - node: monitorMissing
       entity: ComputerFrame
       actions:
-        - !type:SetAnchor { }
+        - !type:SetAnchor
         - !type:AppearanceChange
       edges:
         - to: monitorUnsecured

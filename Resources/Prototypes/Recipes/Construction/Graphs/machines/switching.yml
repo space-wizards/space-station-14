@@ -15,7 +15,7 @@
     edges:
       - to: LeverNode
         completed:
-          - !type:SnapToGrid {}
+          - !type:SnapToGrid
         steps:
           - material: Steel
             amount: 2

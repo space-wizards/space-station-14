@@ -8,7 +8,7 @@
       edges:
         - to: bookshelf
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
             - material: WoodPlank
               amount: 5

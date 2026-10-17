@@ -8,7 +8,7 @@
       edges:
         - to: bed
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
             - material: Steel
               amount: 2
@@ -18,14 +18,14 @@
               doAfter: 1
         - to: dogbed
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
             - material: WoodPlank
               amount: 10
               doAfter: 1
         - to: medicalbed
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
             - material: Plasteel
               amount: 2

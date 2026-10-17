@@ -6,7 +6,7 @@
       edges:
         - to: toilet
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
             - material: Steel
               amount: 5
@@ -19,7 +19,7 @@
             - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 5
-            - !type:EmptyAllContainers {}
+            - !type:EmptyAllContainers
             - !type:DestroyEntity
           conditions:
             - !type:EntityAnchored

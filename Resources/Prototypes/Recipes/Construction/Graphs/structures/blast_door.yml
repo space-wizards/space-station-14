@@ -16,8 +16,8 @@
     - node: frame1
       entity: BlastDoorFrame
       actions:
-        - !type:SnapToGrid {}
-        - !type:SetAnchor {}
+        - !type:SnapToGrid
+        - !type:SetAnchor
       edges:
         - to: frame2
           conditions:

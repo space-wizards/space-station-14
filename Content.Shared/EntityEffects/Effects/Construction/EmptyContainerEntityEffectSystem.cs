@@ -1,4 +1,3 @@
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Containers;
 
@@ -18,12 +17,9 @@ public sealed partial class EmptyContainerEntityEffectSystem : EntityEffectSyste
             || !_container.TryGetContainer(entity, args.Effect.Container, out var container, containerManager))
             return;
 
-        var hasHands = TryComp<HandsComponent>(args.User, out var hands);
-
         foreach (var ent in _container.EmptyContainer(container, true, reparent: !args.Effect.Pickup))
         {
-            if (hasHands)
-                _hands.PickupOrDrop(args.User, ent, dropNear: true, handsComp: hands);
+            _hands.PickupOrDrop(args.User, ent, dropNear: true);
         }
     }
 }

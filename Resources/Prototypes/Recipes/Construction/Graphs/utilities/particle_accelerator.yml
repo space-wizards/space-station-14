@@ -23,7 +23,7 @@
           conditions:
             - !type:EntityAnchored {}
           completed:
-            - !type:SnapToGrid {}
+            - !type:SnapToGrid
           steps:
             - tool: Screwing
               doAfter: 0.5
@@ -73,7 +73,7 @@
           conditions:
             - !type:EntityAnchored {}
           completed:
-            - !type:SnapToGrid {}
+            - !type:SnapToGrid
           steps:
             - tool: Screwing
               doAfter: 0.5
@@ -123,7 +123,7 @@
           conditions:
             - !type:EntityAnchored {}
           completed:
-            - !type:SnapToGrid {}
+            - !type:SnapToGrid
           steps:
             - tool: Screwing
               doAfter: 0.5
@@ -172,7 +172,7 @@
           conditions:
             - !type:EntityAnchored {}
           completed:
-            - !type:SnapToGrid {}
+            - !type:SnapToGrid
           steps:
             - tool: Screwing
               doAfter: 0.5
@@ -221,7 +221,7 @@
           conditions:
             - !type:EntityAnchored {}
           completed:
-            - !type:SnapToGrid {}
+            - !type:SnapToGrid
           steps:
             - tool: Screwing
               doAfter: 0.5
@@ -270,7 +270,7 @@
           conditions:
             - !type:EntityAnchored {}
           completed:
-            - !type:SnapToGrid {}
+            - !type:SnapToGrid
           steps:
             - tool: Screwing
               doAfter: 0.5
@@ -319,7 +319,7 @@
           conditions:
             - !type:EntityAnchored {}
           completed:
-            - !type:SnapToGrid {}
+            - !type:SnapToGrid
           steps:
             - tool: Screwing
               doAfter: 0.5

@@ -8,77 +8,77 @@
       edges:
         - to: Curtains
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
             - material: Cloth
               amount: 2
               doAfter: 1
         - to: CurtainsBlack
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
             - material: FloorCarpetBlack
               amount: 1
               doAfter: 1
         - to: CurtainsBlue
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
             - material: FloorCarpetBlue
               amount: 1
               doAfter: 1
         - to: CurtainsSkyBlue
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
           - material: FloorCarpetSkyBlue
             amount: 1
             doAfter: 1
         - to: CurtainsCyan
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
             - material: FloorCarpetCyan
               amount: 1
               doAfter: 1
         - to: CurtainsGreen
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
             - material: FloorCarpetGreen
               amount: 1
               doAfter: 1
         - to: CurtainsOrange
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
             - material: FloorCarpetOrange
               amount: 1
               doAfter: 1
         - to: CurtainsPink
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
             - material: FloorCarpetPink
               amount: 1
               doAfter: 1
         - to: CurtainsPurple
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
             - material: FloorCarpetPurple
               amount: 1
               doAfter: 1
         - to: CurtainsRed
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
             - material: FloorCarpetRed
               amount: 1
               doAfter: 1
         - to: CurtainsWhite
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
             - material: FloorCarpetWhite
               amount: 1

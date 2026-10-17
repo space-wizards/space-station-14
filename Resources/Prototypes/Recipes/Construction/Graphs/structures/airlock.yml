@@ -16,8 +16,8 @@
   - node: assembly
     entity: AirlockAssembly
     actions:
-    - !type:SnapToGrid {}
-    - !type:SetAnchor {}
+    - !type:SnapToGrid
+    - !type:SetAnchor
     edges:
     - to: wired
       conditions:

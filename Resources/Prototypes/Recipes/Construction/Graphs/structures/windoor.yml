@@ -16,8 +16,8 @@
   - node: assembly
     entity: WindoorAssembly
     actions:
-    - !type:SnapToGrid {}
-    - !type:SetAnchor {}
+    - !type:SnapToGrid
+    - !type:SetAnchor
     edges:
     #to normal
     - to: glass
