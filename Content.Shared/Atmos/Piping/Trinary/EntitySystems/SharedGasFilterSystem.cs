@@ -96,6 +96,15 @@ public abstract partial class SharedGasFilterSystem : EntitySystem
         UpdateUi(ent);
     }
 
+    [SubscribeLocalEvent]
+    private void OnToggleOutputMessage(Entity<GasFilterComponent> ent, ref GasFilterToggleOutputMessage args)
+    {
+        ent.Comp.FilteredGasOnFilterOutlet = args.FilteredGasOnFilterOutlet;
+
+        DirtyField(ent.Owner, ent.Comp, nameof(GasFilterComponent.FilteredGasOnFilterOutlet));
+        UpdateUi(ent);
+    }
+
     protected void UpdateAppearance(Entity<GasFilterComponent> ent)
     {
         _appearance.SetData(ent, FilterVisuals.Enabled, ent.Comp.Enabled);
