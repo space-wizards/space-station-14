@@ -133,6 +133,94 @@
       weight: 4
 
 - type: entityTable
+  id: XenoArtifactEffectsDangerousTable
+  table: !type:GroupSelector
+    children:
+    # hijacks use key, prevents from using artifact, sadly
+    #- id: XenoArtifactEffectUniversalIntercom
+    #  weight: 10.0
+    - id: XenoArtifactSpeedUp
+      weight: 4
+#    - id: XenoArtifactGhost
+#      weight: 2
+#    - id: XenoArtifactPotassiumWave
+#      weight: 7
+#    - id: XenoArtifactFloraSpawn
+#      weight: 10
+    - id: XenoArtifactChemicalPuddle
+      weight: 10
+    - id: XenoArtifactFoamMild
+      weight: 8
+    - id: XenoArtifactMonkeySpawn
+      weight: 10
+    - id: XenoArtifactRadioactive
+      weight: 8
+    - id: XenoArtifactKnock
+      weight: 6
+    - id: XenoArtifactAngryCarpSpawn
+      weight: 6
+    - id: XenoArtifactHostileFaunaSpawn
+      weight: 10
+    - id: XenoArtifactShatterWindows
+      weight: 8
+    - id: XenoArtifactFoamGood
+      weight: 6
+    - id: XenoArtifactFoamDangerous
+      weight: 4
+    - id: XenoArtifactPuddleRare
+      weight: 4
+    - id: XenoArtifactAnomalySpawn
+      weight: 10
+    - id: XenoArtifactIgnite
+      weight: 4
+    - id: XenoArtifactTeleport
+      weight: 4
+    - id: XenoArtifactEmp
+      weight: 4
+    - id: XenoArtifactPolyMonkey
+      weight: 4
+    - id: XenoArtifactPolyLuminous
+      weight: 4
+    - id: XenoArtifactPolyLizard
+      weight: 4
+    - id: XenoArtifactRadioactiveStrong
+      weight: 5
+    - id: XenoArtifactMaterialSpawnGlass
+      weight: 3.3
+    - id: XenoArtifactMaterialSpawnSteel
+      weight: 3.3
+    - id: XenoArtifactMaterialSpawnPlastic
+      weight: 3.3
+    - id: XenoArtifactPortal
+      weight: 4
+    - id: XenoArtifactArtifactSpawn
+      weight: 2
+    - id: XenoArtifactShuffle
+      weight: 3
+    - id: XenoArtifactHealAll
+      weight: 2
+    #- id: XenoArtifactTesla
+    #  weight: 10
+    #- id: XenoArtifactSingularity
+    #  weight: 10
+    - id: XenoArtifactExplosionScary
+      weight: 1
+    - id: XenoArtifactBoom
+      weight: 5
+    - id: XenoArtifactEffectCreationGasPlasma
+      weight: 2
+    - id: XenoArtifactEffectCreationGasTritium
+      weight: 2
+    - id: XenoArtifactEffectCreationGasAmmonia
+      weight: 3
+    - id: XenoArtifactEffectCreationGasFrezon
+      weight: 1
+    - id: XenoArtifactEffectCreationGasNitrousOxide
+      weight: 4
+    - id: XenoArtifactEffectCreationGasCarbonDioxide
+      weight: 4
+
+- type: entityTable
   id: XenoArtifactEffectsHandheldOnlyTable
   table: !type:GroupSelector
     children:
