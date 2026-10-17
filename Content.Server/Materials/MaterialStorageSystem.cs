@@ -124,7 +124,7 @@ public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
     ///     1 biomass = 1 biomass in its stack,
     ///     but 100 plasma = 1 sheet of plasma, etc.
     /// </summary>
-    public List<EntityUid> SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates)
+    public override List<EntityUid> SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates)
     {
         return SpawnMultipleFromMaterial(amount, material, coordinates, out _);
     }
