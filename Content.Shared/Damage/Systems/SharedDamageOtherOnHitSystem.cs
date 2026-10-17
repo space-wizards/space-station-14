@@ -19,7 +19,13 @@ public abstract partial class SharedDamageOtherOnHitSystem : EntitySystem
 
     private void OnDamageExamine(Entity<DamageOtherOnHitComponent> ent, ref DamageExamineEvent args)
     {
-        _damageExamine.AddDamageExamine(args.Message, _damageable.ApplyUniversalAllModifiers(ent.Comp.Damage * _damageable.UniversalThrownDamageModifier), Loc.GetString("damage-throw"));
+        float? stamina = null;
+        if (TryComp<StaminaDamageOnCollideComponent>(ent, out var comp))
+        {
+            stamina = comp.Damage;
+        }
+
+        _damageExamine.AddDamageExamine(args.Message, _damageable.ApplyUniversalAllModifiers(ent.Comp.Damage * _damageable.UniversalThrownDamageModifier), Loc.GetString("damage-throw"), stamina);
     }
 
     /// <summary>
