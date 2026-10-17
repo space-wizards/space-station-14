@@ -1,0 +1,58 @@
+# Breacher Spider
+- type: entity
+  parent: MobSpiderBase
+  id: MobGiantSpiderBreacher
+  name: breacher spider
+  description: A broad, sturdy spider with unusually powerful jaws.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/Spiders/breacherspider.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: idle
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 6
+        Structural: 6
+  - type: Prying
+    speedModifier: 2.0
+  - type: SolutionManager
+    solutions:
+    - SolutionVenomSpiderBreacher
+  - type: MeleeChemicalInjector
+    transferAmount: 1
+    solution: melee
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 3.5
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      120: Dead
+
+- type: entity
+  parent: [SolutionWeapon, SolutionTiny]
+  id: SolutionVenomSpiderBreacher
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 5
+      reagents:
+      - ReagentId: Mechanotoxin
+        Quantity: 5
+  - type: SolutionRegeneration
+    generated:
+      reagents:
+      - ReagentId: Mechanotoxin
+        Quantity: 0.1
+
+# Angry Breacher Spider
+- type: entity
+  parent:
+  - MobSpiderAngryBase
+  - MobGiantSpiderBreacher
+  id: MobGiantSpiderBreacherAngry
+  suffix: Angry
