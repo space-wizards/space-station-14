@@ -16,6 +16,11 @@ public sealed class XenoArtifactTest : GameTest
     private const string TestGenArtifactFlat = "TestGenArtifactFlat";
     private const string TestGenArtifactTall = "TestGenArtifactTall";
     private const string TestGenArtifactFull = "TestGenArtifactFull";
+    private const string TestGenArtifactWithBudget = "TestGenArtifactWithBudget";
+    private const string TestGenArtifactWithNotEnoughBudgetForEffect = "TestGenArtifactWithNotEnoughBudget";
+    private const string TestGenArtifactWithNotEnoughBudgetForTrigger = "TestGenArtifactWithNotEnoughBudgetForTrigger";
+    private const string TestGenArtifactWithTooBigBudgetForEffect = "TestGenArtifactWithTooBigBudgetForEffect";
+    private const string TestGenArtifactWithTooBigBudgetForTrigger = "TestGenArtifactWithTooBigBudgetForTrigger";
 
     [SidedDependency(Side.Server)] private SharedXenoArtifactSystem _sArtifactSystem = null!;
 
@@ -88,11 +93,259 @@ public sealed class XenoArtifactTest : GameTest
       tableId: XenoArtifactEffectsDefaultTable
 
 - type: entity
-  id: {TestArtifactNode}
+  parent: BaseXenoArtifactEffect
+  id: TestArtifactNode
   name: artifact node
   components:
   - type: XenoArtifactNode
     maxDurability: 3
+
+- type: entity
+  id: {TestGenArtifactWithBudget}
+  parent: BaseXenoArtifact
+  name: artifact
+  components:
+  - type: XenoArtifact
+    isGenerationRequired: true
+    nodeCount:
+      min: 2
+      max: 2
+    segmentSize:
+      min: 2
+      max: 2
+    nodesPerSegmentLayer:
+      min: 1
+      max: 1
+    effectsTable: !type:NestedSelector
+      tableId: TestEffectTableWithBudgetRestrictions
+    triggersTable: !type:NestedSelector
+      tableId: TestTriggerTableWithBudgetRestrictions
+
+- type: entityTable
+  id: TestEffectTableWithBudgetRestrictions
+  table: !type:GroupSelector
+    conditionsForChildren:
+    - !type:HasArtifactBudgetInRangeCondition
+    children:
+    - id: TestEffect1
+    - id: TestEffect2
+
+- type: entityTable
+  id: TestTriggerTableWithBudgetRestrictions
+  table: !type:GroupSelector
+    conditionsForChildren:
+      - !type:ExcludeEntitiesFromContextCondition
+      - !type:HasArtifactBudgetInRangeCondition
+    children:
+    - id: TestTrigger1
+    - id: TestTrigger2
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TestTrigger1
+  name: test-trigger-1
+  components:
+  - type: XenoArtifactTriggerBudgetRange
+    actualBudget: 2000
+    budgetRange:
+      min: 0
+      max: 2000
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TestTrigger2
+  name: test-trigger-2
+  components:
+  - type: XenoArtifactTriggerBudgetRange
+    actualBudget: 5000
+    budgetRange:
+      min: 2000
+      max: 5000
+
+- type: entity
+  id: TestEffect1
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Test effect 1
+  components:
+  - type: XenoArtifactNode
+    budgetRange:
+      min: 0
+      max: 2000
+
+- type: entity
+  id: TestEffect2
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Test effect 2
+  components:
+  - type: XenoArtifactNode
+    budgetRange:
+      min: 5000
+      max: 7000
+
+
+- type: entity
+  id: {TestGenArtifactWithNotEnoughBudgetForEffect}
+  parent: BaseXenoArtifact
+  name: artifact
+  components:
+  - type: XenoArtifact
+    isGenerationRequired: true
+    nodeCount:
+      min: 2
+      max: 2
+    segmentSize:
+      min: 2
+      max: 2
+    nodesPerSegmentLayer:
+      min: 1
+      max: 1
+    effectsTable: !type:NestedSelector
+      tableId: TestEffectTableWithBudgetRestrictions2
+    triggersTable: !type:NestedSelector
+      tableId: TestTriggerTableWithBudgetRestrictions
+
+- type: entityTable
+  id: TestEffectTableWithBudgetRestrictions2
+  table: !type:GroupSelector
+    conditionsForChildren:
+    - !type:HasArtifactBudgetInRangeCondition
+    children:
+    - id: TestEffect1
+    - id: TestEffect3
+
+- type: entity
+  id: TestEffect3
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Test effect 3
+  components:
+  - type: XenoArtifactNode
+    budgetRange:
+      min: 7001
+      max: 10000
+
+- type: entity
+  id: {TestGenArtifactWithNotEnoughBudgetForTrigger}
+  parent: BaseXenoArtifact
+  name: artifact
+  components:
+  - type: XenoArtifact
+    isGenerationRequired: true
+    nodeCount:
+      min: 2
+      max: 2
+    segmentSize:
+      min: 2
+      max: 2
+    nodesPerSegmentLayer:
+      min: 1
+      max: 1
+    effectsTable: !type:NestedSelector
+      tableId: TestEffectTableWithBudgetRestrictions
+    triggersTable: !type:NestedSelector
+      tableId: TestTriggerTableWithBudgetRestrictions2
+
+- type: entityTable
+  id: TestTriggerTableWithBudgetRestrictions2
+  table: !type:GroupSelector
+    conditionsForChildren:
+      - !type:ExcludeEntitiesFromContextCondition
+      - !type:HasArtifactBudgetInRangeCondition
+    children:
+    - id: TestTrigger1
+    - id: TestTrigger3
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TestTrigger3
+  name: test-trigger-3
+  components:
+  - type: XenoArtifactTriggerBudgetRange
+    actualBudget: 10000
+    budgetRange:
+      min: 5001
+      max: 10000
+
+- type: entity
+  id: {TestGenArtifactWithTooBigBudgetForEffect}
+  parent: BaseXenoArtifact
+  name: artifact
+  components:
+  - type: XenoArtifact
+    isGenerationRequired: true
+    nodeCount:
+      min: 2
+      max: 2
+    segmentSize:
+      min: 2
+      max: 2
+    nodesPerSegmentLayer:
+      min: 1
+      max: 1
+    effectsTable: !type:NestedSelector
+      tableId: TestEffectTableWithBudgetRestrictions3
+    triggersTable: !type:NestedSelector
+      tableId: TestTriggerTableWithBudgetRestrictions
+
+- type: entityTable
+  id: TestEffectTableWithBudgetRestrictions3
+  table: !type:GroupSelector
+    conditionsForChildren:
+    - !type:HasArtifactBudgetInRangeCondition
+    children:
+    - id: TestEffect1
+    - id: TestEffect4
+
+- type: entity
+  id: TestEffect4
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Test effect 4
+  components:
+  - type: XenoArtifactNode
+    budgetRange:
+      min: 3000
+      max: 3001
+
+- type: entity
+  id: {TestGenArtifactWithTooBigBudgetForTrigger}
+  parent: BaseXenoArtifact
+  name: artifact
+  components:
+  - type: XenoArtifact
+    isGenerationRequired: true
+    nodeCount:
+      min: 2
+      max: 2
+    segmentSize:
+      min: 2
+      max: 2
+    nodesPerSegmentLayer:
+      min: 1
+      max: 1
+    effectsTable: !type:NestedSelector
+      tableId: TestEffectTableWithBudgetRestrictions
+    triggersTable: !type:NestedSelector
+      tableId: TestTriggerTableWithBudgetRestrictions3
+
+- type: entityTable
+  id: TestTriggerTableWithBudgetRestrictions3
+  table: !type:GroupSelector
+    conditionsForChildren:
+      - !type:ExcludeEntitiesFromContextCondition
+      - !type:HasArtifactBudgetInRangeCondition
+    children:
+    - id: TestTrigger1
+    - id: TestTrigger4
+
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: TestTrigger4
+  name: test-trigger-4
+  components:
+  - type: XenoArtifactTriggerBudgetRange
+    actualBudget: 2002
+    budgetRange:
+      min: 2001
+      max: 2002
 ";
 
     /// <summary>
@@ -467,5 +720,55 @@ public sealed class XenoArtifactTest : GameTest
         _sArtifactSystem.TriggerXenoArtifact(artifactEnt, nodeC.Value, force: true);
         unlocking = SComp<XenoArtifactUnlockingComponent>(artifactUid);
         Assert.That(unlocking.EndTime, Is.EqualTo(baseEndTime));
+    }
+
+    [Test]
+    [Description("Checks that when using entity table of triggers and effects with budget range, budget is respected")]
+    [RunOnSide(Side.Server)]
+    public void XenoArtifactGenerateBasedOnBudget()
+    {
+        var artifactUid = SSpawn(TestGenArtifactWithBudget);
+        Entity<XenoArtifactComponent> artifactEnt = (artifactUid, SComp<XenoArtifactComponent>(artifactUid));
+
+        var segments = _sArtifactSystem.GetSegments(artifactEnt);
+        Assert.That(segments.Count, Is.EqualTo(1));
+
+        var segment = segments[0];
+        Assert.That(segment.Count, Is.EqualTo(2), "Artifact is supposed to have 2 layers");
+        var firstNode = segment[0];
+        Assert.That(STryComp<MetaDataComponent>(firstNode,out var metaData1), Is.True);
+        Assert.That(metaData1!.EntityDescription, Is.EqualTo("Test effect 1"));
+        Assert.That(firstNode.Comp.TriggerTip, Is.EqualTo("test-trigger-1"));
+
+        var secondNode = segment[1];
+        Assert.That(STryComp<MetaDataComponent>(secondNode, out var metaData2), Is.True);
+        Assert.That(metaData2!.EntityDescription, Is.EqualTo("Test effect 2"));
+        Assert.That(secondNode.Comp.TriggerTip, Is.EqualTo("test-trigger-2"));
+    }
+
+    [Test]
+    [Description(
+        "Checks that when using entity table of triggers and effects with budget range, "
+        + "but current budget is too low or too big for picking trigger or effect, even if it is desired, and artifact will have less nodes"
+    )]
+    [RunOnSide(Side.Server)]
+    [TestCase(TestGenArtifactWithNotEnoughBudgetForEffect)]
+    [TestCase(TestGenArtifactWithNotEnoughBudgetForTrigger)]
+    [TestCase(TestGenArtifactWithTooBigBudgetForEffect)]
+    [TestCase(TestGenArtifactWithTooBigBudgetForTrigger)]
+    public void XenoArtifactGenerateBasedOnBudgetButNotEnoughBudget(string prototypeToSpawn)
+    {
+        var artifactUid = SSpawn(prototypeToSpawn);
+        Entity<XenoArtifactComponent> artifactEnt = (artifactUid, SComp<XenoArtifactComponent>(artifactUid));
+
+        var segments = _sArtifactSystem.GetSegments(artifactEnt);
+        Assert.That(segments.Count, Is.EqualTo(1));
+
+        var segment = segments[0];
+        Assert.That(segment.Count, Is.EqualTo(1), "Artifact is supposed to have 1 layer");
+        var firstNode = segment[0];
+        Assert.That(STryComp<MetaDataComponent>(firstNode, out var metaData1), Is.True);
+        Assert.That(metaData1!.EntityDescription, Is.EqualTo("Test effect 1"));
+        Assert.That(firstNode.Comp.TriggerTip, Is.EqualTo("test-trigger-1"));
     }
 }

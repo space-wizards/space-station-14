@@ -104,6 +104,14 @@ public sealed partial class XenoArtifactComponent : Component
 
     public int NodeAdjacencyMatrixRows => NodeAdjacencyMatrix.Count;
     public int NodeAdjacencyMatrixColumns => NodeAdjacencyMatrix.TryGetValue(0, out var value) ? value.Count : 0;
+
+    /// <summary>
+    /// Additional budget for artifact trigger and effect evaluation per layer of depth.
+    /// Is multiplied by depth, starting with 0, and can be affected by other modifiers.
+    /// </summary>
+    [DataField]
+    public int PerDepthAdditionalBudgetBase = 2000;
+
     #endregion
 
     #region GenerationInfo
