@@ -199,8 +199,12 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
             HandleFilter();
         }
 
-        // The new guide has to be laid out before it can be scrolled.
-        UserInterfaceManager.DeferAction(() => Scroll.SetScrollValue(state.Scroll));
+        // The scroll range still belongs to the previous guide until the new content has been laid out, which
+        // normally only happens at the end of the frame. Lay it out now so the restored position is already in
+        // place when the guide is first drawn instead of flashing the top of it for a frame.
+        Scroll.Measure(Scroll.Size);
+        Scroll.Arrange(UIBox2.FromDimensions(Scroll.Position, Scroll.Size));
+        Scroll.SetScrollValue(state.Scroll);
     }
 
     private int? HeadingDepth(Label control)
