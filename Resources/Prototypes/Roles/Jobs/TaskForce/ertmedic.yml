@@ -43,10 +43,10 @@
     - Hypospray
     - BeakerSmallBruiz
     - BeakerSmallLace
-    - JugBluespacePunctTranex
-    - JugBluespacePyraDerma
-    - JugBluespaceDexPlusSaline # End of first line
-    - JugBluespaceTrico
+    - BluespaceBeakerPunctTranex
+    - BluespaceBeakerPyraDerma
+    - BluespaceBeakerDexPlusSaline # End of first line
+    - BluespaceBeakerTrico
     - BeakerSmallArith
     - BeakerSmallDiph
     - BeakerSmallSigy
@@ -69,10 +69,10 @@
   storage:
     back:
     - Hypospray
-    - JugBluespacePunctTranex
-    - JugBluespacePyraDerma
-    - JugBluespaceDexPlusSaline
-    - JugBluespaceTrico # End of first line
+    - BluespaceBeakerPunctTranex
+    - BluespaceBeakerPyraDerma
+    - BluespaceBeakerDexPlusSaline
+    - BluespaceBeakerTrico # End of first line
     - BeakerSmallArith
     - DefibrillatorCompact
     - MedkitCombatFilled

@@ -21,20 +21,6 @@
     - ChemDispensable
 
 - type: entity
-  parent: [ Jug, BaseCentcommContraband ]
-  id: JugBluespace
-  name: bluespace jug
-  description: Used to contain a very large amount of chemicals or solutions. Streamlined with bluespace technology to take up as little space as possible.
-  components:
-  - type: Sprite
-    sprite: Objects/Specific/Chemistry/jug_bluespace.rsi
-  - type: Item
-    size: Normal
-    sprite: Objects/Specific/Chemistry/jug_bluespace.rsi
-  - type: SolutionContainerVisuals
-    inHandsMaxFillLevels: 3
-
-- type: entity
   parent: Jug
   id: JugPunctTranex
   suffix: punct & tranex
@@ -48,10 +34,6 @@
         Quantity: 192
       - ReagentId: TranexamicAcid
         Quantity: 48
-
-- type: entity
-  parent: [ JugBluespace, JugPunctTranex ]
-  id: JugBluespacePunctTranex
 
 - type: entity
   parent: Jug
@@ -69,10 +51,6 @@
         Quantity: 180
 
 - type: entity
-  parent: [ JugBluespace, JugPyraDerma ]
-  id: JugBluespacePyraDerma
-
-- type: entity
   parent: Jug
   id: JugDexPlusSaline
   suffix: dex+ & saline
@@ -88,10 +66,6 @@
         Quantity: 120
 
 - type: entity
-  parent: [ JugBluespace, JugDexPlusSaline ]
-  id: JugBluespaceDexPlusSaline
-
-- type: entity
   parent: Jug
   id: JugTrico
   suffix: tricordrazine
@@ -103,10 +77,6 @@
       reagents:
       - ReagentId: Tricordrazine
         Quantity: 240
-
-- type: entity
-  parent: [ JugBluespace, JugTrico ]
-  id: JugBluespaceTrico
 
 - type: entity
   parent: Jug
@@ -122,10 +92,6 @@
         Quantity: 240
 
 - type: entity
-  parent: [ JugBluespace, JugBlood ]
-  id: JugBluespaceBlood
-
-- type: entity
   parent: Jug
   id: JugWater
   suffix: water
@@ -137,10 +103,6 @@
       reagents:
       - ReagentId: Water
         Quantity: 240
-
-- type: entity
-  parent: [ JugBluespace, JugWater ]
-  id: JugBluespaceWater
 
 - type: entity
   parent: Jug
