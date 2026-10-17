@@ -54,6 +54,9 @@
   - type: Transform
     anchored: true
     noRot: false
+  - type: Tag
+    tags:
+    - SolarFlareDeviceLinkSourceTarget
   - type: ApcPowerReceiver
     powerLoad: 2500
     needsPower: true
