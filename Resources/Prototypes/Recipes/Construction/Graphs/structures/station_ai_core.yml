@@ -26,8 +26,8 @@
     - to: start
       completed:
       - !type:SpawnEntity
-        prototype: SheetPlasteel1
-        amount: 4
+        entity: SheetPlasteel1
+        number: 4
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -83,8 +83,8 @@
     - to: frameWithSecuredElectronics
       completed:
       - !type:SpawnEntity
-        prototype: CableApcStack1
-        amount: 1
+        entity: CableApcStack1
+        number: 1
       steps:
       - tool: Cutting
         doAfter: 2
@@ -117,8 +117,8 @@
     - to: frameWithBrain
       completed:
       - !type:SpawnEntity
-        prototype: SheetRGlass1
-        amount: 2
+        entity: SheetRGlass1
+        number: 2
       steps:
       - tool: Prying
         doAfter: 4
@@ -134,8 +134,8 @@
     - to: frameWithWires
       completed:
       - !type:SpawnEntity
-        prototype: SheetRGlass1
-        amount: 2
+        entity: SheetRGlass1
+        number: 2
       steps:
       - tool: Prying
         doAfter: 4
