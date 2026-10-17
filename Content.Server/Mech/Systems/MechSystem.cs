@@ -134,10 +134,10 @@ public sealed partial class MechSystem : SharedMechSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnDamageChanged(EntityUid uid, MechComponent component, DamageChangedEvent args)
+    private void OnDamageChanged(Entity<MechComponent> ent, ref DamageChangedEvent args)
     {
-        var integrity = component.MaxIntegrity - _damageable.GetTotalDamage((uid, args.Damageable));
-        SetIntegrity(uid, integrity, component);
+        var integrity = ent.Comp.MaxIntegrity - _damageable.GetTotalDamage((ent, args.Damageable));
+        SetIntegrity(ent, integrity, ent.Comp);
     }
 
     [SubscribeLocalEvent]

@@ -59,12 +59,11 @@ public sealed partial class SlowOnDamageSystem : EntitySystem
         }
     }
 
-    private void OnDamageChanged(EntityUid uid, SlowOnDamageComponent component, DamageChangedEvent args)
+    private void OnDamageChanged(Entity<SlowOnDamageComponent> ent, ref DamageChangedEvent args)
     {
         // We -could- only refresh if it crossed a threshold but that would kind of be a lot of duplicated
         // code and this isn't a super hot path anyway since basically only humans have this
-
-        _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
+        _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(ent.Owner);
     }
 
     private void OnModifySpeed(Entity<ClothingSlowOnDamageModifierComponent> ent, ref InventoryRelayedEvent<ModifySlowOnDamageSpeedEvent> args)
