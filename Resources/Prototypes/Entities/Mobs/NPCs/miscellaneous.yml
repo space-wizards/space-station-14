@@ -89,6 +89,8 @@
     name: ghost-role-information-tomatokiller-name
     description: ghost-role-information-tomatokiller-description
     rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: short
   - type: GhostTakeoverAvailable
   - type: CanEscapeInventory
     baseResistTime: 3
