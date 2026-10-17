@@ -14,7 +14,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 1
             - !type:DeleteEntity
@@ -33,7 +33,7 @@
       edges:
         - to: frame
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: CableApcStack1
               amount: 2
           steps:
@@ -51,7 +51,7 @@
       edges:
         - to: frame_cable
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetPlastic
               amount: 2
           steps:
@@ -91,7 +91,7 @@
       edges:
         - to: frame_unit
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 1
             - !type:EmptyAllContainers
@@ -121,7 +121,7 @@
       edges:
         - to: frame_mailing
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 1
             - !type:EmptyAllContainers
@@ -151,7 +151,7 @@
     #  edges:
     #    - to: frame_inlet
     #      completed:
-    #        - !type:SpawnPrototype
+    #        - !type:SpawnEntity
     #          prototype: SheetSteel1
     #          amount: 1
     #        - !type:EmptyAllContainers
@@ -181,7 +181,7 @@
     #  edges:
     #    - to: frame_outlet
     #      completed:
-    #        - !type:SpawnPrototype
+    #        - !type:SpawnEntity
     #          prototype: SheetSteel1
     #          amount: 1
     #        - !type:EmptyAllContainers

@@ -5,13 +5,13 @@
   graph:
   - node: start
     actions:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 2
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: CableApcStack1
         amount: 1
-      - !type:DeleteEntity {}
+      - !type:DeleteEntity
     edges:
       - to: LeverNode
         completed:
@@ -58,7 +58,7 @@
             - !type:GivePrototype
               prototype: CableApcStack1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
 
 - type: constructionGraph
   id: SignalSwitchGraph
@@ -87,7 +87,7 @@
             - !type:GivePrototype
               prototype: CableApcStack1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
 
 - type: constructionGraph
   id: SignalButtonGraph
@@ -116,7 +116,7 @@
             - !type:GivePrototype
               prototype: CableApcStack1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
 
 - type: constructionGraph
   id: LightSwitchDirectionalGraph
@@ -145,7 +145,7 @@
             - !type:GivePrototype
               prototype: CableApcStack1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
 
 - type: constructionGraph
   id: SignalSwitchDirectionalGraph
@@ -174,7 +174,7 @@
             - !type:GivePrototype
               prototype: CableApcStack1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
 
 - type: constructionGraph
   id: SignalButtonDirectionalGraph
@@ -203,4 +203,4 @@
             - !type:GivePrototype
               prototype: CableApcStack1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity

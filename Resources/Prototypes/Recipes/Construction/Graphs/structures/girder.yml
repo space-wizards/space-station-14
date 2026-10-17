@@ -18,10 +18,10 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 2
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
           conditions:
             - !type:EntityAnchored
               anchored: false
@@ -275,7 +275,7 @@
           completed:
             - !type:SnapToGrid
               southRotation: true
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetPlasteel1
               amount: 2
           conditions:
@@ -289,7 +289,7 @@
       edges:
         - to: reinforcedGirder
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetPlasteel1
               amount: 2
           steps:
@@ -341,7 +341,7 @@
       edges:
         - to: reinforcedGirder
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetPlasteel1
               amount: 2
           steps:
@@ -393,10 +393,10 @@
       edges:
         - to: reinforcedGirder
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetPlasteel1
               amount: 2
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: PartRodMetal1
               amount: 4
           steps:
@@ -450,10 +450,10 @@
       edges:
         - to: reinforcedGirder
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetPlasteel1
               amount: 1
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 1
           steps:

@@ -25,7 +25,7 @@
         name: construction-graph-tag-proximity-sensor
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 5
       - !type:DeleteEntity
@@ -37,6 +37,7 @@
     entity: LandMineModularUnarmed
     actions:
     - !type:PlaySound
+      playAtPosition: true
       sound: /Audio/Machines/button.ogg
     edges:
     - to: emptyCase
@@ -44,9 +45,9 @@
       - tool: Cutting
         doAfter: 0.5
         completed:
-        - !type:SpawnPrototype
+        - !type:SpawnEntity
           prototype: CableApcStack1
-        - !type:SpawnPrototype
+        - !type:SpawnEntity
           prototype: ProximitySensor
     - to: mine
       steps:
@@ -58,6 +59,7 @@
   - node: mine
     actions:
     - !type:PlaySound
+      playAtPosition: true
       sound: /Audio/Machines/button.ogg
     - !type:AdminLog
       message: "A mine was crafted"

@@ -9,6 +9,7 @@
           - tool: Pulsing
           completed:
           - !type:PlaySound
+            playAtPosition: true
             sound: /Audio/Effects/unwrap.ogg
 
     - node: complete
@@ -19,7 +20,7 @@
           - tool: Welding
             doAfter: 1
           completed:
-          - !type:SpawnPrototype
+          - !type:SpawnEntity
             prototype: SheetSteel1
             amount: 1
           - !type:DeleteEntity

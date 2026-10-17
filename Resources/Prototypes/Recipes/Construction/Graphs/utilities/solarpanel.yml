@@ -18,10 +18,10 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SolarAssemblyFlatpack
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
           steps:
             - tool: Screwing
               doAfter: 2
@@ -75,7 +75,7 @@
           completed:
             - !type:SnapToGrid
               southRotation: true
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetPGlass1
               amount: 2
           conditions:
@@ -92,7 +92,7 @@
           completed:
             - !type:SnapToGrid
               southRotation: true
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetUGlass1
               amount: 2
           conditions:
@@ -109,7 +109,7 @@
           completed:
             - !type:SnapToGrid
               southRotation: true
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetGlass1
               amount: 2
           conditions:
@@ -126,7 +126,7 @@
           completed:
             - !type:SnapToGrid
               southRotation: true
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: ShardGlass
               amount: 2
           conditions:
@@ -143,7 +143,7 @@
         completed:
         - !type:SnapToGrid
           southRotation: true
-        - !type:SpawnPrototype
+        - !type:SpawnEntity
           prototype: ShardGlassPlasma
           amount: 2
         conditions:
@@ -160,7 +160,7 @@
         completed:
         - !type:SnapToGrid
           southRotation: true
-        - !type:SpawnPrototype
+        - !type:SpawnEntity
           prototype: ShardGlassUranium
           amount: 2
         conditions:
@@ -177,10 +177,10 @@
           completed:
             - !type:SnapToGrid
               southRotation: true
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetGlass1
               amount: 2
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SolarTrackerElectronics
               amount: 1
           conditions:

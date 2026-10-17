@@ -31,10 +31,10 @@
 
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 5
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
           steps:
             - tool: Screwing
               doAfter: 2
@@ -91,7 +91,7 @@
           conditions:
             - !type:EntityAnchored { }
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: CableApcStack1
               amount: 5
           steps:
@@ -112,7 +112,7 @@
           conditions:
             - !type:EntityAnchored {}
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetGlass1
               amount: 2
           steps:
@@ -137,7 +137,7 @@
           conditions:
             - !type:EntityAnchored {}
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: ShardGlass
               amount: 2
           steps:

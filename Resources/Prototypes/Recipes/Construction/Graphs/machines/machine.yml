@@ -4,7 +4,7 @@
   graph:
     - node: start
       actions:
-        - !type:SpawnPrototype
+        - !type:SpawnEntity
           prototype: SheetSteel1
         - !type:DeleteEntity
       edges:
@@ -34,7 +34,7 @@
             - material: Cable
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 5
             - !type:DeleteEntity
@@ -84,7 +84,7 @@
               container: machine_board
               examineText: construction-condition-machine-container-empty
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: CableApcStack1
           steps:
             - tool: Cutting
@@ -115,7 +115,7 @@
             - tool: Welding
               doAfter: 5
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 3
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity

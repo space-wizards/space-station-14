@@ -43,10 +43,10 @@
             - tool: Screwing
               doAfter: 2.0
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 2
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
     - node: bulbLight
       entity: PoweredSmallLightEmpty
       edges:
@@ -58,10 +58,10 @@
             - tool: Screwing
               doAfter: 2.0
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
     - node: groundLight
       entity: PoweredLightPostSmallEmpty
       edges:
@@ -73,10 +73,10 @@
             - tool: Screwing
               doAfter: 4.0
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 5
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
     - node: strobeLight
       entity: PoweredStrobeLightEmpty
       edges:
@@ -88,10 +88,10 @@
             - tool: Screwing
               doAfter: 2.0
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
     - node: emergencyLight
       entity: EmergencyLight
       edges:
@@ -100,10 +100,10 @@
             - tool: Screwing
               doAfter: 2.0
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 1
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetGlass1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity

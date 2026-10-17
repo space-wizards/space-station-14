@@ -11,6 +11,7 @@ using Content.Server.Stack;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
+using Content.Shared.EntityEffects.Effects.EntitySpawning;
 using Content.Shared.FixedPoint;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
@@ -304,10 +305,10 @@ public sealed class MaterialArbitrageTest : GameTest
 
                 foreach (var completion in edge.Completed)
                 {
-                    if (completion is not SpawnPrototype spawnCompletion)
+                    if (completion is not SpawnEntity spawnCompletion)
                         continue;
 
-                    var spawnProto = protoManager.Index(spawnCompletion.Prototype);
+                    var spawnProto = protoManager.Index(spawnCompletion.Entity);
 
                     if (!spawnProto.HasComp(materialName) ||
                         !spawnProto.TryComp<PhysicalCompositionComponent>(compositionName, out var mat))
@@ -315,7 +316,7 @@ public sealed class MaterialArbitrageTest : GameTest
 
                     foreach (var (matId, amount) in mat.MaterialComposition)
                     {
-                        materials[matId] = spawnCompletion.Amount * amount + materials.GetValueOrDefault(matId);
+                        materials[matId] = spawnCompletion.Number * amount + materials.GetValueOrDefault(matId);
                     }
                 }
             }

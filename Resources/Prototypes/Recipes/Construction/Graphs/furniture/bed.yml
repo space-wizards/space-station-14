@@ -4,7 +4,7 @@
   graph:
     - node: start
       actions:
-        - !type:DestroyEntity {}
+        - !type:DestroyEntity
       edges:
         - to: bed
           completed:
@@ -38,10 +38,10 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetSteel1
               amount: 2
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialCloth1
               amount: 2
           steps:
@@ -52,7 +52,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 10
           steps:
@@ -63,10 +63,10 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetPlasteel1
               amount: 2
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialDurathread1
               amount: 2
           steps:

@@ -22,7 +22,7 @@
         doAfter: 0.5
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 5
       - !type:DeleteEntity
@@ -35,6 +35,7 @@
     actions:
     - !type:AppearanceChange
     - !type:PlaySound
+      playAtPosition: true
       sound: /Audio/Machines/button.ogg
     edges:
     - to: emptyCase
@@ -42,7 +43,7 @@
       - tool: Cutting
         doAfter: 0.5
         completed:
-        - !type:SpawnPrototype
+        - !type:SpawnEntity
           prototype: CableApcStack1
     - to: caseWithTrigger
       steps:
@@ -61,6 +62,7 @@
     actions:
     - !type:AppearanceChange
     - !type:PlaySound
+      playAtPosition: true
       sound: /Audio/Machines/button.ogg
     edges:
     - to: wiredCase
@@ -81,6 +83,7 @@
     actions:
     - !type:AppearanceChange
     - !type:PlaySound
+      playAtPosition: true
       sound: /Audio/Machines/button.ogg
     edges:
     - to: wiredCase
@@ -101,6 +104,7 @@
     actions:
     - !type:AppearanceChange
     - !type:PlaySound
+      playAtPosition: true
       sound: /Audio/Machines/button.ogg
     - !type:AdminLog
       message: "A grenade was crafted"

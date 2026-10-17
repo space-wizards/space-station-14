@@ -20,8 +20,8 @@
       - !type:ContainerEmpty
         container: "ItemCabinet"
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
+      - !type:SpawnEntity
+        entity: SheetSteel1
         amount: 2
       - !type:EmptyAllContainers
       - !type:DeleteEntity
@@ -48,8 +48,8 @@
       - !type:ContainerEmpty
         container: "ItemCabinet"
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
+      - !type:SpawnEntity
+        entity: SheetSteel1
         amount: 2
       - !type:EmptyAllContainers
       - !type:DeleteEntity
@@ -81,11 +81,11 @@
       - !type:Locked
         locked: false
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
+      - !type:SpawnEntity
+        entity: SheetSteel1
         amount: 5
-      - !type:SpawnPrototype
-        prototype: SheetGlass1
+      - !type:SpawnEntity
+        entity: SheetGlass1
         amount: 2
       - !type:EmptyAllContainers
       - !type:DeleteEntity
@@ -117,11 +117,11 @@
       - !type:Locked
         locked: false
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
+      - !type:SpawnEntity
+        entity: SheetSteel1
         amount: 5
-      - !type:SpawnPrototype
-        prototype: SheetGlass1
+      - !type:SpawnEntity
+        entity: SheetGlass1
         amount: 2
       - !type:EmptyAllContainers
       - !type:DeleteEntity

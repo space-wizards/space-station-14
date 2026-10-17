@@ -31,10 +31,10 @@
       - !type:EntityAnchored
         anchored: false
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetSteel1
         amount: 4
-      - !type:DeleteEntity {}
+      - !type:DeleteEntity
       steps:
       - tool: Welding
         doAfter: 3
@@ -55,7 +55,7 @@
         doAfter: 3
     - to: assembly
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: CableApcStack1
         amount: 5
       steps:
@@ -107,7 +107,7 @@
       - !type:EmptyAllContainers
         pickup: true
         emptyAtUser: true
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetRGlass1
         amount: 1
       steps:
@@ -131,7 +131,7 @@
       - !type:WirePanel {}
       - !type:AllWiresCut
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetRGlass1
         amount: 1
       steps:
@@ -365,7 +365,7 @@
     edges:
     - to: highSecurity
       completed:
-      - !type:AttemptElectrocute
+      - !type:Electrocute
       - !type:GivePrototype
         prototype: PartRodMetal1
         amount: 2

@@ -31,7 +31,7 @@
             - tool: Prying
               doAfter: 5
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank1
               amount: 10
 
@@ -55,7 +55,7 @@
             - tool: Cutting
               doAfter: 0.25
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: CableApcStack1
               amount: 2
 
@@ -75,7 +75,7 @@
             - tool: Prying
               doAfter: 0.5
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SignalTrigger
               amount: 1
 
@@ -112,7 +112,7 @@
             - tool: Prying
               doAfter: 2
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetRGlass1
               amount: 5
 
@@ -124,7 +124,7 @@
             - tool: Prying
               doAfter: 2
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: ShardGlassReinforced
               amount: 1
 
@@ -149,12 +149,12 @@
               doAfter: 2
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: CableApcStack1
               amount: 2
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SignalTrigger
               amount: 1
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetRGlass1
               amount: 5

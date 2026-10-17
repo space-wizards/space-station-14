@@ -21,7 +21,7 @@
         - !type:GivePrototype
           prototype: SheetSteel1
           amount: 5
-        - !type:DeleteEntity {}
+        - !type:DeleteEntity
       - to: parts
         steps:
         - material: Cable

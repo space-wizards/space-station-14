@@ -27,10 +27,10 @@
         doAfter: 1
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetPlasteel1
         amount: 3
-      - !type:DeleteEntity {}
+      - !type:DeleteEntity
       conditions:
       - !type:EntityAnchored
         anchored: true
@@ -55,7 +55,7 @@
           state: "mainboard"
     - to: frame1
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: CableApcStack1
         amount: 2
       conditions:
@@ -148,7 +148,7 @@
         doAfter: 1
     - to: frame4
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetGlass1
         amount: 2
       steps:

@@ -31,10 +31,10 @@
             - !type:EntityAnchored
               anchored: false
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: SheetPlasteel1
               amount: 10
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
           steps:
             - tool: Welding
               doAfter: 4
@@ -54,7 +54,7 @@
               doAfter: 2
         - to: frame1
           completed:
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: CableApcStack1
               amount: 5
           steps:

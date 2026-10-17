@@ -27,7 +27,7 @@
       - !type:GivePrototype
         prototype: SheetSteel1
         amount: 3
-      - !type:DeleteEntity {}
+      - !type:DeleteEntity
       steps:
       - tool: Screwing
         doAfter: 4

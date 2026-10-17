@@ -35,10 +35,10 @@
       - !type:EntityAnchored
         anchored: false
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetPlasteel1
         amount: 2
-      - !type:DeleteEntity {}
+      - !type:DeleteEntity
       steps:
       - tool: Welding
         doAfter: 3
@@ -65,7 +65,7 @@
     edges:
     - to: electronics
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: CableApcStack1
         amount: 5
       steps:
@@ -89,7 +89,7 @@
         doAfter: 2
     - to: wired
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: SheetPlasteel1
         amount: 2
       steps:
@@ -141,7 +141,7 @@
         doAfter: 2
     - to: skeletonWelded
       completed:
-      - !type:SpawnPrototype
+      - !type:SpawnEntity
         prototype: IngotSilver1
         amount: 2
       steps:
@@ -167,7 +167,7 @@
     edges:
     - to: skeletonSilver
       completed:
-        - !type:SpawnPrototype
+        - !type:SpawnEntity
           prototype: SheetRGlass1
           amount: 2
       steps:

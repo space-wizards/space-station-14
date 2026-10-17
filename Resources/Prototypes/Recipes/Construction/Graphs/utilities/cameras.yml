@@ -23,7 +23,7 @@
             - !type:GivePrototype
               prototype: SheetSteel1
               amount: 2
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
           steps:
             - tool: Welding
               doAfter: 2
@@ -50,7 +50,7 @@
             - !type:GivePrototype
               prototype: SheetSteel1
               amount: 2
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
           steps:
             - tool: Welding
               doAfter: 2

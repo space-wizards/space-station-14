@@ -4,7 +4,7 @@
   graph:
     - node: start
       actions:
-        - !type:DestroyEntity {}
+        - !type:DestroyEntity
       edges:
         - to: mannequin
           completed:
@@ -21,10 +21,10 @@
         - to: start
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: MaterialWoodPlank
               amount: 5
-            - !type:SpawnPrototype
+            - !type:SpawnEntity
               prototype: PartRodMetal
               amount: 2
           steps:
