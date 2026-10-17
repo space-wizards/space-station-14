@@ -101,6 +101,8 @@
         type: HumanoidMarkingModifierBoundUserInterface
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
+      enum.VoiceSexModificationControllerKey.Key:
+        type: VoiceSexModificationControllerBoundUserInterface
   - type: UseDelay
     delay: 0.5
   - type: Speech
@@ -173,6 +175,7 @@
       types:
         Asphyxiation: -1.0
     maxSaturation: 15
+  - type: VoiceSexModificationController
 
 - type: entity
   parent: OrganBaseOrganic
