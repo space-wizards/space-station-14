@@ -133,3 +133,13 @@
     roomWhitelist:
       tags:
       - VGRoidInterior
+  - type: Sprite
+    layers:
+      - state: red
+      # max size
+      - sprite: Markers/Outlines/5x5.rsi
+        state: rect
+        color: red
+      - sprite: Markers/Outlines/5x5.rsi
+        state: label
+        color: red
