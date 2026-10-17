@@ -39,6 +39,10 @@
   hideSpawnMenu: true
 
 - type: entityCategory
+  id: Seeds
+  name: entity-category-name-seeds
+
+- type: entityCategory
   id: XenoArtifactTriggers
   name: entity-category-name-xeno-artifact-triggers
   hideSpawnMenu: true
