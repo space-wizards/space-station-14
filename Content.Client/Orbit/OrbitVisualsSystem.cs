@@ -10,7 +10,6 @@ namespace Content.Client.Orbit;
 
 public sealed partial class OrbitVisualsSystem : EntitySystem
 {
-    [Dependency] private IRobustRandom _robustRandom = default!;
     [Dependency] private AnimationPlayerSystem _animations = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SpriteSystem _sprite = default!;
@@ -27,11 +26,13 @@ public sealed partial class OrbitVisualsSystem : EntitySystem
 
     private void OnComponentInit(EntityUid uid, OrbitVisualsComponent component, ComponentInit args)
     {
-        _robustRandom.SetSeed((int)_timing.CurTime.TotalMilliseconds);
-        component.OrbitDistance =
-            _robustRandom.NextFloat(0.75f * component.OrbitDistance, 1.25f * component.OrbitDistance);
+        IRobustRandom random = new RobustRandom();
+        random.SetSeed((int)_timing.CurTime.TotalMilliseconds);
 
-        component.OrbitLength = _robustRandom.NextFloat(0.5f * component.OrbitLength, 1.5f * component.OrbitLength);
+        component.OrbitDistance =
+            random.NextFloat(0.75f * component.OrbitDistance, 1.25f * component.OrbitDistance);
+
+        component.OrbitLength = random.NextFloat(0.5f * component.OrbitLength, 1.5f * component.OrbitLength);
 
         if (TryComp<SpriteComponent>(uid, out var sprite))
         {
