@@ -9,7 +9,8 @@
     enabled: false
     usesApcPower: true
   - type: DeviceNetwork
-    deviceNetId: AtmosDevices
+    deviceNets:
+    - AtmosDevices
     receiveFrequencyId: AtmosMonitor
     transmitFrequencyId: AtmosMonitor
     prefix: device-address-prefix-air-alarm

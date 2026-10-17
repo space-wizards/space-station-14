@@ -41,7 +41,8 @@
     energy: 3.0
     color: "#b89f25"
   - type: DeviceNetwork
-    deviceNetId: Wired
+    deviceNets:
+    - Wired
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
     prefix: device-address-prefix-camera-monitor

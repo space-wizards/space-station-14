@@ -72,7 +72,8 @@
   - type: Ringer
   - type: RingerUplink
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: PDA
     prefix: device-address-prefix-console
     savableAddress: false
