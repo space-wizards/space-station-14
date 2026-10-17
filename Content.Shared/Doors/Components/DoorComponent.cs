@@ -104,6 +104,12 @@ public sealed partial class DoorComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier SparkSound = new SoundCollectionSpecifier("sparks");
+
+    /// <summary>
+    /// Sound to play when the door crushes entities.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? CrushSound = new SoundPathSpecifier("/Audio/Weapons/block_metal1.ogg");
     #endregion
 
     #region Crushing
