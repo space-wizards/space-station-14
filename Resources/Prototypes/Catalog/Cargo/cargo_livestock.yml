@@ -1,7 +1,7 @@
 - type: cargoProduct
   id: LivestockBee
   icon:
-    sprite: Mobs/Animals/bee.rsi
+    sprite: Mobs/Animals/Insects/bee.rsi
     state: 0
   product: CrateNPCBee
   cost: 7000
@@ -11,7 +11,7 @@
 - type: cargoProduct
   id: LivestockButterfly
   icon:
-    sprite: Mobs/Animals/butterfly.rsi
+    sprite: Mobs/Animals/Insects/butterfly.rsi
     state: butterfly
   product: CrateNPCButterflies
   cost: 4400
@@ -250,7 +250,7 @@
 - type: cargoProduct
   id: LivestockMothroach
   icon:
-    sprite: Mobs/Animals/mothroach/mothroach.rsi
+    sprite: Mobs/Animals/Insects/mothroach/mothroach.rsi
     state: mothroach
   product: CrateNPCMothroach
   cost: 5000
