@@ -166,10 +166,7 @@ public partial class MobStateSystem
     private void OnSpeakAttempt(EntityUid uid, MobStateComponent component, SpeakAttemptEvent args)
     {
         if (HasComp<AllowNextCritSpeechComponent>(uid))
-        {
-            RemCompDeferred<AllowNextCritSpeechComponent>(uid);
             return;
-        }
 
         CheckAct(uid, component, args);
     }
