@@ -26,7 +26,7 @@ public sealed partial class RaiseEventEntityEffectSystem : EntityEffectSystem<Tr
 public sealed partial class RaiseEvent : EntityEffectBase<RaiseEvent>
 {
     [DataField(required: true)]
-    public EntityEventArgs Event;
+    public required EntityEventArgs Event;
 
     [DataField]
     public bool Directed = true;
