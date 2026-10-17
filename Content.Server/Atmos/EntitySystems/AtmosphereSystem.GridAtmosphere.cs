@@ -264,6 +264,46 @@ public sealed partial class AtmosphereSystem
         args.Handled = true;
     }
 
+    /// <summary>
+    /// Takes the gas from this tile volume and shoves it into adjacent tiles, then deletes this tile's air
+    /// </summary>
+    /// <param name="tile">Tile we are shunting the air from.</param>
+    private void ShuntTileVolume(TileAtmosphere tile)
+    {
+        DebugTools.AssertNotNull(tile.Air);
+        DebugTools.Assert(tile.Air?.Immutable == false);
+
+        var count = 0;
+        foreach (var adj in tile.AdjacentTiles)
+        {
+            if (adj?.Air != null)
+                count++;
+        }
+
+        if (count == 0)
+            return;
+
+        var ratio = 1f / count;
+
+        // Remove a ratio from this gas mixture.
+        var mix = tile.Air.RemoveRatio(ratio);
+
+        foreach (var adj in tile.AdjacentTiles)
+        {
+            if (adj?.Air == null)
+                continue;
+
+            // And merge it to the new tile air.
+            Merge(adj.Air, mix);
+        }
+
+        tile.Air = null;
+        tile.AirArchived = null;
+        tile.ArchivedCycle = 0;
+        tile.LastShare = 0f;
+        tile.Hotspot = new Hotspot();
+    }
+
     private void GridFixTileVacuum(TileAtmosphere tile)
     {
         DebugTools.AssertNotNull(tile.Air);
