@@ -1,6 +1,7 @@
 #nullable enable
 using System.IO;
 using System.Linq;
+using Content.Client.Lobby;
 using Content.Server.GameTicking;
 using Content.Server.Preferences.Managers;
 using Content.Shared.CCVar;
@@ -23,13 +24,28 @@ public sealed partial class TestPair
 
     private async Task ResetModifiedPreferences()
     {
-        var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
-        foreach (var user in _modifiedProfiles)
-        {
-            await Server.WaitPost(() => prefMan.SetProfile(user, 0, new HumanoidCharacterProfile()).Wait());
-        }
+        if (Player == null)
+            return;
 
-        _modifiedProfiles.Clear();
+        await ReallyBeIdle();
+
+        // reset the client user's prefs through the client so that the client's cached
+        // preferences get updated
+        await Client.WaitAssertion(() =>
+        {
+            var prefMan = Client.ResolveDependency<IClientPreferencesManager>();
+            prefMan.UpdateCharacter(new HumanoidCharacterProfile(), 0);
+            prefMan.SelectCharacter(0);
+
+            var prefs = prefMan.Preferences;
+            foreach (var slot in prefs!.Characters.Keys.ToList().Where(key => key != 0))
+            {
+                prefMan.DeleteCharacter(slot);
+            }
+        });
+
+        // don't reset dummy sessions' users' preferences because they will be
+        // irrelevant after those sessions are removed
     }
 
     protected override async Task Recycle(PairSettings next, TextWriter testOut)
