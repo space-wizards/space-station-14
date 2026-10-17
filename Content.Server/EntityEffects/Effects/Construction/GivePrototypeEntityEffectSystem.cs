@@ -13,7 +13,6 @@ namespace Content.Server.EntityEffects.Effects.Construction;
 /// </summary>
 public sealed partial class GivePrototypeEntityEffectSystem : EntityEffectSystem<TransformComponent, GivePrototype>
 {
-    [Dependency] private IPrototypeManager _protoMan = default!;
     [Dependency] private StackSystem _stack = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
 
@@ -23,7 +22,7 @@ public sealed partial class GivePrototypeEntityEffectSystem : EntityEffectSystem
         var amount = args.Effect.Amount;
         var user = args.User;
 
-        if (_protoMan.TryIndex(prototype, out var entProto) && entProto.HasComp<StackComponent>(Factory))
+        if (ProtoMan.TryIndex(prototype, out var entProto) && entProto.HasComp<StackComponent>(Factory))
         {
             var stacks = _stack.SpawnMultipleNextToOrDrop(prototype, amount, user ?? entity);
 
