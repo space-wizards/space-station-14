@@ -1,7 +1,7 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
-namespace Content.Server.Wires;
+namespace Content.Shared.Wires;
 
 /// <summary>
 ///     WireLayout prototype.
@@ -27,14 +27,14 @@ public sealed partial class WireLayoutPrototype : IPrototype, IInheritingPrototy
     ///     nothing (these are added upon layout
     ///     initialization)
     /// </summary>
-    [DataField("dummyWires")]
+    [DataField]
     [NeverPushInheritance]
     public int DummyWires { get; private set; } = default!;
 
     /// <summary>
     ///     All the valid IWireActions currently in this layout.
     /// </summary>
-    [DataField("wires")]
+    [DataField(serverOnly: true)]
     [NeverPushInheritance]
     public List<IWireAction>? Wires { get; private set; }
 }
