@@ -12,3 +12,6 @@
   voices:
   - UnisexDwarf
   - FemaleDwarf
+  youngAge: 60
+  oldAge: 300
+  maxAge: 600
