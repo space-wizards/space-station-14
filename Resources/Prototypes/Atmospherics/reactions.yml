@@ -1,6 +1,6 @@
 - type: gasReaction
   id: PlasmaFire
-  priority: -2
+  priority: -1
   minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist
   minimumRequirements: # In this case, same as minimum mole count.
     Oxygen: 0.01
@@ -10,7 +10,7 @@
 
 - type: gasReaction
   id: TritiumFire
-  priority: -1
+  priority: -2
   minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist
   minimumRequirements: # In this case, same as minimum mole count.
     Oxygen: 0.01
