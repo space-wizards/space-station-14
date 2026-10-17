@@ -717,7 +717,7 @@
     - type: GhostRole
       name: ghost-role-information-lost-challenge-cargo-technican-name
       description: ghost-role-information-lost-challenge-cargo-technican-description
-      rules: ghost-role-information-lost-disaster-challenge-cargo-technican-rules
+      rules: ghost-role-information-lost-challenge-cargo-technican-rules
       raffle:
         settings: short
     - type: GhostTakeoverAvailable
