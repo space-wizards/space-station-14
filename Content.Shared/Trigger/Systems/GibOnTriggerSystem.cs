@@ -16,7 +16,7 @@ public sealed partial class GibOnTriggerSystem : XOnTriggerSystem<GibOnTriggerCo
             var items = _inventory.GetHandOrInventoryEntities(target);
             foreach (var item in items)
             {
-                PredictedQueueDel(item);
+                QueueDel(item);
             }
         }
 

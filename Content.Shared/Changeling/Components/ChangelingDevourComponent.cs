@@ -91,9 +91,8 @@ public sealed partial class ChangelingDevourComponent : Component
     {
         DamageDict = new()
         {
-            { "Slash", 10},
-            { "Piercing", 10 },
-            { "Blunt", 5 },
+            { "Slash", 15},
+            { "Piercing", 15 },
         },
     };
 
@@ -105,9 +104,9 @@ public sealed partial class ChangelingDevourComponent : Component
     {
         DamageDict = new()
         {
-            { "Slash", 20},
-            { "Piercing", 20 },
-            { "Blunt", 10 },
+            { "Slash", 60},
+            { "Piercing", 60 },
+            { "Caustic", 100 },
         },
     };
 
@@ -142,6 +141,18 @@ public sealed partial class ChangelingDevourComponent : Component
     {
         { "ChangelingDNA", 10 }
     };
+
+    /// <summary>
+    /// What to show on examine while the changeling's devour is in the windup stage.
+    /// </summary>
+    [DataField]
+    public LocId? WindupExamine = "changeling-devour-doafter-windup";
+
+    /// <summary>
+    /// What to show on examine while the changeling is currently devouring somebody.
+    /// </summary>
+    [DataField]
+    public LocId? DevourExamine = "changeling-devour-doafter";
 
     public override bool SendOnlyToOwner => true;
 }

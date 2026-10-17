@@ -56,8 +56,12 @@ reagent-desc-phalanximine = An advanced chemical used in the treatment of cancer
 reagent-name-polypyrylium-oligomers = Polypyrylium Oligomers
 reagent-desc-polypyrylium-oligomers = A purple mixture of short polyelectrolyte chains not easily synthesized in the laboratory. Heals asphyxiation and brute damage. Stops bleeding over time.
 
+reagent-name-romerodone = romerodone
+reagent-desc-romerodone = A byproduct of centrifuging zombie blood, perhaps you could make a cure with this.
+
+
 reagent-name-ambuzol = ambuzol
-reagent-desc-ambuzol = A highly engineered substance able to halt the progression of a zombie infection.
+reagent-desc-ambuzol = A highly engineered substance able to cure the zombie infection.
 
 reagent-name-ambuzol-plus = ambuzol plus
 reagent-desc-ambuzol-plus = Further engineered with omnizine, inoculates the living against the infection.
@@ -78,7 +82,7 @@ reagent-name-tranexamic-acid = tranexamic acid
 reagent-desc-tranexamic-acid = A blood-clotting medicine used to prevent profuse bleeding. Causes heavier bleeding on overdose. Commonly found in small doses within emergency medipens.
 
 reagent-name-tricordrazine = tricordrazine
-reagent-desc-tricordrazine = A wide-spectrum stimulant, originally derived from cordrazine. Treats minor damage of all basic health types as long as the user is not heavily wounded. Best used as an additive to other chemicals.
+reagent-desc-tricordrazine = A wide-spectrum stimulant, originally derived from cordrazine. Treats minor damage of all basic health types as long as the user is not heavily wounded. Best used in a safe enviornment and as an additive to other chemicals.
 
 reagent-name-lipozine = lipozine
 reagent-desc-lipozine = A chemical that accelerates metabolism, causing the user to hunger faster.

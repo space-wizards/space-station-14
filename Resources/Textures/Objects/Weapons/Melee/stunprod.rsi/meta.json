@@ -11,9 +11,6 @@
             "name": "stunprod_off"
         },
         {
-            "name": "stunprod_nocell"
-        },
-        {
             "name": "stunprod_on",
             "delays": [
                 [

@@ -2,7 +2,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.AlertLevel;
 using Content.Shared.Communications;
-using Content.Shared.Station;
+using Content.Shared.Station.Systems;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -18,11 +18,16 @@ namespace Content.Client.Communications.UI;
 public sealed partial class CommunicationsConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private SharedStationSystem _station = default!;
+    [Dependency] private StationSystem _station = default!;
     [Dependency] private AlertLevelSystem _alertLevel = default!;
+
+    [Dependency] private EntityQuery<AlertLevelComponent> _alertLevelQuery;
 
     [ViewVariables]
     private CommunicationsConsoleMenu? _menu;
+
+    private static readonly EntProtoId FallbackScreen = "Screen";
+    private static readonly ProtoId<AlertLevelPrototype> UnknownAlertLevel = "Unknown";
 
     /// <inheritdoc/>
     protected override void Open()
@@ -38,6 +43,8 @@ public sealed partial class CommunicationsConsoleBoundUserInterface(EntityUid ow
 
         if (EntMan.TryGetComponent<CommunicationsConsoleComponent>(Owner, out var console))
             _menu.SetBroadcastDisplayEntity(console.ScreenDisplayId);
+        else
+            _menu.SetBroadcastDisplayEntity(FallbackScreen);
     }
 
     public void AlertLevelSelected(ProtoId<AlertLevelPrototype> level)
@@ -77,21 +84,30 @@ public sealed partial class CommunicationsConsoleBoundUserInterface(EntityUid ow
     {
         base.UpdateState(state);
 
+        if (_menu == null)
+            return;
+
         if (state is not CommunicationsConsoleInterfaceState commsState)
             return;
 
         var stationUid = _station.GetOwningStation(Owner);
 
-        if (!EntMan.TryGetComponent<AlertLevelComponent>(stationUid, out var alertComp))
-            return;
-
-        if (_menu != null)
+        ProtoId<AlertLevelPrototype> currentAlertLevel;
+        List<ProtoId<AlertLevelPrototype>> selectableAlertLevels;
+        bool canChangeAlertLevel;
+        if (_alertLevelQuery.TryGetComponent(stationUid, out var alertComp))
         {
-            var currentAlertLevel = alertComp.CurrentAlertLevel;
-            var selectableAlertLevels = _alertLevel.GetSelectableAlertLevels((stationUid.Value, alertComp));
-            var canChangeAlertLevel = _alertLevel.CanChangeAlertLevel((stationUid.Value, alertComp));
-
-            _menu.UpdateState(commsState, currentAlertLevel, selectableAlertLevels, canChangeAlertLevel);
+            currentAlertLevel = alertComp.CurrentAlertLevel;
+            selectableAlertLevels = _alertLevel.GetSelectableAlertLevels((stationUid.Value, alertComp));
+            canChangeAlertLevel = _alertLevel.CanChangeAlertLevel((stationUid.Value, alertComp));
         }
+        else
+        {
+            currentAlertLevel = UnknownAlertLevel;
+            selectableAlertLevels = new() { UnknownAlertLevel };
+            canChangeAlertLevel = false;
+        }
+
+        _menu.UpdateState(commsState, currentAlertLevel, selectableAlertLevels, canChangeAlertLevel);
     }
 }

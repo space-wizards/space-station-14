@@ -18,8 +18,7 @@ public sealed partial class BotanyShovelSystem : EntitySystem
     [Dependency] private PlantTraySystem _plantTray = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    [Dependency] private EntityQuery<PlantComponent> _plantQuery = default!;
-    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery = default!;
+    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery;
 
     [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<ShovelComponent> ent, ref AfterInteractEvent args)
@@ -27,20 +26,11 @@ public sealed partial class BotanyShovelSystem : EntitySystem
         if (args.Target == null || args.Handled || !args.CanReach)
             return;
 
-        // Allow interacting with either the plant or the tray.
-        var target = args.Target.Value;
-        if (_plantQuery.HasComp(target))
-        {
-            if (!_plant.TryGetTray(target, out var tray))
-                return;
-
-            target = tray.Owner;
-        }
-        else if (!_trayQuery.HasComp(target))
+        if (!_trayQuery.HasComp(args.Target.Value))
             return;
 
         var ev = new TrayShovelAttemptEvent(ent, args.User);
-        RaiseLocalEvent(target, ref ev);
+        RaiseLocalEvent(args.Target.Value, ref ev);
 
         args.Handled = true;
     }

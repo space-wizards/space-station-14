@@ -7,13 +7,10 @@
         <Control MinSize="0 10" />
         <BoxContainer Orientation="Horizontal">
             <LineEdit Name="TagInput"
-                      Access="Public"
                       HorizontalExpand="True"
                       MinSize="320 0" />
             <Control MinSize="10 0" />
-            <Button Name="Confirm"
-                    Access="Public"
-                    Text="{Loc 'disposal-tagger-window-tag-confirm-button'}" />
+            <Button Name="Confirm" />
         </BoxContainer>
     </BoxContainer>
 </DefaultWindow>

@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Objectives.Components;
+namespace Content.Server.Objectives.Components;
 
 /// <summary>
 ///     A free greentext, that's it.
