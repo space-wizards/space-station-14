@@ -1,4 +1,4 @@
-﻿using Content.Shared.Shuttles.Systems;
+using Content.Shared.Shuttles.Systems;
 
 namespace Content.Client.Shuttles;
 

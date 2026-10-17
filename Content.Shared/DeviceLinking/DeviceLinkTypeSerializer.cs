@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.DeviceLinking.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;

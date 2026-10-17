@@ -1,4 +1,4 @@
-﻿using Content.Shared.CCVar;
+using Content.Shared.CCVar;
 using Content.Shared.Damage.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Movement.Components;

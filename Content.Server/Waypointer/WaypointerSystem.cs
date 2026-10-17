@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Shared.Waypointer;
 using Content.Shared.Waypointer.Components;
 using Content.Shared.Waypointer.Events;

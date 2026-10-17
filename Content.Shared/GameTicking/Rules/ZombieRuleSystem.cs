@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Linq;
 using Content.Shared.Antag;
 using Content.Shared.GameTicking.Components;

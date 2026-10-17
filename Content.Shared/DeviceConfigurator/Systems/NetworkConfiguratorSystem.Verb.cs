@@ -1,4 +1,4 @@
-﻿using Content.Shared.Database;
+using Content.Shared.Database;
 using Content.Shared.DeviceConfigurator.Components;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Examine;

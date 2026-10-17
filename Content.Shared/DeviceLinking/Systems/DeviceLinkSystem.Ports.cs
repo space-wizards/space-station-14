@@ -1,4 +1,4 @@
-﻿using Content.Shared.DeviceLinking.Components;
+using Content.Shared.DeviceLinking.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
