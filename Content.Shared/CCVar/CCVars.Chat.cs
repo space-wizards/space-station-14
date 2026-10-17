@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Configuration;
+using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
 
@@ -53,6 +53,16 @@ public sealed partial class CCVars
             false,
             CVar.CLIENTONLY | CVar.ARCHIVE,
             "Toggles displaying a background under the speaking character's name.");
+
+    /// <summary>
+    ///     When enabled, shows a speech bubble above the character's head previewing the text
+    ///     they are currently typing.
+    /// </summary>
+    public static readonly CVarDef<bool> ChatTypingPreviewEnabled =
+        CVarDef.Create("chat.typing_preview_enabled",
+            true,
+            CVar.CLIENTONLY | CVar.ARCHIVE,
+            "When enabled, shows a speech bubble above your character's head previewing what you are typing.");
 
     /// <summary>
     ///     A message broadcast to each player that joins the lobby.

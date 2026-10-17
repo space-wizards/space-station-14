@@ -30,11 +30,10 @@ public sealed partial class BwoinkSystem
 
         public bool WordMatches(ReadOnlySpan<char> word)
         {
+            DebugTools.Assert(!IgnoredWordRegex().IsMatch(word));
+
             foreach (var w in NameWords)
             {
-                if (IgnoredWordRegex().IsMatch(word))
-                    continue;
-
                 if (w.Equals(word, StringComparison.CurrentCultureIgnoreCase))
                 {
                     return true;

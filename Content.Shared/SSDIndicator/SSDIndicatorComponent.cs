@@ -24,7 +24,7 @@ public sealed partial class SSDIndicatorComponent : Component
     /// The icon displayed next to the associated entity when it is SSD.
     /// </summary>
     [DataField]
-    public ProtoId<SsdIconPrototype> Icon = "SSDIcon";
+    public ProtoId<StatusIconPrototype> Icon = "SSDIcon";
 
     /// <summary>
     /// The time at which the entity will fall asleep, if <see cref="CCVars.ICSSDSleep"/> is true.

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.Server.Administration.Logs;
@@ -31,7 +31,7 @@ public sealed class QueryTests : GameTest
         var sPlayers = server.ResolveDependency<IPlayerManager>();
 
         var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
-        var sGamerTicker = sSystems.GetEntitySystem<GameTicker>();
+        var sGamerTicker = sSystems.GetEntitySystem<ServerGameTicker>();
 
         var date = DateTime.UtcNow;
         var guid = Guid.NewGuid();

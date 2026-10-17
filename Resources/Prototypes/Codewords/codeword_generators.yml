@@ -1,4 +1,4 @@
-﻿- type: codewordGenerator
+- type: codewordGenerator
   id: TraitorCodewordGenerator
   words:
   - Adjectives
