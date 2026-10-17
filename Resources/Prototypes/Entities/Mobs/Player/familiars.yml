@@ -13,7 +13,6 @@
     rules: ghost-role-information-familiar-rules
     mindRoles:
     - MindRoleGhostRoleFamiliar
-  - type: GhostTakeoverAvailable
   - type: Grammar
     attributes:
       gender: female
@@ -50,7 +49,6 @@
     - MindRoleGhostRoleFamiliar
     raffle:
       settings: default
-  - type: GhostTakeoverAvailable
   - type: MeleeWeapon
     altDisarm: false
     animation: WeaponArcBite

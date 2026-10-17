@@ -85,7 +85,6 @@
     - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
-  - type: GhostTakeoverAvailable
   - type: Tag
     tags:
       - CannotSuicide

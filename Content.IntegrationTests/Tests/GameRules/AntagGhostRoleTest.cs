@@ -60,12 +60,12 @@ public sealed partial class AntagGhostRoleTest : AntagTest
         }
 
         var roleEnumerator = SEntMan.EntityQueryEnumerator<GhostRoleAntagSpawnerComponent, GhostRoleComponent, TransformComponent>();
-        while (roleEnumerator.MoveNext(out var spawner, out var role, out var xform))
+        while (roleEnumerator.MoveNext(out var uid, out var spawner, out var role, out var xform))
         {
             // Ensure the ghost role spawner spawned correctly!
             Assert.That(spawner.Rule, Is.EqualTo(gameRule?.Owner));
             Assert.That(spawner.Definition, Is.Not.Null);
-            AssertGhostRoleTaken(spawner, role, xform);
+            AssertGhostRoleTaken(spawner, (uid, role), xform);
             var value = rules[spawner.Definition.Value];
             rules[spawner.Definition.Value] = value - 1;
         }
@@ -94,9 +94,9 @@ public sealed partial class AntagGhostRoleTest : AntagTest
         var mind = ServerSession!.GetMind();
 
         var roleEnumerator = SEntMan.EntityQueryEnumerator<GhostRoleAntagSpawnerComponent, GhostRoleComponent, TransformComponent>();
-        while (roleEnumerator.MoveNext(out var spawner, out var role, out var xform))
+        while (roleEnumerator.MoveNext(out var uid, out var spawner, out var role, out var xform))
         {
-            AssertGhostRoleTaken(spawner, role, xform);
+            AssertGhostRoleTaken(spawner, (uid, role), xform);
             var newMind = ServerSession!.GetMind();
             Assert.That(newMind, Is.Not.EqualTo(mind));
             mind = newMind;
@@ -107,7 +107,7 @@ public sealed partial class AntagGhostRoleTest : AntagTest
         Assert.That(STicker.GetAddedGameRules(), Is.Empty);
     }
 
-    private void AssertGhostRoleTaken(GhostRoleAntagSpawnerComponent spawner, GhostRoleComponent role, TransformComponent xform)
+    private void AssertGhostRoleTaken(GhostRoleAntagSpawnerComponent spawner, Entity<GhostRoleComponent> role, TransformComponent xform)
     {
         // Ensure the ghost role spawner spawned correctly!
         Assert.That(spawner.Definition, Is.Not.Null);
@@ -115,7 +115,7 @@ public sealed partial class AntagGhostRoleTest : AntagTest
         Assert.That(xform.MapID, Is.Not.EqualTo(MapId.Nullspace));
 
         // Take the ghost role and ensure we take it!
-        Assert.That(_ghostRole.Takeover(ServerSession!, role.Identifier), Is.True);
+        Assert.That(_ghostRole.Takeover(ServerSession!, SEntMan.GetNetEntity(role)), Is.True);
         Assert.That(ServerSession!.AttachedEntity, Is.Not.Null);
         var antag = SProtoMan.Index(spawner.Definition);
         SAssertAntagInitialized(antag, ServerSession);
