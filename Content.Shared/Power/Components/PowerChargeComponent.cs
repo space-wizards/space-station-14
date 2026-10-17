@@ -1,4 +1,4 @@
-using Content.Shared.Power;
+using Content.Shared.Power.EntitySystems;
 
 namespace Content.Shared.Power.Components;
 
@@ -6,6 +6,7 @@ namespace Content.Shared.Power.Components;
 /// Component for a powered machine that slowly powers on and off over a period of time.
 /// </summary>
 [RegisterComponent]
+[Access(typeof(PowerChargeSystem))]
 public sealed partial class PowerChargeComponent : Component
 {
     /// <summary>

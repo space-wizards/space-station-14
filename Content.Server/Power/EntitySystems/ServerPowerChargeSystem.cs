@@ -10,7 +10,8 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Power.EntitySystems;
 
-public sealed partial class PowerChargeSystem : SharedPowerChargeSystem
+/// <inheritdoc/>
+public sealed partial class ServerPowerChargeSystem : PowerChargeSystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private UserInterfaceSystem _uiSystem = default!;

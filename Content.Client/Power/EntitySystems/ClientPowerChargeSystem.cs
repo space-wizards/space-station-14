@@ -2,4 +2,5 @@
 
 namespace Content.Client.Power.EntitySystems;
 
-public sealed class PowerChargeSystem : SharedPowerChargeSystem;
+/// <inheritdoc/>
+public sealed class ClientPowerChargeSystem : PowerChargeSystem;
