@@ -11,7 +11,7 @@
             "name": "dead"
         },
         {
-            "name": "cow",
+            "name": "alive",
             "directions": 4
         }
     ]
