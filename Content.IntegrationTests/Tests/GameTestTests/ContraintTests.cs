@@ -9,6 +9,16 @@ namespace Content.IntegrationTests.Tests.GameTestTests;
 
 public sealed class ConstraintsTests : GameTest
 {
+    private const string TestProtoId = "TestProtoId";
+
+    [TestPrototypes]
+    private const string TestPrototypes = $@"
+- type: entity
+  id: {TestProtoId}
+  components:
+  - type: MetaData
+";
+
     [Test]
     [TestOf(typeof(CompExistsConstraint))]
     [Description("Ensures that a freshly spawned entity matches a constraint stating it has MetaData.")]
@@ -46,6 +56,53 @@ public sealed class ConstraintsTests : GameTest
 
         // Arbitrary pick.
         Assert.That(ent, Has.No.Comp<EyeComponent>(Server));
+    }
+
+    [Test]
+    [TestOf(typeof(CompExistsConstraint))]
+    [Description("Ensures that a test entity prototype matches a constraint stating it has a specific component.")]
+    [RunOnSide(Side.Server)]
+    public void ProtoCompPositive()
+    {
+        var proto = SProtoMan.Index(TestProtoId);
+
+        Assert.That(proto, Has.Comp<MetaDataComponent>(Server));
+    }
+
+    [Test]
+    [TestOf(typeof(CompExistsConstraint))]
+    [Description("Ensures that a test entity prototype (specified by ID) matches a constraint stating it has a specific component.")]
+    [RunOnSide(Side.Server)]
+    public void ProtoIdCompPositive()
+    {
+        Assert.That(TestProtoId, Has.Comp<MetaDataComponent>(Server));
+    }
+
+    [Test]
+    [TestOf(typeof(CompExistsConstraint))]
+    [Description("Ensures that a test entity prototype does not match a constraint stating it has an arbitrary component.")]
+    [RunOnSide(Side.Server)]
+    public void ProtoCompNegative()
+    {
+        var proto = SProtoMan.Index(TestProtoId);
+
+        Assert.That(proto, Has.No.Comp<EyeComponent>(Server));
+    }
+
+    [Test]
+    [TestOf(typeof(CompOperator))]
+    [Description("Ensures that NUnit property access works on Comp constraints with EntityPrototypes.")]
+    [RunOnSide(Side.Server)]
+    public void ProtoCompPropertyAccess()
+    {
+        var proto = SProtoMan.Index(TestProtoId);
+
+        Assert.That(proto,
+            Has
+                .Comp<MetaDataComponent>(Server)
+                .Property(nameof(MetaDataComponent.EntityDeleted))
+                .EqualTo(false)
+        );
     }
 
     [Test]
