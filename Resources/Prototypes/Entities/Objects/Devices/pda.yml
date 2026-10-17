@@ -1289,12 +1289,12 @@
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
-       pda-medical
+       pda-psychologist
   - type: PdaBorderColor
     borderColor: "#d7d7d0"
-    accentVColor: "#447987"
+    accentVColor: "#00cc35"
   - type: Icon
-    state: pda-medical
+    state: pda-psychologist
 
 - type: entity
   parent: BasePDA

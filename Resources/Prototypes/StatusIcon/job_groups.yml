@@ -53,7 +53,6 @@
   - JobIconMedicalDoctor
   - JobIconMedicalIntern
   - JobIconParamedic
-  - JobIconPsychologist
   - JobIconGeneticist
   - JobIconVirologist
 
@@ -103,6 +102,7 @@
   - JobIconTramDriver
   - JobIconBoxer
   - JobIconZookeeper
+  - JobIconPsychologist
 
 - type: jobIconGroup
   id: TheatreIconGroup # Not exactly service workers, but not civilians either

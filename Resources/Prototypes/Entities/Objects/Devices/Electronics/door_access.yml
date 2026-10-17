@@ -112,6 +112,14 @@
   - type: AccessReader
     access: [["Service"], ["Theatre"]]
 
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsPsychologist
+  suffix: Psychologist, Locked
+  components:
+  - type: AccessReader
+    access: [["Psychologist"]]
+
 # Cargo
 - type: entity
   parent: DoorElectronics

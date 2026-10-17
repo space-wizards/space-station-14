@@ -94,6 +94,15 @@
       board: [ DoorElectronicsHydroponics ]
 
 - type: entity
+  parent: AirlockServiceLocked
+  id: AirlockPsychologistLocked
+  suffix: Psychologist, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsPsychologist ]
+
+- type: entity
   parent: AirlockExternal
   id: AirlockExternalLocked
   suffix: External, Locked
@@ -599,6 +608,15 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsHydroponics ]
+
+- type: entity
+  parent: AirlockServiceGlassLocked
+  id: AirlockPsychologistGlassLocked
+  suffix: Psychologist, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsPsychologist ]
 
 - type: entity
   parent: AirlockServiceGlassLocked
