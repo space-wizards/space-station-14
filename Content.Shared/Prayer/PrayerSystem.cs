@@ -6,6 +6,12 @@ using Robust.Shared.Player;
 
 namespace Content.Shared.Prayer;
 
+/// <summary>
+/// System to handle subtle messages and praying.
+/// </summary>
+/// <remarks>
+/// Rain is a professional developer and this did not take 2 PRs to fix subtle messages.
+/// </remarks>
 public abstract partial class PrayerSystem : EntitySystem
 {
     [Dependency] private SharedPopupSystem _popup = default!;
@@ -48,9 +54,13 @@ public abstract partial class PrayerSystem : EntitySystem
     /// <summary>
     /// Sends a message to the admin channel with a message and username.
     /// </summary>
-    /// <param name="ent">Prayable entity used to make the prayer</param>
-    /// <param name="sender">The IPlayerSession who sent the original message</param>
-    /// <param name="message">Message to be sent to the admin chat</param>
+    /// <param name="ent">Prayable entity used to make the prayer.</param>
+    /// <param name="sender">The IPlayerSession who sent the original message.</param>
+    /// <param name="message">Message to be sent to the admin chat.</param>
+    /// <remarks>
+    /// You may be wondering, "Why the admin chat, specifically? Nobody even reads it!"
+    /// Exactly.
+    /// </remarks>
     public virtual void Pray(Entity<PrayableComponent> ent, ICommonSession sender, string message) { }
 
     protected virtual void OpenPrayerDialog(Entity<PrayableComponent> ent, EntityUid user, ICommonSession session) { }

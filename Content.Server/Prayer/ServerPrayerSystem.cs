@@ -11,12 +11,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Prayer;
 
-/// <summary>
-/// System to handle subtle messages and praying
-/// </summary>
-/// <remarks>
-/// Rain is a professional developer and this did not take 2 PRs to fix subtle messages
-/// </remarks>
+/// <inheritdoc/>
 public sealed partial class ServerPrayerSystem : PrayerSystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;
@@ -24,10 +19,7 @@ public sealed partial class ServerPrayerSystem : PrayerSystem
     [Dependency] private IChatManager _chat = default!;
     [Dependency] private QuickDialogSystem _quickDialog = default!;
 
-    /// <remarks>
-    /// You may be wondering, "Why the admin chat, specifically? Nobody even reads it!"
-    /// Exactly.
-    ///  </remarks>
+    /// <inheritdoc/>
     public override void Pray(Entity<PrayableComponent> ent, ICommonSession sender, string message)
     {
         if (sender.AttachedEntity is null)
