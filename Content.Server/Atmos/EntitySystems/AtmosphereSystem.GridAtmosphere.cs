@@ -280,21 +280,21 @@ public sealed partial class AtmosphereSystem
                 count++;
         }
 
-        if (count == 0)
-            return;
-
-        var ratio = 1f / count;
-
-        // Remove a ratio from this gas mixture.
-        var mix = tile.Air.RemoveRatio(ratio);
-
-        foreach (var adj in tile.AdjacentTiles)
+        if (count > 0)
         {
-            if (adj?.Air == null)
-                continue;
+            var ratio = 1f / count;
 
-            // And merge it to the new tile air.
-            Merge(adj.Air, mix);
+            // Remove a ratio from this gas mixture.
+            var mix = tile.Air.RemoveRatio(ratio);
+
+            foreach (var adj in tile.AdjacentTiles)
+            {
+                if (adj?.Air == null)
+                    continue;
+
+                // And merge it to the new tile air.
+                Merge(adj.Air, mix);
+            }
         }
 
         tile.Air = null;
