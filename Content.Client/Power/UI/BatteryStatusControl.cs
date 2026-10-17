@@ -2,7 +2,6 @@ using Content.Client.Items.UI;
 using Content.Client.Message;
 using Content.Client.Power.EntitySystems;
 using Content.Client.Stylesheets;
-using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
@@ -39,10 +38,6 @@ public sealed partial class BatteryStatusControl : PollingItemStatusControl<Batt
 
     protected override Data PollData()
     {
-        // Do not add battery status to guns that already show an ammo counter.
-        if (_entityManager.HasComponent<AmmoCounterComponent>(_parent))
-            return default;
-
         // Battery charge level.
         int? chargePercent = null;
         if (_powerCell.TryGetBatteryFromEntityOrSlot(_parent, out var battery))
