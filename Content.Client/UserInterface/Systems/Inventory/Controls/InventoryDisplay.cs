@@ -15,6 +15,7 @@ public sealed class InventoryDisplay : LayoutContainer
     private readonly Control resizer;
 
     private readonly Dictionary<string, (SlotControl, Vector2i)> _buttons = new();
+    private readonly ISawmill _sawmill = Logger.GetSawmill("inventory.display");
 
     public InventoryDisplay()
     {
@@ -29,7 +30,7 @@ public sealed class InventoryDisplay : LayoutContainer
         VerticalExpand = true;
         InheritChildMeasure = true;
         if (!_buttons.TryAdd(newButton.SlotName, (newButton, buttonOffset)))
-            Logger.Warning("Tried to add button without a slot!");
+            _sawmill.Warning("Tried to add button without a slot!");
         SetPosition(newButton, buttonOffset * ButtonSize + new Vector2(ButtonSpacing, ButtonSpacing));
         UpdateSizeData(buttonOffset);
         return newButton;
