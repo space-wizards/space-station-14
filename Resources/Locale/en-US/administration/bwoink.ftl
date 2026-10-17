@@ -21,6 +21,11 @@ bwoink-system-typing-indicator = {$players} {$count ->
 admin-ahelp-admin-only = Admin Only
 admin-ahelp-admin-only-tooltip = If checked, then the message won't be visible for the player,
     but will be visible for other admins and still will be Discord relayed.
+admin-ahelp-anonymize = Anonymize
+admin-ahelp-anonymize-tooltip = Replace usernames with placeholders.
+admin-ahelp-anonymous-admin-decorator = (admin)
+admin-ahelp-anonymous-player-name = Participant
+admin-ahelp-copy-buffer = Copy the message log into your clipboard.
 
 admin-bwoink-play-sound = Bwoink?
 
