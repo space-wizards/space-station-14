@@ -601,7 +601,7 @@
   name: admin-smite-monkeyify-name
   description: admin-smite-monkeyify-description
   icon:
-    sprite: Mobs/Animals/monkey.rsi
+    sprite: Mobs/Animals/Ancestors/monkey.rsi
     state: monkey
   effects:
   - !type:Polymorph
