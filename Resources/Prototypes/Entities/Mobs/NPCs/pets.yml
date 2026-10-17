@@ -655,7 +655,7 @@
   components:
   - type: Sprite
     drawdepth: SmallMobs
-    sprite: Mobs/Pets/hamlet.rsi
+    sprite: Mobs/Animals/Rodents/hamlet.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: hamster-0

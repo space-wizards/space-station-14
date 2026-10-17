@@ -22,7 +22,7 @@
     - SimpleHostile
   - type: Sprite
     drawdepth: SmallMobs
-    sprite: Mobs/Animals/regalrat.rsi
+    sprite: Mobs/Animals/Rodents/regalrat.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: regalrat
@@ -129,7 +129,7 @@
   suffix: Buff
   components:
   - type: Sprite
-    sprite: Mobs/Animals/buffrat.rsi
+    sprite: Mobs/Animals/Rodents/buffrat.rsi
     scale: 1.2, 1.2
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
@@ -192,7 +192,7 @@
     - SimpleHostile
   - type: Sprite
     drawdepth: SmallMobs
-    sprite: Mobs/Animals/rat.rsi
+    sprite: Mobs/Animals/Rodents/rat.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: rat
