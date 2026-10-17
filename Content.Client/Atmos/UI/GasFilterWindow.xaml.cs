@@ -23,6 +23,7 @@ namespace Content.Client.Atmos.UI
         public string? CurrentGasId;
 
         public event Action<bool>? ToggleStatusButtonPressed;
+        public event Action<bool>? FilteredGasOutletChanged;
         public event Action<string>? FilterTransferRateChanged;
         public event Action? SelectGasPressed;
 
@@ -31,6 +32,10 @@ namespace Content.Client.Atmos.UI
             RobustXamlLoader.Load(this);
 
             ToggleStatusButton.OnToggled += _ => ToggleStatusButtonPressed?.Invoke(ToggleStatusButton.Pressed);
+            SidePortButton.Group = _buttonGroup;
+            FrontPortButton.Group = _buttonGroup;
+            SidePortButton.OnPressed += _ => FilteredGasOutletChanged?.Invoke(true);
+            FrontPortButton.OnPressed += _ => FilteredGasOutletChanged?.Invoke(false);
 
             FilterTransferRateInput.OnTextChanged += _ => SetFilterRate.Disabled = false;
             SetFilterRate.OnPressed += _ =>
@@ -53,6 +58,14 @@ namespace Content.Client.Atmos.UI
         public void SetFilterStatus(bool enabled)
         {
             ToggleStatusButton.Pressed = enabled;
+        }
+
+        public void SetFilteredGasOutlet(bool filterOutlet)
+        {
+            if (filterOutlet)
+                SidePortButton.Pressed = true;
+            else
+                FrontPortButton.Pressed = true;
         }
 
         public void SetGasFiltered(string? id, string name)
