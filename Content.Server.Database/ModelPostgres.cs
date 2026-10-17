@@ -57,6 +57,10 @@ namespace Content.Server.Database
                 .HasMethod("GIN")
                 .IsTsVectorExpressionIndex("english");
 
+            modelBuilder.Entity<AdminLog>()
+                .HasIndex(l => l.Date, "IX_admin_log_date_brin")
+                .HasMethod("BRIN");
+
             foreach(var entity in modelBuilder.Model.GetEntityTypes())
             {
                 foreach(var property in entity.GetProperties())
