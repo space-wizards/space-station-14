@@ -645,6 +645,7 @@
   - type: Inventory
     speciesId: hamster
     templateId: hamster
+    displaceSpeciesAppropriateClothing: true
     displacements:
       head:
         sizeMaps:
