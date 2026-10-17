@@ -38,7 +38,7 @@ public abstract partial class SharedPopupSystem : EntitySystem
     public abstract void PopupCursor(string? message, Filter filter, bool recordReplay, PopupType type = PopupType.Small);
 
     /// <summary>
-    /// Shows a popup at a world location to every entity in PVS range.
+    /// Shows a popup at a world location to every player in range.
     /// </summary>
     /// <param name="message">The message to display.</param>
     /// <param name="coordinates">The coordinates where to display the message.</param>
@@ -75,7 +75,7 @@ public abstract partial class SharedPopupSystem : EntitySystem
 
     /// <summary>
     /// Filtered variant of <see cref="PopupCoordinates(string, EntityCoordinates, PopupType)"/>, which should only be used
-    /// if the filtering has to be more specific than simply PVS range based.
+    /// if the filtering has to be more specific than simply range-based.
     /// </summary>
     /// <param name="message">The message to display.</param>
     /// <param name="coordinates">The coordinates where to display the message.</param>
@@ -86,7 +86,7 @@ public abstract partial class SharedPopupSystem : EntitySystem
     public abstract void PopupCoordinates(string? message, EntityCoordinates coordinates, Filter filter, bool recordReplay, PopupType type = PopupType.Small, int predictionKey = 0);
 
     /// <summary>
-    /// Shows a popup above an entity for every player in PVS range.
+    /// Shows a popup above an entity for every player in range.
     /// </summary>
     /// <param name="message">The message to display.</param>
     /// <param name="uid">The entity above which to display the popup.</param>
@@ -113,7 +113,7 @@ public abstract partial class SharedPopupSystem : EntitySystem
 
     /// <summary>
     /// Filtered variant of <see cref="PopupEntity(string, EntityUid, PopupType)"/>, which should only be used
-    /// if the filtering has to be more specific than simply PVS range based.
+    /// if the filtering has to be more specific than simply range-based.
     /// </summary>
     /// <param name="message">The message to display.</param>
     /// <param name="uid">The entity above which to display the popup.</param>
@@ -124,10 +124,10 @@ public abstract partial class SharedPopupSystem : EntitySystem
 
     /// <summary>
     /// Variant of <see cref="PopupEntity(string?, EntityUid, PopupType)"/> that displays <paramref name="recipientMessage"/>
-    /// to the recipient and <paramref name="othersMessage"/> to everyone else in PVS range.
+    /// to the recipient and <paramref name="othersMessage"/> to everyone else in range.
     /// </summary>
     /// <param name="recipientMessage">The message to display to the recipient.</param>
-    /// <param name="othersMessage">The message to display to everyone else in PVS range.</param>
+    /// <param name="othersMessage">The message to display to everyone.</param>
     /// <param name="uid">The entity above which to display the popup.</param>
     /// <param name="recipient">The entity whose attached player will see the recipient message.</param>
     /// <param name="type">Used to customize how this popup should appear visually.</param

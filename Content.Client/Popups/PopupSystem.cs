@@ -1,4 +1,6 @@
 using System.Linq;
+using Content.Client.UserInterface.Systems.Chat;
+using Content.Shared.Chat;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Popups;
@@ -12,6 +14,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Replays;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Popups;
 
@@ -77,6 +80,30 @@ public sealed partial class PopupSystem : SharedPopupSystem
             ("count", existingLabel.Repeats));
     }
 
+    private static Color PopupTypeToChatColor(PopupType type)
+    {
+        return type switch
+        {
+            PopupType.SmallCaution or PopupType.MediumCaution or PopupType.LargeCaution => Color.Red,
+            _ => Color.LightSlateGray,
+        };
+    }
+
+    private void SendPopupToChat(string message, PopupType type, out bool sendToReplay)
+    {
+        var chat = _uiManager.GetUIController<ChatUIController>();
+        chat.ProcessChatMessage(new ChatMessage(
+            ChatChannel.Notifications,
+            message,
+            FormattedMessage.EscapeText(message),
+            default,
+            null,
+            colorOverride: PopupTypeToChatColor(type)
+            ),
+            false,
+            out sendToReplay);
+    }
+
     /// <summary>
     /// Interal implementation for both coordinates and entity popups.
     /// </summary>
@@ -85,7 +112,9 @@ public sealed partial class PopupSystem : SharedPopupSystem
         if (string.IsNullOrWhiteSpace(message))
             return;
 
-        if (recordReplay && _replayRecording.IsRecording)
+        SendPopupToChat(message, type, out var sendToReplay);
+
+        if (recordReplay && _replayRecording.IsRecording && sendToReplay)
         {
             if (entity != null)
                 _replayRecording.RecordClientMessage(new PopupEntityEvent(message, type, Timing.CurTick, GetNetEntity(entity.Value)));
@@ -117,7 +146,9 @@ public sealed partial class PopupSystem : SharedPopupSystem
         if (string.IsNullOrWhiteSpace(message))
             return;
 
-        if (recordReplay && _replayRecording.IsRecording)
+        SendPopupToChat(message, type, out var sendToReplay);
+
+        if (recordReplay && _replayRecording.IsRecording && sendToReplay)
             _replayRecording.RecordClientMessage(new PopupCursorEvent(message, type, Timing.CurTick));
 
         var popupData = new CursorPopupData(message, type);
