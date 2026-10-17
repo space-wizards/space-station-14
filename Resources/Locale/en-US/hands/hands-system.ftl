@@ -4,3 +4,5 @@ comp-hands-examine-empty = { CAPITALIZE(SUBJECT($user)) } { CONJUGATE-BE($user) 
 comp-hands-examine-wrapper = { INDEFINITE($item) } [color=paleturquoise]{$item}[/color]
 
 hands-system-blocked-by = Blocked by
+
+hands-system-throwing-cooldown = You are not ready to throw yet!
