@@ -72,6 +72,8 @@
     stateDoorClosed: cap_door
   - type: AccessReader
     access: [["Captain"]]
+  - type: HauntedCloset
+    closeChance: 0.05 # chosen 20 times less often than maint closets
 
 - type: entity
   parent: LockerBase
