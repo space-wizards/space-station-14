@@ -8,6 +8,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Materials;
 using Content.Shared.Nutrition;
+using Content.Shared.ParcelWrap.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using Content.Shared.Tools.EntitySystems;
@@ -108,7 +109,7 @@ public sealed partial class SecretStashSystem : EntitySystem
             return false;
         }
 
-        // Check if item is too big to fit into secret stash or is in the blacklist.
+        // Check if item is too big to fit into secret stash, or is in the blacklist, or is itself a secret stash or a wrapped parcel.
         ProtoId<ItemSizePrototype> maxItemSize;
         if (entity.Comp.MaxItemSize != null)
         {
@@ -116,13 +117,15 @@ public sealed partial class SecretStashSystem : EntitySystem
         }
         else if (TryComp<ItemComponent>(entity, out var stashItem))
         {
-            var smallerSize = _item.GetSizeSmaller(stashItem.Size);
-            if (smallerSize == null)
-                return false;
-
-            maxItemSize = smallerSize.ID;
+            maxItemSize = stashItem.Size;
         }
         else
+        {
+            return false;
+        }
+
+        if (HasComp<SecretStashComponent>(itemToHideUid) || HasComp<ParcelWrapComponent>(itemToHideUid) ||
+            HasComp<WrappedParcelComponent>(itemToHideUid))
         {
             return false;
         }
