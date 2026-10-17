@@ -241,6 +241,32 @@
     Tricordrazine: 2
 
 - type: reaction
+  id: ApotheosoticExtract
+  source: true
+  requiredMixerCategories:
+  - Electrolysis # Maybe swap this to centrifuge once there are some centrifuge QoL improvements
+  reactants:
+    ApotheosoticEnzymes:
+      amount: 6
+  products:
+    ApotheosoticExtract: 4
+    Benzene: 2
+
+- type: reaction
+  id: Omnizine
+  reactants:
+    ApotheosoticExtract:
+      amount: 3
+    PolypyryliumOligomers:
+      amount: 1
+    Diphenhydramine:
+      amount: 1
+    Sigynate:
+      amount: 1
+  products:
+    Omnizine: 4
+
+- type: reaction
   id: HeartbreakerToxin
   reactants:
     DexalinPlus:
