@@ -2,7 +2,6 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Destructible;
 using Content.Shared.Explosion.EntitySystems;
-using Content.Shared.Jittering;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
