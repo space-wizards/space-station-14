@@ -1,0 +1,102 @@
+# Debug-only voice variants of every lathe, used to exercise the voice-command matcher.
+- type: entity
+  abstract: true
+  id: BaseVoiceLatheDebug
+  categories: [ Debug ]
+  suffix: DEBUG
+  components:
+  - type: TriggerOnVoice
+    fuzzyMatch: true
+    listenRange: 8
+  - type: VoiceCommands
+
+- type: entity
+  parent: [ Autolathe, BaseVoiceLatheDebug ]
+  id: AutolatheVoiceDebug
+  components:
+  - type: TriggerOnVoice
+    defaultKeyPhrase: key-phrase-autolathe
+
+- type: entity
+  parent: [ Protolathe, BaseVoiceLatheDebug ]
+  id: ProtolatheVoiceDebug
+  components:
+  - type: TriggerOnVoice
+    defaultKeyPhrase: key-phrase-protolathe
+
+- type: entity
+  parent: [ CircuitImprinter, BaseVoiceLatheDebug ]
+  id: CircuitImprinterVoiceDebug
+  components:
+  - type: TriggerOnVoice
+    defaultKeyPhrase: key-phrase-circuit-imprinter
+
+- type: entity
+  parent: [ ExosuitFabricator, BaseVoiceLatheDebug ]
+  id: ExosuitFabricatorVoiceDebug
+  components:
+  - type: TriggerOnVoice
+    defaultKeyPhrase: key-phrase-exosuit-fabricator
+
+- type: entity
+  parent: [ Biofabricator, BaseVoiceLatheDebug ]
+  id: BiofabricatorVoiceDebug
+  components:
+  - type: TriggerOnVoice
+    defaultKeyPhrase: key-phrase-biofabricator
+
+- type: entity
+  parent: [ SecurityTechFab, BaseVoiceLatheDebug ]
+  id: SecurityTechFabVoiceDebug
+  components:
+  - type: TriggerOnVoice
+    defaultKeyPhrase: key-phrase-security-techfab
+
+- type: entity
+  parent: [ AmmoTechFab, BaseVoiceLatheDebug ]
+  id: AmmoTechFabVoiceDebug
+  components:
+  - type: TriggerOnVoice
+    defaultKeyPhrase: key-phrase-ammo-techfab
+
+- type: entity
+  parent: [ MedicalTechFab, BaseVoiceLatheDebug ]
+  id: MedicalTechFabVoiceDebug
+  components:
+  - type: TriggerOnVoice
+    defaultKeyPhrase: key-phrase-medical-techfab
+
+- type: entity
+  parent: [ UniformPrinter, BaseVoiceLatheDebug ]
+  id: UniformPrinterVoiceDebug
+  components:
+  - type: TriggerOnVoice
+    defaultKeyPhrase: key-phrase-uniform-printer
+
+- type: entity
+  parent: [ Biogenerator, BaseVoiceLatheDebug ]
+  id: BiogeneratorVoiceDebug
+  components:
+  - type: TriggerOnVoice
+    defaultKeyPhrase: key-phrase-biogenerator
+
+- type: entity
+  parent: [ OreProcessor, BaseVoiceLatheDebug ]
+  id: OreProcessorVoiceDebug
+  components:
+  - type: TriggerOnVoice
+    defaultKeyPhrase: key-phrase-ore-processor
+
+- type: entity
+  parent: [ Sheetifier, BaseVoiceLatheDebug ]
+  id: SheetifierVoiceDebug
+  components:
+  - type: TriggerOnVoice
+    defaultKeyPhrase: key-phrase-sheetifier
+
+- type: entity
+  parent: [ CutterMachine, BaseVoiceLatheDebug ]
+  id: CutterMachineVoiceDebug
+  components:
+  - type: TriggerOnVoice
+    defaultKeyPhrase: key-phrase-cutter
