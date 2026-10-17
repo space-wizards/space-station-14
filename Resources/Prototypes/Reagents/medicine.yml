@@ -917,6 +917,15 @@
         damage:
           types:
             Cellular: 0.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: ApotheosoticExtract
+          min: 30
+        damage:
+          types:
+            Caustic: 2
+            Poison: 2
 
 - type: reagent
   id: ApotheosoticExtract
