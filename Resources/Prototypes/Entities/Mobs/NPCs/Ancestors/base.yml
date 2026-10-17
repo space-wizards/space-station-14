@@ -1,0 +1,114 @@
+- type: entity
+  abstract: true
+  parent: [ BaseMobAnimal, SimpleMobBase, StripableInventoryBase, BaseMobDestructible ]
+  id: MobBaseAncestor
+  name: genetic ancestor
+  description: The genetic bipedal ancestor of... Uh... Something. Yeah, there's definitely something on the station that descended from whatever this is.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: monkey
+      sprite: Mobs/Animals/Ancestors/monkey.rsi
+    - map: [ "jumpsuit" ]
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+    - map: [ "ears" ]
+    - map: [ "id" ]
+    - map: [ "outerClothing" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+  - type: RotationVisuals
+    defaultRotation: 90
+    horizontalRotation: 90
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Monkey_burning
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.35
+        density: 80
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Inventory
+    templateId: monkey
+    speciesId: monkey
+  - type: Hands
+    startingHands:
+      hand_left:
+        location: Left
+  - type: Cuffable
+  - type: Stripping
+  - type: ComplexInteraction
+  - type: CombatMode
+    canDisarm: true
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 30
+    animation: WeaponArcBite
+    damage:
+      types:
+        Blunt: 3
+        Piercing: 3
+  - type: Puller
+    needsHands: false
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 3
+  - type: Deathgasp
+    prototype: MonkeyDeathgasp
+  - type: CreamPied
+    sprite:
+      sprite: Effects/creampie.rsi
+      state: creampie_monkey
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-monkey
+    interactFailureString: petting-failure-monkey
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/ferret_happy.ogg
+    interactFailureSound:
+      path: /Audio/Items/wirecutter.ogg
+  - type: IdExaminable
+  - type: Tag
+    tags:
+    - VimPilot
+    - DoorBumpOpener
+    - AnomalyHost
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+    reactions:
+    - reagents: [ Water, SpaceCleaner ]
+      methods: [ Touch ]
+      effects:
+      - !type:WashCreamPie
+  - type: Crawler
+  - type: StatusIcon
+    bounds: -0.5,-0.5,0.5,0.5
+  - type: JobStatus # marks them as crew
+  - type: CanHostGuardian
+  - type: FactionException
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: NPCRetaliation
+    attackMemoryLength: 10
+  - type: HTN
+    rootTask:
+      task: MonkeyCompound
+    blackboard:
+      NavInteract: !type:Bool
+        true
