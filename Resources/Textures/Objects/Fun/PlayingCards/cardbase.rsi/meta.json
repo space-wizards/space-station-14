@@ -1,0 +1,44 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e5ed72520eb453c116ccd96f8495af683aabcde4",
+    "size": {
+        "x": 24,
+        "y": 24
+    },
+    "states": [
+        {
+            "name": "deck_nanotrasen_low"
+        },
+        {
+            "name": "deck_nanotrasen_half"
+        },
+        {
+            "name": "deck_nanotrasen_full"
+        },
+        {
+            "name": "deck_syndicate_low"
+        },
+        {
+            "name": "deck_syndicate_half"
+        },
+        {
+            "name": "deck_syndicate_full"
+        },
+        {
+            "name": "sc_base"
+        },
+        {
+            "name": "syndi_base"
+        },
+        {
+            "name": "sc_backside"
+        },
+        {
+            "name": "syndi_backside"
+        } ,
+        {
+            "name": "red_backside"
+        }
+    ]
+}
