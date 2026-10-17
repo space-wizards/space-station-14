@@ -1,3 +1,6 @@
+reagent-name-deboxide = deboxide
+reagent-desc-deboxide = A compound that inhibits muscle control by impacting nerve receptors. The effect is usually most obvious in the arms and hands, resulting in decreased combat performance.
+
 reagent-name-desoxyephedrine = desoxyephedrine
 reagent-desc-desoxyephedrine = A more effective ephedrine, with more active downsides. Requires less doses to cure narcolepsy.
 
