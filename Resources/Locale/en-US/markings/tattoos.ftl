@@ -64,5 +64,5 @@ marking-TattooEyeshadowVoxMedium = Eyeshadow (Medium)
 marking-TattooEyeshadowVoxLarge-tattoo_eyeshadow_Large = Eyeshadow (Large)
 marking-TattooEyeshadowVoxLarge = Eyeshadow (Large)
 
-marking-TattooVoxTailRing-tattoo_vox_tail_ring = Tail Ring
+marking-TattooVoxTailRing-tail_ring = Tail Ring
 marking-TattooVoxTailRing = Tail Ring
