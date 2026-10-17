@@ -1,5 +1,39 @@
 - type: entity
-  parent: BaseItem
+  abstract: true
+  id: DoorRemoteOptionsBase
+  components:
+  - type: DoorRemote
+    options:
+    - mode: OpenClose
+      tooltip: door-remote-open-close-text
+      icon:
+        sprite: /Textures/Structures/Doors/Airlocks/Standard/airlock-base.rsi
+        state: assembly
+    - mode: ToggleBolts
+      tooltip: door-remote-toggle-bolt-text
+      icon:
+        sprite: /Textures/Interface/Actions/actions_ai.rsi
+        state: bolt_door
+    - mode: ToggleEmergencyAccess
+      tooltip: door-remote-emergency-access-text
+      icon:
+        sprite: /Textures/Interface/Actions/actions_ai.rsi
+        state: emergency_on
+
+- type: entity
+  abstract: true
+  id: DoorRemoteOptionsCanElectrifyDoors
+  components:
+  - type: DoorRemote
+    options:
+    - mode: ToggleOvercharge
+      tooltip: door-remote-toggle-eletrify-text
+      icon:
+        sprite: /Textures/Interface/Actions/actions_ai.rsi
+        state: door_overcharge_on
+
+- type: entity
+  parent: [ BaseItem, DoorRemoteOptionsBase ]
   id: DoorRemoteDefault
   name: door remote
   description: A gadget which can open and bolt doors remotely.
@@ -10,23 +44,6 @@
   - type: Item
     storedRotation: -90
   - type: Access
-  - type: DoorRemote
-    options:
-    - mode: OpenClose
-      tooltip: &TextOpenClose door-remote-open-close-text
-      icon: &IconOpenClose
-        sprite: /Textures/Structures/Doors/Airlocks/Standard/airlock-base.rsi
-        state: assembly
-    - mode: ToggleBolts
-      tooltip: &TextToggleBolt door-remote-toggle-bolt-text
-      icon: &IconToggleBolt
-        sprite: /Textures/Interface/Actions/actions_ai.rsi
-        state: bolt_door
-    - mode: ToggleEmergencyAccess
-      tooltip: &TextEmergencyAccess door-remote-emergency-access-text
-      icon: &IconEmergencyAccess
-        sprite: /Textures/Interface/Actions/actions_ai.rsi
-        state: emergency_on
   - type: StealTarget
     stealGroup:
     - DoorRemote
@@ -39,26 +56,9 @@
         type: DoorRemoteBoundUserInterface
 
 - type: entity
-  parent: DoorRemoteDefault
+  parent: [ DoorRemoteDefault, DoorRemoteOptionsCanElectrifyDoors ]
   id: DoorRemoteCanEletrifyDoors
   abstract: true
-  components:
-  - type: DoorRemote
-    options:
-    - mode: ToggleOvercharge
-      tooltip: door-remote-toggle-eletrify-text
-      icon:
-        sprite: /Textures/Interface/Actions/actions_ai.rsi
-        state: door_overcharge_on
-    - mode: OpenClose
-      tooltip: *TextOpenClose
-      icon: *IconOpenClose
-    - mode: ToggleBolts
-      tooltip: *TextToggleBolt
-      icon: *IconToggleBolt
-    - mode: ToggleEmergencyAccess
-      tooltip: *TextEmergencyAccess
-      icon: *IconEmergencyAccess
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]

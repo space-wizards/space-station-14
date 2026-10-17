@@ -36,6 +36,7 @@
     actions:
     - ActionJumpToCore
     - ActionAIViewLaws
+    - ActionOpenDoorRadialMenu
   - type: UserInterface
     interfaces:
       enum.RadarConsoleUiKey.Key:
@@ -48,6 +49,8 @@
         type: SiliconLawBoundUserInterface
       enum.CommunicationsConsoleUiKey.Key:
         type: CommunicationsConsoleBoundUserInterface
+      enum.DoorRemoteUiKey.Key:
+        type: DoorRemoteBoundUserInterface
   - type: IntrinsicUI
     uis:
       enum.RadarConsoleUiKey.Key:
@@ -413,7 +416,7 @@
 # The actual brain inside the core
 - type: entity
   id: StationAiBrain
-  parent: PositronicBrain
+  parent: [ PositronicBrain, DoorRemoteOptionsBase, DoorRemoteOptionsCanElectrifyDoors ]
   categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: Sprite
@@ -472,6 +475,8 @@
     mindRoles:
     - MindRoleGhostRoleSilicon
     job: StationAi
+  - type: DoorRemote
+    requireInRangeUnoccluded: false
 
 # Hologram projection that the AI's eye tracks.
 - type: entity
