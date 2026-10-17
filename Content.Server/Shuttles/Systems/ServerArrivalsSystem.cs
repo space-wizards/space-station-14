@@ -139,6 +139,12 @@ public sealed partial class ServerArrivalsSystem : ArrivalsSystem
         EnsureComp<ProtectedGridComponent>(grid.Value);
         EnsureComp<PreventPilotComponent>(grid.Value);
 
+        if (Cfg.GetCVar(CCVars.ArrivalsShuttleBulldoze))
+        {
+            var comp = EnsureComp<ShuttleComponent>(grid.Value);
+            comp.Bulldoze = true;
+        }
+
         // Setup planet arrivals if relevant
         if (Cfg.GetCVar(CCVars.ArrivalsPlanet))
         {
