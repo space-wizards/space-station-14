@@ -858,6 +858,96 @@
   - type: StaticPrice
     price: 0
 
+#Ninja Hardsuit
+- type: entity
+  parent: [ ClothingOuterHardsuitBase, BaseHighlyIllegalContraband ]
+  id: ClothingOuterHardsuitSpaceNinja
+  name: space ninja hardsuit
+  description: This black technologically advanced, cybernetically-enhanced suit provides many abilities like invisibility or teleportation.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/spaceninja.rsi
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,3,3
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/spaceninja.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.8
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  # phase cloak
+  - type: ItemToggle
+    onUse: false
+  - type: ToggleClothing
+    action: ActionTogglePhaseCloak
+    disableOnUnequip: true
+  - type: ComponentToggler
+    parent: true
+    components:
+    - type: Stealth
+      minVisibility: 0.1
+      lastVisibility: 0.1
+      shimmerFrequency: 0.05
+  - type: PowerCellDraw
+    drawRate: 1.8 # 200 seconds on the default cell
+  - type: ToggleCellDraw
+  # throwing star ability
+  - type: ItemCreator
+    action: ActionCreateThrowingStar
+    charge: 14.4
+    spawnedPrototype: ThrowingStarNinja
+    noPowerPopup: ninja-no-power
+  # core ninja suit stuff
+  - type: NinjaSuit
+  - type: EmpResistance
+    strengthMultiplier: 0
+  - type: UseDelay
+    delay: 5 # disable time
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+    # throwing in a recharger would bypass glove charging mechanic
+    fitsInCharger: false
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+        ent: null
+        showEnts: false
+        occludes: true
+      toggleable-clothing: !type:ContainerSlot
+        ent: null
+        showEnts: false
+        occludes: true
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
+        disableEject: true
+        whitelist:
+          tags:
+            - PowerCell
+  - type: HideLayerClothing
+    slots:
+    - Tail
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSpaceNinja
+    toggleOnFirstEquip: true
+  - type: Tag
+    tags:
+    - Hardsuit
+    - WhitelistChameleon
+
 #CENTCOMM / ERT HARDSUITS
 #ERT Leader Hardsuit
 - type: entity

@@ -523,6 +523,36 @@
         Piercing: 0.9
         Heat: 0.9
 
+#Ninja Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitSpaceNinja
+  name: space ninja hardsuit helmet
+  description: What may appear to be a simple black garment is in fact a highly sophisticated nano-weave helmet. Standard issue ninja gear.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/spaceninja.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/spaceninja.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 1
+        Slash: 1
+        Piercing: 1
+        Heat: 1
+        Radiation: 1
+    showArmorOnExamine: false # Looks odd but we don't want 'reduced by 0%' either.
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 1000
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
 #CENTCOMM / ERT HARDSUITS
 #ERT Leader Hardsuit
 - type: entity

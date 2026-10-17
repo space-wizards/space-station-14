@@ -219,27 +219,6 @@
     layers:
       Hair: HEAD
 
-#Space Ninja Helmet
-- type: entity
-  parent: [ClothingHeadEVAHelmetBase, BaseHighlyIllegalContraband]
-  id: ClothingHeadHelmetSpaceNinja
-  name: space ninja helmet
-  description: What may appear to be a simple black garment is in fact a highly sophisticated nano-weave helmet. Standard issue ninja gear.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Helmets/spaceninja.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Helmets/spaceninja.rsi
-  - type: Tag
-    tags:
-    - WhitelistChameleon
-  - type: IngestionBlocker
-  - type: IdentityBlocker
-  - type: HideLayerClothing
-    layers:
-      Hair: HEAD
-      Snout: HEAD
-
 #Knight Helmet
 - type: entity
   parent: ClothingHeadHelmetBase
