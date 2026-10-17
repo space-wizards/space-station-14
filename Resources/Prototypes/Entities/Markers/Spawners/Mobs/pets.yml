@@ -213,7 +213,7 @@
     layers:
     - state: green
     - state: monkey
-      sprite: Mobs/Animals/monkey.rsi
+      sprite: Mobs/Animals/Ancestors/monkey.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobMonkeyPunpun

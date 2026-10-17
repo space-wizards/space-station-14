@@ -3,13 +3,15 @@ using Content.Server.Audio;
 using Content.Server.Power.Components;
 using Content.Shared.Database;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 
 namespace Content.Server.Power.EntitySystems;
 
-public sealed partial class PowerChargeSystem : EntitySystem
+/// <inheritdoc/>
+public sealed partial class ServerPowerChargeSystem : PowerChargeSystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private UserInterfaceSystem _uiSystem = default!;
