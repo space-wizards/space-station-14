@@ -9,8 +9,8 @@ using Robust.Shared.Physics.Systems;
 namespace Content.Shared.Teleportation.Systems;
 
 /// <summary>
-/// Handles <see cref="TeleportActionEvent"/> by checking line of sight and whether the performer
-/// would collide with anything at the destination before moving them.
+/// Handles <see cref="TeleportActionEvent"/> by checking whether the performer would collide with
+/// anything at the destination before moving them.
 /// </summary>
 public sealed partial class TeleportActionSystem : EntitySystem
 {

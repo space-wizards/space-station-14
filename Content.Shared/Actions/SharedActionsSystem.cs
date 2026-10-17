@@ -483,15 +483,8 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
     private bool ValidateLineOfSight(EntityUid user, EntityUid target, TargetActionComponent comp)
     {
-        if (!comp.CheckCanSee)
-            return true;
-
-        var range = comp.Range > 0 ? comp.Range : SharedInteractionSystem.MaxRaycastRange;
-        if (_examine.InRangeUnOccluded(user, target, range))
-            return true;
-
-        _popup.PopupEntity(Loc.GetString("target-action-popup-cant-see"), user, user);
-        return false;
+        var targetCoords = Transform(target).Coordinates;
+        return ValidateLineOfSight(user, targetCoords, comp);
     }
 
     private bool ValidateLineOfSight(EntityUid user, EntityCoordinates target, TargetActionComponent comp)
