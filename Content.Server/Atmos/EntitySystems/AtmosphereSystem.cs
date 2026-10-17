@@ -4,6 +4,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.NodeContainer.EntitySystems;
+using Content.Server.Radiation.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
@@ -41,6 +42,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     [Dependency] private MapSystem _map = default!;
     [Dependency] public PuddleSystem Puddle = default!;
     [Dependency] private DamageableSystem _damage = default!;
+    [Dependency] private RadiationSystem _rad = default!;
 
     [Dependency] private EntityQuery<GridAtmosphereComponent> _gridAtmosQuery = default!;
     [Dependency] private EntityQuery<MapAtmosphereComponent> _mapAtmosQuery = default!;
