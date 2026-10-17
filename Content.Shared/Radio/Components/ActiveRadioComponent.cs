@@ -27,4 +27,10 @@ public sealed partial class ActiveRadioComponent : Component
     /// </summary>
     [DataField]
     public bool GlobalReceive = false;
+
+    /// <summary>
+    /// Whether this radio can force-send messages on receive-only channels.
+    /// </summary>
+    [DataField]
+    public bool CanSendInReceiveOnlyChannels;
 }
