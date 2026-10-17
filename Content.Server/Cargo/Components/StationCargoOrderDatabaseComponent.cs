@@ -3,13 +3,14 @@ using Content.Shared.Cargo;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Station.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Cargo.Components;
 
 /// <summary>
 /// Stores all of cargo orders for a particular station.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class StationCargoOrderDatabaseComponent : Component
 {
     /// <summary>
@@ -19,16 +20,13 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     public int Capacity = 20;
 
     /// <summary>
-    /// Every outstanding order across every account.
-    /// </summary>
-    [ViewVariables]
-    public IEnumerable<CargoOrderData> AllOrders => Orders.SelectMany(p => p.Value);
-
-    /// <summary>
     /// A dictionary containing every outstanding order on the system, indexed by account.
     /// </summary>
     [DataField]
-    public Dictionary<ProtoId<CargoAccountPrototype>, List<CargoOrderData>> Orders = new();
+    public List<CargoOrderData> Orders = new();
+
+    [DataField]
+    public List<CargoOrderData> DeliveredOrders = new();
 
     /// <summary>
     /// Used to determine unique order IDs.
@@ -58,6 +56,12 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     /// </summary>
     [DataField]
     public EntProtoId PrinterOutput = "PaperCargoInvoice";
+
+    [DataField]
+    public TimeSpan OrderCheckDelay = TimeSpan.FromSeconds(10);
+
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan NextOrderCheck;
 }
 
 /// <summary>
