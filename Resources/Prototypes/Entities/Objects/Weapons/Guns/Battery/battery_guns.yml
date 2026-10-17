@@ -877,6 +877,64 @@
       fireCost: 100
 
 - type: entity
+  name: Syndicate C.H.I.M.P. handcannon
+  parent: [WeaponPistolCHIMP, BaseSyndicateContraband]
+  id: WeaponPistolCHIMPSyndicate
+  suffix: Syndicate
+  description: For all your illegal anomaly manipulation needs. Comes with a recharging battery.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Revolvers/chimp_syndicate.rsi
+    layers:
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-unshaded-1
+      visible: false
+      map: [ "enum.GunVisualLayers.MagUnshaded" ]
+      shader: unshaded
+  - type: Gun
+    projectileSpeed: 10
+    fireRate: 0.75
+    soundGunshot:
+      path: /Audio/Effects/gateway_off.ogg
+  - type: BatteryAmmoProvider
+    proto: AnomalousParticleDelta
+    fireCost: 210
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: AnomalousParticleDelta
+      fireCost: 210
+    - proto: AnomalousParticleEpsilon
+      fireCost: 210
+    - proto: AnomalousParticleZeta
+      fireCost: 210
+    - proto: AnomalousParticleSigma
+      fireCost: 210
+  - type: BatterySelfRecharger
+    autoRechargeRate: 15
+  - type: Construction
+    graph: UpgradeWeaponPistolCHIMPSyndicate
+    node: start
+
+- type: entity
+  parent: [WeaponPistolCHIMPSyndicate]
+  id: WeaponPistolCHIMPSyndicateUpgraded
+  suffix: Syndicate
+  components:
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: AnomalousParticleDeltaStrong
+      fireCost: 210
+    - proto: AnomalousParticleEpsilonStrong
+      fireCost: 210
+    - proto: AnomalousParticleOmegaStrong
+      fireCost: 210
+    - proto: AnomalousParticleZetaStrong
+      fireCost: 210
+    - proto: AnomalousParticleSigmaStrong
+      fireCost: 210
+
+- type: entity
   name: eye of a behonker
   parent: BaseWeaponBatterySmall
   id: WeaponBehonkerLaser
