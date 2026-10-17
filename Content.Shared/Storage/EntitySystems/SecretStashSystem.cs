@@ -34,6 +34,7 @@ public sealed partial class SecretStashSystem : EntitySystem
     [Dependency] private ToolOpenableSystem _toolOpenableSystem = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private DamageableSystem _damageableSystem = default!;
+    [Dependency] private StashableSystem _stashableSystem = default!;
 
     public override void Initialize()
     {
@@ -127,7 +128,7 @@ public sealed partial class SecretStashSystem : EntitySystem
             return false;
         }
 
-        if (_item.GetSizePrototype(itemComp.Size) > _item.GetSizePrototype(maxItemSize) ||
+        if (_stashableSystem.GetStashableSizePrototype(itemToHideUid) > _item.GetSizePrototype(maxItemSize) ||
             _whitelistSystem.IsWhitelistPass(entity.Comp.Blacklist, itemToHideUid))
         {
             var msg = Loc.GetString("comp-secret-stash-action-hide-item-too-big",

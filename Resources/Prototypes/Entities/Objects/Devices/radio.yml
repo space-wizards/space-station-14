@@ -41,6 +41,7 @@
   - type: Tag
     tags:
     - Radio
+  - type: Stashable
 
 - type: entity
   parent: [ RadioHandheld, BaseSecurityContraband ]
