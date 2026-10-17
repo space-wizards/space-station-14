@@ -1,0 +1,81 @@
+﻿using Content.Shared.Chemistry.Components;
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Hands.Components;
+using Content.Shared.Whitelist;
+using Robust.Shared.Serialization;
+using Robust.Shared.GameStates;
+
+namespace Content.Shared.Containers.ItemSlot;
+
+/// <summary>
+///     The same concept as <see cref="SolutionContainerVisualsComponent"/> but now handles fill visuals per slot.
+/// </summary>
+[RegisterComponent, NetworkedComponent]
+public sealed partial class ItemSlotVisualsComponent : Component
+{
+    /// <summary>
+    /// A Dictionary that handles multiple instances of ItemSlotVisuals. ItemSlotVisuals is for setting the Name, Layer,
+    /// & sprite of an Icon/Inhand/Wielded/Equipped Fill Sprites.
+    /// </summary>
+    [DataField]
+    public Dictionary<string, ItemSlotVisuals> SlotVisuals = new();
+}
+
+[DataDefinition]
+[Serializable, NetSerializable]
+public partial struct ItemSlotVisuals
+{
+    /// <summary>
+    /// A string that looks up Enums in ItemSlotVisualLayers then those enums are used for visuals. Makes multiple visuals possible.
+    /// </summary>
+    [DataField]
+    public string Layer = "enum.ItemSlotVisualLayers.Fill0";
+
+    /// <summary>
+    /// A string to specify which slot to use from ItemSlots. Specifically the third string below the slots Dictionary.
+    ///
+    /// Useful if there's 2 or more tags of the same name but both are in different slots, or if you want to check
+    /// if the slot has been filled in general, without specifying the tag. Checks if anything has been inserted by default.
+    /// </summary>
+    [DataField]
+    public string? SlotName = null;
+
+    /// <summary>
+    /// A Whitelist to check if an item with the same tag/component has been inserted into the ItemSlot. Is made to be
+    /// used with <see cref="ItemSlot"/> Whitelist.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    /// Layers to add to the Icon for Icon Fill Visuals.
+    /// </summary>
+    [DataField]
+    public Dictionary<string, List<PrototypeLayerData>> IconVisuals = new();
+
+    /// <summary>
+    /// Layers to add to the sprite of the player that is holding this object (while the object has an item inserted)
+    /// </summary>
+    [DataField]
+    public Dictionary<HandLocation, List<PrototypeLayerData>> InhandVisuals = new();
+
+    /// <summary>
+    /// Layers to add to the sprite of the player that is wielding this object (while the object has an item inserted).
+    /// </summary>
+    [DataField]
+    public Dictionary<HandLocation, List<PrototypeLayerData>>? WieldedInhandVisuals;
+
+    /// <summary>
+    /// Layers to add to the sprite of the player wearing this object (while the object has an item inserted).
+    /// </summary>
+    [DataField]
+    public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
+}
+
+[Serializable, NetSerializable]
+public enum ItemSlotVisualLayers : byte
+{
+    Fill0,
+    Fill1,
+    Fill2,
+}
