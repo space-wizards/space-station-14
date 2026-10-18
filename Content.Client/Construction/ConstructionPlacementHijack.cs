@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Construction.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Client.Placement;
@@ -15,6 +14,7 @@ public sealed partial class ConstructionPlacementHijack : PlacementHijack
     private EntityQuery<ConstructionGhostComponent> _constructionGhostQuery;
     private EntityQuery<SpriteComponent> _spriteQuery;
 
+    private readonly AppearanceSystem _appearanceSystem;
     private readonly ConstructionSystem _constructionSystem;
 
     private readonly ConstructionPrototype? _prototype;
@@ -27,6 +27,7 @@ public sealed partial class ConstructionPlacementHijack : PlacementHijack
     {
         IoCManager.InjectDependencies(this);
 
+        _appearanceSystem = _entMan.System<AppearanceSystem>();
         _constructionSystem = _entMan.System<ConstructionSystem>();
         _constructionGhostQuery = _entMan.GetEntityQuery<ConstructionGhostComponent>();
         _spriteQuery = _entMan.GetEntityQuery<SpriteComponent>();
@@ -70,6 +71,7 @@ public sealed partial class ConstructionPlacementHijack : PlacementHijack
         {
             var sprite = _spriteQuery.Comp(targetUid);
 
+            _appearanceSystem.OnChangeData(targetUid, sprite);
             manager.PreparePlacementSprite((targetUid, sprite));
         }
         finally
