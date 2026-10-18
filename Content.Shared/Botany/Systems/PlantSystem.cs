@@ -5,7 +5,7 @@ using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
-
+using Robust.Shared.Random;
 namespace Content.Shared.Botany.Systems;
 
 /// <summary>
@@ -17,7 +17,7 @@ public sealed partial class PlantSystem : EntitySystem
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private PlantMutationSystem _mutation = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
-
+    [Dependency] private IRobustRandom _random = default!;
     [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery;
     [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery;
     [Dependency] private EntityQuery<PlantToxinsComponent> _toxinsQuery;
@@ -77,6 +77,17 @@ public sealed partial class PlantSystem : EntitySystem
         _mutation.CrossFloat(ref ent.Comp.Production, pollenData.Production);
         _mutation.CrossFloat(ref ent.Comp.Potency, pollenData.Potency);
         _mutation.CrossTrait(ent.Owner, args.PollenData);
+
+
+        // Hybrids have a high chance of being seedless. Balances very
+        // effective hybrid crossings.
+        if (args.PollenProtoId != null
+            && args.PollenProtoId != MetaData(ent).EntityPrototype?.ID
+            && _random.Prob(0.7f))
+        {
+            EnsureComp<PlantTraitSeedlessComponent>(ent);
+        }
+
         Dirty(ent);
     }
 
@@ -423,3 +434,4 @@ public sealed partial class PlantSystem : EntitySystem
         return string.Join("\n", markup);
     }
 }
+
