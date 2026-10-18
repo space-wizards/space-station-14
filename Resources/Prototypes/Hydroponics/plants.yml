@@ -2545,6 +2545,9 @@
         min: 1
         max: 15
         potencyDivisor: 5
+  - type: PermanentStatusEffects # ideally this is applied as a crossbreedable mutation on plant initiation but currently not possible
+    statusEffects:
+    - Glowing
 
 - type: entity
   parent: BasePlant
