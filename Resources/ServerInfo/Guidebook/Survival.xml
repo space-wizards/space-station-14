@@ -37,9 +37,9 @@ In the event of a serious emergency, there are a few things you can do to help e
 - If you find yourself in a situation where you have to defend yourself, you can easily improvise, various items such as knives, tools, and even a toolbox can help save your life in a pinch, also certain jobs have access to things that can be quite handy to defend yourself.
 
 <Box>
-  <GuideEntityEmbed Entity="toolboxemergency" Caption="Emergency toolbox"/>
+  <GuideEntityEmbed Entity="Toolboxemergency" Caption="Emergency toolbox"/>
   <GuideEntityEmbed Entity="Crowbar" Caption="Crowbar"/>
-  <GuideEntityEmbed Entity="survivalknife" Caption="Survival Knife"/>
+  <GuideEntityEmbed Entity="Survivalknife" Caption="Survival Knife"/>
 </Box>
 
 </Document>
