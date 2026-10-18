@@ -9,5 +9,5 @@ public sealed partial class WiredNetworkManagerComponent : Component
     /// Grid ID that this network controls.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityUid? GridId;
+    public EntityUid? GridUid;
 }

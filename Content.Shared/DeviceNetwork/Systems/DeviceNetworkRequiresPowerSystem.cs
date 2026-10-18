@@ -12,9 +12,6 @@ public sealed partial class DeviceNetworkRequiresPowerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnPowerChanged(Entity<DeviceNetworkRequiresPowerComponent> ent, ref PowerChangedEvent args)
     {
-        if (!args.Powered)
-            _deviceSystem.DisconnectDevice(ent.Owner);
-        else
-            _deviceSystem.ConnectDevice(ent.Owner);
+        _deviceSystem.SetEnabled(ent.Owner, args.Powered);
     }
 }

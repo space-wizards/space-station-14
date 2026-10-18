@@ -9,5 +9,5 @@ public sealed partial class WirelessNetworkManagerComponent : Component
     /// Map ID that this network controls.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityUid? MapId;
+    public EntityUid? MapUid;
 }

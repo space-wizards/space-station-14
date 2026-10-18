@@ -52,14 +52,9 @@ public sealed partial class DeviceNetworkSystem
             if (!attemptEv.Connected)
                 continue;
 
-            ent.Comp.ConnectedNets.Add(netId, uid);
             network = (uid, manager);
             return true;
         }
-
-        // TODO removing this requires predicted entity spawning V2
-        if (_net.IsClient)
-            return false;
 
         // Create an entirely new network that has just this entity
         network = CreateNetwork(ent!, netId);
@@ -69,20 +64,16 @@ public sealed partial class DeviceNetworkSystem
     /// <summary>
     /// Tries to get an already existing device network, and creates a new network if it doesn't exist.
     /// </summary>
-    private Entity<DeviceNetworkManagerComponent>?[] EnsureNetworks(Entity<DeviceNetworkComponent?> ent)
+    private void EnsureNetworks(Entity<DeviceNetworkComponent?> ent, List<Entity<DeviceNetworkManagerComponent>> cache)
     {
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp))
-            return [];
+            return;
 
-        var arr = new Entity<DeviceNetworkManagerComponent>?[ent.Comp.DeviceNets.Length];
-        for (var index = 0; index < ent.Comp.DeviceNets.Length; index++)
+        foreach (var netId in ent.Comp.DeviceNets)
         {
-            var netId = ent.Comp.DeviceNets[index];
-            TryEnsureNetwork(ent, netId, out var network);
-            arr[index] = network;
+            if (TryEnsureNetwork(ent, netId, out var network))
+                cache.Add(network.Value);
         }
-
-        return arr;
     }
 
     private bool TryGetNetwork(
@@ -102,25 +93,21 @@ public sealed partial class DeviceNetworkSystem
         return true;
     }
 
-    private Entity<DeviceNetworkManagerComponent>?[] GetNetworks(Entity<DeviceNetworkComponent?> ent)
+    private void GetNetworks(Entity<DeviceNetworkComponent?> ent, List<Entity<DeviceNetworkManagerComponent>> cache)
     {
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp))
-            return [];
+            return;
 
-        var arr = new Entity<DeviceNetworkManagerComponent>?[ent.Comp.DeviceNets.Length];
-        for (var index = 0; index < ent.Comp.DeviceNets.Length; index++)
+        foreach (var netId in ent.Comp.DeviceNets)
         {
-            var netId = ent.Comp.DeviceNets[index];
-            TryGetNetwork(ent, netId, out var network);
-            arr[index] = network;
+            if (TryGetNetwork(ent, netId, out var network))
+                cache.Add(network.Value);
         }
-
-        return arr;
     }
 
     private Entity<DeviceNetworkManagerComponent> CreateNetwork(Entity<DeviceNetworkComponent> ent, ProtoId<DeviceNetworkPrototype> proto)
     {
-        var uid = Spawn(ProtoMan.Index(proto).ManagerId);
+        var uid = PredictedSpawn(ProtoMan.Index(proto).ManagerId);
 
         var ev = new DeviceNetworkManagerInitializeEvent(ent);
         RaiseLocalEvent(uid, ref ev);
@@ -142,6 +129,12 @@ public sealed partial class DeviceNetworkSystem
     {
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp))
             return false;
+
+        // Checking for a key because on client the EntityUid may be wrong for the first tick if it was spawned predictively
+        if (ent.Comp.ConnectedNets.ContainsKey(network.Comp.DeviceNetId))
+            return true;
+
+        ent.Comp.ConnectedNets.Add(network.Comp.DeviceNetId, network.Owner);
 
         var deviceComp = ent.Comp;
         var device = new Device((ent.Owner, ent.Comp));

@@ -9,5 +9,5 @@ public sealed partial class StationNetworkManagerComponent : Component
     /// Station entity ID that this network controls.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityUid? StationId;
+    public EntityUid? StationUid;
 }

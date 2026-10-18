@@ -108,4 +108,11 @@ public sealed partial class DeviceNetworkComponent : Component
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoNetworkedField, AutoPausedField]
     public TimeSpan? JammedTimeout;
+
+    /// <summary>
+    /// Whether this device is currently able to connect to device networks.
+    /// Set this to false when device shouldn't be able to function.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Enabled = true;
 }

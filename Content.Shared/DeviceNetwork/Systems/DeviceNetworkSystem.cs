@@ -31,6 +31,8 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
 
     private Device[] _deviceCache = [];
 
+    private readonly List<Entity<DeviceNetworkManagerComponent>> _managerCache = new();
+
     [SubscribeLocalEvent]
     private void OnBeforePacketReceived(Entity<DeviceNetworkComponent> ent, ref BeforePacketSentEvent args)
     {

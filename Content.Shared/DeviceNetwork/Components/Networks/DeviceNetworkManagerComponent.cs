@@ -17,7 +17,7 @@ public sealed partial class DeviceNetworkManagerComponent : Component
     /// Network ID that this entity is managing.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public ProtoId<DeviceNetworkPrototype>? DeviceNetId;
+    public ProtoId<DeviceNetworkPrototype> DeviceNetId;
 
     /// <summary>
     ///     Devices, mapped by their "Address", which is just an int that gets converted to Hex for displaying to users.

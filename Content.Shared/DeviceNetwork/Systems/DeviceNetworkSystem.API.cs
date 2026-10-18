@@ -129,15 +129,16 @@ public sealed partial class DeviceNetworkSystem
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
-        var deviceNets = EnsureNetworks(ent);
+        if (!ent.Comp.Enabled)
+            return false;
+
+        _managerCache.Clear();
+        EnsureNetworks(ent, _managerCache);
 
         var success = false;
-        foreach (var net in deviceNets)
+        foreach (var net in _managerCache)
         {
-            if (net == null)
-                continue;
-
-            if (AddToNetwork(ent, net.Value))
+            if (AddToNetwork(ent, net))
                 success = true;
         }
 
@@ -159,21 +160,22 @@ public sealed partial class DeviceNetworkSystem
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
-        if (preventAutoConnect)
+        if (!ent.Comp.Enabled)
+            return true; // Already disconnected, so it's a success
+
+        if (MetaData(ent.Owner).EntityLifeStage >= EntityLifeStage.MapInitialized && preventAutoConnect)
         {
             ent.Comp.AutoConnect = false;
             DirtyField(ent, nameof(DeviceNetworkComponent.AutoConnect));
         }
 
-        var deviceNets = GetNetworks(ent);
+        _managerCache.Clear();
+        GetNetworks(ent, _managerCache);
 
         var success = false;
-        foreach (var net in deviceNets)
+        foreach (var net in _managerCache)
         {
-            if (net == null)
-                continue;
-
-            if (RemoveFromNetwork(ent, net.Value))
+            if (RemoveFromNetwork(ent, net))
                 success = true;
         }
 
@@ -201,13 +203,12 @@ public sealed partial class DeviceNetworkSystem
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
-        foreach (var net in GetNetworks(ent))
+        _managerCache.Clear();
+        GetNetworks(ent, _managerCache);
+        foreach (var net in _managerCache)
         {
-            if (net == null)
-                continue;
-
             var device = new Device(ent!);
-            if (net.Value.Comp.Devices.ContainsValue(device))
+            if (net.Comp.Devices.ContainsValue(device))
                 return true;
         }
 
@@ -241,9 +242,11 @@ public sealed partial class DeviceNetworkSystem
         if (address == null)
             return false;
 
-        foreach (var net in GetNetworks(ent))
+        _managerCache.Clear();
+        GetNetworks(ent, _managerCache);
+        foreach (var net in _managerCache)
         {
-            if (net != null && net.Value.Comp.Devices.ContainsKey(address.Value))
+            if (net.Comp.Devices.ContainsKey(address.Value))
                 return true;
         }
 
@@ -392,5 +395,29 @@ public sealed partial class DeviceNetworkSystem
             return string.Empty;
 
         return DeviceLocalizationHelpers.GetAddressFromId(ent.Comp.Address, ent.Comp.Prefix);
+    }
+
+    /// <summary>
+    /// Sets a device to be enabled or disabled.
+    /// While disabled, the device can't connect to any device networks.
+    /// </summary>
+    /// <param name="ent">The target device.</param>
+    /// <param name="enabled">
+    /// If true, tries to connect the device to networks.
+    /// If false, disconnects the device from networks and doesn't allow to connect until set to true.
+    /// </param>
+    [PublicAPI]
+    public void SetEnabled(Entity<DeviceNetworkComponent?> ent, bool enabled)
+    {
+        if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
+            return;
+
+        if (enabled)
+            ConnectDevice(ent);
+        else
+            DisconnectDevice(ent);
+
+        ent.Comp.Enabled = enabled;
+        DirtyField(ent, nameof(DeviceNetworkComponent.Enabled));
     }
 }
