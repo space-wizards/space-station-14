@@ -39,3 +39,6 @@ reagent-desc-capsaicin-oil = Capsaicin Oil is the ingredient found in different 
 
 reagent-name-frost-oil = Frost Oil
 reagent-desc-frost-oil = Frost Oil is the ingredient found in chilly peppers, a rare pepper mutation.
+
+reagent-name-solar-oil = solar oil
+reagent-desc-solar-oil = A vicious, natural oil with luminescent properties found in solarflowers. Its heat byproduct can warm the body and even forcibly acclimatise plants to hotter environments.

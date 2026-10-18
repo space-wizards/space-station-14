@@ -8,7 +8,10 @@
     },
     "states": [
       {
-        "name": "corerot"
+        "name": "produce_glow"
+      },
+      {
+        "name": "produce_unlit"
       },
       {
         "name": "dead"

@@ -44,6 +44,10 @@
       - !type:CleanBloodstream
         excluded: Charcoal
         cleanseRate: 3
+      - !type:ModifyStatusEffect
+          effectProto: StatusEffectGlowing
+          time: 20 # three minutes per 5u
+          type: Remove
 
 - type: reagent
   id: Ash

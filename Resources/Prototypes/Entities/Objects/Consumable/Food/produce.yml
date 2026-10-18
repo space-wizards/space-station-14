@@ -2837,7 +2837,7 @@
     - Flower
 
 - type: entity
-  parent: FoodProduceBase
+  parent: [ FoodProduceBase, GlowstickBase ]
   id: FoodSolarflower
   name: solarflower
   description: A bulky flower with a glistening glow.
@@ -2853,47 +2853,40 @@
         Quantity: 5
       - ReagentId: Vitamin
         Quantity: 10
-
+      - ReagentId: SolarOil
+        Quantity: 15
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/solarflower.rsi
+    layers:
+    - map: [ enum.ExpendableLightVisualLayers.Base ]
+      state: produce
+    - map: [ enum.ExpendableLightVisualLayers.Glow ]
+      state: produce_glow
+      visible: false
+      shader: unshaded
+    - map: [ enum.ExpendableLightVisualLayers.Overlay ]
+      state: produce_unlit
   - type: Produce
     plantId: SolarflowerPlants
   - type: FoodSequenceElement
     entries:
       Taco: Solarflower
       Burger: Solarflower
+  - type: ExpendableLight
+    glowDuration: 5 # time in seconds
+    iconStateLit: produce_glow
+    iconStateSpent: produce_unlit
+    litSound:
+      path: /Audio/Items/Toys/toy_rustle.ogg
+      params:
+        volume: -5
   - type: PointLight
-    radius: 6.0
+    enabled: false
     color: "#fffb00"
-  - type: Perishable    # lots of point lights are laggy, so rot after 10 minutes to reduce that.
-    rotAfter: 600
-    molsPerSecondPerUnitMass: 0
-    forceRotProgression: true
-  - type: RotInto
-    entity: FoodSolarflowerCoreRot
-    stage: 1
+    radius: 5
   - type: Tag
     tags:
     - Flower
-
-- type: entity
-  parent: FoodInjectableBase
-  id: FoodSolarflowerCoreRot
-  name: empty solarflower core
-  description: The empty core of a solarflower, its light has gone out.
-  components:
-  - type: Sprite
-    sprite: Objects/Specific/Hydroponics/lampflower.rsi
-    state: corerot
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Vitamin
-        Quantity: 10
-  - type: Tag
-    tags:
-      - Trash
-      - Recyclable
 
 - type: entity
   parent: FoodProduceBase
@@ -2912,7 +2905,8 @@
         Quantity: 5
       - ReagentId: Vitamin
         Quantity: 10
-
+      - ReagentId: Nyctalon
+        Quantity: 15
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/shadowflower.rsi
   - type: Produce

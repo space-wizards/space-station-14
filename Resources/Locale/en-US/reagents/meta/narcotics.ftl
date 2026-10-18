@@ -51,6 +51,3 @@ reagent-desc-StrawberryIce = A special drug designed to be even stronger than De
 
 reagent-name-nyctalon = nyctalon
 reagent-desc-nyctalon = An irradiated medicine derived from oculine, this drug stimulates the rod and cone cells of the user's retina, enabling excellent night vision. This comes at a consequence of mild radiation sickness.
-
-reagent-name-solar-oil = solar oil
-reagent-desc-solar-oil = A vicious, natural oil with luminescent properties produced through an exothermic reaction with organic matter. The heat byproduct of this can warm the body and even forcibly acclimatise plants to hotter environments.

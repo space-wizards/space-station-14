@@ -1,4 +1,5 @@
 using Content.Shared.Destructible.Thresholds;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
@@ -35,4 +36,14 @@ public sealed partial class PlantChangeStat : EntityEffectBase<PlantChangeStat>
     /// </summary>
     [DataField(required: true)]
     public EntityEffect Down;
+
+    /// <summary>
+    /// For reagents using this effect. String to refer to in the guidebook for what stat is being changed
+    /// </summary>
+    public LocId TargetDataFieldString = "plant-attribute-unknown";
+
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    {
+        return Loc.GetString("entity-effect-guidebook-plant-stat", ("stat", Loc.GetString(TargetDataFieldString)), ("up", Down), ("min", ApplyRange.Min), ("down", Up), ("max", ApplyRange.Max));
+    }
 }

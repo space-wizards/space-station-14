@@ -544,6 +544,12 @@ entity-effect-guidebook-plant-mutate-chemicals =
         *[other] mutate
     } a plant to produce {$name}
 
+entity-effect-guidebook-plant-stat =
+    { $chance ->
+        [1] Adjusts
+        *[other] adjusts
+    } the plant's {$stat} by {$up} if below {$min}, and {$down} if above {$max}. If between chooses randomly, statisically favouring moving towards a median value.
+
 entity-effect-guidebook-add-reagent-to-bloodstream =
     { $chance ->
         [1] Injects
