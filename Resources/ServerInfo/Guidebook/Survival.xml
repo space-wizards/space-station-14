@@ -34,12 +34,12 @@ In the event of a serious emergency, there are a few things you can do to help e
 - Simple bed rest can allow some wounds to close up on their own. Medical beds are best for this, providing a sterile surface and support for all damaged body parts, but any bed works.
 - Actually sleeping on a bed boosts your healing rate even farther.
 - Meals that contain proteins, such as meat, will tremendously help your body's condition after severe bloodloss. It's still advised to visit a doctor and get treated though.
-- If you find yourself in a situation where you have to defend yourself, you can easily improvise, various items such as knives, tools, and even a toolbox can help save your life in a pinch, also certain jobs have access to things that can be quite handy to defend yourself.
+- If you find yourself in a situation where you have to defend yourself, you can easily improvise, various items such as knives, tools, and even a toolbox can help save your life in a pinch.
 
 <Box>
-  <GuideEntityEmbed Entity="Toolbox" Caption="toolbox"/>
-  <GuideEntityEmbed Entity="Crowbar" Caption="crowbar"/>
-  <GuideEntityEmbed Entity="Knife" Caption="knife"/>
+  <GuideEntityEmbed Entity="ToolboxEmergency" Caption="Toolbox"/>
+  <GuideEntityEmbed Entity="Crowbar" Caption="Crowbar"/>
+  <GuideEntityEmbed Entity="SurvivalKnife" Caption="Survival Knife"
 </Box>
 
 </Document>
