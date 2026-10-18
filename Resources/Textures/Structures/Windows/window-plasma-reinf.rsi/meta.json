@@ -1,0 +1,46 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "By AftrLite (GitHub). Based on the anywall format by 20nypercent and rye-rice (GitHub).",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "full"
+        },
+        {
+            "name": "rpwindow0",
+            "directions": 4
+        },
+        {
+            "name": "rpwindow1",
+            "directions": 4
+        },
+        {
+            "name": "rpwindow2",
+            "directions": 4
+        },
+        {
+            "name": "rpwindow3",
+            "directions": 4
+        },
+        {
+            "name": "rpwindow4",
+            "directions": 4
+        },
+        {
+            "name": "rpwindow5",
+            "directions": 4
+        },
+        {
+            "name": "rpwindow6",
+            "directions": 4
+        },
+        {
+            "name": "rpwindow7",
+            "directions": 4
+        }
+    ]
+}

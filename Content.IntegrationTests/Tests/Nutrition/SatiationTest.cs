@@ -32,7 +32,7 @@ public sealed class SatiationTest : GameTest
     private static readonly string SatiationPrototypes = $@"
 - type: satiation
   id: {TestSatiationId}
-  baseDecayRate: 1
+  baseChangeRate: -1
   maximumValue: {MaxValue}
   thresholds: # Intentionally out of ordinal order.
     {DeadKey}: 0
@@ -40,7 +40,7 @@ public sealed class SatiationTest : GameTest
     {MiddleKey}: {MiddleValue}
   startingValueMinimum: {StartingMin}
   startingValueMaximum: {StartingMax}
-  decayModifiers:
+  changeModifiers:
     25: 0.5
   alertCategory: Hunger
 
@@ -117,9 +117,11 @@ public sealed class SatiationTest : GameTest
                 TestSatiationType,
                 dict,
                 out var result,
+                out var nextHigher,
                 out var nextLower);
             Assert.That(res, Is.True);
             Assert.That(result, Is.EqualTo(100));
+            Assert.That(nextHigher, Is.EqualTo(100));
             Assert.That(nextLower, Is.EqualTo(80));
         }
 
@@ -130,9 +132,11 @@ public sealed class SatiationTest : GameTest
                 TestSatiationType,
                 dict,
                 out var result,
+                out var nextHigher,
                 out var nextLower);
             Assert.That(res, Is.True);
             Assert.That(result, Is.EqualTo(60));
+            Assert.That(nextHigher, Is.EqualTo(60));
             Assert.That(nextLower, Is.EqualTo(40));
         }
 
@@ -143,6 +147,7 @@ public sealed class SatiationTest : GameTest
                 TestSatiationType,
                 dict,
                 out var result,
+                out var nextHigher,
                 out var nextLower);
             Assert.That(res, Is.True);
             Assert.That(result, Is.Zero);
@@ -173,9 +178,11 @@ public sealed class SatiationTest : GameTest
                 TestSatiationType,
                 dict,
                 out var result,
+                out var nextHigher,
                 out var nextLower);
             Assert.That(res, Is.True);
             Assert.That(result, Is.Zero);
+            Assert.That(nextHigher, Is.EqualTo(MaxValue));
             Assert.That(nextLower, Is.EqualTo(MiddleValue));
         }
 
@@ -186,9 +193,11 @@ public sealed class SatiationTest : GameTest
                 TestSatiationType,
                 dict,
                 out var result,
+                out var nextHigher,
                 out var nextLower);
             Assert.That(res, Is.True);
             Assert.That(result, Is.Zero);
+            Assert.That(nextHigher, Is.EqualTo(MaxValue));
             Assert.That(nextLower, Is.EqualTo(MiddleValue));
         }
 
@@ -199,9 +208,11 @@ public sealed class SatiationTest : GameTest
                 TestSatiationType,
                 dict,
                 out var result,
+                out var nextHigher,
                 out var nextLower);
             Assert.That(res, Is.True);
             Assert.That(result, Is.EqualTo(40));
+            Assert.That(nextHigher, Is.EqualTo(MiddleValue));
             Assert.That(nextLower, Is.Zero);
         }
 
@@ -212,9 +223,11 @@ public sealed class SatiationTest : GameTest
                 TestSatiationType,
                 dict,
                 out var result,
+                out var nextHigher,
                 out var nextLower);
             Assert.That(res, Is.True);
             Assert.That(result, Is.EqualTo(20));
+            Assert.That(nextHigher, Is.Zero);
             Assert.That(nextLower, Is.Null);
         }
     }

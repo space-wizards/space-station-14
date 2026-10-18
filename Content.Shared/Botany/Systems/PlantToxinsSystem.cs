@@ -15,23 +15,26 @@ public sealed partial class PlantToxinsSystem : EntitySystem
     [Dependency] private PlantHolderSystem _plantHolder = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
 
+    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery = default!;
+    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
+
     [SubscribeLocalEvent]
     private void OnCrossPollinate(Entity<PlantToxinsComponent> ent, ref PlantCrossPollinateEvent args)
     {
         if (!_botany.TryGetPlantComponent<PlantToxinsComponent>(args.PollenData, args.PollenProtoId, out var pollenData))
             return;
 
-        _mutation.CrossFloat(ent, ref ent.Comp.ToxinsTolerance, pollenData.ToxinsTolerance);
-        _mutation.CrossFloat(ent, ref ent.Comp.ToxinUptakeDivisor, pollenData.ToxinUptakeDivisor);
+        _mutation.CrossFloat(ref ent.Comp.ToxinsTolerance, pollenData.ToxinsTolerance);
+        _mutation.CrossFloat(ref ent.Comp.ToxinUptakeDivisor, pollenData.ToxinUptakeDivisor);
         Dirty(ent);
     }
 
     [SubscribeLocalEvent]
     private void OnPlantGrow(Entity<PlantToxinsComponent> ent, ref PlantGrowEvent args)
     {
-        var trayUid = GetEntity(args.Tray);
-        if (!TryComp<PlantTrayComponent>(trayUid, out var tray)
-            || !TryComp<PlantHolderComponent>(ent.Owner, out var holder))
+        var trayUid = args.Tray;
+        if (!_trayQuery.TryComp(trayUid, out var tray)
+            || !_holderQuery.TryComp(ent.Owner, out var holder))
             return;
 
         if (ent.Comp.ToxinUptakeDivisor <= 0)

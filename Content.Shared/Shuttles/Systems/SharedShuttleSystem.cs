@@ -67,7 +67,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
                 return false;
             }
 
-            if (!_itemSlots.TryGetSlot(consoleUid, SharedShuttleConsoleComponent.DiskSlotName, out var itemSlot, component: slot) || !itemSlot.HasItem)
+            if (!_itemSlots.TryGetSlot((consoleUid, slot), SharedShuttleConsoleComponent.DiskSlotName, out var itemSlot) || !itemSlot.HasItem)
             {
                 return false;
             }

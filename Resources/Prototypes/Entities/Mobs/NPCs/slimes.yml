@@ -1,8 +1,8 @@
-﻿- type: entity
-  name: basic slime
-  id: BaseMobAdultSlimes
-  parent: [ BaseMobSlimes, SimpleMobBase, MobCombat, BaseSlicingRefinable, MobNightVision, BaseMobDestructible ]
+- type: entity
   abstract: true
+  parent: [ BaseMobSlimes, SimpleMobBase, MobCombat, BaseSlicingRefinableButchering, MobNightVision, BaseMobDestructible ]
+  id: BaseMobAdultSlimes
+  name: basic slime
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
   - type: Sprite
@@ -96,7 +96,6 @@
     damage:
       types:
         Blunt: 6
-        Structural: 4
         Caustic: 4
   - type: InteractionPopup
     successChance: 0.5
@@ -105,43 +104,58 @@
   - type: Speech
     speechVerb: Slime
     speechSounds: Slime
+    allowedEmotes: ['Squish']
   - type: TypingIndicator
     proto: slime
 
 - type: entity
-  name: basic slime
-  id: MobAdultSlimes
-  parent: BaseMobAdultSlimes
   abstract: true
+  parent: BaseMobAdultSlimes
+  id: MobAdultSlimes
+  name: basic slime
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
   - type: ReplacementAccent
     accent: slimes
   - type: GhostTakeoverAvailable
   - type: GhostRole
+    prob: 0.05
     makeSentient: true
     name: ghost-role-information-slimes-name
     description: ghost-role-information-slimes-description
     rules: ghost-role-information-nonantagonist-rules
     raffle:
       settings: short
-  - type: Speech
-    speechVerb: Slime
-    speechSounds: Slime
-    allowedEmotes: ['Squish']
-  - type: TypingIndicator
-    proto: slime
   - type: NpcFactionMember
     factions:
     - SimpleNeutral
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
+  - type: NPCRetaliation
+    attackMemoryLength: 10
 
 - type: entity
-  name: blue slime
-  id: MobAdultSlimesBlue
+  abstract: true
+  id: BaseAdultSlimesAngry
+  name: base angry slime
+  components:
+  - type: NpcFactionMember
+    factions:
+      - SimpleHostile
+  - type: GhostRole
+    prob: 1
+    description: ghost-role-information-angry-slimes-description
+    rules: ghost-role-information-angry-slimes-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+    raffle:
+      settings: short
+
+- type: entity
   parent: MobAdultSlimes
+  id: MobAdultSlimesBlue
+  name: blue slime
   components:
   - type: DamageStateVisuals
     states:
@@ -151,97 +165,62 @@
         Base: blue_adult_slime_dead
 
 - type: entity
-  name: blue slime
-  parent: MobAdultSlimesBlue
+  parent: [ BaseAdultSlimesAngry, MobAdultSlimesBlue ]
   id: MobAdultSlimesBlueAngry
+  name: blue slime
   suffix: Angry
-  components:
-    - type: NpcFactionMember
-      factions:
-        - SimpleHostile
-    - type: GhostRole
-      description: ghost-role-information-angry-slimes-description
-      rules: ghost-role-information-angry-slimes-rules
-      mindRoles:
-      - MindRoleGhostRoleTeamAntagonist
-      raffle:
-        settings: short
 
 - type: entity
-  name: green slime
   parent: MobAdultSlimes
   id: MobAdultSlimesGreen
-  components:
-    - type: Sprite
-      layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: green_adult_slime
-    - type: DamageStateVisuals
-      states:
-        Alive:
-          Base: green_adult_slime
-        Dead:
-          Base: green_adult_slime_dead
-    - type: MeleeWeapon
-      damage:
-        types:
-          Blunt: 6
-          Structural: 4
-          Caustic: 1
-          Poison: 4
-
-- type: entity
   name: green slime
-  parent: MobAdultSlimesGreen
-  id: MobAdultSlimesGreenAngry
-  suffix: Angry
   components:
-    - type: NpcFactionMember
-      factions:
-        - SimpleHostile
-    - type: GhostRole
-      description: ghost-role-information-angry-slimes-description
-      rules: ghost-role-information-angry-slimes-rules
-      mindRoles:
-      - MindRoleGhostRoleTeamAntagonist
-      raffle:
-        settings: short
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: green_adult_slime
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: green_adult_slime
+      Dead:
+        Base: green_adult_slime_dead
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 6
+        Caustic: 1
+        Poison: 4
 
 - type: entity
-  name: yellow slime
+  parent: [ BaseAdultSlimesAngry, MobAdultSlimesGreen ]
+  id: MobAdultSlimesGreenAngry
+  name: green slime
+  suffix: Angry
+
+- type: entity
   parent: MobAdultSlimes
   id: MobAdultSlimesYellow
+  name: yellow slime
   components:
-    - type: Sprite
-      layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: yellow_adult_slime
-    - type: DamageStateVisuals
-      states:
-        Alive:
-          Base: yellow_adult_slime
-        Dead:
-          Base: yellow_adult_slime_dead
-    - type: MeleeWeapon
-      damage:
-        types:
-          Blunt: 6
-          Structural: 4
-          Caustic: 4
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: yellow_adult_slime
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: yellow_adult_slime
+      Dead:
+        Base: yellow_adult_slime_dead
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 6
+        Caustic: 4
 
 - type: entity
-  name: yellow slime
-  parent: MobAdultSlimesYellow
+  parent: [ BaseAdultSlimesAngry, MobAdultSlimesYellow ]
   id: MobAdultSlimesYellowAngry
+  name: yellow slime
   suffix: Angry
-  components:
-    - type: NpcFactionMember
-      factions:
-        - SimpleHostile
-    - type: GhostRole
-      description: ghost-role-information-angry-slimes-description
-      rules: ghost-role-information-angry-slimes-rules
-      mindRoles:
-      - MindRoleGhostRoleTeamAntagonist
-      raffle:
-        settings: short

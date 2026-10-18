@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Changeling.Components;
@@ -65,7 +65,7 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
 
         foreach (var deleted in toDelete)
         {
-            PredictedQueueDel(deleted);
+            QueueDel(deleted);
         }
 
         if (ent.Comp.SpillSolution != null)

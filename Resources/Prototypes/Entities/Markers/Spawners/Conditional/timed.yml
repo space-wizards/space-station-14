@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: AI Timed Spawner
   id: AITimedSpawner
   parent: MarkerBase
@@ -70,7 +70,7 @@
     - type: Sprite
       layers:
         - state: blue
-        - sprite: Mobs/Animals/cockroach.rsi
+        - sprite: Mobs/Animals/Insects/cockroach.rsi
           state: cockroach_icon
         - state: timed
     - type: TimedSpawner

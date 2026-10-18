@@ -22,15 +22,28 @@ public sealed partial class BotanyProduceSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
+    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery;
+
     [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<ProduceComponent> ent, ref AfterInteractEvent args)
     {
-        if (args.Target == null || args.Handled || !args.CanReach || !HasComp<PlantTrayComponent>(args.Target))
+        if (args.Target == null || args.Handled || !args.CanReach || !_trayQuery.HasComp(args.Target))
             return;
 
         var ev = new CompostingProduceAttemptEvent(ent, args.User);
         RaiseLocalEvent(args.Target.Value, ref ev);
 
+        args.Handled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPlantAnalyzerAttempt(Entity<ProduceComponent> ent, ref PlantAnalyzerAttemptEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.PlantData = ent.Comp.PlantData;
+        args.PlantProtoId = ent.Comp.PlantProtoId;
         args.Handled = true;
     }
 
@@ -73,6 +86,6 @@ public sealed partial class BotanyProduceSystem : EntitySystem
             _plantTray.AdjustNutrient(ent.AsNullable(), nutrientBonus);
         }
 
-        PredictedQueueDel(args.Produce.Owner);
+        QueueDel(args.Produce.Owner);
     }
 }

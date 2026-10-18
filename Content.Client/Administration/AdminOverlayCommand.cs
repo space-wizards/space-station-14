@@ -1,4 +1,4 @@
-﻿using Content.Client.Administration.Systems;
+using Content.Client.Administration.Systems;
 using Content.Shared.Commands;
 using Robust.Shared.Console;
 

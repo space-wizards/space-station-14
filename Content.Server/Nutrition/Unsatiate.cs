@@ -71,7 +71,7 @@ public sealed partial class Unsatiate : LocalizedEntityCommands
         // Check all of the types given before modifying any of them.
         foreach (var arg in args)
         {
-            if (_protoMan.TryIndex<SatiationPrototype>(arg, out var satiationType) && entity.Comp.Has(satiationType.ID))
+            if (_protoMan.TryIndex<SatiationTypePrototype>(arg, out var satiationType) && entity.Comp.Has(satiationType.ID))
                 continue;
 
             shell.WriteLine(Loc.GetString("shell-target-entity-does-not-have-message",

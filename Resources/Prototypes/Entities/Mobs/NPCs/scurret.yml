@@ -1,4 +1,4 @@
-﻿# Defines the scurret, a small, agile sapient species intended for players who want to play as something similar to an ewok.
+# Defines the scurret, a small, agile sapient species intended for players who want to play as something similar to an ewok.
 # Although based on MobBaseAncestor, this species does not have a "developed" playable species it is an ancestor to.
 
 - type: entity

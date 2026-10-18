@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.Prototypes;
+using Content.Shared.Random.Helpers;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -8,7 +9,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Nutrition.EntitySystems;
 
 // This part provides functions for use in other systems.
-public sealed partial class SatiationSystem
+public abstract partial class SatiationSystem
 {
     /// <summary>
     /// Gets <paramref name="entity"/>'s current value of the satiation of <paramref name="type"/>. If this entity does
@@ -128,17 +129,20 @@ public sealed partial class SatiationSystem
     }
 
     /// <summary>
-    /// This function returns a value from <see cref="valuesByThreshold"/> based on the current value of
-    /// <paramref name="entity"/>'s satiation of the given <paramref name="type"/>. The value in
-    /// <paramref name="valuesByThreshold"/> with the lowest key greater than the current satiation value is returned.
+    /// Returns the <typeparamref name="T"/> value for <paramref name="entity"/>'s current satiation value of the given
+    /// <paramref name="type"/>, as informed by <paramref name="valuesByThreshold"/>.
     /// </summary>
     /// <param name="entity">The entity whose satiation is considered</param>
     /// <param name="type">The type of satiation to consider</param>
     /// <param name="valuesByThreshold">The values, keyed by <see cref="SatiationValue"/> thresholds</param>
     /// <param name="result">The value selected from <paramref name="valuesByThreshold"/></param>
+    /// <param name="nextHigherThreshold">
+    /// The keying-threshold-value of the next threshold above the selected value. Most consumers will not have a use
+    /// for this value, but it is used by <see cref="BaseSatiationEffectSystem{TComp,T}"/>'s prediction of value change.
+    /// </param>
     /// <param name="nextLowerThreshold">
     /// The keying-threshold-value of the next threshold below the selected value. Most consumers will not have a use
-    /// for this value, but it is used by <see cref="BaseSatiationEffectSystem{TComp,T}"/>'s prediction of value decay.
+    /// for this value, but it is used by <see cref="BaseSatiationEffectSystem{TComp,T}"/>'s prediction of value change.
     /// </param>
     /// <typeparam name="T">The type of values in <paramref name="valuesByThreshold"/></typeparam>
     /// <returns>
@@ -151,14 +155,18 @@ public sealed partial class SatiationSystem
         [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
         Dictionary<SatiationValue, T> valuesByThreshold,
         out T? result,
+        out int? nextHigherThreshold,
         out int? nextLowerThreshold
     )
     {
-        result = default;
-        nextLowerThreshold = null;
         if (GetValueOrNull(entity, type) is not { } currentValue ||
             GetAndResolveSatiationOfType(entity, type) is not var (_, proto))
+        {
+            result = default;
+            nextHigherThreshold = null;
+            nextLowerThreshold = null;
             return false;
+        }
 
         using var valuesByDescendingThreshold = valuesByThreshold
             // Resolve keys to threshold integers, discarding any keys which cannot be resolved.
@@ -171,15 +179,17 @@ public sealed partial class SatiationSystem
         {
             // `values` is empty, so there are no values to return.
             result = default;
+            nextHigherThreshold = null;
             nextLowerThreshold = null;
             return false;
         }
 
         if (currentValue > valuesByDescendingThreshold.Current.Item1)
         {
-            // `currentSatiation` is higher than all thresholds, so we don't have a value, but we can return a next
-            // lower threshold.
+            // `currentSatiation` is higher than all thresholds, so we have neither a value nor a higher threshold, but
+            // we can return the next lower threshold.
             result = default;
+            nextHigherThreshold = null;
             nextLowerThreshold = valuesByDescendingThreshold.Current.Item1;
             return false;
         }
@@ -192,6 +202,7 @@ public sealed partial class SatiationSystem
             {
                 // The current value is below `nextHigher` and above `nextLower`, so `nextHigher` is the correct threshold.
                 result = nextHigher.Item2;
+                nextHigherThreshold = nextHigher.Item1;
                 nextLowerThreshold = nextLower.Item1;
                 return true;
             }
@@ -202,9 +213,25 @@ public sealed partial class SatiationSystem
 
         // We've run out of thresholds below.
         result = nextHigher.Item2;
+        nextHigherThreshold = nextHigher.Item1;
         nextLowerThreshold = null;
         return true;
     }
+
+    /// <summary>
+    /// Calculates when the given <paramref name="entity"/>'s satiation of the given <paramref name="type"/> will
+    /// evolve to either <paramref name="upperBound"/> or <paramref name="lowerBound"/>. Returns null if the given
+    /// entity does not have the given satiation or when the given satiation will not never evolve to one of the given
+    /// values. A null bound is treated as unreachable.
+    /// </summary>
+    public TimeSpan? GetTimeToBound(
+        Entity<SatiationComponent> entity,
+        ProtoId<SatiationTypePrototype> type,
+        int? upperBound,
+        int? lowerBound
+    ) => GetAndResolveSatiationOfType(entity, type) is var (satiation, proto)
+        ? EvolvesToBoundAt(satiation, proto, upperBound, lowerBound)
+        : null;
 
     /// <summary>
     /// Looks up the <see cref="StatusIconPrototype"/> appropriate for the given entity's <see cref="Satiation"/> of the
@@ -221,7 +248,7 @@ public sealed partial class SatiationSystem
             !ProtoMan.Resolve(satiation.Prototype, out var proto))
             return null;
 
-        TryGetValueByThreshold(entity, type, proto.Icons, out var iconProtoId, out _);
+        TryGetValueByThreshold(entity, type, proto.Icons, out var iconProtoId, out _, out _);
         return ProtoMan.Resolve(iconProtoId, out var icon) ? icon : null;
     }
 
@@ -238,10 +265,7 @@ public sealed partial class SatiationSystem
     public IEnumerable<string> GetKeysForType(
         Entity<SatiationComponent> entity,
         [ForbidLiteral] ProtoId<SatiationTypePrototype> type
-    )
-    {
-        return GetAndResolveSatiationOfType(entity, type)?.Proto.Thresholds.Keys ?? Enumerable.Empty<string>();
-    }
+    ) => GetAndResolveSatiationOfType(entity, type)?.Proto.Thresholds.Keys ?? Enumerable.Empty<string>();
 
     /// <summary>
     /// Returns the <see cref="SatiationPrototype.MaximumValue"/> of the given <paramref name="type"/> for
@@ -257,4 +281,49 @@ public sealed partial class SatiationSystem
     ) => GetAndResolveSatiationOfType(entity, type)?.Proto.MaximumValue;
 
     #endregion
+
+    /// <summary>
+    /// Adds a new <see cref="Satiation"/> of a given <see cref="SatiationTypePrototype"/> to the entity.
+    /// </summary>
+    /// <param name="entity">The entity to add the satiation to.</param>
+    /// <param name="type">The type of satiation to add.</param>
+    /// <param name="satiation">The satiation of that type to be added.</param>
+    public void AddSatiation(Entity<SatiationComponent?> entity, ProtoId<SatiationTypePrototype> type, Satiation satiation)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return;
+
+        if (!ProtoMan.Resolve(satiation.Prototype, out var proto))
+            return;
+
+        satiation.SatiationType = type;
+
+        entity.Comp.Satiations.TryAdd(type, satiation);
+        
+        var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(entity));
+        var value = rand.NextFloat(proto.StartingValueMinimum, proto.StartingValueMaximum);
+
+        SetAuthoritativeValue((entity, entity.Comp), satiation, proto, value);
+
+        DirtyField(entity, SatiationComponent.SatiationFieldName);
+    }
+
+    /// <summary>
+    /// Removes an existing <see cref="SatiationTypePrototype"/> from the entity.
+    /// </summary>
+    /// <param name="entity">The entity to remove the satiation from.</param>
+    /// <param name="type">The type of satiation to remove.</param>
+    public void RemoveSatiationType(Entity<SatiationComponent?> entity, ProtoId<SatiationTypePrototype> type)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return;
+
+        if (GetAndResolveSatiationOfType(entity.Comp, type) is { } satiation)
+        {
+            _alerts.ClearAlertCategory(entity.Owner, satiation.Proto.AlertCategory);
+            entity.Comp.Satiations.Remove(type);
+        }
+
+        DirtyField(entity, SatiationComponent.SatiationFieldName);
+    }
 }

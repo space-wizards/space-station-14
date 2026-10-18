@@ -5,3 +5,7 @@
 - type: satiationType
   id: Thirst
   name: satiation-type-thirst
+
+- type: satiationType
+  id: Chemicals
+  name: satiation-type-chemicals
