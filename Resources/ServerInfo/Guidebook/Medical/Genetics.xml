@@ -1,14 +1,49 @@
 <Document>
 # Genetics
-Генетическая консоль работает с живым существом, помещённым в связанный медицинский сканер. Макаку можно превратить в случайного человека перед исследованием.
+Genetics is about poking at a living creature's DNA to find the mutations hiding in it, then deciding which ones are worth switching on. It takes a console, a medical scanner and a bit of patience.
 
-У каждого пациента случайно выбираются до семи потенциальных мутаций. Для каждого пациента последовательность каждой мутации генерируется отдельно. Выберите неизвестный ген и подбирайте пары нуклеотидов: A соединяется с T, а G — с C. Анализатор открывает позиции постепенно; правильная последовательность позволяет обнаружить мутацию.
+## Setting up
 
-Обнаруженные мутации можно сохранять в память консоли и использовать для изготовления инъекторов. Активные мутации меняют свойства пациента и увеличивают нестабильность. При нестабильности выше 100 пациент получает 15 клеточного урона каждые 10 секунд; при 150 клеточного урона он умирает. Следите за здоровьем и генетическим уроном на панели консоли.
+Anchor the genetics console and a medical scanner close to each other, then link them with a network configurator through the scanner port. Both machines have to stay anchored and in range, or the console loses the subject.
 
-Каталог включает стандартный набор из 43 мутаций /tg/. Эффекты адаптированы к системам SS14: некоторые редкие способности, например дальнобойные лазерные атаки, излучение радиации и защита от давления, представлены ближайшими доступными эффектами и не являются точным переносом поведения /tg/.
+Put a living creature into the scanner and the console will read it. If all you have is a monkey, the console can turn it into a random humanoid first, so you can test things without bothering the crew.
 
-Для работы соедините консоль с медицинским сканером через порт сканера. Обе машины должны быть закреплены и находиться в пределах действия связи.
+## Finding mutations
+
+Every subject carries up to seven potential mutations. Nothing is active at the start, and each mutation has its own randomly generated sequence for that particular subject. Two people can have the same mutation with completely different sequences.
+
+To discover one, select an unknown gene and fill in the nucleotide pairs:
+- A pairs with T
+- G pairs with C
+
+The analyzer reveals positions little by little as you work. Once the full sequence is right, the mutation is discovered and you can see what it does.
+
+## Storing and injecting
+
+A discovered mutation can be saved in the console memory. From there you can print an injector with that mutation on it. Stab someone with the injector and the mutation switches on for them. Anyone can be a test subject, but think about whose consent you actually have.
+
+## Instability
+
+Every active mutation changes the subject's instability. Powerful mutations add a lot, so stacking several good ones gets risky fast. Mutations with a negative value do the opposite and pull the total down, so a harmless defect can pay for a much stronger ability.
+
+- Above 100 instability, the subject takes 15 cellular damage every 10 seconds.
+- At 150 cellular damage, the subject dies.
+
+Keep an eye on the health and genetic damage readouts on the console, and take mutations off before the numbers go the wrong way.
+
+## Kinds of mutations
+
+Mutations come in three groups.
+
+- **Positive:** things most people want. X-ray and thermal vision, laser eyes, telekinesis, telepathy, regeneration, shock touch, resistance to fire, cold, radiation and pressure, and the Hulk. The Hulk gives green skin, stun immunity and a punch that can break walls, but the subject can no longer use guns.
+- **Neutral:** mostly cosmetic or situational. Size changes, chameleon skin, glowing, species shift, and a handful of speech quirks like Swedish or Elvis.
+- **Negative:** drawbacks. Blindness, deafness, muteness, narcolepsy, epilepsy, clumsiness, radioactivity and similar problems. They are not nice to have, but their negative instability makes them useful as a trade.
+
+Some mutations also give an action button, for example laser eyes or telekinesis. Look for it in the action bar after the mutation turns on.
+
+## Getting rid of mutations
+
+Mutadone is the cure. It strips active mutations from the person who takes it. Be warned, it does not feel great: the patient will notice something is off while it works, and gets a nasty reminder every time they are hurt.
 <Box>
 <GuideEntityEmbed Entity="ComputerGeneticsConsole" Caption="genetics console"/>
 <GuideEntityEmbed Entity="MedicalScanner"/>

@@ -3,7 +3,7 @@
   name: genetics-mutation-epilepsy-name
   description: genetics-mutation-epilepsy-description
   sequence: GATCAGATCAGATCAG
-  instability: 15
+  instability: -30
   epilepsyMinInterval: 20
   epilepsyMaxInterval: 60
   epilepsyStunDuration: 2
@@ -13,7 +13,7 @@
   name: genetics-mutation-tourette-name
   description: genetics-mutation-tourette-description
   sequence: TCAGATCAGATCAGAT
-  instability: 10
+  instability: -30
   touretteMinInterval: 15
   touretteMaxInterval: 45
   touretteExclamations:
@@ -31,7 +31,7 @@
   name: genetics-mutation-narcolepsy-name
   description: genetics-mutation-narcolepsy-description
   sequence: AGATCAGATCAGATCA
-  instability: 20
+  instability: -40
   narcolepsyMinInterval: 30
   narcolepsyMaxInterval: 90
   narcolepsySleepDuration: 5
@@ -41,7 +41,7 @@
   name: genetics-mutation-glass-jaw-name
   description: genetics-mutation-glass-jaw-description
   sequence: CAGATCAGATCAGATC
-  instability: 5
+  instability: -20
   bruteDamageMultiplier: 1.5
 
 - type: geneticMutation
@@ -49,7 +49,7 @@
   name: genetics-mutation-paranoia-name
   description: genetics-mutation-paranoia-description
   sequence: GATGATGATGATGATG
-  instability: 10
+  instability: -30
   paranoiaMinInterval: 20
   paranoiaMaxInterval: 50
 
@@ -58,7 +58,7 @@
   name: genetics-mutation-clumsiness-name
   description: genetics-mutation-clumsiness-description
   sequence: TATATAGCGCATCGAT
-  instability: 10
+  instability: -30
   grantsClumsiness: true
 
 - type: geneticMutation
@@ -66,7 +66,7 @@
   name: genetics-mutation-noises-name
   description: genetics-mutation-noises-description
   sequence: GCATCGATTATATAGC
-  instability: 5
+  instability: -20
   grantsRandomNoises: true
   noisesMinInterval: 20
   noisesMaxInterval: 60
