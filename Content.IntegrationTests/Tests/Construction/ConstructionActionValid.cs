@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Construction
 {
-    [TestFixture] 
+     [TestFixture] 
      public sealed class ConstructionActionValid : GameTest 
      {
 
