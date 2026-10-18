@@ -38,7 +38,7 @@
         - to: start
           completed:
             - !type:SpawnEntity
-              entity: PartRodMetal
+              entity: PartRodMetal1
               number: 2
           steps:
             - tool: Anchoring

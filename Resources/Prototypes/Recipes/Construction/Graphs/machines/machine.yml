@@ -36,7 +36,7 @@
           completed:
             - !type:SpawnEntity
               entity: SheetSteel1
-              number: 5
+              number: 4
             - !type:DeleteEntity
           steps:
             - tool: Screwing
