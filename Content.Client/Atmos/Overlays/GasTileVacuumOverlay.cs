@@ -39,7 +39,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
 
     // Overlay settings
     private float _intensity; // overlay intensity. 0.0f = turned off, 1.0f = full grayscale
-    private float _maxIntensityTemperature;
+    private float _maxIntensityTemperature = 0f;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -52,9 +52,6 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         _unshader = _proto.Index(UnshadedShader).Instance();
         _shader = _proto.Index(VacuumOverlayShader).InstanceUnique();
         _configManager.OnValueChanged(CCVars.VacuumOverlayIntensity, SetVacuumOverlayIntensity, invokeImmediately: true);
-
-        var tintColor = Color.LightBlue; // DCEBFFFF
-        _shader.SetParameter("tint_color", new Vector3(tintColor.R, tintColor.G, tintColor.B));
     }
 
     private void SetVacuumOverlayIntensity(float intensity)
@@ -170,11 +167,19 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         if (!temperature.TryGetTemperature(out var kelvinTemperature))
             return 0f;
 
+        // ThermalByte has 4 K resolution, so values immediately below room temperature
+        // are indistinguishable from room temperature on the client.
+        if (kelvinTemperature >= Atmospherics.T20C - ThermalByte.TempDegreeResolution)
+            return 0f;
+
         if (kelvinTemperature <= maxIntensityTemperature)
             return 1f;
 
-        return MathHelper.Clamp01((Atmospherics.T20C - kelvinTemperature) /
-            (Atmospherics.T20C - maxIntensityTemperature));
+        var temperatureRange = Atmospherics.T20C - maxIntensityTemperature;
+        if (temperatureRange <= 0f)
+            return 0f;
+
+        return MathHelper.Clamp01((Atmospherics.T20C - kelvinTemperature) / temperatureRange);
     }
 
     protected override void Draw(in OverlayDrawArgs args)
