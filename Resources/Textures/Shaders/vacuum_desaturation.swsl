@@ -1,14 +1,18 @@
 uniform sampler2D SCREEN_TEXTURE;
 uniform mediump float intensity;
+uniform mediump vec3 tint_color;
 
 void fragment()
 {
-    if (texture2D(TEXTURE, UV).r < 0.1)
+    mediump float tile_intensity = texture2D(TEXTURE, UV).r;
+    if (tile_intensity <= 0.0)
         discard;
 
     mediump vec4 screen_pixel = texture2D(SCREEN_TEXTURE, UV);
     mediump float gray = dot(screen_pixel.rgb, vec3(0.299, 0.587, 0.114));
 
-    screen_pixel.rgb = mix(screen_pixel.rgb, vec3(gray), intensity);
+    mediump float effect_intensity = tile_intensity * intensity;
+    screen_pixel.rgb = mix(screen_pixel.rgb, vec3(gray), effect_intensity);
+    screen_pixel.rgb = mix(screen_pixel.rgb, tint_color, effect_intensity);
     COLOR = screen_pixel;
 }
