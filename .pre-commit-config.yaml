@@ -6,3 +6,4 @@ repos:
     -   id: end-of-file-fixer
     -   id: trailing-whitespace
     -   id: fix-byte-order-marker
+        exclude_types: [binary]
