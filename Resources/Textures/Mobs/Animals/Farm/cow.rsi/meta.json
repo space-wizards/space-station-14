@@ -11,7 +11,7 @@
             "name": "dead"
         },
         {
-            "name": "chick",
+            "name": "alive",
             "directions": 4
         }
     ]

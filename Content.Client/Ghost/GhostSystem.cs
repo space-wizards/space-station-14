@@ -20,7 +20,6 @@ namespace Content.Client.Ghost
         [Dependency] private SpriteSystem _sprite = default!;
         [Dependency] private SharedNightVisionSystem _nv = default!;
 
-        [Dependency] private EntityQuery<SpriteComponent> _spriteQuery;
         [Dependency] private EntityQuery<NightVisionComponent> _nightVisionQuery;
 
         public int AvailableGhostRoleCount { get; private set; }
@@ -40,10 +39,7 @@ namespace Content.Client.Ghost
         [SubscribeLocalEvent]
         private void OnStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
-            if (!_spriteQuery.TryComp(uid, out var sprite))
-                return;
-
-            _sprite.SetVisible((uid, sprite), GetGhostVisible(uid, GhostVisibility));
+            _sprite.SetVisible(uid, GetGhostVisible(uid, GhostVisibility));
         }
 
         [SubscribeLocalEvent]
@@ -131,8 +127,7 @@ namespace Content.Client.Ghost
         [SubscribeLocalEvent]
         private void OnGhostState(EntityUid uid, GhostComponent component, ref AfterAutoHandleStateEvent args)
         {
-            if (!_spriteQuery.TryComp(uid, out var sprite))
-                _sprite.LayerSetColor((uid, sprite), 0, component.Color);
+            _sprite.LayerSetColor(uid, 0, component.Color);
 
             if (uid != _playerManager.LocalEntity)
                 return;
