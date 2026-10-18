@@ -9,7 +9,7 @@ using Content.Shared.Popups;
 
 namespace Content.Server.Genetics;
 
-public sealed class GeneticMutationInjectorSystem : EntitySystem
+public sealed partial class GeneticMutationInjectorSystem : EntitySystem
 {
     [Dependency] private SharedGeneticsSystem _genetics = default!;
     [Dependency] private MobStateSystem _mobState = default!;

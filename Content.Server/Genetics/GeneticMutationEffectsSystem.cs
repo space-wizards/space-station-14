@@ -48,7 +48,7 @@ using System.Numerics;
 
 namespace Content.Server.Genetics;
 
-public sealed class GeneticMutationEffectsSystem : EntitySystem
+public sealed partial class GeneticMutationEffectsSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private IRobustRandom _random = default!;

@@ -8,7 +8,7 @@ using Content.Shared.Mobs.Systems;
 
 namespace Content.Server.Genetics;
 
-public sealed class GeneticInstabilitySystem : EntitySystem
+public sealed partial class GeneticInstabilitySystem : EntitySystem
 {
     private const int InstabilityDamageThreshold = 100;
     private const int CellularDeathThreshold = 150;

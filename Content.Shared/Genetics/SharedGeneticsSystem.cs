@@ -7,7 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Genetics;
 
-public sealed class SharedGeneticsSystem : EntitySystem
+public sealed partial class SharedGeneticsSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private MovementSpeedModifierSystem _movementSpeed = default!;

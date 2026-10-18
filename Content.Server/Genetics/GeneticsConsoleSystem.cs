@@ -25,7 +25,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Genetics;
 
-public sealed class GeneticsConsoleSystem : EntitySystem
+public sealed partial class GeneticsConsoleSystem : EntitySystem
 {
     [Dependency] private DeviceLinkSystem _deviceLink = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
