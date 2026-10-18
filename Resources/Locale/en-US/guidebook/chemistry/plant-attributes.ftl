@@ -22,4 +22,3 @@ plant-attribute-low-heat-tolerance = low heat tolerance
 plant-attribute-high-heat-tolerance = high heat tolerance
 plant-attribute-low-pressure-tolerance = low pressure tolerance
 plant-attribute-high-pressure-tolerance = high pressure tolerance
-plant-attribute-unknown = unknown attribute
