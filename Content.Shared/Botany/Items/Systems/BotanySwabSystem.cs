@@ -74,8 +74,6 @@ public sealed partial class BotanySwabSystem : EntitySystem
         else
         {
             var pollenData = ent.Comp.PlantData.Value;
-            var oldPollenData = _botany.ClonePlantSnapshotData(targetPlant, parent: ent.Owner);
-
             _mutation.CrossMutations(pollenData, ent.Comp.PlantProtoId, targetPlant);
 
             // Notify growth systems to apply their per-component cross logic.
@@ -83,8 +81,10 @@ public sealed partial class BotanySwabSystem : EntitySystem
             RaiseLocalEvent(targetPlant, ref crossEv);
 
             // Swap: store old target pollen on the swab, apply cross to the target using swab pollen.
+            var oldPollenData = ent.Comp.PlantData;
             ent.Comp.PlantProtoId = MetaData(targetPlant).EntityPrototype?.ID;
-            ent.Comp.PlantData = oldPollenData;
+            ent.Comp.PlantData = _botany.ClonePlantSnapshotData(targetPlant, parent: ent.Owner);
+            _botany.DeletePlantSnapshot(oldPollenData);
 
             _popup.PopupEntity(Loc.GetString("botany-swab-to"), targetPlant, args.Args.User);
         }
