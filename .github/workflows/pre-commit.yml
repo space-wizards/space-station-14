@@ -31,5 +31,5 @@ jobs:
 
     - name: Run Pre-Commit
       uses: pre-commit/action@v3.0.1
-        with:
-          extra_args: --from-ref ${{ github.event.pull_request.base.sha }} --to-ref ${{ github.event.pull_request.head.sha }}
+      with:
+        extra_args: --from-ref ${{ github.event.pull_request.base.sha }} --to-ref ${{ github.event.pull_request.head.sha }}
