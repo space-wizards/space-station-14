@@ -30,7 +30,7 @@ jobs:
       uses: tj-actions/changed-files@v47.0.6
       with:
         write_output_files: true
-        files:
+        files: |
           **.cs
           **.ftl
           **.json
