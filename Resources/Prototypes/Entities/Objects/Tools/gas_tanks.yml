@@ -45,10 +45,14 @@
       volume: 5
       temperature: 293.15
     tankLowPressure: 30.0
+    safetyPressure: 3039.75
+    overpressure: 3039.75
+    maxIntegrity: 5
+    integrity: 5
   - type: Explosive
     explosionType: Minibomb # Mostly a pressure wave explosive so primarily blunt damage
     maxIntensity: 20
-    tileBreakScale: 0.2
+    tileBreakScale: 8
   - type: MeleeWeapon
     wideAnimationRotation: 45
     attackRate: 0.8
