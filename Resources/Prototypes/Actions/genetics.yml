@@ -10,8 +10,9 @@
     sprite: Interface/Actions/voice-mask.rsi
     layers:
     - state: icon
-  - type: EntityTargetAction
+  - type: TargetAction
     range: 12
+  - type: EntityTargetAction
     event: !type:GeneticTelepathyActionEvent
 
 - type: entity
@@ -26,8 +27,9 @@
     sprite: Interface/Actions/actions_ai.rsi
     layers:
     - state: camera_light
-  - type: EntityTargetAction
+  - type: TargetAction
     range: 6
+  - type: EntityTargetAction
     event: !type:GeneticTelekinesisActionEvent
 
 - type: entity
@@ -42,9 +44,28 @@
     sprite: Interface/Actions/voice-mask.rsi
     layers:
     - state: icon
-  - type: EntityTargetAction
+  - type: TargetAction
     range: 1.5
+  - type: EntityTargetAction
     event: !type:GeneticShockTouchActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionGeneticLaserEyes
+  name: action-genetics-laser-eyes-name
+  description: action-genetics-laser-eyes-description
+  components:
+  - type: Action
+    useDelay: 3
+  - type: Sprite
+    sprite: Interface/Actions/actions_ai.rsi
+    layers:
+    - state: camera_light
+  - type: TargetAction
+    range: 20
+    checkCanAccess: false
+  - type: WorldTargetAction
+    event: !type:GeneticLaserEyesActionEvent
 
 - type: entity
   parent: BaseAction

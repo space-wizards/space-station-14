@@ -135,7 +135,7 @@
   description: genetics-mutation-radioactive-description
   sequence: ATGCATGCATGCATGC
   instability: -30
-  bruteDamageMultiplier: 1.1
+  grantsRadiation: true
 
 - type: geneticMutation
   id: GeneticMutationSpastic

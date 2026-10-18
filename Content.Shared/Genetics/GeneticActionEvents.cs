@@ -18,3 +18,7 @@ public sealed partial class GeneticSpeciesShiftActionEvent : InstantActionEvent
 public sealed partial class GeneticShockTouchActionEvent : EntityTargetActionEvent
 {
 }
+
+public sealed partial class GeneticLaserEyesActionEvent : WorldTargetActionEvent
+{
+}

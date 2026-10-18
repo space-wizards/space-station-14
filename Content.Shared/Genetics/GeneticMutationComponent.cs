@@ -167,6 +167,12 @@ public sealed partial class GeneticMutationComponent : Component
     public EntityUid? ShockTouchAction;
 
     [DataField]
+    public EntityUid? LaserEyesAction;
+
+    [DataField]
+    public bool RadiationAdded;
+
+    [DataField]
     public bool AnimalHearingApplied;
 
     [DataField]

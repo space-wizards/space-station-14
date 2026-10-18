@@ -137,7 +137,7 @@
   sequence: GCTAGATCGATCGATC
   instability: 35
   grantsXRay: true
-  meleeBruteBonus: 5
+  grantsLaserEyes: true
 
 - type: geneticMutation
   id: GeneticMutationMindreader
@@ -161,8 +161,7 @@
   description: genetics-mutation-pressure-adaptation-description
   sequence: ATCGGCTAATCGGCTA
   instability: 10
-  fireResistance: 0.25
-  coldResistance: 0.25
+  grantsPressureImmunity: true
 
 - type: geneticMutation
   id: GeneticMutationShockTouch

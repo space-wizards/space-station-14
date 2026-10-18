@@ -71,6 +71,15 @@ public sealed partial class GeneticMutationPrototype : IPrototype
     public bool GrantsShockTouch;
 
     [DataField]
+    public bool GrantsLaserEyes;
+
+    [DataField]
+    public bool GrantsPressureImmunity;
+
+    [DataField]
+    public bool GrantsRadiation;
+
+    [DataField]
     public float FireResistance = 0f;
 
     [DataField]

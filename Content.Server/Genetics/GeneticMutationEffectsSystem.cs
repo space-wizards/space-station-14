@@ -37,7 +37,9 @@ using Content.Shared.Tag;
 using Content.Shared.Traits.Assorted;
 using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.Radiation.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
@@ -75,8 +77,16 @@ public sealed partial class GeneticMutationEffectsSystem : EntitySystem
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private ElectrocutionSystem _electrocution = default!;
+    [Dependency] private BarotraumaSystem _barotrauma = default!;
+    [Dependency] private SharedGunSystem _gun = default!;
 
     private static readonly EntProtoId ClumsyStatusEffect = "StatusEffectClumsyAll";
+    private static readonly EntProtoId TelekinesisActionId = "ActionGeneticTelekinesis";
+    private static readonly EntProtoId TelepathyActionId = "ActionGeneticTelepathy";
+    private static readonly EntProtoId ShockTouchActionId = "ActionGeneticShockTouch";
+    private static readonly EntProtoId SpeciesShiftActionId = "ActionGeneticSpeciesShift";
+    private static readonly EntProtoId LaserEyesActionId = "ActionGeneticLaserEyes";
+    private static readonly EntProtoId LaserBoltId = "BulletLaser";
     private const string TelekinesisTag = "BypassInteractionRangeChecks";
     private const string TelepathyRadioChannel = "Binary";
     private const string StunImmunityTag = "StunImmune";
@@ -93,6 +103,8 @@ public sealed partial class GeneticMutationEffectsSystem : EntitySystem
         SubscribeLocalEvent<GeneticMutationComponent, GeneticTelekinesisActionEvent>(OnTelekinesisAction);
         SubscribeLocalEvent<GeneticMutationComponent, GeneticShockTouchActionEvent>(OnShockTouchAction);
         SubscribeLocalEvent<GeneticMutationComponent, GeneticSpeciesShiftActionEvent>(OnSpeciesShiftAction);
+        SubscribeLocalEvent<GeneticMutationComponent, GeneticLaserEyesActionEvent>(OnLaserEyesAction);
+        SubscribeLocalEvent<GeneticMutationComponent, RefreshPressureImmunityEvent>(OnRefreshPressureImmunity);
         SubscribeLocalEvent<GetMeleeDamageEvent>(OnGetMeleeDamage);
     }
 
@@ -165,6 +177,35 @@ public sealed partial class GeneticMutationEffectsSystem : EntitySystem
                 TimeSpan.FromSeconds(1),
                 refresh: true))
             args.Handled = true;
+    }
+
+    private void OnLaserEyesAction(Entity<GeneticMutationComponent> entity, ref GeneticLaserEyesActionEvent args)
+    {
+        if (!HasActiveMutation(entity.Comp, prototype => prototype.GrantsLaserEyes))
+            return;
+
+        var origin = _transform.GetMapCoordinates(entity.Owner);
+        var direction = _transform.ToMapCoordinates(args.Target).Position - origin.Position;
+        if (direction.LengthSquared() < 0.01f)
+            return;
+
+        var bolt = Spawn(LaserBoltId, origin);
+        _gun.ShootProjectile(bolt, direction.Normalized(), Vector2.Zero, entity.Owner, entity.Owner);
+        args.Handled = true;
+    }
+
+    private void OnRefreshPressureImmunity(
+        Entity<GeneticMutationComponent> entity,
+        ref RefreshPressureImmunityEvent args)
+    {
+        if (HasActiveMutation(entity.Comp, prototype => prototype.GrantsPressureImmunity))
+            args.IsImmune = true;
+    }
+
+    private bool HasActiveMutation(GeneticMutationComponent comp, Func<GeneticMutationPrototype, bool> predicate)
+    {
+        return comp.ActiveMutations.Any(id =>
+            _proto.TryIndex<GeneticMutationPrototype>(id, out var prototype) && predicate(prototype));
     }
 
     private void OnSpeciesShiftAction(
@@ -256,10 +297,10 @@ public sealed partial class GeneticMutationEffectsSystem : EntitySystem
                 continue;
 
             if (proto.BruteDamageMultiplier != 1f)
-                ApplyDictModifier(args.Damage.DamageDict, "Brute", proto.BruteDamageMultiplier);
+                ApplyGroupModifier(args.Damage.DamageDict, "Brute", proto.BruteDamageMultiplier);
 
             if (proto.BruteDamageModifier != 1f && proto.BruteDamageModifier < 1f)
-                ApplyDictModifier(args.Damage.DamageDict, "Brute", proto.BruteDamageModifier);
+                ApplyGroupModifier(args.Damage.DamageDict, "Brute", proto.BruteDamageModifier);
 
             if (proto.FireResistance > 0f)
                 ApplyDictModifier(args.Damage.DamageDict, "Heat", 1f - proto.FireResistance);
@@ -272,6 +313,18 @@ public sealed partial class GeneticMutationEffectsSystem : EntitySystem
         }
     }
 
+    private void ApplyGroupModifier(
+        Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2> dict,
+        string group,
+        float multiplier)
+    {
+        foreach (var type in _proto.Index<DamageGroupPrototype>(group).DamageTypes)
+        {
+            if (dict.TryGetValue(type, out var existing))
+                dict[type] = existing * multiplier;
+        }
+    }
+
     private static void ApplyDictModifier(
         Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2> dict,
         string key,
@@ -280,6 +333,16 @@ public sealed partial class GeneticMutationEffectsSystem : EntitySystem
         var damageType = new ProtoId<DamageTypePrototype>(key);
         if (dict.TryGetValue(damageType, out var existing))
             dict[damageType] = existing * multiplier;
+    }
+
+    private void AddGroupDamage(DamageSpecifier spec, string group, float amount)
+    {
+        var types = _proto.Index<DamageGroupPrototype>(group).DamageTypes;
+        var each = FixedPoint2.New(amount / types.Count);
+        foreach (var type in types)
+        {
+            spec.DamageDict[type] = each;
+        }
     }
 
     private void ProcessRegeneration(EntityUid uid, GeneticMutationComponent comp, float frameTime)
@@ -300,9 +363,9 @@ public sealed partial class GeneticMutationEffectsSystem : EntitySystem
             comp.RegenerationTimer = 0f;
             var heal = new DamageSpecifier();
             if (proto.RegenerationBrute > 0f)
-                heal.DamageDict["Brute"] = -proto.RegenerationBrute;
+                AddGroupDamage(heal, "Brute", -proto.RegenerationBrute);
             if (proto.RegenerationBurn > 0f)
-                heal.DamageDict["Burn"] = -proto.RegenerationBurn;
+                AddGroupDamage(heal, "Burn", -proto.RegenerationBurn);
             _damageable.TryChangeDamage(uid, heal, interruptsDoAfters: false);
             break;
         }
@@ -482,8 +545,7 @@ public sealed partial class GeneticMutationEffectsSystem : EntitySystem
 
     private void SetChameleonVisible(EntityUid uid, GeneticMutationComponent comp, bool visible)
     {
-        if (!TryComp<VisibilityComponent>(uid, out var vis))
-            return;
+        var vis = EnsureComp<VisibilityComponent>(uid);
 
         if (visible)
         {
@@ -693,19 +755,31 @@ public sealed partial class GeneticMutationEffectsSystem : EntitySystem
         if (proto.TelekinesisRange > 0f && !comp.TelekinesisApplied)
         {
             _tag.AddTag(uid, TelekinesisTag);
-            _actions.AddAction(uid, ref comp.TelekinesisAction, "ActionGeneticTelekinesis");
+            _actions.AddAction(uid, ref comp.TelekinesisAction, TelekinesisActionId);
             comp.TelekinesisApplied = true;
         }
 
         if (proto.GrantsTelepathy && !comp.TelepathyApplied)
         {
             EnsureComp<GeneticTelepathyComponent>(uid);
-            _actions.AddAction(uid, ref comp.TelepathyAction, "ActionGeneticTelepathy");
+            _actions.AddAction(uid, ref comp.TelepathyAction, TelepathyActionId);
             comp.TelepathyApplied = true;
         }
 
         if (proto.GrantsShockTouch)
-            _actions.AddAction(uid, ref comp.ShockTouchAction, "ActionGeneticShockTouch");
+            _actions.AddAction(uid, ref comp.ShockTouchAction, ShockTouchActionId);
+
+        if (proto.GrantsLaserEyes)
+            _actions.AddAction(uid, ref comp.LaserEyesAction, LaserEyesActionId);
+
+        if (proto.GrantsRadiation && !HasComp<RadiationSourceComponent>(uid))
+        {
+            AddComp<RadiationSourceComponent>(uid);
+            comp.RadiationAdded = true;
+        }
+
+        if (proto.GrantsPressureImmunity)
+            _barotrauma.RefreshPressureImmunity(uid);
 
         if (proto.GrantsAnimalHearing && !comp.AnimalHearingApplied)
         {
@@ -734,7 +808,7 @@ public sealed partial class GeneticMutationEffectsSystem : EntitySystem
                 if (RandomizeSpeciesShift(uid))
                 {
                     comp.SpeciesShiftApplied = true;
-                    _actions.AddAction(uid, ref comp.SpeciesShiftAction, "ActionGeneticSpeciesShift");
+                    _actions.AddAction(uid, ref comp.SpeciesShiftAction, SpeciesShiftActionId);
                 }
             }
         }
@@ -908,6 +982,21 @@ public sealed partial class GeneticMutationEffectsSystem : EntitySystem
             _actions.RemoveAction((uid, null), (shockAction, null));
             comp.ShockTouchAction = null;
         }
+
+        if (proto.GrantsLaserEyes && comp.LaserEyesAction is { } laserAction)
+        {
+            _actions.RemoveAction((uid, null), (laserAction, null));
+            comp.LaserEyesAction = null;
+        }
+
+        if (proto.GrantsRadiation && comp.RadiationAdded)
+        {
+            RemComp<RadiationSourceComponent>(uid);
+            comp.RadiationAdded = false;
+        }
+
+        if (proto.GrantsPressureImmunity)
+            _barotrauma.RefreshPressureImmunity(uid);
 
         if (proto.GrantsAnimalHearing && comp.AnimalHearingApplied)
         {

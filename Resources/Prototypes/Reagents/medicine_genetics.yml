@@ -7,6 +7,6 @@
   flavor: medicine
   color: "#5096c8"
   metabolisms:
-    Medicine:
+    Bloodstream:
       effects:
       - !type:RemoveAllGeneticMutations
