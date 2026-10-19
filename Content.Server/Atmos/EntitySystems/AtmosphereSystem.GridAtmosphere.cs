@@ -3,6 +3,7 @@ using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Reactions;
+using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
@@ -274,12 +275,12 @@ public sealed partial class AtmosphereSystem
         DebugTools.AssertNotNull(tile.Air);
         DebugTools.Assert(tile.Air?.Immutable == false);
 
-        var adjacent = new List<GasMixture>(Atmospherics.Directions);
+        var adjacent = new ValueList<GasMixture>(Atmospherics.Directions);
         for (var j = 0; j < Atmospherics.Directions; j++)
         {
             var direction = (AtmosDirection)(1 << j);
             var offset = tile.GridIndices.Offset(direction);
-            if (grid.Comp.Tiles.GetValueOrDefault(offset)is not { } adj
+            if (grid.Comp.Tiles.GetValueOrDefault(offset) is not { } adj
                 || adj.AirtightData.BlockedDirections.HasFlag(direction.GetOpposite())
                 || adj.Air is not { } air)
                 continue;
@@ -289,7 +290,7 @@ public sealed partial class AtmosphereSystem
 
         if (adjacent.Count > 0)
         {
-            var ratio = 1 / adjacent.Count;
+            var ratio = 1f / adjacent.Count;
 
             var mix = tile.Air.RemoveRatio(ratio);
 
