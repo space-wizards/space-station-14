@@ -1,5 +1,5 @@
-- type: vendingMachineInventory
-  id: MegaSeedServitorInventory
+- type: vendingMachineInventory # Seeds cost 20. There are currently 179 seeds + 2 snacks costing ~3660, + 100 for the crate.
+  id: MegaSeedServitorInventory # CrateVendingMachineRestockSeeds needs to be more than this.
   startingInventory:
     AloeSeeds: 3
     AmbrosiaVulgarisSeeds: 3
