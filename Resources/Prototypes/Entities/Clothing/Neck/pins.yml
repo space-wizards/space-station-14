@@ -204,7 +204,7 @@
   - type: Clothing
     equippedPrefix: poly
   - type: ChameleonClothing
-    default: ClothingNeckPolyPin
+    default: ClothingNeckPolyamoryPin
 
 - type: entity
   parent: ClothingGenderPinBase
