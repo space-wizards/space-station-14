@@ -280,10 +280,10 @@ public sealed partial class AtmosphereSystem
         {
             var direction = (AtmosDirection)(1 << j);
             var offset = tile.GridIndices.Offset(direction);
-            if (grid.Comp.Tiles.GetValueOrDefault(offset) is not { } adj || adj.Air == null)
+            if (grid.Comp.Tiles.GetValueOrDefault(offset)?.Air is not { } adj)
                 continue;
 
-            adjacent[count++] = adj.Air;
+            adjacent[count++] = adj;
         }
 
         if (count > 0)
