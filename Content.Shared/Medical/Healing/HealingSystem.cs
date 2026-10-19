@@ -19,7 +19,7 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Medical.Healing;
 
-public sealed partial class HealingSystem : EntitySystem
+public abstract partial class HealingSystem : EntitySystem
 {
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
@@ -43,7 +43,6 @@ public sealed partial class HealingSystem : EntitySystem
 
     private void OnDoAfter(Entity<DamageableComponent> target, ref HealingDoAfterEvent args)
     {
-
         if (args.Handled || args.Cancelled)
             return;
 
@@ -111,6 +110,7 @@ public sealed partial class HealingSystem : EntitySystem
         }
 
         _audio.PlayPredicted(healing.HealingEndSound, target.Owner, args.User);
+        PlayHealAnimation(target);
 
         // Logic to determine the whether or not to repeat the healing action
         args.Repeat = HasDamage((args.Used.Value, healing), target) && !dontRepeat;
@@ -252,4 +252,6 @@ public sealed partial class HealingSystem : EntitySystem
         var output = percentDamage * (mod - 1) + 1;
         return Math.Max(output, 1);
     }
+
+    public abstract void PlayHealAnimation(EntityUid uid);
 }
