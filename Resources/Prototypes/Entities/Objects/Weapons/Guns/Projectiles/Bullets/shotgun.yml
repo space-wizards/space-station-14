@@ -262,3 +262,15 @@
     proto: PelletGlass
     count: 5
     spread: 10
+
+- type: entity
+  parent: BaseBullet
+  id: PelletSilver
+  categories: [ HideSpawnMenu ]
+  name: pellet (.50 silver)
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 15
+        Holy: 30

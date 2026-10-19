@@ -147,11 +147,10 @@
     - BodyBagFolded
     - BodyBagFolded
     - JugWater
-    - JugBlood # End of first row
     - FoodBakedBunHotX
     - FoodBakedBunHotX
-    - FoodBakedBunHotX
-    - FoodBakedBunHotX
+    - WeaponShotgunDoubleBarreled
+    - BoxShellSilver
     belt:
     - Bible
     - Lantern

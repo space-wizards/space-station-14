@@ -186,3 +186,23 @@
       - state: mag-tranq-1
         map: ["enum.GunVisualLayers.Mag"]
       - state: tranquilizer
+
+- type: entity
+  parent: AmmoProviderShotgunShell
+  id: BoxShellSilver
+  name: ammunition box (.50 silver)
+  description: A cardboard box of .50 shotgun shells. Intended to hold holy ammunition.
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellSilver
+  - type: MagazineVisuals
+    magState: mag-silver
+    steps: 5
+    zeroVisible: false
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-silver-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: silver
