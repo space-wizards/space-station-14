@@ -1088,6 +1088,9 @@
   id: Pen # CargoBounty: BountyPen
 
 - type: Tag
+  id: PenBase # Construction graph: ForgerPen
+
+- type: Tag
   id: PepperShaker # Storage whitelist: ClothingBeltChef. ItemMapper:  ClothingBeltChef
 
 - type: Tag

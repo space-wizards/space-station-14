@@ -1,0 +1,26 @@
+- type: constructionGraph
+  id: forgerpen
+  start: start
+  graph:
+    - node: start
+      edges:
+      - to: forgerpen
+        steps:
+        - material: CableAPC
+          amount: 2
+        - tag: PenBase
+          name: construction-graph-tag-pen-base
+          icon:
+            sprite: Objects/Misc/pens.rsi
+            state: icon
+        - tag: SmallAIChip
+          name: construction-graph-tag-super-compact-ai-chip
+          icon:
+            sprite: Objects/Misc/potatoai_chip.rsi
+            state: icon
+        - material: Manipulator
+          amount: 1
+          doAfter: 5
+
+    - node: forgerpen
+      entity: PenForger

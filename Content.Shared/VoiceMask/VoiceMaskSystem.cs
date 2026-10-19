@@ -1,3 +1,5 @@
+using Content.Shared.Inventory;
+using Robust.Shared.Serialization;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
@@ -15,8 +17,9 @@ using Content.Shared.Speech.EntitySystems;
 using Content.Shared.VoiceMask;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
+using Content.Shared.Paper;
 
-namespace Content.Server.VoiceMask;
+namespace Content.Shared.VoiceMask;
 
 public sealed partial class VoiceMaskSystem : EntitySystem
 {
@@ -62,6 +65,11 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<VoiceMaskToggledEvent>>((ent, ref ev) => OnVoiceMaskToggledEvent(ent, ref ev.Args));
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskToggledEvent>(OnVoiceMaskToggledEvent);
 
+        // Signature
+        SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<GetSignatureEvent>>((ent, ref ev) => OnGetSignatureEvent(ent, ref ev.Args));
+        SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<GetSignatureEvent>>((ent, ref ev) => OnGetSignatureEvent(ent, ref ev.Args));
+        // it also has a suscribelocalevent for the relay-less version
+
         // Other events
         SubscribeLocalEvent<VoiceMaskComponent, ImplantImplantedEvent>(OnImplantImplantedEvent);
         SubscribeLocalEvent<VoiceMaskComponent, ImplantRemovedEvent>(OnImplantRemovedEventEvent);
@@ -75,6 +83,13 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         SubscribeLocalEvent<VoiceMaskComponent, MapInitEvent>(OnMapInit);
 
         Subs.CVar(_cfgManager, CCVars.MaxNameLength, value => _maxNameLength = value, true);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGetSignatureEvent(Entity<VoiceMaskComponent> ent, ref GetSignatureEvent args)
+    {
+        if (ent.Comp.Active && ent.Comp.VoiceMaskName != null)
+            args.Signature = ent.Comp.VoiceMaskName;
     }
 
     private void OnMapInit(Entity<VoiceMaskComponent> ent, ref MapInitEvent args)
@@ -291,3 +306,80 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     #endregion
 }
 
+[Serializable, NetSerializable]
+public enum VoiceMaskUIKey : byte
+{
+    Key
+}
+
+[Serializable, NetSerializable]
+public sealed class VoiceMaskBuiState : BoundUserInterfaceState
+{
+    public readonly string Name;
+    public readonly string? Verb;
+    public readonly bool Active;
+    public readonly bool AccentHide;
+    public readonly LocId TitleText;
+
+    public VoiceMaskBuiState(string name, string? verb, bool active, bool accentHide, LocId titleText)
+    {
+        Name = name;
+        Verb = verb;
+        Active = active;
+        AccentHide = accentHide;
+        TitleText = titleText;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class VoiceMaskChangeNameMessage : BoundUserInterfaceMessage
+{
+    public readonly string Name;
+
+    public VoiceMaskChangeNameMessage(string name)
+    {
+        Name = name;
+    }
+}
+
+/// <summary>
+/// Change the speech verb prototype to override, or null to use the user's verb.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class VoiceMaskChangeVerbMessage : BoundUserInterfaceMessage
+{
+    public readonly string? Verb;
+
+    public VoiceMaskChangeVerbMessage(string? verb)
+    {
+        Verb = verb;
+    }
+}
+
+/// <summary>
+///     Toggle the effects of the voice mask.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class VoiceMaskToggleMessage : BoundUserInterfaceMessage;
+
+/// <summary>
+///     Toggle the effects of accent negation.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class VoiceMaskAccentToggleMessage : BoundUserInterfaceMessage;
+
+/// <summary>
+///  Fired when a voice mask is turned on.
+/// </summary>
+/// <param name=="Mask">The voice mask that was turned on</param>
+/// <param name=="Source">The entity that owns the voice mask</param>
+/// <param name=="Active">The new value of the voice mask</param>
+public sealed class VoiceMaskToggledEvent(EntityUid mask, EntityUid source, bool active) : IInventoryRelayEvent
+{
+    public EntityUid Mask = mask;
+    public EntityUid Source = source;
+
+    public bool Active = active;
+
+    SlotFlags IInventoryRelayEvent.TargetSlots => SlotFlags.WITHOUT_POCKET;
+}

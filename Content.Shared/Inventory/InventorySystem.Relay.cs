@@ -38,6 +38,7 @@ using Content.Shared.Waypointer.Events;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Wieldable;
 using Content.Shared.Zombies;
+using Content.Shared.Paper;
 
 namespace Content.Shared.Inventory;
 
@@ -95,6 +96,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, GluedEffectAttemptEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, LubedEffectAttemptEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, WaypointerChangedEvent>(RefRelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, GetSignatureEvent>(RelayInventoryEvent);
 
         // Eye/vision events
         SubscribeLocalEvent<InventoryComponent, CanSeeAttemptEvent>(RelayInventoryEvent);
