@@ -1,0 +1,160 @@
+- type: entity
+  parent: [ SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible, BaseExaminableHunger ]
+  id: MobChicken
+  name: chicken
+  description: Comes before an egg, and IS a dinosaur!
+  components:
+  - type: Sprite
+    sprite: Mobs/Animals/Farm/chicken.rsi
+    drawdepth: Mobs
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base", "movement" ]
+      state: chicken-0
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: chicken-moving-0
+    noMovementLayers:
+      movement:
+        state: chicken-0
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.35
+        density: 8
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Speech
+    speechVerb: SmallMob
+    speechSounds: Cluck
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - Chicken
+    - VimPilot
+  - type: Reproductive
+    breedChance: 0.05
+    birthPopup: reproductive-laid-egg-popup
+    makeOffspringInfant: false
+    minHungerThreshold: Peckish
+    partnerWhitelist:
+      tags:
+      - Chicken
+    offspring:
+    - id: FoodEggChickenFertilized
+      maxAmount: 3
+  - type: ReproductivePartner
+  - type: Appearance
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: chicken-0
+      Critical:
+        Base: dead-0
+      Dead:
+        Base: dead-0
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatChicken
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.8
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/chicken_cluck_happy.ogg
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 100
+  - type: EntityProducerAction
+    insufficientSatiationPopup: action-popup-lay-egg-too-hungry
+    userPopup: action-popup-lay-egg-user
+    othersPopup: action-popup-lay-egg-others
+  - type: SatiationProduction
+    delay: 60
+    delayMax: 120
+    satiationUsage: 60
+    minimumSatiation: 60
+    automaticForPlayers: false
+  - type: EntityProducer
+    table:
+      id: FoodEgg
+  - type: ActionGrant
+    actions:
+    - ActionAnimalLayEgg
+  - type: ReplacementAccent
+    accent: chicken
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-organic
+  - type: NpcFactionMember
+    factions:
+    - Passive
+
+- type: entity
+  parent: MobChicken
+  id: MobChicken1
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base", "movement" ]
+      state: chicken-1
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: chicken-moving-1
+    noMovementLayers:
+      movement:
+        state: chicken-1
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: chicken-1
+      Critical:
+        Base: dead-1
+      Dead:
+        Base: dead-1
+
+- type: entity
+  parent: MobChicken
+  id: MobChicken2
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base", "movement" ]
+      state: chicken-2
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: chicken-moving-2
+    noMovementLayers:
+      movement:
+        state: chicken-2
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: chicken-2
+      Critical:
+        Base: dead-2
+      Dead:
+        Base: dead-2
+
+- type: entity
+  parent: FoodEgg
+  id: FoodEggChickenFertilized
+  suffix: Fertilized, Chicken
+  components:
+  - type: TimedSpawner
+    prototypes:
+    - MobChicken
+    - MobChicken1
+    - MobChicken2
+    intervalSeconds: 20
+    allowContainerPlacement: true
+  - type: TimedDespawn # Delete the egg after the chick spawns.
+    lifetime: 21

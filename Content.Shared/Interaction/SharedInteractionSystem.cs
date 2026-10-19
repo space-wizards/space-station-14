@@ -131,8 +131,6 @@ namespace Content.Shared.Interaction
                     CCVars.InteractionRateLimitAnnounceAdminsDelay,
                     RateLimitAlertAdmins)
             );
-
-            InitializeBlocking();
         }
 
         private void RateLimitAlertAdmins(ICommonSession session)
@@ -234,7 +232,7 @@ namespace Content.Shared.Interaction
             if (!item.DeleteOnDrop)
                 RemCompDeferred<UnremoveableComponent>(uid);
             else
-                PredictedQueueDel(uid);
+                QueueDel(uid);
         }
 
         private void OnUnequipHand(EntityUid uid, UnremoveableComponent item, GotUnequippedHandEvent args)
@@ -245,7 +243,7 @@ namespace Content.Shared.Interaction
             if (!item.DeleteOnDrop)
                 RemCompDeferred<UnremoveableComponent>(uid);
             else
-                PredictedQueueDel(uid);
+                QueueDel(uid);
         }
 
         private void OnDropped(EntityUid uid, UnremoveableComponent item, DroppedEvent args)
@@ -258,7 +256,7 @@ namespace Content.Shared.Interaction
             if (!item.DeleteOnDrop)
                 RemCompDeferred<UnremoveableComponent>(uid);
             else
-                PredictedQueueDel(uid);
+                QueueDel(uid);
         }
 
         private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)

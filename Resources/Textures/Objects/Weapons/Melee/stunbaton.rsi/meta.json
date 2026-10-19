@@ -11,9 +11,6 @@
             "name": "stunbaton_off"
         },
         {
-            "name": "stunbaton_nocell"
-        },
-        {
             "name": "stunbaton_on",
             "delays": [
                 [

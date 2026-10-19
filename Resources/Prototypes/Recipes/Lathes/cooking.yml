@@ -102,6 +102,11 @@
     Steel: 50
 
 - type: latheRecipe
+  parent: FoodPlate
+  id: CandyBowl
+  result: CandyBowl
+
+- type: latheRecipe
   id: FoodKebabSkewer
   result: FoodKebabSkewer
   completetime: 0.4

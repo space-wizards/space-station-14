@@ -10,6 +10,7 @@
   - type: ActionGrant
     actions:
     - ActionVendingThrow
+    - ActionOpenVendingMachineInterface
   - type: StationAiWhitelist
   - type: AmbientOnPowered
   - type: AmbientSound
@@ -59,6 +60,7 @@
     interfaces:
       enum.VendingMachineUiKey.Key:
         type: VendingMachineBoundUserInterface
+        requireInputValidation: false
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: WiresPanel
@@ -80,9 +82,13 @@
     messageSet: SpookySpeakerMessagesGeneric
     speakChance: 0.2
   - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Service
   - type: ActiveRadio
     channels:
     - Common
+    - Service
   - type: DoAfter
   - type: Electrified
     enabled: false
@@ -95,9 +101,6 @@
   - type: ApcPowerReceiver
     powerLoad: 200
   - type: Actions
-  - type: SentienceTarget
-    flavorKind: station-event-random-sentience-flavor-mechanical
-    weight: 0.025 # fuck you in particular (it now needs 40 vending machines to be as likely as 1 interesting animal)
   - type: StaticPrice
     price: 100
   - type: Appearance
@@ -106,6 +109,9 @@
   - type: VendingMachineDispenseOnHit
     chance: 0.25
     threshold: 2
+  - type: Input
+    context: "human"
+  - type: Examiner
 
 - type: entity
   id: VendingMachine
