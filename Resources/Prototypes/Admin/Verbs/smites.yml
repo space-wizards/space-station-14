@@ -393,7 +393,9 @@
     sprite: Structures/Storage/closet.rsi
     state: generic
   effects:
-  - !type:StuffIntoLocker
+  - !type:TrapInContainer
+    entity: ClosetMaintenanceWelded
+    container: entity_storage
 
 - type: adminVerb
   id: AdminSmiteHomingRod
@@ -599,7 +601,7 @@
   name: admin-smite-monkeyify-name
   description: admin-smite-monkeyify-description
   icon:
-    sprite: Mobs/Animals/monkey.rsi
+    sprite: Mobs/Animals/Ancestors/monkey.rsi
     state: monkey
   effects:
   - !type:Polymorph

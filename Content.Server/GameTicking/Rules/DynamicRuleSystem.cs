@@ -30,7 +30,9 @@ public sealed partial class DynamicRuleSystem : GameRuleSystem<DynamicRuleCompon
 
         var dynamic = ent.Comp1;
 
-        dynamic.Budget = _random.Next(dynamic.StartingBudgetMin, dynamic.StartingBudgetMax);
+        var blend = _random.NextFloat(0, 1);
+        dynamic.Budget = MathHelper.Lerp(dynamic.StartingBudgetMin, dynamic.StartingBudgetMax, blend);
+        dynamic.BudgetPerSecond = MathHelper.Lerp(dynamic.MinBudgetPerSecond, dynamic.MaxBudgetPerSecond, blend);
         dynamic.NextRuleTime = Timing.CurTime + _random.Next(dynamic.MinRuleInterval, dynamic.MaxRuleInterval);
     }
 
@@ -62,11 +64,9 @@ public sealed partial class DynamicRuleSystem : GameRuleSystem<DynamicRuleCompon
         if (Timing.CurTime < component.NextRuleTime)
             return;
 
-        // don't spawn antags during evac
-        if (_roundEnd.IsRoundEndRequested())
-            return;
-
-        Execute((uid, component));
+        // only spawn antags if we aren't evacuating.
+        if (!_roundEnd.IsRoundEndRequested() || _roundEnd.CanCallOrRecall())
+            Execute((uid, component));
     }
 
     /// <summary>
@@ -76,10 +76,10 @@ public sealed partial class DynamicRuleSystem : GameRuleSystem<DynamicRuleCompon
     private IEnumerable<EntProtoId> GetRuleSpawns(Entity<DynamicRuleComponent> entity)
     {
         UpdateBudget((entity.Owner, entity.Comp));
-        var ctx = new EntityTableContext(new Dictionary<string, object>
+        var ctx = new EntityTableContext
         {
             { HasBudgetCondition.BudgetContextKey, entity.Comp.Budget },
-        });
+        };
 
         return _entityTable.GetSpawns(entity.Comp.Table, ctx: ctx);
     }

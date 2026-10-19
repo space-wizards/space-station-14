@@ -11,6 +11,7 @@
     state: icon
   - type: Tag
     tags:
+    - BotanyTool
     - Recyclable
     - Trash
   - type: BotanySwab
@@ -30,6 +31,9 @@
     layers:
     - state: boxwide
     - state: swab
+  - type: Tag
+    tags:
+    - BotanyTool
   - type: BallisticAmmoProvider
     whitelist:
       components:
