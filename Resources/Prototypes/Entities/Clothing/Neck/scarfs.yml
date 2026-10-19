@@ -225,6 +225,17 @@
 
 - type: entity
   parent: ClothingScarfBase
+  id: ClothingNeckScarfStripedPoly
+  name: striped poly scarf
+  description: A stylish striped poly scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Scarfs/PrideScarfs/poly.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Scarfs/PrideScarfs/poly.rsi
+
+- type: entity
+  parent: ClothingScarfBase
   id: ClothingNeckScarfStripedNonBinary
   name: striped non-binary scarf
   description: A stylish striped non-binary scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.

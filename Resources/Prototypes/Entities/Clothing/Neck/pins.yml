@@ -195,6 +195,19 @@
 
 - type: entity
   parent: ClothingGenderPinBase
+  id: ClothingNeckPolyamoryPin
+  name: polyamory pin
+  description: Be poly do crime(s).
+  components:
+  - type: Sprite
+    state: poly
+  - type: Clothing
+    equippedPrefix: poly
+  - type: ChameleonClothing
+    default: ClothingNeckPolyPin
+
+- type: entity
+  parent: ClothingGenderPinBase
   id: ClothingNeckOmnisexualPin
   name: omnisexual pin
   description: Be omni do crime.
