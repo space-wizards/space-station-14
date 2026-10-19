@@ -420,4 +420,25 @@ public sealed partial class DeviceNetworkSystem
         ent.Comp.Enabled = enabled;
         DirtyField(ent, nameof(DeviceNetworkComponent.Enabled));
     }
+
+    /// <summary>
+    /// Checks whether a <see cref="ILimitedDeviceComponent"/> should not be applied for the current network.
+    /// </summary>
+    /// <param name="ent">The target entity with a <see cref="DeviceNetworkComponent"/>.</param>
+    /// <param name="netId"><see cref="DeviceNetworkPrototype"/> ID to check.</param>
+    /// <typeparam name="T">Component that implements <see cref="ILimitedDeviceComponent"/>.</typeparam>
+    /// <returns>True if this network shouldn't be checked, false if the target network must be checked for blocking.</returns>
+    [PublicAPI]
+    public bool CheckNetworkIgnore<T>(Entity<T, DeviceNetworkComponent?> ent, ProtoId<DeviceNetworkPrototype> netId)
+        where T : IComponent, ILimitedDeviceComponent
+    {
+        return !_deviceQuery.Resolve(ent.Owner, ref ent.Comp2, false) || ent.Comp1.IgnoreNets.Contains(netId);
+    }
+
+    [PublicAPI]
+    public bool CheckNetworkIgnore<T>(DeviceAttemptConnectEvent args, EntityQuery<T> query) where T : IComponent, ILimitedDeviceComponent
+    {
+        return query.TryComp(args.Entity, out var comp)
+               && CheckNetworkIgnore<T>((args.Entity.Owner, comp, args.Entity.Comp), args.ManagerComp.DeviceNetId);
+    }
 }

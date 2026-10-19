@@ -9,6 +9,8 @@ public sealed partial class WiredNetworkSystem : EntitySystem
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private DeviceNetworkSystem _deviceSystem = default!;
 
+    [Dependency] private EntityQuery<WiredNetworkComponent> _wiredQuery;
+
     [SubscribeLocalEvent]
     private void OnWiredInit(Entity<WiredNetworkComponent> ent, ref MapInitEvent args)
     {
@@ -18,6 +20,9 @@ public sealed partial class WiredNetworkSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnConnectNetwork(Entity<WiredNetworkManagerComponent> ent, ref DeviceAttemptConnectEvent args)
     {
+        if (_deviceSystem.CheckNetworkIgnore(args, _wiredQuery))
+            return;
+
         args.Connected = Transform(args.Entity.Owner).GridUid == ent.Comp.GridUid;
     }
 

@@ -47,7 +47,7 @@ public sealed partial class DeviceNetworkSystem
             if (manager.DeviceNetId != netId)
                 continue;
 
-            var attemptEv = new DeviceAttemptConnectEvent(ent!);
+            var attemptEv = new DeviceAttemptConnectEvent(ent!, manager);
             RaiseLocalEvent(uid, ref attemptEv);
             if (!attemptEv.Connected)
                 continue;

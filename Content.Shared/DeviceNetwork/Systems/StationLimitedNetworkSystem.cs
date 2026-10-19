@@ -34,6 +34,9 @@ public sealed partial class StationLimitedNetworkSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnConnectNetwork(Entity<StationNetworkManagerComponent> ent, ref DeviceAttemptConnectEvent args)
     {
+        if (_deviceSystem.CheckNetworkIgnore(args, _stationLimitedQuery))
+            return;
+
         args.Connected = _station.GetOwningStation(args.Entity.Owner) == ent.Comp.StationUid;
     }
 

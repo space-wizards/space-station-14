@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.DeviceNetwork.Components;
 
@@ -8,7 +9,7 @@ namespace Content.Shared.DeviceNetwork.Components;
 /// If the range is not specified, will just check if the entity is on the same map.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class WirelessNetworkComponent : Component
+public sealed partial class WirelessNetworkComponent : Component, ILimitedDeviceComponent
 {
     /// <summary>
     /// Maximum distance at which wireless device network messages can be received.
@@ -16,4 +17,7 @@ public sealed partial class WirelessNetworkComponent : Component
     /// </summary>
     [DataField]
     public float? Range;
+
+    [DataField]
+    public ProtoId<DeviceNetworkPrototype>[]? IgnoreNets { get; set; }
 }

@@ -27,6 +27,9 @@ public sealed partial class WirelessNetworkSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnConnectNetwork(Entity<WirelessNetworkManagerComponent> ent, ref DeviceAttemptConnectEvent args)
     {
+        if (_deviceSystem.CheckNetworkIgnore(args, _wirelessQuery))
+            return;
+
         args.Connected = Transform(args.Entity.Owner).MapUid == ent.Comp.MapUid;
     }
 
