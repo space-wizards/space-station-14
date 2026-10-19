@@ -2808,13 +2808,13 @@
 
 - type: entity
   parent: FoodProduceBase
-  name: sunflower
   id: FoodSunflower
+  name: sunflower
   description: A bulky flower filled with natural oils.
   components:
   - type: FlavorProfile
     flavors:
-      - oily
+    - oily
   - type: Solution
     solution:
       reagents:
@@ -2847,8 +2847,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - oily
-      - spicy
+    - oily
+    - spicy
   - type: Solution
     solution:
       reagents:
@@ -2902,8 +2902,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - oily
-      - cold
+    - oily
+    - cold
   - type: Solution
     solution:
       reagents:
