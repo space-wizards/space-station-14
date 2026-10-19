@@ -285,6 +285,14 @@
   - type: AccessReader
     access: [["Medical"]]
 
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsMedicalChemistry
+  suffix: Medical, Chemistry, Locked
+  components:
+  - type: AccessReader
+    access: [["Medical"], ["Chemistry"]]
+
 # Syndicate
 - type: entity
   parent: DoorElectronics
