@@ -40,6 +40,7 @@
         - ItemMask
         restitution: 0.3
         friction: 0.2
+  - type: PaperSigner
 
 - type: entity
   parent: Pen
@@ -92,6 +93,17 @@
     - Screwing
     useSound:
       collection: Screwdriver
+  - type: PaperSigner
+    customize: true
+  - type: ActivatableUI
+    key: enum.SignatureUiKey.Key
+    inHandsOnly: true
+    verbOnly: true
+    verbText: signature-config-verb
+  - type: UserInterface
+    interfaces:
+      enum.SignatureUiKey.Key:
+        type: SignatureBoundUserInterface
 
 - type: entity
   name: Cybersun pen
@@ -148,3 +160,24 @@
     - WriteIgnoreStamps
     - Write
     - Pen
+
+- type: entity
+  name: makeshift forger's pen
+  parent: [BaseAdvancedPen, BaseMinorContraband]
+  id: PenForger
+  description: A strange pen with integrated electronics made to immitate the signature of others.
+  components:
+  - type: Sprite
+    state: forger_pen
+  - type: PaperSigner
+    customize: true
+    doAfterLength: 15
+    doAfterPopupSelf: signature-forge-popup-self
+    doAfterPopupOthers: signature-forge-popup-others
+  - type: Tag
+    tags:
+    - Write
+    - Pen
+  - type: Construction
+    graph: ForgerPen
+    node: forgerpen

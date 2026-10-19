@@ -12,10 +12,16 @@ using Robust.Shared.Audio.Systems;
 using static Content.Shared.Paper.PaperComponent;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared.Verbs;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Weapons.Ranged.Components;
+using Robust.Shared.GameStates;
+using Content.Shared.DoAfter;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Paper;
 
-public sealed partial class PaperSystem : EntitySystem
+public abstract partial class PaperSystem : EntitySystem
 {
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private IRobustRandom _random = default!;
@@ -26,6 +32,7 @@ public sealed partial class PaperSystem : EntitySystem
     [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private MetaDataSystem _metaSystem = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
 
     [Dependency] private EntityQuery<PaperComponent> _paperQuery = default!;
 
@@ -43,12 +50,147 @@ public sealed partial class PaperSystem : EntitySystem
         SubscribeLocalEvent<PaperComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<PaperComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PaperComponent, PaperInputTextMessage>(OnInputTextMessage);
-
         SubscribeLocalEvent<RandomPaperContentComponent, MapInitEvent>(OnRandomPaperContentMapInit);
 
         SubscribeLocalEvent<ActivateOnPaperOpenedComponent, PaperWriteEvent>(OnPaperWrite);
     }
 
+    [SubscribeLocalEvent]
+    private void OnGetState(Entity<PaperSignerComponent> ent, ref ComponentGetState args)
+    {
+        args.State = new PaperSignerComponentState(ent.Comp.Signature);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnHandleState(Entity<PaperSignerComponent> ent, ref ComponentHandleState args)
+    {
+        if (args.Current is not PaperSignerComponentState state)
+            return;
+
+        if (ent.Comp.Signature == state.Signature)
+            return;
+
+        ent.Comp.Signature = state.Signature;
+        SignatureUpdateUI(ent);
+    }
+
+    protected virtual void SignatureUpdateUI(Entity<PaperSignerComponent> ent)
+    {
+        // implemented on the client
+    }
+
+    [SubscribeLocalEvent]
+    private void OnSignatureChanged(EntityUid uid, PaperSignerComponent signer, SignatureChangedMessage args)
+    {
+        var signature = args.Signature.Trim();
+        signer.Signature = signature[..Math.Min(signer.MaxSignatureLength, signature.Length)];
+        SignatureUpdateUI((uid, signer));
+        Dirty(uid, signer);
+
+        // Log label change
+        _adminLogger.Add(LogType.Action, LogImpact.Low,
+            $"{ToPrettyString(args.Actor):user} set {ToPrettyString(uid):signer} to apply signature \"{signer.Signature}\"");
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGetUtilityVerb(Entity<PaperSignerComponent> ent, ref GetVerbsEvent<UtilityVerb> args)
+    {
+        var user = args.User;
+        var target = args.Target;
+
+        if (!HasComp<PaperComponent>(target) || !args.CanInteract || !args.CanAccess)
+            return;
+
+        if (ent.Comp.DoAfterLength == TimeSpan.Zero)
+        {
+            var verb = new UtilityVerb()
+            {
+                Act = () => TrySign(ent, target, user),
+                IconEntity = GetNetEntity(ent),
+                Text = Loc.GetString("sign-verb-text"),
+                Message = Loc.GetString("sign-verb-message")
+            };
+
+            args.Verbs.Add(verb);
+        }
+        else
+        {
+            var act = () => {
+                _popupSystem.PopupEntity(
+                    ent.Comp.DoAfterPopupSelf != null ? Loc.GetString(ent.Comp.DoAfterPopupSelf, ("target", target)) : null,
+                    ent.Comp.DoAfterPopupOthers != null ? Loc.GetString(ent.Comp.DoAfterPopupOthers, ("user", user), ("target", target)) : null,
+                    user,
+                    user
+                );
+                _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
+                    user,
+                    ent.Comp.DoAfterLength,
+                    new SignDoAfterEvent(),
+                    ent.Owner,
+                    target)
+                {
+                    BreakOnDamage = true,
+                    BreakOnMove = true,
+                    NeedHand = true,
+                });
+            };
+
+            var verb = new UtilityVerb()
+            {
+                Act = act,
+                IconEntity = GetNetEntity(ent),
+                Text = Loc.GetString("sign-verb-text"),
+                Message = Loc.GetString("sign-verb-message")
+            };
+
+            args.Verbs.Add(verb);
+        }
+
+    }
+
+    private void TrySign(Entity<PaperSignerComponent> ent, EntityUid target, EntityUid user)
+    {
+        if (!TryComp<PaperComponent>(target, out var paperComp))
+            return;
+
+        // do the deed
+        var text = Identity.Name(user, EntityManager, user); // todo: replace this with a better system that ignores physical masks but works via identity masks
+        var ev = new GetSignatureEvent(user, text);
+        var fake = false;
+
+        RaiseLocalEvent(ref ev);
+
+        fake |= ev.Signature != text;
+        text = ev.Signature;
+        if (ent.Comp.Customize && !ent.Comp.Signature.IsWhiteSpace() && ent.Comp.Signature != "")
+        {
+            fake |= text != ent.Comp.Signature;
+            text = ent.Comp.Signature;
+        }
+
+        if (TryStamp((target, paperComp), GetStampInfo(ent.Comp, text, fake), ent.Comp.SignState))
+        {
+            var signPaperOtherMessage = Loc.GetString("paper-component-action-sign-paper-other",
+                ("user", user),
+                ("target", target));
+            var signPaperSelfMessage = Loc.GetString("paper-component-action-sign-paper-self",
+                ("target", target));
+            _popupSystem.PopupEntity(signPaperSelfMessage, signPaperOtherMessage, user, user);
+
+            _audio.PlayPredicted(ent.Comp.Sound, ent.Owner, user);
+
+            UpdateUserInterface((target, paperComp));
+        }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnDoAfter(Entity<PaperSignerComponent> entity, ref SignDoAfterEvent args)
+    {
+        if (args.Handled || args.Cancelled || args.Args.Target == null)
+            return;
+
+        TrySign(entity, args.Args.Target.Value, args.Args.User);
+    }
     private void OnMapInit(Entity<PaperComponent> entity, ref MapInitEvent args)
     {
         if (!string.IsNullOrEmpty(entity.Comp.Content))
@@ -98,13 +240,24 @@ public sealed partial class PaperSystem : EntitySystem
             if (entity.Comp.StampedBy.Count > 0)
             {
                 var commaSeparated =
-                    string.Join(", ", entity.Comp.StampedBy.Select(s => Loc.GetString(s.StampedName)));
-                args.PushMarkup(
-                    Loc.GetString(
-                        "paper-component-examine-detail-stamped-by",
-                        ("paper", entity),
-                        ("stamps", commaSeparated))
-                );
+                    string.Join(", ", entity.Comp.StampedBy.Where((k) => !k.Signature).Select(s => Loc.GetString(s.StampedName)));
+                if (commaSeparated != "")
+                    args.PushMarkup(
+                        Loc.GetString(
+                            "paper-component-examine-detail-stamped-by",
+                            ("paper", entity),
+                            ("stamps", commaSeparated))
+                    );
+
+                var signersCommaSeparated =
+                    string.Join(", ", entity.Comp.StampedBy.Where((k) => k.Signature).Select(s => s.StampedName));
+                if (signersCommaSeparated != "")
+                    args.PushMarkup(
+                        Loc.GetString(
+                            "paper-component-examine-detail-signed-by",
+                            ("paper", entity),
+                            ("signers", signersCommaSeparated))
+                    );
             }
         }
     }
@@ -176,6 +329,19 @@ public sealed partial class PaperSystem : EntitySystem
         {
             StampedName = stamp.StampedName,
             StampedColor = stamp.StampedColor
+        };
+    }
+
+    private static StampDisplayInfo GetStampInfo(PaperSignerComponent pen, string signature, bool faked)
+    {
+        // this is the signature one so its a bit different
+        return new StampDisplayInfo
+        {
+            StampedName = signature,
+            StampedColor = pen.SignatureColor,
+            Signature = true,
+            Border = false,
+            Fake = faked
         };
     }
 
@@ -304,6 +470,17 @@ public sealed partial class PaperSystem : EntitySystem
     {
         _uiSystem.SetUiState(entity.Owner, PaperUiKey.Key, new PaperBoundUserInterfaceState(entity.Comp.Content, entity.Comp.StampedBy, entity.Comp.Mode));
     }
+
+    /// <summary>
+    /// If this paper was signed by the author
+    /// </summary>
+    /// <param name="entity">paper to check for</param>
+    /// <param name="author">author that is searched in the signatures</param>
+    /// <param name="ignoreFakes">wether to ignore fake signatures</param>
+    public bool IsSignedBy(Entity<PaperComponent> entity, string author, bool ignoreFakes = false)
+    {
+        return entity.Comp.StampedBy.Count((k) => (!(k.Fake && !ignoreFakes) && k.Signature && k.StampedName.Trim() == author.Trim())) > 0;
+    }
 }
 
 /// <summary>
@@ -318,3 +495,17 @@ public record struct PaperWriteEvent(EntityUid User, EntityUid Paper);
 /// <param name="paper">The paper that the writing will take place on.</param>
 [ByRefEvent]
 public record struct PaperWriteAttemptEvent(EntityUid Paper, string? FailReason = null, bool Cancelled = false);
+
+/// <summary>
+/// Event fired to get an entity's signature. By default, this is its name.
+/// </summary>
+[ByRefEvent]
+public record struct GetSignatureEvent(EntityUid User, string Signature);
+
+/// <summary>
+/// Used to sign things, after a delay
+/// </summary>
+[Serializable, NetSerializable]
+public sealed partial class SignDoAfterEvent : SimpleDoAfterEvent
+{
+}
