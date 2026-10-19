@@ -331,88 +331,34 @@
     size: Normal
 
 - type: entity
-  parent: BluespaceBeaker
+  parent: [BluespaceBeaker, JugPunctTranex]
   id: BluespaceBeakerPunctTranex
   suffix: punct & tranex
-  components:
-  - type: Label
-    localizedLabel: reagent-name-puncturase-tranexamic
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Puncturase
-        Quantity: 192
-      - ReagentId: TranexamicAcid
-        Quantity: 48
 
 - type: entity
-  parent: BluespaceBeaker
+  parent: [BluespaceBeaker, JugPyraDerma]
   id: BluespaceBeakerPyraDerma
   suffix: pyra & derma
-  components:
-  - type: Label
-    localizedLabel: reagent-name-pyrazine-dermaline
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Pyrazine
-        Quantity: 60
-      - ReagentId: Dermaline
-        Quantity: 180
 
 - type: entity
-  parent: BluespaceBeaker
+  parent: [BluespaceBeaker, JugDexPlusSaline]
   id: BluespaceBeakerDexPlusSaline
   suffix: dex+ & saline
-  components:
-  - type: Label
-    localizedLabel: reagent-name-dexalin-plus-saline
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: DexalinPlus
-        Quantity: 120
-      - ReagentId: Saline
-        Quantity: 120
 
 - type: entity
-  parent: BluespaceBeaker
+  parent: [BluespaceBeaker, JugTrico]
   id: BluespaceBeakerTrico
   suffix: tricordrazine
-  components:
-  - type: Label
-    localizedLabel: reagent-name-tricordrazine
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Tricordrazine
-        Quantity: 240
 
 - type: entity
-  parent: BluespaceBeaker
+  parent: [BluespaceBeaker, JugBlood]
   id: BluespaceBeakerBlood
   suffix: blood
-  components:
-  - type: Label
-    localizedLabel: reagent-name-blood
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Blood
-        Quantity: 240
 
 - type: entity
-  parent: BluespaceBeaker
+  parent: [BluespaceBeaker, JugWater]
   id: BluespaceBeakerWater
   suffix: water
-  components:
-  - type: Label
-    localizedLabel: reagent-name-water
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Water
-        Quantity: 240
 
 - type: entity
   name: dropper
