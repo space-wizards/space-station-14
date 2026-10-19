@@ -18,7 +18,6 @@ public sealed partial class StampWidget : PanelContainer
 
     private StyleBoxTexture _borderTexture;
     private ShaderInstance? _stampShader;
-    private bool _border = true;
 
     public float Orientation
     {
