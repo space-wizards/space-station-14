@@ -96,7 +96,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, GluedEffectAttemptEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, LubedEffectAttemptEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, WaypointerChangedEvent>(RefRelayInventoryEvent);
-        SubscribeLocalEvent<InventoryComponent, GetSignatureEvent>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, GetSignatureEvent>(RefRelayInventoryEvent);
 
         // Eye/vision events
         SubscribeLocalEvent<InventoryComponent, CanSeeAttemptEvent>(RelayInventoryEvent);

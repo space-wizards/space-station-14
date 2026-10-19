@@ -18,6 +18,7 @@ using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.GameStates;
 using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
+using Content.Shared.Inventory;
 
 namespace Content.Shared.Paper;
 
@@ -500,7 +501,10 @@ public record struct PaperWriteAttemptEvent(EntityUid Paper, string? FailReason 
 /// Event fired to get an entity's signature. By default, this is its name.
 /// </summary>
 [ByRefEvent]
-public record struct GetSignatureEvent(EntityUid User, string Signature);
+public record struct GetSignatureEvent(EntityUid User, string Signature) : IInventoryRelayEvent
+{
+    public SlotFlags TargetSlots => SlotFlags.All;
+}
 
 /// <summary>
 /// Used to sign things, after a delay
