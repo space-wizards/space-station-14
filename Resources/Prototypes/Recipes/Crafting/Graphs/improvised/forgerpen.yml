@@ -6,13 +6,13 @@
       edges:
       - to: forgerpen
         steps:
-        - material: CableAPC
+        - material: Cable
           amount: 2
         - tag: PenBase
           name: construction-graph-tag-pen-base
           icon:
             sprite: Objects/Misc/pens.rsi
-            state: icon
+            state: pen
         - tag: SmallAIChip
           name: construction-graph-tag-super-compact-ai-chip
           icon:
