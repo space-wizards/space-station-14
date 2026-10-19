@@ -24,6 +24,7 @@ using Content.Shared.Eye.Blinding;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
+using Robust.Shared.Random;
 
 namespace Content.Client.Medical.Healing;
 
@@ -39,6 +40,7 @@ public sealed partial class ClientHealingSystem : HealingSystem
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private AnimationPlayerSystem _animations = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void PlayHealAnimation(EntityUid uid)
     {
@@ -53,13 +55,59 @@ public sealed partial class ClientHealingSystem : HealingSystem
     ///     being deleted.
     ///     Used when the player picks up an entity.
     /// </summary>
-    public void HealAnimation(EntityUid uid, Color? color = null)
+    public void HealAnimation(EntityUid uid, Color? color = null, int particles = 6)
     {
         color ??= Color.Green;
         if (Deleted(uid))
             return;
 
         var metadata = MetaData(uid);
+
+        for (var i = 0; i < particles; i++)
+        {
+            var coords2 = new MapCoordinates(Transform(uid).Coordinates.Position, Transform(uid).MapID);
+            var spark = Spawn("HealingSparkle", coords2);
+            var animationsSpark = Comp<AnimationPlayerComponent>(spark);
+            if (!TryComp(spark, out SpriteComponent? sparkSprite))
+            {
+                Log.Error("Entity ({0}) couldn't be animated for pickup since it doesn't have a {1}!", metadata.EntityName, nameof(SpriteComponent));
+                return;
+            }
+
+            var curScale = sparkSprite.Scale;
+            var curRot = sparkSprite.Rotation;
+            _animations.Play(new Entity<AnimationPlayerComponent>(spark, animationsSpark),
+                new Animation
+                {
+                    Length = TimeSpan.FromMilliseconds(300),
+                    AnimationTracks =
+                    {
+                        new AnimationTrackComponentProperty
+                        {
+                            ComponentType = typeof(SpriteComponent),
+                            Property = nameof(SpriteComponent.Scale),
+                            InterpolationMode = AnimationInterpolationMode.Linear,
+                            KeyFrames =
+                            {
+                                new KeyFrame(curScale, 0),
+                                new KeyFrame(new Vector2(0.1f, 0.1f), 0.300f),
+                            },
+                        },
+                        new AnimationTrackComponentProperty
+                        {
+                            ComponentType = typeof(SpriteComponent),
+                            Property = nameof(SpriteComponent.Rotation),
+                            InterpolationMode = AnimationInterpolationMode.Linear,
+                            KeyFrames =
+                            {
+                                new KeyFrame(curRot, 0),
+                                new KeyFrame(curRot + new Angle(90), 0.300f),
+                            },
+                        },
+                    },
+                },
+                "heal_scale");
+        }
 
         if (IsPaused(uid, metadata))
             return;
