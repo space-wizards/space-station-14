@@ -1160,7 +1160,20 @@ ClothingOuterWizard: ClothingOuterWizardBlue
 ClothingHeadHatRedwizard: ClothingHeadHatWizardRed
 ClothingHeadHatVioletwizard: ClothingHeadHatWizardViolet
 
-# 2026-09-27
+# 2026-10-07
+computerBodyScanner: ComputerBodyScanner
+filingCabinet: FilingCabinet
+filingCabinetRandom: FilingCabinetRandom
+filingCabinetDrawer: FilingCabinetDrawer
+filingCabinetDrawerRandom: FilingCabinetDrawerRandom
+filingCabinetTall: FilingCabinetTall
+filingCabinetTallRandom: FilingCabinetTallRandom
+hydroponicsSoil: HydroponicsSoil
+hydroponicsTray: HydroponicsTray
+trayScanner: TRayScanner
+voicesensor: VoiceSensor
+
+# 2026-10-20
 ClothingHeadsetQM: ClothingHeadsetAltCargo
 ClothingHeadsetCE: ClothingHeadsetAltEngineering
 ClothingHeadsetCMO: ClothingHeadsetAltMedical

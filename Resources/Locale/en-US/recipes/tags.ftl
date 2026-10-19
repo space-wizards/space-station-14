@@ -51,7 +51,7 @@ construction-graph-tag-modular-receiver = modular receiver
 construction-graph-tag-power-cell-small = small power cell
 construction-graph-tag-power-cell = power cell
 construction-graph-tag-potato-battery = a potato battery
-construction-graph-tag-super-compact-ai-chip = a super-compact AI chip
+construction-graph-tag-super-compact-ai-chip = a makeshift microcontroller
 
 # other
 construction-graph-tag-light-bulb = light bulb

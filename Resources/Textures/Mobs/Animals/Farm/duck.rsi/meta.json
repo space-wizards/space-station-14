@@ -1,0 +1,41 @@
+{
+    "version": 1,
+    "license": "CC0-1.0",
+    "copyright": "Created By https://github.com/Mith-randalf",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon-0"
+        },
+        {
+            "name": "icon-1"
+        },
+        {
+            "name": "icon-2"
+        },
+        {
+            "name": "duck-0",
+            "directions": 4
+        },
+        {
+            "name": "duck-1",
+            "directions": 4
+        },
+        {
+            "name": "duck-2",
+            "directions": 4
+        },
+        {
+            "name": "dead-0"
+        },
+        {
+            "name": "dead-1"
+        },
+        {
+            "name": "dead-2"
+        }
+    ]
+}
