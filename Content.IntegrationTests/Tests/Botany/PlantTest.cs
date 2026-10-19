@@ -20,9 +20,9 @@ namespace Content.IntegrationTests.Tests.Botany;
 [TestFixture]
 public sealed class PlantTest : GameTest
 {
-    private const string BotanistGloves = "ClothingHandsGlovesLeather";
-    private const string Hatchet = "HydroponicsToolHatchet";
-    private const string Human = "MobHuman";
+    private readonly EntProtoId _botanistGloves = "ClothingHandsGlovesLeather";
+    private readonly EntProtoId _hatchet = "HydroponicsToolHatchet";
+    private readonly EntProtoId _human = "MobHuman";
 
     public override PoolSettings PoolSettings => new() { Connected = false };
 
@@ -51,9 +51,9 @@ public sealed class PlantTest : GameTest
         var interaction = Server.System<SharedInteractionSystem>();
         var inventory = Server.System<InventorySystem>();
 
-        var botanist = entityManager.SpawnEntity(Human, map.GridCoords);
-        var gloves = entityManager.SpawnEntity(BotanistGloves, map.GridCoords);
-        var hatchet = entityManager.SpawnEntity(Hatchet, map.GridCoords);
+        var botanist = entityManager.SpawnEntity(_human, map.GridCoords);
+        var gloves = entityManager.SpawnEntity(_botanistGloves, map.GridCoords);
+        var hatchet = entityManager.SpawnEntity(_hatchet, map.GridCoords);
 
         inventory.TryEquip(botanist, gloves, "gloves");
         hands.TryPickupAnyHand(botanist, hatchet);
@@ -96,7 +96,7 @@ public sealed class PlantTest : GameTest
         var entityManager = Server.EntMan;
         var componentFactory = Server.ResolveDependency<IComponentFactory>();
         var interaction = Server.System<SharedInteractionSystem>();
-        var botanist = entityManager.SpawnEntity(Human, map.GridCoords);
+        var botanist = entityManager.SpawnEntity(_human, map.GridCoords);
         var seeds = GetSeedPrototypes()
                         .Where(seed =>
                         {
