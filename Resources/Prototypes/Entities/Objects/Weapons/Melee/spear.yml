@@ -113,6 +113,8 @@
     inHandsMaxFillLevels: 1
     equippedFillBaseName: -fill-
     equippedMaxFillLevels: 1
+  - type: ThrowVelocityModifier
+    velocityMultiplier: 1.4
 
 - type: entity
   name: reinforced spear
