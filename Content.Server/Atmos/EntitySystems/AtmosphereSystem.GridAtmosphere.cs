@@ -267,33 +267,30 @@ public sealed partial class AtmosphereSystem
     /// <summary>
     /// Takes the gas from this tile volume and shoves it into adjacent tiles, then deletes this tile's air
     /// </summary>
+    /// <param name="grid">Grid that this tile atmosphere exists on, needed for shunting</param>
     /// <param name="tile">Tile we are shunting the air from.</param>
-    private void ShuntTileVolume(TileAtmosphere tile)
+    private void ShuntTileVolume(Entity<GridAtmosphereComponent> grid, TileAtmosphere tile)
     {
         DebugTools.AssertNotNull(tile.Air);
         DebugTools.Assert(tile.Air?.Immutable == false);
 
         var count = 0;
-        foreach (var adj in tile.AdjacentTiles)
+        var query = GetAdjacentTileMixtures(grid.AsNullable(), tile.GridIndices);
+        var adjacent = new GasMixture[query.Tiles.Length];
+        while (query.MoveNext(out var adj))
         {
-            if (adj?.Air != null)
-                count++;
+            adjacent[count++] = adj;
         }
 
         if (count > 0)
         {
-            var ratio = 1f / count;
+            var ratio = 1 / count;
 
-            // Remove a ratio from this gas mixture.
             var mix = tile.Air.RemoveRatio(ratio);
 
-            foreach (var adj in tile.AdjacentTiles)
+            foreach (var adj in adjacent)
             {
-                if (adj?.Air == null)
-                    continue;
-
-                // And merge it to the new tile air.
-                Merge(adj.Air, mix);
+                Merge(adj, mix);
             }
         }
 
