@@ -21,4 +21,3 @@ public sealed class PlaceableDeconstruction : InteractionTest
     }
 }
 
-a
