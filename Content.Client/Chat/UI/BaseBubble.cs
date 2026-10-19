@@ -66,7 +66,7 @@ public abstract partial class BaseBubble : Control
             baseOffset = speech.SpeechBubbleOffset;
 
         var offset = (-EyeManager.CurrentEye.Rotation).ToWorldVec() * -(EntityVerticalOffset + baseOffset);
-        var worldPos = TransformSystem.GetRenderWorldPosition((SenderEntity, xform)) + offset;
+        var worldPos = TransformSystem.GetWorldPosition(xform) + offset;
 
         var lowerCenter = EyeManager.WorldToScreen(worldPos) / UIScale;
         var screenPos = lowerCenter - new Vector2(ContentSize.X / 2, ContentSize.Y + VerticalOffsetAchieved);

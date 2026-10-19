@@ -1,0 +1,31 @@
+<Document>
+  # Civilian
+
+  Members of the crew without formal jobs are grouped into this informal "department". Unlike other members of the crew, civilians have [color=cyan]no explicit responsibilities.[/color] This generally means they can spend their time on the station however they choose, provided they don't make life harder for everyone else.
+
+  ## Personnel
+  [color=#7f7f7f]Civilian[/color] crew is largely comprised of Passengers, though Visitors to the station are also considered civilians. While there's no "department head" for the Civilian department, civilians are typically expected to listen to directions from Command staff in general.
+
+  <Box>
+    <GuideEntityEmbed Entity="ToyFigurinePassenger" Caption="Passenger"/>
+  </Box>
+
+  ## Killing Time
+
+  Without any explicit responsibilities, some civilians can find themselves feeling bored and directionless. The following are some suggested ways to kill time.
+
+  [bullet/]Exploring the station's maintenance shafts
+
+  [bullet/]Striking up conversations in the bar
+
+  [bullet/]Doing odd jobs for other departments
+
+  [bullet/]Renovating public areas of the station
+
+  [bullet/]Asking Cargo to buy toys for you
+
+  [bullet/]Watching whatever antics the Clown and/or Mime get up to
+
+  If all else fails, you can always flag down a member of Command and ask for an actual job.
+
+</Document>

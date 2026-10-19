@@ -12,35 +12,30 @@ public sealed partial class PrayableComponent : Component
     /// <summary>
     /// If bible users are only allowed to use this prayable entity
     /// </summary>
-    [DataField("bibleUserOnly")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool BibleUserOnly;
 
     /// <summary>
     /// Message given to user to notify them a message was sent
     /// </summary>
-    [DataField("sentMessage")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public string SentMessage = "prayer-popup-notify-pray-sent";
+    [DataField]
+    public LocId SentMessage = "prayer-popup-notify-pray-sent";
 
     /// <summary>
     /// Prefix used in the notification to admins
     /// </summary>
-    [DataField("notificationPrefix")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public string NotificationPrefix = "prayer-chat-notify-pray";
+    [DataField]
+    public LocId NotificationPrefix = "prayer-chat-notify-pray";
 
     /// <summary>
     /// Used in window title and context menu
     /// </summary>
-    [DataField("verb")]
-    [ViewVariables(VVAccess.ReadOnly)]
-    public string Verb = "prayer-verbs-pray";
+    [DataField]
+    public LocId Verb = "prayer-verbs-pray";
 
     /// <summary>
     /// Context menu image
     /// </summary>
-    [DataField("verbImage")]
-    [ViewVariables(VVAccess.ReadOnly)]
-    public SpriteSpecifier? VerbImage = new SpriteSpecifier.Texture(new ("/Textures/Interface/pray.svg.png"));
+    [DataField]
+    public SpriteSpecifier? VerbImage = new SpriteSpecifier.Texture(new("/Textures/Interface/pray.svg.png"));
 }

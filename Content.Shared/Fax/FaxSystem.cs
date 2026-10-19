@@ -595,7 +595,7 @@ public abstract partial class FaxSystem : EntitySystem
             _paperSystem.AddContent(sent.Value, content);
         }
 
-        var payload = new FaxPayload(GetNetEntity(sent.Value));
+        var payload = new FaxPayload(GetNetEntity(sent.Value), fax.Comp.Name);
 
         _deviceNetwork.SendPacket(fax.Owner, fax.Comp.DestinationAddress, ref payload);
 
