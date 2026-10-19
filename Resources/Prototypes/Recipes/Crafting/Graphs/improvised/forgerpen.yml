@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: forgerpen
+  id: ForgerPen
   start: start
   graph:
     - node: start
