@@ -275,15 +275,18 @@ public sealed partial class AtmosphereSystem
         DebugTools.Assert(tile.Air?.Immutable == false);
 
         var count = 0;
-        var adjacent = new GasMixture[Atmospherics.Directions];
+        var adjacent = new List<GasMixture>(Atmospherics.Directions);
         for (var j = 0; j < Atmospherics.Directions; j++)
         {
             var direction = (AtmosDirection)(1 << j);
             var offset = tile.GridIndices.Offset(direction);
-            if (grid.Comp.Tiles.GetValueOrDefault(offset)?.Air is not { } adj)
+            if (grid.Comp.Tiles.GetValueOrDefault(offset)is not { } adj
+                || adj.AirtightData.BlockedDirections.HasFlag(direction.GetOpposite())
+                || adj.Air is not { } air)
                 continue;
 
-            adjacent[count++] = adj;
+            adjacent.Add(air);
+            count++;
         }
 
         if (count > 0)
