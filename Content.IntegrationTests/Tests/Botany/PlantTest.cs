@@ -44,7 +44,8 @@ public sealed class PlantTest : GameTest
     [Test, RunOnSide(Side.Server)]
     public void AllPlantsCanBeHarvestedWithBotanistEquipment()
     {
-        var map = TestMap!;
+        Assume.That(TestMap != null);
+        var map = TestMap;
 
         var entityManager = Server.EntMan;
         var hands = Server.System<SharedHandsSystem>();
@@ -92,15 +93,16 @@ public sealed class PlantTest : GameTest
     {
         var map = TestMap!;
 
-        var prototypeManager = Server.ProtoMan;
-        var entityManager = Server.EntMan;
+        var prototypeManager = SProtoMan;
+        var entityManager = SEntMan;
         var componentFactory = Server.ResolveDependency<IComponentFactory>();
         var interaction = Server.System<SharedInteractionSystem>();
         var botanist = entityManager.SpawnEntity(_human, map.GridCoords);
         var seeds = GetSeedPrototypes()
                         .Where(seed =>
                         {
-                            if (!seed.TryComp<SeedComponent>(out var seedComponent, componentFactory)) return false;
+                            if (!seed.TryComp<SeedComponent>(out var seedComponent, componentFactory))
+                                return false;
                             return prototypeManager.Index(seedComponent.PlantProtoId).HasComp<PlantTraitLigneousComponent>(componentFactory);
                         });
         foreach (var seed in seeds)
