@@ -30,6 +30,13 @@ public sealed partial class LightBulbComponent : Component
     public LightBulbState State = LightBulbState.Normal;
 
     /// <summary>
+    /// The localized short name of the light. Used for the status control of the light replacer.
+    /// </summary>
+    /// <example>An orange light tube uses "orange" as its short name.</example>
+    [DataField]
+    public LocId? ShortName;
+
+    /// <summary>
     /// The temperature the air around the lightbulb is exposed to when the lightbulb burns out.
     /// </summary>
     [DataField("BurningTemperature")]

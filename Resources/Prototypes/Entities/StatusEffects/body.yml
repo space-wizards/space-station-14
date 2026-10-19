@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: MobStatusEffectBase
   id: BloodstreamStatusEffectBase
   abstract: true
@@ -67,6 +67,9 @@
   - type: IgnoreSlowOnDamage
   - type: StatusEffectAlert
     alert: Adrenaline
+  - type: ExaminableStatusEffect
+    messageId: status-effect-examine-adrenaline
+    requiresConciousness: true
 
 - type: entity
   parent: MobStatusEffectBase
@@ -90,3 +93,11 @@
   components:
   - type: StaminaModifierStatusEffect
     modifier: 1.5
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectNightVision
+  name: Night Vision
+  components:
+    - type: NightVision
+      relayOverlay: True

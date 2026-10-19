@@ -119,9 +119,11 @@
         Caustic: 0.5
   - type: GroupExamine
   - type: StealTarget
-    stealGroup: ClothingOuterHardsuitVoidParamed
+    stealGroup:
+    - ClothingOuterHardsuitVoidParamed
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetVoidParamed
+  - type: ItemToggleExaminableStatus
   - type: ItemToggle
     onUse: false
     soundActivate:
@@ -143,7 +145,7 @@
     radius: 2
     energy: 2
     color: blue
-    mask: /Textures/Effects/LightMasks/double_cone.png
+    lightMask: ConeDouble
   - type: RotatingLight
     speed: 360
   - type: Tag

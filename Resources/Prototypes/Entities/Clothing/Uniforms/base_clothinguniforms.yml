@@ -38,7 +38,6 @@
     slots: [innerclothing]
     femaleMask: UniformTop
 
-
 - type: entity
   abstract: true
   parent: UnsensoredClothingUniformBase
@@ -49,9 +48,10 @@
     deviceNetId: Wireless
     transmitFrequencyId: SuitSensor
     savableAddress: false
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 1200
   - type: StationLimitedNetwork
+  - type: StationTracker
 
 - type: entity
   abstract: true
@@ -68,7 +68,7 @@
   components:
   - type: Foldable
     canFoldInsideContainer: true
-    unfoldVerbText: unfold-verb-clothing-jacket
-    foldVerbText: fold-verb-clothing-jacket
+    unfoldVerbText: fold-zip-verb
+    foldVerbText: fold-unzip-verb
   - type: FoldableClothing
     foldedEquippedPrefix: folded

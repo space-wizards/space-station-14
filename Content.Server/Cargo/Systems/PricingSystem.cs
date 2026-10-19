@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Server.Cargo.Components;
 using Content.Shared.Administration;
 using Content.Shared.Cargo;

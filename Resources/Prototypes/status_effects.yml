@@ -1,4 +1,4 @@
-﻿# Status effect prototypes.
+# Status effect prototypes.
 # Holds no actual logic, just some basic data about the effect.
 
 # Note: We have a new status effect system that needs all of these status effects to be fully ported to.
@@ -25,10 +25,7 @@
   id: Drunk
 
 - type: statusEffect
-  id: SlurredSpeech
-
-- type: statusEffect
-  id: PressureImmunity
+  id: SlurredSpeechr
 
 - type: statusEffect
   id: Corporeal
