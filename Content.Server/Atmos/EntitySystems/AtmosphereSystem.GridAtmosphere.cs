@@ -274,7 +274,6 @@ public sealed partial class AtmosphereSystem
         DebugTools.AssertNotNull(tile.Air);
         DebugTools.Assert(tile.Air?.Immutable == false);
 
-        var count = 0;
         var adjacent = new List<GasMixture>(Atmospherics.Directions);
         for (var j = 0; j < Atmospherics.Directions; j++)
         {
@@ -286,12 +285,11 @@ public sealed partial class AtmosphereSystem
                 continue;
 
             adjacent.Add(air);
-            count++;
         }
 
-        if (count > 0)
+        if (adjacent.Count > 0)
         {
-            var ratio = 1 / count;
+            var ratio = 1 / adjacent.Count;
 
             var mix = tile.Air.RemoveRatio(ratio);
 
