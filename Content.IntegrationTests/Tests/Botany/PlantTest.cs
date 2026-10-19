@@ -34,10 +34,10 @@ public sealed class PlantTest : GameTest
         await Server.WaitPost(() =>
         {
             var atmosphere = Server.System<AtmosphereSystem>();
-            var moles = new float[Atmospherics.AdjustedNumberOfGases];
-            moles[(int)Gas.Oxygen] = 21.824779f;
-            moles[(int)Gas.Nitrogen] = 82.10312f;
-            atmosphere.SetMapAtmosphere(map.MapUid, false, new GasMixture(moles, Atmospherics.T20C));
+            var mixture = new GasMixture(Atmospherics.CellVolume) { Temperature = Atmospherics.T20C };
+            mixture.AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesStandard);
+            mixture.AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesStandard);
+            atmosphere.SetMapAtmosphere(map.MapUid, false, mixture);
         });
     }
 
