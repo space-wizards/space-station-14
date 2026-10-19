@@ -2855,7 +2855,7 @@
       - ReagentId: Nutriment
         Quantity: 5
       - ReagentId: Vitamin
-        Quantity: 10
+        Quantity: 5
       - ReagentId: SolarOil
         Quantity: 15
   - type: Sprite
@@ -2910,7 +2910,7 @@
       - ReagentId: Nutriment
         Quantity: 5
       - ReagentId: Vitamin
-        Quantity: 10
+        Quantity: 5
       - ReagentId: Nyctalon
         Quantity: 15
   - type: Sprite
