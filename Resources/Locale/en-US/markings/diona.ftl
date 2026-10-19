@@ -36,11 +36,11 @@ marking-DionaFicusHead-ficus = Diona Ficus (Leafs)
 marking-DionaFicusHead = Diona Ficus (Leafs)
 
 marking-DionaGarlandHead-garland_leaves = Leaves
-marking-DionaGarlandHead-flowers = Flowers
+marking-DionaGarlandHead-garland_flowers = Flowers
 marking-DionaGarlandHead = Diona Garland (Flowers)
 
-marking-DionaKingHead-king-flower = Flower
-marking-DionaKingHead-king-leaves = Leaves
+marking-DionaKingHead-king_flower = Flower
+marking-DionaKingHead-king_leaves = Leaves
 marking-DionaKingHead = Diona Flowerking (Flower)
 
 marking-DionaLaurelHead-laurel = Diona Laurel (Leafs)
@@ -93,8 +93,8 @@ marking-DionaVinelHead-vinel_vines = Vines
 marking-DionaVinelHead-vinel_leaves = Leaves
 marking-DionaVinelHead = Diona Vines Long (Vines)
 
-marking-DionaVinelHead-vines_vines = Vines
-marking-DionaVinelHead-vines_leaves = Leaves
+marking-DionaVinesHead-vines_vines = Vines
+marking-DionaVinesHead-vines_leaves = Leaves
 marking-DionaVinesHead = Diona Vines Short (Vines)
 
 marking-DionaWildflowerHead-wildflower_flowers = Flowers
