@@ -34,11 +34,11 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
-            min: 1
-            max: 5
+            min: 5
+            max: 10
   - type: PhysicalComposition
     materialComposition:
-      Steel: 250
+      Steel: 1000
   - type: ExaminableSolution
     solution: tank
     exactVolume: true
@@ -72,7 +72,15 @@
   - type: ToolRefinable
     refineResult:
     - id: SheetSteel1
-      amount: 5
+      amount: 10
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 7
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 5
 
 - type: entity
   parent: BaseBarrelChem
