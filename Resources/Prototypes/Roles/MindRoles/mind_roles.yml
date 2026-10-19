@@ -205,6 +205,16 @@
   - type: MindRole
     roleType: SoloAntagonist
 
+# Not a MindRoleNukeops child on purpose, NukeopsRole is what counts towards the war declaration minimum
+- type: entity
+  parent: MindRoleGhostRoleTeamAntagonist
+  id: MindRoleNukeopsReinforcement
+  name: Nukeops Reinforcement Role
+  components:
+  - type: MindRole
+    antagPrototype: Nukeops
+    subtype: role-subtype-nukie
+
 # Revolutionaries
 - type: entity
   parent: BaseMindRoleAntag
