@@ -1,19 +1,24 @@
 using Content.Server.StationEvents.Components;
 using Content.Shared.AlertLevel;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.Station.Components;
 
 namespace Content.Server.StationEvents.Events;
 
+/// <summary>
+/// Handler for events setting the station alert level.
+/// </summary>
+/// <seealso cref="AlertLevelInterceptionRuleComponent"/>
 public sealed partial class AlertLevelInterceptionRule : StationEventSystem<AlertLevelInterceptionRuleComponent>
 {
     [Dependency] private AlertLevelSystem _alertLevel = default!;
 
-    protected override void Started(EntityUid uid, AlertLevelInterceptionRuleComponent component, GameRuleComponent gameRule,
-        GameRuleStartedEvent args)
+    protected override void Started(Entity<AlertLevelInterceptionRuleComponent, GameRuleComponent> ent,
+        ref GameRuleStartedEvent args)
     {
-        base.Started(uid, component, gameRule, args);
+        base.Started(ent, ref args);
 
-        if (!Station.TryGetRandomStation(out var chosenStation))
+        if (!Station.TryGetRandomStation<StationEventEligibleComponent>(out var chosenStation))
             return;
 
         if (!_alertLevel.TryGetLevel(chosenStation.Value.Owner, out var level)
@@ -22,7 +27,7 @@ public sealed partial class AlertLevelInterceptionRule : StationEventSystem<Aler
             return;
 
         _alertLevel.SetLevel(chosenStation.Value.Owner,
-            component.AlertLevel,
+            ent.Comp1.AlertLevel,
             force: true);
     }
 }

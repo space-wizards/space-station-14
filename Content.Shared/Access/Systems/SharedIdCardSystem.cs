@@ -22,6 +22,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedAccessSystem _access = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private IdentitySystem _identity = default!;
     [Dependency] private InventorySystem _inventorySystem = default!;
     [Dependency] private MetaDataSystem _metaSystem = default!;
     [Dependency] private SharedJobStatusSystem _jobStatus = default!;
@@ -129,6 +130,21 @@ public abstract partial class SharedIdCardSystem : EntitySystem
     }
 
     /// <summary>
+    /// Gets the entity wearing/holding the given ID card, either directly or through a PDA.
+    /// If nobody is holding it, this is whatever the card or its PDA is parented to.
+    /// </summary>
+    public EntityUid GetIdHolder(EntityUid idCard)
+    {
+        var holder = Transform(idCard).ParentUid;
+
+        // ID is inside a PDA, ascend to whoever is wearing/holding the PDA.
+        if (HasComp<PdaComponent>(holder))
+            holder = Transform(holder).ParentUid;
+
+        return holder;
+    }
+
+    /// <summary>
     /// Attempts to change the job title of a card.
     /// Returns true/false.
     /// </summary>
@@ -159,6 +175,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
         id.LocalizedJobTitle = jobTitle;
         Dirty(uid, id);
         UpdateEntityName(uid, id);
+        _identity.QueueIdentityUpdate(GetIdHolder(uid));
 
         if (player != null)
         {
@@ -255,6 +272,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
         id.FullName = fullName;
         Dirty(uid, id);
         UpdateEntityName(uid, id);
+        _identity.QueueIdentityUpdate(GetIdHolder(uid));
 
         if (player != null)
         {

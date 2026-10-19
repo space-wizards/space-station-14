@@ -6,7 +6,7 @@ namespace Content.Shared.Botany.Components;
 /// <summary>
 /// Component for atmospheric-related requirements for proper plant growth.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true, raiseAfterAutoHandleState: true)]
 [Access(typeof(SharedPlantAtmosphericSystem))]
 public sealed partial class PlantAtmosphericComponent : Component
 {

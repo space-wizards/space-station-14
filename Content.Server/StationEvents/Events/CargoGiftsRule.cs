@@ -9,6 +9,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.StationEvents.Events;
 
+/// <summary>
+/// Handler for events that place cargo orders on the station.
+/// </summary>
+/// <seealso cref="CargoGiftsRuleComponent"/>
 public sealed partial class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
 {
     [Dependency] private CargoSystem _cargoSystem = default!;
@@ -46,7 +50,7 @@ public sealed partial class CargoGiftsRule : StationEventSystem<CargoGiftsRuleCo
 
         component.TimeUntilNextGifts += 30f;
 
-        if (!Station.TryGetRandomStation(out var station, HasComp<StationCargoOrderDatabaseComponent>) ||
+        if (!Station.TryGetRandomStation<StationEventEligibleComponent>(out var station, HasComp<StationCargoOrderDatabaseComponent>) ||
                 !TryComp<StationDataComponent>(station, out var stationData))
             return;
 

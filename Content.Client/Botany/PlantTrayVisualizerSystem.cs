@@ -10,6 +10,7 @@ public sealed partial class PlantTrayVisualizerSystem : VisualizerSystem<PlantTr
 {
     [Dependency] private PlantTraySystem _plantTray = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
 
     /// <summary>
     /// Defers appearance writes until after network state application and deduplicates multiple state events per frame.
@@ -49,6 +50,9 @@ public sealed partial class PlantTrayVisualizerSystem : VisualizerSystem<PlantTr
     {
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
+
+        if (_ui.TryGetOpenUi(ent.Owner, PlantTrayUiKey.Key, out var bui))
+            bui.Update();
 
         if (!ent.Comp.DrawWarnings)
             return;

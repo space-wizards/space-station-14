@@ -27,6 +27,7 @@ public sealed partial class RatKingSystem : SharedRatKingSystem
     [Dependency] private HTNSystem _htn = default!;
     [Dependency] private SatiationSystem _satiation = default!;
     [Dependency] private NPCSystem _npc = default!;
+    [Dependency] private NPCPointCommandSystem _pointCommands = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private IRobustRandom _random = default!;
 
@@ -96,10 +97,7 @@ public sealed partial class RatKingSystem : SharedRatKingSystem
         if (ent.Comp.CurrentOrder != RatKingOrderType.CheeseEm)
             return;
 
-        foreach (var servant in ent.Comp.Servants)
-        {
-            _npc.SetBlackboard(servant, NPCBlackboard.CurrentOrderedTarget, args.Pointed);
-        }
+        _pointCommands.CommandFollowers(ent.Comp.Servants, args.Pointed);
     }
 
     protected override void UpdateServantNpc(EntityUid uid, RatKingOrderType orderType)

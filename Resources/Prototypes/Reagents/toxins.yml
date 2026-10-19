@@ -710,12 +710,12 @@
           inverted: true
         damage:
           types:
-            Poison: 1.6
+            Poison: 0.6 # A 10u spider bite will deal 30 poison damage
       - !type:MovementSpeedModifier
         conditions:
         - !type:ReagentCondition
           reagent: Mechanotoxin
-          min: 2
+          min: 9 # 5 seconds of 20% slow
         - !type:MetabolizerTypeCondition
           type: [Arachnid]
           inverted: true
@@ -725,12 +725,14 @@
         conditions:
         - !type:ReagentCondition
           reagent: Mechanotoxin
-          min: 4
+          min: 9.5 # A spider bite that injects 10u will cause ~3 seconds of 80% slowdown then another 2 seconds of 20% slowdown (additive 20% slow plus 60% slow)
         - !type:MetabolizerTypeCondition
           type: [Arachnid]
           inverted: true
         walkSpeedModifier: 0.4
         sprintSpeedModifier: 0.4
+      - !type:ModifyBleed # thickens the blood, preventing venom from being excreted into blood puddles by bleeding from pierce damage injection.
+        amount: -0.25
 
 - type: reagent
   id: ToxinTrash
@@ -761,12 +763,30 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectHemorrhage
-        time: 21 # 7 bleed ticks, you bleed every 3 seconds by default.
-        type: Update
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1.5 # TODO: Remove when bloodloss is more interesting. This is basically meant to give a bit more strength short-term before bloodloss damage kicks in.
       - !type:ModifyBleed
-        amount: 0.5
+        amount: 1
+      - !type:ModifyBloodLevel
+        amount: -5
+      - !type:ModifyBloodLevel
+        amount: -5
+        conditions:
+        - !type:BloodLevelCondition
+          min: 0.5 # Stronger when at least 50% blood
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        messages:
+        - hemorrhinol-effect-1
+        - hemorrhinol-effect-2
+        - hemorrhinol-effect-3
+        - hemorrhinol-effect-4
+        probability: 0.1
+      - !type:Jitter
+        probability: 0.25
 
 - type: reagent
   id: Hivarol
