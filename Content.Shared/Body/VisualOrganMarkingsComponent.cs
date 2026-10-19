@@ -59,7 +59,7 @@ public sealed partial class VisualOrganMarkingsComponent : Component
 [Serializable, NetSerializable]
 public partial record struct OrganMarkingData
 {
-    [DataField(required: true)]
+    [DataField(required: true), AlwaysPushInheritance]
     public HashSet<HumanoidVisualLayers> Layers = default!;
 
     /// <summary>
