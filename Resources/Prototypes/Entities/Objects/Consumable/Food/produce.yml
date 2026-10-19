@@ -2872,7 +2872,7 @@
       shader: unshaded
   - type: Item
     sprite: Objects/Specific/Hydroponics/solarflower.rsi
-    heldPrefix: produce
+    heldPrefix: unlit
   - type: Produce
     plantId: SolarflowerPlants
   - type: FoodSequenceElement
