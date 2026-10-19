@@ -235,12 +235,22 @@
   - type: EmitSoundOnUse
     sound:
       collection: BikeHorn
+  - type: EmitSoundOnLand
+    sound:
+      collection: BikeHorn
   - type: EmitSoundOnActivate
     sound:
       collection: BikeHorn
   - type: EmitSoundOnTrigger
     sound:
       collection: BikeHorn
+  - type: Edible
+    useSound:
+      collection: BikeHorn
+  - type: MeleeWeapon
+    soundHit:
+      collection: BikeHorn
+
   - type: Item
     sprite: Objects/Fun/plushielizard_jobs/clown.rsi
   - type: Clothing
