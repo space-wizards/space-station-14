@@ -40,7 +40,7 @@
       - Welder
       - PowerCell
       - Geiger
-      - TrayScanner
+      - TRayScanner
       - GasAnalyzer
       - HandLabeler
   - type: ItemMapper
@@ -145,7 +145,7 @@
       - Crowbar
       - Powerdrill
       components:
-      - TrayScanner
+      - TRayScanner
       - SprayPainter
       - SprayPainterAmmo
   - type: ItemMapper
