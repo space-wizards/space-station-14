@@ -191,7 +191,7 @@
   parent: AmmoProviderShotgunShell
   id: BoxShellSilver
   name: ammunition box (.50 silver)
-  description: A cardboard box of .50 shotgun shells. Intended to hold holy ammunition.
+  description: A cardboard box of .50 shotgun shells. Intended to hold blessed silver ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: ShellSilver
