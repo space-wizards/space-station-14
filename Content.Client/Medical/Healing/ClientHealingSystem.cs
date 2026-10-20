@@ -63,9 +63,19 @@ public sealed partial class ClientHealingSystem : HealingSystem
 
         var metadata = MetaData(uid);
 
+        if (!TryComp(uid, out SpriteComponent? sprite0))
+        {
+            Log.Error("Entity ({0}) couldn't be animated for pickup since it doesn't have a {1}!", metadata.EntityName, nameof(SpriteComponent));
+            return;
+        }
+
         for (var i = 0; i < particles; i++)
         {
-            var coords2 = new MapCoordinates(Transform(uid).Coordinates.Position, Transform(uid).MapID);
+            var spriteBounds = _sprite.GetLocalBounds((uid, sprite0));
+            var offset = new Vector2(_random.NextFloat(spriteBounds.Size.X), _random.NextFloat(spriteBounds.Size.Y));
+            var coords = Transform(uid).Coordinates + new EntityCoordinates(uid, offset);
+            var coords = new EntityCoordinates(uid, Transform(uid).Coordinates.Position + offset);
+            var coords2 = _xform.ToMapCoordinates(coords);
             var spark = Spawn("HealingSparkle", coords2);
             var animationsSpark = Comp<AnimationPlayerComponent>(spark);
             if (!TryComp(spark, out SpriteComponent? sparkSprite))
@@ -79,7 +89,7 @@ public sealed partial class ClientHealingSystem : HealingSystem
             _animations.Play(new Entity<AnimationPlayerComponent>(spark, animationsSpark),
                 new Animation
                 {
-                    Length = TimeSpan.FromMilliseconds(300),
+                    Length = TimeSpan.FromSeconds(1),
                     AnimationTracks =
                     {
                         new AnimationTrackComponentProperty
@@ -90,7 +100,7 @@ public sealed partial class ClientHealingSystem : HealingSystem
                             KeyFrames =
                             {
                                 new KeyFrame(curScale, 0),
-                                new KeyFrame(new Vector2(0.1f, 0.1f), 0.300f),
+                                new KeyFrame(new Vector2(0.75f, 0.75f), 1f),
                             },
                         },
                         new AnimationTrackComponentProperty
@@ -101,7 +111,7 @@ public sealed partial class ClientHealingSystem : HealingSystem
                             KeyFrames =
                             {
                                 new KeyFrame(curRot, 0),
-                                new KeyFrame(curRot + new Angle(90), 0.300f),
+                                new KeyFrame(curRot + new Angle(90), 1f),
                             },
                         },
                     },
@@ -111,12 +121,6 @@ public sealed partial class ClientHealingSystem : HealingSystem
 
         if (IsPaused(uid, metadata))
             return;
-
-        if (!TryComp(uid, out SpriteComponent? sprite0))
-        {
-            Log.Error("Entity ({0}) couldn't be animated for pickup since it doesn't have a {1}!", metadata.EntityName, nameof(SpriteComponent));
-            return;
-        }
 
         var animations = Comp<AnimationPlayerComponent>(uid);
         var curColor = sprite0.Color;
