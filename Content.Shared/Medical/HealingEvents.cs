@@ -9,12 +9,7 @@ public sealed partial class HealingEvents : SimpleDoAfterEvent
 }
 
 [Serializable, NetSerializable]
-public sealed partial class HealingAnimationEvent : EntityEventArgs
+public sealed partial class HealingAnimationEvent(NetEntity target) : EntityEventArgs
 {
-    public readonly NetEntity Target;
-
-    public HealingAnimationEvent(NetEntity target)
-    {
-        Target = target;
-    }
+    public readonly NetEntity Target = target;
 }

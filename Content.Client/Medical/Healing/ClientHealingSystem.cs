@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Medical;
 using Content.Shared.Medical.Healing;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -17,6 +18,12 @@ public sealed partial class ClientHealingSystem : HealingSystem
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private AnimationPlayerSystem _animations = default!;
     [Dependency] private IRobustRandom _random = default!;
+
+    [SubscribeNetworkEvent]
+    private void HandlePickupAnimation(HealingAnimationEvent msg)
+    {
+        HealAnimation(GetEntity(msg.Target));
+    }
 
     /// <inheritdoc/>
     public override void PlayHealAnimation(EntityUid target, EntityUid? user = null)
