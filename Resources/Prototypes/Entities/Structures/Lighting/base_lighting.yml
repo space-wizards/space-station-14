@@ -18,6 +18,7 @@
         collection: GlassSmash
   - type: Transform
     anchored: true
+  - type: Pullable
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
@@ -125,7 +126,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: SmartLight
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 200
   - type: DeviceLinkSink
     ports:
@@ -323,7 +324,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: SmartLight
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 200
   - type: Appearance
   - type: PoweredLightVisuals

@@ -86,7 +86,7 @@ reagent-name-toxintrash = reprocessed material
 reagent-desc-toxintrash = An awful-smelling slurry efficiently refined from discarded matter. It represents a perfect, zero-waste conversion of salvage into Vox sustenance, though it is a violent poison to others.
 
 reagent-name-hemorrhinol = hemorrhinol
-reagent-desc-hemorrhinol = A toxin that causes severe damage to blood vessels, causing rapid bleeding.
+reagent-desc-hemorrhinol = A close cousin of Lexorin. Specifically targets and destroys blood cells, causing rapid blood loss.
 
 reagent-name-hivarol = hivarol
 reagent-desc-hivarol = A toxin that attacks specific types of cells in the body, damaging hivemind communication and causing severe pain if one is present.
