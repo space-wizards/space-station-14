@@ -69,7 +69,7 @@
   - node: finish
     entity: !type:BoardNodeEntity { container: board }
     actions:
-    - !type:AddContainer
+    - !type:AddConstructionContainer
       container: board
     edges:
     - to: board

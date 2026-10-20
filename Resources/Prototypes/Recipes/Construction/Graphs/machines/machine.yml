@@ -45,9 +45,9 @@
     - node: machineFrame
       entity: MachineFrame
       actions:
-        - !type:AddContainer
+        - !type:AddConstructionContainer
           container: machine_parts
-        - !type:AddContainer
+        - !type:AddConstructionContainer
           container: machine_board
         - !type:MachineFrameRegenerateProgress
       edges:
