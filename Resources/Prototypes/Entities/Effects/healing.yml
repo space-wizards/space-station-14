@@ -11,8 +11,7 @@
     anchored: true
   - type: Sprite
     layers:
-    - sprite: Fluids/wet_floor_sparkles.rsi
-      state: sparkles
+    - sprite: Effects/healing.rsi
+      state: healing
     drawdepth: Effects
-    color: "#FFFFFF80"
   - type: AnimationPlayer
