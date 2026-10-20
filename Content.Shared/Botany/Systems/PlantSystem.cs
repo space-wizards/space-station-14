@@ -6,6 +6,7 @@ using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
 using Robust.Shared.Random;
+
 namespace Content.Shared.Botany.Systems;
 
 /// <summary>
