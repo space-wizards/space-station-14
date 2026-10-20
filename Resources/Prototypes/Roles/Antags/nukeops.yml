@@ -193,8 +193,8 @@
     - PinpointerSyndicateNuclear
     - CombatMedipen
     - DeathAcidifierImplanter
+    - RedspaceBeaker # Nem said this yaml doesnt support counts so im listing it twice
     - RedspaceBeaker
-    count: 2
 
 - type: chameleonOutfit
   id: NukeopsMedicOutfit
