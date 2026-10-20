@@ -73,10 +73,8 @@ public sealed partial class ClientHealingSystem : HealingSystem
         {
             var spriteBounds = _sprite.GetLocalBounds((uid, sprite0));
             var offset = new Vector2(_random.NextFloat(spriteBounds.Size.X), _random.NextFloat(spriteBounds.Size.Y));
-            var coords = Transform(uid).Coordinates + new EntityCoordinates(uid, offset);
-            var coords = new EntityCoordinates(uid, Transform(uid).Coordinates.Position + offset);
-            var coords2 = _xform.ToMapCoordinates(coords);
-            var spark = Spawn("HealingSparkle", coords2);
+            var coords = _xform.ToMapCoordinates(Transform(uid).Coordinates).Offset(offset);
+            var spark = Spawn("HealingSparkle", coords);
             var animationsSpark = Comp<AnimationPlayerComponent>(spark);
             if (!TryComp(spark, out SpriteComponent? sparkSprite))
             {
