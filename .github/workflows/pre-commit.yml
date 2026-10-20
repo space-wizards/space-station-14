@@ -3,12 +3,6 @@ name: Run Pre-Commit Checks
 on:
   pull_request:
     types: [ opened, reopened, synchronize, ready_for_review ]
-    paths:
-    - '**/*.cs'
-    - '**/*.ftl'
-    - '**/*.json'
-    - '**/*.yaml'
-    - '**/*.yml'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
