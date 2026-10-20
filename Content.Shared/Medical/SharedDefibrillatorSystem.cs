@@ -195,7 +195,7 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
         {
             message = Loc.GetString("defibrillator-rotten");
         }
-        else if (TryComp<UnrevivableComponent>(target, out var unrevivable))
+        else if (TryComp<UnrevivableComponent>(target, out var unrevivable) && _mobState.IsDead(target))
         {
             message = Loc.GetString(unrevivable.ReasonMessage);
         }
