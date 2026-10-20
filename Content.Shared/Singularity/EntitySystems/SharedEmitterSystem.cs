@@ -10,20 +10,15 @@ namespace Content.Shared.Singularity.EntitySystems;
 public abstract partial class SharedEmitterSystem : EntitySystem
 {
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private LockSystem _lock = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<EmitterComponent, GetVerbsEvent<Verb>>(OnGetVerb);
-    }
-
+    [SubscribeLocalEvent]
     private void OnGetVerb(Entity<EmitterComponent> ent, ref GetVerbsEvent<Verb> args)
     {
         if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract || args.Hands == null)
             return;
 
-        if (TryComp<LockComponent>(ent.Owner, out var lockComp) && lockComp.Locked)
+        if (_lock.IsLocked(ent.Owner))
             return;
 
         if (ent.Comp.SelectableTypes.Count < 2 || !TryComp<NetworkPoweredAmmoProviderComponent>(ent, out var ammoProvider))
@@ -32,7 +27,7 @@ public abstract partial class SharedEmitterSystem : EntitySystem
         foreach (var type in ent.Comp.SelectableTypes)
         {
             var proto = ProtoMan.Index(type);
-            
+
             var v = new Verb
             {
                 Priority = 1,

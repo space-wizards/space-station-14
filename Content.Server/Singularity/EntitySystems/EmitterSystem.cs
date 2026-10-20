@@ -5,6 +5,7 @@ using Content.Shared.Weapons.Ranged.Components;
 
 namespace Content.Server.Singularity.EntitySystems;
 
+/// <inheritdoc/>
 public sealed partial class EmitterSystem : SharedEmitterSystem
 {
     [SubscribeLocalEvent]

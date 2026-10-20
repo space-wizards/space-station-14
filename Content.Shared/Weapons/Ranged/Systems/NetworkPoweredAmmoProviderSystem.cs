@@ -22,36 +22,42 @@ public abstract partial class NetworkPoweredAmmoProviderSystem : EntitySystem
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] protected SharedGunSystem Gun = default!;
     [Dependency] protected SharedPowerStateSystem PowerState = default!;
+    [Dependency] private LockSystem _lock = default!;
 
-    /// <summary> Toggles active for device. </summary>
+    /// <summary>
+    /// Toggles active for device.
+    /// </summary>
     [SubscribeLocalEvent(after: [typeof(ActivatableUISystem)])]
     private void OnActivate(Entity<NetworkPoweredAmmoProviderComponent> ent, ref ActivateInWorldEvent args)
     {
         if (args.Handled || !args.Complex)
             return;
 
-        if (TryComp(ent, out LockComponent? lockComp) && lockComp.Locked)
+        if (_lock.IsLocked(ent.Owner))
         {
             Popup.PopupEntity(Loc.GetString("gun-access-locked", ("target", ent)), ent, args.User);
             return;
         }
 
-
         ToggleActive(ent, args.User);
         args.Handled = true;
     }
 
-    /// <summary> Turn off on unanchor. </summary>
+    /// <summary>
+    /// Turns off on unanchor.
+    /// </summary>
     [SubscribeLocalEvent]
     private void OnAnchorStateChanged(Entity<NetworkPoweredAmmoProviderComponent> ent, ref AnchorStateChangedEvent args)
     {
         if (args.Anchored)
             return;
 
-        SwitchOff(ent);
+        SwitchOff(ent.AsNullable());
     }
 
-    /// <summary> Handle signals. </summary>
+    /// <summary>
+    /// Handle signals.
+    /// </summary>
     [SubscribeLocalEvent]
     private void OnSignalReceived(Entity<NetworkPoweredAmmoProviderComponent> ent, ref SignalReceivedEvent args)
     {
@@ -62,36 +68,35 @@ public abstract partial class NetworkPoweredAmmoProviderSystem : EntitySystem
         var component = ent.Comp;
         if (args.Port == component.OffPort)
         {
-            SwitchOff(ent);
+            SwitchOff(ent.AsNullable());
         }
         else if (args.Port == component.OnPort)
         {
-            SwitchOn(ent);
+            SwitchOn(ent.AsNullable());
         }
         else if (args.Port == component.TogglePort)
         {
             if (PowerState.GetWorkingState(ent.Owner))
-            {
-                SwitchOff(ent);
-            }
+                SwitchOff(ent.AsNullable());
             else
-            {
-                SwitchOn(ent);
-            }
+                SwitchOn(ent.AsNullable());
         }
     }
 
 
-    /// <summary> Push selected ammo type to examine. </summary>
+    /// <summary>
+    /// Push selected ammo type to examine.
+    /// </summary>
     [SubscribeLocalEvent]
     private void OnExamined(Entity<NetworkPoweredAmmoProviderComponent> ent, ref ExaminedEvent args)
     {
         var proto = ProtoMan.Index(ent.Comp.Prototype);
-        args.PushMarkup(Loc.GetString("gun-selected-mode-examine", ("color", "yellow"), ("mode", proto.Name)));
+        args.PushMarkup(Loc.GetString("gun-network-ammo-examine", ("ammo", proto.Name)));
     }
 
-
-    /// <summary> Spawn ammo if we are ON. </summary>
+    /// <summary>
+    /// Spawn ammo if we are ON.
+    /// </summary>
     [SubscribeLocalEvent]
     private void OnNetworkTakeAmmo(Entity<NetworkPoweredAmmoProviderComponent> ent, ref TakeAmmoEvent args)
     {
@@ -108,15 +113,18 @@ public abstract partial class NetworkPoweredAmmoProviderSystem : EntitySystem
         }
     }
 
-    /// <summary> Turns device ON, enabling drawing ammo by constantly using power. </summary>
-    public virtual void SwitchOn(Entity<NetworkPoweredAmmoProviderComponent> ent)
+    /// <summary>
+    /// Turns device ON, enabling drawing ammo by constantly using power.
+    /// </summary>
+    public virtual void SwitchOn(Entity<NetworkPoweredAmmoProviderComponent?> ent)
     {
         // implementation can depend on power network so it is server-only
     }
+
     /// <summary>
     /// Turns device OFF, disabling power usage.
     /// </summary>
-    public virtual void SwitchOff(Entity<NetworkPoweredAmmoProviderComponent> ent)
+    public virtual void SwitchOff(Entity<NetworkPoweredAmmoProviderComponent?> ent)
     {
         // implementation can depend on power network so it is server-only
     }

@@ -69,7 +69,9 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
         return ent.Comp.IsWorking;
     }
 
-    /// <summary> Updates appearance according to powered situation. </summary>
+    /// <summary>
+    /// Updates appearance according to powered situation.
+    /// </summary>
     [SubscribeLocalEvent]
     private void OnApcChanged(Entity<PowerStateComponent> ent, ref PowerChangedEvent args)
     {
@@ -106,17 +108,12 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
     {
         PowerStateDeviceVisualState state;
         if (isPowered && ent.Comp.IsWorking)
-        {
             state = PowerStateDeviceVisualState.On;
-        }
         else if (ent.Comp.IsWorking)
-        {
             state = PowerStateDeviceVisualState.Underpowered;
-        }
         else
-        {
             state = PowerStateDeviceVisualState.Off;
-        }
+
         _appearance.SetData(ent, PowerStateDeviceVisuals.VisualState, state);
     }
 }

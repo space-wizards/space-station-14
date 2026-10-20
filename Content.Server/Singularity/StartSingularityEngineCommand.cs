@@ -32,11 +32,11 @@ namespace Content.Server.Singularity
             }
 
             // Turn on emitters
-            var emitterQuery = EntityManager.EntityQueryEnumerator<EmitterComponent, NetworkPoweredAmmoProviderComponent>();
-            while (emitterQuery.MoveNext(out var uid, out _, out var networkPowered))
+            var emitterQuery = EntityManager.EntityQueryEnumerator<EmitterComponent>();
+            while (emitterQuery.MoveNext(out var uid, out _))
             {
                 //FIXME: This turns on ALL emitters, including APEs. It should only turn on the containment field emitters.
-                _ammoProvider.SwitchOn((uid, networkPowered));
+                _ammoProvider.SwitchOn(uid);
             }
 
             // Turn on radiation collectors

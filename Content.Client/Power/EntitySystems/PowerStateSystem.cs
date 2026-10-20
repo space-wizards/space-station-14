@@ -10,7 +10,9 @@ public sealed partial class PowerStateSystem : SharedPowerStateSystem
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
-    /// <summary> Updates visual appearance according to provided changes. </summary>
+    /// <summary>
+    /// Updates visual appearance according to provided changes.
+    /// </summary>
     [SubscribeLocalEvent]
     private void OnAppearanceChange(Entity<PowerStateComponent> ent, ref AppearanceChangeEvent args)
     {

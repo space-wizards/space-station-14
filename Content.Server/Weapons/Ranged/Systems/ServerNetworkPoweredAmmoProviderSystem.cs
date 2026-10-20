@@ -2,7 +2,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Power;
-using Content.Shared.Power.Components;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Physics;
@@ -15,7 +14,9 @@ public sealed partial class ServerNetworkPoweredAmmoProviderSystem : NetworkPowe
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;
 
-    /// <summary> Turn on/off based on power feed. </summary>
+    /// <summary>
+    /// Turn on/off based on power feed.
+    /// </summary>
     [SubscribeLocalEvent]
     private void ReceivedChanged(Entity<NetworkPoweredAmmoProviderComponent> ent, ref PowerConsumerReceivedChanged args)
     {
@@ -25,7 +26,9 @@ public sealed partial class ServerNetworkPoweredAmmoProviderSystem : NetworkPowe
         SetPoweredState(ent, !(args.ReceivedPower < args.DrawRate));
     }
 
-    /// <summary> Turn on/off based on power feed. </summary>
+    /// <summary>
+    /// Turn on/off based on power feed.
+    /// </summary>
     [SubscribeLocalEvent]
     private void OnApcChanged(Entity<NetworkPoweredAmmoProviderComponent> ent, ref PowerChangedEvent args)
     {
@@ -36,38 +39,41 @@ public sealed partial class ServerNetworkPoweredAmmoProviderSystem : NetworkPowe
     }
 
     /// <inheritdoc/>>
-    public override void SwitchOn(Entity<NetworkPoweredAmmoProviderComponent> ent)
+    public override void SwitchOn(Entity<NetworkPoweredAmmoProviderComponent?> ent)
     {
-        if (!TryComp<PowerStateComponent>(ent, out var powerState))
+        if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        PowerState.SetWorkingState((ent.Owner, powerState), true);
+        PowerState.SetWorkingState(ent.Owner, true);
 
-        SetPoweredState(ent, true);
+        SetPoweredState((ent.Owner, ent.Comp), true);
     }
 
     /// <inheritdoc/>>
-    public override void SwitchOff(Entity<NetworkPoweredAmmoProviderComponent> ent)
+    public override void SwitchOff(Entity<NetworkPoweredAmmoProviderComponent?> ent)
     {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
         PowerState.SetWorkingState(ent.Owner, false);
 
-        SetPoweredState(ent, false);
+        SetPoweredState((ent.Owner, ent.Comp), false);
     }
 
     protected override void ToggleActive(Entity<NetworkPoweredAmmoProviderComponent> ent, EntityUid user)
     {
         var uid = ent.Owner;
-        if (TryComp(uid, out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
+        if (TryComp<PhysicsComponent>(uid, out var phys) && phys.BodyType == BodyType.Static)
         {
             var isWorking = PowerState.GetWorkingState(ent.Owner);
             if (!isWorking)
             {
-                SwitchOn(ent);
+                SwitchOn(ent.AsNullable());
                 Popup.PopupEntity(Loc.GetString("gun-toggle-on", ("target", uid)), uid, user);
             }
             else
             {
-                SwitchOff(ent);
+                SwitchOff(ent.AsNullable());
                 Popup.PopupEntity(Loc.GetString("gun-toggle-off", ("target", uid)), uid, user);
             }
 
@@ -93,13 +99,9 @@ public sealed partial class ServerNetworkPoweredAmmoProviderSystem : NetworkPowe
         if (ent.Comp.IsPowered == powerState)
             return;
 
-
         ent.Comp.IsPowered = powerState;
         Dirty(ent);
 
-        if (!TryComp<AutoShootGunComponent>(ent, out var autoShoot))
-            return;
-
-        Gun.SetEnabled((ent, autoShoot), powerState);
+        Gun.SetEnabled(ent.Owner, powerState);
     }
 }
