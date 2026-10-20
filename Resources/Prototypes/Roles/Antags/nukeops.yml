@@ -189,14 +189,12 @@
   storage:
     back:
     - SyndiHypo
-    - SawAdvanced
-    - Cautery
-    - CombatKnife
     - WeaponPistolViper
     - PinpointerSyndicateNuclear
-    - HandheldHealthAnalyzer
     - CombatMedipen
     - DeathAcidifierImplanter
+    - RedspaceBeaker
+    count: 2
 
 - type: chameleonOutfit
   id: NukeopsMedicOutfit
