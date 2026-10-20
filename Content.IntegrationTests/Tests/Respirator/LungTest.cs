@@ -1,22 +1,27 @@
-using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Shared.Body.Systems;
 using Robust.Shared;
-using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using System.Numerics;
-using Content.IntegrationTests.Fixtures;
-using Content.Shared.Atmos.Components;
-using Robust.Shared.EntitySerialization.Systems;
+using Content.IntegrationTests.Tests.Atmos;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Respirator;
 
 [TestFixture]
 [TestOf(typeof(LungSystem))]
-public sealed class LungTest : GameTest
+public sealed class LungTest : AtmosTest
 {
+    protected override ResPath? TestMapPath => new ("Maps/Test/Atmospherics/load_atmos_test_room.yml");
+
+    private readonly Vector2 _gridCenter = new (2.5f, 2.5f);
+
+    private readonly EntProtoId _humanLungDummy = new("HumanLungDummy");
+
+    private Entity<RespiratorComponent> _dummy;
+
     [TestPrototypes]
     private const string Prototypes = @"
 - type: entity
@@ -54,37 +59,21 @@ public sealed class LungTest : GameTest
     [Test]
     public async Task AirConsistencyTest()
     {
-        // --- Setup
-        var pair = Pair;
-        var server = pair.Server;
+        await Pair.CreateTestMap();
 
-        await server.WaitIdleAsync();
-
-        var entityManager = server.ResolveDependency<IEntityManager>();
-        var mapLoader = entityManager.System<MapLoaderSystem>();
-        var mapSys = entityManager.System<SharedMapSystem>();
-
-        EntityUid? grid = null;
-        RespiratorComponent resp = default;
-        EntityUid human = default;
-        GridAtmosphereComponent relevantAtmos = default;
         var startingMoles = 0.0f;
 
-        var testMapName = new ResPath("Maps/Test/Breathing/3by3-20oxy-80nit.yml");
-
-        await server.WaitPost(() =>
+        // --- Setup
+        await Server.WaitPost(() =>
         {
-            mapSys.CreateMap(out var mapId);
-            Assert.That(mapLoader.TryLoadGrid(mapId, testMapName, out var gridEnt));
-            grid = gridEnt!.Value.Owner;
+            SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+            startingMoles = GetMapMoles();
         });
-
-        Assert.That(grid, Is.Not.Null, $"Test blueprint {testMapName} not found.");
 
         float GetMapMoles()
         {
             var totalMapMoles = 0.0f;
-            foreach (var tile in relevantAtmos.Tiles.Values)
+            foreach (var tile in ProcessEnt.Comp1.Tiles.Values)
             {
                 totalMapMoles += tile.Air?.TotalMoles ?? 0.0f;
             }
@@ -92,17 +81,15 @@ public sealed class LungTest : GameTest
             return totalMapMoles;
         }
 
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
-            var center = new Vector2(0.5f, 0.5f);
-            var coordinates = new EntityCoordinates(grid.Value, center);
-            human = entityManager.SpawnEntity("HumanLungDummy", coordinates);
-            relevantAtmos = entityManager.GetComponent<GridAtmosphereComponent>(grid.Value);
-            startingMoles = 100f; // Hardcoded because GetMapMoles returns 900 here for some reason.
+            var human = SSpawnAtPosition(_humanLungDummy, new EntityCoordinates(ProcessEnt, _gridCenter));
 
 #pragma warning disable NUnit2045
-            Assert.That(entityManager.TryGetComponent(human, out resp), Is.True);
+            Assert.That(SEntMan.TryGetComponent<RespiratorComponent>(human, out var resp), Is.True);
 #pragma warning restore NUnit2045
+
+            _dummy = (human, resp);
         });
 
         // --- End setup
@@ -111,16 +98,18 @@ public sealed class LungTest : GameTest
         for (var i = 0; i < inhaleCycles; i++)
         {
             // Breathe in
-            await PoolManager.WaitUntil(server, () => resp.Status == RespiratorStatus.Exhaling);
+            await PoolManager.WaitUntil(Server, () => _dummy.Comp.Status == RespiratorStatus.Exhaling);
             Assert.That(
-                GetMapMoles(), Is.LessThan(startingMoles),
+                GetMapMoles(),
+                Is.LessThan(startingMoles),
                 "Did not inhale in any gas"
             );
 
             // Breathe out
-            await PoolManager.WaitUntil(server, () => resp.Status == RespiratorStatus.Inhaling);
+            await PoolManager.WaitUntil(Server, () => _dummy.Comp.Status == RespiratorStatus.Inhaling);
             Assert.That(
-                GetMapMoles(), Is.EqualTo(startingMoles).Within(0.0002),
+                GetMapMoles(),
+                Is.EqualTo(startingMoles).Within(0.0002),
                 "Did not exhale as much gas as was inhaled"
             );
         }
@@ -129,56 +118,40 @@ public sealed class LungTest : GameTest
     [Test]
     public async Task NoSuffocationTest()
     {
-        var pair = Pair;
-        var server = pair.Server;
+        await Pair.CreateTestMap();
 
-        var entityManager = server.ResolveDependency<IEntityManager>();
-        var cfg = server.ResolveDependency<IConfigurationManager>();
-        var mapLoader = entityManager.System<MapLoaderSystem>();
-        var mapSys = entityManager.System<SharedMapSystem>();
-
-        EntityUid? grid = null;
-        RespiratorComponent respirator = null;
-        EntityUid human = default;
-
-        var testMapName = new ResPath("Maps/Test/Breathing/3by3-20oxy-80nit.yml");
-
-        await server.WaitPost(() =>
+        await Server.WaitPost(() =>
         {
-            mapSys.CreateMap(out var mapId);
-            Assert.That(mapLoader.TryLoadGrid(mapId, testMapName, out var gridEnt));
-            grid = gridEnt!.Value.Owner;
+            SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
         });
 
-        Assert.That(grid, Is.Not.Null, $"Test blueprint {testMapName} not found.");
-
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
-            var center = new Vector2(0.5f, 0.5f);
+            var human = SSpawnAtPosition(_humanLungDummy, new EntityCoordinates(ProcessEnt, _gridCenter));
 
-            var coordinates = new EntityCoordinates(grid.Value, center);
-            human = entityManager.SpawnEntity("HumanLungDummy", coordinates);
-
-            var mixture = entityManager.System<AtmosphereSystem>().GetContainingMixture(human);
+            var mixture = SAtmos.GetContainingMixture(human);
 #pragma warning disable NUnit2045
-            Assert.That(mixture.TotalMoles, Is.GreaterThan(0));
-            Assert.That(entityManager.TryGetComponent(human, out respirator), Is.True);
-            Assert.That(respirator.SuffocationCycles, Is.LessThanOrEqualTo(respirator.SuffocationCycleThreshold));
+            Assert.That(mixture!.TotalMoles, Is.GreaterThan(0));
+            Assert.That(SEntMan.TryGetComponent<RespiratorComponent>(human, out var respirator), Is.True);
+            Assert.That(respirator!.SuffocationCycles, Is.LessThanOrEqualTo(respirator.SuffocationCycleThreshold));
 #pragma warning restore NUnit2045
+
+            _dummy = (human, respirator);
         });
 
         var increment = 10;
 
         // 20 seconds
-        var total = 20 * cfg.GetCVar(CVars.NetTickrate);
+        var total = 20 * Server.CfgMan.GetCVar(CVars.NetTickrate);
 
         for (var tick = 0; tick < total; tick += increment)
         {
-            await server.WaitRunTicks(increment);
-            await server.WaitAssertion(() =>
+            await Server.WaitRunTicks(increment);
+            await Server.WaitAssertion(() =>
             {
-                Assert.That(respirator.SuffocationCycles, Is.LessThanOrEqualTo(respirator.SuffocationCycleThreshold),
-                    $"Entity {entityManager.GetComponent<MetaDataComponent>(human).EntityName} is suffocating on tick {tick}");
+                Assert.That(_dummy.Comp.SuffocationCycles,
+                    Is.LessThanOrEqualTo(_dummy.Comp.SuffocationCycleThreshold),
+                    $"Entity {SToPrettyString(_dummy)} is suffocating on tick {tick}");
             });
         }
     }
