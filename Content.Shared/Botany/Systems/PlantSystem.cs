@@ -18,6 +18,7 @@ public sealed partial class PlantSystem : EntitySystem
     [Dependency] private PlantMutationSystem _mutation = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
     [Dependency] private IRobustRandom _random = default!;
+
     [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery;
     [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery;
     [Dependency] private EntityQuery<PlantToxinsComponent> _toxinsQuery;
