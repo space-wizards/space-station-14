@@ -433,4 +433,3 @@ public sealed partial class PlantSystem : EntitySystem
         return string.Join("\n", markup);
     }
 }
-
