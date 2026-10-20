@@ -72,7 +72,7 @@ public sealed partial class ClientHealingSystem : HealingSystem
         for (var i = 0; i < particles; i++)
         {
             var spriteBounds = _sprite.GetLocalBounds((uid, sprite0));
-            var offset = _random.NextVector2Box(spriteBounds.Size.X, spriteBounds.Size.Y);
+            var offset = _random.NextVector2Box(spriteBounds.Size.X * 0.5f, spriteBounds.Size.Y * 0.5f);
             var coords = _xform.ToMapCoordinates(Transform(uid).Coordinates).Offset(offset);
             var spark = Spawn("HealingSparkle", coords);
             var animationsSpark = Comp<AnimationPlayerComponent>(spark);
@@ -98,7 +98,7 @@ public sealed partial class ClientHealingSystem : HealingSystem
                             KeyFrames =
                             {
                                 new KeyFrame(curScale, 0),
-                                new KeyFrame(new Vector2(0.75f, 0.75f), 1f),
+                                new KeyFrame(new Vector2(0.1f, 0.1f), 1f),
                             },
                         },
                         new AnimationTrackComponentProperty
