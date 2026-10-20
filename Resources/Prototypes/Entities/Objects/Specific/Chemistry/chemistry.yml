@@ -331,19 +331,15 @@
     size: Normal
 
 - type: entity
-  name: small redspace beaker
-  parent: [SolutionLarge, BaseBeakerMetallic] # Redspace items hold 4x the solution of regular items due to lore reasons (120u per tile) as opposed to 8x of bluespace (240u per tile)
+  name: redspace beaker
+  parent: [SolutionLarge, bluespace beaker] # Redspace items hold 4x the solution of regular items due to lore reasons (120u per tile) as opposed to 8x of bluespace (240u per tile)
   description: Powered by acquired redspace technology.
   id: RedspaceBeaker
   components:
-  - type: Spillable
-    solution: beaker
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beaker_redspace.rsi
     layers:
     - state: beakerredspace
-  - type: SolutionContainerVisuals
-    maxFillLevels: 0
 
 - type: entity
   name: dropper

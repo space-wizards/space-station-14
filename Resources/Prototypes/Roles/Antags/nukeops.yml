@@ -189,6 +189,8 @@
   storage:
     back:
     - SyndiHypo
+    - SawAdvanced
+    - Cautery
     - WeaponPistolViper
     - PinpointerSyndicateNuclear
     - CombatMedipen
