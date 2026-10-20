@@ -15,7 +15,7 @@ void fragment()
     mediump float effect_intensity = tile_intensity * intensity;
     screen_pixel.rgb = mix(screen_pixel.rgb, vec3(gray), effect_intensity);
 
-    screen_pixel.rgb = mix(screen_pixel.rgb, screen_pixel.rgb * tint_color, effect_intensity * 2);
+    screen_pixel.rgb = mix(screen_pixel.rgb, screen_pixel.rgb * tint_color, effect_intensity * 0.5);
 
     COLOR = screen_pixel;
 }
