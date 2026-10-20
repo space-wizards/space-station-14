@@ -282,7 +282,6 @@ public sealed partial class PlantMutationSystem : EntitySystem
 
             if (Random(0.5f))
                 RemComp(val, component);
-
         }
 
         foreach (var component in AllComps(pollenData))
