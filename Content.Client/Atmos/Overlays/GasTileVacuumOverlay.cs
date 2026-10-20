@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Client.Graphics;
+using Content.Client.Light;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
@@ -46,6 +47,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
     public GasTileVacuumOverlay()
     {
         IoCManager.InjectDependencies(this);
+        ZIndex = AfterLightTargetOverlay.ContentZIndex + 1;
         _maps = _entManager.System<SharedMapSystem>();
         _xformSys = _entManager.System<SharedTransformSystem>();
 
