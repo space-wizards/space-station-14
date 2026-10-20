@@ -104,8 +104,17 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         var orderedSensors = uniqueSensors.OrderBy(n => n.Name).ThenBy(j => j.Job);
         var assignedSensors = new HashSet<SuitSensorStatus>();
         var departments = uniqueSensors.SelectMany(d => d.JobDepartments).Distinct();
+        var station = _entManager.GetEntity(stationUid);
+        ProtoId<JobWeightPrototype>? weights = null;
+        if (station is { } stationEntity &&
+            _entManager.TryGetComponent<StationDataComponent>(stationEntity, out var stationData))
+        {
+            weights = stationData.JobWeights;
+        }
 
-        // Sorts departaments by proto weight
+        JobUIComparer.TryCreate(_prototypeManager, weights, out var jobComparer);
+
+        // Sort departments by prototype weight.
         var sortableDeparts = new List<DepartmentPrototype>();
         var otherDeparts = new List<string>();
         foreach (var department in departments)
@@ -116,14 +125,14 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
                 otherDeparts.Add(department);
         }
         sortableDeparts.Sort(DepartmentUIComparer.Instance);
-        departments = [.. sortableDeparts.Select(x => x.ID), .. otherDeparts];
+        departments = [.. sortableDeparts.Select(x => x.ID), .. otherDeparts.OrderBy(x => x)];
 
         // Create department labels and populate lists
         foreach (var department in departments)
         {
             var departmentSensors = orderedSensors.Where(d => d.JobDepartments.Contains(department));
 
-            if (departmentSensors == null || !departmentSensors.Any())
+            if (!departmentSensors.Any())
                 continue;
 
             foreach (var sensor in departmentSensors)
@@ -150,8 +159,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
 
             SensorsTable.AddChild(deparmentLabel);
 
-            var station = _entManager.GetEntity(stationUid);
-            PopulateDepartmentList(departmentSensors, station);
+            PopulateDepartmentList(departmentSensors, jobComparer);
         }
 
         // Account for any non-station users
@@ -176,8 +184,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
 
             SensorsTable.AddChild(deparmentLabel);
 
-            var station = _entManager.GetEntity(stationUid);
-            PopulateDepartmentList(remainingSensors, station);
+            PopulateDepartmentList(remainingSensors, jobComparer);
         }
 
         // Show monitor on nav map
@@ -187,7 +194,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         }
     }
 
-    private void PopulateDepartmentList(IEnumerable<SuitSensorStatus> departmentSensors, EntityUid? station)
+    private void PopulateDepartmentList(IEnumerable<SuitSensorStatus> departmentSensors, JobUIComparer? comparer)
     {
         var entriesSort = new List<(JobPrototype? job, SuitSensorStatus entry)>();
         foreach (var a in departmentSensors)
@@ -199,14 +206,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             entriesSort.Add((job, a));
         }
 
-        ProtoId<JobWeightPrototype>? weights = null;
-        if (station is not null &&
-            _entManager.TryGetComponent<StationDataComponent>(station.Value, out var stationData))
-        {
-            weights = stationData.JobWeights;
-        }
-
-        if (JobUIComparer.TryCreate(_prototypeManager, weights, out var comparer))
+        if (comparer != null)
         {
             entriesSort.Sort((a, b) =>
             {
