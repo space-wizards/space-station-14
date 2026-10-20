@@ -38,10 +38,10 @@ public abstract partial class HealingSystem : EntitySystem
 
         SubscribeLocalEvent<HealingComponent, UseInHandEvent>(OnHealingUse);
         SubscribeLocalEvent<HealingComponent, AfterInteractEvent>(OnHealingAfterInteract);
-        SubscribeLocalEvent<DamageableComponent, HealingDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<DamageableComponent, HealingEvents>(OnDoAfter);
     }
 
-    private void OnDoAfter(Entity<DamageableComponent> target, ref HealingDoAfterEvent args)
+    private void OnDoAfter(Entity<DamageableComponent> target, ref HealingEvents args)
     {
         if (args.Handled || args.Cancelled)
             return;
@@ -110,7 +110,7 @@ public abstract partial class HealingSystem : EntitySystem
         }
 
         _audio.PlayPredicted(healing.HealingEndSound, target.Owner, args.User);
-        PlayHealAnimation(target);
+        PlayHealAnimation(target, args.User);
 
         // Logic to determine the whether or not to repeat the healing action
         args.Repeat = HasDamage((args.Used.Value, healing), target) && !dontRepeat;
@@ -219,7 +219,7 @@ public abstract partial class HealingSystem : EntitySystem
             : healing.Comp.Delay * GetScaledHealingPenalty(target, healing.Comp.SelfHealPenaltyMultiplier);
 
         var doAfterEventArgs =
-            new DoAfterArgs(EntityManager, user, delay, new HealingDoAfterEvent(), target, target: target, used: healing)
+            new DoAfterArgs(EntityManager, user, delay, new HealingEvents(), target, target: target, used: healing)
             {
                 // Didn't break on damage as they may be trying to prevent it and
                 // not being able to heal your own ticking damage would be frustrating.
@@ -253,5 +253,10 @@ public abstract partial class HealingSystem : EntitySystem
         return Math.Max(output, 1);
     }
 
-    public abstract void PlayHealAnimation(EntityUid uid);
+    /// <summary>
+    /// Plays healing animation.
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="user"></param>
+    public abstract void PlayHealAnimation(EntityUid target, EntityUid? user = null);
 }

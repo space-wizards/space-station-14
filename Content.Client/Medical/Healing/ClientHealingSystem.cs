@@ -1,86 +1,65 @@
 using System.Numerics;
-using Content.Client.Animations;
 using Content.Shared.Medical.Healing;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.Player;
 using Robust.Shared.Animations;
-using Robust.Shared.Map;
-using Robust.Shared.Spawners;
 using Robust.Shared.Timing;
-using System.Numerics;
-using Robust.Client.Animations;
-using Robust.Client.GameObjects;
-using Robust.Shared.Animations;
-using Robust.Shared.Map;
-using Robust.Shared.Spawners;
 using static Robust.Client.Animations.AnimationTrackProperty;
-using Content.Client.Movement.Systems;
-using Robust.Client.Graphics;
-using Robust.Client.Player;
-using Robust.Shared.Enums;
-using Robust.Shared.Prototypes;
-using Content.Shared.Eye.Blinding;
-using Content.Shared.Eye.Blinding.Components;
-using Content.Shared.Movement.Components;
-using Content.Shared.Movement.Systems;
 using Robust.Shared.Random;
 
 namespace Content.Client.Medical.Healing;
 
-/// <summary>
-/// This handles...
-/// </summary>
+/// <inheritdoc/>
 public sealed partial class ClientHealingSystem : HealingSystem
 {
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IPlayerManager _player = default!;
     [Dependency] private SharedTransformSystem _xform = default!;
-    [Dependency] private EntityPickupAnimationSystem _entityPickupAnimation = default!;
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private AnimationPlayerSystem _animations = default!;
-    [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private IRobustRandom _random = default!;
 
-    public override void PlayHealAnimation(EntityUid uid)
+    /// <inheritdoc/>
+    public override void PlayHealAnimation(EntityUid target, EntityUid? user = null)
     {
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        HealAnimation(uid);
+        HealAnimation(target);
     }
 
     /// <summary>
-    ///     Animates a clone of an entity moving from one point to another before
-    ///     being deleted.
-    ///     Used when the player picks up an entity.
+    ///     Animates a target by recoloring it in <param name="color"></param> and spawns <param name="particles">amount</param> of the healing particles
+    ///     Probably shouldn't be called directly.
     /// </summary>
-    public void HealAnimation(EntityUid uid, Color? color = null, int particles = 6)
+    private void HealAnimation(EntityUid target, Color? color = null, int particles = 6)
     {
         color ??= Color.Green;
-        if (Deleted(uid))
+        if (Deleted(target))
             return;
 
-        var metadata = MetaData(uid);
+        var metadata = MetaData(target);
 
-        if (!TryComp(uid, out SpriteComponent? sprite0))
+        if (IsPaused(target, metadata))
+            return;
+
+        if (!TryComp<SpriteComponent>(target, out var targetSprite))
         {
-            Log.Error("Entity ({0}) couldn't be animated for pickup since it doesn't have a {1}!", metadata.EntityName, nameof(SpriteComponent));
+            Log.Error("Entity ({0}) couldn't be animated for healing since it doesn't have a {1}!", metadata.EntityName, nameof(SpriteComponent));
             return;
         }
 
         for (var i = 0; i < particles; i++)
         {
-            var spriteBounds = _sprite.GetLocalBounds((uid, sprite0));
+            var spriteBounds = _sprite.GetLocalBounds((target, targetSprite));
             var offset = _random.NextVector2Box(spriteBounds.Size.X, spriteBounds.Size.Y) / 2;
-            var coords = _xform.ToMapCoordinates(Transform(uid).Coordinates).Offset(offset);
+            var coords = _xform.ToMapCoordinates(Transform(target).Coordinates).Offset(offset);
             var spark = Spawn("HealingSparkle", coords);
             var animationsSpark = Comp<AnimationPlayerComponent>(spark);
             var curCoords = Transform(spark).LocalPosition;
             var final = new Vector2(0.2f, 0.2f);
             if (!TryComp(spark, out SpriteComponent? sparkSprite))
             {
-                Log.Error("Entity ({0}) couldn't be animated for pickup since it doesn't have a {1}!", metadata.EntityName, nameof(SpriteComponent));
+                Log.Error("Entity ({0}) couldn't be animated for healing since it doesn't have a {1}!", metadata.EntityName, nameof(SpriteComponent));
                 return;
             }
 
@@ -128,16 +107,13 @@ public sealed partial class ClientHealingSystem : HealingSystem
                         },
                     },
                 },
-                "heal_scale");
+                "heal_particles");
         }
 
-        if (IsPaused(uid, metadata))
-            return;
+        var animations = Comp<AnimationPlayerComponent>(target);
+        var curColor = targetSprite.Color;
 
-        var animations = Comp<AnimationPlayerComponent>(uid);
-        var curColor = sprite0.Color;
-
-        _animations.Play(new Entity<AnimationPlayerComponent>(uid, animations),
+        _animations.Play(new Entity<AnimationPlayerComponent>(target, animations),
             new Animation
         {
             Length = TimeSpan.FromMilliseconds(300),
