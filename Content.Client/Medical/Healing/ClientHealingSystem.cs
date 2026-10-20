@@ -77,7 +77,7 @@ public sealed partial class ClientHealingSystem : HealingSystem
             var spark = Spawn("HealingSparkle", coords);
             var animationsSpark = Comp<AnimationPlayerComponent>(spark);
             var curCoords = Transform(spark).LocalPosition;
-            var final = curCoords + new Vector2(10, 10);
+            var final = new Vector2(0.2f, 0.2f);
             if (!TryComp(spark, out SpriteComponent? sparkSprite))
             {
                 Log.Error("Entity ({0}) couldn't be animated for pickup since it doesn't have a {1}!", metadata.EntityName, nameof(SpriteComponent));
@@ -122,7 +122,8 @@ public sealed partial class ClientHealingSystem : HealingSystem
                             KeyFrames =
                             {
                                 new KeyFrame(curCoords, 0),
-                                new KeyFrame(final, 1f),
+                                new KeyFrame(curCoords + final, 0.5f),
+                                new KeyFrame(curCoords + final, 1f),
                             },
                         },
                     },
