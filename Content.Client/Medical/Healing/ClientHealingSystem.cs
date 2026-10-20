@@ -72,10 +72,12 @@ public sealed partial class ClientHealingSystem : HealingSystem
         for (var i = 0; i < particles; i++)
         {
             var spriteBounds = _sprite.GetLocalBounds((uid, sprite0));
-            var offset = _random.NextVector2Box(spriteBounds.Size.X * 0.5f, spriteBounds.Size.Y * 0.5f);
+            var offset = _random.NextVector2Box(spriteBounds.Size.X, spriteBounds.Size.Y) / 2;
             var coords = _xform.ToMapCoordinates(Transform(uid).Coordinates).Offset(offset);
             var spark = Spawn("HealingSparkle", coords);
             var animationsSpark = Comp<AnimationPlayerComponent>(spark);
+            var curCoords = Transform(spark).LocalPosition;
+            var final = curCoords + new Vector2(10, 10);
             if (!TryComp(spark, out SpriteComponent? sparkSprite))
             {
                 Log.Error("Entity ({0}) couldn't be animated for pickup since it doesn't have a {1}!", metadata.EntityName, nameof(SpriteComponent));
@@ -110,6 +112,17 @@ public sealed partial class ClientHealingSystem : HealingSystem
                             {
                                 new KeyFrame(curRot, 0),
                                 new KeyFrame(curRot + new Angle(90), 1f),
+                            },
+                        },
+                        new AnimationTrackComponentProperty
+                        {
+                            ComponentType = typeof(TransformComponent),
+                            Property = nameof(TransformComponent.LocalPosition),
+                            InterpolationMode = AnimationInterpolationMode.Linear,
+                            KeyFrames =
+                            {
+                                new KeyFrame(curCoords, 0),
+                                new KeyFrame(final, 1f),
                             },
                         },
                     },
