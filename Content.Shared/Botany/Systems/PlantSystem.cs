@@ -78,7 +78,6 @@ public sealed partial class PlantSystem : EntitySystem
         _mutation.CrossFloat(ref ent.Comp.Potency, pollenData.Potency);
         _mutation.CrossTrait(ent.Owner, args.PollenData);
 
-
         // Hybrids have a high chance of being seedless. Balances very
         // effective hybrid crossings.
         if (args.PollenProtoId != null
