@@ -272,9 +272,9 @@ public sealed partial class PlantMutationSystem : EntitySystem
     [PublicAPI]
     public void CrossTrait(EntityUid val, EntityUid pollenData)
     {
-        foreach (var component in AllComps(val))
+        foreach (var component in AllComps<PlantTraitsComponent>(val))
         {
-            if (component is not PlantTraitsComponent)
+            if (component.PollinationProtected)
                 continue;
 
             if (HasComp(pollenData, component.GetType()))
@@ -284,9 +284,9 @@ public sealed partial class PlantMutationSystem : EntitySystem
                 RemComp(val, component);
         }
 
-        foreach (var component in AllComps(pollenData))
+        foreach (var component in AllComps<PlantTraitsComponent>(pollenData))
         {
-            if (component is not PlantTraitsComponent)
+            if (component.PollinationProtected)
                 continue;
 
             if (HasComp(val, component.GetType()))

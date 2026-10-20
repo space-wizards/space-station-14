@@ -4,8 +4,8 @@ using Content.Shared.Botany.Events;
 using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
-using Robust.Shared.Timing;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Botany.Systems;
 
