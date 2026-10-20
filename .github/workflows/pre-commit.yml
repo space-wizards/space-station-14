@@ -21,7 +21,7 @@ jobs:
 
     - uses: actions/setup-python@v7
       with:
-        python-version: '3.11'
+        python-version: '3.15'
 
     - name: Run Pre-Commit
       uses: pre-commit/action@v3.0.1
