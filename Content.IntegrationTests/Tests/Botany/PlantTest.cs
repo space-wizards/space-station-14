@@ -24,6 +24,22 @@ public sealed class PlantTest : GameTest
     private readonly EntProtoId _hatchet = "HydroponicsToolHatchet";
     private readonly EntProtoId _human = "MobHuman";
 
+    [SidedDependency(Side.Server)]
+    private readonly SharedHandsSystem _sHands = null!;
+
+    [SidedDependency(Side.Server)]
+    private readonly SharedInteractionSystem _sInteraction = null!;
+
+    [SidedDependency(Side.Server)]
+    private readonly InventorySystem _sInventory = null!;
+
+    [SidedDependency(Side.Server)]
+    private readonly PlantHolderSystem _sPlantHolder = null!;
+
+    [SidedDependency(Side.Server)]
+    private readonly PlantSystem _sPlant = null!;
+
+
     public override PoolSettings PoolSettings => new() { Connected = false };
 
     public override async Task DoSetup()
@@ -48,16 +64,13 @@ public sealed class PlantTest : GameTest
         var map = TestMap;
 
         var entityManager = Server.EntMan;
-        var hands = Server.System<SharedHandsSystem>();
-        var interaction = Server.System<SharedInteractionSystem>();
-        var inventory = Server.System<InventorySystem>();
 
         var botanist = SSpawnAtPosition(_human, map.GridCoords);
         var gloves = SSpawnAtPosition(_botanistGloves, map.GridCoords);
         var hatchet = SSpawnAtPosition(_hatchet, map.GridCoords);
 
-        inventory.TryEquip(botanist, gloves, "gloves");
-        hands.TryPickupAnyHand(botanist, hatchet);
+        _sInventory.TryEquip(botanist, gloves, "gloves");
+        _sHands.TryPickupAnyHand(botanist, hatchet);
 
         Assert.Multiple(() =>
         {
@@ -67,7 +80,7 @@ public sealed class PlantTest : GameTest
 
                 if (entityManager.HasComponent<PlantTraitLigneousComponent>(plant))
                 {
-                    interaction.InteractUsing(
+                    _sInteraction.InteractUsing(
                         botanist,
                         hatchet,
                         plant,
@@ -77,7 +90,7 @@ public sealed class PlantTest : GameTest
                 }
                 else
                 {
-                    interaction.InteractHand(botanist, plant);
+                    _sInteraction.InteractHand(botanist, plant);
                 }
 
                 if (entityManager.Deleted(plant))
@@ -99,8 +112,11 @@ public sealed class PlantTest : GameTest
         var prototypeManager = SProtoMan;
         var entityManager = SEntMan;
         var componentFactory = Server.ResolveDependency<IComponentFactory>();
-        var interaction = Server.System<SharedInteractionSystem>();
         var botanist = SSpawnAtPosition(_human, map.GridCoords);
+
+        var gloves = SSpawnAtPosition(_botanistGloves, map.GridCoords);
+        _sInventory.TryEquip(botanist, gloves, "gloves");
+
         var seeds = GetSeedPrototypes()
                         .Where(seed =>
                         {
@@ -113,7 +129,7 @@ public sealed class PlantTest : GameTest
             foreach (var seed in seeds)
             {
                 var plant = SpawnHarvestablePlant(seed);
-                interaction.InteractHand(botanist, plant);
+                _sInteraction.InteractHand(botanist, plant);
 
                 Assert.That(entityManager.Deleted(plant), Is.False,
                     $"Ligneous plant grown from {seed.ID} was harvested without a hatchet.");
@@ -141,8 +157,8 @@ public sealed class PlantTest : GameTest
         var plantComponent = entityManager.GetComponent<PlantComponent>(plant);
         var holder = entityManager.GetComponent<PlantHolderComponent>(plant);
         var readyAge = (int)MathF.Ceiling(plantComponent.Maturation) + (int)MathF.Floor(plantComponent.Production) + 1;
-        Server.System<PlantHolderSystem>().AdjustsAge((plant, holder), readyAge - holder.Age);
-        Server.System<PlantSystem>().ForceUpdate((plant, plantComponent));
+        _sPlantHolder.AdjustsAge((plant, holder), readyAge - holder.Age);
+        _sPlant.ForceUpdate((plant, plantComponent));
         Assert.That(holder.ReadyForHarvest, Is.True, $"Plant grown from {seed.ID} was not ready for harvest.");
 
         return plant;
