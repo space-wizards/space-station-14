@@ -51,6 +51,12 @@ public sealed partial class TimedSpawnerComponent : Component, ISerializationHoo
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextFire = TimeSpan.Zero;
 
+    /// <summary>
+    /// Determines whether to allow spawning entities in the spawner's container, or if they should always be outside.
+    /// </summary>
+    [DataField]
+    public bool AllowContainerPlacement = false;
+
     void ISerializationHooks.AfterDeserialization()
     {
         if (MinimumEntitiesSpawned > MaximumEntitiesSpawned)
