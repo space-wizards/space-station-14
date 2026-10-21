@@ -83,9 +83,10 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
         if (random.Prob(reclaimer.BloodSpillChance) && active.BloodReagents is { } blood)
             _puddleSystem.TrySpillAt(uid, blood, out _);
 
-        if (random.Prob(reclaimer.ItemThrowChance) && active.SpawnedEntities.Count > 0)
+        // Throwing is not predicted yet.
+        if (_net.IsServer && random.Prob(reclaimer.ItemThrowChance) && active.SpawnedEntities.Count > 0)
         {
-            var thrown = PredictedSpawnAtPosition(
+            var thrown = SpawnAtPosition(
                 random.Pick(active.SpawnedEntities).PrototypeId?.Id,
                 _transformQuery.GetComponent(uid).Coordinates);
 
@@ -201,7 +202,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
             _transform.DropNextTo(item, ent.Owner);
         }
 
-        PredictedQueueDel(toProcess);
+        QueueDel(toProcess);
     }
 
     private void CollectMessData(EntityUid toProcess, Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent)
