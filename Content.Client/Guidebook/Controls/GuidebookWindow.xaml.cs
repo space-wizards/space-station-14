@@ -73,9 +73,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
 
     private void SelectGuide(GuideEntry entry, bool recordHistory = true)
     {
-        // Only the core rules entry is in the tree, so other rule pages highlight it.
-        if (!Tree.TryGetIndexFromMetadata(entry, out var index))
-            Tree.TryGetIndexFromMetadata(CoreRuleEntry, out index);
+        Tree.TryGetIndexFromMetadata(entry, out var index);
 
         if (index is { } idx && Tree.SelectedIndex != idx)
             Tree.ExpandParentEntries(idx);
@@ -147,6 +145,8 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
     public void ClearSelectedGuide()
     {
         SaveGuideState();
+        Tree.SetSelectedIndex(null, invokeEvent: false);
+        TableOfContents.Clear();
         Placeholder.Visible = true;
         EntryContainer.Visible = false;
         SearchContainer.Visible = false;
@@ -413,7 +413,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
 
     private void HandleFilter()
     {
-        if (Tree.SelectedItem != null && Tree.SelectedItem.Metadata is GuideEntry entry && entry.FilterEnabled)
+        if (Selected is { } selected && _entries.TryGetValue(selected, out var entry) && entry.FilterEnabled)
         {
             var foundElements = EntryContainer.GetSearchableControls();
 
