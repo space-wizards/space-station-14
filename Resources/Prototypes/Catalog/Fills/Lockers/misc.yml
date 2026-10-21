@@ -19,29 +19,6 @@
         - id: ClothingEyesHudSyndicate
 
 - type: entity
-  id: LockerSyndicatePersonalAgentFilled
-  suffix: Nukie, Filled
-  parent: LockerSyndicatePersonalAgent
-  description: It's a personal storage unit for nuclear corpsman gear.
-  components:
-  - type: AccessReader
-    access: [["NuclearOperative"]]
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: ClothingBeltMilitaryWebbingMedFilled
-        - id: SyndiHypo
-        - id: RedspaceBeaker
-          amount: 2
-        - id: SawAdvanced
-        - id: HandheldHealthAnalyzer
-        - id: CombatMedipen
-        - id: Cautery
-        - id: CombatKnife
-        - id: ClothingEyesHudSyndicateAgent
-
-- type: entity
   id: LockerSyndicateWallFilled
   suffix: Nukie, Filled
   parent: LockerWallSyndicate
