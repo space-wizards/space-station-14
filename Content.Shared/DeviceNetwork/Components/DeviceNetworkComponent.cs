@@ -96,13 +96,6 @@ public sealed partial class DeviceNetworkComponent : Component
     public bool SavableAddress = true;
 
     /// <summary>
-    /// If true, the address was customized and should be preserved across networks. If false, a randomly
-    /// generated address will be created whenever this device connects to a network.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool CustomAddress;
-
-    /// <summary>
     /// Time until which this device is jammed, meaning it cannot send any packets.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]

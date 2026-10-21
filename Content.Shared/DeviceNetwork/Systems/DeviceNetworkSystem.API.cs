@@ -132,17 +132,54 @@ public sealed partial class DeviceNetworkSystem
         if (!ent.Comp.Enabled)
             return false;
 
+        EnsureValidAddress(ent);
+
         _managerCache.Clear();
         EnsureNetworks(ent, _managerCache);
 
         var success = false;
         foreach (var net in _managerCache)
         {
-            if (AddToNetwork(ent, net))
+            if (AddToNetwork(ent!, net))
                 success = true;
         }
 
         return success;
+    }
+
+    /// <summary>
+    /// Ensures that the specified entity has a valid <see cref="DeviceNetworkComponent.Address"/>
+    /// that isn't a duplicate or <see cref="DeviceAddress.Invalid"/>.
+    /// </summary>
+    [PublicAPI]
+    public void EnsureValidAddress(Entity<DeviceNetworkComponent?> ent)
+    {
+        if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp))
+            return;
+
+        if (ent.Comp.Address == DeviceAddress.Invalid)
+        {
+            ent.Comp.Address = GenerateValidAddressId();
+            DirtyField(ent.AsNullable(), nameof(DeviceNetworkComponent.Address));
+        }
+
+        if (_occupiedAddresses.TryGetValue(ent.Comp.Address.AddressId, out var existing)
+            && existing != ent.Owner)
+        {
+            if (TerminatingOrDeleted(existing))
+                _occupiedAddresses.Remove(ent.Comp.Address.AddressId); // Entity was deleted and therefore the address is free
+            else
+            {
+                // This should only happen with corrupted game saves, otherwise it's a bug that needs to be reported.
+                Log.Warning(
+                    $"Device {ToPrettyString(ent.Owner)} has a duplicate address {ent.Comp.Address.ToString()} with entity {ToPrettyString(existing)}." +
+                    $"Replacing it with another address. This may lead to unexpected errors.");
+                ent.Comp.Address = GenerateValidAddressId();
+                DirtyField(ent.AsNullable(), nameof(DeviceNetworkComponent.Address));
+            }
+        }
+
+        _occupiedAddresses.TryAdd(ent.Comp.Address.AddressId, ent.Owner);
     }
 
     /// <summary>
@@ -221,7 +258,7 @@ public sealed partial class DeviceNetworkSystem
     [PublicAPI]
     public bool IsAddressPresent(DeviceAddress? address)
     {
-        return address != null && _occupiedAddresses.Contains(address.Value.AddressId);
+        return address != null && _occupiedAddresses.ContainsKey(address.Value.AddressId);
     }
 
     /// <summary>
@@ -333,20 +370,19 @@ public sealed partial class DeviceNetworkSystem
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (ent.Comp.Address == address && ent.Comp.CustomAddress)
+        if (ent.Comp.Address == address)
             return;
 
         var oldAddress = ent.Comp.Address;
 
-        ent.Comp.CustomAddress = true;
         ent.Comp.Address = address;
 
         ReconnectDevice(ent);
 
-        var ev = new DeviceAddressChangedEvent(oldAddress, address, ent.Comp.CustomAddress);
+        var ev = new DeviceAddressChangedEvent(oldAddress, address);
         RaiseLocalEvent(ent, ref ev);
 
-        DirtyFields(ent, null, nameof(DeviceNetworkComponent.Address), nameof(DeviceNetworkComponent.CustomAddress));
+        DirtyField(ent, nameof(DeviceNetworkComponent.Address));
     }
 
     /// <summary>
@@ -372,15 +408,14 @@ public sealed partial class DeviceNetworkSystem
             return;
 
         var oldAddress = ent.Comp.Address;
-        ent.Comp.CustomAddress = false;
         ent.Comp.Address = DeviceAddress.Invalid;
 
         ReconnectDevice(ent);
 
-        var ev = new DeviceAddressChangedEvent(oldAddress, ent.Comp.Address, ent.Comp.CustomAddress);
+        var ev = new DeviceAddressChangedEvent(oldAddress, ent.Comp.Address);
         RaiseLocalEvent(ent, ref ev);
 
-        DirtyFields(ent, null, nameof(DeviceNetworkComponent.Address), nameof(DeviceNetworkComponent.CustomAddress));
+        DirtyField(ent, nameof(DeviceNetworkComponent.Address));
     }
 
     /// <summary>

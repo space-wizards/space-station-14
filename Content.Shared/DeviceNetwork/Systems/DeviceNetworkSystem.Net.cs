@@ -125,38 +125,26 @@ public sealed partial class DeviceNetworkSystem
     /// <summary>
     /// Add a device to the network.
     /// </summary>
-    private bool AddToNetwork(Entity<DeviceNetworkComponent?> ent, Entity<DeviceNetworkManagerComponent> network)
+    private bool AddToNetwork(Entity<DeviceNetworkComponent> ent, Entity<DeviceNetworkManagerComponent> network)
     {
-        if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp))
-            return false;
-
         // Checking for a key because on client the EntityUid may be wrong for the first tick if it was spawned predictively
-        if (ent.Comp.ConnectedNets.ContainsKey(network.Comp.DeviceNetId))
+        if (_net.IsClient && ent.Comp.ConnectedNets.ContainsKey(network.Comp.DeviceNetId))
             return true;
 
-        ent.Comp.ConnectedNets.Add(network.Comp.DeviceNetId, network.Owner);
+        if (ent.Comp.ConnectedNets.TryGetValue(network.Comp.DeviceNetId, out var netUid)
+            && netUid != network.Owner)
+        {
+            Log.Error($"Device {ToPrettyString(ent)} tried to connect to the network" +
+                      $"{ToPrettyString(network.Owner)} while it was already connected to {ToPrettyString(netUid)}!");
+        }
+
+        ent.Comp.ConnectedNets.TryAdd(network.Comp.DeviceNetId, network.Owner);
 
         var deviceComp = ent.Comp;
         var device = new Device((ent.Owner, ent.Comp));
-        if (deviceComp.CustomAddress)
-        {
-            // Only add if the device's existing address is available.
-            if (!network.Comp.Devices.TryAdd(deviceComp.Address, device))
-                return false;
-        }
-        else
-        {
-            // Randomly generate a new address if the existing random one is invalid. Otherwise, keep the existing address
-            if (deviceComp.Address == DeviceAddress.Invalid || _occupiedAddresses.Contains(deviceComp.Address.AddressId))
-            {
-                deviceComp.Address = GenerateValidAddressId();
-                _occupiedAddresses.Add(deviceComp.Address.AddressId);
-                device = new Device(ent!); // Reallocate because the data had changed
-                DirtyField(ent, nameof(DeviceNetworkComponent.Address));
-            }
 
-            network.Comp.Devices[deviceComp.Address] = device;
-        }
+        if (!network.Comp.Devices.TryAdd(deviceComp.Address, device))
+            return false;
 
         if (deviceComp.ReceiveFrequency is not { } freq)
             return true;
@@ -221,7 +209,7 @@ public sealed partial class DeviceNetworkSystem
             // There is a 1 in 2 billion chance to roll a 0.
             // Would be funny for this to stay as a super-gamble test fail, but I am evil no fun on my evil Space Station
             addressId = _random.Next();
-        } while (_occupiedAddresses.Contains(addressId) || addressId == DeviceAddress.Invalid.AddressId);
+        } while (_occupiedAddresses.ContainsKey(addressId) || addressId == DeviceAddress.Invalid.AddressId);
 
         return new DeviceAddress(addressId);
     }

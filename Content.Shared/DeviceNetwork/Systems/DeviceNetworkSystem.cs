@@ -3,6 +3,7 @@ using Content.Shared.DeviceNetwork.Components.Networks;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Examine;
 using Robust.Shared.Network;
+using Content.Shared.GameTicking;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -27,11 +28,17 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
     [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceQuery;
     [Dependency] private EntityQuery<DeviceNetworkManagerComponent> _deviceManagerQuery;
 
-    private readonly HashSet<int> _occupiedAddresses = new();
+    private readonly Dictionary<int, EntityUid> _occupiedAddresses = new();
 
     private Device[] _deviceCache = [];
 
     private readonly List<Entity<DeviceNetworkManagerComponent>> _managerCache = new();
+
+    [SubscribeLocalEvent]
+    private void OnRoundRestart(RoundRestartCleanupEvent ev)
+    {
+        _occupiedAddresses.Clear();
+    }
 
     [SubscribeLocalEvent]
     private void OnBeforePacketReceived(Entity<DeviceNetworkComponent> ent, ref BeforePacketSentEvent args)
@@ -69,18 +76,15 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
             device.TransmitFrequency = xmit.Frequency;
         }
 
-        if (ent.Comp.AutoConnect)
-        {
-            if (ent.Comp.Address != DeviceAddress.Invalid)
-                _occupiedAddresses.Add(ent.Comp.Address.AddressId);
-
-            ConnectDevice(ent.AsNullable());
-        }
-
         DirtyFields(ent.AsNullable(),
             null,
             nameof(DeviceNetworkComponent.ReceiveFrequency),
             nameof(DeviceNetworkComponent.TransmitFrequency));
+
+        if (!ent.Comp.AutoConnect)
+            return;
+
+        ConnectDevice(ent.AsNullable());
     }
 
     [SubscribeLocalEvent]
