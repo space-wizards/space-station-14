@@ -1,23 +1,21 @@
 using Robust.Client.GameObjects;
-using Content.Shared.Lathe;
-using Content.Shared.Power;
+using Content.Client.Lathe.UI;
 using Content.Client.Power;
+using Content.Client.Power.EntitySystems;
+using Content.Shared.Lathe;
+using Content.Shared.Materials;
+using Content.Shared.Power;
 using Content.Shared.Research.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Lathe;
 
-public sealed partial class LatheSystem : SharedLatheSystem
+public sealed partial class ClientLatheSystem : LatheSystem
 {
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<LatheComponent, AppearanceChangeEvent>(OnAppearanceChange);
-    }
-
+    [SubscribeLocalEvent]
     private void OnAppearanceChange(EntityUid uid, LatheComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -49,6 +47,35 @@ public sealed partial class LatheSystem : SharedLatheSystem
         }
     }
 
+    [SubscribeLocalEvent]
+    private void OnHandleState(Entity<LatheComponent> lathe, ref AfterAutoHandleStateEvent args)
+    {
+        var lastUpdated = GameTick.Zero;
+        foreach (var mtime in lathe.Comp.LastModifiedFields)
+        {
+            if (mtime > lastUpdated)
+                lastUpdated = mtime;
+        }
+
+        if (lathe.Comp.LastModifiedFields[(int)LatheComponent.FieldIndices.Queue] >= lastUpdated
+            || lathe.Comp.LastModifiedFields[(int)LatheComponent.FieldIndices.CurrentRecipe] >= lastUpdated)
+        {
+            if (_ui.TryGetOpenUi<LatheBoundUserInterface>(lathe.Owner, LatheUiKey.Key, out var bui))
+            {
+                bui.UpdateProductionQueue(lathe.Comp.CurrentRecipe, lathe.Comp.Queue);
+            }
+        }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnMaterialAmountChanged(Entity<LatheComponent> lathe, ref MaterialAmountChangedEvent evt)
+    {
+        if (_ui.TryGetOpenUi<LatheBoundUserInterface>(lathe.Owner, LatheUiKey.Key, out var bui))
+        {
+            bui.UpdateMaterialAmounts();
+        }
+    }
+
     ///<remarks>
     /// Whether or not a recipe is available is not really visible to the client,
     /// so it just defaults to true.
@@ -56,6 +83,11 @@ public sealed partial class LatheSystem : SharedLatheSystem
     protected override bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component)
     {
         return true;
+    }
+
+    protected override bool IsPowered(EntityUid ent)
+    {
+        return this.IsPowered(ent, EntityManager);
     }
 }
 
