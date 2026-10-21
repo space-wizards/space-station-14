@@ -2584,5 +2584,5 @@
         potencyDivisor: 20
       Nyctalon:
         min: 1
-        max: 15
-        potencyDivisor: 5
+        max: 5
+        potencyDivisor: 20

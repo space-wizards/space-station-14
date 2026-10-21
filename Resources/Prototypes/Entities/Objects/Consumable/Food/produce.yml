@@ -2912,7 +2912,7 @@
       - ReagentId: Vitamin
         Quantity: 5
       - ReagentId: Nyctalon
-        Quantity: 15
+        Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/shadowflower.rsi
   - type: Item
