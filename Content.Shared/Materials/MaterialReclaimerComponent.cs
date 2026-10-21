@@ -161,7 +161,7 @@ public sealed partial class MaterialReclaimerComponent : Component
     public bool GibOnEmag = true;
 
     /// <summary>
-    /// If it should gib creatures when they enter and the machine is emagged
+    /// Should it reclaim things on interaction
     /// </summary>
     [DataField]
     public bool ReclaimOnInteract;
