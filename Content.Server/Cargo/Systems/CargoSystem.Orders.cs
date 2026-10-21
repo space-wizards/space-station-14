@@ -69,7 +69,7 @@ public sealed partial class CargoSystem
         if (ent.Comp.Mode == CargoOrderConsoleMode.PrintSlip)
             return;
 
-        if (!TryGetOrderDatabase(station, out var orderDatabase))
+        if (!OnSameMap(ent.Owner, station) || !TryGetOrderDatabase(station, out var orderDatabase))
             return;
 
         if (!_bankQuery.TryComp(station, out var bank))
@@ -98,7 +98,7 @@ public sealed partial class CargoSystem
             return;
 
         var stationUid = _station.GetOwningStation(ent.Owner);
-        if (!TryGetOrderDatabase(stationUid, out var orderDatabase))
+        if (!OnSameMap(ent.Owner, stationUid) || !TryGetOrderDatabase(stationUid, out var orderDatabase))
             return;
 
         if (!_bankQuery.TryComp(stationUid, out var bank))
@@ -434,7 +434,7 @@ public sealed partial class CargoSystem
 
         var stationUid = _station.GetOwningStation(ent);
 
-        if (!TryGetOrderDatabase(stationUid, out var orderDatabase))
+        if (!OnSameMap(ent.Owner, stationUid) || !TryGetOrderDatabase(stationUid, out var orderDatabase))
             return;
 
         if (!ProtoMan.TryIndex(slip.Product, out var product))
