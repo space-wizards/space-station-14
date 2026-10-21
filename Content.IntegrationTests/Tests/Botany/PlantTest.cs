@@ -112,9 +112,10 @@ public sealed class PlantTest : GameTest
         var prototypeManager = SProtoMan;
         var entityManager = SEntMan;
         var componentFactory = Server.ResolveDependency<IComponentFactory>();
-        var botanist = SSpawnAtPosition(_human, map.GridCoords);
 
+        var botanist = SSpawnAtPosition(_human, map.GridCoords);
         var gloves = SSpawnAtPosition(_botanistGloves, map.GridCoords);
+
         _sInventory.TryEquip(botanist, gloves, "gloves");
 
         var seeds = GetSeedPrototypes()
