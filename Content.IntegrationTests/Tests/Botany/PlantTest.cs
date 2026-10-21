@@ -52,9 +52,9 @@ public sealed class PlantTest : GameTest
         var interaction = Server.System<SharedInteractionSystem>();
         var inventory = Server.System<InventorySystem>();
 
-        var botanist = entityManager.SpawnEntity(_human, map.GridCoords);
-        var gloves = entityManager.SpawnEntity(_botanistGloves, map.GridCoords);
-        var hatchet = entityManager.SpawnEntity(_hatchet, map.GridCoords);
+        var botanist = SSpawnAtPosition(_human, map.GridCoords);
+        var gloves = SSpawnAtPosition(_botanistGloves, map.GridCoords);
+        var hatchet = SSpawnAtPosition(_hatchet, map.GridCoords);
 
         inventory.TryEquip(botanist, gloves, "gloves");
         hands.TryPickupAnyHand(botanist, hatchet);
@@ -100,7 +100,7 @@ public sealed class PlantTest : GameTest
         var entityManager = SEntMan;
         var componentFactory = Server.ResolveDependency<IComponentFactory>();
         var interaction = Server.System<SharedInteractionSystem>();
-        var botanist = entityManager.SpawnEntity(_human, map.GridCoords);
+        var botanist = SSpawnAtPosition(_human, map.GridCoords);
         var seeds = GetSeedPrototypes()
                         .Where(seed =>
                         {
@@ -133,8 +133,8 @@ public sealed class PlantTest : GameTest
         var componentFactory = Server.ResolveDependency<IComponentFactory>();
         Assert.That(seed.TryComp<SeedComponent>(out var seedComponent, componentFactory), Is.True);
 
-        var tray = entityManager.SpawnEntity("HydroponicsTray", TestMap!.GridCoords);
-        var plant = entityManager.SpawnEntity(seedComponent!.PlantProtoId, TestMap.GridCoords);
+        var tray = SSpawnAtPosition("HydroponicsTray", TestMap!.GridCoords);
+        var plant = SSpawnAtPosition(seedComponent!.PlantProtoId, TestMap.GridCoords);
         Server.System<BotanySystem>().ApplyPlantSnapshotData(seedComponent.PlantData, plant);
         Server.System<PlantTraySystem>().PlantingPlantInTray(tray, plant);
 
