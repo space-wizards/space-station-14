@@ -206,7 +206,6 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
         for (Control? control = EntryContainer; control != null && control != Scroll; control = control.Parent)
             control.InvalidateMeasure();
         Scroll.InvalidateMeasure();
-        Scroll.InvalidateArrange();
         Scroll.Measure(Scroll.Size);
         Scroll.Arrange(UIBox2.FromDimensions(Scroll.Position, Scroll.Size));
         Scroll.SetScrollValue(state.Scroll);
