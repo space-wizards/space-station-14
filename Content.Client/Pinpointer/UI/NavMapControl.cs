@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Input;
@@ -14,13 +13,14 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 using System.Numerics;
 using JetBrains.Annotations;
 using Content.Shared.Atmos;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Robust.Shared.Player;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -247,11 +247,15 @@ public partial class NavMapControl : MapGridControl
         }
         else if (args.Function == ContentKeyFunctions.AltActivateItemInWorld)
         {
-            if (_player?.LocalEntity is not null && CalculateWorldPos(args, out var pos))
-                _navMapSystem.RequestWarpTo(_player.LocalEntity.Value, pos.Value);
+            // Warp the player mob to where the mouse is pointing (if allowed)
+            if (_player?.LocalEntity is not null && CalculateWorldPos(args, out var worldPosition))
+                _navMapSystem.RequestWarpTo(_player.LocalEntity.Value, worldPosition.Value);
         }
     }
 
+    /// <summary>
+    /// Calculates world position of where the mouse is pointing on the map
+    /// </summary>
     private bool CalculateWorldPos(GUIBoundKeyEventArgs args, [NotNullWhen(true)] out Vector2? worldPosition)
     {
         worldPosition = null;
