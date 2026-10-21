@@ -34,7 +34,7 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         if (args.Args.Used != reclaimer.Owner || args.Args.Target is not { } toProcess)
             return;
 
-        if (!TryValidateInsertionAndPopup(reclaimer, toProcess, args.Args.User) || !_physicsQuery.TryComp(toProcess, out var physics))
+        if (!TryValidateInsertionAndPopup(reclaimer, toProcess, args.Args.User) || !PhysicsQuery.TryComp(toProcess, out var physics))
             return;
 
         _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.Args.User):player} used a biomass reclaimer to gib {ToPrettyString(toProcess):target} in {ToPrettyString(reclaimer):reclaimer}");

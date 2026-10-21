@@ -47,7 +47,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
 
-    [Dependency] protected EntityQuery<PhysicsComponent> _physicsQuery;
+    [Dependency] protected EntityQuery<PhysicsComponent> PhysicsQuery;
     [Dependency] private EntityQuery<TransformComponent> _transformQuery;
     [Dependency] private EntityQuery<ProduceComponent> _produceQuery;
     [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery;
@@ -102,7 +102,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
         if (args.Handled || _activeQuery.HasComp(ent) || !_powerReceiver.IsPowered(ent.Owner))
             return;
 
-        if (!_physicsQuery.TryComp(args.Victim, out var physics))
+        if (!PhysicsQuery.TryComp(args.Victim, out var physics))
             return;
 
         _popup.PopupEntity(Loc.GetString("biomass-reclaimer-suicide-others", ("victim", Identity.Entity(args.Victim, EntityManager))),
@@ -277,7 +277,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     private bool TryStartInsertion(Entity<BiomassReclaimerComponent> reclaimer, EntityUid user, EntityUid toProcess, bool needHand)
     {
         if (!TryValidateInsertionAndPopup(reclaimer, toProcess, user) ||
-            !_physicsQuery.TryComp(toProcess, out var physics))
+            !PhysicsQuery.TryComp(toProcess, out var physics))
             return false;
 
         var delay = reclaimer.Comp.BaseInsertionDelay * physics.FixturesMass;
@@ -341,6 +341,6 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     private bool IsValidTarget(EntityUid target)
     {
         return (_produceQuery.HasComp(target) || _mobStateQuery.HasComp(target)) &&
-               _physicsQuery.HasComp(target);
+               PhysicsQuery.HasComp(target);
     }
 }

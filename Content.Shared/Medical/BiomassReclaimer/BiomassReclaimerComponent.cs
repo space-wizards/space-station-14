@@ -25,43 +25,43 @@ public sealed partial class BiomassReclaimerComponent : Component
     /// <summary>
     /// The interval between attempts to spill blood or throw an item.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public TimeSpan RandomMessInterval = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// The chance to spill blood at each mess interval.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float BloodSpillChance = 0.2f;
 
     /// <summary>
     /// The chance to throw an item at each mess interval.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float ItemThrowChance = 0.03f;
 
     /// <summary>
     /// The minimum speed of thrown items, inclusive.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float ItemThrowMinSpeed = 1f;
 
     /// <summary>
     /// The maximum speed of thrown items, exclusive.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float ItemThrowMaxSpeed = 10f;
 
     /// <summary>
     /// The jitter amplitude while processing.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float JitterAmplitude = -10f;
 
     /// <summary>
     /// The jitter frequency while processing.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float JitterFrequency = 100f;
 
     /// <summary>
@@ -79,30 +79,30 @@ public sealed partial class BiomassReclaimerComponent : Component
     /// <summary>
     /// How many units of biomass it produces for each unit of mass.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float YieldPerUnitMass = 0.4f;
 
     /// <summary>
     /// How many seconds to take to insert an entity per unit of its mass.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float BaseInsertionDelay = 0.1f;
 
     /// <summary>
     /// How much to multiply biomass yield from botany produce.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float ProduceYieldMultiplier = 0.25f;
 
     /// <summary>
     /// The time it takes to process a mob, per mass.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float ProcessingTimePerUnitMass = 0.5f;
 
     /// <summary>
     /// Will this refuse to gib a living mob?
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public bool SafetyEnabled = true;
 }
