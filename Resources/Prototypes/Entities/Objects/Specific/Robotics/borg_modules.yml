@@ -609,10 +609,17 @@
     hands:
     - item: AppraisalTool
     - item: Pen
+    - hand:
+        emptyLabel: borg-slot-documents-empty
+        emptyRepresentative: Paper
+        whitelist:
+          tags:
+          - Book
+          - Document
+          - Write
     - item: HandLabeler
     - item: RubberStampApproved
     - item: RubberStampDenied
-    - item: RadioHandheld
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: appraisal-module }
 
@@ -629,8 +636,16 @@
     hands:
     - item: MiningDrill
     - item: Shovel
+    - item: RadioHandheld
     - item: MineralScannerUnpowered
     - item: BorgOreBag
+    - hand:
+        emptyRepresentative: Coal
+        emptyLabel: borg-slot-ore-empty
+        whitelist:
+          tags:
+          - ConstructionMaterial
+          - Ore
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: mining-module }
 
@@ -648,8 +663,16 @@
     hands:
     - item: MiningDrillDiamond
     - item: Shovel
+    - item: RadioHandheld
     - item: AdvancedMineralScannerUnpowered
     - item: BorgOreBagOfHolding
+    - hand:
+        emptyRepresentative: Coal
+        emptyLabel: borg-slot-ore-empty
+        whitelist:
+          tags:
+          - ConstructionMaterial
+          - Ore
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-mining-module }
 
@@ -668,6 +691,7 @@
     - item: BorgFireExtinguisher
     - item: BorgHandheldGPSBasic
     - item: HandHeldMassScannerBorg
+    - item: RadioHandheld
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: grappling-module }
 
