@@ -59,33 +59,36 @@ public sealed class PlantTest : GameTest
         inventory.TryEquip(botanist, gloves, "gloves");
         hands.TryPickupAnyHand(botanist, hatchet);
 
-        foreach (var seed in GetSeedPrototypes())
+        Assert.Multiple(() =>
         {
-            var plant = SpawnHarvestablePlant(seed);
-
-            if (entityManager.HasComponent<PlantTraitLigneousComponent>(plant))
+            foreach (var seed in GetSeedPrototypes())
             {
-                interaction.InteractUsing(
-                    botanist,
-                    hatchet,
-                    plant,
-                    entityManager.GetComponent<TransformComponent>(plant).Coordinates,
-                    checkCanInteract: false,
-                    checkCanUse: false);
-            }
-            else
-            {
-                interaction.InteractHand(botanist, plant);
-            }
+                var plant = SpawnHarvestablePlant(seed);
 
-            if (entityManager.Deleted(plant))
-                continue;
+                if (entityManager.HasComponent<PlantTraitLigneousComponent>(plant))
+                {
+                    interaction.InteractUsing(
+                        botanist,
+                        hatchet,
+                        plant,
+                        entityManager.GetComponent<TransformComponent>(plant).Coordinates,
+                        checkCanInteract: false,
+                        checkCanUse: false);
+                }
+                else
+                {
+                    interaction.InteractHand(botanist, plant);
+                }
 
-            Assert.That(entityManager.TryGetComponent(plant, out PlantHolderComponent? holder), Is.True,
-                $"Plant grown from {seed.ID} lost its {nameof(PlantHolderComponent)} when harvested.");
-            Assert.That(holder!.ReadyForHarvest, Is.False,
-                $"Plant grown from {seed.ID} was not harvested.");
-        }
+                if (entityManager.Deleted(plant))
+                    continue;
+
+                Assert.That(entityManager.TryGetComponent(plant, out PlantHolderComponent? holder), Is.True,
+                    $"Plant grown from {seed.ID} lost its {nameof(PlantHolderComponent)} when harvested.");
+                Assert.That(holder!.ReadyForHarvest, Is.False,
+                    $"Plant grown from {seed.ID} was not harvested.");
+            }
+        });
     }
 
     [Test, RunOnSide(Side.Server)]
@@ -105,18 +108,23 @@ public sealed class PlantTest : GameTest
                                 return false;
                             return prototypeManager.Index(seedComponent.PlantProtoId).HasComp<PlantTraitLigneousComponent>(componentFactory);
                         });
-        foreach (var seed in seeds)
+        Assert.Multiple(() =>
         {
-            var plant = SpawnHarvestablePlant(seed);
-            interaction.InteractHand(botanist, plant);
+            foreach (var seed in seeds)
+            {
+                var plant = SpawnHarvestablePlant(seed);
+                interaction.InteractHand(botanist, plant);
 
-            Assert.That(entityManager.Deleted(plant), Is.False,
-                $"Ligneous plant grown from {seed.ID} was harvested without a hatchet.");
-            Assert.That(entityManager.TryGetComponent(plant, out PlantHolderComponent? holder), Is.True,
-                $"Ligneous plant grown from {seed.ID} lost its {nameof(PlantHolderComponent)}.");
-            Assert.That(holder!.ReadyForHarvest, Is.True,
-                $"Ligneous plant grown from {seed.ID} was harvested without a hatchet.");
-        }
+                Assert.That(entityManager.Deleted(plant), Is.False,
+                    $"Ligneous plant grown from {seed.ID} was harvested without a hatchet.");
+                Assert.That(entityManager.TryGetComponent(plant, out PlantHolderComponent? holder), Is.True,
+                    $"Ligneous plant grown from {seed.ID} lost its {nameof(PlantHolderComponent)}.");
+                if (holder == null)
+                    continue; // Already failed on the assert, but since multiple we want to see the other failures in the loop
+                Assert.That(holder!.ReadyForHarvest, Is.True,
+                    $"Ligneous plant grown from {seed.ID} was harvested without a hatchet.");
+            }
+        });
     }
 
     private EntityUid SpawnHarvestablePlant(EntityPrototype seed)

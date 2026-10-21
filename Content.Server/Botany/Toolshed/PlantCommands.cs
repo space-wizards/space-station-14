@@ -152,7 +152,6 @@ public sealed partial class PlantCommand : ToolshedCommand
                 $"Plant entity {input} did not accept added chemicals."));
             return null;
         }
-        
         return input;
     }
 
@@ -205,7 +204,7 @@ public sealed partial class PlantCommand : ToolshedCommand
         _plantTray ??= GetSys<PlantTraySystem>();
         _plantTray.PlantingPlantInTray((tray, trayComponent), plant);
 
-        if(!EntityManager.TryGetComponent(plant, out PlantComponent? plantComponent))
+        if (!EntityManager.TryGetComponent(plant, out PlantComponent? plantComponent))
             return null;
 
         return (plant, plantComponent);
