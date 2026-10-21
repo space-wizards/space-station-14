@@ -1,0 +1,24 @@
+# The configuration file for Pre-Commit (https://pre-commit.com/)
+# Install with
+#   pip install pre-commit
+
+# These configurations ensure that all code is appropriately formatted
+# prior to even being committed to a repository.
+
+# To only allow specific files or folders to be automatically changed
+# (i.e. content you control), use the "files:" option. It supports
+# python regex (https://pre-commit.com/#regular-expressions)
+# For example, if you have a namespacing mangle of "_AA", you could use
+# which will filter for files and subdirectories under the mangle.
+
+#files: ^[^\s"']*_AA[\/_].*
+
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+    -   id: mixed-line-ending # Ensures no CRLF
+    -   id: end-of-file-fixer # Ensures text files end with a newline
+    -   id: trailing-whitespace # Cleans up newlines and spaces
+        args: [--markdown-linebreak-ext=md] # Ensures double space breaks don't get clobbered
+    -   id: fix-byte-order-marker # Ensures no BOMs
