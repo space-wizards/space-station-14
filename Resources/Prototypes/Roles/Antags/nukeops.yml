@@ -191,12 +191,12 @@
     - SyndiHypo
     - SawAdvanced
     - Cautery
+    - CombatKnife
     - WeaponPistolViper
     - PinpointerSyndicateNuclear
+    - HandheldHealthAnalyzer
     - CombatMedipen
     - DeathAcidifierImplanter
-    - RedspaceBeaker # Nem said this yaml doesnt support counts so im listing it twice
-    - RedspaceBeaker
 
 - type: chameleonOutfit
   id: NukeopsMedicOutfit
