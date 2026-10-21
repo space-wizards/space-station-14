@@ -9,6 +9,7 @@ using Robust.Shared.Configuration;
 
 namespace Content.Server.Medical.BiomassReclaimer;
 
+/// <inheritdoc/>
 public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSystem
 {
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;

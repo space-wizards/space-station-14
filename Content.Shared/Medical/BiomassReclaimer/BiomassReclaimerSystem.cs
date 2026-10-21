@@ -1,6 +1,6 @@
 using Content.Shared.Audio;
-using Content.Shared.Botany.Items.Components;
 using Content.Shared.Body.Components;
+using Content.Shared.Botany.Items.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Construction.Components;
 using Content.Shared.DoAfter;
@@ -31,21 +31,21 @@ namespace Content.Shared.Medical.BiomassReclaimer;
 
 public abstract partial class BiomassReclaimerSystem : EntitySystem
 {
-    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private MobStateSystem _mobState = default!;
-    [Dependency] private SharedMaterialStorageSystem _material = default!;
-    [Dependency] private InventorySystem _inventory = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private SharedAmbientSoundSystem _ambientSoundSystem = default!;
-    [Dependency] private SharedJitteringSystem _jitteringSystem = default!;
-    [Dependency] private SharedSolutionContainerSystem _solution = default!;
-    [Dependency] private SharedPuddleSystem _puddleSystem = default!;
-    [Dependency] private ThrowingSystem _throwing = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private INetManager _net = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedAmbientSoundSystem _ambientSound = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedJitteringSystem _jittering = default!;
+    [Dependency] private SharedMaterialStorageSystem _material = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private SharedPuddleSystem _puddle = default!;
+    [Dependency] private SharedSolutionContainerSystem _solution = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
 
     [Dependency] protected EntityQuery<PhysicsComponent> PhysicsQuery;
     [Dependency] private EntityQuery<TransformComponent> _transformQuery;
@@ -53,6 +53,8 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery;
     [Dependency] private EntityQuery<ActiveBiomassReclaimerComponent> _activeQuery;
     [Dependency] private EntityQuery<BiomassReclaimerComponent> _reclaimerQuery;
+    [Dependency] private EntityQuery<BloodstreamComponent> _bloodstreamQuery;
+    [Dependency] private EntityQuery<ToolRefinableComponent> _refinableQuery;
 
     public override void Update(float frameTime)
     {
@@ -81,7 +83,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
 
         var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(uid));
         if (random.Prob(reclaimer.BloodSpillChance) && active.BloodReagents is { } blood)
-            _puddleSystem.TrySpillAt(uid, blood, out _);
+            _puddle.TrySpillAt(uid, blood, out _);
 
         // Throwing is not predicted yet.
         if (_net.IsServer && random.Prob(reclaimer.ItemThrowChance) && active.SpawnedEntities.Count > 0)
@@ -151,6 +153,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
             ent.Comp.PowerLossTime = _timing.CurTime;
             Dirty(ent);
         }
+
         StopRunningEffects(ent);
     }
 
@@ -171,8 +174,8 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
 
     private void StartRunningEffects(Entity<BiomassReclaimerComponent> ent)
     {
-        _jitteringSystem.AddJitter(ent, ent.Comp.JitterAmplitude, ent.Comp.JitterFrequency);
-        _ambientSoundSystem.SetAmbience(ent, true);
+        _jittering.AddJitter(ent, ent.Comp.JitterAmplitude, ent.Comp.JitterFrequency);
+        _ambientSound.SetAmbience(ent, true);
     }
 
     private void PlayStartupSound(Entity<BiomassReclaimerComponent> ent)
@@ -184,7 +187,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     private void StopRunningEffects(EntityUid uid)
     {
         RemComp<JitteringComponent>(uid);
-        _ambientSoundSystem.SetAmbience(uid, false);
+        _ambientSound.SetAmbience(uid, false);
     }
 
     protected void StartProcessing(Entity<PhysicsComponent> toProcess, Entity<BiomassReclaimerComponent> ent)
@@ -208,7 +211,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     private void CollectMessData(EntityUid toProcess, Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent)
     {
         var (_, reclaimer, active) = ent;
-        if (TryComp<BloodstreamComponent>(toProcess, out var stream) &&
+        if (_bloodstreamQuery.TryComp(toProcess, out var stream) &&
             _solution.ResolveSolution(toProcess, stream.BloodSolutionName, ref stream.BloodSolution, out var solution))
         {
             active.BloodReagents = solution.Clone();
@@ -216,8 +219,10 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
             active.BloodReagents.ScaleSolution(scale);
         }
 
-        if (TryComp<ToolRefinableComponent>(toProcess, out var refinable))
+        if (_refinableQuery.TryComp(toProcess, out var refinable))
             active.SpawnedEntities = [.. refinable.RefineResult];
+
+        Dirty(ent, active);
     }
 
     private float CalculateYield(Entity<PhysicsComponent> toProcess, Entity<BiomassReclaimerComponent> reclaimer)
@@ -225,6 +230,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
         var expectedYield = toProcess.Comp.FixturesMass * reclaimer.Comp.YieldPerUnitMass;
         if (_produceQuery.HasComp(toProcess))
             expectedYield *= reclaimer.Comp.ProduceYieldMultiplier;
+
         return expectedYield;
     }
 
@@ -282,7 +288,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
             return false;
 
         var delay = reclaimer.Comp.BaseInsertionDelay * physics.FixturesMass;
-        return _doAfterSystem.TryStartDoAfter(
+        return _doAfter.TryStartDoAfter(
             new DoAfterArgs(EntityManager, user, delay, new ReclaimerDoAfterEvent(), reclaimer, target: reclaimer, used: toProcess)
             {
                 NeedHand = needHand,
@@ -321,7 +327,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
         if (TerminatingOrDeleted(target) || EntityManager.IsQueuedForDeletion(target))
             return BiomassReclaimerInsertResult.InvalidTarget;
 
-        if (HasComp<ActiveBiomassReclaimerComponent>(reclaimer))
+        if (_activeQuery.HasComp(reclaimer))
             return BiomassReclaimerInsertResult.Busy;
 
         var isPlant = _produceQuery.HasComp(target);
