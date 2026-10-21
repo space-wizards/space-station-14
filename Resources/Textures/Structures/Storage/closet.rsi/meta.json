@@ -4,7 +4,7 @@
         "x": 32,
         "y": 32
     },
-    "copyright": "Taken from tgstation, brigmedic locker is a resprited CMO locker by PuroSlavKing (Github), n2 sprites based on fire and emergency sprites, genpop lockers by EmoGarbage404 (github), sci bio locker is a resprited bio viro locker by Alpha-Two (github), Evac lockers by EmoGarbage404 (GitHub)",
+    "copyright": "Taken from tgstation, brigmedic locker is a resprited CMO locker by PuroSlavKing (Github), n2 sprites based on fire and emergency sprites, genpop lockers by EmoGarbage404 (github), sci bio locker is a resprited bio viro locker by Alpha-Two (github), Evac lockers by EmoGarbage404 (GitHub), syndicate_agent and syndicate_door_agent and syndicate_open_agent are resprites made by PAFFhassoocksthatmatchhershirt on discord of syndicate.png and syndicate_door.png and syndicate_open.png",
     "license": "CC-BY-SA-3.0",
     "states": [
         {
@@ -545,10 +545,19 @@
             "name": "syndicate"
         },
         {
+            "name": "syndicate_agent"
+        },
+        {
             "name": "syndicate_door"
         },
         {
+            "name": "syndicate_door_agent"
+        },
+        {
             "name": "syndicate_open"
+        },
+        {
+            "name": "syndicate_open_agent"
         },
         {
             "name": "tac"
