@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
+using Content.IntegrationTests.Utility;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Botany.Components;
@@ -12,6 +13,7 @@ using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
+using Robust.Server.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -38,6 +40,8 @@ public sealed class PlantTest : GameTest
 
     [SidedDependency(Side.Server)]
     private readonly PlantSystem _sPlant = null!;
+
+    private static readonly string[] SeedEntities = GameDataScrounger.EntitiesWithComponent("SeedComponent");
 
 
     public override PoolSettings PoolSettings => new() { Connected = false };
@@ -169,12 +173,7 @@ public sealed class PlantTest : GameTest
     {
         var componentFactory = Server.ResolveDependency<IComponentFactory>();
 
-        return Server.ProtoMan.EnumeratePrototypes<EntityPrototype>()
-            .Where(prototype => !prototype.Abstract)
-            .Where(prototype => !Pair.IsTestPrototype(prototype))
-            .Where(prototype => prototype.HasComp<SeedComponent>(componentFactory))
-            .OrderBy(prototype => prototype.ID)
-            .ToList();
+        return SeedEntities.Select(SProtoMan.Index<EntityPrototype>).ToList();
     }
 
 }
