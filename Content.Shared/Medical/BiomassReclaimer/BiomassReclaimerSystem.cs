@@ -282,7 +282,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
 
         var delay = reclaimer.Comp.BaseInsertionDelay * physics.FixturesMass;
         return _doAfterSystem.TryStartDoAfter(
-            new DoAfterArgs(EntityManager, user, delay, new ReclaimerDoAfterEvent(), reclaimer, target: toProcess, used: reclaimer)
+            new DoAfterArgs(EntityManager, user, delay, new ReclaimerDoAfterEvent(), reclaimer, target: reclaimer, used: toProcess)
             {
                 NeedHand = needHand,
                 BreakOnMove = true,
