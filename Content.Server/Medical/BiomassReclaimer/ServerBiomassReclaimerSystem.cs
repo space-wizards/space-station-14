@@ -31,7 +31,7 @@ public sealed partial class ServerBiomassReclaimerSystem : BiomassReclaimerSyste
         if (args.Handled || args.Cancelled)
             return;
 
-        if (args.Args.Used != reclaimer.Owner || args.Args.Target is not { } toProcess)
+        if (args.Args.Target != reclaimer.Owner || args.Args.Used is not { } toProcess)
             return;
 
         if (!TryValidateInsertionAndPopup(reclaimer, toProcess, args.Args.User) || !PhysicsQuery.TryComp(toProcess, out var physics))
