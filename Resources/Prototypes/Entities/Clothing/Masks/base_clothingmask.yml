@@ -26,8 +26,14 @@
   description: Handy, but prevents insertion of pie into your pie hole.
   components:
   - type: Action
-    icon: { sprite: Clothing/Mask/gas.rsi, state: icon }
-    iconOn: Interface/Default/blocked.png
+  - type: Sprite
+    sprite: Clothing/Mask/gas.rsi
+    layers:
+    - state: icon
+      map: ["enum.ActionVisuals.Icon"]
+    - texture: Interface/Default/blocked.png
+      map: ["enum.ActionVisuals.IconToggled"]
+      visible: false
   - type: InstantAction
     event: !type:ToggleMaskEvent
 

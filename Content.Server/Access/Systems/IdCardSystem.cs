@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
-using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
@@ -9,9 +8,10 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Kitchen;
+using Content.Shared.Kitchen.Components;
+using Content.Shared.Kitchen.EntitySystems;
 using Content.Shared.Popups;
 using Robust.Shared.Random;
-using Content.Server.Kitchen.EntitySystems;
 
 namespace Content.Server.Access.Systems;
 
@@ -96,12 +96,10 @@ public sealed partial class IdCardSystem : SharedIdCardSystem
         }
     }
 
-    public override void ExpireId(Entity<ExpireIdCardComponent> ent)
+    public override bool ExpireId(Entity<ExpireIdCardComponent> ent)
     {
-        if (ent.Comp.Expired)
-            return;
-
-        base.ExpireId(ent);
+        if (!base.ExpireId(ent))
+            return false;
 
         if (ent.Comp.ExpireMessage != null)
         {
@@ -112,5 +110,7 @@ public sealed partial class IdCardSystem : SharedIdCardSystem
                 ChatTransmitRange.Normal,
                 true);
         }
+
+        return true;
     }
 }

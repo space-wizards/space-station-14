@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Coordinates.Helpers;
@@ -8,7 +9,6 @@ using Content.Shared.Examine;
 using Content.Shared.Gibbing;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Lock;
 using Content.Shared.Magic.Components;
@@ -18,7 +18,6 @@ using Content.Shared.Mind;
 using Content.Shared.Objectives.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
-using Content.Shared.Speech.Muting;
 using Content.Shared.Storage;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
@@ -28,6 +27,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -48,6 +48,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
     [Dependency] private ISerializationManager _seriMan = default!;
     [Dependency] private SharedMapSystem _mapSystem = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private SharedGunSystem _gunSystem = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
@@ -57,7 +58,6 @@ public abstract partial class SharedMagicSystem : EntitySystem
     [Dependency] private SharedDoorSystem _door = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private LockSystem _lock = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private TagSystem _tag = default!;
@@ -66,29 +66,14 @@ public abstract partial class SharedMagicSystem : EntitySystem
     [Dependency] private SharedStunSystem _stun = default!;
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private SharedChargesSystem _charges = default!;
-    [Dependency] private ExamineSystemShared _examine= default!;
+    [Dependency] private ExamineSystemShared _examine = default!;
     [Dependency] private AliveHumanoidTargetSystem _target = default!;
+
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery;
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<MagicComponent, BeforeCastSpellEvent>(OnBeforeCastSpell);
-
-        SubscribeLocalEvent<InstantSpawnSpellEvent>(OnInstantSpawn);
-        SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
-        SubscribeLocalEvent<WorldSpawnSpellEvent>(OnWorldSpawn);
-        SubscribeLocalEvent<ProjectileSpellEvent>(OnProjectileSpell);
-        SubscribeLocalEvent<ChangeComponentsSpellEvent>(OnChangeComponentsSpell);
-        SubscribeLocalEvent<SmiteSpellEvent>(OnSmiteSpell);
-        SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
-        SubscribeLocalEvent<ChargeSpellEvent>(OnChargeSpell);
-        SubscribeLocalEvent<RandomGlobalSpawnSpellEvent>(OnRandomGlobalSpawnSpell);
-        SubscribeLocalEvent<MindSwapSpellEvent>(OnMindSwapSpell);
-        SubscribeLocalEvent<VoidApplauseSpellEvent>(OnVoidApplause);
-    }
-
+    [SubscribeLocalEvent]
     private void OnBeforeCastSpell(Entity<MagicComponent> ent, ref BeforeCastSpellEvent args)
     {
         var comp = ent.Comp;
@@ -109,7 +94,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
             }
         }
 
-        if (comp.RequiresSpeech && HasComp<MutedComponent>(args.Performer))
+        if (comp.RequiresSpeech && !_actionBlocker.CanSpeak(args.Performer))
             hasReqs = false;
 
         if (hasReqs)
@@ -133,6 +118,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
     /// <summary>
     /// Handles the instant action (i.e. on the caster) attempting to spawn an entity.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnInstantSpawn(InstantSpawnSpellEvent args)
     {
         if (args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
@@ -148,8 +134,8 @@ public abstract partial class SharedMagicSystem : EntitySystem
         args.Handled = true;
     }
 
-        /// <summary>
-    ///     Gets spawn positions listed on <see cref="InstantSpawnSpellEvent"/>
+    /// <summary>
+    /// Gets spawn positions listed on <see cref="InstantSpawnSpellEvent"/>
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     private List<EntityCoordinates> GetInstantSpawnPositions(TransformComponent casterXform, MagicInstantSpawnData data)
@@ -157,7 +143,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
         switch (data)
         {
             case TargetCasterPos:
-                return new List<EntityCoordinates>(1) {casterXform.Coordinates};
+                return new List<EntityCoordinates>(1) { casterXform.Coordinates };
             case TargetInFrontSingle:
             {
                 var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized());
@@ -230,6 +216,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
     /// It will offset entities after the first entity based on the OffsetVector2.
     /// </remarks>
     /// <param name="args"> The Spawn Spell Event args.</param>
+    [SubscribeLocalEvent]
     private void OnWorldSpawn(WorldSpawnSpellEvent args)
     {
         if (args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
@@ -267,6 +254,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
     // End World Spawn Spells
     #endregion
     #region Projectile Spells
+    [SubscribeLocalEvent]
     private void OnProjectileSpell(ProjectileSpellEvent ev)
     {
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
@@ -280,19 +268,38 @@ public abstract partial class SharedMagicSystem : EntitySystem
         var xform = Transform(ev.Performer);
         var fromCoords = xform.Coordinates;
         var toCoords = ev.Target;
-        var userVelocity = _physics.GetMapLinearVelocity(ev.Performer);
+        _physicsQuery.TryComp(ev.Performer, out var userPhysics);
+        var userVelocity = _physics.GetMapLinearVelocity(ev.Performer, userPhysics, xform);
+
+        var userLocalVelocity = userPhysics?.LinearVelocity ?? Vector2.Zero;
 
         // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
         var fromMap = _transform.ToMapCoordinates(fromCoords);
         var ent = Spawn(ev.Prototype, fromMap);
         var direction = _transform.ToMapCoordinates(toCoords).Position -
                          fromMap.Position;
-        _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer, ev.Performer, ev.ProjectileSpeed);
+
+        // Check for backwards velocity compensation.
+        var compensation = 0.0f;
+        if (ev.RearVelocityCompensation > 0.0f
+            && !MathHelper.CloseToPercent(userLocalVelocity.LengthSquared(), 0.0f)
+            && !MathHelper.CloseToPercent(direction.LengthSquared(), 0.0f))
+        {
+            var dotProduct = Vector2.Dot(direction, userLocalVelocity);
+            if (dotProduct < 0.0f)
+            {
+                // Get rearward component of user's local velocity, multiply it by our coefficient.
+                compensation += ev.RearVelocityCompensation * -dotProduct / direction.Length();
+            }
+        }
+
+        _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer, ev.Performer, ev.ProjectileSpeed + compensation);
     }
     // End Projectile Spells
     #endregion
     #region Change Component Spells
     // staves.yml ActionRGB light
+    [SubscribeLocalEvent]
     private void OnChangeComponentsSpell(ChangeComponentsSpellEvent ev)
     {
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
@@ -305,26 +312,8 @@ public abstract partial class SharedMagicSystem : EntitySystem
     }
     // End Change Component Spells
     #endregion
-    #region Teleport Spells
-    // TODO: Rename to teleport clicked spell?
-    /// <summary>
-    /// Teleports the user to the clicked location
-    /// </summary>
-    /// <param name="args"></param>
-    private void OnTeleportSpell(TeleportSpellEvent args)
-    {
-        if (args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
-            return;
-
-        var transform = Transform(args.Performer);
-        if (transform.MapID != _transform.GetMapId(args.Target) || !_interaction.InRangeUnobstructed(args.Performer, args.Target, range: 1000F, collisionMask: CollisionGroup.Opaque, popup: true))
-            return;
-
-        _transform.SetCoordinates(args.Performer, args.Target);
-        _transform.AttachToGridOrMap(args.Performer, transform);
-        args.Handled = true;
-    }
-
+    #region Position Swap Spells
+    [SubscribeLocalEvent]
     public virtual void OnVoidApplause(VoidApplauseSpellEvent ev)
     {
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
@@ -334,7 +323,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
 
         _transform.SwapPositions(ev.Performer, ev.Target);
     }
-    // End Teleport Spells
+    // End Position Swap Spells
     #endregion
     #region Spell Helpers
     private void SpawnSpellHelper(string? proto, EntityCoordinates position, EntityUid performer, float? lifetime = null, bool preventCollide = false)
@@ -382,6 +371,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
     // End Spell Helpers
     #endregion
     #region Touch Spells
+    [SubscribeLocalEvent]
     private void OnSmiteSpell(SmiteSpellEvent ev)
     {
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
@@ -402,6 +392,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
     /// <summary>
     /// Opens all doors and locks within range.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnKnockSpell(KnockSpellEvent args)
     {
         if (args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
@@ -440,6 +431,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
     #endregion
     #region Charge Spells
     // TODO: Future support to charge other items
+    [SubscribeLocalEvent]
     private void OnChargeSpell(ChargeSpellEvent ev)
     {
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer) || !TryComp<HandsComponent>(ev.Performer, out var handsComp))
@@ -469,6 +461,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
     #region Global Spells
 
     // TODO: Change this into a "StartRuleAction" when actions with multiple events are supported
+    [SubscribeLocalEvent]
     protected virtual void OnRandomGlobalSpawnSpell(RandomGlobalSpawnSpellEvent ev)
     {
         if (!_net.IsServer || ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer) || ev.Spawns is not { } spawns)
@@ -502,6 +495,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
     #endregion
     #region Mindswap Spells
 
+    [SubscribeLocalEvent]
     private void OnMindSwapSpell(MindSwapSpellEvent ev)
     {
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))

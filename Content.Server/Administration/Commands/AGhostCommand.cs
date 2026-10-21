@@ -3,7 +3,8 @@ using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Mind;
 using Content.Shared.Administration;
-using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
+using Content.Shared.Ghost.Systems;
 using Content.Shared.Mind;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -74,7 +75,7 @@ public sealed partial class AGhostCommand : LocalizedCommands
         var metaDataSystem = _entities.System<MetaDataSystem>();
         var ghostSystem = _entities.System<SharedGhostSystem>();
         var transformSystem = _entities.System<TransformSystem>();
-        var gameTicker = _entities.System<GameTicker>();
+        var gameTicker = _entities.System<ServerGameTicker>();
 
         if (!mindSystem.TryGetMind(player, out var mindId, out var mind))
         {
@@ -101,7 +102,7 @@ public sealed partial class AGhostCommand : LocalizedCommands
             coordinates = gameTicker.GetObserverSpawnPoint();
         }
 
-        var ghost = _entities.SpawnEntity(GameTicker.AdminObserverPrototypeName, coordinates.Value);
+        var ghost = _entities.SpawnEntity(ServerGameTicker.AdminObserverPrototypeName, coordinates.Value);
 
         if (canReturn)
         {

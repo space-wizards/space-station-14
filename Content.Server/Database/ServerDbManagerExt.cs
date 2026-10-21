@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using Robust.Shared.Asynchronous;
 
 namespace Content.Server.Database;

@@ -119,14 +119,12 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
         _shader.SetParameter("times", _times);
         _shader.SetParameter("count", _currentCount);
         _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        _shader?.SetParameter("renderScale", args.Viewport.RenderScale * args.Viewport.Eye.Scale);
 
         // finally do the rendering
         var worldHandle = args.WorldHandle;
         worldHandle.UseShader(_shader);
         worldHandle.DrawRect(args.WorldBounds, Color.White);
-
-        // i wonder what would happen if this line wasn't there :godo:
-        worldHandle.UseShader(null);
     }
 
     /// <summary>

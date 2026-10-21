@@ -39,7 +39,7 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
 
     private void OnGetVerbs(Entity<EntityHeaterComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract)
+        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract)
             return;
 
         var nextSettingIndex = ((int)ent.Comp.Setting + 1) % _settingCount;
@@ -88,8 +88,8 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
         // Just think of the load as a little LED, or bad wiring, or something.
         return setting switch
         {
-            EntityHeaterSetting.Low => max / 3f,
-            EntityHeaterSetting.Medium => max * 2f / 3f,
+            EntityHeaterSetting.Low => max / 4f,
+            EntityHeaterSetting.Medium => max / 2f,
             EntityHeaterSetting.High => max,
             _ => 0.01f,
         };

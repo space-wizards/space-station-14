@@ -28,6 +28,9 @@ public abstract partial class SharedInstrumentComponent : Component
     [DataField]
     public bool RespectMidiLimits { get; set; } = true;
 
+    [DataField]
+    public byte MinVolume { get; set; }
+
     [ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? Master { get; set; } = null;
 
@@ -63,10 +66,26 @@ public sealed class InstrumentComponentState : ComponentState
     public bool RespectMidiLimits;
 
     public NetEntity? Master;
+    public byte MinVolume;
 
     public BitArray FilteredChannels = default!;
 }
 
+/// <summary>
+///     This message is sent to the client to update midi min volume.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class InstrumentSetMidiMinVolumeEvent : EntityEventArgs
+{
+    public NetEntity Uid { get; }
+    public byte MinVolume { get; set; }
+
+    public InstrumentSetMidiMinVolumeEvent(NetEntity uid, byte minVolume)
+    {
+        Uid = uid;
+        MinVolume = minVolume;
+    }
+}
 
 /// <summary>
 ///     This message is sent to the client to completely stop midi input and midi playback.

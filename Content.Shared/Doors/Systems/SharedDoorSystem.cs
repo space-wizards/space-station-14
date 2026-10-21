@@ -23,7 +23,9 @@ using Robust.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Doors.Systems;
 
@@ -46,6 +48,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] private SharedMapSystem _mapSystem = default!;
     [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private WeldableSystem _weldSystem = default!;
 
     public static readonly ProtoId<TagPrototype> DoorBumpTag = "DoorBumpOpener";
 
@@ -53,8 +56,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
     ///     A set of doors that are currently opening, closing, or just queued to open/close after some delay.
     /// </summary>
     private readonly HashSet<Entity<DoorComponent>> _activeDoors = new();
-
-    private readonly HashSet<Entity<PhysicsComponent>> _doorIntersecting = new();
 
     public override void Initialize()
     {
@@ -74,7 +75,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, BeforePryEvent>(OnBeforePry);
         SubscribeLocalEvent<DoorComponent, PriedEvent>(OnAfterPry);
         SubscribeLocalEvent<DoorComponent, WeldableAttemptEvent>(OnWeldAttempt);
-        SubscribeLocalEvent<DoorComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<DoorComponent, GetPryTimeModifierEvent>(OnPryTimeModifier);
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
     }
@@ -160,6 +160,12 @@ public abstract partial class SharedDoorSystem : EntitySystem
         switch (state)
         {
             case DoorState.Opening:
+                if (_weldSystem.IsWelded(uid))
+                {
+                    state = DoorState.Closed;
+                    goto case DoorState.Closed;
+                }
+
                 _activeDoors.Add((uid, door));
                 door.NextStateChange = GameTiming.CurTime + door.OpenTimeOne;
                 break;
@@ -180,10 +186,14 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 break;
 
             case DoorState.Open:
+                if (_weldSystem.IsWelded(uid))
+                    return false;
+
                 door.Partial = false;
                 if (door.NextStateChange == null)
                     _activeDoors.Remove((uid, door));
                 break;
+
             case DoorState.Closed:
                 // May want to keep the door around to re-check for opening if we got a contact during closing.
                 door.Partial = false;
@@ -219,7 +229,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
     private void OnBeforePry(EntityUid uid, DoorComponent door, ref BeforePryEvent args)
     {
-        if (door.State == DoorState.Welded || !door.CanPry)
+        if (!door.CanPry || _weldSystem.IsWelded(uid))
             args.Cancelled = true;
     }
 
@@ -247,18 +257,10 @@ public abstract partial class SharedDoorSystem : EntitySystem
             args.Cancel();
             return;
         }
-        if (component.State != DoorState.Closed && component.State != DoorState.Welded)
+        if (component.State == DoorState.Open || component.State == DoorState.Opening || component.State == DoorState.Closing)
         {
             args.Cancel();
         }
-    }
-
-    private void OnWeldChanged(EntityUid uid, DoorComponent component, ref WeldableChangedEvent args)
-    {
-        if (component.State == DoorState.Closed)
-            SetState(uid, DoorState.Welded, component);
-        else if (component.State == DoorState.Welded)
-            SetState(uid, DoorState.Closed, component);
     }
 
     /// <summary>
@@ -282,10 +284,13 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!SetState(uid, DoorState.Denying, door))
             return;
 
+        var audioParams = door.DenySound?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVolume(-3);
+
         if (predicted)
-            Audio.PlayPredicted(door.DenySound, uid, user, AudioParams.Default.WithVolume(-3));
+            Audio.PlayPredicted(door.DenySound, uid, user, audioParams);
         else if (_net.IsServer)
-            Audio.PlayPvs(door.DenySound, uid, AudioParams.Default.WithVolume(-3));
+            Audio.PlayPvs(door.DenySound, uid, audioParams);
     }
 
     public bool TryToggleDoor(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
@@ -326,9 +331,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door))
             return false;
 
-        if (door.State == DoorState.Welded)
-            return false;
-
         if (Paused(uid))
             return false;
 
@@ -343,6 +345,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 Deny(uid, door, user, predicted: true);
             return false;
         }
+
+        if (_weldSystem.IsWelded(uid))
+            return false;
 
         return true;
     }
@@ -365,10 +370,16 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!SetState(uid, DoorState.Opening, door))
             return;
 
-        if (predicted)
-            Audio.PlayPredicted(door.OpenSound, uid, user, AudioParams.Default.WithVolume(-5));
-        else if (_net.IsServer)
-            Audio.PlayPvs(door.OpenSound, uid, AudioParams.Default.WithVolume(-5));
+        // Only play the sound if the door actually started opening.
+        if (door.State == DoorState.Opening)
+        {
+            var audioParams = door.OpenSound?.Params ?? AudioParams.Default;
+            audioParams = audioParams.AddVolume(-5);
+            if (predicted)
+                Audio.PlayPredicted(door.OpenSound, uid, user, audioParams);
+            else if (_net.IsServer)
+                Audio.PlayPvs(door.OpenSound, uid, audioParams);
+        }
 
         if (lastState == DoorState.Emagging && TryComp<DoorBoltComponent>(uid, out var doorBoltComponent))
             SetBoltsDown((uid, doorBoltComponent), true, user, true);
@@ -436,7 +447,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         // since both closing/closed and welded are door states, we need to prevent 'closing'
         // a welded door or else there will be weird state bugs
-        if (door.State is DoorState.Welded or DoorState.Closed)
+        if (door.State is DoorState.Closed || _weldSystem.IsWelded(uid))
             return false;
 
         if (Paused(uid))
@@ -450,7 +461,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!HasAccess(uid, user, door))
             return false;
 
-        return !ev.PerformCollisionCheck || !GetColliding(uid).Any();
+        return !ev.PerformCollisionCheck || !GetColliding(uid, null, null, door.CheckFixtureCollision, door.PerformCollisionCheck).Any();
     }
 
     public void StartClosing(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
@@ -461,10 +472,13 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!SetState(uid, DoorState.Closing, door))
             return;
 
+        var audioParams = door.CloseSound?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVolume(-5);
+
         if (predicted)
-            Audio.PlayPredicted(door.CloseSound, uid, user, AudioParams.Default.WithVolume(-5));
+            Audio.PlayPredicted(door.CloseSound, uid, user, audioParams);
         else if (_net.IsServer)
-            Audio.PlayPvs(door.CloseSound, uid, AudioParams.Default.WithVolume(-5));
+            Audio.PlayPvs(door.CloseSound, uid, audioParams);
     }
 
     /// <summary>
@@ -522,7 +536,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     }
 
     /// <summary>
-    /// Crushes everyone colliding with us by more than <see cref="IntersectPercentage"/>%.
+    /// Crushes everyone colliding with the door.
     /// </summary>
     public void Crush(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
     {
@@ -532,9 +546,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!door.CanCrush)
             return;
 
-        // Find entities and apply curshing effects
+        // Find entities and apply crushing effects
         var stunTime = door.DoorStunTime + door.OpenTimeOne;
-        foreach (var entity in GetColliding(uid, physics))
+        foreach (var entity in GetColliding(uid, physics, null, door.CheckFixtureCollision, door.AllowMachineLayer))
         {
             door.CurrentlyCrushing.Add(entity);
             if (door.CrushDamage != null)
@@ -552,11 +566,17 @@ public abstract partial class SharedDoorSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Get all entities that collide with this door by more than <see cref="IntersectPercentage"/> percent.\
+    /// Checks if there are any entities colliding with the door, passing them back out to use e.g. to prevent closing.
     /// </summary>
-    public IEnumerable<EntityUid> GetColliding(EntityUid uid, PhysicsComponent? physics = null)
+    /// <param name="uid">The door entity to check.</param>
+    /// <param name="physics">The door's <see cref="PhysicsComponent"/>.</param>
+    /// <param name="checkFixtureCollision">If true, the door will do a more exact check based on its first fixture.</param>
+    /// <param name="fixtures">The door's <see cref="FixturesComponent"/>.</param>
+    /// <param name="allowMachineLayer">The door will be able to close over <see cref="CollisionGroup.MachineLayer"/>.</param>
+    /// <returns>The list of entities inside the door.</returns>
+    public IEnumerable<EntityUid> GetColliding(EntityUid uid, PhysicsComponent? physics = null, FixturesComponent? fixtures = null, bool checkFixtureCollision = false, bool allowMachineLayer = false)
     {
-        if (!Resolve(uid, ref physics))
+        if (!Resolve(uid, ref physics) || !Resolve(uid, ref fixtures))
             yield break;
 
         var xform = Transform(uid);
@@ -566,19 +586,47 @@ public abstract partial class SharedDoorSystem : EntitySystem
             yield break;
         var tileRef = _mapSystem.GetTileRef(xform.GridUid.Value, mapGridComp, xform.Coordinates);
 
-        _doorIntersecting.Clear();
-        _entityLookup.GetLocalEntitiesIntersecting(xform.GridUid.Value, tileRef.GridIndices, _doorIntersecting, gridComp: mapGridComp, flags: (LookupFlags.All & ~LookupFlags.Sensors));
+        var doorIntersecting = new HashSet<Entity<PhysicsComponent>>();
+
+        if (checkFixtureCollision && fixtures.Fixtures.TryFirstOrNull(out var fixture))
+        {
+            var fixtureToWorld = PhysicsSystem.GetPhysicsTransform(uid, xform);
+
+            _entityLookup.GetEntitiesIntersecting(xform.MapID,
+                fixture.Value.Value.Shape,
+                fixtureToWorld,
+                doorIntersecting,
+                flags: LookupFlags.All & ~(LookupFlags.Sensors | LookupFlags.Contained));
+        }
+        else
+        {
+            _entityLookup.GetLocalEntitiesIntersecting(xform.GridUid.Value, tileRef.GridIndices, doorIntersecting, gridComp: mapGridComp, flags: LookupFlags.All & ~(LookupFlags.Sensors | LookupFlags.Contained));
+        }
 
         // TODO SLOTH fix electro's code.
         // ReSharper disable once InconsistentNaming
 
-        foreach (var otherPhysics in _doorIntersecting)
+        foreach (var otherPhysics in doorIntersecting)
         {
             if (otherPhysics.Comp == physics)
                 continue;
 
             if (!otherPhysics.Comp.CanCollide)
                 continue;
+
+            // Skip anchored static entities on adjacent tiles.
+            // The fixture-based AABB lookup may slightly overlap neighboring tiles
+            // due to PolygonRadius enlargement, picking up walls and other structures.
+            if (otherPhysics.Comp.BodyType == BodyType.Static)
+            {
+                var otherXform = Transform(otherPhysics.Owner);
+                if (otherXform.Anchored)
+                {
+                    var otherTile = _mapSystem.GetTileRef(xform.GridUid.Value, mapGridComp, otherXform.Coordinates);
+                    if (otherTile.GridIndices != tileRef.GridIndices)
+                        continue;
+                }
+            }
 
             //TODO: Make only shutters ignore these objects upon colliding instead of all airlocks
             // Excludes Glasslayer for windows, GlassAirlockLayer for windoors, TableLayer for tables
@@ -591,6 +639,10 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
             //For when doors need to close over conveyor belts
             if (otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.ConveyorMask)
+                continue;
+
+            // We want windoors to be able to close over machines
+            if (allowMachineLayer && otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.MachineLayer)
                 continue;
 
             if ((physics.CollisionMask & otherPhysics.Comp.CollisionLayer) == 0 && (otherPhysics.Comp.CollisionMask & physics.CollisionLayer) == 0)
@@ -817,11 +869,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
                     // The door failed to close (blocked?). Try again in one second.
                     door.NextStateChange = time + TimeSpan.FromSeconds(1);
                 }
-                break;
-
-            case DoorState.Welded:
-                // A welded door? This should never have been active in the first place.
-                Log.Error($"Welded door was in the list of active doors. Door: {ToPrettyString(ent)}");
                 break;
         }
     }

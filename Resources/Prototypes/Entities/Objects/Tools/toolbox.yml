@@ -20,6 +20,8 @@
     storageRemoveSound: /Audio/Items/toolbox_remove.ogg
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,7,4
   - type: MeleeWeapon
     damage:
       types:

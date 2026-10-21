@@ -1,7 +1,7 @@
 - type: entity
+  parent: [ SeatBase, StructureHealthFurniture ]
   name: comfortable bench
   id: BenchComfy
-  parent: SeatBase
   description: A bench with an extremely comfortable backrest.
   components:
   - type: Transform
@@ -17,14 +17,14 @@
     bodyType: Static
   - type: StaticPrice
     price: 35
+  - type: Damageable
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 40
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak

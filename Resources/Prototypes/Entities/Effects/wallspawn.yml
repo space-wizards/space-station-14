@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: WallSpawnAsteroid
   categories: [ HideSpawnMenu ]
   components:
@@ -33,22 +33,6 @@
   components:
   - type: SpawnOnDespawn
     prototype: AsteroidRockUraniumCrab
-
-- type: entity
-  id: WallSpawnAsteroidBananium
-  parent: WallSpawnAsteroid
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: SpawnOnDespawn
-    prototype: AsteroidRockBananium
-
-- type: entity
-  id: WallSpawnAsteroidBananiumCrab
-  parent: WallSpawnAsteroid
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: SpawnOnDespawn
-    prototype: AsteroidRockBananiumCrab
 
 - type: entity
   id: WallSpawnAsteroidUranium

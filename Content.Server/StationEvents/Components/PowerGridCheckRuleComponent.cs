@@ -17,7 +17,7 @@ public sealed partial class PowerGridCheckRuleComponent : Component
     /// Sound to play when power is restored.
     /// </summary>
     [DataField]
-    public SoundSpecifier PowerOnSound = new SoundCollectionSpecifier(DefaultPowerOn, AudioParams.Default.WithVolume(-4f));
+    public SoundSpecifier PowerOnSound = new SoundCollectionSpecifier(DefaultPowerOn, AudioParams.Default.AddVolume(-4f));
 
     /// <summary>
     /// Token source for cancelling the power restoration announcement.

@@ -52,7 +52,7 @@ public abstract partial class SharedHandsSystem
     private bool ShouldIgnoreRestrictions(EntityUid user)
     {
         //Checks if the Entity is something that shouldn't care about drop distance or walls ie Aghost
-        return !_tagSystem.HasTag(user, BypassDropChecksTag);
+        return _tagSystem.HasTag(user, BypassDropChecksTag);
     }
 
     /// <summary>
@@ -203,7 +203,7 @@ public abstract partial class SharedHandsSystem
         var requestedDropDistance = dropVector.Length();
         var dropLength = dropVector.Length();
 
-        if (ShouldIgnoreRestrictions(user))
+        if (!ShouldIgnoreRestrictions(user))
         {
             if (dropVector.Length() > SharedInteractionSystem.InteractionRange)
             {
@@ -216,6 +216,7 @@ public abstract partial class SharedHandsSystem
 
         if (dropLength < requestedDropDistance)
             return origin.Position + dropVector.Normalized() * dropLength;
+
         return target.Position;
     }
 

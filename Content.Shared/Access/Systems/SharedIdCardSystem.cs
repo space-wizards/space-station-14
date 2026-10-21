@@ -22,6 +22,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedAccessSystem _access = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private IdentitySystem _identity = default!;
     [Dependency] private InventorySystem _inventorySystem = default!;
     [Dependency] private MetaDataSystem _metaSystem = default!;
     [Dependency] private SharedJobStatusSystem _jobStatus = default!;
@@ -129,6 +130,21 @@ public abstract partial class SharedIdCardSystem : EntitySystem
     }
 
     /// <summary>
+    /// Gets the entity wearing/holding the given ID card, either directly or through a PDA.
+    /// If nobody is holding it, this is whatever the card or its PDA is parented to.
+    /// </summary>
+    public EntityUid GetIdHolder(EntityUid idCard)
+    {
+        var holder = Transform(idCard).ParentUid;
+
+        // ID is inside a PDA, ascend to whoever is wearing/holding the PDA.
+        if (HasComp<PdaComponent>(holder))
+            holder = Transform(holder).ParentUid;
+
+        return holder;
+    }
+
+    /// <summary>
     /// Attempts to change the job title of a card.
     /// Returns true/false.
     /// </summary>
@@ -159,6 +175,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
         id.LocalizedJobTitle = jobTitle;
         Dirty(uid, id);
         UpdateEntityName(uid, id);
+        _identity.QueueIdentityUpdate(GetIdHolder(uid));
 
         if (player != null)
         {
@@ -255,6 +272,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
         id.FullName = fullName;
         Dirty(uid, id);
         UpdateEntityName(uid, id);
+        _identity.QueueIdentityUpdate(GetIdHolder(uid));
 
         if (player != null)
         {
@@ -298,29 +316,24 @@ public abstract partial class SharedIdCardSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
         ent.Comp.ExpireTime = time;
-        Dirty(ent);
-    }
-
-    public void SetPermanent(Entity<ExpireIdCardComponent?> ent, bool val)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return;
-        ent.Comp.Permanent = val;
+        ent.Comp.Expired = false;
         Dirty(ent);
     }
 
     /// <summary>
     /// Marks an <see cref="ExpireIdCardComponent"/> as expired, setting the accesses.
     /// </summary>
-    public virtual void ExpireId(Entity<ExpireIdCardComponent> ent)
+    public virtual bool ExpireId(Entity<ExpireIdCardComponent> ent)
     {
         if (ent.Comp.Expired)
-            return;
+            return false;
 
         _access.TrySetTags(ent, ent.Comp.ExpiredAccess);
+        var pauseTime = _metaSystem.GetPauseTime(ent.Owner);
+        ent.Comp.ExpireTime ??= _timing.CurTime - pauseTime - TimeSpan.FromTicks(1);
         ent.Comp.Expired = true;
-        ent.Comp.Permanent = false;
         Dirty(ent);
+        return true;
     }
 
     public override void Update(float frameTime)
@@ -329,10 +342,14 @@ public abstract partial class SharedIdCardSystem : EntitySystem
         var query = EntityQueryEnumerator<ExpireIdCardComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (comp.Expired || comp.Permanent)
+            if (comp.Expired || comp.ExpireTime is not { } expireTime)
                 continue;
 
-            if (_timing.CurTime < comp.ExpireTime)
+            var pauseTime = _metaSystem.GetPauseTime(uid);
+            if (expireTime > TimeSpan.MaxValue - pauseTime)
+                continue;
+
+            if (_timing.CurTime <= expireTime + pauseTime)
                 continue;
 
             ExpireId((uid, comp));
