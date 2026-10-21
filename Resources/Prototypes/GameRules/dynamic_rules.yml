@@ -103,6 +103,7 @@
           - id: SnakeSpawnHorde
           - id: SpiderClownSpawnHorde
           - id: SpiderSpawnHorde
+          - id: VendorMalfunction
           - id: VentClog
         - id: SleeperAgents
           weight: 15
