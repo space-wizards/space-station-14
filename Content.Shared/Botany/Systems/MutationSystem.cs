@@ -210,15 +210,6 @@ public sealed partial class PlantMutationSystem : EntitySystem
             .DistinctBy(m => m.Name)
             .Where(m => m.ExclusiveGroup == null || exclusiveGroups.Add(m.ExclusiveGroup))
             .ToList();
-
-        // Hybrids have a high chance of being seedless. Balances very
-        // effective hybrid crossings.
-        if (pollenProtoId != null
-            && pollenProtoId != MetaData(targetPlant).EntityPrototype?.ID
-            && Random(0.7f))
-        {
-            EnsureComp<PlantTraitSeedlessComponent>(targetPlant);
-        }
     }
 
     /// <summary>
@@ -332,9 +323,21 @@ public sealed partial class PlantMutationSystem : EntitySystem
     [PublicAPI]
     public void CrossTrait(EntityUid val, EntityUid pollenData)
     {
-        foreach (var component in AllComps(pollenData))
+        foreach (var component in AllComps<PlantTraitsComponent>(val))
         {
-            if (component is not PlantTraitsComponent)
+            if (component.PollinationProtected)
+                continue;
+
+            if (HasComp(pollenData, component.GetType()))
+                continue;
+
+            if (Random(0.5f))
+                RemComp(val, component);
+        }
+
+        foreach (var component in AllComps<PlantTraitsComponent>(pollenData))
+        {
+            if (component.PollinationProtected)
                 continue;
 
             if (HasComp(val, component.GetType()))
