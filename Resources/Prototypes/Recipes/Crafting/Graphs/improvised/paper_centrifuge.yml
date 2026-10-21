@@ -1,0 +1,39 @@
+# Mortar
+- type: constructionGraph
+  id: MakeshiftCentrifuge
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: makeshiftCentrifuge
+          steps:
+            - material: MetalRod
+              amount: 2
+            - material: Cable
+              amount: 15
+              doAfter: 2
+            - tag: CentrifugeCompatible
+              icon:
+                sprite: Objects/Specific/Chemistry/vial.rsi
+                state: vial
+              name: construction-graph-tag-centrifuge-compatible
+              doAfter: 2
+            - tag: CentrifugeCompatible
+              icon:
+                sprite: Objects/Specific/Chemistry/vial.rsi
+                state: vial
+              name: construction-graph-tag-centrifuge-compatible
+              doAfter: 2
+            - tag: Paper
+              icon:
+                sprite: Objects/Misc/bureaucracy.rsi
+                state: paper
+              name: construction-graph-tag-paper
+            - tag: Paper
+              icon:
+                sprite: Objects/Misc/bureaucracy.rsi
+                state: paper
+              name: construction-graph-tag-paper
+
+    - node: makeshiftCentrifuge
+      entity: HandheldMixerPaperCentrifuge

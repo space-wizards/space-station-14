@@ -1,28 +1,22 @@
-using Content.Shared.Mindshield.Components;
+using Content.Shared.Mindshield;
 using Content.Shared.Overlays;
-using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays;
 
-public sealed class ShowMindShieldIconsSystem : EquipmentHudSystem<ShowMindShieldIconsComponent>
+public sealed partial class ShowMindShieldIconsSystem : EquipmentHudSystem<ShowMindShieldIconsComponent>
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private MindShieldSystem _mindShield = default!;
 
-    public override void Initialize()
+    [SubscribeLocalEvent]
+    private void OnGetStatusIconsEvent(Entity<StatusIconComponent> ent, ref GetStatusIconsEvent args)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<MindShieldComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
-    }
-
-    private void OnGetStatusIconsEvent(EntityUid uid, MindShieldComponent component, ref GetStatusIconsEvent ev)
-    {
+        // Is active checks for our ability to display status icons
         if (!IsActive)
             return;
 
-        if (_prototype.TryIndex(component.MindShieldStatusIcon, out var iconPrototype))
-            ev.StatusIcons.Add(iconPrototype);
+        _mindShield.GetMindshieldStatus(ent.Owner, out _, out var isVisible);
+        if (isVisible && ProtoMan.Resolve(MindShieldSystem.StatusIcon, out var statusIconPrototype))
+            args.StatusIcons.Add(statusIconPrototype);
     }
 }

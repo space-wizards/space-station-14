@@ -1,18 +1,19 @@
 - type: entity
   name: stun baton
-  parent: [BaseItem, BaseRestrictedContraband]
+  parent: [BaseItem, BaseSecurityContraband]
   id: Stunbaton
-  description: A stun baton for incapacitating people with. Actively harming with this is considered bad tone.
+  description: A stun baton for incapacitating people with. Has advanced wrist strap technology to prevent cadets accidentally dropping it.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/stunbaton.rsi
     layers:
     - state: stunbaton_off
-      map: [ "enum.ToggleVisuals.Layer" ]
-  - type: Stunbaton
-    energyPerUse: 50
+      map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: ItemToggleExaminableStatus
+  - type: ItemToggleRequiresCharge
+    requiredCharge: 50
   - type: ItemToggle
-    predictable: false
+    onActivate: false
     soundActivate:
       collection: sparks
       params:
@@ -25,23 +26,32 @@
       path: /Audio/Machines/button.ogg
       params:
         variation: 0.250
+  - type: ItemTogglePrefix
+    prefixOn: on
+    prefixOff: off
   - type: ItemToggleMeleeWeapon
     activatedDamage:
       types:
         Blunt: 0
   - type: MeleeWeapon
+    attackRate: 1.3
     wideAnimationRotation: -135
     damage:
       types:
         Blunt: 7
     bluntStaminaDamageFactor: 2.0
     angle: 60
-    animation: WeaponArcSlash
+    animation: WeaponArcThrust
+    undamagedAlertThreshold: 0
+  - type: MeleeBatteryHitsLeft
+  - type: StaminaDamageOnHitRequiresToggle
+  - type: StaminaDamageOnHitRequiresCharge
+    requiredCharge: 40
   - type: StaminaDamageOnHit
-    damage: 35
+    damage: 23
     sound: /Audio/Weapons/egloves.ogg
   - type: StaminaDamageOnCollide
-    damage: 35
+    damage: 23
     sound: /Audio/Weapons/egloves.ogg
   - type: LandAtCursor # it deals stamina damage when thrown
   - type: Battery
@@ -61,17 +71,16 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-     enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
+     enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
           True: {state: stunbaton_on}
           False: {state: stunbaton_off}
   - type: StaticPrice
     price: 80
   - type: Riggable
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      battery:
-        maxVol: 5
+    - SolutionRiggable
   - type: InjectableSolution
     solution: battery
   - type: DrawableSolution
@@ -88,10 +97,14 @@
     guides:
     - Security
     - Antagonists
+  - type: Tag
+    tags:
+    - Stunbaton
+  - type: PreventForcedThrow
 
 - type: entity
   name: truncheon
-  parent: [BaseItem, BaseRestrictedContraband]
+  parent: [BaseItem, BaseSecurityContraband]
   id: Truncheon
   description: A rigid, steel-studded baton, meant to harm.
   components:
@@ -107,7 +120,10 @@
       collection: MetalThud
     bluntStaminaDamageFactor: 1.5
   - type: Item
-    size: Normal
+    size: Large
+    shape:
+    - 0,0,1,2
+    storedRotation: -45
   - type: Tag
     tags:
     - Truncheon
@@ -136,15 +152,15 @@
       sprite: Objects/Weapons/Melee/flash.rsi
       layers:
       - state: flash
-        map: [ "enum.FlashVisuals.BaseLayer" ]
+        map: [ "enum.FlashVisualLayers.BaseLayer" ]
       - state: flashing
-        map: [ "enum.FlashVisuals.LightLayer" ]
+        map: [ "enum.FlashVisualLayers.LightLayer" ]
         visible: false
         shader: unshaded
     - type: Flash
+    - type: RevolutionaryConverter
     - type: LimitedCharges
       maxCharges: 5
-      charges: 5
     - type: MeleeWeapon
       wideAnimationRotation: 180
       damage:
@@ -155,16 +171,18 @@
       size: Small
       sprite: Objects/Weapons/Melee/flash.rsi
     - type: UseDelay
+      delay: 4 # has to be the same as the FlashingTime datafield in FlashComponent
+    - type: UseDelayOnMeleeHit
     - type: StaticPrice
       price: 40
     - type: Appearance
     - type: GenericVisualizer
       visuals:
         enum.FlashVisuals.Burnt:
-          enum.FlashVisuals.BaseLayer:
+          enum.FlashVisualLayers.BaseLayer:
             True: {state: burnt}
         enum.FlashVisuals.Flashing:
-          enum.FlashVisuals.LightLayer:
+          enum.FlashVisualLayers.LightLayer:
             True: {visible: true}
             False: {visible: false}
     - type: GuideHelp
@@ -180,15 +198,15 @@
   components:
     - type: LimitedCharges
       maxCharges: 2
-      charges: 2
 
 - type: entity
   name: portable flasher
-  parent: [BaseMachine, BaseRestrictedContraband]
+  parent: [BaseMachine, BaseSecurityContraband, BaseMachineDestructible]
   id: PortableFlasher
   description: An ultrabright flashbulb with a proximity trigger, useful for making an area security-only.
   components:
     - type: EmitSoundOnTrigger
+      predicted: true
       sound:
         path: /Audio/Weapons/flash.ogg
     - type: FlashOnTrigger
@@ -227,3 +245,11 @@
       guides:
       - Security
       - Antagonists
+    - type: Destructible
+      thresholds:
+      - trigger: !type:DamageTrigger
+          damage: 175
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalGlassBreak

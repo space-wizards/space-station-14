@@ -1,12 +1,21 @@
 ﻿uniform sampler2D SCREEN_TEXTURE;
-uniform highp float effectScale;
+// Strength of the rainbow color effect. Between 0 and 1.
+uniform highp float colorScale;
+// Strength of the screen warping effect. Between 0 and 1.
+uniform highp float warpScale;
+// How fast to do the rotating motion.
+// 1 for normal effect.
+// 0 for the reduced motion setting.
+uniform highp float timeScale;
+// starting phase for the rotation effect
+// needed so it doesn't always look the same for 0 motion
+uniform highp float phase;
 
-const highp float TimeScale = 0.15;
 const highp float DistortionScale = 0.02; // how strongly to warp the screen
 const highp float NoiseScale = 4.0; // scale of the random noise
 const highp float MaxColorMix = 0.05; // rainbow effect strength. at 1.0, you wont be able to see the screen anymore
 const highp float BaseColorMult = 8.0; // multiplier of the underlying screen texture for the rainbow effect
-const highp float BaseColorPow = 0.8; // exponent for the rainbow effect's 
+const highp float BaseColorPow = 0.8; // exponent for the rainbow effect's
 const highp float CenterRadius = 200.0; // radius of the gradient used to tone down the distortion effect
 const highp float CenterMinDist = 0.4; // minimum distance from the center of the screen for the distortion to appear at all
 const highp float CenterPow = 3.0; // the exponent used for the distortion center
@@ -27,7 +36,7 @@ highp float noise( highp vec2 p ) {
 
     highp vec2  i = floor( p + (p.x+p.y)*K1 );
     highp vec2  a = p - i + (i.x+i.y)*K2;
-    highp float m = step(a.y,a.x); 
+    highp float m = step(a.y,a.x);
     highp vec2  o = vec2(m,1.0-m);
     highp vec2  b = a - o + K2;
     highp vec2  c = a - 1.0 + 2.0*K2;
@@ -43,8 +52,8 @@ highp vec3 hsv2rgb_smooth( highp vec3 c ) {
 }
 
 
-highp float mixNoise(highp vec2 point, highp float phase) {
-    highp float time = TIME * TimeScale + phase;
+highp float mixNoise(highp vec2 point, highp float phase2) {
+    highp float time = TIME * timeScale * 0.15 + phase + phase2;
     highp float a = noise( NoiseScale * point - time);
     highp float b = noise( NoiseScale * point + time );
     return mix(a,b,0.5);
@@ -58,19 +67,16 @@ void fragment() {
     highp vec2 coord = FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy;
     highp vec2 aspect = vec2(1.0/SCREEN_PIXEL_SIZE.x, 1.0/SCREEN_PIXEL_SIZE.y);
     highp vec2 center = aspect * 0.5;
-    
+
     // warp the screen.
     highp vec2 offset = vec2(mixNoise(coord, 0.), mixNoise(coord, 5.));
     highp float centergradient = genGradient(center, FRAGCOORD.xy, CenterRadius, CenterMinDist, CenterPow);
-    COLOR = zTextureSpec(SCREEN_TEXTURE, coord + effectScale * (DistortionScale * centergradient) * offset);
-    
+    COLOR = zTextureSpec(SCREEN_TEXTURE, coord + warpScale * (DistortionScale * centergradient) * offset);
+
     // apply rainbow effect.
     highp float hue = 1. + mixNoise(coord, 10.);
     highp vec3 color = hsv2rgb_smooth(vec3(hue,1.0,1.0));
     highp float centercolor = genGradient(center, FRAGCOORD.xy, CenterColorRadius, CenterColorMinDist, CenterColorPow);
     highp float coloration = pow((COLOR.x + COLOR.y + COLOR.z) * BaseColorMult, BaseColorPow) * centercolor;
-    COLOR.xyz = mix(COLOR.xyz, color, MaxColorMix * effectScale * effectScale * coloration);
+    COLOR.xyz = mix(COLOR.xyz, color, MaxColorMix * colorScale * colorScale * coloration);
 }
-
-
-

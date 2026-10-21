@@ -6,8 +6,9 @@
   name: modular receiver
   description: A vital part used in the creation of firearms. #Could use a better description, but I'm not a gun nut so I can't really do that.
   components:
-#    - type: Item
-#      size: Normal
+    - type: Item
+      storedRotation: -90
+      # size: Normal
     - type: Sprite
       sprite: Objects/Misc/modular_receiver.rsi
       state: icon
@@ -22,8 +23,9 @@
   name: rifle stock
   description: A robust wooden stock, used in the creation of firearms. #Same as above
   components:
-#    - type: Item
-#      size: Normal
+    - type: Item
+      storedRotation: -90
+      # size: Normal
     - type: Sprite
       sprite: Objects/Misc/rifle_stock.rsi
       state: icon
@@ -34,3 +36,19 @@
       tags:
       - RifleStock
       - Wooden
+
+- type: entity
+  parent: BaseItem
+  id: GlassLens
+  name: glass lens
+  description: It does fancy things to photons so that you can see better.
+  components:
+  - type: Item
+    storedRotation: -90
+    size: Tiny
+  - type: Sprite
+    sprite: Objects/Misc/lens.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - GlassLens

@@ -2,17 +2,19 @@
   id: BaseDrink
   group: Drinks
   abstract: true
-  slippery: true
+  slipData:
+    requiredSlipSpeed: 3.5
   metabolisms:
-    Drink:
+    Digestion:
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 3
   reactiveEffects:
     Extinguish:
       methods: [ Touch ]
       effects:
-      - !type:ExtinguishReaction
+      - !type:Extinguish
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: 1
@@ -25,9 +27,10 @@
   parent: BaseDrink
   abstract: true
   metabolisms:
-    Drink:
+    Digestion:
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 2
   plantMetabolism:
   - !type:PlantAdjustNutrition
@@ -37,28 +40,29 @@
   - !type:PlantAdjustHealth
     amount: -0.1
   footstepSound:
-    collection: FootstepSticky
-    params:
-      volume: 6
+    collection: FootstepSlime
   fizziness: 0.5
 
 - type: reagent
   id: BaseAlcohol
   group: Drinks
   abstract: true
+  slipData:
+    requiredSlipSpeed: 3.5
+  friction: 0.4
   metabolisms:
-    Drink:
+    Digestion:
+      metabolites:
+        Ethanol: 0.12
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 2
-      - !type:AdjustReagent
-        reagent: Ethanol
-        amount: 0.06
   reactiveEffects:
     Flammable:
       methods: [ Touch ]
       effects:
-      - !type:FlammableReaction
+      - !type:Flammable
   tileReactions:
   - !type:FlammableTileReaction
     temperatureMultiplier: 1.35
@@ -74,6 +78,4 @@
   abstract: true
   flavor: sweet
   footstepSound:
-    collection: FootstepSticky
-    params:
-      volume: 6
+    collection: FootstepSlime

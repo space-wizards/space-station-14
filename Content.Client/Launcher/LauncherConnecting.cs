@@ -10,18 +10,20 @@ using Robust.Shared.Random;
 
 namespace Content.Client.Launcher
 {
-    public sealed class LauncherConnecting : Robust.Client.State.State
+    public sealed partial class LauncherConnecting : Robust.Client.State.State
     {
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-        [Dependency] private readonly IClientNetManager _clientNetManager = default!;
-        [Dependency] private readonly IGameController _gameController = default!;
-        [Dependency] private readonly IBaseClient _baseClient = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly IClipboardManager _clipboard = default!;
+        [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private IClientNetManager _clientNetManager = default!;
+        [Dependency] private IGameController _gameController = default!;
+        [Dependency] private IBaseClient _baseClient = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
+        [Dependency] private IClipboardManager _clipboard = default!;
+        [Dependency] private ILogManager _logManager = default!;
 
         private LauncherConnectingGui? _control;
+        private ISawmill _sawmill = default!;
 
         private Page _currentPage;
         private string? _connectFailReason;
@@ -60,6 +62,8 @@ namespace Content.Client.Launcher
         protected override void Startup()
         {
             _control = new LauncherConnectingGui(this, _random, _prototypeManager, _cfg, _clipboard);
+
+            _sawmill = _logManager.GetSawmill("launcher-ui");
 
             _userInterfaceManager.StateRoot.AddChild(_control);
 
@@ -115,12 +119,12 @@ namespace Content.Client.Launcher
                 }
                 else
                 {
-                    Logger.InfoS("launcher-ui", $"Redial not possible, no Ss14Address");
+                    _sawmill.Info($"Redial not possible, no Ss14Address");
                 }
             }
             catch (Exception ex)
             {
-                Logger.ErrorS("launcher-ui", $"Redial exception: {ex}");
+                _sawmill.Error($"Redial exception: {ex}");
             }
             return false;
         }

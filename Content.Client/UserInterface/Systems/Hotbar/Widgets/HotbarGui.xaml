@@ -1,7 +1,6 @@
 ﻿<widgets:HotbarGui
     xmlns="https://spacestation14.io"
     xmlns:inventory="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Controls"
-    xmlns:storage="clr-namespace:Content.Client.UserInterface.Systems.Storage.Controls"
     xmlns:hands="clr-namespace:Content.Client.UserInterface.Systems.Hands.Controls"
     xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Hotbar.Widgets"
     Name="HotbarInterface"
@@ -10,13 +9,31 @@
     Orientation="Vertical"
     HorizontalAlignment="Center">
     <BoxContainer Orientation="Vertical">
-        <BoxContainer Name="StorageContainer"
+        <BoxContainer Name="SingleStorageContainer"
                       Access="Public"
                       HorizontalAlignment="Center"
+                      HorizontalExpand="True"
                       Margin="10">
-            <storage:StorageContainer
-                Name="StoragePanel"
-                Visible="False"/>
+        </BoxContainer>
+        <BoxContainer Name="DoubleStorageContainer"
+                      Access="Public"
+                      HorizontalAlignment="Stretch"
+                      HorizontalExpand="True"
+                      Margin="10">
+            <BoxContainer Name="LeftStorageContainer"
+                          Access="Public"
+                          HorizontalAlignment="Left"
+                          HorizontalExpand="True"
+                          VerticalAlignment="Bottom"
+                          Margin="10">
+            </BoxContainer>
+            <BoxContainer Name="RightStorageContainer"
+                          Access="Public"
+                          HorizontalAlignment="Right"
+                          HorizontalExpand="True"
+                          VerticalAlignment="Bottom"
+                          Margin="10">
+            </BoxContainer>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" Name="Hotbar" HorizontalAlignment="Center">
             <inventory:ItemSlotButtonContainer

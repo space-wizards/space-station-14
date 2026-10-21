@@ -10,6 +10,10 @@
     sprite: Objects/Devices/signaller.rsi
     state: signaller
   - type: Signaller
+  - type: SignalOnTrigger
+    port: Pressed
+  - type: UseDelayOnTrigger
+  - type: UseDelayTriggerCondition
   - type: UseDelay
   - type: StaticPrice
     price: 40
@@ -19,10 +23,11 @@
   - type: Tag
     tags:
     - Payload
+    - RemoteSignaller
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 15
 
 - type: entity
@@ -39,7 +44,7 @@
       - state: advanced-inhand-left
       right:
       - state: advanced-inhand-right
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 50
   - type: StaticPrice
     price: 30

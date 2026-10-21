@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: AutolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: autolathe machine board
@@ -7,8 +7,7 @@
     - type: MachineBoard
       prototype: Autolathe
       stackRequirements:
-        MatterBin: 3
-        Manipulator: 1
+        Manipulator: 4
         Glass: 1
 
 - type: entity
@@ -20,7 +19,7 @@
   - type: MachineBoard
     prototype: AutolatheHyperConvection
     stackRequirements:
-      MatterBin: 3
+      Manipulator: 4
       Glass: 1
     tagRequirements:
       Igniter:
@@ -33,15 +32,16 @@
   name: protolathe machine board
   description: A machine printed circuit board for a protolathe.
   components:
-    - type: MachineBoard
-      prototype: Protolathe
-      stackRequirements:
-        MatterBin: 2
-        Manipulator: 2
-      tagRequirements:
-        GlassBeaker:
-          amount: 2
-          defaultPrototype: Beaker
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: Protolathe
+    stackRequirements:
+      Manipulator: 4
+    tagRequirements:
+      GlassBeaker:
+        amount: 2
+        defaultPrototype: Beaker
 
 - type: entity
   parent: BaseMachineCircuitboard
@@ -49,10 +49,12 @@
   name: hyper convection protolathe machine board
   description: A machine printed circuit board for a hyper convection protolathe.
   components:
+  - type: Sprite
+    state: science
   - type: MachineBoard
     prototype: ProtolatheHyperConvection
     stackRequirements:
-      MatterBin: 2
+      Manipulator: 4
     tagRequirements:
       GlassBeaker:
         amount: 2
@@ -67,11 +69,13 @@
   name: biocube fabricator machine board
   description: A machine printed circuit board for a biocube fabricator.
   components:
-    - type: MachineBoard
-      prototype: Biofabricator
-      stackRequirements:
-        MatterBin: 4
-        Glass: 1
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: Biofabricator
+    stackRequirements:
+      Manipulator: 4
+      Glass: 1
 
 - type: entity
   id: SecurityTechFabCircuitboard
@@ -84,8 +88,7 @@
     - type: MachineBoard
       prototype: SecurityTechFab
       stackRequirements:
-        MatterBin: 2
-        Manipulator: 2
+        Manipulator: 4
       tagRequirements:
         GlassBeaker:
           amount: 2
@@ -102,8 +105,7 @@
     - type: MachineBoard
       prototype: AmmoTechFab
       stackRequirements:
-        MatterBin: 1
-        Manipulator: 1
+        Manipulator: 2
 
 - type: entity
   id: MedicalTechFabCircuitboard
@@ -116,14 +118,14 @@
     - type: MachineBoard
       prototype: MedicalTechFab
       stackRequirements:
-        MatterBin: 2
-        Manipulator: 2
+        Manipulator: 4
       tagRequirements:
         GlassBeaker:
           amount: 2
           defaultPrototype: Beaker
     - type: StealTarget
-      stealGroup: MedicalTechFabCircuitboard
+      stealGroup:
+      - MedicalTechFabCircuitboard
 
 - type: entity
   id: CircuitImprinterMachineCircuitboard
@@ -135,8 +137,7 @@
   - type: MachineBoard
     prototype: CircuitImprinter
     stackRequirements:
-      MatterBin: 1
-      Manipulator: 1
+      Manipulator: 2
     tagRequirements:
       GlassBeaker:
         amount: 2
@@ -153,7 +154,7 @@
   - type: MachineBoard
     prototype: CircuitImprinterHyperConvection
     stackRequirements:
-      MatterBin: 2
+      Manipulator: 2
     tagRequirements:
       GlassBeaker:
         amount: 2
@@ -172,8 +173,7 @@
   - type: MachineBoard
     prototype: ExosuitFabricator
     stackRequirements:
-      MatterBin: 1
-      Manipulator: 3
+      Manipulator: 4
       Glass: 5
   - type: GuideHelp
     guides:
@@ -204,7 +204,7 @@
   - type: MachineBoard
     prototype: Biogenerator
     stackRequirements:
-      MatterBin: 2
+      Manipulator: 2
     tagRequirements:
       GlassBeaker:
         amount: 1
@@ -218,8 +218,7 @@
   - type: MachineBoard
     prototype: UniformPrinter
     stackRequirements:
-      MatterBin: 1
-      Manipulator: 2
+      Manipulator: 3
 
 - type: entity
   id: VaccinatorMachineCircuitboard
@@ -231,8 +230,7 @@
   - type: MachineBoard
     prototype: Vaccinator
     stackRequirements:
-      MatterBin: 1
-      Manipulator: 1
+      Manipulator: 2
       Cable: 5
     tagRequirements:
         GlassBeaker:
@@ -270,8 +268,7 @@
     - type: MachineBoard
       prototype: MachineArtifactAnalyzer
       stackRequirements:
-        Manipulator: 3
-        Capacitor: 1
+        Manipulator: 1
         Glass: 5
 
 - type: entity
@@ -290,6 +287,21 @@
       Steel: 5
 
 - type: entity
+  id: StationTeleporterMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: teleporter machine board
+  description: A machine printed circuit board for a bluespace teleporter.
+  components:
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: StationTeleporter
+    stackRequirements:
+      Manipulator: 3
+      Cable: 5
+      PlasmaGlass: 10
+
+- type: entity
   parent: BaseMachineCircuitboard
   id: AnomalyVesselCircuitboard
   name: anomaly vessel machine board
@@ -300,7 +312,7 @@
     - type: MachineBoard
       prototype: MachineAnomalyVessel
       stackRequirements:
-        Capacitor: 3
+        Manipulator: 3
         Cable: 1
         PlasmaGlass: 10
 
@@ -315,7 +327,7 @@
   - type: MachineBoard
     prototype: MachineAnomalyVesselExperimental
     stackRequirements:
-      Capacitor: 3
+      Manipulator: 3
       Cable: 5
       PlasmaGlass: 15
       MetalRod: 4
@@ -331,8 +343,7 @@
     - type: MachineBoard
       prototype: MachineAnomalySynchronizer
       stackRequirements:
-        Manipulator: 2
-        Capacitor: 5
+        Manipulator: 7
         PlasmaGlass: 5
         Cable: 5
 
@@ -347,7 +358,7 @@
     - type: MachineBoard
       prototype: MachineAPE
       stackRequirements:
-        Capacitor: 2
+        Manipulator: 2
         Cable: 1
         Glass: 1
 
@@ -362,8 +373,7 @@
   - type: MachineBoard
     prototype: GasThermoMachineFreezer
     stackRequirements:
-      MatterBin: 2
-      Capacitor: 2
+      Manipulator: 4
       Cable: 5
   - type: Construction
     deconstructionTarget: null
@@ -381,8 +391,7 @@
   - type: MachineBoard
     prototype: GasThermoMachineHeater
     stackRequirements:
-      MatterBin: 2
-      Capacitor: 2
+      Manipulator: 4
       Cable: 5
   - type: Construction
     graph: ThermomachineBoard
@@ -400,8 +409,7 @@
   - type: MachineBoard
     prototype: GasThermoMachineHellfireFreezer
     stackRequirements:
-      MatterBin: 2
-      Capacitor: 2
+      Manipulator: 4
       Plasma: 1
   - type: Construction
     deconstructionTarget: null
@@ -419,8 +427,7 @@
   - type: MachineBoard
     prototype: GasThermoMachineHellfireHeater
     stackRequirements:
-      MatterBin: 2
-      Capacitor: 2
+      Manipulator: 4
       Plasma: 1
   - type: Construction
     graph: ThermomachineBoard
@@ -438,7 +445,7 @@
   - type: MachineBoard
     prototype: BaseGasCondenser
     stackRequirements:
-      MatterBin: 1
+      Manipulator: 1
       Glass: 1
 
 - type: entity
@@ -452,8 +459,7 @@
   - type: MachineBoard
     prototype: PortableScrubber
     stackRequirements:
-      MatterBin: 1
-      Manipulator: 2
+      Manipulator: 3
       Cable: 5
       Glass: 2
 
@@ -468,8 +474,7 @@
   - type: MachineBoard
     prototype: SpaceHeater
     stackRequirements:
-      MatterBin: 1
-      Capacitor: 2
+      Manipulator: 3
       Cable: 5
 
 - type: entity
@@ -483,8 +488,7 @@
     - type: MachineBoard
       prototype: CloningPod
       stackRequirements:
-        MatterBin: 2
-        Manipulator: 2
+        Manipulator: 4
         Glass: 1
         Cable: 1
 
@@ -499,7 +503,7 @@
     - type: MachineBoard
       prototype: MedicalScanner
       stackRequirements:
-        Capacitor: 1
+        Manipulator: 1
         Glass: 5
         Cable: 1
 
@@ -540,7 +544,7 @@
     - type: MachineBoard
       prototype: ChemMaster
       stackRequirements:
-        Capacitor: 1
+        Manipulator: 1
         Glass: 1
         Cable: 1
       tagRequirements:
@@ -559,9 +563,9 @@
     - type: MachineBoard
       prototype: ChemDispenserEmpty
       stackRequirements:
-        Capacitor: 1
+        Manipulator: 1
         Glass: 1
-        Steel: 3
+        Plastic: 3
       tagRequirements:
         GlassBeaker:
           amount: 2
@@ -573,17 +577,18 @@
   name: biomass reclaimer machine board
   description: A machine printed circuit board for a biomass reclaimer.
   components:
-    - type: MachineBoard
-      prototype: BiomassReclaimer
-      stackRequirements:
-        MatterBin: 2
-        Manipulator: 1
-        Steel: 5
-      tagRequirements:
-        Knife:
-          amount: 2
-          defaultPrototype: KitchenKnife
-          examineName: construction-insert-info-examine-name-knife
+  - type: Sprite
+    state: medical
+  - type: MachineBoard
+    prototype: BiomassReclaimer
+    stackRequirements:
+      Manipulator: 3
+      Steel: 5
+    tagRequirements:
+      Knife:
+        amount: 2
+        defaultPrototype: KitchenKnife
+        examineName: construction-insert-info-examine-name-knife
 
 - type: entity
   id: HydroponicsTrayMachineCircuitboard
@@ -615,8 +620,7 @@
     - type: MachineBoard
       prototype: SeedExtractor
       stackRequirements:
-        Manipulator: 2
-        Capacitor: 1
+        Manipulator: 3
         # replacing the console screen
         Glass: 1
         Cable: 2
@@ -633,7 +637,7 @@
     - type: MachineBoard
       prototype: SMESBasicEmpty
       stackRequirements:
-        Capacitor: 1
+        Manipulator: 1
         CableHV: 10
       componentRequirements:
         PowerCell:
@@ -652,7 +656,7 @@
   - type: MachineBoard
     prototype: SMESAdvancedEmpty
     stackRequirements:
-      Capacitor: 2
+      Manipulator: 2
       CableHV: 20
     componentRequirements:
       PowerCell:
@@ -671,12 +675,12 @@
     - type: MachineBoard
       prototype: PowerCellRecharger
       stackRequirements:
-        Capacitor: 2
+        Manipulator: 2
         Cable: 5
     - type: PhysicalComposition
       materialComposition:
-        Steel: 30
-        Plastic: 30
+        Steel: 25
+        Plastic: 25
     - type: StaticPrice
       price: 15
 
@@ -692,8 +696,8 @@
     - type: MachineBoard
       prototype: PowerCageRecharger
       stackRequirements:
-        Capacitor: 4
-        Steel: 5
+        Manipulator: 4
+        Plasteel: 5
         Cable: 10
     - type: PhysicalComposition
       materialComposition:
@@ -714,12 +718,12 @@
     - type: MachineBoard
       prototype: BorgCharger
       stackRequirements:
-        Capacitor: 2
+        Manipulator: 2
         Cable: 5
     - type: PhysicalComposition
       materialComposition:
-        Steel: 30
-        Plastic: 30
+        Steel: 25
+        Plastic: 25
     - type: StaticPrice
       price: 15
 
@@ -735,12 +739,12 @@
     - type: MachineBoard
       prototype: WeaponCapacitorRecharger
       stackRequirements:
-        Capacitor: 2
+        Manipulator: 2
         CableMV: 5
     - type: PhysicalComposition
       materialComposition:
-        Steel: 30
-        Plastic: 30
+        Steel: 25
+        Plastic: 25
     - type: StaticPrice
       price: 15
 
@@ -756,7 +760,7 @@
   - type: MachineBoard
     prototype: TurboItemRecharger
     stackRequirements:
-      Capacitor: 2
+      Manipulator: 2
       CableMV: 5
   - type: PhysicalComposition
     materialComposition:
@@ -772,7 +776,7 @@
     - type: MachineBoard
       prototype: SubstationBasicEmpty
       stackRequirements:
-        Capacitor: 1
+        Manipulator: 1
         CableMV: 5
         CableHV: 5
       componentRequirements:
@@ -792,12 +796,14 @@
   id: DawInstrumentMachineCircuitboard
   name: digital audio workstation machine board
   components:
-    - type: MachineBoard
-      prototype: DawInstrument
-      stackRequirements:
-        Glass: 1
-        Cable: 1
-      tagRequirements:
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: DawInstrument
+    stackRequirements:
+      Glass: 1
+      Cable: 1
+    tagRequirements:
 #      One instrument to bring them all and in the darkness bind them...
        KeyedInstrument:
           amount: 1
@@ -830,7 +836,7 @@
     - type: MachineBoard
       prototype: PortableGeneratorPacman
       stackRequirements:
-        Capacitor: 1
+        Manipulator: 1
         CableHV: 5
     - type: PhysicalComposition
       materialComposition:
@@ -845,22 +851,25 @@
   parent: BaseMachineCircuitboard
   name: thruster machine board
   components:
+  - type: Sprite
+    state: supply
   - type: MachineBoard
     prototype: Thruster
     stackRequirements:
-      Capacitor: 4
-      Steel: 5
+      Manipulator: 4
+      Plasteel: 5
 
 - type: entity
   id: GyroscopeMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: gyroscope machine board
   components:
+  - type: Sprite
+    state: supply
   - type: MachineBoard
     prototype: Gyroscope
     stackRequirements:
-      Manipulator: 2
-      Capacitor: 1
+      Manipulator: 3
       Glass: 2
 
 - type: entity
@@ -873,7 +882,7 @@
     - type: MachineBoard
       prototype: PortableGeneratorSuperPacman
       stackRequirements:
-        Capacitor: 2
+        Manipulator: 2
         CableHV: 10
     - type: PhysicalComposition
       materialComposition:
@@ -893,7 +902,7 @@
     - type: MachineBoard
       prototype: PortableGeneratorJrPacman
       stackRequirements:
-        Capacitor: 1
+        Manipulator: 1
         Cable: 10
     - type: PhysicalComposition
       materialComposition:
@@ -912,8 +921,7 @@
     - type: MachineBoard
       prototype: KitchenReagentGrinder
       stackRequirements:
-        MatterBin: 2
-        Manipulator: 2
+        Manipulator: 4
       tagRequirements:
         GlassBeaker:
           amount: 1
@@ -925,11 +933,13 @@
   name: hotplate machine board
   description: A machine printed circuit board for a hotplate.
   components:
-    - type: MachineBoard
-      prototype: ChemistryHotplate
-      stackRequirements:
-        Capacitor: 2
-        Glass: 1
+  - type: Sprite
+    state: medical
+  - type: MachineBoard
+    prototype: ChemistryHotplate
+    stackRequirements:
+      Manipulator: 2
+      Glass: 1
 
 - type: entity
   parent: BaseMachineCircuitboard
@@ -937,10 +947,12 @@
   name: electric grill machine board
   description: A machine printed circuit board for an electric grill.
   components:
+  - type: Sprite
+    state: service
   - type: MachineBoard
     prototype: KitchenElectricGrill
     stackRequirements:
-      Capacitor: 4
+      Manipulator: 4
       Glass: 2
       Cable: 5
 
@@ -954,8 +966,7 @@
     - type: MachineBoard
       prototype: StasisBed
       stackRequirements:
-        Capacitor: 1
-        Manipulator: 1
+        Manipulator: 2
         Cable: 3
         Steel: 2
 
@@ -970,7 +981,7 @@
   - type: MachineBoard
     prototype: MachineElectrolysisUnit
     stackRequirements:
-      Capacitor: 2
+      Manipulator: 2
       Cable: 1
 
 - type: entity
@@ -988,6 +999,19 @@
       Steel: 1
 
 - type: entity
+  id: MaterialSiloMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: material silo machine board
+  components:
+  - type: Sprite
+    state: supply
+  - type: MachineBoard
+    prototype: MachineMaterialSilo
+    stackRequirements:
+      Manipulator: 4
+      Cable: 1
+
+- type: entity
   id: OreProcessorMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: ore processor machine board
@@ -997,8 +1021,7 @@
     - type: MachineBoard
       prototype: OreProcessor
       stackRequirements:
-        MatterBin: 1
-        Manipulator: 3
+        Manipulator: 4
         Glass: 1
 
 - type: entity
@@ -1011,8 +1034,7 @@
   - type: MachineBoard
     prototype: OreProcessorIndustrial
     stackRequirements:
-      MatterBin: 1
-      Manipulator: 3
+      Manipulator: 4
       Glass: 1
 
 - type: entity
@@ -1023,8 +1045,7 @@
   - type: MachineBoard
     prototype: Sheetifier
     stackRequirements:
-      MatterBin: 1
-      Manipulator: 1
+      Manipulator: 2
 
 - type: entity
   id: MicrowaveMachineCircuitboard
@@ -1036,7 +1057,7 @@
     - type: MachineBoard
       prototype: KitchenMicrowave
       stackRequirements:
-        Capacitor: 1
+        Manipulator: 1
         Glass: 2
         Cable: 2
     - type: Tag
@@ -1045,7 +1066,7 @@
 
 - type: entity
   id: SyndicateMicrowaveMachineCircuitboard
-  parent: BaseMachineCircuitboard
+  parent: [ BaseMachineCircuitboard, BaseSyndicateContraband ]
   name: donk co. microwave machine board
   components:
     - type: Sprite
@@ -1053,7 +1074,7 @@
     - type: MachineBoard
       prototype: SyndicateMicrowave
       stackRequirements:
-        Capacitor: 1
+        Manipulator: 1
         Glass: 2
         Cable: 2
 
@@ -1082,8 +1103,7 @@
   - type: MachineBoard
     prototype: MachineFlatpacker
     stackRequirements:
-      Manipulator: 2
-      MatterBin: 1
+      Manipulator: 3
       Steel: 1
 
 - type: entity
@@ -1096,9 +1116,10 @@
     - type: MachineBoard
       prototype: Emitter
       stackRequirements:
-        Capacitor: 2
+        Manipulator: 2
         CableHV: 5
         Glass: 2
+        Plasteel: 2
 
 - type: entity
   id: SurveillanceCameraRouterCircuitboard
@@ -1106,10 +1127,12 @@
   name: surveillance camera router board
   description: A machine printed circuit board for a surveillance camera router.
   components:
-    - type: MachineBoard
-      prototype: SurveillanceCameraRouterConstructed
-      stackRequirements:
-        Cable: 1
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: SurveillanceCameraRouterConstructed
+    stackRequirements:
+      Cable: 1
 
 - type: entity
   id: SurveillanceCameraWirelessRouterCircuitboard
@@ -1117,11 +1140,27 @@
   name: surveillance camera wireless router board
   description: A machine printed circuit board for a surveillance camera wireless router.
   components:
-    - type: MachineBoard
-      prototype: SurveillanceCameraWirelessRouterConstructed
-      stackRequirements:
-        Cable: 2
-        Glass: 1
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: SurveillanceCameraWirelessRouterConstructed
+    stackRequirements:
+      Cable: 2
+      Glass: 1
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: SurveillanceCameraWirelessRouterXenoborgCircuitboard
+  name: xenoborg camera wireless router
+  description: A machine printed circuit board for a xenoborg camera wireless router.
+  components:
+  - type: Sprite
+    state: generic
+  - type: MachineBoard
+    prototype: SurveillanceCameraWirelessRouterXenoborg
+    stackRequirements:
+      Cable: 2
+      Glass: 1
 
 - type: entity
   id: SurveillanceWirelessCameraMovableCircuitboard
@@ -1129,11 +1168,13 @@
   name: movable wireless camera board
   description: A machine printed circuit board for a movable wireless camera.
   components:
-    - type: MachineBoard
-      prototype: SurveillanceWirelessCameraMovableConstructed
-      stackRequirements:
-        Glass: 2
-        Cable: 2
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: SurveillanceWirelessCameraMovableConstructed
+    stackRequirements:
+      Glass: 2
+      Cable: 2
 
 - type: entity
   id: SurveillanceWirelessCameraAnchoredCircuitboard
@@ -1141,11 +1182,13 @@
   name: wireless camera board
   description: A machine printed circuit board for a wireless camera.
   components:
-    - type: MachineBoard
-      prototype: SurveillanceWirelessCameraAnchoredConstructed
-      stackRequirements:
-        Cable: 2
-        Glass: 1
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: SurveillanceWirelessCameraAnchoredConstructed
+    stackRequirements:
+      Cable: 2
+      Glass: 1
 
 - type: entity
   id: GasRecyclerMachineCircuitboard
@@ -1153,11 +1196,12 @@
   name: gas recycler board
   description: A printed circuit board for a gas recycler.
   components:
+  - type: Sprite
+    state: engineering
   - type: MachineBoard
     prototype: GasRecycler
     stackRequirements:
-      Capacitor: 1
-      Manipulator: 1
+      Manipulator: 2
       Steel: 10
       Plasma: 5
 
@@ -1172,7 +1216,7 @@
     - type: MachineBoard
       prototype: BoozeDispenserEmpty
       stackRequirements:
-        Steel: 5
+        Plastic: 5
       tagRequirements:
           GlassBeaker:
             amount: 1
@@ -1189,8 +1233,22 @@
     - type: MachineBoard
       prototype: CargoTelepad
       stackRequirements:
-        Capacitor: 2
+        Manipulator: 2
         Steel: 5
+
+- type: entity
+  id: MailTeleporterMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: mail teleporter machine board
+  description: A machine printed circuit board for a mail teleporter.
+  components:
+  - type: Sprite
+    state: supply
+  - type: MachineBoard
+    prototype: CargoMailTeleporter
+    stackRequirements:
+      Manipulator: 2
+      Plasteel: 5
 
 - type: entity
   id: SodaDispenserMachineCircuitboard
@@ -1203,7 +1261,7 @@
     - type: MachineBoard
       prototype: SodaDispenserEmpty
       stackRequirements:
-        Steel: 5
+        Plastic: 5
       tagRequirements:
           GlassBeaker:
             amount: 1
@@ -1215,11 +1273,13 @@
   name: telecommunication server machine board
   description: A machine printed circuit board for an telecommunication server.
   components:
-    - type: MachineBoard
-      prototype: TelecomServer
-      stackRequirements:
-        Steel: 1
-        Cable: 2
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: TelecomServer
+    stackRequirements:
+      Steel: 1
+      Cable: 2
 
 - type: entity
   parent: BaseMachineCircuitboard
@@ -1232,7 +1292,7 @@
   - type: MachineBoard
     prototype: SalvageMagnet
     stackRequirements:
-      Capacitor: 4
+      Manipulator: 4
       Steel: 5
       CableHV: 5
       Cable: 2
@@ -1243,11 +1303,12 @@
   name: mini gravity generator machine board
   description: A machine printed circuit board for a mini gravity generator.
   components:
+  - type: Sprite
+    state: supply
   - type: MachineBoard
-    prototype: GravityGeneratorMini
+    prototype: GravityGeneratorMiniUncharged
     stackRequirements:
-      Capacitor: 4
-      MatterBin: 3
+      Manipulator: 7
       Steel: 5
       CableHV: 5
       Uranium: 2
@@ -1261,9 +1322,8 @@
   - type: MachineBoard
     prototype: StationAnchor
     stackRequirements:
-      Capacitor: 4
-      MatterBin: 3
-      Steel: 10
+      Manipulator: 7
+      Plasteel: 10
       Glass: 5
       CableHV: 8
       Uranium: 2
@@ -1276,8 +1336,7 @@
   - type: MachineBoard
     prototype: ReagentGrinderIndustrial
     stackRequirements:
-      MatterBin: 1
-      Manipulator: 3
+      Manipulator: 4
       Glass: 1
 
 - type: entity
@@ -1286,6 +1345,8 @@
   name: jukebox machine board
   description: A machine printed circuit board for a jukebox.
   components:
+  - type: Sprite
+    state: service
   - type: MachineBoard
     prototype: Jukebox
     stackRequirements:
@@ -1303,6 +1364,23 @@
     prototype: CutterMachine
     stackRequirements:
       Steel: 2
-      Capacitor: 1
-      Manipulator: 1
+      Manipulator: 2
       Cable: 1
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: SmartFridgeCircuitboard
+  name: SmartFridge machine board
+  description: A machine printed circuit board for a SmartFridge.
+  components:
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: SmartFridge
+    stackRequirements:
+      Glass: 5
+      Manipulator: 2
+    tagRequirements:
+        GlassBeaker:
+          amount: 2
+          defaultPrototype: Beaker

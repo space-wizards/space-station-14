@@ -1,3 +1,5 @@
+using Content.Shared.Construction.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -11,21 +13,22 @@ namespace Content.Shared.Preferences
     [NetSerializable]
     public sealed class PlayerPreferences
     {
-        private Dictionary<int, ICharacterProfile> _characters;
+        private Dictionary<int, HumanoidCharacterProfile> _characters;
 
-        public PlayerPreferences(IEnumerable<KeyValuePair<int, ICharacterProfile>> characters, int selectedCharacterIndex, Color adminOOCColor)
+        public PlayerPreferences(IEnumerable<KeyValuePair<int, HumanoidCharacterProfile>> characters, int selectedCharacterIndex, Color adminOOCColor, List<ProtoId<ConstructionPrototype>> constructionFavorites)
         {
-            _characters = new Dictionary<int, ICharacterProfile>(characters);
+            _characters = new Dictionary<int, HumanoidCharacterProfile>(characters);
             SelectedCharacterIndex = selectedCharacterIndex;
             AdminOOCColor = adminOOCColor;
+            ConstructionFavorites = constructionFavorites;
         }
 
         /// <summary>
         ///     All player characters.
         /// </summary>
-        public IReadOnlyDictionary<int, ICharacterProfile> Characters => _characters;
+        public IReadOnlyDictionary<int, HumanoidCharacterProfile> Characters => _characters;
 
-        public ICharacterProfile GetProfile(int index)
+        public HumanoidCharacterProfile GetProfile(int index)
         {
             return _characters[index];
         }
@@ -38,16 +41,21 @@ namespace Content.Shared.Preferences
         /// <summary>
         ///     The currently selected character.
         /// </summary>
-        public ICharacterProfile SelectedCharacter => Characters[SelectedCharacterIndex];
+        public HumanoidCharacterProfile SelectedCharacter => Characters[SelectedCharacterIndex];
 
         public Color AdminOOCColor { get; set; }
 
-        public int IndexOfCharacter(ICharacterProfile profile)
+        /// <summary>
+        ///    List of favorite items in the construction menu.
+        /// </summary>
+        public List<ProtoId<ConstructionPrototype>> ConstructionFavorites { get; set; } = [];
+
+        public int IndexOfCharacter(HumanoidCharacterProfile profile)
         {
             return _characters.FirstOrNull(p => p.Value == profile)?.Key ?? -1;
         }
 
-        public bool TryIndexOfCharacter(ICharacterProfile profile, out int index)
+        public bool TryIndexOfCharacter(HumanoidCharacterProfile profile, out int index)
         {
             return (index = IndexOfCharacter(profile)) != -1;
         }

@@ -10,7 +10,7 @@ namespace Content.Server.Nutrition.EntitySystems
 {
     public sealed partial class SmokingSystem
     {
-        [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
+        [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
 
         private void InitializePipes()
         {
@@ -22,7 +22,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         public void OnComponentInit(Entity<SmokingPipeComponent> entity, ref ComponentInit args)
         {
-            _itemSlotsSystem.AddItemSlot(entity, SmokingPipeComponent.BowlSlotId, entity.Comp.BowlSlot);
+            _itemSlotsSystem.AddItemSlot(entity.Owner, SmokingPipeComponent.BowlSlotId, entity.Comp.BowlSlot);
         }
 
         private void OnPipeInteractUsingEvent(Entity<SmokingPipeComponent> entity, ref InteractUsingEvent args)
@@ -30,7 +30,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (args.Handled)
                 return;
 
-            if (!EntityManager.TryGetComponent(entity, out SmokableComponent? smokable))
+            if (!TryComp(entity, out SmokableComponent? smokable))
                 return;
 
             if (smokable.State != SmokableState.Unlit)
@@ -52,7 +52,7 @@ namespace Content.Server.Nutrition.EntitySystems
             var targetEntity = args.Target;
             if (targetEntity == null ||
                 !args.CanReach ||
-                !EntityManager.TryGetComponent(entity, out SmokableComponent? smokable) ||
+                !TryComp(entity, out SmokableComponent? smokable) ||
                 smokable.State == SmokableState.Lit)
                 return;
 
@@ -69,7 +69,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnPipeSolutionEmptyEvent(Entity<SmokingPipeComponent> entity, ref SmokableSolutionEmptyEvent args)
         {
-            _itemSlotsSystem.SetLock(entity, entity.Comp.BowlSlot, false);
+            _itemSlotsSystem.SetLock(entity.Owner, entity.Comp.BowlSlot, false);
             SetSmokableState(entity, SmokableState.Unlit);
         }
 
@@ -81,17 +81,16 @@ namespace Content.Server.Nutrition.EntitySystems
 
             EntityUid contents = entity.Comp.BowlSlot.Item.Value;
 
-            if (!TryComp<SolutionContainerManagerComponent>(contents, out var reagents) ||
-                !_solutionContainerSystem.TryGetSolution(smokable.Owner, smokable.Comp.Solution, out var pipeSolution, out _))
+            if (!_solutionContainerSystem.TryGetSolution(smokable.Owner, smokable.Comp.Solution, out var pipeSolution, out _))
                 return false;
 
-            foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((contents, reagents)))
+            foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions(contents))
             {
                 var reagentSolution = soln.Comp.Solution;
                 _solutionContainerSystem.TryAddSolution(pipeSolution.Value, reagentSolution);
             }
 
-            EntityManager.DeleteEntity(contents);
+            Del(contents);
 
             _itemSlotsSystem.SetLock(entity.Owner, entity.Comp.BowlSlot, true); //no inserting more until current runs out
 

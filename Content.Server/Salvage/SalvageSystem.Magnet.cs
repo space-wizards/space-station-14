@@ -2,30 +2,30 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using Content.Server.Salvage.Magnet;
-using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Procedural;
 using Content.Shared.Radio;
 using Content.Shared.Salvage.Magnet;
-using Robust.Server.Maps;
+using Robust.Shared.Exceptions;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Salvage;
 
 public sealed partial class SalvageSystem
 {
-    [ValidatePrototypeId<RadioChannelPrototype>]
-    private const string MagnetChannel = "Supply";
+    [Dependency] private IRuntimeLog _runtimeLog = default!;
 
-    private EntityQuery<SalvageMobRestrictionsComponent> _salvMobQuery;
+    [Dependency] private EntityQuery<SalvageMobRestrictionsComponent> _salvMobQuery = default!;
+    [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery = default!;
+
+    private static readonly ProtoId<RadioChannelPrototype> MagnetChannel = "Supply";
 
     private List<(Entity<TransformComponent> Entity, EntityUid MapUid, Vector2 LocalPosition)> _detachEnts = new();
 
     private void InitializeMagnet()
     {
-        _salvMobQuery = GetEntityQuery<SalvageMobRestrictionsComponent>();
-
         SubscribeLocalEvent<SalvageMagnetDataComponent, MapInitEvent>(OnMagnetDataMapInit);
 
         SubscribeLocalEvent<SalvageMagnetTargetComponent, GridSplitEvent>(OnMagnetTargetSplit);
@@ -45,7 +45,19 @@ public sealed partial class SalvageSystem
             return;
         }
 
-        TakeMagnetOffer((station.Value, dataComp), args.Index, (uid, component));
+        var index = args.Index;
+        async void TryTakeMagnetOffer()
+        {
+            try
+            {
+                await TakeMagnetOffer((station.Value, dataComp), index, (uid, component));
+            }
+            catch (Exception e)
+            {
+                _runtimeLog.LogException(e, $"{nameof(SalvageSystem)}.{nameof(TakeMagnetOffer)}");
+            }
+        }
+        TryTakeMagnetOffer();
     }
 
     private void OnMagnetStartup(EntityUid uid, SalvageMagnetComponent component, ComponentStartup args)
@@ -121,11 +133,11 @@ public sealed partial class SalvageSystem
         if (data.Comp.ActiveEntities != null)
         {
             // Handle mobrestrictions getting deleted
-            var query = AllEntityQuery<SalvageMobRestrictionsComponent>();
+            var query = AllEntityQuery<SalvageMobRestrictionsComponent, MobStateComponent>();
 
-            while (query.MoveNext(out var salvUid, out var salvMob))
+            while (query.MoveNext(out var salvUid, out var salvMob, out var salvMobState))
             {
-                if (data.Comp.ActiveEntities.Contains(salvMob.LinkedEntity))
+                if (data.Comp.ActiveEntities.Contains(salvMob.LinkedEntity) && _mobState.IsAlive(salvUid, salvMobState))
                 {
                     QueueDel(salvUid);
                 }
@@ -141,6 +153,20 @@ public sealed partial class SalvageSystem
                     continue;
 
                 if (_salvMobQuery.HasComp(mobUid))
+                    continue;
+
+                bool CheckParents(EntityUid uid)
+                {
+                    do
+                    {
+                        uid = _transform.GetParentUid(uid);
+                        if (_mobStateQuery.HasComp(uid))
+                            return true;
+                    } while (uid != xform.GridUid && uid != EntityUid.Invalid);
+                    return false;
+                }
+
+                if (CheckParents(mobUid))
                     continue;
 
                 // Can't parent directly to map as it runs grid traversal.
@@ -267,26 +293,21 @@ public sealed partial class SalvageSystem
         switch (offering)
         {
             case AsteroidOffering asteroid:
-                var grid = _mapManager.CreateGridEntity(salvMap);
+                var grid = _mapSystem.CreateGridEntity(salvMap);
                 await _dungeon.GenerateDungeonAsync(asteroid.DungeonConfig, grid.Owner, grid.Comp, Vector2i.Zero, seed);
                 break;
             case DebrisOffering debris:
-                var debrisProto = _prototypeManager.Index<DungeonConfigPrototype>(debris.Id);
-                var debrisGrid = _mapManager.CreateGridEntity(salvMap);
+                var debrisProto = ProtoMan.Index<DungeonConfigPrototype>(debris.Id);
+                var debrisGrid = _mapSystem.CreateGridEntity(salvMap);
                 await _dungeon.GenerateDungeonAsync(debrisProto, debrisGrid.Owner, debrisGrid.Comp, Vector2i.Zero, seed);
                 break;
             case SalvageOffering wreck:
                 var salvageProto = wreck.SalvageMap;
 
-                var opts = new MapLoadOptions
-                {
-                    Offset = new Vector2(0, 0)
-                };
-
-                if (!_map.TryLoad(salvMapXform.MapID, salvageProto.MapPath.ToString(), out _, opts))
+                if (!_loader.TryLoadGrid(salvMapXform.MapID, salvageProto.MapPath, out _))
                 {
                     Report(magnet, MagnetChannel, "salvage-system-announcement-spawn-debris-disintegrated");
-                    _mapManager.DeleteMap(salvMapXform.MapID);
+                    _mapSystem.DeleteMap(salvMapXform.MapID);
                     return;
                 }
 
@@ -322,7 +343,7 @@ public sealed partial class SalvageSystem
             }
         }
 
-        var magnetXform = _xformQuery.GetComponent(magnet.Owner);
+        var magnetXform = Transform(magnet.Owner);
         var magnetGridUid = magnetXform.GridUid;
         var attachedBounds = new Box2Rotated();
         var mapId = MapId.Nullspace;
@@ -330,7 +351,7 @@ public sealed partial class SalvageSystem
 
         if (magnetGridUid != null)
         {
-            var magnetGridXform = _xformQuery.GetComponent(magnetGridUid.Value);
+            var magnetGridXform = Transform(magnetGridUid.Value);
             var (gridPos, gridRot) = _transform.GetWorldPositionRotation(magnetGridXform);
             var gridAABB = _gridQuery.GetComponent(magnetGridUid.Value).LocalAABB;
 
@@ -347,7 +368,7 @@ public sealed partial class SalvageSystem
         if (!TryGetSalvagePlacementLocation(magnet, mapId, attachedBounds, bounds!.Value, worldAngle, out var spawnLocation, out var spawnAngle))
         {
             Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-spawn-no-debris-available");
-            _mapManager.DeleteMap(salvMapXform.MapID);
+            _mapSystem.DeleteMap(salvMapXform.MapID);
             return;
         }
 
@@ -362,7 +383,7 @@ public sealed partial class SalvageSystem
         // It worked, move it into position and cleanup values.
         while (mapChildren.MoveNext(out var mapChild))
         {
-            var salvXForm = _xformQuery.GetComponent(mapChild);
+            var salvXForm = Transform(mapChild);
             var localPos = salvXForm.LocalPosition;
 
             _transform.SetParent(mapChild, salvXForm, spawnUid.Value);
@@ -384,7 +405,7 @@ public sealed partial class SalvageSystem
         }
 
         Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-arrived", ("timeLeft", data.Comp.ActiveTime.TotalSeconds));
-        _mapManager.DeleteMap(salvMapXform.MapID);
+        _mapSystem.DeleteMap(salvMapXform.MapID);
 
         data.Comp.Announced = false;
 
@@ -402,6 +423,7 @@ public sealed partial class SalvageSystem
         var magnetPos = _transform.GetWorldPosition(magnet) + worldAngle.ToVec() * bounds.MaxDimension;
         var origin = attachedAABB.ClosestPoint(magnetPos);
         var fraction = 0.50f;
+        var grids = new List<Entity<MapGridComponent>>();
 
         // Thanks 20kdc
         for (var i = 0; i < 20; i++)
@@ -417,7 +439,9 @@ public sealed partial class SalvageSystem
 
             // This doesn't stop it from spawning on top of random things in space
             // Might be better like this, ghosts could stop it before
-            if (_mapManager.FindGridsIntersecting(finalCoords.MapId, box2Rot).Any())
+            grids.Clear();
+            _mapSystem.FindGridsIntersecting(finalCoords.MapId, box2Rot, ref grids);
+            if (grids.Count > 0)
             {
                 // Bump it further and further just in case.
                 fraction += 0.1f;

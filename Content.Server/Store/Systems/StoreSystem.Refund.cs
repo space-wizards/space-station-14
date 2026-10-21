@@ -1,33 +1,55 @@
 using Content.Server.Store.Components;
+using Content.Shared.Actions.Events;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Store.Components;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Store.Systems;
 
 public sealed partial class StoreSystem
 {
+    [Dependency] private IGameTiming _timing = default!;
+
     private void InitializeRefund()
     {
         SubscribeLocalEvent<StoreComponent, EntityTerminatingEvent>(OnStoreTerminating);
         SubscribeLocalEvent<StoreRefundComponent, EntityTerminatingEvent>(OnRefundTerminating);
         SubscribeLocalEvent<StoreRefundComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
         SubscribeLocalEvent<StoreRefundComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
+        SubscribeLocalEvent<StoreRefundComponent, ActionPerformedEvent>(OnActionPerformed);
+        SubscribeLocalEvent<StoreRefundComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<StoreRefundComponent, AttemptShootEvent>(OnShootAttempt);
+        // TODO: Handle guardian refund disabling when guardians support refunds.
     }
 
-    private void OnEntityRemoved(EntityUid uid, StoreRefundComponent component, EntRemovedFromContainerMessage args)
+    private void OnEntityRemoved(Entity<StoreRefundComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        if (component.StoreEntity == null || _actions.TryGetActionData(uid, out _, false) || !TryComp<StoreComponent>(component.StoreEntity.Value, out var storeComp))
-            return;
-
-        DisableRefund(component.StoreEntity.Value, storeComp);
+        CheckDisableRefund(ent);
     }
 
-    private void OnEntityInserted(EntityUid uid, StoreRefundComponent component, EntInsertedIntoContainerMessage args)
+    private void OnEntityInserted(Entity<StoreRefundComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        if (component.StoreEntity == null || _actions.TryGetActionData(uid, out _) || !TryComp<StoreComponent>(component.StoreEntity.Value, out var storeComp))
+        CheckDisableRefund(ent);
+    }
+
+    private void OnActionPerformed(Entity<StoreRefundComponent> ent, ref ActionPerformedEvent args)
+    {
+        CheckDisableRefund(ent);
+    }
+
+    private void OnUseInHand(Entity<StoreRefundComponent> ent, ref UseInHandEvent args)
+    {
+        CheckDisableRefund(ent);
+    }
+
+    private void OnShootAttempt(Entity<StoreRefundComponent> ent, ref AttemptShootEvent args)
+    {
+        if (args.Cancelled)
             return;
 
-        DisableRefund(component.StoreEntity.Value, storeComp);
+        CheckDisableRefund(ent);
     }
 
     private void OnStoreTerminating(Entity<StoreComponent> ent, ref EntityTerminatingEvent args)
@@ -51,5 +73,20 @@ public sealed partial class StoreSystem
 
         var ev = new RefundEntityDeletedEvent(ent);
         RaiseLocalEvent(ent.Comp.StoreEntity.Value, ref ev);
+    }
+
+    private void CheckDisableRefund(Entity<StoreRefundComponent> ent)
+    {
+        var component = ent.Comp;
+
+        if (component.StoreEntity == null || !TryComp<StoreComponent>(component.StoreEntity.Value, out var storeComp) || !storeComp.RefundAllowed)
+            return;
+
+        var endTime = component.BoughtTime + component.DisableTime;
+
+        if (IsOnStartingMap(component.StoreEntity.Value, storeComp) && _timing.CurTime < endTime)
+            return;
+
+        DisableRefund(component.StoreEntity.Value, storeComp);
     }
 }

@@ -1,12 +1,14 @@
+#nullable enable
 using System.Collections.Generic;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.Cargo.Systems;
 using Content.Server.Construction.Completions;
 using Content.Server.Construction.Components;
 using Content.Server.Destructible;
 using Content.Server.Destructible.Thresholds.Behaviors;
+using Content.Server.Lathe;
 using Content.Server.Stack;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Construction.Components;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.FixedPoint;
@@ -14,10 +16,9 @@ using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.Stacks;
+using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -26,60 +27,74 @@ namespace Content.IntegrationTests.Tests;
 /// create them.
 /// </summary>
 [TestFixture]
-public sealed class MaterialArbitrageTest
+public sealed class MaterialArbitrageTest : GameTest
 {
+    // These sets are for selectively excluding recipes from arbitrage.
+    // You should NOT be adding to these. They exist here for downstreams and potential future issues.
+    private readonly HashSet<string> _destructionArbitrageIgnore = [];
+    private readonly HashSet<string> _compositionArbitrageIgnore = [];
+
     [Test]
     public async Task NoMaterialArbitrage()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         var testMap = await pair.CreateTestMap();
         await server.WaitIdleAsync();
 
         var entManager = server.ResolveDependency<IEntityManager>();
-        var mapManager = server.ResolveDependency<IMapManager>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
 
         var pricing = entManager.System<PricingSystem>();
         var stackSys = entManager.System<StackSystem>();
         var mapSystem = server.System<SharedMapSystem>();
-        var latheSys = server.System<SharedLatheSystem>();
+        var latheSys = server.System<LatheSystem>();
         var compFact = server.ResolveDependency<IComponentFactory>();
 
         Assert.That(mapSystem.IsInitialized(testMap.MapId));
 
-        var constructionName = compFact.GetComponentName(typeof(ConstructionComponent));
-        var compositionName = compFact.GetComponentName(typeof(PhysicalCompositionComponent));
-        var materialName = compFact.GetComponentName(typeof(MaterialComponent));
-        var destructibleName = compFact.GetComponentName(typeof(DestructibleComponent));
+        var constructionName = compFact.CompName<ConstructionComponent>();
+        var compositionName = compFact.CompName<PhysicalCompositionComponent>();
+        var materialName = compFact.CompName<MaterialComponent>();
+        var destructibleName = compFact.CompName<DestructibleComponent>();
+        var refinableName = compFact.CompName<ToolRefinableComponent>();
 
         // get the inverted lathe recipe dictionary
         var latheRecipes = latheSys.InverseRecipes;
 
-        // Lets assume the possible lathe for resource multipliers:
-        // TODO: each recipe can technically have its own cost multiplier associated with it, so this test needs redone to factor that in.
-        var multiplier = MathF.Pow(0.85f, 3);
+        // Find the lowest multiplier / optimal lathe that can be used to construct a recipie.
+        var minMultiplier = new Dictionary<ProtoId<LatheRecipePrototype>, float>();
+
+        foreach (var (_, lathe) in pair.GetPrototypesWithComponent<LatheComponent>())
+        {
+            foreach (var recipe in latheSys.GetAllPossibleRecipes(lathe))
+            {
+                if (!minMultiplier.TryGetValue(recipe, out var min))
+                    min = 1;
+
+                minMultiplier[recipe] = Math.Min(min, lathe.MaterialUseMultiplier);
+            }
+        }
 
         // create construction dictionary
-        Dictionary<string, ConstructionComponent> constructionRecipes = new();
+        Dictionary<EntProtoId, ConstructionComponent> constructionRecipes = new();
         foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
         {
             if (proto.HideSpawnMenu || proto.Abstract || pair.IsTestPrototype(proto))
                 continue;
 
-            if (!proto.Components.TryGetValue(constructionName, out var destructible))
+            if (!proto.TryComp<ConstructionComponent>(constructionName, out var comp))
                 continue;
 
-            var comp = (ConstructionComponent) destructible.Component;
             constructionRecipes.Add(proto.ID, comp);
         }
 
         // Get ingredients required to construct an entity
-        Dictionary<string, Dictionary<string, int>> constructionMaterials = new();
+        Dictionary<EntProtoId, Dictionary<ProtoId<MaterialPrototype>, int>> constructionMaterials = new();
         foreach (var (id, comp) in constructionRecipes)
         {
-            var materials = new Dictionary<string, int>();
+            var materials = new Dictionary<ProtoId<MaterialPrototype>, int>();
             var graph = protoManager.Index<ConstructionGraphPrototype>(comp.Graph);
             if (graph.Start == null)
                 continue;
@@ -104,11 +119,10 @@ public sealed class MaterialArbitrageTest
                     var stackProto = protoManager.Index<StackPrototype>(materialStep.MaterialPrototypeId);
                     var spawnProto = protoManager.Index(stackProto.Spawn);
 
-                    if (!spawnProto.Components.ContainsKey(materialName) ||
-                        !spawnProto.Components.TryGetValue(compositionName, out var compositionReg))
+                    if (!spawnProto.HasComp(materialName) ||
+                        !spawnProto.TryComp<PhysicalCompositionComponent>(compositionName, out var mat))
                         continue;
 
-                    var mat = (PhysicalCompositionComponent) compositionReg.Component;
                     foreach (var (matId, amount) in mat.MaterialComposition)
                     {
                         materials[matId] = materialStep.Amount * amount + materials.GetValueOrDefault(matId);
@@ -118,9 +132,63 @@ public sealed class MaterialArbitrageTest
             constructionMaterials.Add(id, materials);
         }
 
-        Dictionary<string, double> priceCache = new();
+        Dictionary<EntProtoId, double> priceCache = new();
 
-        Dictionary<string, (Dictionary<string, int> Ents, Dictionary<string, int> Mats)> spawnedOnDestroy = new();
+        Dictionary<EntProtoId, (Dictionary<EntProtoId, float> Ents, Dictionary<ProtoId<MaterialPrototype>, float> Mats)> spawnedOnDestroy = new();
+
+        // cache the compositions of entities
+        // If the entity is refineable (i.e. glass shared can be turned into glass, we take the greater of the two compositions.
+        Dictionary<EntProtoId, Dictionary<ProtoId<MaterialPrototype>, int>> compositions = new();
+        foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
+        {
+            Dictionary<ProtoId<MaterialPrototype>, int>? baseComposition = null;
+
+            if (proto.HasComp(materialName) &&
+                proto.TryComp<PhysicalCompositionComponent>(compositionName, out var compositionComp))
+            {
+                baseComposition = compositionComp.MaterialComposition;
+            }
+
+            if (!proto.TryComp<ToolRefinableComponent>(refinableName, out var refinable))
+            {
+                if (baseComposition != null)
+                    compositions[proto.ID] = new(baseComposition);
+                continue;
+            }
+
+            var composition = new Dictionary<ProtoId<MaterialPrototype>, int>();
+            compositions.Add(proto.ID, composition);
+
+            foreach (var refineResult in refinable.RefineResult)
+            {
+                if (refineResult.PrototypeId == null)
+                    continue;
+
+                var refineProto = protoManager.Index(refineResult.PrototypeId.Value);
+                if (!refineProto.HasComp(materialName))
+                    continue;
+
+                if (!refineProto.TryComp<PhysicalCompositionComponent>(compositionName, out var refinedCompositionComp))
+                    continue;
+
+                // This assumes refine results do not have complex spawn behaviours like exclusive groups.
+                var quantity = refineResult.MaxAmount;
+
+                foreach (var (matId, amount) in refinedCompositionComp.MaterialComposition)
+                {
+                    composition[matId] = quantity * amount + composition.GetValueOrDefault(matId);
+                }
+            }
+
+            if (baseComposition == null)
+                continue;
+
+            // If the un-refined material quantity is greater than the refined quantity, we use that instead.
+            foreach (var (matId, amount) in baseComposition)
+            {
+                composition[matId] = Math.Max(amount, composition.GetValueOrDefault(matId));
+            }
+        }
 
         // Here we get the set of entities/materials spawned when destroying an entity.
         foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
@@ -128,13 +196,11 @@ public sealed class MaterialArbitrageTest
             if (proto.HideSpawnMenu || proto.Abstract || pair.IsTestPrototype(proto))
                 continue;
 
-            if (!proto.Components.TryGetValue(destructibleName, out var destructible))
+            if (!proto.TryComp<DestructibleComponent>(destructibleName, out var comp))
                 continue;
 
-            var comp = (DestructibleComponent) destructible.Component;
-
-            var spawnedEnts = new Dictionary<string, int>();
-            var spawnedMats = new Dictionary<string, int>();
+            var spawnedEnts = new Dictionary<EntProtoId, float>();
+            var spawnedMats = new Dictionary<ProtoId<MaterialPrototype>, float>();
 
             // This test just blindly assumes that ALL spawn entity behaviors get triggered. In reality, some entities
             // might only trigger a subset. If that starts being a problem, this test either needs fixing or needs to
@@ -149,20 +215,14 @@ public sealed class MaterialArbitrageTest
 
                     foreach (var (key, value) in spawn.Spawn)
                     {
-                        spawnedEnts[key] = spawnedEnts.GetValueOrDefault(key) + value.Max;
+                        spawnedEnts[key] = spawnedEnts.GetValueOrDefault(key) + (float)(value.Min + value.Max) / 2;
 
-                        var spawnProto = protoManager.Index<EntityPrototype>(key);
-
-                        // get the amount of each material included in the entity
-
-                        if (!spawnProto.Components.ContainsKey(materialName) ||
-                            !spawnProto.Components.TryGetValue(compositionName, out var compositionReg))
+                        if (!compositions.TryGetValue(key, out var composition))
                             continue;
 
-                        var mat = (PhysicalCompositionComponent) compositionReg.Component;
-                        foreach (var (matId, amount) in mat.MaterialComposition)
+                        foreach (var (matId, amount) in composition)
                         {
-                            spawnedMats[matId] = value.Max * amount + spawnedMats.GetValueOrDefault(matId);
+                            spawnedMats[matId] = (float)(value.Min + value.Max) / 2 * amount + spawnedMats.GetValueOrDefault(matId);
                         }
                     }
                 }
@@ -173,10 +233,13 @@ public sealed class MaterialArbitrageTest
         }
 
         // This is the main loop where we actually check for destruction arbitrage
-        Assert.Multiple(async () =>
+        await Assert.MultipleAsync(async () =>
         {
             foreach (var (id, (spawnedEnts, spawnedMats)) in spawnedOnDestroy)
             {
+                if (_destructionArbitrageIgnore.Contains(id))
+                    continue;
+
                 // Check cargo sell price
                 // several constructible entities have no sell price
                 // also this test only really matters if the entity is also purchaseable.... eh..
@@ -190,6 +253,11 @@ public sealed class MaterialArbitrageTest
                 {
                     foreach (var recipe in recipes)
                     {
+                        if (!minMultiplier.TryGetValue(recipe, out var multiplier))
+                        {
+                            server.Log.Info($"Unused lathe recipe? {recipe.ID}?");
+                            continue;
+                        }
                         foreach (var (matId, amount) in recipe.Materials)
                         {
                             var actualAmount = SharedLatheSystem.AdjustMaterial(amount, recipe.ApplyMaterialDiscount, multiplier);
@@ -213,13 +281,13 @@ public sealed class MaterialArbitrageTest
 
         // Finally, lets also check for deconstruction arbitrage.
         // Get ingredients returned when deconstructing an entity
-        Dictionary<string, Dictionary<string, int>> deconstructionMaterials = new();
+        Dictionary<EntProtoId, Dictionary<ProtoId<MaterialPrototype>, int>> deconstructionMaterials = new();
         foreach (var (id, comp) in constructionRecipes)
         {
             if (comp.DeconstructionNode == null)
                 continue;
 
-            var materials = new Dictionary<string, int>();
+            var materials = new Dictionary<ProtoId<MaterialPrototype>, int>();
             var graph = protoManager.Index<ConstructionGraphPrototype>(comp.Graph);
 
             if (!graph.TryPath(comp.Node, comp.DeconstructionNode, out var path) || path.Length == 0)
@@ -231,18 +299,20 @@ public sealed class MaterialArbitrageTest
                 var edge = cur.GetEdge(node.Name);
                 cur = node;
 
+                if (edge == null)
+                    continue;
+
                 foreach (var completion in edge.Completed)
                 {
                     if (completion is not SpawnPrototype spawnCompletion)
                         continue;
 
-                    var spawnProto = protoManager.Index<EntityPrototype>(spawnCompletion.Prototype);
+                    var spawnProto = protoManager.Index(spawnCompletion.Prototype);
 
-                    if (!spawnProto.Components.ContainsKey(materialName) ||
-                        !spawnProto.Components.TryGetValue(compositionName, out var compositionReg))
+                    if (!spawnProto.HasComp(materialName) ||
+                        !spawnProto.TryComp<PhysicalCompositionComponent>(compositionName, out var mat))
                         continue;
 
-                    var mat = (PhysicalCompositionComponent) compositionReg.Component;
                     foreach (var (matId, amount) in mat.MaterialComposition)
                     {
                         materials[matId] = spawnCompletion.Amount * amount + materials.GetValueOrDefault(matId);
@@ -253,9 +323,9 @@ public sealed class MaterialArbitrageTest
         }
 
         // This is functionally the same loop as before, but now testing deconstruction rather than destruction.
-        // This is pretty braindead. In principle construction graphs can have loops and whatnot.
+        // This is pretty brain-dead. In principle construction graphs can have loops and whatnot.
 
-        Assert.Multiple(async () =>
+        await Assert.MultipleAsync(async () =>
         {
             foreach (var (id, deconstructedMats) in deconstructionMaterials)
             {
@@ -270,6 +340,11 @@ public sealed class MaterialArbitrageTest
                 {
                     foreach (var recipe in recipes)
                     {
+                        if (!minMultiplier.TryGetValue(recipe, out var multiplier))
+                        {
+                            server.Log.Info($"Unused lathe recipe? {recipe.ID}?");
+                            continue;
+                        }
                         foreach (var (matId, amount) in recipe.Materials)
                         {
                             var actualAmount = SharedLatheSystem.AdjustMaterial(amount, recipe.ApplyMaterialDiscount, multiplier);
@@ -291,27 +366,29 @@ public sealed class MaterialArbitrageTest
             }
         });
 
-        // create phyiscal composition dictionary
+        // create physical composition dictionary
         // this doesn't account for the chemicals in the composition
-        Dictionary<string, PhysicalCompositionComponent> physicalCompositions = new();
+        Dictionary<EntProtoId, PhysicalCompositionComponent> physicalCompositions = new();
         foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
         {
             if (proto.HideSpawnMenu || proto.Abstract || pair.IsTestPrototype(proto))
                 continue;
 
-            if (!proto.Components.TryGetValue(compositionName, out var composition))
+            if (!proto.TryComp<PhysicalCompositionComponent>(compositionName, out var comp))
                 continue;
 
-            var comp = (PhysicalCompositionComponent) composition.Component;
             physicalCompositions.Add(proto.ID, comp);
         }
 
         // This is functionally the same loop as before, but now testing composition rather than destruction or deconstruction.
         // This doesn't take into account chemicals generated when deconstructing. Maybe it should.
-        Assert.Multiple(async () =>
+        await Assert.MultipleAsync(async () =>
         {
             foreach (var (id, compositionComponent) in physicalCompositions)
             {
+                if (_compositionArbitrageIgnore.Contains(id))
+                    continue;
+
                 // Check cargo sell price
                 var materialPrice = await GetDeconstructedPrice(compositionComponent.MaterialComposition);
                 var chemicalPrice = await GetChemicalCompositionPrice(compositionComponent.ChemicalComposition);
@@ -325,6 +402,11 @@ public sealed class MaterialArbitrageTest
                 {
                     foreach (var recipe in recipes)
                     {
+                        if (!minMultiplier.TryGetValue(recipe, out var multiplier))
+                        {
+                            server.Log.Info($"Unused lathe recipe? {recipe.ID}?");
+                            continue;
+                        }
                         foreach (var (matId, amount) in recipe.Materials)
                         {
                             var actualAmount = SharedLatheSystem.AdjustMaterial(amount, recipe.ApplyMaterialDiscount, multiplier);
@@ -346,10 +428,9 @@ public sealed class MaterialArbitrageTest
             }
         });
 
-        await server.WaitPost(() => mapManager.DeleteMap(testMap.MapId));
-        await pair.CleanReturnAsync();
+        await server.WaitPost(() => mapSystem.DeleteMap(testMap.MapId));
 
-        async Task<double> GetSpawnedPrice(Dictionary<string, int> ents)
+        async Task<double> GetSpawnedPrice(Dictionary<EntProtoId, float> ents)
         {
             double price = 0;
             foreach (var (id, num) in ents)
@@ -360,14 +441,15 @@ public sealed class MaterialArbitrageTest
             return price;
         }
 
-        async Task<double> GetPrice(string id)
+        async Task<double> GetPrice(EntProtoId id)
         {
             if (!priceCache.TryGetValue(id, out var price))
             {
                 await server.WaitPost(() =>
                 {
                     var ent = entManager.SpawnEntity(id, testMap.GridCoords);
-                    stackSys.SetCount(ent, 1);
+                    if (entManager.TryGetComponent<StackComponent>(ent, out var stackComp))
+                        stackSys.SetCount((ent, stackComp), 1);
                     priceCache[id] = price = pricing.GetPrice(ent, false);
                     entManager.DeleteEntity(ent);
                 });
@@ -375,13 +457,14 @@ public sealed class MaterialArbitrageTest
             return price;
         }
 
+// TODO: why not just have it not be async... W not commenting anything
 #pragma warning disable CS1998
-        async Task<double> GetDeconstructedPrice(Dictionary<string, int> mats)
+        async Task<double> GetDeconstructedPrice(Dictionary<ProtoId<MaterialPrototype>, int> mats)
         {
             double price = 0;
             foreach (var (id, num) in mats)
             {
-                var matProto = protoManager.Index<MaterialPrototype>(id);
+                var matProto = protoManager.Index(id);
                 price += num * matProto.Price;
             }
             return price;
@@ -389,12 +472,12 @@ public sealed class MaterialArbitrageTest
 #pragma warning restore CS1998
 
 #pragma warning disable CS1998
-        async Task<double> GetChemicalCompositionPrice(Dictionary<string, FixedPoint2> mats)
+        async Task<double> GetChemicalCompositionPrice(Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> mats)
         {
             double price = 0;
             foreach (var (id, num) in mats)
             {
-                var reagentProto = protoManager.Index<ReagentPrototype>(id);
+                var reagentProto = protoManager.Index(id);
                 price += num.Double() * reagentProto.PricePerUnit;
             }
             return price;

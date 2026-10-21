@@ -67,3 +67,17 @@
   toolName: tool-quality-rolling-tool-name
   spawn: RollingPin
   icon: { sprite: Objects/Tools/rolling_pin.rsi, state: icon }
+
+- type: tool
+  id: Brushing
+  name: tool-quality-brushing-name
+  toolName: tool-quality-brushing-tool-name
+  spawn: WireBrush
+  icon: { sprite: Objects/Specific/Janitorial/wirebrush.rsi, state: icon }
+
+- type: tool
+  id: Shearing
+  name: tool-quality-shearing-name
+  toolName: tool-quality-shearing-tool-name
+  spawn: Wirecutter
+  icon: { sprite: Objects/Tools/wirecutters.rsi, state: cutters-map }

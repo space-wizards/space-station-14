@@ -1,22 +1,21 @@
 using Content.Server.Anomaly.Components;
 using Content.Server.Beam;
-using Content.Server.DeviceLinking.Systems;
 using Content.Shared.Anomaly.Components;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Components;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Emag.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Anomaly.Effects;
 
-public sealed class TechAnomalySystem : EntitySystem
+public sealed partial class TechAnomalySystem : EntitySystem
 {
-    [Dependency] private readonly DeviceLinkSystem _signal = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly BeamSystem _beam = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private DeviceLinkSystem _signal = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private BeamSystem _beam = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -80,10 +79,13 @@ public sealed class TechAnomalySystem : EntitySystem
         var sourcePort = _random.Pick(source.Comp.Ports);
         var sinkPort = _random.Pick(target.Comp.Ports);
 
-        _signal.SaveLinks(null, source, target,new()
-        {
-            (sourcePort, sinkPort),
-        });
+        _signal.SaveLinks(null,
+            source.AsNullable(),
+            target.AsNullable(),
+            new()
+            {
+                (sourcePort, sinkPort),
+            });
         _beam.TryCreateBeam(source, target, tech.Comp.LinkBeamProto);
     }
 
@@ -116,8 +118,11 @@ public sealed class TechAnomalySystem : EntitySystem
 
             if (_random.Prob(tech.Comp.EmagSupercritProbability))
             {
-                _emag.DoEmagEffect(tech, source);
-                _emag.DoEmagEffect(tech, sink);
+                var sourceEv = new GotEmaggedEvent(tech, EmagType.Access | EmagType.Interaction);
+                RaiseLocalEvent(source, ref sourceEv);
+
+                var sinkEv = new GotEmaggedEvent(tech, EmagType.Access | EmagType.Interaction);
+                RaiseLocalEvent(sink, ref sinkEv);
             }
 
             CreateNewLink(tech, source, sink);
@@ -126,6 +131,6 @@ public sealed class TechAnomalySystem : EntitySystem
 
     private void OnPulse(Entity<TechAnomalyComponent> tech, ref AnomalyPulseEvent args)
     {
-        _signal.InvokePort(tech, tech.Comp.PulsePort);
+        _signal.InvokePort(tech.Owner, tech.Comp.PulsePort);
     }
 }

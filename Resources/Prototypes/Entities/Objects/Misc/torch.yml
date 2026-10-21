@@ -5,11 +5,13 @@
   description: A torch fashioned from some wood.
   components:
     - type: ExpendableLight
-      spentName: expendable-light-burnt-torch-name
-      spentDesc: expendable-light-burnt-torch-desc
+      refuelMaterialID: WoodPlank
       glowDuration: 100
+      refuelMaterialTime: 50
+      refuelMaximumDuration: 205
       fadeOutDuration: 4
       iconStateSpent: torch_spent
+      iconStateLit: torch_nocloth
       turnOnBehaviourID: turn_on
       fadeOutBehaviourID: fade_out
       # Sounds legit nuff

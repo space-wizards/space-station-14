@@ -4,14 +4,13 @@
   description: job-description-paramedic
   playTimeTracker: JobParamedic
   requirements:
-    - !type:RoleTimeRequirement
-      role: JobMedicalDoctor
-      time: 14400 #4 hrs
-    - !type:OverallPlaytimeRequirement
-      time: 54000 # 15 hrs
+  - !type:DepartmentTimeRequirement
+    department: Medical
+    time: 2.5h
   startingGear: ParamedicGear
   icon: "JobIconParamedic"
   supervisors: job-supervisors-cmo
+  guides: [ Medical ] # TODO: should have a more specific guidebook page instead of using the department itself
   access:
   - Medical
   - Maintenance
@@ -23,7 +22,14 @@
   equipment:
     id: ParamedicPDA
     ears: ClothingHeadsetMedical
-    belt: ClothingBeltMedicalEMTFilled
-  storage:
-    back:
-    - EmergencyRollerBedSpawnFolded
+
+- type: chameleonOutfit
+  id: ParamedicChameleonOutfit
+  job: Paramedic
+  equipment:
+    head: ClothingHeadHatParamedicsoft
+    eyes: ClothingEyesHudMedical
+    mask: ClothingMaskSterile
+    neck: ClothingNeckStethoscope
+    outerClothing: ClothingOuterCoatParamedicWB
+    gloves: ClothingHandsGlovesLatex

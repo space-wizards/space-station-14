@@ -32,8 +32,8 @@
             </PanelContainer.PanelOverride>
 
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="10" Margin="10">
-                <menuBar:GameTopMenuBar Name="TopBar" HorizontalExpand="True" Access="Protected" />
-                <chat:ChatBox VerticalExpand="True" HorizontalExpand="True" Name="Chat" Access="Protected" MinSize="0 0"/>
+                <menuBar:GameTopMenuBar Name="TopBar" HorizontalExpand="True" Access="Public" />
+                <chat:ChatBox StyleClasses="ChatOutput" VerticalExpand="True" HorizontalExpand="True" Name="Chat" Access="Protected" MinSize="0 0"/>
             </BoxContainer>
         </PanelContainer>
     </SplitContainer>

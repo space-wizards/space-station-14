@@ -10,19 +10,10 @@
         - state: red
         - sprite: Objects/Materials/Sheets/metal.rsi
           state: steel_3
-    - type: RandomSpawner
-      rarePrototypes:
-        - SheetPlasteel10
-      rareChance: 0.2
-      prototypes:
-        - SheetSteel
-        - SheetGlass
-        - SheetPlastic
-        - CableApcStack
-        - CableMVStack
-        - CableHVStack
-      chance: 0.8
-      offset: 0.0
+    - type: EntityTableSpawner
+      table: !type:NestedSelector
+        tableId: RandomAllConstructionMaterialsTable
+        prob: 0.8
 
 - type: entity
   name: materials spawner
@@ -35,13 +26,10 @@
         - state: red
         - sprite: Objects/Materials/materials.rsi
           state: wood_2
-    - type: RandomSpawner
-      prototypes:
-        - MaterialWoodPlank10
-        - MaterialCardboard10
-        - PartRodMetal10
-      chance: 0.8
-      offset: 0.0
+    - type: EntityTableSpawner
+      table: !type:NestedSelector
+        tableId: RandomAllSupplementaryMaterialsTable
+        prob: 0.8
 
 # High-value materials spawners
 # Maybe these should use the 10-in-stack variants?
@@ -56,15 +44,10 @@
         - state: red
         - sprite: Objects/Materials/Sheets/metal.rsi
           state: plasteel_2
-    - type: RandomSpawner
-      rarePrototypes:
-        - SheetRPGlass
-      rareChance: 0.2
-      prototypes:
-        - SheetPlasteel
-        - SheetRGlass
-      chance: 0.8
-      offset: 0.0
+    - type: EntityTableSpawner
+      table: !type:NestedSelector
+        tableId: RandomAllHighValueConstructionMaterialsTable
+        prob: 0.8
 
 - type: entity
   name: high-value materials spawner
@@ -76,16 +59,10 @@
         - state: red
         - sprite: Objects/Materials/Sheets/other.rsi
           state: plasma_2
-    - type: RandomSpawner
-      rarePrototypes:
-        - SheetUranium
-      rareChance: 0.2
-      prototypes:
-        - SheetPlasma
-        - IngotGold
-        - IngotSilver
-      chance: 0.8
-      offset: 0.0
+    - type: EntityTableSpawner
+      table: !type:NestedSelector
+        tableId: RandomAllHighValueMaterialsTable
+        prob: 0.8
 
 # Surplus materials spawner.
 # Intended use case: randomly place in maintenance or in storage areas.
@@ -100,27 +77,10 @@
         - state: red
         - sprite: Objects/Materials/Sheets/metal.rsi
           state: steel_3
-    - type: RandomSpawner
-      rarePrototypes:
-        - SheetUranium1
-        - IngotGold1
-        - IngotSilver1
-      rareChance: 0.1
-      prototypes:
-        - SheetPlasteel10
-        - SheetPlasma1
-        - MaterialWoodPlank10
-        - PartRodMetal10
-        - SheetSteel10
-        - SheetGlass10
-        - MaterialCloth10
-        - MaterialCardboard10
-        - SheetPlastic10
-        - CableApcStack10
-        - CableMVStack10
-        - CableHVStack10
-      chance: 0.9
-      offset: 0.0
+    - type: EntityTableSpawner
+      table: !type:NestedSelector
+        tableId: RandomAllSurplusMaterialTable
+        prob: 0.9
 
 # Cable coil spawner
 - type: entity
@@ -133,15 +93,169 @@
         - state: red
         - sprite: Objects/Tools/cable-coils.rsi
           state: coilall-30
-    - type: RandomSpawner
-      rarePrototypes:
-        - CableApcStack10
-        - CableMVStack10
-        - CableHVStack10
-      rareChance: 0.1
-      prototypes:
-        - CableApcStack
-        - CableMVStack
-        - CableHVStack
-      chance: 0.9
-      offset: 0.0
+    - type: EntityTableSpawner
+      table: !type:NestedSelector
+        tableId: RandomAllCableCoilTable
+        prob: 0.9
+
+# Entity tables
+## Construction Materials
+- type: entityTable
+  id: RandomAllConstructionMaterialsTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: RandomCommonConstructionMaterialsTable
+      weight: 0.80
+    - !type:NestedSelector
+      tableId: RandomRareConstructionMaterialsTable
+      weight: 0.20
+
+- type: entityTable
+  id: RandomCommonConstructionMaterialsTable
+  table: !type:GroupSelector
+    children:
+    - id: SheetSteel
+    - id: SheetGlass
+    - id: SheetPlastic
+    - id: CableApcStack
+    - id: CableMVStack
+    - id: CableHVStack
+
+- type: entityTable
+  id: RandomRareConstructionMaterialsTable
+  table: !type:GroupSelector
+    children:
+    - id: SheetPlasteel10
+
+## High value construction materials
+- type: entityTable
+  id: RandomAllHighValueConstructionMaterialsTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: RandomCommonHighValueConstructionMaterialsTable
+      weight: 0.80
+    - !type:NestedSelector
+      tableId: RandomRareHighValueConstructionMaterialsTable
+      weight: 0.20
+
+- type: entityTable
+  id: RandomCommonHighValueConstructionMaterialsTable
+  table: !type:GroupSelector
+    children:
+    - id: SheetPlasteel
+    - id: SheetRGlass
+
+- type: entityTable
+  id: RandomRareHighValueConstructionMaterialsTable
+  table: !type:GroupSelector
+    children:
+    - id: SheetRPGlass
+
+## High value materials
+- type: entityTable
+  id: RandomAllHighValueMaterialsTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: RandomCommonHighValueMaterialsTable
+      weight: 0.80
+    - !type:NestedSelector
+      tableId: RandomRareHighValueMaterialsTable
+      weight: 0.20
+
+- type: entityTable
+  id: RandomCommonHighValueMaterialsTable
+  table: !type:GroupSelector
+    children:
+    - id: SheetPlasma
+    - id: IngotGold
+    - id: IngotSilver
+
+- type: entityTable
+  id: RandomRareHighValueMaterialsTable
+  table: !type:GroupSelector
+    children:
+    - id: SheetUranium
+
+## Supplementary Materials
+- type: entityTable
+  id: RandomAllSupplementaryMaterialsTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: RandomCommonSupplementaryMaterialsTable
+
+- type: entityTable
+  id: RandomCommonSupplementaryMaterialsTable
+  table: !type:GroupSelector
+    children:
+    - id: MaterialWoodPlank10
+    - id: MaterialCardboard10
+    - id: PartRodMetal10
+
+## Surplus Materials
+- type: entityTable
+  id: RandomAllSurplusMaterialTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: RandomCommonSurplusMaterialTable
+      weight: 0.90
+    - !type:NestedSelector
+      tableId: RandomRareSurplusMaterialTable
+      weight: 0.10
+
+- type: entityTable
+  id: RandomCommonSurplusMaterialTable
+  table: !type:GroupSelector
+    children:
+    - id: SheetPlasteel10
+    - id: SheetPlasma1
+    - id: MaterialWoodPlank10
+    - id: PartRodMetal10
+    - id: SheetSteel10
+    - id: SheetGlass10
+    - id: MaterialCloth10
+    - id: MaterialCardboard10
+    - id: SheetPlastic10
+    - id: CableApcStack10
+    - id: CableMVStack10
+    - id: CableHVStack10
+
+- type: entityTable
+  id: RandomRareSurplusMaterialTable
+  table: !type:GroupSelector
+    children:
+    - id: SheetUranium1
+    - id: IngotGold1
+    - id: IngotSilver1
+
+## Cables
+- type: entityTable
+  id: RandomAllCableCoilTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: RandomCommonCableCoilTable
+      weight: 0.90
+    - !type:NestedSelector
+      tableId: RandomRareCableCoilTable
+      weight: 0.10
+
+- type: entityTable
+  id: RandomCommonCableCoilTable
+  table: !type:GroupSelector
+    children:
+    - id: CableApcStack
+    - id: CableMVStack
+    - id: CableHVStack
+
+- type: entityTable
+  id: RandomRareCableCoilTable
+  table: !type:GroupSelector
+    children:
+    - id: CableApcStack10
+    - id: CableMVStack10
+    - id: CableHVStack10

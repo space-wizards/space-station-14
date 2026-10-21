@@ -1,4 +1,4 @@
-﻿using Content.Client.UserInterface.Systems.Gameplay;
+using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Client.UserInterface.Systems.Hands;
 using Content.Client.UserInterface.Systems.Hands.Controls;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
@@ -31,13 +31,11 @@ public sealed class HotbarUIController : UIController
         ReloadHotbar();
     }
 
-    public void Setup(HandsContainer handsContainer, StorageContainer storageContainer)
+    public void Setup(HandsContainer handsContainer)
     {
         _inventory = UIManager.GetUIController<InventoryUIController>();
         _hands = UIManager.GetUIController<HandsUIController>();
         _storage = UIManager.GetUIController<StorageUIController>();
-        _hands.RegisterHandContainer(handsContainer);
-        _storage.RegisterStorageContainer(storageContainer);
     }
 
     public void ReloadHotbar()

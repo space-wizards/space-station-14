@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Storage;
 
 namespace Content.Server.Medical.BiomassReclaimer
@@ -34,10 +35,10 @@ namespace Content.Server.Medical.BiomassReclaimer
         public float CurrentExpectedYield = 0f;
 
         /// <summary>
-        /// The reagent that will be spilled while processing a mob.
+        /// The reagents that will be spilled while processing a mob.
         /// </summary>
         [ViewVariables]
-        public string? BloodReagent;
+        public Solution? BloodReagents = null;
 
         /// <summary>
         /// Entities that can be randomly spawned while processing a mob.

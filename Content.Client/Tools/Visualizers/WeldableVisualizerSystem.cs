@@ -3,17 +3,17 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Tools.Visualizers;
 
-public sealed class WeldableVisualizerSystem : VisualizerSystem<WeldableComponent>
+public sealed partial class WeldableVisualizerSystem : VisualizerSystem<WeldableComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, WeldableComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        AppearanceSystem.TryGetData<bool>(uid, WeldableVisuals.IsWelded, out var isWelded, args.Component);
-        if (args.Sprite.LayerMapTryGet(WeldableLayers.BaseWelded, out var layer))
+        args.TryGetData<bool>(WeldableVisuals.IsWelded, out var isWelded);
+        if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), WeldableLayers.BaseWelded, out var layer, false))
         {
-            args.Sprite.LayerSetVisible(layer, isWelded);
+            SpriteSystem.LayerSetVisible((uid, args.Sprite), layer, isWelded);
         }
     }
 }

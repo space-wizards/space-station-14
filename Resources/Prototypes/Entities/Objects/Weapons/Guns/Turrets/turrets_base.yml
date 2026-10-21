@@ -1,0 +1,154 @@
+- type: entity
+  abstract: true
+  parent: BaseStructure
+  id: BaseWeaponTurretIndestructible
+  name: turret
+  components:
+  - type: InteractionOutline
+  - type: Actions
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Turrets/turrets.rsi
+    drawdepth: Mobs
+    layers:
+    - state: syndie_lethal
+  - type: InteractionPopup
+    interactDelay: 0.2
+    successChance: 0.8
+    interactSuccessString: petting-success-generic
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Effects/double_beep.ogg
+  - type: CombatMode
+    toggleMouseRotator: false
+  - type: HTN
+    rootTask:
+      task: TurretCompound
+    blackboard:
+      RotateSpeed: !type:Single
+        3.141
+      SoundTargetInLOS: !type:SoundPathSpecifier
+        path: /Audio/Effects/double_beep.ogg
+  - type: MouseRotator
+    angleTolerance: 5
+    rotationSpeed: 180
+    simple4DirMode: false
+  - type: NoRotateOnInteract
+  - type: NoRotateOnMove
+  - type: Input
+    context: "human"
+
+- type: entity
+  abstract: true
+  parent: StructureHealthMachineStrong
+  id: BaseTurretDestructible
+  components:
+  - type: Damageable
+    damageModifierSet: SteelMod
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 275
+        # TODO: Construction graph
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 3
+            max: 5
+
+- type: entity
+  abstract: true
+  parent: [ BaseWeaponTurretIndestructible, BaseTurretDestructible ]
+  id: BaseWeaponTurret
+
+- type: entity
+  abstract: true
+  parent: BaseWeaponTurretIndestructible
+  id: BaseWeaponBallisticTurretIndestructible
+  name: ballistic turret
+  description: A ballistic machine gun auto-turret.
+  components:
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Gun
+    fireRate: 6
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/gun_sentry.ogg
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifle
+    capacity: 500
+
+- type: entity
+  abstract: true
+  parent: [ BaseWeaponBallisticTurretIndestructible, BaseTurretDestructible ]
+  id: BaseWeaponBallisticTurret
+
+- type: entity
+  abstract: true
+  parent: BaseWeaponTurretIndestructible
+  id: BaseWeaponEnergyTurretIndestructible
+  name: laser turret
+  description: An auto-turret armed with a heavy laser. Its weapon will recharge while connected to an active power grid.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Turrets/sentry_turret.rsi
+    drawdepth: FloorObjects
+    granularLayersRendering: true
+    layers:
+    - state: support
+      renderingStrategy: NoRotation
+    - state: base
+    - state: lethal
+      shader: unshaded
+  - type: Gun
+    projectileSpeed: 15
+    fireRate: 1.5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+  - type: BatteryAmmoProvider
+    proto: BulletEnergyTurretLaser
+    fireCost: 100
+  - type: Battery
+    # Very important:
+    # Disable networking to prevent the battery getting continuously dirtied every tick as it interacts with the power network.
+    # This can not be done by changing the charge rate as the power supply ramps up over time.
+    # This disables prediction for this battery.
+    netsync: false
+    maxCharge: 2000
+    startingCharge: 2000
+  - type: ApcPowerReceiverBattery
+    idleLoad: 5
+    batteryRechargeRate: 200
+    batteryRechargeEfficiency: 0.0 # temporarily no power draw because this was causing potentially seizure inducing light flickering
+  - type: ApcPowerReceiver
+    powerLoad: 5
+  - type: ExtensionCableReceiver
+  - type: HTN
+    rootTask:
+      task: EnergyTurretCompound
+  - type: StaticPrice
+    price: 200
+
+- type: entity
+  abstract: true
+  parent: [ BaseWeaponEnergyTurretIndestructible, BaseTurretDestructible ]
+  id: BaseWeaponEnergyTurret

@@ -19,25 +19,31 @@ signal-port-description-right = This port is invoked whenever the lever is moved
 signal-port-name-doorstatus = Door status
 signal-port-description-doorstatus = This port is invoked with HIGH when the door opens and LOW when the door finishes closing.
 
+signal-port-name-doorboltstatus = Door bolt status
+signal-port-description-doorboltstatus = This port is invoked with HIGH when the door is bolted and LOW when it is unbolted.
+
 signal-port-name-dockstatus = Dock status
 signal-port-description-dockstatus = This port is invoked with HIGH when docked and LOW when undocked.
 
 signal-port-name-middle = Middle
 signal-port-description-middle = This port is invoked whenever the lever is moved to the neutral position.
 
-signal-port-name-timer-trigger = Timer Trigger
-signal-port-description-timer-trigger = This port is invoked whenever the timer triggers.
+signal-port-name-trigger-sender = Trigger
+signal-port-description-trigger-sender = This port is invoked whenever the device triggers.
 
-signal-port-name-timer-start = Timer Start
+signal-port-name-timer-trigger = Timer
+signal-port-description-timer-trigger = This port is invoked whenever the timer is up.
+
+signal-port-name-timer-start = Timer start
 signal-port-description-timer-start = This port is invoked whenever the timer starts.
 
 signal-port-name-logic-output = Output
 signal-port-description-logic-output = This port is invoked with HIGH or LOW depending on the selected gate and inputs.
 
-signal-port-name-logic-output-high = High Output
+signal-port-name-logic-output-high = High output
 signal-port-description-logic-output-high = This port is invoked whenever the input has a rising edge.
 
-signal-port-name-logic-output-low = Low Output
+signal-port-name-logic-output-low = Low output
 signal-port-description-logic-output-low = This port is invoked whenever the input has a falling edge.
 
 signal-port-name-air-danger = Danger
@@ -69,3 +75,6 @@ signal-port-description-power-charging = This port is invoked with HIGH when the
 
 signal-port-name-power-discharging = Discharging
 signal-port-description-power-discharging = This port is invoked with HIGH when the battery is losing charge and LOW when not.
+
+signal-port-name-item-detected = Detected
+signal-port-description-item-detected = This port is invoked whenever the transmitter detects an item.

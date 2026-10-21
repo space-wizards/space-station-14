@@ -29,7 +29,7 @@ public sealed partial class CommsHackerComponent : Component
 /// Generally some kind of mid-round minor antag, though you could make it call in scrubber backflow if you wanted to.
 /// You wouldn't do that, right?
 /// </summary>
-[Prototype("ninjaHackingThreat")]
+[Prototype]
 public sealed partial class NinjaHackingThreatPrototype : IPrototype
 {
     [IdDataField]

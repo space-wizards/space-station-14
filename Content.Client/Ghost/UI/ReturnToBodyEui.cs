@@ -1,4 +1,4 @@
-﻿using Content.Client.Eui;
+using Content.Client.Eui;
 using Content.Shared.Ghost;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;

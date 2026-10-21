@@ -1,19 +1,16 @@
-using Content.Server.Atmos;
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.Body.Components;
 using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
-using Content.Shared.Damage;
+using Content.Shared.Atmos;
+using Content.Shared.Body.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
-using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition;
-using System.Threading;
-using Content.Shared.Atmos;
+using Content.Shared.Nutrition.EntitySystems;
 
 /// <summary>
 /// System for vapes
@@ -22,51 +19,63 @@ namespace Content.Server.Nutrition.EntitySystems
 {
     public sealed partial class SmokingSystem
     {
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly FoodSystem _foodSystem = default!;
-        [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private DamageableSystem _damageableSystem = default!;
+        [Dependency] private EmagSystem _emag = default!;
+        [Dependency] private IngestionSystem _ingestion = default!;
+        [Dependency] private ExplosionSystem _explosionSystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
 
-        private void InitializeVapes()
+        [SubscribeLocalEvent]
+        private void OnVapeActivatedEvent(Entity<VapeComponent> entity, ref ActivateInWorldEvent args)
         {
-            SubscribeLocalEvent<VapeComponent, AfterInteractEvent>(OnVapeInteraction);
-            SubscribeLocalEvent<VapeComponent, VapeDoAfterEvent>(OnVapeDoAfter);
-            SubscribeLocalEvent<VapeComponent, GotEmaggedEvent>(OnEmagged);
+            if (args.Handled)
+                return;
+
+            args.Handled = TryUseVape(entity, args.User, args.User);
         }
 
+        [SubscribeLocalEvent]
         private void OnVapeInteraction(Entity<VapeComponent> entity, ref AfterInteractEvent args)
+        {
+            if (args.Handled || !args.CanReach)
+                return;
+
+            args.Handled = TryUseVape(entity, args.User, args.Target);
+        }
+
+        private bool TryUseVape(Entity<VapeComponent> entity, EntityUid user, EntityUid? target)
         {
             var delay = entity.Comp.Delay;
             var forced = true;
             var exploded = false;
 
-            if (!args.CanReach
-                || !_solutionContainerSystem.TryGetRefillableSolution(entity.Owner, out _, out var solution)
-                || !HasComp<BloodstreamComponent>(args.Target)
-                || _foodSystem.IsMouthBlocked(args.Target.Value, args.User))
+            if (!_solutionContainerSystem.TryGetRefillableSolution(entity.Owner, out _, out var solution)
+                || !HasComp<BloodstreamComponent>(target)
+                || !_ingestion.HasMouthAvailable(user, target.Value)
+                )
             {
-                return;
+                return false;
             }
 
             if (solution.Contents.Count == 0)
             {
                 _popupSystem.PopupEntity(
-                    Loc.GetString("vape-component-vape-empty"), args.Target.Value,
-                    args.User);
-                return;
+                    Loc.GetString("vape-component-vape-empty"), target.Value,
+                    user);
+                return false;
             }
 
-            if (args.Target == args.User)
+            if (target == user)
             {
                 delay = entity.Comp.UserDelay;
                 forced = false;
             }
 
-            if (entity.Comp.ExplodeOnUse || HasComp<EmaggedComponent>(entity.Owner))
+            if (entity.Comp.ExplodeOnUse || _emag.CheckFlag(entity, EmagType.Interaction))
             {
                 _explosionSystem.QueueExplosion(entity.Owner, "Default", entity.Comp.ExplosionIntensity, 0.5f, 3, canCreateVacuum: false);
-                EntityManager.DeleteEntity(entity);
+                Del(entity);
                 exploded = true;
             }
             else
@@ -82,7 +91,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     {
                         exploded = true;
                         _explosionSystem.QueueExplosion(entity.Owner, "Default", entity.Comp.ExplosionIntensity, 0.5f, 3, canCreateVacuum: false);
-                        EntityManager.DeleteEntity(entity);
+                        Del(entity);
                         break;
                     }
                 }
@@ -90,36 +99,37 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (forced)
             {
-                var targetName = Identity.Entity(args.Target.Value, EntityManager);
-                var userName = Identity.Entity(args.User, EntityManager);
+                var targetName = Identity.Entity(target.Value, EntityManager);
+                var userName = Identity.Entity(user, EntityManager);
 
                 _popupSystem.PopupEntity(
-                    Loc.GetString("vape-component-try-use-vape-forced", ("user", userName)), args.Target.Value,
-                    args.Target.Value);
+                    Loc.GetString("vape-component-try-use-vape-forced", ("user", userName)), target.Value,
+                    target.Value);
 
                 _popupSystem.PopupEntity(
-                    Loc.GetString("vape-component-try-use-vape-forced-user", ("target", targetName)), args.User,
-                    args.User);
+                    Loc.GetString("vape-component-try-use-vape-forced-user", ("target", targetName)), user,
+                    user);
             }
             else
             {
                 _popupSystem.PopupEntity(
-                    Loc.GetString("vape-component-try-use-vape"), args.User,
-                    args.User);
+                    Loc.GetString("vape-component-try-use-vape"), user,
+                    user);
             }
 
             if (!exploded)
             {
                 var vapeDoAfterEvent = new VapeDoAfterEvent(solution, forced);
-                _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, delay, vapeDoAfterEvent, entity.Owner, target: args.Target, used: entity.Owner)
+                _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, delay, vapeDoAfterEvent, entity.Owner, target: target, used: entity.Owner)
                 {
                     BreakOnMove = false,
                     BreakOnDamage = true
                 });
             }
-            args.Handled = true;
+            return true;
         }
 
+        [SubscribeLocalEvent]
         private void OnVapeDoAfter(Entity<VapeComponent> entity, ref VapeDoAfterEvent args)
         {
             if (args.Cancelled || args.Handled || args.Args.Target == null)
@@ -161,8 +171,16 @@ namespace Content.Server.Nutrition.EntitySystems
                     args.Args.Target.Value);
             }
         }
+
+        [SubscribeLocalEvent]
         private void OnEmagged(Entity<VapeComponent> entity, ref GotEmaggedEvent args)
         {
+            if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+                return;
+
+            if (_emag.CheckFlag(entity, EmagType.Interaction))
+                return;
+
             args.Handled = true;
         }
     }

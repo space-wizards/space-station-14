@@ -2,16 +2,15 @@ using Content.Shared.Light;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 
 namespace Content.Client.Light.Visualizers;
 
-public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLightVisualsComponent>
+public sealed partial class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLightVisualsComponent>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -24,26 +23,26 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
         if (args.Sprite == null)
             return;
 
-        if (!AppearanceSystem.TryGetData<PoweredLightState>(uid, PoweredLightVisuals.BulbState, out var state, args.Component))
+        if (!args.TryGetData<PoweredLightState>(PoweredLightVisuals.BulbState, out var state))
             return;
 
         if (comp.SpriteStateMap.TryGetValue(state, out var spriteState))
-            args.Sprite.LayerSetState(PoweredLightLayers.Base, spriteState);
+            SpriteSystem.LayerSetRsiState((uid, args.Sprite), PoweredLightLayers.Base, spriteState);
 
-        if (args.Sprite.LayerExists(PoweredLightLayers.Glow))
+        if (SpriteSystem.LayerExists((uid, args.Sprite), PoweredLightLayers.Glow))
         {
             if (TryComp<PointLightComponent>(uid, out var light))
             {
-                args.Sprite.LayerSetColor(PoweredLightLayers.Glow, light.Color);
+                SpriteSystem.LayerSetColor((uid, args.Sprite), PoweredLightLayers.Glow, light.Color);
             }
 
-            args.Sprite.LayerSetVisible(PoweredLightLayers.Glow, state == PoweredLightState.On);
+            SpriteSystem.LayerSetVisible((uid, args.Sprite), PoweredLightLayers.Glow, state == PoweredLightState.On);
         }
 
         SetBlinkingAnimation(
             uid,
             state == PoweredLightState.On
-            && (AppearanceSystem.TryGetData<bool>(uid, PoweredLightVisuals.Blinking, out var isBlinking, args.Component) && isBlinking),
+            && (args.TryGetData<bool>(PoweredLightVisuals.Blinking, out var isBlinking) && isBlinking),
             comp
         );
     }
@@ -53,13 +52,14 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
     /// </summary>
     private void OnAnimationCompleted(EntityUid uid, PoweredLightVisualsComponent comp, AnimationCompletedEvent args)
     {
+        if (!TryComp<AnimationPlayerComponent>(uid, out var animationPlayer))
+            return;
         if (args.Key != PoweredLightVisualsComponent.BlinkingAnimationKey)
             return;
-
-        if(!comp.IsBlinking)
+        if (!comp.IsBlinking)
             return;
 
-        AnimationSystem.Play(uid, Comp<AnimationPlayerComponent>(uid), BlinkingAnimation(comp), PoweredLightVisualsComponent.BlinkingAnimationKey);
+        AnimationSystem.Play((uid, animationPlayer), BlinkingAnimation(comp), PoweredLightVisualsComponent.BlinkingAnimationKey);
     }
 
     /// <summary>
@@ -76,7 +76,7 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
         var animationPlayer = EnsureComp<AnimationPlayerComponent>(uid);
         if (shouldBeBlinking)
         {
-            AnimationSystem.Play(uid, animationPlayer, BlinkingAnimation(comp), PoweredLightVisualsComponent.BlinkingAnimationKey);
+            AnimationSystem.Play((uid, animationPlayer), BlinkingAnimation(comp), PoweredLightVisualsComponent.BlinkingAnimationKey);
         }
         else if (AnimationSystem.HasRunningAnimation(uid, animationPlayer, PoweredLightVisualsComponent.BlinkingAnimationKey))
         {
@@ -122,12 +122,12 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
 
         if (comp.BlinkingSound != null)
         {
-            var sound = _audio.GetSound(comp.BlinkingSound);
+            var sound = _audio.ResolveSound(comp.BlinkingSound);
             blinkingAnim.AnimationTracks.Add(new AnimationTrackPlaySound()
             {
                 KeyFrames =
                 {
-                    new AnimationTrackPlaySound.KeyFrame(sound, 0.5f)
+                    new AnimationTrackPlaySound.KeyFrame(sound, 0.5f, () => comp.BlinkingSound.Params)
                 }
             });
         }

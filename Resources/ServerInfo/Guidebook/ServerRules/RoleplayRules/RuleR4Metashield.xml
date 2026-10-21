@@ -1,104 +1,56 @@
-﻿<Document>
-  # Roleplay Rule 4 - Do not metagame, obey the Metashield
-  Something that is "shielded" cannot be known by your character during a round until the "revealing condition" happens. This also means that your character cannot do things based on "shielded" information. Knowing or acting on something that is shielded before the revealing condition is met is referred to as metagaming.
+<Document>
+  # Roleplay Rule 4 -# Do not use information your character would not have knowledge of.
+Metagaming in Space station 14 is the term used to typically describe actions based on knowledge during a round that is inaccessible to your character. You cannot use information gained while dead or a ghost if you are alive. Use of information gained while dead is considered metagaming. This does not apply to knowledge of what antagonists are capable of doing. We expect players to understand what options are avaliable to antagonists.
 
-  Revealing conditions reveal the shielded information for the round, not for a specific instance. This means that once a revealing condition is met in a round, the shield no longer applies in any case for the remainder of the round.
+## Out of character information and metagaming.
+Unless otherwise specified, when playing as a different character (such as taking a ghost role or being changed to another character via admin intervention), you are to act without knowledge of what occurred in the round as any prior characters and as a ghost while playing a character (ghosts are not considered a character for this rule). Mindswap spells and polymorphs are not considered changing characters for this rule. Failure to follow this is metagaming.
 
-  ## Never Revealed IC
-  Some shields are never revealed IC. This means that your character can never act as if they know about that shielded thing.
+The knowledge that a round will end is out of character information. Knowledge that the shift will end however, is not out of character information. The intention of this rule is to prevent preparation for End of round griefing (EORG). Utilising the knowledge that the round will end is metagaming.
 
-  The following are shielded:
-  - Current game mode and possible antags during the current game mode.
-  - Events from previous rounds.
-  - Events you experienced as a different character.
-  - All information related to the player of a character rather than the character itself. (See "Metafriending and Metagrudging" below.)
-  - All information gained while dead or a ghost.
-  - The fact that a round will end.
+### Knowledge from past lives
+Except when otherwise specified, you cannot use any information gained in a past life in the same round.
+For example, if you were killed by an antagonist, you cannot warn the crew of said antagonist when you respawn as a mothroach.
+This does _not_ apply when being brought back from death as the same character, having your brain transferred to another body, or being cloned.
+For example, if you were killed by an antagonist, your body was found and your brain was placed in a borg, you can recall what happened prior to your original death and could warn the of the antagonist.
 
-  This does not prevent knowing that a shift will end, but does prohibit things like preparing to kill people at central command when roleplay rules stop being enforced on LRP.
+### Knowledge that the round will end (and your character will, ergo, cease to exist)
+Your character will, or should, know that their current shift on Space Station 14 will end and that they will return to Centcomm. They do not know that this represents the effective end of their existence from the perspective of their player.
+You cannot preprepare for end-of-round griefing (EORG) or perform other actions that only make sense in the context that, your characters life ultimately doesn't matter.
 
-  ## Nuclear Operatives
+### Knowledge gained via LOOC
+You cannot use any knowledge gained via LOOC chat that is not in the context of assisting a player with controls, game mechanics, or being made to feel welcome. No in character information should be shared via LOOC, and no actions should be taken or altered because of LOOC or OOC chats.
 
-  The existence of Nuclear Operatives beyond a myth that no one would act on is shielded.
+### MRP Amendment
+Being in the critically injured state or otherwise unconscious (includes sleeping) prevents your character from remembering anything that happened to or around them while unconscious. If brought out of the critical state to the alive state, you may remember what caused you to enter critical state. Entering the dead state causes your character to forget all events related to their death (if you can tie it to how you died, do not remember it). If revived, placed in a MMI, or in the case of Diona, splitting, the character is aware of the fact that they have died but not how.
 
-  The fact that the nuke disk must be protected and could be used by a bad actor to try to destroy the station is not shielded.
+## Do Not Metafriend or Metagrudge
+Giving a person or character preferential treatment based on the events of a previous round is considered metafriending. Treating a person or character negatively based on the events of a previous round is considered metagrudging.
 
-  The revealing condition for this shield is any of the following:
-  - discovering a blood red hardsuit
-  - discovering a nuclear operative's shuttle
-  - an operative name
-  - a War Ops announcement
-  - being a nuclear operative
+#### Metafriending Examples
+These are all examples of things that are prohibited.
+- Giving a character additional access or a job because you are friends with the player who is playing that character.
+- Trusting a character because you are friends with the player who is playing that character.
+- Not fighting a character because you are friends with the player who is playing that character.
+- Ignoring your objective to kill a character because your character and theirs became friends in a previous round.
 
-  ## Implanted Implants
+#### Metagrudging Examples
+These are all examples of things that are prohibited.
 
-  Implanted implants are shielded.
+- Not giving a character additional access or a job because you are mad at or don't like the player who is playing that character.
+- Not trusting a character because you are mad at or don't like the player who is playing that character.
+- Starting a fight with a character because of something that they did in a previous round.
+- Starting a fight with a character because of a major event that happened in a previous round.
+- Starting a fight with a character because they killed you while you were playing a different character.
+- Targeting or harassing a character based on anything which that character did in a previous round.
+- Targeting or harassing a character based on anything which the character's player did while not playing the character.
 
-  Implanters themselves and un-implanted implants are not shielded. This prohibits implant checking.
 
-  The revealing condition for this shield is any of the following:
-  - discovering a non-NT implanter, used or unused
-  - discovering a non-NT implant box
-  - discovering use of a non-NT implant by anyone
-  - experiencing a situation where absolutely no other explanation is possible
-  - discovering an unlocked uplink
+## Explicitly Not Metagaming
 
-  ## Chameleon Items
-
-  Chameleon items are shielded.
-
-  Being suspicious of an item being fake or stolen is not shielded, but testing items or calling them chameleon is covered by this shield.
-
-  The revealing condition for this shield is any of the following:
-  - seeing someone else cause any chameleon item to change
-  - finding holographic nanomachine fibers
-  - experiencing a situation where absolutely no other explanation is possible
-  - discovering an unlocked uplink
-
-  ## Stealth Items
-
-  The fact that an item can be something other than what its visual appearance and examine description indicate is shielded.
-
-  This shield protects stealth items, including protecting them from being tested.
-
-  The revealing condition for this shield is any of the following:
-  - seeing the item behave differently than the expected behavior for the item
-  - seeing the item used for its hidden purpose
-  - experiencing a situation where absolutely no other explanation is possible
-  - discovering an unlocked uplink
-
-  ## MRP Amendment 1
-  A shield prevents your character from remembering anything that happened while unconscious. This shield is never revealed IC.
-
-  ## MRP Amendment 2
-  There is a "New Life Rule" shield. It prevents you from remembering anything that lead to your death, even if you are put into an MMI. If you are cloned, it also prevents you from remembering everything from that round. This shield is never revealed IC.
-
-  ## Metafriending and Metagrudging
-  This section provides additional information on a concept that is prohibited by multiple metashield items that are never revealed IC. Giving a person or character preferential treatment based on something that your character should not know is considered metafriending. Treating a person or character negatively based on something that your character should not know is considered metagrudging.
-
-  ## Metafriending Examples
-  These are all examples of things that are prohibited by at least one metashield item that is never revealed IC.
-  - Giving a character additional access or a job because you are friends with the player who is playing that character.
-  - Trusting a character because you are friends with the player who is playing that character.
-  - Not fighting a character because you are friends with the player who is playing that character.
-  - Ignoring your objective to kill a character because your character and theirs became friends in a previous round.
-
-  ## Metagrudging Examples
-  These are all examples of things that are prohibited by at least one metashield item that is never revealed IC.
-  - Not giving a character additional access or a job because you are mad at or don't like the player who is playing that character.
-  - Not trusting a character because you are mad at or don't like the player who is playing that character.
-  - Starting a fight with a character because of something that they did last round.
-  - Starting a fight with a character because they killed you while you were playing a different character.
-  - Targeting or harassing a character based on anything which that character did outside the current round.
-  - Targeting or harassing a character based on anything which the character's player did while not playing the character.
-
-  ## Explicitly Not Shielded
-  The following is a list of things that are explicitly not shielded. If something is not on this list, it doesn't mean that it is shielded, but if something is on it then it definitely is not shielded.
-  - The fact that the nuke disk must be protected and could be used by a bad actor to try to destroy the station.
-  - Items that are of high value or are desired by the Syndicate, and therefore are likely targets of theft.
-  - The idea that any Syndicate agent or other bad actor has goals or objectives that they are attempting to accomplish.
-  - The number of goals or objectives that a Syndicate agent or other bad actor has.
-  - The fact that the Syndicate are enemies of Nanotrasen, and that they regularly attempt to send covert agents to spy on, sabotage, or attack Nanotrasen.
-  - A character's typical appearance. Though you should keep in mind that multiple characters can share the same name.
-  - The fact that the Syndicate have covert items capable of getting items to them, and that these items are known as uplinks.
+- Protecting high value crew items (will be labeled as such), such as the nuke disk, with the understanding that a bad actor may attempt to steal or use them.
+- Remembering the general events of previous rounds (shifts) up to the extent that you do not metagrudge or metafriend any other player or character, remembering that you survived a violent shooting in the medbay is acceptable for example, stating who the shooter was is not. Avoid making remarks about specific characters, such as calling out someone who was an antagonist in a prior round.
+- The fact that antagonists exist and may be present on or off the station in any form.
+- Knowledge of a characters typical appearance.
+- Using knowledge of a characters typical appearance including your own for a disguise, such as a nuclear operative disguising as themselves as crew.
+- Knowing that enemies may have concealed items that may have function that are not immediately apparent.
 </Document>

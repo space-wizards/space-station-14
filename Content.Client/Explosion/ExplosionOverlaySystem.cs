@@ -4,8 +4,6 @@ using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.GameStates;
 using Robust.Shared.Graphics.RSI;
-using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Explosion;
 
@@ -13,14 +11,13 @@ namespace Content.Client.Explosion;
 ///     This system is responsible for showing the client-side explosion effects (light source & fire-overlay). The
 ///     fire overlay code is just a bastardized version of the atmos plasma fire overlay and uses the same texture.
 /// </summary>
-public sealed class ExplosionOverlaySystem : EntitySystem
+public sealed partial class ExplosionOverlaySystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly IResourceCache _resCache = default!;
-    [Dependency] private readonly IOverlayManager _overlayMan = default!;
-    [Dependency] private readonly SharedPointLightSystem _lights = default!;
-    [Dependency] private readonly IMapManager _mapMan = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private IResourceCache _resCache = default!;
+    [Dependency] private IOverlayManager _overlayMan = default!;
+    [Dependency] private SharedPointLightSystem _lights = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -62,14 +59,14 @@ public sealed class ExplosionOverlaySystem : EntitySystem
     {
         EnsureComp<ExplosionVisualsTexturesComponent>(uid);
 
-        if (!_protoMan.TryIndex(component.ExplosionType, out ExplosionPrototype? type) ||
+        if (!ProtoMan.TryIndex(component.ExplosionType, out ExplosionPrototype? type) ||
             !TryComp(uid, out ExplosionVisualsTexturesComponent? textures))
         {
             return;
         }
 
         // Map may have been deleted.
-        if (_mapMan.MapExists(component.Epicenter.MapId))
+        if (_mapSystem.MapExists(component.Epicenter.MapId))
         {
             // spawn in a client-side light source at the epicenter
             var lightEntity = Spawn("ExplosionLight", component.Epicenter);

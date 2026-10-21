@@ -6,10 +6,11 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 14400 #4 hrs
+      time: 2.5h
   startingGear: StationEngineerGear
   icon: "JobIconStationEngineer"
   supervisors: job-supervisors-ce
+  guides: [ Engineering ] # TODO: should have a more specific guidebook page instead of using the department itself
   access:
   - Maintenance
   - Engineering
@@ -26,3 +27,14 @@
   #storage:
     #back:
     #- Stuff
+
+- type: chameleonOutfit
+  id: StationEngineerChameleonOutfit
+  job: StationEngineer
+  equipment:
+    head: ClothingHeadHatHardhatYellow
+    mask: ClothingMaskBreath
+    neck: ClothingNeckScarfStripedOrange
+    outerClothing: ClothingOuterWinterEngi
+    gloves: ClothingHandsGlovesColorYellow
+    shoes: ClothingShoesBootsMag

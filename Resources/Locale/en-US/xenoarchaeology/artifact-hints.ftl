@@ -22,23 +22,13 @@ artifact-effect-hint-polymorph = Transmogrificational activity
 artifact-effect-hint-magnet = Magnetic waves
 artifact-effect-hint-visual = Visual distortions
 
-# the triggers should be more obvious than the effects
-# gives people an idea of what to do: don't be too specific (i.e. no "welders")
+### Description hints
+xenoarch-trigger-examine-wrenching = There's a loose bit spinning around.
+xenoarch-trigger-examine-prying = There's a panel coming up from the surface.
+xenoarch-trigger-examine-screwing = There's a raised section with a small inset on it.
+xenoarch-trigger-examine-pulsing = An exposed diode pokes out of the artifact's surface.
+xenoarch-trigger-examine-timer = Carvings and scratches cover the surface... You can just barely make out a number: [italic]{$time}[/italic]
 
-artifact-trigger-hint-electricity = Electricity
-artifact-trigger-hint-heat = High temperatures
-artifact-trigger-hint-physical = Physical trauma
-artifact-trigger-hint-tool = Tool usage
-artifact-trigger-hint-music = Sonic vibrations
-artifact-trigger-hint-water = Hydro-reactive
-artifact-trigger-hint-blood = Reaction with hematological fluid
-artifact-trigger-hint-magnet = Magnetic waves
-artifact-trigger-hint-death = Life essence
-artifact-trigger-hint-radiation = Radiation
-artifact-trigger-hint-pressure = Extreme pressure
-artifact-trigger-hint-regular-gases = Standard atmospheric gases
-artifact-trigger-hint-plasma = Gaseous plasma
-artifact-trigger-hint-land = Active deceleration
-artifact-trigger-hint-examine = Examination
-artifact-trigger-hint-medical = Therapeutic chemicals
-
+### Effects hints
+xenoarch-effect-puddle = Produces puddle of following reagents: {$reagent}
+xenoarch-effect-foam = Produces foam of following reagents: {$reagent}

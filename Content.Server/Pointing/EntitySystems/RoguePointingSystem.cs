@@ -7,12 +7,12 @@ using Robust.Shared.Random;
 namespace Content.Server.Pointing.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class RoguePointingSystem : EntitySystem
+    internal sealed partial class RoguePointingSystem : EntitySystem
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly ExplosionSystem _explosion = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private ExplosionSystem _explosion = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private SharedTransformSystem _transformSystem = default!;
 
         private EntityUid? RandomNearbyPlayer(EntityUid uid, RoguePointingArrowComponent? component = null, TransformComponent? transform = null)
         {
@@ -32,7 +32,7 @@ namespace Content.Server.Pointing.EntitySystems
             var angering = _random.Pick(targets);
             angering.Comp.RemainingAnger -= 1;
             if (angering.Comp.RemainingAnger <= 0)
-                RemComp<PointingArrowAngeringComponent>(uid);
+                RemComp<PointingArrowAngeringComponent>(angering);
 
             return angering.Owner;
         }
@@ -62,7 +62,7 @@ namespace Content.Server.Pointing.EntitySystems
 
                 if (component.Chasing is not {Valid: true} chasing || Deleted(chasing))
                 {
-                    EntityManager.QueueDeleteEntity(uid);
+                    QueueDel(uid);
                     continue;
                 }
 
@@ -99,7 +99,7 @@ namespace Content.Server.Pointing.EntitySystems
 
 
                 _explosion.QueueExplosion(uid, ExplosionSystem.DefaultExplosionPrototypeId, 50, 3, 10);
-                EntityManager.QueueDeleteEntity(uid);
+                QueueDel(uid);
             }
         }
     }

@@ -1,5 +1,45 @@
+- type: entityTable
+  id: FilingCabinetFillTable
+  table: !type:AllSelector
+    children:
+    - !type:GroupSelector
+      rolls: !type:RangeNumberSelector
+        range: 2, 4
+      children:
+      - id: BoxFolderBase
+      - id: BoxFolderRed
+      - id: BoxFolderBlue
+      - id: BoxFolderYellow
+      - id: BoxFolderGrey
+      - id: BoxFolderBlack
+      - id: BoxFolderGreen
+    - !type:GroupSelector
+      rolls: !type:RangeNumberSelector
+        range: 0, 3
+      children:
+      - id: Paper
+      - id: PaperOffice
+    - !type:GroupSelector
+      prob: .3
+      rolls: !type:ConstantNumberSelector
+        value: 2
+      children:
+      - id: Pen
+    - !type:GroupSelector
+      prob: 0.15
+      children:
+      - !type:AllSelector
+        weight: 0.2
+        children:
+        - id: RubberStampApproved
+        - id: RubberStampDenied
+      - id: RubberStampGreytide
+        weight: 0.1
+      - id: LuxuryPen
+      - id: NanoTaskCartridge
+
 - type: entity
-  parent: [ BaseStructureDynamic, BaseBagOpenClose ]
+  parent: [ BaseStructureDynamic, BaseBagOpenClose, StructureHealthContainerWeak ]
   id: BaseFilingCabinet
   description: A cabinet for all your filing needs.
   suffix: Empty
@@ -9,11 +49,6 @@
     grid:
     - 0,0,9,3
     maxItemSize: Normal
-    whitelist:
-      tags:
-        - Document
-        - Folder
-        - Write
   - type: Sprite
     sprite: Structures/Storage/cabinets.rsi
     noRot: true
@@ -40,16 +75,13 @@
     containers:
       storagebase: !type:Container
   - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Metallic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 60
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -66,7 +98,7 @@
 - type: entity
   name: filing cabinet
   parent: BaseFilingCabinet
-  id: filingCabinet
+  id: FilingCabinet
   components:
   - type: Sprite
     state: filingcabinet
@@ -75,12 +107,12 @@
     - state: filingcabinet-open
       map: ["openLayer"]
   - type: Construction
-    node: filingCabinet
+    node: FilingCabinet
 
 - type: entity
   name: tall cabinet
   parent: BaseFilingCabinet
-  id: filingCabinetTall
+  id: FilingCabinetTall
   components:
   - type: Sprite
     state: tallcabinet
@@ -94,12 +126,9 @@
 - type: entity
   name: chest drawer
   parent: BaseFilingCabinet
-  id: filingCabinetDrawer
+  id: FilingCabinetDrawer
   description: A small drawer for all your filing needs, Now with wheels!
   components:
-  - type: Storage
-    grid:
-    - 0,0,7,2
   - type: Sprite
     state: chestdrawer
     layers:
@@ -126,34 +155,19 @@
   id: BaseBureaucraticStorageFill
   suffix: Filled
   components:
-  - type: StorageFill
-    contents:
-      - id: Pen
-        prob: 0.5
-      - id: PaperOffice
-        amount: 1
-        maxAmount: 3
-      - id: BoxFolderBlue
-        orGroup: Folder
-      - id: BoxFolderRed
-        orGroup: Folder
-      - id: BoxFolderYellow
-        orGroup: Folder
-      - id: BoxFolderWhite
-        orGroup: Folder
-      - id: BoxFolderGrey
-        orGroup: Folder
-      - id: BoxFolderBlack
-        orGroup: Folder
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:NestedSelector
+        tableId: FilingCabinetFillTable
 
 - type: entity
-  parent: [BaseBureaucraticStorageFill, filingCabinet]
-  id: filingCabinetRandom
+  parent: [BaseBureaucraticStorageFill, FilingCabinet]
+  id: FilingCabinetRandom
 
 - type: entity
-  parent: [BaseBureaucraticStorageFill, filingCabinetTall]
-  id: filingCabinetTallRandom
+  parent: [BaseBureaucraticStorageFill, FilingCabinetTall]
+  id: FilingCabinetTallRandom
 
 - type: entity
-  parent: [BaseBureaucraticStorageFill, filingCabinetDrawer]
-  id: filingCabinetDrawerRandom
+  parent: [BaseBureaucraticStorageFill, FilingCabinetDrawer]
+  id: FilingCabinetDrawerRandom

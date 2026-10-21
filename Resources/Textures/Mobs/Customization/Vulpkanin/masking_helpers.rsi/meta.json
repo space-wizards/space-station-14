@@ -1,0 +1,100 @@
+{
+    "copyright": "Discord PJB#3005 Altered By Floofers in: Taken from https://github.com/DeltaV-Station/Delta-v/commit/65d35d0b3c20aa4e8a0e749a4de8392e53051e86",
+    "license": "CC-BY-SA-3.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ],
+            "directions": 4,
+            "name": "female_none"
+        },
+        {
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ],
+            "directions": 4,
+            "name": "female_full"
+        },
+        {
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ],
+            "directions": 4,
+            "name": "female_top"
+        },
+        {
+            "name": "none"
+        },
+        {
+            "name": "male_full",
+            "directions": 4
+        },
+        {
+            "name": "male_none",
+            "directions": 1
+        },
+        {
+            "name": "male_top",
+            "directions": 4
+        },
+        {
+            "name": "unisex_full",
+            "directions": 4
+        },
+        {
+            "name": "unisex_none",
+            "directions": 1
+        },
+        {
+            "name": "unisex_top",
+            "directions": 4
+        },
+        {
+            "name": "full",
+            "directions": 4
+        },
+        {
+            "name": "top",
+            "directions": 4
+        }
+    ],
+    "version": 1
+}

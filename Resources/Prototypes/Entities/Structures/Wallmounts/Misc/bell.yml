@@ -1,0 +1,36 @@
+- type: entity
+  parent: [ BaseWallmountMetallic, StructureHealthFurnitureStrong ]
+  id: BoxingBell
+  name: boxing bell
+  description: Ding ding!
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/bell.rsi
+    layers:
+    - state: bell
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessSound:
+      path: /Audio/Weapons/boxingbell.ogg
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/boxingbell.ogg"
+  - type: Appearance
+  - type: Damageable
+    damageModifierSet: BrassMod
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 80
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetBrass1:
+            min: 1
+            max: 2

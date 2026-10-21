@@ -34,7 +34,7 @@
     edges:
     - to: done
       steps:
-      - material: Steel
+      - material: Plasteel
         amount: 4
       - material: Cable
         amount: 2
@@ -53,7 +53,7 @@
         locked: false
       completed:
       - !type:SpawnPrototype
-        prototype: SheetSteel1
+        prototype: SheetPlasteel1
         amount: 4
       - !type:SpawnPrototype
         prototype: CableApcStack1
@@ -69,13 +69,13 @@
     edges:
     - to: done
       steps:
-      - material: Steel
+      - material: Plasteel
         amount: 4
       - material: Cable
         amount: 2
         doAfter: 5
       - tag: FreezerElectronics
-        name: freezer electronics
+        name: construction-graph-tag-freezer-electronics
         icon:
           sprite: Objects/Misc/module.rsi
           state: door_electronics
@@ -93,7 +93,7 @@
         locked: false
       completed:
       - !type:SpawnPrototype
-        prototype: SheetSteel1
+        prototype: SheetPlasteel1
         amount: 4
       - !type:SpawnPrototype
         prototype: CableApcStack1

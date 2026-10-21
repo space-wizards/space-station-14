@@ -1,7 +1,8 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.DeviceLinking;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Content.Shared.Guidebook;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
@@ -10,8 +11,12 @@ namespace Content.Server.Atmos.Piping.Unary.Components
     [RegisterComponent]
     public sealed partial class GasVentPumpComponent : Component
     {
+        /// <summary>
+        /// Identifies if the device is enabled by an air alarm. Does not indicate if the device is powered.
+        /// By default, all air vents start enabled, whether linked to an alarm or not.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool Enabled { get; set; } = false;
+        public bool Enabled { get; set; } = true;
 
         [ViewVariables]
         public bool IsDirty { get; set; } = false;
@@ -35,6 +40,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         ///     In releasing mode, do not pump when environment pressure is below this limit.
         /// </summary>
         [DataField]
+        [GuidebookData]
         public float UnderPressureLockoutThreshold = 80; // this must be tuned in conjunction with atmos.mmos_spacing_speed
 
         /// <summary>
@@ -58,7 +64,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField]
         public bool IsPressureLockoutManuallyDisabled = false;
         /// <summary>
-        /// The time when the manual pressure lockout will be reenabled. 
+        /// The time when the manual pressure lockout will be reenabled.
         /// </summary>
         [DataField]
         [AutoPausedField]
@@ -101,6 +107,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         ///     Max pressure of the target gas (NOT relative to source).
         /// </summary>
         [DataField]
+        [GuidebookData]
         public float MaxPressure = Atmospherics.MaxOutputPressure;
 
         /// <summary>
@@ -131,11 +138,11 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField]
         public bool CanLink = false;
 
-        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
-        public string PressurizePort = "Pressurize";
+        [DataField]
+        public ProtoId<SinkPortPrototype> PressurizePort = "Pressurize";
 
-        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
-        public string DepressurizePort = "Depressurize";
+        [DataField]
+        public ProtoId<SinkPortPrototype> DepressurizePort = "Depressurize";
 
         [DataField]
         public float PressurizePressure = Atmospherics.OneAtmosphere;
@@ -162,15 +169,22 @@ namespace Content.Server.Atmos.Piping.Unary.Components
             };
         }
 
-        public void FromAirAlarmData(GasVentPumpData data)
+        public void FromAirAlarmData(GasVentPumpData dataPayload)
         {
-            Enabled = data.Enabled;
-            IsDirty = data.Dirty;
-            PumpDirection = data.PumpDirection;
-            PressureChecks = data.PressureChecks;
-            ExternalPressureBound = data.ExternalPressureBound;
-            InternalPressureBound = data.InternalPressureBound;
-            PressureLockoutOverride = data.PressureLockoutOverride;
+            Enabled = dataPayload.Enabled;
+            IsDirty = dataPayload.Dirty;
+            PumpDirection = dataPayload.PumpDirection;
+            PressureChecks = dataPayload.PressureChecks;
+            ExternalPressureBound = dataPayload.ExternalPressureBound;
+            InternalPressureBound = dataPayload.InternalPressureBound;
+            PressureLockoutOverride = dataPayload.PressureLockoutOverride;
         }
+
+        #region GuidebookData
+
+        [GuidebookData]
+        public float DefaultExternalBound => Atmospherics.OneAtmosphere;
+
+        #endregion
     }
 }

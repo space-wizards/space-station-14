@@ -1,5 +1,5 @@
 using Content.Shared.Parallax.Biomes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Procedural.Loot;
 
@@ -8,6 +8,6 @@ namespace Content.Shared.Procedural.Loot;
 /// </summary>
 public sealed partial class BiomeTemplateLoot : IDungeonLoot
 {
-    [DataField("proto", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<BiomeTemplatePrototype>))]
-    public string Prototype = string.Empty;
+    [DataField("proto", required: true)]
+    public ProtoId<BiomeTemplatePrototype> Prototype = string.Empty;
 }

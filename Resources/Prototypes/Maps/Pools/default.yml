@@ -1,17 +1,13 @@
 - type: gameMapPool
   id: DefaultMapPool
   maps:
-  - Amber
   - Bagel
   - Box
-  - Cog
-  - Core
-  - Fland
-  #- Gate
+  - Elkridge
   - Marathon
-  - Meta
-  - Oasis
-  - Omega
   - Packed
-  - Reach
-  #- Train
+  - Plasma
+  - Exo
+  - Snowball
+  - Sushi
+  - Tram2

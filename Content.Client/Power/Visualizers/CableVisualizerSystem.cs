@@ -4,14 +4,12 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Power.Visualizers;
 
-public sealed class CableVisualizerSystem : VisualizerSystem<CableVisualizerComponent>
+public sealed partial class CableVisualizerSystem : EntitySystem
 {
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<CableVisualizerComponent, AppearanceChangeEvent>(OnAppearanceChange, after: new[] { typeof(SubFloorHideSystem) });
-    }
+    [Dependency] private SpriteSystem _sprite = default!;
 
-    protected override void OnAppearanceChange(EntityUid uid, CableVisualizerComponent component, ref AppearanceChangeEvent args)
+    [SubscribeLocalEvent(after: [typeof(SubFloorHideSystem)])]
+    private void OnAppearanceChange(Entity<CableVisualizerComponent> ent, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
@@ -23,9 +21,11 @@ public sealed class CableVisualizerSystem : VisualizerSystem<CableVisualizerComp
             return;
         }
 
-        if (!AppearanceSystem.TryGetData<WireVisDirFlags>(uid, WireVisVisuals.ConnectedMask, out var mask, args.Component))
+        if (!args.TryGetData<WireVisDirFlags>(WireVisVisuals.ConnectedMask, out var mask))
             mask = WireVisDirFlags.None;
 
-        args.Sprite.LayerSetState(0, $"{component.StatePrefix}{(int) mask}");
+        _sprite.LayerSetRsiState((ent, args.Sprite), 0, $"{ent.Comp.StatePrefix}{(int)mask}");
+        if (ent.Comp.ExtraLayerPrefix != null)
+            _sprite.LayerSetRsiState((ent, args.Sprite), 1, $"{ent.Comp.ExtraLayerPrefix}{(int)mask}");
     }
 }

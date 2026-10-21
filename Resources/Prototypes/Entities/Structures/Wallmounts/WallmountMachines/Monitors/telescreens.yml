@@ -1,0 +1,96 @@
+- type: entity
+  parent: [ BaseWallmountMachine, StructureHealthMachineWeak ]
+  id: WallmountTelescreen
+  name: camera monitor
+  suffix: Wallmount
+  description: A wallmounted surveillance camera monitor. You're watching them. Maybe.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/computers.rsi
+    layers:
+      - state: telescreen_frame
+      - state: telescreen
+      - map: ["enum.PowerDeviceVisualLayers.Powered"]
+        state: telescreen_cameras
+        shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Damageable
+    damageModifierSet: GlassMod
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: TelescreenFrame
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 0
+            max: 2
+          SurveillanceCameraMonitorCircuitboard:
+            min: 0
+            max: 1
+  - type: Construction
+    graph: WallmountTelescreen
+    node: Telescreen
+  - type: PointLight
+    radius: 1.5
+    energy: 3.0
+    color: "#b89f25"
+    enabled: false
+  - type: LitOnPowered
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCamera
+    transmitFrequencyId: SurveillanceCamera
+    prefix: device-address-prefix-camera-monitor
+  - type: WiredNetwork
+  - type: DeviceNetworkRequiresPower
+  - type: SurveillanceCameraMonitor
+  - type: ActivatableUI
+    key: enum.SurveillanceCameraMonitorUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: ActivatableUIRequiresVision
+  - type: UserInterface
+    interfaces:
+        enum.SurveillanceCameraMonitorUiKey.Key:
+          type: SurveillanceCameraMonitorBoundUserInterface
+
+- type: entity
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
+  id: WallmountTelescreenFrame
+  name: camera monitor frame
+  suffix: Wallmount
+  description: A frame for a wallmounted surveillance camera monitor.
+  components:
+  - type: Construction
+    graph: WallmountTelescreen
+    node: TelescreenFrame
+  - type: Sprite
+    sprite: Structures/Machines/computers.rsi
+    state: telescreen_frame
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 0
+            max: 2

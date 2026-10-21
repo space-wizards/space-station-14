@@ -17,13 +17,13 @@ namespace Content.Client.NodeContainer
     {
         private readonly NodeGroupSystem _system;
         private readonly EntityLookupSystem _lookup;
-        private readonly IMapManager _mapManager;
         private readonly IInputManager _inputManager;
         private readonly IEntityManager _entityManager;
         private readonly SharedTransformSystem _transformSystem;
+        private readonly SharedMapSystem _mapSystem;
 
         private readonly Dictionary<(int, int), NodeRenderData> _nodeIndex = new();
-        private readonly Dictionary<EntityUid, Dictionary<Vector2i, List<(GroupData, NodeDatum)>>> _gridIndex = new ();
+        private readonly Dictionary<EntityUid, Dictionary<Vector2i, List<(GroupData, NodeDatum)>>> _gridIndex = new();
         private List<Entity<MapGridComponent>> _grids = new();
 
         private readonly Font _font;
@@ -37,17 +37,16 @@ namespace Content.Client.NodeContainer
         public NodeVisualizationOverlay(
             NodeGroupSystem system,
             EntityLookupSystem lookup,
-            IMapManager mapManager,
             IInputManager inputManager,
             IResourceCache cache,
             IEntityManager entityManager)
         {
             _system = system;
             _lookup = lookup;
-            _mapManager = mapManager;
             _inputManager = inputManager;
             _entityManager = entityManager;
             _transformSystem = _entityManager.System<SharedTransformSystem>();
+            _mapSystem = _entityManager.System<SharedMapSystem>();
 
             _font = cache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 12);
         }
@@ -84,7 +83,7 @@ namespace Content.Client.NodeContainer
             var xform = _entityManager.GetComponent<TransformComponent>(_entityManager.GetEntity(node.Entity));
             if (!_entityManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var grid))
                 return;
-            var gridTile = grid.TileIndicesFor(xform.Coordinates);
+            var gridTile = _mapSystem.TileIndicesFor((xform.GridUid.Value, grid), xform.Coordinates);
 
             var sb = new StringBuilder();
             sb.Append($"entity: {node.Entity}\n");
@@ -94,7 +93,7 @@ namespace Content.Client.NodeContainer
             sb.Append($"grid pos: {gridTile}\n");
             sb.Append(group.DebugData);
 
-            args.ScreenHandle.DrawString(_font, mousePos + new Vector2(20, -20), sb.ToString());
+            args.ScreenHandle.DrawString(_font, mousePos + new Vector2(20, -20), sb.ToString(), 1, Color.White, TextOutline.Default);
         }
 
         private void DrawWorld(in OverlayDrawArgs overlayDrawArgs)
@@ -117,7 +116,7 @@ namespace Content.Client.NodeContainer
             var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
 
             _grids.Clear();
-            _mapManager.FindGridsIntersecting(map, worldAABB, ref _grids);
+            _mapSystem.FindGridsIntersecting(map, worldAABB, ref _grids);
 
             foreach (var grid in _grids)
             {
@@ -133,7 +132,7 @@ namespace Content.Client.NodeContainer
                     if (float.IsNaN(coords.Position.X) || float.IsNaN(coords.Position.Y))
                         continue;
 
-                    var tile = gridDict.GetOrNew(grid.Comp.TileIndicesFor(coords));
+                    var tile = gridDict.GetOrNew(_mapSystem.TileIndicesFor(grid, coords));
 
                     foreach (var (group, nodeDatum) in nodeData)
                     {
@@ -153,7 +152,7 @@ namespace Content.Client.NodeContainer
                 var lCursorBox = invMatrix.TransformBox(cursorBox);
                 foreach (var (pos, list) in gridDict)
                 {
-                    var centerPos = (Vector2) pos + grid.TileSizeHalfVector;
+                    var centerPos = (Vector2)pos + grid.TileSizeHalfVector;
                     list.Sort(NodeDisplayComparer.Instance);
 
                     var offset = -(list.Count - 1) * nodeOffset / 2;
@@ -200,8 +199,6 @@ namespace Content.Client.NodeContainer
                 _nodeIndex.Clear();
             }
 
-
-            handle.SetTransform(Matrix3x2.Identity);
             _gridIndex.Clear();
         }
 

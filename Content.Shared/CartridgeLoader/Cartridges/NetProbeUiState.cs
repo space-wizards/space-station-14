@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
@@ -17,7 +17,7 @@ public sealed class NetProbeUiState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable, DataRecord]
-public sealed class ProbedNetworkDevice
+public sealed partial class ProbedNetworkDevice
 {
     public readonly string Name;
     public readonly string Address;

@@ -22,7 +22,7 @@ public abstract partial class SharedToolSystem
     private void OnMultipleToolStartup(EntityUid uid, MultipleToolComponent multiple, ComponentStartup args)
     {
         // Only set the multiple tool if we have a tool component.
-        if (EntityManager.TryGetComponent(uid, out ToolComponent? tool))
+        if (TryComp(uid, out ToolComponent? tool))
             SetMultipleTool(uid, multiple, tool);
     }
 
@@ -67,18 +67,21 @@ public abstract partial class SharedToolSystem
 
         var current = multiple.Entries[multiple.CurrentEntry];
         tool.UseSound = current.UseSound;
-        tool.Qualities = current.Behavior;
+        tool.Qualities.Clear();
+        tool.Qualities.UnionWith(current.Behavior);
+        Dirty(uid, tool);
 
         // TODO: Replace this with a better solution later
         if (TryComp<PryingComponent>(uid, out var pryComp))
         {
             pryComp.Enabled = current.Behavior.Contains("Prying");
+            Dirty(uid, pryComp);
         }
 
         if (playSound && current.ChangeSound != null)
             _audioSystem.PlayPredicted(current.ChangeSound, uid, user);
 
-        if (_protoMan.TryIndex(current.Behavior.First(), out ToolQualityPrototype? quality))
+        if (ProtoMan.TryIndex(current.Behavior.First(), out ToolQualityPrototype? quality))
             multiple.CurrentQualityName = Loc.GetString(quality.Name);
     }
 }

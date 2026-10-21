@@ -1,36 +1,40 @@
 using Content.Shared.Light.Components;
+using Content.Shared.Light.EntitySystems;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.Light.Visualizers;
+namespace Content.Client.Light.EntitySystems;
 
-public sealed class LightBulbSystem : VisualizerSystem<LightBulbComponent>
+public sealed partial class LightBulbSystem : SharedLightBulbSystem
 {
-    protected override void OnAppearanceChange(EntityUid uid, LightBulbComponent comp, ref AppearanceChangeEvent args)
+    [Dependency] private SpriteSystem _sprite = default!;
+
+    [SubscribeLocalEvent]
+    private void OnAppearanceChange(Entity<LightBulbComponent> ent, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
         // update sprite state
-        if (AppearanceSystem.TryGetData<LightBulbState>(uid, LightBulbVisuals.State, out var state, args.Component))
+        if (args.TryGetData<LightBulbState>(LightBulbVisuals.State, out var state))
         {
             switch (state)
             {
                 case LightBulbState.Normal:
-                    args.Sprite.LayerSetState(LightBulbVisualLayers.Base, comp.NormalSpriteState);
+                    _sprite.LayerSetRsiState((ent, args.Sprite), LightBulbVisualLayers.Base, ent.Comp.NormalSpriteState);
                     break;
                 case LightBulbState.Broken:
-                    args.Sprite.LayerSetState(LightBulbVisualLayers.Base, comp.BrokenSpriteState);
+                    _sprite.LayerSetRsiState((ent, args.Sprite), LightBulbVisualLayers.Base, ent.Comp.BrokenSpriteState);
                     break;
                 case LightBulbState.Burned:
-                    args.Sprite.LayerSetState(LightBulbVisualLayers.Base, comp.BurnedSpriteState);
+                    _sprite.LayerSetRsiState((ent, args.Sprite), LightBulbVisualLayers.Base, ent.Comp.BurnedSpriteState);
                     break;
             }
         }
 
         // also update sprites color
-        if (AppearanceSystem.TryGetData<Color>(uid, LightBulbVisuals.Color, out var color, args.Component))
+        if (args.TryGetData<Color>(LightBulbVisuals.Color, out var color))
         {
-            args.Sprite.Color = color;
+            _sprite.SetColor((ent, args.Sprite), color);
         }
     }
 }

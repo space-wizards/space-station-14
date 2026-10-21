@@ -3,7 +3,12 @@
   name: species-name-dwarf
   roundStart: true
   prototype: MobDwarf
-  sprites: MobHumanSprites
-  markingLimits: MobHumanMarkingLimits
-  dollPrototype: MobDwarfDummy
+  dollPrototype: AppearanceDwarf
   skinColoration: HumanToned
+  defaultSoundsBySex:
+  - UnisexDwarf
+  - FemaleDwarf
+  - UnisexDwarf
+  voices:
+  - UnisexDwarf
+  - FemaleDwarf

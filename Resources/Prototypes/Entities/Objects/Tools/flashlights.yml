@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: flashlight
   parent: BaseItem
   id: FlashlightLantern
@@ -24,10 +24,10 @@
         id: blinking
         interpolate: Nearest
         maxDuration: 1.0
-        minValue: 0.1
-        maxValue: 2.0
+        startValue: 0.1
+        endValue: 2.0
         isLooped: true
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
     spriteLayer: light
     inhandVisuals:
       left:
@@ -36,6 +36,7 @@
       right:
       - state: inhand-right-light
         shader: unshaded
+  - type: ItemTogglePointLight
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: ContainerContainer
@@ -59,7 +60,7 @@
     storedRotation: -90
   - type: PointLight
     enabled: false
-    mask: /Textures/Effects/LightMasks/cone.png
+    lightMask: ConeSingle
     autoRot: true
     radius: 6
     netsync: false
@@ -67,7 +68,8 @@
   - type: StaticPrice
     price: 40
   - type: StealTarget
-    stealGroup: LAMP
+    stealGroup:
+    - LAMP
   - type: Clothing
     sprite: Objects/Tools/flashlight.rsi
     quickEquip: false
@@ -76,7 +78,7 @@
 
 - type: entity
   name: seclite
-  parent: [FlashlightLantern, BaseRestrictedContraband]
+  parent: [FlashlightLantern, BaseSecurityContraband]
   id: FlashlightSeclite
   description: A robust flashlight used by security.
   components:
@@ -87,10 +89,11 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellHigh
+        startingItem: PowerCellMedium
   - type: HandheldLight
     addPrefix: false
-  - type: ToggleableLightVisuals
+    wattage: 0.5
+  - type: ToggleableVisuals
     inhandVisuals:
       left:
       - state: inhand-left-light

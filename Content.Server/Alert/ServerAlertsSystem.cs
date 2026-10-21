@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Server.Alert;
 
-internal sealed class ServerAlertsSystem : AlertsSystem
+internal sealed partial class ServerAlertsSystem : AlertsSystem
 {
     public override void Initialize()
     {
@@ -14,6 +14,7 @@ internal sealed class ServerAlertsSystem : AlertsSystem
 
     private void OnGetState(Entity<AlertsComponent> alerts, ref ComponentGetState args)
     {
-        args.State = new AlertComponentState(alerts.Comp.Alerts);
+        // TODO: Use sourcegen when clone-state bug fixed.
+        args.State = new AlertComponentState(new(alerts.Comp.Alerts));
     }
 }

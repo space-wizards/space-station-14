@@ -6,20 +6,17 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
-    layers:
-      - state: closed
-        map: ["closeLayer"]
-      - state: open
-        map: ["openLayer"]
+    state: icon
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
     size: Normal
   - type: Storage
     grid:
     - 0,0,4,1
-  - type: StorageFill
-    contents:
-      - id: CigPackGreen
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: CigPackGreen
         amount: 5
   - type: Tag
     tags:
@@ -37,13 +34,13 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/red.rsi
-    layers:
-      - state: closed
+    state: icon
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/red.rsi
-  - type: StorageFill
-    contents:
-      - id: CigPackRed
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: CigPackRed
         amount: 5
 
 - type: entity
@@ -54,13 +51,13 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/blue.rsi
-    layers:
-      - state: closed
+    state: icon
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/blue.rsi
-  - type: StorageFill
-    contents:
-      - id: CigPackBlue
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: CigPackBlue
         amount: 5
 
 - type: entity
@@ -71,13 +68,13 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/black.rsi
-    layers:
-      - state: closed
+    state: icon
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/black.rsi
-  - type: StorageFill
-    contents:
-      - id: CigPackBlack
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: CigPackBlack
         amount: 5
 
 - type: entity
@@ -88,12 +85,11 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/mixed.rsi
-    layers:
-      - state: closed
+    state: icon
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/mixed.rsi
-  - type: StorageFill
-    contents:
-      - id: CigPackMixedMedical
-      - id: CigPackMixed
-      - id: CigPackMixedNasty
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: CigPackMixed
+        amount: 3

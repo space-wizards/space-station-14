@@ -1,38 +1,35 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Cloning.Components;
-using Content.Server.DeviceLinking.Systems;
 using Content.Server.Medical.Components;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.UserInterface;
 using Content.Shared.Cloning;
 using Content.Shared.Cloning.CloningConsole;
 using Content.Shared.Database;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Power;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 
 namespace Content.Server.Cloning
 {
-    [UsedImplicitly]
-    public sealed class CloningConsoleSystem : EntitySystem
+    public sealed partial class CloningConsoleSystem : EntitySystem
     {
-        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly CloningSystem _cloningSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-        [Dependency] private readonly PowerReceiverSystem _powerReceiverSystem = default!;
-        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+        [Dependency] private DeviceLinkSystem _signalSystem = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private CloningPodSystem _cloningPodSystem = default!;
+        [Dependency] private UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private MobStateSystem _mobStateSystem = default!;
+        [Dependency] private PowerReceiverSystem _powerReceiverSystem = default!;
+        [Dependency] private SharedMindSystem _mindSystem = default!;
 
         public override void Initialize()
         {
@@ -43,7 +40,7 @@ namespace Content.Server.Cloning
             SubscribeLocalEvent<CloningConsoleComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<CloningConsoleComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<CloningConsoleComponent, NewLinkEvent>(OnNewLink);
-            SubscribeLocalEvent<CloningConsoleComponent, PortDisconnectedEvent>(OnPortDisconnected);
+            SubscribeLocalEvent<CloningConsoleComponent, SourcePortDisconnectedEvent>(OnPortDisconnected);
             SubscribeLocalEvent<CloningConsoleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         }
 
@@ -92,7 +89,7 @@ namespace Content.Server.Cloning
             }
         }
 
-        private void OnNewLink(EntityUid uid, CloningConsoleComponent component, NewLinkEvent args)
+        private void OnNewLink(EntityUid uid, CloningConsoleComponent component, ref NewLinkEvent args)
         {
             if (TryComp<MedicalScannerComponent>(args.Sink, out var scanner) && args.SourcePort == CloningConsoleComponent.ScannerPort)
             {
@@ -108,7 +105,7 @@ namespace Content.Server.Cloning
             RecheckConnections(uid, component.CloningPod, component.GeneticScanner, component);
         }
 
-        private void OnPortDisconnected(EntityUid uid, CloningConsoleComponent component, PortDisconnectedEvent args)
+        private void OnPortDisconnected(EntityUid uid, CloningConsoleComponent component, ref SourcePortDisconnectedEvent args)
         {
             if (args.Port == CloningConsoleComponent.ScannerPort)
                 component.GeneticScanner = null;
@@ -168,10 +165,10 @@ namespace Content.Server.Cloning
             if (!_mindSystem.TryGetMind(body.Value, out var mindId, out var mind))
                 return;
 
-            if (mind.UserId.HasValue == false || mind.Session == null)
+            if (mind.UserId.HasValue == false || !_playerManager.ValidSessionId(mind.UserId.Value))
                 return;
 
-            if (_cloningSystem.TryCloning(cloningPodUid, body.Value, (mindId, mind), cloningPod, scannerComp.CloningFailChanceMultiplier))
+            if (_cloningPodSystem.TryCloning(cloningPodUid, body.Value, (mindId, mind), cloningPod, scannerComp.CloningFailChanceMultiplier))
                 _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(uid)} successfully cloned {ToPrettyString(body.Value)}.");
         }
 

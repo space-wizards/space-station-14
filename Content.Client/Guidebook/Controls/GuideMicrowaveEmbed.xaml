@@ -1,0 +1,35 @@
+<PanelContainer xmlns="https://spacestation14.io"
+              xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+              Margin="5 5 5 5">
+    <PanelContainer.PanelOverride>
+        <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#777777"/>
+    </PanelContainer.PanelOverride>
+
+    <BoxContainer Orientation="Vertical">
+        <PanelContainer HorizontalExpand="True">
+            <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center">
+                <BoxContainer Name="IconContainer"/>
+                <RichTextLabel Name="ResultName"/>
+            </BoxContainer>
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#393c3f"/>
+            </PanelContainer.PanelOverride>
+        </PanelContainer>
+
+        <GridContainer Columns="2" Margin="10">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <Label Text="{Loc 'guidebook-microwave-ingredients-header'}"/>
+                <GridContainer Columns="3" Name="IngredientsGrid"/>
+            </BoxContainer>
+
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <Label Text="{Loc 'guidebook-microwave-cook-time-header'}"/>
+                <RichTextLabel Name="CookTimeLabel"/>
+            </BoxContainer>
+        </GridContainer>
+
+        <BoxContainer Margin="10">
+            <RichTextLabel Name="ResultDescription" HorizontalAlignment="Left"/>
+        </BoxContainer>
+    </BoxContainer>
+</PanelContainer>

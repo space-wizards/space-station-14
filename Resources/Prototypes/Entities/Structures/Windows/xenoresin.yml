@@ -1,0 +1,15 @@
+- type: entity
+  parent: ReinforcedWindow
+  id: XenoResinWindow
+  name: resin window
+  description: Transparent and hardened, yet slightly sticky to the touch.
+  components:
+  - type: Sprite
+    sprite: Structures/Windows/exo-resin.rsi
+  - type: Icon
+    sprite: Structures/Windows/exo-resin.rsi
+  - type: IconSmooth
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: xwindow

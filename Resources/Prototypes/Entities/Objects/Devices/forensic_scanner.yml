@@ -1,12 +1,12 @@
 - type: entity
   name: forensic scanner
-  parent: BaseItem
+  parent: [ BaseItem, BaseSecurityContraband ]
   id: ForensicScanner
   description: A handheld device that can scan objects for fingerprints and fibers.
   components:
   - type: Sprite
     sprite: Objects/Devices/forensic_scanner.rsi
-    state: forensicnew
+    state: icon
   - type: Item
     size: Small
     storedRotation: 90
@@ -28,7 +28,8 @@
     guides:
     - Forensics
   - type: StealTarget
-    stealGroup: ForensicScanner
+    stealGroup:
+    - ForensicScanner
 
 - type: entity
   name: forensic scanner report
@@ -49,7 +50,7 @@
   - type: PaperVisuals
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_perforated.svg.96dpi.png"
     headerImagePath: "/Textures/Interface/Paper/paper_heading_forensic_scanner.svg.96dpi.png"
-    headerMargin: 0.0, 0.0, 0.0, 4.0
+    headerMargin: 0.0, 4.0, 0.0, 0.0
     backgroundImageTile: true
     backgroundPatchMargin: 6.0, 0.0, 6.0, 0.0
     contentMargin: 12.0, 0.0, 6.0, 0.0
@@ -57,3 +58,13 @@
   - type: GuideHelp
     guides:
     - Forensics
+
+- type: entity
+  parent: ForensicReportPaper
+  id: PaperAccessLogs
+  name: access logs
+  description: A printout from the detective's trusty LogProbe.
+  components:
+  - type: PaperVisuals
+    headerImagePath: null
+    headerMargin: 0.0, 0.0, 0.0, 0.0

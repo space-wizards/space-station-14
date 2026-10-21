@@ -1,4 +1,4 @@
-﻿using Content.Shared.Explosion.EntitySystems;
+using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -15,6 +15,9 @@ public sealed partial class ScatteringGrenadeComponent : Component
 {
     public Container Container = default!;
 
+    /// <summary>
+    /// Whitelist what can be inserted into the cluster.
+    /// </summary>
     [DataField]
     public EntityWhitelist? Whitelist;
 
@@ -27,7 +30,7 @@ public sealed partial class ScatteringGrenadeComponent : Component
     /// <summary>
     /// If we have a pre-fill how many more can we spawn.
     /// </summary>
-    [AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
     public int UnspawnedCount;
 
     /// <summary>
@@ -35,6 +38,12 @@ public sealed partial class ScatteringGrenadeComponent : Component
     /// </summary>
     [DataField]
     public int Capacity = 3;
+
+    /// <summary>
+    /// Number of grenades currently contained in the cluster (both spawned and unspawned)
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public int Count => UnspawnedCount + Container.ContainedEntities.Count;
 
     /// <summary>
     /// Decides if contained entities trigger after getting launched
@@ -106,4 +115,10 @@ public sealed partial class ScatteringGrenadeComponent : Component
     /// We need to store this because we are only allowed to spawn and trigger timed entities on the next available frame update
     /// </summary>
     public bool IsTriggered = false;
+
+    /// <summary>
+    /// The trigger key that will activate the grenade.
+    /// </summary>
+    [DataField]
+    public string TriggerKey = "timer";
 }

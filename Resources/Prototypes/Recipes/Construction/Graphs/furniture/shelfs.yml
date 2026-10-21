@@ -9,24 +9,21 @@
 # Normal
         - to: ShelfWood
           completed:
-            - !type:SnapToGrid
-              southRotation: true
+            - !type:SnapToGrid {}
           steps:
             - material: WoodPlank
               amount: 4
               doAfter: 2
         - to: ShelfMetal
           completed:
-            - !type:SnapToGrid
-              southRotation: true
+            - !type:SnapToGrid {}
           steps:
             - material: Steel
               amount: 5
               doAfter: 3
         - to: ShelfGlass
           completed:
-            - !type:SnapToGrid
-              southRotation: true
+            - !type:SnapToGrid {}
           steps:
             - material: Glass
               amount: 4
@@ -34,8 +31,7 @@
 # Reinforced
         - to: ShelfRWood
           completed:
-            - !type:SnapToGrid
-              southRotation: true
+            - !type:SnapToGrid {}
           steps:
             - material: WoodPlank
               amount: 8
@@ -45,8 +41,7 @@
               doAfter: 1
         - to: ShelfRMetal
           completed:
-            - !type:SnapToGrid
-              southRotation: true
+            - !type:SnapToGrid {}
           steps:
             - material: Plasteel
               amount: 5
@@ -59,8 +54,7 @@
               doAfter: 1
         - to: ShelfRGlass
           completed:
-            - !type:SnapToGrid
-              southRotation: true
+            - !type:SnapToGrid {}
           steps:
             - material: Plastic
               amount: 5
@@ -74,16 +68,14 @@
 # Departmental
         - to: ShelfBar
           completed:
-            - !type:SnapToGrid
-              southRotation: true
+            - !type:SnapToGrid {}
           steps:
             - material: WoodPlank
               amount: 6
               doAfter: 2
         - to: ShelfKitchen
           completed:
-            - !type:SnapToGrid
-              southRotation: true
+            - !type:SnapToGrid {}
           steps:
             - material: MetalRod
               amount: 2
@@ -95,8 +87,7 @@
               doAfter: 2
         - to: ShelfChemistry
           completed:
-            - !type:SnapToGrid
-              southRotation: true
+            - !type:SnapToGrid {}
           steps:
             - material: Plasteel
               amount: 2
@@ -118,7 +109,7 @@
         - to: start
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: MaterialWoodPlank1
                 amount: 4
           steps:
@@ -131,7 +122,7 @@
         - to: start
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: SheetSteel1
                 amount: 5
           steps:
@@ -144,7 +135,7 @@
         - to: start
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: SheetGlass1
                 amount: 4
           steps:
@@ -157,10 +148,10 @@
         - to: start
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: MaterialWoodPlank1
                 amount: 8
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: CableApcStack1
                 amount: 2
           steps:
@@ -175,13 +166,13 @@
         - to: start
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: SheetPlasteel1
                 amount: 5
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: SheetRGlass1
                 amount: 5
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: CableApcStack1
                 amount: 3
           steps:
@@ -196,13 +187,13 @@
         - to: start
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: SheetPlastic1
                 amount: 5
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: SheetRGlass1
                 amount: 5
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: CableApcStack1
                 amount: 2
           steps:
@@ -218,7 +209,7 @@
         - to: start
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: MaterialWoodPlank1
                 amount: 6
           steps:
@@ -231,13 +222,13 @@
         - to: start
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: PartRodMetal
                 amount: 2
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: SheetSteel1
                 amount: 5
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: MaterialWoodPlank1
                 amount: 3
           steps:
@@ -254,16 +245,16 @@
         - to: start
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: SheetPlasteel1
                 amount: 2
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: SheetPlastic1
                 amount: 5
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: SheetRGlass1
                 amount: 5
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: CableApcStack1
                 amount: 2
           steps:

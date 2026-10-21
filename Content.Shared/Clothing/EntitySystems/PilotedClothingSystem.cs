@@ -11,9 +11,9 @@ namespace Content.Shared.Clothing.EntitySystems;
 
 public sealed partial class PilotedClothingSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedMoverController _moverController = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedMoverController _moverController = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     public override void Initialize()
     {
@@ -63,7 +63,7 @@ public sealed partial class PilotedClothingSystem : EntitySystem
         if (!isCorrectSlot)
             return;
 
-        entity.Comp.Wearer = args.Equipee;
+        entity.Comp.Wearer = args.EquipTarget;
         Dirty(entity);
 
         // Attempt to setup control link, if Pilot and Wearer are both present.

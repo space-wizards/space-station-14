@@ -12,13 +12,11 @@ namespace Content.Server.StoreDiscount.Systems;
 /// <summary>
 /// Discount system that is part of <see cref="StoreSystem"/>.
 /// </summary>
-public sealed class StoreDiscountSystem : EntitySystem
+public sealed partial class StoreDiscountSystem : EntitySystem
 {
-    [ValidatePrototypeId<StoreCategoryPrototype>]
-    private const string DiscountedStoreCategoryPrototypeKey = "DiscountedItems";
+    private static readonly ProtoId<StoreCategoryPrototype> DiscountedStoreCategoryPrototypeKey = "DiscountedItems";
 
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -71,7 +69,7 @@ public sealed class StoreDiscountSystem : EntitySystem
 
     private IReadOnlyList<StoreDiscountData> InitializeDiscounts(
         IReadOnlyCollection<ListingDataWithCostModifiers> listings,
-        int totalAvailableDiscounts = 3
+        int totalAvailableDiscounts = 6
     )
     {
         // Get list of categories with cumulative weights.
@@ -81,7 +79,7 @@ public sealed class StoreDiscountSystem : EntitySystem
         // each category, and after that - roll exact items in categories
         // and their cost
 
-        var prototypes = _prototypeManager.EnumeratePrototypes<DiscountCategoryPrototype>();
+        var prototypes = ProtoMan.EnumeratePrototypes<DiscountCategoryPrototype>();
         var categoriesWithCumulativeWeight = new CategoriesWithCumulativeWeightMap(prototypes);
         var uniqueListingItemCountByCategory = PickCategoriesToRoll(totalAvailableDiscounts, categoriesWithCumulativeWeight);
 

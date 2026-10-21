@@ -7,64 +7,42 @@ using Robust.Shared.Map;
 
 namespace Content.Client.Fluids;
 
-public sealed class PuddleSystem : SharedPuddleSystem
+public sealed partial class PuddleSystem : SharedPuddleSystem
 {
-    [Dependency] private readonly IconSmoothSystem _smooth = default!;
+    [Dependency] private IconSmoothSystem _smooth = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<PuddleComponent, AppearanceChangeEvent>(OnPuddleAppearance);
-    }
-
+    [SubscribeLocalEvent]
     private void OnPuddleAppearance(EntityUid uid, PuddleComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        var volume = 1f;
-
-        if (args.AppearanceData.TryGetValue(PuddleVisuals.CurrentVolume, out var volumeObj))
-        {
-            volume = (float) volumeObj;
-        }
+        if (!args.TryGetData<float>(PuddleVisuals.CurrentVolume, out var volume))
+            volume = 1.0f;
 
         // Update smoothing and sprite based on volume.
-        if (TryComp<IconSmoothComponent>(uid, out var smooth))
+        if (volume < LowThreshold)
         {
-            if (volume < LowThreshold)
-            {
-                args.Sprite.LayerSetState(0, $"{smooth.StateBase}a");
-                _smooth.SetEnabled(uid, false, smooth);
-            }
-            else if (volume < MediumThreshold)
-            {
-                args.Sprite.LayerSetState(0, $"{smooth.StateBase}b");
-                _smooth.SetEnabled(uid, false, smooth);
-            }
-            else
-            {
-                if (!smooth.Enabled)
-                {
-                    args.Sprite.LayerSetState(0, $"{smooth.StateBase}0");
-                    _smooth.SetEnabled(uid, true, smooth);
-                    _smooth.DirtyNeighbours(uid);
-                }
-            }
+            _sprite.LayerSetRsiState((uid, args.Sprite), component.PuddleKey, $"{component.PuddleState}a");
+            _smooth.SetEnabled(uid, false, false);
+        }
+        else if (volume < MediumThreshold)
+        {
+            _sprite.LayerSetRsiState((uid, args.Sprite), component.PuddleKey, $"{component.PuddleState}b");
+            _smooth.SetEnabled(uid, false, false);
+        }
+        else
+        {
+            _smooth.SetEnabled(uid, true);
         }
 
         var baseColor = Color.White;
 
-        if (args.AppearanceData.TryGetValue(PuddleVisuals.SolutionColor, out var colorObj))
-        {
-            var color = (Color) colorObj;
-            args.Sprite.Color = color * baseColor;
-        }
-        else
-        {
-            args.Sprite.Color *= baseColor;
-        }
+        if (!args.TryGetData<Color>(PuddleVisuals.SolutionColor, out var color))
+            color = args.Sprite.Color;
+
+        _sprite.SetColor((uid, args.Sprite), color * baseColor);
     }
 
     #region Spill
@@ -72,7 +50,19 @@ public sealed class PuddleSystem : SharedPuddleSystem
     // Maybe someday we'll have clientside prediction for entity spawning, but not today.
     // Until then, these methods do nothing on the client.
     /// <inheritdoc/>
-    public override bool TrySplashSpillAt(EntityUid uid, EntityCoordinates coordinates, Solution solution, out EntityUid puddleUid, bool sound = true, EntityUid? user = null)
+    public override bool TrySplashSpillAt(Entity<SpillableComponent?> entity, EntityCoordinates coordinates, out EntityUid puddleUid, out Solution solution, bool sound = true, EntityUid? user = null)
+    {
+        puddleUid = EntityUid.Invalid;
+        solution = new Solution();
+        return false;
+    }
+
+    public override bool TrySplashSpillAt(EntityUid entity,
+        EntityCoordinates coordinates,
+        Solution spilled,
+        out EntityUid puddleUid,
+        bool sound = true,
+        EntityUid? user = null)
     {
         puddleUid = EntityUid.Invalid;
         return false;

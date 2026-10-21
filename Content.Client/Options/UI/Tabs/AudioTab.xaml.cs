@@ -1,3 +1,4 @@
+using Content.Client.Administration.Managers;
 using Content.Client.Audio;
 using Content.Shared.CCVar;
 using Robust.Client.Audio;
@@ -12,13 +13,16 @@ namespace Content.Client.Options.UI.Tabs;
 [GenerateTypedNameReferences]
 public sealed partial class AudioTab : Control
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IAudioManager _audio = default!;
+    [Dependency] private IAudioManager _audio = default!;
+    [Dependency] private IClientAdminManager _admin = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
 
     public AudioTab()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+
+        Control.AddOptionDropDown(CVars.AudioDevice, DropDownAudioDevice, BuildAudioDeviceOptions());
 
         var masterVolume = Control.AddOptionPercentSlider(
             CVars.AudioMasterVolume,
@@ -61,8 +65,30 @@ public sealed partial class AudioTab : Control
         Control.AddOptionCheckBox(CCVars.RestartSoundsEnabled, RestartSoundsCheckBox);
         Control.AddOptionCheckBox(CCVars.EventMusicEnabled, EventMusicCheckBox);
         Control.AddOptionCheckBox(CCVars.AdminSoundsEnabled, AdminSoundsCheckBox);
+        Control.AddOptionCheckBox(CCVars.BwoinkSoundEnabled, BwoinkSoundCheckBox);
+        Control.AddOptionCheckBox(CCVars.AudioHrtf, AudioHrtfCheckBox);
+        Control.AddOptionCheckBox(CVars.AudioMuteUnfocused, MuteUnfocusedCheckBox);
 
         Control.Initialize();
+    }
+
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
+        _admin.AdminStatusUpdated += UpdateAdminButtonsVisibility;
+        UpdateAdminButtonsVisibility();
+    }
+
+    protected override void ExitedTree()
+    {
+        base.ExitedTree();
+        _admin.AdminStatusUpdated -= UpdateAdminButtonsVisibility;
+    }
+
+
+    private void UpdateAdminButtonsVisibility()
+    {
+        BwoinkSoundCheckBox.Visible = _admin.IsActive();
     }
 
     private void OnMasterVolumeSliderChanged(float value)
@@ -70,5 +96,30 @@ public sealed partial class AudioTab : Control
         // TODO: I was thinking of giving OptionsTabControlRow a flag to "set CVar immediately", but I'm deferring that
         // until there's a proper system for enforcing people don't close the window with pending changes.
         _audio.SetMasterGain(value);
+    }
+
+    private List<OptionDropDownCVar<string>.ValueOption> BuildAudioDeviceOptions()
+    {
+        var options = new List<OptionDropDownCVar<string>.ValueOption>();
+
+        options.Add(new OptionDropDownCVar<string>.ValueOption(
+            string.Empty,
+            Loc.GetString("ui-options-audio-device-default")));
+
+        foreach (var device in _audio.GetAudioDevices())
+        {
+            options.Add(new OptionDropDownCVar<string>.ValueOption(device, FormatAudioDeviceLabel(device)));
+        }
+
+        return options;
+    }
+
+    private static string FormatAudioDeviceLabel(string device)
+    {
+        const string openAlSoftPrefix = "OpenAL Soft on ";
+        if (device.StartsWith(openAlSoftPrefix, StringComparison.Ordinal))
+            return IAudioManager.ConvertAudioDeviceNameForDisplay(device);
+
+        return device;
     }
 }

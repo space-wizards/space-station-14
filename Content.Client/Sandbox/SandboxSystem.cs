@@ -1,5 +1,6 @@
 using Content.Client.Administration.Managers;
 using Content.Client.Movement.Systems;
+using Content.Client.Sandbox.Components;
 using Content.Shared.Sandbox;
 using Robust.Client.Console;
 using Robust.Client.Placement;
@@ -9,15 +10,16 @@ using Robust.Shared.Player;
 
 namespace Content.Client.Sandbox
 {
-    public sealed class SandboxSystem : SharedSandboxSystem
+    public sealed partial class SandboxSystem : SharedSandboxSystem
     {
-        [Dependency] private readonly IClientAdminManager _adminManager = default!;
-        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
-        [Dependency] private readonly IMapManager _map = default!;
-        [Dependency] private readonly IPlacementManager _placement = default!;
-        [Dependency] private readonly ContentEyeSystem _contentEye = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
-        [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+        [Dependency] private IClientAdminManager _adminManager = default!;
+        [Dependency] private IClientConsoleHost _consoleHost = default!;
+        [Dependency] private IPlacementManager _placement = default!;
+        [Dependency] private ContentEyeSystem _contentEye = default!;
+        [Dependency] private SharedTransformSystem _transform = default!;
+        [Dependency] private SharedMapSystem _mapSystem = default!;
+
+        [Dependency] private EntityQuery<SandboxCopyableComponent> _sandboxCopyableQuery;
 
         private bool _sandboxEnabled;
         public bool SandboxAllowed { get; private set; }
@@ -83,6 +85,11 @@ namespace Content.Client.Sandbox
             RaiseNetworkEvent(new MsgSandboxSuicide());
         }
 
+        public void ToggleThermalVision()
+        {
+            RaiseNetworkEvent(new MsgSandboxThermalVision());
+        }
+
         public bool Copy(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             if (!SandboxAllowed)
@@ -90,14 +97,27 @@ namespace Content.Client.Sandbox
 
             // Try copy entity.
             if (uid.IsValid()
-                && EntityManager.TryGetComponent(uid, out MetaDataComponent? comp)
+                && TryComp(uid, out MetaDataComponent? comp)
                 && !comp.EntityDeleted)
             {
-                if (comp.EntityPrototype == null || comp.EntityPrototype.HideSpawnMenu || comp.EntityPrototype.Abstract)
+                // Unconditional failures.
+                if (comp.EntityPrototype == null || comp.EntityPrototype.Abstract)
+                    return false;
+
+                // Skippable failures.
+                if (comp.EntityPrototype.HideSpawnMenu && !_sandboxCopyableQuery.HasComp(uid))
                     return false;
 
                 if (_placement.Eraser)
                     _placement.ToggleEraser();
+
+                // Get the rotation of the object to copy relative to its grid (if it exists) or the map.
+                var xform = Transform(uid);
+                var targetRotation = _transform.GetWorldRotation(xform);
+                if (TryComp<TransformComponent>(xform.GridUid, out var gridXform))
+                    targetRotation -= gridXform.LocalRotation;
+
+                _placement.Direction = targetRotation.GetCardinalDir();
 
                 _placement.BeginPlacing(new()
                 {
@@ -111,11 +131,14 @@ namespace Content.Client.Sandbox
 
             // Try copy tile.
 
-            if (!_map.TryFindGridAt(_transform.ToMapCoordinates(coords), out var gridUid, out var grid) || !_mapSystem.TryGetTileRef(gridUid, grid, coords, out var tileRef))
+            if (!_mapSystem.TryFindGridAt(_transform.ToMapCoordinates(coords), out var gridUid, out var grid) || !_mapSystem.TryGetTileRef(gridUid, grid, coords, out var tileRef))
                 return false;
 
             if (_placement.Eraser)
                 _placement.ToggleEraser();
+
+            _placement.Direction = (Direction)(tileRef.Tile.RotationMirroring % 4 * 2);
+            _placement.Mirrored = tileRef.Tile.RotationMirroring >= 4;
 
             _placement.BeginPlacing(new()
             {

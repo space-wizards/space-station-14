@@ -5,25 +5,22 @@ using Robust.Client.Graphics;
 
 namespace Content.Client.Atmos.Monitor;
 
-public sealed class AtmosAlarmableVisualsSystem : VisualizerSystem<AtmosAlarmableVisualsComponent>
+public sealed partial class AtmosAlarmableVisualsSystem : VisualizerSystem<AtmosAlarmableVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, AtmosAlarmableVisualsComponent component, ref AppearanceChangeEvent args)
     {
-        if (args.Sprite == null || !args.Sprite.LayerMapTryGet(component.LayerMap, out var layer))
+        if (args.Sprite == null || !SpriteSystem.LayerMapTryGet((uid, args.Sprite), component.LayerMap, out var layer, false))
             return;
 
-        if (!args.AppearanceData.TryGetValue(PowerDeviceVisuals.Powered, out var poweredObject) ||
-            poweredObject is not bool powered)
-        {
+        if (!args.TryGetData<bool>(PowerDeviceVisuals.Powered, out var powered))
             return;
-        }
 
         if (component.HideOnDepowered != null)
         {
             foreach (var visLayer in component.HideOnDepowered)
             {
-                if (args.Sprite.LayerMapTryGet(visLayer, out var powerVisibilityLayer))
-                    args.Sprite.LayerSetVisible(powerVisibilityLayer, powered);
+                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), visLayer, out var powerVisibilityLayer, false))
+                    SpriteSystem.LayerSetVisible((uid, args.Sprite), powerVisibilityLayer, powered);
             }
         }
 
@@ -31,17 +28,16 @@ public sealed class AtmosAlarmableVisualsSystem : VisualizerSystem<AtmosAlarmabl
         {
             foreach (var (setLayer, powerState) in component.SetOnDepowered)
             {
-                if (args.Sprite.LayerMapTryGet(setLayer, out var setStateLayer))
-                    args.Sprite.LayerSetState(setStateLayer, new RSI.StateId(powerState));
+                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), setLayer, out var setStateLayer, false))
+                    SpriteSystem.LayerSetRsiState((uid, args.Sprite), setStateLayer, new RSI.StateId(powerState));
             }
         }
 
-        if (args.AppearanceData.TryGetValue(AtmosMonitorVisuals.AlarmType, out var alarmTypeObject)
-            && alarmTypeObject is AtmosAlarmType alarmType
+        if (args.TryGetData<AtmosAlarmType>(AtmosMonitorVisuals.AlarmType, out var alarmType)
             && powered
             && component.AlarmStates.TryGetValue(alarmType, out var state))
         {
-            args.Sprite.LayerSetState(layer, new RSI.StateId(state));
+            SpriteSystem.LayerSetRsiState((uid, args.Sprite), layer, new RSI.StateId(state));
         }
     }
 }

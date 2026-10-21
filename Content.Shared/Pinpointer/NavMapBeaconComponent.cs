@@ -5,15 +5,14 @@ namespace Content.Shared.Pinpointer;
 /// <summary>
 /// Will show a marker on a NavMap.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedNavMapSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(NavMapSystem))]
 [AutoGenerateComponentState]
 public sealed partial class NavMapBeaconComponent : Component
 {
     /// <summary>
     /// Defaults to entity name if nothing found.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public string? Text;
 
     /// <summary>
@@ -23,14 +22,12 @@ public sealed partial class NavMapBeaconComponent : Component
     [DataField]
     public LocId? DefaultText;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public Color Color = Color.Orange;
 
     /// <summary>
     /// Only enabled beacons can be seen on a station map.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool Enabled = true;
 }

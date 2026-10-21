@@ -1,0 +1,20 @@
+- files:
+  - gray.png
+  - gray-herringbone.png
+  - gray-horizontal-slats.png
+  - gray-maint.png
+  - gray-mini.png
+  - gray-mono.png
+  - gray-pavement.png
+  - gray-pavement-vertical.png
+  - gray-plastic.png
+  - gray-vertical-slats.png
+  license: "CC0-1.0"
+  copyright: "By AftrLite (GitHub)"
+  source: "https://github.com/space-wizards/space-station-14"
+
+- files:
+  - gray-damaged.png
+  license: "CC-BY-SA-3.0"
+  copyright: "Damage overlays by WJohn (GitHub). Gray tile by AftrLite (GitHub)."
+  source: "https://github.com/wall-nerds/wallening/blob/9428d97a4fadf8a486b0c6fbe2ee345a2780e687/icons/turf/damaged.dmi"

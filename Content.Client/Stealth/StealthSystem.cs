@@ -1,5 +1,5 @@
 using Content.Client.Interactable.Components;
-using Content.Client.StatusIcon;
+using Content.Client.Graphics;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Robust.Client.GameObjects;
@@ -8,10 +8,12 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Stealth;
 
-public sealed class StealthSystem : SharedStealthSystem
+public sealed partial class StealthSystem : SharedStealthSystem
 {
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    private static readonly ProtoId<ShaderPrototype> Shader = "Stealth";
+
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     private ShaderInstance _shader = default!;
 
@@ -19,7 +21,7 @@ public sealed class StealthSystem : SharedStealthSystem
     {
         base.Initialize();
 
-        _shader = _protoMan.Index<ShaderPrototype>("Stealth").InstanceUnique();
+        _shader = ProtoMan.Index(Shader).InstanceUnique();
 
         SubscribeLocalEvent<StealthComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<StealthComponent, ComponentStartup>(OnStartup);
@@ -40,22 +42,32 @@ public sealed class StealthSystem : SharedStealthSystem
         if (!Resolve(uid, ref component, ref sprite, false))
             return;
 
-        sprite.Color = Color.White;
-        sprite.PostShader = enabled ? _shader : null;
-        sprite.GetScreenTexture = enabled;
-        sprite.RaiseShaderEvent = enabled;
-
-        if (!enabled)
+        _sprite.SetColor((uid, sprite), Color.White);
+        if (enabled)
         {
-            if (component.HadOutline && !TerminatingOrDeleted(uid))
-                EnsureComp<InteractionOutlineComponent>(uid);
-            return;
+            _sprite.SetPostShader((uid, sprite), new SpriteComponent.PostShaderArgs(ContentPostShaderIds.Stealth, _shader)
+            {
+                GetScreenTexture = true,
+                RaiseShaderEvent = true,
+                Before = ContentPostShaderIds.BeforeOutlines,
+            });
+        }
+        else
+        {
+            _sprite.RemovePostShader((uid, sprite), ContentPostShaderIds.Stealth);
         }
 
-        if (TryComp(uid, out InteractionOutlineComponent? outline))
+        if (enabled)
         {
-            RemCompDeferred(uid, outline);
-            component.HadOutline = true;
+            component.HadOutline = RemCompDeferred<InteractionOutlineComponent>(uid);
+        }
+        else
+        {
+            if (component.HadOutline && !TerminatingOrDeleted(uid))
+            {
+                EnsureComp<InteractionOutlineComponent>(uid);
+                component.HadOutline = false;
+            }
         }
     }
 
@@ -91,8 +103,9 @@ public sealed class StealthSystem : SharedStealthSystem
 
         _shader.SetParameter("reference", reference);
         _shader.SetParameter("visibility", visibility);
+        _shader.SetParameter("shimmer_frequency", component.ShimmerFrequency);
 
         visibility = MathF.Max(0, visibility);
-        args.Sprite.Color = new Color(visibility, visibility, 1, 1);
+        _sprite.SetColor((uid, args.Sprite), new Color(visibility, visibility, 1, 1));
     }
 }

@@ -14,10 +14,10 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 /// </summary>
 public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdown
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    private NPCSteeringSystem _steering = default!;
-    private PathfindingSystem _pathfind = default!;
-    private SharedTransformSystem _transform = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private NPCSteeringSystem _steering = default!;
+    [Dependency] private PathfindingSystem _pathfind = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     /// <summary>
     /// When to shut the task down.
@@ -63,14 +63,6 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
 
     private const string MovementCancelToken = "MovementCancelToken";
 
-    public override void Initialize(IEntitySystemManager sysManager)
-    {
-        base.Initialize(sysManager);
-        _pathfind = sysManager.GetEntitySystem<PathfindingSystem>();
-        _steering = sysManager.GetEntitySystem<NPCSteeringSystem>();
-        _transform = sysManager.GetEntitySystem<SharedTransformSystem>();
-    }
-
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
         CancellationToken cancelToken)
     {
@@ -82,11 +74,11 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
         if (!_entManager.TryGetComponent<TransformComponent>(owner, out var xform) ||
-            !_entManager.TryGetComponent<PhysicsComponent>(owner, out var body))
+            !_entManager.HasComponent<PhysicsComponent>(owner))
             return (false, null);
 
-        if (!_entManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var ownerGrid) ||
-            !_entManager.TryGetComponent<MapGridComponent>(targetCoordinates.GetGridUid(_entManager), out var targetGrid))
+        if (!_entManager.HasComponent<MapGridComponent>(xform.GridUid) ||
+            !_entManager.HasComponent<MapGridComponent>(_transform.GetGrid(targetCoordinates)))
         {
             return (false, null);
         }
@@ -155,8 +147,8 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
         {
             if (blackboard.TryGetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, out var coordinates, _entManager))
             {
-                var mapCoords = coordinates.ToMap(_entManager, _transform);
-                _steering.PrunePath(uid, mapCoords, targetCoordinates.ToMapPos(_entManager, _transform) - mapCoords.Position, result.Path);
+                var mapCoords = _transform.ToMapCoordinates(coordinates);
+                _steering.PrunePath(uid, mapCoords, _transform.ToMapCoordinates(targetCoordinates).Position - mapCoords.Position, result.Path);
             }
 
             comp.CurrentPath = new Queue<PathPoly>(result.Path);

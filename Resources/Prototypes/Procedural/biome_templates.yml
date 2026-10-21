@@ -278,7 +278,7 @@
         cellularDistanceFunction: Euclidean
         cellularReturnType: Distance2
       entities:
-        - WallRockBasalt
+        - WallRock
     - !type:BiomeDummyLayer
       id: Loot
     # Fill basalt
@@ -489,7 +489,7 @@
         lacunarity: 2
         gain: 0.4
       entities:
-      - FloorChromiteChasm
+      - FloorChasmEntity
     - !type:BiomeDummyLayer
       id: Loot
     # Fill chromite
@@ -513,7 +513,9 @@
         - CrystalGreen
         - CrystalPink
         - CrystalOrange
+        - CrystalBlack
         - CrystalBlue
+        - CrystalYellow
         - CrystalCyan
     - !type:BiomeEntityLayer
       threshold: 0.95
@@ -561,7 +563,9 @@
         - CrystalGreen
         - CrystalPink
         - CrystalOrange
+        - CrystalBlack
         - CrystalBlue
+        - CrystalYellow
         - CrystalCyan
     - !type:BiomeEntityLayer
       threshold: 0.95

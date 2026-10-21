@@ -90,23 +90,25 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             var spriteSystem = sysManager.GetEntitySystem<SpriteSystem>();
             var requirementsManager = IoCManager.Resolve<JobRequirementsManager>();
 
-            // TODO: role.Requirements value doesn't work at all as an equality key, this must be fixed
             // Grouping roles
             var groupedRoles = ghostState.GhostRoles.GroupBy(
-                role => (role.Name, role.Description, role.Requirements));
+                role => (
+                    role.Name,
+                    role.Description,
+                    //  Check the prototypes for role requirements and bans
+                    requirementsManager.IsAllowed(role.RolePrototypes.Item1, role.RolePrototypes.Item2, null, out var reason),
+                    reason));
 
             // Add a new entry for each role group
             foreach (var group in groupedRoles)
             {
+                var reason = group.Key.reason;
                 var name = group.Key.Name;
                 var description = group.Key.Description;
-                var hasAccess = requirementsManager.CheckRoleRequirements(
-                    group.Key.Requirements,
-                    null,
-                    out var reason);
+                var prototypesAllowed = group.Key.Item3;
 
                 // Adding a new role
-                _window.AddEntry(name, description, hasAccess, reason, group, spriteSystem);
+                _window.AddEntry(name, description, prototypesAllowed, reason, group, spriteSystem);
             }
 
             // Restore the Collapsible box state if it is saved

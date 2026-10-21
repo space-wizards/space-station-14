@@ -1,9 +1,9 @@
-﻿using Content.Shared.Alert;
+using Content.Shared.Alert;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.StatusEffect
 {
-    [Prototype("statusEffect")]
+    [Prototype]
     public sealed partial class StatusEffectPrototype : IPrototype
     {
         [IdDataField]

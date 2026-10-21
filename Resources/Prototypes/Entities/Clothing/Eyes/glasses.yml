@@ -1,4 +1,15 @@
 - type: entity
+  abstract: true
+  parent: BaseScrewingRefinable
+  id: ClothingEyesGlassesBase
+  components:
+  - type: ToolRefinable
+    refineResult:
+    - id: GlassLens
+      amount: 2
+    - id: PartRodMetal1
+
+- type: entity
   parent: ClothingEyesBase
   id: ClothingEyesGlassesGar
   name: gar glasses
@@ -34,7 +45,7 @@
         Blunt: 10
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: ClothingEyesGlassesGarOrange
   id: ClothingEyesGlassesGarGiga
   name: giga gar glasses
   description: We evolve past the person we were a minute before. Little by little we advance with each turn. That's how a drill works!
@@ -47,10 +58,6 @@
     equippedPrefix: super
   - type: Item
     heldPrefix: super
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 10
 
 - type: entity
   parent: [ClothingEyesBase, BaseEngineeringContraband]
@@ -65,9 +72,13 @@
   - type: EyeProtection
   - type: IdentityBlocker
     coverage: EYES
+  - type: Tag
+    tags:
+    - PetWearable
+    - WhitelistChameleon
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, ClothingEyesGlassesBase]
   id: ClothingEyesGlasses
   name: glasses
   description: A pair of spectacular spectacles with prescription lenses.
@@ -83,7 +94,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, ClothingEyesGlassesBase]
   id: ClothingEyesGlassesJensen
   name: jensen glasses
   description: A pair of yellow tinted folding glasses. You never asked for these.
@@ -97,7 +108,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, ClothingEyesGlassesBase]
   id: ClothingEyesGlassesJamjar
   name: jamjar glasses
   description: These retro glasses remind you of a simpler time.
@@ -113,7 +124,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, ClothingEyesGlassesBase]
   id: ClothingEyesGlassesOutlawGlasses
   name: outlaw glasses
   description: A must for every self-respecting undercover agent.
@@ -124,9 +135,11 @@
     sprite: Clothing/Eyes/Glasses/outlawglasses.rsi
   - type: VisionCorrection
   - type: IdentityBlocker
+  - type: StaticPrice
+    price: 500
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, ClothingEyesGlassesBase]
   id: ClothingEyesGlassesCheapSunglasses
   name: cheap sunglasses
   description: A pair of black sunglasses. Doesn't block light well, more of an accessory than something useful.
@@ -138,27 +151,26 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - PetWearable
     - WhitelistChameleon
   - type: IdentityBlocker
     coverage: EYES
 
 - type: entity
-  parent: ClothingEyesGlassesCheapSunglasses
+  parent: [ClothingEyesGlassesCheapSunglasses, ClothingEyesSunglassesBase]
   id: ClothingEyesGlassesSunglasses
-  name: sun glasses
+  name: sunglasses
   description: A pair of black sunglasses.
   components:
-  - type: FlashImmunity
-  - type: EyeProtection
-    protectionTime: 5
   - type: Tag
     tags:
     - Sunglasses
+    - PetWearable
     - HamsterWearable
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingEyesBase, ShowSecurityIcons, BaseRestrictedContraband]
+  parent: [ClothingEyesSunglassesBase, ShowSecurityIcons, BaseSecurityContraband]
   id: ClothingEyesGlassesSecurity
   name: security glasses
   description: Upgraded sunglasses that provide flash immunity and a security HUD.
@@ -167,46 +179,38 @@
     sprite: Clothing/Eyes/Glasses/secglasses.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/secglasses.rsi
-  - type: FlashImmunity
-  - type: EyeProtection
-    protectionTime: 5
   - type: Construction
     graph: GlassesSecHUD
     node: glassesSec
   - type: Tag
     tags:
     - HamsterWearable
+    - PetWearable
     - WhitelistChameleon
   - type: GuideHelp
     guides:
     - Security
     - Antagonists
-  - type: IdentityBlocker
-    coverage: EYES
 
 - type: entity
-  parent: [ClothingEyesBase, BaseCommandContraband]
+  parent: [ClothingEyesSunglassesBase, BaseCommandContraband]
   id: ClothingEyesGlassesCommand
   name: administration glasses
-  description: Upgraded sunglasses that provide flash immunity and show ID card status. 
+  description: Upgraded sunglasses that provide flash immunity and show ID card status.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/commandglasses.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/commandglasses.rsi
-  - type: FlashImmunity
-  - type: EyeProtection
-    protectionTime: 5
   - type: Tag
     tags:
     - HamsterWearable
+    - PetWearable
     - WhitelistChameleon
-  - type: IdentityBlocker
-    coverage: EYES
   - type: ShowJobIcons
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: ClothingEyesSunglassesBase
   id: ClothingEyesGlassesMercenary
   name: mercenary glasses
   description: Glasses made for combat, to protect the eyes from bright blinding flashes.
@@ -215,11 +219,6 @@
     sprite: Clothing/Eyes/Glasses/mercglasses.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/mercglasses.rsi
-  - type: FlashImmunity
-  - type: EyeProtection
-    protectionTime: 5
-  - type: IdentityBlocker
-    coverage: EYES
 
 #Make a scanner category when these actually function and we get the trayson
 - type: entity
@@ -239,6 +238,7 @@
   - type: GroupExamine
   - type: IdentityBlocker
     coverage: EYES
+  - type: ThermalSight
 
 - type: entity
   parent: ClothingEyesBase
@@ -253,9 +253,13 @@
     - type: SolutionScanner
     - type: IdentityBlocker
       coverage: EYES
+    - type: Tag
+      tags:
+      - PetWearable
+      - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingEyesBase, BaseMajorContraband]
+  parent: [ClothingEyesBase, BaseHighlyIllegalContraband]
   id: ClothingEyesVisorNinja
   name: ninja visor
   description: An advanced visor protecting a ninja's eyes from flashing lights.
@@ -265,3 +269,19 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/ninjavisor.rsi
   - type: FlashImmunity
+
+- type: entity
+  parent: [ClothingEyesSunglassesBase, ShowSecurityIcons, BaseSecurityContraband]
+  id: ClothingEyesGlassesNoir
+  name: noir-tech glasses
+  description: A pair of glasses that simulate what the world looked like before the invention of color.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/noir.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/sunglasses.rsi
+  - type: NoirOverlay
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon

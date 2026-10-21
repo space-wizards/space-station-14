@@ -1,0 +1,40 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/2712e62ee56d46e6ae11fcb3b16d401a01179ec1/icons/obj/device.dmi, inhands sprited by Flareguy for Space Station 14",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+        "states": [
+        {
+          "name": "icon-on",
+          "delays": [
+            [
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1
+            ]
+          ]
+        },
+        {
+          "name": "icon",
+          "delays": [
+            [
+              0.5,
+              0.5
+            ]
+          ]
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
+}

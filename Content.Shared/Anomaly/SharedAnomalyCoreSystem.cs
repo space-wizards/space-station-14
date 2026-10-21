@@ -12,11 +12,11 @@ namespace Content.Shared.Anomaly;
 /// <summary>
 /// This component reduces the value of the entity during decay
 /// </summary>
-public sealed class SharedAnomalyCoreSystem : EntitySystem
+public sealed partial class SharedAnomalyCoreSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private ItemSlotsSystem _itemSlots = default!;
 
     public override void Initialize()
     {
@@ -36,9 +36,9 @@ public sealed class SharedAnomalyCoreSystem : EntitySystem
         var (uid, comp) = ent;
 
         // don't waste charges on non-anchorable non-anomalous static bodies.
-        if (!HasComp<AnomalyComponent>(args.Hit)
-            && !HasComp<AnchorableComponent>(args.Hit)
-            && TryComp<PhysicsComponent>(args.Hit, out var body)
+        if (!HasComp<AnomalyComponent>(args.Target)
+            && !HasComp<AnchorableComponent>(args.Target)
+            && TryComp<PhysicsComponent>(args.Target, out var body)
             && body.BodyType == BodyType.Static)
             return;
 

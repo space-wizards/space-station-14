@@ -21,10 +21,10 @@ namespace Content.Client.ParticleAccelerator.UI;
 [GenerateTypedNameReferences]
 public sealed partial class ParticleAcceleratorControlMenu : FancyWindow
 {
-    [Dependency] private readonly IResourceCache _cache = default!;
+    [Dependency] private IResourceCache _cache = default!;
 
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IPlayerManager _player = default!;
 
     private readonly AccessReaderSystem _accessReader;
 
@@ -93,14 +93,9 @@ public sealed partial class ParticleAcceleratorControlMenu : FancyWindow
         StateSpinBox.ValueChanged += PowerStateChanged;
         StateSpinBox.LineEditDisabled = true;
 
-        OffButton.OnPressed += _ =>
+        PowerSwitch.OnToggled += args =>
         {
-            OnOverallState?.Invoke(false);
-        };
-
-        OnButton.OnPressed += _ =>
-        {
-            OnOverallState?.Invoke(true);
+            OnOverallState?.Invoke(args.Pressed);
         };
 
         ScanButton.OnPressed += _ =>
@@ -212,12 +207,10 @@ public sealed partial class ParticleAcceleratorControlMenu : FancyWindow
         bool hasAccess = _player.LocalSession?.AttachedEntity is {} player
             && _accessReader.IsAllowed(player, _entity);
 
-        OnButton.Pressed = enabled;
-        OffButton.Pressed = !enabled;
+        PowerSwitch.Pressed = enabled;
 
         var cantUse = !assembled || blocked || powerBlock || !hasAccess;
-        OnButton.Disabled = cantUse;
-        OffButton.Disabled = cantUse;
+        PowerSwitch.Disabled = cantUse;
         ScanButton.Disabled = blocked || !hasAccess;
 
         var cantChangeLevel = !assembled || blocked || !enabled || cantUse;
@@ -262,16 +255,18 @@ public sealed partial class ParticleAcceleratorControlMenu : FancyWindow
 
 public sealed class PASegmentControl : Control
 {
+    private static readonly ProtoId<ShaderPrototype> GreyscaleShaderId = "Greyscale";
     private readonly ShaderInstance _greyScaleShader;
     private readonly TextureRect _base;
     private readonly TextureRect _unlit;
     private RSI? _rsi;
 
     public string BaseState { get; set; } = "control_box";
+    public bool DefaultVisible { get; set; } = false;
 
     public PASegmentControl()
     {
-        _greyScaleShader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("Greyscale").Instance();
+        _greyScaleShader = IoCManager.Resolve<IPrototypeManager>().Index(GreyscaleShaderId).Instance();
 
         AddChild(_base = new TextureRect());
         AddChild(_unlit = new TextureRect());
@@ -283,12 +278,14 @@ public sealed class PASegmentControl : Control
         _rsi = IoCManager.Resolve<IResourceCache>().GetResource<RSIResource>($"/Textures/Structures/Power/Generation/PA/{BaseState}.rsi").RSI;
         MinSize = _rsi.Size;
         _base.Texture = _rsi["completed"].Frame0;
+
+        SetVisible(DefaultVisible);
+        _unlit.Visible = DefaultVisible;
     }
 
     public void SetPowerState(ParticleAcceleratorUIState state, bool exists)
     {
-        _base.ShaderOverride = exists ? null : _greyScaleShader;
-        _base.ModulateSelfOverride = exists ? null : new Color(127, 127, 127);
+        SetVisible(exists);
 
         if (!state.Enabled || !exists)
         {
@@ -318,5 +315,24 @@ public sealed class PASegmentControl : Control
         }
 
         _unlit.Texture = rState.Frame0;
+    }
+
+    /// <summary>
+    /// Adds/Removes the shading to the part in the control menu based on the
+    /// input state.
+    /// </summary>
+    /// <param name="state">True if the part exists, false otherwise</param>
+    private void SetVisible(bool state)
+    {
+        if (state)
+        {
+            _base.ShaderOverride = null;
+            _base.ModulateSelfOverride = null;
+        }
+        else
+        {
+            _base.ShaderOverride = _greyScaleShader;
+            _base.ModulateSelfOverride = new Color(127, 127, 127);
+        }
     }
 }

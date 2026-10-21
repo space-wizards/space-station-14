@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Database;
@@ -13,12 +13,12 @@ using static Content.Shared.Administration.PermissionsEuiMsg;
 
 namespace Content.Server.Administration.UI
 {
-    public sealed class PermissionsEui : BaseEui
+    public sealed partial class PermissionsEui : BaseEui
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IServerDbManager _db = default!;
-        [Dependency] private readonly IAdminManager _adminManager = default!;
-        [Dependency] private readonly ILogManager _logManager = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IServerDbManager _db = default!;
+        [Dependency] private IAdminManager _adminManager = default!;
+        [Dependency] private ILogManager _logManager = default!;
 
         private readonly ISawmill _sawmill;
         private bool _isLoading;
@@ -76,7 +76,8 @@ namespace Content.Server.Administration.UI
                     Title = p.a.Title,
                     RankId = p.a.AdminRankId,
                     UserId = new NetUserId(p.a.UserId),
-                    UserName = p.lastUserName
+                    UserName = p.lastUserName,
+                    Suspended = p.a.Suspended,
                 }).ToArray(),
 
                 AdminRanks = _adminRanks.ToDictionary(a => a.Id, a => new PermissionsEuiState.AdminRankData
@@ -239,6 +240,12 @@ namespace Content.Server.Administration.UI
                 return;
             }
 
+            var (bad, rankName) = await FetchAndCheckRank(ua.RankId);
+            if (bad)
+            {
+                return;
+            }
+
             var admin = await _db.GetAdminDataForAsync(ua.UserId);
             if (admin == null)
             {
@@ -255,16 +262,11 @@ namespace Content.Server.Administration.UI
             admin.Title = ua.Title;
             admin.AdminRankId = ua.RankId;
             admin.Flags = GenAdminFlagList(ua.PosFlags, ua.NegFlags);
+            admin.Suspended = ua.Suspended;
 
             await _db.UpdateAdminAsync(admin);
 
             var playerRecord = await _db.GetPlayerRecordByUserId(ua.UserId);
-            var (bad, rankName) = await FetchAndCheckRank(ua.RankId);
-            if (bad)
-            {
-                return;
-            }
-
             var name = playerRecord?.LastSeenUserName ?? ua.UserId.ToString();
             var title = ua.Title ?? "<no title>";
             var flags = AdminFlagsHelper.PosNegFlagsText(ua.PosFlags, ua.NegFlags);
@@ -335,7 +337,8 @@ namespace Content.Server.Administration.UI
                 Flags = GenAdminFlagList(ca.PosFlags, ca.NegFlags),
                 AdminRankId = ca.RankId,
                 UserId = userId.UserId,
-                Title = ca.Title
+                Title = ca.Title,
+                Suspended = ca.Suspended,
             };
 
             await _db.AddAdminAsync(admin);

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from paradise https://github.com/ParadiseSS13/Paradise/tree/master/icons (unknown commit). Vox state by Flareguy for SS14",
+  "copyright": "Taken from paradise https://github.com/ParadiseSS13/Paradise/tree/master/icons (unknown commit). Vox state by Flareguy for SS14. Vulpkanin version made by Floofers. Reptilian state by TiniestShark (Github).",
   "size": {
     "x": 32,
     "y": 32
@@ -19,11 +19,19 @@
       "directions": 4
     },
     {
+      "name": "equipped-HELMET-reptilian",
+      "directions": 4
+    },
+    {
       "name": "inhand-left",
       "directions": 4
     },
     {
       "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-vulpkanin",
       "directions": 4
     }
   ]

@@ -1,7 +1,8 @@
 <Document>
   # Antimatter Engine (AME)
+  The Antimatter Engine is a short-term support generator for the station, providing a sizable chunk of power for a limited time.
 
-  The AME is one of the simplest engines available. You put together the multi-tile structure, stick some fuel into it, and you're all set. This doesn't mean it is perfectly safe though; you may need to deal with the AME overheating.
+  It's mainly used to assist engineers in starting up bigger engines like the [textlink="Singularity Engine" link="SingularityEngine"] or [textlink="Tesla Engine" link="TeslaEngine"], by supplementing the station's [textlink="batteries" link="PowerStorage"] with partial power to extend their runtime.
 
   ## Construction
   <Box>Required parts:</Box>
@@ -11,15 +12,65 @@
   <GuideEntityEmbed Entity="AmeJar"/>
   </Box>
 
-  To assemble an AME, start by wrenching down the controller on the near end of a HV wire. On most stations, there's catwalks to assist with this. From there, start putting down a 3x3 or larger square of AME parts in preparation for construction, making sure to maximize the number of "center" pieces that are surrounded on all 8 sides.
+  The AME Controller is the part of the AME that outputs power to the station's grid through an [textlink="HV connection" link="VoltageNetworks"].
+  Because of this, you'll want to start your AME construction with the controller on top of an [color=orange]HV wire[/color].
 
-  Once this is done, you can use a multitool to convert each AME part into shielding, which should form a finished AME configuration. From there, insert a fuel jar, set the fuel rate to [color=#a4885c]twice the core count or less[/color], and turn on injection. Any more than this ratio will eventually result in the engine [color=#ff0000]overheating and[/color], shortly afterwards, [color=#ff0000]exploding[/color].
+  Most stations have exposed [color=orange]HV wiring[/color] or designated spots to wrench an AME controller, so that it connects to the grid.
 
-  ## Fuel Economy
-  The closer you are to the perfect ratio of [color=#a4885c]1:2[/color] AME cores to fuel injection rate, the more efficient you'll be. You're cutting fuel efficiency to [color=#a4885c]50% and less[/color] if you're using more cores, but a lower fuel injection rate.
-  For an example, [color=#76db91]3 cores and 6 fuel injected[/color] will generate [color=#76db91]240kW[/color], while  [color=#f0684d]8 cores and 8 fuel injected[/color] will generate [color=#f0684d]160kW[/color]; you'd be generating 80kW less while spending 2 more fuel per injection.
+  AME shielding is the physical structure that makes the antimatter engine. It's made by converting AME flatpacks into shielding using a multitool.
 
-  ## Upgrading the AME
+  To construct an AME, start putting down a 3x3 or larger square of AME flatpacks in preparation for construction, making sure to maximize the number of "center" pieces that are surrounded on all eight sides.
+  The greater amount of center pieces, the more cores your AME will have, and the more power it will be able to output safely.
 
-  You can generally only upgrade the AME by installing more cores, which can be done by ordering more AME flatpacks from [color=#a4885c]Cargo[/color].
+  <Box>
+    <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>
+    <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>
+    <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>
+    <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>
+    <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>
+    <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>
+    <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>
+  </Box>
+
+  Once this is done, you can use a multitool to convert each AME flatpack into shielding, which should form a finished AME configuration.
+
+  <GuideEntityEmbed Entity="AmeController" Caption=""/>
+  <Box>
+    <GuideEntityEmbed Entity="AmeShielding" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="AmeShielding" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="AmeShielding" Caption="" Margin="0"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="AmeShielding" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="AmeShielding" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="AmeShielding" Caption="" Margin="0"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="AmeShielding" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="AmeShielding" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="AmeShielding" Caption="" Margin="0"/>
+  </Box>
+  <Box>
+    [color=#999999][italic]An example of a one core setup[italic][/color]
+  </Box>
+
+  ## Operation
+  To start the AME, insert a fuel jar into the AME controller, and set the safe injection rate.
+
+  The safe injection rate is the point where the AME can safely run without overheating, while maximizing power output.
+
+  This rate is always twice the core count.
+
+  For example, an AME with one core will have a safe injection rate of 2. With two cores, the safe injection rate would be 4, and so on.
+
+  Any more than this ratio will eventually result in the engine [color=#ff0000]overheating[/color] and, shortly afterwards, [color=#ff0000]exploding[/color].
+
+  The AME controller will [textlink="report" link="InspectingPower"] on both the amount of power it is providing to the grid, and the theoretical maximum power it could provide if demanded.
+
 </Document>

@@ -1,22 +1,49 @@
 using Content.Server.Chat.Systems;
+using Content.Server.GameTicking;
+using Content.Server.GameTicking.Rules.Components;
+using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.Magic;
 using Content.Shared.Magic.Events;
+using Content.Shared.Mind;
+using Content.Shared.Tag;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Magic;
 
-public sealed class MagicSystem : SharedMagicSystem
+public sealed partial class MagicSystem : SharedMagicSystem
 {
-    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private ServerGameTicker _gameTicker = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
 
-    public override void Initialize()
+    private static readonly ProtoId<TagPrototype> InvalidForSurvivorAntagTag = "InvalidForSurvivorAntag";
+    private static readonly EntProtoId SurvivorGameRule = "Survivor";
+
+    public override void OnVoidApplause(VoidApplauseSpellEvent ev)
     {
-        base.Initialize();
+        base.OnVoidApplause(ev);
 
-        SubscribeLocalEvent<SpeakSpellEvent>(OnSpellSpoken);
+        _chat.TryEmoteWithChat(ev.Performer, ev.Emote);
+
+        var perfXForm = Transform(ev.Performer);
+        var targetXForm = Transform(ev.Target);
+
+        Spawn(ev.Effect, perfXForm.Coordinates);
+        Spawn(ev.Effect, targetXForm.Coordinates);
     }
 
-    private void OnSpellSpoken(ref SpeakSpellEvent args)
+    protected override void OnRandomGlobalSpawnSpell(RandomGlobalSpawnSpellEvent ev)
     {
-        _chat.TrySendInGameICMessage(args.Performer, Loc.GetString(args.Speech), InGameICChatType.Speak, false);
+        base.OnRandomGlobalSpawnSpell(ev);
+
+        if (!ev.MakeSurvivorAntagonist)
+            return;
+
+        if (_mind.TryGetMind(ev.Performer, out var mind, out _) && !_tag.HasTag(mind, InvalidForSurvivorAntagTag))
+            _tag.AddTag(mind, InvalidForSurvivorAntagTag);
+
+        if (!_gameTicker.IsGameRuleActive<SurvivorRuleComponent>())
+            _gameTicker.StartGameRule(SurvivorGameRule);
     }
 }

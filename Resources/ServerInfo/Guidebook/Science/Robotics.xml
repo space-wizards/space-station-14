@@ -1,6 +1,6 @@
 <Document>
   # Robotics
-  The science team has the ability to create several unique types of robots to suit the station's needs. In order to begin, you'll want to research [color=#a4885c]Robotics[/color] technology.
+  The science team has the ability to create several unique types of robots to suit the station's needs. In order to begin, you'll want to research the [color=#a4885c]Robotics[/color] technology.
 
   ## Exosuit Fabricator
 <Box>
@@ -28,7 +28,7 @@
 </Box>
   [color=#a4885c]Bots[/color] are small, simple automata which can perform simple tasks, such as cleaning. They don't use power cells, but are quite fragile. Making these will require parts which can be made at an exosuit fabricator.
 
-  To make a bot, open the [color=#a4885c]Construction Menu[/color] and go to the "Utilities" category  (or just search "bot") and you'll have the whole list of recipes. In order to assemble the bot, you must have the parts outlined by the recipe close to you and click [color=#a4885c]Build[/color], after a few seconds your newly created silicon servant should appear at your feet!
+  To make a bot, open the [color=#a4885c]Construction Menu[/color] and go to the "Utilities" category (or just search "bot") and you'll have the whole list of recipes. In order to assemble the bot, you must have the parts outlined by the recipe close to you and click [color=#a4885c]Build[/color], after a few seconds your newly created silicon servant should appear at your feet!
 
   ## Mechs
 <Box>
@@ -47,7 +47,7 @@
 <GuideEntityEmbed Entity="RipleyPeripheralsElectronics" Caption="Ripley peripherals control module"/>
 </Box>
 
-  For example, both of the circuit boards above are necessary to create a ripley mech, and cannot be used to make any other mech.
+  For example, both of the circuit boards above are necessary to create a Ripley mech, and cannot be used to make any other mech.
 
   To start making a mech, print their harness in the fabricator and insert the limbs, you can [color=#a4885c]examine[/color] it to see how to proceed with construction once all limbs are in place.
   - Every mech requires some combination of wires, tool usage, and their own unique circuit boards to construct after the chassis has been assembled. Most mechs have two or more unique circuit boards. For example, the [color=#a4885c]Ripley[/color] mech requires a [color=#a4885c]ripley controls module[/color] board and a [color=#a4885c]ripley peripherals module[/color] board.

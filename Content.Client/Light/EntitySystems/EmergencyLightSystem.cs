@@ -4,23 +4,23 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Light.EntitySystems;
 
-public sealed class EmergencyLightSystem : VisualizerSystem<EmergencyLightComponent>
+public sealed partial class EmergencyLightSystem : VisualizerSystem<EmergencyLightComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, EmergencyLightComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (!AppearanceSystem.TryGetData<bool>(uid, EmergencyLightVisuals.On, out var on, args.Component))
+        if (!args.TryGetData<bool>(EmergencyLightVisuals.On, out var on))
             on = false;
 
-        args.Sprite.LayerSetVisible(EmergencyLightVisualLayers.LightOff, !on);
-        args.Sprite.LayerSetVisible(EmergencyLightVisualLayers.LightOn, on);
+        SpriteSystem.LayerSetVisible((uid, args.Sprite), EmergencyLightVisualLayers.LightOff, !on);
+        SpriteSystem.LayerSetVisible((uid, args.Sprite), EmergencyLightVisualLayers.LightOn, on);
 
-        if (AppearanceSystem.TryGetData<Color>(uid, EmergencyLightVisuals.Color, out var color, args.Component))
+        if (args.TryGetData<Color>(EmergencyLightVisuals.Color, out var color))
         {
-            args.Sprite.LayerSetColor(EmergencyLightVisualLayers.LightOn, color);
-            args.Sprite.LayerSetColor(EmergencyLightVisualLayers.LightOff, color);
+            SpriteSystem.LayerSetColor((uid, args.Sprite), EmergencyLightVisualLayers.LightOn, color);
+            SpriteSystem.LayerSetColor((uid, args.Sprite), EmergencyLightVisualLayers.LightOff, color);
         }
     }
 }

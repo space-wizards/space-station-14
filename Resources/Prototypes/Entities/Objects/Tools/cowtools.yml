@@ -4,9 +4,6 @@
   id: Haycutters
   description: This kills the wire. Moo!
   components:
-  - type: Tag
-    tags:
-    - PlantSampleTaker
   - type: Sprite
     sprite: Objects/Tools/Cowtools/haycutters.rsi
     state: haycutters
@@ -19,11 +16,13 @@
   - type: Tool
     qualities:
     - Cutting
+    - Shearing
     useSound:
       path: /Audio/Items/wirecutter.ogg
     speedModifier: 0.05
   - type: Item
     sprite: Objects/Tools/Cowtools/haycutters.rsi
+  - type: BotanySampleTaker
 
 - type: entity
   name: moodriver
@@ -139,6 +138,11 @@
     layers:
     - state: milkalyzer
   - type: GasAnalyzer
+  - type: ActivatableUI
+    inHandsOnly: true
+    singleUser: true
+    requireActiveHand: false
+    key: enum.GasAnalyzerUiKey.Key
   - type: UserInterface
     interfaces:
       enum.GasAnalyzerUiKey.Key:
@@ -167,12 +171,14 @@
   suffix: Filled
   parent: CowToolbox
   components:
-  - type: StorageFill
-    contents:
-    - id: Haycutters
-    - id: Moodriver
-    - id: Wronch
-    - id: Cowbar
-    - id: Mooltitool
-    - id: Cowelder
-    - id: Milkalyzer
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: Haycutters
+        - id: Moodriver
+        - id: Wronch
+        - id: Cowbar
+        - id: Mooltitool
+        - id: Cowelder
+        - id: Milkalyzer

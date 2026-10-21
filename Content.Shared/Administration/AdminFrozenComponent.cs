@@ -1,8 +1,8 @@
-﻿using Robust.Shared.GameStates;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Administration;
 
-[RegisterComponent, Access(typeof(SharedAdminFrozenSystem))]
+[RegisterComponent, Access(typeof(AdminFrozenSystem))]
 [NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class AdminFrozenComponent : Component
 {

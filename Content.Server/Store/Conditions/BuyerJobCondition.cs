@@ -2,7 +2,7 @@ using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
 using Content.Shared.Store;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Store.Conditions;
 
@@ -15,26 +15,24 @@ public sealed partial class BuyerJobCondition : ListingCondition
     /// <summary>
     /// A whitelist of jobs prototypes that can purchase this listing. Only one needs to be found.
     /// </summary>
-    [DataField("whitelist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<JobPrototype>))]
-    public HashSet<string>? Whitelist;
+    [DataField]
+    public HashSet<ProtoId<JobPrototype>>? Whitelist;
 
     /// <summary>
     /// A blacklist of job prototypes that can purchase this listing. Only one needs to be found.
     /// </summary>
-    [DataField("blacklist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<JobPrototype>))]
-    public HashSet<string>? Blacklist;
+    [DataField]
+    public HashSet<ProtoId<JobPrototype>>? Blacklist;
 
     public override bool Condition(ListingConditionArgs args)
     {
         var ent = args.EntityManager;
-        var minds = ent.System<SharedMindSystem>();
 
-        // this is for things like surplus crate
-        if (!minds.TryGetMind(args.Buyer, out var mindId, out _))
-            return true;
+        if (!ent.TryGetComponent<MindComponent>(args.Buyer, out var _))
+            return true; // inanimate objects don't have minds
 
         var jobs = ent.System<SharedJobSystem>();
-        jobs.MindTryGetJob(mindId, out var job);
+        jobs.MindTryGetJob(args.Buyer, out var job);
 
         if (Blacklist != null)
         {

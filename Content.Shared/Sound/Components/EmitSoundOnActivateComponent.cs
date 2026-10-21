@@ -5,7 +5,7 @@ namespace Content.Shared.Sound.Components;
 /// <summary>
 /// Simple sound emitter that emits sound on ActivateInWorld
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class EmitSoundOnActivateComponent : BaseEmitSoundComponent
 {
     /// <summary>
@@ -17,6 +17,6 @@ public sealed partial class EmitSoundOnActivateComponent : BaseEmitSoundComponen
     ///     otherwise this might enable sound spamming, as use-delays are only initiated if the interaction was
     ///     handled.
     /// </remarks>
-    [DataField("handle")]
+    [DataField]
     public bool Handle = true;
 }

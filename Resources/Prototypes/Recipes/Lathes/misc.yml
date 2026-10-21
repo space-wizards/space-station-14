@@ -3,18 +3,23 @@
 - type: latheRecipe
   abstract: true
   id: BaseLightRecipe
-  category: Lights
+  categories:
+  - Lights
   completetime: 2
   materials:
     Steel: 50
-    Glass: 50
+    Glass: 200
 
 - type: latheRecipe
   abstract: true
-  id: BaseFauxTileRecipe
-  completetime: 1
-  materials:
-    Plastic: 100
+  id: BasePackagedLightRecipe
+  categories:
+  - Lights
+  completetime: 10 # 2x as fast as printing lights individually.
+  materials: # 20% cheaper than printing lights individually.
+    Steel: 400
+    Glass: 1600
+    Cardboard: 200 # You get only one back via recycling.
 
 # Recipes
 
@@ -54,6 +59,63 @@
   parent: BaseLightRecipe
   id: DimLightBulb
   result: DimLightBulb
+
+- type: latheRecipe
+  parent: BaseLightRecipe
+  id: WarmLightBulb
+  result: WarmLightBulb
+
+# Light Packages
+
+- type: latheRecipe
+  parent: BasePackagedLightRecipe
+  id: BoxLighttube
+  result: BoxLighttube
+
+- type: latheRecipe
+  parent: BasePackagedLightRecipe
+  id: BoxExteriorLighttube
+  result: BoxExteriorLighttube
+
+- type: latheRecipe
+  parent: BasePackagedLightRecipe
+  id: BoxLedLighttube
+  result: BoxLedLighttube
+
+- type: latheRecipe
+  parent: BasePackagedLightRecipe
+  id: BoxSodiumLighttube
+  result: BoxSodiumLighttube
+
+- type: latheRecipe
+  parent: BasePackagedLightRecipe
+  id: BoxLightbulb
+  result: BoxLightbulb
+
+- type: latheRecipe
+  parent: BasePackagedLightRecipe
+  id: BoxDimLightbulb
+  result: BoxDimLightbulb
+
+- type: latheRecipe
+  parent: BasePackagedLightRecipe
+  id: BoxWarmLightbulb
+  result: BoxWarmLightbulb
+
+- type: latheRecipe
+  parent: BasePackagedLightRecipe
+  id: BoxLedLightbulb
+  result: BoxLedLightbulb
+
+- type: latheRecipe
+  parent: BasePackagedLightRecipe
+  id: BoxLightMixed
+  result: BoxLightMixed
+
+- type: latheRecipe
+  parent: BasePackagedLightRecipe
+  id: BoxLedLightMixed
+  result: BoxLedLightMixed
 
 - type: latheRecipe
   parent: BaseLightRecipe
@@ -100,6 +162,15 @@
     Glass: 100
 
 - type: latheRecipe
+  id: PushHorn
+  result: PushHorn
+  completetime: 5
+  materials:
+    Steel: 500
+    Plastic: 500
+    Plasma: 200
+
+- type: latheRecipe
   parent: BaseToolRecipe
   id: NodeScanner
   result: NodeScanner
@@ -112,7 +183,21 @@
   result: AirTank
   completetime: 4
   materials:
-    Steel: 300
+    Steel: 400
+
+- type: latheRecipe
+  id: DoubleEmergencyOxygenTank
+  result: DoubleEmergencyOxygenTank
+  completetime: 4
+  materials:
+    Steel: 250
+
+- type: latheRecipe
+  id: DoubleEmergencyNitrogenTank
+  result: DoubleEmergencyNitrogenTank
+  completetime: 4
+  materials:
+    Steel: 250
 
 - type: latheRecipe
   id: ClothingShoesBootsMagSci
@@ -139,56 +224,22 @@
     Silver: 500
 
 - type: latheRecipe
+  id: ClothingShoesBootsJump
+  result: ClothingShoesBootsJump
+  completetime: 2
+  materials:
+    Steel: 1400
+    Plastic: 600
+    Silver: 200
+    Plasma: 200
+
+- type: latheRecipe
   id: ModularReceiver
   result: ModularReceiver
   completetime: 12
   materials:
     Steel: 750
     Plastic: 100
-
-- type: latheRecipe
-  parent: BaseFauxTileRecipe
-  id: FauxTileAstroGrass
-  result: FloorTileItemAstroGrass
-
-- type: latheRecipe
-  parent: BaseFauxTileRecipe
-  id: FauxTileMowedAstroGrass
-  result: FloorTileItemMowedAstroGrass
-
-- type: latheRecipe
-  parent: BaseFauxTileRecipe
-  id: FauxTileJungleAstroGrass
-  result: FloorTileItemJungleAstroGrass
-
-- type: latheRecipe
-  parent: BaseFauxTileRecipe
-  id: FauxTileAstroIce
-  result: FloorTileItemAstroIce
-
-- type: latheRecipe
-  parent: BaseFauxTileRecipe
-  id: FauxTileAstroSnow
-  result: FloorTileItemAstroSnow
-
-- type: latheRecipe
-  id: FloorGreenCircuit
-  result: FloorTileItemGCircuit4
-  completetime: 2
-  materials:
-    Steel: 100
-
-- type: latheRecipe
-  parent: FloorGreenCircuit
-  id: FloorBlueCircuit
-  result: FloorTileItemBCircuit4
-
-- type: latheRecipe
-  id: FloorRedCircuit
-  result: FloorTileItemRCircuit4
-  completetime: 2
-  materials:
-    Steel: 100
 
 - type: latheRecipe
   id: HandheldStationMap
@@ -212,3 +263,50 @@
   completetime: 3
   materials:
     Plastic: 200
+
+- type: latheRecipe
+  id: ClothingOuterVestTank
+  result: ClothingOuterVestTank
+  completetime: 2
+  materials:
+    Cloth: 100
+    Steel: 50
+
+- type: latheRecipe
+  id: Ashtray
+  result: Ashtray
+  completetime: 1
+  materials:
+    Steel: 30
+
+- type: latheRecipe
+  id: BoxFolderClipboardEmpty
+  result: BoxFolderClipboardEmpty
+  completetime: 2
+  materials:
+    Wood: 100
+    Steel: 50
+
+- type: latheRecipe
+  id: BoxFolderPlasticClipboardEmpty
+  result: BoxFolderPlasticClipboardEmpty
+  completetime: 2
+  materials:
+    Plastic: 100
+    Steel: 50
+
+- type: latheRecipe
+  id: TowelColorWhite
+  result: TowelColorWhite
+  completetime: 2
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: Binoculars
+  result: Binoculars
+  completetime: 2
+  materials:
+    Steel: 400
+    Plastic: 200
+    Glass: 200

@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Telephone;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [Access(typeof(SharedTelephoneSystem))]
 public sealed partial class TelephoneComponent : Component
 {
@@ -13,19 +13,19 @@ public sealed partial class TelephoneComponent : Component
     /// Sets how long the telephone will ring before it automatically hangs up
     /// </summary>
     [DataField]
-    public float RingingTimeout = 30;
+    public TimeSpan RingingTimeout = TimeSpan.FromSeconds(30);
 
     /// <summary>
     /// Sets how long the telephone can remain idle in-call before it automatically hangs up
     /// </summary>
     [DataField]
-    public float IdlingTimeout = 60;
+    public TimeSpan IdlingTimeout = TimeSpan.FromSeconds(60);
 
     /// <summary>
     /// Sets how long the telephone will stay in the hanging up state before return to idle
     /// </summary>
     [DataField]
-    public float HangingUpTimeout = 2;
+    public TimeSpan HangingUpTimeout = TimeSpan.FromSeconds(2);
 
     /// <summary>
     /// Tone played while the phone is ringing
@@ -37,7 +37,7 @@ public sealed partial class TelephoneComponent : Component
     /// Sets the number of seconds before the next ring tone is played
     /// </summary>
     [DataField]
-    public float RingInterval = 2f;
+    public TimeSpan RingInterval = TimeSpan.FromSeconds(2);
 
     /// <summary>
     /// The time at which the next tone will be played
@@ -52,10 +52,27 @@ public sealed partial class TelephoneComponent : Component
     public TelephoneVolume SpeakerVolume = TelephoneVolume.Whisper;
 
     /// <summary>
-    /// The range at which the telephone can connect to another
+    /// The maximum range at which the telephone initiate a call with another
     /// </summary>
     [DataField]
     public TelephoneRange TransmissionRange = TelephoneRange.Grid;
+
+    /// <summary>
+    /// This telephone will ignore devices that share the same grid as it
+    /// </summary>
+    /// <remarks>
+    /// This bool will be ignored if the <see cref="TransmissionRange"/> is
+    /// set to <see cref="TelephoneRange.Grid"/>
+    /// </remarks>
+    [DataField]
+    public bool IgnoreTelephonesOnSameGrid = false;
+
+    /// <summary>
+    /// The telephone can only connect with other telephones which have a
+    /// <see cref="TransmissionRange"/> present in this list
+    /// </summary>
+    [DataField]
+    public List<TelephoneRange> CompatibleRanges = new List<TelephoneRange>() { TelephoneRange.Grid };
 
     /// <summary>
     /// The range at which the telephone picks up voices
@@ -64,16 +81,16 @@ public sealed partial class TelephoneComponent : Component
     public float ListeningRange = 2;
 
     /// <summary>
-    /// Specifies whether this telephone require power to fucntion
-    /// </summary>
-    [DataField]
-    public bool RequiresPower = true;
-
-    /// <summary>
-    /// This telephone does not appear on public telephone directories
+    /// This telephone should not appear on public telephone directories
     /// </summary>
     [DataField]
     public bool UnlistedNumber = false;
+
+    /// <summary>
+    /// Speech is relayed through this entity instead of the telephone
+    /// </summary>
+    [DataField]
+    public EntityUid? Speaker = null;
 
     /// <summary>
     /// Telephone number for this device
@@ -81,39 +98,55 @@ public sealed partial class TelephoneComponent : Component
     /// <remarks>
     /// For future use - a system for generating and handling telephone numbers has not been implemented yet
     /// </remarks>
-    [ViewVariables]
+    [DataField]
     public int TelephoneNumber = -1;
 
     /// <summary>
-    /// Linked telephone
+    /// Other telephones that have been linked to this one
     /// </summary>
-    [ViewVariables]
-    public HashSet<Entity<TelephoneComponent>> LinkedTelephones = new();
+    [DataField]
+    public HashSet<EntityUid> LinkedTelephones = new();
 
     /// <summary>
     /// Defines the current state the telephone is in
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public TelephoneState CurrentState = TelephoneState.Idle;
+
+    /// <summary>
+    /// Defines the previous state the telephone was in
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TelephoneState PreviousState = TelephoneState.Idle;
 
     /// <summary>
     /// The game tick the current state started
     /// </summary>
-    [ViewVariables]
+    [DataField, AutoPausedField]
     public TimeSpan StateStartTime;
 
     /// <summary>
     /// Sets whether the telphone can pick up nearby speech
     /// </summary>
-    [ViewVariables]
+    [DataField]
     public bool Muted = false;
 
     /// <summary>
     /// The presumed name and/or job of the last person to call this telephone
+    /// and the name of the device that they used to do so
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
-    public (string?, string?) LastCallerId;
+    [DataField, AutoNetworkedField]
+    public TelephoneCallRecord? LastCallerId;
 }
+
+/// <summary>
+/// A telephone call record.
+/// </summary>
+/// <param name="CallerId">The name of the person who placed the call.</param>
+/// <param name="CallerJob">The job of the person who placed the call.</param>
+/// <param name="DeviceId">The name of the device used to make the call.</param>
+[Serializable, NetSerializable]
+public record struct TelephoneCallRecord(string? CallerId, string? CallerJob, string? DeviceId);
 
 #region: Telephone events
 
@@ -164,7 +197,8 @@ public readonly record struct TelephoneMessageReceivedEvent(string Message, MsgC
 [Serializable, NetSerializable]
 public struct TelephoneCallOptions
 {
-    public bool ForceConnect;   // The source immediately starts a call with the receiver, potentially interrupting a call that is already in progress 
+    public bool IgnoreRange;    // The source can always reach its target
+    public bool ForceConnect;   // The source immediately starts a call with the receiver, potentially interrupting a call that is already in progress
     public bool ForceJoin;      // The source smoothly joins a call in progress, or starts a normal call with the receiver if there is none
     public bool MuteSource;     // Chatter from the source is not transmitted - could be used for eavesdropping when combined with 'ForceJoin'
     public bool MuteReceiver;   // Chatter from the receiver is not transmitted - useful for broadcasting messages to multiple receivers
@@ -196,8 +230,7 @@ public enum TelephoneVolume : byte
 [Serializable, NetSerializable]
 public enum TelephoneRange : byte
 {
-    Grid,       // Can call grid/map range telephones that are on the same grid 
-    Map,        // Can call grid/map range telephones that are on the same map 
-    Long,       // Can only long range telephones that are on a different map
-    Unlimited   // Can call any telephone
+    Grid,       // Can only reach telephones that are on the same grid
+    Map,        // Can reach any telephone that is on the same map
+    Unlimited,  // Can reach any telephone, across any distance
 }

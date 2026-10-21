@@ -15,11 +15,27 @@ namespace Content.Shared.Fluids.Components
         public SoundSpecifier SpillSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
 
         [DataField]
-        public FixedPoint2 OverflowVolume = FixedPoint2.New(20);
+        public FixedPoint2 OverflowVolume = FixedPoint2.New(50);
 
         [DataField("solution")] public string SolutionName = "puddle";
 
-        [DataField("solutionRef")]
+        /// <summary>
+        /// Default minimum speed someone must be moving to slip for all reagents.
+        /// </summary>
+        [DataField]
+        public float DefaultSlippery = 5.5f;
+
+        // Shitcode I wrote to make this worth with new IconSmooth.
+        // Both need generic visualizers support.
+        [ViewVariables]
+        public string PuddleKey = "direction";
+
+        // Shitcode I wrote to make this worth with new IconSmooth.
+        // Both need generic visualizers support.
+        [DataField, ViewVariables]
+        public string PuddleState = "splat";
+
+        [ViewVariables]
         public Entity<SolutionComponent>? Solution;
     }
 }

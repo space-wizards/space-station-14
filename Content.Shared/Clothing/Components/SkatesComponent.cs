@@ -1,7 +1,7 @@
 using Robust.Shared.GameStates;
 using Content.Shared.Clothing.EntitySystems;
 
-namespace Content.Shared.Clothing;
+namespace Content.Shared.Clothing.Components;
 
 [RegisterComponent]
 [NetworkedComponent]
@@ -11,44 +11,44 @@ public sealed partial class SkatesComponent : Component
     /// <summary>
     /// the levels of friction the wearer is subected to, higher the number the more friction.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float Friction = 2.5f;
+    [DataField]
+    public float Friction = 0.125f;
 
     /// <summary>
     /// Determines the turning ability of the wearer, Higher the number the less control of their turning ability.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float? FrictionNoInput = 2.5f;
+    [DataField]
+    public float FrictionNoInput = 0.125f;
 
     /// <summary>
     /// Sets the speed in which the wearer accelerates to full speed, higher the number the quicker the acceleration.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float Acceleration = 5f;
+    [DataField]
+    public float Acceleration = 0.25f;
 
     /// <summary>
     /// The minimum speed the wearer needs to be traveling to take damage from collision.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float MinimumSpeed = 3f;
 
     /// <summary>
     /// The length of time the wearer is stunned for on collision.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float StunSeconds = 3f;
 
 
     /// <summary>
     /// The time duration before another collision can take place.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float DamageCooldown = 2f;
 
     /// <summary>
     /// The damage per increment of speed on collision.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float SpeedDamage = 1f;
 
 

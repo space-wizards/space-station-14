@@ -1,4 +1,4 @@
-﻿using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -19,6 +19,12 @@ public sealed partial class BinComponent : Component
     /// </summary>
     [ViewVariables]
     public Container ItemContainer = default!;
+
+    /// <summary>
+    /// ID of the container used to hold the items in the bin.
+    /// </summary>
+    [DataField]
+    public string ContainerId = "bin-container";
 
     /// <summary>
     /// A list representing the order in which

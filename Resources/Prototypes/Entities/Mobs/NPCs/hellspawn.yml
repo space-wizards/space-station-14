@@ -4,6 +4,9 @@
   - BaseSimpleMob
   - MobCombat
   - MobBloodstream
+  - BaseMobAnimal
+  - BaseSlicingRefinableButchering
+  - BaseMobDestructible
   id: MobHellspawn
   description: An unstoppable force of carnage.
   components:
@@ -13,6 +16,8 @@
     name: ghost-role-information-hellspawn-name
     description: ghost-role-information-hellspawn-description
     rules: ghost-role-information-antagonist-rules
+    mindRoles:
+    - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
   - type: RotationVisuals
@@ -25,11 +30,10 @@
   - type: NpcFactionMember
     factions:
       - SimpleHostile
-  - type: Body
-    prototype: Animal
   - type: Damageable
-    damageContainer: BiologicalMetaphysical
     damageModifierSet: HellSpawn
+  - type: Injurable
+    damageContainer: BiologicalMetaphysical
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 3
@@ -79,10 +83,10 @@
     thresholds:
       0: Alive
       450: Dead
-  - type: Butcherable
-    spawned:
-      - id: ArtifactFragment
-        amount: 4
+  - type: ToolRefinable
+    refineResult:
+    - id: ArtifactFragment
+      amount: 4
   - type: MeleeWeapon
     attackRate: 0.6
     hidden: true
@@ -91,7 +95,6 @@
     damage:
       types:
         Blunt: 150
-        Structural: 70
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepThud

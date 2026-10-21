@@ -1,0 +1,131 @@
+## Static
+
+- type: latheRecipePack
+  id: FloorDarkTilesStatic
+  recipes:
+  - FloorTileItemDark
+  - FloorTileItemDarkHerringbone
+  - FloorTileItemDarkMini
+  - FloorTileItemDarkMono
+  - FloorTileItemDarkVerticalSlatsBordered
+  - FloorTileItemDarkHorizontalSlatsBordered
+  - FloorTileItemDarkPavement
+  - FloorTileItemDarkPavementVertical
+
+- type: latheRecipePack
+  id: FloorSteelTilesStatic
+  recipes:
+  - FloorTileItemSteel
+  - FloorTileItemSteelHerringbone
+  - FloorTileItemSteelMini
+  - FloorTileItemSteelVerticalSlatsBordered
+  - FloorTileItemSteelHorizontalSlatsBordered
+  - FloorTileItemSteelMono
+  - FloorTileItemSteelPavement
+  - FloorTileItemSteelPavementVertical
+  - FloorTileItemSteelCheckerDark
+  - FloorTileItemSteelCheckerLight
+
+- type: latheRecipePack
+  id: FloorWhiteTilesStatic
+  recipes:
+  - FloorTileItemWhite
+  - FloorTileItemWhiteHerringbone
+  - FloorTileItemWhiteMini
+  - FloorTileItemWhiteMono
+  - FloorTileItemWhiteVerticalSlatsBordered
+  - FloorTileItemWhiteHorizontalSlatsBordered
+  - FloorTileItemWhitePavement
+  - FloorTileItemWhitePavementVertical
+
+- type: latheRecipePack
+  id: FloorMaintsTilesStatic
+  recipes:
+  - FloorTileItemGratingMaint
+  - FloorTileItemSteelMaint
+  - FloorTileItemTechmaintDark
+
+- type: latheRecipePack
+  id: FloorIndustrialTilesStatic
+  recipes:
+  - FloorTileItemMetalDiamond
+  - FloorTileItemFreezer
+
+- type: latheRecipePack
+  id: FloorWoodTilesStatic
+  recipes:
+  - FloorTileItemWood
+  - FloorTileItemWoodLarge
+  - FloorTileItemWoodPattern
+
+- type: latheRecipePack
+  id: FloorConcreteTilesStatic
+  recipes:
+  - FloorTileItemConcrete
+  - FloorTileItemConcreteMono
+  - FloorTileItemConcreteSmooth
+
+- type: latheRecipePack
+  id: CircuitFloorsStatic
+  recipes:
+  - FloorGreenCircuit
+  - FloorBlueCircuit
+  - FloorRedCircuit
+
+- type: latheRecipePack
+  id: FloorMarbleTilesStatic
+  recipes:
+  - FloorTileItemWhiteMarble
+  - FloorTileItemDarkMarble
+
+- type: latheRecipePack
+  id: FloorShuttleTilesStatic
+  recipes:
+  - FloorTileItemShuttleWhite
+  - FloorTileItemShuttleBlue
+  - FloorTileItemShuttleOrange
+  - FloorTileItemShuttlePurple
+  - FloorTileItemShuttleRed
+  - FloorTileItemShuttleGrey
+  - FloorTileItemShuttleBlack
+
+- type: latheRecipePack
+  id: PlasticTilesStatic
+  recipes:
+  - FloorTileItemLino
+  - FloorTileItemBoxing
+  - FloorTileItemGym
+  - FloorTileItemPlastic
+  - FloorTileItemDarkPlastic
+  - FloorTileItemWhitePlastic
+
+- type: latheRecipePack
+  id: CarpetTilesStatic
+  recipes:
+  - FloorTileItemArcadeBlue
+  - FloorTileItemArcadeRed
+  - FloorTileItemCarpetClown
+  - FloorTileItemCarpetOffice
+
+- type: latheRecipePack
+  id: PreciousTilesStatic
+  recipes:
+  - FloorTileItemGold
+  - FloorTileItemSilver
+
+## Dynamic
+
+- type: latheRecipePack
+  id: FauxTiles
+  recipes:
+  - FauxTileAstroGrass
+  - FauxTileMowedAstroGrass
+  - FauxTileJungleAstroGrass
+  - FauxTileDarkAstroGrass
+  - FauxTileAstroIce
+  - FauxTileAstroSnow
+  - FauxTileAstroAsteroidSand
+  - FauxTileAstroAsteroidSandBorderless
+  - FauxTileDesertAstroSand
+  - FauxTileAstroIronsand
+  - FauxTileAstroIronsandBorderless

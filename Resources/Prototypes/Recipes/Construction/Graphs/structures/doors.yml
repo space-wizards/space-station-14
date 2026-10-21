@@ -6,66 +6,48 @@
       actions:
         - !type:DestroyEntity {}
       edges:
-        - to: metalDoor
-          completed:
-            - !type:SnapToGrid { }
-          steps:
-            - material: Steel
-              amount: 20
-              doAfter: 15
         - to: woodDoor
           completed:
             - !type:SnapToGrid { }
           steps:
             - material: WoodPlank
-              amount: 20
-              doAfter: 15
+              amount: 10
+              doAfter: 8
         - to: plasmaDoor
           completed:
             - !type:SnapToGrid { }
           steps:
             - material: Plasma
-              amount: 20
-              doAfter: 15
+              amount: 10
+              doAfter: 8
         - to: goldDoor
           completed:
             - !type:SnapToGrid { }
           steps:
             - material: Gold
-              amount: 20
-              doAfter: 15
+              amount: 10
+              doAfter: 8
         - to: silverDoor
           completed:
             - !type:SnapToGrid { }
           steps:
             - material: Silver
-              amount: 20
-              doAfter: 15
-        - to: bananiumDoor
-          completed:
-            - !type:SnapToGrid { }
-          steps:
-            - material: Bananium
-              amount: 5
-              doAfter: 15
+              amount: 10
+              doAfter: 8
         - to: paperDoor
           completed:
             - !type:SnapToGrid { }
           steps:
             - material: Paper
-              amount: 20
-              doAfter: 15
-    - node: metalDoor
-      entity: MetalDoor
-      edges:
-        - to: start
+              amount: 10
+              doAfter: 8
+        - to: cardDoor
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 20
+            - !type:SnapToGrid { }
           steps:
-            - tool: Anchoring
-              doAfter: 15
+            - material: Cardboard
+              amount: 10
+              doAfter: 8
     - node: woodDoor
       entity: WoodDoor
       edges:
@@ -73,10 +55,10 @@
           completed:
             - !type:SpawnPrototype
               prototype: MaterialWoodPlank1
-              amount: 20
+              amount: 10
           steps:
             - tool: Anchoring
-              doAfter: 15
+              doAfter: 8
     - node: plasmaDoor
       entity: PlasmaDoor
       edges:
@@ -84,10 +66,10 @@
           completed:
             - !type:SpawnPrototype
               prototype: SheetPlasma
-              amount: 20
+              amount: 10
           steps:
             - tool: Anchoring
-              doAfter: 15
+              doAfter: 8
     - node: goldDoor
       entity: GoldDoor
       edges:
@@ -95,10 +77,10 @@
           completed:
             - !type:SpawnPrototype
               prototype: IngotGold1
-              amount: 20
+              amount: 10
           steps:
             - tool: Anchoring
-              doAfter: 15
+              doAfter: 8
     - node: silverDoor
       entity: SilverDoor
       edges:
@@ -106,10 +88,10 @@
           completed:
             - !type:SpawnPrototype
               prototype: IngotSilver1
-              amount: 20
+              amount: 10
           steps:
             - tool: Anchoring
-              doAfter: 15
+              doAfter: 8
     - node: paperDoor
       entity: PaperDoor
       edges:
@@ -117,18 +99,21 @@
           completed:
             - !type:SpawnPrototype
               prototype: SheetPaper1
-              amount: 20
+              amount: 10
           steps:
             - tool: Anchoring
-              doAfter: 15
-    - node: bananiumDoor
-      entity: BananiumDoor
+              doAfter: 8
+    - node: cardDoor
+      entity: CardDoor
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: MaterialBananium1
-              amount: 5
+          - !type:PlaySound
+            sound: /Audio/Items/Toys/ToyFall2.ogg
+          - !type:SpawnPrototype
+                prototype: MaterialCardboard1
+                amount: 8
+          - !type:DeleteEntity {}
           steps:
-            - tool: Anchoring
-              doAfter: 15
+            - tool: Slicing
+              doAfter: 2

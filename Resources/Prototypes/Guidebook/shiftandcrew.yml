@@ -3,10 +3,11 @@
   name: guide-entry-jobs
   text: "/ServerInfo/Guidebook/Jobs.xml"
   children:
-  - Cargo
   - Command
+  - Cargo
   - Engineering
   - Medical
   - Science
   - Security
   - Service
+  - Civilian

@@ -1,4 +1,4 @@
-using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Shared.EntityTable.ValueSelector;
 
@@ -7,15 +7,29 @@ namespace Content.Shared.EntityTable.ValueSelector;
 /// </summary>
 public sealed partial class ConstantNumberSelector : NumberSelector
 {
+    /// <summary>
+    /// The constant value of this selector.
+    /// </summary>
     [DataField]
-    public float Value = 1;
+    public int Value = 1;
 
-    public ConstantNumberSelector(float value)
+    public ConstantNumberSelector(int value)
     {
         Value = value;
     }
 
-    public override float Get(System.Random rand, IEntityManager entMan, IPrototypeManager proto)
+    public override int Get(IRobustRandom rand)
+    {
+        return Value;
+    }
+
+    public override float Odds()
+    {
+        // You really shouldn't have a constant value of 0 ever.
+        return 1;
+    }
+
+    public override float Average()
     {
         return Value;
     }

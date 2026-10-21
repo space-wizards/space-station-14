@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -48,4 +48,5 @@ public sealed partial class MouseRotatorComponent : Component
 public sealed class RequestMouseRotatorRotationEvent : EntityEventArgs
 {
     public Angle Rotation;
+    public NetEntity? User;
 }

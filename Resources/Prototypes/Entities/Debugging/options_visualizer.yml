@@ -1,10 +1,8 @@
-﻿- type: entity
+- type: entity
   id: OptionsVisualizerTest
+  name: OptionsVisualizerTest
   suffix: DEBUG
   components:
-  - type: Tag
-    tags:
-    - Debug
   - type: Sprite
     sprite: Effects/optionsvisualizertest.rsi
     layers:
@@ -21,4 +19,3 @@
         data: { state: motion }
       - options: [Test, ReducedMotion]
         data: { state: both }
-

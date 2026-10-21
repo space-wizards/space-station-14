@@ -1,8 +1,8 @@
-﻿- type: entity
+- type: entity
   name: jaunt
   parent: [Incorporeal, BaseMob]
   id: BaseMobJaunt
-  description: Faint traces of a humanoid figure linger here
+  description: A faint image of a humanoid figure.
   suffix: Ethereal
   components:
   - type: ContentEye
@@ -38,3 +38,14 @@
   - type: MovementSpeedModifier
     baseSprintSpeed: 6
     baseWalkSpeed: 4
+
+- type: entity
+  parent: [Incorporeal, BaseMob]
+  id: DesynchronizedPocket
+  name: desynchronized pocket
+  description: A pocket in spacetime, keeping the user a fraction of a second in the future.
+  components:
+  - type: Spectral
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 0
+    baseWalkSpeed: 0

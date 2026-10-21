@@ -5,6 +5,28 @@
   setPreference: true
   objective: roles-antag-syndicate-agent-objective
   guides: [ Traitors ]
+  tags:
+  - OnStation
+  - Roundstart
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 1h
+
+- type: antagSpecifier
+  abstract: true
+  parent: RestrictedAntag
+  id: BaseTraitor
+
+- type: antagSpecifier
+  parent: BaseTraitor
+  id: Traitor
+  prefRoles:
+  - Traitor
+  blacklist:
+    components:
+    - AntagImmune
+  mindRoles:
+  - MindRoleTraitor
 
 - type: antag
   id: TraitorSleeper
@@ -13,6 +35,29 @@
   setPreference: true
   objective: roles-antag-syndicate-agent-sleeper-objective
   guides: [ Traitors ]
+  tags:
+  - OnStation
+  - Midround
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 1h
+
+- type: antagSpecifier
+  parent: BaseTraitor
+  id: TraitorSleeper
+  prefRoles:
+  - TraitorSleeper
+  mindRoles:
+  - MindRoleTraitorSleeper
+
+- type: antagSpecifier
+  parent: BaseTraitor
+  id: TraitorReinforcement
+  prefRoles:
+  - Traitor
+  - GenericTeamAntagonist # Matters for Antag bans.
+  mindRoles:
+  - MindRoleTraitorReinforcement
 
 # Syndicate Operative Outfit - Monkey
 - type: startingGear
@@ -37,39 +82,75 @@
     - DeathAcidifierImplanter
 
 - type: startingGear
-  id: SyndicateOperativeClothing
+  id: SyndicateReinforcementClothing
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
-    back: ClothingBackpackSyndicate
+    back: ClothingBackpackDuffel
     shoes: ClothingShoesBootsSyndieFilled
     gloves: ClothingHandsGlovesColorBlack
-
-- type: startingGear
-  id: SyndicateReinforcementMedic
-  parent: SyndicateOperativeClothing
-  equipment:
+    ears: ClothingHeadsetSyndicateCovert
+    id: SyndiCovertPDA
     pocket1: WeaponPistolViper
   inhand:
+    - PaperWrittenSyndicateInstructions
+
+- type: startingGear
+  parent: SyndicateReinforcementClothing
+  id: SyndicateReinforcementMedic
+  equipment:
+    head: ClothingHeadHatSurgcapPurple
+    mask: ClothingMaskSterile
+    gloves: ClothingHandsGlovesLatex
+    belt: ClothingBeltMedicalFilled
+    eyes: ClothingEyesHudMedical
+    pocket2: PillCanisterBicaridine
+  inhand:
     - MedkitCombatFilled
+  storage:
+    back:
+    - SyndicateFlippo
+    - EncryptionKeySyndie
+    - MagazinePistolHighCapacity
+    - EncryptionKeyMedical
+    - DefibrillatorSyndicate
+    - CigPackSyndicate
+    - UniformScrubsColorPurple
+    - ChemistryBottleToxin
+    - Syringe
+    - HandheldHealthAnalyzer
+    - AdvancedJetInjector
 
 - type: startingGear
+  parent: SyndicateReinforcementClothing
   id: SyndicateReinforcementSpy
-  parent: SyndicateOperativeClothing
   equipment:
-    id: AgentIDCard
-    mask: ClothingMaskGasVoiceChameleon
-    pocket1: WeaponPistolViper
+    pocket1: WeaponPistolCobra
+    pocket2: VoiceMaskImplanter
+  inhand:
+    - ClothingBackpackChameleonFillAgent
+  storage:
+    back:
+    - SyndicateFlippo
+    - EncryptionKeySyndie
+    - BodyBagFolded
+    - Syringe
+    - ChemistryBottleMuteToxin
 
 - type: startingGear
+  parent: SyndicateReinforcementClothing
   id: SyndicateReinforcementThief
-  parent: SyndicateOperativeClothing
   equipment:
-    pocket1: WeaponPistolViper
+    eyes: ClothingEyesGlassesHiddenSecurity
+    outerClothing: ClothingOuterCoatJensenSyndie
+    pocket2: C4
   inhand:
     - ToolboxSyndicateFilled
   storage:
     back:
+    - SyndicateFlippo
+    - EncryptionKeySyndie
     - SyndicateJawsOfLife
+    - CameraBug
 
 #Syndicate Operative Outfit - Basic
 - type: startingGear

@@ -1,8 +1,76 @@
+# Core logic shared between regular and wall-mount substation
+- type: entity
+  abstract: true
+  id: CoreSubstation
+  components:
+  # Core power behavior
+  - type: Battery
+    # Very important:
+    # Disable networking to prevent the battery getting continuously dirtied every tick as it interacts with the power network.
+    # This can not be done by changing the charge rate as the power supply ramps up over time.
+    # This disables prediction for this battery.
+    netsync: false
+  - type: ExaminableBattery
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+      output:
+        !type:CableDeviceNode
+        nodeGroupID: MVPower
+  - type: BatteryCharger
+    voltage: High
+  - type: BatteryDischarger
+    voltage: Medium
+  - type: PowerNetworkBattery
+    maxSupply: 150000
+    maxChargeRate: 5000
+    supplyRampTolerance: 5000
+    supplyRampRate: 1000
+  - type: StationInfiniteBatteryTarget
+
+  # Interface
+  - type: BatteryInterface
+    minChargeRate: 5000
+    maxChargeRate: 150000
+    minSupply: 5000
+    maxSupply: 150000
+  - type: UserInterface
+    interfaces:
+      enum.BatteryUiKey.Key:
+        type: BatteryBoundUserInterface
+  - type: ActivatableUI
+    key: enum.BatteryUiKey.Key
+
+  - type: PowerMonitoringDevice
+    group: Substation
+    sourceNode: input
+    loadNode: output
+    collectionName: substation
+
+  # Damage
+  - type: PacifismDangerousAttack
+
+  # Guidebook
+  - type: GuideHelp
+    guides:
+    - VoltageNetworks
+    - Power
+
+  # Ambient sound
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -5
+    sound:
+      path: /Audio/Ambience/Objects/buzzing.ogg
+
 # Base substation
 - type: entity
   abstract: true
   id: BaseSubstation
-  parent: [ BaseMachine, ConstructibleMachine ]
+  parent: [ CoreSubstation, BaseMachine, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   name: substation
   description: Reduces the voltage of electricity put into it.
   placement:
@@ -20,71 +88,29 @@
   - type: Battery
     maxCharge: 2500000
     startingCharge: 0
-  - type: ExaminableBattery
   - type: PointLight
     radius: 1.5
     energy: 1
     color: "#ff6900"
     castShadows: false
-  - type: NodeContainer
-    examinable: true
-    nodes:
-      input:
-        !type:CableDeviceNode
-        nodeGroupID: HVPower
-      output:
-        !type:CableDeviceNode
-        nodeGroupID: MVPower
   - type: PowerMonitoringDevice
-    group: Substation
-    sourceNode: input
-    loadNode: output
-    collectionName: substation
     sprite: Structures/Power/substation.rsi
     state: substation_static
-  - type: BatteryCharger
-    voltage: High
-  - type: BatteryDischarger
-    voltage: Medium
-  - type: PowerNetworkBattery
-    maxSupply: 150000
-    maxChargeRate: 5000
-    supplyRampTolerance: 5000
-    supplyRampRate: 1000
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallicStrong
-  - type: PacifismDangerousAttack
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 175
       behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
       - !type:ExplodeBehavior
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          MachineFrameDestroyed:
-            min: 1
-            max: 1
       - !type:SpawnGasBehavior
         gasMixture:
           volume: 1000
           moles:
-            - 0 # oxygen
-            - 0 # nitrogen
-            - 340.5701689 # carbon dioxide
+            CarbonDioxide: 340.5701689 # carbon dioxide
           temperature: 373.15
   - type: Explosive
     explosionType: Default
@@ -94,13 +120,8 @@
   - type: WiresPanel
   - type: Machine
     board: SubstationMachineCircuitboard
-  - type: StationInfiniteBatteryTarget
-  - type: AmbientOnPowered
   - type: AmbientSound
-    volume: -5
     range: 3
-    sound:
-      path: /Audio/Ambience/Objects/buzzing.ogg
   - type: Electrified
     onHandInteract: false
     onInteractUsing: false
@@ -111,19 +132,14 @@
 
 # Compact Wall Substation Base
 - type: entity
+  parent: [ CoreSubstation, BaseWallmount, StructureHealthMachine ]
   id: BaseSubstationWall
   categories: [ HideSpawnMenu ]
   name: wallmount substation
   description: A substation designed for compact shuttles and spaces.
-  placement:
-    mode: SnapgridCenter
   components:
-  - type: AmbientOnPowered
   - type: AmbientSound
-    volume: -5
     range: 2
-    sound:
-      path: /Audio/Ambience/Objects/buzzing.ogg
   - type: PointLight
     radius: 1.5
     energy: 1
@@ -131,22 +147,12 @@
     netsync: false
     castShadows: false
     offset: 0, -0.2
-  - type: Clickable
-  - type: AccessReader
-    access: [["Engineering"]]
   - type: ContainerFill
     containers:
       board: [ WallmountSubstationElectronics ]
   - type: ContainerContainer
     containers:
       board: !type:Container
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
-    canCollide: false
-  - type: Fixtures
-  - type: Transform
-    anchored: true
   - type: Sprite # TODO: add sprite for maintenance panel open
     drawdepth: WallMountedItems
     sprite: Structures/Power/substation.rsi
@@ -157,49 +163,17 @@
   - type: Battery
     maxCharge: 2000000
     startingCharge: 0
-  - type: ExaminableBattery
-  - type: NodeContainer
-    examinable: true
-    nodes:
-      input:
-        !type:CableDeviceNode
-        nodeGroupID: HVPower
-      output:
-        !type:CableDeviceNode
-        nodeGroupID: MVPower
   - type: PowerMonitoringDevice
-    group: Substation
-    sourceNode: input
-    loadNode: output
     sprite: Structures/Power/substation.rsi
     state: substation_wall_static
-  - type: BatteryCharger
-    voltage: High
-  - type: BatteryDischarger
-    voltage: Medium
-  - type: PowerNetworkBattery
-    maxSupply: 150000
-    maxChargeRate: 5000
-    supplyRampTolerance: 5000
-    supplyRampRate: 1000
   - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallicStrong
-  - type: PacifismDangerousAttack
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 175
       behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:ExplodeBehavior
       - !type:PlaySoundBehavior
         sound:
@@ -212,8 +186,15 @@
     maxIntensity: 50
     intensitySlope: 2
     totalIntensity: 100
-  - type: StationInfiniteBatteryTarget
-  - type: WallMount
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.45,0.35,0.20"
+        density: 5
+        mask:
+        - FullTileMask
 
 # Substations in use
 
@@ -245,15 +226,15 @@
   - type: ContainerFill
     containers:
       board: [ WallmountSubstationElectronics ]
-      capacitor: [ CapacitorStockPart ]
+      manipulator: [ MicroManipulatorStockPart ]
       powercell: [ PowerCellSmall ]
   - type: ContainerContainer
     containers:
       board: !type:Container
-      capacitor: !type:Container
+      manipulator: !type:Container
       powercell: !type:Container
 
-# Construction Frame
+      # Construction Frame
 - type: entity
   id: BaseSubstationWallFrame
   categories: [ HideSpawnMenu ]

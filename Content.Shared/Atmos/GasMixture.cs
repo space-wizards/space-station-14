@@ -1,5 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics.Tensors;
 using System.Runtime.CompilerServices;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Reactions;
@@ -13,13 +15,13 @@ namespace Content.Shared.Atmos
     /// </summary>
     [Serializable]
     [DataDefinition]
-    public sealed partial class GasMixture : IEquatable<GasMixture>, ISerializationHooks
+    public sealed partial class GasMixture : IEquatable<GasMixture>, ISerializationHooks, IEnumerable<(Gas gas, float moles)>
     {
         public static GasMixture SpaceGas => new() {Volume = Atmospherics.CellVolume, Temperature = Atmospherics.TCMB, Immutable = true};
 
         // No access, to ensure immutable mixtures are never accidentally mutated.
-        [Access(typeof(SharedAtmosphereSystem), typeof(SharedAtmosDebugOverlaySystem), Other = AccessPermissions.None)]
-        [DataField]
+        [Access(typeof(SharedAtmosphereSystem), typeof(SharedAtmosDebugOverlaySystem), typeof(GasEnumerator), Other = AccessPermissions.None)]
+        [DataField(customTypeSerializer: typeof(GasArraySerializer))]
         public float[] Moles = new float[Atmospherics.AdjustedNumberOfGases];
 
         public float this[int gas] => Moles[gas];
@@ -32,17 +34,16 @@ namespace Content.Shared.Atmos
         public bool Immutable { get; private set; }
 
         [ViewVariables]
-        public readonly Dictionary<GasReaction, float> ReactionResults = new()
+        public readonly float[] ReactionResults =
         {
-            // We initialize the dictionary here.
-            { GasReaction.Fire, 0f }
+            0f,
         };
 
         [ViewVariables]
         public float TotalMoles
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => NumericsHelpers.HorizontalAdd(Moles);
+            get => TensorPrimitives.Sum(Moles);
         }
 
         [ViewVariables]
@@ -177,9 +178,9 @@ namespace Content.Shared.Atmos
             var removed = new GasMixture(Volume) { Temperature = Temperature };
 
             Moles.CopyTo(removed.Moles.AsSpan());
-            NumericsHelpers.Multiply(removed.Moles, ratio);
+            TensorPrimitives.Multiply(removed.Moles, ratio, removed.Moles);
             if (!Immutable)
-                NumericsHelpers.Sub(Moles, removed.Moles);
+                TensorPrimitives.Subtract(Moles, removed.Moles, Moles);
 
             for (var i = 0; i < Moles.Length; i++)
             {
@@ -223,7 +224,7 @@ namespace Content.Shared.Atmos
         public void Multiply(float multiplier)
         {
             if (Immutable) return;
-            NumericsHelpers.Multiply(Moles, multiplier);
+            TensorPrimitives.Multiply(Moles, multiplier, Moles);
         }
 
         void ISerializationHooks.AfterDeserialization()
@@ -247,6 +248,16 @@ namespace Content.Shared.Atmos
             }
 
             return new GasMixtureStringRepresentation(TotalMoles, Temperature, Pressure, molesPerGas);
+        }
+
+        GasEnumerator GetEnumerator()
+        {
+            return new GasEnumerator(this);
+        }
+
+        IEnumerator<(Gas gas, float moles)> IEnumerable<(Gas gas, float moles)>.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         public override bool Equals(object? obj)
@@ -289,6 +300,11 @@ namespace Content.Shared.Atmos
             return hashCode.ToHashCode();
         }
 
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
         public GasMixture Clone()
         {
             if (Immutable)
@@ -301,6 +317,29 @@ namespace Content.Shared.Atmos
                 Volume = Volume,
             };
             return newMixture;
+        }
+
+        public struct GasEnumerator(GasMixture mixture) : IEnumerator<(Gas gas, float moles)>
+        {
+            private int _idx = -1;
+
+            public void Dispose()
+            {
+                // Nada.
+            }
+
+            public bool MoveNext()
+            {
+                return ++_idx < Atmospherics.TotalNumberOfGases;
+            }
+
+            public void Reset()
+            {
+                _idx = -1;
+            }
+
+            public (Gas gas, float moles) Current => ((Gas)_idx, mixture.Moles[_idx]);
+            object? IEnumerator.Current => Current;
         }
     }
 }

@@ -14,7 +14,7 @@
     sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
     state: seed
   product: CrateHydroponicsSeedsMedicinal
-  cost: 500
+  cost: 600
   category: cargoproduct-category-name-hydroponics
   group: market
 
@@ -42,8 +42,18 @@
   id: BulkPlantBGone
   icon:
     sprite: Objects/Specific/Chemistry/jug.rsi
-    state: jug
+    state: icon_empty
   product: CratePlantBGone
+  cost: 750
+  category: cargoproduct-category-name-hydroponics
+  group: market
+
+- type: cargoProduct
+  id: HydroponicsTray
+  icon:
+    sprite: Structures/Hydroponics/containers.rsi
+    state: hydrotray3
+  product: CrateHydroponicsTray
   cost: 750
   category: cargoproduct-category-name-hydroponics
   group: market

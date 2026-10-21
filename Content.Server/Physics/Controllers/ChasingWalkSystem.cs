@@ -12,13 +12,13 @@ namespace Content.Server.Physics.Controllers;
 /// <summary>
 /// A system which makes its entity chasing another entity with selected component.
 /// </summary>
-public sealed class ChasingWalkSystem : VirtualController
+public sealed partial class ChasingWalkSystem : VirtualController
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
 
     private readonly HashSet<Entity<IComponent>> _potentialChaseTargets = new();
 
@@ -96,10 +96,35 @@ public sealed class ChasingWalkSystem : VirtualController
         var pos1 = _transform.GetWorldPosition(uid);
         var pos2 = _transform.GetWorldPosition(component.ChasingEntity.Value);
 
-        var delta = pos2 - pos1;
-        var speed = delta.Length() > 0 ? delta.Normalized() * component.Speed : Vector2.Zero;
+        var currentDirection = _physics.GetLinearVelocity(uid, Vector2.Zero);
+
+        var targetVector = pos2 - pos1;
+
+        var angleToChange = targetVector.ToAngle() - currentDirection.ToAngle();
+
+        // Make sure we rotate to the smallest direction
+        if (angleToChange > Angle.FromDegrees(180))
+            angleToChange -= Angle.FromDegrees(360);
+        else if (angleToChange < Angle.FromDegrees(-180))
+            angleToChange += Angle.FromDegrees(360);
+
+        angleToChange = Math.Clamp(angleToChange,
+            -component.MaxAngleVectorChangePerImpulse,
+            component.MaxAngleVectorChangePerImpulse);
+
+        var newDirection = currentDirection.ToAngle() + angleToChange;
+
+        var speed = !component.StopAtTarget || targetVector.Length() > 0
+            ? newDirection.ToVec() * component.Speed
+            : Vector2.Zero;
 
         _physics.SetLinearVelocity(uid, speed);
         _physics.SetBodyStatus(uid, physics, BodyStatus.InAir); //If this is not done, from the explosion up close, the tesla will "Fall" to the ground, and almost stop moving.
+
+        if (component.RotateWithImpulse)
+        {
+            var ang = speed.ToAngle() + Angle.FromDegrees(90); // we want "Up" to be forward, bullet convention.
+            _transform.SetWorldRotation(uid, ang + component.RotationAngleOffset);
+        }
     }
 }

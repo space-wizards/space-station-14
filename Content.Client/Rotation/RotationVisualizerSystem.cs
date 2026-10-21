@@ -5,34 +5,26 @@ using Robust.Shared.Animations;
 
 namespace Content.Client.Rotation;
 
-public sealed class RotationVisualizerSystem : SharedRotationVisualsSystem
+public sealed partial class RotationVisualizerSystem : SharedRotationVisualsSystem
 {
+    [Dependency] private AnimationPlayerSystem _animation = default!;
 
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly AnimationPlayerSystem _animation = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<RotationVisualsComponent, AppearanceChangeEvent>(OnAppearanceChange);
-    }
-
-    private void OnAppearanceChange(EntityUid uid, RotationVisualsComponent component, ref AppearanceChangeEvent args)
+    [SubscribeLocalEvent]
+    private void OnAppearanceChange(Entity<RotationVisualsComponent> ent, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (!_appearance.TryGetData<RotationState>(uid, RotationVisuals.RotationState, out var state, args.Component))
-            return;
+        if (!args.TryGetData<RotationState>(RotationVisuals.RotationState, out var state))
+            state = RotationState.Vertical;
 
         switch (state)
         {
             case RotationState.Vertical:
-                AnimateSpriteRotation(uid, args.Sprite, component.VerticalRotation, component.AnimationTime);
+                AnimateSpriteRotation(ent, args.Sprite, ent.Comp.VerticalRotation, ent.Comp.AnimationTime);
                 break;
             case RotationState.Horizontal:
-                AnimateSpriteRotation(uid, args.Sprite, component.HorizontalRotation, component.AnimationTime);
+                AnimateSpriteRotation(ent, args.Sprite, ent.Comp.HorizontalRotation, ent.Comp.AnimationTime);
                 break;
         }
     }
@@ -52,7 +44,7 @@ public sealed class RotationVisualizerSystem : SharedRotationVisualsSystem
         // Stop the current rotate animation and then start a new one
         if (_animation.HasRunningAnimation(animationComp, animationKey))
         {
-            _animation.Stop(animationComp, animationKey);
+            _animation.Stop((uid, animationComp), animationKey);
         }
 
         var animation = new Animation

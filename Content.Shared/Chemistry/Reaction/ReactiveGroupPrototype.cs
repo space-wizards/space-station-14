@@ -1,8 +1,8 @@
-﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.Reaction;
 
-[Prototype("reactiveGroup")]
+[Prototype]
 public sealed partial class ReactiveGroupPrototype : IPrototype
 {
     [IdDataField]

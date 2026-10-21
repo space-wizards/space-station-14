@@ -3,13 +3,13 @@ using Robust.Shared.Physics.Events;
 
 namespace Content.Server.Movement.Systems;
 
-public sealed class BoundarySystem : EntitySystem
+public sealed partial class BoundarySystem : EntitySystem
 {
     /*
      * The real reason this even exists is because with out mover controller it's really easy to clip out of bounds on chain shapes.
      */
 
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
 
     public override void Initialize()
     {
@@ -27,6 +27,6 @@ public sealed class BoundarySystem : EntitySystem
         // If for whatever reason you want to yeet them to the other side.
         // offset = new Angle(MathF.PI).RotateVec(offset);
 
-        _xform.SetWorldPosition(otherXform, center + offset);
+        _xform.SetWorldPosition((args.OtherEntity, otherXform), center + offset);
     }
 }

@@ -1,3 +1,6 @@
+using Content.Shared.DisplacementMap;
+using Robust.Shared.Prototypes;
+
 namespace Content.Client.Atmos.Components;
 
 /// <summary>
@@ -39,4 +42,10 @@ public sealed partial class FireVisualsComponent : Component
     ///     the burning entity as entities don't support having multiple point-lights.
     /// </summary>
     public EntityUid? LightEntity;
+
+    /// <summary>
+    /// Tracks the currently applied displacement, so that only new changes update the layer.
+    /// </summary>
+    [DataField]
+    public ProtoId<DisplacementDataPrototype>? CurrentDisplacement;
 }

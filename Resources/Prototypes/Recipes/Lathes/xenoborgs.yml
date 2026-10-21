@@ -1,0 +1,169 @@
+# Base prototypes
+
+- type: latheRecipe
+  abstract: true
+  id: BaseXenoborgMachineRecipe
+  categories:
+  - Machines
+  completetime: 2
+
+- type: latheRecipe
+  abstract: true
+  id: BaseXenoborgRecipe
+  categories:
+  - Robotics
+  completetime: 10
+
+- type: latheRecipe
+  abstract: true
+  id: BaseXenoborgModulesRecipe
+  categories:
+  - Modules
+  completetime: 2
+
+# machines
+
+- type: latheRecipe
+  parent: BaseXenoborgMachineRecipe
+  id: XenoborgExtractorRecipe
+  result: XenoborgExtractorFlatpack
+  materials:
+    Steel: 1000
+
+# xenoborgs
+
+- type: latheRecipe
+  parent: BaseXenoborgRecipe
+  id: XenoborgEngiRecipe
+  result: XenoborgEngiPrinted
+  materials:
+    XenoborgCrystal: 100
+
+- type: latheRecipe
+  parent: BaseXenoborgRecipe
+  id: XenoborgHeavyRecipe
+  result: XenoborgHeavyPrinted
+  materials:
+    XenoborgCrystal: 100
+
+- type: latheRecipe
+  parent: BaseXenoborgRecipe
+  id: XenoborgScoutRecipe
+  result: XenoborgScoutPrinted
+  materials:
+    XenoborgCrystal: 100
+
+- type: latheRecipe
+  parent: BaseXenoborgRecipe
+  id: XenoborgStealthRecipe
+  result: XenoborgStealthPrinted
+  materials:
+    XenoborgCrystal: 100
+
+# modules
+
+## engi xenoborg modules
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleDoorControlRecipe
+  result: XenoborgModuleDoorControl
+  materials:
+    XenoborgCrystal: 200
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleDeflectorFieldRecipe
+  result: XenoborgModuleDeflectorField
+  materials:
+    XenoborgCrystal: 100
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleZapRecipe
+  result: XenoborgModuleZap
+  materials:
+    XenoborgCrystal: 100
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleOilGunRecipe
+  result: XenoborgModuleOilGun
+  materials:
+    XenoborgCrystal: 300
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleNaniteGunRecipe
+  result: XenoborgModuleNaniteGun
+  materials:
+    XenoborgCrystal: 200
+
+## heavy xenoborg modules
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleHeavyLaserRecipe
+  result: XenoborgModuleHeavyLaser
+  materials:
+    XenoborgCrystal: 200
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleGuidedMissileLauncherRecipe
+  result: XenoborgModuleGuidedMissileLauncher
+  materials:
+    XenoborgCrystal: 300
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleRocketRecipe
+  result: XenoborgModuleRocket
+  materials:
+    XenoborgCrystal: 400
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleBurstFireLaserRecipe
+  result: XenoborgModuleBurstFireLaser
+  materials:
+    XenoborgCrystal: 200
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleHeavyRadioactiveRecipe
+  result: XenoborgModuleHeavyRadioactive
+  materials:
+    XenoborgCrystal: 100
+
+## scout xenoborg modules
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleEnergySwordRecipe
+  result: XenoborgModuleEnergySword
+  materials:
+    XenoborgCrystal: 300
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleJumpRecipe
+  result: XenoborgModuleJump
+  materials:
+    XenoborgCrystal: 100
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleBioKinfeRecipe
+  result: XenoborgModuleBioKinfe
+  materials:
+    XenoborgCrystal: 200
+
+## stealth xenoborg modules
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleSuperCloakDeviceRecipe
+  result: XenoborgModuleSuperCloakDevice
+  materials:
+    XenoborgCrystal: 300

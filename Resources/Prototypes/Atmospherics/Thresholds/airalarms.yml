@@ -1,0 +1,127 @@
+# Threshold prototypes for AtmosMonitors
+
+# NOTE: Warning thresholds are given as multipliers of the danger bound. For
+# example, if upperBound=10 (kPa) and upperWarnRound=0.5, that means the upper
+# warning threshold is actually 5 (kPa).
+#
+# As a result, all upperWarn's should be <1 and lowerWarn's should be >1,
+# otherwise the warning will never kick in.
+
+- type: alarmThreshold
+  id: stationTemperature
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 393.15 # T20C + 200
+  lowerBound: !type:AlarmThresholdSetting
+    threshold: 193.15 # T20C - 100
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.8
+  lowerWarnAround: !type:AlarmThresholdSetting
+    threshold: 1.1
+
+- type: alarmThreshold
+  id: stationPressure
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 550 # HazardHighPressure from Atmospherics.cs
+  lowerBound: !type:AlarmThresholdSetting
+    # Actual low pressure damage threshold is at 20 kPa, but below ~85 kPa you can't breathe due to lack of oxygen.
+    threshold: 85
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.7 # 385 kPa, WarningHighPressure from Atmospherics.cs
+  lowerWarnAround: !type:AlarmThresholdSetting
+    threshold: 1.05 # ~90 kPa
+
+# For gas concentrations, threshold=0.1 means 10%
+- type: alarmThreshold
+  id: stationOxygen
+  lowerBound: !type:AlarmThresholdSetting
+    threshold: 0.10
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 0.3
+  lowerWarnAround: !type:AlarmThresholdSetting
+    threshold: 1.5
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.8
+
+- type: alarmThreshold
+  id: stationNitrogen
+  lowerBound: !type:AlarmThresholdSetting
+    threshold: 0.10
+  lowerWarnAround: !type:AlarmThresholdSetting
+    threshold: 1.5
+
+- type: alarmThreshold
+  id: stationCO2
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 0.006
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.5 # minor gasping and airloss at 0.3%
+
+- type: alarmThreshold
+  id: stationPlasma
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 0.005 # lightable beyond this concentration
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.5
+
+- type: alarmThreshold
+  id: stationTritium
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 0.004 # lightable beyond this concentration
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.5
+
+# this is a hack, but 150% means never danger on water, but warn at 75%
+- type: alarmThreshold
+  id: stationWaterVapor
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 1.5
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.5
+
+- type: alarmThreshold
+  id: stationNO
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 0.01
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.5
+
+- type: alarmThreshold
+  id: stationAmmonia
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 0.05
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.5
+
+- type: alarmThreshold
+  id: ignore # just ignore nitrogen??? ??? ???
+  ignore: true
+
+- type: alarmThreshold
+  id: danger # just any gas you don't want at all
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 0.0001
+
+- type: alarmThreshold
+  id: voxOxygen
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 0.02 # 2%
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.5 # 1%
+
+- type: alarmThreshold
+  id: voxNitrogen
+  lowerBound: !type:AlarmThresholdSetting
+    threshold: 0.8 # danger below 80% nitrogen
+  lowerWarnAround: !type:AlarmThresholdSetting
+    threshold: 1.125 # warning below 90%
+
+- type: alarmThreshold
+  id: freezerTemperature
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 335.15 # T-38.15C (235) + 100
+  lowerBound: !type:AlarmThresholdSetting
+    threshold: 135.15 # T-38.15C (235) - 100
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.8
+  lowerWarnAround: !type:AlarmThresholdSetting
+    threshold: 1.1

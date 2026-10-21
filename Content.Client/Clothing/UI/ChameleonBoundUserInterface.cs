@@ -1,15 +1,18 @@
-﻿using Content.Client.Clothing.Systems;
+using Content.Client.Clothing.Systems;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Tag;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Clothing.UI;
 
 [UsedImplicitly]
-public sealed class ChameleonBoundUserInterface : BoundUserInterface
+public sealed partial class ChameleonBoundUserInterface : BoundUserInterface
 {
+    [Dependency] private IPrototypeManager _proto = default!;
     private readonly ChameleonClothingSystem _chameleon;
+    private readonly TagSystem _tag;
 
     [ViewVariables]
     private ChameleonMenu? _menu;
@@ -17,6 +20,7 @@ public sealed class ChameleonBoundUserInterface : BoundUserInterface
     public ChameleonBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
         _chameleon = EntMan.System<ChameleonClothingSystem>();
+        _tag = EntMan.System<TagSystem>();
     }
 
     protected override void Open()
@@ -34,7 +38,25 @@ public sealed class ChameleonBoundUserInterface : BoundUserInterface
             return;
 
         var targets = _chameleon.GetValidTargets(st.Slot);
-        _menu?.UpdateState(targets, st.SelectedId);
+        if (st.RequiredTag != null)
+        {
+            var newTargets = new List<EntProtoId>();
+            foreach (var target in targets)
+            {
+                if (string.IsNullOrEmpty(target) || !_proto.Resolve(target, out EntityPrototype? proto))
+                    continue;
+
+                if (!proto.TryComp(out TagComponent? tag, EntMan.ComponentFactory) || !_tag.HasTag(tag, st.RequiredTag))
+                    continue;
+
+                newTargets.Add(target);
+            }
+            _menu?.UpdateState(newTargets, st.SelectedId);
+        }
+        else
+        {
+            _menu?.UpdateState(targets, st.SelectedId);
+        }
     }
 
     private void OnIdSelected(string selectedId)

@@ -1,3 +1,4 @@
+using Robust.Shared.Utility;
 using System.Linq;
 
 namespace Content.Shared.Telephone;
@@ -21,19 +22,36 @@ public abstract class SharedTelephoneSystem : EntitySystem
 
         if (presumedJob != null)
             callerId = Loc.GetString("chat-telephone-caller-id-with-job",
-                ("callerName", presumedName),
-                ("callerJob", presumedJob),
+                ("callerName", FormattedMessage.RemoveMarkupPermissive(presumedName)),
+                ("callerJob", FormattedMessage.RemoveMarkupPermissive(presumedJob)),
                 ("color", fontColor),
                 ("fontType", fontType),
                 ("fontSize", fontSize));
 
         else
             callerId = Loc.GetString("chat-telephone-caller-id-without-job",
-                ("callerName", presumedName),
+                ("callerName", FormattedMessage.RemoveMarkupPermissive(presumedName)),
                 ("color", fontColor),
                 ("fontType", fontType),
                 ("fontSize", fontSize));
 
         return callerId;
+    }
+
+    public string GetFormattedDeviceIdForEntity(string? deviceName, Color fontColor, string fontType = "Default", int fontSize = 12)
+    {
+        if (deviceName == null)
+        {
+            return Loc.GetString("chat-telephone-unknown-device",
+                ("color", fontColor),
+                ("fontType", fontType),
+                ("fontSize", fontSize));
+        }
+
+        return Loc.GetString("chat-telephone-device-id",
+            ("deviceName", FormattedMessage.RemoveMarkupPermissive(deviceName)),
+            ("color", fontColor),
+            ("fontType", fontType),
+            ("fontSize", fontSize));
     }
 }

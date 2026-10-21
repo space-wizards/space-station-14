@@ -12,9 +12,18 @@
       visible: false
     - state: mmi_off
       map: ["enum.MMIVisualLayers.Base"]
+    - state: mmi_light
+      map: ["enum.MMIVisualLayers.Unlit"]
+      shader: unshaded
+      visible: false
   - type: Input
     context: human
   - type: MMI
+    brainSlot:
+      name: positronic-brain-slot-component-slot-name-brain
+      whitelist:
+        components:
+        - Brain
   - type: BorgBrain
   - type: BlockMovement
   - type: Examiner
@@ -35,12 +44,6 @@
   - type: Speech
     speechSounds: Pai
   - type: ItemSlots
-    slots:
-      brain_slot:
-        name: positronic-brain-slot-component-slot-name-brain
-        whitelist:
-          components:
-          - Brain
   - type: ContainerContainer
     containers:
       brain_slot: !type:ContainerSlot
@@ -59,14 +62,13 @@
   id: MMIFilled
   suffix: Filled
   components:
-  - type: ItemSlots
-    slots:
-      brain_slot:
-        name: "Brain"
-        startingItem: OrganHumanBrain
-        whitelist:
-          components:
-            - Brain
+  - type: MMI
+    brainSlot:
+      name: positronic-brain-slot-component-slot-name-brain
+      startingItem: OrganHumanBrain
+      whitelist:
+        components:
+        - Brain
 
 - type: entity
   parent: BaseItem
@@ -78,7 +80,8 @@
       sprite: Objects/Specific/Robotics/mmi.rsi
       layers:
       - state: posibrain
-        map: ["base"]
+      - map: ["light"]
+        shader: unshaded
     - type: Input
       context: human
     - type: ToggleableGhostRole
@@ -89,6 +92,8 @@
       roleName: positronic-brain-role-name
       roleDescription: positronic-brain-role-description
       roleRules: ghost-role-information-silicon-rules
+      mindRoles:
+      - MindRoleGhostRoleSilicon
       wipeVerbText: positronic-brain-wipe-device-verb-text
       wipeVerbPopup: positronic-brain-wiped-device
       stopSearchVerbText: positronic-brain-stop-searching-verb-text
@@ -113,9 +118,11 @@
       proto: robot
     - type: Speech
       speechSounds: Pai
+    - type: Alerts
     - type: MobState
       allowedStates:
       - Alive
+      - Dead
     - type: Appearance
     - type: Tag
       tags:
@@ -123,8 +130,8 @@
     - type: GenericVisualizer
       visuals:
         enum.ToggleableGhostRoleVisuals.Status:
-          base:
-            Off: { state: posibrain }
+          light:
+            Off: { state: empty } # TODO: fix null states in SpriteComp.LayerSetData, use a null state
             Searching: { state: posibrain-searching }
             On: { state: posibrain-occupied }
     - type: GuideHelp

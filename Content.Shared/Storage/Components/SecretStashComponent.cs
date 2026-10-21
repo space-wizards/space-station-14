@@ -9,6 +9,7 @@ using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 using Robust.Shared.Audio;
 using Content.Shared.Whitelist;
+using Content.Shared.Damage;
 
 namespace Content.Shared.Storage.Components
 {
@@ -23,9 +24,10 @@ namespace Content.Shared.Storage.Components
     {
         /// <summary>
         ///     Max item size that can be inserted into secret stash.
+        ///     If null, uses one size smaller than the stash's <see cref="ItemComponent"/> size.
         /// </summary>
-        [DataField("maxItemSize")]
-        public ProtoId<ItemSizePrototype> MaxItemSize = "Small";
+        [DataField]
+        public ProtoId<ItemSizePrototype>? MaxItemSize;
 
         /// <summary>
         ///     Entity blacklist for secret stashes.
@@ -59,6 +61,12 @@ namespace Content.Shared.Storage.Components
         /// </summary>
         [DataField]
         public string? SecretStashName;
+
+        /// <summary>
+        /// How much damage is delt to something after eating a secret stash that contains an item.
+        /// </summary>
+        [DataField]
+        public DamageSpecifier? DamageEatenItemInside;
 
         /// <summary>
         ///     Container used to keep secret stash item.

@@ -1,4 +1,4 @@
-﻿using Content.Client.Storage.Components;
+using Content.Client.Storage.Components;
 using Content.Shared.Rounding;
 using Content.Shared.Storage;
 using Robust.Client.GameObjects;
@@ -6,22 +6,22 @@ using Robust.Client.GameObjects;
 namespace Content.Client.Storage.Systems;
 
 /// <inheritdoc cref="StorageContainerVisualsComponent"/>
-public sealed class StorageContainerVisualsSystem : VisualizerSystem<StorageContainerVisualsComponent>
+public sealed partial class StorageContainerVisualsSystem : VisualizerSystem<StorageContainerVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, StorageContainerVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (!AppearanceSystem.TryGetData<int>(uid, StorageVisuals.StorageUsed, out var used, args.Component))
+        if (!args.TryGetData<int>(StorageVisuals.StorageUsed, out var used))
             return;
 
-        if (!AppearanceSystem.TryGetData<int>(uid, StorageVisuals.Capacity, out var capacity, args.Component))
+        if (!args.TryGetData<int>(StorageVisuals.Capacity, out var capacity))
             return;
 
-        var fraction = used / (float) capacity;
+        var fraction = used / (float)capacity;
 
-        if (!args.Sprite.LayerMapTryGet(component.FillLayer, out var fillLayer))
+        if (!SpriteSystem.LayerMapTryGet((uid, args.Sprite), component.FillLayer, out var fillLayer, false))
             return;
 
         var closestFillSprite = Math.Min(ContentHelpers.RoundToNearestLevels(fraction, 1, component.MaxFillLevels + 1),
@@ -32,13 +32,13 @@ public sealed class StorageContainerVisualsSystem : VisualizerSystem<StorageCont
             if (component.FillBaseName == null)
                 return;
 
-            args.Sprite.LayerSetVisible(fillLayer, true);
+            SpriteSystem.LayerSetVisible((uid, args.Sprite), fillLayer, true);
             var stateName = component.FillBaseName + closestFillSprite;
-            args.Sprite.LayerSetState(fillLayer, stateName);
+            SpriteSystem.LayerSetRsiState((uid, args.Sprite), fillLayer, stateName);
         }
         else
         {
-            args.Sprite.LayerSetVisible(fillLayer, false);
+            SpriteSystem.LayerSetVisible((uid, args.Sprite), fillLayer, false);
         }
     }
 }

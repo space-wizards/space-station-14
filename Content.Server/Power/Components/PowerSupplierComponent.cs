@@ -1,5 +1,6 @@
 using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
+using Content.Shared.Guidebook;
 
 namespace Content.Server.Power.Components
 {
@@ -8,6 +9,7 @@ namespace Content.Server.Power.Components
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("supplyRate")]
+        [GuidebookData]
         public float MaxSupply { get => NetworkSupply.MaxSupply; set => NetworkSupply.MaxSupply = value; }
 
         [ViewVariables(VVAccess.ReadWrite)]

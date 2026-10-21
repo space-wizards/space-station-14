@@ -8,5 +8,7 @@ flatpacker-ui-title = Flatpacker 1001
 flatpacker-ui-materials-label = Materials
 flatpacker-ui-cost-label = Packing Cost
 flatpacker-ui-no-board-label = No board present!
+flatpacker-ui-board-invalid-label = [color=red]Invalid board!
+    Unable to print![/color]
 flatpacker-ui-insert-board = Insert a board to begin.
 flatpacker-ui-pack-button = Pack

@@ -1,20 +1,17 @@
 using Content.Server.GameTicking;
 using Content.Server.Voting;
 using Robust.Server;
-using Robust.Shared.Configuration;
 using Robust.Shared.Utility;
-using System.Diagnostics;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
 namespace Content.Server.Discord.WebhookMessages;
 
-public sealed class VoteWebhooks : IPostInjectInit
+public sealed partial class VoteWebhooks : IPostInjectInit
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IEntitySystemManager _entSys = default!;
-    [Dependency] private readonly DiscordWebhook _discord = default!;
-    [Dependency] private readonly IBaseServer _baseServer = default!;
+    [Dependency] private IEntitySystemManager _entSys = default!;
+    [Dependency] private DiscordWebhook _discord = default!;
+    [Dependency] private IBaseServer _baseServer = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -42,7 +39,7 @@ public sealed class VoteWebhooks : IPostInjectInit
             fields.Add(newVote);
         }
 
-        var gameTicker = _entSys.GetEntitySystemOrNull<GameTicker>();
+        var gameTicker = _entSys.GetEntitySystemOrNull<ServerGameTicker>();
         _sawmill = Logger.GetSawmill("discord");
 
         var runLevel = gameTicker != null ? Loc.GetString($"game-run-level-{gameTicker.RunLevel}") : "";

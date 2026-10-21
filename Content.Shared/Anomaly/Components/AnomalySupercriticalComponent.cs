@@ -1,4 +1,4 @@
-﻿using Robust.Shared.GameStates;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Anomaly.Components;
@@ -18,13 +18,6 @@ public sealed partial class AnomalySupercriticalComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoPausedField]
     public TimeSpan EndTime;
-
-    /// <summary>
-    /// The length of the animation before it goes supercritical.
-    /// </summary>
-    [AutoNetworkedField]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan SupercriticalDuration = TimeSpan.FromSeconds(10);
 
     /// <summary>
     /// The maximum size the anomaly scales to while going supercritical

@@ -5,6 +5,6 @@ namespace Content.Shared.Roles;
 ///     depending on their roles.
 /// </summary>
 /// <param name="IsAntagonist">Whether or not the player is an antagonist.</param>
-/// <param name="IsExclusiveAntagonist">Whether or not AntagSelectionSystem should exclude this player from other antag roles</param
+/// <param name="IsExclusiveAntagonist">Whether or not AntagSelectionSystem should exclude this player from other antag roles</param>
 [ByRefEvent]
 public record struct MindIsAntagonistEvent(bool IsAntagonist, bool IsExclusiveAntagonist);

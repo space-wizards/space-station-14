@@ -1,16 +1,17 @@
-using System.Threading;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.GameTicking;
 using Content.Server.RoundEnd;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public sealed class RoundEndTest
+    public sealed partial class RoundEndTest : GameTest
     {
-        private sealed class RoundEndTestSystem : EntitySystem
+        private sealed partial class RoundEndTestSystem : EntitySystem
         {
             public int RoundCount;
 
@@ -22,25 +23,28 @@ namespace Content.IntegrationTests.Tests
 
             private void OnRoundEnd(RoundEndSystemChangedEvent ev)
             {
-                Interlocked.Increment(ref RoundCount);
+                RoundCount += 1;
             }
         }
+
+
+        public override PoolSettings PoolSettings => new PoolSettings
+        {
+            DummyTicker = false,
+            Connected = true,
+            Dirty = true
+        };
 
         [Test]
         public async Task Test()
         {
-            await using var pair = await PoolManager.GetServerClient(new PoolSettings
-            {
-                DummyTicker = false,
-                Connected = true,
-                Dirty = true
-            });
+            var pair = Pair;
 
             var server = pair.Server;
 
             var config = server.ResolveDependency<IConfigurationManager>();
             var sysManager = server.ResolveDependency<IEntitySystemManager>();
-            var ticker = sysManager.GetEntitySystem<GameTicker>();
+            var ticker = sysManager.GetEntitySystem<ServerGameTicker>();
             var roundEndSystem = sysManager.GetEntitySystem<RoundEndSystem>();
             var sys = server.System<RoundEndTestSystem>();
             sys.RoundCount = 0;
@@ -127,13 +131,17 @@ namespace Content.IntegrationTests.Tests
 
             async Task WaitForEvent()
             {
-                var timeout = Task.Delay(TimeSpan.FromSeconds(10));
-                var currentCount = Thread.VolatileRead(ref sys.RoundCount);
-                while (currentCount == Thread.VolatileRead(ref sys.RoundCount) && !timeout.IsCompleted)
+                const int maxTicks = 60;
+                var currentCount = sys.RoundCount;
+                for (var i = 0; i < maxTicks; i++)
                 {
-                    await pair.RunTicksSync(5);
+                    if (currentCount != sys.RoundCount)
+                        return;
+
+                    await pair.RunTicksSync(1);
                 }
-                if (timeout.IsCompleted) throw new TimeoutException("Event took too long to trigger");
+
+                throw new TimeoutException("Event took too long to trigger");
             }
 
             // Need to clean self up
@@ -148,7 +156,6 @@ namespace Content.IntegrationTests.Tests
                 roundEndSystem.DefaultCountdownDuration = TimeSpan.FromMinutes(4);
                 ticker.RestartRound();
             });
-            await pair.CleanReturnAsync();
         }
     }
 }

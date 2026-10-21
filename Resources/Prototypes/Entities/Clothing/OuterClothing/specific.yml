@@ -1,5 +1,5 @@
-﻿- type: entity
-  parent: ClothingOuterBase
+- type: entity
+  parent: [ClothingOuterBase, TemperatureProtectionMinimal, AllowSuitStorageClothingGasTanks, BaseChameleon]
   id: ClothingOuterChameleon
   name: vest
   description: A thick vest with a rubbery, water-resistant shell.
@@ -14,7 +14,9 @@
     - type: ChameleonClothing
       slot: [outerClothing]
       default: ClothingOuterVest
-    - type: UserInterface
-      interfaces:
-        enum.ChameleonUiKey.Key:
-          type: ChameleonBoundUserInterface
+    - type: Armor
+      modifiers:
+        coefficients:
+          Slash: 0.95
+          Heat: 0.90
+      showArmorOnExamine: false

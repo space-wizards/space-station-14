@@ -1,9 +1,9 @@
 #nullable enable
+using Content.IntegrationTests.Fixtures;
 using Content.Server.Stack;
 using Content.Shared.Stacks;
 using Content.Shared.Materials;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Materials
@@ -15,16 +15,16 @@ namespace Content.IntegrationTests.Tests.Materials
     [TestFixture]
     [TestOf(typeof(StackSystem))]
     [TestOf(typeof(MaterialPrototype))]
-    public sealed class MaterialPrototypeSpawnsStackMaterialTest
+    public sealed class MaterialPrototypeSpawnsStackMaterialTest : GameTest
     {
         [Test]
         public async Task MaterialPrototypeSpawnsStackMaterial()
         {
-            await using var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
             await server.WaitIdleAsync();
 
-            var mapManager = server.ResolveDependency<IMapManager>();
+            var mapSystem = server.System<SharedMapSystem>();
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
 
@@ -55,14 +55,12 @@ namespace Content.IntegrationTests.Tests.Materials
                             $"{proto.ID} material has no stack prototype");
 
                         if (stackProto != null)
-                            Assert.That(proto.StackEntity, Is.EqualTo(stackProto.Spawn));
+                            Assert.That(proto.StackEntity, Is.EqualTo(stackProto.Spawn.Id));
                     }
                 });
 
-                mapManager.DeleteMap(testMap.MapId);
+                mapSystem.DeleteMap(testMap.MapId);
             });
-
-            await pair.CleanReturnAsync();
         }
     }
 }

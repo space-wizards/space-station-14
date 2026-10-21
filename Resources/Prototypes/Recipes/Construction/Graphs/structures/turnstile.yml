@@ -1,0 +1,32 @@
+- type: constructionGraph
+  id: EnergyGate
+  start: start
+  graph:
+  - node: start
+    actions:
+    - !type:DeleteEntity { }
+    edges:
+    - to: energyGate
+      completed:
+      - !type:SnapToGrid
+      steps:
+      - material: MetalRod
+        amount: 4
+      - material: Steel
+        amount: 1
+        doAfter: 6
+
+  - node: energyGate
+    entity: EnergyGate
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: PartRodMetal1
+        amount: 4
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 4.0
+      - tool: Cutting
+        doAfter: 2.0

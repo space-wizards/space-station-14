@@ -1,0 +1,37 @@
+- type: entity
+  abstract: true
+  parent: AirSensorBase
+  id: AirSensorFreezerBase
+  suffix: Freezer Atmosphere
+  components:
+  - type: AtmosMonitor
+    temperatureThresholdId: freezerTemperature
+
+- type: entity
+  parent: [AirSensorFreezerBase, AirSensor]
+  id: AirSensorFreezer
+
+- type: entity
+  parent: !type:CreateVariants
+    sequences: [ [AirSensorFreezerBase, GasVentPump], [AirSensorFreezerBase, GasVentPumpAlt1], [AirSensorFreezerBase, GasVentPumpAlt2] ]
+  id: !type:CreateVariants
+    values: [ GasVentPumpFreezer, GasVentPumpFreezerAlt1, GasVentPumpFreezerAlt2 ]
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
+    
+- type: entity
+  parent: !type:CreateVariants
+    sequences: [ [AirSensorFreezerBase, GasVentScrubber], [AirSensorFreezerBase, GasVentScrubberAlt1], [AirSensorFreezerBase, GasVentScrubberAlt2] ]
+  id: !type:CreateVariants
+    values: [ GasVentScrubberFreezer, GasVentScrubberFreezerAlt1, GasVentScrubberFreezerAlt2 ]
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
+
+# air alarm proto with auto: false to prevent the automatic switching of modes overriding the default values
+- type: entity
+  parent: AirAlarm
+  id: AirAlarmFreezer
+  suffix: Freezer Atmosphere, auto mode disabled
+  components:
+  - type: AirAlarm
+    autoMode: false

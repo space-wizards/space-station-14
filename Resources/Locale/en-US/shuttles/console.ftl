@@ -10,17 +10,24 @@ shuttle-console-prevent = You are unable to pilot this ship
 shuttle-console-display-label = Display
 
 shuttle-console-position = Position:
+shuttle-console-position-value = {$X}, {$Y}
 shuttle-console-orientation = Orientation:
+shuttle-console-orientation-value  = {$angle}
 shuttle-console-linear-velocity = Linear velocity:
+shuttle-console-linear-velocity-value = {$X}, {$Y}
 shuttle-console-angular-velocity = Angular velocity:
+shuttle-console-angular-velocity-value = {$angularVelocity}
 
 shuttle-console-unknown = Unknown
 shuttle-console-iff-label = {$name} ({$distance}m)
 shuttle-console-exclusion = Exclusion area
 
 shuttle-console-nav-settings = Settings
+shuttle-console-nav-legend = Legend
+shuttle-console-nav-other-dock = External Docks
+shuttle-console-nav-cargo-dock = Cargo Docks
+shuttle-console-nav-arrivals-dock = Arrivals Docks
 shuttle-console-iff-toggle = Show IFF
-shuttle-console-dock-toggle = Show docks
 
 # MAP
 

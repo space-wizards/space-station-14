@@ -1,3 +1,5 @@
+using Content.Shared.DoAfter;
+using Content.Shared.Physics;
 using System.Numerics;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -26,6 +28,12 @@ public sealed partial class ClimbingComponent : Component
     public bool IsClimbing;
 
     /// <summary>
+    /// The Climbing DoAfter.
+    /// </summary>
+    [DataField]
+    public DoAfterId? DoAfter;
+
+    /// <summary>
     /// Whether the owner is being moved onto the climbed entity.
     /// </summary>
     [AutoNetworkedField, DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
@@ -43,6 +51,12 @@ public sealed partial class ClimbingComponent : Component
     /// </summary>
     [DataField]
     public float TransitionRate = 5f;
+
+    /// <summary>
+    /// Collision layers that stop movement onto a climbable surface.
+    /// </summary>
+    [DataField]
+    public int TransitionCollisionMask = (int) CollisionGroup.Impassable;
 
     [AutoNetworkedField, DataField]
     public Dictionary<string, int> DisabledFixtureMasks = new();

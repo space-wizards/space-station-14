@@ -1,4 +1,4 @@
-﻿# Used for entities that are considered flying,
+# Used for entities that are considered flying,
 # i.e. shouldnt slip, have free movement in weightlesness, and should go over chasms/lava
 - type: entity
   id: FlyingMobBase
@@ -9,3 +9,4 @@
   - type: NoSlip
   - type: MovementAlwaysTouching
   - type: CanMoveInAir
+  - type: MovementSpeedModifier

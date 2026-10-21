@@ -1,0 +1,38 @@
+- type: cargoProduct
+  abstract: true
+  id: BaseLockBoxProduct
+  icon:
+    sprite: Structures/Storage/Crates/lockbox.rsi
+    state: icon
+  cost: 300
+  group: market
+
+- type: cargoProduct
+  parent: BaseLockBoxProduct
+  id: CrateLockBoxEngineering
+  product: CrateLockBoxEngineering
+  category: cargoproduct-category-name-engineering
+
+- type: cargoProduct
+  parent: BaseLockBoxProduct
+  id: CrateLockBoxMedical
+  product: CrateLockBoxMedical
+  category: cargoproduct-category-name-medical
+
+- type: cargoProduct
+  parent: BaseLockBoxProduct
+  id: CrateLockBoxScience
+  product: CrateLockBoxScience
+  category: cargoproduct-category-name-science
+
+- type: cargoProduct
+  parent: BaseLockBoxProduct
+  id: CrateLockBoxSecurity
+  product: CrateLockBoxSecurity
+  category: cargoproduct-category-name-security
+
+- type: cargoProduct
+  parent: BaseLockBoxProduct
+  id: CrateLockBoxService
+  product: CrateLockBoxService
+  category: cargoproduct-category-name-service

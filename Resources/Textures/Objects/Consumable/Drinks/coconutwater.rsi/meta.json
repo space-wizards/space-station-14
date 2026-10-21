@@ -5,13 +5,21 @@
         "y": 32
     },
     "license": "CC0-1.0",
-    "copyright": "Original work by noctis on Discord",
+    "copyright": "Original work by noctis on Discord. Inhands by Tiniest Shark (Github)",
     "states": [
         {
             "name": "icon"
         },
         {
             "name": "icon_open"
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
         }
     ]
 }

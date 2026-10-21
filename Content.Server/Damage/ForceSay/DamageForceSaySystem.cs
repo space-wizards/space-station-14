@@ -1,23 +1,23 @@
 using Content.Shared.Bed.Sleep;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Events;
 using Content.Shared.Damage.ForceSay;
+using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Stunnable;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Damage.ForceSay;
 
 /// <inheritdoc cref="DamageForceSayComponent"/>
-public sealed class DamageForceSaySystem : EntitySystem
+public sealed partial class DamageForceSaySystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -47,7 +47,7 @@ public sealed class DamageForceSaySystem : EntitySystem
         }
     }
 
-    private void TryForceSay(EntityUid uid, DamageForceSayComponent component, bool useSuffix=true, string? suffixOverride = null)
+    private void TryForceSay(EntityUid uid, DamageForceSayComponent component, bool useSuffix=true)
     {
         if (!TryComp<ActorComponent>(uid, out var actor))
             return;
@@ -57,7 +57,13 @@ public sealed class DamageForceSaySystem : EntitySystem
             _timing.CurTime < component.NextAllowedTime)
             return;
 
-        var suffix = Loc.GetString(suffixOverride ?? component.ForceSayStringPrefix + _random.Next(1, component.ForceSayStringCount));
+        var ev = new BeforeForceSayEvent(component.ForceSayStringDataset);
+        RaiseLocalEvent(uid, ev);
+
+        if (!ProtoMan.Resolve(ev.Prefix, out var prefixList))
+            return;
+
+        var suffix = Loc.GetString(_random.Pick(prefixList.Values));
 
         // set cooldown & raise event
         component.NextAllowedTime = _timing.CurTime + component.Cooldown;
@@ -80,7 +86,10 @@ public sealed class DamageForceSaySystem : EntitySystem
         if (!args.FellAsleep)
             return;
 
-        TryForceSay(uid, component, true, "damage-force-say-sleep");
+        if (Comp<MobStateComponent>(uid).CurrentState != MobState.Alive)
+            return;
+
+        TryForceSay(uid, component);
         AllowNextSpeech(uid);
     }
 
@@ -97,7 +106,7 @@ public sealed class DamageForceSaySystem : EntitySystem
         if (component.ValidDamageGroups != null)
         {
             var totalApplicableDamage = FixedPoint2.Zero;
-            foreach (var (group, value) in args.DamageDelta.GetDamagePerGroup(_prototype))
+            foreach (var (group, value) in args.DamageDelta.GetDamagePerGroup(ProtoMan))
             {
                 if (!component.ValidDamageGroups.Contains(group))
                     continue;

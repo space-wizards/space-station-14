@@ -9,6 +9,9 @@
   - type: Marker
   - type: Clickable
   - type: InteractionOutline
+  - type: Tag
+    tags:
+    - ForceFixRotations
   - type: Sprite
     drawdepth: Overdoors
     sprite: Markers/cross.rsi

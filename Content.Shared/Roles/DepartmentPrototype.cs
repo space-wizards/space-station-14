@@ -2,11 +2,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Roles;
 
-[Prototype("department")]
+[Prototype]
 public sealed partial class DepartmentPrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = string.Empty;
+    public string ID { get; private set; } = string.Empty;
 
     /// <summary>
     /// The name LocId of the department that will be displayed in the various menus.
@@ -41,6 +41,14 @@ public sealed partial class DepartmentPrototype : IPrototype
     /// </summary>
     [DataField]
     public int Weight { get; private set; }
+
+    // See https://github.com/space-wizards/space-station-14/issues/45214
+    // 
+    /// <summary>
+    /// Whether jobs in this department should skip same-department minimum job fallback.
+    /// </summary>
+    [DataField]
+    public bool IgnoreForDepartmentFallback;
 
     /// <summary>
     /// Toggles the display of the department in the priority setting menu in the character editor.

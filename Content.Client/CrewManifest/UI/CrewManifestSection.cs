@@ -1,4 +1,4 @@
-﻿using Content.Shared.CrewManifest;
+using Content.Shared.CrewManifest;
 using Content.Shared.StatusIcon;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
@@ -22,7 +22,7 @@ public sealed class CrewManifestSection : BoxContainer
         AddChild(new Label()
         {
             StyleClasses = { "LabelBig" },
-            Text = Loc.GetString($"department-{section.ID}")
+            Text = Loc.GetString(section.Name)
         });
 
         var gridContainer = new GridContainer()

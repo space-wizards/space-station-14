@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
+using Content.Shared.Lathe.Prototypes;
 using Content.Shared.Localizations;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
@@ -14,12 +15,13 @@ namespace Content.Shared.Lathe;
 /// <summary>
 /// This handles...
 /// </summary>
-public abstract class SharedLatheSystem : EntitySystem
+public abstract partial class SharedLatheSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
+    [Dependency] private SharedMaterialStorageSystem _materialStorage = default!;
+    [Dependency] private EmagSystem _emag = default!;
 
     public readonly Dictionary<string, List<LatheRecipePrototype>> InverseRecipes = new();
+    public const int MaxItemsPerRequest = 10_000;
 
     public override void Initialize()
     {
@@ -30,6 +32,37 @@ public abstract class SharedLatheSystem : EntitySystem
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
 
         BuildInverseRecipeDictionary();
+    }
+
+    /// <summary>
+    /// Get the set of all recipes that a lathe could possibly ever create (e.g., if all techs were unlocked).
+    /// </summary>
+    public HashSet<ProtoId<LatheRecipePrototype>> GetAllPossibleRecipes(LatheComponent component)
+    {
+        var recipes = new HashSet<ProtoId<LatheRecipePrototype>>();
+        foreach (var pack in component.StaticPacks)
+        {
+            recipes.UnionWith(ProtoMan.Index(pack).Recipes);
+        }
+
+        foreach (var pack in component.DynamicPacks)
+        {
+            recipes.UnionWith(ProtoMan.Index(pack).Recipes);
+        }
+
+        return recipes;
+    }
+
+    /// <summary>
+    /// Add every recipe in the list of recipe packs to a single hashset.
+    /// </summary>
+    public void AddRecipesFromPacks(HashSet<ProtoId<LatheRecipePrototype>> recipes, IEnumerable<ProtoId<LatheRecipePackPrototype>> packs)
+    {
+        foreach (var id in packs)
+        {
+            var pack = ProtoMan.Index(id);
+            recipes.UnionWith(pack.Recipes);
+        }
     }
 
     private void OnExamined(Entity<LatheComponent> ent, ref ExaminedEvent args)
@@ -44,7 +77,7 @@ public abstract class SharedLatheSystem : EntitySystem
     [PublicAPI]
     public bool CanProduce(EntityUid uid, string recipe, int amount = 1, LatheComponent? component = null)
     {
-        return _proto.TryIndex<LatheRecipePrototype>(recipe, out var proto) && CanProduce(uid, proto, amount, component);
+        return ProtoMan.TryIndex<LatheRecipePrototype>(recipe, out var proto) && CanProduce(uid, proto, amount, component);
     }
 
     public bool CanProduce(EntityUid uid, LatheRecipePrototype recipe, int amount = 1, LatheComponent? component = null)
@@ -53,12 +86,51 @@ public abstract class SharedLatheSystem : EntitySystem
             return false;
         if (!HasRecipe(uid, recipe, component))
             return false;
+        if (amount <= 0)
+            return false;
 
+        var materials = _materialStorage.GetStoredMaterials(uid);
+
+        return HasMaterials(materials, recipe, component.MaterialUseMultiplier, amount);
+    }
+
+    /// <summary>
+    /// Returns whether or not the given lathe can produce some number of a given recipe.
+    /// </summary>
+    /// <remarks>
+    /// Useful for reducing material lookup with batched checks.
+    /// </remarks>
+    /// <param name="ent">The lathe that would produce the recipe.</param>
+    /// <param name="recipe">The recipe to be produced.</param>
+    /// <param name="materials">The set of materials to check.</param>
+    /// <param name="amount">The number of times the recipe should be made.</param>
+    public bool CanProduce(Entity<LatheComponent?> ent, LatheRecipePrototype recipe, Dictionary<ProtoId<MaterialPrototype>, int> materials, int amount)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        if (amount <= 0)
+            return false;
+
+        if (!HasRecipe(ent, recipe, ent.Comp))
+            return false;
+
+        return HasMaterials(materials, recipe, ent.Comp.MaterialUseMultiplier, amount);
+    }
+
+    /// <summary>
+    /// Returns whether or not the given materials dictionary can produce <paramref name="amount"/> copies of <paramref name="recipe"/>.
+    /// </summary>
+    private bool HasMaterials(Dictionary<ProtoId<MaterialPrototype>, int> materials, LatheRecipePrototype recipe, float materialMultiplier, int amount = 1)
+    {
         foreach (var (material, needed) in recipe.Materials)
         {
-            var adjustedAmount = AdjustMaterial(needed, recipe.ApplyMaterialDiscount, component.MaterialUseMultiplier);
+            if (!materials.TryGetValue(material, out var availableAmount))
+                return false;
 
-            if (_materialStorage.GetMaterialAmount(uid, material) < adjustedAmount * amount)
+            var adjustedAmount = AdjustMaterial(needed, recipe.ApplyMaterialDiscount, materialMultiplier);
+
+            if (availableAmount < adjustedAmount * amount)
                 return false;
         }
         return true;
@@ -66,11 +138,17 @@ public abstract class SharedLatheSystem : EntitySystem
 
     private void OnEmagged(EntityUid uid, EmagLatheRecipesComponent component, ref GotEmaggedEvent args)
     {
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+            return;
+
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
+            return;
+
         args.Handled = true;
     }
 
     public static int AdjustMaterial(int original, bool reduce, float multiplier)
-        => reduce ? (int) MathF.Ceiling(original * multiplier) : original;
+        => reduce ? (int)MathF.Ceiling(original * multiplier) : original;
 
     protected abstract bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component);
 
@@ -84,9 +162,9 @@ public abstract class SharedLatheSystem : EntitySystem
     private void BuildInverseRecipeDictionary()
     {
         InverseRecipes.Clear();
-        foreach (var latheRecipe in _proto.EnumeratePrototypes<LatheRecipePrototype>())
+        foreach (var latheRecipe in ProtoMan.EnumeratePrototypes<LatheRecipePrototype>())
         {
-            if (latheRecipe.Result is not {} result)
+            if (latheRecipe.Result is not { } result)
                 continue;
 
             InverseRecipes.GetOrNew(result).Add(latheRecipe);
@@ -103,7 +181,7 @@ public abstract class SharedLatheSystem : EntitySystem
 
     public string GetRecipeName(ProtoId<LatheRecipePrototype> proto)
     {
-        return GetRecipeName(_proto.Index(proto));
+        return GetRecipeName(ProtoMan.Index(proto));
     }
 
     public string GetRecipeName(LatheRecipePrototype proto)
@@ -111,15 +189,15 @@ public abstract class SharedLatheSystem : EntitySystem
         if (!string.IsNullOrWhiteSpace(proto.Name))
             return Loc.GetString(proto.Name);
 
-        if (proto.Result is {} result)
+        if (proto.Result is { } result)
         {
-            return _proto.Index(result).Name;
+            return ProtoMan.Index(result).Name;
         }
 
         if (proto.ResultReagents is { } resultReagents)
         {
             return ContentLocalizationManager.FormatList(resultReagents
-                .Select(p => Loc.GetString("lathe-menu-result-reagent-display", ("reagent", _proto.Index(p.Key).LocalizedName), ("amount", p.Value)))
+                .Select(p => Loc.GetString("lathe-menu-result-reagent-display", ("reagent", ProtoMan.Index(p.Key).LocalizedName), ("amount", p.Value)))
                 .ToList());
         }
 
@@ -129,7 +207,7 @@ public abstract class SharedLatheSystem : EntitySystem
     [PublicAPI]
     public string GetRecipeDescription(ProtoId<LatheRecipePrototype> proto)
     {
-        return GetRecipeDescription(_proto.Index(proto));
+        return GetRecipeDescription(ProtoMan.Index(proto));
     }
 
     public string GetRecipeDescription(LatheRecipePrototype proto)
@@ -137,16 +215,16 @@ public abstract class SharedLatheSystem : EntitySystem
         if (!string.IsNullOrWhiteSpace(proto.Description))
             return Loc.GetString(proto.Description);
 
-        if (proto.Result is {} result)
+        if (proto.Result is { } result)
         {
-            return _proto.Index(result).Description;
+            return ProtoMan.Index(result).Description;
         }
 
         if (proto.ResultReagents is { } resultReagents)
         {
             // We only use the first one for the description since these descriptions don't combine very well.
             var reagent = resultReagents.First().Key;
-            return _proto.Index(reagent).LocalizedDescription;
+            return ProtoMan.Index(reagent).LocalizedDescription;
         }
 
         return string.Empty;

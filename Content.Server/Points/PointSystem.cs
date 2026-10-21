@@ -10,10 +10,10 @@ using Robust.Shared.Utility;
 namespace Content.Server.Points;
 
 /// <inheritdoc/>
-public sealed class PointSystem : SharedPointSystem
+public sealed partial class PointSystem : SharedPointSystem
 {
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private PvsOverrideSystem _pvsOverride = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -25,7 +25,7 @@ public sealed class PointSystem : SharedPointSystem
 
     private void OnStartup(EntityUid uid, PointManagerComponent component, ComponentStartup args)
     {
-        _pvsOverride.AddGlobalOverride(GetNetEntity(uid));
+        _pvsOverride.AddGlobalOverride(uid);
     }
 
     /// <summary>

@@ -5,9 +5,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public sealed class ControlMob : IConsoleCommand
+    public sealed partial class ControlMob : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private IEntityManager _entities = default!;
 
         public string Command => "controlmob";
         public string Description => Loc.GetString("control-mob-command-description");
@@ -42,6 +42,14 @@ namespace Content.Server.Administration.Commands
             }
 
             _entities.System<MindSystem>().ControlMob(player.UserId, target.Value);
+        }
+
+        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            if (args.Length != 1)
+                return CompletionResult.Empty;
+
+            return CompletionResult.FromOptions(CompletionHelper.NetEntities(args[0], entManager: _entities));
         }
     }
 }

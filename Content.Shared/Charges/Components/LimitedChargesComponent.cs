@@ -1,24 +1,40 @@
 using Content.Shared.Charges.Systems;
+using Content.Shared.Popups;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Charges.Components;
 
-[RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedChargesSystem))]
-[AutoGenerateComponentState]
+/// <summary>
+/// Specifies the attached action has discrete charges, separate to a cooldown.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedChargesSystem))]
 public sealed partial class LimitedChargesComponent : Component
 {
     /// <summary>
-    /// The maximum number of charges
+    /// Localization ID of the popup shown when the entity has no charges left.
     /// </summary>
-    [DataField("maxCharges"), ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
+    [DataField]
+    public LocId? OnFailPopup;
+
+    /// <summary>
+    /// The type the fail popup should show up as.
+    /// </summary>
+    [DataField]
+    public PopupType OnFailPopupType = PopupType.SmallCaution;
+
+    [DataField, AutoNetworkedField]
+    public int LastCharges;
+
+    /// <summary>
+    ///     The max charges this action has.
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public int MaxCharges = 3;
 
     /// <summary>
-    /// The current number of charges
+    /// Last time charges was changed. Used to derive current charges.
     /// </summary>
-    [DataField("charges"), ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
-    public int Charges = 3;
+    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    public TimeSpan LastUpdate;
 }

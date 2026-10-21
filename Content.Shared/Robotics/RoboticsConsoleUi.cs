@@ -1,4 +1,4 @@
-﻿﻿using Robust.Shared.Prototypes;
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Utility;
@@ -17,11 +17,17 @@ public sealed class RoboticsConsoleState : BoundUserInterfaceState
     /// <summary>
     /// Map of device network addresses to cyborg data.
     /// </summary>
-    public Dictionary<string, CyborgControlData> Cyborgs;
+    public Dictionary<LocDeviceAddress, CyborgControlData> Cyborgs;
 
-    public RoboticsConsoleState(Dictionary<string, CyborgControlData> cyborgs)
+    /// <summary>
+    /// If the UI will have the buttons to disable and destroy.
+    /// </summary>
+    public bool AllowBorgControl;
+
+    public RoboticsConsoleState(Dictionary<LocDeviceAddress, CyborgControlData> cyborgs, bool allowBorgControl)
     {
         Cyborgs = cyborgs;
+        AllowBorgControl = allowBorgControl;
     }
 }
 
@@ -31,9 +37,9 @@ public sealed class RoboticsConsoleState : BoundUserInterfaceState
 [Serializable, NetSerializable]
 public sealed class RoboticsConsoleDisableMessage : BoundUserInterfaceMessage
 {
-    public readonly string Address;
+    public readonly DeviceAddress Address;
 
-    public RoboticsConsoleDisableMessage(string address)
+    public RoboticsConsoleDisableMessage(DeviceAddress address)
     {
         Address = address;
     }
@@ -45,9 +51,9 @@ public sealed class RoboticsConsoleDisableMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class RoboticsConsoleDestroyMessage : BoundUserInterfaceMessage
 {
-    public readonly string Address;
+    public readonly DeviceAddress Address;
 
-    public RoboticsConsoleDestroyMessage(string address)
+    public RoboticsConsoleDestroyMessage(DeviceAddress address)
     {
         Address = address;
     }
@@ -58,7 +64,7 @@ public sealed class RoboticsConsoleDestroyMessage : BoundUserInterfaceMessage
 /// Created by <c>BorgTransponderComponent</c> and sent to clients by <c>RoboticsConsoleComponent</c>.
 /// </summary>
 [DataRecord, Serializable, NetSerializable]
-public record struct CyborgControlData
+public partial record struct CyborgControlData
 {
     /// <summary>
     /// Texture of the borg chassis.
@@ -83,6 +89,12 @@ public record struct CyborgControlData
     /// </summary>
     [DataField]
     public float Charge;
+
+    /// <summary>
+    /// HP level from 0 to 1.
+    /// </summary>
+    [DataField]
+    public float HpPercent; // 0.0 to 1.0
 
     /// <summary>
     /// How many modules this borg has, just useful information for roboticists.
@@ -111,24 +123,34 @@ public record struct CyborgControlData
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan Timeout = TimeSpan.Zero;
 
-    public CyborgControlData(SpriteSpecifier? chassisSprite, string chassisName, string name, float charge, int moduleCount, bool hasBrain, bool canDisable)
+    public CyborgControlData(SpriteSpecifier? chassisSprite, string chassisName, string name, float charge, float hpPercent, int moduleCount, bool hasBrain, bool canDisable)
     {
         ChassisSprite = chassisSprite;
         ChassisName = chassisName;
         Name = name;
         Charge = charge;
+        HpPercent = hpPercent;
         ModuleCount = moduleCount;
         HasBrain = hasBrain;
         CanDisable = canDisable;
     }
 }
 
-public static class RoboticsConsoleConstants
-{
-    // broadcast by cyborgs on Robotics Console frequency
-    public const string NET_CYBORG_DATA = "cyborg-data";
+/// <summary>
+/// Disables a borg when received.
+/// </summary>
+public partial record struct RoboticsCyborgDisablePayload : INetworkPayload;
 
-    // sent by robotics console to cyborgs on Cyborg Control frequency
-    public const string NET_DISABLE_COMMAND = "cyborg-disable";
-    public const string NET_DESTROY_COMMAND = "cyborg-destroy";
+/// <summary>
+/// Destroys a borg when received.
+/// </summary>
+public partial record struct RoboticsCyborgDestroyPayload : INetworkPayload;
+
+/// <summary>
+/// A wrapper for <see cref="CyborgControlData"/>
+/// </summary>
+public partial record struct RoboticsCyborgDataPayload : INetworkPayload
+{
+    [DataField]
+    public CyborgControlData Data;
 }

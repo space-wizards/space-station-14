@@ -1,10 +1,8 @@
-﻿using Content.Server.Stack;
+using Content.Server.Stack;
 using Content.Shared.Construction;
-using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Construction.Completions
 {
@@ -12,10 +10,11 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public sealed partial class SpawnPrototype : IGraphAction
     {
-        [DataField("prototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string Prototype { get; private set; } = string.Empty;
-        [DataField("amount")]
-        public int Amount { get; private set; } = 1;
+        [DataField(required: true)]
+        public EntProtoId Prototype;
+
+        [DataField]
+        public int Amount = 1;
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
@@ -24,11 +23,14 @@ namespace Content.Server.Construction.Completions
 
             var coordinates = entityManager.GetComponent<TransformComponent>(uid).Coordinates;
 
-            if (EntityPrototypeHelpers.HasComponent<StackComponent>(Prototype))
+            // TODO: pass the PrototypeManager into IGraphAction.
+            var protoMan = IoCManager.Resolve<IPrototypeManager>();
+
+            if (protoMan.TryIndex(Prototype, out EntityPrototype? proto) && proto.HasComp<StackComponent>(entityManager.ComponentFactory))
             {
                 var stackEnt = entityManager.SpawnEntity(Prototype, coordinates);
                 var stack = entityManager.GetComponent<StackComponent>(stackEnt);
-                entityManager.EntitySysManager.GetEntitySystem<StackSystem>().SetCount(stackEnt, Amount, stack);
+                entityManager.EntitySysManager.GetEntitySystem<StackSystem>().SetCount((stackEnt, stack), Amount);
             }
             else
             {

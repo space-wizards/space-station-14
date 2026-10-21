@@ -10,21 +10,30 @@ namespace Content.Shared.Physics;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class JointVisualsComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite), DataField("sprite", required: true), AutoNetworkedField]
+    /// <summary>
+    /// The sprite to use for the line.
+    /// </summary>
+    [DataField(required: true), AutoNetworkedField]
     public SpriteSpecifier Sprite = default!;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("target"), AutoNetworkedField]
-    public NetEntity? Target;
+    /// <summary>
+    /// The line is drawn between this target and the entity owning the component.
+    /// </summary>
+    /// <summary>
+    /// TODO: WeakEntityReference.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityUid? Target;
 
     /// <summary>
     /// Offset from Body A.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("offsetA"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public Vector2 OffsetA;
 
     /// <summary>
     /// Offset from Body B.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("offsetB"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public Vector2 OffsetB;
 }

@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
@@ -7,7 +8,9 @@ using Content.Server.Mind;
 using Content.Server.Roles;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.Mind;
+using Content.Shared.NPC.Prototypes;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Objectives.Components;
 using Robust.Shared.GameObjects;
@@ -16,31 +19,34 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.GameRules;
 
 [TestFixture]
-public sealed class TraitorRuleTest
+public sealed class TraitorRuleTest : GameTest
 {
     private const string TraitorGameRuleProtoId = "Traitor";
     private const string TraitorAntagRoleName = "Traitor";
+    private static readonly ProtoId<NpcFactionPrototype> SyndicateFaction = "Syndicate";
+    private static readonly ProtoId<NpcFactionPrototype> NanotrasenFaction = "NanoTrasen";
+
+    public override PoolSettings PoolSettings => new()
+    {
+        Dirty = true,
+        DummyTicker = false,
+        Connected = true,
+        InLobby = true,
+    };
 
     [Test]
     public async Task TestTraitorObjectives()
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings()
-        {
-            Dirty = true,
-            DummyTicker = false,
-            Connected = true,
-            InLobby = true,
-        });
+        var pair = Pair;
         var server = pair.Server;
         var client = pair.Client;
         var entMan = server.EntMan;
         var protoMan = server.ProtoMan;
         var compFact = server.ResolveDependency<IComponentFactory>();
-        var ticker = server.System<GameTicker>();
+        var ticker = server.System<ServerGameTicker>();
         var mindSys = server.System<MindSystem>();
         var roleSys = server.System<RoleSystem>();
         var factionSys = server.System<NpcFactionSystem>();
-        var traitorRuleSys = server.System<TraitorRuleSystem>();
 
         // Look up the minimum player count and max total objective difficulty for the game rule
         var minPlayers = 1;
@@ -50,10 +56,10 @@ public sealed class TraitorRuleTest
             Assert.That(protoMan.TryIndex<EntityPrototype>(TraitorGameRuleProtoId, out var gameRuleEnt),
             $"Failed to lookup traitor game rule entity prototype with ID \"{TraitorGameRuleProtoId}\"!");
 
-            Assert.That(gameRuleEnt.TryGetComponent<GameRuleComponent>(out var gameRule, compFact),
+            Assert.That(gameRuleEnt.TryComp<GameRuleComponent>(out var gameRule, compFact),
             $"Game rule entity {TraitorGameRuleProtoId} does not have a GameRuleComponent!");
 
-            Assert.That(gameRuleEnt.TryGetComponent<AntagRandomObjectivesComponent>(out var randomObjectives, compFact),
+            Assert.That(gameRuleEnt.TryComp<AntagRandomObjectivesComponent>(out var randomObjectives, compFact),
             $"Game rule entity {TraitorGameRuleProtoId} does not have an AntagRandomObjectivesComponent!");
 
             minPlayers = gameRule.MinPlayers;
@@ -81,7 +87,7 @@ public sealed class TraitorRuleTest
         await server.WaitPost(() =>
         {
             var gameRuleEnt = ticker.AddGameRule(TraitorGameRuleProtoId);
-            Assert.That(entMan.TryGetComponent<TraitorRuleComponent>(gameRuleEnt, out traitorRule));
+            Assert.That(entMan.TryGetComponent(gameRuleEnt, out traitorRule));
 
             // Ready up
             ticker.ToggleReadyAll(true);
@@ -90,7 +96,7 @@ public sealed class TraitorRuleTest
             // Start the round
             ticker.StartRound();
             // Force traitor mode to start (skip the delay)
-            ticker.StartGameRule(gameRuleEnt);
+            ticker.StartGameRule(gameRuleEnt!.Value);
         });
         await pair.RunTicksSync(10);
 
@@ -108,8 +114,8 @@ public sealed class TraitorRuleTest
         // Make sure the player is a traitor.
         var mind = mindSys.GetMind(player)!.Value;
         Assert.That(roleSys.MindIsAntagonist(mind));
-        Assert.That(factionSys.IsMember(player, "Syndicate"), Is.True);
-        Assert.That(factionSys.IsMember(player, "NanoTrasen"), Is.False);
+        Assert.That(factionSys.IsMember(player, SyndicateFaction), Is.True);
+        Assert.That(factionSys.IsMember(player, NanotrasenFaction), Is.False);
         Assert.That(traitorRule.TotalTraitors, Is.EqualTo(1));
         Assert.That(traitorRule.TraitorMinds[0], Is.EqualTo(mind));
 
@@ -120,9 +126,6 @@ public sealed class TraitorRuleTest
             $"MaxDifficulty exceeded! Objectives: {string.Join(", ", mindComp.Objectives.Select(o => FormatObjective(o, entMan)))}");
         Assert.That(mindComp.Objectives, Is.Not.Empty,
             $"No objectives assigned!");
-
-
-        await pair.CleanReturnAsync();
     }
 
     private static string FormatObjective(Entity<ObjectiveComponent> entity, IEntityManager entMan)

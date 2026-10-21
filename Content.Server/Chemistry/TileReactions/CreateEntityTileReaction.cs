@@ -6,7 +6,6 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using System.Numerics;
 
 namespace Content.Server.Chemistry.TileReactions;
@@ -14,8 +13,8 @@ namespace Content.Server.Chemistry.TileReactions;
 [DataDefinition]
 public sealed partial class CreateEntityTileReaction : ITileReaction
 {
-    [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Entity = default!;
+    [DataField(required: true)]
+    public EntProtoId Entity;
 
     [DataField]
     public FixedPoint2 Usage = FixedPoint2.New(1);
@@ -41,33 +40,33 @@ public sealed partial class CreateEntityTileReaction : ITileReaction
         IEntityManager entityManager,
         List<ReagentData>? data)
     {
-        if (reactVolume >= Usage)
+        if (reactVolume < Usage)
+            return FixedPoint2.Zero;
+
+        if (Whitelist != null)
         {
-            if (Whitelist != null)
+            var lookup = entityManager.System<EntityLookupSystem>();
+
+            int acc = 0;
+            foreach (var ent in lookup.GetEntitiesInTile(tile, LookupFlags.Static))
             {
-                int acc = 0;
-                foreach (var ent in tile.GetEntitiesInTile())
-                {
-                    var whitelistSystem = entityManager.System<EntityWhitelistSystem>();
-                    if (whitelistSystem.IsWhitelistPass(Whitelist, ent))
-                        acc += 1;
+                var whitelistSystem = entityManager.System<EntityWhitelistSystem>();
+                if (whitelistSystem.IsWhitelistPass(Whitelist, ent))
+                    acc += 1;
 
-                    if (acc >= MaxOnTile)
-                        return FixedPoint2.Zero;
-                }
+                if (acc >= MaxOnTile)
+                    return FixedPoint2.Zero;
             }
-
-            var random = IoCManager.Resolve<IRobustRandom>();
-            var xoffs = random.NextFloat(-RandomOffsetMax, RandomOffsetMax);
-            var yoffs = random.NextFloat(-RandomOffsetMax, RandomOffsetMax);
-
-            var center = entityManager.System<TurfSystem>().GetTileCenter(tile);
-            var pos = center.Offset(new Vector2(xoffs, yoffs));
-            entityManager.SpawnEntity(Entity, pos);
-
-            return Usage;
         }
 
-        return FixedPoint2.Zero;
+        var random = IoCManager.Resolve<IRobustRandom>();
+        var xoffs = random.NextFloat(-RandomOffsetMax, RandomOffsetMax);
+        var yoffs = random.NextFloat(-RandomOffsetMax, RandomOffsetMax);
+
+        var center = entityManager.System<TurfSystem>().GetTileCenter(tile);
+        var pos = center.Offset(new Vector2(xoffs, yoffs));
+        entityManager.SpawnEntity(Entity, pos);
+
+        return Usage;
     }
 }

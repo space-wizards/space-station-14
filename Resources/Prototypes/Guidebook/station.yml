@@ -1,17 +1,31 @@
 - type: guideEntry
   id: SS14
   name: guide-entry-ss14
+  priority: 20
   text: "/ServerInfo/Guidebook/SpaceStation14.xml"
   children:
   - Jobs
-  - Survival
   - Antagonists
+  - SpaceLaw
+  - Survival
   - Glossary
 
 - type: guideEntry
   id: Glossary
   name: guide-entry-glossary
   text: "/ServerInfo/Guidebook/Glossary.xml"
+
+- type: guideEntry
+  id: SpaceLaw
+  name: guide-entry-rules-space-law
+  text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SpaceLaw.xml"
+  children:
+  - SpaceLawCrimeList
+
+- type: guideEntry
+  id: SpaceLawCrimeList
+  name: guide-entry-rules-sl-crime-list
+  text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SLCrimeList.xml"
 
 - type: guideEntry
   id: Survival

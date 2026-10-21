@@ -11,11 +11,11 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
 
-public sealed class TileAnomalySystem : SharedTileAnomalySystem
+public sealed partial class TileAnomalySystem : SharedTileAnomalySystem
 {
-    [Dependency] private readonly SharedAnomalySystem _anomaly = default!;
-    [Dependency] private readonly ITileDefinitionManager _tiledef = default!;
-    [Dependency] private readonly TileSystem _tile = default!;
+    [Dependency] private SharedAnomalySystem _anomaly = default!;
+    [Dependency] private ITileDefinitionManager _tiledef = default!;
+    [Dependency] private TileSystem _tile = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -84,10 +84,6 @@ public sealed class TileAnomalySystem : SharedTileAnomalySystem
 
     private void SpawnTiles(Entity<TileSpawnAnomalyComponent> anomaly, TileSpawnSettingsEntry entry, float stability, float severity, float powerMod)
     {
-        var xform = Transform(anomaly);
-        if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
-            return;
-
         var tiles = _anomaly.GetSpawningPoints(anomaly, stability, severity, entry.Settings, powerMod);
         if (tiles == null)
             return;

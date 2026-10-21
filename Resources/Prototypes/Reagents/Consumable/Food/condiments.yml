@@ -19,6 +19,15 @@
   recognizable: true
 
 - type: reagent
+  id: Coldsauce
+  name: reagent-name-coldsauce
+  group: Foods
+  desc: reagent-desc-coldsauce
+  physicalDesc: reagent-physical-desc-cold
+  flavor: cold
+  color: skyblue
+
+- type: reagent
   id: Cornoil
   name: reagent-name-cornoil
   group: Foods
@@ -27,15 +36,6 @@
   flavor: oily
   color: yellow
   recognizable: true
-
-- type: reagent
-  id: Frostoil
-  name: reagent-name-frostoil
-  group: Foods
-  desc: reagent-desc-frostoil
-  physicalDesc: reagent-physical-desc-cold
-  flavor: cold
-  color: skyblue
 
 - type: reagent
   id: HorseradishSauce
@@ -127,11 +127,13 @@
   color: saddlebrown
   recognizable: true
   metabolisms:
-    Food:
+    Digestion:
       effects:
-      - !type:SatiateHunger
+      - !type:Satiate
+        satiationType: Hunger
         factor: 0.5
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: -0.5 # high salt content
 
 - type: reagent
@@ -159,10 +161,11 @@
   - !type:PlantAdjustHealth
     amount: -2
   metabolisms:
-    Food:
+    Digestion:
       effects:
       # eating salt on its own kinda sucks, kids
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: -0.5
 
 - type: reagent
@@ -174,17 +177,17 @@
   color: "#fb7125"
   recognizable: true
   physicalDesc: reagent-physical-desc-sticky
-  slippery: false
   viscosity: 0.55 #Start using syrup to attach your remote recievers to your microwaves!
   tileReactions:
     - !type:SpillTileReaction
   metabolisms:
-    Food:
+    Digestion:
       # 12 diona blood for 1 unit of syrup, this stuff better be worthwhile.
       effects:
-      - !type:SatiateHunger
+      - !type:Satiate
+        satiationType: Hunger
         factor: 6.0 #Stronger than cookedramen
   footstepSound:
-    collection: FootstepBlood
+    collection: FootstepSlime
     params:
       volume: 6

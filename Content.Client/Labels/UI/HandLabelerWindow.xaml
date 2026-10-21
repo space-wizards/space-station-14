@@ -1,8 +1,14 @@
 <DefaultWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            Title="{Loc 'hand-labeler-ui-header'}">
-    <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
+            Title="{Loc 'hand-labeler-ui-header'}"
+            SetWidth="400"
+            MinWidth="150">
+    <BoxContainer Orientation="Vertical" SeparationOverride="4">
         <Label Name="CurrentTextLabel" Text="{Loc 'hand-labeler-current-text-label'}" />
         <LineEdit Name="LabelLineEdit" />
+        <BoxContainer Orientation="Horizontal" Align="Center">
+            <Button Name="ResetLabelButton" Text="{Loc 'hand-labeler-ui-reset-label-text'}" StyleClasses="OpenRight" />
+            <Button Name="ClearLabelButton" Text="{Loc 'hand-labeler-ui-clear-label-text'}" StyleClasses="OpenLeft" />
+        </BoxContainer>
     </BoxContainer>
 </DefaultWindow>

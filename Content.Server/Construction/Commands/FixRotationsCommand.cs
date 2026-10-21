@@ -1,17 +1,22 @@
 using Content.Server.Administration;
-using Content.Server.Power.Components;
 using Content.Shared.Administration;
 using Content.Shared.Construction;
+using Content.Shared.Power.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Console;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Construction.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
-public sealed class FixRotationsCommand : IConsoleCommand
+public sealed partial class FixRotationsCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+
+    private static readonly ProtoId<TagPrototype> ForceFixRotationsTag = "ForceFixRotations";
+    private static readonly ProtoId<TagPrototype> ForceNoFixRotationsTag = "ForceNoFixRotations";
+    private static readonly ProtoId<TagPrototype> DiagonalTag = "Diagonal";
 
     // ReSharper disable once StringLiteralTypo
     public string Command => "fixrotations";
@@ -23,6 +28,7 @@ public sealed class FixRotationsCommand : IConsoleCommand
         var player = shell.Player;
         EntityUid? gridId;
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
+        var xformSystem = _entManager.System<SharedTransformSystem>();
 
         switch (args.Length)
         {
@@ -86,9 +92,11 @@ public sealed class FixRotationsCommand : IConsoleCommand
             // cables
             valid |= _entManager.HasComponent<CableComponent>(child);
             // anything else that might need this forced
-            valid |= tagSystem.HasTag(child, "ForceFixRotations");
+            valid |= tagSystem.HasTag(child, ForceFixRotationsTag);
             // override
-            valid &= !tagSystem.HasTag(child, "ForceNoFixRotations");
+            valid &= !tagSystem.HasTag(child, ForceNoFixRotationsTag);
+            // remove diagonal entities as well
+            valid &= !tagSystem.HasTag(child, DiagonalTag);
 
             if (!valid)
                 continue;
@@ -97,7 +105,7 @@ public sealed class FixRotationsCommand : IConsoleCommand
 
             if (childXform.LocalRotation != Angle.Zero)
             {
-                childXform.LocalRotation = Angle.Zero;
+                xformSystem.SetLocalRotationNoLerp(child, Angle.Zero, childXform);
                 changed++;
             }
         }

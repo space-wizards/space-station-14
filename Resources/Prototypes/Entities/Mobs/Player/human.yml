@@ -1,9 +1,3 @@
-- type: entity
-  save: false
-  name: Urist McHands
-  parent: BaseMobHuman
-  id: MobHuman
-
 #Syndie
 - type: entity
   parent: MobHuman
@@ -13,12 +7,14 @@
   components:
   - type: RandomHumanoidAppearance
     randomizeName: false
-    hair: HairBald
   - type: Loadout
     prototypes: [SyndicateOperativeGearExtremelyBasic]
     roleLoadout: [ RoleSurvivalSyndicate ]
   - type: RandomMetadata
-    nameSegments: [names_death_commando]
+    nameSegments:
+    - NamesDeathCommandoFirst
+    - NamesDeathCommandoLast
+    nameFormat: name-format-standard
   - type: NpcFactionMember
     factions:
     - Syndicate
@@ -34,16 +30,27 @@
     profile: TraitorReinforcement
 
 - type: entity
-  parent: MobHumanSyndicateAgent
+  abstract: true
+  parent: MobHuman
+  id: MobHumanSyndicateReinforcement
+  components:
+  - type: RandomHumanoidAppearance
+    randomizeName: true
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+
+- type: entity
+  parent: MobHumanSyndicateReinforcement
   id: MobHumanSyndicateAgentMedic
-  name: syndicate medic
+  name: syndicate combat medic
   components:
   - type: Loadout
     prototypes: [SyndicateReinforcementMedic]
     roleLoadout: [ RoleSurvivalSyndicate ]
 
 - type: entity
-  parent: MobHumanSyndicateAgent
+  parent: MobHumanSyndicateReinforcement
   id: MobHumanSyndicateAgentSpy
   name: syndicate spy
   components:
@@ -52,7 +59,7 @@
     roleLoadout: [ RoleSurvivalSyndicate ]
 
 - type: entity
-  parent: MobHumanSyndicateAgent
+  parent: MobHumanSyndicateReinforcement
   id: MobHumanSyndicateAgentThief
   name: syndicate thief
   components:
@@ -68,8 +75,8 @@
   - type: NukeOperative
   - type: RandomMetadata
     nameSegments:
-    - nukeops-role-operator
-    - SyndicateNamesNormal
+    - NamesSyndicateNormal
+    nameFormat: name-format-nukie-operator
   - type: Loadout
     prototypes: [SyndicateOperativeGearFullNoUplink]
 
@@ -97,8 +104,21 @@
     roleLoadout: [ RoleSurvivalSyndicate ]
   - type: RandomMetadata
     nameSegments:
-    - SyndicateNamesPrefix
-    - SyndicateNamesNormal
+    - NamesSyndicatePrefix
+    - NamesSyndicateNormal
+    nameFormat: name-format-nukie-generic
   - type: NpcFactionMember
     factions:
     - Syndicate
+
+# Wizard
+- type: entity
+  categories: [ HideSpawnMenu ]
+  name: Wizard
+  parent: MobHuman
+  id: MobHumanWizard
+  components:
+  - type: RandomHumanoidAppearance
+  - type: NpcFactionMember
+    factions:
+    - Wizard

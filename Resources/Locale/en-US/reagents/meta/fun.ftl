@@ -10,8 +10,8 @@ reagent-desc-buzzochloric-bees = Liquid bees. Oh god it's LIQUID BEES NO-
 reagent-name-ground-bee = ground Bee
 reagent-desc-ground-bee = Bee grounds. Gross.
 
-reagent-name-saxoite = saxoite
-reagent-desc-saxoite = Smells like jazz.
+reagent-name-brass = brass
+reagent-desc-brass = Smells like clockwork.
 
 reagent-name-licoxide = licoxide
 reagent-desc-licoxide = A synthetic battery acid. It looks... electrifying.
@@ -27,3 +27,12 @@ reagent-desc-laughter = Some say that this is the best medicine, but recent stud
 
 reagent-name-weh = juice that makes you Weh
 reagent-desc-weh = Pure essence of lizard plush. Makes you Weh!
+
+reagent-name-hew = juice that makes you Hew
+reagent-desc-hew = Pure essence of inversed lizard plush. Makes you Hew!
+
+reagent-name-catessence = felinase
+reagent-desc-catessence = A type of carcinogenic enzyme known to break down proteins found within the vocal cords of most animals. Also grants cat-style night vision. Mixing is NOT recommended.
+
+reagent-name-canidessence = caninase
+reagent-desc-canidessence = A type of carcinogenic enzyme known to break down proteins found within the vocal cords of most animals. Mixing is NOT recommended.

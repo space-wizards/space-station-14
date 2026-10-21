@@ -8,6 +8,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
@@ -17,17 +18,16 @@ namespace Content.Shared.Teleportation.Systems;
 /// <summary>
 /// This handles <see cref="SwapTeleporterComponent"/>
 /// </summary>
-public sealed class SwapTeleporterSystem : EntitySystem
+public sealed partial class SwapTeleporterSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-
-    private EntityQuery<TransformComponent> _xformQuery;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -38,8 +38,6 @@ public sealed class SwapTeleporterSystem : EntitySystem
         SubscribeLocalEvent<SwapTeleporterComponent, ExaminedEvent>(OnExamined);
 
         SubscribeLocalEvent<SwapTeleporterComponent, ComponentShutdown>(OnShutdown);
-
-        _xformQuery = GetEntityQuery<TransformComponent>();
     }
 
     private void OnInteract(Entity<SwapTeleporterComponent> ent, ref AfterInteractEvent args)
@@ -61,13 +59,13 @@ public sealed class SwapTeleporterSystem : EntitySystem
 
         if (comp.LinkedEnt != null)
         {
-            _popup.PopupClient(Loc.GetString("swap-teleporter-popup-link-fail-already"), uid, args.User);
+            _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-link-fail-already"), uid, args.User);
             return;
         }
 
         if (targetComp.LinkedEnt != null)
         {
-            _popup.PopupClient(Loc.GetString("swap-teleporter-popup-link-fail-already-other"), uid, args.User);
+            _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-link-fail-already-other"), uid, args.User);
             return;
         }
 
@@ -77,7 +75,7 @@ public sealed class SwapTeleporterSystem : EntitySystem
         Dirty(target, targetComp);
         _appearance.SetData(uid, SwapTeleporterVisuals.Linked, true);
         _appearance.SetData(target, SwapTeleporterVisuals.Linked, true);
-        _popup.PopupClient(Loc.GetString("swap-teleporter-popup-link-create"), uid, args.User);
+        _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-link-create"), uid, args.User);
     }
 
     private void OnGetAltVerb(Entity<SwapTeleporterComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -113,7 +111,7 @@ public sealed class SwapTeleporterSystem : EntitySystem
 
         if (comp.LinkedEnt == null)
         {
-            _popup.PopupClient(Loc.GetString("swap-teleporter-popup-teleport-cancel-link"), ent, user);
+            _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-teleport-cancel-link"), ent, user);
             return;
         }
 
@@ -126,7 +124,7 @@ public sealed class SwapTeleporterSystem : EntitySystem
 
         if (_timing.CurTime < comp.NextTeleportUse)
         {
-            _popup.PopupClient(Loc.GetString("swap-teleporter-popup-teleport-cancel-time"), ent, user);
+            _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-teleport-cancel-time"), ent, user);
             return;
         }
 
@@ -145,19 +143,16 @@ public sealed class SwapTeleporterSystem : EntitySystem
         comp.TeleportTime = null;
 
         Dirty(uid, comp);
-        if (comp.LinkedEnt is not { } linkedEnt)
-        {
+        // We can't run the teleport logic on the client due to PVS range issues.
+        if (_net.IsClient || comp.LinkedEnt is not { } linkedEnt)
             return;
-        }
 
         var teleEnt = GetTeleportingEntity((uid, xform));
         var otherTeleEnt = GetTeleportingEntity((linkedEnt, Transform(linkedEnt)));
+        var teleXform = Transform(teleEnt);
+        var otherTeleXform = Transform(otherTeleEnt);
 
-        _container.TryGetOuterContainer(teleEnt, Transform(teleEnt), out var cont);
-        _container.TryGetOuterContainer(otherTeleEnt, Transform(otherTeleEnt), out var otherCont);
-
-        if (otherCont != null && !_container.CanInsert(teleEnt, otherCont) ||
-            cont != null && !_container.CanInsert(otherTeleEnt, cont))
+        if (!CanSwapTeleport((teleEnt, teleXform), (otherTeleEnt, otherTeleXform)))
         {
             _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-teleport-fail",
                 ("entity", Identity.Entity(linkedEnt, EntityManager))),
@@ -167,12 +162,32 @@ public sealed class SwapTeleporterSystem : EntitySystem
             return;
         }
 
-        _popup.PopupClient(Loc.GetString("swap-teleporter-popup-teleport-other",
+        _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-teleport-other",
             ("entity", Identity.Entity(linkedEnt, EntityManager))),
             teleEnt,
             otherTeleEnt,
             PopupType.MediumCaution);
         _transform.SwapPositions(teleEnt, otherTeleEnt);
+    }
+
+    /// <summary>
+    /// Checks if two entities are able to swap positions via the teleporter.
+    /// </summary>
+    private bool CanSwapTeleport(
+        Entity<TransformComponent> entity1,
+        Entity<TransformComponent> entity2)
+    {
+        _container.TryGetOuterContainer(entity1, entity1, out var container1);
+        _container.TryGetOuterContainer(entity2, entity2, out var container2);
+
+        if (container2 != null && !_container.CanInsert(entity1, container2) ||
+            container1 != null && !_container.CanInsert(entity2, container1))
+            return false;
+
+        if (IsPaused(entity1) || IsPaused(entity2))
+            return false;
+
+        return true;
     }
 
     /// <remarks>
@@ -190,7 +205,7 @@ public sealed class SwapTeleporterSystem : EntitySystem
         Dirty(ent, ent.Comp);
 
         if (user != null)
-            _popup.PopupClient(Loc.GetString("swap-teleporter-popup-link-destroyed"), ent, user.Value);
+            _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-link-destroyed"), ent, user.Value);
         else
             _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-link-destroyed"), ent);
 
@@ -205,7 +220,7 @@ public sealed class SwapTeleporterSystem : EntitySystem
         if (HasComp<MapGridComponent>(parent) || HasComp<MapComponent>(parent))
             return ent;
 
-        if (!_xformQuery.TryGetComponent(parent, out var parentXform) || parentXform.Anchored)
+        if (!TryComp(parent, out TransformComponent? parentXform) || parentXform.Anchored)
             return ent;
 
         if (!TryComp<PhysicsComponent>(parent, out var body) || body.BodyType == BodyType.Static)

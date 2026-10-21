@@ -1,0 +1,40 @@
+- type: paintableGroup
+  id: AirlockStandard
+  time: 3
+  cost: 3
+  defaultStyle: basic
+  styles:
+    atmospherics: AirlockAtmospherics
+    basic: Airlock
+    cargo: AirlockCargo
+    chemistry: AirlockChemistry
+    command: AirlockCommand
+    engineering: AirlockEngineering
+    freezer: AirlockFreezer
+    hydroponics: AirlockHydroponics
+    maintenance: AirlockMaint
+    medical: AirlockMedical
+    salvage: AirlockSalvage
+    science: AirlockScience
+    security: AirlockSecurity
+    virology: AirlockVirology
+
+- type: paintableGroup
+  id: AirlockGlass
+  time: 3
+  cost: 3
+  defaultStyle: basic
+  styles:
+    atmospherics: AirlockAtmosphericsGlass
+    basic: AirlockGlass
+    cargo: AirlockCargoGlass
+    chemistry: AirlockChemistryGlass
+    command: AirlockCommandGlass
+    engineering: AirlockEngineeringGlass
+    hydroponics: AirlockHydroponicsGlass
+    maintenance: AirlockMaintGlass
+    medical: AirlockMedicalGlass
+    salvage: AirlockSalvageGlass
+    science: AirlockScienceGlass
+    security: AirlockSecurityGlass
+    virology: AirlockVirologyGlass

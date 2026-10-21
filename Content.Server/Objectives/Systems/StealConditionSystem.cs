@@ -1,12 +1,10 @@
 using Content.Server.Objectives.Components;
-using Content.Server.Objectives.Components.Targets;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.Interaction;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
@@ -16,25 +14,22 @@ using Content.Shared.Stacks;
 
 namespace Content.Server.Objectives.Systems;
 
-public sealed class StealConditionSystem : EntitySystem
+public sealed partial class StealConditionSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-
-    private EntityQuery<ContainerManagerComponent> _containerQuery;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private SharedObjectivesSystem _objectives = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private EntityQuery<ContainerManagerComponent> _containerQuery = default!;
 
     private HashSet<Entity<TransformComponent>> _nearestEnts = new();
+    private HashSet<EntityUid> _countedItems = new();
 
     public override void Initialize()
     {
         base.Initialize();
-
-        _containerQuery = GetEntityQuery<ContainerManagerComponent>();
 
         SubscribeLocalEvent<StealConditionComponent, ObjectiveAssignedEvent>(OnAssigned);
         SubscribeLocalEvent<StealConditionComponent, ObjectiveAfterAssignEvent>(OnAfterAssign);
@@ -44,31 +39,32 @@ public sealed class StealConditionSystem : EntitySystem
     /// start checks of target acceptability, and generation of start values.
     private void OnAssigned(Entity<StealConditionComponent> condition, ref ObjectiveAssignedEvent args)
     {
-        List<StealTargetComponent?> targetList = new();
+        var minSize = condition.Comp.MinCollectionSize;
+        var maxSize = condition.Comp.MaxCollectionSize;
 
-        var query = AllEntityQuery<StealTargetComponent>();
-        while (query.MoveNext(out var target))
+        if (condition.Comp.VerifyMapExistence)
         {
-            if (condition.Comp.StealGroup != target.StealGroup)
-                continue;
+            // TODO: Use entity pools someday
+            List<StealTargetComponent?> targetList = new();
 
-            targetList.Add(target);
+            var query = AllEntityQuery<StealTargetComponent>();
+            while (query.MoveNext(out var target))
+            {
+                if (!target.StealGroup.Contains(condition.Comp.StealGroup))
+                    continue;
+
+                targetList.Add(target);
+            }
+
+            if (targetList.Count == 0)
+            {
+                args.Cancelled = true;
+                return;
+            }
+
+            maxSize = Math.Min(targetList.Count, maxSize);
+            minSize = Math.Min(targetList.Count, minSize);
         }
-
-        // cancel if the required items do not exist
-        if (targetList.Count == 0 && condition.Comp.VerifyMapExistence)
-        {
-            args.Cancelled = true;
-            return;
-        }
-
-        //setup condition settings
-        var maxSize = condition.Comp.VerifyMapExistence
-            ? Math.Min(targetList.Count, condition.Comp.MaxCollectionSize)
-            : condition.Comp.MaxCollectionSize;
-        var minSize = condition.Comp.VerifyMapExistence
-            ? Math.Min(targetList.Count, condition.Comp.MinCollectionSize)
-            : condition.Comp.MinCollectionSize;
 
         condition.Comp.CollectionSize = _random.Next(minSize, maxSize);
     }
@@ -76,10 +72,10 @@ public sealed class StealConditionSystem : EntitySystem
     //Set the visual, name, icon for the objective.
     private void OnAfterAssign(Entity<StealConditionComponent> condition, ref ObjectiveAfterAssignEvent args)
     {
-        var group = _proto.Index(condition.Comp.StealGroup);
+        var group = ProtoMan.Index(condition.Comp.StealGroup);
         string localizedName = Loc.GetString(group.Name);
 
-        var title =condition.Comp.OwnerText == null
+        var title = condition.Comp.OwnerText == null
             ? Loc.GetString(condition.Comp.ObjectiveNoOwnerText, ("itemName", localizedName))
             : Loc.GetString(condition.Comp.ObjectiveText, ("owner", Loc.GetString(condition.Comp.OwnerText)), ("itemName", localizedName));
 
@@ -93,16 +89,18 @@ public sealed class StealConditionSystem : EntitySystem
     }
     private void OnGetProgress(Entity<StealConditionComponent> condition, ref ObjectiveGetProgressEvent args)
     {
-        args.Progress = GetProgress(args.Mind, condition);
+        args.Progress = GetProgress((args.MindId, args.Mind), condition);
     }
 
-    private float GetProgress(MindComponent mind, StealConditionComponent condition)
+    private float GetProgress(Entity<MindComponent> mind, StealConditionComponent condition)
     {
-        if (!_containerQuery.TryGetComponent(mind.OwnedEntity, out var currentManager))
+        if (!_containerQuery.TryGetComponent(mind.Comp.OwnedEntity, out var currentManager))
             return 0;
 
         var containerStack = new Stack<ContainerManagerComponent>();
         var count = 0;
+
+        _countedItems.Clear();
 
         //check stealAreas
         if (condition.CheckStealAreas)
@@ -126,7 +124,7 @@ public sealed class StealConditionSystem : EntitySystem
         }
 
         //check pulling object
-        if (TryComp<PullerComponent>(mind.OwnedEntity, out var pull)) //TO DO: to make the code prettier? don't like the repetition
+        if (TryComp<PullerComponent>(mind.Comp.OwnedEntity, out var pull)) //TO DO: to make the code prettier? don't like the repetition
         {
             var pulledEntity = pull.Pulling;
             if (pulledEntity != null)
@@ -153,7 +151,7 @@ public sealed class StealConditionSystem : EntitySystem
             }
         } while (containerStack.TryPop(out currentManager));
 
-        var result = count / (float) condition.CollectionSize;
+        var result = count / (float)condition.CollectionSize;
         result = Math.Clamp(result, 0, 1);
         return result;
     }
@@ -174,11 +172,14 @@ public sealed class StealConditionSystem : EntitySystem
 
     private int CheckStealTarget(EntityUid entity, StealConditionComponent condition)
     {
+        if (_countedItems.Contains(entity))
+            return 0;
+
         // check if this is the target
         if (!TryComp<StealTargetComponent>(entity, out var target))
             return 0;
 
-        if (target.StealGroup != condition.StealGroup)
+        if (!target.StealGroup.Contains(condition.StealGroup))
             return 0;
 
         // check if cartridge is installed
@@ -195,6 +196,8 @@ public sealed class StealConditionSystem : EntitySystem
                     return 0;
             }
         }
+
+        _countedItems.Add(entity);
 
         return TryComp<StackComponent>(entity, out var stack) ? stack.Count : 1;
     }

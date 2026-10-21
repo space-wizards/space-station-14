@@ -2,7 +2,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.DeviceLinking;
 
-
 /// <summary>
 /// Types of logic gates that can be used, determines how the output port is set.
 /// </summary>
@@ -39,4 +38,16 @@ public enum LogicGateLayers : byte
     InputA,
     InputB,
     Output
+}
+
+/// <summary>
+/// The possible states of a logic-capable signal.
+/// Stored in network payload data of device network messages.
+/// </summary>
+[Serializable, NetSerializable]
+public enum SignalState : byte
+{
+    Momentary, // Instantaneous pulse high, compatibility behavior
+    Low,
+    High,
 }

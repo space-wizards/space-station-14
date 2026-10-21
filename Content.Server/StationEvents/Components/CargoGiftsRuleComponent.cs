@@ -1,4 +1,4 @@
-﻿using Content.Server.StationEvents.Events;
+using Content.Server.StationEvents.Events;
 using Content.Shared.Cargo.Prototypes;
 using Robust.Shared.Prototypes;
 
@@ -33,6 +33,12 @@ public sealed partial class CargoGiftsRuleComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public LocId Dest = "cargo-gift-default-dest";
+
+    /// <summary>
+    /// Account the gifts are deposited into
+    /// </summary>
+    [DataField]
+    public ProtoId<CargoAccountPrototype> Account = "Cargo";
 
     /// <summary>
     /// Cargo that you would like gifted to the station, with the quantity for each

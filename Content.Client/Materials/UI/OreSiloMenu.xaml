@@ -1,0 +1,35 @@
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+                     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                     xmlns:ui="clr-namespace:Content.Client.Materials.UI"
+                     Title="{Loc 'ore-silo-ui-title'}"
+                     MinSize="600 260"
+                     SetSize="700 400">
+    <BoxContainer Orientation="Horizontal"
+                  HorizontalExpand="True"
+                  VerticalExpand="True"
+                  Margin="10 10 10 10">
+        <BoxContainer VerticalExpand="True"
+                      HorizontalExpand="True"
+                      Orientation="Vertical"
+                      SizeFlagsStretchRatio="2">
+            <Label Text="{Loc 'ore-silo-ui-label-clients'}" Margin="5 5 5 5" HorizontalAlignment="Center" StyleClasses="LabelKeyText"/>
+            <PanelContainer VerticalExpand="True" StyleClasses="PanelDeep">
+                <ItemList Name="ClientList" SelectMode="Button" VerticalExpand="True"/>
+            </PanelContainer>
+        </BoxContainer>
+        <BoxContainer VerticalExpand="True"
+                      HorizontalExpand="True"
+                      Orientation="Vertical"
+                      SizeFlagsStretchRatio="3">
+            <Label Text="{Loc 'ore-silo-ui-label-mats'}" Margin="5 5 5 5" HorizontalAlignment="Center" StyleClasses="LabelKeyText"/>
+            <PanelContainer VerticalExpand="True" StyleClasses="PanelDeep">
+                <BoxContainer
+                    Orientation="Vertical"
+                    VerticalExpand="True"
+                    HorizontalExpand="True">
+                    <ui:MaterialStorageControl Name="Materials"/>
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

@@ -1,29 +1,29 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Atmos.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Singularity.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Radiation.Events;
 using Content.Shared.Singularity.Components;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Singularity.EntitySystems;
 
-public sealed class RadiationCollectorSystem : EntitySystem
+public sealed partial class RadiationCollectorSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedContainerSystem _containerSystem = default!;
+    [Dependency] private UseDelaySystem _useDelay = default!;
 
     private const string GasTankContainer = "gas_tank";
 
@@ -47,7 +47,7 @@ public sealed class RadiationCollectorSystem : EntitySystem
         if (!_containerSystem.TryGetContainer(uid, GasTankContainer, out var container) || container.ContainedEntities.Count == 0)
             return false;
 
-        if (!EntityManager.TryGetComponent(container.ContainedEntities.First(), out gasTankComponent))
+        if (!TryComp(container.ContainedEntities.First(), out gasTankComponent))
             return false;
 
         return true;
@@ -67,7 +67,10 @@ public sealed class RadiationCollectorSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, RadiationCollectorComponent component, ActivateInWorldEvent args)
     {
-        if (TryComp(uid, out UseDelayComponent? useDelay) && !_useDelay.TryResetDelay((uid, useDelay), true))
+        if (!args.Complex)
+            return;
+
+        if (!_useDelay.TryResetDelay(uid, true))
             return;
 
         ToggleCollector(uid, args.User, component);

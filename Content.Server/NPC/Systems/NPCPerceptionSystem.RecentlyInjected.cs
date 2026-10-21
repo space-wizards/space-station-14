@@ -1,4 +1,4 @@
-using Content.Server.NPC.Components;
+using Content.Shared.NPC.Components;
 
 namespace Content.Server.NPC.Systems;
 

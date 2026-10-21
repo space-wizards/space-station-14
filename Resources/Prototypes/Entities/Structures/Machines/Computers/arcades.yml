@@ -5,24 +5,20 @@
   name: arcade
   parent: BaseComputer
   components:
-  - type: ApcPowerReceiver
-    powerLoad: 350
   - type: ExtensionCableReceiver
   - type: PointLight
     radius: 1.8
-    energy: 1.6
+    energy: 3.0
     color: "#3db83b"
   - type: LitOnPowered
+  - type: ComputerVisuals
+    stateFrame: arcade
+    stateKeyboard: null
+    stateScreen: screen_invaders
+    stateKeys: null
+    statePanel: panel
   - type: Sprite
     sprite: Structures/Machines/arcade.rsi
-    layers:
-    - map: ["computerLayerBody"]
-      state: arcade
-    - map: ["computerLayerScreen"]
-      state: screen_invaders
-    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
-      state: panel
-      visible: false
   - type: Icon
     sprite: Structures/Machines/arcade.rsi
     state: arcade
@@ -36,6 +32,9 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: Vending
+  - type: SpookySpeaker
+    messageSet: SpookySpeakerMessagesGeneric
+    speakChance: 0.2
   - type: Anchorable
   - type: Pullable
   - type: StaticPrice
@@ -56,16 +55,8 @@
   name: space villain arcade
   parent: ArcadeBase
   components:
-  - type: Sprite
-    sprite: Structures/Machines/arcade.rsi
-    layers:
-    - map: ["computerLayerBody"]
-      state: arcade
-    - map: ["computerLayerScreen"]
-      state: screen_spacevillain
-    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
-      state: panel
-      visible: false
+  - type: ComputerVisuals
+    stateScreen: screen_spacevillain
   - type: PointLight
     color: "#e3a136"
   - type: SpaceVillainArcade
@@ -85,7 +76,7 @@
     - FoamBlade
     - FoamCutlass
     - Football
-    - GlowstickBase #green
+    - GlowstickGreen
     - GlowstickBlue
     - GlowstickYellow
     - GlowstickPurple
@@ -111,6 +102,7 @@
     - PlushieSnake
     - PlushieArachind
     - PlushieMoth
+    - PlushieVulp
     - PlushieHampter
     - PlushiePenguin
     - PlushieHuman
@@ -122,20 +114,23 @@
     - PlushieSharkBlue
     - PlushieVox
     - PlushieXeno
+    - PlushieSpaceSheep
+    - PlushieSheep
     - PlasticBanana
     - RevolverCapGun
     - SnapPopBox
+    - TennisBall
     - ToyMouse
     - ToyAi
     - ToyNuke
-    - ToyGriffin
+    - ToyFigurineGriffin
     - ToyHonk
     - ToyIan
     - ToyMarauder
     - ToyMauler
     - ToyGygax
     - ToyOdysseus
-    - ToyOwlman
+    - ToyFigurineOwlman
     - ToyDeathRipley
     - ToyPhazon
     - ToyFireRipley
@@ -143,7 +138,7 @@
     - ToyRipley
     - ToySeraph
     - ToyDurand
-    - ToySkeleton
+    - ToyFigurineSkeleton
     - ToySword
     - ToyAmongPequeno
     - ToyRubberDuck
@@ -167,10 +162,12 @@
         type: WiresBoundUserInterface
   - type: Computer
     board: SpaceVillainArcadeComputerCircuitboard
-  - type: Advertise
-    pack: SpaceVillainAds
-    minimumWait: 60 # Arcades are noisy
-    maximumWait: 240
+  - type: Vocalizer
+    minVocalizeInterval: 1m # Arcades are noisy
+    maxVocalizeInterval: 4m
+    hideChat: true
+  - type: DatasetVocalizer
+    dataset: SpaceVillainAds
   - type: SpeakOnUIClosed
     pack: SpaceVillainGoodbyes
 
@@ -189,16 +186,8 @@
   name: NT block game
   parent: ArcadeBase
   components:
-  - type: Sprite
-    sprite: Structures/Machines/arcade.rsi
-    layers:
-    - map: ["computerLayerBody"]
-      state: arcade
-    - map: ["computerLayerScreen"]
-      state: screen_blockgame
-    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
-      state: panel
-      visible: false
+  - type: ComputerVisuals
+    stateScreen: screen_blockgame
   - type: BlockGameArcade
   - type: ActivatableUI
     key: enum.BlockGameUiKey.Key
@@ -212,9 +201,11 @@
         type: WiresBoundUserInterface
   - type: Computer
     board: BlockGameArcadeComputerCircuitboard
-  - type: Advertise
-    pack: BlockGameAds
-    minimumWait: 60 # Arcades are noisy
-    maximumWait: 240
+  - type: Vocalizer
+    minVocalizeInterval: 1m # Arcades are noisy
+    maxVocalizeInterval: 4m
+    hideChat: true
+  - type: DatasetVocalizer
+    dataset: BlockGameAds
   - type: SpeakOnUIClosed
     pack: BlockGameGoodbyes

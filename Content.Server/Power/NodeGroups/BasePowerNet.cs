@@ -1,7 +1,8 @@
-﻿using Content.Server.NodeContainer.Nodes;
+using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Pow3r;
+using Content.Shared.NodeContainer;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Power.NodeGroups;

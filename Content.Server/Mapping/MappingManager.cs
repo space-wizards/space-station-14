@@ -1,10 +1,9 @@
-﻿using System.IO;
+using System.IO;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.Mapping;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.Map;
+using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -13,17 +12,19 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.Mapping;
 
-public sealed class MappingManager : IPostInjectInit
+public sealed partial class MappingManager : IPostInjectInit
 {
-    [Dependency] private readonly IAdminManager _admin = default!;
-    [Dependency] private readonly ILogManager _log = default!;
-    [Dependency] private readonly IMapManager _map = default!;
-    [Dependency] private readonly IServerNetManager _net = default!;
-    [Dependency] private readonly IPlayerManager _players = default!;
-    [Dependency] private readonly IEntitySystemManager _systems = default!;
+#if !FULL_RELEASE
+    [Dependency] private IAdminManager _admin = default!;
+    [Dependency] private ILogManager _log = default!;
+    [Dependency] private IServerNetManager _net = default!;
+    [Dependency] private IPlayerManager _players = default!;
+    [Dependency] private IEntitySystemManager _systems = default!;
+    [Dependency] private IEntityManager _ent = default!;
 
     private ISawmill _sawmill = default!;
     private ZStdCompressionContext _zstd = default!;
+#endif
 
     public void PostInject()
     {
@@ -45,14 +46,14 @@ public sealed class MappingManager : IPostInjectInit
             if (!_players.TryGetSessionByChannel(message.MsgChannel, out var session) ||
                 !_admin.IsAdmin(session, true) ||
                 !_admin.HasAdminFlag(session, AdminFlags.Host) ||
-                session.AttachedEntity is not { } player)
+                !_ent.TryGetComponent(session.AttachedEntity, out TransformComponent? xform) ||
+                xform.MapUid is not {} mapUid)
             {
                 return;
             }
 
-            var mapId = _systems.GetEntitySystem<TransformSystem>().GetMapCoordinates(player).MapId;
-            var mapEntity = _map.GetMapEntityIdOrThrow(mapId);
-            var data = _systems.GetEntitySystem<MapLoaderSystem>().GetSaveData(mapEntity);
+            var sys = _systems.GetEntitySystem<MapLoaderSystem>();
+            var data = sys.SerializeEntitiesRecursive([mapUid]).Node;
             var document = new YamlDocument(data.ToYaml());
             var stream = new YamlStream { document };
             var writer = new StringWriter();

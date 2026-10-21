@@ -9,6 +9,7 @@ using Content.Shared.Ensnaring.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.VirtualItem;
@@ -21,7 +22,4 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Strip;
 
-public sealed class StrippableSystem : SharedStrippableSystem
-{
-
-}
+public sealed partial class StrippableSystem : SharedStrippableSystem;

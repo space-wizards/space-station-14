@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+using Content.Shared.EntityTable.Conditions;
 using Content.Shared.EntityTable.ValueSelector;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -5,9 +7,22 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.EntityTable.EntitySelectors;
 
+/// <summary>
+/// An extensible table for configurable entity selection, both random and deterministic.
+/// </summary>
+/// <remarks>
+/// This is currently the favored way to select multiple entities - generally for spawning.
+/// With its children, it supports returning multiple entities, nested selectors,
+/// groups of entities, conditions, and probabilistic spawns.
+/// </remarks>
 [ImplicitDataDefinitionForInheritors, UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
 public abstract partial class EntityTableSelector
 {
+    /// <summary>
+    /// Key for <see cref="EntityTableContext"/>, under which additional scoped conditions should be stored.
+    /// </summary>
+    public static readonly EntityTableContextKey<List<EntityTableCondition>> AdditionalConditionsKey = new("AdditionalConditions");
+
     /// <summary>
     /// The number of times this selector is run
     /// </summary>
@@ -24,26 +39,136 @@ public abstract partial class EntityTableSelector
     /// A simple chance that the selector will run.
     /// </summary>
     [DataField]
-    public double Prob = 1;
+    public float Prob = 1;
 
-    public IEnumerable<EntProtoId> GetSpawns(System.Random rand,
+    /// <summary>
+    /// A list of conditions that must evaluate to 'true' for the selector to apply.
+    /// </summary>
+    [DataField]
+    public List<EntityTableCondition> Conditions = new();
+
+    /// <summary>
+    /// If true, all the conditions must be successful in order for the selector to process.
+    /// Otherwise, only one of them must be.
+    /// </summary>
+    [DataField]
+    public bool RequireAll = true;
+
+    /// <summary>
+    /// Samples an output for this selector.
+    /// </summary>
+    public IEnumerable<EntProtoId> GetSpawns(
+        IRobustRandom rand,
         IEntityManager entMan,
-        IPrototypeManager proto)
+        IPrototypeManager proto,
+        EntityTableContext ctx)
     {
-        var rolls = Rolls.Get(rand, entMan, proto);
+        if (!CheckConditions(entMan, proto, ctx))
+            yield break;
+
+        var rolls = Rolls.Get(rand);
         for (var i = 0; i < rolls; i++)
         {
             if (!rand.Prob(Prob))
                 continue;
 
-            foreach (var spawn in GetSpawnsImplementation(rand, entMan, proto))
+            foreach (var spawn in GetSpawnsImplementation(rand, entMan, proto, ctx))
             {
                 yield return spawn;
             }
         }
     }
 
-    protected abstract IEnumerable<EntProtoId> GetSpawnsImplementation(System.Random rand,
+    /// <summary>
+    /// Check if the condition for this selector are met.
+    /// </summary>
+    public virtual bool CheckConditions(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
+    {
+        // No conditions to evaluate (own or injected into the context) => always valid.
+        if (!TryGetConditions(ctx, out var conditions))
+            return true;
+
+        var success = false;
+        foreach (var condition in conditions)
+        {
+            var res = condition.Evaluate(this, entMan, proto, ctx);
+
+            if (RequireAll && !res)
+                return false; // intentional break out of loop and function
+
+            success |= res;
+        }
+
+        if (RequireAll)
+            return true;
+
+        return success;
+    }
+
+    /// <summary>
+    /// Gets a list of every spawn in the table, and the odds of that spawn occuring, ignoring conditions.
+    /// </summary>
+    public IEnumerable<(EntProtoId spawn, double prob)> ListSpawns(IEntityManager entMan,
+        IPrototypeManager proto,
+        EntityTableContext ctx,
+        float mod = 1f)
+    {
+        foreach (var (spawn, prob) in ListSpawnsImplementation(entMan, proto, ctx))
+        {
+            yield return (spawn, prob * Prob * Rolls.Odds() * mod);
+        }
+    }
+
+    /// <summary>
+    /// Gets a list of every spawn in the table, and the average number of occurrences, ignoring conditions.
+    /// </summary>
+    public IEnumerable<(EntProtoId spawn, double prob)> AverageSpawns(IEntityManager entMan,
+        IPrototypeManager proto,
+        EntityTableContext ctx,
+        float mod = 1f)
+    {
+        foreach (var (spawn, prob) in AverageSpawnsImplementation(entMan, proto, ctx))
+        {
+            yield return (spawn, prob * Prob * Rolls.Average() * mod);
+        }
+    }
+
+    protected abstract IEnumerable<EntProtoId> GetSpawnsImplementation(IRobustRandom rand,
         IEntityManager entMan,
-        IPrototypeManager proto);
+        IPrototypeManager proto,
+        EntityTableContext ctx);
+
+    protected abstract IEnumerable<(EntProtoId spawn, double)> ListSpawnsImplementation(IEntityManager entMan,
+        IPrototypeManager proto,
+        EntityTableContext ctx);
+
+    protected abstract IEnumerable<(EntProtoId spawn, double)> AverageSpawnsImplementation(IEntityManager entMan,
+        IPrototypeManager proto,
+        EntityTableContext ctx);
+
+    /// <summary>
+    /// Gets the effective conditions for this selector, respecting conditions injected into the context.
+    /// Returns false when there are no conditions to evaluate.
+    /// </summary>
+    private bool TryGetConditions(EntityTableContext ctx, [NotNullWhen(true)] out List<EntityTableCondition>? conditions)
+    {
+        var hasAdditionalConditions = ctx.TryGetData(AdditionalConditionsKey, out var additionalConditions);
+
+        if (Conditions.Count == 0 && !hasAdditionalConditions)
+        {
+            conditions = null;
+            return false;
+        }
+
+        if (!hasAdditionalConditions)
+        {
+            conditions = Conditions;
+            return true;
+        }
+
+        conditions = new List<EntityTableCondition>(Conditions.Count + additionalConditions!.Count);
+        conditions.AddRange(Conditions);
+        conditions.AddRange(additionalConditions);
+        return true;
+    }
 }

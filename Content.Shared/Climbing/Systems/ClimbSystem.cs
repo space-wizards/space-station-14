@@ -2,7 +2,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Climbing.Components;
 using Content.Shared.Climbing.Events;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
@@ -24,44 +24,45 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Climbing.Systems;
 
 public sealed partial class ClimbSystem : VirtualController
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _containers = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] private DamageableSystem _damageableSystem = default!;
+    [Dependency] private FixtureSystem _fixtureSystem = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
+    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedStunSystem _stunSystem = default!;
+    [Dependency] private SharedTransformSystem _xformSystem = default!;
+
+    [Dependency] private EntityQuery<BonkableComponent> _bonkQuery;
+    [Dependency] private EntityQuery<ClimbableComponent> _climbableQuery;
+    [Dependency] private EntityQuery<FixturesComponent> _fixturesQuery;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery;
+    [Dependency] private EntityQuery<TransformComponent> _xformQuery;
 
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
 
-    private EntityQuery<ClimbableComponent> _climbableQuery;
-    private EntityQuery<FixturesComponent> _fixturesQuery;
-    private EntityQuery<TransformComponent> _xformQuery;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        _climbableQuery = GetEntityQuery<ClimbableComponent>();
-        _fixturesQuery = GetEntityQuery<FixturesComponent>();
-        _xformQuery = GetEntityQuery<TransformComponent>();
 
         SubscribeLocalEvent<ClimbingComponent, UpdateCanMoveEvent>(OnMoveAttempt);
         SubscribeLocalEvent<ClimbingComponent, EntParentChangedMessage>(OnParentChange);
         SubscribeLocalEvent<ClimbingComponent, ClimbDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
         SubscribeLocalEvent<ClimbingComponent, BuckledEvent>(OnBuckled);
+        SubscribeLocalEvent<ClimbingComponent, EntGotInsertedIntoContainerMessage>(OnStored);
 
         SubscribeLocalEvent<ClimbableComponent, CanDropTargetEvent>(OnCanDragDropOn);
         SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbableVerb);
@@ -90,7 +91,20 @@ public sealed partial class ClimbSystem : VirtualController
             }
 
             var xform = _xformQuery.GetComponent(uid);
-            _xformSystem.SetLocalPosition(uid, xform.LocalPosition + comp.Direction * frameTime, xform);
+            var oldPosition = xform.LocalPosition;
+            _xformSystem.SetLocalPosition(uid, oldPosition + comp.Direction * frameTime, xform);
+
+            var physics = _physicsQuery.GetComponent(uid);
+            // TODO: Add a physics query for checking any intersecting entity with a configurable collision mask.
+            if ((physics.CollisionMask & comp.TransitionCollisionMask) == 0
+                || _physics.GetEntitiesIntersectingBody(uid, comp.TransitionCollisionMask).Count == 0)
+            {
+                continue;
+            }
+
+            // Restore the last valid position and stop at the wall.
+            _xformSystem.SetLocalPosition(uid, oldPosition, xform);
+            FinishTransition(uid, comp);
         }
     }
 
@@ -102,7 +116,7 @@ public sealed partial class ClimbSystem : VirtualController
         Dirty(uid, comp);
 
         // Stop if necessary.
-        if (!_fixturesQuery.TryGetComponent(uid, out var fixtures) ||
+        if (!_fixturesQuery.TryComp(uid, out var fixtures) ||
             !IsClimbing(uid, fixtures))
         {
             StopClimb(uid, comp);
@@ -148,7 +162,7 @@ public sealed partial class ClimbSystem : VirtualController
 
     private void OnCanDragDropOn(EntityUid uid, ClimbableComponent component, ref CanDropTargetEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !component.Vaultable)
             return;
 
         // If already climbing then don't show outlines.
@@ -169,17 +183,17 @@ public sealed partial class ClimbSystem : VirtualController
 
     private void AddClimbableVerb(EntityUid uid, ClimbableComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanMove(args.User))
+        if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanMove(args.User) || !component.Vaultable)
             return;
 
         if (!TryComp(args.User, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing || !climbingComponent.CanClimb)
             return;
 
-        // TODO VERBS ICON add a climbing icon?
         args.Verbs.Add(new AlternativeVerb
         {
             Act = () => TryClimb(args.User, args.User, args.Target, out _, component),
-            Text = Loc.GetString("comp-climbable-verb-climb")
+            Text = Loc.GetString("comp-climbable-verb-climb"),
+            Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/vault.svg.192dpi.png")),
         });
     }
 
@@ -209,7 +223,7 @@ public sealed partial class ClimbSystem : VirtualController
              : CanVault(comp, user, entityToMove, climbable, out reason);
         if (!canVault)
         {
-            _popupSystem.PopupClient(reason, user, user);
+            _popupSystem.PopupEntity(reason, user, user);
             return false;
         }
 
@@ -229,24 +243,38 @@ public sealed partial class ClimbSystem : VirtualController
             used: entityToMove)
         {
             BreakOnMove = true,
-            BreakOnDamage = true,
+            BreakOnDamage = user != entityToMove,
             DuplicateCondition = DuplicateConditions.SameTool | DuplicateConditions.SameTarget
         };
 
         _audio.PlayPredicted(comp.StartClimbSound, climbable, user);
-        return _doAfterSystem.TryStartDoAfter(args, out id);
+        var success = _doAfterSystem.TryStartDoAfter(args, out id);
+
+        if (success)
+            climbing.DoAfter = id;
+
+        return success;
+
     }
 
     private void OnDoAfter(EntityUid uid, ClimbingComponent component, ClimbDoAfterEvent args)
     {
+        component.DoAfter = null;
+
         if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
             return;
+
+        if (_containers.IsEntityInContainer(uid))
+        {
+            args.Handled = true;
+            return;
+        }
 
         Climb(uid, args.Args.User, args.Args.Target.Value, climbing: component);
         args.Handled = true;
     }
 
-    private void Climb(EntityUid uid, EntityUid user, EntityUid climbable, bool silent = false, ClimbingComponent? climbing = null,
+    public void Climb(EntityUid uid, EntityUid user, EntityUid climbable, bool silent = false, ClimbingComponent? climbing = null,
         PhysicsComponent? physics = null, FixturesComponent? fixtures = null, ClimbableComponent? comp = null)
     {
         if (!Resolve(uid, ref climbing, ref physics, ref fixtures, false))
@@ -272,7 +300,10 @@ public sealed partial class ClimbSystem : VirtualController
 
         var xform = _xformQuery.GetComponent(uid);
         var (worldPos, worldRot) = _xformSystem.GetWorldPositionRotation(xform);
-        var worldDirection = _xformSystem.GetWorldPosition(climbable) - worldPos;
+        var climbableCenter = _physicsQuery.HasComp(climbable) && _fixturesQuery.HasComp(climbable)
+            ? _physics.GetHardAABB(climbable).Center
+            : _physics.GetPhysicsTransform(climbable).Position;
+        var worldDirection = climbableCenter - worldPos;
         var distance = worldDirection.Length();
         var parentRot = worldRot - xform.LocalRotation;
         // Need direction relative to climber's parent.
@@ -327,7 +358,7 @@ public sealed partial class ClimbSystem : VirtualController
                 ("climbable", climbable));
         }
 
-        _popupSystem.PopupPredicted(selfMessage, othersMessage, uid, user);
+        _popupSystem.PopupEntity(selfMessage, othersMessage, uid, user);
     }
 
     /// <summary>
@@ -441,6 +472,12 @@ public sealed partial class ClimbSystem : VirtualController
     /// <param name="reason">The reason why it cant be dropped</param>
     public bool CanVault(ClimbableComponent component, EntityUid user, EntityUid target, out string reason)
     {
+        if (!component.Vaultable)
+        {
+            reason = string.Empty;
+            return false;
+        }
+
         if (!_actionBlockerSystem.CanInteract(user, target))
         {
             reason = Loc.GetString("comp-climbable-cant-interact");
@@ -520,17 +557,37 @@ public sealed partial class ClimbSystem : VirtualController
 
     private void OnBuckled(EntityUid uid, ClimbingComponent component, ref BuckledEvent args)
     {
-        StopClimb(uid, component);
+        StopOrCancelClimb(uid, component);
+    }
+
+    private void OnStored(EntityUid uid, ClimbingComponent component, ref EntGotInsertedIntoContainerMessage args)
+    {
+        StopOrCancelClimb(uid, component);
+    }
+
+    private void StopOrCancelClimb(EntityUid uid, ClimbingComponent component)
+    {
+        if (component.IsClimbing)
+        {
+            StopClimb(uid, component);
+            return;
+        }
+
+        if (component.DoAfter != null)
+        {
+            _doAfterSystem.Cancel(component.DoAfter);
+            component.DoAfter = null;
+        }
     }
 
     private void OnGlassClimbed(EntityUid uid, GlassTableComponent component, ref ClimbedOnEvent args)
     {
-        if (TryComp<PhysicsComponent>(args.Climber, out var physics) && physics.Mass <= component.MassLimit)
+        if (_physicsQuery.TryComp(args.Climber, out var physics) && physics.Mass <= component.MassLimit)
             return;
 
         _damageableSystem.TryChangeDamage(args.Climber, component.ClimberDamage, origin: args.Climber);
         _damageableSystem.TryChangeDamage(uid, component.TableDamage, origin: args.Climber);
-        _stunSystem.TryParalyze(args.Climber, TimeSpan.FromSeconds(component.StunTime), true);
+        _stunSystem.TryUpdateParalyzeDuration(args.Climber, TimeSpan.FromSeconds(component.StunTime));
 
         // Not shown to the user, since they already get a 'you climb on the glass table' popup
         _popupSystem.PopupEntity(

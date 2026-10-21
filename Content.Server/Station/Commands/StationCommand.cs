@@ -2,12 +2,12 @@ using System.Diagnostics;
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Cargo.Systems;
-using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
+using Content.Shared.Station;
+using Content.Shared.Station.Components;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Errors;
-using Robust.Shared.Toolshed.Syntax;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Station.Commands;
@@ -15,21 +15,21 @@ namespace Content.Server.Station.Commands;
 [ToolshedCommand, AdminCommand(AdminFlags.Admin)]
 public sealed class StationsCommand : ToolshedCommand
 {
-    private StationSystem? _station;
+    private ServerStationSystem? _station;
     private CargoSystem? _cargo;
 
     [CommandImplementation("list")]
     public IEnumerable<EntityUid> List()
     {
-        _station ??= GetSys<StationSystem>();
+        _station ??= GetSys<ServerStationSystem>();
 
         return _station.GetStationsSet();
     }
 
     [CommandImplementation("get")]
-    public EntityUid Get([CommandInvocationContext] IInvocationContext ctx)
+    public EntityUid Get(IInvocationContext ctx)
     {
-        _station ??= GetSys<StationSystem>();
+        _station ??= GetSys<ServerStationSystem>();
 
         var set = _station.GetStationsSet();
         if (set.Count > 1 || set.Count == 0)
@@ -45,7 +45,7 @@ public sealed class StationsCommand : ToolshedCommand
     [CommandImplementation("getowningstation")]
     public EntityUid? GetOwningStation([PipedArgument] EntityUid input)
     {
-        _station ??= GetSys<StationSystem>();
+        _station ??= GetSys<ServerStationSystem>();
 
         return _station.GetOwningStation(input);
     }
@@ -53,9 +53,8 @@ public sealed class StationsCommand : ToolshedCommand
     [CommandImplementation("largestgrid")]
     public EntityUid? LargestGrid([PipedArgument] EntityUid input)
     {
-        _station ??= GetSys<StationSystem>();
-
-        return _station.GetLargestGrid(Comp<StationDataComponent>(input));
+        _station ??= GetSys<ServerStationSystem>();
+        return _station.GetLargestGrid(input);
     }
 
     [CommandImplementation("largestgrid")]
@@ -80,46 +79,30 @@ public sealed class StationsCommand : ToolshedCommand
         => input.Select(Config);
 
     [CommandImplementation("addgrid")]
-    public void AddGrid(
-        [CommandInvocationContext] IInvocationContext ctx,
-        [PipedArgument] EntityUid input,
-        [CommandArgument] ValueRef<EntityUid> grid
-        )
+    public void AddGrid([PipedArgument] EntityUid input, EntityUid grid)
     {
-        _station ??= GetSys<StationSystem>();
-
-        _station.AddGridToStation(input, grid.Evaluate(ctx));
+        _station ??= GetSys<ServerStationSystem>();
+        _station.AddGridToStation(input, grid);
     }
 
     [CommandImplementation("rmgrid")]
-    public void RmGrid(
-        [CommandInvocationContext] IInvocationContext ctx,
-        [PipedArgument] EntityUid input,
-        [CommandArgument] ValueRef<EntityUid> grid
-    )
+    public void RmGrid([PipedArgument] EntityUid input, EntityUid grid)
     {
-        _station ??= GetSys<StationSystem>();
-
-        _station.RemoveGridFromStation(input, grid.Evaluate(ctx));
+        _station ??= GetSys<ServerStationSystem>();
+        _station.RemoveGridFromStation(input, grid);
     }
 
     [CommandImplementation("rename")]
-    public void Rename([CommandInvocationContext] IInvocationContext ctx,
-        [PipedArgument] EntityUid input,
-        [CommandArgument] ValueRef<string> name
-    )
+    public void Rename([PipedArgument] EntityUid input, string name)
     {
-        _station ??= GetSys<StationSystem>();
-
-        _station.RenameStation(input, name.Evaluate(ctx)!);
+        _station ??= GetSys<ServerStationSystem>();
+        _station.RenameStation(input, name);
     }
 
     [CommandImplementation("rerollBounties")]
-    public void RerollBounties([CommandInvocationContext] IInvocationContext ctx,
-        [PipedArgument] EntityUid input)
+    public void RerollBounties([PipedArgument] EntityUid input)
     {
         _cargo ??= GetSys<CargoSystem>();
-
         _cargo.RerollBountyDatabase(input);
     }
 }

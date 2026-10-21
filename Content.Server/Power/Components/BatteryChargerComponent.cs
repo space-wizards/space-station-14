@@ -1,4 +1,5 @@
-﻿using Content.Server.Power.NodeGroups;
+using Content.Server.Power.NodeGroups;
+using Content.Shared.Power.Components;
 
 namespace Content.Server.Power.Components
 {

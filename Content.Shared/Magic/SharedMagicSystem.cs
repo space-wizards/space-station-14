@@ -1,26 +1,23 @@
 using System.Numerics;
-using Content.Shared.Actions;
-using Content.Shared.Body.Components;
-using Content.Shared.Body.Systems;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Charges.Components;
+using Content.Shared.Charges.Systems;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Examine;
+using Content.Shared.Gibbing;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Humanoid;
-using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Lock;
 using Content.Shared.Magic.Components;
 using Content.Shared.Magic.Events;
 using Content.Shared.Maps;
 using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
-using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs.Systems;
+using Content.Shared.Objectives.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
-using Content.Shared.Speech.Muting;
 using Content.Shared.Storage;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
@@ -30,131 +27,53 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Spawners;
 
 namespace Content.Shared.Magic;
 
+// TODO: Move BeforeCast & Prerequirements (like Wizard clothes) to action comp
+//   Alt idea - make it its own comp and split, like the Charge PR
+// TODO: Move speech to actionComp or again, its own ECS
+// TODO: Use the MagicComp just for pure backend things like spawning patterns?
 /// <summary>
 /// Handles learning and using spells (actions)
 /// </summary>
-public abstract class SharedMagicSystem : EntitySystem
+public abstract partial class SharedMagicSystem : EntitySystem
 {
-    [Dependency] private readonly ISerializationManager _seriMan = default!;
-    [Dependency] private readonly IComponentFactory _compFact = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedGunSystem _gunSystem = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly SharedBodySystem _body = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedDoorSystem _door = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly LockSystem _lock = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private ISerializationManager _seriMan = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private SharedGunSystem _gunSystem = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private GibbingSystem _gibbing = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedDoorSystem _door = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private LockSystem _lock = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
+    [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private SharedChargesSystem _charges = default!;
+    [Dependency] private ExamineSystemShared _examine = default!;
+    [Dependency] private AliveHumanoidTargetSystem _target = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<MagicComponent, BeforeCastSpellEvent>(OnBeforeCastSpell);
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery;
 
-        SubscribeLocalEvent<InstantSpawnSpellEvent>(OnInstantSpawn);
-        SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
-        SubscribeLocalEvent<WorldSpawnSpellEvent>(OnWorldSpawn);
-        SubscribeLocalEvent<ProjectileSpellEvent>(OnProjectileSpell);
-        SubscribeLocalEvent<ChangeComponentsSpellEvent>(OnChangeComponentsSpell);
-        SubscribeLocalEvent<SmiteSpellEvent>(OnSmiteSpell);
-        SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
-        SubscribeLocalEvent<ChargeSpellEvent>(OnChargeSpell);
-        SubscribeLocalEvent<RandomGlobalSpawnSpellEvent>(OnRandomGlobalSpawnSpell);
-        SubscribeLocalEvent<MindSwapSpellEvent>(OnMindSwapSpell);
+    private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
 
-        // Spell wishlist
-        //  A wishlish of spells that I'd like to implement or planning on implementing in a future PR
-
-        // TODO: InstantDoAfterSpell and WorldDoafterSpell
-        //  Both would be an action that take in an event, that passes an event to trigger once the doafter is done
-        //  This would be three events:
-        //    1 - Event that triggers from the action that starts the doafter
-        //    2 - The doafter event itself, which passes the event with it
-        //    3 - The event to trigger once the do-after finishes
-
-        // TODO: Inanimate objects to life ECS
-        //  AI sentience
-
-        // TODO: Flesh2Stone
-        //   Entity Target spell
-        //   Synergy with Inanimate object to life (detects player and allows player to move around)
-
-        // TODO: Lightning Spell
-        // Should just fire lightning, try to prevent arc back to caster
-
-        // TODO: Magic Missile (homing projectile ecs)
-        //   Instant action, target any player (except self) on screen
-
-        // TODO: Random projectile ECS for magic-carp, wand of magic
-
-        // TODO: Recall Spell
-        //  mark any item in hand to recall
-        //    ItemRecallComponent
-        //    Event adds the component if it doesn't exist and the performer isn't stored in the comp
-        //    2nd firing of the event checks to see if the recall comp has this uid, and if it does it calls it
-        //  if no free hands, summon at feet
-        //  if item deleted, clear stored item
-
-        // TODO: Jaunt (should be its own ECS)
-        // Instant action
-        //   When clicked, disappear/reappear (goes to paused map)
-        //   option to restrict to tiles
-        //   option for requiring entry/exit (blood jaunt)
-        //   speed option
-
-        // TODO: Summon Events
-        //  List of wizard events to add into the event pool that frequently activate
-        //  floor is lava
-        //  change places
-        //  ECS that when triggered, will periodically trigger a random GameRule
-        //  Would need a controller/controller entity?
-
-        // TODO: Summon Guns
-        //  Summon a random gun at peoples feet
-        //    Get every alive player (not in cryo, not a simplemob)
-        //  TODO: After Antag Rework - Rare chance of giving gun collector status to people
-
-        // TODO: Summon Magic
-        //  Summon a random magic wand at peoples feet
-        //    Get every alive player (not in cryo, not a simplemob)
-        //  TODO: After Antag Rework - Rare chance of giving magic collector status to people
-
-        // TODO: Bottle of Blood
-        //  Summons Slaughter Demon
-        //  TODO: Slaughter Demon
-        //    Also see Jaunt
-
-        // TODO: Field Spells
-        //  Should be able to specify a grid of tiles (3x3 for example) that it effects
-        //  Timed despawn - so it doesn't last forever
-        //  Ignore caster - for spells that shouldn't effect the caster (ie if timestop should effect the caster)
-
-        // TODO: Touch toggle spell
-        //  1 - When toggled on, show in hand
-        //  2 - Block hand when toggled on
-        //      - Require free hand
-        //  3 - use spell event when toggled & click
-    }
-
+    [SubscribeLocalEvent]
     private void OnBeforeCastSpell(Entity<MagicComponent> ent, ref BeforeCastSpellEvent args)
     {
         var comp = ent.Comp;
@@ -175,14 +94,14 @@ public abstract class SharedMagicSystem : EntitySystem
             }
         }
 
-        if (comp.RequiresSpeech && HasComp<MutedComponent>(args.Performer))
+        if (comp.RequiresSpeech && !_actionBlocker.CanSpeak(args.Performer))
             hasReqs = false;
 
         if (hasReqs)
             return;
 
         args.Cancelled = true;
-        _popup.PopupClient(Loc.GetString("spell-requirements-failed"), args.Performer, args.Performer);
+        _popup.PopupEntity(Loc.GetString("spell-requirements-failed"), args.Performer, args.Performer);
 
         // TODO: Pre-cast do after, either here or in SharedActionsSystem
     }
@@ -199,6 +118,7 @@ public abstract class SharedMagicSystem : EntitySystem
     /// <summary>
     /// Handles the instant action (i.e. on the caster) attempting to spawn an entity.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnInstantSpawn(InstantSpawnSpellEvent args)
     {
         if (args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
@@ -211,12 +131,11 @@ public abstract class SharedMagicSystem : EntitySystem
             SpawnSpellHelper(args.Prototype, position, args.Performer, preventCollide: args.PreventCollideWithCaster);
         }
 
-        Speak(args);
         args.Handled = true;
     }
 
-        /// <summary>
-    ///     Gets spawn positions listed on <see cref="InstantSpawnSpellEvent"/>
+    /// <summary>
+    /// Gets spawn positions listed on <see cref="InstantSpawnSpellEvent"/>
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     private List<EntityCoordinates> GetInstantSpawnPositions(TransformComponent casterXform, MagicInstantSpawnData data)
@@ -224,14 +143,14 @@ public abstract class SharedMagicSystem : EntitySystem
         switch (data)
         {
             case TargetCasterPos:
-                return new List<EntityCoordinates>(1) {casterXform.Coordinates};
+                return new List<EntityCoordinates>(1) { casterXform.Coordinates };
             case TargetInFrontSingle:
             {
                 var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized());
 
                 if (!TryComp<MapGridComponent>(casterXform.GridUid, out var mapGrid))
                     return new List<EntityCoordinates>();
-                if (!directionPos.TryGetTileRef(out var tileReference, EntityManager, _mapManager))
+                if (!_turf.TryGetTileRef(directionPos, out var tileReference))
                     return new List<EntityCoordinates>();
 
                 var tileIndex = tileReference.Value.GridIndices;
@@ -244,7 +163,7 @@ public abstract class SharedMagicSystem : EntitySystem
                 if (!TryComp<MapGridComponent>(casterXform.GridUid, out var mapGrid))
                     return new List<EntityCoordinates>();
 
-                if (!directionPos.TryGetTileRef(out var tileReference, EntityManager, _mapManager))
+                if (!_turf.TryGetTileRef(directionPos, out var tileReference))
                     return new List<EntityCoordinates>();
 
                 var tileIndex = tileReference.Value.GridIndices;
@@ -297,6 +216,7 @@ public abstract class SharedMagicSystem : EntitySystem
     /// It will offset entities after the first entity based on the OffsetVector2.
     /// </remarks>
     /// <param name="args"> The Spawn Spell Event args.</param>
+    [SubscribeLocalEvent]
     private void OnWorldSpawn(WorldSpawnSpellEvent args)
     {
         if (args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
@@ -305,7 +225,6 @@ public abstract class SharedMagicSystem : EntitySystem
         var targetMapCoords = args.Target;
 
         WorldSpawnSpellHelper(args.Prototypes, targetMapCoords, args.Performer, args.Lifetime, args.Offset);
-        Speak(args);
         args.Handled = true;
     }
 
@@ -335,83 +254,76 @@ public abstract class SharedMagicSystem : EntitySystem
     // End World Spawn Spells
     #endregion
     #region Projectile Spells
+    [SubscribeLocalEvent]
     private void OnProjectileSpell(ProjectileSpellEvent ev)
     {
-        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer) || !_net.IsServer)
+        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
             return;
 
         ev.Handled = true;
-        Speak(ev);
+
+        if (!_net.IsServer)
+            return; // client returns handled for predicted audio
 
         var xform = Transform(ev.Performer);
         var fromCoords = xform.Coordinates;
         var toCoords = ev.Target;
-        var userVelocity = _physics.GetMapLinearVelocity(ev.Performer);
+        _physicsQuery.TryComp(ev.Performer, out var userPhysics);
+        var userVelocity = _physics.GetMapLinearVelocity(ev.Performer, userPhysics, xform);
+
+        var userLocalVelocity = userPhysics?.LinearVelocity ?? Vector2.Zero;
 
         // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
-        var fromMap = fromCoords.ToMap(EntityManager, _transform);
-        var spawnCoords = _mapManager.TryFindGridAt(fromMap, out var gridUid, out _)
-            ? fromCoords.WithEntityId(gridUid, EntityManager)
-            : new(_mapManager.GetMapEntityId(fromMap.MapId), fromMap.Position);
+        var fromMap = _transform.ToMapCoordinates(fromCoords);
+        var ent = Spawn(ev.Prototype, fromMap);
+        var direction = _transform.ToMapCoordinates(toCoords).Position -
+                         fromMap.Position;
 
-        var ent = Spawn(ev.Prototype, spawnCoords);
-        var direction = toCoords.ToMapPos(EntityManager, _transform) -
-                        spawnCoords.ToMapPos(EntityManager, _transform);
-        _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer, ev.Performer);
+        // Check for backwards velocity compensation.
+        var compensation = 0.0f;
+        if (ev.RearVelocityCompensation > 0.0f
+            && !MathHelper.CloseToPercent(userLocalVelocity.LengthSquared(), 0.0f)
+            && !MathHelper.CloseToPercent(direction.LengthSquared(), 0.0f))
+        {
+            var dotProduct = Vector2.Dot(direction, userLocalVelocity);
+            if (dotProduct < 0.0f)
+            {
+                // Get rearward component of user's local velocity, multiply it by our coefficient.
+                compensation += ev.RearVelocityCompensation * -dotProduct / direction.Length();
+            }
+        }
+
+        _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer, ev.Performer, ev.ProjectileSpeed + compensation);
     }
     // End Projectile Spells
     #endregion
     #region Change Component Spells
     // staves.yml ActionRGB light
+    [SubscribeLocalEvent]
     private void OnChangeComponentsSpell(ChangeComponentsSpellEvent ev)
     {
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
             return;
 
         ev.Handled = true;
-        Speak(ev);
 
-        foreach (var toRemove in ev.ToRemove)
-        {
-            if (_compFact.TryGetRegistration(toRemove, out var registration))
-                RemComp(ev.Target, registration.Type);
-        }
-
-        foreach (var (name, data) in ev.ToAdd)
-        {
-            if (HasComp(ev.Target, data.Component.GetType()))
-                continue;
-
-            var component = (Component)_compFact.GetComponent(name);
-            var temp = (object)component;
-            _seriMan.CopyTo(data.Component, ref temp);
-            EntityManager.AddComponent(ev.Target, (Component)temp!);
-        }
+        RemoveComponents(ev.Target, ev.ToRemove);
+        AddComponents(ev.Target, ev.ToAdd);
     }
     // End Change Component Spells
     #endregion
-    #region Teleport Spells
-    // TODO: Rename to teleport clicked spell?
-    /// <summary>
-    /// Teleports the user to the clicked location
-    /// </summary>
-    /// <param name="args"></param>
-    private void OnTeleportSpell(TeleportSpellEvent args)
+    #region Position Swap Spells
+    [SubscribeLocalEvent]
+    public virtual void OnVoidApplause(VoidApplauseSpellEvent ev)
     {
-        if (args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
+        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
             return;
 
-        var transform = Transform(args.Performer);
+        ev.Handled = true;
 
-        if (transform.MapID != args.Target.GetMapId(EntityManager) || !_interaction.InRangeUnobstructed(args.Performer, args.Target, range: 1000F, collisionMask: CollisionGroup.Opaque, popup: true))
-            return;
-
-        _transform.SetCoordinates(args.Performer, args.Target);
-        _transform.AttachToGridOrMap(args.Performer, transform);
-        Speak(args);
-        args.Handled = true;
+        _transform.SwapPositions(ev.Performer, ev.Target);
     }
-    // End Teleport Spells
+    // End Position Swap Spells
     #endregion
     #region Spell Helpers
     private void SpawnSpellHelper(string? proto, EntityCoordinates position, EntityUid performer, float? lifetime = null, bool preventCollide = false)
@@ -419,7 +331,7 @@ public abstract class SharedMagicSystem : EntitySystem
         if (!_net.IsServer)
             return;
 
-        var ent = Spawn(proto, position.SnapToGrid(EntityManager, _mapManager));
+        var ent = Spawn(proto, position.SnapToGrid(EntityManager));
 
         if (lifetime != null)
         {
@@ -433,48 +345,76 @@ public abstract class SharedMagicSystem : EntitySystem
             comp.Uid = performer;
         }
     }
+
+    private void AddComponents(EntityUid target, ComponentRegistry comps)
+    {
+        foreach (var (name, data) in comps)
+        {
+            if (HasComp(target, data.Component.GetType()))
+                continue;
+
+            var component = (Component)Factory.GetComponent(name);
+            var temp = (object)component;
+            _seriMan.CopyTo(data.Component, ref temp);
+            AddComp(target, (Component)temp!);
+        }
+    }
+
+    private void RemoveComponents(EntityUid target, HashSet<string> comps)
+    {
+        foreach (var toRemove in comps)
+        {
+            if (Factory.TryGetRegistration(toRemove, out var registration))
+                RemComp(target, registration.Type);
+        }
+    }
     // End Spell Helpers
     #endregion
-    #region Smite Spells
+    #region Touch Spells
+    [SubscribeLocalEvent]
     private void OnSmiteSpell(SmiteSpellEvent ev)
     {
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
             return;
 
         ev.Handled = true;
-        Speak(ev);
 
         var direction = _transform.GetMapCoordinates(ev.Target, Transform(ev.Target)).Position - _transform.GetMapCoordinates(ev.Performer, Transform(ev.Performer)).Position;
         var impulseVector = direction * 10000;
 
         _physics.ApplyLinearImpulse(ev.Target, impulseVector);
-
-        if (!TryComp<BodyComponent>(ev.Target, out var body))
-            return;
-
-        _body.GibBody(ev.Target, true, body);
+        _gibbing.Gib(ev.Target);
     }
-    // End Smite Spells
+
+    // End Touch Spells
     #endregion
     #region Knock Spells
     /// <summary>
-    /// Opens all doors and locks within range
+    /// Opens all doors and locks within range.
     /// </summary>
-    /// <param name="args"></param>
+    [SubscribeLocalEvent]
     private void OnKnockSpell(KnockSpellEvent args)
     {
         if (args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
             return;
 
         args.Handled = true;
-        Speak(args);
+        Knock(args.Performer, args.Range);
+    }
 
-        var transform = Transform(args.Performer);
+    /// <summary>
+    /// Opens all doors and locks within range.
+    /// </summary>
+    /// <param name="performer">Performer of spell. </param>
+    /// <param name="range">Radius around <see cref="performer"/> in which all doors and locks should be opened.</param>
+    public void Knock(EntityUid performer, float range)
+    {
+        var transform = Transform(performer);
 
         // Look for doors and lockers, and don't open/unlock them if they're already opened/unlocked.
-        foreach (var target in _lookup.GetEntitiesInRange(_transform.GetMapCoordinates(args.Performer, transform), args.Range, flags: LookupFlags.Dynamic | LookupFlags.Static))
+        foreach (var target in _lookup.GetEntitiesInRange(_transform.GetMapCoordinates(performer, transform), range, flags: LookupFlags.Dynamic | LookupFlags.Static))
         {
-            if (!_interaction.InRangeUnobstructed(args.Performer, target, range: 0, collisionMask: CollisionGroup.Opaque))
+            if (!_examine.InRangeUnOccluded(performer, target, range: 0))
                 continue;
 
             if (TryComp<DoorBoltComponent>(target, out var doorBoltComp) && doorBoltComp.BoltsDown)
@@ -483,21 +423,22 @@ public abstract class SharedMagicSystem : EntitySystem
             if (TryComp<DoorComponent>(target, out var doorComp) && doorComp.State is not DoorState.Open)
                 _door.StartOpening(target);
 
-            if (TryComp<LockComponent>(target, out var lockComp) && lockComp.Locked)
-                _lock.Unlock(target, args.Performer, lockComp);
+            if (TryComp<LockComponent>(target, out var lockComp) && lockComp.Locked && lockComp.BreakOnAccessBreaker)
+                _lock.Unlock(target, performer, lockComp);
         }
     }
     // End Knock Spells
     #endregion
     #region Charge Spells
     // TODO: Future support to charge other items
+    [SubscribeLocalEvent]
     private void OnChargeSpell(ChargeSpellEvent ev)
     {
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer) || !TryComp<HandsComponent>(ev.Performer, out var handsComp))
             return;
 
         EntityUid? wand = null;
-        foreach (var item in _hands.EnumerateHeld(ev.Performer, handsComp))
+        foreach (var item in _hands.EnumerateHeld((ev.Performer, handsComp)))
         {
             if (!_tag.HasTag(item, ev.WandTag))
                 continue;
@@ -506,26 +447,29 @@ public abstract class SharedMagicSystem : EntitySystem
         }
 
         ev.Handled = true;
-        Speak(ev);
 
-        if (wand == null || !TryComp<BasicEntityAmmoProviderComponent>(wand, out var basicAmmoComp) || basicAmmoComp.Count == null)
+        if (wand == null)
             return;
 
-        _gunSystem.UpdateBasicEntityAmmoCount(wand.Value, basicAmmoComp.Count.Value + ev.Charge, basicAmmoComp);
+        if (TryComp<BasicEntityAmmoProviderComponent>(wand, out var basicAmmoComp) && basicAmmoComp.Count != null)
+            _gunSystem.UpdateBasicEntityAmmoCount((wand.Value, basicAmmoComp), basicAmmoComp.Count.Value + ev.Charge);
+        else if (TryComp<LimitedChargesComponent>(wand, out var charges))
+            _charges.AddCharges((wand.Value, charges), ev.Charge);
     }
     // End Charge Spells
     #endregion
     #region Global Spells
 
-    private void OnRandomGlobalSpawnSpell(RandomGlobalSpawnSpellEvent ev)
+    // TODO: Change this into a "StartRuleAction" when actions with multiple events are supported
+    [SubscribeLocalEvent]
+    protected virtual void OnRandomGlobalSpawnSpell(RandomGlobalSpawnSpellEvent ev)
     {
         if (!_net.IsServer || ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer) || ev.Spawns is not { } spawns)
             return;
 
         ev.Handled = true;
-        Speak(ev);
 
-        var allHumans = _mind.GetAliveHumans();
+        var allHumans = _target.GetMinds();
 
         foreach (var human in allHumans)
         {
@@ -533,6 +477,9 @@ public abstract class SharedMagicSystem : EntitySystem
                 continue;
 
             var ent = human.Comp.OwnedEntity.Value;
+
+            if (_tag.HasTag(ent, InvalidForGlobalSpawnSpellTag))
+                continue;
 
             var mapCoords = _transform.GetMapCoordinates(ent);
             foreach (var spawn in EntitySpawnCollection.GetSpawns(spawns, _random))
@@ -548,13 +495,13 @@ public abstract class SharedMagicSystem : EntitySystem
     #endregion
     #region Mindswap Spells
 
+    [SubscribeLocalEvent]
     private void OnMindSwapSpell(MindSwapSpellEvent ev)
     {
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
             return;
 
         ev.Handled = true;
-        Speak(ev);
 
         // Need performer mind, but target mind is unnecessary, such as taking over a NPC
         // Need to get target mind before putting performer mind into their body if they have one
@@ -572,22 +519,12 @@ public abstract class SharedMagicSystem : EntitySystem
             _mind.TransferTo(tarMind, ev.Performer);
         }
 
-        _stun.TryParalyze(ev.Target, ev.TargetStunDuration, true);
-        _stun.TryParalyze(ev.Performer, ev.PerformerStunDuration, true);
+        _stun.TryUpdateParalyzeDuration(ev.Target, ev.TargetStunDuration);
+        _stun.TryUpdateParalyzeDuration(ev.Performer, ev.PerformerStunDuration);
     }
 
     #endregion
     // End Spells
     #endregion
 
-    // When any spell is cast it will raise this as an event, so then it can be played in server or something. At least until chat gets moved to shared
-    // TODO: Temp until chat is in shared
-    private void Speak(BaseActionEvent args)
-    {
-        if (args is not ISpeakSpell speak || string.IsNullOrWhiteSpace(speak.Speech))
-            return;
-
-        var ev = new SpeakSpellEvent(args.Performer, speak.Speech);
-        RaiseLocalEvent(ref ev);
-    }
 }

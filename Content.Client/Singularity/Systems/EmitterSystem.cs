@@ -1,46 +1,41 @@
-﻿using Content.Shared.Singularity.Components;
+using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Singularity.Systems;
 
-public sealed class EmitterSystem : SharedEmitterSystem
+public sealed partial class EmitterSystem : SharedEmitterSystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<EmitterComponent, AppearanceChangeEvent>(OnAppearanceChange);
-    }
-
-    private void OnAppearanceChange(EntityUid uid, EmitterComponent component, ref AppearanceChangeEvent args)
+    [SubscribeLocalEvent]
+    private void OnAppearanceChange(Entity<EmitterComponent> ent, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (!_appearance.TryGetData<EmitterVisualState>(uid, EmitterVisuals.VisualState, out var state, args.Component))
+        if (!args.TryGetData<EmitterVisualState>(EmitterVisuals.VisualState, out var state))
             state = EmitterVisualState.Off;
 
-        if (!args.Sprite.LayerMapTryGet(EmitterVisualLayers.Lights, out var layer))
+        if (!_sprite.LayerMapTryGet((ent, args.Sprite), EmitterVisualLayers.Lights, out var layer, false))
             return;
 
         switch (state)
         {
             case EmitterVisualState.On:
-                if (component.OnState == null)
+                if (ent.Comp.OnState == null)
                     break;
-                args.Sprite.LayerSetVisible(layer, true);
-                args.Sprite.LayerSetState(layer, component.OnState);
+                _sprite.LayerSetVisible((ent, args.Sprite), layer, true);
+                _sprite.LayerSetRsiState((ent, args.Sprite), layer, ent.Comp.OnState);
                 break;
             case EmitterVisualState.Underpowered:
-                if (component.UnderpoweredState == null)
+                if (ent.Comp.UnderpoweredState == null)
                     break;
-                args.Sprite.LayerSetVisible(layer, true);
-                args.Sprite.LayerSetState(layer, component.UnderpoweredState);
+                _sprite.LayerSetVisible((ent, args.Sprite), layer, true);
+                _sprite.LayerSetRsiState((ent, args.Sprite), layer, ent.Comp.UnderpoweredState);
                 break;
             case EmitterVisualState.Off:
-                args.Sprite.LayerSetVisible(layer, false);
+                _sprite.LayerSetVisible((ent, args.Sprite), layer, false);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

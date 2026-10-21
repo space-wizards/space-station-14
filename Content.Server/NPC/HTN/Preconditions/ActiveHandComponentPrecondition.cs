@@ -1,4 +1,4 @@
-using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.HTN.Preconditions;
@@ -8,7 +8,8 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// </summary>
 public sealed partial class ActiveHandComponentPrecondition : HTNPrecondition
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
 
     [DataField("invert")]
     public bool Invert;
@@ -18,14 +19,18 @@ public sealed partial class ActiveHandComponentPrecondition : HTNPrecondition
 
     public override bool IsMet(NPCBlackboard blackboard)
     {
-        if (!blackboard.TryGetValue<Hand>(NPCBlackboard.ActiveHand, out var hand, _entManager) || hand.HeldEntity == null)
+        if (!blackboard.TryGetValue<EntityUid>(NPCBlackboard.Owner, out var owner, _entManager) ||
+            !blackboard.TryGetValue<string>(NPCBlackboard.ActiveHand, out var hand, _entManager))
         {
             return Invert;
         }
 
+        if (!_handsSystem.TryGetHeldItem(owner, hand, out var entity))
+            return Invert;
+
         foreach (var comp in Components)
         {
-            var hasComp = _entManager.HasComponent(hand.HeldEntity, comp.Value.Component.GetType());
+            var hasComp = _entManager.HasComponent(entity, comp.Value.Component.GetType());
 
             if (!hasComp ||
                 Invert && hasComp)

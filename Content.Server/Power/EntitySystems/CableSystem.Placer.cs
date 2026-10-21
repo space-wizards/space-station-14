@@ -3,16 +3,19 @@ using Content.Server.Power.Components;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
+using Content.Shared.Power.Components;
 using Content.Shared.Stacks;
+using Content.Shared.Whitelist;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Power.EntitySystems;
 
 public sealed partial class CableSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
     private void InitializeCablePlacer()
     {
@@ -25,29 +28,29 @@ public sealed partial class CableSystem
             return;
 
         var component = placer.Comp;
-        if (component.CablePrototypeId == null)
-            return;
-
-        if(!TryComp<MapGridComponent>(_transform.GetGrid(args.ClickLocation), out var grid))
+        if (!TryComp<MapGridComponent>(_transform.GetGrid(args.ClickLocation), out var grid))
             return;
 
         var gridUid = _transform.GetGrid(args.ClickLocation)!.Value;
-        var snapPos = grid.TileIndicesFor(args.ClickLocation);
-        var tileDef = (ContentTileDefinition) _tileManager[_map.GetTileRef(gridUid, grid,snapPos).Tile.TypeId];
+        var snapPos = _map.TileIndicesFor((gridUid, grid), args.ClickLocation);
+        var tileDef = (ContentTileDefinition)_tileManager[_map.GetTileRef(gridUid, grid, snapPos).Tile.TypeId];
 
-        if (!tileDef.IsSubFloor || !tileDef.Sturdy)
+        if ((!component.OverTile && !tileDef.IsSubFloor) || !tileDef.Sturdy)
             return;
 
-        foreach (var anchored in grid.GetAnchoredEntities(snapPos))
+        foreach (var anchored in _map.GetAnchoredEntities((gridUid, grid), snapPos))
         {
+            if (_whitelistSystem.IsWhitelistPass(component.Blacklist, anchored))
+                return;
+
             if (TryComp<CableComponent>(anchored, out var wire) && wire.CableType == component.BlockingCableType)
                 return;
         }
 
-        if (TryComp<StackComponent>(placer, out var stack) && !_stack.Use(placer, 1, stack))
+        if (TryComp<StackComponent>(placer, out var stack) && !_stack.TryUse((placer.Owner, stack), 1))
             return;
 
-        var newCable = EntityManager.SpawnEntity(component.CablePrototypeId, grid.GridTileToLocal(snapPos));
+        var newCable = SpawnAtPosition(component.CablePrototypeId, _map.GridTileToLocal(gridUid, grid, snapPos));
         _adminLogger.Add(LogType.Construction, LogImpact.Low,
             $"{ToPrettyString(args.User):player} placed {ToPrettyString(newCable):cable} at {Transform(newCable).Coordinates}");
         args.Handled = true;

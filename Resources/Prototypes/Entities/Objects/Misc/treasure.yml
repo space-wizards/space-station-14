@@ -83,11 +83,6 @@
     - state: cpu_super
   - type: Item
     size: Tiny
-  - type: PhysicalComposition
-    materialComposition: # big mats if you don't sell it
-      Steel: 500
-      Glass: 1000
-      Silver: 300
   - type: StaticPrice
     price: 750
 
@@ -145,71 +140,71 @@
       weight: 5
 
 - type: entity
+  abstract: true
   parent: BaseItem
-  id: TreasureCoinIron
+  id: BaseCoin
   name: coin
   description: A flat bit of metal. If it was still in circulation, inflation would've made it worthless. Since it isn't, it's worth enough to keep in a book.
   components:
+  - type: Dice
+    sides: 2
+    currentValue: 1
+    sound: !type:SoundCollectionSpecifier
+      collection: Coin
+    values: CoinFaces
+    examineLandedOnText: dice-component-roll-specific
+    examineObjectText: null # no need to show how many sides it has, it's a coin
+  - type: Tag
+    tags:
+    - Dice
+  - type: UseDelay
   - type: Sprite
     sprite: Objects/Misc/coins.rsi
-    state: coin_iron
   - type: Item
     size: Tiny
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 300
+
+- type: entity
+  parent: BaseCoin
+  id: TreasureCoinIron
+  components:
+  - type: Sprite
+    state: coinIron_1
   - type: StaticPrice
     price: 75
 
 - type: entity
-  parent: TreasureCoinIron
+  parent: BaseCoin
   id: TreasureCoinSilver
   components:
   - type: Sprite
-    state: coin_silver
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 100 # coins are fake on the inside
-      Silver: 200
+    state: coinSilver_1
   - type: StaticPrice
-    price: 135
+    price: 125
 
 - type: entity
-  parent: TreasureCoinIron
+  parent: BaseCoin
   id: TreasureCoinGold
   components:
   - type: Sprite
-    state: coin_gold
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 100
-      Gold: 200
+    state: coinGold_1
   - type: StaticPrice
     price: 175
 
 - type: entity
-  parent: TreasureCoinIron
+  parent: BaseCoin
   id: TreasureCoinAdamantine
   components:
   - type: Sprite
-    state: coin_adamantine
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 400
-      Diamond: 5
+    state: coinAdamantine_1
   - type: StaticPrice
     price: 250
 
 - type: entity
-  parent: TreasureCoinIron
+  parent: BaseCoin
   id: TreasureCoinDiamond
   components:
   - type: Sprite
-    state: coin_diamond
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 300
-      Diamond: 15
+    state: coinDiamond_1
   - type: StaticPrice
     price: 500
 

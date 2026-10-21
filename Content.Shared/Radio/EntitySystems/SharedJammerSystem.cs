@@ -1,25 +1,61 @@
-using Content.Shared.Popups;
-using Content.Shared.Verbs;
-using Content.Shared.Examine;
-using Content.Shared.Radio.Components;
+using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
+using Content.Shared.Examine;
+using Content.Shared.Item.ItemToggle;
+using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.Popups;
+using Content.Shared.Power;
+using Content.Shared.Radio.Components;
+using Content.Shared.Verbs;
 
 namespace Content.Shared.Radio.EntitySystems;
 
-public abstract class SharedJammerSystem : EntitySystem
+public sealed partial class JammerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedDeviceNetworkJammerSystem _jammer = default!;
-    [Dependency] protected readonly SharedPopupSystem Popup = default!;
+    [Dependency] private ItemToggleSystem _itemToggle = default!;
+    [Dependency] private DeviceNetworkJammerSystem _jammer = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
-    public override void Initialize()
+    [SubscribeLocalEvent]
+    private void OnItemToggle(Entity<RadioJammerComponent> entity, ref ItemToggledEvent args)
     {
-        base.Initialize();
+        if (args.Activated)
+        {
+            EnsureComp<ActiveRadioJammerComponent>(entity);
+            EnsureComp<DeviceNetworkJammerComponent>(entity, out var jammingComp);
+            _jammer.SetRange((entity, jammingComp), GetCurrentRange(entity));
+            _jammer.AddJammableNetwork((entity, jammingComp), (int) DeviceNetIdDefaults.Wireless);
 
-        SubscribeLocalEvent<RadioJammerComponent, GetVerbsEvent<Verb>>(OnGetVerb);
-        SubscribeLocalEvent<RadioJammerComponent, ExaminedEvent>(OnExamine);
+            // Add excluded frequencies using the system method
+            foreach (var freq in entity.Comp.FrequenciesExcluded)
+            {
+                _jammer.AddExcludedFrequency((entity, jammingComp), freq);
+            }
+        }
+        else
+        {
+            RemCompDeferred<ActiveRadioJammerComponent>(entity);
+            RemCompDeferred<DeviceNetworkJammerComponent>(entity);
+        }
+
+        if (args.User == null)
+            return;
+
+        var state = Loc.GetString(args.Activated ? "radio-jammer-component-on-state" : "radio-jammer-component-off-state");
+        var message = Loc.GetString("radio-jammer-component-on-use", ("state", state));
+        _popup.PopupEntity(message, args.User.Value, args.User.Value);
     }
 
+    [SubscribeLocalEvent]
+    private void OnRefreshChargeRate(Entity<RadioJammerComponent> entity, ref RefreshChargeRateEvent args)
+    {
+        if (_itemToggle.IsActivated(entity.Owner))
+            args.NewChargeRate -= GetCurrentWattage(entity);
+    }
+
+    [SubscribeLocalEvent]
     private void OnGetVerb(Entity<RadioJammerComponent> entity, ref GetVerbsEvent<Verb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
@@ -47,7 +83,7 @@ public abstract class SharedJammerSystem : EntitySystem
                     // The range should be updated when it turns on again!
                     _jammer.TrySetRange(entity.Owner, GetCurrentRange(entity));
 
-                    Popup.PopupClient(Loc.GetString(setting.Message), user, user);
+                    _popup.PopupEntity(Loc.GetString(setting.Message), user, user);
                 },
                 Text = Loc.GetString(setting.Name),
             };
@@ -56,39 +92,63 @@ public abstract class SharedJammerSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnExamine(Entity<RadioJammerComponent> ent, ref ExaminedEvent args)
     {
-        if (args.IsInDetailsRange)
-        {
-            var powerIndicator = HasComp<ActiveRadioJammerComponent>(ent)
-                ? Loc.GetString("radio-jammer-component-examine-on-state")
-                : Loc.GetString("radio-jammer-component-examine-off-state");
-            args.PushMarkup(powerIndicator);
+        if (!args.IsInDetailsRange)
+            return;
 
-            var powerLevel = Loc.GetString(ent.Comp.Settings[ent.Comp.SelectedPowerLevel].Name);
-            var switchIndicator = Loc.GetString("radio-jammer-component-switch-setting", ("powerLevel", powerLevel));
-            args.PushMarkup(switchIndicator);
-        }
+        var powerIndicator = _itemToggle.IsActivated(ent.Owner)
+            ? Loc.GetString("radio-jammer-component-examine-on-state")
+            : Loc.GetString("radio-jammer-component-examine-off-state");
+        args.PushMarkup(powerIndicator);
+
+        var powerLevel = Loc.GetString(ent.Comp.Settings[ent.Comp.SelectedPowerLevel].Name);
+        var switchIndicator = Loc.GetString("radio-jammer-component-switch-setting", ("powerLevel", powerLevel));
+        args.PushMarkup(switchIndicator);
     }
 
-    public float GetCurrentWattage(Entity<RadioJammerComponent> jammer)
+    [SubscribeLocalEvent]
+    private void OnRadioSendAttempt(ref RadioSendAttemptEvent args)
+    {
+        if (ShouldCancel(args.RadioSource, args.Channel.Frequency))
+            args.Cancelled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnRadioReceiveAttempt(ref RadioReceiveAttemptEvent args)
+    {
+        if (ShouldCancel(args.RadioReceiver, args.Channel.Frequency))
+            args.Cancelled = true;
+    }
+
+    private bool ShouldCancel(EntityUid sourceUid, DeviceFrequency frequency)
+    {
+        var source = Transform(sourceUid).Coordinates;
+        var query = EntityQueryEnumerator<ActiveRadioJammerComponent, RadioJammerComponent, TransformComponent>();
+
+        while (query.MoveNext(out var uid, out _, out var jam, out var transform))
+        {
+            // Check if this jammer excludes the frequency
+            if (jam.FrequenciesExcluded.Contains(frequency))
+                continue;
+
+            if (_transform.InRange(source, transform.Coordinates, GetCurrentRange((uid, jam))))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static float GetCurrentWattage(Entity<RadioJammerComponent> jammer)
     {
         return jammer.Comp.Settings[jammer.Comp.SelectedPowerLevel].Wattage;
     }
 
-    public float GetCurrentRange(Entity<RadioJammerComponent> jammer)
+    private static float GetCurrentRange(Entity<RadioJammerComponent> jammer)
     {
         return jammer.Comp.Settings[jammer.Comp.SelectedPowerLevel].Range;
     }
-
-    protected void ChangeLEDState(Entity<AppearanceComponent?> ent, bool isLEDOn)
-    {
-        _appearance.SetData(ent, RadioJammerVisuals.LEDOn, isLEDOn, ent.Comp);
-    }
-
-    protected void ChangeChargeLevel(Entity<AppearanceComponent?> ent, RadioJammerChargeLevel chargeLevel)
-    {
-        _appearance.SetData(ent, RadioJammerVisuals.ChargeLevel, chargeLevel, ent.Comp);
-    }
-
 }

@@ -1,19 +1,24 @@
 - type: entity
-  id: BaseShutter
-  parent: BaseStructure
-  name: shutter
   abstract: true
+  parent: BaseStructure
+  id: BaseShutter
+  name: shutter
   description: One shudders to think about what might be behind this shutter.
   placement:
     mode: SnapgridCenter
   components:
-  - type: StationAiWhitelist
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Rotatable
   - type: Sprite
     sprite: Structures/Doors/Shutters/shutters.rsi
     drawdepth: BlastDoors
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
+    - state: welded
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: AnimationPlayer
   - type: Physics
   - type: Fixtures
@@ -34,24 +39,27 @@
     containers:
       board: !type:Container
   - type: NavMapDoor
+  - type: Tag
+    tags:
+    - ForceNoFixRotations # Don't want the fixrotations command to target these
   - type: Door
     openDrawDepth: BlastDoors
     closedDrawDepth: BlastDoors
     bumpOpen: false
     clickOpen: false
     closeTimeOne: 0.2
-    closeTimeTwo: 1.2
-    openTimeOne: 1.2
-    openTimeTwo: 0.2
-    openingAnimationTime: 1.4
-    closingAnimationTime: 1.4
+    closeTimeTwo: 0.8
+    openTimeOne: 0.2
+    openTimeTwo: 0.8
+    openingAnimationTime: 1
+    closingAnimationTime: 1
     crushDamage:
       types:
         Blunt: 5 # getting shutters closed on you probably doesn't hurt that much
     openSound:
-      path: /Audio/Machines/blastdoor.ogg
+      path: /Audio/Machines/shutter.ogg
     closeSound:
-      path: /Audio/Machines/blastdoor.ogg
+      path: /Audio/Machines/shutter.ogg
   - type: Weldable
     time: 3
   - type: Appearance
@@ -62,25 +70,11 @@
   - type: Airtight
   - type: RadiationBlocker
     resistance: 2
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 500
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-  - type: IconSmooth
-    key: walls
-    mode: NoSprite
   - type: DoorSignalControl
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 200
   - type: DeviceLinkSink
     ports:
@@ -93,15 +87,21 @@
     lastSignals:
       DoorStatus: false
   - type: InteractionPopup
-    interactSuccessString: comp-window-knock
-    messagePerceivedByOthers: comp-window-knock
+    interactSuccessString: shutter-rattle
+    messagePerceivedByOthers: shutter-rattle
     interactSuccessSound:
-      path: /Audio/Effects/glass_knock.ogg
+      collection: FenceRattle
   - type: BlockWeather
+  - type: PlacementReplacement
+    key: shutters
+  - type: IconSmooth
+    key: doors
+  - type: StructureAligner
+  - type: StructureAlignerPylon
 
 - type: entity
   id: ShuttersNormal
-  parent: BaseShutter
+  parent: [BaseDeltaPressureGlass, BaseShutter, StructureHealthDoorWeak]
   components:
   - type: Occluder
   - type: Construction
@@ -109,6 +109,19 @@
     node: Shutters
     containers:
     - board
+  - type: Damageable
+    damageModifierSet: SteelStaticMod
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -4
 
 - type: entity
   id: ShuttersNormalOpen
@@ -127,16 +140,18 @@
     enabled: false
 
 - type: entity
+  parent: ShuttersNormal
   id: ShuttersRadiation
-  parent: BaseShutter
   name: radiation shutters
-  description: Why did they make these shutters radioactive?
+  description: These come with extra-radiation-resistant paint.
   components:
   - type: Sprite
-    sprite: Structures/Doors/Shutters/shutters_radiation.rsi
+    sprite: Structures/Doors/Shutters/shutters-radiation.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
+    - state: welded
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Occluder
   - type: Construction
     graph: Shutters
@@ -164,15 +179,17 @@
 
 - type: entity
   id: ShuttersWindow
-  parent: BaseShutter
+  parent: [BaseDeltaPressureGlass, BaseShutter, StructureHealthDoorWeak]
   name: window shutters
   description: The Best (TM) place to see your friends explode!
   components:
   - type: Sprite
-    sprite: Structures/Doors/Shutters/shutters_window.rsi
+    sprite: Structures/Doors/Shutters/shutters-window.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
+    - state: welded
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Construction
     graph: Shutters
     node: ShuttersWindow
@@ -180,6 +197,19 @@
     - board
   - type: RadiationBlocker
     resistance: 1
+  - type: Damageable
+    damageModifierSet: SteelStaticMod
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -4
 
 - type: entity
   id: ShuttersWindowOpen
@@ -197,14 +227,14 @@
 
 # Frame for construction
 - type: entity
+  parent: [ BaseStructureDynamic, StructureHealthDoorWeak ]
   id: ShuttersFrame
-  parent: BaseStructureDynamic
   name: shutter frame
   description: A frame for constructing a shutter.
   components:
   - type: Sprite
     sprite: Structures/Doors/Shutters/shutters.rsi
-    state: frame
+    state: assembly
   - type: Construction
     graph: Shutters
     node: frame1
@@ -212,16 +242,18 @@
     - board
   - type: InteractionOutline
   - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Metallic
+    damageModifierSet: SteelStaticMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 500
+        damage: 100
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -4
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures
@@ -237,4 +269,4 @@
         layer:
         - HighImpassable
   - type: Transform
-    noRot: true
+    noRot: false

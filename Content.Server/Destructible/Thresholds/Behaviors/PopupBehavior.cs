@@ -20,11 +20,21 @@ public sealed partial class PopupBehavior : IThresholdBehavior
     [DataField("popupType")]
     public PopupType PopupType;
 
+    /// <summary>
+    /// Only the affected entity will see the popup.
+    /// </summary>
+    [DataField]
+    public bool TargetOnly;
+
     public void Execute(EntityUid uid, DestructibleSystem system, EntityUid? cause = null)
     {
         var popup = system.EntityManager.System<SharedPopupSystem>();
         // popup is placed at coords since the entity could be deleted after, no more popup then
         var coords = system.EntityManager.GetComponent<TransformComponent>(uid).Coordinates;
-        popup.PopupCoordinates(Loc.GetString(Popup), coords, PopupType);
+
+        if (TargetOnly)
+            popup.PopupCoordinates(Loc.GetString(Popup), coords, uid, PopupType);
+        else
+            popup.PopupCoordinates(Loc.GetString(Popup), coords, PopupType);
     }
 }

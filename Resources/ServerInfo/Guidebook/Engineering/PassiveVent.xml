@@ -1,0 +1,15 @@
+﻿<Document>
+  # Passive Vent
+  The passive vent is an extremely basic vent.
+  It serves as a direct connection between the pipenet it's connected to and the atmosphere it's exposed to.
+  <Box>
+    <GuideEntityEmbed Entity="GasPassiveVent"/>
+  </Box>
+  Gasses are free to move between the passive vent and the atmosphere it's connected to.
+  The passive vent requires no [textlink="power" link="Power"] to function.
+
+  This vent is commonly found in the station's [textlink="gas storage tanks" link="GasMiningAndStorage"] and connected to the station's wastenet.
+  It is a simple and reliable way to pull gasses from a gas miner, or to space unwanted gasses safely.
+
+  The passive vent can be welded with any welding tool to stop it from functioning.
+</Document>

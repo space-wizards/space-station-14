@@ -1,4 +1,4 @@
-﻿using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Melee;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Administration.Components;
@@ -8,7 +8,4 @@ namespace Content.Shared.Administration.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedMeleeWeaponSystem))]
-public sealed partial class DisarmProneComponent : Component
-{
-
-}
+public sealed partial class DisarmProneComponent : Component;

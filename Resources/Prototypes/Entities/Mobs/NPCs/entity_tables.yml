@@ -1,0 +1,18 @@
+- type: entityTable
+  id: SmallCritterEntityTable
+  table: !type:GroupSelector
+    children:
+    - id: MobMothroach
+    - id: MobCockroach
+    - !type:GroupSelector
+      children:
+      - id: MobMouse
+      - id: MobMouse1
+      - id: MobMouse2
+      - id: MobMouseCancer
+        weight: 0.05
+    - !type:GroupSelector
+      children:
+      - id: MobSnail
+      - id: MobSnailSpeed
+      - id: MobSnailMoth

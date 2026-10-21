@@ -83,6 +83,18 @@
     count: 8
 
 - type: localizedDataset
+  id: DrGibbAds
+  values:
+    prefix: advertisement-gibb-
+    count: 8
+
+- type: localizedDataset
+  id: SmiteAds
+  values:
+    prefix: advertisement-smite-
+    count: 8
+
+- type: localizedDataset
   id: CondimentVendAds
   values:
     prefix: advertisement-condiment-
@@ -129,12 +141,6 @@
   values:
     prefix: fat-extractor-fact-
     count: 6
-
-- type: localizedDataset
-  id: FirebotAd
-  values:
-    prefix: advertisement-firebot-
-    count: 4
 
 - type: localizedDataset
   id: GoodCleanFunAds
@@ -269,7 +275,7 @@
     count: 3
 
 - type: localizedDataset
-  id: MedibotAds
+  id: PrideDrobeAds
   values:
-    prefix: advertisement-medibot-
-    count: 17
+    prefix: advertisement-pride-
+    count: 4

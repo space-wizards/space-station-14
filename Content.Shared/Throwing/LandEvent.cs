@@ -9,8 +9,6 @@ namespace Content.Shared.Throwing
     /// <summary>
     /// Raised when a thrown entity is no longer moving.
     /// </summary>
-    public sealed class StopThrowEvent : EntityEventArgs
-    {
-        public EntityUid? User;
-    }
+    [ByRefEvent]
+    public record struct StopThrowEvent(EntityUid? User);
 }

@@ -34,7 +34,7 @@ reagent-desc-iced-tea = No relation to a certain rap artist/actor.
 reagent-name-lemonade = lemonade
 reagent-desc-lemonade = Drink using lemon juice, water, and a sweetener such as cane sugar or honey.
 
-reagent-name-arnold-palmer = arnold palmer
+reagent-name-arnold-palmer = Arnold Palmer
 reagent-desc-arnold-palmer = Now watch this drive.
 
 reagent-name-milk = milk
@@ -42,6 +42,9 @@ reagent-desc-milk = An opaque white liquid produced by the mammary glands of mam
 
 reagent-name-milk-goat = goats milk
 reagent-desc-milk-goat = An opaque white liquid produced by a goat. High buttermilk content.
+
+reagent-name-milk-sheep = sheep's milk
+reagent-desc-milk-sheep = An opaque white liquid produced by a sheep. High in fat.
 
 reagent-name-milk-oat = oat milk
 reagent-desc-milk-oat = Surprisingly tasty.
@@ -91,11 +94,8 @@ reagent-desc-pilk = A sickening mixture of milk and cola.
 reagent-name-posca = posca
 reagent-desc-posca = Poor warriors' drink from a forgotten era.
 
-reagent-name-the-martinez = The Martinez
-reagent-desc-the-martinez = The edgerunner legend. Remembered by a drink, forgotten by a drunk.
-
-reagent-name-white-gilgamesh = white gilgamesh
-reagent-desc-white-gilgamesh = A sickening mixture of milk and beer. Makes you feel like you're made of wood.
-
 reagent-name-mopwata = mopwata
 reagent-desc-mopwata = Dirty, stagnant mop water.
+
+reagent-name-orange-lime-soda = citrus bikeshed
+reagent-desc-orange-lime-soda = The soda should be orange! No, it should be lemon-lime!

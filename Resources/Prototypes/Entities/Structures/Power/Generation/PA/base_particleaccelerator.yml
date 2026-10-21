@@ -1,6 +1,7 @@
 - type: entity
-  id: ParticleAcceleratorBase
   abstract: true
+  parent: StructureHealthMachineStrong
+  id: ParticleAcceleratorBase
   placement:
     mode: SnapgridCenter
   components:
@@ -26,8 +27,25 @@
   - type: Pullable
   - type: Clickable
   - type: GuideHelp
-    guides: [ Singularity, Power ]
+    guides:
+    - SingularityTeslaEngine
   - type: Appearance
+  - type: AmbientMusicMarkerEngineering
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 275
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        offset: 0
+        spawn:
+          MachineFrameDestroyed:
+            min: 1
+            max: 1
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
 
 - type: entity
   id: ParticleAcceleratorFinishedPart
@@ -42,7 +60,6 @@
       map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
       shader: unshaded
       visible: false
-  - type: ParticleAcceleratorPart
   - type: ParticleAcceleratorPartVisuals
     stateBase: unlit
   - type: Construction

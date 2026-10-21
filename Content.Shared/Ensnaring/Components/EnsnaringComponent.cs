@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Audio;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Ensnaring.Components;
@@ -6,6 +6,7 @@ namespace Content.Shared.Ensnaring.Components;
 /// Use this on something you want to use to ensnare an entity with
 /// </summary>
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedEnsnareableSystem))]
 public sealed partial class EnsnaringComponent : Component
 {
     /// <summary>
@@ -39,6 +40,12 @@ public sealed partial class EnsnaringComponent : Component
     public float StaminaDamage = 55f;
 
     /// <summary>
+    /// How many times can the ensnare be applied to the same target?
+    /// </summary>
+    [DataField]
+    public float MaxEnsnares = 1;
+
+    /// <summary>
     /// Should this ensnare someone when thrown?
     /// </summary>
     [DataField]
@@ -56,6 +63,9 @@ public sealed partial class EnsnaringComponent : Component
     [DataField]
     public bool CanMoveBreakout;
 
+/// <summary>
+/// The sound to play when being ensnared.
+/// </summary>
     [DataField]
     public SoundSpecifier? EnsnareSound = new SoundPathSpecifier("/Audio/Effects/snap.ogg");
 }

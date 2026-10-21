@@ -6,12 +6,11 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 10800 # 3 hrs
-    - !type:OverallPlaytimeRequirement
-      time: 36000 #10 hrs
+      time: 2.5h
   icon: "JobIconShaftMiner"
   startingGear: SalvageSpecialistGear
   supervisors: job-supervisors-qm
+  guides: [ Salvage ]
   access:
   - Cargo
   - Salvage
@@ -27,3 +26,15 @@
   #storage:
     #back:
     #- Stuff
+
+- type: chameleonOutfit
+  id: SalvageSpecialistChameleonOutfit
+  job: SalvageSpecialist
+  equipment:
+    head: ClothingHeadHatCargosoft
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskGasExplorer
+    outerClothing: ClothingOuterWinterMiner
+    neck: ClothingNeckScarfStripedBrown
+    gloves: ClothingHandsGlovesColorBlack
+

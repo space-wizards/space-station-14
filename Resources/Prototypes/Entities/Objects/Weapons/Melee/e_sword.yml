@@ -14,7 +14,9 @@
       path: /Audio/Weapons/ebladehum.ogg
   - type: ComponentToggler
     components:
-    - type: Sharp
+    - type: Tool
+      qualities:
+      - Slicing
     - type: DisarmMalus
       malus: 0.6
     - type: Execution
@@ -23,6 +25,7 @@
   - type: ItemToggleSize
     activatedSize: Huge
   - type: ItemTogglePointLight
+    toggleableVisualsColorModulatesLights: true
   - type: ItemToggleMeleeWeapon
     activatedSoundOnHit:
       path: /Audio/Weapons/eblade1.ogg
@@ -41,7 +44,7 @@
       types:
         Slash: 15
         Heat: 15
-        Structural: 20
+        Structural: 12
   - type: MeleeWeapon
     wideAnimationRotation: -135
     attackRate: 1
@@ -59,7 +62,7 @@
     color: white
     netsync: false
   - type: Appearance
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals # Add support for multiple layers
     spriteLayer: blade
     inhandVisuals:
       left:
@@ -78,6 +81,7 @@
   id: EnergySword
   description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Cuts through unarmored targets like butter.
   components:
+  - type: ItemToggleExaminableStatus
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi
     layers:
@@ -89,6 +93,8 @@
       map: [ "blade" ]
   - type: Item
     sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
+  - type: StaticPrice
+    price: 2500
 
 - type: entity
   name: energy dagger
@@ -96,6 +102,7 @@
   id: EnergyDaggerLoud
   description: A not as loud and dangerous dagger with a beam made of pure, concentrated plasma. This one is completely undisguised.
   components:
+  - type: ItemToggleExaminableStatus
   - type: ItemToggle
     soundActivate:
       path: /Audio/Weapons/ebladeon.ogg
@@ -123,7 +130,9 @@
         volume: -3
   - type: ComponentToggler
     components:
-    - type: Sharp
+    - type: Tool
+      qualities:
+      - Slicing
     - type: DisarmMalus
       malus: 0.4
     - type: Execution
@@ -150,13 +159,13 @@
   - type: PointLight
     enabled: false
     radius: 1.5
-    energy: 1.5
+    energy: 2.7
     color: white
     netsync: false
 
 - type: entity
   name: pen
-  parent: BaseMeleeWeaponEnergy
+  parent: [BaseMeleeWeaponEnergy, SelectableLock]
   id: EnergyDagger
   suffix: E-Dagger
   description: 'A dark ink pen.'
@@ -185,16 +194,18 @@
       types:
         Slash: 10
         Heat: 10
+    deactivatedSecret: true
   - type: ComponentToggler
     components:
-    - type: Sharp
+    - type: Tool
+      qualities:
+      - Slicing
     - type: DisarmMalus
       malus: 0.4
     - type: Execution
       doAfterDuration: 4.0
     - type: Contraband
       severity: Syndicate
-      allowedDepartments: null
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger.rsi
     layers:
@@ -210,7 +221,7 @@
   - type: PointLight
     enabled: false
     radius: 1.5
-    energy: 1.5
+    energy: 2.7
     color: white
     netsync: false
   - type: MeleeWeapon
@@ -220,6 +231,16 @@
     damage:
       types:
         Blunt: 1
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/pen_click.ogg
+      params:
+        volume: -4
+        maxDistance: 2
+  - type: UseDelay
+    delay: 1.5
+  - type: ItemToggleRequiresLock #  TODO: FIX THIS VERB IS COOKED
+    lockedPopup: null
   - type: Tag
     tags:
     - Write
@@ -248,6 +269,7 @@
   id: EnergyCutlass
   description: An exotic energy weapon.
   components:
+  - type: ItemToggleExaminableStatus
   - type: ItemToggleMeleeWeapon
     activatedDamage:
         types:
@@ -272,6 +294,7 @@
   id: EnergySwordDouble
   description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. This can be stored in pockets.
   components:
+  - type: ItemToggleExaminableStatus
   - type: ItemToggle
     onUse: false # wielding events control it instead
     onActivate: false # prevents the weapon from being able to be turned on when it is on the ground
@@ -293,7 +316,6 @@
         types:
             Slash: 12
             Heat: 12
-            Structural: 15
   - type: ItemToggleActiveSound
     activeSound:
       path: /Audio/Weapons/ebladehum.ogg
@@ -301,11 +323,13 @@
         volume: 3
   - type: ComponentToggler
     components:
-    - type: Sharp
     - type: DisarmMalus
       malus: 0.7
     - type: Execution
       doAfterDuration: 4.0
+    - type: Tool
+      qualities:
+      - Slicing
   - type: Wieldable
     wieldSound: null # esword light sound instead
   - type: MeleeWeapon
@@ -331,11 +355,82 @@
     reflectProb: .75
     spread: 75
 
+# Item will look weird in handslot. Will need to adjust handstorage visuals in a future PR
 - type: entity
-  suffix: One-Handed, For Borgs
+  parent: EnergySwordDouble
+  id: HyperEutacticBlade
+  name: hypereutactic-blade
+  description: A supermassive weapon envisioned to cleave the very fabric of space and time itself in twain, the hypereutactic blade dynamically flash-forges a hypereutactic crystaline nanostructure capable of passing through most known forms of matter like a hot knife through butter.
+  components:
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    attackRate: 0.8 #0.7 and below is too slow
+    angle: 100
+    range: 2.0
+    damage:
+      types:
+        Blunt: 4.5
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnSwing:
+      path: /Audio/Weapons/eblademiss.ogg
+      params:
+        volume: -3
+        variation: 0.250
+    activatedDamage:
+      types:
+        Slash: 20
+        Heat: 20
+  - type: MeleeRequiresWield
+  - type: HeldSpeedModifier #slowdown is what balances this compared to a dsword
+    walkModifier: 0.6
+    sprintModifier: 0.6
+    weightlessAcceleration: 0.6
+    zeroGravityModifier: 0.6
+  - type: UseDelay
+    delay: 1.5
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/hypereutactic_blade.rsi
+    layers:
+    - state: hypereutactic
+    - state: hypereutactic_blade
+      color: "#FFFFFF"
+      visible: false
+      shader: unshaded
+      map: [ "blade" ]
+    - state: hypereutactic_gem
+      color: "#FFFFFF"
+      visible: false
+      shader: unshaded
+      map: [ "gem" ]
+  - type: Item
+    size: Small
+    sprite: Objects/Weapons/Melee/hypereutactic_blade_inhands.rsi
+  - type: Reflect
+    reflectProb: 1.0
+    spread: 75
+
+# Borgs
+
+- type: entity
+  parent: EnergySword
+  id: CyborgEnergySword
+  suffix: For Borgs
+  description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Specially designed for syndicate cyborgs.
+
+- type: entity
   parent: EnergySwordDouble
   id: CyborgEnergySwordDouble # why is this invalid if ID is BorgEnergySwordDouble
+  suffix: One-Handed, For Borgs
   description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. Specially designed for syndicate cyborgs.
   components: # could add energy-draining like the L6C
   - type: Wieldable
     freeHandsRequired: 0 # because borg has no off-hand to wield with.  Without this, it will be unable to activate the esword
+
+- type: entity
+  parent: [ EnergyDaggerLoud, BaseXenoborgContraband ]
+  id: EnergyDaggerLoudBlue
+  suffix: blue
+  components:
+  - type: EnergySword
+    colorOptions:
+    - "#2288ff" # can only be blue

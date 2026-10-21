@@ -1,8 +1,8 @@
-﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.HUD
 {
-    [Prototype("hudTheme")]
+    [Prototype]
     public sealed partial class HudThemePrototype : IPrototype, IComparable<HudThemePrototype>
     {
         [DataField("name", required: true)]
