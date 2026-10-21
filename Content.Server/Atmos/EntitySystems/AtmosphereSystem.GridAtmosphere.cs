@@ -1,3 +1,4 @@
+using System.Buffers;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
@@ -275,30 +276,33 @@ public sealed partial class AtmosphereSystem
         DebugTools.AssertNotNull(tile.Air);
         DebugTools.Assert(tile.Air?.Immutable == false);
 
-        var adjacent = new ValueList<GasMixture>(Atmospherics.Directions);
-        for (var j = 0; j < Atmospherics.Directions; j++)
+        var adjacent = ArrayPool<GasMixture>.Shared.Rent(Atmospherics.Directions);
+        var count = 0;
+        for (var i = 0; i < Atmospherics.Directions; i++)
         {
-            var direction = (AtmosDirection)(1 << j);
+            var direction = (AtmosDirection)(1 << i);
             var offset = tile.GridIndices.Offset(direction);
             if (grid.Comp.Tiles.GetValueOrDefault(offset) is not { } adj
                 || adj.AirtightData.BlockedDirections.HasFlag(direction.GetOpposite())
                 || adj.Air is not { } air)
                 continue;
 
-            adjacent.Add(air);
+            adjacent[count++] = air;
         }
 
-        if (adjacent.Count > 0)
+        if (count > 0)
         {
-            var ratio = 1f / adjacent.Count;
+            var ratio = 1f / count;
 
             var mix = tile.Air.RemoveRatio(ratio);
 
-            foreach (var adj in adjacent)
+            for (var i = 0; i < count; i++)
             {
-                Merge(adj, mix);
+                Merge(adjacent[i], mix);
             }
         }
+
+        ArrayPool<GasMixture>.Shared.Return(adjacent);
 
         tile.Air = null;
         tile.AirArchived = null;
