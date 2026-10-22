@@ -6,6 +6,7 @@ using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.Coordinates;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
@@ -68,7 +69,7 @@ public sealed partial class CargoSystem
         if (ent.Comp.Mode == CargoOrderConsoleMode.PrintSlip)
             return;
 
-        if (!TryGetOrderDatabase(station, out var orderDatabase))
+        if (!OnSameMap(ent.Owner, station) || !TryGetOrderDatabase(station, out var orderDatabase))
             return;
 
         if (!_bankQuery.TryComp(station, out var bank))
@@ -97,7 +98,7 @@ public sealed partial class CargoSystem
             return;
 
         var stationUid = _station.GetOwningStation(ent.Owner);
-        if (!TryGetOrderDatabase(stationUid, out var orderDatabase))
+        if (!OnSameMap(ent.Owner, stationUid) || !TryGetOrderDatabase(stationUid, out var orderDatabase))
             return;
 
         if (!_bankQuery.TryComp(stationUid, out var bank))
@@ -155,7 +156,8 @@ public sealed partial class CargoSystem
 
         // No station to deduct from.
         if (
-            !_bankQuery.TryComp(station, out var bank)
+            !OnSameMap(ent.Owner, station)
+            || !_bankQuery.TryComp(station, out var bank)
             || !_stationQuery.TryComp(station, out var stationData)
             || !TryGetOrderDatabase(station, out var orderDatabase)
         )
@@ -355,6 +357,15 @@ public sealed partial class CargoSystem
         return amount;
     }
 
+    private bool OnSameMap(EntityUid uid, EntityUid? station)
+    {
+        if (station is null ||
+            _station.GetLargestGrid(station.Value) is not { } stationGrid)
+            return false;
+
+        return Transform(stationGrid).MapID == Transform(uid).MapID;
+    }
+
     public List<ProtoId<CargoProductPrototype>> GetAvailableProducts(Entity<CargoOrderConsoleComponent> ent)
     {
         if (
@@ -423,7 +434,7 @@ public sealed partial class CargoSystem
 
         var stationUid = _station.GetOwningStation(ent);
 
-        if (!TryGetOrderDatabase(stationUid, out var orderDatabase))
+        if (!OnSameMap(ent.Owner, stationUid) || !TryGetOrderDatabase(stationUid, out var orderDatabase))
             return;
 
         if (!ProtoMan.TryIndex(slip.Product, out var product))
