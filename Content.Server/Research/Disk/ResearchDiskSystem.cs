@@ -3,6 +3,7 @@ using Content.Shared.Interaction;
 using Content.Server.Popups;
 using Content.Shared.Research.Prototypes;
 using Content.Server.Research.Systems;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.Research.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Research.TechnologyDisk.Components;
@@ -16,6 +17,7 @@ namespace Content.Server.Research.Disk
         [Dependency] private PopupSystem _popupSystem = default!;
         [Dependency] private ResearchSystem _research = default!;
         [Dependency] private TechnologyDiskSystem _technologyDisk = default!;
+        [Dependency] private StorageSystem _storage = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -30,12 +32,22 @@ namespace Content.Server.Research.Disk
                 return;
 
             if (TryComp<TechnologyDiskComponent>(args.Item, out var technologyDisk))
-                _technologyDisk.TryInsertDisk((args.Item, technologyDisk), uid);
+            {
+                if (!_technologyDisk.TryInsertDisk((args.Item, technologyDisk), uid))
+                    return;
+            }
             else if (TryComp<ResearchDiskComponent>(args.Item, out var researchDisk))
             {
                 _research.ModifyServerPoints(uid, researchDisk.Points, component);
                 QueueDel(args.Item);
             }
+            else
+            {
+                return;
+            }
+
+            var xform = Transform(args.Item);
+            _storage.PlayPickupAnimation(args.Item, xform.Coordinates, Transform(uid).Coordinates, xform.LocalRotation);
         }
 
         private void OnAfterInteract(EntityUid uid, ResearchDiskComponent component, AfterInteractEvent args)

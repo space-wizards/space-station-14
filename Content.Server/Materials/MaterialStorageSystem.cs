@@ -7,6 +7,7 @@ using Content.Shared.Stacks;
 using Content.Shared.Storage.Components;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
 using Content.Shared.Database;
@@ -27,6 +28,7 @@ public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private StackSystem _stackSystem = default!;
+    [Dependency] private StorageSystem _storage = default!;
 
     public override void Initialize()
     {
@@ -39,7 +41,11 @@ public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
 
     private void OnMagnetPickup(EntityUid uid, MaterialStorageComponent component, ref MagnetPickupAttemptEvent args)
     {
-        TryInsertMaterialEntity(uid, args.Item, uid, component);
+        if (TryInsertMaterialEntity(uid, args.Item, uid, component))
+        {
+            var xform = Transform(args.Item);
+            _storage.PlayPickupAnimation(args.Item, xform.Coordinates, Transform(uid).Coordinates, xform.LocalRotation);
+        }
     }
 
     private void OnDeconstructed(EntityUid uid, MaterialStorageComponent component, MachineDeconstructedEvent args)
