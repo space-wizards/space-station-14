@@ -11,6 +11,12 @@ namespace Content.Shared.Storage.Components;
 [AutoGenerateComponentPause]
 public sealed partial class MagnetPickupComponent : Component
 {
+    /// <summary>
+    /// Whether automatic pickup is enabled.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Enabled = true;
+
     [DataField]
     [AutoPausedField]
     [AutoNetworkedField]

@@ -1,7 +1,9 @@
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Examine;
 using Content.Shared.Inventory;
 using Content.Shared.Interaction;
 using Content.Shared.Storage.Components;
+using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
@@ -36,11 +38,36 @@ public sealed partial class MagnetPickupSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<MagnetPickupComponent, MapInitEvent>(OnMagnetMapInit);
+        SubscribeLocalEvent<MagnetPickupComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<MagnetPickupComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
     }
 
     private void OnMagnetMapInit(EntityUid uid, MagnetPickupComponent component, MapInitEvent args)
     {
         component.NextScan = _timing.CurTime;
+    }
+
+    private void OnExamined(Entity<MagnetPickupComponent> ent, ref ExaminedEvent args)
+    {
+        args.PushMarkup(Loc.GetString(ent.Comp.Enabled ? "magnet-pickup-examine-on" : "magnet-pickup-examine-off"));
+    }
+
+    private void OnGetVerbs(Entity<MagnetPickupComponent> ent, ref GetVerbsEvent<Verb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        var enabled = !ent.Comp.Enabled;
+        args.Verbs.Add(new Verb
+        {
+            Text = Loc.GetString(enabled ? "magnet-pickup-enable-verb" : "magnet-pickup-disable-verb"),
+            Act = () =>
+            {
+                ent.Comp.Enabled = enabled;
+                ent.Comp.NextScan = _timing.CurTime;
+                Dirty(ent);
+            },
+        });
     }
 
     public override void Update(float frameTime)
@@ -51,7 +78,7 @@ public sealed partial class MagnetPickupSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var comp, out var xform, out var meta))
         {
-            if (comp.NextScan > currentTime)
+            if (!comp.Enabled || comp.NextScan > currentTime)
                 continue;
 
             comp.NextScan += ScanDelay;
