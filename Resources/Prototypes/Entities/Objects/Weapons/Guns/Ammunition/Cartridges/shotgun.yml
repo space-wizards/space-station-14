@@ -177,3 +177,18 @@
       proto: PelletShotgunUraniumSpread
     - type: SpentAmmoVisuals
       state: "depleted-uranium"
+
+- type: entity
+  parent: [ BaseShellShotgun, BaseSecurityContraband ]
+  id: ShellSilver
+  name: shell (.50 silver)
+  description: The standard cartridge used by most modern shotguns. Silver ammunition is especially effective against creatures of supernatural evil.
+  components:
+  - type: Sprite
+    layers:
+    - state: silver
+      map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: PelletSilver
+  - type: SpentAmmoVisuals
+    state: "silver"
