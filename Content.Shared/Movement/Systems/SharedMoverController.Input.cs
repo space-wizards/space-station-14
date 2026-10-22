@@ -312,7 +312,7 @@ namespace Content.Shared.Movement.Systems
                 return;
 
             // TODO: Should move this into HandleMobMovement itself.
-            if (entity.Comp.CanMove && RelayQuery.TryComp(entity, out var relayMover))
+            if (entity.Comp.CanMove && RelayQuery.TryComp(entity, out var relayMover) && relayMover.Running)
             {
                 DebugTools.Assert(relayMover.RelayEntity != entity.Owner);
                 DebugTools.AssertNotNull(relayMover.RelayEntity);

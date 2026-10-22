@@ -1,6 +1,6 @@
 # Nurse Spider
 - type: entity
-  parent: MobSpiderAnimated
+  parent: MobSpiderBase
   id: MobGiantSpiderNurse
   name: nurse spider
   description: A pallid, unsettling spider that oozes something caustic.

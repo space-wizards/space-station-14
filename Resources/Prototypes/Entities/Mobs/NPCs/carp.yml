@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat, BaseSlicingRefinable, MobNightVision, BaseMobDestructible ]
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat, BaseSlicingRefinableButchering, MobNightVision, BaseMobDestructible ]
   id: BaseMobCarp
   name: space carp
   description: It's a space carp.
@@ -191,7 +191,7 @@
         Slash: 6
 
 - type: entity
-  parent: [ BaseMobBloodsucker, BaseMobCarp, BaseSlicingRefinable ]
+  parent: [ BaseMobBloodsucker, BaseMobCarp, BaseSlicingRefinableButchering ]
   id: MobShark
   name: sharkminnow
   description: A dangerous shark from the blackness of endless space, who loves to drink blood.

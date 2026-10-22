@@ -9,8 +9,20 @@ namespace Content.Server.StationEvents.Components;
 public sealed partial class VentClogRuleComponent : Component
 {
     /// <summary>
+    /// Chance of each individual vent being affected by this rule (having something flow out of it)
+    /// </summary>
+    [DataField]
+    public float VentClogChance = 0.33f;
+
+    /// <summary>
+    /// Chance of an affected vent rolling from the table of *ALL* reagents instead of just the <see cref="SafeishVentChemicals"/>
+    /// </summary>
+    [DataField]
+    public float AnyReagentChance = 0.05f;
+    
+    /// <summary>
     /// Somewhat safe chemicals to put in foam that probably won't instantly kill you.
-    /// There is a small chance of using any reagent, ignoring this.
+    /// There is a small chance of using any reagent, ignoring this (see <see cref="AnyReagentChance"/>).
     /// </summary>
     [DataField]
     public IReadOnlyList<ProtoId<ReagentPrototype>> SafeishVentChemicals = new ProtoId<ReagentPrototype>[]

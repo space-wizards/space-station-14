@@ -54,6 +54,7 @@
       shader: unshaded
   - type: Lock
   - type: LockVisuals
+  - type: LockedStorage
   - type: GenericVisualizer
     visuals:
       enum.StorageVisuals.Open:
