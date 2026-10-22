@@ -18,6 +18,9 @@
           True: { state: silo_active }
           False: { state: silo }
   - type: OreSilo
+  - type: MagnetPickup
+    slotFlags: null
+    requireAnchored: true
   - type: MaterialStorage
     whitelist:
       tags:
