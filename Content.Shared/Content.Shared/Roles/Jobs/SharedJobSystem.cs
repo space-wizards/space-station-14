@@ -1,0 +1,285 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Content.Shared.Players.PlayTimeTracking;
+using Content.Shared.Roles.Components;
+using Content.Shared.StatusIcon;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
+
+namespace Content.Shared.Roles.Jobs;
+
+/// <summary>
+///     Handles the job data on mind entities.
+/// </summary>
+public abstract partial class SharedJobSystem : EntitySystem
+{
+    [Dependency] private SharedRoleSystem _roles = default!;
+
+    private readonly Dictionary<string, string> _inverseTrackerLookup = new();
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnProtoReload);
+        SetupTrackerLookup();
+    }
+
+    private void OnProtoReload(PrototypesReloadedEventArgs obj)
+    {
+        if (obj.WasModified<JobPrototype>())
+            SetupTrackerLookup();
+    }
+
+    private void SetupTrackerLookup()
+    {
+        _inverseTrackerLookup.Clear();
+
+        // This breaks if you have N trackers to 1 JobId but future concern.
+        foreach (var job in ProtoMan.EnumeratePrototypes<JobPrototype>())
+        {
+            _inverseTrackerLookup.Add(job.PlayTimeTracker, job.ID);
+        }
+    }
+
+    /// <summary>
+    /// Gets the corresponding Job Prototype to a <see cref="PlayTimeTrackerPrototype"/>
+    /// </summary>
+    /// <param name="trackerProto"></param>
+    /// <returns></returns>
+    public string GetJobPrototype(string trackerProto)
+    {
+        DebugTools.Assert(ProtoMan.HasIndex<PlayTimeTrackerPrototype>(trackerProto));
+        return _inverseTrackerLookup[trackerProto];
+    }
+
+    /// <summary>
+    /// Tries to get the first job prototype using the given job icon.
+    /// </summary>
+    public bool TryGetJobFromIcon(ProtoId<JobIconPrototype> jobIcon, [NotNullWhen(true)] out JobPrototype? jobPrototype)
+    {
+        jobPrototype = null;
+
+        foreach (var prototype in ProtoMan.EnumeratePrototypes<JobPrototype>())
+        {
+            if (prototype.Icon != jobIcon)
+                continue;
+
+            jobPrototype = prototype;
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Tries to get the first corresponding department for this job prototype.
+    /// </summary>
+    public bool TryGetDepartment(string jobProto, [NotNullWhen(true)] out DepartmentPrototype? departmentPrototype)
+    {
+        // Not that many departments so we can just eat the cost instead of storing the inverse lookup.
+        var departmentProtos = ProtoMan.EnumeratePrototypes<DepartmentPrototype>().ToList();
+        departmentProtos.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
+
+        foreach (var department in departmentProtos)
+        {
+            if (department.Roles.Contains(jobProto))
+            {
+                departmentPrototype = department;
+                return true;
+            }
+        }
+
+        departmentPrototype = null;
+        return false;
+    }
+
+    /// <summary>
+    /// Like <see cref="TryGetDepartment"/> but ignores any non-primary departments.
+    /// For example, with CE it will return Engineering but with captain it will
+    /// not return anything, since Command is not a primary department.
+    /// </summary>
+    public bool TryGetPrimaryDepartment(string jobProto, [NotNullWhen(true)] out DepartmentPrototype? departmentPrototype)
+    {
+        // not sorting it since there should only be 1 primary department for a job.
+        // this is enforced by the job tests.
+        var departmentProtos = ProtoMan.EnumeratePrototypes<DepartmentPrototype>();
+
+        foreach (var department in departmentProtos)
+        {
+            if (department.Primary && department.Roles.Contains(jobProto))
+            {
+                departmentPrototype = department;
+                return true;
+            }
+        }
+
+        departmentPrototype = null;
+        return false;
+    }
+
+    /// <summary>
+    /// Like <see cref="TryGetPrimaryDepartment"/> but tries to get any non-primary department(s) first.
+    /// For all heads (including the captain), it will return Command, but for John Scientist it will return Science.
+    /// </summary>
+    /// <returns> True if a department was found, false if not.</returns>
+    public bool TryGetSecondaryDepartmentsOrFallback(ProtoId<JobPrototype> jobProto, [NotNullWhen(true)] out List<DepartmentPrototype>? departmentPrototypes)
+    {
+        departmentPrototypes = new List<DepartmentPrototype>();
+
+        // not sorting it since there should only be 1 primary department for a job.
+        // this is enforced by the job tests.
+        var departmentProtos = ProtoMan.EnumeratePrototypes<DepartmentPrototype>();
+        foreach (var department in departmentProtos)
+        {
+            if (!department.Primary && department.Roles.Contains(jobProto))
+            {
+                departmentPrototypes.Add(department);
+            }
+        }
+
+        if (departmentPrototypes.Count > 0)
+            return true;
+
+        // if we don't have any secondary dept, try to get a primary
+        if (TryGetPrimaryDepartment(jobProto, out var primaryDept))
+        {
+            departmentPrototypes.Add(primaryDept);
+            return true;
+        }
+
+        // no department was found
+        return false;
+    }
+
+    /// <summary>
+    /// Gets all departments for a mind's job (if any) and checks if the chosen department is among them.
+    /// </summary>
+    /// <param name="mind">The mind to check for.</param>
+    /// <param name="deptProto">The department proto ID to check for.</param>
+    /// <returns>True if the mind is a part of the department.</returns>
+    public bool MindIsInDepartment(EntityUid mind, ProtoId<DepartmentPrototype> deptProto)
+    {
+        if (!MindTryGetJobId(mind, out var job))
+            return false;
+
+        if (!job.HasValue)
+            return false;
+
+        return JobIsInDepartment(job.Value, deptProto);
+    }
+
+    /// <summary>
+    /// Checks if the job is contained within a department, and returns true if it does.
+    /// </summary>
+    public bool JobIsInDepartment(ProtoId<JobPrototype> jobProto, ProtoId<DepartmentPrototype> deptProto)
+    {
+        if (!TryGetAllDepartments(jobProto, out var depts))
+            return false;
+
+        return depts.Any(dept => dept.ID == deptProto);
+    }
+
+    /// <summary>
+    /// Tries to get all the departments for a given job. Will return an empty list if none are found.
+    /// </summary>
+    public bool TryGetAllDepartments(string jobProto, out List<DepartmentPrototype> departmentPrototypes)
+    {
+        // not sorting it since there should only be 1 primary department for a job.
+        // this is enforced by the job tests.
+        var departmentProtos = ProtoMan.EnumeratePrototypes<DepartmentPrototype>();
+        departmentPrototypes = new List<DepartmentPrototype>();
+        var found = false;
+
+        foreach (var department in departmentProtos)
+        {
+            if (department.Roles.Contains(jobProto))
+            {
+                departmentPrototypes.Add(department);
+                found = true;
+            }
+        }
+
+        return found;
+    }
+
+    /// <summary>
+    /// Try to get the lowest weighted department for the given job. If the job has no departments will return null.
+    /// </summary>
+    public bool TryGetLowestWeightDepartment(string jobProto, [NotNullWhen(true)] out DepartmentPrototype? departmentPrototype)
+    {
+        departmentPrototype = null;
+
+        if (!TryGetAllDepartments(jobProto, out var departmentPrototypes) || departmentPrototypes.Count == 0)
+            return false;
+
+        departmentPrototypes.Sort((x, y) => y.Weight.CompareTo(x.Weight));
+
+        departmentPrototype = departmentPrototypes[0];
+        return true;
+    }
+
+    public bool MindHasJobWithId(EntityUid? mindId, params ProtoId<JobPrototype>[] prototypes)
+    {
+        if (mindId is null)
+            return false;
+
+        if (!_roles.MindHasRole<JobRoleComponent>(mindId.Value, out var role))
+            return false;
+
+        if (role.Value.Comp1.JobPrototype is not { } protoId)
+            return false;
+
+        return prototypes.Contains(protoId);
+    }
+
+    public bool MindTryGetJob(
+        [NotNullWhen(true)] EntityUid? mindId,
+        [NotNullWhen(true)] out JobPrototype? prototype)
+    {
+        prototype = null;
+        MindTryGetJobId(mindId, out var protoId);
+
+        return ProtoMan.Resolve(protoId, out prototype) || prototype is not null;
+    }
+
+    public bool MindTryGetJobId(
+        [NotNullWhen(true)] EntityUid? mindId,
+        out ProtoId<JobPrototype>? job)
+    {
+        job = null;
+
+        if (mindId is null)
+            return false;
+
+        if (_roles.MindHasRole<JobRoleComponent>(mindId.Value, out var role))
+            job = role.Value.Comp1.JobPrototype;
+
+        return job is not null;
+    }
+
+    /// <summary>
+    ///     Tries to get the job name for this mind.
+    ///     Returns unknown if not found.
+    /// </summary>
+    public bool MindTryGetJobName([NotNullWhen(true)] EntityUid? mindId, out string name)
+    {
+        if (MindTryGetJob(mindId, out var prototype))
+        {
+            name = prototype.LocalizedName;
+            return true;
+        }
+
+        name = Loc.GetString("generic-unknown-title");
+        return false;
+    }
+
+    /// <summary>
+    ///     Tries to get the job name for this mind.
+    ///     Returns unknown if not found.
+    /// </summary>
+    public string MindTryGetJobName([NotNullWhen(true)] EntityUid? mindId)
+    {
+        MindTryGetJobName(mindId, out var name);
+        return name;
+    }
+}
