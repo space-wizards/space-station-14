@@ -45,7 +45,6 @@
     - id: SleeperAgents
     - id: ZombieOutbreak
     - id: LoneOpsSpawn
-    - id: InstigatorsSpawn
     - id: WizardSpawn
     - id: SpaceChangelingSpawn
     - !type:NestedSelector
@@ -615,32 +614,6 @@
     antags:
     - !type:FixedAntagCount
       proto: LoneOp
-  - type: DynamicRuleCost
-    cost: 75
-
-- type: entity
-  parent: [ BaseAntagGhostRoleRule, BaseNukeopsRule ]
-  id: InstigatorsSpawn # those are basically weaker loneops
-  components:
-  - type: StationEvent
-    earliestStart: 30
-    weight: 1
-    minimumPlayers: 15
-    duration: null # LoneOpsSpawn needs an infinite duration so that it inherits the NukeOpsRule things of an actually appropriate end screen (not always "Neutral outcome!") and... ending the game if the station is nuked.
-    occursDuringRoundEnd: false
-  - type: RuleGrids
-  - type: LoadMapRule
-    gridPath: /Maps/Shuttles/ShuttleEvent/instigator.yml
-  - type: NukeopsRule
-    roundEndBehavior: Nothing
-  - type: AntagSelection
-    antags:
-    - !type:FixedAntagCount
-      proto: Instigator
-      count: 2
-    - !type:FixedAntagCount
-      proto: InstigatorCommander
-      count: 1
   - type: DynamicRuleCost
     cost: 75
 
