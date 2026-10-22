@@ -4,8 +4,8 @@ meta:
   engineVersion: 293.0.1
   forkId: ""
   forkVersion: ""
-  time: 10/22/2026 01:36:23
-  entityCount: 546
+  time: 10/22/2026 01:40:44
+  entityCount: 567
 maps: []
 grids:
 - 1
@@ -158,6 +158,13 @@ entities:
     - type: TileHistory
       chunkHistory: {}
     - type: ExplosionAirtightGrid
+- proto: AccessBreaker
+  entities:
+  - uid: 550
+    components:
+    - type: Transform
+      parent: 1
+      pos: 8.2579365,7.6746473
 - proto: ActionToggleInternals
   entities:
   - uid: 495
@@ -188,7 +195,7 @@ entities:
       anchored: True
     - type: Physics
       bodyType: Static
-- proto: AirlockExternalGlass
+- proto: AirlockExternalGlassSyndicateLocked
   entities:
   - uid: 125
     components:
@@ -196,68 +203,24 @@ entities:
       parent: 1
       rot: 1.5707963267948966 rad
       pos: 3.5,1.5
-    - type: DeviceLinkSink
-      ports:
-      - DoorBolt
-      - Open
-      - Close
-      - Toggle
-    - type: DeviceLinkSource
-      linkedPorts:
-        127:
-        - source: DoorStatus
-          sink: DoorBolt
   - uid: 126
-    components:
-    - type: Transform
-      parent: 1
-      rot: 1.5707963267948966 rad
-      pos: -2.5,1.5
-    - type: DeviceLinkSink
-      ports:
-      - DoorBolt
-      - Open
-      - Close
-      - Toggle
-    - type: DeviceLinkSource
-      linkedPorts:
-        128:
-        - source: DoorStatus
-          sink: DoorBolt
-  - uid: 127
     components:
     - type: Transform
       parent: 1
       rot: 3.141592653589793 rad
       pos: 4.5,2.5
-    - type: DeviceLinkSink
-      ports:
-      - DoorBolt
-      - Open
-      - Close
-      - Toggle
-    - type: DeviceLinkSource
-      linkedPorts:
-        125:
-        - source: DoorStatus
-          sink: DoorBolt
+  - uid: 127
+    components:
+    - type: Transform
+      parent: 1
+      rot: 1.5707963267948966 rad
+      pos: -2.5,1.5
   - uid: 128
     components:
     - type: Transform
       parent: 1
       rot: 3.141592653589793 rad
       pos: -3.5,2.5
-    - type: DeviceLinkSink
-      ports:
-      - DoorBolt
-      - Open
-      - Close
-      - Toggle
-    - type: DeviceLinkSource
-      linkedPorts:
-        126:
-        - source: DoorStatus
-          sink: DoorBolt
 - proto: AirlockMaint
   entities:
   - uid: 43
@@ -280,6 +243,13 @@ entities:
       parent: 1
       rot: 1.5707963267948966 rad
       pos: 11.5,2.5
+    - type: Door
+      state: Opening
+      secondsUntilStateChange: -106.7974
+    - type: DeviceLinkSource
+      lastSignals:
+        DoorStatus: True
+        DoorBoltStatus: False
   - uid: 46
     components:
     - type: Transform
@@ -349,6 +319,18 @@ entities:
       parent: 1
       rot: 1.5707963267948966 rad
       pos: 11.5,4.5
+  - uid: 548
+    components:
+    - type: Transform
+      parent: 1
+      rot: 3.141592653589793 rad
+      pos: -3.5,3.5
+  - uid: 549
+    components:
+    - type: Transform
+      parent: 1
+      rot: 3.141592653589793 rad
+      pos: 4.5,3.5
 - proto: Bed
   entities:
   - uid: 446
@@ -938,6 +920,96 @@ entities:
     - type: Transform
       parent: 1
       pos: 8.5,14.5
+  - uid: 547
+    components:
+    - type: Transform
+      parent: 1
+      pos: -7.5,12.5
+  - uid: 551
+    components:
+    - type: Transform
+      parent: 1
+      pos: -6.5,12.5
+  - uid: 552
+    components:
+    - type: Transform
+      parent: 1
+      pos: -5.5,6.5
+  - uid: 553
+    components:
+    - type: Transform
+      parent: 1
+      pos: -6.5,6.5
+  - uid: 554
+    components:
+    - type: Transform
+      parent: 1
+      pos: -7.5,6.5
+  - uid: 555
+    components:
+    - type: Transform
+      parent: 1
+      pos: -1.5,-2.5
+  - uid: 556
+    components:
+    - type: Transform
+      parent: 1
+      pos: -1.5,-3.5
+  - uid: 557
+    components:
+    - type: Transform
+      parent: 1
+      pos: -2.5,-3.5
+  - uid: 558
+    components:
+    - type: Transform
+      parent: 1
+      pos: 2.5,-2.5
+  - uid: 559
+    components:
+    - type: Transform
+      parent: 1
+      pos: 2.5,-3.5
+  - uid: 560
+    components:
+    - type: Transform
+      parent: 1
+      pos: 3.5,-3.5
+  - uid: 561
+    components:
+    - type: Transform
+      parent: 1
+      pos: 8.5,6.5
+  - uid: 562
+    components:
+    - type: Transform
+      parent: 1
+      pos: 7.5,6.5
+  - uid: 563
+    components:
+    - type: Transform
+      parent: 1
+      pos: 6.5,6.5
+  - uid: 564
+    components:
+    - type: Transform
+      parent: 1
+      pos: 8.5,12.5
+  - uid: 565
+    components:
+    - type: Transform
+      parent: 1
+      pos: 7.5,12.5
+  - uid: 566
+    components:
+    - type: Transform
+      parent: 1
+      pos: -9.5,3.5
+  - uid: 567
+    components:
+    - type: Transform
+      parent: 1
+      pos: 10.5,3.5
 - proto: CableHV
   entities:
   - uid: 214
@@ -3409,7 +3481,7 @@ entities:
     components:
     - type: Transform
       parent: 1
-      pos: 8.421873,7.766321
+      pos: 8.360843,7.9906096
 - proto: TableFancyBlack
   entities:
   - uid: 489
