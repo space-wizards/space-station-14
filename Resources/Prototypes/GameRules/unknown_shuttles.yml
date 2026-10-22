@@ -5,8 +5,8 @@
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
     - id: LoneOpsSpawn
+    - id: InstigatorsSpawn
     - id: UnknownShuttleManOWar
-    - id: UnknownShuttleInstigator
 
 # Shuttle Game Rules
 
@@ -64,15 +64,6 @@
     minimumPlayers: 25
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/ShuttleEvent/quark.yml
-
-- type: entity
-  id: UnknownShuttleInstigator
-  parent: BaseUnknownShuttleRule
-  components:
-  - type: StationEvent
-    weight: 0.1 #  approximately 1/1000 on the random hostile shuttle table. Golden Legendary!
-  - type: LoadMapRule
-    gridPath: /Maps/Shuttles/ShuttleEvent/instigator.yml
 
 - type: entity
   id: UnknownShuttleManOWar
