@@ -124,12 +124,6 @@ public sealed partial class SecretStashSystem : EntitySystem
             return false;
         }
 
-        if (HasComp<SecretStashComponent>(itemToHideUid) || HasComp<ParcelWrapComponent>(itemToHideUid) ||
-            HasComp<WrappedParcelComponent>(itemToHideUid))
-        {
-            return false;
-        }
-
         if (_item.GetSizePrototype(itemComp.Size) > _item.GetSizePrototype(maxItemSize) ||
             _whitelistSystem.IsWhitelistPass(entity.Comp.Blacklist, itemToHideUid))
         {
