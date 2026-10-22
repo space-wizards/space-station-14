@@ -192,6 +192,16 @@
   group: market
 
 - type: cargoProduct
+  id: VirtualSingerOutfits
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirts/Service/virtual_singer.rsi
+    state: icon
+  product: CrateVirtualSingerOutfits
+  cost: 25000
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
   id: FunSpaceLube
   icon:
     sprite: Objects/Consumable/Drinks/lube-tube.rsi
@@ -214,5 +224,3 @@
     entity: WrappedParcel
     containerId: contents
   cost: 300
-  category: cargoproduct-category-name-fun
-  group: market

@@ -76,12 +76,10 @@ public sealed partial class ContainerFillSystem : EntitySystem
             if (ent.Comp.ContextContainers)
             {
                 // Pass in the container being filled so conditions can look at it
-                ctx = new EntityTableContext(
-                    new Dictionary<string, object>
-                    {
-                        [EmptyContainerCondition.ContainerContextKey] = container,
-                    }
-                );
+                ctx = new EntityTableContext
+                {
+                    { EmptyContainerCondition.ContainerContextKey, container },
+                };
             }
 
             var spawns = _entityTable.GetSpawns(table, ctx: ctx).ToList();

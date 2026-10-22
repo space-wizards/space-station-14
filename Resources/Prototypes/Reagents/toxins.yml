@@ -763,12 +763,30 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectHemorrhage
-        time: 21 # 7 bleed ticks, you bleed every 3 seconds by default.
-        type: Update
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1.5 # TODO: Remove when bloodloss is more interesting. This is basically meant to give a bit more strength short-term before bloodloss damage kicks in.
       - !type:ModifyBleed
-        amount: 0.5
+        amount: 1
+      - !type:ModifyBloodLevel
+        amount: -5
+      - !type:ModifyBloodLevel
+        amount: -5
+        conditions:
+        - !type:BloodLevelCondition
+          min: 0.5 # Stronger when at least 50% blood
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        messages:
+        - hemorrhinol-effect-1
+        - hemorrhinol-effect-2
+        - hemorrhinol-effect-3
+        - hemorrhinol-effect-4
+        probability: 0.1
+      - !type:Jitter
+        probability: 0.25
 
 - type: reagent
   id: Hivarol
