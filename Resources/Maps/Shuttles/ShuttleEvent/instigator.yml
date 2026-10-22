@@ -4,8 +4,8 @@ meta:
   engineVersion: 293.0.1
   forkId: ""
   forkVersion: ""
-  time: 10/22/2026 01:03:17
-  entityCount: 542
+  time: 10/22/2026 01:36:23
+  entityCount: 546
 maps: []
 grids:
 - 1
@@ -2697,6 +2697,68 @@ entities:
     - type: Transform
       parent: 1
       pos: 0.5,4.5
+- proto: GrenadeBlast
+  entities:
+  - uid: 530
+    mapInit: true
+    paused: true
+    components:
+    - type: Transform
+      parent: 129
+    - type: EmitSoundOnCollide
+      nextSound: -2672.9086437
+    - type: Physics
+      canCollide: False
+    - type: Forensics
+      residues: []
+      fingerprints: []
+      fibers: []
+      dNAs: []
+  - uid: 531
+    mapInit: true
+    paused: true
+    components:
+    - type: Transform
+      parent: 129
+    - type: EmitSoundOnCollide
+      nextSound: -2672.9086437
+    - type: Physics
+      canCollide: False
+    - type: Forensics
+      residues: []
+      fingerprints: []
+      fibers: []
+      dNAs: []
+  - uid: 532
+    mapInit: true
+    paused: true
+    components:
+    - type: Transform
+      parent: 132
+    - type: EmitSoundOnCollide
+      nextSound: -2672.9086437
+    - type: Physics
+      canCollide: False
+    - type: Forensics
+      residues: []
+      fingerprints: []
+      fibers: []
+      dNAs: []
+  - uid: 546
+    mapInit: true
+    paused: true
+    components:
+    - type: Transform
+      parent: 132
+    - type: EmitSoundOnCollide
+      nextSound: -2672.9086437
+    - type: Physics
+      canCollide: False
+    - type: Forensics
+      residues: []
+      fingerprints: []
+      fibers: []
+      dNAs: []
 - proto: Grille
   entities:
   - uid: 108
@@ -3090,12 +3152,52 @@ entities:
       parent: 1
       rot: 3.141592653589793 rad
       pos: -3.5,3.5
+    - type: ContainerContainer
+      containers:
+        machine_board: !type:Container
+          ents: []
+          showEnts: False
+          occludes: True
+        machine_parts: !type:Container
+          ents: []
+          showEnts: False
+          occludes: True
+        ballistic-ammo: !type:Container
+          ents:
+          - 530
+          - 531
+          showEnts: False
+          occludes: True
+    - type: BallisticAmmoProvider
+      entities:
+      - 530
+      - 531
   - uid: 132
     components:
     - type: Transform
       parent: 1
       rot: 3.141592653589793 rad
       pos: 4.5,3.5
+    - type: ContainerContainer
+      containers:
+        machine_board: !type:Container
+          ents: []
+          showEnts: False
+          occludes: True
+        machine_parts: !type:Container
+          ents: []
+          showEnts: False
+          occludes: True
+        ballistic-ammo: !type:Container
+          ents:
+          - 532
+          - 546
+          showEnts: False
+          occludes: True
+    - type: BallisticAmmoProvider
+      entities:
+      - 532
+      - 546
 - proto: SignalButtonDirectional
   entities:
   - uid: 329
