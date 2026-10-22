@@ -1182,15 +1182,19 @@
   group: Medicine
   desc: reagent-desc-holywater
   evaporationSpeed: 0.3
+  absorbent: true
   physicalDesc: reagent-physical-desc-holy
   flavor: holy
   color: "#91C3F7"
+  boilingPoint: 100.0
+  meltingPoint: 0.0
+  friction: 0.4
   metabolisms:
     Digestion:
       effects:
       - !type:Satiate
         satiationType: Thirst
-        factor: 3
+        factor: 4
       - !type:HealthChange
         conditions:
         damage:
