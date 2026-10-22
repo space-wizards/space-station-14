@@ -8,7 +8,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Materials;
 using Content.Shared.Nutrition;
-using Content.Shared.ParcelWrap.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using Content.Shared.Tools.EntitySystems;
