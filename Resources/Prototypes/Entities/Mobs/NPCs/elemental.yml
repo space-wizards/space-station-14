@@ -322,8 +322,6 @@
     rules: ghost-role-information-angry-slimes-rules
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
-    raffle:
-      settings: short
   - type: NpcFactionMember
     factions:
     - SimpleHostile

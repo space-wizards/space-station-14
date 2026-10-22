@@ -893,6 +893,72 @@
           Brute: -2
 
 - type: reagent
+  id: ApotheosoticEnzymes
+  name: reagent-name-apotheosotic-enzymes
+  group: Medicine
+  desc: reagent-desc-apotheosotic-enzymes
+  physicalDesc: reagent-physical-desc-sticky
+  flavor: magical
+  color: "#faf5ef"
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:EvenHealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Omnizine
+          max: 0
+        damage:
+          Burn: -2
+          Toxin: -2
+          Airloss: -2
+          Brute: -2
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 0.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: ApotheosoticExtract
+          min: 30
+        damage:
+          types:
+            Caustic: 2
+            Poison: 2
+
+- type: reagent
+  id: ApotheosoticExtract
+  name: reagent-name-apotheosotic-extract
+  group: Medicine
+  desc: reagent-desc-apotheosotic-extract
+  physicalDesc: reagent-physical-desc-chalky
+  flavor: chalky
+  color: "#fffff0"
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:EvenHealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: ApotheosoticExtract
+          max: 5
+        damage:
+          Burn: -1
+          Toxin: -1
+          Airloss: -1
+          Brute: -1
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: ApotheosoticExtract
+          min: 5
+        damage:
+          types:
+            Caustic: 2
+            Poison: 2
+
+- type: reagent
   id: Ultravasculine
   name: reagent-name-ultravasculine
   group: Medicine
@@ -1177,20 +1243,20 @@
             Poison: 2.5 # 10 per u
 
 - type: reagent
+  parent: Water # so basic physical properties (e.g recognizability, slippage, evaporation, thirst-quenching) are identical to Water
   id: Holywater
   name: reagent-name-holywater
   group: Medicine
   desc: reagent-desc-holywater
-  evaporationSpeed: 0.3
   physicalDesc: reagent-physical-desc-holy
   flavor: holy
   color: "#91C3F7"
   metabolisms:
     Digestion:
       effects:
-      - !type:Satiate
+      - !type:Satiate # Same as Water
         satiationType: Thirst
-        factor: 3
+        factor: 4
       - !type:HealthChange
         conditions:
         damage:
@@ -1201,7 +1267,7 @@
             Shock: -0.2
             Cold: -0.2
   reactiveEffects:
-    Extinguish:
+    Extinguish: # same as BaseDrink, therefore same as Water
       methods: [ Touch ]
       effects:
       - !type:Extinguish
@@ -1213,11 +1279,6 @@
         damage:
           types:
             Holy: 0.5
-  plantMetabolism:
-  - !type:PlantAdjustWater
-    amount: 1
-  tileReactions:
-  - !type:ExtinguishTileReaction { }
 
 - type: reagent
   id: Pyrazine
