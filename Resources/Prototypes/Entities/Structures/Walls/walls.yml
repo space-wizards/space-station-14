@@ -1140,7 +1140,7 @@
     - !type:DiagonalSpriteSmoothing
       mask:
       - walls-exo-borg
-      - windows-exo-borg,
+      - windows-exo-borg
       - grilles
       - doors
       base: state
