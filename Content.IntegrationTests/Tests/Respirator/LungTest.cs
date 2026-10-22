@@ -128,11 +128,13 @@ public sealed class LungTest : AtmosTest
             var human = SSpawnAtPosition(_humanLungDummy, new EntityCoordinates(ProcessEnt, _gridCenter));
 
             var mixture = SAtmos.GetContainingMixture(human);
-            Assert.That(mixture!.TotalMoles, Is.GreaterThan(0));
-            Assert.That(SEntMan.TryGetComponent<RespiratorComponent>(human, out var respirator), Is.True);
-            Assert.That(respirator!.SuffocationCycles, Is.LessThanOrEqualTo(respirator.SuffocationCycleThreshold));
-
-            _dummy = (human, respirator);
+            Assert.Multiple(() =>
+            {
+                Assert.That(mixture!.TotalMoles, Is.GreaterThan(0));
+                Assert.That(SEntMan.TryGetComponent<RespiratorComponent>(human, out var respirator), Is.True);
+                Assert.That(respirator!.SuffocationCycles, Is.LessThanOrEqualTo(respirator.SuffocationCycleThreshold));
+                _dummy = (human, respirator);
+            });
         });
 
         var increment = 10;
