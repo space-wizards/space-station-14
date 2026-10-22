@@ -181,22 +181,9 @@
 - type: startingGear
   id: SyndicateOperativeMedicFull
   parent: SyndicateOperativeGearFull
-  equipment:
-    eyes: ClothingEyesHudSyndicateAgent
+  equipment: # syndie medic gear is now in a mapped closet fill called "
     outerClothing: ClothingOuterHardsuitSyndieMedic
     id: SyndiCorpsmanPDA
-    belt: ClothingBeltMilitaryWebbingMedFilled
-  storage:
-    back:
-    - SyndiHypo
-    - SawAdvanced
-    - Cautery
-    - CombatKnife
-    - WeaponPistolViper
-    - PinpointerSyndicateNuclear
-    - HandheldHealthAnalyzer
-    - CombatMedipen
-    - DeathAcidifierImplanter
 
 - type: chameleonOutfit
   id: NukeopsMedicOutfit
