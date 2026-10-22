@@ -41,7 +41,7 @@ public sealed class PlantTest : GameTest
     [SidedDependency(Side.Server)]
     private readonly PlantSystem _sPlant = null!;
 
-    private static readonly string[] SeedEntities = GameDataScrounger.EntitiesWithComponent("SeedComponent");
+    private static readonly string[] SeedEntities = GameDataScrounger.EntitiesWithComponent("Seed");
 
 
     public override PoolSettings PoolSettings => new() { Connected = false };
