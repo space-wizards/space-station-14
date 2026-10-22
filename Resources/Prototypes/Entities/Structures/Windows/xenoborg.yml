@@ -14,5 +14,8 @@
     states:
     - !type:CardinalCornerSpriteSmoothing
       mask: [ windows-exo-borg ]
-      altMask: [ walls-exo-borg, grilles, doors ]
+      altMask:
+      - walls-exo-borg
+      - grilles
+      - doors
       base: window

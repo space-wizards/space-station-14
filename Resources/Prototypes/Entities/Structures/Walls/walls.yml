@@ -78,7 +78,12 @@
     key: walls
     states:
     - !type:DiagonalSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
+      mask:
+      - walls
+      - windows
+      - grilles
+      - marble
+      - doors
       base: state
   - type: Airtight
     noAirWhenFullyAirBlocked: false
@@ -138,7 +143,12 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
+      mask:
+      - walls
+      - windows
+      - grilles
+      - marble
+      - doors
       base: brick
 
 - type: entity
@@ -170,7 +180,12 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
+      mask:
+      - walls
+      - windows
+      - grilles
+      - marble
+      - doors
       base: brass
 
 - type: entity
@@ -208,7 +223,12 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
+      mask:
+      - walls
+      - windows
+      - grilles
+      - marble
+      - doors
       base: meat
 
 - type: entity
@@ -232,7 +252,12 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
+      mask:
+      - walls
+      - windows
+      - grilles
+      - marble
+      - doors
       base: debug
 
 - type: entity
@@ -315,7 +340,12 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
+      mask:
+      - walls
+      - windows
+      - grilles
+      - marble
+      - doors
       base: gold
 
 - type: entity
@@ -349,7 +379,12 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
+      mask:
+      - walls
+      - windows
+      - grilles
+      - marble
+      - doors
       base: plasma
   - type: RadiationBlocker
     resistance: 5
@@ -369,25 +404,24 @@
     states:
     - !type:CardinalCornerSpriteSmoothing
       mask: [ walls-plastitanium ]
-      altMask: [
-        windows,
-        windows-reinf,
-        windows-tinted,
-        windows-plasma,
-        windows-plasma-reinf,
-        windows-uranium,
-        windows-uranium-reinf,
-        windows-exo,
-        windows-shuttle,
-        windows-plastitanium,
-        windows-regal,
-        walls-exo,
-        walls-shuttle,
-        walls-marble,
-        walls,
-        grilles,
-        doors
-      ]
+      altMask:
+      - windows
+      - windows-reinf
+      - windows-tinted
+      - windows-plasma
+      - windows-plasma-reinf
+      - windows-uranium
+      - windows-uranium-reinf
+      - windows-exo
+      - windows-shuttle
+      - windows-plastitanium
+      - windows-regal
+      - walls-exo
+      - walls-shuttle
+      - walls-marble
+      - walls
+      - grilles
+      - doors
       base: wall
   - type: Fixtures
     fixtures:
@@ -493,26 +527,25 @@
     states:
     - !type:CardinalCornerSpriteSmoothing
       mask: [ walls ]
-      altMask: [
-        windows,
-        windows-reinf,
-        windows-tinted,
-        windows-plasma,
-        windows-plasma-reinf,
-        windows-uranium,
-        windows-uranium-reinf,
-        windows-exo,
-        windows-shuttle,
-        windows-plastitanium,
-        windows-regal,
-        walls-exo,
-        walls-shuttle,
-        walls-plastitanium,
-        walls-marble,
-        walls,
-        grilles,
-        doors
-      ]
+      altMask:
+      - windows
+      - windows-reinf
+      - windows-tinted
+      - windows-plasma
+      - windows-plasma-reinf
+      - windows-uranium
+      - windows-uranium-reinf
+      - windows-exo
+      - windows-shuttle
+      - windows-plastitanium
+      - windows-regal
+      - walls-exo
+      - walls-shuttle
+      - walls-plastitanium
+      - walls-marble
+      - walls
+      - grilles
+      - doors
       base: wall
   - type: Appearance
   - type: GenericVisualizer
@@ -561,26 +594,25 @@
     states:
     - !type:CardinalCornerSpriteSmoothing
       mask: [ walls ]
-      altMask: [
-        windows,
-        windows-reinf,
-        windows-tinted,
-        windows-plasma,
-        windows-plasma-reinf,
-        windows-uranium,
-        windows-uranium-reinf,
-        windows-exo,
-        windows-shuttle,
-        windows-plastitanium,
-        windows-regal,
-        walls-exo,
-        walls-shuttle,
-        walls-plastitanium,
-        walls-marble,
-        walls,
-        grilles,
-        doors
-      ]
+      altMask:
+      - windows
+      - windows-reinf
+      - windows-tinted
+      - windows-plasma
+      - windows-plasma-reinf
+      - windows-uranium
+      - windows-uranium-reinf
+      - windows-exo
+      - windows-shuttle
+      - windows-plastitanium
+      - windows-regal
+      - walls-exo
+      - walls-shuttle
+      - walls-plastitanium
+      - walls-marble
+      - walls
+      - grilles
+      - doors
       base: wall
     # Rusted walls should be made weaker through a damage mod status effect.
 
@@ -622,25 +654,24 @@
     states:
     - !type:CardinalCornerSpriteSmoothing
       mask: [ walls-marble ]
-      altMask: [
-        windows,
-        windows-reinf,
-        windows-tinted,
-        windows-plasma,
-        windows-plasma-reinf,
-        windows-uranium,
-        windows-uranium-reinf,
-        windows-exo,
-        windows-shuttle,
-        windows-plastitanium,
-        windows-regal,
-        walls-exo,
-        walls-shuttle,
-        walls-plastitanium,
-        walls,
-        grilles,
-        doors
-      ]
+      altMask:
+      - windows
+      - windows-reinf
+      - windows-tinted
+      - windows-plasma
+      - windows-plasma-reinf
+      - windows-uranium
+      - windows-uranium-reinf
+      - windows-exo
+      - windows-shuttle
+      - windows-plastitanium
+      - windows-regal
+      - walls-exo
+      - walls-shuttle
+      - walls-plastitanium
+      - walls
+      - grilles
+      - doors
       base: wall
   - type: Fixtures
     fixtures:
@@ -707,7 +738,12 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
+      mask:
+      - walls
+      - windows
+      - grilles
+      - marble
+      - doors
       base: silver
 
 #shuttle walls
@@ -792,25 +828,24 @@
     states:
     - !type:CardinalCornerSpriteSmoothing
       mask: [ walls-shuttle ]
-      altMask: [
-        windows,
-        windows-reinf,
-        windows-tinted,
-        windows-plasma,
-        windows-plasma-reinf,
-        windows-uranium,
-        windows-uranium-reinf,
-        windows-exo,
-        windows-shuttle,
-        windows-plastitanium,
-        windows-regal,
-        walls-exo,
-        walls-plastitanium,
-        walls-marble,
-        walls,
-        grilles,
-        doors
-      ]
+      altMask:
+      - windows
+      - windows-reinf
+      - windows-tinted
+      - windows-plasma
+      - windows-plasma-reinf
+      - windows-uranium
+      - windows-uranium-reinf
+      - windows-exo
+      - windows-shuttle
+      - windows-plastitanium
+      - windows-regal
+      - walls-exo
+      - walls-plastitanium
+      - walls-marble
+      - walls
+      - grilles
+      - doors
       base: wall
   - type: Appearance
   - type: GenericVisualizer
@@ -873,26 +908,25 @@
     states:
     - !type:CardinalCornerSpriteSmoothing
       mask: [ walls ]
-      altMask: [
-        windows,
-        windows-reinf,
-        windows-tinted,
-        windows-plasma,
-        windows-plasma-reinf,
-        windows-uranium,
-        windows-uranium-reinf,
-        windows-exo,
-        windows-shuttle,
-        windows-plastitanium,
-        windows-regal,
-        walls-exo,
-        walls-shuttle,
-        walls-plastitanium,
-        walls-marble,
-        walls,
-        grilles,
-        doors
-      ]
+      altMask:
+      - windows
+      - windows-reinf
+      - windows-tinted
+      - windows-plasma
+      - windows-plasma-reinf
+      - windows-uranium
+      - windows-uranium-reinf
+      - windows-exo
+      - windows-shuttle
+      - windows-plastitanium
+      - windows-regal
+      - walls-exo
+      - walls-shuttle
+      - walls-plastitanium
+      - walls-marble
+      - walls
+      - grilles
+      - doors
       base: wall
 
 - type: entity
@@ -932,26 +966,25 @@
     states:
     - !type:CardinalCornerSpriteSmoothing
       mask: [ walls ]
-      altMask: [
-        windows,
-        windows-reinf,
-        windows-tinted,
-        windows-plasma,
-        windows-plasma-reinf,
-        windows-uranium,
-        windows-uranium-reinf,
-        windows-exo,
-        windows-shuttle,
-        windows-plastitanium,
-        windows-regal,
-        walls-exo,
-        walls-shuttle,
-        walls-plastitanium,
-        walls-marble,
-        walls,
-        grilles,
-        doors
-      ]
+      altMask:
+      - windows
+      - windows-reinf
+      - windows-tinted
+      - windows-plasma
+      - windows-plasma-reinf
+      - windows-uranium
+      - windows-uranium-reinf
+      - windows-exo
+      - windows-shuttle
+      - windows-plastitanium
+      - windows-regal
+      - walls-exo
+      - walls-shuttle
+      - walls-plastitanium
+      - walls-marble
+      - walls
+      - grilles
+      - doors
       base: wall
   # Rusted walls should be made weaker through a damage mod status effect.
 
@@ -978,25 +1011,24 @@
     states:
     - !type:CardinalCornerSpriteSmoothing
       mask: [ walls-exo ]
-      altMask: [
-        windows,
-        windows-reinf,
-        windows-tinted,
-        windows-plasma,
-        windows-plasma-reinf,
-        windows-uranium,
-        windows-uranium-reinf,
-        windows-exo,
-        windows-shuttle,
-        windows-plastitanium,
-        windows-regal,
-        walls-shuttle,
-        walls-plastitanium,
-        walls-marble,
-        walls,
-        grilles,
-        doors
-      ]
+      altMask:
+      - windows
+      - windows-reinf
+      - windows-tinted
+      - windows-plasma
+      - windows-plasma-reinf
+      - windows-uranium
+      - windows-uranium-reinf
+      - windows-exo
+      - windows-shuttle
+      - windows-plastitanium
+      - windows-regal
+      - walls-shuttle
+      - walls-plastitanium
+      - walls-marble
+      - walls
+      - grilles
+      - doors
       base: wall
   - type: Construction
     graph: Girder
@@ -1046,25 +1078,24 @@
     states:
     - !type:CardinalCornerSpriteSmoothing
       mask: [ walls-exo ]
-      altMask: [
-        windows,
-        windows-reinf,
-        windows-tinted,
-        windows-plasma,
-        windows-plasma-reinf,
-        windows-uranium,
-        windows-uranium-reinf,
-        windows-exo,
-        windows-shuttle,
-        windows-plastitanium,
-        windows-regal,
-        walls-shuttle,
-        walls-plastitanium,
-        walls-marble,
-        walls,
-        grilles,
-        doors
-      ]
+      altMask:
+      - windows
+      - windows-reinf
+      - windows-tinted
+      - windows-plasma
+      - windows-plasma-reinf
+      - windows-uranium
+      - windows-uranium-reinf
+      - windows-exo
+      - windows-shuttle
+      - windows-plastitanium
+      - windows-regal
+      - walls-shuttle
+      - walls-plastitanium
+      - walls-marble
+      - walls
+      - grilles
+      - doors
       base: wall
   - type: Construction
     graph: Girder
@@ -1084,7 +1115,10 @@
     states:
     - !type:CardinalCornerSpriteSmoothing
       mask: [ walls-exo-borg ]
-      altMask: [ windows-exo-borg, grilles, doors ]
+      altMask:
+      - windows-exo-borg
+      - grilles
+      - doors
       base: wall
 
 - type: entity
@@ -1104,7 +1138,11 @@
     key: walls-exo-borg
     states:
     - !type:DiagonalSpriteSmoothing
-      mask: [ walls-exo-borg, windows-exo-borg, grilles, doors ]
+      mask:
+      - walls-exo-borg
+      - windows-exo-borg,
+      - grilles
+      - doors
       base: state
 
 - type: entity
@@ -1145,7 +1183,12 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
+      mask:
+      - walls
+      - windows
+      - grilles
+      - marble
+      - doors
       base: uranium
   - type: RadiationBlocker
     resistance: 6
@@ -1183,7 +1226,12 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
+      mask:
+      - walls
+      - windows
+      - grilles
+      - marble
+      - doors
       base: wood
 
 - type: entity
@@ -1219,7 +1267,13 @@
     key: webs
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors, webs ]
+      mask:
+      - walls
+      - windows
+      - grilles
+      - marble
+      - doors
+      - webs
       base: wall
   - type: Construction
     graph: WebStructures
@@ -1246,7 +1300,12 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
+      mask:
+      - walls
+      - windows
+      - grilles
+      - marble
+      - doors
       base: mining
   - type: Appearance
 
@@ -1344,7 +1403,12 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
+      mask:
+      - walls
+      - windows
+      - grilles
+      - marble
+      - doors
       base: concrete
 
 # Cardboard
