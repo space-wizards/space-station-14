@@ -1,10 +1,10 @@
+using System.Numerics;
+using Content.IntegrationTests.Tests.Atmos;
 using Content.Server.Body.Components;
 using Content.Shared.Body.Systems;
 using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using System.Numerics;
-using Content.IntegrationTests.Tests.Atmos;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -85,9 +85,7 @@ public sealed class LungTest : AtmosTest
         {
             var human = SSpawnAtPosition(_humanLungDummy, new EntityCoordinates(ProcessEnt, _gridCenter));
 
-#pragma warning disable NUnit2045
             Assert.That(SEntMan.TryGetComponent<RespiratorComponent>(human, out var resp), Is.True);
-#pragma warning restore NUnit2045
 
             _dummy = (human, resp);
         });
@@ -130,11 +128,9 @@ public sealed class LungTest : AtmosTest
             var human = SSpawnAtPosition(_humanLungDummy, new EntityCoordinates(ProcessEnt, _gridCenter));
 
             var mixture = SAtmos.GetContainingMixture(human);
-#pragma warning disable NUnit2045
             Assert.That(mixture!.TotalMoles, Is.GreaterThan(0));
             Assert.That(SEntMan.TryGetComponent<RespiratorComponent>(human, out var respirator), Is.True);
             Assert.That(respirator!.SuffocationCycles, Is.LessThanOrEqualTo(respirator.SuffocationCycleThreshold));
-#pragma warning restore NUnit2045
 
             _dummy = (human, respirator);
         });
