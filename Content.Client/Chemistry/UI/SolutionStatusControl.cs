@@ -4,6 +4,7 @@ using Content.Client.Items.UI;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Client.UserInterface.Controls;
@@ -42,18 +43,31 @@ public sealed class SolutionStatusControl : PollingItemStatusControl<SolutionSta
         if (_entityManager.TryGetComponent(_parent.Owner, out SolutionTransferComponent? transfer))
             transferAmount = transfer.TransferAmount;
 
-        return new Data(solution.Volume, solution.MaxVolume, transferAmount);
+        ExaminedVolumeDisplay? state = null;
+        if (_entityManager.TryGetComponent(_parent.Owner, out ExaminableSolutionComponent? examine) &&
+            _entityManager.TryGetComponent(_parent.Owner, out TransformComponent? xform))
+        {
+            state = _solutionContainers.ExaminedVolume((_parent, examine), solution, xform.ParentUid);
+        }
+
+        return new Data(solution.Volume, solution.MaxVolume, transferAmount, state);
     }
 
     protected override void Update(in Data data)
     {
-        var markup = Loc.GetString("solution-status-volume",
-            ("currentVolume", data.Volume),
-            ("maxVolume", data.MaxVolume));
+        var markup = "";
+
+        if (data.VolumeState is { } state)
+            markup = Loc.GetString(_parent.Comp.LocControlVolume,
+                            ("fillLevel", state),
+                            ("current", data.CurrentVolume),
+                            ("max", data.MaxVolume));
+
         if (data.TransferVolume is { } transferVolume)
-            markup += "\n" + Loc.GetString("solution-status-transfer", ("volume", transferVolume));
+            markup += "\n" + Loc.GetString(_parent.Comp.LocControlTransfer, ("volume", transferVolume));
+
         _label.SetMarkup(markup);
     }
 
-    public readonly record struct Data(FixedPoint2 Volume, FixedPoint2 MaxVolume, FixedPoint2? TransferVolume);
+    public readonly record struct Data(FixedPoint2 CurrentVolume, FixedPoint2 MaxVolume, FixedPoint2? TransferVolume, ExaminedVolumeDisplay? VolumeState);
 }
