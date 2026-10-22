@@ -66,6 +66,7 @@
       - walls-exo
       - walls-shuttle
       - walls-plastitanium
+      - walls-material
       - walls-marble
       - walls
       - grilles
@@ -144,8 +145,14 @@
       - windows-uranium
       - windows-uranium-reinf
       - windows-exo
-      - walls-marble
+      - windows-shuttle
+      - windows-plastitanium
+      - windows-regal
       - walls-exo
+      - walls-shuttle
+      - walls-plastitanium
+      - walls-material
+      - walls-marble
       - walls
       - grilles
       - doors
