@@ -1,3 +1,4 @@
+using Content.Shared.DeviceLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
@@ -6,6 +7,12 @@ namespace Content.Server.Research.TechnologyDisk.Components;
 [RegisterComponent]
 public sealed partial class DiskConsoleComponent : Component
 {
+    /// <summary>
+    /// Signal input to print disk.
+    /// </summary>
+    [DataField]
+    public ProtoId<SinkPortPrototype> PrintPort = "PrintDisk";
+
     /// <summary>
     /// How much it costs to print a disk
     /// </summary>

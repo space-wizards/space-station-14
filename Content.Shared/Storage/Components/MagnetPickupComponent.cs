@@ -25,6 +25,18 @@ public sealed partial class MagnetPickupComponent : Component
     [DataField]
     public bool RequireActiveHand = false;
 
+    /// <summary>
+    /// Whether the magnet must be anchored
+    /// </summary>
+    [DataField]
+    public bool RequireAnchored = false;
+
     [DataField]
     public float Range = 1f;
 }
+
+/// <summary>
+/// Raised on a magnet to insert a nearby item
+/// </summary>
+[ByRefEvent]
+public readonly record struct MagnetPickupAttemptEvent(EntityUid Item);

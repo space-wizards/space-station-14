@@ -4,6 +4,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Materials;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
+using Content.Shared.Storage.Components;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Shared.ActionBlocker;
@@ -31,8 +32,14 @@ public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
     {
         base.Initialize();
         SubscribeLocalEvent<MaterialStorageComponent, MachineDeconstructedEvent>(OnDeconstructed);
+        SubscribeLocalEvent<MaterialStorageComponent, MagnetPickupAttemptEvent>(OnMagnetPickup);
 
         SubscribeAllEvent<EjectMaterialMessage>(OnEjectMessage);
+    }
+
+    private void OnMagnetPickup(EntityUid uid, MaterialStorageComponent component, ref MagnetPickupAttemptEvent args)
+    {
+        TryInsertMaterialEntity(uid, args.Item, uid, component);
     }
 
     private void OnDeconstructed(EntityUid uid, MaterialStorageComponent component, MachineDeconstructedEvent args)

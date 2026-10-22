@@ -1,4 +1,7 @@
 using Content.Server.Research.Systems;
+using Content.Server.Power.EntitySystems;
+using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Server.Research.TechnologyDisk.Components;
 using Content.Shared.UserInterface;
 using Content.Shared.Research;
@@ -15,10 +18,13 @@ public sealed partial class DiskConsoleSystem : EntitySystem
     [Dependency] private AudioSystem _audio = default!;
     [Dependency] private ResearchSystem _research = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private DeviceLinkSystem _link = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
+        SubscribeLocalEvent<DiskConsoleComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<DiskConsoleComponent, SignalReceivedEvent>(OnSignalReceived);
         SubscribeLocalEvent<DiskConsoleComponent, DiskConsolePrintDiskMessage>(OnPrintDisk);
         SubscribeLocalEvent<DiskConsoleComponent, ResearchServerPointsChangedEvent>(OnPointsChanged);
         SubscribeLocalEvent<DiskConsoleComponent, ResearchRegistrationChangedEvent>(OnRegistrationChanged);
@@ -44,7 +50,23 @@ public sealed partial class DiskConsoleSystem : EntitySystem
 
     private void OnPrintDisk(EntityUid uid, DiskConsoleComponent component, DiskConsolePrintDiskMessage args)
     {
-        if (HasComp<DiskConsolePrintingComponent>(uid))
+        TryPrintDisk(uid, component);
+    }
+
+    private void OnInit(EntityUid uid, DiskConsoleComponent component, ComponentInit args)
+    {
+        _link.EnsureSinkPorts(uid, component.PrintPort);
+    }
+
+    private void OnSignalReceived(EntityUid uid, DiskConsoleComponent component, ref SignalReceivedEvent args)
+    {
+        if (args.Port == component.PrintPort)
+            TryPrintDisk(uid, component);
+    }
+
+    private void TryPrintDisk(EntityUid uid, DiskConsoleComponent component)
+    {
+        if (!this.IsPowered(uid, EntityManager) || HasComp<DiskConsolePrintingComponent>(uid))
             return;
 
         if (!_research.TryGetClientServer(uid, out var server, out var serverComp))

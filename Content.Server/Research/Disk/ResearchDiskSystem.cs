@@ -4,6 +4,10 @@ using Content.Server.Popups;
 using Content.Shared.Research.Prototypes;
 using Content.Server.Research.Systems;
 using Content.Shared.Research.Components;
+using Content.Server.Power.EntitySystems;
+using Content.Shared.Research.TechnologyDisk.Components;
+using Content.Shared.Research.TechnologyDisk.Systems;
+using Content.Shared.Storage.Components;
 
 namespace Content.Server.Research.Disk
 {
@@ -11,11 +15,27 @@ namespace Content.Server.Research.Disk
     {
         [Dependency] private PopupSystem _popupSystem = default!;
         [Dependency] private ResearchSystem _research = default!;
+        [Dependency] private TechnologyDiskSystem _technologyDisk = default!;
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<ResearchDiskComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<ResearchDiskComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<ResearchServerComponent, MagnetPickupAttemptEvent>(OnMagnetPickup);
+        }
+
+        private void OnMagnetPickup(EntityUid uid, ResearchServerComponent component, ref MagnetPickupAttemptEvent args)
+        {
+            if (!this.IsPowered(uid, EntityManager))
+                return;
+
+            if (TryComp<TechnologyDiskComponent>(args.Item, out var technologyDisk))
+                _technologyDisk.TryInsertDisk((args.Item, technologyDisk), uid);
+            else if (TryComp<ResearchDiskComponent>(args.Item, out var researchDisk))
+            {
+                _research.ModifyServerPoints(uid, researchDisk.Points, component);
+                QueueDel(args.Item);
+            }
         }
 
         private void OnAfterInteract(EntityUid uid, ResearchDiskComponent component, AfterInteractEvent args)

@@ -23,6 +23,9 @@
     color: "#b211b2"
   - type: LitOnPowered
   - type: ResearchServer
+  - type: MagnetPickup
+    slotFlags: null
+    requireAnchored: true
   - type: TechnologyDatabase
     supportedDisciplines:
     - Industrial

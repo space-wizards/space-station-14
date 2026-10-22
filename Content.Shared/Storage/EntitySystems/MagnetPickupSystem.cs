@@ -1,5 +1,6 @@
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
+using Content.Shared.Interaction;
 using Content.Shared.Storage.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Physics.Components;
@@ -19,6 +20,7 @@ public sealed partial class MagnetPickupSystem : EntitySystem
     [Dependency] private SharedStorageSystem _storage = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
 
     [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
@@ -44,10 +46,10 @@ public sealed partial class MagnetPickupSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        var query = EntityQueryEnumerator<MagnetPickupComponent, StorageComponent, TransformComponent, MetaDataComponent>();
+        var query = EntityQueryEnumerator<MagnetPickupComponent, TransformComponent, MetaDataComponent>();
         var currentTime = _timing.CurTime;
 
-        while (query.MoveNext(out var uid, out var comp, out var storage, out var xform, out var meta))
+        while (query.MoveNext(out var uid, out var comp, out var xform, out var meta))
         {
             if (comp.NextScan > currentTime)
                 continue;
@@ -56,6 +58,9 @@ public sealed partial class MagnetPickupSystem : EntitySystem
             Dirty(uid, comp);
 
             var parentUid = xform.ParentUid;
+
+            if (comp.RequireAnchored && !xform.Anchored)
+                continue;
 
             if (comp.RequireActiveHand && (!_hands.TryGetActiveItem(parentUid, out var activeItem) || activeItem != uid))
                 continue;
@@ -70,7 +75,8 @@ public sealed partial class MagnetPickupSystem : EntitySystem
             }
 
             // No space
-            if (!_storage.HasSpace((uid, storage)))
+            TryComp<StorageComponent>(uid, out var storage);
+            if (storage != null && !_storage.HasSpace((uid, storage)))
                 continue;
 
             var playedSound = false;
@@ -82,14 +88,27 @@ public sealed partial class MagnetPickupSystem : EntitySystem
 
             foreach (var near in _nearby)
             {
-                if (_whitelistSystem.IsWhitelistFail(storage.Whitelist, near))
+                if (TerminatingOrDeleted(near) || EntityManager.IsQueuedForDeletion(near))
+                    continue;
+
+                if (storage != null && _whitelistSystem.IsWhitelistFail(storage.Whitelist, near))
                     continue;
 
                 if (!_physicsQuery.TryGetComponent(near, out var physics) || physics.BodyStatus != BodyStatus.OnGround)
                     continue;
 
-                if (near == parentUid)
+                if (near == uid || near == parentUid)
                     continue;
+
+                if (storage == null)
+                {
+                    if (!_interaction.InRangeUnobstructed(uid, near, comp.Range))
+                        continue;
+
+                    var ev = new MagnetPickupAttemptEvent(near);
+                    RaiseLocalEvent(uid, ref ev);
+                    continue;
+                }
 
                 // TODO: Probably move this to storage somewhere when it gets cleaned up
                 // TODO: This sucks but you need to fix a lot of stuff to make it better
