@@ -186,15 +186,6 @@
             min: 20
           - !type:RoundDurationCondition
             min: 2700 # 45 minutes
-        - id: InstigatorsSpawn
-          weight: 5
-          conditions:
-          - !type:HasBudgetCondition
-          - !type:MaxRuleOccurenceCondition
-          - !type:PlayerCountCondition
-            min: 15
-          - !type:RoundDurationCondition
-            min: 2700 # 35 minutes
         - id: WizardSpawn
           weight: 10
           conditions:
