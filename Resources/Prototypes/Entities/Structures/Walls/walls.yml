@@ -552,7 +552,7 @@
     sprite: Structures/Walls/solid-reinforced-rust.rsi
   - type: Icon
     sprite: Structures/Walls/solid-reinforced-rust.rsi
-    state: rgeneric
+    state: full
   - type: Construction
     graph: Girder
     node: reinforcedWallRust
