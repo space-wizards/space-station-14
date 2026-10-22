@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "copyright": "sprited by kipdotnet (GitHub) and starlighthowls (Github) for Impstation, plumage sprites by landsharkRAWR.",
+    "license": "CC-BY-SA-4.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "allulaloLegUnderbellyDefaultLeft",
+            "directions": 4
+        },
+        {
+            "name": "allulaloLegPlumage",
+            "directions": 4
+        }
+    ]
+}

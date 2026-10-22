@@ -1,0 +1,32 @@
+- type: reagent
+  id: Ethanotoxin #allulalo bite toxin. does poison damage but injects adrenaline, reduces bleeding and reduces stun time
+  name: reagent-name-ethanotoxin
+  group: Toxins
+  desc: reagent-desc-ethanotoxin
+  flavor: sour
+  color: "#cbbfe6"
+  physicalDesc: reagent-physical-desc-acrid
+  metabolisms:
+    # Should you be injecting this in a friendly? maybe
+    Metabolites:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+      - !type:ModifyBleed
+        amount: -2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.1
+      - !type:GenericStatusEffect
+        key: Adrenaline # This is half-ish strength epi
+        component: IgnoreSlowOnDamage
+        time: 1.5
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectStunned
+        time: 0.5
+        type: Remove
+      - !type:ModifyKnockdown
+        time: 0.5
+        type: Remove

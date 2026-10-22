@@ -1,0 +1,11 @@
+- type: localizedDataset
+  id: AllulaloFirstNames
+  values:
+    prefix: names-allulalo-first-
+    count: 21
+
+- type: localizedDataset
+  id: AllulaloLastNames
+  values:
+    prefix: names-allulalo-last-
+    count: 20

@@ -1,0 +1,12 @@
+- type: entity
+  id: WeaponArcAllulaloBite
+  parent: WeaponArcStatic
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: WeaponArcVisuals
+    fadeOut: false
+  - type: Sprite
+    sprite: _MACRO/Effects/arcs.rsi
+    state: allulalo_bite
+  - type: TimedDespawn
+    lifetime: 0.299

@@ -1,0 +1,39 @@
+{
+    "version": 1,
+    "copyright": "sprited by kipdotnet (GitHub) and starlighthowls (Github) for Impstation, horn and plumage sprites by landsharkRAWR",
+    "license": "CC-BY-SA-4.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "allulaloHeadTopFeathers",
+            "directions": 4
+        },
+        {
+            "name": "allulaloHeadTopHorn",
+            "directions": 4
+        },
+        {
+            "name": "allulaloHeadTopCurvedHorns",
+            "directions": 4
+        },
+        {
+            "name": "allulaloHeadTopStubHorns",
+            "directions": 4
+        },
+        {
+            "name": "allulaloHeadTopSweptHorns",
+            "directions": 4
+        },
+        {
+            "name": "allulaloHeadTopPlumage1",
+            "directions": 4
+        },
+        {
+            "name": "allulaloHeadTopPlumage2",
+            "directions": 4
+        }
+    ]
+}

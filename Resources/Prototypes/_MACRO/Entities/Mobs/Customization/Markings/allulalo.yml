@@ -1,0 +1,327 @@
+# Chest
+
+- type: marking
+  id: AllulaloUnderbelly
+  bodyPart: Chest
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/chest.rsi
+    state: allulaloChestUnderbelly
+
+- type: marking
+  id: AllulaloChestHeartMonitor
+  bodyPart: Chest
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/chest.rsi
+    state: allulaloChestHeartMonitor
+  shaders:
+    allulaloChestHeartMonitor: unshaded
+
+# Head
+
+- type: marking
+  id: AllulaloHeadUnderbelly
+  bodyPart: Head
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/head.rsi
+    state: allulaloHeadUnderbelly
+
+- type: marking
+  id: AllulaloHeadSpikes
+  bodyPart: Head
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/head.rsi
+    state: allulaloHeadSpikes
+
+# Snout
+
+# Eyes
+
+- type: marking
+  id: AllulaloEyesDefault
+  bodyPart: Eyes
+  groupWhitelist: [ Allulalo ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/eyes.rsi
+    state: allulaloEyesDefault
+  forcedColoring: true
+
+- type: marking
+  id: AllulaloEyesHeterochromia
+  bodyPart: Eyes
+  groupWhitelist: [ Allulalo ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/eyes.rsi
+    state: allulaloEyesDefaultLeft
+  - sprite: _MACRO/Mobs/Customization/Allulalo/eyes.rsi
+    state: allulaloEyesDefaultRight
+
+- type: marking
+  id: AllulaloEyesUnshaded
+  bodyPart: Eyes
+  groupWhitelist: [ Allulalo ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/eyes.rsi
+    state: allulaloEyesUnshadedLeft
+  - sprite: _MACRO/Mobs/Customization/Allulalo/eyes.rsi
+    state: allulaloEyesUnshadedRight
+  shaders:
+    allulaloEyesUnshadedLeft: unshaded
+    allulaloEyesUnshadedRight: unshaded
+
+# RArm
+
+- type: marking
+  id: AllulaloWingsDefaultRight
+  bodyPart: RArm
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/rarm.rsi
+    state: allulaloArmDefaultRight
+
+- type: marking
+  id: AllulaloWingsSplitRight
+  bodyPart: RArm
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/rarm.rsi
+    state: allulaloArmSplit1
+  - sprite: _MACRO/Mobs/Customization/Allulalo/rarm.rsi
+    state: allulaloArmSplit2
+
+- type: marking
+  id: AllulaloWingsOwlRight
+  bodyPart: RArm
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/rarm.rsi
+    state: allulaloArmOwl1
+  - sprite: _MACRO/Mobs/Customization/Allulalo/rarm.rsi
+    state: allulaloArmOwl2
+  - sprite: _MACRO/Mobs/Customization/Allulalo/rarm.rsi
+    state: allulaloArmOwl3
+
+# LArm
+
+- type: marking
+  id: AllulaloWingsDefaultLeft
+  bodyPart: LArm
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/larm.rsi
+    state: allulaloArmDefaultLeft
+
+- type: marking
+  id: AllulaloWingsSplitLeft
+  bodyPart: LArm
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/larm.rsi
+    state: allulaloArmSplit1
+  - sprite: _MACRO/Mobs/Customization/Allulalo/larm.rsi
+    state: allulaloArmSplit2
+
+- type: marking
+  id: AllulaloWingsOwlLeft
+  bodyPart: LArm
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/larm.rsi
+    state: allulaloArmOwl1
+  - sprite: _MACRO/Mobs/Customization/Allulalo/larm.rsi
+    state: allulaloArmOwl2
+  - sprite: _MACRO/Mobs/Customization/Allulalo/larm.rsi
+    state: allulaloArmOwl3
+
+# RLeg
+
+- type: marking
+  id: AllulaloLegUnderbellyDefaultRight
+  bodyPart: RLeg
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/rleg.rsi
+    state: allulaloLegUnderbellyDefaultRight
+
+# LLeg
+
+- type: marking
+  id: AllulaloLegUnderbellyDefaultLeft
+  bodyPart: LLeg
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/lleg.rsi
+    state: allulaloLegUnderbellyDefaultLeft
+
+# UndergarmentBottom
+
+# UndergarmentTop
+
+# LFoot
+
+- type: marking
+  id: AllulaloLegPlumageLeft
+  bodyPart: LFoot #dont look at me
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/lleg.rsi
+    state: allulaloLegPlumage
+
+# RFoot
+
+- type: marking
+  id: AllulaloLegPlumageRight
+  bodyPart: RFoot
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/rleg.rsi
+    state: allulaloLegPlumage
+
+# LHand
+
+# RHand
+
+# FacialHair
+
+- type: marking
+  id: AllulaloHeadNeckFluff
+  bodyPart: FacialHair
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/head.rsi
+    state: allulaloHeadNeckFluff
+
+#- type: marking #I think this one might be too much
+#  id: AllulaloHeadNeckPlumageOutrageous
+#  bodyPart: Tail #layering sucks
+#  groupWhitelist: [ Allulalo ]
+#  sprites:
+#  - sprite: _MACRO/Mobs/Customization/Allulalo/head.rsi
+#    state: allulaloHeadNeckPlumageOutrageous
+
+# Hair
+
+# HeadSide
+
+# HeadTop
+
+- type: marking
+  id: AllulaloHeadTopHorn
+  bodyPart: HeadTop
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/headtop.rsi
+    state: allulaloHeadTopHorn
+
+- type: marking
+  id: AllulaloHeadTopFeathers
+  bodyPart: HeadTop
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/headtop.rsi
+    state: allulaloHeadTopFeathers
+
+- type: marking
+  id: AllulaloHeadTopCurvedHorns
+  bodyPart: HeadTop
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/headtop.rsi
+    state: allulaloHeadTopCurvedHorns
+
+- type: marking
+  id: AllulaloHeadTopSweptHorns
+  bodyPart: HeadTop
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/headtop.rsi
+    state: allulaloHeadTopSweptHorns
+
+- type: marking
+  id: AllulaloHeadTopStubHorns
+  bodyPart: HeadTop
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/headtop.rsi
+    state: allulaloHeadTopStubHorns
+
+- type: marking
+  id: AllulaloHeadTopPlumage1
+  bodyPart: HeadTop
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/headtop.rsi
+    state: allulaloHeadTopPlumage1
+
+- type: marking
+  id: AllulaloHeadTopPlumage2
+  bodyPart: HeadTop
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/headtop.rsi
+    state: allulaloHeadTopPlumage2
+
+# Tail
+
+- type: marking
+  id: AllulaloTailDefault
+  bodyPart: Tail
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/tail.rsi
+    state: allulaloTailDefault
+  - sprite: _MACRO/Mobs/Customization/Allulalo/tail.rsi
+    state: allulaloTailDefault2
+  - sprite: _MACRO/Mobs/Customization/Allulalo/tail.rsi
+    state: allulaloTailDefault3
+
+- type: marking
+  id: AllulaloTailThick
+  bodyPart: Tail
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/tail.rsi
+    state: allulaloTailLarge
+  - sprite: _MACRO/Mobs/Customization/Allulalo/tail.rsi
+    state: allulaloTailLarge2
+
+- type: marking
+  id: AllulaloTailThickSpikes
+  bodyPart: Tail
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/tail.rsi
+    state: allulaloTailLarge
+  - sprite: _MACRO/Mobs/Customization/Allulalo/tail.rsi
+    state: allulaloTailLarge2
+  - sprite: _MACRO/Mobs/Customization/Allulalo/tail.rsi
+    state: allulaloTailLarge3
+
+- type: marking
+  id: AllulaloTailTuft
+  bodyPart: Tail
+  groupWhitelist: [ Allulalo ]
+  sprites:
+  - sprite: _MACRO/Mobs/Customization/Allulalo/tail.rsi
+    state: allulaloTailTuft
+  - sprite: _MACRO/Mobs/Customization/Allulalo/tail.rsi
+    state: allulaloTailTuft2
+  - sprite: _MACRO/Mobs/Customization/Allulalo/tail.rsi
+    state: allulaloTailTuft3
+
+# RArmExtension

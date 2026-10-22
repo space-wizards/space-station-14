@@ -1,0 +1,37 @@
+- type: species
+  id: Allulalo
+  name: species-name-allulalo
+  roundStart: true
+  #randomViable: true
+  prototype: MobAllulalo
+  defaultSkinTone: "#385878"
+  dollPrototype: AppearanceAllulalo
+  skinColoration: Hues
+  maleFirstNames: AllulaloFirstNames
+  femaleFirstNames: AllulaloFirstNames
+  lastNames: AllulaloLastNames
+  sexes:
+  - Male
+  - Female
+  - Unsexed
+  defaultSoundsBySex:
+  - UnisexAllulalo
+  - UnisexAllulalo
+  - UnisexAllulalo
+  voices:
+  - UnisexAllulalo
+
+# Developer Notes
+#
+# Allulalo are a small avian species with alcoholic blood reminiscent of raptors. They lack traditional hands, and instead
+# manipulate items using their beak.
+# The largest drawbacks for playing an Allulalo is the singular hand and the inability to use large machines without
+# buckling themselves or floating (be it moon-boots or lack of gravity).
+# Allulalo can also inject people they bite with a weak toxin up to four times,
+# with a 20 second recharge time (for one bite)
+# Allulalo are naturally faster than other species. It's a hefty balance concern so
+# disable it if you want by commenting out the MovementSpeedModifier component in their prototype.
+# Enabling them is a good idea if you lack avian species (Say, you only have vox enabled), and want another species
+# that introduces gameplay challenges.
+# You might want to keep them disabled in a server that doesn't prioritize non-humanoid species, or one with an abundance of
+# Avian species.

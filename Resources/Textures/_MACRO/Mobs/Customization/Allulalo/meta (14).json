@@ -1,0 +1,47 @@
+{
+    "version": 1,
+    "copyright": "sprited by kipdotnet (GitHub) and starlighthowls (Github) for Impstation",
+    "license": "CC-BY-SA-4.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "allulaloTailDefault",
+            "directions": 4
+        },
+        {
+            "name": "allulaloTailDefault2",
+            "directions": 4
+        },
+        {
+            "name": "allulaloTailDefault3",
+            "directions": 4
+        },
+        {
+            "name": "allulaloTailLarge",
+            "directions": 4
+        },
+        {
+            "name": "allulaloTailLarge2",
+            "directions": 4
+        },
+        {
+            "name": "allulaloTailLarge3",
+            "directions": 4
+        },
+        {
+            "name": "allulaloTailTuft",
+            "directions": 4
+        },
+        {
+            "name": "allulaloTailTuft2",
+            "directions": 4
+        },
+        {
+            "name": "allulaloTailTuft3",
+            "directions": 4
+        }
+    ]
+}

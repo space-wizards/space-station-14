@@ -1,0 +1,117 @@
+﻿- type: reagent
+  id: GrayBlood
+  name: reagent-name-gray-blood
+  group: Biological
+  parent: Radium
+  desc: reagent-desc-gray-blood
+  physicalDesc: reagent-physical-desc-glowing
+
+- type: reaction
+  id: GrayBloodBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    GrayBlood:
+      amount: 5
+  products:
+    Radium: 5
+
+- type: reagent
+  id: Mucin
+  name: reagent-name-mucin
+  group: Biological
+  desc: reagent-desc-mucin
+  flavor: snotty
+  color: "#b1d8c1"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-viscous
+  slipData:
+    requiredSlipSpeed: 4.0 #It's not as slippery as water
+  friction: 0.4
+  evaporationSpeed: 15.0
+  footstepSound:
+    collection: FootstepBlood
+    params:
+      volume: 6
+
+- type: reagent
+  parent: Blood
+  id: BloodKodepiia
+  name: reagent-name-bloodkodepiia
+  group: Biological
+  desc: reagent-desc-bloodkodepiia
+  flavor: kodepiia
+  color: "#4f0000"
+
+- type: reaction
+  id: KodepiiaBloodBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    BloodKodepiia:
+      amount: 20
+  products:
+    Ice: 11
+    Copper: 0.5
+    TableSalt: 2
+    Ammonia: 3
+    Fat: 4
+
+- type: reagent
+  id: BloodAllulalo
+  name: reagent-name-bloodallulalo
+  group: Biological
+  desc: reagent-desc-bloodallulalo
+  physicalDesc: reagent-physical-desc-thin
+  flavor: allulalo
+  color: "#c1c7d3"
+  evaporationSpeed: 0.3 #same as water
+  metabolisms: #have to redefine from basealcohol otherwise its slippery which is a hell of a can of worms for a species
+    Metabolites:
+      metabolismRate: 0.05
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ethanol
+          min: 15
+        - !type:MetabolizerTypeCondition
+          type: [ Dwarf ]
+          inverted: true
+        damage:
+          types:
+            Poison: 0.1
+      # dwarves take less toxin damage and heal a marginal amount of brute
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ethanol
+          min: 15
+        - !type:MetabolizerTypeCondition
+          type: [ Dwarf ]
+        damage:
+          types:
+            Poison: 0.02
+      - !type:EvenHealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ethanol
+          min: 15
+        - !type:MetabolizerTypeCondition
+          type: [ Dwarf ]
+        damage:
+          Brute: -0.1
+      - !type:Vomit
+        probability: 0.04
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ethanol
+          min: 12
+        # dwarves immune to vomiting from alcohol
+        - !type:MetabolizerTypeCondition
+          type: [ Dwarf ]
+          inverted: true
+      - !type:Drunk
+        boozePower: 2

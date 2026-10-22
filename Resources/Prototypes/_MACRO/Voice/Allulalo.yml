@@ -1,0 +1,54 @@
+- type: speechSounds
+  id: Allulalo
+  saySound:
+    path: /Audio/_MACRO/Voice/Allulalo/allulalo_say.ogg
+  askSound:
+    path: /Audio/_MACRO/Voice/Allulalo/allulalo_ask.ogg
+  exclaimSound:
+    path: /Audio/_MACRO/Voice/Allulalo/allulalo_exclaim.ogg
+
+- type: emoteSounds
+  id: UnisexAllulalo
+  voiceSelectorName: humanoid-profile-editor-voice-neutral
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/_MACRO/Voice/Allulalo/allulalo_scream.ogg
+    Laugh:
+      path: /Audio/_MACRO/Voice/Allulalo/allulalo_laugh.ogg
+    Hiss:
+      path: /Audio/_MACRO/Voice/Vox/voxhiss.ogg
+      params:
+        volume: -5
+    Chitter:
+      path: /Audio/_MACRO/Voice/Allulalo/allulalo_chitter.ogg
+    Sneeze:
+      collection: UnisexSneezes #placeholder
+    Cough:
+      path: /Audio/Voice/Vox/vox_cough.ogg #placeholder
+    Yawn:
+      path: /Audio/_MACRO/Voice/Allulalo/allulalo_say.ogg
+    Honk:
+      collection: BikeHorn
+    Sigh:
+      path: /Audio/_MACRO/Voice/Allulalo/allulalo_say.ogg #placeholder
+    Whistle:
+      collection: Whistles
+    Crying:
+      path: /Audio/_MACRO/Voice/Allulalo/allulalo_cry.ogg
+    Weh:
+      collection: Weh
+    Gasp:
+      path: /Audio/_MACRO/Voice/Allulalo/allulalo_say.ogg
+    DefaultDeathgasp:
+      /Audio/_MACRO/Voice/Allulalo/allulalo_deathgasp.ogg
+
+- type: speechVerb
+  id: Allulalo
+  name: chat-speech-verb-name-allulalo
+  speechVerbStrings:
+  - chat-speech-verb-allulalo-1
+  - chat-speech-verb-allulalo-2
+  - chat-speech-verb-allulalo-3
+  - chat-speech-verb-allulalo-4

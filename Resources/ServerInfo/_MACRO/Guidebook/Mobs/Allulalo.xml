@@ -1,0 +1,61 @@
+<Document>
+  # Allulalo
+
+  <Box>
+    <GuideEntityEmbed Entity="MobAllulalo" Caption=""/>
+  </Box>
+
+  [color=red]Caution! This species has several SEVERELY limiting game mechanics and is only recommended for highly experienced players. Some jobs and tasks may be difficult or impossible to perform by yourself with only one hand.[/color]
+
+  Allulalo are a reclusive species of saurians native to the IMP-sector outer nebulae. They are rarely seen, preferring to conceal their cities deep inside asteroid fields and mask their movements with stealth fields or radio jammers. Although investigations into whether they pose a security risk to nearby stations is ongoing, successful agreements have been brokered to enable small-scale contact and occasional employment of Allulalo among Nanotrasen staff.
+
+  Observation records confirm higher land-speeds than traditionally seen among humanoids, but the unusual, pentafurcated beak they use for manipulating in the place of traditional "hands" seems to [color=#ffa500]prevent them from wielding any large weaponry.[/color] Their height also makes them unable to interface with most NT standard devices, and they are frequently seen [color=#ffa500]standing on chairs and tables or using anti-gravity technology to reach the controls.[/color]
+
+  <Box>
+    <GuideEntityEmbed Entity="ComputerAlert" Caption=""/>
+    <GuideEntityEmbed Entity="VendingMachineCigs" Caption=""/>
+    <GuideEntityEmbed Entity="Autolathe" Caption=""/>
+  </Box>
+
+  # Biology
+
+  [color=yellow][bold]NOTE:[/bold][/color] Species damage modifiers work largely the same way worn armor does, primarily applying to external, direct sources of damage. Unless explicitly stated, these [color=yellow][bold]do not[/bold][/color] apply to intrinsic sources of damage, such extreme pressure, extreme body temperature, or metabolizing chemicals.
+
+  Allulalo have hollow bones, which results in them taking [color=#ffa500]15% more Blunt, Slash, and Piercing damage[/color]. They are also [color=#ffa500]25% more vulnerable to stuns, and their low body mass causes them to be thrown farther by impacts[/color].
+
+  Allulalo also have hyperactive hearts, which results in them [color=#ffa500]metabolising Medicine, Poisons and Narcotics 50% faster[/color]. Their heart's already-strained musculature also causes speed-increasing reagents to be [color=#ffa500]Significantly less effective.[/color], as well as causing them to burn energy faster and become [color=#ffa500]hungry and thirsty sooner than their peers[/color].
+
+  It is easy to underestimate Allulalo due to these drawbacks, but they have a major strength: [color=#1e90ff]They are incredibly mobile, and can easily outpace most humanoid species[/color].
+
+  Allulalo are also in unique posession of a highly methylated bloodstream. Due to this, [color=#1e90ff]their blood naturally evaporates on its own[/color], as well as making them [color=#1e90ff]remarkably heavyweight drinkers[/color] for their body weight.
+
+  In addition to their methylated blood, their beak saliva contains [color=#1e90ff]small amounts[/color] of the [color=#1e90ff]blood clotting agent and adreno-stimulant ethanotoxin[/color]. Allulalo have been recorded biting eachother in critical situations in order to clot wounds and boost adrenaline, but there appears to be [color=#ffa500]a lengthy delay to the toxin replenishing after repeated use[/color].
+
+  <Box>
+    <GuideEntityEmbed Entity="DrinkAbsintheBottleFull" Caption=""/>
+  </Box>
+
+  # Physical Strength
+
+  Allulalo have naturally lower body mass due to their small stature, and as such have difficulty dragging things larger than themselves.
+
+  As a result of both this and their lack of multiple "hands", Allulalo are uniquely poised to benefit from science research such as [color=#1e90ff]HARMpacks[/color] and [color=#1e90ff]tether guns[/color], and their smaller size [color=#1e90ff]allows them to pilot VIMs[/color].
+
+  <Box>
+    <GuideEntityEmbed Entity="MechVimBattery" Caption=""/>
+    <GuideEntityEmbed Entity="ClothingBackpackHarmpack" Caption=""/>
+    <GuideEntityEmbed Entity="WeaponTetherGun" Caption=""/>
+  </Box>
+
+  ## Allulalo Naming Conventions
+
+  Allulalo names are comprised of two parts. The first half is similar in function to a human's, while the last half is a conjunction of the first syllables of both of their parent's names.
+
+  - [color=#449944]Acceptable:[/color] Halio Hera-Nofa
+  - [color=#449944]Acceptable:[/color] Sadita Ona-Rona
+  - [color=#449944]Acceptable:[/color] Unira Lota-Pota
+  - [color=#994444]Bad:[/color] Waga Baga-Bobo
+  - [color=#994444]Bad:[/color] Pete Pee-Pee
+  - [color=#994444]Bad:[/color] Benry
+
+</Document>
