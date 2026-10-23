@@ -20,7 +20,7 @@ public sealed partial class CargoSystem
     private static readonly SoundPathSpecifier ApproveSound = new("/Audio/Effects/Cargo/ping.ogg");
     private bool _lockboxCutEnabled;
 
-    private void InitializeShuttle()
+    private void InitializeTradeStation()
     {
         _cfg.OnValueChanged(CCVars.LockboxCutEnabled, (enabled) => { _lockboxCutEnabled = enabled; }, true);
     }
@@ -102,8 +102,11 @@ public sealed partial class CargoSystem
     /// </summary>
     /// <param name="gridUid">The grid to search for pallets.</param>
     /// <param name="requestType">Which pallet types to include. Defaults to <see cref="BuySellType.Buy"/>.</param>
-    /// <param name="pallets"> Specific pallets to check.
-    /// All the pallets must be anchored to <see cref="gridUid"/> otherwise they are skipped. </param>
+    /// <param name="pallets">
+    /// Specific pallets to check.
+    /// If <see langword="null"/>, all pallets on <paramref name="gridUid"/> are checked.
+    /// <paramref name="requestType"/> is ignored if pallets are given here.
+    /// Any pallet not anchored to <paramref name="gridUid"/> is skipped.</param>
     /// <returns>Each free pallet entity with its <see cref="TransformComponent"/>.</returns>
     public IEnumerable<(Entity<CargoPalletComponent> Entity, TransformComponent Transform)> GetFreeCargoPallets(
         EntityUid gridUid,
@@ -143,8 +146,11 @@ public sealed partial class CargoSystem
     /// </summary>
     /// <param name="gridUid">The grid to search.</param>
     /// <param name="requestType">Which pallet types to include. Defaults to <see cref="BuySellType.Sell"/>.</param>
-    /// <param name="pallets"> Specific pallets to check, filtered by <paramref name="requestType"/>.
-    /// All the pallets must be anchored to <see cref="gridUid"/> otherwise they are skipped. </param>
+    /// <param name="pallets">
+    /// Specific pallets to check.
+    /// If <see langword="null"/>, all pallets on <paramref name="gridUid"/> are checked.
+    /// <paramref name="requestType"/> is ignored if pallets are given here.
+    /// Any pallet not anchored to <paramref name="gridUid"/> is skipped.</param>
     /// <returns>Distinct set of entity UIDs found on pallets.</returns>
     public IEnumerable<EntityUid> GetEntitiesOnCargoPallets(
         EntityUid gridUid,
@@ -221,8 +227,11 @@ public sealed partial class CargoSystem
     /// and anything with a price of zero.
     /// </summary>
     /// <param name="gridUid">The grid to appraise.</param>
-    /// <param name="pallets"> Specific pallets to check.
-    /// All the pallets must be anchored to <see cref="gridUid"/> otherwise they are skipped. </param>
+    /// <param name="pallets">
+    /// Specific pallets to check.
+    /// If <see langword="null"/>, all pallets on <paramref name="gridUid"/> are checked.
+    /// Any pallet not anchored to <paramref name="gridUid"/> is skipped.
+    /// The <see cref="BuySellType"/> of the pallets is not checked.</param>
     /// <returns> HashSet of goods on the pallets. </returns>
     public HashSet<(EntityUid ent, OverrideSellComponent? overrideSellComponent, double price)> GetPalletGoods(
         EntityUid gridUid,

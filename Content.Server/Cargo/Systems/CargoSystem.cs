@@ -59,7 +59,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
     public override void Initialize()
     {
         base.Initialize();
-        InitializeShuttle();
+        InitializeTradeStation();
         InitializeBounty();
         InitializeFunds();
     }
