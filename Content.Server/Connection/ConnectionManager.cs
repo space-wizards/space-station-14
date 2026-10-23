@@ -42,7 +42,7 @@ namespace Content.Server.Connection
         /// <param name="duration">How long the bypass should last for.</param>
         void AddTemporaryConnectBypass(NetUserId user, TimeSpan duration);
 
-        void Update();
+        void Update(FrameEventArgs args);
     }
 
     /// <summary>
@@ -69,6 +69,9 @@ namespace Content.Server.Connection
         private ISawmill _sawmill = default!;
         private readonly Dictionary<NetUserId, TimeSpan> _temporaryBypasses = [];
         private IPIntel.IPIntel _ipintel = default!;
+        private TimeSpan _timeAccumulated;
+        private TimeSpan _fallbackUpdateNext;
+        private readonly TimeSpan _fallbackUpdateInterval = TimeSpan.FromSeconds(30);
 
         public void PostInit()
         {
@@ -84,6 +87,8 @@ namespace Content.Server.Connection
             _netMgr.Connecting += NetMgrOnConnecting;
             _netMgr.AssignUserIdCallback = AssignUserIdCallback;
             _plyMgr.PlayerStatusChanged += PlayerStatusChanged;
+            _cfg.OnValueChanged(CCVars.FallbackServers, OnFallbackServersCvar , invokeImmediately: true);
+
             // Approval-based IP bans disabled because they don't play well with Happy Eyeballs.
             // _netMgr.HandleApprovalCallback = HandleApproval;
         }
@@ -97,8 +102,17 @@ namespace Content.Server.Connection
                 time = newTime;
         }
 
-        public async void Update()
+        public async void Update(FrameEventArgs args)
         {
+            // Only delta frametime is available, so we must resort to such measures
+            _timeAccumulated += TimeSpan.FromSeconds(args.DeltaSeconds);
+
+            if (_timeAccumulated > _fallbackUpdateNext)
+            {
+                UpdateAllServers();
+                _fallbackUpdateNext = _timeAccumulated + _fallbackUpdateInterval;
+            }
+
             try
             {
                 await _ipintel.Update();
@@ -152,7 +166,10 @@ namespace Content.Server.Connection
 
                 var properties = new Dictionary<string, object>();
                 if (reason == ConnectionDenyReason.Full)
+                {
                     properties["delay"] = _cfg.GetCVar(CCVars.GameServerFullReconnectDelay);
+                    properties["fallbackServers"] = StringifyFallbackServers();
+                }
 
                 e.Deny(new NetDenyReason(msg, properties));
             }
