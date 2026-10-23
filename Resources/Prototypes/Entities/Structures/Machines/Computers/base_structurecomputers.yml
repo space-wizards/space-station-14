@@ -79,6 +79,7 @@
 #    interfaces:
 #      enum.WiresUiKey.Key:
 #        type: WiresBoundUserInterface
+  - type: TooShortForUiBlacklist # MACRO
 
 - type: entity
   parent: BaseComputer
