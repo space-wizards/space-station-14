@@ -1,3 +1,4 @@
+using Content.Shared.NameModifier.EntitySystems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.NameModifier.Components;
@@ -6,8 +7,8 @@ namespace Content.Shared.NameModifier.Components;
 /// Adds a modifier to the wearer's name when this item is equipped,
 /// and removes it when it is unequipped.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(NameModifierSystem))]
 public sealed partial class ModifyWearerNameComponent : Component
 {
     /// <summary>
@@ -18,7 +19,7 @@ public sealed partial class ModifyWearerNameComponent : Component
     public LocId LocId = string.Empty;
 
     /// <summary>
-    /// Priority of the modifier. See <see cref="EntitySystems.RefreshNameModifiersEvent"/> for more information.
+    /// Priority of the modifier. See <see cref="EntitySystems.RefreshNameModifiersEvent.AddModifier"/> for more information.
     /// </summary>
     [DataField, AutoNetworkedField]
     public int Priority;
