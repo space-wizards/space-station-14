@@ -424,59 +424,6 @@ public sealed class StatusEffectNewTest : InteractionTest
     }
 
     #endregion TryAddTime and TryRemoveTime
-
-    [Test, Description("Testing TryAddTime and TryRemoveTime to add and subtract effect duration")]
-    public async Task TestAddRemoveEffectTime()
-    {
-        var curTime = TimeSpan.Zero;
-        await Server.WaitPost(() =>
-        {
-            _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks);
-            curTime = STiming.CurTime;
-        });
-
-        Assume.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var time), Is.True, "Could not get time info for effect A");
-        Assume.That(time.EndEffectTime, Is.EqualTo(curTime + TenTicks), "Status effect A did not have expected end time of 10 ticks after current time");
-
-        Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusA, TwentyTicks), Is.True, "TryAddTime adding 20 ticks to duration did not return true");
-        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePlusTenPlusTwenty);
-        Assert.That(timePlusTenPlusTwenty.EndEffectTime, Is.EqualTo(curTime + ThirtyTicks).Within(SGameTiming.TickPeriod), "Status effect A did not have expected updated end time of 30 ticks after current time (was 10, 20 added)");
-
-        Assert.That(_sStatusSystem.TryRemoveTime(SPlayer, StatusA, TenTicks), Is.True, "TryRemoveTime removing ten ticks from duration did not return true");
-        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePlusTenPlusTwentyMinusTen);
-        Assert.That(timePlusTenPlusTwentyMinusTen.EndEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(SGameTiming.TickPeriod), "Status effect A did not have expected updated end time of 20 ticks after current time (was 30, 10 removed)");
-    }
-    
-    [Test, Description("Testing TryAddTime with null args (should make status effect last indefinitely)")]
-    public async Task TestAddEffectTime_Null()
-    {
-        await Server.WaitPost(() =>
-        {
-            _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks);
-        });
-
-        Assume.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var time), Is.True, "Could not get time info for effect A");
-        Assume.That(time.EndEffectTime, Is.Not.Null, "Can't properly test setting duration to null when it's already null...");
-
-        Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusA, null), Is.True, "TryAddTime setting duration to null did not return true");
-        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePermanent);
-        Assert.That(timePermanent.EndEffectTime, Is.Null, "TryAddTime setting to null did not set the duration to null"); 
-    }
-    
-    [Test, Description("Testing TryRemoveTime with null args (should remove status effect)")]
-    public async Task TestRemoveEffectTime_Null()
-    {
-        await Server.WaitPost(() =>
-        {
-            _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks);
-        });
-
-        Assume.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.True, "Status effect A was not found on the player (can't really test removing time from it if it's not present...)");
-        Assert.That(_sStatusSystem.TryRemoveTime(SPlayer, StatusA,  null), Is.True, "TryRemoveTime with param of null did not return true");
-        await Pair.RunUntilSynced();
-        await Pair.RunTicksSync(1); // status effect removal is queued to next tick.
-        Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA),  Is.False, "TryRemoveTime set to null did not remove the status effect (TryRemoveTime is supposed to remove status effect if null is given)");
-    }
     
     [Test, Description("Testing TryAddStatusEffectDuration to adjust status effect duration.")]
     public async Task TestAddEffectTime_TryAddStatusEffectDuration()
