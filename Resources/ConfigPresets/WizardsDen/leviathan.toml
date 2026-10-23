@@ -1,14 +1,16 @@
 # Configuration preset used on Wizard's Den Leviathan
 
-# Nothing specific yet
-
 [game]
-hostname = "[EN] Wizard's Den Leviathan [NA East]"
+hostname = "[EN][LRP] Wizard's Den Leviathan [NA East]"
+desc = "Official English server for Space Station 14. Low roleplay ruleset."
 panic_bunker.enabled = false
 panic_bunker.disable_with_admins = false
 panic_bunker.enable_without_admins = false
 panic_bunker.custom_reason = ""
 
+[server]
+# This needs to be specified even though it's identical to the hostname, because fallback lobby name is "Lobby: <hostname>" which would be too long and go out of bounds
+lobby_name = "[EN][LRP] Wizard's Den Leviathan [NA East]"
+
 [hub]
 tags = "lang:en,region:am_n_e,rp:low"
-
