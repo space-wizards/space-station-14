@@ -41,11 +41,11 @@ public sealed partial class GasTileVacuumOverlay : Overlay
     private float _intensity; // overlay intensity. 0.0f = turned off, 1.0f = full grayscale
 
     /// <summary>
-    /// The maximum temperature at which the tint effect is applied, decreasing linearly to 0 at 0°C.
+    /// The temperature at which maximum tint effect is applied, decreasing linearly to 0 at 0°C.
     /// </summary>
     private readonly float _maxTintTemperature = 193f;
     /// <summary>
-    /// Minimum pressure to start diminishing the tint effect, increasing linearly to full effect at 0 pressure.
+    /// kPa pressure threshold to start diminishing the tint effect, increasing linearly to full effect at 0 pressure.
     /// </summary>
     private readonly float _minTintModifierPressure = 30f;
 
