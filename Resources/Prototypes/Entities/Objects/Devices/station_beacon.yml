@@ -320,14 +320,6 @@
 
 - type: entity
   parent: DefaultStationBeaconMedical
-  id: DefaultStationBeaconPsychology
-  suffix: Psychology
-  components:
-  - type: NavMapBeacon
-    defaultText: station-beacon-psychology
-
-- type: entity
-  parent: DefaultStationBeaconMedical
   id: DefaultStationBeaconClinic
   suffix: Clinic
   components:
@@ -739,6 +731,14 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-theater
+
+- type: entity
+  parent: DefaultStationBeaconService
+  id: DefaultStationBeaconPsychology
+  suffix: Psychology
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-psychology
 
 - type: entity
   parent: DefaultStationBeacon
