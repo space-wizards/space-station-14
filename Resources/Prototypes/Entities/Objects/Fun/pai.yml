@@ -107,6 +107,7 @@
       - state: base-inhand-left
       right:
       - state: base-inhand-right
+  - type: Stashable
 
 - type: entity
   parent: [ PersonalAI, BaseSyndicateContraband]
