@@ -327,6 +327,7 @@
       - state: beakerbluespace
   - type: SolutionContainerVisuals
     maxFillLevels: 0
+    inHandsMaxFillLevels: 0
   - type: Item
     size: Normal
 
