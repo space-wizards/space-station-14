@@ -1,54 +1,44 @@
 using System.Linq;
 using Content.Shared.Administration.Logs;
-using Content.Shared.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Popups;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Tag;
-using Robust.Shared.Player;
+using Content.Shared.UserInterface;
 using Robust.Shared.Audio.Systems;
-using static Content.Shared.Paper.PaperComponent;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using static Content.Shared.Paper.PaperComponent;
 
 namespace Content.Shared.Paper;
 
+/// <summary>
+/// A system for interactions with in-game pieces of paper.
+/// Largely handles reading, writing, examine, and UI interactions.
+/// </summary>
 public sealed partial class PaperSystem : EntitySystem
 {
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private MetaDataSystem _metaSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
-    [Dependency] private TagSystem _tagSystem = default!;
     [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
-    [Dependency] private MetaDataSystem _metaSystem = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private TagSystem _tagSystem = default!;
 
+    [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery = default!;
     [Dependency] private EntityQuery<PaperComponent> _paperQuery = default!;
+    [Dependency] private EntityQuery<StampComponent> _stampQuery = default!;
 
     private static readonly ProtoId<TagPrototype> WriteIgnoreStampsTag = "WriteIgnoreStamps";
     private static readonly ProtoId<TagPrototype> WriteTag = "Write";
 
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<PaperComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<PaperComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<PaperComponent, BeforeActivatableUIOpenEvent>(BeforeUIOpen);
-        SubscribeLocalEvent<PaperComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<PaperComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<PaperComponent, PaperInputTextMessage>(OnInputTextMessage);
-
-        SubscribeLocalEvent<RandomPaperContentComponent, MapInitEvent>(OnRandomPaperContentMapInit);
-
-        SubscribeLocalEvent<ActivateOnPaperOpenedComponent, PaperWriteEvent>(OnPaperWrite);
-    }
-
+    #region Event Handlers
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<PaperComponent> entity, ref MapInitEvent args)
     {
         if (!string.IsNullOrEmpty(entity.Comp.Content))
@@ -57,12 +47,13 @@ public sealed partial class PaperSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnInit(Entity<PaperComponent> entity, ref ComponentInit args)
     {
         entity.Comp.Mode = PaperAction.Read;
         UpdateUserInterface(entity);
 
-        if (TryComp<AppearanceComponent>(entity, out var appearance))
+        if (_appearanceQuery.TryComp(entity, out var appearance))
         {
             if (entity.Comp.Content != "")
                 _appearance.SetData(entity, PaperVisuals.Status, PaperStatus.Written, appearance);
@@ -72,12 +63,14 @@ public sealed partial class PaperSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void BeforeUIOpen(Entity<PaperComponent> entity, ref BeforeActivatableUIOpenEvent args)
     {
         entity.Comp.Mode = PaperAction.Read;
         UpdateUserInterface(entity);
     }
 
+    [SubscribeLocalEvent]
     private void OnExamined(Entity<PaperComponent> entity, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
@@ -109,6 +102,7 @@ public sealed partial class PaperSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnInteractUsing(Entity<PaperComponent> entity, ref InteractUsingEvent args)
     {
         // only allow editing if there are no stamps or when using a cyberpen
@@ -152,7 +146,8 @@ public sealed partial class PaperSystem : EntitySystem
         }
 
         // If a stamp, attempt to stamp paper
-        if (TryComp<StampComponent>(args.Used, out var stampComp) && TryStamp(entity, GetStampInfo(stampComp), stampComp.StampState))
+        if (_stampQuery.TryComp(args.Used, out var stampComp)
+            && TryStamp(entity, GetStampInfo(stampComp), stampComp.StampState))
         {
             // successfully stamped, play popup
             var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other",
@@ -170,15 +165,7 @@ public sealed partial class PaperSystem : EntitySystem
         }
     }
 
-    private static StampDisplayInfo GetStampInfo(StampComponent stamp)
-    {
-        return new StampDisplayInfo
-        {
-            StampedName = stamp.StampedName,
-            StampedColor = stamp.StampedColor
-        };
-    }
-
+    [SubscribeLocalEvent]
     private void OnInputTextMessage(Entity<PaperComponent> entity, ref PaperInputTextMessage args)
     {
         var ev = new PaperWriteAttemptEvent(entity.Owner);
@@ -192,7 +179,7 @@ public sealed partial class PaperSystem : EntitySystem
 
             var paperStatus = string.IsNullOrWhiteSpace(args.Text) ? PaperStatus.Blank : PaperStatus.Written;
 
-            if (TryComp<AppearanceComponent>(entity, out var appearance))
+            if (_appearanceQuery.TryComp(entity, out var appearance))
                 _appearance.SetData(entity, PaperVisuals.Status, paperStatus, appearance);
 
             if (TryComp(entity, out MetaDataComponent? meta))
@@ -209,6 +196,7 @@ public sealed partial class PaperSystem : EntitySystem
         UpdateUserInterface(entity);
     }
 
+    [SubscribeLocalEvent]
     private void OnRandomPaperContentMapInit(Entity<RandomPaperContentComponent> ent, ref MapInitEvent args)
     {
         if (!_paperQuery.TryComp(ent, out var paperComp))
@@ -233,13 +221,32 @@ public sealed partial class PaperSystem : EntitySystem
         RemCompDeferred(ent, ent.Comp);
     }
 
+    [SubscribeLocalEvent]
     private void OnPaperWrite(Entity<ActivateOnPaperOpenedComponent> entity, ref PaperWriteEvent args)
     {
         _interaction.UseInHandInteraction(args.User, entity);
     }
+    #endregion Event Handlers
 
+    #region Internal
+    private static StampDisplayInfo GetStampInfo(StampComponent stamp)
+    {
+        return new StampDisplayInfo
+        {
+            StampedName = stamp.StampedName,
+            StampedColor = stamp.StampedColor
+        };
+    }
+
+    private void UpdateUserInterface(Entity<PaperComponent> entity)
+    {
+        _uiSystem.SetUiState(entity.Owner, PaperUiKey.Key, new PaperBoundUserInterfaceState(entity.Comp.Content, entity.Comp.StampedBy, entity.Comp.Mode));
+    }
+    #endregion Internal
+
+    #region Public API
     /// <summary>
-    ///     Accepts the name and state to be stamped onto the paper, returns true if successful.
+    /// Accepts the name and state to be stamped onto the paper, returns true if successful.
     /// </summary>
     public bool TryStamp(Entity<PaperComponent> entity, StampDisplayInfo stampInfo, string spriteStampState)
     {
@@ -247,7 +254,7 @@ public sealed partial class PaperSystem : EntitySystem
         {
             entity.Comp.StampedBy.Add(stampInfo);
             Dirty(entity);
-            if (entity.Comp.StampState == null && TryComp<AppearanceComponent>(entity, out var appearance))
+            if (entity.Comp.StampState == null && _appearanceQuery.TryComp(entity, out var appearance))
             {
                 entity.Comp.StampState = spriteStampState;
                 // Would be nice to be able to display multiple sprites on the paper
@@ -259,7 +266,7 @@ public sealed partial class PaperSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Copy any stamp information from one piece of paper to another.
+    /// Copy any stamp information from one piece of paper to another.
     /// </summary>
     public void CopyStamps(Entity<PaperComponent?> source, Entity<PaperComponent?> target)
     {
@@ -270,7 +277,7 @@ public sealed partial class PaperSystem : EntitySystem
         target.Comp.StampState = source.Comp.StampState;
         Dirty(target);
 
-        if (TryComp<AppearanceComponent>(target, out var appearance))
+        if (_appearanceQuery.TryComp(target, out var appearance))
         {
             // delete any stamps if the stamp state is null
             _appearance.SetData(target, PaperVisuals.Stamp, target.Comp.StampState ?? "", appearance);
@@ -279,7 +286,7 @@ public sealed partial class PaperSystem : EntitySystem
 
     public void SetContent(EntityUid entity, string content)
     {
-        if (!TryComp<PaperComponent>(entity, out var paper))
+        if (!_paperQuery.TryComp(entity, out var paper))
             return;
         SetContent((entity, paper), content);
     }
@@ -290,7 +297,7 @@ public sealed partial class PaperSystem : EntitySystem
         Dirty(entity);
         UpdateUserInterface(entity);
 
-        if (!TryComp<AppearanceComponent>(entity, out var appearance))
+        if (!_appearanceQuery.TryComp(entity, out var appearance))
             return;
 
         var status = string.IsNullOrWhiteSpace(content)
@@ -299,11 +306,7 @@ public sealed partial class PaperSystem : EntitySystem
 
         _appearance.SetData(entity, PaperVisuals.Status, status, appearance);
     }
-
-    private void UpdateUserInterface(Entity<PaperComponent> entity)
-    {
-        _uiSystem.SetUiState(entity.Owner, PaperUiKey.Key, new PaperBoundUserInterfaceState(entity.Comp.Content, entity.Comp.StampedBy, entity.Comp.Mode));
-    }
+    #endregion Public API
 }
 
 /// <summary>
