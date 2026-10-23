@@ -264,6 +264,46 @@ public sealed partial class AtmosphereSystem
         args.Handled = true;
     }
 
+    /// <summary>
+    /// Takes the gas from this tile volume and shoves it into adjacent tiles, then deletes this tile's air
+    /// </summary>
+    /// <param name="tile">Tile we are shunting the air from.</param>
+    private void ShuntTileVolume(TileAtmosphere tile)
+    {
+        DebugTools.AssertNotNull(tile.Air);
+        DebugTools.Assert(tile.Air?.Immutable == false);
+
+        var count = 0;
+        foreach (var adj in tile.AdjacentTiles)
+        {
+            if (adj?.Air != null)
+                count++;
+        }
+
+        if (count > 0)
+        {
+            var ratio = 1f / count;
+
+            // Remove a ratio from this gas mixture.
+            var mix = tile.Air.RemoveRatio(ratio);
+
+            foreach (var adj in tile.AdjacentTiles)
+            {
+                if (adj?.Air == null)
+                    continue;
+
+                // And merge it to the new tile air.
+                Merge(adj.Air, mix);
+            }
+        }
+
+        tile.Air = null;
+        tile.AirArchived = null;
+        tile.ArchivedCycle = 0;
+        tile.LastShare = 0f;
+        tile.Hotspot = new Hotspot();
+    }
+
     private void GridFixTileVacuum(TileAtmosphere tile)
     {
         DebugTools.AssertNotNull(tile.Air);
@@ -281,7 +321,7 @@ public sealed partial class AtmosphereSystem
         if (count == 0)
             return;
 
-        var ratio = 1f / count;
+        var ratio = 1f / (count + 1);
         var totalTemperature = 0f;
 
         foreach (var adj in tile.AdjacentTiles)
@@ -291,19 +331,11 @@ public sealed partial class AtmosphereSystem
 
             totalTemperature += adj.Temperature;
 
-            // TODO ATMOS. Why is this removing and then re-adding air to the neighbouring tiles?
-            // Is it some rounding issue to do with Atmospherics.GasMinMoles? because otherwise this is just unnecessary.
-            // if we get rid of this, then this could also just add moles and then multiply by ratio at the end, rather
-            // than having to iterate over adjacent tiles twice.
-
             // Remove a bit of gas from the adjacent ratio...
             var mix = adj.Air.RemoveRatio(ratio);
 
             // And merge it to the new tile air.
             Merge(tile.Air, mix);
-
-            // Return removed gas to its original mixture.
-            Merge(adj.Air, mix);
         }
 
         // New temperature is the arithmetic mean of the sum of the adjacent temperatures...

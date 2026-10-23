@@ -33,7 +33,7 @@
     sprite: Markers/jobs.rsi
     layers:
       - state: green
-      - sprite: Mobs/Animals/regalrat.rsi
+      - sprite: Mobs/Animals/Rodents/regalrat.rsi
         state: icon
 
 - type: entity
