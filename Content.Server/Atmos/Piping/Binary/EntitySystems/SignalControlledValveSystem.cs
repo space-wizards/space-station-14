@@ -1,6 +1,8 @@
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Payloads;
 using Content.Shared.DeviceLinking.Systems;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems;
@@ -9,36 +11,49 @@ public sealed partial class SignalControlledValveSystem : EntitySystem
 {
     [Dependency] private DeviceLinkSystem _signal = default!;
     [Dependency] private GasValveSystem _valve = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<SignalControlledValveComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<SignalControlledValveComponent, SignalReceivedEvent>(OnSignalReceived);
-    }
+    [Dependency] private EntityQuery<GasValveComponent> _valveQuery;
 
     private void OnInit(EntityUid uid, SignalControlledValveComponent comp, ComponentInit args)
     {
         _signal.EnsureSinkPorts(uid, comp.OpenPort, comp.ClosePort, comp.TogglePort);
     }
 
-    private void OnSignalReceived(EntityUid uid, SignalControlledValveComponent comp, ref SignalReceivedEvent args)
+    [SubscribeLocalEvent]
+    private void OnSignalReceived(Entity<SignalControlledValveComponent> ent, ref SignalReceivedEvent args)
     {
-        if (!TryComp<GasValveComponent>(uid, out var valve))
+        if (!_valveQuery.TryComp(ent.Owner, out var valve))
             return;
 
-        if (args.Port == comp.OpenPort)
+        if (args.Port == ent.Comp.OpenPort)
+            _valve.Set(ent.Owner, valve, true);
+        else if (args.Port == ent.Comp.ClosePort)
+            _valve.Set(ent.Owner, valve, false);
+        else if (args.Port == ent.Comp.TogglePort)
+            _valve.Toggle(ent.Owner, valve);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnSignalReceived(Entity<SignalControlledValveComponent> ent, ref SignalReceivedEvent<LogicStatePayload> args)
+    {
+        if (!_valveQuery.TryComp(ent.Owner, out var valve))
+            return;
+ 
+        var state = args.Data.State;
+ 
+        if (args.Port == ent.Comp.OpenPort)
         {
-            _valve.Set(uid, valve, true);
+            if (state != SignalState.Low)
+                _valve.Set(ent.Owner, valve, true);
         }
-        else if (args.Port == comp.ClosePort)
+        else if (args.Port == ent.Comp.ClosePort)
         {
-            _valve.Set(uid, valve, false);
+            if (state != SignalState.Low)
+                _valve.Set(ent.Owner, valve, false);
         }
-        else if (args.Port == comp.TogglePort)
+        else if (args.Port == ent.Comp.TogglePort)
         {
-            _valve.Toggle(uid, valve);
+            if (state != SignalState.Low)
+                _valve.Toggle(ent.Owner, valve);
         }
     }
 }
