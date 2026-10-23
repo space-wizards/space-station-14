@@ -154,7 +154,3 @@
     description: ghost-role-information-hamster-description
     rules: ghost-role-information-nonantagonist-rules
   - type: GhostTakeoverAvailable
-  - type: Speech
-    speechVerb: SmallMob
-    speechSounds: Squeak
-    allowedEmotes: ['Squeak']
