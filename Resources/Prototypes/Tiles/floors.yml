@@ -360,5 +360,5 @@
   sprite: /Textures/Tiles/super_reinforced.png
   footstepSounds:
     collection: FootstepHull
-  itemDrop: PartRodMetal1 #same case as FloorHull
+  itemDrop: SheetPlasteel1
 
