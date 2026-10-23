@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.NPC.Components;
 using Content.Server.Storage.EntitySystems;

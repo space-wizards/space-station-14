@@ -1,4 +1,4 @@
-﻿using Content.Shared.Medical.HealthAnalyzer;
+using Content.Shared.Medical.HealthAnalyzer;
 
 namespace Content.Client.Medical.HealthAnalyzer;
 

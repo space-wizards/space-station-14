@@ -1,4 +1,4 @@
-﻿using Content.Shared.Waypointer.Components;
+using Content.Shared.Waypointer.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;

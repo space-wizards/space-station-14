@@ -1,4 +1,4 @@
-﻿using Content.Shared.DeviceConfigurator.Components;
+using Content.Shared.DeviceConfigurator.Components;
 
 namespace Content.Shared.DeviceConfigurator.Systems;
 

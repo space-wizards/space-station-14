@@ -1,4 +1,4 @@
-﻿using Content.Shared.Database;
+using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Popups;
