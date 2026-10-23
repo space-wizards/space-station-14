@@ -89,19 +89,19 @@ public sealed class StatusEffectNewTest : InteractionTest
     }
 
     [Test, Description("Test that valid status effects can be added with TrySetStatusEffectDuration (and that invalid ones are rejected) - non-delay variant")]
-    public async Task TestAddNewStatusEffects_NoDelay_TrySetStatusEffectDuration()
+    public async Task TrySetStatusEffectDuration_AddNewEffects_NoDelay()
     {
         await TestAddNewStatusEffects_NoDelay(_sStatusSystem.TrySetStatusEffectDuration, "TrySetStatusEffectDuration");
     }
 
     [Test, Description("Test that valid status effects can be added with TryAddStatusEffectDuration (and that invalid ones are rejected) - non-delay variant")]
-    public async Task TestAddNewStatusEffects_NoDelay_TryAddStatusEffectDuration()
+    public async Task TryAddStatusEffectDuration_AddNewEffects_NoDelay()
     {
         await TestAddNewStatusEffects_NoDelay(_sStatusSystem.TryAddStatusEffectDuration, "TryAddStatusEffectDuration");
     }
 
     [Test, Description("Test that valid status effects can be added with TryUpdateStatusEffectDuration (and that invalid ones are rejected) - non-delay variant")]
-    public async Task TestAddNewStatusEffects_NoDelay_TryUpdateStatusEffectDuration()
+    public async Task TryUpdateStatusEffectDuration_AddNewEffects_NoDelay()
     {
         await TestAddNewStatusEffects_NoDelay(_sStatusSystem.TryUpdateStatusEffectDuration, "TryUpdateStatusEffectDuration");
     }
@@ -217,19 +217,19 @@ public sealed class StatusEffectNewTest : InteractionTest
     }
 
     [Test, Description("Test that valid status effects with delays can be added with TrySetStatusEffectDuration")]
-    public async Task TestAddNewStatusEffects_WithDelay_TrySetStatusEffectDuration()
+    public async Task TrySetStatusEffectDuration_AddNewEffects_WithDelay()
     {
         await TestAddNewStatusEffects_WithDelay(_sStatusSystem.TrySetStatusEffectDuration, "TrySetStatusEffectDuration");
     }
 
     [Test, Description("Test that valid status effects with delays can be added with TryAddStatusEffectDuration")]
-    public async Task TestAddNewStatusEffects_WithDelay_TryAddStatusEffectDuration()
+    public async Task TryAddStatusEffectDuration_AddNewEffects_WithDelay()
     {
         await TestAddNewStatusEffects_WithDelay(_sStatusSystem.TryAddStatusEffectDuration, "TryAddStatusEffectDuration");
     }
 
     [Test, Description("Test that valid status effects with delays can be added with TryUpdateStatusEffectDuration")]
-    public async Task TestAddNewStatusEffects_WithDelay_TryUpdateStatusEffectDuration()
+    public async Task TryUpdateStatusEffectDuration_AddNewEffects_WithDelay()
     {
         await TestAddNewStatusEffects_WithDelay(_sStatusSystem.TryUpdateStatusEffectDuration, "TryUpdateStatusEffectDuration");
     }
@@ -547,7 +547,7 @@ public sealed class StatusEffectNewTest : InteractionTest
     }
 
     [Test, Description("Testing trying to increase delays to status effects (unsupported(?) operation, weird edge case, see comments)")]
-    public async Task TestIncreaseStatusEffectDelay_TrySetStatusEffectDuration_WeirdEdgeCaseConsistencyTest()
+    public async Task TrySetStatusEffectDuration_DelayIncrease_WeirdEdgeCaseTest()
     {
         var curTime = TimeSpan.Zero;
         await Server.WaitPost(() =>
