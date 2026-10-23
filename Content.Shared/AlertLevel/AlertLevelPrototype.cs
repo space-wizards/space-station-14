@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
@@ -56,7 +57,7 @@ public sealed partial class AlertLevelPrototype : IPrototype, IInheritingPrototy
     /// <summary>
     /// The sound that will played in-game when this alert level is selected.
     /// </summary>
-    [DataField]
+    [DataField, AllowStereo]
     public SoundSpecifier? Sound;
 
     /// <summary>
