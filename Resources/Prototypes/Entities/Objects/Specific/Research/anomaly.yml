@@ -68,6 +68,9 @@
     - ScannersAndVessels
   - type: Item
     storedRotation: -90
+  - type: Tag
+    tags:
+    - Scanner
 
 - type: entity
   parent: AnomalyScanner
