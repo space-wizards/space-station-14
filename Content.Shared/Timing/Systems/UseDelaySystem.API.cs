@@ -118,7 +118,7 @@ public sealed partial class UseDelaySystem
     /// <param name="delayed">The entity whose specified delay is being reset.</param>
     /// <param name="checkDelayed">Whether to check if the delay is already active. If so, it'll not reset it.</param>
     /// <param name="id">The specified id of the delay. If null, it'll use the standard delay.</param>
-    /// <returns>Returns true if it was able to find & reset the delay, otherwise false.</returns>
+    /// <returns>Returns true if it was able to find &amp; reset the delay, otherwise false.</returns>
     [PublicAPI]
     public bool TryResetDelay(Entity<UseDelayComponent?> delayed, bool checkDelayed = false, string id = DefaultId)
     {
