@@ -25,7 +25,8 @@
   - type: ResearchServer
   - type: MagnetPickup
     slotFlags: null
-    requireAnchored: true
+    requirePowered: true
+    manualTriggerOnly: true
   - type: TechnologyDatabase
     supportedDisciplines:
     - Industrial

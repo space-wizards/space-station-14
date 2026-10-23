@@ -590,7 +590,8 @@
   components:
     - type: MagnetPickup
       slotFlags: null
-      requireAnchored: true
+      requirePowered: true
+      manualTriggerOnly: true
     - type: Sprite
       sprite: Structures/Machines/ore_processor.rsi
       layers:

@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Storage.Components;
 
 /// <summary>
-/// Applies an ongoing pickup area around the attached entity.
+/// Applies a pickup area around the attached entity.  Can be automatic or manual.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
@@ -16,6 +16,12 @@ public sealed partial class MagnetPickupComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Enabled = true;
+
+    /// <summary>
+    /// Whether this requires a manual trigger instead of being automatic.
+    /// </summary>
+    [DataField]
+    public bool ManualTriggerOnly = false;
 
     [DataField]
     [AutoPausedField]
@@ -32,10 +38,10 @@ public sealed partial class MagnetPickupComponent : Component
     public bool RequireActiveHand = false;
 
     /// <summary>
-    /// Whether the magnet must be anchored
+    /// Whether the magnet needs power to work.
     /// </summary>
     [DataField]
-    public bool RequireAnchored = false;
+    public bool RequirePowered = false;
 
     [DataField]
     public float Range = 1f;

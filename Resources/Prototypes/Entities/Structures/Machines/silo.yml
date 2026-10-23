@@ -20,7 +20,8 @@
   - type: OreSilo
   - type: MagnetPickup
     slotFlags: null
-    requireAnchored: true
+    requirePowered: true
+    manualTriggerOnly: true
   - type: MaterialStorage
     whitelist:
       tags:
