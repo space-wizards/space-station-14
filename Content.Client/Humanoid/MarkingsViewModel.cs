@@ -384,7 +384,12 @@ public sealed partial class MarkingsViewModel
         if (markingIdx == -1)
             return;
 
-        markings[markingIdx] = markings[markingIdx].WithColorAt(colorIndex, color);
+        var markingProto = _prototype.Index(markingId);
+        var newColor = color;
+        if (markingProto.Strategy != null)
+            newColor = markingProto.Strategy.ClosestSkinColor(color);
+
+        markings[markingIdx] = markings[markingIdx].WithColorAt(colorIndex, newColor);
         MarkingsChanged?.Invoke(organ, layer);
     }
 
@@ -403,7 +408,7 @@ public sealed partial class MarkingsViewModel
 
             var actualMarkings = _markings.GetValueOrDefault(organ)?.ShallowClone() ?? [];
 
-            _marking.EnsureValidColors(actualMarkings);
+            _marking.EnsureValidColors(actualMarkings); // here
             _marking.EnsureValidGroupAndSex(actualMarkings, organData.Group, organProfileData.Sex);
             _marking.EnsureValidLayers(actualMarkings, organData.Layers);
             _marking.EnsureValidLimits(actualMarkings, organData.Group, organData.Layers, organProfileData.SkinColor, organProfileData.EyeColor);
