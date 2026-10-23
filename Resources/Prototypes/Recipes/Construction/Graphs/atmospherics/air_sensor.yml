@@ -17,10 +17,10 @@
             - !type:EntityAnchored
               anchored: false
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 2
-            - !type:DeleteEntity {}
+            - !type:SpawnEntity
+              entity: SheetSteel1
+              number: 2
+            - !type:DeleteEntity
           steps:
             - tool: Screwing
               doAfter: 2

@@ -6,7 +6,7 @@
       edges:
         - to: frame1
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
             - material: Steel
               amount: 3
@@ -26,10 +26,10 @@
               doAfter: 1
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 3
-            - !type:DeleteEntity {}
+            - !type:SpawnEntity
+              entity: SheetSteel1
+              number: 3
+            - !type:DeleteEntity
           conditions:
             - !type:EntityAnchored
               anchored: true
@@ -51,9 +51,9 @@
                 state: "door_electronics"
         - to: frame1
           completed:
-            - !type:SpawnPrototype
-              prototype: CableApcStack1
-              amount: 2
+            - !type:SpawnEntity
+              entity: CableApcStack1
+              number: 2
           conditions:
             - !type:EntityAnchored
               anchored: true
@@ -98,9 +98,9 @@
               doAfter: 2
         - to: frame2
           completed:
-            - !type:SpawnPrototype
-              prototype: DoorElectronics
-              amount: 1
+            - !type:SpawnEntity
+              entity: DoorElectronics
+              number: 1
           conditions:
             - !type:EntityAnchored
               anchored: true
@@ -130,9 +130,9 @@
               doAfter: 1
         - to: frame4
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetGlass1
-              amount: 2
+            - !type:SpawnEntity
+              entity: SheetGlass1
+              number: 2
           steps:
             - tool: Screwing
               doAfter: 1
@@ -160,9 +160,9 @@
               doAfter: 1
         - to: frame4
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 2
+            - !type:SpawnEntity
+              entity: SheetSteel1
+              number: 2
           steps:
             - tool: Screwing
               doAfter: 1

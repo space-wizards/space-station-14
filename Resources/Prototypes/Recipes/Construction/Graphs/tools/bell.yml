@@ -29,9 +29,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: PartRodMetal1
-        amount: 1
+      - !type:SpawnEntity
+        entity: PartRodMetal1
+        number: 1
       steps: &UnscrewStep
       - tool: Screwing
         doAfter: 1
@@ -41,9 +41,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: CableApcStack1
-        amount: 2
+      - !type:SpawnEntity
+        entity: CableApcStack1
+        number: 2
       steps: *UnscrewStep
 
   - node: deskHornNode
@@ -51,7 +51,7 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: BikeHorn
-        amount: 1
+      - !type:SpawnEntity
+        entity: BikeHorn
+        number: 1
       steps: *UnscrewStep

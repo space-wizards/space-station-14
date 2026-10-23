@@ -16,9 +16,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: MaterialWoodPlank1
-        amount: 10
+      - !type:SpawnEntity
+        entity: MaterialWoodPlank1
+        number: 10
       - !type:DeleteEntity { }
       steps:
       - tool: Prying
@@ -38,9 +38,9 @@
     edges:
     - to: bonfire
       completed:
-      - !type:SpawnPrototype
-        prototype: MaterialWoodPlank1
-        amount: 2
+      - !type:SpawnEntity
+        entity: MaterialWoodPlank1
+        number: 2
       steps:
       - tool: Prying
         doAfter: 1

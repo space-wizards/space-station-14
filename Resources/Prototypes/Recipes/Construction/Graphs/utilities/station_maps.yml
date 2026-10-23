@@ -4,7 +4,7 @@
   graph:
   - node: start
     actions: # This action on the start node ensures we delete regardless of how we get here (sometimes reduces code duplication)
-    - !type:DeleteEntity {}
+    - !type:DeleteEntity
     edges:
     - to: assembly
       steps:
@@ -14,6 +14,7 @@
       completed:
       # An edge with no completed action feels unresponsive, so in this case a sound is added.
       - !type:PlaySound
+        playAtPosition: true
         sound:
           collection: PlaceMetal
 
@@ -28,6 +29,7 @@
         amount: 2
       completed:
       - !type:PlaySound
+        playAtPosition: true
         sound:
           collection: PlaceWires
     - to: start
@@ -55,6 +57,7 @@
           state: "door_electronics"
       completed:
       - !type:PlaySound
+        playAtPosition: true
         sound:
           collection: PlaceElectronics
     - to: assembly
@@ -77,6 +80,7 @@
         amount: 2
       completed:
       - !type:PlaySound
+        playAtPosition: true
         sound:
           collection: PlaceGlass
     - to: wired
@@ -100,6 +104,7 @@
         doAfter: 2
       completed:
       - !type:PlaySound
+        playAtPosition: true
         sound: /Audio/Machines/light_tube_on.ogg
     - to: electronics
       conditions: # Safety condition. Should never be false but surfaces something went wrong

@@ -7,10 +7,10 @@
     edges:
     - to: disposableTurret
       completed:
-      - !type:SpawnPrototype
-            prototype: ToolboxElectricalTurret
-            amount: 1
-      - !type:DeleteEntity {}
+      - !type:SpawnEntity
+        entity: ToolboxElectricalTurret
+        number: 1
+      - !type:DeleteEntity
       steps:
         - tool: Screwing
           doAfter: 10

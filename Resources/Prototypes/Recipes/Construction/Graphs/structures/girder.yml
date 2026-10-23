@@ -18,10 +18,10 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 2
-            - !type:DeleteEntity {}
+            - !type:SpawnEntity
+              entity: SheetSteel1
+              number: 2
+            - !type:DeleteEntity
           conditions:
             - !type:EntityAnchored
               anchored: false
@@ -275,9 +275,9 @@
           completed:
             - !type:SnapToGrid
               southRotation: true
-            - !type:SpawnPrototype
-              prototype: SheetPlasteel1
-              amount: 2
+            - !type:SpawnEntity
+              entity: SheetPlasteel1
+              number: 2
           conditions:
             - !type:EntityAnchored { }
           steps:
@@ -289,9 +289,9 @@
       edges:
         - to: reinforcedGirder
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetPlasteel1
-              amount: 2
+            - !type:SpawnEntity
+              entity: SheetPlasteel1
+              number: 2
           steps:
             - tool: Cutting
               doAfter: 1
@@ -341,9 +341,9 @@
       edges:
         - to: reinforcedGirder
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetPlasteel1
-              amount: 2
+            - !type:SpawnEntity
+              entity: SheetPlasteel1
+              number: 2
           steps:
             - tool: Cutting
               doAfter: 1
@@ -393,12 +393,12 @@
       edges:
         - to: reinforcedGirder
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetPlasteel1
-              amount: 2
-            - !type:SpawnPrototype
-              prototype: PartRodMetal1
-              amount: 4
+            - !type:SpawnEntity
+              entity: SheetPlasteel1
+              number: 2
+            - !type:SpawnEntity
+              entity: PartRodMetal1
+              number: 4
           steps:
             - tool: Welding
               doAfter: 10
@@ -450,12 +450,12 @@
       edges:
         - to: reinforcedGirder
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetPlasteel1
-              amount: 1
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 1
+            - !type:SpawnEntity
+              entity: SheetPlasteel1
+              number: 1
+            - !type:SpawnEntity
+              entity: SheetSteel1
+              number: 1
           steps:
           #To-Do: Add deconstruct visuals
             - tool: Welding

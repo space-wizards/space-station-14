@@ -25,11 +25,11 @@
       - !type:Locked
         locked: false
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetPlasteel1
-        amount: 5
-      - !type:SpawnPrototype
-        prototype: CableApcStack1
-        amount: 2
+      - !type:SpawnEntity
+        entity: SheetPlasteel1
+        number: 5
+      - !type:SpawnEntity
+        entity: CableApcStack1
+        number: 2
       - !type:EmptyAllContainers
       - !type:DeleteEntity

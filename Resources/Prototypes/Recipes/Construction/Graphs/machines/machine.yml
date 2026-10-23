@@ -4,8 +4,8 @@
   graph:
     - node: start
       actions:
-        - !type:SpawnPrototype
-          prototype: SheetSteel1
+        - !type:SpawnEntity
+          entity: SheetSteel1
         - !type:DeleteEntity
       edges:
         - to: missingWires
@@ -34,9 +34,9 @@
             - material: Cable
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 5
+            - !type:SpawnEntity
+              entity: SheetSteel1
+              number: 4
             - !type:DeleteEntity
           steps:
             - tool: Screwing
@@ -45,9 +45,9 @@
     - node: machineFrame
       entity: MachineFrame
       actions:
-        - !type:AddContainer
+        - !type:AddConstructionContainer
           container: machine_parts
-        - !type:AddContainer
+        - !type:AddConstructionContainer
           container: machine_board
         - !type:MachineFrameRegenerateProgress
       edges:
@@ -84,8 +84,8 @@
               container: machine_board
               examineText: construction-condition-machine-container-empty
           completed:
-            - !type:SpawnPrototype
-              prototype: CableApcStack1
+            - !type:SpawnEntity
+              entity: CableApcStack1
           steps:
             - tool: Cutting
               doAfter: 0.25
@@ -115,7 +115,7 @@
             - tool: Welding
               doAfter: 5
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 3
-            - !type:DeleteEntity {}
+            - !type:SpawnEntity
+              entity: SheetSteel1
+              number: 3
+            - !type:DeleteEntity

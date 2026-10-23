@@ -17,6 +17,20 @@ public sealed partial class PlaySoundEntityEffectSystem : EntityEffectSystem<Tra
 
     protected override void Effect(Entity<TransformComponent> entity, ref EntityEffectEvent<PlaySound> args)
     {
+        if (args.Effect.PlayAtPosition)
+        {
+            if (args.Effect.Predicted && args.User != null)
+            {
+                _audio.PlayPredicted(args.Effect.Sound, Transform(entity).Coordinates, args.User);
+            }
+            else
+            {
+                _audio.PlayPvs(args.Effect.Sound, Transform(entity).Coordinates);
+            }
+
+            return;
+        }
+
         if (args.Effect.Predicted && args.User != null)
         {
             _audio.PlayPredicted(args.Effect.Sound, entity, args.User);
@@ -42,6 +56,12 @@ public sealed partial class PlaySound : EntityEffectBase<PlaySound>
     /// </summary>
     [DataField]
     public bool Predicted = true;
+
+    /// <summary>
+    /// If true the sound will be played at the position of the entity it is raised on instead of attached to it.
+    /// </summary>
+    [DataField]
+    public bool PlayAtPosition = false;
 
     /// <inheritdoc/>
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => string.Empty;

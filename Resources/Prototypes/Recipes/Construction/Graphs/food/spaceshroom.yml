@@ -8,6 +8,7 @@
     - to: cooked spaceshroom
       completed:
       - !type:PlaySound
+        playAtPosition: true
         sound: /Audio/Effects/sizzle.ogg
       steps:
       - minTemperature: 375 # little bit above boiling, shrooms need to lose all moisture to be good

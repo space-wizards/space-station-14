@@ -17,9 +17,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: MaterialWoodPlank1
-        amount: 5
+      - !type:SpawnEntity
+        entity: MaterialWoodPlank1
+        number: 5
       - !type:DeleteEntity {}
       steps:
       - tool: Prying
@@ -57,12 +57,12 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: MaterialWoodPlank1
-        amount: 4
-      - !type:SpawnPrototype
-        prototype: SheetPlastic1
-        amount: 2
+      - !type:SpawnEntity
+        entity: MaterialWoodPlank1
+        number: 4
+      - !type:SpawnEntity
+        entity: SheetPlastic1
+        number: 2
       - !type:DeleteEntity {}
       steps:
       - tool: Prying

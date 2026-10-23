@@ -17,9 +17,9 @@
       edges:
         - to: start
           completed:
-          - !type:SpawnPrototype
-                prototype: PartRodMetal1
-                amount: 2
-          - !type:DeleteEntity {}
+          - !type:SpawnEntity
+            entity: PartRodMetal1
+            number: 2
+          - !type:DeleteEntity
           steps:
             - tool: Cutting

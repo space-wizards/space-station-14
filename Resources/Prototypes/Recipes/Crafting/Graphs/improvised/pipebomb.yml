@@ -35,9 +35,9 @@
     edges:
     - to: cable
       completed:
-      - !type:SpawnPrototype
-        prototype: CableApcStack1
-        amount: 5
+      - !type:SpawnEntity
+        entity: CableApcStack1
+        number: 5
       steps:
       - tool: Cutting
         doAfter: 2

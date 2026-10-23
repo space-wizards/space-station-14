@@ -4,11 +4,11 @@
   graph:
   - node: start
     actions:
-      - !type:DestroyEntity {}
+      - !type:DestroyEntity
     edges:
       - to: plasticFlaps
         completed:
-          - !type:SnapToGrid { }
+          - !type:SnapToGrid
         steps:
           - material: Plastic
             amount: 5
@@ -19,16 +19,16 @@
     edges:
       - to: start
         completed:
-          - !type:SpawnPrototype
-            prototype: SheetPlastic
-            amount: 5
+          - !type:SpawnEntity
+            entity: SheetPlastic
+            number: 5
         steps:
           - tool: Anchoring
             doAfter: 10
 
       - to: opaqueFlaps
         completed:
-          - !type:SnapToGrid { }
+          - !type:SnapToGrid
         steps:
           - tool: Welding
             doAfter: 5
@@ -38,9 +38,9 @@
     edges:
       - to: start
         completed:
-          - !type:SpawnPrototype
-            prototype: SheetPlastic
-            amount: 5
+          - !type:SpawnEntity
+            entity: SheetPlastic
+            number: 5
         steps:
           - tool: Anchoring
             doAfter: 10

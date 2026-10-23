@@ -22,8 +22,8 @@
             - !type:StorageWelded
               welded: false
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetPlastic1
-              amount: 5
+            - !type:SpawnEntity
+              entity: SheetPlastic1
+              number: 5
             - !type:EmptyAllContainers
             - !type:DeleteEntity

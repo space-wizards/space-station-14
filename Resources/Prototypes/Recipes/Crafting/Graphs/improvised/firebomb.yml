@@ -23,10 +23,10 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: DrinkColaCanEmpty
-      - !type:SpawnPrototype
-        prototype: Igniter
+      - !type:SpawnEntity
+        entity: DrinkColaCanEmpty
+      - !type:SpawnEntity
+        entity: Igniter
       - !type:DeleteEntity {}
       steps:
       - tool: Prying
@@ -67,9 +67,9 @@
     edges:
     - to: fuel
       completed:
-      - !type:SpawnPrototype
-        prototype: CableApcStack1
-        amount: 5
+      - !type:SpawnEntity
+        entity: CableApcStack1
+        number: 5
       steps:
       - tool: Cutting
         doAfter: 2

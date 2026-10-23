@@ -39,14 +39,14 @@
       - tool: Cutting
         doAfter: 1
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 2
-      - !type:SpawnPrototype
-        prototype: CableMVStack1
-        amount: 5
-      - !type:SpawnPrototype
-        prototype: ModularReceiver
+      - !type:SpawnEntity
+        entity: SheetSteel1
+        number: 2
+      - !type:SpawnEntity
+        entity: CableMVStack1
+        number: 5
+      - !type:SpawnEntity
+        entity: ModularReceiver
       - !type:DeleteEntity
 
   - node: mslaserframescrewed
@@ -91,9 +91,9 @@
       - tool: Cutting
         doAfter: 1
       completed:
-      - !type:SpawnPrototype
-        prototype: GlassLens
-        amount: 2
+      - !type:SpawnEntity
+        entity: GlassLens
+        number: 2
 
   - node: mslasercelled
     entity: WeaponMakeshiftLaserFrame

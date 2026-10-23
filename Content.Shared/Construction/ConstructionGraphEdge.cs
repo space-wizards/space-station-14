@@ -1,4 +1,5 @@
 using Content.Shared.Construction.Steps;
+using Content.Shared.EntityEffects;
 
 namespace Content.Shared.Construction
 {
@@ -12,17 +13,14 @@ namespace Content.Shared.Construction
         [DataField("conditions", serverOnly: true)]
         private IGraphCondition[] _conditions = Array.Empty<IGraphCondition>();
 
-        [DataField("completed", serverOnly: true)]
-        private IGraphAction[] _completed = Array.Empty<IGraphAction>();
-
         [DataField("to", required:true)]
         public string Target { get; private set; } = string.Empty;
 
         [ViewVariables]
         public IReadOnlyList<IGraphCondition> Conditions => _conditions;
 
-        [ViewVariables]
-        public IReadOnlyList<IGraphAction> Completed => _completed;
+        [DataField]
+        public EntityEffect[] Completed = Array.Empty<EntityEffect>();
 
         [ViewVariables]
         public IReadOnlyList<ConstructionGraphStep> Steps => _steps;

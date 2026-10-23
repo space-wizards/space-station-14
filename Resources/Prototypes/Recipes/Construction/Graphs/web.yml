@@ -11,7 +11,7 @@
 
   - node: removed
     actions:
-    - !type:DestroyEntity {}
+    - !type:DestroyEntity
 
 - type: constructionGraph
   id: WebStructures
@@ -19,7 +19,7 @@
   graph:
   - node: start
     actions:
-    - !type:DestroyEntity {}
+    - !type:DestroyEntity
     edges:
     - to: wall
       completed:
@@ -78,9 +78,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: MaterialWebSilk1
-        amount: 4
+      - !type:SpawnEntity
+        entity: MaterialWebSilk1
+        number: 4
       steps:
       - tool: Cutting
         doAfter: 2
@@ -90,9 +90,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: MaterialWebSilk1
-        amount: 4
+      - !type:SpawnEntity
+        entity: MaterialWebSilk1
+        number: 4
       steps:
       - tool: Cutting
         doAfter: 2
@@ -102,9 +102,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: MaterialWebSilk1
-        amount: 5 # One silk loss, cry
+      - !type:SpawnEntity
+        entity: MaterialWebSilk1
+        number: 5 # One silk loss, cry
       steps:
       - tool: Cutting
         doAfter: 2
@@ -114,9 +114,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: MaterialWebSilk1
-        amount: 3
+      - !type:SpawnEntity
+        entity: MaterialWebSilk1
+        number: 3
       steps:
       - tool: Cutting
         doAfter: 2
@@ -126,9 +126,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: MaterialWebSilk1
-        amount: 7
+      - !type:SpawnEntity
+        entity: MaterialWebSilk1
+        number: 7
       steps:
       - tool: Cutting
         doAfter: 3
@@ -138,9 +138,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: MaterialWebSilk1
-        amount: 6
+      - !type:SpawnEntity
+        entity: MaterialWebSilk1
+        number: 6
       steps:
       - tool: Cutting
         doAfter: 3

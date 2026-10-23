@@ -30,6 +30,7 @@ namespace Content.Server.Construction
         [Dependency] private SharedHandsSystem _handsSystem = default!;
         [Dependency] private EntityLookupSystem _lookupSystem = default!;
         [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+        [Dependency] private ConstructionSystem _construction = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -304,17 +305,11 @@ namespace Content.Server.Construction
             // We have step completed steps!
             foreach (var step in steps)
             {
-                foreach (var completed in step.Completed)
-                {
-                    completed.PerformAction(newEntity, user, EntityManager);
-                }
+                _construction.PerformActions(newEntity, user, step.Completed);
             }
 
             // And we also have edge completed effects!
-            foreach (var completed in edge.Completed)
-            {
-                completed.PerformAction(newEntity, user, EntityManager);
-            }
+            _construction.PerformActions(newEntity, user, edge.Completed);
 
             return newEntity;
         }
