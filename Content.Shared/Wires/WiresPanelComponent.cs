@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Wires;
 
 [NetworkedComponent, RegisterComponent]
-[Access(typeof(SharedWiresSystem))]
+[Access(typeof(WiresSystem))]
 [AutoGenerateComponentState]
 public sealed partial class WiresPanelComponent : Component
 {
