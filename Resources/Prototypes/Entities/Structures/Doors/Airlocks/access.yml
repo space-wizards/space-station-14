@@ -87,7 +87,7 @@
 - type: entity
   parent: AirlockHydroponics
   id: AirlockHydroponicsLocked
-  suffix: Botany, Locked
+  suffix: Hydroponics, Locked
   components:
   - type: ContainerFill
     containers:
@@ -484,7 +484,7 @@
 - type: entity
   parent: AirlockServiceGlassLocked
   id: AirlockServiceTheatreGlassLocked
-  suffix: Theatre-Service, Locked
+  suffix: Theatre, Locked Theatre-Service
   components:
   - type: ContainerFill
     containers:
@@ -594,7 +594,7 @@
 - type: entity
   parent: AirlockHydroponicsGlass
   id: AirlockHydroGlassLocked
-  suffix: Botany, Locked
+  suffix: Hydroponics, Locked
   components:
   - type: ContainerFill
     containers:
@@ -940,7 +940,7 @@
 - type: entity
   parent: [AirlockMaintSprite, AirlockHydroponicsLocked]
   id: AirlockMaintHydroLocked
-  suffix: Botany-Maint, Locked
+  suffix: Hydroponics-Maint, Locked
 
 - type: entity
   parent: [AirlockMaintSprite, AirlockJanitorLocked]
@@ -965,7 +965,7 @@
 - type: entity
   parent: [AirlockMaintSprite, AirlockServiceTheatreLocked]
   id: AirlockMaintServiceTheatreLocked
-  suffix: Theatre-Service-Maint, Locked
+  suffix: Theatre-Maint, Locked Theatre-Service
 
 - type: entity
   parent: [AirlockMaintSprite, AirlockKitchenLocked]
