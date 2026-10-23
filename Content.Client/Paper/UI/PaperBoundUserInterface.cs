@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.Player;
 using Robust.Shared.Utility;
 using Content.Shared.Paper;
 using static Content.Shared.Paper.PaperComponent;
@@ -40,14 +41,26 @@ public sealed class PaperBoundUserInterface : BoundUserInterface
         _window?.Populate((PaperBoundUserInterfaceState) state);
     }
 
-    private void InputOnTextEntered(string text)
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
     {
-        SendMessage(new PaperInputTextMessage(text));
+        base.ReceiveMessage(message);
+
+        if (message is PaperBeginEditMessage msg)
+        {
+            _window?.BeginEdit(msg.EditToolEntity);
+        }
+    }
+
+    private void InputOnTextEntered(NetEntity editTool, string text)
+    {
+        var playerEnt = PlayerManager.LocalEntity ?? EntityUid.Invalid;
+        SendMessage(new PaperInputTextMessage(EntMan.GetNetEntity((EntityUid)playerEnt), editTool, text));
 
         if (_window != null)
         {
             _window.Input.TextRope = Rope.Leaf.Empty;
             _window.Input.CursorPosition = new TextEdit.CursorPos(0, TextEdit.LineBreakBias.Top);
+            _window.FinishEdit();
         }
     }
 }
