@@ -56,11 +56,11 @@ public sealed partial class RadioSystem : SharedRadioSystem
     /// <inheritdoc/>
     public override void SendRadioMessage(EntityUid messageSource, string message, RadioChannelPrototype channel, EntityUid radioSource, bool escapeMarkup = true)
     {
-        // TODO if radios ever garble / modify messages, feedback-prevention needs to be handled better than this.
-        if (!_messages.Add(message))
+        if (_whitelist.IsWhitelistFail(channel.Whitelist, messageSource))
             return;
 
-        if (_whitelist.IsWhitelistFail(channel.Whitelist, messageSource))
+        // TODO if radios ever garble / modify messages, feedback-prevention needs to be handled better than this.
+        if (!_messages.Add(message))
             return;
 
         var evt = new TransformSpeakerNameEvent(messageSource, MetaData(messageSource).EntityName);

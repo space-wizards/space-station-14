@@ -8,6 +8,7 @@ using Content.Shared.Power.EntitySystems;
 using Content.Shared.Radio.Components;
 using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
+using Content.Shared.Whitelist;
 
 using Robust.Shared.Prototypes;
 
@@ -23,7 +24,9 @@ public abstract partial class SharedRadioDeviceSystem : EntitySystem
     [Dependency] private SharedChatSystem _chat = default!;
     [Dependency] private SharedRadioSystem _radio = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     // Used to prevent a shitter from using a bunch of radios to spam chat.
     private readonly HashSet<(string, EntityUid, RadioChannelPrototype)> _recentlySent = [];
@@ -277,8 +280,14 @@ public abstract partial class SharedRadioDeviceSystem : EntitySystem
         ref EncryptionChannelsChangedEvent args
     )
     {
-        ent.Comp.SupportedChannels =
+        var allChannels =
             args.Component.Channels.Select(p => new ProtoId<RadioChannelPrototype>(p)).ToList();
+
+        foreach (var c in allChannels)
+        {
+            if (_whitelist.IsWhitelistPassOrNull(_proto.Index(c).Whitelist, ent.Owner) && !ent.Comp.SupportedChannels.Contains(c))
+                ent.Comp.SupportedChannels.Add(c);
+        }
 
         var channel = args.Component.DefaultChannel;
         if (ent.Comp.CurrentChannel != null && ent.Comp.SupportedChannels.Contains(ent.Comp.CurrentChannel.Value))
