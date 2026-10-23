@@ -1,6 +1,6 @@
 # Head Markings (Head)
 - type: marking
-  parent: [ VulpBaseMarking ]
+  parent: [ VulpBaseMarkingClamped ]
   id: VulpHeadBlaze
   bodyPart: Head
   groupWhitelist: [ Vulpkanin ]
@@ -9,7 +9,7 @@
       state: blaze
 
 - type: marking
-  parent: [ VulpBaseMarking ]
+  parent: [ VulpBaseMarkingClamped ]
   id: VulpHeadMask
   bodyPart: Head
   groupWhitelist: [ Vulpkanin ]
@@ -18,7 +18,7 @@
       state: mask
 
 - type: marking
-  parent: [ VulpBaseMarking ]
+  parent: [ VulpBaseMarkingClamped ]
   id: VulpPatch
   bodyPart: Head
   groupWhitelist: [ Vulpkanin ]
@@ -27,7 +27,7 @@
       state: patch
 
 - type: marking
-  parent: [ VulpBaseMarking ]
+  parent: [ VulpBaseMarkingClamped ]
   id: VulpSlash
   bodyPart: Head
   groupWhitelist: [ Vulpkanin ]
@@ -36,7 +36,7 @@
       state: slash
 
 - type: marking
-  parent: [ VulpBaseMarking ]
+  parent: [ VulpBaseMarkingClamped ]
   id: VulpStripes1
   bodyPart: Head
   groupWhitelist: [ Vulpkanin ]
@@ -45,7 +45,7 @@
       state: stripes_1
 
 - type: marking
-  parent: [ VulpBaseMarking ]
+  parent: [ VulpBaseMarkingClamped ]
   id: VulpStripes2
   bodyPart: Head
   groupWhitelist: [ Vulpkanin ]
@@ -54,7 +54,7 @@
       state: stripes_2
 
 - type: marking
-  parent: [ VulpBaseMarking ]
+  parent: [ VulpBaseMarkingClamped ]
   id: VulpVulpine
   bodyPart: Head
   groupWhitelist: [ Vulpkanin ]

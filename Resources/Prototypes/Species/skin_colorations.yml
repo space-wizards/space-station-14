@@ -70,4 +70,8 @@
 - type: marking
   abstract: true
   id: VulpBaseMarking
+
+- type: marking
+  abstract: true
+  id: VulpBaseMarkingClamped
   strategy: *VulpColorClamp
