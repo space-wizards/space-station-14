@@ -198,6 +198,44 @@
     selfMessage: changeling-sting-success
 
 - type: entity
+  parent: BaseAction
+  id: ActionChangelingTransformationSting
+  name: Transformation Sting
+  description: "Temporarily transform someone into one of your stored identities. \n\nRequires 50 Chemicals."
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    priority: 1
+    useDelay: 20
+    raiseOnAction: true
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: transform_sting
+  - type: ActionRequirements
+    conditions:
+      Performer:
+      - !type:SatiationCondition
+        satiationType: Chemicals
+        min: 50
+    effects:
+      Performer:
+      - !type:Satiate
+        satiationType: Chemicals
+        factor: -50
+  - type: TargetAction
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - HumanoidProfile
+    event: !type:ChangelingTransformationStingEvent
+  - type: ChangelingTransformationStingAbility
+  - type: PopupOnAction
+    popupType: Medium
+    selfMessage: changeling-sting-success
+
+- type: entity
   abstract: true
   parent: BaseAction
   id: BaseActionChangelingSting
@@ -556,3 +594,4 @@
         mobstate: Dead
       sound:
         collection: gib
+

@@ -64,6 +64,11 @@ changeling-fake-mindshield-disabled = We stop emitting fake mindshield waves.
 # chemicals
 changeling-not-enough-chemicals = We don't have enough Chemicals.
 
+# stings transform
+changeling-sting-transform-no-identities = We have no stored identities to sting with.
+changeling-sting-transform-target-popup = Your body twists into an unfamiliar form!
+changeling-sting-transform-revert-popup = Your body settles back into your original form.
+
 # other
 changeling-action-fail-generic = We cannot do this right now.
 changeling-paused-map-name = Changeling identity storage map

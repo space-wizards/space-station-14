@@ -5,11 +5,9 @@ using Content.Shared.Changeling.Components;
 using Content.Shared.Cloning;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
-using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
-using Content.Shared.Store.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
@@ -34,6 +32,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
     [Dependency] private SharedChangelingIdentitySystem _changelingIdentity = default!;
 
     private const string ChangelingBuiXmlGeneratedName = "ChangelingTransformBoundUserInterface";
+    private const string ChangelingStingBuiXmlGeneratedName = "ChangelingStingTransformBoundUserInterface";
     public override void Initialize()
     {
         base.Initialize();
@@ -55,6 +54,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
 
         var userInterfaceComp = EnsureComp<UserInterfaceComponent>(ent);
         _ui.SetUi((ent, userInterfaceComp), ChangelingTransformUiKey.Key, new InterfaceData(ChangelingBuiXmlGeneratedName));
+        _ui.SetUi((ent, userInterfaceComp), ChangelingTransformUiKey.StingKey, new InterfaceData(ChangelingStingBuiXmlGeneratedName));
     }
 
     private void OnShutdown(Entity<ChangelingTransformComponent> ent, ref ComponentShutdown args)
@@ -231,40 +231,59 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (!ProtoMan.Resolve(ent.Comp.TransformCloningSettings, out var settings))
             return;
 
-        var beforeTransformEvent = new BeforeChangelingTransformEvent(targetIdentity);
-        RaiseLocalEvent(ent.Owner, beforeTransformEvent);
-
-        _visualBody.CopyAppearanceFrom(targetIdentity, ent.Owner);
-        _cloning.CloneComponents(targetIdentity, ent.Owner, settings);
-
-        if (settings.CopyStatusEffects)
-            _cloning.CopyStatusEffects(targetIdentity, ent.Owner, settings.StatusEffectWhitelist, settings.StatusEffectBlacklist);
+        ApplyIdentity(ent.Owner, targetIdentity, settings);
 
         if (TryComp<ChangelingStoredIdentityComponent>(targetIdentity, out var storedIdentity) && storedIdentity.OriginalSession != null)
             _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player})");
         else
             _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\"");
 
-        _metaData.SetEntityName(ent, Name(targetIdentity), raiseEvents: false); // Don't raise events because we don't want to rename the ID card.
-        _metaData.SetEntityDescription(ent, Description(targetIdentity));
-        _identity.QueueIdentityUpdate(ent); // We have to manually refresh the identity because we did not raise events.
-
-        Dirty(ent);
-
         EntityUid? oldIdentity = null;
         if (TryComp<ChangelingIdentityComponent>(ent, out var identity)) // in case we ever get changelings that don't store identities
         {
             oldIdentity = identity.CurrentIdentity;
             identity.CurrentIdentity = targetIdentity;
-            Dirty(ent.Owner, identity);
+            Dirty(ent, identity);
         }
 
         var afterTransformEvent = new AfterChangelingTransformEvent(targetIdentity, oldIdentity);
         RaiseLocalEvent(ent.Owner, afterTransformEvent);
 
-        if (oldIdentity != null && !ent.Comp.ManualDrop)
-            _changelingIdentity.DropStoredIdentity(ent.Owner, oldIdentity.Value);
+        if (oldIdentity is { } old && !ent.Comp.ManualDrop)
+            _changelingIdentity.DropStoredIdentity(ent.Owner, old);
+    }
 
+    /// <summary>
+    /// Apply a stored identity to any valid target entity using cloning settings.
+    /// </summary>
+    public bool TryApplyIdentity(EntityUid target, EntityUid targetIdentity, ProtoId<CloningSettingsPrototype> cloningSettings)
+    {
+        if (!Exists(target) || !Exists(targetIdentity))
+            return false;
+
+        if (!ProtoMan.Resolve(cloningSettings, out var settings))
+            return false;
+
+        ApplyIdentity(target, targetIdentity, settings);
+
+        var afterTransformEvent = new AfterChangelingTransformEvent(targetIdentity, null);
+        RaiseLocalEvent(target, afterTransformEvent);
+        return true;
+    }
+
+    private void ApplyIdentity(EntityUid target, EntityUid targetIdentity, CloningSettingsPrototype settings)
+    {
+        var beforeTransformEvent = new BeforeChangelingTransformEvent(targetIdentity);
+        RaiseLocalEvent(target, beforeTransformEvent);
+
+        _visualBody.CopyAppearanceFrom(targetIdentity, target);
+        _cloning.CloneComponents(targetIdentity, target, settings);
+        if (settings.CopyStatusEffects)
+            _cloning.CopyStatusEffects(targetIdentity, target, settings.StatusEffectWhitelist, settings.StatusEffectBlacklist);
+
+        _metaData.SetEntityName(target, Name(targetIdentity), raiseEvents: false); // Don't raise events because we don't want to rename the ID card.
+        _metaData.SetEntityDescription(target, Description(targetIdentity));
+        _identity.QueueIdentityUpdate(target); // We have to manually refresh the identity because we did not raise events.
     }
 
     private void StorageBeforeTransform(Entity<StorageComponent> ent, ref BeforeChangelingTransformEvent args)
