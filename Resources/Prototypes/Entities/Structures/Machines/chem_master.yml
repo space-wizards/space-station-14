@@ -79,6 +79,9 @@
         whitelist:
           components:
           - FitsInDispenser
+        blacklist:
+          tags:
+          - ChemMasterInputOutputCollisionBlacklist
       outputSlot:
         whitelistFailPopup: chem-master-component-cannot-put-entity-message
         whitelist:
