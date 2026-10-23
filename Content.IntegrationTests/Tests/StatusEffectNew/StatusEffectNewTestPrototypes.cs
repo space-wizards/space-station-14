@@ -9,8 +9,6 @@ public static class StatusEffectNewTestPrototypes
     public const string StatusC = "StatusC";
     public const string StatusD = "StatusD";
 
-    public static readonly TimeSpan TenTicks = new TimeSpan(10);
-
     [TestPrototypes]
     public static readonly string StatusEffectPrototypes = @$"
 - type: entity

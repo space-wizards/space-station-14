@@ -10,10 +10,25 @@ namespace Content.IntegrationTests.Tests.StatusEffectNew;
 [TestOf(typeof(StatusEffectsSystem))]
 public sealed class StatusEffectNewTest : InteractionTest
 {
-
     [SidedDependency(Side.Server)] private readonly StatusEffectsSystem _sStatusSystem = default!;
-    private static readonly TimeSpan TwentyTicks = TenTicks + TenTicks;
-    private static readonly TimeSpan ThirtyTicks = TwentyTicks + TenTicks;
+
+    // Timespan offsets for use in these tests, should line up with the timing of the server's tickrate.
+    /// <summary>
+    /// baseline difference between the following tick rates (saves having to hardcode this everywhere)
+    /// </summary>
+    private const int Ten = 10;
+    /// <summary>
+    /// calculates duration of ten game ticks as a timespan, based on current tickrate.
+    /// </summary>
+    private TimeSpan TenTicks => SGameTiming.TickPeriod * Ten;
+    /// <summary>
+    /// duration of twenty game ticks as a timespan
+    /// </summary>
+    private TimeSpan TwentyTicks => TenTicks * 2;
+    /// <summary>
+    /// duration of thirty game ticks as a timespan
+    /// </summary>
+    private TimeSpan ThirtyTicks => TenTicks * 3;
 
     [Test, Description("Test that the durations of status effects can be set")]
     public async Task TestSetDurations()
@@ -80,8 +95,11 @@ public sealed class StatusEffectNewTest : InteractionTest
         }
 
         // wait for effect B's delay to end
-        await Server.WaitRunTicks((int)TenTicks.Ticks);
-        Assert.That(compStatusB!.Applied, Is.True, "Status effect B had not been applied to the player, despite its delay being over.");
+        await Pair.RunUntilSynced();
+        await Pair.RunTicksSync(Ten);
+
+        _sStatusSystem.TryGetTime(SPlayer, StatusB, out var latterTimeB);
+        Assert.That(compStatusB!.Applied, Is.True, $"Status effect B had not been applied to the player, despite its delay being over. (cur time: {STiming.CurTime}, b delay: {latterTimeB.StartEffectTime?.ToString() ?? "dunno" })");
     }
 
     [Test, Description("Testing setting a negative delay for a status effect. TODO is this implementation desired behaviour?")]
@@ -124,7 +142,9 @@ public sealed class StatusEffectNewTest : InteractionTest
         Assume.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusB), Is.True, "Status effect B was not found on the player");
         Assume.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusC), Is.False, "Status effect C was found on the player despite never being given");
 
-        await Server.WaitRunTicks((int)TenTicks.Ticks); // exact duration of effect, avoids hardcoded values I guess
+        // exact duration of effect, avoids hardcoded values I guess
+        await Pair.RunUntilSynced();
+        await Pair.RunTicksSync(Ten);
 
         using (Assert.EnterMultipleScope())
         {
@@ -202,7 +222,8 @@ public sealed class StatusEffectNewTest : InteractionTest
 
         Assume.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.True, "Status effect A was not found on the player (can't really test removing time from it if it's not present...)");
         Assert.That(_sStatusSystem.TryRemoveTime(SPlayer, StatusA,  null), Is.True, "TryRemoveTime with param of null did not return true");
-        await Server.WaitRunTicks(1); // status effect removal is queued to next tick.
+        await Pair.RunUntilSynced();
+        await Pair.RunTicksSync(1); // status effect removal is queued to next tick.
         Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA),  Is.False, "TryRemoveTime set to null did not remove the status effect (TryRemoveTime is supposed to remove status effect if null is given)");
     }
     
