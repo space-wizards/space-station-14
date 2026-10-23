@@ -1,3 +1,5 @@
+using Content.Shared.Wires;
+
 namespace Content.Server.Wires;
 
 /// <summary>
