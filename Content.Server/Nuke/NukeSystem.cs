@@ -2,8 +2,9 @@ using Content.Server.Chat.Systems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
-using Content.Shared.AlertLevel;
+using Content.Server.StationEvents.Components;
 using Content.Shared.Audio;
+using Content.Shared.AlertLevel;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
@@ -144,6 +145,17 @@ public sealed partial class NukeSystem : EntitySystem
     private void OnRemove(EntityUid uid, NukeComponent component, ComponentRemove args)
     {
         _itemSlots.RemoveItemSlot(uid, component.DiskSlot);
+
+        var query = EntityQueryEnumerator<SuddenNukeArmRuleComponent>();
+
+        while (query.MoveNext(out _, out var suddenNukeArmRuleComponent))
+        {
+            if (suddenNukeArmRuleComponent.PickedNuke == uid)
+            {
+                suddenNukeArmRuleComponent.PickedNuke = null;
+                break;
+            }
+        }
     }
 
     private void OnItemSlotChanged(EntityUid uid, NukeComponent component, ContainerModifiedMessage args)
@@ -291,7 +303,7 @@ public sealed partial class NukeSystem : EntitySystem
 
         DisarmBomb(uid, component);
 
-        var ev = new NukeDisarmSuccessEvent();
+        var ev = new NukeDisarmSuccessEvent(uid);
         RaiseLocalEvent(ev);
 
         args.Handled = true;
@@ -386,8 +398,11 @@ public sealed partial class NukeSystem : EntitySystem
                 // do nothing, wait for arm button to be pressed
                 break;
             case NukeStatus.ARMED:
-                // handling case of wizard recalling disk out of armed Nuke
-                if (!component.DiskSlot.HasItem)
+                if (component.DiskSlot.HasItem)
+                {
+                    _itemSlots.SetLock(uid, component.DiskSlot, true);
+                }
+                else // handling case of wizard recalling disk out of armed Nuke
                 {
                     DisarmBomb(uid, component);
                 }
@@ -513,7 +528,11 @@ public sealed partial class NukeSystem : EntitySystem
         // enable the navmap beacon for people to find it
         _navMap.SetBeaconEnabled(uid, true);
 
-        _itemSlots.SetLock(uid, component.DiskSlot, true);
+        if (component.DiskSlot.HasItem)
+        {
+            _itemSlots.SetLock(uid, component.DiskSlot, true);
+        }
+
         if (!nukeXform.Anchored)
         {
             // Admin command shenanigans, just make sure.
@@ -607,6 +626,7 @@ public sealed partial class NukeSystem : EntitySystem
         RaiseLocalEvent(new NukeExplodedEvent()
         {
             OwningStation = transform.GridUid,
+            ExplodedNuke = uid,
         });
 
         _sound.StopStationEventMusic(uid, StationEventMusicType.Nuke);
@@ -679,14 +699,15 @@ public sealed partial class NukeSystem : EntitySystem
 public sealed class NukeExplodedEvent : EntityEventArgs
 {
     public EntityUid? OwningStation;
+    public EntityUid ExplodedNuke;
 }
 
 /// <summary>
 ///     Raised directed on the nuke when its disarm doafter is successful.
 ///     So the game knows not to end.
 /// </summary>
-public sealed class NukeDisarmSuccessEvent : EntityEventArgs
+public sealed class NukeDisarmSuccessEvent(EntityUid disarmedNuke) : EntityEventArgs
 {
-
+    public EntityUid DisarmedNuke = disarmedNuke;
 }
 
