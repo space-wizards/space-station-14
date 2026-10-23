@@ -33,14 +33,18 @@ public sealed partial class ChannelFilterPopup : Popup
 
     public event Action<ChatChannel, bool>? OnChannelFilter;
     public event Action<string>? OnNewHighlights;
+    public event Action<string>? OnNewFilters;
 
     public ChannelFilterPopup()
     {
         RobustXamlLoader.Load(this);
 
         HighlightButton.OnPressed += HighlightsEntered;
+        WordFilterButton.OnPressed += WordFiltersEntered;
         // Add a placeholder text to the highlights TextEdit.
         HighlightEdit.Placeholder = new Rope.Leaf(Loc.GetString("hud-chatbox-highlights-placeholder"));
+        // Add a placeholder text to the word filters TextEdit.
+        WordFilterEdit.Placeholder = new Rope.Leaf(Loc.GetString("hud-chatbox-word-filters-placeholder"));
 
         // Load highlights if any were saved.
         var cfg = IoCManager.Resolve<IConfigurationManager>();
@@ -49,6 +53,14 @@ public sealed partial class ChannelFilterPopup : Popup
         if (!string.IsNullOrEmpty(highlights))
         {
             UpdateHighlights(highlights);
+        }
+
+        // Load word filters if any were saved.
+        string wordFilters = cfg.GetCVar(CCVars.ChatWordFilters);
+
+        if (!string.IsNullOrEmpty(wordFilters))
+        {
+            UpdateWordFilters(wordFilters);
         }
     }
 
@@ -114,6 +126,11 @@ public sealed partial class ChannelFilterPopup : Popup
         HighlightEdit.TextRope = new Rope.Leaf(highlights);
     }
 
+    public void UpdateWordFilters(string wordFilters)
+    {
+        WordFilterEdit.TextRope = new Rope.Leaf(wordFilters);
+    }
+
     private void CheckboxPressed(ButtonEventArgs args)
     {
         var checkbox = (ChannelFilterCheckbox) args.Button;
@@ -123,6 +140,11 @@ public sealed partial class ChannelFilterPopup : Popup
     private void HighlightsEntered(ButtonEventArgs _args)
     {
         OnNewHighlights?.Invoke(Rope.Collapse(HighlightEdit.TextRope));
+    }
+
+    private void WordFiltersEntered(ButtonEventArgs _args)
+    {
+        OnNewFilters?.Invoke(Rope.Collapse(WordFilterEdit.TextRope));
     }
 
     public void UpdateUnread(ChatChannel channel, int? unread)
