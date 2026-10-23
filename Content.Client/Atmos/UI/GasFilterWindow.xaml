@@ -9,6 +9,20 @@
             Pressed="True" />
 
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Label Text="{Loc comp-gas-filter-ui-filtered-gas-outlet}"
+                   VerticalAlignment="Center"
+                   HorizontalExpand="True" />
+            <BoxContainer Orientation="Horizontal">
+                <Button Name="SidePortButton"
+                        Text="{Loc comp-gas-filter-ui-filter-side-port}"
+                        StyleClasses="OpenRight" />
+                <Button Name="FrontPortButton"
+                        Text="{Loc comp-gas-filter-ui-filter-front-port}"
+                        StyleClasses="OpenLeft" />
+            </BoxContainer>
+        </BoxContainer>
+
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <Label Text="{Loc comp-gas-filter-ui-filter-transfer-rate}"/>
             <LineEdit Name="FilterTransferRateInput" MinSize="70 0" />
             <Button Name="SetFilterRate" Text="{Loc comp-gas-filter-ui-filter-set-rate}" Disabled="True"/>
