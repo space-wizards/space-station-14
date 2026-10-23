@@ -20,6 +20,9 @@ construction-graph-tag-red-crayon = red crayon
 construction-graph-tag-yellow-crayon = yellow crayon
 construction-graph-tag-black-crayon = black crayon
 
+# engineering
+construction-graph-tag-engi-goggles = engineering goggles
+
 # eva
 construction-graph-tag-eva-suit = an EVA suit
 construction-graph-tag-eva-helmet = an EVA helmet
@@ -27,6 +30,7 @@ construction-graph-tag-eva-helmet = an EVA helmet
 # hud
 construction-graph-tag-security-hud = security hud
 construction-graph-tag-medical-hud = medical hud
+construction-graph-tag-diagnostic-hud = diagnostic hud
 
 # security
 construction-graph-tag-sun-glasses = sun glasses
