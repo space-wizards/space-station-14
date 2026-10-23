@@ -41,6 +41,18 @@ public sealed partial class JukeboxBoundUserInterface : BoundUserInterface
             SendMessage(new JukeboxStopMessage());
         };
 
+        _menu.OnVolumeDownPressed += () =>
+        {
+            SendMessage(new JukeboxVolumeDownMessage());
+            UpdateVolumeDisplay();
+        };
+
+        _menu.OnVolumeUpPressed += () =>
+        {
+            SendMessage(new JukeboxVolumeUpMessage());
+            UpdateVolumeDisplay();
+        };
+
         _menu.OnSongSelected += SelectSong;
 
         _menu.SetTime += SetTime;
@@ -67,6 +79,15 @@ public sealed partial class JukeboxBoundUserInterface : BoundUserInterface
         {
             _menu.SetSelectedSong(string.Empty, 0f);
         }
+        UpdateVolumeDisplay();
+    }
+
+    public void UpdateVolumeDisplay()
+    {
+        if (_menu == null || !EntMan.TryGetComponent<JukeboxComponent>(Owner, out var jukebox))
+            return;
+
+        _menu.SetVolumeDisplay(jukebox.JukeboxVolume, jukebox.JukeboxVolumeMin);
     }
 
     public void PopulateMusic()

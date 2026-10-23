@@ -24,7 +24,8 @@ public sealed partial class JukeboxSystem : SharedJukeboxSystem
         SubscribeLocalEvent<JukeboxComponent, JukeboxSetTimeMessage>(OnJukeboxSetTime);
         SubscribeLocalEvent<JukeboxComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<JukeboxComponent, ComponentShutdown>(OnComponentShutdown);
-
+        SubscribeLocalEvent<JukeboxComponent, JukeboxVolumeDownMessage>(OnJukeboxVolumeDown);
+        SubscribeLocalEvent<JukeboxComponent, JukeboxVolumeUpMessage>(OnJukeboxVolumeUp);
         SubscribeLocalEvent<JukeboxComponent, PowerChangedEvent>(OnPowerChanged);
     }
 
@@ -161,6 +162,7 @@ public sealed partial class JukeboxSystem : SharedJukeboxSystem
             }
 
             ent.Comp.AudioStream = Audio.PlayPvs(jukeboxProto.Path, ent, AudioParams.Default.WithMaxDistance(10f))?.Entity;
+            Audio.SetVolume(ent.Comp.AudioStream, ent.Comp.JukeboxVolume);
             Dirty(ent);
         }
         return true;
@@ -200,5 +202,24 @@ public sealed partial class JukeboxSystem : SharedJukeboxSystem
             return;
 
         Audio.SetPlaybackPosition(entity.Comp.AudioStream, songTime);
+    }
+    private void OnJukeboxVolumeDown(Entity<JukeboxComponent> entity, ref JukeboxVolumeDownMessage args)
+    {
+        if (entity.Comp.JukeboxVolume > entity.Comp.JukeboxVolumeMin)
+        {
+            entity.Comp.JukeboxVolume--;
+            Dirty(entity);
+            Audio.SetVolume(entity.Comp.AudioStream, entity.Comp.JukeboxVolume);
+        }
+    }
+
+    private void OnJukeboxVolumeUp(Entity<JukeboxComponent> entity, ref JukeboxVolumeUpMessage args)
+    {
+        if (entity.Comp.JukeboxVolume < entity.Comp.JukeboxVolumeMax)
+        {
+            entity.Comp.JukeboxVolume++;
+            Dirty(entity);
+            Audio.SetVolume(entity.Comp.AudioStream, entity.Comp.JukeboxVolume);
+        }
     }
 }
