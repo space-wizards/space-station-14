@@ -152,7 +152,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             return newAirBlockedDirs;
-}
+        }
 
         [SubscribeLocalEvent]
         private void OnPowerChanged(Entity<AirtightOnPoweredComponent> ent, ref PowerChangedEvent args)
