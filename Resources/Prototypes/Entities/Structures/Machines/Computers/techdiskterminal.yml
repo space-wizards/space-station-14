@@ -14,9 +14,6 @@
     stateKeys: null
     statePanel: panel
   - type: DiskConsole
-  - type: DeviceLinkSink
-    ports:
-    - PrintDisk
   - type: ResearchClient
   - type: ActivatableUI
     key: enum.DiskConsoleUiKey.Key

@@ -101,6 +101,3 @@ signal-port-description-target-receiver = Receives target information from a tar
 
 signal-port-name-target-source = Target finder
 signal-port-description-target-source = Sends target information to a target receiver.
-
-signal-port-name-print-disk = Print
-signal-port-description-print-disk = Prints a technology disk.

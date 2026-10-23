@@ -1,9 +1,4 @@
 - type: sinkPort
-  id: PrintDisk
-  name: signal-port-name-print-disk
-  description: signal-port-description-print-disk
-
-- type: sinkPort
   id: AutoClose
   name: signal-port-name-hold-open
   description: signal-port-description-hold-open
