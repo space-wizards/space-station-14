@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
-using Content.Shared.Item;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
@@ -17,8 +16,6 @@ public sealed partial class DumpableSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private SharedTransformSystem _transformSystem = default!;
-
-    [Dependency] private EntityQuery<ItemComponent> _itemQuery = default!;
 
     public override void Initialize()
     {
@@ -62,7 +59,7 @@ public sealed partial class DumpableSystem : EntitySystem
         {
             Act = () =>
             {
-                StartDoAfter(uid, args.Target, args.User, dumpable);//Had multiplier of 0.6f
+                StartDoAfter(uid, args.Target, args.User, dumpable);
             },
             Text = Loc.GetString("dump-verb-name"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/drop.svg.192dpi.png")),
@@ -96,27 +93,15 @@ public sealed partial class DumpableSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private void StartDoAfter(EntityUid storageUid, EntityUid targetUid, EntityUid userUid, DumpableComponent dumpable)
+    /// <summary>
+    /// Starts dumping a bag.
+    /// </summary>
+    public void StartDoAfter(EntityUid storageUid, EntityUid targetUid, EntityUid userUid, DumpableComponent dumpable)
     {
-        if (!TryComp<StorageComponent>(storageUid, out var storage))
+        if (!TryComp<StorageComponent>(storageUid, out var storage) || storage.Container.ContainedEntities.Count == 0)
             return;
 
-        var delay = 0f;
-
-        foreach (var entity in storage.Container.ContainedEntities)
-        {
-            if (!_itemQuery.TryGetComponent(entity, out var itemComp) ||
-                !ProtoMan.Resolve(itemComp.Size, out var itemSize))
-            {
-                continue;
-            }
-
-            delay += itemSize.Weight;
-        }
-
-        delay *= (float)dumpable.DelayPerItem.TotalSeconds * dumpable.Multiplier;
-
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, userUid, delay, new DumpableDoAfterEvent(), storageUid, target: targetUid, used: storageUid)
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, userUid, dumpable.DumpDelay, new DumpableDoAfterEvent(), storageUid, target: targetUid, used: storageUid)
         {
             BreakOnMove = true,
             NeedHand = true,
