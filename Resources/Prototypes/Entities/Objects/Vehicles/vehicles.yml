@@ -153,6 +153,7 @@
     slots:
       key_slot:
         name: vehicle-slot-component-slot-name-keys
+        ejectDelay: 1
         whitelist:
           tags:
           - JanicartKeys
