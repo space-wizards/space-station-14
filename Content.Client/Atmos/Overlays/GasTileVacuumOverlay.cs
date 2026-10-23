@@ -61,7 +61,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         _shader = _proto.Index(VacuumOverlayShader).InstanceUnique();
         _configManager.OnValueChanged(CCVars.VacuumOverlayIntensity, SetVacuumOverlayIntensity, invokeImmediately: true);
 
-        _shader.SetParameter("tint_modifier", new Vector3(0f, 0f, 1.0f));  // is blue 🙂
+        _shader.SetParameter("tint_modifier", new Vector3(0f, 0f, 1.0f));
     }
 
     private void SetVacuumOverlayIntensity(float intensity)
