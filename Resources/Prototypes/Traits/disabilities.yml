@@ -118,3 +118,13 @@
   - !type:ApplyStatusEffectSpecial
     statusEffects:
     - TraitStatusEffectBlinkDyspraxia
+
+- type: trait
+  id: Unblinking
+  name: trait-unblinking-name
+  description: trait-unblinking-desc
+  category: Disabilities
+  specials:
+  - !type:ApplyStatusEffectSpecial
+    statusEffects:
+    - TraitStatusEffectUnblinking
