@@ -86,4 +86,11 @@
   graph: FoodBoxPizza
   startNode: start
   targetNode: foodboxpizza
+
+- type: construction
+  parent: BaseBox
+  id: Barrel
+  graph: Barrel
+  startNode: start
+  targetNode: barrel
 # endregion Boxes
