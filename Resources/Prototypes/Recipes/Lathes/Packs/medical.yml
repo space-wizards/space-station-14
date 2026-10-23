@@ -103,6 +103,7 @@
   - LauncherSyringe
   - MiniSyringe
   - AdvancedJetInjector
+  - DefibrillatorCompact
 
 - type: latheRecipePack
   id: MedicalBoards

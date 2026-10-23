@@ -155,6 +155,7 @@
   recipeUnlocks:
   - BorgModuleAdvancedTopical
   - AdvancedJetInjector
+  - DefibrillatorCompact
 
 - type: technology
   id: AdvancedCleaning
