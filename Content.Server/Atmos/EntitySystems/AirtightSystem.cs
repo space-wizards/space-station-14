@@ -15,6 +15,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private ExplosionSystem _explosionSystem = default!;
         [Dependency] private SharedMapSystem _mapSystem = default!;
         [Dependency] private AirtightSystem _airtightSystem = default!;
+
         [Dependency] private EntityQuery<AirtightComponent> _airtightQuery;
 
         public override void Initialize()
