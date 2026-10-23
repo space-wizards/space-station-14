@@ -124,7 +124,7 @@ public sealed partial class CargoSystem
     }
 
     /// <summary>
-    /// Is the given pallet free of dynamic entities
+    /// Checks whether the given pallet intersects any dynamic entities.
     /// </summary>
     /// <param name="pallet"> The pallet to check. </param>
     /// <returns> <c>true</c> if the pallet has dynamic entities on it; otherwise <c>false</c>. </returns>
@@ -143,7 +143,7 @@ public sealed partial class CargoSystem
     /// </summary>
     /// <param name="gridUid">The grid to search.</param>
     /// <param name="requestType">Which pallet types to include. Defaults to <see cref="BuySellType.Sell"/>.</param>
-    /// <param name="pallets"> Specific pallets to check. If set then <see cref="requestType"/> is ignored.
+    /// <param name="pallets"> Specific pallets to check, filtered by <paramref name="requestType"/>.
     /// All the pallets must be anchored to <see cref="gridUid"/> otherwise they are skipped. </param>
     /// <returns>Distinct set of entity UIDs found on pallets.</returns>
     public IEnumerable<EntityUid> GetEntitiesOnCargoPallets(
@@ -175,26 +175,23 @@ public sealed partial class CargoSystem
     /// Sells all goods and adds the money to the stations bank account.
     /// Deletes the entity after sale and raises <see cref="EntitySoldEvent"/>.
     /// The money will be split based on the account distribution unless sold in a lock box,
-    /// Then it will split between the lock box department and cargo based on the <see cref="LockboxCut"/>.
+    /// Then it will split between the lock box department and cargo based on the <see cref="StationBankAccountComponent.LockboxCut"/>.
     /// Does not check if an entity is valid to sell.
     /// </summary>
     /// <param name="station"> Station which will receive the money from the sale. </param>
     /// <param name="goods"> The list of goods to be sold. </param>
     public bool SellGoods(
         Entity<StationBankAccountComponent> station,
-        HashSet<(EntityUid ent, OverrideSellComponent? overrideSellComponent, double price)> goods
+        IReadOnlyCollection<(EntityUid ent, OverrideSellComponent? overrideSellComponent, double price)> goods
     )
     {
         if (goods.Count == 0)
             return false;
 
         var baseDistribution = CreateAccountDistribution(station);
-
-        Dictionary<ProtoId<CargoAccountPrototype>, double> distribution;
-
         foreach (var (ent, sellComponent, price) in goods)
         {
-            distribution = baseDistribution;
+            var distribution = baseDistribution;
             if (sellComponent != null)
             {
                 var cut = _lockboxCutEnabled ? station.Comp.LockboxCut : station.Comp.PrimaryCut;
