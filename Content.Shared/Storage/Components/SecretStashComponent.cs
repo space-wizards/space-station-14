@@ -24,7 +24,7 @@ namespace Content.Shared.Storage.Components
     {
         /// <summary>
         ///     Max item size that can be inserted into secret stash.
-        ///     If null, uses one size smaller than the stash's <see cref="ItemComponent"/> size.
+        ///     If null, uses the stash's <see cref="ItemComponent"/> size.
         /// </summary>
         [DataField]
         public ProtoId<ItemSizePrototype>? MaxItemSize;
@@ -63,7 +63,7 @@ namespace Content.Shared.Storage.Components
         public string? SecretStashName;
 
         /// <summary>
-        /// How much damage is delt to something after eating a secret stash that contains an item.
+        /// How much damage is dealt to something after eating a secret stash that contains an item.
         /// </summary>
         [DataField]
         public DamageSpecifier? DamageEatenItemInside;
