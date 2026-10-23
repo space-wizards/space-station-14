@@ -76,7 +76,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
             // The gas recycler is a passive device, so it permits gas flow even if nothing is being reacted.
             comp.Reacting = inlet.Air.Temperature >= comp.MinTemp && inlet.Air.Pressure >= comp.MinPressure;
-            var removed = inlet.Air.RemoveVolume(PassiveTransferVol(inlet.Air, outlet.Air));
+            var ratioToEqualize = inlet.Air.Pressure > outlet.Air.Pressure ? _atmosphereSystem.FractionToEqualizePressure(inlet.Air, outlet.Air) : 0;
+            var removed = inlet.Air.RemoveRatio(ratioToEqualize);
             if (comp.Reacting)
             {
                 var nCO2 = removed.GetMoles(Gas.CarbonDioxide);
@@ -90,17 +91,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             _atmosphereSystem.Merge(outlet.Air, removed);
             UpdateAppearance(ent, comp);
             _ambientSoundSystem.SetAmbience(ent, true);
-        }
-
-        public float PassiveTransferVol(GasMixture inlet, GasMixture outlet)
-        {
-            if (inlet.Pressure < outlet.Pressure)
-            {
-                return 0;
-            }
-            float overPressConst = 300; // pressure difference (in atm) to get 200 L/sec transfer rate
-            float alpha = Atmospherics.MaxTransferRate * _atmosphereSystem.PumpSpeedup() / (float)Math.Sqrt(overPressConst*Atmospherics.OneAtmosphere);
-            return alpha * (float)Math.Sqrt(inlet.Pressure - outlet.Pressure);
         }
 
         private void OnDisabled(EntityUid uid, GasRecyclerComponent comp, ref AtmosDeviceDisabledEvent args)
