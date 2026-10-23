@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 09/22/2026 18:29:32
-  entityCount: 23929
+  entityCount: 23928
 maps:
 - 5350
 grids:
@@ -60336,14 +60336,6 @@ entities:
       parent: 30
       rot: -1.5707963267948966 rad
       pos: -16.5,-1.5
-- proto: ComputerTechnologyDiskTerminal
-  entities:
-  - uid: 17885
-    components:
-    - type: Transform
-      parent: 30
-      rot: 3.141592653589793 rad
-      pos: 20.5,10.5
 - proto: ComputerTelevision
   entities:
   - uid: 1431

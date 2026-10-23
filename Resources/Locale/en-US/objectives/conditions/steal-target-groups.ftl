@@ -21,7 +21,6 @@ steal-target-groups-heads-hardsuits = head's hardsuit
 steal-target-groups-stamps = stamp
 steal-target-groups-door-remotes = door remote
 steal-target-groups-encryption-keys = encryption key
-steal-target-groups-technology-disks = technology disk
 steal-target-groups-mail = mail
 steal-target-groups-id-cards = ID Card
 steal-target-groups-officer-handguns = security officer's handgun

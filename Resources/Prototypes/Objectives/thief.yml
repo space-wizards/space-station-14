@@ -109,20 +109,6 @@
 
 - type: entity
   parent: BaseThiefStealCollectionObjective
-  id: TechnologyDiskStealCollectionObjective
-  components:
-  - type: NotJobRequirement
-    jobs: [ Scientist ]
-  - type: StealCondition
-    stealGroup: TechnologyDisk
-    minCollectionSize: 5
-    maxCollectionSize: 15
-    verifyMapExistence: false
-  - type: Objective
-    difficulty: 0.8
-
-- type: entity
-  parent: BaseThiefStealCollectionObjective
   id: MailStealCollectionObjective
   components:
   - type: NotJobRequirement
