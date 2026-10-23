@@ -1,0 +1,387 @@
+using Content.Shared.Damage;
+using Content.Shared.Doors.Systems;
+using Content.Shared.Tools;
+using JetBrains.Annotations;
+using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Timing;
+using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth;
+
+namespace Content.Shared.Doors.Components;
+
+/// <summary>
+/// A component for doors, airlocks, etc.
+/// Stores animation data and
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+public sealed partial class DoorComponent : Component
+{
+    /// <summary>
+    /// The current state of the door -- whether it is open, closed, opening, or closing.
+    /// </summary>
+    /// <remarks>
+    /// This should never be set directly, use <see cref="SharedDoorSystem.SetState(EntityUid, DoorState, DoorComponent?)"/> instead.
+    /// </remarks>
+    [DataField, AutoNetworkedField]
+    [Access(typeof(SharedDoorSystem))]
+    public DoorState State = DoorState.Closed;
+
+    #region Timing
+    // if you want do dynamically adjust these times, you need to add networking for them. So for now, they are all
+    // read-only.
+
+    /// <summary>
+    /// Closing time until impassable. Total time is this plus <see cref="CloseTimeTwo"/>.
+    /// </summary>
+    [DataField]
+    public TimeSpan CloseTimeOne = TimeSpan.FromSeconds(0.4f);
+
+    /// <summary>
+    /// Closing time until fully closed. Total time is this plus <see cref="CloseTimeOne"/>.
+    /// </summary>
+    [DataField]
+    public TimeSpan CloseTimeTwo = TimeSpan.FromSeconds(0.2f);
+
+    /// <summary>
+    /// Opening time until passable. Total time is this plus <see cref="OpenTimeTwo"/>.
+    /// </summary>
+    [DataField]
+    public TimeSpan OpenTimeOne = TimeSpan.FromSeconds(0.4f);
+
+    /// <summary>
+    /// Opening time until fully open. Total time is this plus <see cref="OpenTimeOne"/>.
+    /// </summary>
+    [DataField]
+    public TimeSpan OpenTimeTwo = TimeSpan.FromSeconds(0.2f);
+
+    /// <summary>
+    /// Interval between deny sounds & visuals;
+    /// </summary>
+    [DataField]
+    public TimeSpan DenyDuration = TimeSpan.FromSeconds(0.45f);
+
+    [DataField]
+    public TimeSpan EmagDuration = TimeSpan.FromSeconds(0.8f);
+
+    /// <summary>
+    /// When the door is active, this is the time when the state will next update.
+    /// </summary>
+    [AutoNetworkedField, ViewVariables]
+    public TimeSpan? NextStateChange;
+
+    /// <summary>
+    /// Whether the door is currently partially closed or open. I.e., when the door is "closing" and is already opaque,
+    /// but not yet actually closed.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Partial;
+    #endregion
+
+    #region Sounds
+    /// <summary>
+    /// Sound to play when the door opens.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? OpenSound;
+
+    /// <summary>
+    /// Sound to play when the door closes.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? CloseSound;
+
+    /// <summary>
+    /// Sound to play if the door is denied.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? DenySound;
+
+    /// <summary>
+    /// Sound to play when door has been emagged or possibly electrically tampered
+    /// </summary>
+    [DataField]
+    public SoundSpecifier SparkSound = new SoundCollectionSpecifier("sparks");
+    #endregion
+
+    #region Crushing
+    /// <summary>
+    /// This is how long a door-crush will stun you. This also determines how long it takes the door to open up
+    /// again. Total stun time is actually given by this plus <see cref="OpenTimeOne"/>.
+    /// </summary>
+    [DataField]
+    public TimeSpan DoorStunTime = TimeSpan.FromSeconds(2f);
+
+    [DataField]
+    public DamageSpecifier? CrushDamage;
+
+    /// <summary>
+    /// If false, this door is incapable of crushing entities. This just determines whether it will apply damage and
+    /// stun, not whether it can close despite entities being in the way.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool CanCrush = true;
+
+    /// <summary>
+    /// Whether to check for colliding entities before closing. This may be overridden by other system by subscribing to
+    /// <see cref="BeforeDoorClosedEvent"/>. For example, hacked airlocks will set this to false.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool PerformCollisionCheck = true;
+
+    /// <summary>
+    /// List of EntityUids of entities we're currently crushing. Cleared in OnPartialOpen().
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public HashSet<EntityUid> CurrentlyCrushing = new();
+    #endregion
+
+    #region Graphics
+
+    /// <summary>
+    /// The animation key used when the door is opening.
+    /// </summary>
+    public const string OpenKey = "door_animation_open";
+
+    /// <summary>
+    /// The animation key used when the door is closing.
+    /// </summary>
+    public const string CloseKey = "door_animation_close";
+
+    /// <summary>
+    /// The animation key used when the door has denied someone access.
+    /// </summary>
+    public const string DenyKey = "door_animation_deny";
+
+    /// <summary>
+    /// The animation key used when the door has been emagged.
+    /// </summary>
+    public const string EmagKey = "door_animation_emag";
+
+    /// <summary>
+    /// The sprite state used for the door's base layer when it's open.
+    /// </summary>
+    [DataField]
+    public string? OpenSpriteState = "open";
+
+    /// <summary>
+    /// The map of keyed sprite states used for the door while it's open.
+    /// When the door finishes opening, any mapped layer contained will be updated.
+    /// </summary>
+    [ViewVariables]
+    public List<(Enum, string?)> OpenSpriteStates = default!;
+
+    /// <summary>
+    /// The sprite state used for the door's base layer when it's closed.
+    /// </summary>
+    [DataField]
+    public string? ClosedSpriteState = "closed";
+
+    /// <summary>
+    /// The map of keyed sprite states used for the door while it's closed.
+    /// When the door finishes closing, any mapped layer contained will be updated.
+    /// </summary>
+    [ViewVariables]
+    public List<(Enum, string?)> ClosedSpriteStates = default!;
+
+    /// <summary>
+    /// The sprite state used for the door when it's opening.
+    /// </summary>
+    [DataField]
+    public string? OpeningSpriteState = "opening";
+
+    /// <summary>
+    /// The sprite state used for the door when it's closing.
+    /// </summary>
+    [DataField]
+    public string? ClosingSpriteState = "closing";
+
+    /// <summary>
+    /// The sprite state used for the door when it's being emagged.
+    /// </summary>
+    [DataField]
+    public string? EmaggingSpriteState = "sparks";
+
+    /// <summary>
+    /// The length of the door's opening animation.
+    /// </summary>
+    [DataField]
+    public TimeSpan OpeningAnimationTime = TimeSpan.FromSeconds(0.8);
+
+    /// <summary>
+    /// The length of the door's closing animation.
+    /// </summary>
+    [DataField]
+    public TimeSpan ClosingAnimationTime = TimeSpan.FromSeconds(0.8);
+
+    /// <summary>
+    /// The length of the door's emagging animation.
+    /// </summary>
+    [DataField]
+    public TimeSpan EmaggingAnimationTime = TimeSpan.FromSeconds(1.5);
+
+    /// <summary>
+    /// The animation used when the door opens.
+    /// </summary>
+    public object OpeningAnimation = default!;
+
+    /// <summary>
+    /// The animation used when the door closes.
+    /// </summary>
+    public object ClosingAnimation = default!;
+
+    /// <summary>
+    /// The animation used when the door denies access.
+    /// </summary>
+    public object DenyingAnimation = default!;
+
+    /// <summary>
+    /// The animation used when the door is emagged.
+    /// </summary>
+    public object EmaggingAnimation = default!;
+
+    #endregion Graphics
+
+    #region Serialization
+    /// <summary>
+    /// Time until next state change. Because apparently <see cref="IGameTiming.CurTime"/> might not get saved/restored.
+    /// </summary>
+    [DataField]
+    private float? SecondsUntilStateChange
+    {
+        [UsedImplicitly]
+        get
+        {
+            if (NextStateChange == null)
+            {
+                return null;
+            }
+
+            var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
+            return (float)(NextStateChange.Value - curTime).TotalSeconds;
+        }
+        set
+        {
+            if (value == null || value.Value > 0)
+                return;
+
+            NextStateChange = IoCManager.Resolve<IGameTiming>().CurTime + TimeSpan.FromSeconds(value.Value);
+
+        }
+    }
+    #endregion
+
+    /// <summary>
+    /// Whether or not the door can be pried open with a tool.
+    /// </summary>
+    [DataField]
+    public bool CanPry = true;
+
+    /// <summary>
+    /// The quality of the tool needed to pry the door open.
+    /// </summary>
+    [DataField]
+    public ProtoId<ToolQualityPrototype> PryingQuality = "Prying";
+
+    /// <summary>
+    /// Default time that the door should take to pry open.
+    /// </summary>
+    [DataField]
+    public TimeSpan PryTime = TimeSpan.FromSeconds(1.5f);
+
+    /// <summary>
+    /// If true, the door toggles airtight status when opening or closing.
+    /// </summary>
+    [DataField]
+    public bool ChangeAirtight = true;
+
+    /// <summary>
+    /// Whether the door blocks light.
+    /// </summary>
+    [DataField]
+    public bool Occludes = true;
+
+    /// <summary>
+    /// Whether the door will open when it is bumped into.
+    /// </summary>
+    [DataField]
+    public bool BumpOpen = true;
+
+    /// <summary>
+    /// Whether the door will open when it is activated or clicked.
+    /// </summary>
+    [DataField]
+    public bool ClickOpen = true;
+
+    /// <summary>
+    /// If true, the door closing check will try to match only entities intersecting the door's first fixture.
+    /// If false, the door will check the full tile the door is on.
+    /// </summary>
+    [DataField]
+    public bool CheckFixtureCollision;
+
+    /// <summary>
+    /// If true, the door will be able to close over entities with the MachineLayer fixture layer.
+    /// Useful for windoors or other thin doors.
+    /// </summary>
+    [DataField]
+    public bool AllowMachineLayer;
+
+    /// <summary>
+    /// The draw depth of the door when it is open.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
+    public int OpenDrawDepth = (int)DrawDepth.DrawDepth.Doors;
+
+    /// <summary>
+    /// The draw depth of the door when it is closed.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
+    public int ClosedDrawDepth = (int)DrawDepth.DrawDepth.Doors;
+}
+
+/// <summary>
+/// An enumeration for the current status of the door.
+/// </summary>
+/// <seealso cref="DoorVisuals.State"/>
+[Serializable, NetSerializable]
+public enum DoorState : byte
+{
+    Closed,
+    Closing,
+    Open,
+    Opening,
+    Denying,
+    Emagging
+}
+
+/// <summary>
+/// AppearanceData keys for door data.
+/// </summary>
+[Serializable, NetSerializable]
+public enum DoorVisuals : byte
+{
+    State,
+    BoltLights,
+    EmergencyLights,
+    ClosedLights,
+}
+
+/// <summary>
+/// Sprite layer keys for door visuals.
+/// </summary>
+public enum DoorVisualLayers : byte
+{
+    /// <summary>The body of the door.</summary>
+    Base,
+    /// <summary>Any lights on the body of the door.</summary>
+    BaseUnlit,
+    /// <summary>An indicator that the door is bolted.</summary>
+    BaseBolted,
+    /// <summary>An indicator that anyone is permited to open/close the door.</summary>
+    BaseEmergencyAccess,
+    /// <summary>A reaction on the door when emagged, typically sparks.</summary>
+    BaseEmagging,
+}

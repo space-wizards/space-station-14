@@ -1,0 +1,10 @@
+using Content.Shared.Popups;
+
+namespace Content.Shared.Actions.Events;
+
+/// <summary>
+/// Raised before an action is used and can be cancelled to prevent it.
+/// Allowed to have side effects like modifying the action components.
+/// </summary>
+[ByRefEvent]
+public record struct ActionAttemptEvent(EntityUid User, EntityUid? Target, bool Cancelled = false, string? Reason = null, PopupType Type = PopupType.SmallCaution);
