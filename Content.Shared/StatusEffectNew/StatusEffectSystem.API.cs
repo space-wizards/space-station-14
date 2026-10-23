@@ -354,7 +354,7 @@ public sealed partial class StatusEffectsSystem
             {
                 if (duration is null)
                 {
-                    SetStatusEffectEndTime(effect, duration);
+                    SetStatusEffectEndTime(effect, null);
                     return true;
                 }
                 if (!_effectQuery.TryComp(effect, out var effectComp))
