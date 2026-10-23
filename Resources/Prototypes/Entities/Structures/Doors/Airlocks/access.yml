@@ -1,6 +1,10 @@
-# suffix info:
-# 1. What this door is for ( department, sub-department ) ( There are some exeptions (maybe) )
-# 2. Is it locked? If it is the same as the name, leave blank, otherwise type in the access ( Locked Medical-Detective-Chaplin )
+## Suffix formatting ##
+# [ 1, 2-3 , 4 5 ]
+# 1. Custom - maps specific or special information - ex. ( 3x4, Exo )
+# 2. Group - what group of doors does it fall in to - not always laybaled to not clutter - ex. ( Medical )
+# 3. What the door is for, what department is it for, if specified in name, leave blank - ex. ( Mourge )
+# 4. Is it locked or not - ex. ( Locked )
+# 5. If it is locked, what access can unlock it, if it is the same as the 3, leave blank - ex. ( Medical-Detective-Chaplin )
 
 # Airlocks
 - type: entity
@@ -33,7 +37,7 @@
 - type: entity
   parent: AirlockServiceLocked
   id: AirlockServiceTheatreLocked
-  suffix: Theatre, Locked Service-Theatre
+  suffix: Theatre, Locked Theatre-Service
   components:
   - type: ContainerFill
     containers:
@@ -96,7 +100,7 @@
 - type: entity
   parent: AirlockExternal
   id: AirlockExternalLocked
-  suffix: Locked External
+  suffix: Locked
   components:
   - type: ContainerFill
     containers:
@@ -182,7 +186,7 @@
 - type: entity
   parent: AirlockFreezer
   id: AirlockFreezerLocked
-  suffix: Freezer, Locked Kitchen
+  suffix: Kitchen-Freezer, Locked
   components:
   - type: ContainerFill
     containers:
@@ -191,7 +195,7 @@
 - type: entity
   parent: AirlockFreezer
   id: AirlockFreezerKitchenHydroLocked
-  suffix: Freezer, Locked Kitchen-Hydroponics
+  suffix: Kitchen-Hydroponics-Freezer, Locked
   components:
   - type: ContainerFill
     containers:
@@ -200,7 +204,7 @@
 - type: entity
   parent: AirlockFreezer
   id: AirlockFreezerHydroponicsLocked
-  suffix: Freezer, Locked Hydroponics
+  suffix: Hydroponics-Freezer, Locked
   components:
   - type: ContainerFill
     containers:
@@ -281,7 +285,7 @@
 - type: entity
   parent: AirlockMedical
   id: AirlockMedicalMorgueLocked
-  suffix: Medical-Morgue, Locked Medical-Detective-Chapel
+  suffix: Medical-Morgue, Locked Medical-Detective-Chapel # group suffix, to not forget to put morgue door instead of normal med door
   components:
   - type: ContainerFill
     containers:
@@ -299,7 +303,7 @@
 - type: entity
   parent: AirlockScience
   id: AirlockMedicalScienceLocked
-  suffix: Science-Medical, Locked
+  suffix: Science-Medical, Locked # uses sci door sprite
   components:
   - type: ContainerFill
     containers:
@@ -398,7 +402,7 @@
 - type: entity
   parent: AirlockSecurity
   id: AirlockDetectiveLocked
-  suffix: Detective, Locked
+  suffix: Detective, Locked # only detective, no sec access
   components:
   - type: ContainerFill
     containers:
@@ -407,7 +411,7 @@
 - type: entity
   parent: AirlockSecurity
   id: AirlockBrigLocked
-  suffix: Security-Brig, Locked Brig # maybe only Brig? but it is still security, searching for it people might miss it? idk
+  suffix: Security-Brig, Locked Brig # sec group
   components:
   - type: ContainerFill
     containers:
@@ -416,7 +420,7 @@
 - type: entity
   parent: AirlockSecurity
   id: AirlockSecurityLawyerLocked
-  suffix: Security-Lawyer, Locked
+  suffix: Security-Lawyer, Locked # sec group
   components:
   - type: ContainerFill
     containers:
@@ -425,7 +429,7 @@
 - type: entity
   parent: AirlockSecurity
   id: AirlockArmoryLocked
-  suffix: Security-Armory, Locked Armory # same as brig
+  suffix: Security-Armory, Locked Armory # sec group
   components:
   - type: ContainerFill
     containers:
@@ -436,7 +440,7 @@
 - type: entity
   parent: AirlockSecurity
   id: AirlockVaultLocked
-  suffix: Security-Vault, Locked Security-Command
+  suffix: Security-Vault, Locked Security-Command # sec group
   components:
   - type: ContainerFill
     containers:
@@ -466,7 +470,7 @@
 - type: entity
   parent: AirlockServiceGlassLocked
   id: AirlockLawyerGlassLocked
-  suffix: Lawyer, Locked
+  suffix: Lawyer, Locked # only detective, no sec access
   components:
   - type: ContainerFill
     containers:
@@ -512,7 +516,7 @@
 - type: entity
   parent: AirlockExternalGlass
   id: AirlockExternalGlassLocked
-  suffix: Locked External
+  suffix: Locked
   components:
   - type: ContainerFill
     containers:
@@ -666,7 +670,7 @@
 - type: entity
   parent: AirlockMedicalGlass
   id: AirlockMedicalMorgueGlassLocked
-  suffix: Medical-Morgue, Locked Medical-Detective-Chapel
+  suffix: Medical-Morgue, Locked Medical-Detective-Chapel # med group
   components:
   - type: ContainerFill
     containers:
@@ -702,7 +706,7 @@
 - type: entity
   parent: AirlockScienceGlass
   id: AirlockMedicalScienceGlassLocked
-  suffix: Science-Medical, Locked
+  suffix: Science-Medical, Locked # uses sci door sprite
   components:
   - type: ContainerFill
     containers:
@@ -1055,7 +1059,7 @@
 - type: entity
   parent: [AirlockMaintSprite, AirlockEVALocked]
   id: AirlockMaintEVALocked
-  suffix: EVA, Locked External-Command
+  suffix: EVA-Maint, Locked External-Command
 # Maints end
 
 - type: entity
