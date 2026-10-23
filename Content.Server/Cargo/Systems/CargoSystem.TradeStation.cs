@@ -33,6 +33,7 @@ public sealed partial class CargoSystem
             _uiSystem.SetUiState(uid, CargoPalletConsoleUiKey.Sale, new CargoPalletConsoleInterfaceState(0, 0, false));
             return;
         }
+
         var goods = GetPalletGoods(gridUid);
         var totalAmount = (int)goods.Sum(t => t.price);
         _uiSystem.SetUiState(
@@ -92,6 +93,7 @@ public sealed partial class CargoSystem
         {
             if ((requestType & comp.PalletType) == 0 || !compXform.Anchored || compXform.ParentUid != gridUid)
                 continue;
+
             yield return ((uid, comp), compXform);
         }
     }
@@ -288,13 +290,9 @@ public sealed partial class CargoSystem
     {
         var xform = Transform(ent.Owner);
 
-        if (
-            _station.GetOwningStation(ent.Owner) is not { } station
-            || !_bankQuery.TryComp(station, out var bankAccount)
-        )
-        {
+        if (_station.GetOwningStation(ent.Owner) is not { } station
+            || !_bankQuery.TryComp(station, out var bankAccount))
             return;
-        }
 
         if (xform.GridUid is not { } gridUid)
         {
