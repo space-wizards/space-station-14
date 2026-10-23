@@ -4,7 +4,6 @@ using Content.Shared.Inventory;
 using Content.Shared.Interaction;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
-using Content.Shared.Whitelist;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
@@ -18,9 +17,7 @@ public sealed partial class MagnetPickupSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private InventorySystem _inventory = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedStorageSystem _storage = default!;
-    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
 
@@ -107,8 +104,6 @@ public sealed partial class MagnetPickupSystem : EntitySystem
                 continue;
 
             var playedSound = false;
-            var finalCoords = xform.Coordinates;
-            var moverCoords = _transform.GetMoverCoordinates(uid, xform);
             _nearby.Clear();
             _nearby.AddRange(_lookup.GetEntitiesInRange(uid, comp.Range, LookupFlags.Dynamic | LookupFlags.Sundries));
             _nearby.Sort((a, b) => GetNetEntity(a).CompareTo(GetNetEntity(b)));
@@ -118,43 +113,16 @@ public sealed partial class MagnetPickupSystem : EntitySystem
                 if (TerminatingOrDeleted(near) || EntityManager.IsQueuedForDeletion(near))
                     continue;
 
-                if (storage != null && _whitelistSystem.IsWhitelistFail(storage.Whitelist, near))
-                    continue;
-
                 if (!_physicsQuery.TryGetComponent(near, out var physics) || physics.BodyStatus != BodyStatus.OnGround)
                     continue;
 
                 if (near == uid || near == parentUid)
                     continue;
 
-                if (storage == null)
-                {
-                    if (!_interaction.InRangeUnobstructed(uid, near, comp.Range))
-                        continue;
 
-                    var ev = new MagnetPickupAttemptEvent(near);
-                    RaiseLocalEvent(uid, ref ev);
-                    continue;
-                }
-
-                // TODO: Probably move this to storage somewhere when it gets cleaned up
-                // TODO: This sucks but you need to fix a lot of stuff to make it better
-                // the problem is that stack pickups delete the original entity, which is fine, but due to
-                // game state handling we can't show a lerp animation for it.
-                var nearXform = Transform(near);
-                var nearMap = _transform.GetMapCoordinates(near, xform: nearXform);
-                var nearCoords = _transform.ToCoordinates(moverCoords.EntityId, nearMap);
-
-                if (!_storage.Insert(uid, near, out var stacked, user: parentUid, storageComp: storage, playSound: !playedSound))
-                    continue;
-
-                // Play pickup animation for either the stack entity or the original entity.
-                if (stacked != null)
-                    _storage.PlayPickupAnimation(stacked.Value, nearCoords, finalCoords, nearXform.LocalRotation, parentUid);
-                else
-                    _storage.PlayPickupAnimation(near, nearCoords, finalCoords, nearXform.LocalRotation, parentUid);
-
-                playedSound = true;
+                var ev = new MagnetPickupAttemptEvent(near, !playedSound);
+                RaiseLocalEvent(uid, ref ev);
+                playedSound |= ev.Handled;
             }
         }
     }

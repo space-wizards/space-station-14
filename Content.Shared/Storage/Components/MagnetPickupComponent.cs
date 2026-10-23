@@ -45,4 +45,7 @@ public sealed partial class MagnetPickupComponent : Component
 /// Raised on a magnet to insert a nearby item
 /// </summary>
 [ByRefEvent]
-public readonly record struct MagnetPickupAttemptEvent(EntityUid Item);
+public record struct MagnetPickupAttemptEvent(EntityUid Item, bool PlaySound = true)
+{
+    public bool Handled;
+}

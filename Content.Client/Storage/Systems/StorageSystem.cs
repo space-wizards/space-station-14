@@ -7,6 +7,7 @@ using Content.Shared.Storage.EntitySystems;
 using Robust.Client.Player;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Storage.Systems;
@@ -122,10 +123,11 @@ public sealed partial class StorageSystem : SharedStorageSystem
 
     private void HandlePickupAnimation(PickupAnimationEvent msg)
     {
-        PickupAnimation(GetEntity(msg.ItemUid), GetCoordinates(msg.InitialPosition), GetCoordinates(msg.FinalPosition), msg.InitialAngle);
+        PickupAnimation(GetEntity(msg.ItemUid), GetCoordinates(msg.InitialPosition), GetCoordinates(msg.FinalPosition), msg.InitialAngle, msg.ItemPrototype);
     }
 
-    public void PickupAnimation(EntityUid item, EntityCoordinates initialCoords, EntityCoordinates finalCoords, Angle initialAngle)
+    public void PickupAnimation(EntityUid item, EntityCoordinates initialCoords, EntityCoordinates finalCoords, Angle initialAngle,
+        EntProtoId? itemPrototype = null)
     {
         if (!_timing.IsFirstTimePredicted)
             return;
@@ -139,7 +141,7 @@ public sealed partial class StorageSystem : SharedStorageSystem
         var finalMapPos = TransformSystem.ToMapCoordinates(finalCoords).Position;
         var finalPos = Vector2.Transform(finalMapPos, TransformSystem.GetInvWorldMatrix(initialCoords.EntityId));
 
-        _entityPickupAnimation.AnimateEntityPickup(item, initialCoords, finalPos, initialAngle);
+        _entityPickupAnimation.AnimateEntityPickup(item, initialCoords, finalPos, initialAngle, itemPrototype);
     }
 
     /// <summary>

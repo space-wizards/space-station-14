@@ -28,7 +28,7 @@ namespace Content.Server.Research.Disk
 
         private void OnMagnetPickup(EntityUid uid, ResearchServerComponent component, ref MagnetPickupAttemptEvent args)
         {
-            if (!this.IsPowered(uid, EntityManager))
+            if (args.Handled || !this.IsPowered(uid, EntityManager))
                 return;
 
             if (TryComp<TechnologyDiskComponent>(args.Item, out var technologyDisk))
@@ -48,6 +48,7 @@ namespace Content.Server.Research.Disk
 
             var xform = Transform(args.Item);
             _storage.PlayPickupAnimation(args.Item, xform.Coordinates, Transform(uid).Coordinates, xform.LocalRotation);
+            args.Handled = true;
         }
 
         private void OnAfterInteract(EntityUid uid, ResearchDiskComponent component, AfterInteractEvent args)

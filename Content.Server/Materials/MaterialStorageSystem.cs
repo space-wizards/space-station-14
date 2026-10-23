@@ -41,10 +41,14 @@ public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
 
     private void OnMagnetPickup(EntityUid uid, MaterialStorageComponent component, ref MagnetPickupAttemptEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (TryInsertMaterialEntity(uid, args.Item, uid, component))
         {
             var xform = Transform(args.Item);
             _storage.PlayPickupAnimation(args.Item, xform.Coordinates, Transform(uid).Coordinates, xform.LocalRotation);
+            args.Handled = true;
         }
     }
 
