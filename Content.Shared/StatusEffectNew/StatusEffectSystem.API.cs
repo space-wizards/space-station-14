@@ -137,8 +137,8 @@ public sealed partial class StatusEffectsSystem
     }
 
     /// <summary>
-    /// Attempting to remove a status effect from an entity.
-    /// Returns True if the status effect existed on the entity and was successfully removed, and False in otherwise.
+    /// Attempts to remove a status effect from an entity.
+    /// Returns True if the status effect existed on the entity and was successfully removed, and False otherwise.
     /// </summary>
     public bool TryRemoveStatusEffect(EntityUid target, EntProtoId effectProto)
     {
@@ -269,6 +269,7 @@ public sealed partial class StatusEffectsSystem
 
     /// <summary>
     /// Attempts to edit the remaining time for a status effect on an entity.
+    /// No effect (returning false) if the status effect isn't already on the entity.
     /// </summary>
     /// <param name="uid">The target entity on which the effect is applied.</param>
     /// <param name="effectProto">The prototype ID of the status effect to modify.</param>
@@ -296,6 +297,7 @@ public sealed partial class StatusEffectsSystem
 
     /// <summary>
     /// A method which specifically removes time from a status effect, or removes the status effect if time is null.
+    /// No effect (returning false) if the status effect isn't already on the entity.
     /// </summary>
     /// <param name="uid">The target entity on which the effect is applied.</param>
     /// <param name="effectProto">The prototype ID of the status effect to modify.</param>
