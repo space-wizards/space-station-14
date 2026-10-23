@@ -1,0 +1,96 @@
+{
+    "version": 1,
+    "license": "CC0-1.0",
+    "copyright": "Created by EmoGarbage404 (github), edits by whatston3 (GitHub)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "charge0",
+            "directions": 4,
+            "delays": [
+                [ 1.0, 1.0 ],
+                [ 1.0, 1.0 ],
+                [ 1.0, 1.0 ],
+                [ 1.0, 1.0 ]
+            ]
+        },
+        {
+            "name": "charge1",
+            "directions": 4,
+            "delays": [
+                [ 0.5, 0.5 ],
+                [ 0.5, 0.5 ],
+                [ 0.5, 0.5 ],
+                [ 0.5, 0.5 ]
+            ]
+        },
+        {
+            "name": "charge2",
+            "directions": 4
+        },
+        {
+            "name": "charge3",
+            "directions": 4
+        },
+        {
+            "name": "charge4",
+            "directions": 4
+        },
+        {
+            "name": "charging",
+            "directions": 4,
+            "delays": [
+                [ 0.5, 0.5 ],
+                [ 0.5, 0.5 ],
+                [ 0.5, 0.5 ],
+                [ 0.5, 0.5 ]
+            ]
+        },
+        {
+            "name": "discharging",
+            "directions": 4,
+            "delays": [
+                [ 0.25, 0.25 ],
+                [ 0.25, 0.25 ],
+                [ 0.25, 0.25 ],
+                [ 0.25, 0.25 ]
+            ]
+        },
+        {
+            "name": "frame",
+            "directions": 4
+        },
+        {
+            "name": "input",
+            "directions": 4
+        },
+        {
+            "name": "open",
+            "directions": 4
+        },
+        {
+            "name": "output",
+            "directions": 4
+        },
+        {
+            "name": "screen",
+            "directions": 4
+        },
+        {
+            "name": "static"
+        },
+        {
+            "name": "still",
+            "directions": 4,
+            "delays": [
+                [ 1.0, 1.0 ],
+                [ 1.0, 1.0 ],
+                [ 1.0, 1.0 ],
+                [ 1.0, 1.0 ]
+            ]
+        }
+    ]
+}
