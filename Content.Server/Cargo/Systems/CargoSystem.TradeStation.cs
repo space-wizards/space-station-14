@@ -167,15 +167,13 @@ public sealed partial class CargoSystem
                 // - anything already being sold
                 // - anything anchored (e.g. light fixtures)
                 // - anything blacklisted (e.g. players).
+                // - anything containing anything we should not sell
                 if (toSell.Contains(ent) ||
                     TryComp(ent, out TransformComponent? xform) &&
                     (xform.Anchored || !CanSell(ent)))
                 {
                     continue;
                 }
-
-                if (_cargoSellBlacklistQuery.HasComponent(ent))
-                    continue;
 
                 var price = _pricing.GetPrice(ent);
                 if (price == 0)
@@ -205,6 +203,11 @@ public sealed partial class CargoSystem
 
             if (!CanSell(child))
                 return false;
+        }
+
+        if (_cargoSellBlacklistQuery.HasComponent(uid))
+        {
+            return false;
         }
 
         return true;
