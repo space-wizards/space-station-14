@@ -271,7 +271,8 @@
   - type: WirelessNetwork
     range: 10
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: BasicDevice
 
 - type: entity

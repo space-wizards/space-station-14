@@ -2,6 +2,7 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.Radio.EntitySystems;
 using Robust.Shared.Serialization;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Radio.Components;
 
@@ -56,6 +57,12 @@ public sealed partial class RadioJammerComponent : Component
     /// </summary>
     [DataField]
     public HashSet<DeviceFrequency> FrequenciesExcluded = [];
+
+    /// <summary>
+    /// All device network types jammed by this jammer.
+    /// </summary>
+    [DataField]
+    public HashSet<ProtoId<DeviceNetworkPrototype>> JammedNetworks = ["Wireless"];
 
     /// <summary>
     /// Index of the currently selected setting.

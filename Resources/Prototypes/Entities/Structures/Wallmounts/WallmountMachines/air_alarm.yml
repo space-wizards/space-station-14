@@ -9,15 +9,21 @@
     enabled: false
     usesApcPower: true
   - type: DeviceNetwork
-    deviceNetId: AtmosDevices
+    deviceNets:
+    - AtmosDevices
+    - Wireless
     receiveFrequencyId: AtmosMonitor
     transmitFrequencyId: AtmosMonitor
     prefix: device-address-prefix-air-alarm
     sendBroadcastAttemptEvent: true
   - type: WiredNetwork
+    ignoreNets:
+    - Wireless
   # for output status ports
   - type: WirelessNetwork
     range: 200
+    ignoreNets:
+    - Wired
   - type: DeviceList
   - type: DeviceNetworkRequiresPower
   - type: DeviceLinkSource
