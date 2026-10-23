@@ -39,7 +39,9 @@ public sealed partial class GasTileVacuumOverlay : Overlay
 
     // Overlay settings
     private float _intensity; // overlay intensity. 0.0f = turned off, 1.0f = full grayscale
-    private float _maxIntensityTemperature = 0f;
+
+    private readonly float _maxTintTemperature = 193f;
+    private readonly float _maxDesaturationTemperature = 0f;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -129,14 +131,16 @@ public sealed partial class GasTileVacuumOverlay : Overlay
                             if (!localBounds.Contains(tilePosition))
                                 continue;
 
-                            var strength = GetVacuumDesaturationStrength(tileGas.ByteGasTemperature, _maxIntensityTemperature);
-                            if (strength <= 0f)
+                            var tintStrength = GetEffectStrength(tileGas.ByteGasTemperature, _maxTintTemperature, false);
+                            var desaturationStrength = GetEffectStrength(tileGas.ByteGasTemperature, _maxDesaturationTemperature);
+
+                            if (tintStrength <= 0f && desaturationStrength <= 0f)
                                 continue;
 
                             // Encode the strength in the red channel.
                             worldHandle.DrawRect(Box2.CenteredAround(tilePosition + grid.Comp.TileSizeHalfVector,
                                     grid.Comp.TileSizeVector),
-                                new Color(strength, 0f, 0f));
+                                new Color(desaturationStrength, tintStrength, 0f));
                             anyDesaturation = true;
                         }
                     }
@@ -155,21 +159,12 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         return true;
     }
 
-    /// <summary>
-    /// Gets the desaturation strength for a tile based on its temperature.
-    /// Room temperature and warmer tiles are not desaturated; absolute zero has maximum strength.
-    /// </summary>
-    private static float GetVacuumDesaturationStrength(ThermalByte temperature, float maxIntensityTemperature)
+    private static float GetEffectStrength(ThermalByte temperature, float maxIntensityTemperature, bool worksInVacuum = true)
     {
         if (temperature.IsVacuum)
-            return 1f;
+            return worksInVacuum ? 1f : 0f;
 
         if (!temperature.TryGetTemperature(out var kelvinTemperature))
-            return 0f;
-
-        // ThermalByte has 4 K resolution, so values immediately below room temperature
-        // are indistinguishable from room temperature on the client.
-        if (kelvinTemperature >= Atmospherics.T20C - ThermalByte.TempDegreeResolution)
             return 0f;
 
         if (kelvinTemperature <= maxIntensityTemperature)

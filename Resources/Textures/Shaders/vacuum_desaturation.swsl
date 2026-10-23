@@ -6,16 +6,18 @@ uniform mediump vec3 tint_color = vec3(0, 0, 1.0);
 void fragment()
 {
     mediump float tile_intensity = texture2D(TEXTURE, UV).r;
-    if (tile_intensity < 0.01)
-        discard;
+
 
     mediump vec4 screen_pixel = texture2D(SCREEN_TEXTURE, UV);
     mediump float gray = dot(screen_pixel.rgb, vec3(0.299, 0.587, 0.114));
 
-    mediump float effect_intensity = tile_intensity * intensity;
-    screen_pixel.rgb = mix(screen_pixel.rgb, vec3(gray), effect_intensity);
+    mediump float desaturation_intensity = tile_intensity * intensity;
+    screen_pixel.rgb = mix(screen_pixel.rgb, vec3(gray), desaturation_intensity);
 
-    screen_pixel.rgb = mix(screen_pixel.rgb, screen_pixel.rgb * tint_color, effect_intensity * 0.5);
+    mediump float tint_intensity = texture2D(TEXTURE, UV).g;
+
+
+    screen_pixel.rgb = mix(screen_pixel.rgb, screen_pixel.rgb * tint_color, tint_intensity * 0.4);
 
     COLOR = screen_pixel;
 }
