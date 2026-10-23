@@ -297,10 +297,13 @@ public sealed class StatusEffectNewTest : InteractionTest
     /// </summary>
     private void SetupStatus(EntProtoId statusProto, TimeSpan? delay, string delayText, TimeSpan? duration, string durationText, string endTimeText, IResolveConstraint delayConstraint, IResolveConstraint durationConstraint)
     {
-        Assert.That(_sStatusSystem.TrySetStatusEffectDuration(SPlayer, statusProto, duration, delay), Is.True, $"{statusProto.Id} ({delayText} delay, {durationText} duration) could not be added to player");
-        Assert.That(_sStatusSystem.TryGetTime(SPlayer, statusProto, out var statusTime), Is.True, $"Could not get time info for {statusProto.Id}");
-        Assert.That(statusTime.StartEffectTime, delayConstraint, $"Delay of {statusProto.Id} is not {delayText}");
-        Assert.That(statusTime.EndEffectTime, durationConstraint, $"End time of {statusProto.Id} is not {endTimeText}");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_sStatusSystem.TrySetStatusEffectDuration(SPlayer, statusProto, duration, delay), Is.True, $"{statusProto.Id} ({delayText} delay, {durationText} duration) could not be added to player");
+            Assert.That(_sStatusSystem.TryGetTime(SPlayer, statusProto, out var statusTime), Is.True, $"Could not get time info for {statusProto.Id}");
+            Assert.That(statusTime.StartEffectTime, delayConstraint, $"Delay of {statusProto.Id} is not {delayText}");
+            Assert.That(statusTime.EndEffectTime, durationConstraint, $"End time of {statusProto.Id} is not {endTimeText}");
+        }
     }
     
     #region TryAddTime and TryRemoveTime
