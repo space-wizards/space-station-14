@@ -106,6 +106,9 @@ public abstract partial class SharedWiresSystem : EntitySystem
         if (!IsPanelOpen(ent.Owner))
             return;
 
+        if (!UI.HasUi(ent.Owner, WiresUiKey.Key))
+            return;
+
         var actor = args.User;
         var verb = new AlternativeVerb
         {
