@@ -32,29 +32,30 @@ public sealed class StatusEffectNewTest : InteractionTest
     /// </summary>
     private TimeSpan ThirtyTicks => TenTicks * 3;
 
-    #region Add new status effects
+    #region Add new status effects (no delay)
     
     /// <summary>
-    /// Helper method to test the various methods which can be used to add a new status effect to an entity
+    /// Helper method to test the various methods which can be used to add a new status effect to an entity without a delay
     /// (these being TrySetStatusEffectDuration, TryAddStatusEffectDuration, and TryUpdateStatusEffectDuration).
     /// Call this with each method (and the method name) to try applying statuses with them, and ensure they have been applied.
+    /// Also makes sure that a status effect with a non-indefinite duration is removed at the appropriate time.
     /// </summary>
     /// <param name="addStatusEffectMethod">The method from StatusEffectsSystem being used to add these status effects.</param>
     /// <param name="methodName">The name of the method we passed to this (for use in error messages)</param>
-    private async Task TestAddNewStatusEffects(Func<EntityUid, EntProtoId, TimeSpan?, TimeSpan?, bool> addStatusEffectMethod, string methodName)
+    private async Task TestAddNewStatusEffects_NoDelay(Func<EntityUid, EntProtoId, TimeSpan?, TimeSpan?, bool> addStatusEffectMethod, string methodName)
     {
         var curTime = TimeSpan.Zero;
         await Server.WaitAssertion(() =>
         {
             using (Assert.EnterMultipleScope())
             {
-                Assert.That(addStatusEffectMethod(SPlayer, StatusA, null, null), Is.True, $"adding an indefinite status effect via {methodName} failed!");
                 curTime = STiming.CurTime;
-                Assert.That(addStatusEffectMethod(SPlayer, StatusB, TenTicks, null), Is.True, $"adding a status effect with duration via {methodName} failed!");
+                Assert.That(addStatusEffectMethod(SPlayer, StatusA, null, null), Is.True, $"Adding an indefinite status effect via {methodName} failed!");
+                Assert.That(addStatusEffectMethod(SPlayer, StatusB, TenTicks, null), Is.True, $"Adding a status effect with duration via {methodName} failed!");
                 // zero duration should be rejected
-                Assert.That(addStatusEffectMethod(SPlayer, StatusC, TimeSpan.Zero, null), Is.False, $"adding a status effect with zero duration via {methodName} didn't get rejected!");
+                Assert.That(addStatusEffectMethod(SPlayer, StatusC, TimeSpan.Zero, null), Is.False, $"Adding a status effect with zero duration via {methodName} didn't get rejected!");
                 // checking to ensure that a negative duration gets rejected
-                Assert.That(addStatusEffectMethod(SPlayer, StatusD, -TenTicks, null), Is.False, $"adding a status effect with negative duration via {methodName} didn't get rejected!");
+                Assert.That(addStatusEffectMethod(SPlayer, StatusD, -TenTicks, null), Is.False, $"Adding a status effect with negative duration via {methodName} didn't get rejected!");
             }
         });
         using (Assert.EnterMultipleScope())
@@ -70,27 +71,158 @@ public sealed class StatusEffectNewTest : InteractionTest
             Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusC), Is.False, "Status effect C was found despite having zero duration");
             Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusD), Is.False, "Status effect D was found despite having a negative duration");
         }
+
+        // wait 10 ticks (B duration should be over)
+        await Pair.RunUntilSynced();
+        await Pair.RunTicksSync(Ten);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.True, "Status effect A (indefinite) is no longer on the player after 10 ticks!");
+            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusB), Is.False, "Status effect B (10 tick duration) is still on the player after 10 ticks!");
+        }
     }
 
-    [Test, Description("Test that valid status effects can be added with TrySetStatusEffectDuration (and that invalid ones are rejected)")]
-    public async Task TestAddNewStatusEffects_TrySetStatusEffectDuration()
+    [Test, Description("Test that valid status effects can be added with TrySetStatusEffectDuration (and that invalid ones are rejected) - non-delay variant")]
+    public async Task TestAddNewStatusEffects_NoDelay_TrySetStatusEffectDuration()
     {
-        await TestAddNewStatusEffects(_sStatusSystem.TrySetStatusEffectDuration, "TrySetStatusEffectDuration");
+        await TestAddNewStatusEffects_NoDelay(_sStatusSystem.TrySetStatusEffectDuration, "TrySetStatusEffectDuration");
     }
 
-    [Test, Description("Test that valid status effects can be added with TrySetStatusEffectDuration (and that invalid ones are rejected)")]
-    public async Task TestAddNewStatusEffects_TryAddStatusEffectDuration()
+    [Test, Description("Test that valid status effects can be added with TryAddStatusEffectDuration (and that invalid ones are rejected) - non-delay variant")]
+    public async Task TestAddNewStatusEffects_NoDelay_TryAddStatusEffectDuration()
     {
-        await TestAddNewStatusEffects(_sStatusSystem.TryAddStatusEffectDuration, "TryAddStatusEffectDuration");
+        await TestAddNewStatusEffects_NoDelay(_sStatusSystem.TryAddStatusEffectDuration, "TryAddStatusEffectDuration");
     }
 
-    [Test, Description("Test that valid status effects can be added with TryUpdateStatusEffectDuration (and that invalid ones are rejected)")]
-    public async Task TestAddNewStatusEffects_TryUpdateStatusEffectDuration()
+    [Test, Description("Test that valid status effects can be added with TryUpdateStatusEffectDuration (and that invalid ones are rejected) - non-delay variant")]
+    public async Task TestAddNewStatusEffects_NoDelay_TryUpdateStatusEffectDuration()
     {
-        await TestAddNewStatusEffects(_sStatusSystem.TryUpdateStatusEffectDuration, "TryUpdateStatusEffectDuration");
+        await TestAddNewStatusEffects_NoDelay(_sStatusSystem.TryUpdateStatusEffectDuration, "TryUpdateStatusEffectDuration");
     }
-    
-    #endregion Add new status effects
+
+    #endregion Add new status effects (no delay)
+
+    #region Add new status effects (with delay)
+
+    /// <summary>
+    /// Helper method to test the various methods which can be used to add a new status effect to an entity with a delay
+    /// (these being TrySetStatusEffectDuration, TryAddStatusEffectDuration, and TryUpdateStatusEffectDuration).
+    /// Call this with each method (and the method name) to try applying statuses with them, that the delays are correct,
+    /// the status is applied correctly after the delay, and that the status effects are removed at the appropriate times
+    /// </summary>
+    /// <param name="addStatusEffectMethod">The method from StatusEffectsSystem being used to add these status effects.</param>
+    /// <param name="methodName">The name of the method we passed to this (for use in error messages)</param>
+    private async Task TestAddNewStatusEffects_WithDelay(Func<EntityUid, EntProtoId, TimeSpan?, TimeSpan?, bool> addStatusEffectMethod, string methodName)
+    {
+        var effectQuery = SEntMan.GetEntityQuery<StatusEffectComponent>();
+        var curTime = TimeSpan.Zero;
+        await Server.WaitAssertion(() =>
+        {
+            using (Assert.EnterMultipleScope())
+            {
+                curTime = STiming.CurTime;
+                // A should start now, null delay, and end 20 ticks from curtime
+                Assert.That(addStatusEffectMethod(SPlayer, StatusA, TwentyTicks, null), Is.True, $"Calling {methodName} to add effect without delay returned false!" );
+                // B should start now, null delay, and end 20 ticks from curtime
+                Assert.That(addStatusEffectMethod(SPlayer, StatusB, TwentyTicks, TimeSpan.Zero), Is.True, $"Calling {methodName} to add effect with zero delay returned false!" );
+                // C should start 10 ticks from now, and last 10 ticks (and end 20 ticks from curtime)
+                Assert.That(addStatusEffectMethod(SPlayer, StatusC, TenTicks, TenTicks), Is.True, $"Calling {methodName} to add effect with delay returned false!"); 
+                // D should start 10 ticks ago, and last thirty ticks (ending 20 ticks from curTime)
+                Assert.That(addStatusEffectMethod(SPlayer, StatusD, ThirtyTicks, -TenTicks), Is.True, $"Calling {methodName} to add effect with negative delay returned false!");
+            }
+        });
+
+        // mostly faffing around obtaining references.
+        // can't put these in a scope, they will be needed later.
+        Assume.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var timeA), Is.True, "Could not get time info for effect A");
+        Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusA, out var idStatusA),  Is.True, "Status effect A was not found on the player");
+        Assume.That(effectQuery.TryComp(idStatusA, out var compStatusA), Is.True, "Status effect A component was not found on the player");
+
+        Assume.That(_sStatusSystem.TryGetTime(SPlayer, StatusB, out var timeB), Is.True, "Could not get time info for effect B");
+        Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusB, out var idStatusB),  Is.True, "Status effect B was not found on the player");
+        Assume.That(effectQuery.TryComp(idStatusB, out var compStatusB), Is.True, "Status effect B component was not found on the player");
+        
+        Assume.That(_sStatusSystem.TryGetTime(SPlayer, StatusC, out var timeC), Is.True, "Could not get time info for effect C");
+        Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusC, out var idStatusC),  Is.True, "Status effect C was not found on the player");
+        Assume.That(effectQuery.TryComp(idStatusC, out var compStatusC), Is.True, "Status effect C component was not found on the player");
+
+        Assume.That(_sStatusSystem.TryGetTime(SPlayer, StatusD, out var timeD), Is.True, "Could not get time info for effect D");
+        Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusD, out var idStatusD),  Is.True, "Status effect D was not found on the player");
+        Assume.That(effectQuery.TryComp(idStatusD, out var compStatusD), Is.True, "Status effect D component was not found on the player");
+
+        // assertions about initial state of the status effects
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(timeA.StartEffectTime, Is.EqualTo(curTime).Within(SGameTiming.TickPeriod), "Status effect A start time is not currentTime!");
+            Assert.That(timeA.EndEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(SGameTiming.TickPeriod), "Status effect A (null delay, 20 tick duration) will not end twenty ticks from now"); 
+            Assert.That(compStatusA!.Applied, Is.True, "Status effect A was not applied on the player, despite not having a delay");
+
+            Assert.That(timeB.StartEffectTime, Is.EqualTo(curTime).Within(SGameTiming.TickPeriod), "Status effect B start time is not currentTime!");
+            Assert.That(timeB.EndEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(SGameTiming.TickPeriod), "Status effect B (zero delay, 20 tick duration) will not end twenty ticks from now"); 
+            Assert.That(compStatusB!.Applied, Is.True, "Status effect B was not applied on the player, despite having a delay of zero!");
+
+            Assert.That(timeC.StartEffectTime, Is.EqualTo(curTime + TenTicks).Within(SGameTiming.TickPeriod), "Status effect C is not going to start after a delay of ten ticks");
+            Assert.That(timeC.EndEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(SGameTiming.TickPeriod), "Status effect C (10 tick delay, 10 tick duration) will not end 20 ticks from now");
+            Assert.That(compStatusC!.Applied, Is.False, "Status effect C was applied on the player, despite delay not being over.");
+
+            Assert.That(timeD.StartEffectTime, Is.EqualTo(curTime - TenTicks).Within(SGameTiming.TickPeriod), "Status effect D start time was not 10 ticks ago!");
+            Assert.That(timeD.EndEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(SGameTiming.TickPeriod), "Status effect D (-10 delay, 30 tick duration) will not end twenty ticks from now"); 
+            Assert.That(compStatusD!.Applied, Is.True, "Status effect D was not applied on the player, despite having a negative delay!");
+        }
+
+        // wait 10 ticks (C delay should be over)
+        await Pair.RunUntilSynced();
+        await Pair.RunTicksSync(Ten);
+
+        // taking a look after 10 ticks - ABD should still be applied, C should now be applied as delay is over.
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.True, "Status effect A was no longer on the player after 10 ticks (should have remained until 20 ticks)");
+            Assert.That(compStatusA!.Applied, Is.True, "Status effect A ceased to be applied to the player earlier than expected (gone at 10 ticks, should have remained until 20)");
+            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusB), Is.True, "Status effect B was no longer on the player after 10 ticks (should have remained until 20 ticks)");
+            Assert.That(compStatusB!.Applied, Is.True, "Status effect B ceased to be applied to the player earlier than expected (gone at 10 ticks, should have remained until 20)");
+
+            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusC), Is.True, "Status effect C was not on the player after 10 ticks (should have remained until 20 ticks)");
+            _sStatusSystem.TryGetTime(SPlayer, StatusC, out var latterTimeC);
+            Assert.That(compStatusC!.Applied, Is.True, $"Status effect C had not been applied to the player after 10 ticks, despite its 10-tick delay being over. (cur time: {STiming.CurTime}, c delay: {latterTimeC.StartEffectTime?.ToString() ?? "unknown" })");
+
+            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusD), Is.True, "Status effect D was no longer on the player after 10 ticks (should have remained until 20 ticks)");
+            Assert.That(compStatusD!.Applied, Is.True, "Status effect D ceased to be applied to the player earlier than expected (gone at 10 ticks, should have remained until 20)");
+        }
+
+        // wait 10 more ticks (effects should all be over)
+        await Pair.RunUntilSynced();
+        await Pair.RunTicksSync(Ten);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.False, "Status effect A was still on the player after expected end time!");
+            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusB), Is.False, "Status effect B was still on the player after expected end time!");
+            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusC), Is.False, "Status effect C was still on the player after expected end time!");
+            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusD), Is.False, "Status effect D was still on the player after expected end time!");
+        }
+    }
+
+    [Test, Description("Test that valid status effects with delays can be added with TrySetStatusEffectDuration")]
+    public async Task TestAddNewStatusEffects_WithDelay_TrySetStatusEffectDuration()
+    {
+        await TestAddNewStatusEffects_WithDelay(_sStatusSystem.TrySetStatusEffectDuration, "TrySetStatusEffectDuration");
+    }
+
+    [Test, Description("Test that valid status effects with delays can be added with TryAddStatusEffectDuration")]
+    public async Task TestAddNewStatusEffects_WithDelay_TryAddStatusEffectDuration()
+    {
+        await TestAddNewStatusEffects_WithDelay(_sStatusSystem.TryAddStatusEffectDuration, "TryAddStatusEffectDuration");
+    }
+
+    [Test, Description("Test that valid status effects with delays can be added with TryUpdateStatusEffectDuration")]
+    public async Task TestAddNewStatusEffects_WithDelay_TryUpdateStatusEffectDuration()
+    {
+        await TestAddNewStatusEffects_WithDelay(_sStatusSystem.TryUpdateStatusEffectDuration, "TryUpdateStatusEffectDuration");
+    }
+
+    #endregion Add new status effects (with delay)
     
     [Test, Description("Test that the delays of status effects can be set")]
     public async Task TestSetDelays()
