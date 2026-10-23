@@ -15,6 +15,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/wheat.rsi
     snapCardinals: true
+    noRot: true
   - type: Appearance
   - type: Clickable
   - type: InteractionOutline
@@ -1228,6 +1229,7 @@
     production: 12
     yield: 2
     potency: 20
+    growthStages: 3
   - type: PlantHarvest
     harvestRepeat: Repeat
   - type: PlantGrowth
