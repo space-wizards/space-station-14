@@ -25,6 +25,7 @@ public sealed partial class TriggerSystem
             Dirty(ent);
         }
 
+        RebuildKeyPhraseCandidate(ent.Comp);
         UpdateListening(ent);
     }
 
@@ -57,7 +58,7 @@ public sealed partial class TriggerSystem
                 return;
 
             if (message.Length >= component.MinLength && message.Length <= component.MaxLength)
-                FinishRecording(ent, args.Source, args.Message);
+                FinishRecording(ent, args.Source, message);
             else if (message.Length > component.MaxLength)
                 _popup.PopupEntity(Loc.GetString("trigger-on-voice-record-failed-too-long"), ent);
             else if (message.Length < component.MinLength)
@@ -66,16 +67,29 @@ public sealed partial class TriggerSystem
             return;
         }
 
-        if (!string.IsNullOrWhiteSpace(component.KeyPhrase) && message.IndexOf(component.KeyPhrase, StringComparison.InvariantCultureIgnoreCase) is var index and >= 0)
+        if (string.IsNullOrWhiteSpace(component.KeyPhrase))
+            return;
+
+        if (!VoiceCommandMatcher.TryExtractKeyphrase(message, component.KeyPhrase, component.KeyPhraseCandidates, component.FuzzyMatch, component.FuzzyMatchThreshold, out var messageWithoutPhrase))
+            return;
+
+        // VoiceCommands handles its own dispatch; plain triggers use the keyed path.
+        if (!HasComp<VoiceCommandsComponent>(ent))
         {
             _adminLogger.Add(LogType.Trigger, LogImpact.Medium,
-                    $"A voice-trigger on {ToPrettyString(ent):entity} was triggered by {ToPrettyString(args.Source):speaker} speaking the key-phrase {component.KeyPhrase}.");
+                $"A voice-trigger on {ToPrettyString(ent):entity} was triggered by {ToPrettyString(args.Source):speaker} speaking the key-phrase {component.KeyPhrase}.");
             Trigger(ent, args.Source, ent.Comp.KeyOut);
-
-            var messageWithoutPhrase = message.Remove(index, component.KeyPhrase.Length).Trim();
-            var voice = new VoiceTriggeredEvent(args.Source, message, messageWithoutPhrase);
-            RaiseLocalEvent(ent, ref voice);
         }
+
+        var voice = new VoiceTriggeredEvent(args.Source, message, messageWithoutPhrase);
+        RaiseLocalEvent(ent, ref voice);
+    }
+
+    private static void RebuildKeyPhraseCandidate(TriggerOnVoiceComponent comp)
+    {
+        comp.KeyPhraseCandidates = string.IsNullOrWhiteSpace(comp.KeyPhrase)
+            ? new()
+            : VoiceCommandMatcher.BuildVoiceCommandCandidates(new Dictionary<string, string> { [comp.KeyPhrase] = string.Empty });
     }
 
     private void OnVoiceGetAltVerbs(Entity<TriggerOnVoiceComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -173,6 +187,7 @@ public sealed partial class TriggerSystem
         ent.Comp.KeyPhrase = message;
         ent.Comp.IsRecording = false;
         Dirty(ent);
+        RebuildKeyPhraseCandidate(ent.Comp);
 
         _adminLogger.Add(LogType.Trigger, LogImpact.Low,
                 $"A voice-trigger on {ToPrettyString(ent):entity} has recorded a new keyphrase: '{ent.Comp.KeyPhrase}'. Recorded from {ToPrettyString(source):speaker}");
@@ -188,6 +203,7 @@ public sealed partial class TriggerSystem
         ent.Comp.KeyPhrase = null;
         ent.Comp.IsRecording = false;
         Dirty(ent);
+        RebuildKeyPhraseCandidate(ent.Comp);
         RemComp<ActiveListenerComponent>(ent);
     }
 
@@ -202,6 +218,7 @@ public sealed partial class TriggerSystem
         ent.Comp.KeyPhrase = Loc.GetString(ent.Comp.DefaultKeyPhrase);
         ent.Comp.IsRecording = false;
         Dirty(ent);
+        RebuildKeyPhraseCandidate(ent.Comp);
         UpdateListening(ent);
 
         _adminLogger.Add(LogType.Trigger, LogImpact.Low,
