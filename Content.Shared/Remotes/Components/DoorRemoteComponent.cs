@@ -22,7 +22,7 @@ public sealed partial class DoorRemoteComponent : Component
     /// <summary>
     /// Modes with metadata that could be displayed in the device mode change menu.
     /// </summary>
-    [DataField]
+    [DataField, AlwaysPushInheritance]
     public List<DoorRemoteModeInfo> Options;
 
     /// <summary>

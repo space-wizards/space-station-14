@@ -1,11 +1,15 @@
 using Content.Shared.Actions.Events;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
+using Content.Shared.Remotes.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Doors.Components;
+using Content.Shared.Remotes.EntitySystems;
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -44,6 +48,36 @@ public abstract partial class SharedStationAiSystem
             return;
 
         _xforms.DropNextTo(core.Comp.RemoteEntity.Value, core.Owner);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnInteractHand(InteractHandEvent args)
+    {
+        var target = args.Target;
+
+        if (HasComp<DoorComponent>(target))
+        {
+            args.Handled = TryHandleAiDoorRemoteInteract(args.User, args.Target);
+        }
+    }
+
+    private bool TryHandleAiDoorRemoteInteract(EntityUid user, EntityUid target)
+    {
+        if (!TryGetCore(user, out var aiCore) || !TryGetHeld(aiCore, out var aiHeld))
+        {
+            return false;
+        }
+
+        if (!HasComp<DoorRemoteComponent>(aiHeld.Value))
+        {
+            return false;
+        }
+
+        var beforeRangedInteractEvent =
+            new BeforeRangedInteractEvent(aiHeld.Value, aiHeld.Value, target, Transform(target).Coordinates, true);
+        RaiseLocalEvent(aiHeld.Value, beforeRangedInteractEvent, true);
+
+        return beforeRangedInteractEvent.Handled;
     }
 
     /// <summary>
