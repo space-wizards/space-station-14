@@ -237,9 +237,6 @@
     - trigger: !type:DamageTrigger
         damage: 100
       behaviors: *DoDestruction
-    - trigger: !type:DamageTrigger
-        damage: 50
-      behaviors: *DoBreakage
 
 # Airlocks / firelocks
 - type: entity
@@ -252,9 +249,6 @@
     - trigger: !type:DamageTrigger
         damage: 200
       behaviors: *DoDestruction
-    - trigger: !type:DamageTrigger
-        damage: 100
-      behaviors: *DoBreakage
 
 # High-security airlocks / blast doors
 - type: entity
@@ -267,9 +261,6 @@
     - trigger: !type:DamageTrigger
         damage: 350
       behaviors: *DoDestruction
-    - trigger: !type:DamageTrigger
-        damage: 250
-      behaviors: *DoBreakage
 
 #endregion
 #region Walls

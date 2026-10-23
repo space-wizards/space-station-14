@@ -1,4 +1,4 @@
-﻿using Robust.Shared.GameStates;
+using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Movement.Components;

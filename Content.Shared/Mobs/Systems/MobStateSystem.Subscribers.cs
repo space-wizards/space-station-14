@@ -223,25 +223,6 @@ public partial class MobStateSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnMobStateActionAttempt(Entity<ActionRequireMobStateComponent> ent, ref ActionAttemptEvent args)
-    {
-        if (_mobStateQuery.TryComp(args.User, out var mobState) &&
-            ent.Comp.States.Contains(mobState.CurrentState))
-        {
-            return;
-        }
-
-        if (ent.Comp.FailReason != null)
-        {
-            var states = string.Join(", ", ent.Comp.States.Order().Select(s => Loc.GetString($"mob-state-{s}")));
-            args.Reason = Loc.GetString(ent.Comp.FailReason, ("states", states));
-            args.Type = ent.Comp.FailReasonPopupType;
-        }
-
-        args.Cancelled = true;
-    }
-
-    [SubscribeLocalEvent]
     private void OnIncapCuffCheck(Entity<MobStateComponent> ent, ref CheckIncapacitatedCuffEvent args)
     {
         if (IsIncapacitated(ent, ent.Comp))

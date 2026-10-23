@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: AirSensorBase
   id: AirSensorFreezerBase

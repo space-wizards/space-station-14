@@ -81,3 +81,13 @@
   - type: StunnedStatusEffect
   - type: ExaminableStatusEffect
     messageId: status-effect-examine-stunned
+    requiresConciousness: true
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectKnockdown
+  name: knockdown
+  components:
+  - type: KnockdownStatusEffect
+    crawl: true
+    drop: false
