@@ -124,7 +124,11 @@ public sealed partial class ActionUIController : UIController, IOnStateChanged<G
                 if (args.State != BoundKeyState.Down)
                     return false;
 
-                TriggerAction(boundId);
+                //Try the actions on the first row if the second row fails,
+                //so we aren't hijacking shift when we don't need it
+                if (!TriggerAction(boundId) && _actions.Count < 11)
+                    TriggerAction(boundId - 10);
+
                 return true;
             }, false, true));
         }
@@ -230,12 +234,12 @@ public sealed partial class ActionUIController : UIController, IOnStateChanged<G
         CommandBinds.Unregister<ActionUIController>();
     }
 
-    private void TriggerAction(int index)
+    private bool TriggerAction(int index)
     {
         if (!_actions.TryGetValue(index, out var actionId) ||
             _actionsSystem?.GetAction(actionId) is not {} action)
         {
-            return;
+            return false;
         }
 
         // TODO: probably should have a clientside event raised for flexibility
@@ -243,6 +247,8 @@ public sealed partial class ActionUIController : UIController, IOnStateChanged<G
             ToggleTargeting((action, action, target));
         else
             _actionsSystem?.TriggerAction(action);
+
+        return true;
     }
 
     private void OnActionAdded(EntityUid actionId)
