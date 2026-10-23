@@ -101,6 +101,10 @@
   name: industrial reagent grinder
   description: An industrial reagent grinder.
   components:
+  - type: BagDeposit
+  - type: Solution
+    solution:
+      maxVol: 4000
   - type: MaterialReclaimer
     whitelist:
       components:

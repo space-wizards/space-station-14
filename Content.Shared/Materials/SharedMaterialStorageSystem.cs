@@ -3,6 +3,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Research.Components;
 using Content.Shared.Stacks;
+using Content.Shared.Storage.Events;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -34,6 +35,7 @@ public abstract partial class SharedMaterialStorageSystem : EntitySystem
 
         SubscribeLocalEvent<MaterialStorageComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MaterialStorageComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<MaterialStorageComponent, BagDepositAttemptEvent>(OnBagDeposit);
         SubscribeLocalEvent<MaterialStorageComponent, TechnologyDatabaseModifiedEvent>(OnDatabaseModified);
     }
 
@@ -445,6 +447,14 @@ public abstract partial class SharedMaterialStorageSystem : EntitySystem
         RaiseLocalEvent(uid, ref ev);
         component.MaterialWhiteList = ev.Whitelist;
         Dirty(uid, component);
+    }
+
+    private void OnBagDeposit(Entity<MaterialStorageComponent> ent, ref BagDepositAttemptEvent args)
+    {
+        if (args.Handled || !ent.Comp.InsertOnInteract)
+            return;
+
+        args.Handled = TryInsertMaterialEntity(args.User, args.Item, ent, ent.Comp);
     }
 
     private void OnInteractUsing(EntityUid uid, MaterialStorageComponent component, InteractUsingEvent args)

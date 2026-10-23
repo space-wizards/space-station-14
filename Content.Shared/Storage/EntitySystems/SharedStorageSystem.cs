@@ -146,6 +146,8 @@ public abstract partial class SharedStorageSystem : EntitySystem
         SubscribeLocalEvent<StorageComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
         SubscribeLocalEvent<StorageComponent, AreaPickupDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<StorageComponent, GotReclaimedEvent>(OnReclaimed);
+        SubscribeLocalEvent<StorageComponent, MagnetPickupAttemptEvent>(OnMagnetPickup);
+        SubscribeLocalEvent<StorageComponent, BagDepositAttemptEvent>(OnBagDeposit);
 
         SubscribeLocalEvent<MetaDataComponent, StackCountChangedEvent>(OnStackCountChanged);
 
@@ -166,6 +168,41 @@ public abstract partial class SharedStorageSystem : EntitySystem
         Subs.CVar(_cfg, CCVars.NestedStorage, OnNestedStorageCvar, true);
 
         CacheDefaultStorageSize();
+    }
+
+    private void OnBagDeposit(Entity<StorageComponent> ent, ref BagDepositAttemptEvent args)
+    {
+        if (args.Handled || !ent.Comp.ClickInsert || !CanInteract(args.User, ent))
+            return;
+
+        var attempt = new StorageInteractUsingAttemptEvent();
+        RaiseLocalEvent(ent, ref attempt);
+        if (attempt.Cancelled)
+            return;
+
+        args.Handled = Insert(ent, args.Item, out _, user: args.User, playSound: false);
+    }
+
+    private void OnMagnetPickup(Entity<StorageComponent> ent, ref MagnetPickupAttemptEvent args)
+    {
+        if (args.Handled || _whitelistSystem.IsWhitelistFail(ent.Comp.Whitelist, args.Item))
+            return;
+
+        var xform = Transform(ent);
+        var user = xform.ParentUid;
+        var finalCoords = xform.Coordinates;
+        var moverCoords = TransformSystem.GetMoverCoordinates(ent, xform);
+        var itemXform = Transform(args.Item);
+        var itemMap = TransformSystem.GetMapCoordinates(args.Item, xform: itemXform);
+        var initialCoords = TransformSystem.ToCoordinates(moverCoords.EntityId, itemMap);
+        var initialRotation = itemXform.LocalRotation;
+
+        if (!Insert(ent, args.Item, out _, user: user, storageComp: ent.Comp, playSound: args.PlaySound))
+            return;
+
+        // Use the picked-up item's prototype if merging stacks deletes it on the client.
+        PlayPickupAnimation(args.Item, initialCoords, finalCoords, initialRotation, user);
+        args.Handled = true;
     }
 
     private void OnItemSizeChanged(ref ItemSizeChangedEvent ev)

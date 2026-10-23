@@ -1,4 +1,5 @@
 using Content.Server.Research.Systems;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Research.TechnologyDisk.Components;
 using Content.Shared.UserInterface;
 using Content.Shared.Research;
@@ -44,7 +45,12 @@ public sealed partial class DiskConsoleSystem : EntitySystem
 
     private void OnPrintDisk(EntityUid uid, DiskConsoleComponent component, DiskConsolePrintDiskMessage args)
     {
-        if (HasComp<DiskConsolePrintingComponent>(uid))
+        TryPrintDisk(uid, component);
+    }
+
+    private void TryPrintDisk(EntityUid uid, DiskConsoleComponent component)
+    {
+        if (!this.IsPowered(uid, EntityManager) || HasComp<DiskConsolePrintingComponent>(uid))
             return;
 
         if (!_research.TryGetClientServer(uid, out var server, out var serverComp))

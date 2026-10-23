@@ -12,6 +12,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Stacks;
+using Content.Shared.Storage.Events;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -41,6 +42,13 @@ public abstract partial class SharedMaterialReclaimerSystem : EntitySystem
     [Dependency] private EntityQuery<SolutionTransferComponent> _solutionTransferQuery;
 
     public const string ActiveReclaimerContainerId = "active-material-reclaimer-container";
+
+    [SubscribeLocalEvent]
+    private void OnBagDeposit(Entity<MaterialReclaimerComponent> ent, ref BagDepositAttemptEvent args)
+    {
+        if (!args.Handled)
+            args.Handled = TryStartProcessItem(ent, args.Item, ent.Comp, args.User);
+    }
 
     [SubscribeLocalEvent(before: [typeof(SolutionTransferSystem), typeof(AnchorableSystem)])]
     private void OnInteractUsing(Entity<MaterialReclaimerComponent> entity, ref InteractUsingEvent args)
@@ -135,7 +143,7 @@ public abstract partial class SharedMaterialReclaimerSystem : EntitySystem
         if (user != null)
         {
             _adminLog.Add(LogType.Action,
-                LogImpact.High,
+                LogImpact.Low,
                 $"{ToPrettyString(user.Value):player} destroyed {ToPrettyString(item)} in the material reclaimer, {ToPrettyString(uid)}");
         }
 
