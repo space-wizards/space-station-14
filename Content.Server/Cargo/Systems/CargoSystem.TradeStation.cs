@@ -179,9 +179,10 @@ public sealed partial class CargoSystem
 
     /// <summary>
     /// Sells all goods and adds the money to the stations bank account.
-    /// Deletes the entity after sale and raises <see cref="EntitySoldEvent"/>.
+    /// Deletes the entity after sale.
+    /// <see cref="EntitySoldEvent"/> is raised before deletion and the money is added to the accounts.
     /// The money will be split based on the account distribution unless sold in a lock box,
-    /// Then it will split between the lock box department and cargo based on the <see cref="StationBankAccountComponent.LockboxCut"/>.
+    /// Then it will split between the lockbox's department and the primary bank account based on the <see cref="StationBankAccountComponent.LockboxCut"/>.
     /// Does not check if an entity is valid to sell.
     /// </summary>
     /// <param name="station"> Station which will receive the money from the sale. </param>
@@ -193,6 +194,9 @@ public sealed partial class CargoSystem
     {
         if (goods.Count == 0)
             return false;
+
+        var ev = new EntitySoldEvent(goods.Select(x => x.ent).ToHashSet(), station);
+        RaiseLocalEvent(ref ev);
 
         var baseDistribution = CreateAccountDistribution(station);
         foreach (var (ent, sellComponent, price) in goods)
@@ -212,9 +216,6 @@ public sealed partial class CargoSystem
 
             Del(ent);
         }
-
-        var ev = new EntitySoldEvent(goods.Select(x => x.ent).ToHashSet(), station);
-        RaiseLocalEvent(ref ev);
 
         Dirty(station.Owner, station.Comp);
 
