@@ -250,6 +250,22 @@
     - Janitorial
 
 - type: entity
+  id: BookLogisticsManual
+  parent: BaseGuidebook
+  name: logistics manual
+  description: An official Nanotrasen reference manual that explains the basics of deep-space supply logistics.
+  components:
+  - type: Sprite
+    layers:
+    - state: paper
+    - state: cover_base
+      color: "#D3BB43"
+    - state: icon_box
+  - type: GuideHelp
+    guides:
+    - Cargo
+
+- type: entity
   id: BookHowToRockAndStone
   parent: BaseGuidebook
   name: how to rock and stone
