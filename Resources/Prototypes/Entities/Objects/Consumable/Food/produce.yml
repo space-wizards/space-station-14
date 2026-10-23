@@ -2805,3 +2805,124 @@
         - MobMask
         layer:
         - MobLayer
+
+- type: entity
+  parent: FoodProduceBase
+  id: FoodSunflower
+  name: sunflower
+  description: A bulky flower filled with natural oils.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - oily
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 10
+      - ReagentId: Oil
+        Quantity: 15
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/sunflower.rsi
+    state: produce
+  - type: Item
+    heldPrefix: produce
+  - type: Produce
+    plantId: SunflowerPlants
+  - type: FoodSequenceElement
+    entries:
+      Taco: Sunflower
+      Burger: Sunflower
+  - type: Tag
+    tags:
+    - Flower
+
+- type: entity
+  parent: [ FoodProduceBase, GlowstickBase ]
+  id: FoodSolarflower
+  name: solarflower
+  description: A bulky flower filled with a glisening solution, it just needs a push to get going.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - oily
+    - spicy
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 5
+      - ReagentId: SolarOil
+        Quantity: 15
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/solarflower.rsi
+    layers:
+    - map: [ enum.ExpendableLightVisualLayers.Base ]
+      state: produce
+    - map: [ enum.ExpendableLightVisualLayers.Overlay ]
+      state: produce_spent
+      visible: false
+    - map: [ enum.ExpendableLightVisualLayers.Glow ]
+      state: produce_glow
+      visible: false
+      shader: unshaded
+  - type: Item
+    sprite: Objects/Specific/Hydroponics/solarflower.rsi
+    heldPrefix: unlit
+  - type: Produce
+    plantId: SolarflowerPlants
+  - type: FoodSequenceElement
+    entries:
+      Taco: Solarflower
+      Burger: Solarflower
+  - type: ExpendableLight
+    iconStateLit: produce_glow
+    iconStateSpent: produce_spent
+    litSound:
+      path: /Audio/Items/Toys/toy_rustle.ogg
+      params:
+        volume: -5
+  - type: PointLight
+    enabled: false
+    color: "#fffb00"
+    radius: 5
+  - type: Tag
+    tags:
+    - Flower
+
+- type: entity
+  parent: FoodProduceBase
+  id: FoodShadowflower
+  name: shadowflower
+  description: A bulky flower with a core of darkness.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - oily
+    - cold
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 5
+      - ReagentId: Nyctalon
+        Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/shadowflower.rsi
+  - type: Item
+    heldPrefix: produce
+  - type: Produce
+    plantId: ShadowflowerPlants
+  - type: FoodSequenceElement
+    entries:
+      Taco: Shadowflower
+      Burger: Shadowflower
+  - type: Tag
+    tags:
+    - Flower
