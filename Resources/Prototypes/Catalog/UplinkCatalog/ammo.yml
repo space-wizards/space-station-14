@@ -10,6 +10,8 @@
     Telecrystal: 1
   categories:
   - UplinkAmmo
+  conditions:
+  - !type:RestrictOnEvacCondition
 
 # For the C20R
 - type: listing
