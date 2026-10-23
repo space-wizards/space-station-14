@@ -949,7 +949,7 @@ public sealed partial class AccessReaderSystem : EntitySystem
         Dirty(ent);
     }
 
-    private List<string> GetLocalizedAccessNames(List<HashSet<ProtoId<AccessLevelPrototype>>> accessLists)
+    public List<string> GetLocalizedAccessNames(List<HashSet<ProtoId<AccessLevelPrototype>>> accessLists)
     {
         var localizedNames = new List<string>();
         string? andSeparator = null;
