@@ -248,22 +248,21 @@ public sealed class StatusEffectNewTest : InteractionTest
                 Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.True, "Status effect A was not found on the player");
                 Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusB), Is.False, "Status effect B was found on the player despite never being given");
 
-                Assert.That(_sStatusSystem.TryRemoveStatusEffect(SPlayer, StatusA), Is.True, "TryRemoveStatusEffect for Status A failed!");
-                Assert.That(_sStatusSystem.TryRemoveStatusEffect(SPlayer, StatusB), Is.False, "TryRemoveStatusEffect for Status B (not on the player) somehow succeeded despite this effect not being on the player!?");
+                Assert.That(_sStatusSystem.TryRemoveStatusEffect(SPlayer, StatusA), Is.True, "TryRemoveStatusEffect for Status A failed! (returned false, expected true)");
+                Assert.That(_sStatusSystem.TryRemoveStatusEffect(SPlayer, StatusB), Is.False, "TryRemoveStatusEffect for Status B (not on the player) somehow succeeded despite this effect not being on the player!? (returned true, expected false)");
             }
         });
-
         await Pair.RunUntilSynced(); // have to wait for queued deletion of status effects
         Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.False, "Status effect A was still on the player after being removed!");
     }
 
 
     /// <summary>
-    /// helper method to give SPlayer effects A,B,C,D with duration of null (indefinite) or 20 ticks, and no delay.
+    /// helper method to give SPlayer effects A,B,C,D with duration of null (indefinite) or 20 ticks, with no delay.
     /// </summary>
     /// <param name="duration20">If true, will give effects a duration of 20 ticks. If false, gives duration of null.</param>
     /// <returns>STiming.CurTime as of when the status effects were applied.</returns>
-    private async Task<TimeSpan> TryAddOrRemoveTime_Setup(bool duration20)
+    private async Task<TimeSpan> SetupStatusesSameLength(bool duration20)
     {
         var curTime = TimeSpan.Zero;
         await Server.WaitAssertion(() =>
@@ -273,7 +272,7 @@ public sealed class StatusEffectNewTest : InteractionTest
                 curTime = STiming.CurTime;
                 TimeSpan? duration = duration20 ? TwentyTicks : null;
                 var durationText = duration20 ? "20 ticks" : "indefinite";
-                Constraint durationConstraint = duration20 ? Is.EqualTo(curTime + duration).Within(STiming.TickPeriod) : Is.Null;
+                IResolveConstraint durationConstraint = duration20 ? Is.EqualTo(curTime + duration).Within(STiming.TickPeriod) : Is.Null;
                 
                 Assert.That(_sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, duration), Is.True, $"Status effect A ({durationText} duration) could not be added to player");
                 Assert.That(_sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusB, duration), Is.True, $"Status effect B ({durationText} duration) could not be added to player");
@@ -294,19 +293,20 @@ public sealed class StatusEffectNewTest : InteractionTest
         return curTime;
     }
     
+    #region TryAddTime and TryRemoveTime
+
     [Test, Description("Testing TryAddTime to add status effect duration")]
     public async Task TryAddTime()
     {
-        var curTime = await TryAddOrRemoveTime_Setup(true);
-
+        var curTime = await SetupStatusesSameLength(true);
         await Server.WaitAssertion(() =>
         {
             using (Assert.EnterMultipleScope())
             {
-                Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusA, TenTicks), Is.True, "Unable to use TryAddTime to add 10 ticks to duration of StatusA");
-                Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusB, -TenTicks), Is.True, "Unable to use TryAddTime to add -10 ticks to duration of StatusB");
-                Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusC, TimeSpan.Zero), Is.True, "Unable to use TryAddTime to add zero to duration of StatusC");
-                Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusD, null), Is.True, "Unable to use TryAddTime to add null to duration of StatusD");
+                Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusA, TenTicks), Is.True, "Using use TryAddTime to add 10 ticks to finite duration of StatusA unexpectedly returned false");
+                Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusB, -TenTicks), Is.True, "Using use TryAddTime to add -10 ticks to finite duration of StatusB unexpectedly returned false");
+                Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusC, TimeSpan.Zero), Is.True, "Using use TryAddTime to add zero to finite duration of StatusC unexpectedly returned false");
+                Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusD, null), Is.True, "Using use TryAddTime to add null to finite duration of StatusD (to make it indefinite) unexpectedly returned false");
                 
                 Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var timeA), Is.True, "Could not get time info for effect A");
                 Assert.That(timeA.EndEffectTime, Is.EqualTo(curTime + ThirtyTicks).Within(SGameTiming.TickPeriod), "Adding 10 ticks to 20-tick status effect did not give duration 30");
@@ -320,31 +320,110 @@ public sealed class StatusEffectNewTest : InteractionTest
         });
     }
     
-    [Test, Description("Testing TryAddTime to add status effect duration")]
+    [Test, Description("Testing TryAddTime to add status effect duration to indefinite status effects")]
     public async Task TryAddTime_Null()
     {
-        var curTime = await TryAddOrRemoveTime_Setup(false);
-
+        await SetupStatusesSameLength(false);
         await Server.WaitAssertion(() =>
         {
             using (Assert.EnterMultipleScope())
             {
-                Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusA, TenTicks), Is.True, "Unable to use TryAddTime to add 10 ticks to duration of StatusA");
-                Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusB, -TenTicks), Is.True, "Unable to use TryAddTime to add -10 ticks to duration of StatusB");
-                Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusC, TimeSpan.Zero), Is.True, "Unable to use TryAddTime to add zero to duration of StatusC");
-                Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusD, null), Is.True, "Unable to use TryAddTime to add null to duration of StatusD");
+                Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusA, TenTicks), Is.True, "Using TryAddTime to add 10 ticks to indefinite duration of StatusA unexpectedly returned false");
+                Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusB, -TenTicks), Is.True, "Using TryAddTime to add -10 ticks (subtract 10) to indefinite duration of StatusB unexpectedly returned false");
+                Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusC, TimeSpan.Zero), Is.True, "Using TryAddTime to add zero to indefinite duration of StatusC unexpectedly returned false");
+                Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusD, null), Is.True, "Using TryAddTime to add null to indefinite duration of StatusD (making it indefinite again) unexpectedly returned false");
                 
                 Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var timeA), Is.True, "Could not get time info for effect A");
-                Assert.That(timeA.EndEffectTime, Is.Null, "Adding 10 ticks to 20-tick status effect did not give duration 30");
+                Assert.That(timeA.EndEffectTime, Is.Null, "Adding 10 ticks to indefinite status effect made the duration non-indefinite");
                 Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusB, out var timeB), Is.True, "Could not get time info for effect B");
-                Assert.That(timeB.EndEffectTime, Is.Null, "Adding minus 10 ticks to 20-tick status effect did not give duration 10");
+                Assert.That(timeB.EndEffectTime, Is.Null, "Adding minus 10 ticks to indefinite status effect made the duration non-indefinite");
                 Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusC, out var timeC), Is.True, "Could not get time info for effect C");
-                Assert.That(timeC.EndEffectTime, Is.Null, "Adding 0 ticks to 20-tick status effect did not give duration 20");
+                Assert.That(timeC.EndEffectTime, Is.Null, "Adding 0 ticks to indefinite status effect made the duration non-indefinite");
                 Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusD, out var timeD), Is.True, "Could not get time info for effect D");
-                Assert.That(timeD.EndEffectTime, Is.Null, "Adding null to 20-tick status effect did not make the effect indefinite");
+                Assert.That(timeD.EndEffectTime, Is.Null, "Adding null to indefinite status effect made the duration non-indefinite");
             }
         });
     }
+
+    [Test, Description("Testing TryRemoveTime to remove status effect duration")]
+    public async Task TryRemoveTime()
+    {
+        var curTime = await SetupStatusesSameLength(true);
+        await Server.WaitAssertion(() =>
+        {
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(_sStatusSystem.TryRemoveTime(SPlayer, StatusA, TenTicks), Is.True, "Using TryRemoveTime to subtract 10 ticks from finite duration of StatusA unexpectedly returned false");
+                Assert.That(_sStatusSystem.TryRemoveTime(SPlayer, StatusB, -TenTicks), Is.True, "Using TryRemoveTime to subtract -10 ticks (add 10) from finite duration of StatusB unexpectedly returned false");
+                Assert.That(_sStatusSystem.TryRemoveTime(SPlayer, StatusC, TimeSpan.Zero), Is.True, "Using TryRemoveTime to subtract zero from finite duration of StatusC unexpectedly returned false");
+                Assert.That(_sStatusSystem.TryRemoveTime(SPlayer, StatusD, null), Is.True, "Using TryRemoveTime to subtract null from finite StatusD duration (to remove status) unexpectedly returned false");
+                
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var timeA), Is.True, "Could not get time info for effect A");
+                Assert.That(timeA.EndEffectTime, Is.EqualTo(curTime + TenTicks).Within(SGameTiming.TickPeriod), "Subtracting 10 ticks from 20-tick status effect did not give duration 10");
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusB, out var timeB), Is.True, "Could not get time info for effect B");
+                Assert.That(timeB.EndEffectTime, Is.EqualTo(curTime + ThirtyTicks).Within(SGameTiming.TickPeriod), "Subtracting minus 10 ticks from 20-tick status effect did not give duration 30");
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusC, out var timeC), Is.True, "Could not get time info for effect C");
+                Assert.That(timeC.EndEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(SGameTiming.TickPeriod), "Subtracting 0 ticks from 20-tick status effect did not give duration 20");
+            }
+        });
+        // give the system time to handle the queued removal of status D
+        await Pair.RunUntilSynced();
+        Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusD, out _), Is.False, "TryRemoveTime with null was supposed to remove the status effect; it was not removed.");
+    }
+    
+    [Test, Description("Testing TryRemoveTime to remove status effect duration from indefinite durations")]
+    public async Task TryRemoveTime_Null()
+    {
+        await SetupStatusesSameLength(false);
+        await Server.WaitAssertion(() =>
+        {
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(_sStatusSystem.TryRemoveTime(SPlayer, StatusA, TenTicks), Is.True, "Using TryRemoveTime to subtract 10 ticks from indefinite duration of StatusA unexpectedly returned false");
+                Assert.That(_sStatusSystem.TryRemoveTime(SPlayer, StatusB, -TenTicks), Is.True, "Using TryRemoveTime to subtract -10 ticks (add 10) from indefinite duration of StatusB unexpectedly returned false");
+                Assert.That(_sStatusSystem.TryRemoveTime(SPlayer, StatusC, TimeSpan.Zero), Is.True, "Using TryRemoveTime to subtract zero from indefinite duration of StatusC unexpectedly returned false");
+                Assert.That(_sStatusSystem.TryRemoveTime(SPlayer, StatusD, null), Is.True, "Using TryRemoveTime to subtract null from indefinite StatusD (to remove status) unexpectedly returned false");
+                
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var timeA), Is.True, "Could not get time info for effect A");
+                Assert.That(timeA.EndEffectTime, Is.Null, "Subtracting 10 ticks from indefinite status effect made the duration non-indefinite");
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusB, out var timeB), Is.True, "Could not get time info for effect B");
+                Assert.That(timeB.EndEffectTime, Is.Null, "Subtracting minus 10 ticks from indefinite status effect made the duration non-indefinite");
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusC, out var timeC), Is.True, "Could not get time info for effect C");
+                Assert.That(timeC.EndEffectTime, Is.Null, "Subtracting 0 ticks from indefinite status effect made the duration non-indefinite");
+            }
+        });
+        // give the system time to handle the queued removal of status D
+        await Pair.RunUntilSynced();
+        Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusD, out _), Is.False, "TryRemoveTime with null was supposed to remove the indefinite status effect; it was not removed.");
+    }
+
+    [Test, Description("This is what happens if you use TryAddTime and TryRemoveTime to remove all duration of a status effect/make it negative (setting end time in the past)")]
+    public async Task TryAddTime_TryRemoveTime_RemoveAllDuration()
+    {
+        await SetupStatusesSameLength(true);
+        await Server.WaitAssertion(() =>
+        {
+            using (Assert.EnterMultipleScope())
+            {
+                // using TryAddTime and TryRemoveTime to reduce remaining effect durations to zero/negative
+                Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusA, -TwentyTicks), Is.True, "Using use TryAddTime to add -20 ticks (subtract 20) to 20-tick duration of StatusA unexpectedly returned false");
+                Assert.That(_sStatusSystem.TryAddTime(SPlayer, StatusB, -ThirtyTicks), Is.True, "Using use TryAddTime to add -30 ticks (subtract 30) to 20-tick duration of StatusB unexpectedly returned false");
+                Assert.That(_sStatusSystem.TryRemoveTime(SPlayer, StatusC, TwentyTicks), Is.True, "Using TryRemoveTime to subtract 20 ticks from 20-tick duration of StatusC unexpectedly returned false");
+                Assert.That(_sStatusSystem.TryRemoveTime(SPlayer, StatusD, ThirtyTicks), Is.True, "Using TryRemoveTime to subtract 30 ticks from 20-tick duration of StatusD unexpectedly returned false");
+            }
+        });
+        // give the system time to handle the queued removal of statuses
+        await Pair.RunUntilSynced();
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusA, out _), Is.False, "TryAddTime to set remaining duration of StatusA to zero did not result in status getting removed.");
+            Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusB, out _), Is.False, "TryAddTime to set remaining duration of StatusB to negative did not result in status getting removed.");
+            Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusC, out _), Is.False, "TryRemoveTime to set remaining duration of StatusC to zero did not result in status getting removed.");
+            Assert.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusD, out _), Is.False, "TryRemoveTime to set remaining duration of StatusD to zero did not result in status getting removed.");
+        }
+    }
+
+    #endregion TryAddTime and TryRemoveTime
 
     [Test, Description("Testing TryAddTime and TryRemoveTime to add and subtract effect duration")]
     public async Task TestAddRemoveEffectTime()
