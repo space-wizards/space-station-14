@@ -43,7 +43,7 @@ public sealed partial class StampComponent : Component
     /// The color of the ink used by the stamp in UIs
     /// </summary>
     [DataField("stampedColor")]
-    public Color StampedColor = Color.FromHex("#BB3232"); // StyleNano.DangerousRedFore
+    public Color StampedColor = Color.FromHex("#BB3232");
 
     /// <summary>
     /// The sound when stamp stamped
