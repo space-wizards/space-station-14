@@ -50,4 +50,14 @@
   A [color=red]Revolutionary[/color] is a crew member that has been converted by a [bold][color=#5e9cff]Head Revolutionary[/color][/bold].
 
   [bold][color=red]Revolutionaries[/color] can't convert people themselves,[/bold] but they're more than capable of doing dirty work and carrying out orders.
+
+  All revolutionaries have access to the [bold][color=#318df8]Undercommon[/color][/bold] radio channel (:r). This channel is available only as long as the [bold][color=#2cdb2c]Common[/color][/bold] radio channel is online. Should the common radio server be taken offline such as through a power outage or intentional disabling, this channel will go down too.
+  As a revolutionary, consider setting up a secondary common server to ensure the tyrants of the station don't take away a key communication tool.
+
+  <Box>
+    <GuideEntityEmbed Entity="BaseBallBat"/>
+    <GuideEntityEmbed Entity="TelecomServerFilledCommon"/>
+    <GuideEntityEmbed Entity="ClothingHeadsetGrey"/>
+  </Box>
+
 </Document>
