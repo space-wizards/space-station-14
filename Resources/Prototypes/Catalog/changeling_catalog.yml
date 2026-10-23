@@ -147,6 +147,21 @@
   productAction: ActionChangelingStingArmblade
 
 - type: listing
+  id: ChangelingStingHemotoxin
+  name: changeling-catalog-hemotoxin-sting-name
+  description: changeling-catalog-hemotoxin-sting-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: hemotoxin_sting }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 15
+  categories:
+  - ChangelingStoreCombat
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingStingHemotoxin
+
+- type: listing
   id: ChangelingLastResort
   name: changeling-catalog-last-resort-name
   description: changeling-catalog-last-resort-desc
@@ -180,19 +195,24 @@
   productComponents: ChangelingNightVisionDummy
 
 - type: listing
-  id: ChangelingScreech
-  name: changeling-catalog-screech-name
-  description: changeling-catalog-screech-desc
-  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: screech }
+  id: ChangelingHorrorForm
+  name: changeling-catalog-horror-form-name
+  description: changeling-catalog-horror-form-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: horror_shop }
   applyToMob: true
   cost:
-    ChangelingDNA: 20
+    ChangelingDNA: 20 # kinda cheap because it burns thru DNA
   categories:
   - ChangelingStoreCombat
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-  productAction: ActionChangelingScreech
+  - !type:BuyerChangelingIdentityCountCondition
+    requireDevour: true
+    count: 3
+    lock: true
+  productEvent: !type:ChangelingUnlockHorrorEvent
+  raiseProductEventOnUser: true
 
 - type: listing
   id: ChangelingFakeMindshield
