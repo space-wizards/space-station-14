@@ -247,6 +247,7 @@
       - NukeDisk # Because a core mechanic of nukies should not be "where in this bag is the fucking disk"
       - SecretStash # no recursive stashing
       - WrappedParcel # cannot stash a parcel to use recursion anyway
+      - Storage # cannot store storages
       tags:
       - QuantumSpinInverter # It will cause issues with the grinder...
       - FakeNukeDisk # For parity with NukeDisk
