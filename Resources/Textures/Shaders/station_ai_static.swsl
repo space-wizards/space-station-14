@@ -1,0 +1,31 @@
+light_mode unshaded;
+
+uniform highp vec4 worldOriginAndCellSize;
+uniform highp vec4 worldAxes;
+
+const highp float MinCellSize = 0.0001;
+const mediump float StaticFrameRate = 30.0;
+const mediump float HashScale = 0.1031;
+const mediump float HashOffset = 33.33;
+const mediump float HashWrap = 8192.0;
+const mediump vec2 FrameOffset = vec2(197.0, 311.0);
+const mediump float StaticBaseBrightness = 0.05;
+const mediump float StaticBrightnessRange = 0.2;
+
+mediump float aiStaticHash(highp vec2 value) {
+    mediump vec3 p3 = fract(vec3(value.xyx) * HashScale);
+    p3 += dot(p3, p3.yzx + HashOffset);
+    return fract((p3.x + p3.y) * p3.z);
+}
+
+void fragment() {
+    highp vec2 worldOrigin = worldOriginAndCellSize.xy;
+    highp vec2 worldXAxis = worldAxes.xy;
+    highp vec2 worldYAxis = worldAxes.zw;
+    highp vec2 worldPos = worldOrigin + worldXAxis * UV2.x + worldYAxis * UV2.y;
+    highp vec2 coords = floor(worldPos / max(worldOriginAndCellSize.z, MinCellSize));
+    mediump float frame = mod(floor(TIME * StaticFrameRate), HashWrap);
+    mediump float value = aiStaticHash(mod(coords + frame * FrameOffset, HashWrap));
+    mediump vec3 color = vec3(StaticBaseBrightness + value * StaticBrightnessRange);
+    COLOR = vec4(color, 1.0);
+}
