@@ -7,30 +7,20 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Labels.EntitySystems;
 
 public abstract partial class SharedHandLabelerSystem : EntitySystem
 {
+    [Dependency] private ActorSystem _actor = default!;
     [Dependency] protected SharedUserInterfaceSystem UserInterfaceSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private LabelSystem _labelSystem = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<HandLabelerComponent, AfterInteractEvent>(AfterInteractOn);
-        SubscribeLocalEvent<HandLabelerComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
-        SubscribeLocalEvent<HandLabelerComponent, ExaminedEvent>(OnExamined);
-        // Bound UI subscriptions
-        SubscribeLocalEvent<HandLabelerComponent, HandLabelerLabelChangedMessage>(OnHandLabelerLabelChanged);
-        SubscribeLocalEvent<HandLabelerComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<HandLabelerComponent, ComponentHandleState>(OnHandleState);
-    }
-
+    [SubscribeLocalEvent]
     private void OnGetState(Entity<HandLabelerComponent> ent, ref ComponentGetState args)
     {
         args.State = new HandLabelerComponentState(ent.Comp.AssignedLabel)
@@ -39,6 +29,7 @@ public abstract partial class SharedHandLabelerSystem : EntitySystem
         };
     }
 
+    [SubscribeLocalEvent]
     private void OnHandleState(Entity<HandLabelerComponent> ent, ref ComponentHandleState args)
     {
         if (args.Current is not HandLabelerComponentState state)
@@ -65,7 +56,7 @@ public abstract partial class SharedHandLabelerSystem : EntitySystem
             return;
         }
 
-        _labelSystem.Label(target, ent.Comp.AssignedLabel);
+        _labelSystem.Label(target, ent.Comp.AssignedLabel, labelApplier: _actor.GetSession(user));
 
         _popupSystem.PopupEntity(Loc.GetString("hand-labeler-successfully-applied"), user, user);
 
@@ -79,7 +70,7 @@ public abstract partial class SharedHandLabelerSystem : EntitySystem
         if (!_labelSystem.HasLabel(target))
             return;
 
-        _labelSystem.Label(target, null);
+        _labelSystem.Label(target, null, labelApplier: null);
 
         _popupSystem.PopupEntity(Loc.GetString("hand-labeler-successfully-removed"), user, user);
 
@@ -88,6 +79,7 @@ public abstract partial class SharedHandLabelerSystem : EntitySystem
             $"{ToPrettyString(user):user} removed label from {ToPrettyString(target):target} with {ToPrettyString(uid):labeler}");
     }
 
+    [SubscribeLocalEvent]
     private void OnUtilityVerb(Entity<HandLabelerComponent> ent, ref GetVerbsEvent<UtilityVerb> args)
     {
         if (args.Target is not { Valid: true } target || !_whitelistSystem.CheckBoth(target, ent.Comp.Blacklist, ent.Comp.Whitelist) || !args.CanAccess)
@@ -128,6 +120,7 @@ public abstract partial class SharedHandLabelerSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void AfterInteractOn(Entity<HandLabelerComponent> ent, ref AfterInteractEvent args)
     {
         if (args.Target is not { Valid: true } target || !_whitelistSystem.CheckBoth(target, ent.Comp.Blacklist, ent.Comp.Whitelist) || !args.CanReach)
@@ -136,6 +129,7 @@ public abstract partial class SharedHandLabelerSystem : EntitySystem
         AddLabelTo(ent, args.User, target);
     }
 
+    [SubscribeLocalEvent]
     private void OnHandLabelerLabelChanged(EntityUid uid, HandLabelerComponent handLabeler, HandLabelerLabelChangedMessage args)
     {
         var label = args.Label.Trim();
@@ -148,6 +142,7 @@ public abstract partial class SharedHandLabelerSystem : EntitySystem
             $"{ToPrettyString(args.Actor):user} set {ToPrettyString(uid):labeler} to apply label \"{handLabeler.AssignedLabel}\"");
     }
 
+    [SubscribeLocalEvent]
     private void OnExamined(Entity<HandLabelerComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
