@@ -70,7 +70,7 @@ public sealed partial class BotanySeedSystem : EntitySystem
             _itemSlots.TryEjectToHands(args.Seed, paperLabel.LabelSlot, args.User);
 
         _plantTray.PlantingPlantInTray(ent.Owner, plantUid, args.Seed.Comp.HealthOverride);
-        PredictedQueueDel(args.Seed);
+        QueueDel(args.Seed);
 
         if (plantData.PlantLogImpact != null)
         {

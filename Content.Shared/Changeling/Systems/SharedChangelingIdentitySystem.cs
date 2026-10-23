@@ -271,7 +271,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
             dropped.Identity = null;
         }
 
-        PredictedQueueDel(identity);
+        QueueDel(identity);
 
         if (toDrop.Count > 0)
         {

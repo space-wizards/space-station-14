@@ -45,7 +45,7 @@ public sealed partial class SeedExtractorSystem : EntitySystem
         _popup.PopupCursor(Loc.GetString("seed-extractor-component-interact-message", ("name", args.Used)),
             args.User);
 
-        PredictedQueueDel(args.Used);
+        QueueDel(args.Used);
         args.Handled = true;
 
         var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));

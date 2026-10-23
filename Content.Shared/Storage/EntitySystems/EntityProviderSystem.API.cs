@@ -116,7 +116,7 @@ public sealed partial class EntityProviderSystem
         Dirty(provider);
 
         if (provider.Comp.DeleteIfEmpty && provider.Comp.EntityCounter.Count == 0)
-            PredictedQueueDel(provider);
+            QueueDel(provider);
 
         return true;
     }

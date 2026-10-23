@@ -284,7 +284,7 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
 
         ent.Comp.Program = null;
         ent.Comp.AudioStream = _audioSystem.Stop(ent.Comp.AudioStream);
-        ent.Comp.EndTime = null; // It's important that we do this first or PredictedQueueDelete will fail to remove the entity from the container because the grinder is still active.
+        ent.Comp.EndTime = null; // It's important that we do this first or QueueDelete will fail to remove the entity from the container because the grinder is still active.
         Dirty(ent);
         // Remove deferred to avoid modifying the component we are currently enumerating over in the update loop.
         RemCompDeferred<ActiveReagentGrinderComponent>(ent);

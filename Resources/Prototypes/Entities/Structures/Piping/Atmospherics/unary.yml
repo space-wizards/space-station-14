@@ -19,6 +19,7 @@
           nodeGroupID: Pipe
           pipeDirection: South
     - type: CollideOnAnchor
+    - type: SandboxCopyable
 
 - type: entity
   parent: [GasUnaryBase, AirSensorBase]
@@ -553,4 +554,3 @@
   - type: GuideHelp
     guides:
     - GasCondensing
-
