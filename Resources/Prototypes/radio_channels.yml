@@ -63,6 +63,17 @@
   color: "#b48b57"
 
 - type: radioChannel
+  id: Undercommon
+  name: chat-radio-undercommon
+  keycode: 'r'
+  frequency: 145.8
+  color: "#447e2a"
+  whitelist:
+    components:
+    - HeadRevolutionary
+    - Revolutionary
+
+- type: radioChannel
   id: Syndicate
   name: chat-radio-syndicate
   keycode: 't'
