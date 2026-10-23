@@ -12,7 +12,9 @@ public sealed partial class StatusEffectsSystem
     /// </summary>
     /// <param name="target">The target entity to which the effect should be added.</param>
     /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has StatusEffectComponent on it.</param>
-    /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.</param>
+    /// <param name="duration">Duration to add to the status effect (will attempt to add this to duration of existing status effect).
+    /// Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.
+    /// Method will do nothing and return false if a value of zero is given.</param>
     /// <param name="delay">The delay of the effect. If a start time already exists, the closest time takes precedence. Leave null for the effect to be instant.</param>
     /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if it doesn't exist.</param>
     /// <returns>True if effect exists and its duration is set properly, false in case effect cannot be applied.</returns>
@@ -24,13 +26,13 @@ public sealed partial class StatusEffectsSystem
         TimeSpan? delay = null
     )
     {
+        // We check to make sure time is not zero here because sometimes you want to use TryAddStatusEffect to remove duration instead...
         if (duration == TimeSpan.Zero)
         {
             statusEffect = null;
             return false;
         }
 
-        // We check to make sure time is greater than zero here because sometimes you want to use TryAddStatusEffect to remove duration instead...
         if (!TryGetStatusEffect(target, effectProto, out statusEffect))
             return TryAddStatusEffect(target, effectProto, out statusEffect, duration, delay);
 
@@ -298,8 +300,8 @@ public sealed partial class StatusEffectsSystem
     /// <param name="uid">The target entity on which the effect is applied.</param>
     /// <param name="effectProto">The prototype ID of the status effect to modify.</param>
     /// <param name="time">
-    /// The time adjustment to apply to the status effect. Positive values extend the duration,
-    /// while negative values reduce it. Null removes the status effect.
+    /// The time adjustment to apply to the status effect. Positive values reduce the duration,
+    /// while negative values extend it. Null removes the status effect.
     /// </param>
     /// <returns> True if duration was edited successfully, false otherwise.</returns>
     public bool TryRemoveTime(EntityUid uid, EntProtoId effectProto, TimeSpan? time)
