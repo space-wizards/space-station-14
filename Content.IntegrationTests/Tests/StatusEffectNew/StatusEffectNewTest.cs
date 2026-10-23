@@ -2,6 +2,8 @@ using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.StatusEffectNew.Components;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using static Content.IntegrationTests.Tests.StatusEffectNew.StatusEffectNewTestPrototypes;
 
 namespace Content.IntegrationTests.Tests.StatusEffectNew;
@@ -30,21 +32,29 @@ public sealed class StatusEffectNewTest : InteractionTest
     /// </summary>
     private TimeSpan ThirtyTicks => TenTicks * 3;
 
-    [Test, Description("Test that valid status effects can be added with TrySetStatusEffectDuration (and that invalid ones are rejected)")]
-    public async Task TestAddNewStatusEffects_TrySetStatusEffectDuration()
+    #region Add new status effects
+    
+    /// <summary>
+    /// Helper method to test the various methods which can be used to add a new status effect to an entity
+    /// (these being TrySetStatusEffectDuration, TryAddStatusEffectDuration, and TryUpdateStatusEffectDuration).
+    /// Call this with each method (and the method name) to try applying statuses with them, and ensure they have been applied.
+    /// </summary>
+    /// <param name="addStatusEffectMethod">The method from StatusEffectsSystem being used to add these status effects.</param>
+    /// <param name="methodName">The name of the method we passed to this (for use in error messages)</param>
+    private async Task TestAddNewStatusEffects(Func<EntityUid, EntProtoId, TimeSpan?, TimeSpan?, bool> addStatusEffectMethod, string methodName)
     {
         var curTime = TimeSpan.Zero;
         await Server.WaitAssertion(() =>
         {
             using (Assert.EnterMultipleScope())
             {
-                Assert.That(_sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA), Is.True, "adding an indefinite status effect via TrySetStatusEffectDuration failed!");
+                Assert.That(addStatusEffectMethod(SPlayer, StatusA, null, null), Is.True, $"adding an indefinite status effect via {methodName} failed!");
                 curTime = STiming.CurTime;
-                Assert.That(_sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusB, TenTicks), Is.True, "adding a status effect with duration via TrySetStatusEffectDuration failed!");
+                Assert.That(addStatusEffectMethod(SPlayer, StatusB, TenTicks, null), Is.True, $"adding a status effect with duration via {methodName} failed!");
                 // zero duration should be rejected
-                Assert.That(_sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusC, TimeSpan.Zero), Is.False, "adding a status effect with zero duration via TrySetStatusEffectDuration didn't get rejected!");
+                Assert.That(addStatusEffectMethod(SPlayer, StatusC, TimeSpan.Zero, null), Is.False, $"adding a status effect with zero duration via {methodName} didn't get rejected!");
                 // checking to ensure that a negative duration gets rejected
-                Assert.That(_sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusD, -TenTicks), Is.False, "adding a status effect with negative duration via TrySetStatusEffectDuration didn't get rejected!");
+                Assert.That(addStatusEffectMethod(SPlayer, StatusD, -TenTicks, null), Is.False, $"adding a status effect with negative duration via {methodName} didn't get rejected!");
             }
         });
         using (Assert.EnterMultipleScope())
@@ -60,71 +70,27 @@ public sealed class StatusEffectNewTest : InteractionTest
             Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusC), Is.False, "Status effect C was found despite having zero duration");
             Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusD), Is.False, "Status effect D was found despite having a negative duration");
         }
+    }
+
+    [Test, Description("Test that valid status effects can be added with TrySetStatusEffectDuration (and that invalid ones are rejected)")]
+    public async Task TestAddNewStatusEffects_TrySetStatusEffectDuration()
+    {
+        await TestAddNewStatusEffects(_sStatusSystem.TrySetStatusEffectDuration, "TrySetStatusEffectDuration");
     }
 
     [Test, Description("Test that valid status effects can be added with TrySetStatusEffectDuration (and that invalid ones are rejected)")]
     public async Task TestAddNewStatusEffects_TryAddStatusEffectDuration()
     {
-        var curTime = TimeSpan.Zero;
-        await Server.WaitAssertion(() =>
-        {
-            using (Assert.EnterMultipleScope())
-            {
-                Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusA, null), Is.True, "adding an indefinite status effect via TryAddStatusEffectDuration failed!");
-                curTime = STiming.CurTime;
-                Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusB, TenTicks), Is.True, "adding a status effect with duration via TryAddStatusEffectDuration failed!");
-                // zero duration should be rejected
-                Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusC, TimeSpan.Zero), Is.False, "adding a status effect with zero duration via TryAddStatusEffectDuration didn't get rejected!");
-                // checking to ensure that a negative duration gets rejected
-                Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusD, -TenTicks), Is.False, "adding a status effect with negative duration via TryAddStatusEffectDuration didn't get rejected!");
-            }
-        });
-        using (Assert.EnterMultipleScope())
-        {
-            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.True, "Status effect A was not found on the player");
-            Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var timeA), Is.True, "Could not get time info for effect A");
-            Assert.That(timeA.EndEffectTime, Is.Null, "Status effect A did not have an end time of null");
-
-            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusB), Is.True, "Status effect B was not found on the player");
-            Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusB, out var timeB), Is.True, "Could not get time info for effect B");
-            Assert.That(timeB.EndEffectTime, Is.EqualTo(curTime + TenTicks).Within(SGameTiming.TickPeriod), "Status effect B did not have an end time of 10 game ticks after start time");
-
-            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusC), Is.False, "Status effect C was found despite having zero duration");
-            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusD), Is.False, "Status effect D was found despite having a negative duration");
-        }
+        await TestAddNewStatusEffects(_sStatusSystem.TryAddStatusEffectDuration, "TryAddStatusEffectDuration");
     }
 
     [Test, Description("Test that valid status effects can be added with TryUpdateStatusEffectDuration (and that invalid ones are rejected)")]
     public async Task TestAddNewStatusEffects_TryUpdateStatusEffectDuration()
     {
-        var curTime = TimeSpan.Zero;
-        await Server.WaitAssertion(() =>
-        {
-            using (Assert.EnterMultipleScope())
-            {
-                Assert.That(_sStatusSystem.TryUpdateStatusEffectDuration(SPlayer, StatusA), Is.True, "adding an indefinite status effect via TryUpdateStatusEffectDuration failed!");
-                curTime = STiming.CurTime;
-                Assert.That(_sStatusSystem.TryUpdateStatusEffectDuration(SPlayer, StatusB, TenTicks), Is.True, "adding a status effect with duration via TryUpdateStatusEffectDuration failed!");
-                // zero duration should be rejected
-                Assert.That(_sStatusSystem.TryUpdateStatusEffectDuration(SPlayer, StatusC, TimeSpan.Zero), Is.False, "adding a status effect with zero duration via TryUpdateStatusEffectDuration didn't get rejected!");
-                // checking to ensure that a negative duration gets rejected
-                Assert.That(_sStatusSystem.TryUpdateStatusEffectDuration(SPlayer, StatusD, -TenTicks), Is.False, "adding a status effect with negative duration via TryUpdateStatusEffectDuration didn't get rejected!");
-            }
-        });
-        using (Assert.EnterMultipleScope())
-        {
-            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.True, "Status effect A was not found on the player");
-            Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var timeA), Is.True, "Could not get time info for effect A");
-            Assert.That(timeA.EndEffectTime, Is.Null, "Status effect A did not have an end time of null");
-
-            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusB), Is.True, "Status effect B was not found on the player");
-            Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusB, out var timeB), Is.True, "Could not get time info for effect B");
-            Assert.That(timeB.EndEffectTime, Is.EqualTo(curTime + TenTicks).Within(SGameTiming.TickPeriod), "Status effect B did not have an end time of 10 game ticks after start time");
-
-            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusC), Is.False, "Status effect C was found despite having zero duration");
-            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusD), Is.False, "Status effect D was found despite having a negative duration");
-        }
+        await TestAddNewStatusEffects(_sStatusSystem.TryUpdateStatusEffectDuration, "TryUpdateStatusEffectDuration");
     }
+    
+    #endregion Add new status effects
     
     [Test, Description("Test that the delays of status effects can be set")]
     public async Task TestSetDelays()
