@@ -5,7 +5,7 @@ using Content.Shared.Power.EntitySystems;
 namespace Content.Server.Power.EntitySystems;
 
 /// <inheritdoc/>>
-public sealed partial class PowerStateSystem : SharedPowerStateSystem
+public sealed partial class ServerPowerStateSystem : PowerStateSystem
 {
     [Dependency] private EntityQuery<PowerConsumerComponent> _powerConsumerQuery;
 
@@ -18,7 +18,7 @@ public sealed partial class PowerStateSystem : SharedPowerStateSystem
         if (ent.Comp.EnsureApc)
             EnsureComp<ApcPowerReceiverComponent>(ent);
 
-        var isPowered = SetPowerLoadGetIsPowered(ent, ent.Comp.IsWorking);
+        var isPowered = SetPowerLoadGetHasPower(ent, ent.Comp.IsTurnedOn);
         UpdateAppearance(ent, isPowered);
     }
 
@@ -28,17 +28,17 @@ public sealed partial class PowerStateSystem : SharedPowerStateSystem
     [SubscribeLocalEvent]
     private void ReceivedChanged(Entity<PowerStateComponent> ent, ref PowerConsumerReceivedChanged args)
     {
-        if (!ent.Comp.IsWorking)
+        if (!ent.Comp.IsTurnedOn)
             return;
 
-        var isPowered = args.ReceivedPower >= args.DrawRate;
-        UpdateAppearance(ent, isPowered);
+        var hasPower = args.ReceivedPower >= args.DrawRate;
+        SetIsPoweredState(ent, hasPower);
     }
 
     /// <inheritdoc/>>
-    protected override bool SetPowerLoadGetIsPowered(Entity<PowerStateComponent> ent, bool isWorking)
+    protected override bool SetPowerLoadGetHasPower(Entity<PowerStateComponent> ent, bool isWorking)
     {
-        var isPowered = base.SetPowerLoadGetIsPowered(ent, isWorking);
+        var isPowered = base.SetPowerLoadGetHasPower(ent, isWorking);
         if (isPowered)
             return isPowered;
 

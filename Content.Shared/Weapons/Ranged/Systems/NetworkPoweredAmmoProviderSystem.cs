@@ -21,7 +21,7 @@ public abstract partial class NetworkPoweredAmmoProviderSystem : EntitySystem
 {
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] protected SharedGunSystem Gun = default!;
-    [Dependency] protected SharedPowerStateSystem PowerState = default!;
+    [Dependency] protected PowerStateSystem PowerState = default!;
     [Dependency] private LockSystem _lock = default!;
 
     /// <summary>
@@ -101,7 +101,7 @@ public abstract partial class NetworkPoweredAmmoProviderSystem : EntitySystem
     private void OnNetworkTakeAmmo(Entity<NetworkPoweredAmmoProviderComponent> ent, ref TakeAmmoEvent args)
     {
         var shots = args.Shots;
-        if (shots == 0 || !ent.Comp.IsPowered)
+        if (shots == 0)
             return;
 
         var entityCoordinates = args.Coordinates;

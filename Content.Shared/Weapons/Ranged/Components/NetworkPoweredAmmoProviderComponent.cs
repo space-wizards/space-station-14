@@ -24,12 +24,6 @@ public sealed partial class NetworkPoweredAmmoProviderComponent : AmmoProviderCo
     public EntProtoId Prototype;
 
     /// <summary>
-    /// Whether the power switch is on AND the machine has enough power (so is actively firing)
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool IsPowered;
-
-    /// <summary>
     /// Signal port that turns on the emitter.
     /// </summary>
     [DataField]

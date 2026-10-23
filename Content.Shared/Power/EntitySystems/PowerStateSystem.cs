@@ -7,7 +7,7 @@ namespace Content.Shared.Power.EntitySystems;
 /// Generic system that handles entities with <see cref="PowerStateComponent"/>.
 /// Used for simple machines that only need to switch between "idle" and "working" power states.
 /// </summary>
-public abstract partial class SharedPowerStateSystem : EntitySystem
+public abstract partial class PowerStateSystem : EntitySystem
 {
     [Dependency] private SharedPowerReceiverSystem _powerReceiverSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
@@ -25,17 +25,18 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
         if (!_powerStateQuery.Resolve(ent, ref ent.Comp))
             return;
 
-        if (ent.Comp.IsWorking == isWorking)
+        if (ent.Comp.IsTurnedOn == isWorking)
             return;
 
-        ent.Comp.IsWorking = isWorking;
+        ent.Comp.IsTurnedOn = isWorking;
 
         var powerStateEnt = (ent, ent.Comp);
-        var isPowered = SetPowerLoadGetIsPowered(powerStateEnt, isWorking);
-        UpdateAppearance(powerStateEnt, isPowered);
-
-        var ev = new PowerStateChanged(isWorking);
+        var hasPower = SetPowerLoadGetHasPower(powerStateEnt, isWorking);
+        
+        var ev = new TurnedOnStateChanged(isWorking);
         RaiseLocalEvent(ent, ref ev);
+
+        SetIsPoweredState(powerStateEnt, hasPower);
     }
 
     /// <summary>
@@ -66,7 +67,7 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
         if (!_powerStateQuery.Resolve(ent, ref ent.Comp))
             return false;
 
-        return ent.Comp.IsWorking;
+        return ent.Comp.IsTurnedOn;
     }
 
     /// <summary>
@@ -75,8 +76,10 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnApcChanged(Entity<PowerStateComponent> ent, ref PowerChangedEvent args)
     {
-        if (!ent.Comp.IsWorking)
+        if (!ent.Comp.IsTurnedOn)
             return;
+
+        SetIsPoweredState(ent, args.Powered);
 
         UpdateAppearance(ent, args.Powered);
     }
@@ -84,36 +87,63 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
     /// <summary>
     /// Sets up power load for provided working state and return if device is sufficiently powered.
     /// </summary>
-    protected virtual bool SetPowerLoadGetIsPowered(Entity<PowerStateComponent> ent, bool isWorking)
+    protected virtual bool SetPowerLoadGetHasPower(Entity<PowerStateComponent> ent, bool isWorking)
     {
         SharedApcPowerReceiverComponent? apcPower = null;
         if (_powerReceiverSystem.ResolveApc(ent, ref apcPower))
         {
             var powerLoadToSet = isWorking ? ent.Comp.WorkingPowerDraw : ent.Comp.IdlePowerDraw;
-            _powerReceiverSystem.SetLoad((ent, apcPower), powerLoadToSet);
-            return apcPower.Powered;
+            var apcPowerEnt = (ent, apcPower);
+            _powerReceiverSystem.SetLoad(apcPowerEnt, powerLoadToSet);
+            // this will not react to power load instantly, but will mark if device is powered at-all.
+            // Could provide one-tick move before powered will be updated
+            // and PoweredChangedEvent is going to shut device down due to shortage
+            return _powerReceiverSystem.IsPowered(apcPowerEnt);
         }
 
         return false;
     }
 
     /// <summary>
-    /// Updates flags for visual state according to <see cref="PowerStateComponent.IsWorking"/>
-    /// and <see cref="isPowered"/> flags (making 3 states of <see cref="PowerStateDeviceVisualState"/>
+    /// Set `powered` flag, update appearance and send event if needed.
+    /// </summary>
+    /// <param name="ent">Entity to update.</param>
+    /// <param name="hasPower">Is entity getting enough power to operate properly?</param>
+    protected void SetIsPoweredState(Entity<PowerStateComponent> ent, bool hasPower)
+    {
+        UpdateAppearance(ent, hasPower);
+
+        var isPowered = ent.Comp.IsTurnedOn && hasPower;
+        if (ent.Comp.IsOperating == isPowered)
+            return;
+
+        ent.Comp.IsOperating = isPowered;
+        Dirty(ent);
+
+        var ev = new OperatingStateChanged(isPowered);
+        RaiseLocalEvent(ent, ref ev);
+    }
+
+    /// <summary>
+    /// Updates flags for visual state according to <see cref="PowerStateComponent.IsTurnedOn"/>
+    /// and <see cref="hasPower"/> flags (making 3 states of <see cref="PowerStateDeviceVisualState"/>
     /// as a result).
     /// </summary>
     /// <param name="ent">Entity that requires visual state update.</param>
-    /// <param name="isPowered">Is device sufficiently powered?</param>
-    protected void UpdateAppearance(Entity<PowerStateComponent> ent, bool isPowered)
+    /// <param name="hasPower">Is device sufficiently powered?</param>
+    protected void UpdateAppearance(Entity<PowerStateComponent> ent, bool hasPower)
     {
         PowerStateDeviceVisualState state;
-        if (isPowered && ent.Comp.IsWorking)
+        if (hasPower && ent.Comp.IsTurnedOn)
             state = PowerStateDeviceVisualState.On;
-        else if (ent.Comp.IsWorking)
+        else if (ent.Comp.IsTurnedOn)
             state = PowerStateDeviceVisualState.Underpowered;
         else
             state = PowerStateDeviceVisualState.Off;
 
+        if(_appearance.TryGetData(ent, PowerStateDeviceVisuals.VisualState, out PowerStateDeviceVisualState current) && current == state)
+            return;
+        
         _appearance.SetData(ent, PowerStateDeviceVisuals.VisualState, state);
     }
 }
@@ -122,4 +152,10 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
 /// Event of changing power state of entity.
 /// </summary>
 [ByRefEvent]
-public record struct PowerStateChanged(bool IsWorking);
+public record struct TurnedOnStateChanged(bool IsTurnedOn);
+
+/// <summary>
+/// Event of changing if device is operating properly - power demand is met, and it is turned ON.
+/// </summary>
+[ByRefEvent]
+public record struct OperatingStateChanged(bool IsOperating);

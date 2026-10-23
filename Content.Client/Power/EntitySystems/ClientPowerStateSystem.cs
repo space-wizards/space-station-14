@@ -5,7 +5,7 @@ using Robust.Client.GameObjects;
 namespace Content.Client.Power.EntitySystems;
 
 /// <inheritdoc/>
-public sealed partial class PowerStateSystem : SharedPowerStateSystem
+public sealed partial class ClientPowerStateSystem : PowerStateSystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SpriteSystem _sprite = default!;

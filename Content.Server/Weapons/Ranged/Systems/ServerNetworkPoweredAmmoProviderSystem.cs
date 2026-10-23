@@ -1,7 +1,6 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Database;
-using Content.Shared.Power;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Physics;
@@ -14,28 +13,10 @@ public sealed partial class ServerNetworkPoweredAmmoProviderSystem : NetworkPowe
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;
 
-    /// <summary>
-    /// Turn on/off based on power feed.
-    /// </summary>
     [SubscribeLocalEvent]
-    private void ReceivedChanged(Entity<NetworkPoweredAmmoProviderComponent> ent, ref PowerConsumerReceivedChanged args)
+    private void OnOperatingChanged(Entity<NetworkPoweredAmmoProviderComponent> ent, ref OperatingStateChanged operatingState)
     {
-        if (!PowerState.GetWorkingState(ent.Owner))
-            return;
-
-        SetPoweredState(ent, !(args.ReceivedPower < args.DrawRate));
-    }
-
-    /// <summary>
-    /// Turn on/off based on power feed.
-    /// </summary>
-    [SubscribeLocalEvent]
-    private void OnApcChanged(Entity<NetworkPoweredAmmoProviderComponent> ent, ref PowerChangedEvent args)
-    {
-        if (!PowerState.GetWorkingState(ent.Owner))
-            return;
-
-        SetPoweredState(ent, args.Powered);
+        Gun.SetEnabled(ent.Owner, operatingState.IsOperating);
     }
 
     /// <inheritdoc/>>
@@ -45,8 +26,6 @@ public sealed partial class ServerNetworkPoweredAmmoProviderSystem : NetworkPowe
             return;
 
         PowerState.SetWorkingState(ent.Owner, true);
-
-        SetPoweredState((ent.Owner, ent.Comp), true);
     }
 
     /// <inheritdoc/>>
@@ -56,8 +35,6 @@ public sealed partial class ServerNetworkPoweredAmmoProviderSystem : NetworkPowe
             return;
 
         PowerState.SetWorkingState(ent.Owner, false);
-
-        SetPoweredState((ent.Owner, ent.Comp), false);
     }
 
     protected override void ToggleActive(Entity<NetworkPoweredAmmoProviderComponent> ent, EntityUid user)
@@ -92,16 +69,5 @@ public sealed partial class ServerNetworkPoweredAmmoProviderSystem : NetworkPowe
         {
             Popup.PopupEntity(Loc.GetString("gun-not-anchored", ("target", uid)), uid, user);
         }
-    }
-
-    private void SetPoweredState(Entity<NetworkPoweredAmmoProviderComponent> ent, bool powerState)
-    {
-        if (ent.Comp.IsPowered == powerState)
-            return;
-
-        ent.Comp.IsPowered = powerState;
-        Dirty(ent);
-
-        Gun.SetEnabled(ent.Owner, powerState);
     }
 }
