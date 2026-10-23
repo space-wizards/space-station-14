@@ -37,6 +37,7 @@ public sealed partial class ServerNetworkPoweredAmmoProviderSystem : NetworkPowe
         PowerState.SetWorkingState(ent.Owner, false);
     }
 
+    /// <inheritdoc/>>
     protected override void ToggleActive(Entity<NetworkPoweredAmmoProviderComponent> ent, EntityUid user)
     {
         var uid = ent.Owner;

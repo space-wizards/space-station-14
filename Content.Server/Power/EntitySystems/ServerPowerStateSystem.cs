@@ -4,7 +4,7 @@ using Content.Shared.Power.EntitySystems;
 
 namespace Content.Server.Power.EntitySystems;
 
-/// <inheritdoc/>>
+/// <inheritdoc/>
 public sealed partial class ServerPowerStateSystem : PowerStateSystem
 {
     [Dependency] private EntityQuery<PowerConsumerComponent> _powerConsumerQuery;

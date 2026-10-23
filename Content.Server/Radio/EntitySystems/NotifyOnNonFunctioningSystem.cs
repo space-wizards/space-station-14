@@ -19,7 +19,7 @@ public sealed partial class NotifyOnNonFunctioningSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private NavMapSystem _navMap = default!;
-    [Dependency] private ServerPowerStateSystem _serverPowerState = default!;
+    [Dependency] private PowerStateSystem _powerState = default!;
     [Dependency] private RadioSystem _radio = default!;
 
     [Dependency] private EntityQuery<ApcPowerReceiverComponent> _powerReceiverQuery = default!;
@@ -75,7 +75,7 @@ public sealed partial class NotifyOnNonFunctioningSystem : EntitySystem
     [SubscribeLocalEvent]
     private void ReceivedChanged(Entity<NotifyOnNonFunctioningComponent> ent, ref PowerConsumerReceivedChanged args)
     {
-        if (!ent.Comp.LocUnpowered.HasValue || !_serverPowerState.GetWorkingState(ent.Owner))
+        if (!ent.Comp.LocUnpowered.HasValue || !_powerState.GetWorkingState(ent.Owner))
             return;
 
         if (args.ReceivedPower < args.DrawRate)
@@ -84,7 +84,7 @@ public sealed partial class NotifyOnNonFunctioningSystem : EntitySystem
 
     private void AlertRadioIfWasWorking(Entity<NotifyOnNonFunctioningComponent> ent, string locString, bool ignorePower = false)
     {
-        if (!_serverPowerState.GetWorkingState(ent.Owner))
+        if (!_powerState.GetWorkingState(ent.Owner))
             return;
 
         AlertRadio(ent, locString, ignorePower);
