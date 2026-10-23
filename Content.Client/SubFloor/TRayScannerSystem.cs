@@ -7,6 +7,7 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.Input;
 using Content.Shared.Inventory;
+using Content.Shared.Item;
 using Content.Shared.SubFloor;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -14,6 +15,7 @@ using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Client.SubFloor;
@@ -33,6 +35,8 @@ public sealed partial class TRayScannerSystem : SharedTRayScannerSystem
     [Dependency] private EntityQuery<TRayScannerComponent> _trayScannerQuery = default!;
     [Dependency] private EntityQuery<SubFloorHideComponent> _subFloorHideQuery = default!;
 
+    public static readonly ProtoId<ItemStatusPrototype> TrayScannerItemStatus = "TrayScanner";
+
     private const string TRayAnimationKey = "trays";
     private const double AnimationLength = 0.3;
 
@@ -41,7 +45,8 @@ public sealed partial class TRayScannerSystem : SharedTRayScannerSystem
     public override void Initialize()
     {
         base.Initialize();
-        Subs.ItemStatus<TRayScannerComponent>(OnCollectItemStatus);
+
+        Subs.ItemStatus<TRayScannerComponent>(OnCollectItemStatus, TrayScannerItemStatus);
     }
 
     public override void Update(float frameTime)

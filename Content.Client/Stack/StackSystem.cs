@@ -1,8 +1,10 @@
 using Content.Client.Items;
 using Content.Client.Storage.Systems;
+using Content.Shared.Item;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Stack
 {
@@ -12,11 +14,13 @@ namespace Content.Client.Stack
     {
         [Dependency] private ItemCounterSystem _counterSystem = default!;
 
+        public static readonly ProtoId<ItemStatusPrototype> StackItemStatus = "Stack";
+
         public override void Initialize()
         {
             base.Initialize();
 
-            Subs.ItemStatus<StackComponent>(ent => new StackStatusControl(ent));
+            Subs.ItemStatus<StackComponent>(ent => new StackStatusControl(ent), StackItemStatus);
         }
 
         #region Appearance
