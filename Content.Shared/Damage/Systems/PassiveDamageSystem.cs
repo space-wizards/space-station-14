@@ -21,7 +21,7 @@ public sealed partial class PassiveDamageSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnDamageTaken(Entity<PassiveDamageComponent> ent, ref DamageDealtEvent args)
     {
-        if (ent.Comp.IntervalHaltOnDamageTaken == TimeSpan.Zero || !args.Damage.AnyPositive())
+        if (ent.Comp.IntervalHaltOnDamageTaken == TimeSpan.Zero || !args.AnyPositive)
             return;
 
         var proposedUpdateTime = _timing.CurTime + ent.Comp.IntervalHaltOnDamageTaken;

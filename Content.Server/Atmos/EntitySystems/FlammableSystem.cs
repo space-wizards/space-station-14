@@ -80,7 +80,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             SubscribeLocalEvent<ExtinguishOnInteractComponent, ActivateInWorldEvent>(OnExtinguishActivateInWorld);
 
-            SubscribeLocalEvent<IgniteOnHeatDamageComponent, DamageChangedEvent>(OnDamageChanged);
+            SubscribeLocalEvent<IgniteOnHeatDamageComponent, DamageDealtEvent>(OnDamageDealt);
         }
 
         private void OnExtinguishEvent(Entity<FlammableComponent> ent, ref ExtinguishEvent args)
@@ -377,29 +377,23 @@ namespace Content.Server.Atmos.EntitySystems
             UpdateAppearance(uid, flammable);
         }
 
-        private void OnDamageChanged(EntityUid uid, IgniteOnHeatDamageComponent component, DamageChangedEvent args)
+        private void OnDamageDealt(Entity<IgniteOnHeatDamageComponent> ent, ref DamageDealtEvent args)
         {
             // Make sure the entity is flammable
-            if (!TryComp<FlammableComponent>(uid, out var flammable))
-                return;
-
-            // Make sure the damage delta isn't null
-            if (args.DamageDelta == null)
+            if (!TryComp<FlammableComponent>(ent, out var flammable))
                 return;
 
             // Check if its' taken any heat damage, and give the value
-            if (args.DamageDelta.DamageDict.TryGetValue("Heat", out FixedPoint2 value))
+            if (args.Damage.DamageDict.TryGetValue("Heat", out FixedPoint2 value))
             {
                 // Make sure the value is greater than the threshold
-                if (value <= component.Threshold)
+                if (value <= ent.Comp.Threshold)
                     return;
 
                 // Ignite that sucker
-                flammable.FireStacks += component.FireStacks;
-                Ignite(uid, uid, flammable);
+                flammable.FireStacks += ent.Comp.FireStacks;
+                Ignite(ent, ent, flammable);
             }
-
-
         }
 
         public void Resist(EntityUid uid,

@@ -1,6 +1,5 @@
 using Content.Server.NPC.Components;
 using Content.Shared.CombatMode;
-using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.NPC.Components;
@@ -15,27 +14,22 @@ namespace Content.Server.NPC.Systems;
 /// </summary>
 public sealed partial class NPCRetaliationSystem : EntitySystem
 {
-    [Dependency] private NpcFactionSystem _npcFaction = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private NpcFactionSystem _npcFaction = default!;
 
-    /// <inheritdoc />
-    public override void Initialize()
+    [SubscribeLocalEvent]
+    private void OnDamageDealt(Entity<NPCRetaliationComponent> ent, ref DamageDealtEvent args)
     {
-        SubscribeLocalEvent<NPCRetaliationComponent, DamageChangedEvent>(OnDamageChanged);
-        SubscribeLocalEvent<NPCRetaliationComponent, DisarmedEvent>(OnDisarmed);
-    }
-
-    private void OnDamageChanged(Entity<NPCRetaliationComponent> ent, ref DamageChangedEvent args)
-    {
-        if (!args.DamageIncreased)
+        if (!args.AnyPositive)
             return;
 
-        if (args.Origin is not {} origin)
+        if (args.Origin is not { } origin)
             return;
 
         TryRetaliate(ent, origin);
     }
 
+    [SubscribeLocalEvent]
     private void OnDisarmed(Entity<NPCRetaliationComponent> ent, ref DisarmedEvent args)
     {
         TryRetaliate(ent, args.Source);
