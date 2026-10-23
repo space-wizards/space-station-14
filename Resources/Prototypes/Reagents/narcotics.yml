@@ -127,9 +127,8 @@
   group: Narcotics
   desc: reagent-desc-pax
   physicalDesc: reagent-physical-desc-soothing
-  allowedDepartments:
-  - Security
-  - Medical
+  contrabandSeverity: Syndicate
+  flavor: numbingtranquility
   color: "#AAAAAA"
   metabolisms:
     Bloodstream:
