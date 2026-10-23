@@ -4,6 +4,9 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
+/// <summary>
+/// A UI fragment for the wanted list PDA app.
+/// </summary>
 public sealed partial class WantedListUi : UIFragment
 {
     private WantedListUiFragment? _fragment;
@@ -15,7 +18,7 @@ public sealed partial class WantedListUi : UIFragment
 
     public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
-        _fragment = new WantedListUiFragment();
+        _fragment = userInterface.CreateDisposableControl<WantedListUiFragment>();
     }
 
     public override void UpdateState(BoundUserInterfaceState state)
