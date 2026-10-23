@@ -58,6 +58,9 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/pig_oink.ogg
+  - type: Speech
+    speechVerb: LargeMob
+    speechSounds: Bass
   - type: ReplacementAccent
     accent: pig
   - type: SentienceTarget
