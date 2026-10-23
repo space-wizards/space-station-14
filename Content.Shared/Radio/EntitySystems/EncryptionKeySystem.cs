@@ -8,6 +8,7 @@ using Content.Shared.Popups;
 using Content.Shared.Radio.Components;
 using Content.Shared.Tools.Components;
 using Content.Shared.Wires;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -27,6 +28,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedWiresSystem _wires = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     public override void Initialize()
     {
@@ -210,6 +212,9 @@ public sealed partial class EncryptionKeySystem : EntitySystem
         foreach (var id in channels)
         {
             proto = ProtoMan.Index<RadioChannelPrototype>(id);
+
+            if (_whitelist.IsWhitelistFail(proto.Whitelist, examineEvent.Examiner)) //if lacking the ability to use the channel, prevent viewing it
+                continue;
 
             var key = id == SharedChatSystem.CommonChannel
                 ? SharedChatSystem.RadioCommonPrefix.ToString()

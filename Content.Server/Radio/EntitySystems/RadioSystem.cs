@@ -7,6 +7,7 @@ using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Content.Shared.Radio.EntitySystems;
 using Content.Shared.Speech;
+using Content.Shared.Whitelist;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -24,6 +25,7 @@ public sealed partial class RadioSystem : SharedRadioSystem
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private EntityQuery<TelecomExemptComponent> _exemptQuery = default!;
 
     // set used to prevent radio feedback loops.
@@ -54,6 +56,9 @@ public sealed partial class RadioSystem : SharedRadioSystem
     /// <inheritdoc/>
     public override void SendRadioMessage(EntityUid messageSource, string message, RadioChannelPrototype channel, EntityUid radioSource, bool escapeMarkup = true)
     {
+        if (_whitelist.IsWhitelistFail(channel.Whitelist, messageSource))
+            return;
+
         // TODO if radios ever garble / modify messages, feedback-prevention needs to be handled better than this.
         if (!_messages.Add(message))
             return;
@@ -107,8 +112,9 @@ public sealed partial class RadioSystem : SharedRadioSystem
         {
             if (!radio.ReceiveAllChannels)
             {
-                if (!radio.Channels.Contains(channel.ID) || (TryComp<IntercomComponent>(receiver, out var intercom) &&
-                                                             !intercom.SupportedChannels.Contains(channel.ID)))
+                if (!radio.Channels.Contains(channel.ID)
+                || TryComp<IntercomComponent>(receiver, out var intercom) && !intercom.SupportedChannels.Contains(channel.ID)
+                || _whitelist.IsWhitelistFail(channel.Whitelist, receiver) && _whitelist.IsWhitelistFail(channel.Whitelist, Transform(receiver).ParentUid))
                     continue;
             }
 
