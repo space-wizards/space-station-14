@@ -80,8 +80,6 @@ public abstract partial class PowerStateSystem : EntitySystem
             return;
 
         SetIsPoweredState(ent, args.Powered);
-
-        UpdateAppearance(ent, args.Powered);
     }
 
     /// <summary>
@@ -141,9 +139,6 @@ public abstract partial class PowerStateSystem : EntitySystem
         else
             state = PowerStateDeviceVisualState.Off;
 
-        if(_appearance.TryGetData(ent, PowerStateDeviceVisuals.VisualState, out PowerStateDeviceVisualState current) && current == state)
-            return;
-        
         _appearance.SetData(ent, PowerStateDeviceVisuals.VisualState, state);
     }
 }
