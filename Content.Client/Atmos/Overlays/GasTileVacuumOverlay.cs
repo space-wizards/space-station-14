@@ -15,7 +15,7 @@ using Color = Robust.Shared.Maths.Color;
 namespace Content.Client.Atmos.Overlays;
 
 /// <summary>
-/// Overlay responsible for rendering vacuum overlay.
+/// Tints all areas gray based on pressure, and cold areas blue based on temperature and pressure.
 /// </summary>
 public sealed partial class GasTileVacuumOverlay : Overlay
 {
@@ -40,8 +40,14 @@ public sealed partial class GasTileVacuumOverlay : Overlay
     // Overlay settings
     private float _intensity; // overlay intensity. 0.0f = turned off, 1.0f = full grayscale
 
+    /// <summary>
+    /// The maximum temperature at which the tint effect is applied, decreasing linearly to 0 at 0°C.
+    /// </summary>
     private readonly float _maxTintTemperature = 193f;
-    private readonly float _maxDesaturationTemperature = 0f;
+    /// <summary>
+    /// Minimum pressure to start diminishing the tint effect, increasing linearly to full effect at 0 pressure.
+    /// </summary>
+    private readonly float _minTintModifierPressure = 30f;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -54,6 +60,8 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         _unshader = _proto.Index(UnshadedShader).Instance();
         _shader = _proto.Index(VacuumOverlayShader).InstanceUnique();
         _configManager.OnValueChanged(CCVars.VacuumOverlayIntensity, SetVacuumOverlayIntensity, invokeImmediately: true);
+
+        _shader.SetParameter("tint_modifier", new Vector3(0f, 0f, 1.0f));  // is blue 🙂
     }
 
     private void SetVacuumOverlayIntensity(float intensity)
@@ -131,13 +139,18 @@ public sealed partial class GasTileVacuumOverlay : Overlay
                             if (!localBounds.Contains(tilePosition))
                                 continue;
 
-                            var tintStrength = GetEffectStrength(tileGas.ByteGasTemperature, _maxTintTemperature, false);
-                            var desaturationStrength = GetEffectStrength(tileGas.ByteGasTemperature, _maxDesaturationTemperature);
+                            var tintStrength = GetTemperatureEffectStrength(tileGas.ByteGasTemperature, _maxTintTemperature, false);
+                            var desaturationStrength = 1f - MathHelper.Clamp01(tileGas.Pressure / _minTintModifierPressure);
+
+                            // Diminish cold blue tint effect as pressure decreases.
+                            // A pressurized room with temperature problems will be visibly cold, but a spaced room will not.
+                            tintStrength *= 1f - desaturationStrength;
 
                             if (tintStrength <= 0f && desaturationStrength <= 0f)
                                 continue;
 
-                            // Encode the strength in the red channel.
+
+                            // Encode desaturation and tint in separate color channels.
                             worldHandle.DrawRect(Box2.CenteredAround(tilePosition + grid.Comp.TileSizeHalfVector,
                                     grid.Comp.TileSizeVector),
                                 new Color(desaturationStrength, tintStrength, 0f));
@@ -159,7 +172,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         return true;
     }
 
-    private static float GetEffectStrength(ThermalByte temperature, float maxIntensityTemperature, bool worksInVacuum = true)
+    private static float GetTemperatureEffectStrength(ThermalByte temperature, float maxIntensityTemperature, bool worksInVacuum = true)
     {
         if (temperature.IsVacuum)
             return worksInVacuum ? 1f : 0f;
@@ -170,11 +183,11 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         if (kelvinTemperature <= maxIntensityTemperature)
             return 1f;
 
-        var temperatureRange = Atmospherics.T20C - maxIntensityTemperature;
+        var temperatureRange = Atmospherics.T0C - maxIntensityTemperature;
         if (temperatureRange <= 0f)
             return 0f;
 
-        return MathHelper.Clamp01((Atmospherics.T20C - kelvinTemperature) / temperatureRange);
+        return MathHelper.Clamp01((Atmospherics.T0C - kelvinTemperature) / temperatureRange);
     }
 
     protected override void Draw(in OverlayDrawArgs args)

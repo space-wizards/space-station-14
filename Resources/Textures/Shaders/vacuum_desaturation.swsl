@@ -1,23 +1,24 @@
 uniform sampler2D SCREEN_TEXTURE;
 uniform mediump float intensity;
-
-uniform mediump vec3 tint_color = vec3(0, 0, 1.0);
+uniform mediump vec3 tint_modifier;
 
 void fragment()
 {
-    mediump float tile_intensity = texture2D(TEXTURE, UV).r;
+    mediump vec4 mask = zTextureSpec(TEXTURE, UV);
+    mediump float tile_intensity = mask.r;
+    mediump float tint_intensity = mask.g;
 
+    if (tile_intensity < 0.1 && tint_intensity < 0.1)
+        discard;
 
-    mediump vec4 screen_pixel = texture2D(SCREEN_TEXTURE, UV);
+    mediump vec4 screen_pixel = zTextureSpec(SCREEN_TEXTURE, UV);
+
     mediump float gray = dot(screen_pixel.rgb, vec3(0.299, 0.587, 0.114));
 
     mediump float desaturation_intensity = tile_intensity * intensity;
     screen_pixel.rgb = mix(screen_pixel.rgb, vec3(gray), desaturation_intensity);
 
-    mediump float tint_intensity = texture2D(TEXTURE, UV).g;
-
-
-    screen_pixel.rgb = mix(screen_pixel.rgb, screen_pixel.rgb * tint_color, tint_intensity * 0.4);
+    screen_pixel.rgb = mix(screen_pixel.rgb, screen_pixel.rgb * tint_modifier, tint_intensity * 0.4);
 
     COLOR = screen_pixel;
 }
