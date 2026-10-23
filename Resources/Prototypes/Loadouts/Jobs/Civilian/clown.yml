@@ -72,3 +72,13 @@
   id: ClownWintercoat
   equipment:
     outerClothing: ClothingOuterWinterClown
+
+# Job trinkets
+- type: loadout
+  id: FlowerWaterClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ClownStarter
+  storage:
+    back:
+    - SprayFlowerPin
