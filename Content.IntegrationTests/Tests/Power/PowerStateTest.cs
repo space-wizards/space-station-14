@@ -67,7 +67,6 @@ public sealed class PowerStateTest : GameTest
 
     [SidedDependency(Side.Server)] private SharedMapSystem _mapSys = default!;
     [SidedDependency(Side.Server)] private PowerStateSystem _powerStateSys = default!;
-    [SidedDependency(Side.Server)] private SharedPowerNetSystem _powerNetSys= default!;
     [SidedDependency(Side.Server)] private OperatingChangedListenerSystem _operatingChangedListener = default!;
     [SidedDependency(Side.Server)] private TurnedOnChangedListenerSystem _turnedOnChangedListener = default!;
 
