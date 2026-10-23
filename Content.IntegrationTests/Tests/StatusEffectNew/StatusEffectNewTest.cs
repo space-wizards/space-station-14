@@ -503,7 +503,39 @@ public sealed class StatusEffectNewTest : InteractionTest
     }
 
     #endregion TrySetDuration
-    
+
+    #region TrySetStatusEffectDuration
+
+    [Test, Description("Testing trying to increase delays to status effects via TrySetStatusEffectDuration (unsupported(?) operation, weird edge case, see comments)")]
+    public async Task TrySetStatusEffectDuration_DelayIncrease_WeirdEdgeCaseTest()
+    {
+        await Server.WaitAssertion(() =>
+        {
+            using (Assert.EnterMultipleScope())
+            {
+                var curTime = STiming.CurTime;
+                _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks, TenTicks);
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var time1), Is.True, "Could not get time info for effect A");
+                Assert.That(time1.StartEffectTime, Is.EqualTo(curTime + TenTicks).Within(SGameTiming.TickPeriod), "Status effect A did not have expected start time 10 ticks after current time");
+                Assert.That(time1.EndEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(SGameTiming.TickPeriod), "Status effect A did not have expected end time of 20 ticks after current time");
+
+                // TODO: do we still want this method to return true when a longer (invalid) delay has been given?
+                //  * if delay is given, current implementation calculates new end time as (current time + delay + duration)
+                //  * underlying `UpdateStatusEffectDelay` method rejects any delays longer than existing delay
+                //  * however, this isn't factored in when calculating new effect end time - diff between current delay and desired delay is added to duration.
+                //  is this intended behaviour?
+                //  this test has been written based on current implementation (in case any systems rely on this weird behaviour), please adjust if implementation changes 
+                Assert.That(_sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks, TwentyTicks), Is.True, "Weird TrySetStatusEffectDuration - should(?) return true in this edge case - see TODO in test method.");
+
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var time2), Is.True, "Could not get time info for effect A after trying to increase delay");
+                Assert.That(time2.StartEffectTime, Is.EqualTo(time1.StartEffectTime).Within(SGameTiming.TickPeriod), "Unsupported attempt at increasing delay of status effect A somehow increased the delay - see TODO in this test method");
+                Assert.That(time2.EndEffectTime, Is.EqualTo(curTime + ThirtyTicks).Within(SGameTiming.TickPeriod), "Unsupported attempt at increasing delay of status effect A did not postpone effect end time - see TODO in this test method");
+            }
+        });
+    }
+
+    #endregion
+
     [Test, Description("Testing TryAddStatusEffectDuration to adjust status effect duration.")]
     public async Task TestAddEffectTime_TryAddStatusEffectDuration()
     {
@@ -625,33 +657,5 @@ public sealed class StatusEffectNewTest : InteractionTest
         Assert.That(compStatusA!.Applied, Is.True, "Status effect A was not applied to the player after delay was reduced to zero");
     }
 
-    [Test, Description("Testing trying to increase delays to status effects (unsupported(?) operation, weird edge case, see comments)")]
-    public async Task TrySetStatusEffectDuration_DelayIncrease_WeirdEdgeCaseTest()
-    {
-        var curTime = TimeSpan.Zero;
-        await Server.WaitPost(() =>
-        {
-            _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks, TenTicks);
-            curTime = STiming.CurTime;
-        });
-
-        Assume.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var time1), Is.True, "Could not get time info for effect A");
-        Assume.That(time1.StartEffectTime, Is.EqualTo(curTime + TenTicks).Within(SGameTiming.TickPeriod), "Status effect A did not have expected start time 10 ticks after current time");
-        Assume.That(time1.EndEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(SGameTiming.TickPeriod), "Status effect A did not have expected end time of 20 ticks after current time");
-
-        // TODO: do we still want this method to return true when a longer (invalid) delay has been given?
-        //  * if delay is given, current implementation calculates new end time as (current time + delay + duration)
-        //  * underlying `UpdateStatusEffectDelay` method rejects any delays longer than existing delay
-        //  * however, this isn't factored in when calculating new effect end time - diff between current delay and desired delay is added to duration.
-        //  is this intended behaviour?
-        //  this test has been written based on current implementation (in case any systems rely on this weird behaviour), please adjust if implementation changes 
-        Assume.That(_sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks, TwentyTicks), Is.True, "Weird TrySetStatusEffectDuration - should(?) return true in this edge case - see TODO in test method.");
-
-        Assume.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var time2), Is.True, "Could not get time info for effect A after trying to increase delay");
-        using (Assert.EnterMultipleScope())
-        {
-            Assert.That(time2.StartEffectTime, Is.EqualTo(time1.StartEffectTime).Within(SGameTiming.TickPeriod), "Unsupported attempt at increasing delay of status effect A somehow increased the delay - see TODO in this test method");
-            Assert.That(time2.EndEffectTime, Is.EqualTo(curTime + ThirtyTicks).Within(SGameTiming.TickPeriod), "Unsupported attempt at increasing delay of status effect A did not postpone effect end time - see TODO in this test method");
-        }
-    }
+    
 }
