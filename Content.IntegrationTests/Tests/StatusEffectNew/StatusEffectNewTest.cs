@@ -30,22 +30,55 @@ public sealed class StatusEffectNewTest : InteractionTest
     /// </summary>
     private TimeSpan ThirtyTicks => TenTicks * 3;
 
-    [Test, Description("Test that the durations of status effects can be set")]
-    public async Task TestSetDurations()
+    [Test, Description("Test that valid status effects can be added with TrySetStatusEffectDuration (and that invalid ones are rejected)")]
+    public async Task TestAddNewStatusEffects_TrySetStatusEffectDuration()
     {
         var curTime = TimeSpan.Zero;
-        await Server.WaitPost(() =>
+        await Server.WaitAssertion(() =>
         {
-            _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA);
-            curTime = STiming.CurTime;
-            _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusB, TenTicks);
-
-            // zero duration should be rejected
-            _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusC, TimeSpan.Zero);
-            // checking to ensure that a negative duration gets rejected
-            _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusD, -TenTicks);
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(_sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA), Is.True, "adding an indefinite status effect via TrySetStatusEffectDuration failed!");
+                curTime = STiming.CurTime;
+                Assert.That(_sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusB, TenTicks), Is.True, "adding a status effect with duration via TrySetStatusEffectDuration failed!");
+                // zero duration should be rejected
+                Assert.That(_sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusC, TimeSpan.Zero), Is.False, "adding a status effect with zero duration via TrySetStatusEffectDuration didn't get rejected!");
+                // checking to ensure that a negative duration gets rejected
+                Assert.That(_sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusD, -TenTicks), Is.False, "adding a status effect with negative duration via TrySetStatusEffectDuration didn't get rejected!");
+            }
         });
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.True, "Status effect A was not found on the player");
+            Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var timeA), Is.True, "Could not get time info for effect A");
+            Assert.That(timeA.EndEffectTime, Is.Null, "Status effect A did not have an end time of null");
 
+            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusB), Is.True, "Status effect B was not found on the player");
+            Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusB, out var timeB), Is.True, "Could not get time info for effect B");
+            Assert.That(timeB.EndEffectTime, Is.EqualTo(curTime + TenTicks).Within(SGameTiming.TickPeriod), "Status effect B did not have an end time of 10 game ticks after start time");
+
+            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusC), Is.False, "Status effect C was found despite having zero duration");
+            Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusD), Is.False, "Status effect D was found despite having a negative duration");
+        }
+    }
+
+    [Test, Description("Test that valid status effects can be added with TrySetStatusEffectDuration (and that invalid ones are rejected)")]
+    public async Task TestAddNewStatusEffects_TryAddStatusEffectDuration()
+    {
+        var curTime = TimeSpan.Zero;
+        await Server.WaitAssertion(() =>
+        {
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusA, null), Is.True, "adding an indefinite status effect via TryAddStatusEffectDuration failed!");
+                curTime = STiming.CurTime;
+                Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusB, TenTicks), Is.True, "adding a status effect with duration via TryAddStatusEffectDuration failed!");
+                // zero duration should be rejected
+                Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusC, TimeSpan.Zero), Is.False, "adding a status effect with zero duration via TryAddStatusEffectDuration didn't get rejected!");
+                // checking to ensure that a negative duration gets rejected
+                Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusD, -TenTicks), Is.False, "adding a status effect with negative duration via TryAddStatusEffectDuration didn't get rejected!");
+            }
+        });
         using (Assert.EnterMultipleScope())
         {
             Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.True, "Status effect A was not found on the player");
@@ -67,11 +100,12 @@ public sealed class StatusEffectNewTest : InteractionTest
         var effectQuery = SEntMan.GetEntityQuery<StatusEffectComponent>();
         var curTimeA = TimeSpan.Zero;
         var curTimeB = TimeSpan.Zero;
-        await Server.WaitPost(() =>
+        await Server.WaitAssertion(() =>
         {
             _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, duration: TwentyTicks); // should end 20 ticks from curtime
             curTimeA = STiming.CurTime;
-            _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusB, duration: TenTicks, delay: TenTicks); // should start 10 ticks from curtime and end 20 ticks from curtime
+            Assert.That(_sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusB, duration: TenTicks, delay: TenTicks), Is.True, "CallingTrySetStatusEffectDuration to add effect with delay returned false!"); 
+            // should start 10 ticks from curtime and end 20 ticks from curtime
             curTimeB = STiming.CurTime;
         });
 
@@ -111,10 +145,10 @@ public sealed class StatusEffectNewTest : InteractionTest
         //  If method implementation changes to reject negative delays/treat them as zero/etc, please update this test.
         var effectQuery = SEntMan.GetEntityQuery<StatusEffectComponent>();
         var curTimeA = TimeSpan.Zero;
-        await Server.WaitPost(() =>
+        await Server.WaitAssertion(() =>
         {
             // lasts 20 ticks, but started 10 ticks ago
-            _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, duration: TwentyTicks, delay: -TenTicks);
+            Assert.That(_sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, duration: TwentyTicks, delay: -TenTicks), Is.True, "Setting status effect with negative delay did not return true");
             curTimeA = STiming.CurTime;
         });
 
