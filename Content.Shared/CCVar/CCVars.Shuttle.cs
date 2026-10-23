@@ -34,6 +34,12 @@ public sealed partial class CCVars
         CVarDef.Create("shuttle.arrivals", true);
 
     /// <summary>
+    ///     Whether the arrivals shuttle should bulldoze grids when docking
+    /// </summary>
+    public static readonly CVarDef<bool> ArrivalsShuttleBulldoze =
+        CVarDef.Create("shuttle.arrivals_bulldozes", true);
+
+    /// <summary>
     ///     The map to use for the arrivals station.
     /// </summary>
     public static readonly CVarDef<string> ArrivalsMap =
@@ -169,6 +175,12 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> EmergencyShuttleEnabled =
         CVarDef.Create("shuttle.emergency", true, CVar.SERVERONLY);
+
+    /// <summary>
+    ///     Whether the emergency shuttle should bulldoze grids when docking.
+    /// </summary>
+    public static readonly CVarDef<bool> EmergencyShuttleBulldoze =
+        CVarDef.Create("shuttle.emergency_bulldoze", true, CVar.SERVERONLY);
 
     /// <summary>
     ///     The percentage of time passed from the initial call to when the shuttle can no longer be recalled.
