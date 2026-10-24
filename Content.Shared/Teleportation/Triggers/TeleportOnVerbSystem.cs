@@ -56,7 +56,7 @@ public sealed partial class TeleportOnVerbSystem : EntitySystem
             return;
 
         var target = args.User;
-        var attempt = _teleport.CheckTeleportUse(ent, target, target);
+        var attempt = _teleport.CanTeleport(ent, target, target);
 
         if (attempt.Cancelled && ent.Comp.HideWhenDisabled)
             return;

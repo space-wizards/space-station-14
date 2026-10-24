@@ -18,7 +18,7 @@ public sealed partial class SharedTeleportSystem
     /// The user activating the teleporter, or null for automatic activation. A supplied user must still exist.
     /// </param>
     /// <returns>The cancellation state and optional reason from lifetime checks and teleporter restrictions.</returns>
-    public TeleportUseAttemptEvent CheckTeleportUse(EntityUid teleporter, EntityUid target, EntityUid? user)
+    public TeleportUseAttemptEvent CanTeleport(EntityUid teleporter, EntityUid target, EntityUid? user)
     {
         var attempt = new TeleportUseAttemptEvent(target, user, Cancelled: true);
 
@@ -57,7 +57,7 @@ public sealed partial class SharedTeleportSystem
         EntityUid? user,
         bool shouldTriggerEffects = true)
     {
-        var attempt = CheckTeleportUse(teleporter, target, user);
+        var attempt = CanTeleport(teleporter, target, user);
         if (attempt.Cancelled)
             return false;
 
