@@ -134,7 +134,6 @@
     sprite: Structures/Power/Generation/ame.rsi
     state: shield_0
     layers:
-    - state: shield_0
     - state: core
       map: ["core"]
       visible: false
@@ -175,6 +174,7 @@
     - !type:DirectionSpriteSmoothing
       mask: [ ame_shield ]
       base: shield_
+      index: 0
   - type: AmeShield
   - type: NodeContainer
     nodes:
