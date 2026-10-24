@@ -7,7 +7,8 @@ using Robust.Shared.Physics.Systems;
 namespace Content.Shared.Teleportation.Systems;
 
 /// <summary>
-/// Moves entities to resolved destination coordinates, with optional effects before and after movement.
+/// Handles teleport requests, effects, and target notifications.
+/// Teleport implementations supply the destination coordinates.
 /// </summary>
 public sealed partial class SharedTeleportSystem : EntitySystem
 {
@@ -16,18 +17,28 @@ public sealed partial class SharedTeleportSystem : EntitySystem
     [Dependency] private SharedJointSystem _joints = default!;
 
     /// <summary>
-    /// Attempts to move a target, optionally triggering effects on the teleporter.
-    /// Notifies the target with <see cref="TeleportedEvent"/> after successful movement, before post-move effects.
-    /// Used by teleport implementations while handling a request dispatched by <see cref="RequestTeleport"/>.
+    /// Attempts to teleport a target, with optional effects on the teleporter.
+    /// After a successful teleport, raises <see cref="TeleportedEvent"/> on the target before post-teleport effects.
+    /// Used by teleport implementations called through <see cref="RequestTeleport"/>.
     /// </summary>
+    /// <remarks>Exceptions from teleportation and its event handlers propagate to the caller.</remarks>
     /// <param name="teleporter">The entity performing the teleportation.</param>
     /// <param name="target">The entity to teleport.</param>
     /// <param name="destination">The destination chosen by the teleport implementation.</param>
-    /// <param name="moved">Whether the target reached the destination, even if a later effect throws.</param>
-    /// <param name="triggerEffects">Whether to raise the pre-move and post-move effect events.</param>
-    internal bool TryTeleport(EntityUid teleporter, EntityUid target, EntityCoordinates destination, out bool moved, bool triggerEffects = true)
+    /// <param name="reachedDestination">
+    /// Whether the target's transform matches the destination after the coordinate update attempt,
+    /// even if a handler throws.
+    /// </param>
+    /// <param name="triggerEffects">Whether to raise events for effects before and after teleportation.</param>
+    /// <returns>Whether teleportation succeeded.</returns>
+    internal bool TryTeleport(
+        EntityUid teleporter,
+        EntityUid target,
+        EntityCoordinates destination,
+        out bool reachedDestination,
+        bool triggerEffects = true)
     {
-        moved = false;
+        reachedDestination = false;
 
         if (!Exists(teleporter))
             return false;
@@ -51,14 +62,14 @@ public sealed partial class SharedTeleportSystem : EntitySystem
         }
         finally
         {
-            // SetCoordinates can raise movement handlers after changing the transform.
-            // Preserve the movement result even if one of those handlers throws.
-            moved = TryComp(target, out TransformComponent? transform) &&
-                    transform.ParentUid == destination.EntityId &&
-                    transform.LocalPosition.EqualsApprox(destination.Position);
+            // SetCoordinates can invoke MoveEvent handlers after changing the transform.
+            // Preserve whether the destination was reached even if a handler throws.
+            reachedDestination = TryComp(target, out TransformComponent? transform) &&
+                                 transform.ParentUid == destination.EntityId &&
+                                 transform.LocalPosition.EqualsApprox(destination.Position);
         }
 
-        if (!moved)
+        if (!reachedDestination)
             return false;
 
         var teleported = new TeleportedEvent(teleporter);
@@ -67,7 +78,7 @@ public sealed partial class SharedTeleportSystem : EntitySystem
         if (!triggerEffects)
             return true;
 
-        // Notification handlers may delete either participant after the movement succeeded.
+        // Notification handlers may delete either participant after teleportation succeeds.
         if (TerminatingOrDeleted(target))
             return true;
 
@@ -94,6 +105,9 @@ public sealed partial class SharedTeleportSystem : EntitySystem
         _transform.SetCoordinates(target, Transform(target), destination);
     }
 
+    /// <summary>
+    /// Detaches pulling and grappling links that cannot safely span the teleport.
+    /// </summary>
     private void StopSpatialRelationships(EntityUid target)
     {
         StopPullingRelationships(target);
@@ -102,6 +116,9 @@ public sealed partial class SharedTeleportSystem : EntitySystem
         _joints.RemoveJoint(target, SharedGrapplingGunSystem.GrapplingJoint);
     }
 
+    /// <summary>
+    /// Attempts to stop the target from pulling another entity and from being pulled.
+    /// </summary>
     private void StopPullingRelationships(EntityUid target)
     {
         if (TryComp(target, out PullableComponent? targetPullable))

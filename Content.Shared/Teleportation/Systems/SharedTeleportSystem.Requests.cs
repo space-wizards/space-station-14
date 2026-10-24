@@ -14,7 +14,10 @@ public sealed partial class SharedTeleportSystem
     /// </summary>
     /// <param name="teleporter">The teleporter being activated.</param>
     /// <param name="target">The entity to teleport.</param>
-    /// <param name="user">The explicit initiator, or null for automatic activation. A supplied initiator must still exist.</param>
+    /// <param name="user">
+    /// The user activating the teleporter, or null for automatic activation. A supplied user must still exist.
+    /// </param>
+    /// <returns>The cancellation state and optional reason from lifetime checks and teleporter restrictions.</returns>
     public TeleportUseAttemptEvent CheckTeleportUse(EntityUid teleporter, EntityUid target, EntityUid? user)
     {
         var attempt = new TeleportUseAttemptEvent(target, user, Cancelled: true);
@@ -37,13 +40,17 @@ public sealed partial class SharedTeleportSystem
     }
 
     /// <summary>
-    /// Checks whether a teleporter can be used, then dispatches a request to its implementation.
-    /// The target remains protected from nested requests until all teleport events have finished.
+    /// Checks whether the teleporter can be used, then asks its implementation to teleport the target.
+    /// Blocks nested teleport requests for the target until all teleport events finish.
     /// </summary>
+    /// <remarks>
+    /// On clients, the result describes local prediction and does not confirm a server teleport.
+    /// </remarks>
     /// <param name="teleporter">The teleporter being activated.</param>
     /// <param name="target">The entity to teleport.</param>
-    /// <param name="user">The explicit initiator, or null for automatic activation.</param>
-    /// <param name="triggerEffects">Whether to run effects before and after movement.</param>
+    /// <param name="user">The user activating the teleporter, or null for automatic activation.</param>
+    /// <param name="triggerEffects">Whether to run effects before and after teleportation.</param>
+    /// <returns>Whether the teleport implementation reported success.</returns>
     public bool RequestTeleport(EntityUid teleporter, EntityUid target, EntityUid? user, bool triggerEffects = true)
     {
         var attempt = CheckTeleportUse(teleporter, target, user);

@@ -19,7 +19,10 @@ public sealed partial class SharedTeleportSystem
     /// <param name="target">The map coordinates to check.</param>
     /// <param name="rotation">The entity's world rotation at the destination.</param>
     /// <param name="flags">Which types of obstacles to consider.</param>
-    /// <returns>Whether the destination is blocked. Returns false if either required component is missing.</returns>
+    /// <returns>
+    /// Whether a hard fixture at the destination overlaps an obstacle the entity can collide with.
+    /// Returns false if required components are missing or the entity has no collidable hard body.
+    /// </returns>
     public bool IsDestinationBlocked(
         Entity<FixturesComponent?, PhysicsComponent?> user,
         MapCoordinates target,

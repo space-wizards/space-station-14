@@ -4,8 +4,8 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Teleportation.Components;
 
 /// <summary>
-/// Resolves teleport requests to destinations linked through <see cref="LinkedEntityComponent"/>.
-/// When no destinations are linked, can choose a random nearby destination if <see cref="RandomTeleport"/> is enabled.
+/// Configures portal destinations linked through <see cref="LinkedEntityComponent"/>.
+/// Without links, <see cref="RandomTeleport"/> allows a random nearby destination.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PortalComponent : Component
@@ -42,15 +42,15 @@ public sealed partial class PortalComponent : Component
     public bool RandomTeleport = true;
 
     /// <summary>
-    /// Restricts explicit initiators when the portal has no linked destinations.
-    /// Null adds no restriction. Automatic activations without a user are unaffected.
+    /// Limits users of a portal with no linked destinations.
+    /// Null adds no restriction. Automatic activation without a user is unaffected.
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityWhitelist? UnlinkedUserWhitelist;
 
     /// <summary>
-    /// Blocks matching explicit initiators when the portal has no linked destinations.
-    /// Takes precedence over <see cref="UnlinkedUserWhitelist"/>. Automatic activations are unaffected.
+    /// Blocks matching users when the portal has no linked destinations.
+    /// Takes priority over <see cref="UnlinkedUserWhitelist"/>. Automatic activation without a user is unaffected.
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityWhitelist? UnlinkedUserBlacklist;

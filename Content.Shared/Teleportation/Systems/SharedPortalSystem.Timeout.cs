@@ -6,6 +6,7 @@ namespace Content.Shared.Teleportation.Systems;
 
 public abstract partial class SharedPortalSystem
 {
+    /// <inheritdoc/>
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -20,6 +21,9 @@ public abstract partial class SharedPortalSystem
         }
     }
 
+    /// <summary>
+    /// The server refreshes all timeouts. Clients refresh timeouts only for physics-predicted targets.
+    /// </summary>
     private bool ShouldUpdateTimeout(EntityUid target)
     {
         if (!_net.IsClient)
@@ -35,8 +39,15 @@ public abstract partial class SharedPortalSystem
 
     /// <summary>
     /// Protects a target from portal use until it leaves the specified exit's trigger bounds.
-    /// Returns false when this exit cannot trigger for the target.
     /// </summary>
+    /// <remarks>
+    /// The target does not need to overlap the exit yet.
+    /// </remarks>
+    /// <param name="target">The entity to protect from further portal use.</param>
+    /// <param name="exit">The destination portal.</param>
+    /// <returns>
+    /// Whether protection was set. Returns false if the exit is not a portal or cannot trigger for the target.
+    /// </returns>
     public bool SetPortalTimeout(EntityUid target, EntityUid exit)
     {
         if (!HasComp<PortalComponent>(exit))
@@ -51,6 +62,9 @@ public abstract partial class SharedPortalSystem
         return true;
     }
 
+    /// <summary>
+    /// Retains protection while the target overlaps its exit, or while the client cannot see that exit.
+    /// </summary>
     private bool IsTimeoutActive(EntityUid target, PortalTimeoutComponent timeout)
     {
         // An exit outside client visibility is not evidence that the server deleted it.
@@ -63,6 +77,9 @@ public abstract partial class SharedPortalSystem
         return _collisionTrigger.IsInsideTriggerBounds(timeout.ExitPortal, target);
     }
 
+    /// <summary>
+    /// Checks whether the client lacks the exit's transform or sees it in nullspace.
+    /// </summary>
     private bool IsExitUnavailableOnClient(EntityUid exit)
     {
         if (!_net.IsClient)
@@ -74,9 +91,12 @@ public abstract partial class SharedPortalSystem
         return transform.MapID == MapId.Nullspace;
     }
 
+    /// <summary>
+    /// Clears inactive exit protection after teleport processing ends.
+    /// </summary>
     private void RefreshTimeout(EntityUid target, PortalTimeoutComponent timeout)
     {
-        // Movement can synchronously end the source contact before arrival is complete.
+        // Changing coordinates can synchronously end the source contact before arrival is complete.
         if (HasComp<TeleportingComponent>(target))
             return;
 
@@ -87,10 +107,14 @@ public abstract partial class SharedPortalSystem
         RemComp<PortalTimeoutComponent>(target);
     }
 
-    private void RestoreTimeoutAfterFailedTeleport(EntityUid target, EntityUid? previousExit, bool moved)
+    /// <summary>
+    /// Restores the previous exit protection if the target did not reach the destination.
+    /// Preserves destination protection once the target has reached it.
+    /// </summary>
+    private void RestoreTimeoutAfterFailedTeleport(EntityUid target, EntityUid? previousExit, bool reachedDestination)
     {
-        // A failed post-move effect must not remove protection at the exit.
-        if (moved)
+        // A failed effect after teleportation must not remove protection at the exit.
+        if (reachedDestination)
             return;
 
         if (TerminatingOrDeleted(target))

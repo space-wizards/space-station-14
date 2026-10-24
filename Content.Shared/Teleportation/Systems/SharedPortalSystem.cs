@@ -11,7 +11,7 @@ using Robust.Shared.Random;
 namespace Content.Shared.Teleportation.Systems;
 
 /// <summary>
-/// Resolves linked or random portal destinations and delegates movement to <see cref="SharedTeleportSystem"/>.
+/// Chooses linked or random portal destinations. <see cref="SharedTeleportSystem"/> teleports the targets.
 /// </summary>
 /// <seealso cref="PortalComponent"/>
 public abstract partial class SharedPortalSystem : EntitySystem
@@ -27,6 +27,7 @@ public abstract partial class SharedPortalSystem : EntitySystem
 
     private const int MaxRandomTeleportAttempts = 20;
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
@@ -36,6 +37,10 @@ public abstract partial class SharedPortalSystem : EntitySystem
         SubscribeLocalEvent<PortalComponent, TeleportTriggerExitedEvent>(OnTeleportTriggerExited);
     }
 
+    /// <summary>
+    /// Checks exit protection and, for unlinked portals, user restrictions.
+    /// Does not choose a destination or teleport the target.
+    /// </summary>
     private void OnTeleportUseAttempt(Entity<PortalComponent> ent, ref TeleportUseAttemptEvent args)
     {
         if (args.Cancelled)
@@ -68,6 +73,9 @@ public abstract partial class SharedPortalSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Rechecks exit protection when a contact with the exit portal ends.
+    /// </summary>
     private void OnTeleportTriggerExited(Entity<PortalComponent> ent, ref TeleportTriggerExitedEvent args)
     {
         if (!TryComp<PortalTimeoutComponent>(args.Target, out var timeout))
@@ -79,6 +87,10 @@ public abstract partial class SharedPortalSystem : EntitySystem
         RefreshTimeout(args.Target, timeout);
     }
 
+    /// <summary>
+    /// Handles a teleport request through a linked exit or, on the server, a random nearby point.
+    /// Ignores requests already handled.
+    /// </summary>
     private void OnTeleportRequest(Entity<PortalComponent> ent, ref TeleportRequestEvent args)
     {
         if (args.Handled)
@@ -102,6 +114,9 @@ public abstract partial class SharedPortalSystem : EntitySystem
         args.Succeeded = TryTeleport(ent, args.Target, randomDestination, args.TriggerEffects);
     }
 
+    /// <summary>
+    /// Selects a linked destination. Clients run this only when they can predict the destination.
+    /// </summary>
     private bool TryTeleportLinked(
         Entity<PortalComponent> ent,
         LinkedEntityComponent link,
@@ -119,6 +134,11 @@ public abstract partial class SharedPortalSystem : EntitySystem
         return TryTeleport(ent, target, destination, triggerEffects, destinationEntity);
     }
 
+    /// <summary>
+    /// Validates a portal destination and protects the target from returning through the exit.
+    /// Restores the previous timeout if the target does not reach the destination,
+    /// even if an effect throws before teleportation.
+    /// </summary>
     private bool TryTeleport(
         Entity<PortalComponent> ent,
         EntityUid target,
@@ -135,10 +155,10 @@ public abstract partial class SharedPortalSystem : EntitySystem
         var source = Transform(target).Coordinates;
         var previousExit = CompOrNull<PortalTimeoutComponent>(target)?.ExitPortal;
         var timeoutSet = destinationEntity != null && SetPortalTimeout(target, destinationEntity.Value);
-        var moved = false;
+        var reachedDestination = false;
         try
         {
-            if (!_teleport.TryTeleport(ent, target, destination, out moved, triggerEffects))
+            if (!_teleport.TryTeleport(ent, target, destination, out reachedDestination, triggerEffects))
                 return false;
 
             LogTeleport(ent, target, source, destination);
@@ -147,10 +167,14 @@ public abstract partial class SharedPortalSystem : EntitySystem
         finally
         {
             if (timeoutSet)
-                RestoreTimeoutAfterFailedTeleport(target, previousExit, moved);
+                RestoreTimeoutAfterFailedTeleport(target, previousExit, reachedDestination);
         }
     }
 
+    /// <summary>
+    /// Rejects linked exits where the target would overlap a static obstacle, showing a popup on failure.
+    /// Random destinations use their own candidate selection instead.
+    /// </summary>
     private bool TryValidateExit(EntityUid target, EntityCoordinates destination, EntityUid? exit)
     {
         if (exit == null)
@@ -170,6 +194,10 @@ public abstract partial class SharedPortalSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Checks the portal's map and distance limits. If a limit fails, the server shows the fizzle message
+    /// and queues the source portal and any linked destination for deletion.
+    /// </summary>
     private bool TryValidateDestination(
         Entity<PortalComponent> ent,
         EntityCoordinates destination,
@@ -208,6 +236,10 @@ public abstract partial class SharedPortalSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Tries to choose a nearby point clear of static entities.
+    /// Falls back to the final candidate after the attempt limit, even if that point is occupied.
+    /// </summary>
     private EntityCoordinates FindRandomDestination(Entity<PortalComponent> ent)
     {
         var source = Transform(ent).Coordinates;
@@ -236,7 +268,7 @@ public abstract partial class SharedPortalSystem : EntitySystem
     }
 
     /// <summary>
-    /// Clients can predict only a single linked exit that is available locally and outside nullspace.
+    /// Clients can predict teleportation only with exactly one linked exit, available locally and outside nullspace.
     /// Multiple exits require a random choice by the server.
     /// </summary>
     private bool CanPredictTeleport(Entity<LinkedEntityComponent> portal)

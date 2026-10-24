@@ -13,7 +13,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Teleportation;
 
 /// <summary>
-/// This handles creating portals from a hand teleporter.
+/// Creates and closes hand teleporter portals, enforcing tile support and map/grid restrictions.
 /// </summary>
 public sealed partial class HandTeleporterSystem : EntitySystem
 {
@@ -35,6 +35,10 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged, before: new[] { typeof(TransformSystem) });
     }
 
+    /// <summary>
+    /// Closes portals whose supporting tile was removed, even if their device no longer exists.
+    /// Runs before the transform system unanchors entities from the removed tile.
+    /// </summary>
     private void OnTileChanged(ref TileChangedEvent args)
     {
         foreach (var change in args.Changes)
@@ -85,6 +89,9 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         args.Handled = true;
     }
 
+    /// <summary>
+    /// Closes a completed portal pair immediately or starts the delay for placing the next portal.
+    /// </summary>
     private void OnUseInHand(EntityUid uid, HandTeleporterComponent component, UseInHandEvent args)
     {
         if (args.Handled)
@@ -123,8 +130,7 @@ public sealed partial class HandTeleporterSystem : EntitySystem
     }
 
     /// <summary>
-    /// Checks if both portals of a teleporter are on same grid/map
-    /// and if the teleporter allows that. if the portals are in an illegal state, it fizzles them.
+    /// Closes a portal pair that no longer satisfies the device's map and grid restrictions.
     /// </summary>
     private void CheckPortals(Entity<HandTeleporterComponent> entity)
     {
@@ -176,6 +182,9 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         FizzlePortals((uid, component), user, false);
     }
 
+    /// <summary>
+    /// Places the first portal beneath the user. Blocks the user's portal use until they leave its trigger bounds.
+    /// </summary>
     private void CreateFirstPortal(EntityUid uid, HandTeleporterComponent component, EntityUid user, TransformComponent xform)
     {
         if (xform.ParentUid != xform.GridUid)
@@ -185,12 +194,16 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         EnsureComp<HandTeleporterPortalComponent>(component.FirstPortal.Value).Teleporter = uid;
         _portal.SetPortalTimeout(user, component.FirstPortal.Value);
         Dirty(uid, component);
-        ConfigurePortalMapTravel(component.FirstPortal, component);
+        ConfigureCrossMapTeleportation(component.FirstPortal, component);
 
         _adminLogger.Add(LogType.EntitySpawn, LogImpact.High, $"{ToPrettyString(user):player} opened {ToPrettyString(component.FirstPortal.Value)} at {Transform(component.FirstPortal.Value).Coordinates} using {ToPrettyString(uid)}");
         _audio.PlayPvs(component.NewPortalSound, uid);
     }
 
+    /// <summary>
+    /// Completes the linked pair, or closes the first portal if placement would violate the device's grid restriction.
+    /// Prevents the new portal from immediately teleporting its creator.
+    /// </summary>
     private void CreateSecondPortal(EntityUid uid, HandTeleporterComponent component, EntityUid user, TransformComponent xform)
     {
         if (xform.ParentUid != xform.GridUid)
@@ -207,14 +220,14 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         EnsureComp<HandTeleporterPortalComponent>(component.SecondPortal.Value).Teleporter = uid;
         _portal.SetPortalTimeout(user, component.SecondPortal.Value);
         Dirty(uid, component);
-        ConfigurePortalMapTravel(component.SecondPortal, component);
+        ConfigureCrossMapTeleportation(component.SecondPortal, component);
 
         _adminLogger.Add(LogType.EntitySpawn, LogImpact.High, $"{ToPrettyString(user):player} opened {ToPrettyString(component.SecondPortal.Value)} at {Transform(component.SecondPortal.Value).Coordinates} linked to {ToPrettyString(component.FirstPortal!.Value)} using {ToPrettyString(uid)}");
         _link.TryLink(component.FirstPortal!.Value, component.SecondPortal.Value, true);
         _audio.PlayPvs(component.NewPortalSound, uid);
     }
 
-    private void ConfigurePortalMapTravel(EntityUid? portal, HandTeleporterComponent component)
+    private void ConfigureCrossMapTeleportation(EntityUid? portal, HandTeleporterComponent component)
     {
         if (!component.AllowPortalsOnDifferentMaps)
             return;
@@ -226,11 +239,12 @@ public sealed partial class HandTeleporterSystem : EntitySystem
     }
 
     /// <summary>
-    /// Deletes both portals of a teleporter
+    /// Queues both portals for deletion and clears the device's portal references.
+    /// Warns the initiating user about unstable placement when requested.
     /// </summary>
-    /// <param name="entity">the teleporter entity</param>
-    /// <param name="user">who deleted the portals</param>
-    /// <param name="instability">if it should send an "instability" popup to the user</param>
+    /// <param name="entity">The device whose portals are being closed.</param>
+    /// <param name="user">The initiating user, or null for automatic closure.</param>
+    /// <param name="instability">Whether to warn the initiating user that placement was unstable.</param>
     private void FizzlePortals(Entity<HandTeleporterComponent> entity, EntityUid? user, bool instability)
     {
         LogPortalClosure(entity.Comp.FirstPortal, entity, user);
@@ -256,6 +270,9 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("handheld-teleporter-instability-fizzle"), entity, user.Value, PopupType.MediumCaution);
     }
 
+    /// <summary>
+    /// Logs an existing portal's closure with the initiating user, if any.
+    /// </summary>
     private void LogPortalClosure(EntityUid? portal, EntityUid teleporter, EntityUid? user)
     {
         if (Deleted(portal))

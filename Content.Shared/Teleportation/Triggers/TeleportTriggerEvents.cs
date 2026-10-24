@@ -1,24 +1,25 @@
 namespace Content.Shared.Teleportation.Triggers;
 
 /// <summary>
-/// Passes a target and the user that activated the teleporter to a teleport implementation.
-/// Raised on the teleporter entity.
-/// Triggers must use SharedTeleportSystem.RequestTeleport to run use checks and prevent nested requests.
+/// Requests teleportation of a target. Raised on the teleporter entity.
+/// Triggers must call SharedTeleportSystem.RequestTeleport so use checks run and nested requests are blocked.
 /// </summary>
 /// <param name="Target">The entity to teleport.</param>
 /// <param name="User">The entity that explicitly activated the teleporter, or null for automatic activation.</param>
-/// <param name="TriggerEffects">Whether to run effects before and after movement. Does not bypass use checks.</param>
+/// <param name="TriggerEffects">
+/// Whether to run effects before and after teleportation. Does not bypass use checks.
+/// </param>
 [ByRefEvent, Serializable]
 public record struct TeleportRequestEvent(EntityUid Target, EntityUid? User, bool TriggerEffects = true)
 {
     /// <summary>
-    /// Whether a teleport implementation accepted the request, even if teleportation failed.
-    /// Set before execution to prevent another implementation from processing the same request.
+    /// Whether an implementation has accepted this request. Teleportation may still fail.
+    /// Set before teleporting so another implementation cannot handle the same request.
     /// </summary>
     public bool Handled;
 
     /// <summary>
-    /// Whether the implementation successfully completed the teleportation.
+    /// Whether the implementation completed teleportation successfully.
     /// </summary>
     public bool Succeeded;
 }
@@ -26,7 +27,7 @@ public record struct TeleportRequestEvent(EntityUid Target, EntityUid? User, boo
 /// <summary>
 /// Checks whether a teleporter can be used by the given target and user.
 /// Raised on the teleporter entity.
-/// Handlers must only update the cancellation state because this event can be raised while verbs are being collected.
+/// Also raised when building verb menus. Handlers must only change the cancellation state.
 /// </summary>
 /// <param name="Target">The entity that would be teleported.</param>
 /// <param name="User">The entity that explicitly activates the teleporter, or null for automatic activation.</param>
@@ -40,8 +41,11 @@ public record struct TeleportUseAttemptEvent(
     LocId? CancelReason = null)
 {
     /// <summary>
-    /// Cancels the attempt, preserving an explanation already provided by another handler.
+    /// Cancels the attempt without replacing a reason already provided by another handler.
     /// </summary>
+    /// <param name="reason">
+    /// Optional localization key. An existing cancellation reason is kept.
+    /// </param>
     public void Cancel(LocId? reason = null)
     {
         Cancelled = true;
@@ -50,9 +54,8 @@ public record struct TeleportUseAttemptEvent(
 }
 
 /// <summary>
-/// Notifies a teleporter that one eligible fixture contact with a target has ended.
-/// The target may still overlap the trigger; handlers must check its bounds before treating this as an exit.
-/// Raised on the teleporter entity.
+/// Raised on the teleporter when a matching fixture contact with the target ends.
+/// The target may still overlap the trigger. Handlers must check its bounds before treating this as an exit.
 /// </summary>
 /// <param name="Target">The entity whose fixture contact ended.</param>
 [ByRefEvent, Serializable]

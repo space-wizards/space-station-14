@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 namespace Content.Shared.Teleportation.Components;
 
 /// <summary>
-/// Plays sounds at a target's departure and arrival locations during teleportation.
+/// Sets the departure and arrival sounds for teleportation.
 /// </summary>
 [RegisterComponent]
 public sealed partial class TeleportSoundComponent : Component

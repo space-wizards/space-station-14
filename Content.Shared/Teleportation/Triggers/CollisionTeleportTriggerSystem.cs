@@ -9,12 +9,16 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Teleportation.Triggers;
 
+/// <summary>
+/// Triggers teleportation on collision and checks whether entities have left a portal.
+/// </summary>
 public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
 {
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private SharedTeleportSystem _teleport = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
@@ -23,6 +27,9 @@ public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
         SubscribeLocalEvent<CollisionTeleportTriggerComponent, EndCollideEvent>(OnEndCollide);
     }
 
+    /// <summary>
+    /// Requests teleportation for a collision that passes the trigger's filters. No user is specified.
+    /// </summary>
     private void OnStartCollide(Entity<CollisionTeleportTriggerComponent> ent, ref StartCollideEvent args)
     {
         if (!IsTriggerCollision(ent.Comp, args.OurFixtureId, args.OtherFixtureId, args.OtherFixture))
@@ -36,6 +43,9 @@ public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
         _teleport.RequestTeleport(ent, target, user: null);
     }
 
+    /// <summary>
+    /// Reports the end of a matching fixture contact. Portal handlers check whether the target has left the exit.
+    /// </summary>
     private void OnEndCollide(Entity<CollisionTeleportTriggerComponent> ent, ref EndCollideEvent args)
     {
         if (!IsTriggerCollision(ent.Comp, args.OurFixtureId, args.OtherFixtureId, args.OtherFixture))
@@ -46,9 +56,12 @@ public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Whether the target's fixtures and filters allow it to activate this trigger after teleporting here.
-    /// Does not check the teleport destination or current overlap.
+    /// Checks whether the target could activate this trigger after teleportation.
+    /// Does not check the destination or whether the target currently overlaps the trigger.
     /// </summary>
+    /// <param name="teleporter">The trigger to check.</param>
+    /// <param name="target">The entity that would activate the trigger.</param>
+    /// <returns>Whether an allowed target fixture has collision masks that match a trigger fixture.</returns>
     public bool CanTrigger(Entity<CollisionTeleportTriggerComponent?> teleporter, EntityUid target)
     {
         if (!Resolve(teleporter, ref teleporter.Comp, logMissing: false))
@@ -88,11 +101,16 @@ public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Whether the target overlaps the conservative world bounds of this trigger's fixtures.
-    /// Uses current geometry rather than physics contacts or collision eligibility, so temporarily
-    /// disabling collisions does not release a target that is still inside the exit.
-    /// Bounds can retain the block near the corners of rotated or non-rectangular shapes.
+    /// Checks whether the target overlaps the trigger's world-space fixture bounds.
     /// </summary>
+    /// <remarks>
+    /// Uses current geometry, independent of physics contacts and collision eligibility.
+    /// Targets still inside the exit stay protected if collisions are disabled.
+    /// Bounding boxes may keep protection active near corners of rotated or non-rectangular shapes.
+    /// </remarks>
+    /// <param name="teleporter">The trigger that defines the exit bounds.</param>
+    /// <param name="target">The entity to check for overlap.</param>
+    /// <returns>Whether any selected fixture bounds intersect on the same map.</returns>
     public bool IsInsideTriggerBounds(Entity<CollisionTeleportTriggerComponent?> teleporter, EntityUid target)
     {
         if (!Resolve(teleporter, ref teleporter.Comp, logMissing: false))
@@ -143,6 +161,9 @@ public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Checks the bounding boxes of both fixtures' child shapes, without using contacts or collision flags.
+    /// </summary>
     private static bool FixtureBoundsOverlap(
         Fixture teleporterFixture,
         Fixture targetFixture,
@@ -162,6 +183,9 @@ public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Tests fixture filters and collision masks without requiring the target to overlap the trigger yet.
+    /// </summary>
     private static bool CanTriggerFixture(
         CollisionTeleportTriggerComponent component,
         Fixture teleporterFixture,
@@ -180,6 +204,9 @@ public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Rejects anchored targets and checks the filters used for collisions and exit protection.
+    /// </summary>
     private bool IsTargetAllowed(CollisionTeleportTriggerComponent component, EntityUid target)
     {
         if (Transform(target).Anchored)
@@ -191,6 +218,9 @@ public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
         return !_whitelist.IsWhitelistPass(component.TargetBlacklist, target);
     }
 
+    /// <summary>
+    /// Filters fixture contacts used for both activation and exit notifications.
+    /// </summary>
     private static bool IsTriggerCollision(
         CollisionTeleportTriggerComponent component,
         string teleporterFixtureId,

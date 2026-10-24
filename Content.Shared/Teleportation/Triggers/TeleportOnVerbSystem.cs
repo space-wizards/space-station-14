@@ -4,11 +4,15 @@ using Content.Shared.Whitelist;
 
 namespace Content.Shared.Teleportation.Triggers;
 
+/// <summary>
+/// Adds configurable teleport verbs and handles their activation.
+/// </summary>
 public sealed partial class TeleportOnVerbSystem : EntitySystem
 {
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private SharedTeleportSystem _teleport = default!;
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
@@ -26,6 +30,9 @@ public sealed partial class TeleportOnVerbSystem : EntitySystem
                 OnGetVerbs(ent, ref args, type, createVerb));
     }
 
+    /// <summary>
+    /// Builds the teleport menu entry, hiding or disabling it when unavailable and setting its explanatory message.
+    /// </summary>
     private void OnGetVerbs<TVerb>(
         Entity<TeleportOnVerbComponent> ent,
         ref GetVerbsEvent<TVerb> args,
@@ -63,9 +70,13 @@ public sealed partial class TeleportOnVerbSystem : EntitySystem
         verb.Icon = ent.Comp.VerbIcon;
         var category = ent.Comp.VerbCategory;
         verb.Category = category != null ? new VerbCategory(category.Value, null) : null;
+
         args.Verbs.Add(verb);
     }
 
+    /// <summary>
+    /// Rechecks the verb's user filters, then requests teleportation with the configured effects.
+    /// </summary>
     private void RequestTeleport(Entity<TeleportOnVerbComponent> ent, EntityUid target)
     {
         if (!IsUserAllowed(ent.Comp, target))
@@ -74,14 +85,20 @@ public sealed partial class TeleportOnVerbSystem : EntitySystem
         _teleport.RequestTeleport(ent, target, target, ent.Comp.TriggerEffects);
     }
 
+    /// <summary>
+    /// Checks the verb's user whitelist and blacklist. Collision-trigger filters do not apply.
+    /// </summary>
     private bool IsUserAllowed(TeleportOnVerbComponent component, EntityUid user)
     {
-        if (_whitelist.IsWhitelistFail(component.UserWhitelist, user))
-            return false;
-
-        return !_whitelist.IsWhitelistPass(component.UserBlacklist, user);
+        return _whitelist.CheckBoth(
+            user,
+            blacklist: component.UserBlacklist,
+            whitelist: component.UserWhitelist);
     }
 
+    /// <summary>
+    /// Returns the localized verb message. A cancellation reason overrides the default disabled message.
+    /// </summary>
     private string? GetMessage(TeleportOnVerbComponent component, TeleportUseAttemptEvent attempt)
     {
         var message = attempt.Cancelled

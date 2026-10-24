@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Teleportation.Triggers;
 
 /// <summary>
-/// Requests teleportation when an allowed user activates a verb on the teleporter.
+/// Adds a teleport verb with configurable user restrictions. Activation requests teleportation.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TeleportOnVerbComponent : Component
@@ -67,7 +67,8 @@ public sealed partial class TeleportOnVerbComponent : Component
     public LocId? EnabledMessage;
 
     /// <summary>
-    /// Fallback description when teleportation is unavailable and no cancellation reason was supplied.
+    /// Message shown for an unavailable verb if the teleport check supplied no cancellation reason.
+    /// Displayed only when <see cref="HideWhenDisabled"/> is false.
     /// </summary>
     [DataField]
     public LocId? DisabledMessage;
@@ -91,6 +92,9 @@ public sealed partial class TeleportOnVerbComponent : Component
     public EntityWhitelist? UserBlacklist;
 }
 
+/// <summary>
+/// Selects the verb menu and shortcut used to activate a teleporter.
+/// </summary>
 [Serializable, NetSerializable]
 public enum TeleportVerbType : byte
 {

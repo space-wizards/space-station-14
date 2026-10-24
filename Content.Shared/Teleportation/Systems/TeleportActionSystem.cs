@@ -8,8 +8,7 @@ using Robust.Shared.Map;
 namespace Content.Shared.Teleportation.Systems;
 
 /// <summary>
-/// Handles <see cref="TeleportActionEvent"/> by checking line of sight and whether the performer
-/// would collide with anything at the destination before moving them.
+/// Handles <see cref="TeleportActionEvent"/> for teleports to selected coordinates.
 /// </summary>
 public sealed partial class TeleportActionSystem : EntitySystem
 {
@@ -34,13 +33,13 @@ public sealed partial class TeleportActionSystem : EntitySystem
     }
 
     /// <summary>
-    /// Attempts to teleport user entity to target coordinates. Stops pulling or being pulled if requested.
+    /// Checks line of sight and destination clearance before teleporting the entity, optionally stopping its pulls.
     /// </summary>
-    /// <param name="user">Entity to teleport.</param>
-    /// <param name="target">Target coordinates.</param>
-    /// <param name="stopBeingPulled">Should <see cref="user"/> stop being used in pulling interaction?</param>
-    /// <param name="stopPulling">Should <see cref="user"/> stop pulling interaction on any entity he is currently pulling?</param>
-    /// <returns></returns>
+    /// <param name="user">The entity to teleport.</param>
+    /// <param name="target">The destination coordinates selected by the action.</param>
+    /// <param name="stopBeingPulled">Whether to stop another entity from pulling <paramref name="user"/>.</param>
+    /// <param name="stopPulling">Whether to stop <paramref name="user"/> from pulling another entity.</param>
+    /// <returns>Whether validation passed and the entity was teleported.</returns>
     public bool TryTeleport(
         EntityUid user,
         EntityCoordinates target,
