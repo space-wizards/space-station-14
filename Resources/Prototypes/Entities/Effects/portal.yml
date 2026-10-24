@@ -18,7 +18,7 @@
     departureSound: /Audio/Effects/teleport_departure.ogg
     arrivalSound: /Audio/Effects/teleport_arrival.ogg
   - type: TeleportOnVerb
-    triggerEffects: false
+    shouldTriggerEffects: false
     requireCanInteract: false
     requireHands: false
     verbType: Alternative

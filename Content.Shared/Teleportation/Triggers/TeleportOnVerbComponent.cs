@@ -16,7 +16,7 @@ public sealed partial class TeleportOnVerbComponent : Component
     /// Use checks and the successful teleport notification are unaffected.
     /// </summary>
     [DataField]
-    public bool TriggerEffects = true;
+    public bool ShouldTriggerEffects = true;
 
     /// <summary>
     /// Determines the verb menu and shortcut used to activate this trigger.

@@ -7,11 +7,11 @@ namespace Content.Shared.Teleportation.Triggers;
 /// </summary>
 /// <param name="Target">The entity to teleport.</param>
 /// <param name="User">The entity that explicitly activated the teleporter, or null for automatic activation.</param>
-/// <param name="TriggerEffects">
+/// <param name="ShouldTriggerEffects">
 /// Whether to run effects before and after teleportation. Does not bypass use checks.
 /// </param>
 [ByRefEvent, Serializable]
-public record struct TeleportRequestEvent(EntityUid Target, EntityUid? User, bool TriggerEffects = true)
+public record struct TeleportRequestEvent(EntityUid Target, EntityUid? User, bool ShouldTriggerEffects = true)
 {
     /// <summary>
     /// Whether an implementation has accepted this request. Teleportation may still fail.

@@ -13,27 +13,27 @@ public sealed partial class SharedTeleportSystem
     private readonly HashSet<Entity<PhysicsComponent>> _destinationIntersecting = new();
 
     /// <summary>
-    /// Checks whether the entity would collide with another hard, collidable entity at the target coordinates.
+    /// Checks whether the entity would collide with another hard, collidable entity at the destination coordinates.
     /// </summary>
-    /// <param name="user">The entity being checked, with optional cached fixtures and physics components.</param>
-    /// <param name="target">The map coordinates to check.</param>
-    /// <param name="rotation">The entity's world rotation at the destination.</param>
+    /// <param name="target">The entity to teleport, with optional cached fixtures and physics components.</param>
+    /// <param name="destination">The map coordinates to check.</param>
+    /// <param name="rotation">The target's world rotation at the destination.</param>
     /// <param name="flags">Which types of obstacles to consider.</param>
     /// <returns>
-    /// Whether a hard fixture at the destination overlaps an obstacle the entity can collide with.
+    /// Whether a hard fixture at the destination overlaps an obstacle the target can collide with.
     /// Returns false if required components are missing or the entity has no collidable hard body.
     /// </returns>
     public bool IsDestinationBlocked(
-        Entity<FixturesComponent?, PhysicsComponent?> user,
-        MapCoordinates target,
+        Entity<FixturesComponent?, PhysicsComponent?> target,
+        MapCoordinates destination,
         Angle rotation,
         LookupFlags flags = LookupFlags.Dynamic | LookupFlags.Static)
     {
-        if (!Resolve(user, ref user.Comp1, ref user.Comp2, logMissing: false))
+        if (!Resolve(target, ref target.Comp1, ref target.Comp2, logMissing: false))
             return false;
 
-        var fixtures = user.Comp1;
-        var physics = user.Comp2;
+        var fixtures = target.Comp1;
+        var physics = target.Comp2;
 
         if (!physics.CanCollide)
             return false;
@@ -41,7 +41,7 @@ public sealed partial class SharedTeleportSystem
         if (!physics.Hard)
             return false;
 
-        var destinationTransform = new Transform(target.Position, rotation);
+        var destinationTransform = new Transform(destination.Position, rotation);
 
         foreach (var fixture in fixtures.Fixtures.Values)
         {
@@ -50,7 +50,7 @@ public sealed partial class SharedTeleportSystem
 
             _destinationIntersecting.Clear();
             _lookup.GetEntitiesIntersecting(
-                target.MapId,
+                destination.MapId,
                 fixture.Shape,
                 destinationTransform,
                 _destinationIntersecting,
@@ -58,10 +58,10 @@ public sealed partial class SharedTeleportSystem
 
             foreach (var other in _destinationIntersecting)
             {
-                if (other.Owner == user.Owner)
+                if (other.Owner == target.Owner)
                     continue;
 
-                if (_physics.IsCurrentlyHardCollidable((other.Owner, null, other.Comp), user))
+                if (_physics.IsCurrentlyHardCollidable((other.Owner, null, other.Comp), target))
                     return true;
             }
         }

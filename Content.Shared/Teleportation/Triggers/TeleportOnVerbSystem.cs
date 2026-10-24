@@ -82,7 +82,7 @@ public sealed partial class TeleportOnVerbSystem : EntitySystem
         if (!IsUserAllowed(ent.Comp, target))
             return;
 
-        _teleport.RequestTeleport(ent, target, target, ent.Comp.TriggerEffects);
+        _teleport.RequestTeleport(ent, target, target, ent.Comp.ShouldTriggerEffects);
     }
 
     /// <summary>

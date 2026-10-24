@@ -35,57 +35,59 @@ public sealed partial class TeleportActionSystem : EntitySystem
     /// <summary>
     /// Checks line of sight and destination clearance before teleporting the entity, optionally stopping its pulls.
     /// </summary>
-    /// <param name="user">The entity to teleport.</param>
-    /// <param name="target">The destination coordinates selected by the action.</param>
-    /// <param name="stopBeingPulled">Whether to stop another entity from pulling <paramref name="user"/>.</param>
-    /// <param name="stopPulling">Whether to stop <paramref name="user"/> from pulling another entity.</param>
+    /// <param name="target">The entity to teleport.</param>
+    /// <param name="destination">The destination coordinates selected by the action.</param>
+    /// <param name="stopBeingPulled">Whether to stop another entity from pulling <paramref name="target"/>.</param>
+    /// <param name="stopPulling">Whether to stop <paramref name="target"/> from pulling another entity.</param>
     /// <returns>Whether validation passed and the entity was teleported.</returns>
     public bool TryTeleport(
-        EntityUid user,
-        EntityCoordinates target,
+        EntityUid target,
+        EntityCoordinates destination,
         bool stopBeingPulled = false,
         bool stopPulling = false)
     {
-        if (!target.IsValid(EntityManager))
+        if (!destination.IsValid(EntityManager))
             return false;
 
-        var xform = Transform(user);
-        var targetXform = Transform(target.EntityId);
-        if (!_examine.InRangeUnOccluded(user, target, SharedInteractionSystem.MaxRaycastRange))
+        var targetXform = Transform(target);
+        var destinationXform = Transform(destination.EntityId);
+        if (!_examine.InRangeUnOccluded(target, destination, SharedInteractionSystem.MaxRaycastRange))
         {
-            _popup.PopupEntity(Loc.GetString("teleport-action-popup-cant-see"), user, user);
+            _popup.PopupEntity(Loc.GetString("teleport-action-popup-cant-see"), target, target);
             return false;
         }
 
-        var targetEntPosRot = _transform.GetWorldPositionRotation(targetXform);
-        var targetRotated = targetEntPosRot.WorldRotation.RotateVec(target.Position);
-        var targetMapCoordinates = new MapCoordinates(targetEntPosRot.WorldPosition + targetRotated, targetXform.MapID);
+        var destinationPosRot = _transform.GetWorldPositionRotation(destinationXform);
+        var rotatedOffset = destinationPosRot.WorldRotation.RotateVec(destination.Position);
+        var destinationMapCoordinates = new MapCoordinates(
+            destinationPosRot.WorldPosition + rotatedOffset,
+            destinationXform.MapID);
 
-        if (_teleport.IsDestinationBlocked(user, targetMapCoordinates, targetEntPosRot.WorldRotation))
+        if (_teleport.IsDestinationBlocked(target, destinationMapCoordinates, destinationPosRot.WorldRotation))
         {
-            _popup.PopupEntity(Loc.GetString("teleport-action-popup-blocked"), user, user);
+            _popup.PopupEntity(Loc.GetString("teleport-action-popup-blocked"), target, target);
             return false;
         }
 
         if (stopBeingPulled &&
-            TryComp<PullableComponent>(user, out var pullable) &&
-            _pulling.IsPulled(user, pullable))
+            TryComp<PullableComponent>(target, out var pullable) &&
+            _pulling.IsPulled(target, pullable))
         {
-            _pulling.TryStopPull(user, pullable);
+            _pulling.TryStopPull(target, pullable);
         }
 
         if (stopPulling &&
-            TryComp<PullerComponent>(user, out var puller) &&
+            TryComp<PullerComponent>(target, out var puller) &&
             TryComp<PullableComponent>(puller.Pulling, out var pulled))
         {
             _pulling.TryStopPull(puller.Pulling.Value, pulled);
         }
 
-        var destination = _map.TryFindGridAt(targetMapCoordinates, out var grid, out _)
-            ? _map.MapToGrid(grid, targetMapCoordinates)
-            : _transform.ToCoordinates(targetMapCoordinates);
+        var resolvedDestination = _map.TryFindGridAt(destinationMapCoordinates, out var grid, out _)
+            ? _map.MapToGrid(grid, destinationMapCoordinates)
+            : _transform.ToCoordinates(destinationMapCoordinates);
 
-        _transform.SetCoordinates(user, xform, destination);
+        _transform.SetCoordinates(target, targetXform, resolvedDestination);
         return true;
     }
 }

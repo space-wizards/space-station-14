@@ -100,7 +100,7 @@ public abstract partial class SharedPortalSystem : EntitySystem
 
         if (TryComp<LinkedEntityComponent>(ent, out var link) && link.LinkedEntities.Count != 0)
         {
-            args.Succeeded = TryTeleportLinked(ent, link, args.Target, args.TriggerEffects);
+            args.Succeeded = TryTeleportLinked(ent, link, args.Target, args.ShouldTriggerEffects);
             return;
         }
 
@@ -111,7 +111,7 @@ public abstract partial class SharedPortalSystem : EntitySystem
             return;
 
         var randomDestination = FindRandomDestination(ent);
-        args.Succeeded = TryTeleport(ent, args.Target, randomDestination, args.TriggerEffects);
+        args.Succeeded = TryTeleport(ent, args.Target, randomDestination, args.ShouldTriggerEffects);
     }
 
     /// <summary>
@@ -121,7 +121,7 @@ public abstract partial class SharedPortalSystem : EntitySystem
         Entity<PortalComponent> ent,
         LinkedEntityComponent link,
         EntityUid target,
-        bool triggerEffects)
+        bool shouldTriggerEffects)
     {
         if (_net.IsClient && !CanPredictTeleport((ent, link)))
             return false;
@@ -131,7 +131,7 @@ public abstract partial class SharedPortalSystem : EntitySystem
             return false;
 
         var destination = Transform(destinationEntity).Coordinates;
-        return TryTeleport(ent, target, destination, triggerEffects, destinationEntity);
+        return TryTeleport(ent, target, destination, shouldTriggerEffects, destinationEntity);
     }
 
     /// <summary>
@@ -143,7 +143,7 @@ public abstract partial class SharedPortalSystem : EntitySystem
         Entity<PortalComponent> ent,
         EntityUid target,
         EntityCoordinates destination,
-        bool triggerEffects,
+        bool shouldTriggerEffects,
         EntityUid? destinationEntity = null)
     {
         if (!TryValidateDestination(ent, destination, destinationEntity))
@@ -158,7 +158,7 @@ public abstract partial class SharedPortalSystem : EntitySystem
         var reachedDestination = false;
         try
         {
-            if (!_teleport.TryTeleport(ent, target, destination, out reachedDestination, triggerEffects))
+            if (!_teleport.TryTeleport(ent, target, destination, out reachedDestination, shouldTriggerEffects))
                 return false;
 
             LogTeleport(ent, target, source, destination);
@@ -175,19 +175,19 @@ public abstract partial class SharedPortalSystem : EntitySystem
     /// Rejects linked exits where the target would overlap a static obstacle, showing a popup on failure.
     /// Random destinations use their own candidate selection instead.
     /// </summary>
-    private bool TryValidateExit(EntityUid target, EntityCoordinates destination, EntityUid? exit)
+    private bool TryValidateExit(EntityUid target, EntityCoordinates destination, EntityUid? destinationEntity)
     {
-        if (exit == null)
+        if (destinationEntity == null)
             return true;
 
-        var mapCoordinates = _transform.ToMapCoordinates(destination);
+        var destinationMapCoordinates = _transform.ToMapCoordinates(destination);
         var targetTransform = Transform(target);
         var rotation = _transform.GetWorldRotation(targetTransform);
         // Bodies without local rotation follow the destination parent's rotation after reparenting.
         if (targetTransform.NoLocalRotation)
             rotation = _transform.GetWorldRotation(destination.EntityId);
 
-        if (!_teleport.IsDestinationBlocked(target, mapCoordinates, rotation, LookupFlags.Static))
+        if (!_teleport.IsDestinationBlocked(target, destinationMapCoordinates, rotation, LookupFlags.Static))
             return true;
 
         _popup.PopupEntity(Loc.GetString("portal-component-exit-blocked"), target, target);
@@ -203,11 +203,11 @@ public abstract partial class SharedPortalSystem : EntitySystem
         EntityCoordinates destination,
         EntityUid? destinationEntity)
     {
-        var source = Transform(ent).Coordinates;
-        var onSameMap = _transform.GetMapId(source) == _transform.GetMapId(destination);
+        var portalCoordinates = Transform(ent).Coordinates;
+        var onSameMap = _transform.GetMapId(portalCoordinates) == _transform.GetMapId(destination);
         var mapInvalid = !onSameMap && !ent.Comp.CanTeleportToOtherMaps;
         var distanceInvalid = ent.Comp.MaxTeleportRadius != null
-                              && source.TryDistance(EntityManager, destination, out var distance)
+                              && portalCoordinates.TryDistance(EntityManager, destination, out var distance)
                               && distance > ent.Comp.MaxTeleportRadius;
 
         if (!mapInvalid && !distanceInvalid)
@@ -218,8 +218,8 @@ public abstract partial class SharedPortalSystem : EntitySystem
 
         _popup.PopupCoordinates(
             Loc.GetString("portal-component-invalid-configuration-fizzle"),
-            source,
-            Filter.Pvs(source, entityMan: EntityManager),
+            portalCoordinates,
+            Filter.Pvs(portalCoordinates, entityMan: EntityManager),
             true);
 
         _popup.PopupCoordinates(
@@ -242,12 +242,12 @@ public abstract partial class SharedPortalSystem : EntitySystem
     /// </summary>
     private EntityCoordinates FindRandomDestination(Entity<PortalComponent> ent)
     {
-        var source = Transform(ent).Coordinates;
-        var destination = source.Offset(_random.NextVector2(ent.Comp.MaxRandomRadius));
+        var portalCoordinates = Transform(ent).Coordinates;
+        var destination = portalCoordinates.Offset(_random.NextVector2(ent.Comp.MaxRandomRadius));
 
         for (var i = 0; i < MaxRandomTeleportAttempts; i++)
         {
-            destination = source.Offset(_random.NextVector2(ent.Comp.MaxRandomRadius));
+            destination = portalCoordinates.Offset(_random.NextVector2(ent.Comp.MaxRandomRadius));
             if (!_lookup.AnyEntitiesIntersecting(_transform.ToMapCoordinates(destination), LookupFlags.Static))
                 break;
         }
@@ -276,10 +276,10 @@ public abstract partial class SharedPortalSystem : EntitySystem
         if (portal.Comp.LinkedEntities.Count != 1)
             return false;
 
-        var destination = portal.Comp.LinkedEntities.First();
-        if (!Exists(destination))
+        var destinationEntity = portal.Comp.LinkedEntities.First();
+        if (!Exists(destinationEntity))
             return false;
 
-        return Transform(destination).MapID != MapId.Nullspace;
+        return Transform(destinationEntity).MapID != MapId.Nullspace;
     }
 }

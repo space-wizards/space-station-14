@@ -29,14 +29,14 @@ public sealed partial class SharedTeleportSystem : EntitySystem
     /// Whether the target's transform matches the destination after the coordinate update attempt,
     /// even if a handler throws.
     /// </param>
-    /// <param name="triggerEffects">Whether to raise events for effects before and after teleportation.</param>
+    /// <param name="shouldTriggerEffects">Whether to raise events for effects before and after teleportation.</param>
     /// <returns>Whether teleportation succeeded.</returns>
     internal bool TryTeleport(
         EntityUid teleporter,
         EntityUid target,
         EntityCoordinates destination,
         out bool reachedDestination,
-        bool triggerEffects = true)
+        bool shouldTriggerEffects = true)
     {
         reachedDestination = false;
 
@@ -46,7 +46,7 @@ public sealed partial class SharedTeleportSystem : EntitySystem
         if (!CanTeleport(target, destination))
             return false;
 
-        if (triggerEffects)
+        if (shouldTriggerEffects)
         {
             var beforeTeleport = new BeforeTeleportEvent(target);
             RaiseLocalEvent(teleporter, ref beforeTeleport);
@@ -75,7 +75,7 @@ public sealed partial class SharedTeleportSystem : EntitySystem
         var teleported = new TeleportedEvent(teleporter);
         RaiseLocalEvent(target, ref teleported);
 
-        if (!triggerEffects)
+        if (!shouldTriggerEffects)
             return true;
 
         // Notification handlers may delete either participant after teleportation succeeds.

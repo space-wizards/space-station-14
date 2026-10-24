@@ -49,9 +49,13 @@ public sealed partial class SharedTeleportSystem
     /// <param name="teleporter">The teleporter being activated.</param>
     /// <param name="target">The entity to teleport.</param>
     /// <param name="user">The user activating the teleporter, or null for automatic activation.</param>
-    /// <param name="triggerEffects">Whether to run effects before and after teleportation.</param>
+    /// <param name="shouldTriggerEffects">Whether to run effects before and after teleportation.</param>
     /// <returns>Whether the teleport implementation reported success.</returns>
-    public bool RequestTeleport(EntityUid teleporter, EntityUid target, EntityUid? user, bool triggerEffects = true)
+    public bool RequestTeleport(
+        EntityUid teleporter,
+        EntityUid target,
+        EntityUid? user,
+        bool shouldTriggerEffects = true)
     {
         var attempt = CheckTeleportUse(teleporter, target, user);
         if (attempt.Cancelled)
@@ -61,7 +65,7 @@ public sealed partial class SharedTeleportSystem
         {
             AddComp<TeleportingComponent>(target);
 
-            var request = new TeleportRequestEvent(target, user, triggerEffects);
+            var request = new TeleportRequestEvent(target, user, shouldTriggerEffects);
             RaiseLocalEvent(teleporter, ref request);
 
             if (request.Handled)
