@@ -357,14 +357,14 @@ public sealed class CargoTest : GameTest
                     );
 
                     // Verify spawned entities on pallets
-                    var spawnedEntities = GetEntitiesOnCargoPallets(grid.Owner);
+                    var spawnedEntities = _sCargo.GetEntitiesOnCargoPallets(grid.Owner);
                     var count = 0;
                     var expectedProtos = new List<EntProtoId> { productProto.Product };
                     // Some products spawn inside containers e.g. silver inside parcel
                     if (productProto.Container is { } container)
                         expectedProtos.Add(container.Entity.Id);
                     else if (
-                        entProto.TryGetComponent<EntityTableSpawnerComponent>(out var tableSpawnerComponent, _sCompFact)
+                        entProto.TryComp<EntityTableSpawnerComponent>(out var tableSpawnerComponent, _sCompFact)
                     )
                     {
                         expectedProtos = _sTableSystem
@@ -427,20 +427,5 @@ public sealed class CargoTest : GameTest
     {
         var console = SSpawnAtPosition(protoId, coordinates);
         return (console, SComp<CargoOrderConsoleComponent>(console));
-    }
-
-    private IEnumerable<EntityUid> GetEntitiesOnCargoPallets(EntityUid gridOwner)
-    {
-        var entities = new HashSet<EntityUid>();
-        foreach (var pallet in _sCargo.GetCargoPallets(gridOwner, BuySellType.Buy))
-        {
-            var aabb = _sLookup.GetAABBNoContainer(
-                pallet.Entity,
-                pallet.PalletXform.LocalPosition,
-                pallet.PalletXform.LocalRotation
-            );
-            _sLookup.GetLocalEntitiesIntersecting(gridOwner, aabb, entities, LookupFlags.Dynamic);
-        }
-        return entities.Distinct();
     }
 }
