@@ -758,8 +758,8 @@
 - type: entity
   parent: [ClothingOuterWinterCoatToggleable, BaseSyndicateContraband]
   id: ClothingOuterWinterSyndieCap
-  name: syndicate's formal winter coat
-  description: "The syndicate's winter coat is made of durable fabric, with gilded patterns, and coarse wool."
+  name: syndicate formal winter coat
+  description: "A fancy winter coat made of durable fabric, coarse wool, and a touch of gilding worn by high ranking Syndicate operatives."
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
@@ -783,8 +783,8 @@
 - type: entity
   parent: [ BaseSyndicateContraband, ClothingOuterWinterWarden ]
   id: ClothingOuterWinterSyndieCapArmored
-  name: syndicate's armored winter coat
-  description: "The syndicate's armored winter coat is made of durable fabric, with gilded patterns, and coarse wool."
+  name: syndicate armored winter coat
+  description: "A sturdy reinforced winter coat made of durable fabric, coarse wool, and a touch of gilding worn by high ranking Syndicate operatives."
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/syndicate/coatsyndiecaparmored.rsi
@@ -797,7 +797,7 @@
 - type: entity
   parent: [ClothingOuterWinterCoatToggleable, BaseSyndicateContraband]
   id: ClothingOuterWinterSyndie
-  name: syndicate's winter coat
+  name: syndicate winter coat
   description: Insulated winter coat, looks like a piece of merch from "Syndieland".
   components:
   - type: Sprite
