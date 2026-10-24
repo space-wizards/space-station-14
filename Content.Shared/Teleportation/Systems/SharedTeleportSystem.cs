@@ -17,8 +17,9 @@ public sealed partial class SharedTeleportSystem : EntitySystem
     [Dependency] private SharedJointSystem _joints = default!;
 
     /// <summary>
-    /// Attempts to teleport a target, with optional effects on the teleporter.
-    /// After a successful teleport, raises <see cref="TeleportedEvent"/> on the target before post-teleport effects.
+    /// Attempts to teleport a target, notifying it with <see cref="TeleportedEvent"/> on success.
+    /// Optionally raises <see cref="BeforeTeleportEvent"/> before the attempt and
+    /// <see cref="TargetTeleportedEvent"/> after that notification, both on the teleporter.
     /// Used by teleport implementations called through <see cref="RequestTeleport"/>.
     /// </summary>
     /// <remarks>Exceptions from teleportation and its event handlers propagate to the caller.</remarks>
@@ -121,17 +122,17 @@ public sealed partial class SharedTeleportSystem : EntitySystem
     /// </summary>
     private void StopPullingRelationships(EntityUid target)
     {
-        if (TryComp(target, out PullableComponent? targetPullable))
+        if (TryComp<PullableComponent>(target, out var targetPullable))
             _pulling.TryStopPull(target, targetPullable);
 
-        if (!TryComp(target, out PullerComponent? targetPuller))
+        if (!TryComp<PullerComponent>(target, out var targetPuller))
             return;
 
         var pulledTarget = targetPuller.Pulling;
         if (pulledTarget == null)
             return;
 
-        if (!TryComp(pulledTarget, out PullableComponent? pulledEntity))
+        if (!TryComp<PullableComponent>(pulledTarget, out var pulledEntity))
             return;
 
         _pulling.TryStopPull(pulledTarget.Value, pulledEntity);

@@ -43,14 +43,13 @@ public sealed partial class PortalComponent : Component
 
     /// <summary>
     /// Limits users of a portal with no linked destinations.
-    /// Null adds no restriction. Automatic activation without a user is unaffected.
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityWhitelist? UnlinkedUserWhitelist;
 
     /// <summary>
     /// Blocks matching users when the portal has no linked destinations.
-    /// Takes priority over <see cref="UnlinkedUserWhitelist"/>. Automatic activation without a user is unaffected.
+    /// Takes priority over <see cref="UnlinkedUserWhitelist"/>.
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityWhitelist? UnlinkedUserBlacklist;
