@@ -147,14 +147,11 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         var sameGrid = portal1Xform.GridUid == portal2Xform.GridUid;
         var sameMap = portal1Xform.MapID == portal2Xform.MapID;
 
-        if (!sameGrid && !entity.Comp.AllowPortalsOnDifferentGrids)
+        if (!sameGrid && !entity.Comp.AllowPortalsOnDifferentGrids 
+            || !sameMap && !entity.Comp.AllowPortalsOnDifferentMaps)
         {
             FizzlePortals(entity, null, false);
-            return;
         }
-
-        if (!sameMap && !entity.Comp.AllowPortalsOnDifferentMaps)
-            FizzlePortals(entity, null, false);
     }
 
     /// <summary>
