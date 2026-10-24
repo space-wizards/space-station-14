@@ -310,9 +310,6 @@ public sealed class PowerStateTest : GameTest
 
             ent = SSpawnAtPosition(ProtoId, grid.Owner.ToCoordinates());
             SEntMan.EnsureComponent<TestListenerComponent>(ent);
-
-            var apcEnt = SEntMan.SpawnAttachedTo("ApcDummy", grid.Owner.ToCoordinates(0, 0));
-
         });
 
         // wait for power to set up
@@ -336,7 +333,7 @@ public sealed class PowerStateTest : GameTest
             {
                 Assert.That(powerState.IsTurnedOn, Is.False);
                 Assert.That(powerState.IsOperating, Is.False);
-                Assert.That(receiver.Load, Is.EqualTo(powerState.WorkingPowerDraw).Within(0.01f));
+                Assert.That(receiver.Load, Is.EqualTo(powerState.IdlePowerDraw).Within(0.01f));
             }
 
             var operatingChangedEvents = _operatingChangedListener.GetEvents(ent)
