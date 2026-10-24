@@ -14,7 +14,7 @@
     time: 3h
   - !type:DepartmentTimeRequirement
     department: Security
-    time: 5h
+    time: 3h
 
 - type: antagSpecifier
   abstract: true
