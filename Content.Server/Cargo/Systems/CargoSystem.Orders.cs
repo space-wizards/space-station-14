@@ -540,8 +540,10 @@ public sealed partial class CargoSystem
         foreach (var trade in _listEnts)
         {
             var freePads = GetFreeCargoPallets(trade, BuySellType.Buy).ToList();
-            _random.Shuffle(freePads);
+            if (freePads.Count < order.OrderQuantity) //check if the station has enough free pallets
+                continue;
 
+            _random.Shuffle(freePads);
             foreach (var pad in freePads)
             {
                 var coordinates = new EntityCoordinates(trade, pad.Transform.LocalPosition);
