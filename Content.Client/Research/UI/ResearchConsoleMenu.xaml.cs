@@ -89,9 +89,9 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
         if (!_entity.TryGetComponent(Entity, out TechnologyDatabaseComponent? database))
             return;
 
-        var focuses = database.MainDisciplines;
+        var disciplines = database.MainDisciplines;
         var disciplineText = new FormattedMessage();
-        foreach (var id in focuses)
+        foreach (var id in disciplines)
         {
             if (!disciplineText.IsEmpty)
                 disciplineText.AddText(", ");
@@ -102,14 +102,14 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
             disciplineText.Pop();
         }
 
-        if (focuses.Count == 0)
+        if (disciplines.Count == 0)
             disciplineText.AddText(Loc.GetString("research-discipline-none"));
 
         var msg = new FormattedMessage();
         msg.AddMarkupOrThrow(Loc.GetString("research-console-menu-main-discipline",
             ("name", disciplineText.ToMarkup()),
-            ("count", focuses.Count),
-            ("limit", database.ResearchFocusLimit)));
+            ("count", disciplines.Count),
+            ("limit", database.ResearchDisciplineLimit)));
         MainDisciplineLabel.SetMessage(msg);
 
         TierDisplayContainer.Children.Clear();

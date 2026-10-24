@@ -17,7 +17,7 @@ public sealed partial class ResearchSystem
             return;
 
         primaryDb.MainDisciplines = new(otherDb.MainDisciplines);
-        primaryDb.ResearchFocusLimit = otherDb.ResearchFocusLimit;
+        primaryDb.ResearchDisciplineLimit = otherDb.ResearchDisciplineLimit;
         primaryDb.CurrentTechnologyCards = otherDb.CurrentTechnologyCards;
         primaryDb.SupportedDisciplines = otherDb.SupportedDisciplines;
         primaryDb.UnlockedTechnologies = otherDb.UnlockedTechnologies;
@@ -167,7 +167,7 @@ public sealed partial class ResearchSystem
         if (args.Server != null)
             return;
         component.MainDisciplines = new();
-        component.ResearchFocusLimit = 1;
+        component.ResearchDisciplineLimit = 1;
         component.CurrentTechnologyCards = new List<string>();
         component.SupportedDisciplines = new List<ProtoId<TechDisciplinePrototype>>();
         component.UnlockedTechnologies = new List<ProtoId<TechnologyPrototype>>();

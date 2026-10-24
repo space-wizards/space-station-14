@@ -53,7 +53,7 @@ public sealed partial class TechnologyPrototype : IPrototype
     public int Cost = 10000;
 
     /// <summary>
-    /// Requires all ordinary research in the current focuses
+    /// Requires all ordinary research in the current disciplines
     /// </summary>
     [DataField]
     public bool RequiresResearchCompletion;

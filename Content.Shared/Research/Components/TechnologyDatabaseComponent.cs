@@ -19,7 +19,7 @@ public sealed partial class TechnologyDatabaseComponent : Component
     /// Maximum number of main disciplines.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public int ResearchFocusLimit = 1;
+    public int ResearchDisciplineLimit = 1;
 
     [DataField, AutoNetworkedField]
     public List<string> CurrentTechnologyCards = new();

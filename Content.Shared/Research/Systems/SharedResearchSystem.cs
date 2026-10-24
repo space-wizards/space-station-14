@@ -20,7 +20,7 @@ public abstract partial class SharedResearchSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<TechnologyDatabaseComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<TechnologyDatabaseComponent, ResearchFocusUnlockEvent>(OnResearchFocusUnlock);
+        SubscribeLocalEvent<TechnologyDatabaseComponent, ResearchDisciplineUnlockEvent>(OnResearchDisciplineUnlock);
     }
 
     private void OnMapInit(EntityUid uid, TechnologyDatabaseComponent component, MapInitEvent args)
@@ -28,9 +28,9 @@ public abstract partial class SharedResearchSystem : EntitySystem
         UpdateTechnologyCards(uid, component);
     }
 
-    private void OnResearchFocusUnlock(EntityUid uid, TechnologyDatabaseComponent component, ResearchFocusUnlockEvent args)
+    private void OnResearchDisciplineUnlock(EntityUid uid, TechnologyDatabaseComponent component, ResearchDisciplineUnlockEvent args)
     {
-        component.ResearchFocusLimit += args.Amount;
+        component.ResearchDisciplineLimit += args.Amount;
         Dirty(uid, component);
     }
 
@@ -100,9 +100,9 @@ public abstract partial class SharedResearchSystem : EntitySystem
 
     public bool HasCompletedResearch(TechnologyDatabaseComponent component)
     {
-        var focuses = component.MainDisciplines;
-        // Each newly purchased focus must be selected and completed before another upgrade.
-        if (focuses.Count < component.ResearchFocusLimit)
+        var disciplines = component.MainDisciplines;
+        // Each newly purchased discipline must be selected and completed before another upgrade.
+        if (disciplines.Count < component.ResearchDisciplineLimit)
             return false;
 
         foreach (var tech in ProtoMan.EnumeratePrototypes<TechnologyPrototype>())
@@ -111,7 +111,7 @@ public abstract partial class SharedResearchSystem : EntitySystem
                 continue;
 
             var discipline = ProtoMan.Index(tech.Discipline);
-            if (tech.Tier >= discipline.LockoutTier && !focuses.Contains(tech.Discipline))
+            if (tech.Tier >= discipline.LockoutTier && !disciplines.Contains(tech.Discipline))
                 continue;
 
             if (!component.UnlockedTechnologies.Contains(tech.ID))
@@ -152,7 +152,7 @@ public abstract partial class SharedResearchSystem : EntitySystem
 
         var highestTier = techDiscipline.TierPrerequisites.Keys.Max();
         var tier = 2; //tier 1 is always given
-        var focuses = component.MainDisciplines;
+        var disciplines = component.MainDisciplines;
 
         // todo this might break if you have hidden technologies. i'm not sure
 
@@ -171,8 +171,8 @@ public abstract partial class SharedResearchSystem : EntitySystem
                 break;
 
             if (tier >= techDiscipline.LockoutTier &&
-                !focuses.Contains(techDiscipline.ID) &&
-                focuses.Count >= component.ResearchFocusLimit)
+                !disciplines.Contains(techDiscipline.ID) &&
+                disciplines.Count >= component.ResearchDisciplineLimit)
                 break;
             tier++;
         }
@@ -256,7 +256,7 @@ public abstract partial class SharedResearchSystem : EntitySystem
         var discipline = ProtoMan.Index(prototype.Discipline);
         if (prototype.Tier < discipline.LockoutTier || prototype.RequiresResearchCompletion ||
             component.MainDisciplines.Contains(prototype.Discipline) ||
-            component.MainDisciplines.Count >= component.ResearchFocusLimit)
+            component.MainDisciplines.Count >= component.ResearchDisciplineLimit)
             return;
         component.MainDisciplines.Add(prototype.Discipline);
         Dirty(uid, component);
@@ -316,7 +316,7 @@ public abstract partial class SharedResearchSystem : EntitySystem
 
         comp.UnlockedTechnologies.Clear();
         comp.MainDisciplines.Clear();
-        comp.ResearchFocusLimit = 1;
+        comp.ResearchDisciplineLimit = 1;
         Dirty(uid, comp);
     }
 
