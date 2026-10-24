@@ -37,7 +37,6 @@ namespace Content.Server.Atmos.EntitySystems
                 UpdatePosition(airtight);
                 return;
             }
-
             // Otherwise we need to determine its current blocked air directions based on rotation
             // and check if it's still airtight.
             var xform = Transform(airtight);
