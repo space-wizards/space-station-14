@@ -161,7 +161,6 @@ namespace Content.Server.Atmos.EntitySystems
                 _airtightSystem.SetAirblocked((ent.Owner, airtight), args.Powered);
         }
     }
-
     /// <summary>
     /// Raised upon the airtight status being changed via anchoring, movement, etc.
     /// </summary>
