@@ -26,8 +26,8 @@ public sealed partial class TeleportOnVerbSystem : EntitySystem
     private void SubscribeVerb<TVerb>(TeleportVerbType type, Func<TVerb> createVerb) where TVerb : Verb
     {
         SubscribeLocalEvent<TeleportOnVerbComponent, GetVerbsEvent<TVerb>>(
-            (Entity<TeleportOnVerbComponent> ent, ref GetVerbsEvent<TVerb> args) =>
-                OnGetVerbs(ent, ref args, type, createVerb));
+            (ent, ref args) => OnGetVerbs(ent, ref args, type, createVerb)
+        );
     }
 
     /// <summary>
