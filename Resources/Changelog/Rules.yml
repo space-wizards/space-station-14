@@ -26,7 +26,7 @@ Entries:
   url: https://github.com/space-wizards/space-station-14/pull/42264
 - author: SlamBamActionMan
   changes:
-  - message: Silicon Rule 8 update - For crewsimov silicon (but not for any other lawsets), crew membership can and must be determined by the new crew HUD indicators.  (Entry added to changelog on 2026-10-24)
+  - message: Silicon Rule 8 update - For crewsimov silicon (but not for any other lawsets), crew membership can and must be determined by the new crew indicators. A pulsing green border around the job icon means crew. (Entry added to changelog on 2026-10-24)
     type: Tweak
   id: 4
   time: '2026-01-29T08:13:55.0000000+00:00'
