@@ -15,6 +15,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/wheat.rsi
     snapCardinals: true
+  - type: Transform
     noRot: true
   - type: Appearance
   - type: Clickable
