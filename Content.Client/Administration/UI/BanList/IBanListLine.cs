@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration.BanList;
+using Content.Shared.Administration.BanList;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Administration.UI.BanList;

@@ -88,7 +88,7 @@ public sealed partial class ParcelWrappingSystem
     {
         var duration = wrapper.Comp.WrapDelay;
 
-        if (TryComp<ParcelWrapOverrideComponent>(target, out var overrideComp) &&
+        if (_parcelWrapOverrideQuery.TryComp(target, out var overrideComp) &&
             overrideComp.WrapDelay is { } wrapDelayOverride)
             duration = wrapDelayOverride;
 
@@ -96,7 +96,7 @@ public sealed partial class ParcelWrappingSystem
         if (target == user)
         {
             var selfMsg = Loc.GetString("parcel-wrap-popup-being-wrapped-self");
-            _popup.PopupClient(selfMsg, user, user);
+            _popup.PopupEntity(selfMsg, user, user);
         }
         else
         {
@@ -132,7 +132,7 @@ public sealed partial class ParcelWrappingSystem
         // Consume a `use` on the wrapper, and delete the wrapper if it's empty.
         _charges.TryUseCharges(wrapper.Owner, 1);
         if (_charges.IsEmpty(wrapper.Owner))
-            PredictedQueueDel(wrapper);
+            QueueDel(wrapper);
 
         // Play a wrapping sound.
         _audio.PlayPredicted(wrapper.Comp.WrapSound, target, user);
@@ -142,7 +142,7 @@ public sealed partial class ParcelWrappingSystem
 
         // Spawn the actual parcel entity.
         var targetTransform = Transform(target);
-        var spawned = Spawn(GetParcelPrototype(wrapper, target), targetTransform.Coordinates);
+        var spawned = SpawnAtPosition(GetParcelPrototype(wrapper, target), targetTransform.Coordinates);
         _transform.SetLocalRotation(spawned, targetTransform.LocalRotation);
 
         // If the target is in a container, try to put the parcel in its place in the container.

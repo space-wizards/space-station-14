@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.FixedPoint;
 using Content.Shared.PDA.Ringer;
 using Content.Shared.Store.Components;

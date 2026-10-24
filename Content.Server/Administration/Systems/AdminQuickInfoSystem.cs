@@ -1,6 +1,10 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Administration.Managers;
+using Content.Server.Mind;
 using Content.Shared.Administration;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
+using Robust.Shared.Network;
 
 namespace Content.Server.Administration.Systems;
 
@@ -14,6 +18,7 @@ namespace Content.Server.Administration.Systems;
 public sealed partial class AdminQuickInfoSystem : EntitySystem
 {
     [Dependency] private IAdminManager _adminManager = null!;
+    [Dependency] private MindSystem _mind = null!;
 
     public override void Initialize()
     {
@@ -33,10 +38,17 @@ public sealed partial class AdminQuickInfoSystem : EntitySystem
         var responses = ev.Entities.Select(e =>
             {
                 if (!TryGetEntity(e, out var ent))
-                    return new QuickInfoShared.SingleEntityInfo(e, false, "", "");
+                    return new QuickInfoShared.SingleEntityInfo(e, false, "", "", null);
 
+                NetUserId? lastPlayer = null;
+
+                // Check the last mind that was attached to the entity and get its userid.
+                if (_mind.TryGetLastMind(ent.Value, out var lastMind))
+                {
+                    lastPlayer = lastMind.Value.Comp.UserId;
+                }
                 var metadata = MetaData(ent.Value);
-                return new QuickInfoShared.SingleEntityInfo(e, true, metadata.EntityName, metadata.EntityPrototype?.ID);
+                return new QuickInfoShared.SingleEntityInfo(e, true, metadata.EntityName, metadata.EntityPrototype?.ID, lastPlayer);
             })
             .ToArray();
 

@@ -17,6 +17,7 @@ steal-target-groups-weapon-energy-magnum = energy magnum
 steal-target-groups-figurines = figurine
 steal-target-groups-heads-cloaks = head's cloak
 steal-target-groups-heads-bedsheets = head's bedsheet
+steal-target-groups-heads-hardsuits = head's hardsuit
 steal-target-groups-stamps = stamp
 steal-target-groups-door-remotes = door remote
 steal-target-groups-encryption-keys = encryption key

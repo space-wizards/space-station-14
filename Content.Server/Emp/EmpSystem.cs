@@ -1,11 +1,11 @@
 using Content.Server.Power.EntitySystems;
-using Content.Server.Radio;
 using Content.Server.SurveillanceCamera;
 using Content.Shared.Emp;
+using Content.Shared.Radio;
 
 namespace Content.Server.Emp;
 
-public sealed class EmpSystem : SharedEmpSystem
+public sealed partial class EmpSystem : SharedEmpSystem
 {
     public override void Initialize()
     {
