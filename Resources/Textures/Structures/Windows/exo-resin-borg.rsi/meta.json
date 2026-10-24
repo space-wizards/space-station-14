@@ -11,59 +11,35 @@
             "name": "full"
         },
         {
-            "name": "window0",
+            "name": "xenoborg0",
             "directions": 4
         },
         {
-            "name": "window1",
+            "name": "xenoborg1",
             "directions": 4
         },
         {
-            "name": "window2",
+            "name": "xenoborg2",
             "directions": 4
         },
         {
-            "name": "window3",
+            "name": "xenoborg3",
             "directions": 4
         },
         {
-            "name": "window4",
+            "name": "xenoborg4",
             "directions": 4
         },
         {
-            "name": "window5",
+            "name": "xenoborg5",
             "directions": 4
         },
         {
-            "name": "window6",
+            "name": "xenoborg6",
             "directions": 4
         },
         {
-            "name": "window7",
-            "directions": 4
-        },
-        {
-            "name": "window8",
-            "directions": 4
-        },
-        {
-            "name": "window9",
-            "directions": 4
-        },
-        {
-            "name": "window10",
-            "directions": 4
-        },
-        {
-            "name": "window11",
-            "directions": 4
-        },
-        {
-            "name": "window12",
-            "directions": 4
-        },
-        {
-            "name": "window13",
+            "name": "xenoborg7",
             "directions": 4
         }
     ]
