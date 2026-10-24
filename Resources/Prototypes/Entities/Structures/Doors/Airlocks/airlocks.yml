@@ -179,8 +179,8 @@
 
 - type: entity
   parent: AirlockCargo
-  id: AirlockMining # idk why we even have this, we don't use it for mapping stations on wizden
-  suffix: UNUSED, Mining # remove UNUSED when you find n use for it
+  id: AirlockMining
+  suffix: Mining
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/cargo-mining.rsi
@@ -399,7 +399,7 @@
 - type: entity
   parent: AirlockCargoGlass
   id: AirlockMiningGlass
-  suffix: UNUSED, Mining #remove UNUSED if you find a use for it
+  suffix: Mining
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/cargo-mining.rsi
