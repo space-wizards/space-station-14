@@ -54,9 +54,6 @@ public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
         if (!Resolve(teleporter, ref teleporter.Comp, logMissing: false))
             return false;
 
-        if (!IsTargetAllowed(teleporter.Comp, target))
-            return false;
-
         if (!TryComp<PhysicsComponent>(teleporter, out var teleporterBody))
             return false;
 
@@ -73,6 +70,9 @@ public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
             return false;
 
         if (!TryComp<FixturesComponent>(target, out var targetFixtures))
+            return false;
+
+        if (!IsTargetAllowed(teleporter.Comp, target))
             return false;
 
         foreach (var (teleporterId, teleporterFixture) in teleporterFixtures.Fixtures)
