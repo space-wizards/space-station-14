@@ -293,7 +293,7 @@
     children:
     - id: OxygenTankFilled
     - id: ClothingOuterHardsuitSyndie
-    - id: ClothingShoesBootsMagSyndie
+    - id: ClothingShoesBootsMagSyndieFilled
     - id: ClothingMaskGasSyndicate
 
 #Pirate Captain's hardsuit
