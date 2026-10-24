@@ -17,8 +17,8 @@
   - type: TeleportSound
     departureSound: /Audio/Effects/teleport_departure.ogg
     arrivalSound: /Audio/Effects/teleport_arrival.ogg
-  - type: TeleportOnVerb
-    shouldTriggerEffects: false
+  - type: TeleportOnVerb #Verb for ghost
+    shouldTriggerEffects: false #silent teleportation, so ghost won't spam sound
     requireCanInteract: false
     requireHands: false
     verbType: Alternative
