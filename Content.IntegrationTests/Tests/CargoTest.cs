@@ -398,6 +398,10 @@ public sealed class CargoTest : GameTest
                         $"[{proto}] Expected {spawnCount} spawned entities, got {count}"
                     );
                 }
+                SDeleteNow(iDCard);
+                SDeleteNow(station);
+                SDeleteNow(grid);
+                SDeleteNow(console);
             }
         });
     }
