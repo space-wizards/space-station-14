@@ -1172,3 +1172,9 @@ hydroponicsSoil: HydroponicsSoil
 hydroponicsTray: HydroponicsTray
 trayScanner: TRayScanner
 voicesensor: VoiceSensor
+
+# 2026-10-20
+ClothingHeadsetQM: ClothingHeadsetAltCargo
+ClothingHeadsetCE: ClothingHeadsetAltEngineering
+ClothingHeadsetCMO: ClothingHeadsetAltMedical
+ClothingHeadsetRD: ClothingHeadsetAltScience
