@@ -304,9 +304,6 @@
   id: ChemDispensable # Storage whitelist: ChemDispenserEmpty, SmartFridge, BorgModuleChemical
 
 - type: Tag
-  id: ChemMasterInputOutputCollisionBlacklist # For e.g. bottles that have FitsInDispenser Comp, but shouldnt be in the ChemMaster input slot.
-
-- type: Tag
   id: Chicken # Reproductive partner key. MetamorphRecipe: FoodBurgerChicken
 
 - type: Tag
