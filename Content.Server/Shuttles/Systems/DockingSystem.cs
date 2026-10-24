@@ -305,7 +305,13 @@ public sealed partial class DockingSystem : SharedDockingSystem
 
         if (TryComp(dockAUid, out DoorComponent? doorA))
         {
-            if (_doorSystem.TryOpen(dockAUid, doorA))
+            var opened = true;
+            if (!Paused(dockAUid))
+                opened = _doorSystem.TryOpen(dockAUid, doorA);
+            else
+                _doorSystem.StartOpening(dockAUid, doorA);
+
+            if (opened)
             {
                 if (TryComp<DoorBoltComponent>(dockAUid, out var airlockA))
                 {
@@ -317,7 +323,13 @@ public sealed partial class DockingSystem : SharedDockingSystem
 
         if (TryComp(dockBUid, out DoorComponent? doorB))
         {
-            if (_doorSystem.TryOpen(dockBUid, doorB))
+            var opened = true;
+            if (!Paused(dockBUid))
+                opened = _doorSystem.TryOpen(dockBUid, doorB);
+            else
+                _doorSystem.StartOpening(dockBUid, doorB);
+
+            if (opened)
             {
                 if (TryComp<DoorBoltComponent>(dockBUid, out var airlockB))
                 {
