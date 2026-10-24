@@ -1,8 +1,9 @@
 namespace Content.Shared.Teleportation.Triggers;
 
 /// <summary>
-/// Requests teleportation of a target. Raised on the teleporter entity.
-/// Triggers must call SharedTeleportSystem.RequestTeleport so use checks run and nested requests are blocked.
+/// Requests systems to try to handle teleportation. Raised on the teleporter entity.
+/// Triggers must use SharedTeleportSystem.RequestTeleport to run use checks and prevent nested requests.
+/// Passes the entity to teleport and the user who activated the teleporter to a teleport implementation.
 /// </summary>
 /// <param name="Target">The entity to teleport.</param>
 /// <param name="User">The entity that explicitly activated the teleporter, or null for automatic activation.</param>
