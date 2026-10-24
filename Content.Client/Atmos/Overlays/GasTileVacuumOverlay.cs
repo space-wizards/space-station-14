@@ -139,8 +139,14 @@ public sealed partial class GasTileVacuumOverlay : Overlay
                             if (!localBounds.Contains(tilePosition))
                                 continue;
 
-                            var tintStrength = GetTemperatureEffectStrength(tileGas.ByteGasTemperature, _maxTintTemperatureKelvin, false);
-                            var desaturationStrength = 1f - MathHelper.Clamp01(tileGas.Pressure / _minTintModifierPressureKPa);
+                            if (tileGas.ByteGasTemperature.Value == ThermalByte.AtmosImpossible)
+                                continue;
+
+                            var tintStrength = GetTemperatureEffectStrength(tileGas.ByteGasTemperature,
+                                _maxTintTemperatureKelvin,
+                                false);
+                            var desaturationStrength =
+                                1f - MathHelper.Clamp01(tileGas.Pressure / _minTintModifierPressureKPa);
 
                             // Diminish cold blue tint effect as pressure decreases.
                             // A pressurized room with temperature problems will be visibly cold, but a spaced room will not.
