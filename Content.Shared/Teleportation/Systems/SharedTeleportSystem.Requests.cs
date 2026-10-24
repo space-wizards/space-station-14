@@ -19,19 +19,10 @@ public sealed partial class SharedTeleportSystem
     {
         var attempt = new TeleportUseAttemptEvent(target, user, Cancelled: true);
 
-        if (!Exists(teleporter))
-            return attempt;
-
         if (TerminatingOrDeleted(teleporter))
             return attempt;
 
-        if (!Exists(target))
-            return attempt;
-
         if (TerminatingOrDeleted(target))
-            return attempt;
-
-        if (user != null && !Exists(user.Value))
             return attempt;
 
         if (user != null && TerminatingOrDeleted(user.Value))

@@ -112,9 +112,6 @@ public abstract partial class SharedPortalSystem : EntitySystem
             return false;
 
         var destinationEntity = _random.Pick(link.LinkedEntities);
-        if (!Exists(destinationEntity))
-            return false;
-
         if (TerminatingOrDeleted(destinationEntity))
             return false;
 

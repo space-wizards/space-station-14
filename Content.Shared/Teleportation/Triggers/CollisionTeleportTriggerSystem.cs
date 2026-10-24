@@ -98,13 +98,7 @@ public sealed partial class CollisionTeleportTriggerSystem : EntitySystem
         if (!Resolve(teleporter, ref teleporter.Comp, logMissing: false))
             return false;
 
-        if (!Exists(teleporter))
-            return false;
-
         if (TerminatingOrDeleted(teleporter))
-            return false;
-
-        if (!Exists(target))
             return false;
 
         if (TerminatingOrDeleted(target))
