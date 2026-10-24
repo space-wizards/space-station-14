@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 08/23/2026 10:22:08
-  entityCount: 3689
+  entityCount: 3690
 maps:
 - 23
 grids:
@@ -12499,6 +12499,13 @@ entities:
     - type: Transform
       parent: 1
       pos: 47.5,61.5
+- proto: ComputerTechnologyDiskTerminal
+  entities:
+  - uid: 808
+    components:
+    - type: Transform
+      parent: 1
+      pos: 56.5,24.5
 - proto: ConveyorBelt
   entities:
   - uid: 1650

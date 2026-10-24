@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 09/22/2026 18:21:07
-  entityCount: 11483
+  entityCount: 11484
 maps:
 - 658
 grids:
@@ -28701,6 +28701,14 @@ entities:
       parent: 31
       rot: 1.5707963267948966 rad
       pos: 48.5,-4.5
+- proto: ComputerTechnologyDiskTerminal
+  entities:
+  - uid: 591
+    components:
+    - type: Transform
+      parent: 31
+      rot: -1.5707963267948966 rad
+      pos: -14.5,-24.5
 - proto: ContainmentFieldGenerator
   entities:
   - uid: 4559
