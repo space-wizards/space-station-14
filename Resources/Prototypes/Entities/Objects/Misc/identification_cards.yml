@@ -988,6 +988,8 @@
     - AntagonistIconGroup
     - MiscIconGroup
     - BlankIconGroup
+  - type: IdCard
+    jobIcon: JobIconPassenger
   - type: UIRequiresLock
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
@@ -1159,6 +1161,7 @@
     heldPrefix: green
   - type: AccessStealer
   - type: IdCard
+    jobTitle: job-name-ninja
     jobIcon: JobIconNinja
   - type: Access
     tags:
@@ -1178,6 +1181,7 @@
   - type: Item
     heldPrefix: orange #this is close enough to the weird puce color pirate IDs have going on
   - type: IdCard
+    jobTitle: job-name-pirate
     jobIcon: JobIconPirate
 
 - type: entity
@@ -1211,6 +1215,7 @@
     - External
     - Maintenance
   - type: IdCard
+    jobTitle: job-name-wizard
     jobIcon: JobIconWizard
 
 #ERT/Centcomm

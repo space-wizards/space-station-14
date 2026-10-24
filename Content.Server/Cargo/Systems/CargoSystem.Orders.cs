@@ -6,6 +6,7 @@ using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.Coordinates;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
@@ -64,6 +65,7 @@ public sealed partial class CargoSystem
 
         // PrintSlip consoles can't remove orders as they can't add orders manually.
         if (ent.Comp.Mode == CargoOrderConsoleMode.PrintSlip
+            || !OnSameMap(ent.Owner, station)
             || !TryGetOrderDatabase(station, out var orderDatabase))
             return;
 
@@ -84,7 +86,8 @@ public sealed partial class CargoSystem
             return;
 
         var stationUid = _station.GetOwningStation(ent.Owner);
-        if (!TryGetOrderDatabase(stationUid, out var orderDatabase)
+        if (!OnSameMap(ent.Owner, stationUid) 
+            || !TryGetOrderDatabase(stationUid, out var orderDatabase)
             || !ProtoMan.Resolve<CargoProductPrototype>(args.CargoProductId, out var product)
             || !GetAvailableProducts(ent).Contains(args.CargoProductId))
             return;
@@ -131,7 +134,8 @@ public sealed partial class CargoSystem
 
         // No station to deduct from.
         if (
-            !_bankQuery.TryComp(station, out var bank)
+            !OnSameMap(ent.Owner, station)
+            || !_bankQuery.TryComp(station, out var bank)
             || !_stationQuery.TryComp(station, out var stationData)
             || !TryGetOrderDatabase(station, out var orderDatabase)
         )
@@ -267,6 +271,15 @@ public sealed partial class CargoSystem
         return RelevantOrders(station, account, approved: true, onlyShowThisAccount: false).Sum(order => order.OrderQuantity - order.NumDispatched);
     }
 
+    private bool OnSameMap(EntityUid uid, EntityUid? station)
+    {
+        if (station is null ||
+            _station.GetLargestGrid(station.Value) is not { } stationGrid)
+            return false;
+
+        return Transform(stationGrid).MapID == Transform(uid).MapID;
+    }
+
     public List<ProtoId<CargoProductPrototype>> GetAvailableProducts(Entity<CargoOrderConsoleComponent> ent)
     {
         if (
@@ -341,7 +354,8 @@ public sealed partial class CargoSystem
             return;
         }
 
-        if (!TryGetOrderDatabase(stationUid, out var orderDatabase)
+        if (!OnSameMap(ent.Owner, stationUid) 
+            || !TryGetOrderDatabase(stationUid, out var orderDatabase)
             || !ent.Comp.AllowedGroups.Contains(product.Group))
             return;
 
@@ -433,9 +447,7 @@ public sealed partial class CargoSystem
         // Try to fulfill from any station where possible, if the pad is not occupied.
         foreach (var trade in GetTradeStations(stationData))
         {
-            var tradePads = GetCargoPallets(trade, BuySellType.Buy);
-
-            var freePads = GetFreeCargoPallets(trade, tradePads);
+            var freePads = GetFreeCargoPallets(trade, BuySellType.Buy).ToList();
             if (freePads.Count < order.OrderQuantity) //check if the station has enough free pallets
                 continue;
 

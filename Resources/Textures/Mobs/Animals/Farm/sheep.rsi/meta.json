@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/pull/69318.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "sheep_bare",
+            "directions": 4
+        },
+        {
+            "name": "icon",
+            "directions": 1
+        },
+        {
+            "name": "sheep_dead"
+        },
+        {
+            "name": "sheep_wool_dead"
+        },
+        {
+            "name": "sheep_wool",
+            "directions": 4
+        }
+    ]
+}
