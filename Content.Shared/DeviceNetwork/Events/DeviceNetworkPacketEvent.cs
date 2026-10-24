@@ -1,4 +1,5 @@
 using Content.Shared.DeviceNetwork.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.DeviceNetwork.Events;
 
@@ -27,7 +28,7 @@ namespace Content.Shared.DeviceNetwork.Events;
 /// <typeparam name="T">Type of the payload sent by this event.</typeparam>
 [ByRefEvent]
 public readonly record struct DeviceNetworkPacketEvent<T>(
-    int NetId,
+    ProtoId<DeviceNetworkPrototype> NetId,
     DeviceAddress? Address,
     DeviceFrequency Frequency,
     DeviceAddress SenderAddress,

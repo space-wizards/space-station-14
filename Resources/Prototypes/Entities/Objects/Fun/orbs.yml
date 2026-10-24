@@ -99,7 +99,8 @@
       enum.SurveillanceCameraMonitorUiKey.Key:
         type: SurveillanceCameraMonitorBoundUserInterface
   - type: DeviceNetwork
-    deviceNetId: Wired
+    deviceNets:
+    - Wired
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
   - type: WiredNetwork
@@ -127,7 +128,8 @@
   - type: Speech
     speechSounds: Pai
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: BasicDevice
   - type: WirelessNetwork
     range: 20

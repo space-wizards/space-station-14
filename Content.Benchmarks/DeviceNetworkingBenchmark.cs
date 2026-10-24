@@ -34,7 +34,8 @@ public class DeviceNetworkingBenchmark
     - type: DeviceNetwork
       transmitFrequency: 100
       receiveFrequency: 100
-      deviceNetId: Private
+      deviceNets:
+      - Private
 - type: entity
   name: DummyWirelessNetworkDevice
   id: DummyWirelessNetworkDevice
@@ -42,7 +43,8 @@ public class DeviceNetworkingBenchmark
     - type: DeviceNetwork
       transmitFrequency: 100
       receiveFrequency: 100
-      deviceNetId: Wireless
+      deviceNets:
+      - Wireless
     - type: WirelessNetwork
       range: 100
         ";

@@ -159,7 +159,8 @@
       sound:
         path: /Audio/Ambience/Objects/gas_pump.ogg
     - type: DeviceNetwork
-      deviceNetId: AtmosDevices
+      deviceNets:
+      - AtmosDevices
       receiveFrequencyId: AtmosMonitor
       transmitFrequencyId: AtmosMonitor
       sendBroadcastAttemptEvent: true
@@ -386,7 +387,8 @@
   - type: GasValve
   - type: SignalControlledValve
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: BasicDevice
   - type: WirelessNetwork
     range: 200
@@ -513,7 +515,8 @@
       outlet: outlet
       canLink: false
     - type: DeviceNetwork
-      deviceNetId: Wireless
+      deviceNets:
+      - Wireless
       receiveFrequencyId: BasicDevice
     - type: WirelessNetwork
       range: 200
@@ -521,7 +524,7 @@
       ports:
         - Pressurize
         - Depressurize
-      
+
     - type: Construction
       graph: !type:CreateVariants
         values: [ GasBinary, GasBinaryAlt1, GasBinaryAlt2 ]

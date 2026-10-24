@@ -165,7 +165,8 @@
     - North
   - type: DisposalSignaller
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: BasicDevice
   - type: DeviceLinkSource
     ports:
@@ -481,7 +482,8 @@
     - Off
     - Toggle
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: BasicDevice
   - type: WirelessNetwork
     range: 200

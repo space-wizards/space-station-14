@@ -1,5 +1,6 @@
 using Content.Shared.Station.Components;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.DeviceNetwork.Components;
 
@@ -9,11 +10,14 @@ namespace Content.Shared.DeviceNetwork.Components;
 /// </summary>
 // TODO: Reconsider this component entirely in the future, possibly by adding new retranslator machines to communicate received packets between grids
 [RegisterComponent, NetworkedComponent]
-public sealed partial class StationLimitedNetworkComponent : Component
+public sealed partial class StationLimitedNetworkComponent : Component, ILimitedDeviceComponent
 {
     /// <summary>
     /// Whether the entity is allowed to receive packets from entities that are not tied to any station
     /// </summary>
     [DataField]
     public bool AllowNonStationPackets;
+
+    [DataField]
+    public ProtoId<DeviceNetworkPrototype>[]? IgnoreNets { get; set; }
 }

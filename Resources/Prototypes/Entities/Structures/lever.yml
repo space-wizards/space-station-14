@@ -51,7 +51,8 @@
       graph: LeverGraph
       node: LeverNode
     - type: DeviceNetwork
-      deviceNetId: Wireless
+      deviceNets:
+      - Wireless
     - type: WirelessNetwork
       range: 200
     - type: DeviceLinkSource

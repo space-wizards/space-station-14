@@ -1,5 +1,6 @@
+using System.Linq;
 using Content.Shared.DeviceNetwork.Components;
-using Robust.Shared.Utility;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.DeviceNetwork;
 
@@ -17,24 +18,6 @@ public static class DeviceLocalizationHelpers
     public static string FrequencyToString(DeviceFrequency? frequency)
     {
         return frequency == null ? string.Empty : frequency.Value.ToString();
-    }
-
-    /// <summary>
-    /// Either returns the localized name representation of the corresponding <see cref="DeviceNetIdDefaults"/>
-    /// or converts the id to string
-    /// </summary>
-    public static string DeviceNetIdToLocalizedName(int? id, ILocalizationManager localeMan)
-    {
-        if (id == null)
-            return string.Empty;
-
-        if (!Enum.IsDefined(typeof(DeviceNetIdDefaults), id))
-            return id.Value.ToString();
-
-        var result = ((DeviceNetIdDefaults) id).ToString();
-        var resultKebab = "device-net-id-" + CaseConversion.PascalToKebab(result);
-
-        return !localeMan.TryGetString(resultKebab, out var name) ? result : name;
     }
 
     /// <remarks>
@@ -56,5 +39,14 @@ public static class DeviceLocalizationHelpers
     public static string GetAddressFromId(DeviceNetworkComponent comp)
     {
         return GetAddressFromId(comp.Address, comp.Prefix);
+    }
+
+    /// <summary>
+    /// Gets the readable string from an array of device network prototype IDs,
+    /// represented by their names separated with commas.
+    /// </summary>
+    public static string GetDeviceNetIdString(ProtoId<DeviceNetworkPrototype>[] deviceNets, IPrototypeManager manager)
+    {
+        return string.Join(", ", deviceNets.Select(id => Loc.GetString(manager.Index(id).Name)));
     }
 }

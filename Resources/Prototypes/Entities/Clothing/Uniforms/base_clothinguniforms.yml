@@ -45,7 +45,8 @@
   components:
   - type: SuitSensor
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     transmitFrequencyId: SuitSensor
     savableAddress: false
   - type: WirelessNetwork

@@ -1,13 +1,50 @@
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Components.Networks;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Station.Components;
+using Content.Shared.Station.Systems;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
 public sealed partial class StationLimitedNetworkSystem : EntitySystem
 {
+    [Dependency] private DeviceNetworkSystem _deviceSystem = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private StationSystem _station = default!;
+
     [Dependency] private EntityQuery<StationTrackerComponent> _stationTrackerQuery;
     [Dependency] private EntityQuery<StationLimitedNetworkComponent> _stationLimitedQuery;
+
+    [SubscribeLocalEvent]
+    private void OnWiredInit(Entity<StationLimitedNetworkComponent> ent, ref MapInitEvent args)
+    {
+        _metaData.AddFlag(ent.Owner, MetaDataFlags.ExtraTransformEvents);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGridChanged(Entity<StationLimitedNetworkComponent> ent, ref GridUidChangedEvent args)
+    {
+        if (MetaData(ent.Owner).EntityLifeStage < EntityLifeStage.MapInitialized
+            || args.OldGrid == args.NewGrid)
+            return;
+
+        _deviceSystem.ReconnectDevice(ent.Owner);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnConnectNetwork(Entity<StationNetworkManagerComponent> ent, ref DeviceAttemptConnectEvent args)
+    {
+        if (_deviceSystem.CheckNetworkIgnore(args, _stationLimitedQuery))
+            return;
+
+        args.Connected = _station.GetOwningStation(args.Entity.Owner) == ent.Comp.StationUid;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnManagerInit(Entity<StationNetworkManagerComponent> ent, ref DeviceNetworkManagerInitializeEvent args)
+    {
+        ent.Comp.StationUid = _station.GetOwningStation(args.Entity.Owner);
+    }
 
     [SubscribeLocalEvent]
     private void OnBeforePacketSent(Entity<StationLimitedNetworkComponent> ent, ref BeforePacketSentEvent args)

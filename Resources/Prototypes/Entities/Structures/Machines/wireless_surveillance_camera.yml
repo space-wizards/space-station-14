@@ -89,7 +89,8 @@
   id: SurveillanceWirelessCameraAnchoredConstructed
   components:
     - type: DeviceNetwork
-      deviceNetId: Wireless
+      deviceNets:
+      - Wireless
       receiveFrequencyId: SurveillanceCamera
       transmitFrequencyId: SurveillanceCamera
     - type: SurveillanceCamera
@@ -102,7 +103,8 @@
   id: SurveillanceWirelessCameraMovableConstructed
   components:
     - type: DeviceNetwork
-      deviceNetId: Wireless
+      deviceNets:
+      - Wireless
       receiveFrequencyId: SurveillanceCameraEntertainment
       transmitFrequencyId: SurveillanceCamera
     - type: SurveillanceCamera
@@ -115,7 +117,8 @@
   id: SurveillanceWirelessCameraAnchoredEntertainment
   components:
     - type: DeviceNetwork
-      deviceNetId: Wireless
+      deviceNets:
+      - Wireless
       receiveFrequencyId: SurveillanceCameraEntertainment
       transmitFrequencyId: SurveillanceCamera
     - type: SurveillanceCamera
@@ -127,7 +130,8 @@
   id: SurveillanceWirelessCameraMovableEntertainment
   components:
     - type: DeviceNetwork
-      deviceNetId: Wireless
+      deviceNets:
+      - Wireless
       receiveFrequencyId: SurveillanceCameraEntertainment
       transmitFrequencyId: SurveillanceCamera
     - type: SurveillanceCamera

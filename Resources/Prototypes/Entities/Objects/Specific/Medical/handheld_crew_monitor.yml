@@ -32,7 +32,8 @@
         type: CrewMonitoringBoundUserInterface
   - type: CrewMonitoringConsole
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: CrewMonitor
     prefix: device-address-prefix-crew-monitor
   - type: WirelessNetwork

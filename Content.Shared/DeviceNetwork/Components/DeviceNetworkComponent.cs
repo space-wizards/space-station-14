@@ -1,23 +1,26 @@
 using Content.Shared.DeviceNetwork.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.DeviceNetwork.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
-[Access(typeof(DeviceNetworkSystem), typeof(DeviceNet))]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
+[Access(typeof(DeviceNetworkSystem))]
 public sealed partial class DeviceNetworkComponent : Component
 {
     /// <summary>
-    /// Default device network ID to connect to.
+    /// All types of networks this device can connect to.
     /// </summary>
-    [DataField("deviceNetId")]
-    public DeviceNetIdDefaults NetIdEnum { get; set; }
+    [DataField(required: true), AutoNetworkedField]
+    public ProtoId<DeviceNetworkPrototype>[] DeviceNets;
 
     /// <summary>
-    /// The numeric identifier of the device network this device uses.
+    /// All currently connected networks.
     /// </summary>
-    public int DeviceNetId => (int) NetIdEnum;
+    [DataField, AutoNetworkedField]
+    public Dictionary<ProtoId<DeviceNetworkPrototype>, EntityUid> ConnectedNets = new();
 
     /// <summary>
     /// The device address paired with its optional localized prefix.
@@ -83,7 +86,7 @@ public sealed partial class DeviceNetworkComponent : Component
     /// <summary>
     /// Whether the device should attempt to join the network on map init.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool AutoConnect = true;
 
     /// <summary>
@@ -93,9 +96,16 @@ public sealed partial class DeviceNetworkComponent : Component
     public bool SavableAddress = true;
 
     /// <summary>
-    /// If true, the address was customized and should be preserved across networks. If false, a randomly
-    /// generated address will be created whenever this device connects to a network.
+    /// Time until which this device is jammed, meaning it cannot send any packets.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoNetworkedField, AutoPausedField]
+    public TimeSpan? JammedTimeout;
+
+    /// <summary>
+    /// Whether this device is currently able to connect to device networks.
+    /// Set this to false when device shouldn't be able to function.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool CustomAddress;
+    public bool Enabled = true;
 }
