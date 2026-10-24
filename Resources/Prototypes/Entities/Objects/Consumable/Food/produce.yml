@@ -1531,6 +1531,85 @@
       Burger: Aloe
 
 - type: entity
+  parent: FoodProduceBase
+  id: FoodAloeIgnis
+  name: aloe ignis leaf
+  description: A jagged leaf. It's uncomfortably warm to the touch and smells like ozone and spice.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/aloe_ignis.rsi
+  - type: Item
+    size: Small
+    sprite: Objects/Specific/Hydroponics/aloe_ignis.rsi
+    heldPrefix: produce
+  - type: Produce
+    plantId: AloeIgnisPlants
+  - type: Tag
+    tags:
+    - Fruit
+  - type: FlavorProfile
+    flavors:
+    - spicy
+    - medicine
+  - type: Solution
+    solution:
+      maxVol: 15
+      canReact: true
+      reagents:
+      - ReagentId: Ignisol
+        Quantity: 8
+      - ReagentId: Carbon
+        Quantity: 4
+  - type: Damageable
+  - type: Injurable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:SpillBehavior
+        solution: food
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: FoodSequenceElement
+    entries:
+      Taco: AloeIgnis
+      Burger: AloeIgnisBurger
+
+- type: entity
+  parent: FoodProduceBase
+  id: FoodDragonTail
+  name: dragon's tail fruit
+  description: A long, spiraling fruit that glows with a soft emerald light. It feels perfectly temperate.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/dragon_tail.rsi
+  - type: Item
+    size: Small
+    sprite: Objects/Specific/Hydroponics/dragon_tail.rsi
+    heldPrefix: produce
+  - type: Produce
+    plantId: DragonTailPlants
+  - type: FlavorProfile
+    flavors:
+    - minty
+    - sweet
+  - type: Solution
+    solution:
+      maxVol: 20
+      reagents:
+      - ReagentId: Equiline
+        Quantity: 10
+      - ReagentId: Nutriment
+        Quantity: 2
+  - type: FoodSequenceElement
+    entries:
+      Taco: DragonTail
+      Burger: DragonTailBurger
+
+- type: entity
   name: poppy
   parent: FoodProduceBase
   id: FoodPoppy
