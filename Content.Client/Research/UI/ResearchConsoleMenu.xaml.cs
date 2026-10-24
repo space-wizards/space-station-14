@@ -89,18 +89,27 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
         if (!_entity.TryGetComponent(Entity, out TechnologyDatabaseComponent? database))
             return;
 
-        var disciplineText = Loc.GetString("research-discipline-none");
-        var disciplineColor = Color.Gray;
-        if (database.MainDiscipline != null)
+        var focuses = database.MainDisciplines;
+        var disciplineText = new FormattedMessage();
+        foreach (var id in focuses)
         {
-            var discipline = _prototype.Index<TechDisciplinePrototype>(database.MainDiscipline);
-            disciplineText = Loc.GetString(discipline.Name);
-            disciplineColor = discipline.Color;
+            if (!disciplineText.IsEmpty)
+                disciplineText.AddText(", ");
+
+            var discipline = _prototype.Index(id);
+            disciplineText.PushColor(discipline.Color);
+            disciplineText.AddText(Loc.GetString(discipline.Name));
+            disciplineText.Pop();
         }
+
+        if (focuses.Count == 0)
+            disciplineText.AddText(Loc.GetString("research-discipline-none"));
 
         var msg = new FormattedMessage();
         msg.AddMarkupOrThrow(Loc.GetString("research-console-menu-main-discipline",
-            ("name", disciplineText), ("color", disciplineColor)));
+            ("name", disciplineText.ToMarkup()),
+            ("count", focuses.Count),
+            ("limit", database.ResearchFocusLimit)));
         MainDisciplineLabel.SetMessage(msg);
 
         TierDisplayContainer.Children.Clear();

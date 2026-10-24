@@ -16,7 +16,8 @@ public sealed partial class ResearchSystem
         if (!Resolve(primaryUid, ref primaryDb) || !Resolve(otherUid, ref otherDb))
             return;
 
-        primaryDb.MainDiscipline = otherDb.MainDiscipline;
+        primaryDb.MainDisciplines = new(otherDb.MainDisciplines);
+        primaryDb.ResearchFocusLimit = otherDb.ResearchFocusLimit;
         primaryDb.CurrentTechnologyCards = otherDb.CurrentTechnologyCards;
         primaryDb.SupportedDisciplines = otherDb.SupportedDisciplines;
         primaryDb.UnlockedTechnologies = otherDb.UnlockedTechnologies;
@@ -81,7 +82,6 @@ public sealed partial class ResearchSystem
             return false;
 
         AddTechnology(serverEnt.Value, prototype);
-        TrySetMainDiscipline(prototype, serverEnt.Value);
         ModifyServerPoints(serverEnt.Value, -prototype.Cost);
         UpdateTechnologyCards(serverEnt.Value);
 
@@ -113,10 +113,11 @@ public sealed partial class ResearchSystem
             return;
 
         //todo this needs to support some other stuff, too
+        TryAddMainDiscipline(technology, uid, component);
         foreach (var generic in technology.GenericUnlocks)
         {
             if (generic.PurchaseEvent != null)
-                RaiseLocalEvent(generic.PurchaseEvent);
+                RaiseLocalEvent(uid, generic.PurchaseEvent);
         }
 
         component.UnlockedTechnologies.Add(technology.ID);
@@ -148,10 +149,11 @@ public sealed partial class ResearchSystem
         if (!Resolve(uid, ref client, ref database, false))
             return false;
 
-        if (!TryGetClientServer(uid, out _, out var serverComp, client))
+        if (!TryGetClientServer(uid, out var server, out var serverComp, client) ||
+            !TryComp<TechnologyDatabaseComponent>(server, out var serverDatabase))
             return false;
 
-        if (!IsTechnologyAvailable(database, technology))
+        if (!IsTechnologyAvailable(serverDatabase, technology))
             return false;
 
         if (technology.Cost > serverComp.Points)
@@ -164,7 +166,8 @@ public sealed partial class ResearchSystem
     {
         if (args.Server != null)
             return;
-        component.MainDiscipline = null;
+        component.MainDisciplines = new();
+        component.ResearchFocusLimit = 1;
         component.CurrentTechnologyCards = new List<string>();
         component.SupportedDisciplines = new List<ProtoId<TechDisciplinePrototype>>();
         component.UnlockedTechnologies = new List<ProtoId<TechnologyPrototype>>();

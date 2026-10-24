@@ -10,10 +10,16 @@ namespace Content.Shared.Research.Components;
 public sealed partial class TechnologyDatabaseComponent : Component
 {
     /// <summary>
-    /// A main discipline that locks out other discipline technology past a certain tier.
+    /// Disciplines selected for research at T3.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public ProtoId<TechDisciplinePrototype>? MainDiscipline;
+    public List<ProtoId<TechDisciplinePrototype>> MainDisciplines = new();
+
+    /// <summary>
+    /// Maximum number of main disciplines.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int ResearchFocusLimit = 1;
 
     [DataField, AutoNetworkedField]
     public List<string> CurrentTechnologyCards = new();

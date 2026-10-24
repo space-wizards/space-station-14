@@ -53,6 +53,12 @@ public sealed partial class TechnologyPrototype : IPrototype
     public int Cost = 10000;
 
     /// <summary>
+    /// Requires all ordinary research in the current focuses
+    /// </summary>
+    [DataField]
+    public bool RequiresResearchCompletion;
+
+    /// <summary>
     /// A list of <see cref="TechnologyPrototype"/>s that need to be unlocked in order to unlock this technology.
     /// </summary>
     [DataField]
