@@ -70,11 +70,11 @@ namespace Content.Client.ContextMenu.UI
             };
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void ExitedTree()
         {
+            base.ExitedTree();
             MenuBody.OnChildRemoved -= ctrl => _uiController.OnRemoveElement(this, ctrl);
             ParentElement = null;
-            base.Dispose(disposing);
         }
     }
 }

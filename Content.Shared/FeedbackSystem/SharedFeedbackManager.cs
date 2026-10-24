@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -83,8 +83,8 @@ public interface ISharedFeedbackManager
 /// <inheritdoc cref="ISharedFeedbackManager" />
 public abstract partial class SharedFeedbackManager : ISharedFeedbackManager
 {
-    [Dependency] private readonly IPrototypeManager _proto = null!;
-    [Dependency] protected readonly INetManager NetManager = null!;
+    [Dependency] private IPrototypeManager _proto = null!;
+    [Dependency] protected INetManager NetManager = null!;
 
     public virtual IReadOnlySet<ProtoId<FeedbackPopupPrototype>>? DisplayedPopups => null;
 
@@ -101,6 +101,7 @@ public abstract partial class SharedFeedbackManager : ISharedFeedbackManager
     public virtual void Initialize()
     {
         InitSubscriptions();
+        Display(GetOriginFeedbackPrototypes(false));
     }
 
     /// <inheritdoc />
@@ -137,7 +138,7 @@ public abstract partial class SharedFeedbackManager : ISharedFeedbackManager
     public List<ProtoId<FeedbackPopupPrototype>> GetOriginFeedbackPrototypes(bool roundEndOnly, bool ruleSpecific = false)
     {
         var feedbackProtypes = _proto.EnumeratePrototypes<FeedbackPopupPrototype>()
-            .Where(x => (!roundEndOnly || x.ShowRoundEnd) && ruleSpecific == (x.RuleWhitelist != null) && _validOrigins.Contains(x.PopupOrigin))
+            .Where(x => (roundEndOnly && x.ShowRoundEnd && ruleSpecific == (x.RuleWhitelist != null) || x.AlwaysShow) && _validOrigins.Contains(x.PopupOrigin))
             .Select(x => new ProtoId<FeedbackPopupPrototype>(x.ID))
             .OrderBy(x => x.Id)
             .ToList();

@@ -4,6 +4,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Light.Components
 {
@@ -33,29 +34,14 @@ namespace Content.Shared.Light.Components
         [DataField, AutoNetworkedField]
         public bool On = true;
 
-        [DataField]
-        public bool IgnoreGhostsBoo;
-
-        [DataField]
-        public TimeSpan GhostBlinkingTime = TimeSpan.FromSeconds(10);
-
-        [DataField]
-        public TimeSpan GhostBlinkingCooldown = TimeSpan.FromSeconds(60);
-
         [ViewVariables]
         public ContainerSlot LightBulbContainer = default!;
 
         [AutoNetworkedField]
         public bool CurrentLit;
 
-        [DataField, AutoNetworkedField]
-        public bool IsBlinking;
-
         [DataField, AutoNetworkedField, AutoPausedField]
         public TimeSpan LastThunk;
-
-        [DataField, AutoPausedField]
-        public TimeSpan? LastGhostBlink;
 
         [DataField]
         public ProtoId<SinkPortPrototype> OnPort = "On";
@@ -83,5 +69,20 @@ namespace Content.Shared.Light.Components
         /// </summary>
         [DataField]
         public TimeSpan UnarmedHitStun = TimeSpan.FromSeconds(5);
+    }
+
+    /// <summary>
+    /// Makes an entity with <see cref="PoweredLightComponent"/> toggle itself on and off.
+    /// </summary>
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+    public sealed partial class BlinkingPoweredLightComponent : Component
+    {
+        /// <summary>
+        /// The time at which this component will remove itself, stopping the blinking.
+        /// If null then this light will keep blinking forever.
+        /// </summary>
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        [AutoNetworkedField, AutoPausedField]
+        public TimeSpan? StopBlinkingTime;
     }
 }

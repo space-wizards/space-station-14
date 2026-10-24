@@ -2,6 +2,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Morgue.Components;
 
@@ -39,4 +40,7 @@ public sealed partial class CrematoriumComponent : Component
 
     [DataField]
     public SoundSpecifier CremateFinishSound = new SoundPathSpecifier("/Audio/Machines/ding.ogg");
+
+    [DataField]
+    public SpriteSpecifier CremateVerbIcon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/burn.svg.192dpi.png"));
 }

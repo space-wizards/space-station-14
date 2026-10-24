@@ -1,4 +1,4 @@
-using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Fonts;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Access;
 using Content.Shared.Access.Systems;
@@ -12,15 +12,16 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using System.Numerics;
+using Content.Shared.DeviceNetwork;
 
 namespace Content.Client.TurretController;
 
 [GenerateTypedNameReferences]
 public sealed partial class TurretControllerWindow : BaseWindow
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IResourceCache _cache = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IResourceCache _cache = default!;
 
     private readonly AccessReaderSystem _accessReaderSystem;
 
@@ -69,7 +70,7 @@ public sealed partial class TurretControllerWindow : BaseWindow
         AccessConfiguration.OnAccessLevelsChangedEvent += OnAccessLevelsChanged;
 
         // Override footer font
-        var smallFont = _cache.NotoStack(size: 8);
+        var smallFont = new NotoFontFamilyStack(_cache).GetFont(8);
         Footer.FontOverride = smallFont;
     }
 
@@ -139,7 +140,7 @@ public sealed partial class TurretControllerWindow : BaseWindow
         RefreshLinkedTurrets(state.TurretStateByAddress);
     }
 
-    public void RefreshLinkedTurrets(Dictionary<string, string> turretStates)
+    public void RefreshLinkedTurrets(Dictionary<LocDeviceAddress, string> turretStates)
     {
         var turretCount = turretStates.Count;
         var hasTurrets = turretCount > 0;

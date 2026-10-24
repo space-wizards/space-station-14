@@ -4,10 +4,10 @@ using Robust.Shared.Configuration;
 
 namespace Content.Client.Light.EntitySystems;
 
-public sealed class PlanetLightSystem : EntitySystem
+public sealed partial class PlanetLightSystem : EntitySystem
 {
-    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
-    [Dependency] private readonly IOverlayManager _overlayMan = default!;
+    [Dependency] private IConfigurationManager _cfgManager = default!;
+    [Dependency] private IOverlayManager _overlayMan = default!;
 
     /// <summary>
     /// Enables / disables the ambient occlusion overlay.
@@ -39,9 +39,7 @@ public sealed class PlanetLightSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<GetClearColorEvent>(OnClearColor);
-
-        _cfgManager.OnValueChanged(CCVars.AmbientOcclusion, val =>
+        Subs.CVar(_cfgManager, CCVars.AmbientOcclusion, val =>
         {
             AmbientOcclusion = val;
         }, true);
@@ -54,11 +52,6 @@ public sealed class PlanetLightSystem : EntitySystem
         _overlayMan.AddOverlay(new AfterLightTargetOverlay());
     }
 
-    private void OnClearColor(ref GetClearColorEvent ev)
-    {
-        ev.Color = Color.Transparent;
-    }
-
     public override void Shutdown()
     {
         base.Shutdown();
@@ -68,5 +61,12 @@ public sealed class PlanetLightSystem : EntitySystem
         _overlayMan.RemoveOverlay<LightBlurOverlay>();
         _overlayMan.RemoveOverlay<SunShadowOverlay>();
         _overlayMan.RemoveOverlay<AfterLightTargetOverlay>();
+        _overlayMan.RemoveOverlay<AmbientOcclusionOverlay>();
+    }
+
+    [SubscribeLocalEvent]
+    private void OnClearColor(ref GetClearColorEvent ev)
+    {
+        ev.Color = Color.Transparent;
     }
 }

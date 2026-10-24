@@ -6,43 +6,40 @@ using JetBrains.Annotations;
 
 namespace Content.Shared.Eye.Blinding.Systems;
 
-public sealed class BlindableSystem : EntitySystem
+public sealed partial class BlindableSystem : EntitySystem
 {
-    [Dependency] private readonly BlurryVisionSystem _blurriness = default!;
-    [Dependency] private readonly EyeClosingSystem _eyelids = default!;
+    [Dependency] private BlurryVisionSystem _blurriness = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<BlindableComponent, RejuvenateEvent>(OnRejuvenate);
-        SubscribeLocalEvent<BlindableComponent, EyeDamageChangedEvent>(OnDamageChanged);
-        SubscribeLocalEvent<BlindableComponent, GetEyePvsScaleAttemptEvent>(OnGetEyePvsScaleAttemptEvent);
-        SubscribeLocalEvent<BlindableComponent, GetEyeOffsetAttemptEvent>(OnGetEyeOffsetAttemptEvent);
-    }
-
+    [SubscribeLocalEvent]
     private void OnRejuvenate(Entity<BlindableComponent> ent, ref RejuvenateEvent args)
     {
         AdjustEyeDamage((ent.Owner, ent.Comp), -ent.Comp.EyeDamage);
     }
 
+    [SubscribeLocalEvent]
     private void OnDamageChanged(Entity<BlindableComponent> ent, ref EyeDamageChangedEvent args)
     {
         _blurriness.UpdateBlurMagnitude((ent.Owner, ent.Comp));
-        _eyelids.UpdateEyesClosable((ent.Owner, ent.Comp));
     }
 
+    [SubscribeLocalEvent]
     private void OnGetEyePvsScaleAttemptEvent(Entity<BlindableComponent> ent, ref GetEyePvsScaleAttemptEvent args)
     {
         if (ent.Comp.IsBlind)
             args.Cancelled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnGetEyeOffsetAttemptEvent(Entity<BlindableComponent> ent, ref GetEyeOffsetAttemptEvent args)
     {
         if (ent.Comp.IsBlind)
             args.Cancelled = true;
     }
 
+    /// <summary>
+    /// Checks and updates a blindable is blind state according to damage and other components to the entity.
+    /// </summary>
+    /// <param name="blindable">The entity to update.</param>
     [PublicAPI]
     public void UpdateIsBlind(Entity<BlindableComponent?> blindable)
     {
@@ -71,6 +68,11 @@ public sealed class BlindableSystem : EntitySystem
         Dirty(blindable);
     }
 
+    /// <summary>
+    /// Adjust eye damage and updates the relevant subcomponents.
+    /// </summary>
+    /// <param name="blindable">Entity to adjust for.</param>
+    /// <param name="amount">How much to change the eye damage. Can be positive and negative.</param>
     public void AdjustEyeDamage(Entity<BlindableComponent?> blindable, int amount)
     {
         if (!Resolve(blindable, ref blindable.Comp, false) || amount == 0)
@@ -79,6 +81,7 @@ public sealed class BlindableSystem : EntitySystem
         blindable.Comp.EyeDamage += amount;
         UpdateEyeDamage(blindable, true);
     }
+
     private void UpdateEyeDamage(Entity<BlindableComponent?> blindable, bool isDamageChanged)
     {
         if (!Resolve(blindable, ref blindable.Comp, false))
@@ -94,6 +97,13 @@ public sealed class BlindableSystem : EntitySystem
         var ev = new EyeDamageChangedEvent(blindable.Comp.EyeDamage);
         RaiseLocalEvent(blindable.Owner, ref ev);
     }
+
+    /// <summary>
+    /// Sets the minimum damage to an eye.
+    /// Also updates subcomponents.
+    /// </summary>
+    /// <param name="blindable">The entity to update.</param>
+    /// <param name="amount">The minimum amount the entity can be blinded.</param>
     public void SetMinDamage(Entity<BlindableComponent?> blindable, int amount)
     {
         if (!Resolve(blindable, ref blindable.Comp, false))
@@ -105,19 +115,19 @@ public sealed class BlindableSystem : EntitySystem
 }
 
 /// <summary>
-///     This event is raised when an entity's blindness changes
+/// This event is raised when an entity's blindness changes
 /// </summary>
 [ByRefEvent]
 public record struct BlindnessChangedEvent(bool Blind);
 
 /// <summary>
-///     This event is raised when an entity's eye damage changes
+/// This event is raised when an entity's eye damage changes
 /// </summary>
 [ByRefEvent]
 public record struct EyeDamageChangedEvent(int Damage);
 
 /// <summary>
-///     Raised directed at an entity to see whether the entity is currently blind or not.
+/// Raised directed at an entity to see whether the entity is currently blind or not.
 /// </summary>
 public sealed class CanSeeAttemptEvent : CancellableEntityEventArgs, IInventoryRelayEvent
 {
@@ -128,7 +138,7 @@ public sealed class CanSeeAttemptEvent : CancellableEntityEventArgs, IInventoryR
 public sealed class GetEyeProtectionEvent : EntityEventArgs, IInventoryRelayEvent
 {
     /// <summary>
-    ///     Time to subtract from any temporary blindness sources.
+    /// Time to subtract from any temporary blindness sources.
     /// </summary>
     public TimeSpan Protection;
 

@@ -40,12 +40,6 @@
     - type: StationArrivals
 
 - type: entity
-  id: BaseStationGateway
-  abstract: true
-  components:
-    - type: GatewayGenerator
-
-- type: entity
   id: BaseStationShuttles
   abstract: true
   components:
@@ -89,9 +83,6 @@
           minCount: 12
           maxCount: 16
           addComponents:
-          - type: Gravity
-            enabled: true
-            inherent: true
           - type: IFF
             flags: HideLabel
             color: "#88b0d1"
@@ -124,13 +115,6 @@
   abstract: true
   components:
     - type: StationEmergencyShuttle
-
-- type: entity
-  id: BaseStationAlertLevels
-  abstract: true
-  components:
-    - type: AlertLevel
-      alertLevelPrototype: stationAlerts
 
 - type: entity
   id: BaseStationExpeditions

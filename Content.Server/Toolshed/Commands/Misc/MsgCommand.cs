@@ -13,18 +13,18 @@ using Robust.Shared.Toolshed;
 namespace Content.Server.Toolshed.Commands.Misc;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Fun)]
-public sealed class MsgCommand : ToolshedCommand
+public sealed partial class MsgCommand : ToolshedCommand
 {
     [Dependency] private IChatManager _chatManager = default!;
 
-    private PrayerSystem? _prayer;
+    private ServerPrayerSystem? _prayer;
     private PopupSystem? _popup;
     private TipsSystem? _tips;
 
     [CommandImplementation("subtle")]
     public IEnumerable<EntityUid> Subtle(IInvocationContext ctx, [PipedArgument] IEnumerable<EntityUid> targets, string popup, string message)
     {
-        _prayer ??= GetSys<PrayerSystem>();
+        _prayer ??= GetSys<ServerPrayerSystem>();
 
         foreach (var ent in targets)
         {
@@ -47,6 +47,16 @@ public sealed class MsgCommand : ToolshedCommand
 
             _chatManager.ChatMessageToOne(ChatChannel.Local, message, message, EntityUid.Invalid, false, actor.PlayerSession.Channel);
             yield return ent;
+        }
+    }
+
+    [CommandImplementation("chat")]
+    public IEnumerable<ICommonSession> Chat([PipedArgument] IEnumerable<ICommonSession> targets, string message)
+    {
+        foreach (var session in targets)
+        {
+            _chatManager.ChatMessageToOne(ChatChannel.Local, message, message, EntityUid.Invalid, false, session.Channel);
+            yield return session;
         }
     }
 
@@ -78,6 +88,19 @@ public sealed class MsgCommand : ToolshedCommand
             _tips.SendTippy(actor.PlayerSession, message, prototype, speakTime, slideTime, waddleInterval);
 
             yield return ent;
+        }
+    }
+
+    [CommandImplementation("tippy")]
+    public IEnumerable<ICommonSession> Tippy([PipedArgument] IEnumerable<ICommonSession> targets, string message, EntProtoId prototype, float speakTime, float slideTime, float waddleInterval)
+    {
+        _tips ??= GetSys<TipsSystem>();
+
+        foreach (var session in targets)
+        {
+            _tips.SendTippy(session, message, prototype, speakTime, slideTime, waddleInterval);
+
+            yield return session;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Physics.Controllers;
+using Content.Shared.Physics.Controllers;
 
 namespace Content.Client.Physics.Controllers;
 

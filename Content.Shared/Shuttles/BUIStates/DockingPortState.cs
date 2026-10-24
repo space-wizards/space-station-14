@@ -27,4 +27,19 @@ public sealed class DockingPortState
     /// The colour used to shade a dock on a radar screen if it is highlighted (hovered over/selected on docking screen/shown in the main ship radar)
     /// </summary>
     public Color HighlightedColor;
+
+    /// <summary>
+    /// The category of the dock, used to determine what kind of dock it is for the purposes of the radar screen legend
+    /// </summary>
+    public LegendCategory Category = LegendCategory.General;
+}
+
+/// <summary>
+/// The category of the dock, used to determine what kind of dock it is for the purposes of the radar screen legend
+/// </summary>
+public enum LegendCategory
+{
+    General,
+    Cargo,
+    Arrivals
 }

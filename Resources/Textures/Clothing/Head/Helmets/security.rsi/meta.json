@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by DieselMohawk for use in SS14",
+  "copyright": "-visor states Made by DieselMohawk for use in SS14, non-visor states edited by Nox38.",
   "size": {
     "x": 32,
     "y": 32
@@ -11,7 +11,14 @@
       "name": "icon"
     },
     {
+      "name": "icon-visor"
+    },
+    {
       "name": "equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "visor-equipped-HELMET",
       "directions": 4
     },
     {
@@ -19,11 +26,23 @@
       "directions": 4
     },
     {
+      "name": "visor-equipped-HELMET-vox",
+      "directions": 4
+    },
+    {
       "name": "inhand-left",
       "directions": 4
     },
     {
+      "name": "visor-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "visor-inhand-right",
       "directions": 4
     }
   ]

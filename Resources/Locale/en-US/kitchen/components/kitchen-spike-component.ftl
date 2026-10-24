@@ -1,4 +1,4 @@
-﻿comp-kitchen-spike-begin-hook-self = You begin dragging yourself onto { THE($hook) }!
+comp-kitchen-spike-begin-hook-self = You begin dragging yourself onto { THE($hook) }!
 comp-kitchen-spike-begin-hook-self-other = { CAPITALIZE(THE($victim)) } begins dragging { REFLEXIVE($victim) } onto { THE($hook) }!
 
 comp-kitchen-spike-begin-hook-other-self = You begin dragging { CAPITALIZE(THE($victim)) } onto { THE($hook) }!
@@ -27,6 +27,10 @@ comp-kitchen-spike-begin-butcher = { CAPITALIZE(THE($user)) } begins to butcher 
 
 comp-kitchen-spike-butcher-self = You butchered { THE($victim) }!
 comp-kitchen-spike-butcher = { CAPITALIZE(THE($user)) } butchered { THE($victim) }!
+
+comp-kitchen-spike-butcher-empty = { CAPITALIZE(THE($victim)) } has no meat left to butcher!
+
+comp-kitchen-spike-need-tool-quality = { $quality } tool required to butcher { THE($target) }.
 
 comp-kitchen-spike-unhook-verb = Unhook
 

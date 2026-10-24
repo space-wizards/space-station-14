@@ -8,7 +8,7 @@ namespace Content.Server.Trigger.Systems;
 
 public sealed partial class PolymorphOnTriggerSystem : EntitySystem
 {
-    [Dependency] private readonly PolymorphSystem _polymorph = default!;
+    [Dependency] private PolymorphSystem _polymorph = default!;
 
     /// <summary>
     /// Need to do this so we don't get a collection enumeration error in physics by polymorphing

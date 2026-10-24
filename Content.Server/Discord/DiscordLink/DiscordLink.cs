@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Content.Shared.CCVar;
 using NetCord;
@@ -40,10 +40,10 @@ public sealed class CommandReceivedEventArgs
 /// <summary>
 /// Handles the connection to Discord and provides methods to interact with it.
 /// </summary>
-public sealed class DiscordLink : IPostInjectInit
+public sealed partial class DiscordLink : IPostInjectInit
 {
-    [Dependency] private readonly ILogManager _logManager = default!;
-    [Dependency] private readonly IConfigurationManager _configuration = default!;
+    [Dependency] private ILogManager _logManager = default!;
+    [Dependency] private IConfigurationManager _configuration = default!;
 
     /// <summary>
     ///    The Discord client. This is null if the bot is not connected.

@@ -45,7 +45,7 @@
         - id: Multitool
         - id: HolofanProjector
         - id: GasAnalyzer
-        - id: trayScanner
+        - id: TRayScanner
 
 - type: entityTable
   id: BeltSecurityEntityTable
@@ -92,7 +92,7 @@
         - id: CleanerGrenade
           amount: 2
         - id: FlashlightLantern
-        - id: LightReplacer
+        - id: LightReplacerFilled
         - id: WireBrush
 
 - type: entity

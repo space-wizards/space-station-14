@@ -1,17 +1,19 @@
 using System.Threading;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking.Rules;
 using Robust.Server.Player;
 using Robust.Shared.Player;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed class InactivityTimeRestartRuleSystem : GameRuleSystem<InactivityRuleComponent>
+public sealed partial class InactivityTimeRestartRuleSystem : GameRuleSystem<InactivityRuleComponent>
 {
-    [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private IChatManager _chatManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
 
     public override void Initialize()
     {
@@ -27,11 +29,11 @@ public sealed class InactivityTimeRestartRuleSystem : GameRuleSystem<InactivityR
         _playerManager.PlayerStatusChanged -= PlayerStatusChanged;
     }
 
-    protected override void Ended(EntityUid uid, InactivityRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
+    protected override void Ended(Entity<InactivityRuleComponent> rule, ref GameRuleEndedEvent args)
     {
-        base.Ended(uid, component, gameRule, args);
+        base.Ended(rule, ref args);
 
-        StopTimer(uid, component);
+        StopTimer(rule, rule.Comp);
     }
 
     public void RestartTimer(EntityUid uid, InactivityRuleComponent? component = null)
@@ -66,12 +68,9 @@ public sealed class InactivityTimeRestartRuleSystem : GameRuleSystem<InactivityR
 
     private void RunLevelChanged(GameRunLevelChangedEvent args)
     {
-        var query = EntityQueryEnumerator<InactivityRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var inactivity, out var gameRule))
+        var query = QueryActiveRules();
+        while (query.MoveNext(out var uid, out var inactivity, out _, out _))
         {
-            if (!GameTicker.IsGameRuleActive(uid, gameRule))
-                return;
-
             switch (args.New)
             {
                 case GameRunLevel.InRound:
@@ -90,7 +89,7 @@ public sealed class InactivityTimeRestartRuleSystem : GameRuleSystem<InactivityR
         var query = EntityQueryEnumerator<InactivityRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var inactivity, out var gameRule))
         {
-            if (!GameTicker.IsGameRuleActive(uid, gameRule))
+            if (!GameTicker.IsGameRuleActive((uid, gameRule)))
                 return;
 
             if (GameTicker.RunLevel != GameRunLevel.InRound)
