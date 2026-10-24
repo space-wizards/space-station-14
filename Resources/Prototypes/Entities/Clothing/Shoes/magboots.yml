@@ -89,7 +89,7 @@
     price: 3000
 
 - type: entity
-  parent: [ClothingShoesBootsMagBase, ClothingShoesMilitaryBase, BaseJetpack, BaseSyndicateContraband]
+  parent: [ClothingShoesBootsMagBase, ClothingSlotBase, BaseJetpack, BaseSyndicateContraband]
   id: ClothingShoesBootsMagSyndie
   name: blood-red magboots
   description: Reverse-engineered from ERT magboots, they have a heavy magnetic pull and integrated thrusters. It can hold 0.75 L of gas.
@@ -114,6 +114,16 @@
   - type: Item
     sprite: null
     size: Normal
+  - type: ItemSlots
+    slots:
+      item:
+        name: clothing-boots-sidearm
+        priority: 4
+        ejectOnBreak: true
+        whitelist:
+          tags:
+          - Knife
+          - Sidearm
   - type: StaticPrice
     price: 1500
 
