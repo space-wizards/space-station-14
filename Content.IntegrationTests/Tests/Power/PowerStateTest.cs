@@ -35,7 +35,7 @@ public sealed class PowerStateTest : GameTest
             isWorking: false
             idlePowerDraw: 10
             workingPowerDraw: 50
-            
+        
         - type: entity
           id: {DebugApc}
           components:
@@ -63,6 +63,12 @@ public sealed class PowerStateTest : GameTest
                 nodeGroupID: Apc
           - type: Transform
             anchored: true
+          - type: UserInterface
+            interfaces:
+              enum.ApcUiKey.Key:
+                type: ApcBoundUserInterface
+          - type: AccessReader
+            access: [['Engineering']]
         """;
 
     [SidedDependency(Side.Server)] private SharedMapSystem _mapSys = default!;
@@ -244,15 +250,11 @@ public sealed class PowerStateTest : GameTest
 
             _mapSys.SetTile(grid, Vector2i.Zero, new Tile(1));
 
-            var apc = SEntMan.SpawnAttachedTo(DebugApc, grid.Owner.ToCoordinates(0, 1));
-            SEntMan.SpawnAttachedTo(LvCable, grid.Owner.ToCoordinates(0, 1));
+            var apc = SEntMan.SpawnAttachedTo(DebugApc, grid.Owner.ToCoordinates(0, 0));
             SEntMan.SpawnAttachedTo(LvCable, grid.Owner.ToCoordinates(0, 0));
 
             ent = SSpawnAtPosition(ProtoId, grid.Owner.ToCoordinates());
             SEntMan.EnsureComponent<TestListenerComponent>(ent);
-
-            var apcEnt = SEntMan.SpawnAttachedTo("ApcDummy", grid.Owner.ToCoordinates(0, 0));
-
         });
 
         // wait for power to set up
@@ -304,8 +306,7 @@ public sealed class PowerStateTest : GameTest
 
             _mapSys.SetTile(grid, Vector2i.Zero, new Tile(1));
 
-            var apc = SEntMan.SpawnAttachedTo(DebugApc, grid.Owner.ToCoordinates(0, 1));
-            SEntMan.SpawnAttachedTo(LvCable, grid.Owner.ToCoordinates(0, 1));
+            var apc = SEntMan.SpawnAttachedTo(DebugApc, grid.Owner.ToCoordinates(0, 0));
             SEntMan.SpawnAttachedTo(LvCable, grid.Owner.ToCoordinates(0, 0));
 
             ent = SSpawnAtPosition(ProtoId, grid.Owner.ToCoordinates());
