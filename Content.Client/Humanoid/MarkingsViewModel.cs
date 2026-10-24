@@ -408,7 +408,7 @@ public sealed partial class MarkingsViewModel
 
             var actualMarkings = _markings.GetValueOrDefault(organ)?.ShallowClone() ?? [];
 
-            _marking.EnsureValidColors(actualMarkings); // here
+            _marking.EnsureValidColors(actualMarkings);
             _marking.EnsureValidGroupAndSex(actualMarkings, organData.Group, organProfileData.Sex);
             _marking.EnsureValidLayers(actualMarkings, organData.Layers);
             _marking.EnsureValidLimits(actualMarkings, organData.Group, organData.Layers, organProfileData.SkinColor, organProfileData.EyeColor);

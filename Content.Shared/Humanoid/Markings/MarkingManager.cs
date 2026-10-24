@@ -177,7 +177,7 @@ public sealed partial class MarkingManager
                 var clampedColors = new List<Color>();
                 foreach (var color in markings[i].MarkingColors)
                 {
-                    clampedColors.Add(marking.Strategy.ClosestSkinColor(color));
+                    clampedColors.Add(marking.Strategy.EnsureVerified(color));
                 }
 
                 markings[i] =  new Marking(marking.ID, clampedColors);
