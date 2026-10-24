@@ -9,8 +9,12 @@
   - OnStation
   - Roundstart
   requirements:
-  - !type:OverallPlaytimeRequirement
-    time: 1h
+  - !type:DepartmentTimeRequirement
+    department: Command
+    time: 3h
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 5h
 
 - type: antagSpecifier
   abstract: true
