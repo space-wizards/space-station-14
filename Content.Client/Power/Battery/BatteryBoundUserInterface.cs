@@ -1,4 +1,4 @@
-﻿using Content.Client.UserInterface;
+using Content.Client.UserInterface;
 using Content.Shared.Power;
 using JetBrains.Annotations;
 using Robust.Client.Timing;

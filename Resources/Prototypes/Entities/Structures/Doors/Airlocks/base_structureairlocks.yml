@@ -1,4 +1,4 @@
-﻿# Feature-reduced parent, compatible with the requirements of the High Security Door
+# Feature-reduced parent, compatible with the requirements of the High Security Door
 # You probably want to inherit from Airlock rather than this
 - type: entity
   abstract: true
@@ -60,8 +60,7 @@
       shader: unshaded
       visible: false
   - type: IconSmooth
-    key: walls
-    mode: NoSprite
+    key: doors
   - type: AnimationPlayer
   - type: Physics
   - type: Fixtures
@@ -177,7 +176,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 200
   - type: DeviceLinkSink
     ports:
@@ -189,10 +188,18 @@
   - type: DeviceLinkSource
     ports:
     - DoorStatus
+    - DoorBoltStatus
     lastSignals:
       DoorStatus: false
-  - type: SoundOnOverload
-  - type: SpawnOnOverload
+      DoorBoltStatus: false
+  - type: EntityEffectOnDeviceOverload
+    effects:
+    - !type:SpawnEntity
+      entity: EffectSparks
+      predicted: false
+    - !type:PlaySound
+      sound: /Audio/Items/Defib/defib_zap.ogg
+      predicted: false
   - type: RCDDeconstructable
     cost: 6
     delay: 8

@@ -1,4 +1,4 @@
-﻿- type: constructionGraph
+- type: constructionGraph
   id: OrnateStatueClown
   start: start
   graph:

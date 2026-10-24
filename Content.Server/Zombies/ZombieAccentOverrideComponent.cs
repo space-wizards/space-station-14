@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Zombies;
+namespace Content.Server.Zombies;
 
 /// <summary>
 /// Overrides the applied accent for zombies.
