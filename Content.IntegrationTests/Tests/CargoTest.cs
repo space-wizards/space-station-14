@@ -51,7 +51,7 @@ public sealed class CargoTest : GameTest
     private readonly MapLoaderSystem _sMapLoader = null!;
 
     [SidedDependency(Side.Server)]
-    private readonly StationSystem _sStation = null!;
+    private readonly ServerStationSystem _sStation = null!;
 
     [SidedDependency(Side.Server)]
     private readonly EntityLookupSystem _sLookup = null!;
