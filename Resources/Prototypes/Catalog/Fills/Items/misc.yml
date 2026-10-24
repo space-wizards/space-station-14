@@ -67,3 +67,8 @@
       item:
       - ThrowingKnife
 
+- type: entity
+  id: ClothingShoesBootsMagSyndieFilled
+  parent:
+  - ClothingShoesBootsMagSyndie
+  - ClothingShoesBootsSecFilled

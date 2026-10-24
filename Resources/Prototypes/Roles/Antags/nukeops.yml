@@ -138,7 +138,6 @@
   storage:
     back:
     - WeaponPistolViper
-    - CombatKnife
     - PinpointerSyndicateNuclear
     - DeathAcidifierImplanter
 
