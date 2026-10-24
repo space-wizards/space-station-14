@@ -7,6 +7,7 @@ using Content.Server.Projectiles;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Payloads;
 using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
@@ -274,6 +275,13 @@ namespace Content.Server.Singularity.EntitySystems
                 component.BoltType = boltType;
                 Dirty(uid, component);
             }
+        }
+
+        [SubscribeLocalEvent]
+        private void OnLogicSignalReceived(Entity<EmitterComponent> ent, ref SignalReceivedEvent<LogicStatePayload> args)
+        {
+            SignalReceivedEvent ev = args;
+            OnSignalReceived(ent.Owner, ent.Comp, ref ev);
         }
     }
 }

@@ -1,4 +1,5 @@
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Payloads;
 using Content.Shared.Doors.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio.Systems;
@@ -150,6 +151,13 @@ public abstract partial class SharedAirlockSystem : EntitySystem
             ent.Comp.AutoClose = false;
             Dirty(ent);
         }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnLogicSignalReceived(Entity<AirlockComponent> ent, ref SignalReceivedEvent<LogicStatePayload> args)
+    {
+        SignalReceivedEvent ev = args;
+        OnSignalReceived(ent, ref ev);
     }
 
     private void OnPowerChanged(Entity<AirlockComponent> ent, ref PowerChangedEvent args)

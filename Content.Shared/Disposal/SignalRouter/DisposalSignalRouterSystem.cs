@@ -2,6 +2,7 @@ using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.Disposal.Unit;
 using System.Linq;
+using Content.Shared.DeviceLinking.Payloads;
 using Content.Shared.DeviceLinking.Systems;
 
 namespace Content.Shared.Disposal.SignalRouter;
@@ -38,6 +39,13 @@ public sealed partial class DisposalSignalRouterSystem : EntitySystem
             : args.Port == ent.Comp.OnPort;
 
         Dirty(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnLogicSignalReceived(Entity<DisposalSignalRouterComponent> ent, ref SignalReceivedEvent<LogicStatePayload> args)
+    {
+        SignalReceivedEvent ev = args;
+        OnSignalReceived(ent, ref ev);
     }
 
     private void OnGetNextDirection(Entity<DisposalSignalRouterComponent> ent, ref GetDisposalsNextDirectionEvent args)

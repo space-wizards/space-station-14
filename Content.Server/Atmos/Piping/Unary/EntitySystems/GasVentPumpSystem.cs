@@ -17,6 +17,7 @@ using Content.Shared.Atmos.Visuals;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Payloads;
 using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.DeviceNetwork.Events;
@@ -303,6 +304,13 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 component.PressureChecks = VentPressureBound.ExternalBound;
                 UpdateState(uid, component);
             }
+        }
+
+        [SubscribeLocalEvent]
+        private void OnLogicSignalReceived(Entity<GasVentPumpComponent> ent, ref SignalReceivedEvent<LogicStatePayload> args)
+        {
+            SignalReceivedEvent ev = args;
+            OnSignalReceived(ent.Owner, ent.Comp, ref ev);
         }
 
         private void UpdateState(EntityUid uid, GasVentPumpComponent vent, AppearanceComponent? appearance = null)

@@ -1,6 +1,7 @@
 using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.Trigger.Components.Effects;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Payloads;
 
 namespace Content.Shared.Trigger.Systems;
 
@@ -40,5 +41,12 @@ public sealed partial class TriggerSystem
             return;
 
         Trigger(ent.Owner, args.Trigger, ent.Comp.KeyOut);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnLogicSignalReceived(Entity<TriggerOnSignalComponent> ent, ref SignalReceivedEvent<LogicStatePayload> args)
+    {
+        SignalReceivedEvent ev = args;
+        OnSignalReceived(ent, ref ev);
     }
 }
