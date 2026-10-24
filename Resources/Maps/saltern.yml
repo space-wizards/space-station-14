@@ -1,17 +1,18 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 290.0.0
+  engineVersion: 293.0.1
   forkId: ""
   forkVersion: ""
-  time: 09/22/2026 18:21:07
-  entityCount: 11484
+  time: 10/24/2026 03:44:05
+  entityCount: 11483
 maps:
 - 658
 grids:
 - 31
 orphans: []
 nullspace:
+- 591
 - 6251
 - 9480
 - 11267
@@ -39,7 +40,6 @@ nullspace:
 - 11481
 - 11482
 - 11483
-- 11484
 tilemap:
   0: Space
   41: FloorArcadeBlue
@@ -1459,6 +1459,7 @@ entities:
     - type: ExplosionAirtightGrid
     - type: ChunkContainer
       chunkEntities:
+      - 591
       - 6251
       - 9480
       - 11267
@@ -1486,7 +1487,6 @@ entities:
       - 11481
       - 11482
       - 11483
-      - 11484
   - uid: 658
     components:
     - type: MetaData
@@ -2459,8 +2459,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         11306:
-        - - DoorStatus
-          - InputB
+        - source: DoorStatus
+          sink: InputB
   - uid: 9068
     components:
     - type: Transform
@@ -2469,8 +2469,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         11307:
-        - - DoorStatus
-          - InputB
+        - source: DoorStatus
+          sink: InputB
 - proto: AirlockExternalGlassCargoLocked
   entities:
   - uid: 6522
@@ -2482,8 +2482,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         11307:
-        - - DoorStatus
-          - InputA
+        - source: DoorStatus
+          sink: InputA
   - uid: 9067
     components:
     - type: Transform
@@ -2492,8 +2492,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         11306:
-        - - DoorStatus
-          - InputA
+        - source: DoorStatus
+          sink: InputA
   - uid: 10094
     components:
     - type: Transform
@@ -2511,8 +2511,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         175:
-        - - DoorStatus
-          - DoorBolt
+        - source: DoorStatus
+          sink: DoorBolt
   - uid: 145
     components:
     - type: Transform
@@ -2522,8 +2522,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         151:
-        - - DoorStatus
-          - DoorBolt
+        - source: DoorStatus
+          sink: DoorBolt
   - uid: 151
     components:
     - type: Transform
@@ -2533,8 +2533,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         145:
-        - - DoorStatus
-          - DoorBolt
+        - source: DoorStatus
+          sink: DoorBolt
   - uid: 172
     components:
     - type: Transform
@@ -2544,8 +2544,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         173:
-        - - DoorStatus
-          - DoorBolt
+        - source: DoorStatus
+          sink: DoorBolt
   - uid: 173
     components:
     - type: Transform
@@ -2555,8 +2555,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         172:
-        - - DoorStatus
-          - DoorBolt
+        - source: DoorStatus
+          sink: DoorBolt
   - uid: 174
     components:
     - type: Transform
@@ -2566,8 +2566,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         9974:
-        - - DoorStatus
-          - DoorBolt
+        - source: DoorStatus
+          sink: DoorBolt
   - uid: 175
     components:
     - type: Transform
@@ -2577,8 +2577,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         72:
-        - - DoorStatus
-          - DoorBolt
+        - source: DoorStatus
+          sink: DoorBolt
   - uid: 9974
     components:
     - type: Transform
@@ -2587,8 +2587,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         174:
-        - - DoorStatus
-          - DoorBolt
+        - source: DoorStatus
+          sink: DoorBolt
 - proto: AirlockExternalGlassLocked
   entities:
   - uid: 182
@@ -2600,8 +2600,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         183:
-        - - DoorStatus
-          - DoorBolt
+        - source: DoorStatus
+          sink: DoorBolt
   - uid: 183
     components:
     - type: Transform
@@ -2611,8 +2611,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         182:
-        - - DoorStatus
-          - DoorBolt
+        - source: DoorStatus
+          sink: DoorBolt
   - uid: 1594
     components:
     - type: Transform
@@ -2621,8 +2621,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         2465:
-        - - DoorStatus
-          - DoorBolt
+        - source: DoorStatus
+          sink: DoorBolt
   - uid: 2465
     components:
     - type: Transform
@@ -2631,8 +2631,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         1594:
-        - - DoorStatus
-          - DoorBolt
+        - source: DoorStatus
+          sink: DoorBolt
 - proto: AirlockExternalGlassShuttleArrivals
   entities:
   - uid: 1755
@@ -3468,9 +3468,6 @@ entities:
     - type: Transform
       parent: 31
       pos: 48.5,12.5
-    - type: DeviceNetwork
-      deviceLists:
-      - 6582
   - uid: 6910
     components:
     - type: Transform
@@ -5128,12 +5125,12 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         5070:
-        - - Start
-          - Close
-        - - Timer
-          - AutoClose
-        - - Timer
-          - Open
+        - source: Start
+          sink: Close
+        - source: Timer
+          sink: AutoClose
+        - source: Timer
+          sink: Open
   - uid: 9952
     components:
     - type: Transform
@@ -5144,12 +5141,12 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         1203:
-        - - Start
-          - Close
-        - - Timer
-          - AutoClose
-        - - Timer
-          - Open
+        - source: Start
+          sink: Close
+        - source: Timer
+          sink: AutoClose
+        - source: Timer
+          sink: Open
 - proto: BrokenBottle
   entities:
   - uid: 10591
@@ -24406,7 +24403,7 @@ entities:
       pos: -21.49966,9.580566
 - proto: ChunkEntity
   entities:
-  - uid: 6251
+  - uid: 591
     components:
     - type: ChunkEntity
       root: 31
@@ -24637,7 +24634,7 @@ entities:
             694: -3,-29
             695: -2,-29
             696: -1,-29
-  - uid: 9480
+  - uid: 6251
     components:
     - type: ChunkEntity
       root: 31
@@ -24733,7 +24730,7 @@ entities:
             518: 21,24
             519: 22,24
             521: 20,24
-  - uid: 11267
+  - uid: 9480
     components:
     - type: ChunkEntity
       root: 31
@@ -24822,7 +24819,7 @@ entities:
             angle: -1.5707963267948966 rad
           decals:
             465: -40,7
-  - uid: 11295
+  - uid: 11267
     components:
     - type: ChunkEntity
       root: 31
@@ -24903,7 +24900,7 @@ entities:
             color: '#DE3A3A96'
           decals:
             203: -19,5
-  - uid: 11308
+  - uid: 11295
     components:
     - type: ChunkEntity
       root: 31
@@ -25058,7 +25055,7 @@ entities:
             791: 27,10
             792: 27,9
             793: 27,8
-  - uid: 11309
+  - uid: 11308
     components:
     - type: ChunkEntity
       root: 31
@@ -25247,7 +25244,7 @@ entities:
             color: '#FFFFFFFF'
           decals:
             388: 49.003635,-25.832918
-  - uid: 11310
+  - uid: 11309
     components:
     - type: ChunkEntity
       root: 31
@@ -25388,7 +25385,7 @@ entities:
             color: '#FFFFFFFF'
           decals:
             327: 47.08176,-23.395418
-  - uid: 11311
+  - uid: 11310
     components:
     - type: ChunkEntity
       root: 31
@@ -25456,7 +25453,7 @@ entities:
             390: -1,16
             391: -1,17
             392: -1,18
-  - uid: 11313
+  - uid: 11311
     components:
     - type: ChunkEntity
       root: 31
@@ -25547,7 +25544,7 @@ entities:
             4: 4,25
             174: 0,28
             185: 4,23
-  - uid: 11322
+  - uid: 11313
     components:
     - type: ChunkEntity
       root: 31
@@ -25631,7 +25628,7 @@ entities:
             color: '#FFFFFFFF'
           decals:
             697: 0,-29
-  - uid: 11359
+  - uid: 11322
     components:
     - type: ChunkEntity
       root: 31
@@ -25768,7 +25765,7 @@ entities:
             color: '#FFFFFFFF'
           decals:
             828: 11,-12
-  - uid: 11387
+  - uid: 11359
     components:
     - type: ChunkEntity
       root: 31
@@ -25892,7 +25889,7 @@ entities:
             color: '#FFFFFFFF'
           decals:
             827: -42,-6
-  - uid: 11469
+  - uid: 11387
     components:
     - type: ChunkEntity
       root: 31
@@ -25947,7 +25944,7 @@ entities:
             color: '#FFFFFFFF'
           decals:
             618: -52,-12
-  - uid: 11470
+  - uid: 11469
     components:
     - type: ChunkEntity
       root: 31
@@ -26030,7 +26027,7 @@ entities:
           decals:
             579: -17,-31
             580: -17,-30
-  - uid: 11471
+  - uid: 11470
     components:
     - type: ChunkEntity
       root: 31
@@ -26056,7 +26053,7 @@ entities:
             color: '#FFFFFFFF'
           decals:
             559: -8,-33
-  - uid: 11472
+  - uid: 11471
     components:
     - type: ChunkEntity
       root: 31
@@ -26227,7 +26224,7 @@ entities:
           decals:
             117: -3,10
             206: -5,5
-  - uid: 11473
+  - uid: 11472
     components:
     - type: ChunkEntity
       root: 31
@@ -26322,7 +26319,7 @@ entities:
             278: 60,2
             279: 60,3
             280: 60,4
-  - uid: 11474
+  - uid: 11473
     components:
     - type: ChunkEntity
       root: 31
@@ -26441,7 +26438,7 @@ entities:
             681: 58,-4
             682: 59,-4
             683: 60,-4
-  - uid: 11475
+  - uid: 11474
     components:
     - type: ChunkEntity
       root: 31
@@ -26564,7 +26561,7 @@ entities:
             color: '#FFFFFFFF'
           decals:
             737: 20,-12
-  - uid: 11476
+  - uid: 11475
     components:
     - type: ChunkEntity
       root: 31
@@ -26588,7 +26585,7 @@ entities:
             733: 17,-18
             734: 18,-18
             735: 19,-18
-  - uid: 11477
+  - uid: 11476
     components:
     - type: ChunkEntity
       root: 31
@@ -26742,7 +26739,7 @@ entities:
             angle: 3.141592653589793 rad
           decals:
             307: 7,11
-  - uid: 11478
+  - uid: 11477
     components:
     - type: ChunkEntity
       root: 31
@@ -26766,7 +26763,7 @@ entities:
             cleanable: True
           decals:
             494: -24,-9
-  - uid: 11479
+  - uid: 11478
     components:
     - type: ChunkEntity
       root: 31
@@ -26901,7 +26898,7 @@ entities:
             815: 38,0
             816: 39,0
             817: 40,0
-  - uid: 11480
+  - uid: 11479
     components:
     - type: ChunkEntity
       root: 31
@@ -26938,7 +26935,7 @@ entities:
             color: '#EFB34196'
           decals:
             168: 35,-5
-  - uid: 11481
+  - uid: 11480
     components:
     - type: ChunkEntity
       root: 31
@@ -26953,7 +26950,7 @@ entities:
             color: '#FFFFFFFF'
           decals:
             393: -26,24
-  - uid: 11482
+  - uid: 11481
     components:
     - type: ChunkEntity
       root: 31
@@ -26978,7 +26975,7 @@ entities:
             color: '#FFFFFFFF'
           decals:
             834: 38,16
-  - uid: 11483
+  - uid: 11482
     components:
     - type: ChunkEntity
       root: 31
@@ -27009,7 +27006,7 @@ entities:
             650: -7,-6
             651: -6,-6
             652: -5,-6
-  - uid: 11484
+  - uid: 11483
     components:
     - type: ChunkEntity
       root: 31
@@ -28170,7 +28167,7 @@ entities:
     - type: Transform
       parent: 31
       pos: -6.4295473,32.285225
-- proto: ClothingShoesBootsPerformer
+- proto: ClothingShoesBootsVirtualSinger
   entities:
   - uid: 8319
     components:
@@ -28475,9 +28472,9 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         9418:
-        - - ArtifactAnalyzerSender
-          - ArtifactAnalyzerReceiver
-- proto: computerBodyScanner
+        - source: ArtifactAnalyzerSender
+          sink: ArtifactAnalyzerReceiver
+- proto: ComputerBodyScanner
   entities:
   - uid: 7285
     components:
@@ -28701,14 +28698,6 @@ entities:
       parent: 31
       rot: 1.5707963267948966 rad
       pos: 48.5,-4.5
-- proto: ComputerTechnologyDiskTerminal
-  entities:
-  - uid: 591
-    components:
-    - type: Transform
-      parent: 31
-      rot: -1.5707963267948966 rad
-      pos: -14.5,-24.5
 - proto: ContainmentFieldGenerator
   entities:
   - uid: 4559
@@ -33120,7 +33109,7 @@ entities:
       pos: 7.5,24.5
     - type: FaxMachine
       name: Captain's office
-- proto: filingCabinetDrawerRandom
+- proto: FilingCabinetDrawerRandom
   entities:
   - uid: 4637
     components:
@@ -33132,7 +33121,7 @@ entities:
     - type: Transform
       parent: 31
       pos: 9.5,18.5
-- proto: filingCabinetRandom
+- proto: FilingCabinetRandom
   entities:
   - uid: 4216
     components:
@@ -33159,7 +33148,7 @@ entities:
     - type: Transform
       parent: 31
       pos: -2.5,14.5
-- proto: filingCabinetTallRandom
+- proto: FilingCabinetTallRandom
   entities:
   - uid: 1424
     components:
@@ -33662,17 +33651,11 @@ entities:
     - type: Transform
       parent: 31
       pos: -18.5,3.5
-    - type: DeviceNetwork
-      deviceLists:
-      - 10021
   - uid: 7041
     components:
     - type: Transform
       parent: 31
       pos: -19.5,3.5
-    - type: DeviceNetwork
-      deviceLists:
-      - 10021
   - uid: 7042
     components:
     - type: Transform
@@ -48848,7 +48831,7 @@ entities:
       parent: 31
       rot: 1.5707963267948966 rad
       pos: -13.5,-37.5
-- proto: hydroponicsSoil
+- proto: HydroponicsSoil
   entities:
   - uid: 9666
     components:
@@ -48925,7 +48908,7 @@ entities:
     - type: Transform
       parent: 31
       pos: -18.353035,8.817266
-- proto: hydroponicsTray
+- proto: HydroponicsTray
   entities:
   - uid: 775
     components:
@@ -49536,8 +49519,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         6548:
-        - - Pressed
-          - Trigger
+        - source: Pressed
+          sink: Trigger
   - uid: 11053
     components:
     - type: MetaData
@@ -49548,14 +49531,14 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         6635:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
         6345:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
         6348:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
 - proto: LockerAtmosphericsFilledHardsuit
   entities:
   - uid: 6408
@@ -49812,11 +49795,11 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         6522:
-        - - Output
-          - DoorBolt
+        - source: Output
+          sink: DoorBolt
         9068:
-        - - Output
-          - DoorBolt
+        - source: Output
+          sink: DoorBolt
     - type: Physics
       canCollide: False
       bodyType: Static
@@ -49829,11 +49812,11 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         3052:
-        - - Output
-          - DoorBolt
+        - source: Output
+          sink: DoorBolt
         9067:
-        - - Output
-          - DoorBolt
+        - source: Output
+          sink: DoorBolt
     - type: Physics
       canCollide: False
       bodyType: Static
@@ -56654,8 +56637,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         1756:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
   - uid: 4526
     components:
     - type: Transform
@@ -56664,14 +56647,14 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         4695:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
         4694:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
         4693:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
   - uid: 5132
     components:
     - type: Transform
@@ -56681,8 +56664,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         260:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
   - uid: 8766
     components:
     - type: Transform
@@ -56691,11 +56674,11 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         8767:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
         8768:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
   - uid: 8774
     components:
     - type: Transform
@@ -56704,17 +56687,17 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         8772:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
         8773:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
         8771:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
         8770:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
   - uid: 10325
     components:
     - type: Transform
@@ -56725,8 +56708,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         7588:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
   - uid: 10996
     components:
     - type: Transform
@@ -56735,11 +56718,11 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         9122:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
         2138:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
   - uid: 10997
     components:
     - type: Transform
@@ -56748,11 +56731,11 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         1475:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
         2137:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
   - uid: 11284
     components:
     - type: Transform
@@ -56762,11 +56745,11 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         11119:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
         11118:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
 - proto: SignalButtonDirectional
   entities:
   - uid: 11380
@@ -56779,11 +56762,11 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         44:
-        - - Pressed
-          - Open
+        - source: Pressed
+          sink: Open
         124:
-        - - Pressed
-          - Open
+        - source: Pressed
+          sink: Open
 - proto: SignalSwitch
   entities:
   - uid: 276
@@ -56802,80 +56785,80 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         8899:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         7550:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         1771:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         3550:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         3387:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         3548:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         3549:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         10095:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - source: On
+          sink: Open
+        - source: Off
+          sink: Close
         10089:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         10090:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         10092:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         10091:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         10046:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         3905:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - source: On
+          sink: Open
+        - source: Off
+          sink: Close
         10053:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
   - uid: 7945
     components:
     - type: Transform
@@ -56884,75 +56867,75 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         10047:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         10048:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         10049:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         10050:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         10051:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         10052:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         10053:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         10093:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         9139:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         9138:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         66:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - source: On
+          sink: Open
+        - source: Off
+          sink: Close
         10096:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - source: On
+          sink: Open
+        - source: Off
+          sink: Close
         10054:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         10045:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
   - uid: 9557
     components:
     - type: Transform
@@ -56961,30 +56944,30 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         9551:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - source: On
+          sink: Open
+        - source: Off
+          sink: Close
         9552:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - source: On
+          sink: Open
+        - source: Off
+          sink: Close
         9553:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - source: On
+          sink: Open
+        - source: Off
+          sink: Close
         9554:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - source: On
+          sink: Open
+        - source: Off
+          sink: Close
         9555:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - source: On
+          sink: Open
+        - source: Off
+          sink: Close
   - uid: 10218
     components:
     - type: Transform
@@ -56994,60 +56977,60 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         10033:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         10040:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         10043:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         10109:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         1561:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - source: On
+          sink: Open
+        - source: Off
+          sink: Close
         10110:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         9886:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         9266:
-        - - On
-          - Reverse
-        - - Off
-          - Off
+        - source: On
+          sink: Reverse
+        - source: Off
+          sink: Off
         10201:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - source: On
+          sink: Open
+        - source: Off
+          sink: Close
         9265:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
         10215:
-        - - On
-          - Forward
-        - - Off
-          - Off
+        - source: On
+          sink: Forward
+        - source: Off
+          sink: Off
 - proto: SignalSwitchDirectional
   entities:
   - uid: 11371
@@ -57058,10 +57041,10 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         11370:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - source: On
+          sink: Open
+        - source: Off
+          sink: Close
   - uid: 11372
     components:
     - type: Transform
@@ -57071,10 +57054,10 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         11369:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - source: On
+          sink: Open
+        - source: Off
+          sink: Close
 - proto: SignAnomaly
   entities:
   - uid: 10546
@@ -61525,7 +61508,7 @@ entities:
     - type: Transform
       parent: 31
       pos: 38.48186,-17.514906
-- proto: trayScanner
+- proto: TRayScanner
   entities:
   - uid: 8901
     components:

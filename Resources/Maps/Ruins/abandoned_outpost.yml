@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 289.0.0
+  engineVersion: 293.0.1
   forkId: ""
   forkVersion: ""
-  time: 08/23/2026 12:22:12
-  entityCount: 377
+  time: 10/24/2026 03:44:19
+  entityCount: 376
 maps: []
 grids:
 - 2
@@ -956,13 +956,6 @@ entities:
       parent: 2
       rot: 1.5707963267948966 rad
       pos: 4.5,-6.5
-- proto: ComputerTechnologyDiskTerminal
-  entities:
-  - uid: 288
-    components:
-    - type: Transform
-      parent: 2
-      pos: -1.5,6.5
 - proto: CrateArtifactContainer
   entities:
   - uid: 281

@@ -1,0 +1,49 @@
+# Complete all ordinary research available to the current disciplines before expanding.
+- type: technology
+  id: ResearchDisciplineExpansion1
+  name: research-technology-discipline-expansion-1
+  icon:
+    sprite: Interface/Misc/research_disciplines.rsi
+    state: experimental
+  discipline: Experimental
+  tier: 1
+  cost: 250000
+  requiresResearchCompletion: true
+  genericUnlocks:
+  - unlockDescription: research-technology-discipline-expansion-unlock
+    purchaseEvent: !type:ResearchDisciplineUnlockEvent
+      amount: 1
+
+- type: technology
+  id: ResearchDisciplineExpansion2
+  name: research-technology-discipline-expansion-2
+  icon:
+    sprite: Interface/Misc/research_disciplines.rsi
+    state: experimental
+  discipline: Experimental
+  tier: 1
+  cost: 300000
+  requiresResearchCompletion: true
+  technologyPrerequisites:
+  - ResearchDisciplineExpansion1
+  genericUnlocks:
+  - unlockDescription: research-technology-discipline-expansion-unlock
+    purchaseEvent: !type:ResearchDisciplineUnlockEvent
+      amount: 1
+
+- type: technology
+  id: ResearchDisciplineExpansion3
+  name: research-technology-discipline-expansion-3
+  icon:
+    sprite: Interface/Misc/research_disciplines.rsi
+    state: experimental
+  discipline: Experimental
+  tier: 1
+  cost: 500000
+  requiresResearchCompletion: true
+  technologyPrerequisites:
+  - ResearchDisciplineExpansion2
+  genericUnlocks:
+  - unlockDescription: research-technology-discipline-expansion-unlock
+    purchaseEvent: !type:ResearchDisciplineUnlockEvent
+      amount: 1

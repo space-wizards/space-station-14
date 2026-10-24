@@ -67,11 +67,6 @@
 
 - type: latheRecipe
   parent: [ BaseGoldCircuitboardRecipe, BaseResearchComputerRecipeCategory ]
-  id: TechDiskComputerCircuitboard
-  result: TechDiskComputerCircuitboard
-
-- type: latheRecipe
-  parent: [ BaseGoldCircuitboardRecipe, BaseResearchComputerRecipeCategory ]
   id: StationTeleportersControlCircuitboard
   result: StationTeleportersControlCircuitboard
 
