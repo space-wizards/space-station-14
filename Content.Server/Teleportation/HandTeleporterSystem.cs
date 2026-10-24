@@ -78,10 +78,7 @@ public sealed partial class HandTeleporterSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, HandTeleporterComponent component, DoAfterEvent args)
     {
-        if (args.Cancelled)
-            return;
-
-        if (args.Handled)
+        if (args.Cancelled || args.Handled)
             return;
 
         HandlePortalUpdating(uid, component, args.Args.User);
@@ -135,10 +132,7 @@ public sealed partial class HandTeleporterSystem : EntitySystem
     private void CheckPortals(Entity<HandTeleporterComponent> entity)
     {
         // no need to check nothing if there aren't 2 portals
-        if (Deleted(entity.Comp.FirstPortal))
-            return;
-
-        if (Deleted(entity.Comp.SecondPortal))
+        if (Deleted(entity.Comp.FirstPortal) || Deleted(entity.Comp.SecondPortal))
             return;
 
         var portal1Xform = Transform(entity.Comp.FirstPortal!.Value);
@@ -147,7 +141,7 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         var sameGrid = portal1Xform.GridUid == portal2Xform.GridUid;
         var sameMap = portal1Xform.MapID == portal2Xform.MapID;
 
-        if (!sameGrid && !entity.Comp.AllowPortalsOnDifferentGrids 
+        if (!sameGrid && !entity.Comp.AllowPortalsOnDifferentGrids
             || !sameMap && !entity.Comp.AllowPortalsOnDifferentMaps)
         {
             FizzlePortals(entity, null, false);
@@ -258,13 +252,8 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         Dirty(entity);
         _audio.PlayPvs(entity.Comp.ClearPortalsSound, entity);
 
-        if (!instability)
-            return;
-
-        if (user == null)
-            return;
-
-        _popup.PopupEntity(Loc.GetString("handheld-teleporter-instability-fizzle"), entity, user.Value, PopupType.MediumCaution);
+        if (instability && user != null)
+            _popup.PopupEntity(Loc.GetString("handheld-teleporter-instability-fizzle"), entity, user.Value, PopupType.MediumCaution);
     }
 
     /// <summary>

@@ -27,20 +27,11 @@ public abstract partial class SharedPortalSystem : EntitySystem
 
     private const int MaxRandomTeleportAttempts = 20;
 
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<PortalComponent, TeleportUseAttemptEvent>(OnTeleportUseAttempt);
-        SubscribeLocalEvent<PortalComponent, TeleportRequestEvent>(OnTeleportRequest);
-        SubscribeLocalEvent<PortalComponent, TeleportTriggerExitedEvent>(OnTeleportTriggerExited);
-    }
-
     /// <summary>
     /// Checks exit protection and, for unlinked portals, user restrictions.
     /// Does not choose a destination or teleport the target.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnTeleportUseAttempt(Entity<PortalComponent> ent, ref TeleportUseAttemptEvent args)
     {
         if (args.Cancelled)
@@ -76,6 +67,7 @@ public abstract partial class SharedPortalSystem : EntitySystem
     /// <summary>
     /// Rechecks exit protection when a contact with the exit portal ends.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnTeleportTriggerExited(Entity<PortalComponent> ent, ref TeleportTriggerExitedEvent args)
     {
         if (!TryComp<PortalTimeoutComponent>(args.Target, out var timeout))
@@ -91,6 +83,7 @@ public abstract partial class SharedPortalSystem : EntitySystem
     /// Handles a teleport request through a linked exit or, on the server, a random nearby point.
     /// Ignores requests already handled.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnTeleportRequest(Entity<PortalComponent> ent, ref TeleportRequestEvent args)
     {
         if (args.Handled)

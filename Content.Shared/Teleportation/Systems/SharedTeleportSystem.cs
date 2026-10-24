@@ -32,7 +32,7 @@ public sealed partial class SharedTeleportSystem : EntitySystem
     /// </param>
     /// <param name="shouldTriggerEffects">Whether to raise events for effects before and after teleportation.</param>
     /// <returns>Whether teleportation succeeded.</returns>
-    internal bool TryTeleport(
+    public bool TryTeleport(
         EntityUid teleporter,
         EntityUid target,
         EntityCoordinates destination,
