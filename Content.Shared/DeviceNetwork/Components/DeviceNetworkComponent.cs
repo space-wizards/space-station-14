@@ -108,4 +108,12 @@ public sealed partial class DeviceNetworkComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Enabled = true;
+
+    /// <summary>
+    /// The text that is shown on examine of the device.
+    /// The address is passed as an "address" variable to Fluent.
+    /// Requires <see cref="ExaminableAddress"/> to be true to show up.
+    /// </summary>
+    [DataField]
+    public LocId ExamineMessage = "device-address-examine-message";
 }

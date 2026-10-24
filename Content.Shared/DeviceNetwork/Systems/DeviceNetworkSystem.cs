@@ -2,8 +2,9 @@ using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Components.Networks;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Examine;
-using Robust.Shared.Network;
 using Content.Shared.GameTicking;
+using Robust.Shared.GameStates;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -24,22 +25,39 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private MetaDataSystem _metaSystem = default!;
     [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private SharedPvsOverrideSystem _pvsOverride = default!;
 
     [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceQuery;
     [Dependency] private EntityQuery<DeviceNetworkManagerComponent> _deviceManagerQuery;
 
+    /// <summary>
+    /// A dictionary of occupied Device addresses and corresponding <see cref="EntityUid"/>.
+    /// The entity stores is not guaranteed to be valid.
+    /// </summary>
     private readonly Dictionary<int, EntityUid> _occupiedAddresses = new();
 
+    /// <summary>
+    /// Cache for storing selected devices and sending a packet to them.
+    /// </summary>
     private Device[] _deviceCache = [];
 
+    /// <summary>
+    /// Cache for network managers. Used by API methods.
+    /// </summary>
     private readonly List<Entity<DeviceNetworkManagerComponent>> _managerCache = new();
 
+    /// <summary>
+    /// Frees all addresses on round restart.
+    /// </summary>
     [SubscribeLocalEvent]
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
     {
         _occupiedAddresses.Clear();
     }
 
+    /// <summary>
+    /// Checks whether the device is jammed to cancel the packet.
+    /// </summary>
     [SubscribeLocalEvent]
     private void OnBeforePacketReceived(Entity<DeviceNetworkComponent> ent, ref BeforePacketSentEvent args)
     {
@@ -48,15 +66,18 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
             args.Cancelled = true;
     }
 
+    /// <summary>
+    /// Shows a device address on examine.
+    /// </summary>
     [SubscribeLocalEvent]
     private void OnExamine(Entity<DeviceNetworkComponent> ent, ref ExaminedEvent args)
     {
         if (ent.Comp.ExaminableAddress)
-            args.PushText(Loc.GetString("device-address-examine-message", ("address", DeviceLocalizationHelpers.GetAddressFromId(ent.Comp))));
+            args.PushText(Loc.GetString(ent.Comp.ExamineMessage, ("address", DeviceLocalizationHelpers.GetAddressFromId(ent.Comp))));
     }
 
     /// <summary>
-    /// Automatically attempt to connect some devices when a map starts.
+    /// Resolves the frequencies and attempts to connect some devices when a map starts.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<DeviceNetworkComponent> ent, ref MapInitEvent args)
@@ -87,15 +108,31 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
         ConnectDevice(ent.AsNullable());
     }
 
+    /// <summary>
+    /// Disconnects the device from all networks on its component shutdown.
+    /// </summary>
     [SubscribeLocalEvent]
     private void OnNetworkShutdown(Entity<DeviceNetworkComponent> ent, ref ComponentShutdown args)
     {
         DisconnectDevice(ent.AsNullable());
     }
 
+    /// <summary>
+    /// Adds an initialized device network manager to global PVS override.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnManagerMapInit(Entity<DeviceNetworkManagerComponent> ent, ref MapInitEvent args)
+    {
+        _pvsOverride.AddGlobalOverride(ent.Owner);
+    }
+
+    /// <summary>
+    /// Sends a <see cref="DeviceNetworkPacketEvent{T}"/> event to all currently available and targeted devices.
+    /// </summary>
+    /// <param name="packet">The event to raise on all receiving devices.</param>
+    /// <typeparam name="T">Type of the network payload sent with the packet.</typeparam>
     private void SendPacket<T>(ref DeviceNetworkPacketEvent<T> packet) where T : INetworkPayload
     {
-        // If we fail to get the network, sending the packet is useless since nothing will receive it.
         if (!TryGetNetwork(packet.Sender.AsNullable(), packet.NetId, out var network))
             return;
 
@@ -112,6 +149,7 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
         }
         else
         {
+            // Send to devices that receive everything, and also the target device address
             var totalDevices = 0;
             var hasTargetedDevice = false;
             if (network.Value.Comp.ReceiveAllDevices.TryGetValue(packet.Frequency, out var devices))
@@ -140,9 +178,9 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
 
     /// <summary>
     /// Sends the <see cref="BeforeBroadcastAttemptEvent"/> to the sending entity if the packets SendBeforeBroadcastAttemptEvent field is set to true.
-    /// The recipients is set to the modified recipient list.
+    /// The recipients are set to the modified recipient list.
     /// </summary>
-    /// <returns>false if the broadcast was canceled</returns>
+    /// <returns>False if the broadcast was canceled.</returns>
     private bool CheckRecipientsList<T>(DeviceNetworkPacketEvent<T> packet, ref HashSet<Device> recipients) where T : INetworkPayload
     {
         if (!packet.Sender.Comp.SendBroadcastAttemptEvent)
@@ -158,6 +196,12 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Raises a <see cref="DeviceNetworkPacketEvent{T}"/> on a span of <see cref="Device"/>s.
+    /// </summary>
+    /// <param name="connections">A span of devices to raise the event on.</param>
+    /// <param name="packet">The event to raise on all entities.</param>
+    /// <typeparam name="T">Type of the network payload sent with the packet.</typeparam>
     private void SendToConnections<T>(ReadOnlySpan<Device> connections, DeviceNetworkPacketEvent<T> packet) where T : INetworkPayload
     {
         var xform = Transform(packet.Sender);
