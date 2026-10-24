@@ -344,6 +344,7 @@
   - type: Item
     size: Small
 
+- type: entity
   parent: [BluespaceBeaker, JugPunctTranex]
   id: BluespaceBeakerPunctTranex
   suffix: punct & tranex
