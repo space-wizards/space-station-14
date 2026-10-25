@@ -5,7 +5,7 @@
     - tasks:
         - !type:HTNPrimitiveTask
           preconditions:
-            - !type:SatiationPrecondition
+            - !type:BaseSatiationPrecondition
               satiationType: Hunger
               below: Peckish
           operator: !type:UtilityOperator
@@ -36,7 +36,7 @@
     - tasks:
         - !type:HTNPrimitiveTask
           preconditions:
-            - !type:SatiationPrecondition
+            - !type:BaseSatiationPrecondition
               satiationType: Thirst
               below: Parched
           operator: !type:UtilityOperator

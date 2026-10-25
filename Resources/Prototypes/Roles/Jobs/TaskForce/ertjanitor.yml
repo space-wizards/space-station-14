@@ -51,6 +51,7 @@
     - GrenadeCleanade
     - GrenadeCleanade
     - GrenadeCleanade
+    - MagazinePistol
     belt:
     - MegaSprayBottleSpaceCleaner
     - Holoprojector
@@ -58,7 +59,6 @@
     - WireBrush
     - CrowbarRed
     - WeaponPistolMk58
-    - MagazinePistol
     - EmergencyMedipen
   inhand:
     - TrashBag
