@@ -28,6 +28,9 @@ public sealed partial class PricingSystem : EntitySystem
     [Dependency] private MobStateSystem _mobStateSystem = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
+    // Prototype ids whose price handlers are currently on the call stack.
+    private readonly HashSet<string> _pricingStack = new();
+
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -198,13 +201,40 @@ public sealed partial class PricingSystem : EntitySystem
     /// </remarks>
     public double GetPrice(EntityUid uid, bool includeContents = true)
     {
+        // Detect recursive pricing (e.g. a spawn handler pricing an ancestor prototype).
+        var prototypeId = MetaData(uid).EntityPrototype?.ID;
+
+        if (prototypeId != null && !_pricingStack.Add(prototypeId))
+            return GetOwnPrice(uid);
+
         var ev = new PriceCalculationEvent();
         RaiseLocalEvent(uid, ref ev);
+
+        if (prototypeId != null)
+            _pricingStack.Remove(prototypeId);
 
         if (ev.Handled)
             return ev.Price;
 
-        var price = ev.Price;
+        var price = ev.Price + GetOwnPrice(uid);
+
+        if (includeContents && TryComp<ContainerManagerComponent>(uid, out var containers))
+        {
+            foreach (var container in containers.Containers.Values)
+            {
+                foreach (var ent in container.ContainedEntities)
+                {
+                    price += GetPrice(ent);
+                }
+            }
+        }
+
+        return price;
+    }
+
+    private double GetOwnPrice(EntityUid uid)
+    {
+        var price = 0.0;
         //TODO: Add an OpaqueToAppraisal component or similar for blocking the recursive descent into containers, or preventing material pricing.
         // DO NOT FORGET TO UPDATE ESTIMATED PRICING
         price += GetMaterialsPrice(uid);
@@ -217,17 +247,6 @@ public sealed partial class PricingSystem : EntitySystem
         if (oldPrice.Equals(price))
         {
             price += GetStaticPrice(uid);
-        }
-
-        if (includeContents && TryComp<ContainerManagerComponent>(uid, out var containers))
-        {
-            foreach (var container in containers.Containers.Values)
-            {
-                foreach (var ent in container.ContainedEntities)
-                {
-                    price += GetPrice(ent);
-                }
-            }
         }
 
         return price;

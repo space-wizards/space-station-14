@@ -21,8 +21,6 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private SharedAudioSystem _audio = default!;
         [Dependency] private SharedTransformSystem _transform = default!;
 
-        [ThreadStatic] private static HashSet<string>? _processingPrototypes;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -33,32 +31,19 @@ namespace Content.Server.Storage.EntitySystems
 
         private void CalculatePrice(EntityUid uid, SpawnItemsOnUseComponent component, ref PriceCalculationEvent args)
         {
-            if (_processingPrototypes == null)
-                _processingPrototypes = new HashSet<string>();
-
-            var processing = _processingPrototypes;
-
-            var priced = false;
-
             var ungrouped = CollectOrGroups(component.Items, out var orGroups);
+
             foreach (var entry in ungrouped)
             {
                 if (entry.PrototypeId == null)
                     continue;
-                if (!processing.Add(entry.PrototypeId))
-                    continue;
 
-                try
-                {
-                    var protUid = Spawn(entry.PrototypeId, MapCoordinates.Nullspace);
-                    args.Price += _pricing.GetPrice(protUid) * entry.SpawnProbability * entry.GetAmount(getAverage: true);
-                    Del(protUid);
-                    priced = true;
-                }
-                finally
-                {
-                    processing.Remove(entry.PrototypeId);
-                }
+                var protUid = Spawn(entry.PrototypeId, MapCoordinates.Nullspace);
+
+                // Calculate the average price of the possible spawned items
+                args.Price += _pricing.GetPrice(protUid) * entry.SpawnProbability * entry.GetAmount(getAverage: true);
+
+                Del(protUid);
             }
 
             foreach (var group in orGroups)
@@ -67,26 +52,19 @@ namespace Content.Server.Storage.EntitySystems
                 {
                     if (entry.PrototypeId == null)
                         continue;
-                    if (!processing.Add(entry.PrototypeId))
-                        continue;
 
-                    try
-                    {
-                        var protUid = Spawn(entry.PrototypeId, MapCoordinates.Nullspace);
-                        args.Price += _pricing.GetPrice(protUid) *
-                                      (entry.SpawnProbability / group.CumulativeProbability) *
-                                      entry.GetAmount(getAverage: true);
-                        Del(protUid);
-                        priced = true;
-                    }
-                    finally
-                    {
-                        processing.Remove(entry.PrototypeId);
-                    }
+                    var protUid = Spawn(entry.PrototypeId, MapCoordinates.Nullspace);
+
+                    // Calculate the average price of the possible spawned items
+                    args.Price += _pricing.GetPrice(protUid) *
+                                  (entry.SpawnProbability / group.CumulativeProbability) *
+                                  entry.GetAmount(getAverage: true);
+
+                    Del(protUid);
                 }
             }
-            if (priced)
-                args.Handled = true;
+
+            args.Handled = true;
         }
 
         private void OnUseInHand(EntityUid uid, SpawnItemsOnUseComponent component, UseInHandEvent args)
