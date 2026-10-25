@@ -32,6 +32,13 @@ public sealed partial class BluespaceAnomalyComponent : Component
     public float SupercriticalTeleportRadius = 50f;
 
     /// <summary>
+    /// The radius around a supercritical anom that will be swapped
+    /// </summary>
+    [DataField]
+    public float SupercriticalRegionSwapRadius = 10;
+
+
+    /// <summary>
     /// The sound played after players are shuffled/teleported around
     /// </summary>
     [DataField("teleportSound"), ViewVariables(VVAccess.ReadWrite)]
