@@ -207,7 +207,7 @@ public struct ThermalByte : IEquatable<ThermalByte>
         _coreValue = StateVacuum;
     }
 
-    public bool IsAtmosImpossible => _coreValue == AtmosImpossible; // Cold space, solid walls
+    public bool IsAtmosImpossible => _coreValue == AtmosImpossible; // Solid walls.
     public bool IsVacuum => _coreValue == StateVacuum;
     public byte Value => _coreValue;
 
