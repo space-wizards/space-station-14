@@ -166,6 +166,3 @@ reagent-desc-heparin = Commonly used as an anticoagulant medication. Causes bloo
 
 reagent-name-ignisol = ignisol
 reagent-desc-ignisol = A volatile medicinal extract that treats frostbite by rapidly raising body temperature. Highly flammable and can cause overheating when overdosed.
-
-reagent-name-equiline = equiline
-reagent-desc-equiline = An advanced homeostatic agent. It heals thermal damage and helps stabilize body temperature.

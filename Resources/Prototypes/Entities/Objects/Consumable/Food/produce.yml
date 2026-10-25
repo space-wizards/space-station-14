@@ -1579,35 +1579,30 @@
       Burger: AloeIgnisBurger
 
 - type: entity
-  parent: FoodProduceBase
+  parent: [ProduceBase, BaseSlicingRefinableButchering]
   id: FoodDragonTail
   name: dragon's tail fruit
-  description: A long, spiraling fruit that glows with a soft emerald light. It feels perfectly temperate.
+  description: A long, spiraling fruit that glows with a soft emerald light. Its flesh can be processed into a soothing salve.
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/dragon_tail.rsi
+    state: produce
   - type: Item
     size: Small
     sprite: Objects/Specific/Hydroponics/dragon_tail.rsi
     heldPrefix: produce
   - type: Produce
     plantId: DragonTailPlants
-  - type: FlavorProfile
-    flavors:
-    - minty
-    - sweet
   - type: Solution
     solution:
       maxVol: 20
       reagents:
-      - ReagentId: Equiline
+      - ReagentId: Ignisol
         Quantity: 10
-      - ReagentId: Nutriment
-        Quantity: 2
-  - type: FoodSequenceElement
-    entries:
-      Taco: DragonTail
-      Burger: DragonTailBurger
+  - type: ToolRefinable
+    refineResult:
+    - id: DragonTailCompress
+      amount: 10
 
 - type: entity
   name: poppy

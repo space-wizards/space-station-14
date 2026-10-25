@@ -16,6 +16,13 @@
 
 - type: stack
   parent: BaseSmallStack
+  id: DragonTailSalve
+  name: stack-dragon-tail-salve
+  icon: { sprite: "/Textures/Objects/Specific/Hydroponics/dragon_tail.rsi", state: cream }
+  spawn: DragonTailSalve
+
+- type: stack
+  parent: BaseSmallStack
   id: Gauze
   name: stack-gauze
   icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: gauze }
