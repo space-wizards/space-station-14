@@ -15,7 +15,7 @@ using Color = Robust.Shared.Maths.Color;
 namespace Content.Client.Atmos.Overlays;
 
 /// <summary>
-/// Tints all areas gray based on pressure, and cold areas blue based on temperature and pressure.
+/// Desaturates areas based on pressure, and tints cold areas blue based on temperature.
 /// </summary>
 public sealed partial class GasTileVacuumOverlay : Overlay
 {
@@ -47,7 +47,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
     /// <summary>
     /// kPa pressure threshold to start diminishing the tint effect, increasing linearly to full effect at 0 pressure.
     /// </summary>
-    private const float MinTintModifierPressureKPa = 30f;
+    private const float MinTintModifierPressureKPa = 40f;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -61,7 +61,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         _shader = _proto.Index(VacuumOverlayShader).InstanceUnique();
         _configManager.OnValueChanged(CCVars.VacuumOverlayIntensity, SetVacuumOverlayIntensity, invokeImmediately: true);
 
-        _shader.SetParameter("tint_modifier", new Vector3(0f, 0f, 1.0f));
+        _shader.SetParameter("tint", new Vector3(0f, 0f, 1.0f));
     }
 
     private void SetVacuumOverlayIntensity(float intensity)
@@ -99,7 +99,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         var worldHandle = args.WorldHandle;
         var worldToViewportLocal = args.Viewport.GetWorldToLocalMatrix();
 
-        // If there is no cold tile after checking all visible tiles, we can bail early
+        // If there is no affected tile after checking all visible tiles, we can bail early.
         var anyDesaturation = false;
 
         args.WorldHandle.RenderInRenderTarget(res.VacuumTarget,

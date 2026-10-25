@@ -1,6 +1,6 @@
 uniform sampler2D SCREEN_TEXTURE;
 uniform mediump float intensity;
-uniform mediump vec3 tint_modifier;
+uniform mediump vec3 tint;
 
 void fragment()
 {
@@ -18,7 +18,7 @@ void fragment()
     mediump float desaturation_intensity = tile_intensity * intensity;
     screen_pixel.rgb = mix(screen_pixel.rgb, vec3(gray), desaturation_intensity);
 
-    screen_pixel.rgb = mix(screen_pixel.rgb, screen_pixel.rgb * tint_modifier, tint_intensity * 0.3);
+    screen_pixel.rgb = mix(screen_pixel.rgb, screen_pixel.rgb * tint, tint_intensity * 0.3);
 
     COLOR = screen_pixel;
 }
