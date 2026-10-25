@@ -16,10 +16,10 @@
 
 - type: stack
   parent: BaseSmallStack
-  id: DragonTailSalve
-  name: stack-dragon-tail-salve
+  id: DragonTailCompress
+  name: stack-dragon-tail-compress
   icon: { sprite: "/Textures/Objects/Specific/Hydroponics/dragon_tail.rsi", state: cream }
-  spawn: DragonTailSalve
+  spawn: DragonTailCompress
 
 - type: stack
   parent: BaseSmallStack

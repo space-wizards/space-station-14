@@ -1,12 +1,15 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Sprites by qwazori (discord)",
+    "copyright": "Sprites by qwazori (discord),  cream sprite modified by aischylos from aloe cream sprite",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
+        {
+            "name": "cream"
+        },
         {
             "name": "dead"
         },
