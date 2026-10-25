@@ -262,6 +262,9 @@ public sealed partial class ShuttleSystem
         float? hyperspaceTime = null,
         string? priorityTag = null)
     {
+        if (!coordinates.IsValid(EntityManager) || !double.IsFinite(angle.Theta))
+            return;
+
         if (!TrySetupFTL(shuttleUid, component, out var hyperspace))
             return;
 
