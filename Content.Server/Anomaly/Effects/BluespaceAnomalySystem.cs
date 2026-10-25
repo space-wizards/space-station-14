@@ -251,7 +251,7 @@ public sealed partial class BluespaceAnomalySystem : EntitySystem
         ToBeMoved moves)
     {
         var radiusSquare = radius * radius;
-        var sourceCenter = TileCenter(source);
+        var sourceCenter = new Vector2(source.X + 0.5f, source.Y + 0.5f);
         var delta = new Vector2(destination.X - source.X, destination.Y - source.Y);
 
         foreach (var found in _lookup.GetEntitiesInRange(new EntityCoordinates(gridUid, sourceCenter), radius, LookupFlags.Uncontained))
@@ -353,6 +353,4 @@ public sealed partial class BluespaceAnomalySystem : EntitySystem
         target = default;
         return false;
     }
-
-    private static Vector2 TileCenter(Vector2i tile) => new(tile.X + 0.5f, tile.Y + 0.5f);
 }
