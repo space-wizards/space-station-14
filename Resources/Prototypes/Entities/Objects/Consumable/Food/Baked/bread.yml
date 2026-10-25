@@ -972,8 +972,8 @@
     speechSounds: Dog
     speechVerb: SmallMob
   - type: MovementSpeedModifier
-    baseWalkSpeed : 5
-    baseSprintSpeed : 3
+    baseWalkSpeed : 3
+    baseSprintSpeed : 5
   - type: Tag
     tags:
     - Bread
@@ -992,7 +992,7 @@
     damage:
       types:
         Blunt: 4
-        Pierce: 4
+        Piercing: 4
   - type: Physics
   - type: Fixtures
     fixtures:

@@ -1151,7 +1151,7 @@
     damage:
       types:
         Blunt: 2
-        Pierce: 3
+        Piercing: 3
         Slash: 3
 
 # Suppermatter
