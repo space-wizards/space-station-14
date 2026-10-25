@@ -905,6 +905,8 @@
   parent: [SimpleMobBase, BaseMobDestructible, SolutionLarge, FoodBase, BaseSlicingRefinableFood]
   description: It's a bread. It's a dog. It's a... breaddog?
   components:
+  - type: Edible
+    requireDead: false
   - type: CollisionWake
     enabled: false # EVIL! (without that it becomes intangible after some idle time)
   - type: FlavorProfile

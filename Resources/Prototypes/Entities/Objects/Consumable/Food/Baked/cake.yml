@@ -1042,6 +1042,8 @@
   parent: [MobCat, SolutionLarge, FoodBase]
   description: It's a cake. It's a cat. It's a cak.
   components:
+  - type: Edible
+    requireDead: false
   - type: CollisionWake
     enabled: false # EVIL! (without this the cak behaves like an item and loses its collisions after being immobile for a while, preventing me from crippling its body with .30 caliber. death to all caks)
   - type: FlavorProfile
