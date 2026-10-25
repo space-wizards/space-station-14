@@ -2843,7 +2843,7 @@
   parent: [ FoodProduceBase, GlowstickBase ]
   id: FoodSolarflower
   name: solarflower
-  description: A bulky flower filled with a glisening solution, it just needs a push to get going.
+  description: A bulky flower filled with a glistening solution, it just needs a push to get going.
   components:
   - type: FlavorProfile
     flavors:
