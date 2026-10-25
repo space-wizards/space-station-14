@@ -124,8 +124,6 @@
     name: ghost-role-information-slimes-name
     description: ghost-role-information-slimes-description
     rules: ghost-role-information-nonantagonist-rules
-    raffle:
-      settings: short
   - type: NpcFactionMember
     factions:
     - SimpleNeutral
@@ -149,8 +147,6 @@
     rules: ghost-role-information-angry-slimes-rules
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
-    raffle:
-      settings: short
 
 - type: entity
   parent: MobAdultSlimes

@@ -43,6 +43,19 @@
     content: book-text-combat-bakery-kit
 
 - type: entity
+  parent: Paper
+  id: PaperWrittenSyndicateInstructions
+  name: covert operations reinforcement manual
+  description: A shorthand manual that details the essentials of your latest mission. Destroy after reading.
+  components:
+  - type: Paper
+    content: book-text-reinforcement-initiation
+    stampedBy:
+    - stampedName: stamp-component-stamped-name-syndicate
+      stampedColor: "#850000FF"
+    stampState: paper_stamp-syndicate
+
+- type: entity
   id: PaperLootboxInformation
   name: lock box delivery procedures
   description: An inspirational memo on appropriate delivery procedures that seems to have been mixed in with its contents.

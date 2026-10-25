@@ -618,6 +618,19 @@
     event: !type:IntrinsicStoreActionEvent
 
 - type: entity
+  parent: BaseMentalAction
+  id: ActionOpenVendingMachineInterface
+  name: Toggle UI
+  description: Select free gifts from your inventory!
+  components:
+  - type: Action
+  - type: Sprite
+    layers:
+    - texture: Interface/Actions/shop.png
+  - type: InstantAction
+    event: !type:OpenVendingUIActionEvent
+
+- type: entity
   parent: ActionChangeVoiceMask
   id: ActionChangeVoiceMaskImplant
   components:
