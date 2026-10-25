@@ -58,7 +58,6 @@
       weight: 0.5
     - id: TriggerAttackParticleEngine
       weight: 0.1
-    - id: TriggerReactiveEnergyDrink
 
 - type: entityTable
   id: XenoArtifactHandheldOnlyTriggerTable
@@ -495,30 +494,6 @@
       - LaserProjectile
       tags:
       - EmitterBolt
-
-- type: entity
-  parent: BaseXenoArtifactTrigger
-  id: TriggerReactiveEnergyDrink
-  name: Energy Drinks
-  components:
-  - type: XATReactive
-    reagents: # Drinks available round start from a vending machine
-    - Cola
-    - ChangelingSting
-    - DrGibb
-    - EnergyDrink
-    - FourteenLoko
-    - GrapeSoda
-    - LemonLime
-    - LemonLimeCranberry
-    - NuclearCola
-    - PwrGame
-    - ShamblersJuice
-    - SodaWater
-    - SolDry
-    - SpaceMountainWind
-    - SpaceUp
-    - Starkist
 
 #endregion
 #region Handheld triggers
