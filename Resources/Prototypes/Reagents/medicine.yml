@@ -1618,27 +1618,24 @@
         messages: [ "ignis-inside-effect-light" ]
         probability: 0.1
       - !type:AdjustTemperature
-        amount: 6000
+        amount: 15000
         conditions:
         - !type:ReagentCondition
           reagent: Ignisol
-          max: 10
+          max: 15
         - !type:TemperatureCondition
           max: 313.15
       - !type:AdjustTemperature
-        amount: 25000
+        amount: 50000
         conditions:
         - !type:ReagentCondition
           reagent: Ignisol
-          min: 10
-        - !type:TemperatureCondition
-          max: 350.15
+          min: 15
       - !type:Flammable
         multiplier: 0.2
         conditions:
         - !type:ReagentCondition
           reagent: Ignisol
-          min: 15
       - !type:Ignite
         conditions:
         - !type:ReagentCondition
