@@ -32,6 +32,10 @@ jobs:
         cd RobustToolbox
         git fetch --depth=1
 
+    - name: Get source info
+      id: source-info
+      run: Tools/actions_get_source_info.py
+
     - name: Install dependencies
       run: dotnet restore
 
@@ -59,7 +63,13 @@ jobs:
       run: Tools/publish_multi_request.py --fork-id wizards-testing
       env:
         PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
-        GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
+        GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY || github.repository }}
+        SOURCE_URL: ${{ steps.source-info.outputs.source_url }}
+        SOURCE_COMMIT_ID: ${{ steps.source-info.outputs.source_commit_id }}
+        SOURCE_BRANCH_NAME: ${{ steps.source-info.outputs.source_branch_name }}
+        ENGINE_SOURCE_URL: ${{ steps.source-info.outputs.engine_source_url }}
+        ENGINE_SOURCE_COMMIT_ID: ${{ steps.source-info.outputs.engine_source_commit_id }}
+        ENGINE_SOURCE_BRANCH_NAME: ${{ steps.source-info.outputs.engine_source_branch_name }}
 
     - name: Publish changelog (RSS)
       continue-on-error: true

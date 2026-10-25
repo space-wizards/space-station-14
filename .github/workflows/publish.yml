@@ -117,6 +117,10 @@ jobs:
           git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "refs/tags/${VERSION_TAG}"
         fi
 
+    - name: Get source info
+      id: source-info
+      run: Tools/actions_get_source_info.py
+
     - name: Create PR from stable to master
       env:
         GH_TOKEN: ${{ secrets.CL_ACCESS_TOKEN }}
@@ -144,7 +148,13 @@ jobs:
       run: Tools/publish_multi_request.py
       env:
         PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
-        GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
+        GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY || github.repository }}
+        SOURCE_URL: ${{ steps.source-info.outputs.source_url }}
+        SOURCE_COMMIT_ID: ${{ steps.source-info.outputs.source_commit_id }}
+        SOURCE_BRANCH_NAME: ${{ steps.source-info.outputs.source_branch_name }}
+        ENGINE_SOURCE_URL: ${{ steps.source-info.outputs.engine_source_url }}
+        ENGINE_SOURCE_COMMIT_ID: ${{ steps.source-info.outputs.engine_source_commit_id }}
+        ENGINE_SOURCE_BRANCH_NAME: ${{ steps.source-info.outputs.engine_source_branch_name }}
 
     - name: Publish changelog (Discord)
       run: Tools/actions_changelogs_since_last_run.py
