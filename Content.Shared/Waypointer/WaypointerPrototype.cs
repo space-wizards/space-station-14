@@ -31,7 +31,7 @@ public sealed partial class WaypointerPrototype : IPrototype, IInheritingPrototy
     /// This is player facing, so it's different than ID
     /// </summary>
     [DataField(required: true)]
-    public required string Name;
+    public required LocId Name;
 
     /// <summary>
     /// The components that decide which entities will be tracked by this waypointer.
