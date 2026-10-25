@@ -116,6 +116,9 @@ public abstract partial class SharedMaterialReclaimerSystem : EntitySystem
     /// </summary>
     public bool TryStartProcessItem(EntityUid uid, EntityUid item, MaterialReclaimerComponent? component = null, EntityUid? user = null)
     {
+        if (EntityManager.IsQueuedForDeletion(item))
+            return false;
+
         if (!Resolve(uid, ref component))
             return false;
 
