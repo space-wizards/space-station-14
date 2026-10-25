@@ -207,16 +207,22 @@ public sealed partial class PricingSystem : EntitySystem
         if (prototypeId != null && !_pricingStack.Add(prototypeId))
             return GetOwnPrice(uid);
 
-        var ev = new PriceCalculationEvent();
-        RaiseLocalEvent(uid, ref ev);
+        var price = 0.0;
+        try
+        {
+            var ev = new PriceCalculationEvent();
+            RaiseLocalEvent(uid, ref ev);
 
-        if (prototypeId != null)
-            _pricingStack.Remove(prototypeId);
+            if (ev.Handled)
+                return ev.Price;
 
-        if (ev.Handled)
-            return ev.Price;
-
-        var price = ev.Price + GetOwnPrice(uid);
+            price = ev.Price + GetOwnPrice(uid);
+        }
+        finally
+        {
+            if (prototypeId != null)
+                _pricingStack.Remove(prototypeId);
+        }
 
         if (includeContents && TryComp<ContainerManagerComponent>(uid, out var containers))
         {
