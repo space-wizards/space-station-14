@@ -1633,9 +1633,6 @@
           min: 11
       - !type:Flammable
         multiplier: 0.2
-        conditions:
-        - !type:ReagentCondition
-          reagent: Ignisol
       - !type:Ignite
         conditions:
         - !type:ReagentCondition
