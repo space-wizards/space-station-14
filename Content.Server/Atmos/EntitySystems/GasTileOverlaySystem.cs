@@ -4,14 +4,12 @@ using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.CCVar;
 using Content.Shared.Chunking;
 using Content.Shared.GameTicking;
-using Content.Shared.Maps;
 using Content.Shared.Rounding;
 using JetBrains.Annotations;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Enums;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Threading;
@@ -31,8 +29,6 @@ public sealed partial class GasTileOverlaySystem : SharedGasTileOverlaySystem
     [Robust.Shared.IoC.Dependency] private IParallelManager _parMan = default!;
     [Robust.Shared.IoC.Dependency] private AtmosphereSystem _atmosphereSystem = default!;
     [Robust.Shared.IoC.Dependency] private ChunkingSystem _chunkingSys = default!;
-    [Robust.Shared.IoC.Dependency] private SharedMapSystem _mapSystem = default!;
-    [Robust.Shared.IoC.Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
 
     [Robust.Shared.IoC.Dependency] private EntityQuery<MapGridComponent> _mapGridQuery;
     [Robust.Shared.IoC.Dependency] private EntityQuery<GasTileOverlayComponent> _gasTileOverlayQuery;
@@ -209,11 +205,7 @@ public sealed partial class GasTileOverlaySystem : SharedGasTileOverlaySystem
     /// <summary>
     /// Updates the visuals for a tile on some grid chunk. Returns true if the visuals have changed.
     /// </summary>
-    private bool UpdateChunkTile(
-        MapGridComponent mapGrid,
-        GridAtmosphereComponent gridAtmosphere,
-        GasOverlayChunk chunk,
-        Vector2i index)
+    private bool UpdateChunkTile(GridAtmosphereComponent gridAtmosphere, GasOverlayChunk chunk, Vector2i index)
     {
         ref var oldData = ref chunk.TileData[chunk.GetDataIndex(index)];
         if (!gridAtmosphere.Tiles.TryGetValue(index, out var tile))
@@ -228,19 +220,12 @@ public sealed partial class GasTileOverlaySystem : SharedGasTileOverlaySystem
 
         var changed = false;
 
-        _mapSystem.TryGetTile(mapGrid, index, out var gridTile);
-
-        var isLattice = tile.Space &&
-                            _tileDefinitionManager[gridTile.TypeId].ID == ContentTileDefinition.LatticeID;
-
         ThermalByte newByteTemp = new();
         var newPressure = GetPressure(tile.Air?.Pressure ?? 0f);
 
         if (tile.Hotspot.Valid)
             newByteTemp.SetTemperature(tile.Hotspot.Temperature);
-        else if (isLattice
-                 || gridTile.IsEmpty
-                 || tile is { Space: false, Air.TotalMoles: <= ThermalByte.MinimalPressureThreshold })
+        else if (!tile.Space && tile.Air?.TotalMoles <= ThermalByte.MinimalPressureThreshold)
             newByteTemp.SetVacuum();
         else if (!tile.Space && tile.Air != null)
             newByteTemp = new(tile.Air.Temperature);
@@ -307,8 +292,8 @@ public sealed partial class GasTileOverlaySystem : SharedGasTileOverlaySystem
     private void UpdateOverlayData()
     {
         // TODO parallelize?
-        var query = AllEntityQuery<GasTileOverlayComponent, GridAtmosphereComponent, MapGridComponent, MetaDataComponent>();
-        while (query.MoveNext(out var uid, out var overlay, out var gam, out var mapGrid, out var meta))
+        var query = AllEntityQuery<GasTileOverlayComponent, GridAtmosphereComponent, MetaDataComponent>();
+        while (query.MoveNext(out var uid, out var overlay, out var gam, out var meta))
         {
             var changed = false;
             foreach (var index in overlay.InvalidTiles)
@@ -318,7 +303,7 @@ public sealed partial class GasTileOverlaySystem : SharedGasTileOverlaySystem
                 if (!overlay.Chunks.TryGetValue(chunkIndex, out var chunk))
                     overlay.Chunks[chunkIndex] = chunk = new GasOverlayChunk(chunkIndex);
 
-                changed |= UpdateChunkTile(mapGrid, gam, chunk, index);
+                changed |= UpdateChunkTile(gam, chunk, index);
             }
 
             if (changed)

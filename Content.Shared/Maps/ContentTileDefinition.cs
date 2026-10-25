@@ -17,7 +17,6 @@ public sealed partial class ContentTileDefinition : IPrototype, IInheritingProto
     public static readonly ProtoId<ToolQualityPrototype> PryingToolQuality = "Prying";
 
     public const string SpaceID = "Space";
-    public const string LatticeID = "Lattice";
 
     [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<ContentTileDefinition>))]
     public string[]? Parents { get; private set; }
