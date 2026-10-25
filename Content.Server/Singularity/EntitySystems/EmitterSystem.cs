@@ -24,6 +24,6 @@ public sealed partial class EmitterSystem : SharedEmitterSystem
     private void OnLogicSignalReceived(Entity<EmitterComponent> ent, ref SignalReceivedEvent<LogicStatePayload> args)
     {
         SignalReceivedEvent ev = args;
-        OnSignalReceived(ent.Owner, ent.Comp, ref ev);
+        OnSignalReceived(ent, ref ev);
     }
 }
