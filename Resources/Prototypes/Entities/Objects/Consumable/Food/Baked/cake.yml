@@ -1039,9 +1039,11 @@
 - type: entity
   name: cak
   id: MobCatCake
-  parent: [SolutionLarge, FoodBase]
+  parent: [MobCat, SolutionLarge, FoodBase]
   description: It's a cake. It's a cat. It's a cak.
   components:
+  - type: CollisionWake
+    enabled: false # EVIL! (without this the cak behaves like an item and loses its collisions after being immobile for a while, preventing me from crippling its body with .30 caliber. death to all caks)
   - type: FlavorProfile
     flavors:
     - sweet
@@ -1049,6 +1051,13 @@
     solution: food
   - type: RefillableSolution
     solution: food
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Sugar
+        Quantity: 40
+      - ReagentId: Butter
+        Quantity: 20
   - type: Solution
     solution:
       reagents:
@@ -1090,6 +1099,14 @@
     - 0,5,0,6
     - 4,5,4,6
     heldPrefix: cak
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: cak
+      Critical:
+        Base: cak_dead
+      Dead:
+        Base: cak_dead
   - type: Clothing
     quickEquip: false
     sprite: Mobs/Pets/cat.rsi
@@ -1131,7 +1148,9 @@
     hidden: true
     damage:
       types:
-        Blunt: 1
+        Blunt: 2
+        Pierce: 3
+        Slash: 3
 
 # Suppermatter
 # I can't figure out where to put this. It kind of acts like a cake I guess?

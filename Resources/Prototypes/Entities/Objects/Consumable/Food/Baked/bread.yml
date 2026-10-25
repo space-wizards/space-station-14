@@ -902,9 +902,11 @@
 - type: entity
   name: bread dog
   id: MobBreadDog
-  parent: [SolutionLarge, FoodBase, BaseSlicingRefinableFood]
+  parent: [SimpleMobBase, BaseMobDestructible, SolutionLarge, FoodBase, BaseSlicingRefinableFood]
   description: It's a bread. It's a dog. It's a... breaddog?
   components:
+  - type: CollisionWake
+    enabled: false # EVIL! (without that it becomes intangible after some idle time)
   - type: FlavorProfile
     flavors:
     - meaty
@@ -924,6 +926,15 @@
         Quantity: 10
       - ReagentId: UncookedAnimalProteins
         Quantity: 25
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 20
+      - ReagentId: Protein
+        Quantity: 20
+      - ReagentId: Vitamin
+        Quantity: 20
   - type: Sprite
     noRot: true
     drawdepth: Mobs
@@ -931,20 +942,14 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: base
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 50
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
-  - type: RotationVisuals
-    defaultRotation: 0
-    horizontalRotation: 0
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: base
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
   - type: Item
     size: Ginormous
     shape:
@@ -978,16 +983,26 @@
     baseResistTime: 2
   - type: Puller
     needsHands: false
-  - type: Examiner
-  - type: DoAfter
-  - type: CombatMode
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Animals/dog_bark1.ogg
     hidden: true
     damage:
       types:
-        Blunt: 1
+        Blunt: 4
+        Pierce: 4
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 15
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
 
 - type: entity
   parent: [SolutionVeryTiny, FoodBreadSliceBase]
