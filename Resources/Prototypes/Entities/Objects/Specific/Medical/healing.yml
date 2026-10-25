@@ -361,7 +361,7 @@
   parent: BaseHealingItem
   id: DragonTailCompress
   name: dragon's tail compress
-  description: A soothing salve extracted from dragon's tail fruit. Used to treat heat, cold, and electrical burns.
+  description: A soothing salve extracted from dragon's tail plants. Used to treat heat and cold burns.
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/dragon_tail.rsi
