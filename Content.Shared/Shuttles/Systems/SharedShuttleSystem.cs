@@ -199,7 +199,9 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         var targetPosition = mapCoordinates.Position;
 
         // Check range even if it's cross-map.
-        if ((targetPosition - ourPos).Length() > FTLRange)
+        var distance = (targetPosition - ourPos).Length();
+
+        if (!float.IsFinite(distance) || distance > FTLRange)
         {
             return false;
         }
