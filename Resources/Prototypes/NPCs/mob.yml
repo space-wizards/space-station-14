@@ -26,12 +26,29 @@
   id: MouseCompound
   branches:
     - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyCable
+
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: true
+            removeKeyOnFinish: false
+            rangeKey: MeleeRange
+
+        - !type:HTNPrimitiveTask
+          operator: !type:AltInteractOperator
+
+        - !type:HTNPrimitiveTask
+          operator: !type:WaitOperator
+            key: IdleTime
+    - tasks:
         - !type:HTNCompoundTask
           task: FoodCompound
     - tasks:
         - !type:HTNCompoundTask
           task: IdleCompound
-          
+
 - type: htnCompound
   id: MoproachCompound
   branches:

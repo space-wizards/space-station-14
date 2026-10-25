@@ -1,0 +1,27 @@
+- type: entity
+  parent: [ OrganBaseStomach, OrganAnimalInternal ]
+  id: OrganRodentStomach
+  suffix: Rodent
+  components:
+  - type: Stomach
+    specialDigestible:
+      components:
+      - Cable
+    isSpecialDigestibleExclusive: false
+  - type: Metabolizer
+    metabolizerTypes: [ Rodent ]
+
+- type: entity
+  id: BaseMobRodent
+  abstract: true
+  components:
+  - type: Body
+  - type: EntityTableContainerFill
+    containers:
+      body_organs: !type:AllSelector
+        children:
+        - id: OrganAnimalLungs
+        - id: OrganAnimalHeart
+        - id: OrganRodentStomach
+        - id: OrganAnimalLiver
+        - id: OrganAnimalKidneys

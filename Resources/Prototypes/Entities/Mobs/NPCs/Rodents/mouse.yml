@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ SimpleMobBase, BaseMobAnimal, SolutionVermin, BaseSlicingRefinableButchering, MobNightVision ]
+  parent: [ BaseMobRodent, SimpleMobBase, SolutionVermin, BaseSlicingRefinableButchering, MobNightVision ]
   id: MobMouse
   name: mouse
   description: Squeak!

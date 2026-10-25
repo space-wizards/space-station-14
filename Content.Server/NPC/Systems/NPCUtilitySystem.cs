@@ -33,6 +33,7 @@ using Content.Shared.Whitelist;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NPC.Systems;
@@ -59,6 +60,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
     [Dependency] private TurretTargetSettingsSystem _turretTargetSettings = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private SatiationSystem _satiation = default!;
+    [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedStealthSystem _stealth = default!;
     [Dependency] private EntityQuery<PuddleComponent> _puddleQuery = default!;
 
@@ -189,6 +191,8 @@ public sealed partial class NPCUtilitySystem : EntitySystem
 
                 return 1f;
             }
+            case RandomCon randomConsideration:
+                return _random.Prob(randomConsideration.Chance) ? 1f : 0f;
             case DrinkValueCon drinkValueConsideration:
             {
                 // can't drink closed drinks and can't drink with a mask on...

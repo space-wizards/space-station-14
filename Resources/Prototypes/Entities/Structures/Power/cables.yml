@@ -57,6 +57,9 @@
     cost: 2
     delay: 0
     fx: EffectRCDConstruct0
+  - type: Edible
+    requiresSpecialDigestion: true
+    solution: solution
 
 - type: entity
   parent: CableBase

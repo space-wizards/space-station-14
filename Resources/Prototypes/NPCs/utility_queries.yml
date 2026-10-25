@@ -47,6 +47,22 @@
       curve: !type:BoolCurve
 
 - type: utilityQuery
+  id: NearbyCable
+  query:
+    - !type:ComponentQuery
+      components:
+      - type: Cable
+  considerations:
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+    - !type:RandomCon
+      chance: 0.5 # TODO qwer: change to like 1%.
+      curve: !type:BoolCurve
+    - !type:TargetAccessibleCon
+      curve: !type:BoolCurve
+
+- type: utilityQuery
   id: NearbyDrink
   query:
   - !type:ComponentQuery
