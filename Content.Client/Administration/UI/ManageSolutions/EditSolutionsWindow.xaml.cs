@@ -18,10 +18,10 @@ namespace Content.Client.Administration.UI.ManageSolutions
     [GenerateTypedNameReferences]
     public sealed partial class EditSolutionsWindow : DefaultWindow
     {
-        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IClientGameTiming _timing = default!;
-        [Dependency] private readonly IClientAdminManager _admin = default!;
+        [Dependency] private IClientConsoleHost _consoleHost = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private IClientGameTiming _timing = default!;
+        [Dependency] private IClientAdminManager _admin = default!;
 
         private NetEntity _target = NetEntity.Invalid;
         private string? _selectedSolution;

@@ -1,38 +1,38 @@
 - type: entity
+  parent: MarkerBase
   id: RandomVending
   name: random vending machine spawner
   suffix: Any
-  parent: MarkerBase
   components:
   - type: Sprite
     layers:
     - state: red
     - sprite: Structures/Machines/VendingMachines/random.rsi
       state: any
-  - type: RandomSpawner
-    prototypes:
-    - VendingMachineChang
-    - VendingMachineCigs
-    - VendingMachineCoffee
-    - VendingMachineCola #Robust Sofdrinks
-    - VendingMachineColaBlack #Robust Sofdrinks [Black]
-    - VendingMachineColaRed #Space Cola
-    - VendingMachineDiscount
-    - VendingMachineDonut
-    - VendingMachineDrGibb
-    - VendingMachinePwrGame
-    - VendingMachineShamblersJuice
-    - VendingMachineSmite
-    - VendingMachineSnack
-    - VendingMachineSnackBlue
-    - VendingMachineSnackGreen
-    - VendingMachineSnackOrange
-    - VendingMachineSnackTeal
-    - VendingMachineSoda #Robust Sofdrinks [Soda]
-    - VendingMachineSovietSoda #Boda
-    - VendingMachineSpaceUp
-    - VendingMachineStarkist
-    chance: 1
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: VendingMachineChang
+      - id: VendingMachineCigs
+      - id: VendingMachineCoffee
+      - id: VendingMachineCola #Robust Sofdrinks
+      - id: VendingMachineColaBlack #Robust Sofdrinks [Black]
+      - id: VendingMachineColaRed #Space Cola
+      - id: VendingMachineDiscount
+      - id: VendingMachineDonut
+      - id: VendingMachineDrGibb
+      - id: VendingMachinePwrGame
+      - id: VendingMachineShamblersJuice
+      - id: VendingMachineSmite
+      - id: VendingMachineSnack
+      - id: VendingMachineSnackBlue
+      - id: VendingMachineSnackGreen
+      - id: VendingMachineSnackOrange
+      - id: VendingMachineSnackTeal
+      - id: VendingMachineSoda #Robust Sofdrinks [Soda]
+      - id: VendingMachineSovietSoda #Boda
+      - id: VendingMachineSpaceUp
+      - id: VendingMachineStarkist
 
 
 - type: entityTable
@@ -40,19 +40,17 @@
   table: !type:GroupSelector
     children:
     - id: VendingMachineClothing
-      weight: 40
+      weight: 4
     - id: VendingMachineWinter
-      weight: 40
+      weight: 4
     - id: VendingMachinePride
-      weight: 10
     - id: VendingMachineTheater
-      weight: 10
 
 - type: entity
+  parent: MarkerBase
   id: RandomVendingClothing
   name: random vending machine spawner
   suffix: Clothing
-  parent: MarkerBase
   components:
   - type: Sprite
     layers:

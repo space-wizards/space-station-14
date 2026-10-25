@@ -7,7 +7,7 @@ namespace Content.Shared.Trigger.Systems;
 
 public sealed partial class HandTriggerSystem : TriggerOnXSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {

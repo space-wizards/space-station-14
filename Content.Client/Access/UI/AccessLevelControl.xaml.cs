@@ -12,7 +12,7 @@ namespace Content.Client.Access.UI;
 [GenerateTypedNameReferences]
 public sealed partial class AccessLevelControl : GridContainer
 {
-    [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private ILogManager _logManager = default!;
 
     private ISawmill _sawmill = default!;
 

@@ -1,4 +1,4 @@
-﻿using Content.Client.Message;
+using Content.Client.Message;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Access.Components;
 using Content.Shared.CCVar;
@@ -12,7 +12,7 @@ namespace Content.Client.Security.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class GenpopLockerMenu : FancyWindow
 {
-    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
+    [Dependency] private IConfigurationManager _cfgManager = default!;
 
     public event Action<string, float, string>? OnConfigurationComplete;
 

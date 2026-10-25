@@ -1,10 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
 using Content.IntegrationTests.Fixtures;
 using Content.Server.Shuttles.Systems;
-using Content.Tests;
-using Robust.Server.GameObjects;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -33,7 +30,6 @@ public sealed class DockTest : GameTest
         var map = await pair.CreateTestMap();
 
         var entManager = server.ResolveDependency<IEntityManager>();
-        var mapManager = server.ResolveDependency<IMapManager>();
         var dockingSystem = entManager.System<DockingSystem>();
         var mapSystem = entManager.System<SharedMapSystem>();
         var xformSystem = entManager.System<SharedTransformSystem>();
@@ -43,8 +39,8 @@ public sealed class DockTest : GameTest
         await server.WaitAssertion(() =>
         {
             entManager.DeleteEntity(map.Grid);
-            var grid1 = mapManager.CreateGridEntity(mapId);
-            var grid2 = mapManager.CreateGridEntity(mapId);
+            var grid1 = mapSystem.CreateGridEntity(mapId);
+            var grid2 = mapSystem.CreateGridEntity(mapId);
             var grid1Ent = grid1.Owner;
             var grid2Ent = grid2.Owner;
             var grid2Offset = new Vector2(50f, 50f);
@@ -62,9 +58,7 @@ public sealed class DockTest : GameTest
             };
 
             mapSystem.SetTiles(grid1.Owner, grid1.Comp, tiles1);
-            var dock1 = entManager.SpawnEntity("AirlockShuttle", new EntityCoordinates(grid1Ent, dock1Pos));
-            var dock1Xform = entManager.GetComponent<TransformComponent>(dock1);
-            dock1Xform.LocalRotation = dock1Angle;
+            var dock1 = entManager.SpawnAttachedTo("AirlockShuttle", new EntityCoordinates(grid1Ent, dock1Pos), rotation: dock1Angle);
 
             var tiles2 = new List<(Vector2i Index, Tile Tile)>()
             {
@@ -76,9 +70,7 @@ public sealed class DockTest : GameTest
             };
 
             mapSystem.SetTiles(grid2.Owner, grid2.Comp, tiles2);
-            var dock2 = entManager.SpawnEntity("AirlockShuttle", new EntityCoordinates(grid2Ent, dock2Pos));
-            var dock2Xform = entManager.GetComponent<TransformComponent>(dock2);
-            dock2Xform.LocalRotation = dock2Angle;
+            var dock2 = entManager.SpawnAttachedTo("AirlockShuttle", new EntityCoordinates(grid2Ent, dock2Pos), rotation: dock2Angle);
 
             var config = dockingSystem.GetDockingConfig(grid1Ent, grid2Ent);
 

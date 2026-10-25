@@ -12,39 +12,45 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
-
 /// <summary>
-///     Greytide Virus event
-///     This will open and bolt airlocks and unlock lockers from randomly selected access groups.
+/// This event will open and bolt airlocks and unlock lockers with access from randomly selected access groups.
 /// </summary>
-public sealed class GreytideVirusRule : StationEventSystem<GreytideVirusRuleComponent>
+/// <seealso cref="GreytideVirusRuleComponent"/>
+public sealed partial class GreytideVirusRule : StationEventSystem<GreytideVirusRuleComponent>
 {
-    [Dependency] private readonly AccessReaderSystem _access = default!;
-    [Dependency] private readonly SharedDoorSystem _door = default!;
-    [Dependency] private readonly LockSystem _lock = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private AccessReaderSystem _access = default!;
+    [Dependency] private SharedDoorSystem _door = default!;
+    [Dependency] private LockSystem _lock = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
-    protected override void Added(EntityUid uid, GreytideVirusRuleComponent virusComp, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    [Dependency] private EntityQuery<FirelockComponent> _firelockQuery = default!;
+    [Dependency] private EntityQuery<AccessReaderComponent> _accessReaderQuery = default!;
+
+    protected override void Added(Entity<GreytideVirusRuleComponent, GameRuleComponent> ent, ref GameRuleAddedEvent args)
     {
-        if (!TryComp<StationEventComponent>(uid, out var stationEvent))
+        if (!TryComp<StationEventComponent>(ent, out var stationEvent))
             return;
+
+        var virusComp = ent.Comp1;
 
         // pick severity randomly from range if not specified otherwise
         virusComp.Severity ??= virusComp.SeverityRange.Next(_random);
         virusComp.Severity = Math.Min(virusComp.Severity.Value, virusComp.AccessGroups.Count);
 
         stationEvent.StartAnnouncement = Loc.GetString("station-event-greytide-virus-start-announcement", ("severity", virusComp.Severity.Value));
-        base.Added(uid, virusComp, gameRule, args);
+        base.Added(ent, ref args);
     }
-    protected override void Started(EntityUid uid, GreytideVirusRuleComponent virusComp, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    protected override void Started(Entity<GreytideVirusRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
-        base.Started(uid, virusComp, gameRule, args);
+        base.Started(ent, ref args);
+
+        var virusComp = ent.Comp1;
 
         if (virusComp.Severity == null)
             return;
 
-        if (!TryGetRandomStation(out var chosenStation))
+        if (!Station.TryGetRandomStation<StationEventEligibleComponent>(out var chosenStation))
             return;
 
         // pick random access groups
@@ -58,17 +64,14 @@ public sealed class GreytideVirusRule : StationEventSystem<GreytideVirusRuleComp
                 accessIds.UnionWith(proto.Tags);
         }
 
-        var firelockQuery = GetEntityQuery<FirelockComponent>();
-        var accessQuery = GetEntityQuery<AccessReaderComponent>();
-
         var lockQuery = AllEntityQuery<LockComponent, TransformComponent>();
         while (lockQuery.MoveNext(out var lockUid, out var lockComp, out var xform))
         {
-            if (!accessQuery.TryComp(lockUid, out var accessComp))
+            if (!_accessReaderQuery.TryComp(lockUid, out var accessComp))
                 continue;
 
             // make sure not to hit CentCom or other maps
-            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation)
+            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation.Value.Owner)
                 continue;
 
             // check access
@@ -86,11 +89,11 @@ public sealed class GreytideVirusRule : StationEventSystem<GreytideVirusRuleComp
         while (airlockQuery.MoveNext(out var airlockUid, out var airlockComp, out var doorComp, out var xform))
         {
             // don't space everything
-            if (firelockQuery.HasComp(airlockUid))
+            if (_firelockQuery.HasComp(airlockUid))
                 continue;
 
             // make sure not to hit CentCom or other maps
-            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation)
+            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation.Value.Owner)
                 continue;
 
             // use the access reader from the door electronics if they exist

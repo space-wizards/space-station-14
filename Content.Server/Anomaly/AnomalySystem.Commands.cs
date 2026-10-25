@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Anomaly.Components;
 using Robust.Shared.Console;
@@ -7,7 +7,7 @@ namespace Content.Server.Anomaly;
 
 public sealed partial class AnomalySystem
 {
-    [Dependency] private readonly IConsoleHost _consoleHost = default!;
+    [Dependency] private IConsoleHost _consoleHost = default!;
 
     public void InitializeCommands()
     {

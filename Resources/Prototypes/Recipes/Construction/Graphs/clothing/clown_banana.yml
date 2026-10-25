@@ -1,4 +1,4 @@
-﻿- type: constructionGraph
+- type: constructionGraph
   id: BananaClownJumpsuit
   start: start
   graph:
@@ -30,7 +30,7 @@
             - tag: ClownSuit
               name: construction-graph-tag-clown-suit
               icon:
-                sprite: Clothing/Uniforms/Jumpsuit/clown.rsi
+                sprite: Clothing/Uniforms/Jumpsuits/Service/clown.rsi
                 state: icon
               doAfter: 1
     - node: jumpsuit

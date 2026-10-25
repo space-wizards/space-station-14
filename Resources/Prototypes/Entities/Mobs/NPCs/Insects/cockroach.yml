@@ -1,0 +1,136 @@
+- type: entity
+  abstract: true
+  parent: [ SolutionFood, SolutionTiny, SimpleMobBase, BaseSlicingRefinableButchering, MobNightVision ]
+  id: BaseCockroach
+  components:
+  - type: Sprite
+    drawdepth: SmallMobs
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 100
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.5
+    baseSprintSpeed: 5
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      1: Dead
+  - type: Damageable
+    damageModifierSet: Cockroach
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: InsectBlood
+        Quantity: 20
+  - type: Item
+    size: Tiny
+  - type: Edible
+  - type: FlavorProfile
+    flavors:
+    - horrible
+    - terrible
+    - chewy
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: CockroachHunger
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Slime
+        Quantity: 10
+  - type: Extractable
+    grindableSolutionName: food
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatSlime
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 0
+  - type: Tag
+    tags:
+    - Trash
+    - VimPilot
+  - type: NonSpreaderZombie
+  - type: StepTrigger
+    requiredTriggeredSpeed: 1
+  - type: TriggerOnStepTrigger
+  - type: RandomChanceTriggerCondition
+    successChance: 0.2
+  - type: GibOnTrigger
+  - type: ProtectedFromStepTriggers
+  - type: HTN
+    constantlyReplan: false
+    rootTask:
+      task: MouseCompound
+
+- type: entity
+  parent: BaseCockroach
+  id: MobCockroach
+  name: cockroach
+  description: This station is just crawling with bugs.
+  components:
+  - type: Sprite
+    sprite: Mobs/Animals/Insects/cockroach.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: cockroach
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: cockroach
+      Critical:
+        Base: cockroach_dead
+      Dead:
+        Base: cockroach_dead
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 10
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+
+- type: entity
+  parent: MobCockroach
+  id: MobGlockroach
+  name: glockroach
+  suffix: Admeme
+  description: This station is just crawling with bu- OH GOD THAT COCKROACH HAS A GUN!!!
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: glockroach
+  - type: Gun
+    fireRate: 2
+    useKey: false
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/pistol.ogg
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifle
+    capacity: 500
+  - type: CombatMode
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: HTN
+    rootTask:
+      task: GlockroachCompound

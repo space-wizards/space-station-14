@@ -1,13 +1,13 @@
-﻿using Content.Server.Database;
+using Content.Server.Database;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Ban)]
-    public sealed class PardonCommand : LocalizedCommands
+    public sealed partial class PardonCommand : LocalizedCommands
     {
-        [Dependency] private readonly IServerDbManager _dbManager = default!;
+        [Dependency] private IServerDbManager _dbManager = default!;
 
         public override string Command => "pardon";
 

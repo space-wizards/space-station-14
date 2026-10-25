@@ -21,7 +21,7 @@ public sealed partial class SalvageSystem
      * Handles actively running a salvage expedition.
      */
 
-    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
 
     private void InitializeRunner()
     {

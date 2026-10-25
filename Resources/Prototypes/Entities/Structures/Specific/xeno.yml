@@ -1,4 +1,5 @@
 - type: entity
+  parent: BaseStatue
   id: XenoWardingTower
   name: xeno warding tower
   placement:
@@ -15,9 +16,6 @@
       Heat:
         collection:
           MeatLaserImpact
-  - type: Transform
-    anchored: true
-  - type: Clickable
   - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Specific/xeno_building.rsi
@@ -25,11 +23,6 @@
       - state: wardingtower
       - state: wardingtower-unshaded
         shader: unshaded
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Metallic
-  - type: Physics
-    bodyType: Static
   - type: Fixtures
     fixtures:
       fix1:
@@ -41,14 +34,6 @@
         layer:
           - WallLayer
         density: 1000
-  - type: Destructible
-    thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 50
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
 
 - type: entity
   parent: XenoWardingTower

@@ -1,17 +1,19 @@
 using Content.Shared.Coordinates;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Stealth.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Whistle;
 
-public sealed class WhistleSystem : EntitySystem
+public sealed partial class WhistleSystem : EntitySystem
 {
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private EntityLookupSystem _entityLookup = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
@@ -49,6 +51,10 @@ public sealed class WhistleSystem : EntitySystem
         foreach (var iterator in
             _entityLookup.GetEntitiesInRange<HumanoidProfileComponent>(_transform.GetMapCoordinates(uid), component.Distance))
         {
+            // Avoid avoid pinging dead or unconcious entities
+            if (!_mobState.IsAlive(iterator))
+                continue;
+
             //Avoid pinging invisible entities
             if (TryComp(iterator, out stealth) && stealth.Enabled)
                 continue;

@@ -64,7 +64,7 @@ namespace Content.IntegrationTests.Tests.Preferences
             var conn = new SqliteConnection("Data Source=:memory:");
             conn.Open();
             builder.UseSqlite(conn);
-            return new ServerDbSqlite(() => builder.Options, true, cfg, true, opsLog, serialization);
+            return new ServerDbSqlite(() => builder.Options, true, cfg, true, opsLog, serialization, false);
         }
 
         [Test]

@@ -7,11 +7,11 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Client.Holiday;
 
-public sealed class HolidaySystem : EntitySystem
+public sealed partial class HolidaySystem : EntitySystem
 {
-    [Dependency] private readonly IResourceCache _rescache = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private IResourceCache _rescache = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -21,7 +21,7 @@ public sealed class HolidaySystem : EntitySystem
 
     private void OnAppearanceChange(Entity<HolidayRsiSwapComponent> ent, ref AppearanceChangeEvent args)
     {
-        if (!_appearance.TryGetData<string>(ent, HolidayVisuals.Holiday, out var data, args.Component))
+        if (!args.TryGetData<string>(HolidayVisuals.Holiday, out var data))
             return;
 
         var comp = ent.Comp;

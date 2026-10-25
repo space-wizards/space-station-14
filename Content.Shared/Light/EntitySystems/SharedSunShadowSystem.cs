@@ -3,9 +3,9 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Light.EntitySystems;
 
-public abstract class SharedSunShadowSystem : EntitySystem
+public abstract partial class SharedSunShadowSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {

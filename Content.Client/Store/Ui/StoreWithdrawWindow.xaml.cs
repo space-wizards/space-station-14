@@ -16,7 +16,7 @@ namespace Content.Client.Store.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class StoreWithdrawWindow : DefaultWindow
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     private Dictionary<CurrencyPrototype, FixedPoint2> _validCurrencies = new();
     private HashSet<CurrencyWithdrawButton> _buttons = new();

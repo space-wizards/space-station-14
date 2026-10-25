@@ -7,9 +7,9 @@ using System.Linq;
 namespace Content.Client.Commands;
 
 [UsedImplicitly]
-public sealed class DebugPathfindingCommand : LocalizedCommands
+public sealed partial class DebugPathfindingCommand : LocalizedCommands
 {
-    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+    [Dependency] private IEntitySystemManager _entitySystemManager = default!;
 
     public override string Command => "pathfinder";
 
