@@ -1576,7 +1576,7 @@
 - type: entity
   parent: BasePlant
   id: DragonTailPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: dragon's tail
   components:
   - type: Sprite
