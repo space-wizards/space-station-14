@@ -541,7 +541,6 @@
   name: biogenerator
   description: Converts plants into biomass, which can be used to construct useful items.
   components:
-  - type: BagDeposit
   - type: Sprite
     sprite: Structures/Machines/biofabricator.rsi
     snapCardinals: true
@@ -589,7 +588,6 @@
   name: ore processor
   description: It produces sheets and ingots using ores.
   components:
-    - type: BagDeposit
     - type: MagnetPickup
       slotFlags: null
       requirePowered: true

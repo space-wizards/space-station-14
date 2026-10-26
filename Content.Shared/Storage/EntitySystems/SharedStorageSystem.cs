@@ -147,7 +147,6 @@ public abstract partial class SharedStorageSystem : EntitySystem
         SubscribeLocalEvent<StorageComponent, AreaPickupDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<StorageComponent, GotReclaimedEvent>(OnReclaimed);
         SubscribeLocalEvent<StorageComponent, MagnetPickupAttemptEvent>(OnMagnetPickup);
-        SubscribeLocalEvent<StorageComponent, BagDepositAttemptEvent>(OnBagDeposit);
 
         SubscribeLocalEvent<MetaDataComponent, StackCountChangedEvent>(OnStackCountChanged);
 
@@ -168,19 +167,6 @@ public abstract partial class SharedStorageSystem : EntitySystem
         Subs.CVar(_cfg, CCVars.NestedStorage, OnNestedStorageCvar, true);
 
         CacheDefaultStorageSize();
-    }
-
-    private void OnBagDeposit(Entity<StorageComponent> ent, ref BagDepositAttemptEvent args)
-    {
-        if (args.Handled || !ent.Comp.ClickInsert || !CanInteract(args.User, ent))
-            return;
-
-        var attempt = new StorageInteractUsingAttemptEvent();
-        RaiseLocalEvent(ent, ref attempt);
-        if (attempt.Cancelled)
-            return;
-
-        args.Handled = Insert(ent, args.Item, out _, user: args.User, playSound: false);
     }
 
     private void OnMagnetPickup(Entity<StorageComponent> ent, ref MagnetPickupAttemptEvent args)

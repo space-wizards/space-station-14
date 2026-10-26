@@ -5,7 +5,6 @@ using Content.Shared.Botany.Items.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Storage.Events;
 using Robust.Server.Audio;
 
 namespace Content.Server.Materials;
@@ -21,31 +20,21 @@ public sealed partial class ProduceMaterialExtractorSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<ProduceMaterialExtractorComponent, AfterInteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<ProduceMaterialExtractorComponent, BagDepositAttemptEvent>(OnBagDeposit);
     }
 
     private void OnInteractUsing(Entity<ProduceMaterialExtractorComponent> ent, ref AfterInteractUsingEvent args)
     {
-        if (!args.Handled)
-            args.Handled = TryInsertProduce(ent, args.Used, args.User);
-    }
+        if (args.Handled)
+            return;
 
-    private void OnBagDeposit(Entity<ProduceMaterialExtractorComponent> ent, ref BagDepositAttemptEvent args)
-    {
-        if (!args.Handled)
-            args.Handled = TryInsertProduce(ent, args.Item, args.User);
-    }
-
-    private bool TryInsertProduce(Entity<ProduceMaterialExtractorComponent> ent, EntityUid item, EntityUid user)
-    {
         if (!this.IsPowered(ent, EntityManager))
-            return false;
+            return;
 
-        if (!TryComp<ProduceComponent>(item, out var produce))
-            return false;
+        if (!TryComp<ProduceComponent>(args.Used, out var produce))
+            return;
 
-        if (!_solutionContainer.TryGetSolution(item, produce.TargetSolution, out var solution))
-            return false;
+        if (!_solutionContainer.TryGetSolution(args.Used, produce.TargetSolution, out var solution))
+            return;
 
         // Can produce even have fractional amounts? Does it matter if they do?
         // Questions man was never meant to answer.
@@ -57,14 +46,14 @@ public sealed partial class ProduceMaterialExtractorSystem : EntitySystem
 
         if (changed == 0)
         {
-            _popup.PopupEntity(Loc.GetString("material-extractor-comp-wrongreagent", ("used", item)), user, user);
-            return false;
+            _popup.PopupEntity(Loc.GetString("material-extractor-comp-wrongreagent", ("used", args.Used)), args.User, args.User);
+            return;
         }
 
         _materialStorage.TryChangeMaterialAmount(ent, ent.Comp.ExtractedMaterial, changed);
 
         _audio.PlayPvs(ent.Comp.ExtractSound, ent);
-        QueueDel(item);
-        return true;
+        QueueDel(args.Used);
+        args.Handled = true;
     }
 }

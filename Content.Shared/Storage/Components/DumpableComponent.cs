@@ -1,4 +1,5 @@
 using Content.Shared.DoAfter;
+using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -21,10 +22,16 @@ public sealed partial class DumpableComponent : Component
     public SoundSpecifier? DumpSound = new SoundCollectionSpecifier("storageRustle");
 
     /// <summary>
-    /// Time to dump items from a bag
+    /// How long each item adds to the doafter.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public TimeSpan DumpDelay = TimeSpan.FromSeconds(2);
+    [DataField("delayPerItem"), AutoNetworkedField]
+    public TimeSpan DelayPerItem = TimeSpan.FromSeconds(SharedStorageSystem.AreaInsertDelayPerItem);
+
+    /// <summary>
+    /// The multiplier modifier
+    /// </summary>
+    [DataField("multiplier"), AutoNetworkedField]
+    public float Multiplier = 1.0f;
 }
 
 /// <summary>
