@@ -1542,7 +1542,7 @@
 - type: entity
   parent: BasePlant
   id: AloeIgnisPlants
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: aloe ignis
   components:
   - type: Sprite
