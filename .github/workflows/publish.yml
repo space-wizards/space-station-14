@@ -98,7 +98,6 @@ jobs:
             git -c http.https://github.com/.extraheader= \
               push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
               "HEAD:${GITHUB_REF_NAME}"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
             echo "committed=true" >> "$GITHUB_OUTPUT"
           fi
         fi
