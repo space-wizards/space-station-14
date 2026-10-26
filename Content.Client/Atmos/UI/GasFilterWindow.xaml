@@ -10,8 +10,8 @@
 
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <Label Text="{Loc comp-gas-filter-ui-filtered-gas-outlet}"
-                   VerticalAlignment="Center"
-                   HorizontalExpand="True" />
+                   VerticalAlignment="Center" />
+            <Control MinSize="5 0" />
             <BoxContainer Orientation="Horizontal">
                 <Button Name="SidePortButton"
                         Text="{Loc comp-gas-filter-ui-filter-side-port}"
@@ -20,6 +20,10 @@
                         Text="{Loc comp-gas-filter-ui-filter-front-port}"
                         StyleClasses="OpenLeft" />
             </BoxContainer>
+            <Control MinSize="5 0" />
+            <Button Name="SetFilteredGasOutletButton"
+                    Text="{Loc comp-gas-filter-ui-filter-set-outlet}"
+                    Disabled="True" />
         </BoxContainer>
 
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
