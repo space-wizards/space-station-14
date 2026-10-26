@@ -32,7 +32,7 @@
   parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   id: CrateArmoryMosin
   name: mosin crate
-  description: Reliable, dirt cheap, and loud as hell. Contains six mosin rifles and 18 speedloaders of .30 rifle ammunition. Requires Armory access to open.
+  description: Reliable, dirt cheap, and loud as hell. Contains six mosin rifles as well as 18 speedloaders and a 60-round box of .30 rifle ammunition. Requires Armory access to open.
   components:
   - type: EntityTableContainerFill
     containers:
