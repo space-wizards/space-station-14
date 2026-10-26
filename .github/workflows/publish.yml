@@ -115,7 +115,9 @@ jobs:
           echo "DRY-RUN: would create tag '${VERSION_TAG}' at ${HEAD_SHA} and push it."
         else
           git tag "${VERSION_TAG}"
-          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "refs/tags/${VERSION_TAG}"
+          git -c http.https://github.com/.extraheader= \
+            push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+            "refs/tags/${VERSION_TAG}"
         fi
 
     - name: Create PR from stable to master
