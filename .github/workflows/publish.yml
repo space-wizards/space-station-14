@@ -162,6 +162,6 @@ jobs:
 
     - name: Finalize dry run (not a publish)
       if: ${{ github.event.inputs.dry_run == 'true' }}
-      run: |
+      run:  |
         echo "::error::Dry run completed - nothing was actually published. Exiting non-zero so this run is never recorded as a successful publish and is excluded from future 'Get last publish SHA' lookups."
         exit 1
