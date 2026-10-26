@@ -1579,7 +1579,7 @@
       Burger: AloeIgnisBurger
 
 - type: entity
-  parent: [ProduceBase, BaseSlicingRefinableButchering]
+  parent: [ ProduceBase, BaseSlicingRefinableButchering ]
   id: FoodDragonTail
   name: dragon's tail fruit
   description: A long, spiraling fruit that glows with a soft emerald light. Its flesh can be processed into a soothing salve.
