@@ -264,7 +264,7 @@ public sealed partial class ShuttleSystem
     {
         if (!coordinates.IsValid(EntityManager) || !double.IsFinite(angle.Theta))
         {
-            Log.Error($"Found invalid FTL destination with coordinates {coordinates} and angle {angle}");
+            Log.Error($"Found invalid FTL destination with coordinates {coordinates} and angle {angle} for shuttle {shuttleUid}");
             return;
         }
 
