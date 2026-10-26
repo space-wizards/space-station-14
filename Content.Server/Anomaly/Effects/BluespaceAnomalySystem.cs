@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Server.Anomaly.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Destructible;
+using Content.Server.Tiles;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Atmos;
@@ -36,6 +37,7 @@ public sealed partial class BluespaceAnomalySystem : EntitySystem
     [Dependency] private EntityQuery<CableComponent> _cableQuery;
     [Dependency] private EntityQuery<DestructibleComponent> _destructibleQuery;
     [Dependency] private EntityQuery<ItemComponent> _itemQuery;
+    [Dependency] private EntityQuery<TileEntityEffectComponent> _tileQuery;
     [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery;
 
     private const int SwapTargetAttempts = 20;
@@ -269,7 +271,7 @@ public sealed partial class BluespaceAnomalySystem : EntitySystem
                 continue;
 
             var isMob = _mobStateQuery.HasComp(found);
-            if (!isMob && !_destructibleQuery.HasComp(found) && !_itemQuery.HasComp(found))
+            if (!isMob && !_destructibleQuery.HasComp(found) && !_itemQuery.HasComp(found) && !_tileQuery.HasComp(found))
                 continue;
 
             var newPos = foundXform.LocalPosition + delta;
