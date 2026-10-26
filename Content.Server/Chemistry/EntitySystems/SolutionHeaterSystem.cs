@@ -5,8 +5,6 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Placeable;
 using Content.Shared.Power;
-using Content.Shared.Temperature;
-using Content.Shared.Temperature.Components;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
