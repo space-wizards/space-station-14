@@ -9,6 +9,7 @@ using Content.Shared.Anomaly.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Database;
+using Content.Shared.Decals;
 using Content.Shared.Item;
 using Content.Shared.Maps;
 using Content.Shared.Mobs.Components;
@@ -33,6 +34,7 @@ public sealed partial class BluespaceAnomalySystem : EntitySystem
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private AtmosphereSystem _atmos = default!;
     [Dependency] private GridFixtureSystem _gridFixture = default!;
+    [Dependency] private SharedDecalSystem _decal = default!;
 
     [Dependency] private EntityQuery<CableComponent> _cableQuery;
     [Dependency] private EntityQuery<DestructibleComponent> _destructibleQuery;
@@ -45,12 +47,14 @@ public sealed partial class BluespaceAnomalySystem : EntitySystem
     private readonly record struct PropMove(EntityUid Uid, Vector2 NewPos, bool Anchored);
     private readonly record struct MobMove(EntityUid Uid, Vector2 NewPos);
     private readonly record struct CableRespawn(EntityUid Uid, string ProtoId, Vector2 NewPos);
+    private readonly record struct DecalMove(DecalIndex Index, Decal Decal, Vector2 NewPos);
 
     private sealed class ToBeMoved
     {
         public readonly List<PropMove> Props = new();
         public readonly List<MobMove> Mobs = new();
         public readonly List<CableRespawn> Cables = new();
+        public readonly List<DecalMove> Decals = new();
 
         public int Count => Props.Count + Mobs.Count + Cables.Count;
     }
@@ -210,6 +214,12 @@ public sealed partial class BluespaceAnomalySystem : EntitySystem
             Dirty(uid, Transform(uid));
         }
 
+        foreach (var (id, decal, newPos) in moves.Decals)
+        {
+            _decal.RemoveDecal(gridUid, id);
+            _decal.TryAddDecal(decal.WithCoordinates(newPos), new EntityCoordinates(gridUid, newPos), out _);
+        }
+
         _map.SetTiles(gridUid, grid, clearChanges);
         _gridFixture.CheckSplits(gridUid);
 
@@ -288,6 +298,14 @@ public sealed partial class BluespaceAnomalySystem : EntitySystem
             {
                 moves.Props.Add(new PropMove(found, newPos, foundXform.Anchored));
             }
+        }
+
+        foreach (var (index, decal) in _decal.GetDecalsInRange(gridUid, sourceCenter, radius))
+        {
+            if ((decal.Coordinates - sourceCenter).LengthSquared() > radiusSquare)
+                continue;
+            var newPos = decal.Coordinates + delta;
+            moves.Decals.Add(new DecalMove(index, decal, newPos));
         }
     }
 
