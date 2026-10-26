@@ -1,10 +1,10 @@
 - type: cargoProduct
   id: ArmorySmg
   icon:
-    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
+    sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
     state: icon
   product: CrateArmorySMG
-  cost: 9000
+  cost: 7500
   category: cargoproduct-category-name-armory
   group: market
 
