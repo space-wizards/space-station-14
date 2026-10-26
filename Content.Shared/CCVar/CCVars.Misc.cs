@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Configuration;
+using Robust.Shared.Configuration;
 
 using Content.Shared.Administration;
 using Content.Shared.CCVar.CVarAccess;

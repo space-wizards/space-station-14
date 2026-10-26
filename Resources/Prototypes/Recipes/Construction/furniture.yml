@@ -368,8 +368,18 @@
 - type: construction
   parent: BaseFurniture
   id: NoticeBoard
-  graph: NoticeBoard
+  graph: WallBoard
   targetNode: noticeBoard
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition
+
+- type: construction
+  parent: BaseFurniture
+  id: PostBoard
+  graph: WallBoard
+  targetNode: postBoard
   canRotate: true
   canBuildInImpassable: true
   conditions:

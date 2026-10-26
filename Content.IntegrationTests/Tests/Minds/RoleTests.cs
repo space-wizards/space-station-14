@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.Shared.Roles.Components;
 using Robust.Shared.GameObjects;

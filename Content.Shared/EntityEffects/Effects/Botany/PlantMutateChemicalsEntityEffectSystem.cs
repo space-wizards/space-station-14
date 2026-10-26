@@ -16,8 +16,7 @@ public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffec
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantMutateChemicals> args)
     {
-        var randomChems = ProtoMan.Index(args.Effect.RandomPickBotanyReagent);
-        _plantChemicals.MutateRandomChemical(entity.Owner, randomChems);
+        _plantChemicals.MutateRandomChemical(entity.Owner, args.Effect.RandomChemTables);
     }
 }
 
@@ -25,10 +24,10 @@ public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffec
 public sealed partial class PlantMutateChemicals : EntityEffectBase<PlantMutateChemicals>
 {
     /// <summary>
-    /// The Reagent list this mutation draws from.
+    /// Chemical tables from which this mutation can select.
     /// </summary>
-    [DataField]
-    public ProtoId<WeightedRandomFillSolutionPrototype> RandomPickBotanyReagent = "RandomPickBotanyReagent";
+    [DataField(required: true)]
+    public List<ProtoId<WeightedRandomFillSolutionPrototype>> RandomChemTables = [];
 
     /// <inheritdoc/>
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
@@ -36,17 +35,20 @@ public sealed partial class PlantMutateChemicals : EntityEffectBase<PlantMutateC
         var list = new List<string>();
 
         // If your table doesn't exist, no guidebook for you!
-        if (!prototype.Resolve(RandomPickBotanyReagent, out var table))
-            return string.Empty;
-
-        foreach (var fill in table.Fills)
+        foreach (var tableId in RandomChemTables)
         {
-            foreach (var reagent in fill.Reagents)
-            {
-                if (!prototype.Resolve(reagent, out var proto))
-                    continue;
+            if (!prototype.Resolve(tableId, out var table))
+                continue;
 
-                list.Add(proto.LocalizedName);
+            foreach (var fill in table.Fills)
+            {
+                foreach (var reagent in fill.Reagents)
+                {
+                    if (!prototype.Resolve(reagent, out var reagentPrototype))
+                        continue;
+
+                    list.Add(reagentPrototype.LocalizedName);
+                }
             }
         }
 

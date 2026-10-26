@@ -1,4 +1,4 @@
-﻿# Standing portals
+# Standing portals
 - type: entity
   abstract: true
   id: BasePortal

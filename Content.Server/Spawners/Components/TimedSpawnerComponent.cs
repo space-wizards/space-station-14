@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -50,6 +50,12 @@ public sealed partial class TimedSpawnerComponent : Component, ISerializationHoo
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextFire = TimeSpan.Zero;
+
+    /// <summary>
+    /// Determines whether to allow spawning entities in the spawner's container, or if they should always be outside.
+    /// </summary>
+    [DataField]
+    public bool AllowContainerPlacement = false;
 
     void ISerializationHooks.AfterDeserialization()
     {
