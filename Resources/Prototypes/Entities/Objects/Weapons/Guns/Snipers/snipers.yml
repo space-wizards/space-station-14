@@ -19,7 +19,7 @@
     - suitStorage
   - type: AmmoCounter
   - type: Gun
-    fireRate: 0.5
+    fireRate: 0.9
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
@@ -83,6 +83,15 @@
     qualities: [ Slicing ]
     speedModifier: 0.5 #It's a bayonet
   - type: GunRequiresWield
+  - type: EmbeddableProjectile
+    offset: -0.15,0.0
+  - type: ThrowingAngle
+    angle: 225
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 15
   - type: StaticPrice
     price: 300
 

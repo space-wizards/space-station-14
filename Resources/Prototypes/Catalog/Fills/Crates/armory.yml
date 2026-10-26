@@ -38,10 +38,12 @@
     containers:
       entity_storage: !type:AllSelector
         children:
-        - id: WeaponSniperMosin
-          amount: 6
+        - id: MagazineBoxLightRifle
+          amount: 1
         - id: SpeedLoaderLightRifle
           amount: 18
+        - id: WeaponSniperMosin
+          amount: 6
 
 - type: entity
   parent: [ CrateWeaponSecure, BaseSecurityContraband ]
