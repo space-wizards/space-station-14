@@ -278,6 +278,18 @@
       sprite: Structures/Storage/Crates/secure.rsi
 
 - type: entity
+  parent: [ CrateBaseSecure, BaseSecurityContraband ]
+  id: CrateSurplusSecure
+  name: military surplus crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/surplus.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/surplus.rsi
+  - type: AccessReader
+    access: [["Armory"]]
+
+- type: entity
   parent: CrateBaseSecure
   id: CrateHydroSecure
   name: secure hydroponics crate
@@ -290,14 +302,14 @@
     access: [["Hydroponics"]]
 
 - type: entity
-  parent: CrateBaseSecure
+  parent: [ CrateBaseSecure, BaseSecurityContraband ]
   id: CrateWeaponSecure
-  name: secure weapon crate
+  name: security weapon crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/weapon.rsi
+    sprite: Structures/Storage/Crates/sec_weapons.rsi
   - type: Sprite
-    sprite: Structures/Storage/Crates/weapon.rsi
+    sprite: Structures/Storage/Crates/sec_weapons.rsi
   - type: Damageable
     damageModifierSet: PlasteelStaticMod
   - type: AccessReader
