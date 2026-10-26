@@ -19,7 +19,7 @@
     - suitStorage
   - type: AmmoCounter
   - type: Gun
-    fireRate: 0.75
+    fireRate: 0.5
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
@@ -84,7 +84,7 @@
     speedModifier: 0.5 #It's a bayonet
   - type: GunRequiresWield
   - type: StaticPrice
-    price: 500
+    price: 300
 
 - type: entity
   name: Hristov
