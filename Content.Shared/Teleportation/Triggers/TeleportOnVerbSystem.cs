@@ -40,19 +40,11 @@ public sealed partial class TeleportOnVerbSystem : EntitySystem
         Func<TVerb> createVerb)
         where TVerb : Verb
     {
-        if (ent.Comp.VerbType != type)
-            return;
-
-        if (!args.CanAccess)
-            return;
-
-        if (ent.Comp.RequireCanInteract && !args.CanInteract)
-            return;
-
-        if (ent.Comp.RequireHands && args.Hands == null)
-            return;
-
-        if (!IsUserAllowed(ent.Comp, args.User))
+        if (ent.Comp.VerbType != type
+        || !args.CanAccess
+        || ent.Comp.RequireCanInteract && !args.CanInteract
+        || ent.Comp.RequireHands && args.Hands == null
+        || !IsUserAllowed(ent.Comp, args.User))
             return;
 
         var target = args.User;

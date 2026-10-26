@@ -22,16 +22,10 @@ public sealed partial class SharedTeleportSystem
     {
         var attempt = new TeleportUseAttemptEvent(target, user, Cancelled: true);
 
-        if (TerminatingOrDeleted(teleporter))
-            return attempt;
-
-        if (TerminatingOrDeleted(target))
-            return attempt;
-
-        if (user != null && TerminatingOrDeleted(user.Value))
-            return attempt;
-
-        if (HasComp<TeleportingComponent>(target))
+        if (TerminatingOrDeleted(teleporter)
+        || TerminatingOrDeleted(target)
+        || user != null && TerminatingOrDeleted(user.Value)
+        || HasComp<TeleportingComponent>(target))
             return attempt;
 
         attempt.Cancelled = false;

@@ -22,22 +22,6 @@ public abstract partial class SharedPortalSystem
     }
 
     /// <summary>
-    /// The server refreshes all timeouts. Clients refresh timeouts only for physics-predicted targets.
-    /// </summary>
-    private bool ShouldUpdateTimeout(EntityUid target)
-    {
-        if (!_net.IsClient)
-            return true;
-
-        // On clients, update timeouts only for bodies with physics prediction enabled.
-        // Other entities receive timeout changes from the server.
-        if (!TryComp<PhysicsComponent>(target, out var body))
-            return false;
-
-        return body.Predict;
-    }
-
-    /// <summary>
     /// Protects a target from portal use until it leaves the specified exit's trigger bounds.
     /// </summary>
     /// <remarks>
@@ -63,32 +47,19 @@ public abstract partial class SharedPortalSystem
     }
 
     /// <summary>
-    /// Retains protection while the target overlaps its exit, or while the client cannot see that exit.
+    /// The server refreshes all timeouts. Clients refresh timeouts only for physics-predicted targets.
     /// </summary>
-    private bool IsTimeoutActive(EntityUid target, PortalTimeoutComponent timeout)
-    {
-        // An exit outside client visibility is not evidence that the server deleted it.
-        if (IsExitUnavailableOnClient(timeout.ExitPortal))
-            return true;
-
-        if (!HasComp<PortalComponent>(timeout.ExitPortal))
-            return false;
-
-        return _collisionTrigger.IsInsideTriggerBounds(timeout.ExitPortal, target);
-    }
-
-    /// <summary>
-    /// Checks whether the client lacks the exit's transform or sees it in nullspace.
-    /// </summary>
-    private bool IsExitUnavailableOnClient(EntityUid exit)
+    private bool ShouldUpdateTimeout(EntityUid target)
     {
         if (!_net.IsClient)
-            return false;
-
-        if (!TryComp(exit, out TransformComponent? transform))
             return true;
 
-        return transform.MapID == MapId.Nullspace;
+        // On clients, update timeouts only for bodies with physics prediction enabled.
+        // Other entities receive timeout changes from the server.
+        if (!TryComp<PhysicsComponent>(target, out var body))
+            return false;
+
+        return body.Predict;
     }
 
     /// <summary>
@@ -105,6 +76,39 @@ public abstract partial class SharedPortalSystem
 
         // Do not queue removal: another request may replace the timeout in the same tick.
         RemComp<PortalTimeoutComponent>(target);
+    }
+
+    /// <summary>
+    /// Retains protection while the target overlaps its exit, or while the client cannot see that exit.
+    /// </summary>
+    private bool IsTimeoutActive(EntityUid target, PortalTimeoutComponent timeout)
+    {
+        var exit = timeout.ExitPortal;
+        if (exit == null)
+            return false;
+
+        // An exit outside client visibility is not evidence that the server deleted it.
+        if (IsExitUnavailableOnClient(exit.Value))
+            return true;
+
+        if (!HasComp<PortalComponent>(timeout.ExitPortal))
+            return false;
+
+        return _collisionTrigger.IsInsideTriggerBounds(exit.Value, target);
+    }
+
+    /// <summary>
+    /// Checks whether the client lacks the exit's transform or sees it in nullspace.
+    /// </summary>
+    private bool IsExitUnavailableOnClient(EntityUid exit)
+    {
+        if (!_net.IsClient)
+            return false;
+
+        if (!TryComp(exit, out TransformComponent? transform))
+            return true;
+
+        return transform.MapID == MapId.Nullspace;
     }
 
     /// <summary>

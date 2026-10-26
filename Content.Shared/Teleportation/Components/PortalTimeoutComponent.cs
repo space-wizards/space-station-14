@@ -15,5 +15,5 @@ public sealed partial class PortalTimeoutComponent : Component
     /// For a hand teleporter, this is the portal just created beneath the user.
     /// </summary>
     [ViewVariables, DataField, AutoNetworkedField]
-    public EntityUid ExitPortal;
+    public EntityUid? ExitPortal;
 }

@@ -28,17 +28,14 @@ public sealed partial class HandTeleporterSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<HandTeleporterComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<HandTeleporterComponent, TeleporterDoAfterEvent>(OnDoAfter);
-        SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
-        // Find supported portals before tile removal clears the grid's anchored entities.
-        SubscribeLocalEvent<TileChangedEvent>(OnTileChanged, before: new[] { typeof(TransformSystem) });
     }
 
     /// <summary>
     /// Closes portals whose supporting tile was removed, even if their device no longer exists.
     /// Runs before the transform system unanchors entities from the removed tile.
     /// </summary>
+    [SubscribeLocalEvent(before: [typeof(TransformSystem)])]
     private void OnTileChanged(ref TileChangedEvent args)
     {
         foreach (var change in args.Changes)
@@ -55,18 +52,20 @@ public sealed partial class HandTeleporterSystem : EntitySystem
                 if (EntityManager.IsQueuedForDeletion(portal.Value))
                     continue;
 
-                if (!TryComp<HandTeleporterComponent>(portalComponent.Teleporter, out var teleporter))
+                var teleporter = portalComponent.Teleporter;
+                if (!TryComp<HandTeleporterComponent>(teleporter, out var teleporterComp))
                 {
                     // LinkedEntitySystem also removes the paired exit, even without the device.
                     QueueDel(portal.Value);
                     continue;
                 }
 
-                FizzlePortals((portalComponent.Teleporter, teleporter), null, false);
+                FizzlePortals((teleporter.Value, teleporterComp), null, false);
             }
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnGridSplit(ref GridSplitEvent args)
     {
         var teleporterQuery = EntityQueryEnumerator<HandTeleporterComponent>();
@@ -89,6 +88,7 @@ public sealed partial class HandTeleporterSystem : EntitySystem
     /// <summary>
     /// Closes a completed portal pair immediately or starts the delay for placing the next portal.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnUseInHand(EntityUid uid, HandTeleporterComponent component, UseInHandEvent args)
     {
         if (args.Handled)
