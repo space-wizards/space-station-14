@@ -277,7 +277,7 @@ public sealed partial class BluespaceAnomalySystem : EntitySystem
             if (foundXform.ParentUid != gridUid)
                 continue;
 
-            if ((foundXform.LocalPosition - sourceCenter).LengthSquared() > radiusSquare)
+            if ((foundXform.LocalPosition - sourceCenter).LengthSquared() >= radiusSquare)
                 continue;
 
             var isMob = _mobStateQuery.HasComp(found);

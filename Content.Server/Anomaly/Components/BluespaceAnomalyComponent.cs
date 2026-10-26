@@ -35,7 +35,7 @@ public sealed partial class BluespaceAnomalyComponent : Component
     /// The radius around a supercritical anom that will be swapped
     /// </summary>
     [DataField]
-    public float SupercriticalRegionSwapRadius = 10;
+    public float SupercriticalRegionSwapRadius = 7;
 
 
     /// <summary>
