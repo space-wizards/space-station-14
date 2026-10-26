@@ -57,7 +57,7 @@
       curve: !type:PresetCurve
         preset: TargetDistance
     - !type:RandomCon
-      chance: 0.5 # TODO qwer: change to like 1%.
+      chance: 0.01
       curve: !type:BoolCurve
     - !type:TargetAccessibleCon
       curve: !type:BoolCurve
