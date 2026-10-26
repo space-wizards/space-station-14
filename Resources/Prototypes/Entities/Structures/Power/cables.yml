@@ -59,7 +59,12 @@
     fx: EffectRCDConstruct0
   - type: Edible
     requiresSpecialDigestion: true
-    solution: solution
+  - type: Solution
+    id: food
+    solution:
+      reagents:
+      - ReagentId: Tazinide
+        Quantity: 4
 
 - type: entity
   parent: CableBase
