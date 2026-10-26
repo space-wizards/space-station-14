@@ -39,4 +39,5 @@
           Medium: { visible: true, state: medium }
           High: { visible: true, state: high }
   - type: AnchoredBlur    
-    offset: 0, -0.4
+    offset: 0.4, 0
+    targetStrength: 0.5

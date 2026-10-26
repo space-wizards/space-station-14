@@ -229,7 +229,7 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
         _shader.SetParameter("NOISE_TEXTURE", _noiseTexture);
 
         // DEBUG pro tip, comment out this shader line to make the heat texture visible.
-        //args.WorldHandle.UseShader(_shader);
+        args.WorldHandle.UseShader(_shader);
         args.WorldHandle.DrawTextureRect(res.HeatTarget.Texture, args.WorldBounds);
     }
 

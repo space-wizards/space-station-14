@@ -94,7 +94,7 @@ public sealed partial class SolutionHeaterSystem : EntitySystem
             return;
 
         if (toggle)
-            blur.Strength = 0.4f;
+            blur.Strength = blur.TargetStrength;
         else
             blur.Strength = 0.0f;
 

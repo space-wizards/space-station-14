@@ -97,6 +97,8 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
         if (!TryComp<AnchoredBlurComponent>(ent, out var blur))
             return;
 
+        var settingStep = blur.TargetStrength / 3;
+
         if (!_receiver.IsPowered(ent.Owner) || ent.Comp.Setting == EntityHeaterSetting.Off)
         {
             blur.Strength = 0f;
@@ -105,9 +107,9 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
         {
             blur.Strength = ent.Comp.Setting switch
             {
-                EntityHeaterSetting.Low => 0.2f,
-                EntityHeaterSetting.Medium => 0.4f,
-                EntityHeaterSetting.High => 0.6f,
+                EntityHeaterSetting.Low => settingStep,
+                EntityHeaterSetting.Medium => settingStep * 2,
+                EntityHeaterSetting.High => settingStep * 3,
                 _ => 0f,
             };
         }

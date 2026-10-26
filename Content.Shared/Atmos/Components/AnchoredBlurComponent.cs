@@ -26,5 +26,10 @@ public sealed partial class AnchoredBlurComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public float Strength = 1f;
-}
 
+    /// <summary>
+    /// Strength of the heat blur distortion effect (0 to 1).
+    /// </summary>
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+    public float TargetStrength = 1f;
+}
