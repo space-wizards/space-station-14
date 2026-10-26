@@ -201,7 +201,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         //Check for invalid entities.
         if (!coordinates.IsValid(EntityManager) || !double.IsFinite(angle.Theta))
         {
-            Log.Error($"Found invalid FTL destination with coordinates {coordinates} and angle {angle}");
+            Log.Error($"Found invalid FTL destination with coordinates {coordinates} and angle {angle} for shuttle {shuttleUid}");
             return false;
         }
 
