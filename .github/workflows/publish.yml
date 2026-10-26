@@ -44,7 +44,6 @@ jobs:
 
     - uses: actions/checkout@v7
       with:
-        token: ${{ secrets.CL_ACCESS_TOKEN }} # prevents reusing the default GITHUB_TOKEN
         submodules: 'recursive'
         fetch-depth: 0
         filter: blob:none
@@ -96,7 +95,9 @@ jobs:
             fi
           else
             git commit -m "Update changelog"
-            git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            git -c http.https://github.com/.extraheader= \
+              push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+              "HEAD:${GITHUB_REF_NAME}"
             git push origin "HEAD:${GITHUB_REF_NAME}"
             echo "committed=true" >> "$GITHUB_OUTPUT"
           fi
