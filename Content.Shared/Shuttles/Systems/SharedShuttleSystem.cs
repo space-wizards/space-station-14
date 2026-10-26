@@ -198,15 +198,15 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         // This is the already adjusted position
         var targetPosition = mapCoordinates.Position;
 
-        // Check range even if it's cross-map.
+        //Check for invalid entities.
         if (!coordinates.IsValid(EntityManager) || !double.IsFinite(angle.Theta))
         {
+            Log.Error($"Found invalid FTL destination with coordinates {coordinates} and angle {angle}");
             return false;
         }
 
-        var distance = (targetPosition - ourPos).Length();
-
-        if (!float.IsFinite(distance) || distance > FTLRange)
+        // Check range even if it's cross-map.
+        if ((targetPosition - ourPos).Length() > FTLRange)
         {
             return false;
         }

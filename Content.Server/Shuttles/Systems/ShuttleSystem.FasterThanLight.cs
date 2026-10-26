@@ -263,7 +263,10 @@ public sealed partial class ShuttleSystem
         string? priorityTag = null)
     {
         if (!coordinates.IsValid(EntityManager) || !double.IsFinite(angle.Theta))
+        {
+            Log.Error($"Found invalid FTL destination with coordinates {coordinates} and angle {angle}");
             return;
+        }
 
         if (!TrySetupFTL(shuttleUid, component, out var hyperspace))
             return;
