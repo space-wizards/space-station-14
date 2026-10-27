@@ -45,11 +45,11 @@ public sealed partial class SeedExtractorSystem : EntitySystem
         _popup.PopupCursor(Loc.GetString("seed-extractor-component-interact-message", ("name", args.Used)),
             args.User);
 
-        PredictedQueueDel(args.Used);
+        QueueDel(args.Used);
         args.Handled = true;
 
         var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
-        var amount = ent.Comp.BaseSeeds.NextFloat(random);
+        var amount = ent.Comp.BaseSeeds.Next(random);
         var coords = Transform(ent).Coordinates;
 
         for (var i = 0; i < amount; i++)

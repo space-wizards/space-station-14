@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: MobStatusEffectBase
   id: BloodstreamStatusEffectBase
   abstract: true
@@ -69,6 +69,7 @@
     alert: Adrenaline
   - type: ExaminableStatusEffect
     messageId: status-effect-examine-adrenaline
+    requiresConciousness: true
 
 - type: entity
   parent: MobStatusEffectBase

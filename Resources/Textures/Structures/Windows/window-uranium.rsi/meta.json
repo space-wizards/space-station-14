@@ -11,35 +11,59 @@
             "name": "full"
         },
         {
-            "name": "uwindow0",
+            "name": "window0",
             "directions": 4
         },
         {
-            "name": "uwindow1",
+            "name": "window1",
             "directions": 4
         },
         {
-            "name": "uwindow2",
+            "name": "window2",
             "directions": 4
         },
         {
-            "name": "uwindow3",
+            "name": "window3",
             "directions": 4
         },
         {
-            "name": "uwindow4",
+            "name": "window4",
             "directions": 4
         },
         {
-            "name": "uwindow5",
+            "name": "window5",
             "directions": 4
         },
         {
-            "name": "uwindow6",
+            "name": "window6",
             "directions": 4
         },
         {
-            "name": "uwindow7",
+            "name": "window7",
+            "directions": 4
+        },
+        {
+            "name": "window8",
+            "directions": 4
+        },
+        {
+            "name": "window9",
+            "directions": 4
+        },
+        {
+            "name": "window10",
+            "directions": 4
+        },
+        {
+            "name": "window11",
+            "directions": 4
+        },
+        {
+            "name": "window12",
+            "directions": 4
+        },
+        {
+            "name": "window13",
             "directions": 4
         }
     ]

@@ -15,6 +15,8 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/wheat.rsi
     snapCardinals: true
+  - type: Transform
+    noRot: true
   - type: Appearance
   - type: Clickable
   - type: InteractionOutline
@@ -788,6 +790,7 @@
   categories: [HideSpawnMenu]
   name: tomato killer plant
   components:
+  - type: NPCImprinted
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tomatokiller.rsi
   - type: PlantData
@@ -1227,6 +1230,7 @@
     production: 12
     yield: 2
     potency: 20
+    growthStages: 3
   - type: PlantHarvest
     harvestRepeat: Repeat
   - type: PlantGrowth
@@ -1635,7 +1639,7 @@
         min: 1
         max: 2
         potencyDivisor: 10
-      Omnizine: # Don't kill me
+      ApotheosoticEnzymes:
         min: 1
         max: 3
         potencyDivisor: 35

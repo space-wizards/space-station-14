@@ -247,7 +247,7 @@ public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
                 TryGetStationAiHolder(ent, out var holder))
             {
                 _container.RemoveEntity(holder.Value, ent.Comp.ActionTarget.Value, force: true);
-                PredictedQueueDel(ent.Comp.ActionTarget);
+                QueueDel(ent.Comp.ActionTarget);
 
                 ent.Comp.ActionTarget = null;
                 Dirty(ent);

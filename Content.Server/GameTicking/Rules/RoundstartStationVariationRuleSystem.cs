@@ -1,8 +1,9 @@
-﻿using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking.Rules;
+using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.Station.Components;
 using Content.Shared.Storage;
 using Robust.Shared.Random;
@@ -18,15 +19,17 @@ public sealed partial class RoundstartStationVariationRuleSystem : GameRuleSyste
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StationPostInitEvent>(OnStationPostInit, after: new []{typeof(ShuttleSystem)});
+        SubscribeLocalEvent<StationPostInitEvent>(OnStationPostInit, after: new[] { typeof(ShuttleSystem) });
     }
 
-    protected override void Added(EntityUid uid, RoundstartStationVariationRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    protected override void Added(Entity<RoundstartStationVariationRuleComponent, GameRuleComponent> ent, ref GameRuleAddedEvent args)
     {
-        var spawns = EntitySpawnCollection.GetSpawns(component.Rules, _random);
+        base.Added(ent, ref args);
+
+        var spawns = EntitySpawnCollection.GetSpawns(ent.Comp1.Rules, _random);
         foreach (var rule in spawns)
         {
-            GameTicker.AddFilteredGameRule(rule);
+            GameTicker.AddGameRule(rule);
         }
     }
 
@@ -47,13 +50,6 @@ public sealed partial class RoundstartStationVariationRuleSystem : GameRuleSyste
         var passQuery = EntityQueryEnumerator<StationVariationPassRuleComponent, GameRuleComponent>();
         while (passQuery.MoveNext(out var uid, out _, out _))
         {
-            // TODO: for some reason, ending a game rule just gives it a marker comp,
-            // and doesnt delete it
-            // so we have to check here that it isnt an ended game rule (which could happen if a preset failed to start
-            // or it was ended before station maps spawned etc etc etc)
-            if (HasComp<EndedGameRuleComponent>(uid))
-                continue;
-
             RaiseLocalEvent(uid, ref passEv);
         }
 
@@ -62,8 +58,8 @@ public sealed partial class RoundstartStationVariationRuleSystem : GameRuleSyste
 }
 
 /// <summary>
-///     Raised directed on game rule entities which are added and marked as <see cref="StationVariationPassRuleComponent"/>
-///     when a new station is initialized that should be varied.
+/// Raised directed on game rule entities which are added and marked as <see cref="StationVariationPassRuleComponent"/>
+/// when a new station is initialized that should be varied.
 /// </summary>
 /// <param name="Station">The new station that was added, and its config & grids.</param>
 [ByRefEvent]

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: MedicalScanner
   parent: [ BaseMachinePowered, BaseConstructibleMachineDestructible ]
   name: medical scanner
