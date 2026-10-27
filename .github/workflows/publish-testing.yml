@@ -9,6 +9,10 @@ on:
   schedule:
   - cron: '0 10 * * *'
 
+permissions:
+  contents: read
+  pull-requests: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -44,7 +48,7 @@ jobs:
         BRANCH: master
         CHANGELOG_REPO_PATH: Resources/Changelog
         EXTRA_CATEGORIES: Admin,Maps,Rules
-        GITHUB_TOKEN: ${{ secrets.CL_ACCESS_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build Packaging
       run: dotnet build Content.Packaging --configuration Release --no-restore /m
