@@ -1618,7 +1618,7 @@
         messages: [ "ignis-inside-effect-light" ]
         probability: 0.1
       - !type:AdjustTemperature
-        amount: 15000
+        amount: 100000
         conditions:
         - !type:ReagentCondition
           reagent: Ignisol
@@ -1626,7 +1626,7 @@
         - !type:TemperatureCondition
           max: 313.15
       - !type:AdjustTemperature
-        amount: 50000
+        amount: 250000
         conditions:
         - !type:ReagentCondition
           reagent: Ignisol
