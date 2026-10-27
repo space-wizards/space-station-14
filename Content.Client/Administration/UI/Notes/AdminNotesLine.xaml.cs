@@ -35,7 +35,7 @@ public sealed partial class AdminNotesLine : BoxContainer
     {
         RobustXamlLoader.Load(this);
         _sprites = sprites;
-        _log = IoCManager.Resolve<ILogManager>().GetSawmill("admin.notes");
+        _log = Logger.GetSawmill("admin.notes");
 
         Note = note;
         MouseFilter = MouseFilterMode.Pass;

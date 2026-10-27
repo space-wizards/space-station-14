@@ -20,7 +20,7 @@ public sealed partial class AlertsUI : UIWidget
 
     public AlertsUI()
     {
-        _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("alert");
+        _sawmill = Logger.GetSawmill("alert");
         RobustXamlLoader.Load(this);
     }
 

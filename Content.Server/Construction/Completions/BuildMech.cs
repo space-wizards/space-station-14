@@ -25,7 +25,7 @@ public sealed partial class BuildMech : IGraphAction
     // TODO use or generalize ConstructionSystem.ChangeEntity();
     public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
     {
-        var sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("construction.mech");
+        var sawmill = Logger.GetSawmill("construction.mech");
 
         if (!entityManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager))
         {
