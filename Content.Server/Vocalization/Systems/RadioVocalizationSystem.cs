@@ -55,7 +55,7 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
             potentialChannels.UnionWith(radio.Channels);
         }
 
-        potentialChannels.RemoveWhere(id => id != SharedChatSystem.CommonChannel && ProtoMan.Index(id).KeyCode == null);
+        potentialChannels.RemoveWhere(id => !SharedChatSystem.TryGetRadioChannelPrefix(ProtoMan.Index(id), out _));
 
         if (potentialChannels.Count == 0)
         {
@@ -84,9 +84,8 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
         if (!TryPickRandomRadioChannel(entity, out var channel))
             return false;
 
-        var channelPrefix = channel == SharedChatSystem.CommonChannel
-            ? SharedChatSystem.RadioCommonPrefix.ToString()
-            : $"{SharedChatSystem.RadioChannelPrefix}{ProtoMan.Index(channel).KeyCode}";
+        if (!SharedChatSystem.TryGetRadioChannelPrefix(ProtoMan.Index(channel), out var channelPrefix))
+            return false;
 
         // send a whisper using the radio channel prefix and whatever relevant radio channel character
         // along with the message. This is analogous to how radio messages are sent by players

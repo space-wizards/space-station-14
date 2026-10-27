@@ -86,9 +86,10 @@ public sealed partial class SiliconLawMenu : FancyWindow
         else
         {
             var radioChannelProto = _selectableRadioChannels[_selectedChatChannelIdx - SelectableChatChannels.Count];
-            var radioMessage = radioChannelProto.ID == SharedChatSystem.CommonChannel
-                ? $"{SharedChatSystem.RadioCommonPrefix} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}"
-                : $"{SharedChatSystem.RadioChannelPrefix}{radioChannelProto.KeyCode} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}";
+            if (!SharedChatSystem.TryGetRadioChannelPrefix(radioChannelProto, out var prefix))
+                return;
+
+            var radioMessage = $"{prefix} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}";
             _chatManager.SendMessage(radioMessage, ChatSelectChannel.Radio);
         }
     }
@@ -115,7 +116,7 @@ public sealed partial class SiliconLawMenu : FancyWindow
                 if (!_prototypeManager.TryIndex(radioChannel, out var radioChannelProto))
                     continue;
 
-                if (radioChannelProto.ID != SharedChatSystem.CommonChannel && radioChannelProto.KeyCode == null)
+                if (!SharedChatSystem.TryGetRadioChannelPrefix(radioChannelProto, out _))
                     continue;
 
                 _selectableRadioChannels.Add(radioChannelProto);

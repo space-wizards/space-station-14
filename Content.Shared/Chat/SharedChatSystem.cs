@@ -99,6 +99,30 @@ public abstract partial class SharedChatSystem : EntitySystem
         ClickMessageSender(target, ent);
     }
 
+    /// <summary>
+    /// Attempts to get the chat prefix for a radio channel.
+    /// </summary>
+    /// <param name="channel">The radio channel to get the prefix for.</param>
+    /// <param name="prefix">The channel's chat prefix, or an empty string if the channel cannot be addressed through chat.</param>
+    /// <returns>True if the channel can be addressed through chat; otherwise, false.</returns>
+    public static bool TryGetRadioChannelPrefix(RadioChannelPrototype channel, out string prefix)
+    {
+        if (channel.ID == CommonChannel)
+        {
+            prefix = RadioCommonPrefix.ToString();
+            return true;
+        }
+
+        if (channel.KeyCode is { } keyCode)
+        {
+            prefix = $"{RadioChannelPrefix}{keyCode}";
+            return true;
+        }
+
+        prefix = string.Empty;
+        return false;
+    }
+
     private void CacheRadios()
     {
         _keyCodes = ProtoMan.EnumeratePrototypes<RadioChannelPrototype>()
