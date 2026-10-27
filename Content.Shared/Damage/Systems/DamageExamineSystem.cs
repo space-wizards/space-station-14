@@ -37,9 +37,9 @@ public sealed partial class DamageExamineSystem : EntitySystem
         }
     }
 
-    public void AddDamageExamine(FormattedMessage message, DamageSpecifier damageSpecifier, string? type = null)
+    public void AddDamageExamine(FormattedMessage message, DamageSpecifier damageSpecifier, string? type = null, bool ignoreResistance = false )
     {
-        var markup = GetDamageExamine(damageSpecifier, type);
+        var markup = GetDamageExamine(damageSpecifier, type, ignoreResistance);
         if (!message.IsEmpty)
         {
             message.PushNewline();
@@ -50,7 +50,7 @@ public sealed partial class DamageExamineSystem : EntitySystem
     /// <summary>
     /// Retrieves the damage examine values.
     /// </summary>
-    private FormattedMessage GetDamageExamine(DamageSpecifier damageSpecifier, string? type = null)
+    private FormattedMessage GetDamageExamine(DamageSpecifier damageSpecifier, string? type = null, bool ignoreResistance = false)
     {
         var msg = new FormattedMessage();
 
@@ -66,7 +66,11 @@ public sealed partial class DamageExamineSystem : EntitySystem
                 return msg;
             }
 
-            msg.AddMarkupOrThrow(Loc.GetString("damage-examine-type", ("type", type)));
+            var damageLoc = "damage-examine-damage";
+            if (ignoreResistance)
+                damageLoc = "damage-examine-AP-damage";
+
+            msg.AddMarkupOrThrow(Loc.GetString("damage-examine-type", ("type", type), ("damage", Loc.GetString(damageLoc))));
         }
 
         foreach (var damage in damageSpecifier.DamageDict)

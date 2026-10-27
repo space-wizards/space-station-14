@@ -34,15 +34,7 @@ public abstract partial class SharedGunSystem
         if (damageSpec == null)
             return;
 
-        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec.Value.Item1), Loc.GetString("damage-projectile"));
-
-        if (damageSpec.Value.Item2)
-        {
-            var msg = new FormattedMessage();
-            msg.PushNewline();
-            msg.AddMarkupOrThrow(Loc.GetString(ent.Comp.IgnoreResistancesMessage));
-            args.Message.AddMessage(msg);
-        }
+        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec.Value.Item1), Loc.GetString("damage-projectile"), damageSpec.Value.Item2);
     }
 
     private (DamageSpecifier, bool)? GetProjectileDamage(EntProtoId proto)
