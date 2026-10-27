@@ -60,9 +60,9 @@ public abstract partial class SharedGunSystem
 
         float? stamina = null;
         if (proto.TryComp<StaminaDamageOnCollideComponent>(out var comp, Factory))
-        {
             stamina = comp.Damage;
-        }
+        else if (proto.TryComp<HitscanStaminaDamageComponent>(out var hitscanStamina, Factory))
+            stamina = hitscanStamina.StaminaDamage;
 
         if (damageSpec == null)
             return;

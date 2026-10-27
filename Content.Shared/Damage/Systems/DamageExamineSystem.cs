@@ -12,6 +12,7 @@ namespace Content.Shared.Damage.Systems;
 public sealed partial class DamageExamineSystem : EntitySystem
 {
     [Dependency] private ExamineSystemShared _examine = default!;
+    [Dependency] private SharedStaminaSystem _stamina = default!;
 
     public override void Initialize()
     {
@@ -83,7 +84,7 @@ public sealed partial class DamageExamineSystem : EntitySystem
         if (stamina is not null)
         {
             msg.PushNewline();
-            msg.AddMarkupOrThrow(Loc.GetString("damage-value-stamina", ("amount", stamina)));
+            msg.AddMarkupOrThrow(Loc.GetString("damage-value-stamina", ("amount", stamina * _stamina.UniversalStaminaDamageModifier)));
         }
 
         return msg;

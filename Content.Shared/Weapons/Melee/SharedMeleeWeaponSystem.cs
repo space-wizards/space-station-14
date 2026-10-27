@@ -151,12 +151,9 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         float? stamina = null;
         if (TryComp<StaminaDamageOnHitComponent>(uid, out var comp))
         {
-            if (HasComp<StaminaDamageOnHitRequiresToggleComponent>(uid))
-            {
-                if (_toggle.IsActivated(uid))
-                    stamina = comp.Damage;
-            }
-            else
+            var attempt = new StaminaDamageOnHitAttemptEvent();
+            RaiseLocalEvent(uid, ref attempt);
+            if (!attempt.Cancelled)
                 stamina = comp.Damage;
         }
 
