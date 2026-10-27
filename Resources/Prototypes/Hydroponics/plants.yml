@@ -2341,6 +2341,9 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pyrotton.rsi
+  - type: IgnitionSource
+    ignited: true
+    temperature: 400
   - type: PlantData
     name: seeds-pyrotton-name
     packetPrototype: PyrottonSeeds
