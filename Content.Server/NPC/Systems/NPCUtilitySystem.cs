@@ -12,16 +12,19 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Fluids.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Maps;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Storage.Components;
+using Content.Shared.SubFloor;
 using Content.Shared.Stunnable;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Tools.Systems;
@@ -31,6 +34,8 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Whitelist;
 using Microsoft.Extensions.ObjectPool;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Server.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -62,6 +67,9 @@ public sealed partial class NPCUtilitySystem : EntitySystem
     [Dependency] private SatiationSystem _satiation = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedStealthSystem _stealth = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private EntityQuery<PuddleComponent> _puddleQuery = default!;
 
     private ObjectPool<HashSet<EntityUid>> _entPool =
@@ -229,6 +237,23 @@ public sealed partial class NPCUtilitySystem : EntitySystem
             }
             case TargetAccessibleCon:
             {
+                var radius = blackboard.GetValueOrDefault<float>(blackboard.GetVisionRadiusKey(EntityManager), EntityManager);
+                if (!_interaction.InRangeAndAccessible(owner, targetUid, radius))
+                {
+                    return 0f;
+                }
+
+                // Deny subfloor targets if hidden under floor tiles.
+                if (HasComp<SubFloorHideComponent>(targetUid)
+                    && TryComp(targetUid, out TransformComponent? targetXform)
+                    && targetXform is { Anchored: true, GridUid: { } gridUid }
+                    && TryComp<MapGridComponent>(gridUid, out var grid)
+                    && _map.TryGetTileRef(gridUid, grid, targetXform.Coordinates, out var tileRef)
+                    && !((ContentTileDefinition)_tileDefinitionManager[tileRef.Tile.TypeId]).IsSubFloor)
+                {
+                    return 0f;
+                }
+
                 if (_container.TryGetContainingContainer(targetUid, out var container))
                 {
                     if (container.Owner == owner)
