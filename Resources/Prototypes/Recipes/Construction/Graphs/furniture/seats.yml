@@ -4,7 +4,7 @@
   graph:
     - node: start
       actions:
-        - !type:DestroyEntity {}
+        - !type:DestroyEntity
       edges:
         - to: chair
           steps:
@@ -98,8 +98,8 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
+            - !type:SpawnEntity
+              entity: SheetSteel1
           steps:
             - tool: Screwing
               doAfter: 1
@@ -109,8 +109,8 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
+            - !type:SpawnEntity
+              entity: SheetSteel1
           steps:
             - tool: Screwing
               doAfter: 1
@@ -120,8 +120,8 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
+            - !type:SpawnEntity
+              entity: SheetSteel1
           steps:
             - tool: Screwing
               doAfter: 1
@@ -131,8 +131,8 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetBrass1
+            - !type:SpawnEntity
+              entity: SheetBrass1
           steps:
             - tool: Screwing
               doAfter: 1
@@ -142,9 +142,9 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 2
+            - !type:SpawnEntity
+              entity: SheetSteel1
+              number: 2
           steps:
             - tool: Screwing
               doAfter: 1
@@ -154,9 +154,9 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 2
+            - !type:SpawnEntity
+              entity: SheetSteel1
+              number: 2
           steps:
             - tool: Screwing
               doAfter: 1
@@ -166,9 +166,9 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 2
+            - !type:SpawnEntity
+              entity: SheetSteel1
+              number: 2
           steps:
             - tool: Screwing
               doAfter: 1
@@ -178,9 +178,9 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 2
+            - !type:SpawnEntity
+              entity: SheetSteel1
+              number: 2
           steps:
             - tool: Screwing
               doAfter: 2
@@ -190,9 +190,9 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: MaterialWoodPlank1
-              amount: 3
+            - !type:SpawnEntity
+              entity: MaterialWoodPlank1
+              number: 3
           steps:
             - tool: Screwing
               doAfter: 1
@@ -202,9 +202,9 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: MaterialSheetMeat1
-              amount: 2
+            - !type:SpawnEntity
+              entity: MaterialSheetMeat1
+              number: 2
           steps:
             - tool: Screwing
               doAfter: 1
@@ -214,12 +214,12 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetPlastic1
-              amount: 1
-            - !type:SpawnPrototype
-              prototype: PartRodMetal1
-              amount: 2
+            - !type:SpawnEntity
+              entity: SheetPlastic1
+              number: 1
+            - !type:SpawnEntity
+              entity: PartRodMetal1
+              number: 2
           steps:
             - tool: Screwing
               doAfter: 1
@@ -229,9 +229,9 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 2
+            - !type:SpawnEntity
+              entity: SheetSteel1
+              number: 2
           steps:
             - tool: Screwing
               doAfter: 1
@@ -241,10 +241,11 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: MaterialCardboard1
-              amount: 3
+            - !type:SpawnEntity
+              entity: MaterialCardboard1
+              number: 3
             - !type:PlaySound
+              playAtPosition: true
               sound: /Audio/Items/Toys/ToyFall2.ogg
           steps:
             - tool: Slicing
@@ -255,9 +256,9 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: MaterialWoodPlank1
-              amount: 4
+            - !type:SpawnEntity
+              entity: MaterialWoodPlank1
+              number: 4
           steps:
             - tool: Screwing
               doAfter: 2
@@ -267,12 +268,12 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 2
-            - !type:SpawnPrototype
-              prototype: MaterialCloth1
-              amount: 1
+            - !type:SpawnEntity
+              entity: SheetSteel1
+              number: 2
+            - !type:SpawnEntity
+              entity: MaterialCloth1
+              number: 1
           steps:
             - tool: Cutting
               doAfter: 1
@@ -284,12 +285,12 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 2
-            - !type:SpawnPrototype
-              prototype: MaterialCloth1
-              amount: 1
+            - !type:SpawnEntity
+              entity: SheetSteel1
+              number: 2
+            - !type:SpawnEntity
+              entity: MaterialCloth1
+              number: 1
           steps:
             - tool: Cutting
               doAfter: 1

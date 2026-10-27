@@ -7,6 +7,7 @@ using Content.Shared.Construction.Components;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Construction.Steps;
 using Content.Shared.DoAfter;
+using Content.Shared.EntityEffects;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Prying.Systems;
@@ -27,6 +28,7 @@ namespace Content.Server.Construction
     public sealed partial class ConstructionSystem
     {
         [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private SharedEntityEffectsSystem _effects = default!;
 #if EXCEPTION_TOLERANCE
         [Dependency] private IRuntimeLog _runtimeLog = default!;
 #endif
@@ -457,23 +459,22 @@ namespace Content.Server.Construction
         }
 
         /// <summary>
-        ///     Performs a number of <see cref="IGraphAction"/>s for a given entity, with an optional user entity.
+        ///     Performs a number of <see cref="EntityEffect"/>s for a given entity, with an optional user entity.
         /// </summary>
         /// <param name="uid">The entity to perform the actions on.</param>
         /// <param name="userUid">An optional user entity to pass into the actions.</param>
-        /// <param name="actions">The actions to perform.</param>
+        /// <param name="effects">The effects to add onto the entity.</param>
         /// <remarks>This method checks whether the given target entity exists before performing any actions.
         ///          If the entity is deleted by an action, it will short-circuit and stop performing the rest of actions.</remarks>
-        public void PerformActions(EntityUid uid, EntityUid? userUid, IEnumerable<IGraphAction> actions)
+        public void PerformActions(EntityUid uid, EntityUid? userUid, EntityEffect[] effects)
         {
-            foreach (var action in actions)
+            if (!Exists(uid))
             {
-                // If an action deletes the entity, we stop performing the rest of actions.
-                if (!Exists(uid))
-                    break;
-
-                action.PerformAction(uid, userUid, EntityManager);
+                Log.Debug("doesn't exist");
+                return;
             }
+
+            _effects.TryApplyEffects(uid, effects, user: userUid);
         }
 
         /// <summary>

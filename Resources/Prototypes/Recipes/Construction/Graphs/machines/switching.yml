@@ -5,17 +5,17 @@
   graph:
   - node: start
     actions:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 2
-      - !type:SpawnPrototype
-        prototype: CableApcStack1
-        amount: 1
-      - !type:DeleteEntity {}
+      - !type:SpawnEntity
+        entity: SheetSteel1
+        number: 2
+      - !type:SpawnEntity
+        entity: CableApcStack1
+        number: 1
+      - !type:DeleteEntity
     edges:
       - to: LeverNode
         completed:
-          - !type:SnapToGrid {}
+          - !type:SnapToGrid
         steps:
           - material: Steel
             amount: 2
@@ -58,7 +58,7 @@
             - !type:GivePrototype
               prototype: CableApcStack1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
 
 - type: constructionGraph
   id: SignalSwitchGraph
@@ -87,7 +87,7 @@
             - !type:GivePrototype
               prototype: CableApcStack1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
 
 - type: constructionGraph
   id: SignalButtonGraph
@@ -116,7 +116,7 @@
             - !type:GivePrototype
               prototype: CableApcStack1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
 
 - type: constructionGraph
   id: LightSwitchDirectionalGraph
@@ -145,7 +145,7 @@
             - !type:GivePrototype
               prototype: CableApcStack1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
 
 - type: constructionGraph
   id: SignalSwitchDirectionalGraph
@@ -174,7 +174,7 @@
             - !type:GivePrototype
               prototype: CableApcStack1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
 
 - type: constructionGraph
   id: SignalButtonDirectionalGraph
@@ -203,4 +203,4 @@
             - !type:GivePrototype
               prototype: CableApcStack1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity

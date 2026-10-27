@@ -4,11 +4,11 @@
   graph:
     - node: start
       actions:
-        - !type:DestroyEntity {}
+        - !type:DestroyEntity
       edges:
         - to: mannequin
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
             - material: WoodPlank
               amount: 5
@@ -21,12 +21,12 @@
         - to: start
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
-              prototype: MaterialWoodPlank
-              amount: 5
-            - !type:SpawnPrototype
-              prototype: PartRodMetal
-              amount: 2
+            - !type:SpawnEntity
+              entity: MaterialWoodPlank
+              number: 5
+            - !type:SpawnEntity
+              entity: PartRodMetal
+              number: 2
           steps:
             - tool: Screwing
               doAfter: 3

@@ -19,9 +19,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 2
+      - !type:SpawnEntity
+        entity: SheetSteel1
+        number: 2
       - !type:DeleteEntity
       conditions:
       - !type:EntityAnchored

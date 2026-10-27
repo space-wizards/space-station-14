@@ -4,11 +4,11 @@
   graph:
     - node: start
       actions:
-        - !type:DestroyEntity {}
+        - !type:DestroyEntity
       edges:
         - to: dresser
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
             - material: WoodPlank
               amount: 3
@@ -18,9 +18,9 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: MaterialWoodPlank
-              amount: 3
+            - !type:SpawnEntity
+              entity: MaterialWoodPlank
+              number: 3
           steps:
             - tool: Prying
               doAfter: 3

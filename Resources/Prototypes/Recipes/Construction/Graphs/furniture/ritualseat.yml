@@ -4,7 +4,7 @@
   graph:
     - node: start
       actions:
-        - !type:DestroyEntity {}
+        - !type:DestroyEntity
       edges:
         - to: chairRitual
           completed:
@@ -20,9 +20,9 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-                prototype: MaterialWoodPlank1
-                amount: 2
+            - !type:SpawnEntity
+               entity: MaterialWoodPlank1
+               number: 2
           steps:
             - tool: Screwing
               doAfter: 1
@@ -41,9 +41,9 @@
       edges:
         - to: chairRitual
           completed:
-            - !type:SpawnPrototype
-              prototype: OrganSkeletonPersonHead
-              amount: 1
+            - !type:SpawnEntity
+              entity: OrganSkeletonPersonHead
+              number: 1
           steps:
             - tool: Prying
               doAfter: 1

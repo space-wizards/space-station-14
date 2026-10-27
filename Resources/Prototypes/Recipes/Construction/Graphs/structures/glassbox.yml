@@ -31,9 +31,9 @@
             - tool: Prying
               doAfter: 5
           completed:
-            - !type:SpawnPrototype
-              prototype: MaterialWoodPlank1
-              amount: 10
+            - !type:SpawnEntity
+              entity: MaterialWoodPlank1
+              number: 10
 
     - node: boxMissingTrigger
       edges:
@@ -55,9 +55,9 @@
             - tool: Cutting
               doAfter: 0.25
           completed:
-            - !type:SpawnPrototype
-              prototype: CableApcStack1
-              amount: 2
+            - !type:SpawnEntity
+              entity: CableApcStack1
+              number: 2
 
     - node: boxTriggerUnsecured
       edges:
@@ -75,9 +75,9 @@
             - tool: Prying
               doAfter: 0.5
           completed:
-            - !type:SpawnPrototype
-              prototype: SignalTrigger
-              amount: 1
+            - !type:SpawnEntity
+              entity: SignalTrigger
+              number: 1
 
     - node: boxMissingRGlass
       edges:
@@ -112,9 +112,9 @@
             - tool: Prying
               doAfter: 2
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetRGlass1
-              amount: 5
+            - !type:SpawnEntity
+              entity: SheetRGlass1
+              number: 5
 
     - node: brokenGlassBox
       entity: GlassBoxBroken
@@ -124,9 +124,9 @@
             - tool: Prying
               doAfter: 2
           completed:
-            - !type:SpawnPrototype
-              prototype: ShardGlassReinforced
-              amount: 1
+            - !type:SpawnEntity
+              entity: ShardGlassReinforced
+              number: 1
 
     - node: glassBox
       entity: GlassBoxLaser
@@ -149,12 +149,12 @@
               doAfter: 2
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
-              prototype: CableApcStack1
-              amount: 2
-            - !type:SpawnPrototype
-              prototype: SignalTrigger
-              amount: 1
-            - !type:SpawnPrototype
-              prototype: SheetRGlass1
-              amount: 5
+            - !type:SpawnEntity
+              entity: CableApcStack1
+              number: 2
+            - !type:SpawnEntity
+              entity: SignalTrigger
+              number: 1
+            - !type:SpawnEntity
+              entity: SheetRGlass1
+              number: 5

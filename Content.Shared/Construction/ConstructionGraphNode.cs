@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Construction.NodeEntities;
 using Content.Shared.Construction.Serialization;
-using Robust.Shared.Prototypes;
+using Content.Shared.EntityEffects;
 
 namespace Content.Shared.Construction
 {
@@ -9,9 +9,6 @@ namespace Content.Shared.Construction
     [DataDefinition]
     public sealed partial class ConstructionGraphNode
     {
-        [DataField("actions", serverOnly: true)]
-        private IGraphAction[] _actions = Array.Empty<IGraphAction>();
-
         [DataField("edges")]
         private ConstructionGraphEdge[] _edges = Array.Empty<ConstructionGraphEdge>();
 
@@ -21,8 +18,8 @@ namespace Content.Shared.Construction
         [ViewVariables]
         public IReadOnlyList<ConstructionGraphEdge> Edges => _edges;
 
-        [ViewVariables]
-        public IReadOnlyList<IGraphAction> Actions => _actions;
+        [DataField]
+        public EntityEffect[] Actions = Array.Empty<EntityEffect>();
 
         [DataField("transform")]
         public IGraphTransform[] TransformLogic = Array.Empty<IGraphTransform>();

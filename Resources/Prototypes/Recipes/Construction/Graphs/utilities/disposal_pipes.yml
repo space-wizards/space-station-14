@@ -86,8 +86,8 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
+      - !type:SpawnEntity
+        entity: SheetSteel1
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -97,9 +97,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 2
+      - !type:SpawnEntity
+        entity: SheetSteel1
+        number: 2
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -109,9 +109,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 2
+      - !type:SpawnEntity
+        entity: SheetSteel1
+        number: 2
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -121,11 +121,11 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 2
-      - !type:SpawnPrototype
-        prototype: CableApcStack1 # I have no idea why this does not work
+      - !type:SpawnEntity
+        entity: SheetSteel1
+        number: 2
+      - !type:SpawnEntity
+        entity: CableApcStack1 # I have no idea why this does not work
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -135,9 +135,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 2
+      - !type:SpawnEntity
+        entity: SheetSteel1
+        number: 2
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -148,9 +148,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 2
+      - !type:SpawnEntity
+        entity: SheetSteel1
+        number: 2
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -160,9 +160,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 2
+      - !type:SpawnEntity
+        entity: SheetSteel1
+        number: 2
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -173,9 +173,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 2
+      - !type:SpawnEntity
+        entity: SheetSteel1
+        number: 2
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -189,9 +189,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 2
+      - !type:SpawnEntity
+        entity: SheetSteel1
+        number: 2
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -205,9 +205,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 2
+      - !type:SpawnEntity
+        entity: SheetSteel1
+        number: 2
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -221,9 +221,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 2
+      - !type:SpawnEntity
+        entity: SheetSteel1
+        number: 2
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -238,9 +238,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 2
+      - !type:SpawnEntity
+        entity: SheetSteel1
+        number: 2
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -251,11 +251,11 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 2
-      - !type:SpawnPrototype
-        prototype: CableApcStack1
+      - !type:SpawnEntity
+        entity: SheetSteel1
+        number: 2
+      - !type:SpawnEntity
+        entity: CableApcStack1
       - !type:DestroyEntity
       steps:
       - tool: Welding
@@ -265,11 +265,11 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 2
-      - !type:SpawnPrototype
-        prototype: CableApcStack1
+      - !type:SpawnEntity
+        entity: SheetSteel1
+        number: 2
+      - !type:SpawnEntity
+        entity: CableApcStack1
       - !type:DestroyEntity
       steps:
       - tool: Welding

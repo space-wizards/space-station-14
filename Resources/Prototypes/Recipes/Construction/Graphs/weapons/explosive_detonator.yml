@@ -9,7 +9,7 @@
       - material: Bananium
         amount: 1
         doAfter: 1
-  
+
   - node: emptyDetonator
     entity: EmptyDetonator
     actions:
@@ -27,6 +27,7 @@
     actions:
     - !type:AppearanceChange
     - !type:PlaySound
+      playAtPosition: true
       sound: /Audio/Machines/button.ogg
     edges:
     - to: emptyDetonator
@@ -46,6 +47,7 @@
     actions:
     - !type:AppearanceChange
     - !type:PlaySound
+      playAtPosition: true
       sound: /Audio/Machines/button.ogg
     - !type:AdminLog
       message: "A detonator cap was crafted"
@@ -55,5 +57,5 @@
       - tool: Cutting
         doAfter: 0.5
         completed:
-        - !type:SpawnPrototype
-          prototype: CableDetStack1
+        - !type:SpawnEntity
+          entity: CableDetStack1

@@ -17,10 +17,10 @@
       - tool: Screwing
         doAfter: 2
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 3
-      - !type:DeleteEntity {}
+      - !type:SpawnEntity
+        entity: SheetSteel1
+        number: 3
+      - !type:DeleteEntity
     - to: logic_gate
       steps:
       - material: Cable
@@ -67,9 +67,9 @@
       - tool: Prying
         doAfter: 2
       completed:
-      - !type:SpawnPrototype
-        prototype: CableApcStack1
-        amount: 2
+      - !type:SpawnEntity
+        entity: CableApcStack1
+        number: 2
   - node: edge_detector
     entity: EdgeDetector
     edges:
@@ -78,12 +78,12 @@
       - tool: Prying
         doAfter: 2
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetGlass1
-        amount: 2
-      - !type:SpawnPrototype
-        prototype: CableApcStack1
-        amount: 2
+      - !type:SpawnEntity
+        entity: SheetGlass1
+        number: 2
+      - !type:SpawnEntity
+        entity: CableApcStack1
+        number: 2
   - node: power_sensor
     entity: PowerSensor
     edges:
@@ -92,11 +92,11 @@
       - tool: Prying
         doAfter: 2
       completed:
-      - !type:SpawnPrototype
-        prototype: Multitool
-      - !type:SpawnPrototype
-        prototype: CableApcStack1
-        amount: 2
+      - !type:SpawnEntity
+        entity: Multitool
+      - !type:SpawnEntity
+        entity: CableApcStack1
+        number: 2
   - node: memory_cell
     entity: MemoryCell
     edges:
@@ -105,11 +105,11 @@
       - tool: Prying
         doAfter: 2
       completed:
-      - !type:SpawnPrototype
-        prototype: MicroManipulatorStockPart
-      - !type:SpawnPrototype
-        prototype: CableApcStack1
-        amount: 2
+      - !type:SpawnEntity
+        entity: MicroManipulatorStockPart
+      - !type:SpawnEntity
+        entity: CableApcStack1
+        number: 2
   - node: random_gate
     entity: RandomGate
     edges:
@@ -118,9 +118,9 @@
       - tool: Prying
         doAfter: 2
       completed:
-      - !type:SpawnPrototype
-        prototype: CableApcStack1
-        amount: 1
-      - !type:SpawnPrototype
-        prototype: PartRodMetal1
-        amount: 1
+      - !type:SpawnEntity
+        entity: CableApcStack1
+        number: 1
+      - !type:SpawnEntity
+        entity: PartRodMetal1
+        number: 1

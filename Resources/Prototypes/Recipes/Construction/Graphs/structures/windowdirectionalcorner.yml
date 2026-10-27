@@ -49,7 +49,7 @@
             - !type:GivePrototype
               prototype: SheetGlass1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
           steps:
             - tool: Screwing
               doAfter: 1
@@ -64,7 +64,7 @@
             - !type:GivePrototype
               prototype: SheetRGlass1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
           steps:
             - tool: Screwing
               doAfter: 1
@@ -83,7 +83,7 @@
             - !type:GivePrototype
               prototype: SheetPGlass1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
           steps:
             - tool: Screwing
               doAfter: 2
@@ -102,7 +102,7 @@
             - !type:GivePrototype
               prototype: SheetRPGlass1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
           steps:
             - tool: Screwing
               doAfter: 2
@@ -121,7 +121,7 @@
             - !type:GivePrototype
               prototype: SheetUGlass1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
           steps:
             - tool: Screwing
               doAfter: 2
@@ -140,7 +140,7 @@
             - !type:GivePrototype
               prototype: SheetRUGlass1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
           steps:
             - tool: Screwing
               doAfter: 2

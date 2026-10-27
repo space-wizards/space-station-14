@@ -16,8 +16,8 @@
     - node: frame1
       entity: BlastDoorFrame
       actions:
-        - !type:SnapToGrid {}
-        - !type:SetAnchor {}
+        - !type:SnapToGrid
+        - !type:SetAnchor
       edges:
         - to: frame2
           conditions:
@@ -31,10 +31,10 @@
             - !type:EntityAnchored
               anchored: false
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetPlasteel1
-              amount: 10
-            - !type:DeleteEntity {}
+            - !type:SpawnEntity
+              entity: SheetPlasteel1
+              number: 10
+            - !type:DeleteEntity
           steps:
             - tool: Welding
               doAfter: 4
@@ -54,9 +54,9 @@
               doAfter: 2
         - to: frame1
           completed:
-            - !type:SpawnPrototype
-              prototype: CableApcStack1
-              amount: 5
+            - !type:SpawnEntity
+              entity: CableApcStack1
+              number: 5
           steps:
             - tool: Cutting
               doAfter: 4

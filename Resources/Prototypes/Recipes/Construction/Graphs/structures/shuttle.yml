@@ -16,8 +16,8 @@
   - node: assembly
     entity: AirlockShuttleAssembly
     actions:
-    - !type:SnapToGrid {}
-    - !type:SetAnchor {}
+    - !type:SnapToGrid
+    - !type:SetAnchor
     edges:
     - to: electronics
       conditions:
@@ -35,10 +35,10 @@
       - !type:EntityAnchored
         anchored: false
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetPlasteel1
-        amount: 2
-      - !type:DeleteEntity {}
+      - !type:SpawnEntity
+        entity: SheetPlasteel1
+        number: 2
+      - !type:DeleteEntity
       steps:
       - tool: Welding
         doAfter: 3
@@ -65,9 +65,9 @@
     edges:
     - to: electronics
       completed:
-      - !type:SpawnPrototype
-        prototype: CableApcStack1
-        amount: 5
+      - !type:SpawnEntity
+        entity: CableApcStack1
+        number: 5
       steps:
       - tool: Cutting
         doAfter: 2
@@ -89,9 +89,9 @@
         doAfter: 2
     - to: wired
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetPlasteel1
-        amount: 2
+      - !type:SpawnEntity
+        entity: SheetPlasteel1
+        number: 2
       steps:
       - tool: Prying
         doAfter: 2
@@ -141,9 +141,9 @@
         doAfter: 2
     - to: skeletonWelded
       completed:
-      - !type:SpawnPrototype
-        prototype: IngotSilver1
-        amount: 2
+      - !type:SpawnEntity
+        entity: IngotSilver1
+        number: 2
       steps:
       - tool: Prying
         doAfter: 2
@@ -167,9 +167,9 @@
     edges:
     - to: skeletonSilver
       completed:
-        - !type:SpawnPrototype
-          prototype: SheetRGlass1
-          amount: 2
+        - !type:SpawnEntity
+          entity: SheetRGlass1
+          number: 2
       steps:
       - tool: Prying
         doAfter: 4

@@ -18,10 +18,10 @@
       edges:
         - to: start
           completed:
-          - !type:SpawnPrototype
-                prototype: IngotGold1
-                amount: 8
-          - !type:DeleteEntity {}
+          - !type:SpawnEntity
+            entity: IngotGold1
+            number: 8
+          - !type:DeleteEntity
           steps:
             - tool: Anchoring
               doAfter: 5
@@ -47,10 +47,10 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: IngotSilver1
-        amount: 15
-      - !type:DeleteEntity {}
+      - !type:SpawnEntity
+        entity: IngotSilver1
+        number: 15
+      - !type:DeleteEntity
       steps:
       - tool: Welding
         doAfter: 5
@@ -64,9 +64,9 @@
     edges:
     - to: empty
       completed:
-      - !type:SpawnPrototype
-        prototype: MaterialDiamond1
-        amount: 2
+      - !type:SpawnEntity
+        entity: MaterialDiamond1
+        number: 2
       steps:
       - tool: Prying
         doAfter: 2
@@ -80,9 +80,9 @@
     edges:
     - to: eyes
       completed:
-      - !type:SpawnPrototype
-        prototype: MaterialToothSpaceCarp1
-        amount: 5
+      - !type:SpawnEntity
+        entity: MaterialToothSpaceCarp1
+        number: 5
       steps:
       - tool: Prying
         doAfter: 5

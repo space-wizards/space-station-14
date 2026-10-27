@@ -4,11 +4,11 @@
   graph:
     - node: start
       actions:
-        - !type:DestroyEntity {}
+        - !type:DestroyEntity
       edges:
         - to: bed
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
             - material: Steel
               amount: 2
@@ -18,14 +18,14 @@
               doAfter: 1
         - to: dogbed
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
             - material: WoodPlank
               amount: 10
               doAfter: 1
         - to: medicalbed
           completed:
-            - !type:SnapToGrid { }
+            - !type:SnapToGrid
           steps:
             - material: Plasteel
               amount: 2
@@ -38,12 +38,12 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 2
-            - !type:SpawnPrototype
-              prototype: MaterialCloth1
-              amount: 2
+            - !type:SpawnEntity
+              entity: SheetSteel1
+              number: 2
+            - !type:SpawnEntity
+              entity: MaterialCloth1
+              number: 2
           steps:
             - tool: Screwing
               doAfter: 1
@@ -52,9 +52,9 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: MaterialWoodPlank1
-              amount: 10
+            - !type:SpawnEntity
+              entity: MaterialWoodPlank1
+              number: 10
           steps:
             - tool: Screwing
               doAfter: 1
@@ -63,12 +63,12 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
-              prototype: SheetPlasteel1
-              amount: 2
-            - !type:SpawnPrototype
-              prototype: MaterialDurathread1
-              amount: 2
+            - !type:SpawnEntity
+              entity: SheetPlasteel1
+              number: 2
+            - !type:SpawnEntity
+              entity: MaterialDurathread1
+              number: 2
           steps:
             - tool: Screwing
               doAfter: 1

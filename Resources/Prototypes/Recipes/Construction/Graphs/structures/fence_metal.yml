@@ -32,9 +32,9 @@
     edges:
     - to: broken
       completed:
-      - !type:SpawnPrototype
-        prototype: PartRodMetal1
-        amount: 1
+      - !type:SpawnEntity
+        entity: PartRodMetal1
+        number: 1
       steps:
       - tool: Welding
         doAfter: 4.0
@@ -46,9 +46,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: PartRodMetal1
-        amount: 5
+      - !type:SpawnEntity
+        entity: PartRodMetal1
+        number: 5
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -61,9 +61,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: PartRodMetal1
-        amount: 5
+      - !type:SpawnEntity
+        entity: PartRodMetal1
+        number: 5
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -76,9 +76,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: PartRodMetal1
-        amount: 5
+      - !type:SpawnEntity
+        entity: PartRodMetal1
+        number: 5
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -91,9 +91,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: PartRodMetal1
-        amount: 1
+      - !type:SpawnEntity
+        entity: PartRodMetal1
+        number: 1
       - !type:DeleteEntity
       steps:
       - tool: Cutting

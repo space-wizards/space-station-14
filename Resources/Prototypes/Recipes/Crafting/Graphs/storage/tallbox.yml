@@ -20,9 +20,9 @@
       - !type:StorageWelded
         welded: false
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 4
+      - !type:SpawnEntity
+        entity: SheetSteel1
+        number: 4
       - !type:EmptyAllContainers
       - !type:DeleteEntity
 
@@ -52,12 +52,12 @@
       - !type:Locked
         locked: false
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetPlasteel1
-        amount: 4
-      - !type:SpawnPrototype
-        prototype: CableApcStack1
-        amount: 2
+      - !type:SpawnEntity
+        entity: SheetPlasteel1
+        number: 4
+      - !type:SpawnEntity
+        entity: CableApcStack1
+        number: 2
       - !type:EmptyAllContainers
       - !type:DeleteEntity
 
@@ -92,15 +92,15 @@
       - !type:Locked
         locked: false
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetPlasteel1
-        amount: 4
-      - !type:SpawnPrototype
-        prototype: CableApcStack1
-        amount: 2
-      - !type:SpawnPrototype
-        prototype: FreezerElectronics
-        amount: 1
+      - !type:SpawnEntity
+        entity: SheetPlasteel1
+        number: 4
+      - !type:SpawnEntity
+        entity: CableApcStack1
+        number: 2
+      - !type:SpawnEntity
+        entity: FreezerElectronics
+        number: 1
       - !type:EmptyAllContainers
       - !type:DeleteEntity
 
@@ -133,15 +133,15 @@
       - !type:Locked
         locked: false
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 10
-      - !type:SpawnPrototype
-        prototype: CableApcStack1
-        amount: 5
-      - !type:SpawnPrototype
-        prototype: SheetPlasteel1
-        amount: 10
+      - !type:SpawnEntity
+        entity: SheetSteel1
+        number: 10
+      - !type:SpawnEntity
+        entity: CableApcStack1
+        number: 5
+      - !type:SpawnEntity
+        entity: SheetPlasteel1
+        number: 10
       - !type:EmptyAllContainers
       - !type:DeleteEntity
 
@@ -167,8 +167,8 @@
       - !type:StorageWelded
         welded: false
       completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 4
+      - !type:SpawnEntity
+        entity: SheetSteel1
+        number: 4
       - !type:EmptyAllContainers
       - !type:DeleteEntity

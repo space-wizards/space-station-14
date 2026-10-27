@@ -21,9 +21,9 @@
     edges:
     - to: start
       completed:
-      - !type:SpawnPrototype
-        prototype: PartRodMetal1
-        amount: 4
+      - !type:SpawnEntity
+        entity: PartRodMetal1
+        number: 4
       - !type:DeleteEntity
       steps:
       - tool: Welding
