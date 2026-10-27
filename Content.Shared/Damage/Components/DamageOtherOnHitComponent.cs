@@ -15,9 +15,6 @@ public sealed partial class DamageOtherOnHitComponent : Component
     [DataField]
     public bool IgnoreResistances;
 
-    [DataField]
-    public LocId IgnoreResistancesMessage = "damage-ignore-resistance-on-hit";
-
     /// <summary>
     /// The damage amount to deal on hit.
     /// </summary>
