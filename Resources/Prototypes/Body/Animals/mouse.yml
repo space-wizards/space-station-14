@@ -9,7 +9,6 @@
       - Cable
     isSpecialDigestibleExclusive: false
   - type: Metabolizer
-    metabolizerTypes: [ Rodent ]
 
 - type: entity
   id: BaseMobRodent
