@@ -16,7 +16,7 @@ public sealed partial class AlertsUI : UIWidget
 {
     // also known as Control.Children?
     private readonly Dictionary<AlertKey, AlertControl> _alertControls = new();
-    private ISawmill _sawmill = default!;
+    private readonly ISawmill _sawmill;
 
     public AlertsUI()
     {

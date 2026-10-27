@@ -15,7 +15,7 @@ namespace Content.Client.Administration.UI.Notes;
 public sealed partial class AdminNotesLine : BoxContainer
 {
     private readonly SpriteSystem _sprites;
-    private ISawmill _log;
+    private readonly ISawmill _log;
 
     private const string AdminNotesTextureBase = "/Textures/Interface/AdminNotes/";
     private static readonly Dictionary<NoteSeverity, string> SeverityIcons = new()
