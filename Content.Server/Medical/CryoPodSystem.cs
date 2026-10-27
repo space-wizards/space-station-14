@@ -8,17 +8,18 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Medical.Cryogenics;
+using Content.Shared.Medical.HealthAnalyzer;
 
 namespace Content.Server.Medical;
 
 public sealed partial class CryoPodSystem : SharedCryoPodSystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-    [Dependency] private readonly GasCanisterSystem _gasCanisterSystem = default!;
-    [Dependency] private readonly GasAnalyzerSystem _gasAnalyzerSystem = default!;
-    [Dependency] private readonly HealthAnalyzerSystem _healthAnalyzerSystem = default!;
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private GasCanisterSystem _gasCanisterSystem = default!;
+    [Dependency] private GasAnalyzerSystem _gasAnalyzerSystem = default!;
+    [Dependency] private HealthAnalyzerSystem _healthAnalyzerSystem = default!;
+    [Dependency] private NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
 
 
     public override void Initialize()
@@ -56,7 +57,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         var gasMix = _gasAnalyzerSystem.GenerateGasMixEntry("Cryo pod", air.Air);
         var (beakerCapacity, beaker) = GetBeakerInfo(entity);
         var injecting = GetInjectingReagents(entity);
-        var health = _healthAnalyzerSystem.GetHealthAnalyzerUiState(patient);
+        var health = _healthAnalyzerSystem.GetHealthAnalyzerUiState(patient, true);
         health.ScanMode = true;
         var hasDamage = patient is null ? false : _damageable.GetTotalDamage(patient.Value) > 0;
 

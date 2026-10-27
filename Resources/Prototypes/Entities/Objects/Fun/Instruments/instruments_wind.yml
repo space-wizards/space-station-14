@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseHandheldInstrument
   id: BaseWoodwindInstrument
   abstract: true
@@ -17,20 +17,21 @@
     program: 66
   - type: SwappableInstrument
     instrumentList:
-      "Soprano": {64: 0}
-      "Alto": {65: 0}
-      "Tenor": {66: 0}
-      "Baritone": {67: 0}
+      swappable-instrument-style-soprano: {64: 0}
+      swappable-instrument-style-alto: {65: 0}
+      swappable-instrument-style-tenor: {66: 0}
+      swappable-instrument-style-baritone: {67: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/saxophone.rsi
   - type: Extractable
-    grindableSolutionName: sax
-  - type: SolutionContainerManager
-    solutions:
-      sax:
-        reagents:
-          - ReagentId: Saxoite
-            Quantity: 10
+    grindableSolutionName: instrument
+  - type: Solution
+    id: instrument
+    solution:
+      maxVol: 20 # Based on material balance and not container balance so no size parent.
+      reagents:
+      - ReagentId: Brass
+        Quantity: 10
 
 - type: entity
   parent: BaseWoodwindInstrument
@@ -49,7 +50,11 @@
     slots:
     - neck
   - type: ActivatableUI
-    inHandsOnly: false  
+    inHandsOnly: false
+  - type: Tag
+    tags:
+    - WoodwindInstrument
+    - MonkeyWearable
 
 - type: entity
   parent: BaseWoodwindInstrument

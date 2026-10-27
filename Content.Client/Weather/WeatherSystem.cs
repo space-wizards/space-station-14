@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.CCVar;
 using Content.Shared.Light.Components;
 using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Weather;
@@ -7,32 +8,33 @@ using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.Audio.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 
 namespace Content.Client.Weather;
 
-public sealed class WeatherSystem : SharedWeatherSystem
+public sealed partial class WeatherSystem : SharedWeatherSystem
 {
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly MapSystem _mapSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private AudioSystem _audio = default!;
+    [Dependency] private MapSystem _mapSystem = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
 
-    private EntityQuery<AudioComponent> _audioQuery;
-    private EntityQuery<MapGridComponent> _gridQuery;
-    private EntityQuery<RoofComponent> _roofQuery;
+    [Dependency] private EntityQuery<AudioComponent> _audioQuery = default!;
+    [Dependency] private EntityQuery<MapGridComponent> _gridQuery = default!;
+    [Dependency] private EntityQuery<RoofComponent> _roofQuery = default!;
+
+    private float _weatherGain;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        Subs.CVar(_cfg, CCVars.AmbienceVolume, value => _weatherGain = value, true);
         SubscribeLocalEvent<WeatherStatusEffectComponent, ComponentShutdown>(OnComponentShutdown);
-
-        _audioQuery = GetEntityQuery<AudioComponent>();
-        _gridQuery = GetEntityQuery<MapGridComponent>();
-        _roofQuery = GetEntityQuery<RoofComponent>();
     }
 
     private void OnComponentShutdown(Entity<WeatherStatusEffectComponent> ent, ref ComponentShutdown args)
@@ -60,13 +62,13 @@ public sealed class WeatherSystem : SharedWeatherSystem
             if (weather.Sound == null || status.AppliedTo != playerXform.MapUid)
             {
                 weather.Stream = _audio.Stop(weather.Stream);
-                return;
+                continue;
             }
 
             weather.Stream ??= _audio.PlayGlobal(weather.Sound, Filter.Local(), true)?.Entity;
 
             if (!_audioQuery.TryComp(weather.Stream, out var audio))
-                return;
+                continue;
 
             var occlusion = 0f;
 
@@ -133,6 +135,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
 
             var alpha = GetWeatherPercent((uid, status));
             alpha *= SharedAudioSystem.VolumeToGain(weather.Sound.Params.Volume);
+            alpha *= _weatherGain;
             _audio.SetGain(weather.Stream, alpha, audio);
             audio.Occlusion = occlusion;
         }

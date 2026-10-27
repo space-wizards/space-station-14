@@ -1,4 +1,4 @@
-﻿using Content.Shared.CCVar;
+using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.NukeOps;
 using JetBrains.Annotations;
@@ -9,9 +9,9 @@ using Robust.Shared.Timing;
 namespace Content.Client.NukeOps;
 
 [UsedImplicitly]
-public sealed class WarDeclaratorBoundUserInterface : BoundUserInterface
+public sealed partial class WarDeclaratorBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
 
     [ViewVariables]
     private WarDeclaratorWindow? _window;

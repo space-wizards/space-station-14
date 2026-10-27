@@ -4,9 +4,9 @@ using Content.Shared.Inventory;
 
 namespace Content.Shared.Eye.Blinding.Systems;
 
-public sealed class BlindfoldSystem : EntitySystem
+public sealed partial class BlindfoldSystem : EntitySystem
 {
-    [Dependency] private readonly BlindableSystem _blindableSystem = default!;
+    [Dependency] private BlindableSystem _blindableSystem = default!;
 
     public override void Initialize()
     {
@@ -24,11 +24,11 @@ public sealed class BlindfoldSystem : EntitySystem
 
     private void OnEquipped(Entity<BlindfoldComponent> blindfold, ref GotEquippedEvent args)
     {
-        _blindableSystem.UpdateIsBlind(args.Equipee);
+        _blindableSystem.UpdateIsBlind(args.EquipTarget);
     }
 
     private void OnUnequipped(Entity<BlindfoldComponent> blindfold, ref GotUnequippedEvent args)
     {
-        _blindableSystem.UpdateIsBlind(args.Equipee);
+        _blindableSystem.UpdateIsBlind(args.EquipTarget);
     }
 }

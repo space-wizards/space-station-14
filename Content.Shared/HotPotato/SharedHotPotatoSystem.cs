@@ -11,13 +11,13 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.HotPotato;
 
-public abstract class SharedHotPotatoSystem : EntitySystem
+public abstract partial class SharedHotPotatoSystem : EntitySystem
 {
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
-    [Dependency] private readonly DamageOnHoldingSystem _damageOnHolding = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedAmbientSoundSystem _ambientSound = default!;
+    [Dependency] private DamageOnHoldingSystem _damageOnHolding = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
 
     public override void Initialize()
@@ -57,15 +57,14 @@ public abstract class SharedHotPotatoSystem : EntitySystem
 
             if (!_hands.IsHolding((hitEntity, hands), ent.Owner, out _) && _hands.TryForcePickupAnyHand(hitEntity, ent.Owner, handsComp: hands))
             {
-                _popup.PopupPredicted(
+                _popup.PopupEntity(
                     Loc.GetString("hot-potato-passed", ("from", Identity.Entity(args.User, EntityManager)), ("to", Identity.Entity(hitEntity, EntityManager))),
                     ent.Owner,
-                    args.User,
                     PopupType.Medium);
                 break;
             }
 
-            _popup.PopupClient(
+            _popup.PopupEntity(
                 Loc.GetString("hot-potato-failed", ("to", Identity.Entity(hitEntity, EntityManager))),
                 ent.Owner,
                 args.User,

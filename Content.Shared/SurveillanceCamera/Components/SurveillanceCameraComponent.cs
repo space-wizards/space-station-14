@@ -8,18 +8,23 @@ namespace Content.Shared.SurveillanceCamera.Components;
 [Access(typeof(SharedSurveillanceCameraSystem))]
 public sealed partial class SurveillanceCameraComponent : Component
 {
-    // List of active viewers. This is for bookkeeping purposes,
-    // so that when a camera shuts down, any entity viewing it
-    // will immediately have their subscription revoked.
+    /// <summary>
+    /// List of active viewers who have a PVS view subscription on this camera.
+    /// This is for bookkeeping purposes,
+    /// so that when a camera shuts down, any entity viewing it
+    /// will immediately have their subscription revoked.
+    /// </summary>
     [ViewVariables]
-    public HashSet<EntityUid> ActiveViewers { get; } = new();
+    public HashSet<EntityUid> ActivePvsViewers { get; } = new();
 
-    // Monitors != Viewers, as viewers are entities that are tied
-    // to a player session that's viewing from this camera
-    //
-    // Monitors are grouped sets of viewers, and may be
-    // completely different monitor types (e.g., monitor console,
-    // AI, etc.)
+    /// <summary>
+    /// Monitors != Viewers, as viewers are entities that are tied
+    /// to a player session that's viewing from this camera
+    ///
+    /// Monitors are grouped sets of viewers, and may be
+    /// completely different monitor types (e.g., monitor console,
+    /// AI, etc.)
+    /// </summary>
     [ViewVariables]
     public HashSet<EntityUid> ActiveMonitors { get; } = new();
 

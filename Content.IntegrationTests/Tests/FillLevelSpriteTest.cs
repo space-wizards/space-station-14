@@ -1,7 +1,7 @@
 using System.Linq;
+using Content.IntegrationTests.Fixtures;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
@@ -12,7 +12,7 @@ namespace Content.IntegrationTests.Tests;
 /// Tests to see if any entity prototypes specify solution fill level sprites that don't exist.
 /// </summary>
 [TestFixture]
-public sealed class FillLevelSpriteTest
+public sealed class FillLevelSpriteTest : GameTest
 {
     private static readonly string[] HandStateNames = ["left", "right"];
     private static readonly string[] EquipStateNames = ["back", "suitstorage"];
@@ -20,7 +20,7 @@ public sealed class FillLevelSpriteTest
     [Test]
     public async Task FillLevelSpritesExist()
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+        var pair = Pair;
         var client = pair.Client;
         var protoMan = client.ResolveDependency<IPrototypeManager>();
         var componentFactory = client.ResolveDependency<IComponentFactory>();
@@ -32,7 +32,7 @@ public sealed class FillLevelSpriteTest
             var protos = protoMan.EnumeratePrototypes<EntityPrototype>()
                 .Where(p => !p.Abstract)
                 .Where(p => !pair.IsTestPrototype(p))
-                .Where(p => p.TryGetComponent<SolutionContainerVisualsComponent>(out _, componentFactory))
+                .Where(p => p.TryComp<SolutionContainerVisualsComponent>(out _, componentFactory))
                 .OrderBy(p => p.ID)
                 .ToList();
 
@@ -40,9 +40,9 @@ public sealed class FillLevelSpriteTest
             {
                 foreach (var proto in protos)
                 {
-                    Assert.That(proto.TryGetComponent<SolutionContainerVisualsComponent>(out var visuals, componentFactory));
-                    Assert.That(proto.TryGetComponent<SpriteComponent>(out var sprite, componentFactory));
-                    if (!proto.HasComponent<AppearanceComponent>(componentFactory))
+                    Assert.That(proto.TryComp<SolutionContainerVisualsComponent>(out var visuals, componentFactory));
+                    Assert.That(proto.TryComp<SpriteComponent>(out var sprite, componentFactory));
+                    if (!proto.HasComp<AppearanceComponent>(componentFactory))
                     {
                         Assert.Fail(@$"{proto.ID} has SolutionContainerVisualsComponent but no AppearanceComponent.");
                     }
@@ -101,7 +101,5 @@ public sealed class FillLevelSpriteTest
                 }
             });
         });
-
-        await pair.CleanReturnAsync();
     }
 }

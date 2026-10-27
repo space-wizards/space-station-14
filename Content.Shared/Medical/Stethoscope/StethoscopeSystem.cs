@@ -13,13 +13,13 @@ using Robust.Shared.Containers;
 
 namespace Content.Shared.Medical.Stethoscope;
 
-public sealed class StethoscopeSystem : EntitySystem
+public sealed partial class StethoscopeSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
 
     // The damage type to "listen" for with the stethoscope.
     private const string DamageToListenFor = "Asphyxiation";
@@ -97,11 +97,11 @@ public sealed class StethoscopeSystem : EntitySystem
     {
         // TODO: Add check for respirator component when it gets moved to shared.
         // If the mob is dead or cannot asphyxiation damage, the popup shows nothing.
-        if (!TryComp<MobStateComponent>(target, out var mobState)                        ||
-            _mobState.IsDead(target, mobState)                                           ||
-            !_damageable.GetAllDamage(target).DamageDict.TryGetValue(DamageToListenFor, out var asphyxDmg))
+        if (!TryComp<MobStateComponent>(target, out var mobState)
+            || _mobState.IsDead(target, mobState)
+            || !_damageable.GetAllDamage(target).DamageDict.TryGetValue(DamageToListenFor, out var asphyxDmg))
         {
-            _popup.PopupPredicted(Loc.GetString("stethoscope-nothing"), target, user);
+            _popup.PopupEntity(Loc.GetString("stethoscope-nothing"), target, user);
             stethoscope.Comp.LastMeasuredDamage = null;
             return;
         }
@@ -111,12 +111,12 @@ public sealed class StethoscopeSystem : EntitySystem
         // Don't show the change if this is the first time listening.
         if (stethoscope.Comp.LastMeasuredDamage == null)
         {
-            _popup.PopupPredicted(absString, target, user);
+            _popup.PopupEntity(absString, target, user);
         }
         else
         {
             var deltaString = GetDeltaDamageString(stethoscope.Comp.LastMeasuredDamage.Value, asphyxDmg);
-            _popup.PopupPredicted(Loc.GetString("stethoscope-combined-status", ("absolute", absString), ("delta", deltaString)), target, user);
+            _popup.PopupEntity(Loc.GetString("stethoscope-combined-status", ("absolute", absString), ("delta", deltaString)), target, user);
         }
 
         stethoscope.Comp.LastMeasuredDamage = asphyxDmg;

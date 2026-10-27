@@ -1,14 +1,14 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Shared.Administration.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 
 namespace Content.Client.Administration.Systems;
 
-public sealed class KillSignSystem : EntitySystem
+public sealed partial class KillSignSystem : EntitySystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private IPlayerManager _player = default!;
 
     public override void Initialize()
     {

@@ -6,13 +6,12 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Audio.Jukebox;
 
 
-public sealed class JukeboxSystem : SharedJukeboxSystem
+public sealed partial class JukeboxSystem : SharedJukeboxSystem
 {
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private AnimationPlayerSystem _animationPlayer = default!;
+    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -21,13 +20,13 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         SubscribeLocalEvent<JukeboxComponent, AnimationCompletedEvent>(OnAnimationCompleted);
         SubscribeLocalEvent<JukeboxComponent, AfterAutoHandleStateEvent>(OnJukeboxAfterState);
 
-        _protoManager.PrototypesReloaded += OnProtoReload;
+        ProtoMan.PrototypesReloaded += OnProtoReload;
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
-        _protoManager.PrototypesReloaded -= OnProtoReload;
+        ProtoMan.PrototypesReloaded -= OnProtoReload;
     }
 
     private void OnProtoReload(PrototypesReloadedEventArgs obj)
@@ -73,11 +72,8 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         if (args.Sprite == null)
             return;
 
-        if (!args.AppearanceData.TryGetValue(JukeboxVisuals.VisualState, out var visualStateObject) ||
-            visualStateObject is not JukeboxVisualState visualState)
-        {
+        if (!args.TryGetData<JukeboxVisualState>(JukeboxVisuals.VisualState, out var visualState))
             visualState = JukeboxVisualState.On;
-        }
 
         UpdateAppearance((uid, args.Sprite), visualState, component);
     }

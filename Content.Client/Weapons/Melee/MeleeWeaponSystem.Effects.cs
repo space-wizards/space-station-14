@@ -32,7 +32,7 @@ public sealed partial class MeleeWeaponSystem
         if (localPos == Vector2.Zero || animation == null)
             return;
 
-        if (!_xformQuery.TryGetComponent(user, out var userXform) || userXform.MapID == MapId.Nullspace)
+        if (!TryComp(user, out TransformComponent? userXform) || userXform.MapID == MapId.Nullspace)
             return;
 
         var animationUid = Spawn(animation, userXform.Coordinates);
@@ -64,7 +64,7 @@ public sealed partial class MeleeWeaponSystem
         }
         _sprite.SetRotation((animationUid, sprite), localPos.ToWorldAngle());
 
-        var xform = _xformQuery.GetComponent(animationUid);
+        var xform = Transform(animationUid);
         TrackUserComponent track;
 
         switch (arcComponent.Animation)
@@ -94,6 +94,10 @@ public sealed partial class MeleeWeaponSystem
         }
     }
 
+    /// <summary>
+    /// Makes the sprite move in a slash motion around the player.
+    /// For example for wide swing animations.
+    /// </summary>
     private Animation GetSlashAnimation(Entity<SpriteComponent> sprite, Angle arc, Angle spriteRotation, float length, float offset)
     {
         var startRotation = sprite.Comp.Rotation + (arc * 0.5f);
@@ -105,7 +109,6 @@ public sealed partial class MeleeWeaponSystem
 
         startRotation += spriteRotation;
         endRotation += spriteRotation;
-        sprite.Comp.NoRotation = true;
 
         return new Animation()
         {
@@ -141,6 +144,10 @@ public sealed partial class MeleeWeaponSystem
         };
     }
 
+    /// <summary>
+    /// Makes the sprite move in a thrust motion from the player towards the target, then slightly pulls back.
+    /// For example for spears.
+    /// </summary>
     private Animation GetThrustAnimation(Entity<SpriteComponent> sprite, float offset, Angle spriteRotation, float length)
     {
         var startOffset = sprite.Comp.Rotation.RotateVec(new Vector2(0f, 0f));
@@ -170,6 +177,10 @@ public sealed partial class MeleeWeaponSystem
         };
     }
 
+    /// <summary>
+    /// Makes the sprite slowly fade by gradually reducing its alpha value.
+    /// Used at the end of attack animations so that the weapon sprite does not abruptly disappears.
+    /// </summary>
     private Animation GetFadeAnimation(SpriteComponent sprite, float start, float end)
     {
         return new Animation
@@ -193,6 +204,7 @@ public sealed partial class MeleeWeaponSystem
 
     /// <summary>
     /// Get the sprite offset animation to use for mob lunges.
+    /// This is applied to the attacker to show who is attacking.
     /// </summary>
     private Animation GetLungeAnimation(Vector2 direction)
     {
@@ -230,7 +242,7 @@ public sealed partial class MeleeWeaponSystem
             if (arcComponent.User == null || EntityManager.Deleted(arcComponent.User))
                 continue;
 
-            Vector2 targetPos = TransformSystem.GetWorldPosition(arcComponent.User.Value);
+            var targetPos = TransformSystem.GetWorldPosition(arcComponent.User.Value);
 
             if (arcComponent.Offset != Vector2.Zero)
             {

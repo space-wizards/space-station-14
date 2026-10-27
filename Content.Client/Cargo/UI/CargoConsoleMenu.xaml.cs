@@ -18,7 +18,7 @@ namespace Content.Client.Cargo.UI
     [GenerateTypedNameReferences]
     public sealed partial class CargoConsoleMenu : FancyWindow
     {
-        [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private IGameTiming _timing = default!;
 
         private readonly IEntityManager _entityManager;
         private readonly IPrototypeManager _protoManager;
@@ -161,7 +161,7 @@ namespace Content.Client.Cargo.UI
                         ProductName = { Text = prototype.Name },
                         MainButton = { ToolTip = prototype.Description },
                         PointCost = { Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", prototype.Cost.ToString())) },
-                        Icon = { Texture = _spriteSystem.Frame0(prototype.Icon) },
+                        Icon = { Texture = _spriteSystem.Frame0(prototype.Icon) }
                     };
                     button.MainButton.OnPressed += args =>
                     {
@@ -230,16 +230,12 @@ namespace Content.Client.Cargo.UI
                             "cargo-console-menu-order-row-title",
                             ("productName", productName),
                             ("orderAmount", order.OrderQuantity),
-                            ("orderPrice", productProto.Cost)),
+                            ("orderPrice", productProto.Cost))
                     },
 
                     Stride =
                     {
-                        PanelOverride = new StyleBoxFlat
-                        {
-                            BackgroundColor = account.Color,
-                            ContentMarginBottomOverride = 2,
-                        },
+                        ColorOverride = account.Color
                     },
 
                     Icon = { Texture = _spriteSystem.Frame0(product) },
