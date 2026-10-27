@@ -5,6 +5,7 @@ using Content.Shared.Examine;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -33,10 +34,18 @@ public abstract partial class SharedGunSystem
         if (damageSpec == null)
             return;
 
-        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), Loc.GetString("damage-projectile"));
+        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec.Value.Item1), Loc.GetString("damage-projectile"));
+
+        if (damageSpec.Value.Item2)
+        {
+            var msg = new FormattedMessage();
+            msg.PushNewline();
+            msg.AddMarkupOrThrow(Loc.GetString(ent.Comp.IgnoreResistancesMessage));
+            args.Message.AddMessage(msg);
+        }
     }
 
-    private DamageSpecifier? GetProjectileDamage(EntProtoId proto)
+    private (DamageSpecifier, bool)? GetProjectileDamage(EntProtoId proto)
     {
         if (!ProtoMan.TryIndex(proto, out var entityProto))
             return null;
@@ -45,7 +54,7 @@ public abstract partial class SharedGunSystem
             return null;
 
         if (!projectile.Damage.Empty)
-            return projectile.Damage * Damageable.UniversalProjectileDamageModifier;
+            return (projectile.Damage * Damageable.UniversalProjectileDamageModifier, projectile.IgnoreResistances);
 
         return null;
     }

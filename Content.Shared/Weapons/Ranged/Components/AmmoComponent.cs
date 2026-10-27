@@ -51,4 +51,7 @@ public sealed partial class CartridgeAmmoComponent : AmmoComponent
     /// </summary>
     [DataField("soundEject")]
     public SoundSpecifier? EjectSound = new SoundCollectionSpecifier("CasingEject");
+
+    [DataField]
+    public LocId IgnoreResistancesMessage = "damage-ignore-resistance-cartridge";
 }

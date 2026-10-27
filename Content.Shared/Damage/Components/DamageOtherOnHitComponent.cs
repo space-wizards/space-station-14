@@ -13,7 +13,10 @@ public sealed partial class DamageOtherOnHitComponent : Component
     /// Whether to ignore damage modifiers.
     /// </summary>
     [DataField]
-    public bool IgnoreResistances = false;
+    public bool IgnoreResistances;
+
+    [DataField]
+    public LocId IgnoreResistancesMessage = "damage-ignore-resistance-on-hit";
 
     /// <summary>
     /// The damage amount to deal on hit.
