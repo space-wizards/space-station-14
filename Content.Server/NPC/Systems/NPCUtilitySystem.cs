@@ -199,8 +199,6 @@ public sealed partial class NPCUtilitySystem : EntitySystem
 
                 return 1f;
             }
-            case RandomCon randomConsideration:
-                return _random.Prob(randomConsideration.Chance) ? 1f : 0f;
             case DrinkValueCon drinkValueConsideration:
             {
                 // can't drink closed drinks and can't drink with a mask on...

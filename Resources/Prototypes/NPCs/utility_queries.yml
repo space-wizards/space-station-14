@@ -56,9 +56,6 @@
     - !type:TargetDistanceCon
       curve: !type:PresetCurve
         preset: TargetDistance
-    - !type:RandomCon
-      chance: 0.001
-      curve: !type:BoolCurve
     - !type:TargetAccessibleCon
       curve: !type:BoolCurve
 
