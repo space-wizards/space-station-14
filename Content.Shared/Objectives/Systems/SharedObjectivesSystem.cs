@@ -9,10 +9,9 @@ namespace Content.Shared.Objectives.Systems;
 /// <summary>
 /// Provides API for creating and interacting with objectives.
 /// </summary>
-public abstract class SharedObjectivesSystem : EntitySystem
+public abstract partial class SharedObjectivesSystem : EntitySystem
 {
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
 
     /// <summary>
     /// Checks requirements and duplicate objectives to see if an objective can be assigned.
@@ -48,7 +47,7 @@ public abstract class SharedObjectivesSystem : EntitySystem
     /// </summary>
     public EntityUid? TryCreateObjective(EntityUid mindId, MindComponent mind, string proto)
     {
-        if (!_protoMan.HasIndex<EntityPrototype>(proto))
+        if (!ProtoMan.HasIndex<EntityPrototype>(proto))
             return null;
 
         var uid = Spawn(proto);

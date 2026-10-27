@@ -1,15 +1,14 @@
-﻿using System.Linq;
 using Content.Server.Administration;
-using Content.Server.GameTicking.Presets;
 using Content.Shared.Administration;
+using Content.Shared.GameTicking.Prototypes;
 using Robust.Shared.Console;
 
 namespace Content.Server.GameTicking.Commands
 {
     [AdminCommand(AdminFlags.Round)]
-    public sealed class SetGamePresetCommand : IConsoleCommand
+    public sealed partial class SetGamePresetCommand : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entity = default!;
+        [Dependency] private IEntityManager _entity = default!;
 
         public string Command => "setgamepreset";
         public string Description => Loc.GetString("set-game-preset-command-description", ("command", Command));
@@ -23,7 +22,7 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            var ticker = _entity.System<GameTicker>();
+            var ticker = _entity.System<ServerGameTicker>();
 
             if (!ticker.TryFindGamePreset(args[0], out var preset))
             {

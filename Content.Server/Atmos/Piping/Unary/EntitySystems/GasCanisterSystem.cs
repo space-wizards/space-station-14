@@ -14,12 +14,12 @@ using GasCanisterComponent = Content.Shared.Atmos.Piping.Unary.Components.GasCan
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
 
-public sealed class GasCanisterSystem : SharedGasCanisterSystem
+public sealed partial class GasCanisterSystem : SharedGasCanisterSystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmos = default!;
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private AtmosphereSystem _atmos = default!;
+    [Dependency] private NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     private const float ReleaseArea = 0.05f; // 500cm^2 Number chosen for balance reasons. It's quite large, but so are gas canisters (holding 1.5 cubic meters of gas!)
 
@@ -91,8 +91,7 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
     {
         _atmos.React(entity.Comp.Air, entity.Comp);
 
-        if (!TryComp<NodeContainerComponent>(entity, out var nodeContainer)
-            || !TryComp<AppearanceComponent>(entity, out var appearance))
+        if (!TryComp<NodeContainerComponent>(entity, out var nodeContainer))
             return;
 
         if (!_nodeContainer.TryGetNode(nodeContainer, entity.Comp.PortName, out PortablePipeNode? portNode))
@@ -125,26 +124,10 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
         if (MathHelper.CloseToPercent(entity.Comp.Air.Pressure, entity.Comp.LastPressure))
             return;
 
-        DirtyUI(entity, entity.Comp, nodeContainer);
-
         entity.Comp.LastPressure = entity.Comp.Air.Pressure;
 
-        if (entity.Comp.Air.Pressure < 10)
-        {
-            _appearance.SetData(entity, GasCanisterVisuals.PressureState, 0, appearance);
-        }
-        else if (entity.Comp.Air.Pressure < Atmospherics.OneAtmosphere)
-        {
-            _appearance.SetData(entity, GasCanisterVisuals.PressureState, 1, appearance);
-        }
-        else if (entity.Comp.Air.Pressure < (15 * Atmospherics.OneAtmosphere))
-        {
-            _appearance.SetData(entity, GasCanisterVisuals.PressureState, 2, appearance);
-        }
-        else
-        {
-            _appearance.SetData(entity, GasCanisterVisuals.PressureState, 3, appearance);
-        }
+        DirtyUI(entity, entity.Comp, nodeContainer);
+        UpdateAppearance(entity);
     }
 
     /// <summary>

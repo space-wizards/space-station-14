@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.Server.Ghost.Roles;
@@ -35,6 +35,7 @@ public sealed partial class MindTests : GameTest
   components:
   - type: MindContainer
   - type: Damageable
+  - type: Injurable
     damageContainer: Biological
   - type: Body
     prototype: Human

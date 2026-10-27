@@ -7,11 +7,11 @@ using Robust.Shared.Upload;
 
 namespace Content.Server.Administration;
 
-public sealed class ContentNetworkResourceManager
+public sealed partial class ContentNetworkResourceManager
 {
-    [Dependency] private readonly IServerDbManager _serverDb = default!;
-    [Dependency] private readonly NetworkResourceManager _netRes = default!;
-    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
+    [Dependency] private IServerDbManager _serverDb = default!;
+    [Dependency] private NetworkResourceManager _netRes = default!;
+    [Dependency] private IConfigurationManager _cfgManager = default!;
 
     [ViewVariables] public bool StoreUploaded { get; set; } = true;
 

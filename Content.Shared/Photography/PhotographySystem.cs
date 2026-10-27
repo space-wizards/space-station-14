@@ -11,12 +11,12 @@ namespace Content.Shared.Photography;
 /// <summary>
 /// Handles everything related to photography.
 /// </summary>
-public sealed class PhotographySystem : EntitySystem
+public sealed partial class PhotographySystem : EntitySystem
 {
-    [Dependency] private readonly ExamineSystemShared _examine = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly EntityTableSystem _tables = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private ExamineSystemShared _examine = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private EntityTableSystem _tables = default!;
+    [Dependency] private INetManager _net = default!;
 
     public override void Initialize()
     {

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Database;
+using Content.Shared.Database;
 using Robust.Shared.Network;
 
 namespace Content.Server.Connection;

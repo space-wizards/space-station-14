@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Client.Guidebook;
 using Content.Client.Guidebook.Components;
 using Content.Client.Stylesheets;
@@ -14,8 +14,8 @@ namespace Content.Client.UserInterface.Controls
     [Virtual]
     public partial class FancyWindow : BaseWindow
     {
-        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
-        [Dependency] private readonly IStylesheetManager _styleMan = default!;
+        [Dependency] private IEntitySystemManager _sysMan = default!;
+        [Dependency] private IStylesheetManager _styleMan = default!;
         private GuidebookSystem? _guidebookSystem;
         private const int DRAG_MARGIN_SIZE = 7;
 

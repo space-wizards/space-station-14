@@ -8,11 +8,11 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Client.Fluids;
 
-public sealed class PuddleOverlay : Overlay
+public sealed partial class PuddleOverlay : Overlay
 {
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+    [Dependency] private IEyeManager _eyeManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IEntitySystemManager _entitySystemManager = default!;
     private readonly PuddleDebugOverlaySystem _debugOverlaySystem;
     private readonly SharedTransformSystem _transformSystem;
 
@@ -75,8 +75,6 @@ public sealed class PuddleOverlay : Overlay
                 drawHandle.DrawRect(box, ColorMap(debugOverlayData.CurrentVolume));
             }
         }
-
-        drawHandle.SetTransform(Matrix3x2.Identity);
     }
 
     private void DrawScreen(in OverlayDrawArgs args)
@@ -104,7 +102,7 @@ public sealed class PuddleOverlay : Overlay
 
                 var screenCenter = _eyeManager.WorldToScreen(Vector2.Transform(centre, matrix));
 
-                drawHandle.DrawString(_font, screenCenter, debugOverlayData.CurrentVolume.ToString(), Color.White);
+                drawHandle.DrawString(_font, screenCenter, debugOverlayData.CurrentVolume.ToString(), 1, Color.White, TextOutline.Default);
             }
         }
     }

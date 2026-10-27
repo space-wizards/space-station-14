@@ -4,13 +4,13 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Materials.OreSilo;
 
-public abstract class SharedOreSiloSystem : EntitySystem
+public abstract partial class SharedOreSiloSystem : EntitySystem
 {
-    [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private SharedMaterialStorageSystem _materialStorage = default!;
+    [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
-    [Dependency] private readonly EntityQuery<OreSiloClientComponent> _clientQuery = default!;
+    [Dependency] private EntityQuery<OreSiloClientComponent> _clientQuery = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

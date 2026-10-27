@@ -13,18 +13,18 @@ using Robust.Shared.Toolshed;
 namespace Content.Server.Toolshed.Commands.Misc;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Fun)]
-public sealed class MsgCommand : ToolshedCommand
+public sealed partial class MsgCommand : ToolshedCommand
 {
     [Dependency] private IChatManager _chatManager = default!;
 
-    private PrayerSystem? _prayer;
+    private ServerPrayerSystem? _prayer;
     private PopupSystem? _popup;
     private TipsSystem? _tips;
 
     [CommandImplementation("subtle")]
     public IEnumerable<EntityUid> Subtle(IInvocationContext ctx, [PipedArgument] IEnumerable<EntityUid> targets, string popup, string message)
     {
-        _prayer ??= GetSys<PrayerSystem>();
+        _prayer ??= GetSys<ServerPrayerSystem>();
 
         foreach (var ent in targets)
         {

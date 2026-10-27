@@ -14,11 +14,11 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 /// </summary>
 public sealed partial class PickEntityNearMobOperator : HTNOperator
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    private EntityLookupSystem _lookup = default!;
-    private PathfindingSystem _pathfinding = default!;
-    private ContainerSystem _container = default!;
-    private EntityWhitelistSystem _entityWhitelist = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private PathfindingSystem _pathfinding = default!;
+    [Dependency] private ContainerSystem _container = default!;
+    [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
 
     /// <summary>
     /// Range to search for entities
@@ -68,15 +68,6 @@ public sealed partial class PickEntityNearMobOperator : HTNOperator
     [DataField]
     public MobState? MobState;
 
-    public override void Initialize(IEntitySystemManager sysManager)
-    {
-        base.Initialize(sysManager);
-        _lookup = sysManager.GetEntitySystem<EntityLookupSystem>();
-        _pathfinding = sysManager.GetEntitySystem<PathfindingSystem>();
-        _container = sysManager.GetEntitySystem<ContainerSystem>();
-        _entityWhitelist = sysManager.GetEntitySystem<EntityWhitelistSystem>();
-    }
-
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
         CancellationToken cancelToken)
     {
@@ -85,47 +76,42 @@ public sealed partial class PickEntityNearMobOperator : HTNOperator
         if (!blackboard.TryGetValue<float>(RangeKey, out var range, _entManager))
             return (false, null);
 
-        if (!blackboard.TryGetValue<float>(RangeKey, out var mobRange, _entManager))
+        if (!blackboard.TryGetValue<float>(MobRangeKey, out var mobRange, _entManager))
             return (false, null);
 
         var mobState = _entManager.GetEntityQuery<MobStateComponent>();
 
-        foreach (var entity in _lookup.GetEntitiesInRange(owner, range))
+        foreach (var mob in _lookup.GetEntitiesInRange(owner, mobRange, LookupFlags.Uncontained & ~LookupFlags.Sensors))
         {
-            if (!_entityWhitelist.CheckBoth(entity, Blacklist, Whitelist))
+            if (mob == owner)
                 continue;
 
-            //checking if there is anyone NEAR the entity we found
-            foreach (var mob in _lookup.GetEntitiesInRange(entity, mobRange))
+            if (!mobState.TryGetComponent(mob, out var state))
+                continue;
+
+            if (MobState != null && state.CurrentState != MobState)
+                continue;
+
+            foreach (var entity in _lookup.GetEntitiesInRange(mob, range))
             {
-                if (mob == owner)
+                if (!_entityWhitelist.CheckBoth(entity, Blacklist, Whitelist))
                     continue;
 
-                if (_container.IsEntityInContainer(mob))
-                    continue;
+                var pathRange = SharedInteractionSystem.InteractionRange;
+                var path = await _pathfinding.GetPath(owner, mob, pathRange, cancelToken);
 
-                if (mobState.TryGetComponent(mob, out var state))
+                if (path.Result == PathResult.NoPath)
+                    return (false, null);
+
+                return (true, new Dictionary<string, object>()
                 {
-                    if (MobState != null && state.CurrentState != MobState)
-                        continue;
-
-                    var pathRange = SharedInteractionSystem.InteractionRange;
-                    var path = await _pathfinding.GetPath(owner, mob, pathRange, cancelToken);
-
-                    if (path.Result == PathResult.NoPath)
-                        return (false, null);
-
-                    return (true, new Dictionary<string, object>()
-                    {
-                        {TargetKey, mob},
-                        {NearbyEntityTargetKey, entity},
-                        {TargetMoveKey, _entManager.GetComponent<TransformComponent>(mob).Coordinates},
-                        {NPCBlackboard.PathfindKey, path},
-                    });
-                }
+                    {TargetKey, mob},
+                    {NearbyEntityTargetKey, entity},
+                    {TargetMoveKey, _entManager.GetComponent<TransformComponent>(mob).Coordinates},
+                    {NPCBlackboard.PathfindKey, path},
+                });
             }
         }
-
         return (false, null);
     }
 }

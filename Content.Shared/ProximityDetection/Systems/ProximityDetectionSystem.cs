@@ -1,4 +1,4 @@
-﻿using Content.Shared.Item.ItemToggle;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.ProximityDetection.Components;
 using Robust.Shared.Timing;
@@ -8,10 +8,10 @@ namespace Content.Shared.ProximityDetection.Systems;
 /// <summary>
 /// Handles generic proximity detector logic.
 /// </summary>
-public sealed class ProximityDetectionSystem : EntitySystem
+public sealed partial class ProximityDetectionSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ItemToggleSystem _toggle = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ItemToggleSystem _toggle = default!;
 
     public override void Initialize()
     {

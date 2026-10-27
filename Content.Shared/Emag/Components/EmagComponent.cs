@@ -3,11 +3,13 @@ using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Emag.Components;
 
+/// <summary>
+/// This allows an entity to emag other entities upon interaction.
+/// </summary>
 [Access(typeof(EmagSystem))]
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]

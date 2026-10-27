@@ -3,10 +3,10 @@ using Content.Shared.RepulseAttract;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed class RepulseAttractOnTriggerSystem : XOnTriggerSystem<RepulseAttractOnTriggerComponent>
+public sealed partial class RepulseAttractOnTriggerSystem : XOnTriggerSystem<RepulseAttractOnTriggerComponent>
 {
-    [Dependency] private readonly RepulseAttractSystem _repulse = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private RepulseAttractSystem _repulse = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     protected override void OnTrigger(Entity<RepulseAttractOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {

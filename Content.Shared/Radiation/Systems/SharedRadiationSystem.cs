@@ -1,10 +1,10 @@
-﻿using Content.Shared.Radiation.Components;
+using Content.Shared.Radiation.Components;
 
 namespace Content.Shared.Radiation.Systems;
 
 public abstract partial class SharedRadiationSystem : EntitySystem
 {
-    [Dependency] protected readonly EntityQuery<RadiationSourceComponent> SourceQuery = default!;
+    [Dependency] protected EntityQuery<RadiationSourceComponent> SourceQuery = default!;
 
     /// <summary>
     /// Sets the intensity of a <see cref="RadiationSourceComponent"/> to the passed intensity.
@@ -17,11 +17,18 @@ public abstract partial class SharedRadiationSystem : EntitySystem
             return;
 
         entity.Comp.Intensity = intensity;
-        UpdateSource((entity, entity.Comp));
     }
 
     /// <summary>
-    /// Updates the radiation source cache. Does nothing on client, see server!
+    /// Change intensity of a <see cref="RadiationSourceComponent"/> using the passed intensity.
     /// </summary>
-    protected virtual void UpdateSource(Entity<RadiationSourceComponent> entity) { }
+    /// <param name="ent">Radiation source we're attempting to update. </param>
+    /// <param name="intensityChange">Intensity change value that will be added to current intensity value.</param>
+    public void ChangeIntensity(Entity<RadiationSourceComponent?> ent, float intensityChange)
+    {
+        if (!SourceQuery.Resolve(ent, ref ent.Comp, false))
+            return;
+
+        ent.Comp.Intensity = MathF.Max(0f, ent.Comp.Intensity + intensityChange);
+    }
 }

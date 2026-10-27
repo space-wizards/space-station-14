@@ -2,7 +2,7 @@ using Content.Shared.Actions;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Examine;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Systems;
 using Content.Shared.Toggleable;
 using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
@@ -11,13 +11,13 @@ using InternalsComponent = Content.Shared.Body.Components.InternalsComponent;
 
 namespace Content.Shared.Atmos.EntitySystems;
 
-public abstract class SharedGasTankSystem : GasMaxPressureSystem<GasTankComponent>
+public abstract partial class SharedGasTankSystem : GasMaxPressureSystem<GasTankComponent>
 {
-    [Dependency] private   readonly SharedActionsSystem _actions = default!;
-    [Dependency] private   readonly SharedContainerSystem _containers = default!;
-    [Dependency] private   readonly SharedInternalsSystem _internals = default!;
-    [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
-    [Dependency] private   readonly UseDelaySystem _delay = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
+    [Dependency] private SharedInternalsSystem _internals = default!;
+    [Dependency] protected SharedUserInterfaceSystem UI = default!;
+    [Dependency] private UseDelaySystem _delay = default!;
 
     public const string GasTankDelay = "gasTank";
 
@@ -65,6 +65,9 @@ public abstract class SharedGasTankSystem : GasMaxPressureSystem<GasTankComponen
 
     private void OnGetActions(EntityUid uid, GasTankComponent component, GetItemActionsEvent args)
     {
+        if (!HasComp<InternalsComponent>(args.User))
+            return;
+
         args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
         Dirty(uid, component);
     }

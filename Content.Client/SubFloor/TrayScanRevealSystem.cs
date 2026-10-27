@@ -4,10 +4,10 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Client.SubFloor;
 
-public sealed class TrayScanRevealSystem : EntitySystem
+public sealed partial class TrayScanRevealSystem : EntitySystem
 {
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedMapSystem _map = default!;
 
     public bool IsUnderRevealingEntity(EntityUid uid)
     {

@@ -1,4 +1,5 @@
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Utility;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction.Prototypes;
@@ -14,7 +15,6 @@ namespace Content.IntegrationTests.Tests.Construction
         // TODO: Create serialization validators for these?
         // Top test definitely can be but writing a serializer takes ages.
 
-        private static string[] _constructablePrototypes = GameDataScrounger.EntitiesWithComponent("Construction");
         private static string[] _constructions = GameDataScrounger.PrototypesOfKind<ConstructionPrototype>();
 
         /// <summary>
@@ -22,34 +22,31 @@ namespace Content.IntegrationTests.Tests.Construction
         /// </summary>
         [Test]
         [TestOf(typeof(ConstructionComponent))]
-        [TestCaseSource(nameof(_constructablePrototypes))]
+        [RunOnSide(Side.Server)]
         [Description("Tests that a given entity specifies a valid node for construction, and optionally a valid one for deconstruction.")]
-        public async Task ConstructionComponentValid(string protoKey)
+        public async Task ConstructionComponentValid()
         {
-            var pair = Pair;
-            var server = pair.Server;
+            var constructablePrototypes = GameDataScrounger.EntitiesWithComponent("Construction");
 
-            var protoMan = server.ResolveDependency<IPrototypeManager>();
-
-            await server.WaitAssertion(() =>
+            using (Assert.EnterMultipleScope())
             {
-                var proto = protoMan.Index(protoKey);
-                var construction = (ConstructionComponent)proto.Components["Construction"].Component;
-
-                var graph = protoMan.Index<ConstructionGraphPrototype>(construction.Graph);
-
-                using (Assert.EnterMultipleScope())
+                foreach (var protoKey in constructablePrototypes)
                 {
+                    var proto = SProtoMan.Index(protoKey);
+                    var construction = (ConstructionComponent)proto.Components["Construction"].Component;
+
+                    var graph = SProtoMan.Index(construction.Graph);
+
                     Assert.That(graph.Nodes.ContainsKey(construction.Node),
                         $"Found no node \"{construction.Node}\" on graph \"{graph.ID}\" for entity \"{proto.ID}\"!");
 
                     if (construction.DeconstructionNode is not { } target)
-                        return;
+                        continue;
 
                     Assert.That(graph.Nodes.ContainsKey(target),
                         $"Invalid deconstruction node \"{target}\" on graph \"{graph.ID}\" for construction entity \"{proto.ID}\"!");
                 }
-            });
+            }
         }
 
         [Test]

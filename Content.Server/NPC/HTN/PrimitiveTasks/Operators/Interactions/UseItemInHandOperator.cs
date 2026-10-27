@@ -7,7 +7,8 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
 /// </summary>
 public sealed partial class UseItemInHandOperator : HTNOperator
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
@@ -16,8 +17,7 @@ public sealed partial class UseItemInHandOperator : HTNOperator
         if (!blackboard.TryGetValue<string>(NPCBlackboard.ActiveHand, out var activeHand, _entManager))
             return HTNOperatorStatus.Failed;
 
-        var handsSystem = _entManager.System<SharedHandsSystem>();
-        var success = handsSystem.TryUseItemInHand(owner, handName: activeHand);
+        var success = _handsSystem.TryUseItemInHand(owner, handName: activeHand);
 
         return success ? HTNOperatorStatus.Finished : HTNOperatorStatus.Failed;
     }

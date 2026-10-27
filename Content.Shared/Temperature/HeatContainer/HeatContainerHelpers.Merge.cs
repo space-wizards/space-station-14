@@ -5,64 +5,65 @@ namespace Content.Shared.Temperature.HeatContainer;
 public static partial class HeatContainerHelpers
 {
     /// <summary>
-    /// Merges two heat containers into one, conserving total internal energy.
+    /// Merges one heat container into another.
     /// </summary>
     /// <param name="cA">The first <see cref="IHeatContainer"/> to merge. This will be modified to contain the merged result.</param>
-    /// <param name="cB">The second <see cref="IHeatContainer"/> to merge.</param>
+    /// <param name="cB">The second <see cref="IHeatContainer"/> to merge. This will remain unmodified.</param>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when the combined heat capacity of both containers is zero or negative.</exception>
     [PublicAPI]
-    public static void Merge<T1, T2>(ref T1 cA, ref T2 cB)
+    public static void MergeInto<T1, T2>(ref T1 cA, ref T2 cB)
         where T1 : IHeatContainer
         where T2 : IHeatContainer
     {
         var combinedHeatCapacity = cA.HeatCapacity + cB.HeatCapacity;
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(combinedHeatCapacity);
 
-        cA.HeatCapacity = combinedHeatCapacity;
         cA.Temperature = (cA.InternalEnergy + cB.InternalEnergy) / combinedHeatCapacity;
+        cA.HeatCapacity = combinedHeatCapacity;
     }
 
 
     /// <summary>
-    /// Merges an array of <see cref="IHeatContainer"/>s into a single heat container, conserving total internal energy.
+    /// Merges an array of <see cref="IHeatContainer"/>s into a single heat container.
+    /// This means you combine N+1 containers into 1.
     /// </summary>
-    /// <param name="cA">The first <see cref="IHeatContainer"/> to merge.
-    /// This will be modified to contain the merged result.</param>
-    /// <param name="cN">The array of <see cref="IHeatContainer"/>s to merge.</param>
+    /// <param name="cA">The first <see cref="IHeatContainer"/> to merge. This will be modified to contain the merged result.</param>
+    /// <param name="cN">The array of <see cref="IHeatContainer"/>s to merge. These will remain unmodified.</param>
     [PublicAPI]
-    public static void Merge<T1, T2>(ref T1 cA, T2[] cN)
+    public static void MergeInto<T1, T2>(ref T1 cA, T2[] cN)
         where T1 : IHeatContainer
         where T2 : IHeatContainer
     {
-        // merge the first array and then merge the result with cA to avoid alloc
-        var temp = new HeatContainer();
-        cN.Merge(ref temp);
-        Merge(ref cA, ref temp);
-    }
-
-    /// <summary>
-    /// Merges an array of <see cref="IHeatContainer"/>s into a single heat container, conserving total internal energy.
-    /// </summary>
-    /// <param name="cN">The array of <see cref="IHeatContainer"/>s to merge.</param>
-    /// <param name="result">The modified <see cref="IHeatContainer"/> containing the merged result.</param>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown when the combined heat capacity of all containers is zero or negative.</exception>
-    [PublicAPI]
-    public static void Merge<T1, T2>(this T1[] cN, ref T2 result)
-        where T1 : IHeatContainer
-        where T2 : IHeatContainer
-    {
-        var totalHeatCapacity = 0f;
-        var totalEnergy = 0f;
-
-        foreach (var c in cN)
+        var totalEnergy = cA.InternalEnergy;
+        var totalHeatCapacity = cA.HeatCapacity;
+        for (var i = 0; i < cN.Length; i++)
         {
-            totalHeatCapacity += c.HeatCapacity;
-            totalEnergy += c.InternalEnergy;
+            totalEnergy += cN[i].InternalEnergy;
+            totalHeatCapacity += cN[i].HeatCapacity;
         }
+        cA.Temperature = totalEnergy / totalHeatCapacity;
+        cA.HeatCapacity = totalHeatCapacity;
+    }
 
-        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(totalHeatCapacity);
-
-        result.HeatCapacity = totalHeatCapacity;
-        result.Temperature = totalEnergy / totalHeatCapacity;
+    /// <summary>
+    /// Merges an array of <see cref="IHeatContainer"/>s into a single new output heat container.
+    /// This means you combine N containers into 1.
+    /// </summary>
+    /// <param name="cA">The <see cref="IHeatContainer"/> to write the result to.</param>
+    /// <param name="cN">The array of <see cref="IHeatContainer"/>s to merge. These will remain unmodified.</param>
+    [PublicAPI]
+    public static void MergeAndCopy<T1, T2>(ref T1 cA, T2[] cN)
+        where T1 : IHeatContainer
+        where T2 : IHeatContainer
+    {
+        var totalEnergy = 0f;
+        var totalHeatCapacity = 0f;
+        for (var i = 0; i < cN.Length; i++)
+        {
+            totalEnergy += cN[i].InternalEnergy;
+            totalHeatCapacity += cN[i].HeatCapacity;
+        }
+        cA.Temperature = totalEnergy / totalHeatCapacity;
+        cA.HeatCapacity = totalHeatCapacity;
     }
 }

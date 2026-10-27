@@ -13,8 +13,8 @@ namespace Content.Client.Xenoarchaeology.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class NodeScannerDisplay : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _ent = default!;
-    [Dependency] private readonly IGameTiming _timing= default!;
+    [Dependency] private IEntityManager _ent = default!;
+    [Dependency] private IGameTiming _timing= default!;
 
     private readonly SharedXenoArtifactSystem _artifact;
     private TimeSpan? _nextUpdate;

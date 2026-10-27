@@ -4,10 +4,10 @@ using Robust.Shared.Containers;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed class ShockOnTriggerSystem : XOnTriggerSystem<ShockOnTriggerComponent>
+public sealed partial class ShockOnTriggerSystem : XOnTriggerSystem<ShockOnTriggerComponent>
 {
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedElectrocutionSystem _electrocution = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedElectrocutionSystem _electrocution = default!;
 
     protected override void OnTrigger(Entity<ShockOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {

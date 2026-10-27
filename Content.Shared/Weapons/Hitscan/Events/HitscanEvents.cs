@@ -58,6 +58,11 @@ public record struct HitscanRaycastFiredData
     public EntityUid Gun;
 
     /// <summary>
+    /// The hitscan entity
+    /// </summary>
+    public EntityUid Hitscan;
+
+    /// <summary>
     /// Player who shot the gun, if null the gun was fired by itself.
     /// </summary>
     public EntityUid? Shooter;
@@ -81,6 +86,19 @@ public struct AttemptHitscanRaycastFiredEvent
     /// </summary>
     public bool Cancelled;
 }
+
+/// <summary>
+/// Raised on the targeted entity of the hitscan to allow it to respond to being struck.
+/// </summary>
+[ByRefEvent]
+public struct HitscanRaycastStrikeEvent
+{
+    /// <summary>
+    /// Data for the hitscan that was fired.
+    /// </summary>
+    public HitscanRaycastFiredData Data;
+}
+
 
 /// <summary>
 /// Results of a hitscan raycast and will be raised on the raycast entity on itself. Stuff like the damage system should

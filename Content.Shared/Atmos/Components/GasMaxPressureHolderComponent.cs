@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Audio;
+using Robust.Shared.Audio;
 
 namespace Content.Shared.Atmos.Components;
 
@@ -8,7 +8,7 @@ namespace Content.Shared.Atmos.Components;
 /// </summary>
 public abstract partial class GasMaxPressureHolderComponent : Component, IGasMaxPressureHolder
 {
-    private const int DefaultIntegrity = 5;
+    private const float DefaultIntegrity = 3f;
     private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 
     /// <summary>
@@ -49,13 +49,16 @@ public abstract partial class GasMaxPressureHolderComponent : Component, IGasMax
     /// Sound made when air is leaked out of this device.
     /// </summary>
     [DataField]
-    public SoundSpecifier? ReleaseSound { get; set; } = new SoundPathSpecifier("/Audio/Effects/spray.ogg");
+    public SoundSpecifier? ReleaseSound { get; set; } = new SoundPathSpecifier("/Audio/Effects/spray.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(-5f),
+    };
 
     /// <summary>
     /// The mixture of air contained in this device.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public GasMixture Air { get; set; }
+    public GasMixture Air { get; set; } = new();
 
     // TODO ATMOS: Proper loud BANG sound, these are lethal concussive blast waves
     [DataField]
@@ -73,8 +76,8 @@ public abstract partial class GasMaxPressureHolderComponent : Component, IGasMax
     public LocId? SafetyAlert { get; set; } = "gas-max-pressure-alert";
 
     [DataField]
-    public int MaxIntegrity { get; set; } = DefaultIntegrity;
+    public float MaxIntegrity { get; set; } = DefaultIntegrity;
 
     [DataField]
-    public int Integrity { get; set; } = DefaultIntegrity;
+    public float Integrity { get; set; } = DefaultIntegrity;
 }

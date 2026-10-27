@@ -10,11 +10,10 @@
   - !type:DepartmentTimeRequirement
     department: Science
     time: 10h
-  weight: 10
   startingGear: ResearchDirectorGear
   icon: "JobIconResearchDirector"
   supervisors: job-supervisors-captain
-  canBeAntag: false
+  guides: [ Command ] # TODO: should have a more specific guidebook page instead of using the department itself
   access:
   - Research
   - Command

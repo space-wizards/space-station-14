@@ -24,7 +24,7 @@ public sealed partial class LayerMarkingOrderer : BoxContainer
     private readonly List<LayerDragDropBeacon> _beacons = new();
     private LayerDragDropBeacon? _dragTarget;
 
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     public LayerMarkingOrderer(MarkingsViewModel markingsModel, ProtoId<OrganCategoryPrototype> organ, HumanoidVisualLayers layer)
     {
