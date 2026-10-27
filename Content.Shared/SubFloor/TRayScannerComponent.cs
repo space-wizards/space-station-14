@@ -30,11 +30,3 @@ public enum TrayScannerMode
     Piping,
     Wiring
 }
-
-[Serializable, NetSerializable]
-public enum TrayScannerVisual : byte
-{
-    Visual,
-    On,
-    Off
-}
