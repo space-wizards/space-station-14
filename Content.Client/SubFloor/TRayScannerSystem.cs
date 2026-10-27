@@ -1,3 +1,4 @@
+using Content.Client.Items;
 using Content.Client.Items.UI;
 using Content.Client.Message;
 using Content.Client.Power.Visualizers;
