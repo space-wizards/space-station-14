@@ -102,6 +102,7 @@ public sealed partial class SiliconLawMenu : FancyWindow
         Version.Text = Loc.GetString("laws-window-footer-right", ("version", state.Version));
 
         LawChatChannelOption.Clear();
+        _selectableRadioChannels.Clear();
         foreach (var chatChannel in SelectableChatChannels)
         {
             LawChatChannelOption.AddItem(chatChannel.ToString());
@@ -114,10 +115,16 @@ public sealed partial class SiliconLawMenu : FancyWindow
                 if (!_prototypeManager.TryIndex(radioChannel, out var radioChannelProto))
                     continue;
 
+                if (radioChannelProto.ID != SharedChatSystem.CommonChannel && radioChannelProto.KeyCode == null)
+                    continue;
+
                 _selectableRadioChannels.Add(radioChannelProto);
                 LawChatChannelOption.AddItem(Loc.GetString(radioChannelProto.Name));
             }
         }
+
+        if (_selectedChatChannelIdx >= SelectableChatChannels.Count + _selectableRadioChannels.Count)
+            _selectedChatChannelIdx = 0;
 
         LawChatChannelOption.Select(_selectedChatChannelIdx);
 

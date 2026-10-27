@@ -39,7 +39,7 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
 
     /// <summary>
     /// Selects a random radio channel from all ActiveRadio entities in a given entity's inventory
-    /// If no channels are found, this returns false and sets channel to an empty string
+    /// If no channels with usable chat prefixes are found, this returns false and sets channel to an empty string
     /// </summary>
     private bool TryPickRandomRadioChannel(EntityUid entity, out ProtoId<RadioChannelPrototype> channel)
     {
@@ -54,6 +54,8 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
 
             potentialChannels.UnionWith(radio.Channels);
         }
+
+        potentialChannels.RemoveWhere(id => id != SharedChatSystem.CommonChannel && ProtoMan.Index(id).KeyCode == null);
 
         if (potentialChannels.Count == 0)
         {
@@ -82,13 +84,15 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
         if (!TryPickRandomRadioChannel(entity, out var channel))
             return false;
 
-        var channelPrefix = ProtoMan.Index<RadioChannelPrototype>(channel).KeyCode;
+        var channelPrefix = channel == SharedChatSystem.CommonChannel
+            ? SharedChatSystem.RadioCommonPrefix.ToString()
+            : $"{SharedChatSystem.RadioChannelPrefix}{ProtoMan.Index(channel).KeyCode}";
 
         // send a whisper using the radio channel prefix and whatever relevant radio channel character
         // along with the message. This is analogous to how radio messages are sent by players
         _chat.TrySendInGameICMessage(
             entity,
-            $"{SharedChatSystem.RadioChannelPrefix}{channelPrefix} {message}",
+            $"{channelPrefix} {message}",
             InGameICChatType.Whisper,
             ChatTransmitRange.Normal);
 
