@@ -70,7 +70,7 @@
   table: !type:GroupSelector
     children:
     - id: CrateEmergencyFire
-    - id: CrateEmergencyInternals
+    - id: CrateEmergencyEVA
     - id: CrateEmergencyInflatablewall
       weight: 0.5
 
@@ -78,8 +78,8 @@
   id: LowValueServiceCrateTable
   table: !type:GroupSelector
     children:
-    - id: CrateServiceColorfulLights
-    - id: CrateServiceReplacementLights
+    - id: CrateJanitorialColorfulLights
+    - id: CrateJanitorialReplacementLights
     - id: CrateServiceBureaucracy
     - id: PetCarrier
     - id: CrateHydroponicsTools
@@ -88,7 +88,7 @@
       weight: 0.5
     - id: CrateHydroponicsSeedsMedicinal
       weight: 0.5
-    - id: CrateServiceJanitorialSupplies
+    - id: CrateJanitorialSupplies
     - id: JanitorialTrolley
       weight: 0.2
 
@@ -203,14 +203,15 @@
         - id: CrateEngineeringSingularityCollector
         - id: CrateEngineeringTeslaCoil
         - id: CrateEngineeringSingularityEmitter
-        - id: CrateEngineeringGyroscope
-        - id: CrateEngineeringThruster
         - id: CrateEngineeringToolbox
-        - id: CrateEngineeringShuttle
         - id: CrateEngineeringSolar
-        - id: CrateEngineeringJetpack
         - id: CrateEmergencyRadiation
         - id: CrateRadiation
+        # EVA/shuttle supplies aren't technically "engineering" crates, but there's enough overlap to put them here
+        - id: CrateSpaceGyroscope
+        - id: CrateSpaceJetpack
+        - id: CrateSpaceShuttlePower
+        - id: CrateSpaceThruster
       - !type:GroupSelector
         weight: 2
         children:
@@ -245,7 +246,6 @@
         - id: CrateTrainingBombs
         - id: CrateTrackingImplants
         - id: CrateSecurityTrackingMindshieldImplants
-        - id: CrateSecurityHelmet
         - id: CrateSecurityArmor
         - id: CrateRestraints
         - id: CrateEmergencyExplosive

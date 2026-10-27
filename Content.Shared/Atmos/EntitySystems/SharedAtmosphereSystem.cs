@@ -10,7 +10,6 @@ namespace Content.Shared.Atmos.EntitySystems;
 public abstract partial class SharedAtmosphereSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] protected IPrototypeManager ProtoMan = default!;
     [Dependency] private SharedInternalsSystem _internals = default!;
     [Dependency] protected SharedTransformSystem XformSystem = default!;
 

@@ -11,11 +11,18 @@ namespace Content.Shared.Labels.Components;
 public sealed partial class LabelComponent : Component
 {
     /// <summary>
-    /// Current text on the label. If set before map init, during map init this string will be localized.
-    /// This permits localized preset labels with fallback to the text written on the label.
+    /// Current text on the label.
+    /// Do not use this in entity prototypes - use <see cref="LocalizedLabel"/> instead.
     /// </summary>
     [DataField, AutoNetworkedField]
     public string? CurrentLabel { get; set; }
+
+    /// <summary>
+    /// Localization ID used to set <see cref="CurrentLabel"/> on map init.
+    /// Use this in entity prototypes.
+    /// </summary>
+    [DataField]
+    public LocId? LocalizedLabel { get; set; }
 
     /// <summary>
     /// Should the label show up in the examine menu?
