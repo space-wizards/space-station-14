@@ -55,7 +55,7 @@ public sealed class TargetOutlineSystem : EntitySystem
     public CancellableEntityEventArgs? ValidationEvent = null;
 
     /// <summary>
-    ///     Minimum range for a target to be valid.
+    ///     Maximum range for a target to be valid.
     /// </summary>
     /// <remarks>
     ///     If a target is further than this distance, they will still be highlighted in a different color.
