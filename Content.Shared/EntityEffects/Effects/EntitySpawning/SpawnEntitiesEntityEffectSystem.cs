@@ -44,7 +44,7 @@ public sealed partial class SpawnEntitiesEntityEffectSystem : EntityEffectSystem
                     : (int)random.NextFloat(minMax.Min, minMax.Max + 1);
                 count *= scale;
 
-                if (count == 0)
+                if (count <= 0)
                     continue;
 
                 if (ProtoMan.TryIndex(entityId, out var proto) && proto.HasComp<StackComponent>(Factory))
@@ -78,13 +78,15 @@ public sealed partial class SpawnEntitiesEntityEffectSystem : EntityEffectSystem
             return;
 
         var comp = EnsureComp<ForensicsComponent>(spawned);
-        comp.DNAs = forensicsComponent.DNAs;
+        comp.DNAs.UnionWith(forensicsComponent.DNAs);
 
-        if (!random.Prob(0.4f))
-            return;
+        if (random.Prob(effect.ForensicsTransferProb))
+        {
+            comp.Fingerprints.UnionWith(forensicsComponent.Fingerprints);
+            comp.Fibers.UnionWith(forensicsComponent.Fibers);
+        }
 
-        comp.Fingerprints = forensicsComponent.Fingerprints;
-        comp.Fibers = forensicsComponent.Fibers;
+        Dirty(spawned, comp);
     }
 }
 
@@ -108,6 +110,13 @@ public sealed partial class SpawnEntities : EntityEffectBase<SpawnEntities>
     /// </summary>
     [DataField("transferForensics")]
     public bool DoTransferForensics;
+
+    /// <summary>
+    /// Probability of transferring fingerprints and fibers. DNA is always transferred
+    /// when <see cref="DoTransferForensics"/> is enabled.
+    /// </summary>
+    [DataField]
+    public float ForensicsTransferProb = 0.4f;
 
     /// <summary>
     /// Whether to spawn the entities inside the owner's container,

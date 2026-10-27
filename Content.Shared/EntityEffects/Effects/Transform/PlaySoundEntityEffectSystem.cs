@@ -28,10 +28,16 @@ public sealed partial class PlaySoundEntityEffectSystem : EntityEffectSystem<Tra
                     _audio.PlayEntity(args.Effect.Sound, entity.Owner, args.User.Value);
                 break;
             case PlaySoundRecipients.Pvs when args.Effect.Method == PlaySoundMethod.PlayEntity:
-                _audio.PlayPredicted(args.Effect.Sound, entity.Owner, args.User);
+                if (args.Effect.Predicted && args.User != null)
+                    _audio.PlayPredicted(args.Effect.Sound, entity.Owner, args.User);
+                else
+                    _audio.PlayPvs(args.Effect.Sound, entity.Owner);
                 break;
             case PlaySoundRecipients.Pvs:
-                _audio.PlayPredicted(args.Effect.Sound, Transform(entity).Coordinates, args.User);
+                if (args.Effect.Predicted && args.User != null)
+                    _audio.PlayPredicted(args.Effect.Sound, entity.Comp.Coordinates, args.User);
+                else
+                    _audio.PlayPvs(args.Effect.Sound, entity.Comp.Coordinates);
                 break;
         }
     }
@@ -45,6 +51,12 @@ public sealed partial class PlaySound : EntityEffectBase<PlaySound>
     /// </summary>
     [DataField(required: true)]
     public SoundSpecifier Sound { get; set; } = default!;
+
+    /// <summary>
+    /// Whether PVS audio is predicted. Requires a user passed in.
+    /// </summary>
+    [DataField]
+    public bool Predicted = true;
 
     /// <summary>
     /// Where the sound is played from.
