@@ -1,4 +1,4 @@
-﻿using Content.Shared.Body.Components;
+using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;

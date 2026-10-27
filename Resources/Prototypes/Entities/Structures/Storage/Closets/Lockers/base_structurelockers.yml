@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ ClosetBase, StructureHealthContainer ]
+  parent: [ ClosetBase, StructureHealthContainerWeak ]
   id: LockerBase
   components:
   - type: AccessReader
@@ -38,7 +38,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 60
       behaviors:
       - !type:PlaySoundBehavior
         sound:

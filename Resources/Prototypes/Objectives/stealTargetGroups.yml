@@ -12,7 +12,7 @@
   name: steal-target-groups-handheld-crew-monitor
   sprite:
     sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi
-    state: scanner
+    state: icon
 
 - type: stealTargetGroup
   id: ClothingOuterHardsuitRd
@@ -106,6 +106,13 @@
   sprite:
     sprite: Objects/Misc/bedsheets.rsi
     state: sheetNT
+
+- type: stealTargetGroup
+  id: HeadHardsuit
+  name: steal-target-groups-heads-hardsuits
+  sprite:
+    sprite: Clothing/OuterClothing/Hardsuits/security-red.rsi
+    state: icon
 
 - type: stealTargetGroup
   id: Stamp

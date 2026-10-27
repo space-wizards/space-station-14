@@ -14,7 +14,8 @@ namespace Content.Server.Chat.Managers
         /// </summary>
         /// <param name="message"></param>
         /// <param name="colorOverride">Override the color of the message being sent.</param>
-        void DispatchServerAnnouncement(string message, Color? colorOverride = null);
+        /// <param name="sender">Session of the administrator who initiated the announcement.</param>
+        void DispatchServerAnnouncement(string message, Color? colorOverride = null, ICommonSession? sender = null);
 
         void DispatchServerMessage(ICommonSession player, string message, bool suppressLog = false);
 
@@ -49,7 +50,5 @@ namespace Content.Server.Chat.Managers
         /// <param name="player">The player sending a chat message.</param>
         /// <returns>False if the player has violated rate limits and should be blocked from sending further messages.</returns>
         RateLimitStatus HandleRateLimit(ICommonSession player);
-
-        string PrependFollowButtonIfAppropriate(string wrappedMessage, EntityUid source, INetChannel recipient);
     }
 }

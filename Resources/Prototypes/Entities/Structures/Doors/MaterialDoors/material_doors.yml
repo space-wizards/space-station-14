@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: BaseStructure
   id: BaseMaterialDoor
@@ -51,10 +51,11 @@
   - type: Occluder
   - type: BlockWeather
   - type: IconSmooth
-    key: walls
-    mode: NoSprite
+    key: doors
   - type: PlacementReplacement
     key: walls
+  - type: StructureAligner
+  - type: StructureAlignerPylon
 
 - type: entity
   abstract: true
@@ -262,4 +263,3 @@
           MaterialCardboard: *BaseDoorSpawn
   - type: IconSmooth
     key: cards
-    mode: NoSprite

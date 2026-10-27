@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Administration;
+namespace Content.Shared.Administration;
 
 /// <summary>
 /// Command names that may be used programmatically (e.g. in cmdlinks). In their own class to ensure consistency.

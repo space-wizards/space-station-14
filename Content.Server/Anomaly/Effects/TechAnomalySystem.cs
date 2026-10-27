@@ -1,8 +1,8 @@
 using Content.Server.Anomaly.Components;
 using Content.Server.Beam;
-using Content.Server.DeviceLinking.Systems;
 using Content.Shared.Anomaly.Components;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Components;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Emag.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -79,10 +79,13 @@ public sealed partial class TechAnomalySystem : EntitySystem
         var sourcePort = _random.Pick(source.Comp.Ports);
         var sinkPort = _random.Pick(target.Comp.Ports);
 
-        _signal.SaveLinks(null, source, target,new()
-        {
-            (sourcePort, sinkPort),
-        });
+        _signal.SaveLinks(null,
+            source.AsNullable(),
+            target.AsNullable(),
+            new()
+            {
+                (sourcePort, sinkPort),
+            });
         _beam.TryCreateBeam(source, target, tech.Comp.LinkBeamProto);
     }
 
@@ -128,6 +131,6 @@ public sealed partial class TechAnomalySystem : EntitySystem
 
     private void OnPulse(Entity<TechAnomalyComponent> tech, ref AnomalyPulseEvent args)
     {
-        _signal.InvokePort(tech, tech.Comp.PulsePort);
+        _signal.InvokePort(tech.Owner, tech.Comp.PulsePort);
     }
 }

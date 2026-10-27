@@ -55,6 +55,7 @@
   parent: Crayon
   id: CrayonMime
   name: mime crayon
+  description: ...
   components:
   - type: Sprite
     state: mime
