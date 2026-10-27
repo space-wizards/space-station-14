@@ -1,4 +1,3 @@
-using Content.Client.Items;
 using Content.Client.Items.UI;
 using Content.Client.Message;
 using Content.Client.Power.Visualizers;
@@ -33,8 +32,10 @@ public sealed partial class TRayScannerSystem : SharedTRayScannerSystem
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private TrayScanRevealSystem _trayScanReveal = default!;
     [Dependency] private IInputManager _inputManager = default!;
-    [Dependency] private EntityQuery<TRayScannerComponent> _trayScannerQuery = default!;
-    [Dependency] private EntityQuery<SubFloorHideComponent> _subFloorHideQuery = default!;
+
+    [Dependency] private EntityQuery<TRayScannerComponent> _trayScannerQuery;
+    [Dependency] private EntityQuery<SubFloorHideComponent> _subFloorHideQuery;
+    [Dependency] private EntityQuery<ItemToggleComponent> _itemToggleQuery;
 
     private const string TRayAnimationKey = "trays";
     private const double AnimationLength = 0.3;
@@ -196,8 +197,8 @@ public sealed partial class TRayScannerSystem : SharedTRayScannerSystem
     #region UI
     private Control OnCollectItemStatus(Entity<TRayScannerComponent> entity)
     {
-        _inputManager.TryGetKeyBinding((ContentKeyFunctions.AltUseItemInHand), out var binding);
-        TryComp<ItemToggleComponent>(entity, out var toggle);
+        _inputManager.TryGetKeyBinding(ContentKeyFunctions.AltUseItemInHand, out var binding);
+        _itemToggleQuery.TryComp(entity, out var toggle);
         return new StatusControl(entity, toggle, binding?.GetKeyString() ?? "");
     }
 
@@ -229,7 +230,7 @@ public sealed partial class TRayScannerSystem : SharedTRayScannerSystem
                 _label.SetMarkup(string.Empty);
                 return;
             }
-            
+
             var modeLocString = data.Mode switch
             {
                 TrayScannerMode.All => "tray-scanner-examine-mode-all",
