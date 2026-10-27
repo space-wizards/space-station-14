@@ -5,7 +5,6 @@ using Content.Shared.CombatMode;
 using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.NPC;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 using ClimbableComponent = Content.Shared.Climbing.Components.ClimbableComponent;
@@ -75,10 +74,9 @@ public sealed partial class NPCSteeringSystem
                 return SteeringObstacleStatus.Failed;
         }
 
-        if (!TryComp<MapGridComponent>(poly.GraphUid, out var grid))
-            return SteeringObstacleStatus.Completed;
-
-        var obstacleEnts = new HashSet<EntityUid>(_mapSystem.GetLocalAnchoredEntities(poly.GraphUid, grid, poly.Box));
+        var obstacleEnts = new HashSet<EntityUid>();
+        _lookup.GetLocalEntitiesIntersecting(poly.GraphUid, poly.Box, obstacleEnts, flags: LookupFlags.Dynamic | LookupFlags.Static);
+        obstacleEnts.Remove(poly.GraphUid);
         FilterObstacleEntities((uid, component), mask, layer, obstacleEnts);
 
         // Nothing actually near us.
