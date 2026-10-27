@@ -11,5 +11,5 @@ damage-examine = It does the following damage:
 damage-examine-type = It does the following [color=cyan]{$type}[/color] damage:
 damage-value = - [color=red]{$amount}[/color] units of [color=yellow]{$type}[/color].
 damage-none = It does no damage.
-damage-ignore-resistance-on-hit = - It does [color=red]piercing-armor damage[/color] on throwing.
-damage-ignore-resistance-cartridge = - It does [color=red]piercing-armor damage[/color] as ammo.
+damage-ignore-resistance-on-hit = - It does [color=red]armor-piercing damage[/color] on throwing.
+damage-ignore-resistance-cartridge = - It does [color=red]armor-piercing damage[/color] as ammo.
