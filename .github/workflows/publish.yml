@@ -41,7 +41,7 @@ jobs:
         cd RobustToolbox
         git fetch --depth=1
 
-    - name: Restore
+    - name: Install dependencies
       run: dotnet restore
 
     - name: Build Packaging
@@ -61,6 +61,7 @@ jobs:
 
   announce:
     needs: publish
+    continue-on-error: true
     runs-on: ubuntu-latest
 
     steps:

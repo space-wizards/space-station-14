@@ -14,7 +14,7 @@ permissions:
   pull-requests: read
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -64,6 +64,32 @@ jobs:
       env:
         PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
         GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
+
+    # The changelog is generated here and never committed, so hand it to announce.
+    - name: Upload changelog
+      uses: actions/upload-artifact@v4
+      with:
+        name: changelog
+        path: Resources/Changelog
+
+  announce:
+    needs: publish
+    continue-on-error: true
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        fetch-depth: 1
+
+    - name: Install dependencies
+      run: sudo apt-get install -y python3-paramiko python3-lxml python3-yaml
+
+    - name: Download changelog
+      uses: actions/download-artifact@v4
+      with:
+        name: changelog
+        path: Resources/Changelog
 
     - name: Publish changelog (RSS)
       continue-on-error: true
