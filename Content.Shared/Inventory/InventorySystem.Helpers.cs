@@ -67,8 +67,19 @@ public partial class InventorySystem
                && (slot.SlotFlags & flags) != 0;
     }
 
-    public bool SpawnItemInSlot(EntityUid uid, string slot, string prototype, bool silent = false, bool force = false, InventoryComponent? inventory = null)
+    public bool SpawnItemInSlot(EntityUid uid,
+        string slot,
+        string prototype,
+        bool silent = false,
+        bool force = false,
+        InventoryComponent? inventory = null)
     {
+        return SpawnItemInSlot(uid, slot, prototype, out _, silent, force, inventory);
+    }
+
+    public bool SpawnItemInSlot(EntityUid uid, string slot, string prototype, [NotNullWhen(true)] out EntityUid? spawned, bool silent = false, bool force = false, InventoryComponent? inventory = null)
+    {
+        spawned = null;
         if (!Resolve(uid, ref inventory, false))
             return false;
 
@@ -81,71 +92,20 @@ public partial class InventorySystem
             return false;
 
         // If the prototype in question doesn't exist, we do nothing.
-        if (!_prototypeManager.HasIndex<EntityPrototype>(prototype))
+        if (!ProtoMan.HasIndex<EntityPrototype>(prototype))
             return false;
 
         // Let's spawn this first...
         var item = Spawn(prototype, Transform(uid).Coordinates);
 
-        // Helper method that deletes the item and returns false.
-        bool DeleteItem()
-        {
-            Del(item);
-            return false;
-        }
-
         // We finally try to equip the item, otherwise we delete it.
-        return TryEquip(uid, item, slot, silent, force) || DeleteItem();
-    }
-
-    /// <summary>
-    /// Will attempt to spawn a list of items inside of an entities bag, pockets, hands or nearby
-    /// </summary>
-    /// <param name="entity">The entity that you want to spawn an item on</param>
-    /// <param name="items">A list of prototype IDs that you want to spawn in the bag.</param>
-    public void SpawnItemsOnEntity(EntityUid entity, List<string> items)
-    {
-        foreach (var item in items)
+        if (TryEquip(uid, item, slot, silent, force))
         {
-            SpawnItemOnEntity(entity, item);
+            spawned = item;
+            return true;
         }
-    }
 
-    /// <summary>
-    /// Will attempt to spawn an item inside of an entities bag, pockets, hands or nearby
-    /// </summary>
-    /// <param name="entity">The entity that you want to spawn an item on</param>
-    /// <param name="item">The prototype ID that you want to spawn in the bag.</param>
-    public void SpawnItemOnEntity(EntityUid entity, EntProtoId item)
-    {
-        //Transform() throws error if TransformComponent doesnt exist
-        if (!HasComp<TransformComponent>(entity))
-            return;
-
-        var xform = Transform(entity);
-        var mapCoords = _transform.GetMapCoordinates(xform);
-
-        var itemToSpawn = Spawn(item, mapCoords);
-
-        //Try insert into the backpack
-        if (TryGetSlotContainer(entity, "back", out var backSlot, out _)
-            && backSlot.ContainedEntity.HasValue
-            && _storageSystem.Insert(backSlot.ContainedEntity.Value, itemToSpawn, out _)
-            )
-            return;
-
-        //Try insert into pockets
-        if (TryGetSlotContainer(entity, "pocket1", out var pocket1, out _)
-            && _containerSystem.Insert(itemToSpawn, pocket1)
-            )
-            return;
-
-        if (TryGetSlotContainer(entity, "pocket2", out var pocket2, out _)
-            && _containerSystem.Insert(itemToSpawn, pocket2)
-            )
-            return;
-
-        //Try insert into hands, or drop on the floor
-        _handsSystem.PickupOrDrop(entity, itemToSpawn, false);
+        Del(item);
+        return false;
     }
 }

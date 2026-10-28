@@ -17,7 +17,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
 {
     [TestFixture]
     [TestOf(typeof(InteractionSystem))]
-    public sealed class InteractionSystemTests : GameTest
+    public sealed partial class InteractionSystemTests : GameTest
     {
         [TestPrototypes]
         private const string Prototypes = @"
@@ -45,7 +45,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             var server = pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
-            var mapManager = server.ResolveDependency<IMapManager>();
             var sysMan = server.ResolveDependency<IEntitySystemManager>();
             var handSys = sysMan.GetEntitySystem<SharedHandsSystem>();
 
@@ -111,7 +110,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             var server = pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
-            var mapManager = server.ResolveDependency<IMapManager>();
             var sysMan = server.ResolveDependency<IEntitySystemManager>();
             var handSys = sysMan.GetEntitySystem<SharedHandsSystem>();
 
@@ -177,7 +175,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             var server = pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
-            var mapManager = server.ResolveDependency<IMapManager>();
             var sysMan = server.ResolveDependency<IEntitySystemManager>();
             var handSys = sysMan.GetEntitySystem<SharedHandsSystem>();
 
@@ -243,7 +240,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             var server = pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
-            var mapManager = server.ResolveDependency<IMapManager>();
             var sysMan = server.ResolveDependency<IEntitySystemManager>();
             var handSys = sysMan.GetEntitySystem<SharedHandsSystem>();
 
@@ -307,7 +303,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             var server = pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
-            var mapManager = server.ResolveDependency<IMapManager>();
             var sysMan = server.ResolveDependency<IEntitySystemManager>();
             var handSys = sysMan.GetEntitySystem<SharedHandsSystem>();
             var conSystem = sysMan.GetEntitySystem<SharedContainerSystem>();
@@ -387,7 +382,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             testInteractionSystem.ClearHandlers();
         }
 
-        public sealed class TestInteractionSystem : EntitySystem
+        public sealed partial class TestInteractionSystem : EntitySystem
         {
             public EntityEventHandler<InteractUsingEvent>? InteractUsingEvent;
             public EntityEventHandler<InteractHandEvent>? InteractHandEvent;
