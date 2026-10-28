@@ -14,7 +14,7 @@
 - type: waypointer
   parent: BaseGridWaypointer
   id: NTStationWaypointer
-  name: Station Waypointer
+  name: waypointer-name-station
   trackedComponents:
   - type: StationData
   color: Blue
@@ -24,7 +24,7 @@
 - type: waypointer
   parent: BaseGridWaypointer
   id: TradeStationWaypointer
-  name: Trade Station Waypointer
+  name: waypointer-name-trade-station
   trackedComponents:
   - type: TradeStation
   color: Green
@@ -33,7 +33,7 @@
 - type: waypointer
   parent: BaseGridWaypointer
   id: WreckWaypointer
-  name: Wreck Waypointer
+  name: waypointer-name-wreck
   trackedComponents:
   - type: MapGrid
   blacklist:
@@ -48,7 +48,7 @@
 - type: waypointer
   parent: BaseWaypointer
   id: DragonRiftWaypointer
-  name: Rift Waypointer
+  name: waypointer-name-dragon-rift
   trackedComponents:
   - type: DragonRift
     spawn: !type:GroupSelector # This doesn't spawn anything. This is here because dragonRiftComponent requires spawn to be filled.
