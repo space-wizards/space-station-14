@@ -1249,5 +1249,31 @@ public sealed class StatusEffectNewTest : InteractionTest
         await Pair.RunUntilSynced(); // have to wait for queued deletion of status effects
         Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.False, "Status effect A was still on the player after being removed!");
     }
-    
+
+    [Test, Description("Attempts to test using the TrySetTime method to set the actual end time of a status effect")]
+    public async Task TrySetTime()
+    {
+        var curTime = await SetupStatusesSameLength(delay20:false,duration20:true);
+        await Server.WaitAssertion(() =>
+            {
+                using (Assert.EnterMultipleScope())
+                {
+                    Assert.That(_sStatusSystem.TrySetTime(SPlayer, StatusA, curTime + TenTicks), Is.True, "Using TrySetTime to set end time 10 ticks from now did not return true!");
+                    Assert.That(_sStatusSystem.TrySetTime(SPlayer, StatusB, TimeSpan.Zero), Is.True, "Using TrySetTime to set end time at zero ticks did not return true!");
+                    Assert.That(_sStatusSystem.TrySetTime(SPlayer, StatusC, null), Is.True, "Using TrySetTime to set end time as null did not return true!");
+                    _sStatusSystem.TrySetTime(SPlayer, StatusD, null); // just making Status D indefinite, no need to duplicate this assertion...
+                    Assert.That(_sStatusSystem.TrySetTime(SPlayer, StatusD, curTime + TenTicks), Is.True, "Using TrySetTime to set end time of indefinite status effect to 10 ticks from now did not return true!");
+
+                    Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var timeA), Is.True, "Could not get time info for effect A");
+                    Assert.That(timeA.EndEffectTime, Is.EqualTo(curTime + TenTicks), "Could not use TrySetTime to set end time of effect A as curTime + 10 ticks!");
+                    Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusB, out var timeB), Is.True, "Could not get time info for effect B");
+                    Assert.That(timeB.EndEffectTime, Is.EqualTo(TimeSpan.Zero), "Could not use TrySetTime to set end time of effect B as zero!");
+                    Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusC, out var timeC), Is.True, "Could not get time info for effect C");
+                    Assert.That(timeC.EndEffectTime, Is.Null, "Could not use TrySetTime to set end time of effect C as null to make it indefinite!");
+                    Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusD, out var timeD), Is.True, "Could not get time info for effect D");
+                    Assert.That(timeD.EndEffectTime, Is.EqualTo(curTime + TenTicks), "Could not use TrySetTime to set end time of indefinite effect D as curTime + 10 ticks!");
+                }
+            }
+        );
+    }
 }
