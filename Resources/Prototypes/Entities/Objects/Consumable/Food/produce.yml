@@ -2593,6 +2593,9 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pyrotton.rsi
+  - type: IgnitionSource
+    ignited: true
+    temperature: 400
   - type: FlavorProfile
     flavors:
       - pyrotton
