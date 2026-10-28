@@ -1,3 +1,5 @@
+# Bases, not locked
+
 - type: entity
   id: Windoor
   parent: BaseWindoor
@@ -18,12 +20,21 @@
 
 # TODO remove these with parameterized prototypes/whatever we end up doing
 # Please sort these alphabetically
-#region Windoor (Normal)
+
+## Suffix formatting ##
+# [ 1, 2-3 , 4 5 ]
+# 1. Custom - maps specific or special information - ex. ( 3x4, Exo )
+# 2. Group - what group of doors does it fall in to - not always laybaled to not clutter - ex. ( Medical )
+# 3. What the door is for, what department is it for, if specified in name, leave blank - ex. ( Mourge )
+# 4. Is it locked or not - ex. ( Locked )
+# 5. If it is locked, what access can unlock it, if it is the same as the 3, leave blank - ex. ( Medical-Detective-Chaplin )
+
+## Windoor (Normal)
 
 - type: entity
   parent: Windoor
   id: WindoorArmoryLocked
-  suffix: Armory, Locked
+  suffix: Security-Armory, Locked Armory
   components:
   - type: ContainerFill
     containers:
@@ -52,7 +63,7 @@
 - type: entity
   parent: WindoorServiceLocked
   id: WindoorBarKitchenLocked
-  suffix: Bar&Kitchen, Locked
+  suffix: Bar-Kitchen, Locked
   components:
   - type: ContainerFill
     containers:
@@ -61,7 +72,7 @@
 - type: entity
   parent: WindoorSecurityLocked
   id: WindoorBrigLocked
-  suffix: Brig, Locked
+  suffix: Security-Brig, Locked
   components:
   - type: ContainerFill
     containers:
@@ -81,7 +92,7 @@
 - type: entity
   parent: WindoorCommandLocked
   id: WindoorCentralCommandLocked
-  suffix: Central Command, Locked
+  suffix: CentralCommand, Locked
   components:
   - type: ContainerFill
     containers:
@@ -152,7 +163,7 @@
 - type: entity
   parent: WindoorCommandLocked
   id: WindoorHeadOfPersonnelLocked
-  suffix: HeadOfPersonnel, Locked
+  suffix: Command, Locked HeadOfPersonnel
   components:
   - type: ContainerFill
     containers:
@@ -161,7 +172,7 @@
 - type: entity
   parent: WindoorCommandLocked
   id: WindoorEVALocked
-  suffix: EVA, Locked
+  suffix: EVA, Locked External-Command
   components:
   - type: ContainerFill
     containers:
@@ -197,7 +208,7 @@
 - type: entity
   parent: WindoorServiceLocked
   id: WindoorKitchenHydroponicsLocked
-  suffix: Kitchen&Hydroponics, Locked
+  suffix: Kitchen-Hydroponics, Locked
   components:
   - type: ContainerFill
     containers:
@@ -226,7 +237,7 @@
 - type: entity
   parent: WindoorCommandLocked
   id: WindoorResearchDirectorLocked
-  suffix: ResearchDirector, Locked
+  suffix: Command, Locked ResearchDirector
   components:
   - type: ContainerFill
     containers:
@@ -255,7 +266,7 @@
 - type: entity
   parent: WindoorSecurityLocked
   id: WindoorSecurityLawyerLocked
-  suffix: Security/Lawyer, Locked
+  suffix: Security-Lawyer, Locked
   components:
   - type: ContainerFill
     containers:
@@ -307,7 +318,7 @@
 - type: entity
   parent: WindoorPlasma
   id: PlasmaWindoorArmoryLocked
-  suffix: Armory, Locked, Plasma
+  suffix: Security-Armory, Locked
   components:
   - type: ContainerFill
     containers:
@@ -318,7 +329,7 @@
 - type: entity
   parent: PlasmaWindoorEngineeringLocked
   id: PlasmaWindoorAtmosphericsLocked
-  suffix: Atmospherics, Locked, Plasma
+  suffix: Atmospherics, Locked
   components:
   - type: ContainerFill
     containers:
@@ -327,7 +338,7 @@
 - type: entity
   parent: PlasmaWindoorCommandLocked
   id: PlasmaWindoorCentralCommandLocked
-  suffix: Central Command, Locked, Plasma
+  suffix: CentralCommand, Locked
   components:
   - type: ContainerFill
     containers:
@@ -336,7 +347,7 @@
 - type: entity
   parent: WindoorPlasma
   id: PlasmaWindoorChemistryLocked
-  suffix: Chemistry, Locked, Plasma
+  suffix: Chemistry, Locked
   components:
   - type: ContainerFill
     containers:
@@ -347,7 +358,7 @@
 - type: entity
   parent: WindoorPlasma
   id: PlasmaWindoorCommandLocked
-  suffix: Command, Locked, Plasma
+  suffix: Command, Locked
   components:
   - type: ContainerFill
     containers:
@@ -360,7 +371,7 @@
 - type: entity
   parent: WindoorPlasma
   id: PlasmaWindoorEngineeringLocked
-  suffix: Engineering, Locked, Plasma
+  suffix: Engineering, Locked
   components:
   - type: ContainerFill
     containers:
@@ -371,7 +382,7 @@
 - type: entity
   parent: WindoorPlasma
   id: PlasmaWindoorJanitorLocked
-  suffix: Janitor, Locked, Plasma
+  suffix: Janitor, Locked
   components:
   - type: ContainerFill
     containers:
@@ -382,7 +393,7 @@
 - type: entity
   parent: WindoorPlasma
   id: PlasmaWindoorNukeopLocked
-  suffix: Nukeop, Locked, Plasma
+  suffix: Nukeop, Locked
   components:
   - type: ContainerFill
     containers:
@@ -391,7 +402,7 @@
 - type: entity
   parent: WindoorPlasma
   id: PlasmaWindoorScienceLocked
-  suffix: Science, Locked, Plasma
+  suffix: Science, Locked
   components:
   - type: ContainerFill
     containers:
@@ -402,7 +413,7 @@
 - type: entity
   parent: WindoorPlasma
   id: PlasmaWindoorSecurityLocked
-  suffix: Security, Locked, Plasma
+  suffix: Security, Locked
   components:
   - type: ContainerFill
     containers:
@@ -413,7 +424,7 @@
 - type: entity
   parent: WindoorPlasma
   id: PlasmaWindoorSyndicateLocked
-  suffix: Syndicate, Locked, Plasma
+  suffix: Syndicate, Locked
   components:
   - type: ContainerFill
     containers:
@@ -425,7 +436,7 @@
 - type: entity
   parent: WindoorUranium
   id: UraniumWindoorCentralCommandLocked
-  suffix: Central Command, Locked, Uranium
+  suffix: CentralCommand, Locked
   components:
   - type: ContainerFill
     containers:
@@ -438,7 +449,7 @@
 - type: entity
   parent: WindoorUranium
   id: UraniumWindoorEngineeringLocked
-  suffix: Engineering, Locked, Uranium
+  suffix: Engineering, Locked
   components:
   - type: ContainerFill
     containers:
@@ -449,7 +460,7 @@
 - type: entity
   parent: WindoorUranium
   id: UraniumWindoorNukeopLocked
-  suffix: Nukeop, Locked, Uranium
+  suffix: Nukeop, Locked
   components:
   - type: ContainerFill
     containers:
@@ -458,7 +469,7 @@
 - type: entity
   parent: WindoorUranium
   id: UraniumWindoorSyndicateLocked
-  suffix: Syndicate, Locked, Uranium
+  suffix: Syndicate, Locked
   components:
   - type: ContainerFill
     containers:

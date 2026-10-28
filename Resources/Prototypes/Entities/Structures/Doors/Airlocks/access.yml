@@ -643,7 +643,7 @@
 - type: entity
   parent: AirlockAtmosphericsGlass
   id: AirlockAtmosphericsEngineeringGlassLocked
-  suffix: Atmospherics, Engineering, Locked
+  suffix: Atmospherics-Engineering, Locked
   components:
   - type: ContainerFill
     containers:
