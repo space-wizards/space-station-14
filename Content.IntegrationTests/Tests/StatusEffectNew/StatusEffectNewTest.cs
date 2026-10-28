@@ -1206,6 +1206,48 @@ public sealed class StatusEffectNewTest : InteractionTest
             }
         });
     }
+
+    [Test, Description("Testing TryAddStatusEffectDuration to increase the delays of status effects - unsupported(?) operation, see remarks in comments.")]
+    public async Task TryAddStatusEffectDuration_Delays_IncreaseDelays_WeirdEdgeCase()
+    {
+        // TODO: do we still want this method to return true when a longer (invalid) delay has been given?
+        //  * if delay is given, current implementation calculates new end time as (current time + delay + duration)
+        //  * underlying `UpdateStatusEffectDelay` method rejects any delays longer than existing delay
+        //  * however, this isn't factored in when calculating new effect end time - diff between current delay and desired delay is added to duration.
+        //  is this intended behaviour?
+        //  this test has been written based on current implementation (in case any systems rely on this weird behaviour), please adjust if implementation changes 
+        var curTime = await SetupStatusesSameLength(delay20:true,duration20:true);
+        await Server.WaitAssertion(() =>
+        {
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusA, TenTicks, ThirtyTicks), Is.True, "Weird TryAddStatusEffectDuration increase 20 length 20 delay StatusA to 30 delay +10 duration (20 delay, 50 end time result?) unexpectedly(?) returned false - should(?) return true, weird edge case, see TODO in method");
+                Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusB, -TenTicks, FortyTicks), Is.True, "Using TryAddStatusEffectDuration to increase duration of 20 length 20 delay StatusB to 40 delay -10 duration (20 delay, 30 end time result?) unexpectedly returned false - should(?) return true, weird edge case, see TODO in method");
+                Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusC, TimeSpan.Zero, ThirtyTicks), Is.False, "Using TryAddStatusEffectDuration to increase duration of 20 length 20 delay StatusC to 30 delay 0 duration unexpectedly returned true (invalid duration input, it should do nothing)");
+                Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusD, null, ThirtyTicks), Is.True, "Using TryAddStatusEffectDuration to to set duration of 20 length 20 delay StatusB to 30 delay null duration (making it indefinite again, resulting delay should still be the shorter prior 20 delay) unexpectedly(?) returned false - should(?) return true, weird edge case, see TODO in method");
+
+                // A. Calculated new end time should be 60 (30delay + 30length = 60). However, as 30delay > 20delay, current implementation is expected to leave delay as 20.
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var timeA), Is.True, "Could not get time info for effect A");
+                Assert.That(timeA.StartEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(WiggleRoom), "TryAddStatusEffectDuration passing 30 delay and +10 duration somehow overwrote the delay of 20 delay 20 duration Status A (current implementation should preserve the current shorter delay)");
+                Assert.That(timeA.EndEffectTime, Is.EqualTo(curTime + FiftyTicks).Within(WiggleRoom), "Overwriting duration of status effect A to a positive amount (20 delay 20duration + [30 delay, +10 duration] -> delay = min(20,30), end time = delay(20) + (20 + 10) = 50) did not result in 50-tick end time!"); 
+
+                
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusB, out var timeB), Is.True, "Could not get time info for effect B");
+                Assert.That(timeB.StartEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(WiggleRoom), "TryAddStatusEffectDuration passing 40 delay and +10 duration somehow overwrote the delay of 20 delay 20 duration Status B (current implementation should preserve the current shorter delay)");
+                Assert.That(timeB.EndEffectTime, Is.EqualTo(curTime + ThirtyTicks).Within(WiggleRoom), "TryAddStatusEffectDuration adding negative duration to status effect B (20 delay 20duration + [40 delay, -10 duration] -> delay = min(20,40), end time = delay(20) + (20 - 10) = 30) did not result in 30-tick end time!");
+
+                // c is simple, should've done nothing.
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusC, out var timeC), Is.True, "Could not get time info for effect C");
+                Assert.That(timeC.StartEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(WiggleRoom), "TryAddStatusEffectDuration unexpectedly overwrote effect C delay, method should've done nothing due to being given invalid (zero) duration!");
+                Assert.That(timeC.EndEffectTime, Is.EqualTo(curTime + FortyTicks).Within(WiggleRoom), "TryAddStatusEffectDuration unexpectedly overwrote effect C duration despite being given an invalid (zero) length!");
+
+                // D. Calculated new end time should be null (given null duration). End time should still be 20 (30delay > 20delay, preserve 20 delay).
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusD, out var timeD), Is.True, "Could not get time info for effect D");
+                Assert.That(timeD.StartEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(WiggleRoom), "TryAddStatusEffectDuration passing 30 delay and null duration somehow overwrote the delay of 20 delay 20 duration Status D (current implementation should preserve the current shorter delay)");
+                Assert.That(timeD.EndEffectTime, Is.Null, "Overwriting duration of finite status effect with 20 tick delay to (delay 30(?) duration null) somehow made the duration non-indefinite");
+            }
+        });
+    }
     #endregion
 
     [Test, Description("Testing TryAddStatusEffectDuration to adjust status effect duration.")]
