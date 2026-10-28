@@ -11,12 +11,12 @@ public static class PdaRngAnalyzer
 {
     public const int MaxPrintedBadges = 20;
     public const int MinNumber = 0;
-    public const int MaxNumber = 999_999;
+    public const int MaxNumber = 99_999;
 
     public static PdaRngRollResult Analyze(int number)
     {
         if (number is < MinNumber or > MaxNumber)
-            throw new ArgumentOutOfRangeException(nameof(number), number, "PDA RNG rolls must be in 0..999999");
+            throw new ArgumentOutOfRangeException(nameof(number), number, "PDA RNG rolls must be in 0..99999");
 
         var text = number.ToString(CultureInfo.InvariantCulture);
         var badges = new List<PdaRngEarnedBadge>();
