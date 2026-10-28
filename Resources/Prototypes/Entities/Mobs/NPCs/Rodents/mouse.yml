@@ -157,6 +157,8 @@
     constantlyReplan: false
     rootTask:
       task: MouseCompound
+  - type: Insulated
+    coefficient: 2
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
