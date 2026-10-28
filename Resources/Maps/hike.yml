@@ -3867,8 +3867,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 3300
-      configurators:
-      - invalid
 - proto: AltarBananium
   entities:
   - uid: 2779
