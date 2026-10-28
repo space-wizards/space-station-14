@@ -431,6 +431,9 @@
     layers:
     - state: pyrotton_3
       map: ["base"]
+  - type: IgnitionSource
+    ignited: true
+    temperature: 400
   - type: Edible
     requiresSpecialDigestion: true
     solution: composite

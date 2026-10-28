@@ -75,23 +75,15 @@ public abstract partial class SharedDoorSystem
         UpdateBoltLightStatus(ent);
     }
 
+    /// <summary>
+    /// Set the bolts for a door.
+    /// </summary>
+    /// <param name="ent">The door entity</param>
+    /// <param name="value">Bolts up/down</param>
+    /// <param name="user">Optional user who triggered the bolts</param>
+    /// <param name="predicted">If predicted</param>
     public void SetBoltsDown(Entity<DoorBoltComponent> ent, bool value, EntityUid? user = null, bool predicted = false)
     {
-        TrySetBoltDown(ent, value, user, predicted);
-    }
-
-    public bool TrySetBoltDown(
-        Entity<DoorBoltComponent> ent,
-        bool value,
-        EntityUid? user = null,
-        bool predicted = false
-    )
-    {
-        if (!_powerReceiver.IsPowered(ent.Owner))
-            return false;
-        if (ent.Comp.BoltsDown == value)
-            return false;
-
         ent.Comp.BoltsDown = value;
         Dirty(ent, ent.Comp);
         UpdateBoltLightStatus(ent);
@@ -105,6 +97,29 @@ public abstract partial class SharedDoorSystem
             Audio.PlayPredicted(sound, ent, user: user);
         else
             Audio.PlayPvs(sound, ent);
+    }
+
+    /// <summary>
+    /// Attempts to set the bolts for a door.
+    /// </summary>
+    /// <param name="ent">The door entity</param>
+    /// <param name="value">Bolts up/down</param>
+    /// <param name="user">Optional user who triggered the bolts</param>
+    /// <param name="predicted">If predicted</param>
+    /// <returns>If the bolts were successfully affected</returns>
+    public bool TrySetBoltDown(
+        Entity<DoorBoltComponent> ent,
+        bool value,
+        EntityUid? user = null,
+        bool predicted = false
+    )
+    {
+        if (!_powerReceiver.IsPowered(ent.Owner))
+            return false;
+        if (ent.Comp.BoltsDown == value)
+            return false;
+
+        SetBoltsDown(ent, value, user, predicted);
         return true;
     }
 

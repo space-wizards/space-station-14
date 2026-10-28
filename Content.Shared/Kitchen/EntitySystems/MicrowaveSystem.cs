@@ -39,7 +39,7 @@ public abstract partial class MicrowaveSystem : EntitySystem
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedItemSystem _item = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
-    [Dependency] private SharedPowerStateSystem _powerState = default!;
+    [Dependency] private PowerStateSystem _powerState = default!;
     [Dependency] private SharedStackSystem _stack = default!;
     [Dependency] private SharedTemperatureSystem _temperature = default!;
 
