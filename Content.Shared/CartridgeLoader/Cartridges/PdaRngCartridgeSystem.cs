@@ -1,6 +1,4 @@
-using Content.Shared.Administration.Logs;
 using Content.Shared.CartridgeLoader.Cartridges.PdaRng;
-using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Labels.EntitySystems;
@@ -17,7 +15,6 @@ public sealed partial class PdaRngCartridgeSystem : EntitySystem
 {
     [Dependency] private CartridgeLoaderSystem _cartridge = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private LabelSystem _label = default!;
     [Dependency] private PaperSystem _paper = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
@@ -73,9 +70,6 @@ public sealed partial class PdaRngCartridgeSystem : EntitySystem
 
         var paperComp = Comp<PaperComponent>(paper);
         _paper.SetContent((paper, paperComp), PdaRngAnalyzer.FormatTicket(result, playerName));
-
-        _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low,
-            $"{ToPrettyString(user):user} printed PDA RNG ticket {result.NumberText} ({paper})");
     }
 
     private void UpdateUiState(Entity<PdaRngCartridgeComponent> ent, EntityUid loaderUid)

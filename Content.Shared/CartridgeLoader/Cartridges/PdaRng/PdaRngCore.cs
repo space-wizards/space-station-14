@@ -263,7 +263,7 @@ public static class PdaRngAnalyzer
             ("NiceBlaze", 69420, 95),
             ("BlazeNice", 42069, 95),
             ("QuadSevens", 77777, 120),
-            ("BoobiesPlus", 80085, 90),
+            ("FunnyNumber", 80085, 90),
             ("PrimeNearEnd", 99991, 130),
             ("MaxRoll", 99999, 120),
         ];
