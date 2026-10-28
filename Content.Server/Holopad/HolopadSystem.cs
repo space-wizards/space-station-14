@@ -40,7 +40,7 @@ public sealed partial class HolopadSystem : SharedHolopadSystem
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private PvsOverrideSystem _pvs = default!;
-    [Dependency] private SharedPowerStateSystem _powerState = default!;
+    [Dependency] private PowerStateSystem _powerState = default!;
     [Dependency] private MetaDataSystem _meta = default!;
 
     #region: Holopad UI bound user interface messages

@@ -17,6 +17,7 @@
     salvage: AirlockSalvage
     science: AirlockScience
     security: AirlockSecurity
+    service: AirlockService
     virology: AirlockVirology
 
 - type: paintableGroup

@@ -4,7 +4,7 @@
 /// Event raised to update the devices stored in a device list.
 /// </summary>
 [ByRefEvent]
-public readonly record struct DeviceListUpdateEvent(List<EntityUid> OldDevices, List<EntityUid> Devices);
+public readonly record struct DeviceListUpdateEvent(IReadOnlySet<EntityUid> OldDevices, IReadOnlySet<EntityUid> Devices);
 
 /// <summary>
 /// Result of attempting to update a device list.

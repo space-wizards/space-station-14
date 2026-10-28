@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
@@ -589,14 +588,11 @@ namespace Content.Shared.Interaction
             // Only rotate to face if they're not moving.
             if (!HasComp<NoRotateOnInteractComponent>(user) && (!TryComp(user, out InputMoverComponent? mover) || (mover.HeldMoveButtons & MoveButtons.AnyDirection) == 0x0))
             {
-                TryFaceInteraction(user, _transform.ToMapCoordinates(coordinates).Position);
+                _rotateToFaceSystem.TryFaceCoordinates(user, _transform.ToMapCoordinates(coordinates).Position);
             }
 
             return true;
         }
-
-        protected virtual bool TryFaceInteraction(EntityUid user, Vector2 coordinates)
-            => _rotateToFaceSystem.TryFaceCoordinates(user, coordinates);
 
         /// <summary>
         ///     Traces a ray from coords to otherCoords and returns the length
