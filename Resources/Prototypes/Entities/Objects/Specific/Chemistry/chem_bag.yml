@@ -31,3 +31,20 @@
         - Syringe
         - Dropper
   - type: Dumpable
+
+- type: entity
+  parent: ChemBag
+  id: BorgChemBagFilled
+  suffix: Filled
+  name: integrated bag
+  description: A chemistry bag built into the frame of a medical cyborg.
+  components:
+  - type: Storage
+    grid:
+    - 0,0,7,1
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ChemistryEmptyBottle01
+          amount: 16

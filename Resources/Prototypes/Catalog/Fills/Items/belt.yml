@@ -138,6 +138,29 @@
         - id: ChemistryBottleCharcoal
 
 - type: entity
+  parent: ClothingBeltMedical
+  id: BorgBeltMedicalFilled
+  suffix: Filled
+  name: integrated belt
+  description: A medical belt built into the frame of a medical cyborg.
+  components:
+  - type: Storage
+    grid:
+    - 0,0,3,1
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ChemistryBottleSaline
+        - id: ChemistryBottleBicaridine
+        - id: ChemistryBottleDexalin
+        - id: ChemistryBottleDylovene
+        - id: ChemistryBottleHyronalin
+        - id: ChemistryBottleKelotane
+        - id: ChemistryBottleEpinephrine
+        - id: PillCanisterTricordrazine
+
+- type: entity
   id: ClothingBeltPlantFilled
   parent: ClothingBeltPlant
   suffix: Filled

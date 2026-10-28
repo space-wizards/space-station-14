@@ -920,6 +920,18 @@
         whitelist:
           components:
           - Healing
+    - item: BorgBeltMedicalFilled
+    - hand:
+        emptyLabel: borg-slot-pills-chemical-containers-empty
+        emptyRepresentative: Beaker
+        whitelist:
+          components:
+            - FitsInDispenser
+          tags:
+          - ChemDispensable
+          - PillCanister
+          - Bottle
+          - Pill
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: treatment-module }
 
@@ -1034,6 +1046,18 @@
         whitelist:
           components:
           - Healing
+    - item: BorgChemBagFilled
+    - hand:
+        emptyLabel: borg-slot-pills-chemical-containers-empty
+        emptyRepresentative: Beaker
+        whitelist:
+          components:
+            - FitsInDispenser
+          tags:
+          - ChemDispensable
+          - PillCanister
+          - Bottle
+          - Pill
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-chem-module }
 
