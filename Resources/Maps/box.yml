@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 292.0.0
+  engineVersion: 293.0.1
   forkId: ""
   forkVersion: ""
-  time: 10/10/2026 22:58:19
+  time: 10/16/2026 20:35:01
   entityCount: 28888
 maps:
 - 780
@@ -78448,7 +78448,7 @@ entities:
     - type: Transform
       parent: 8364
       pos: 7.5,-46.5
-- proto: computerBodyScanner
+- proto: ComputerBodyScanner
   entities:
   - uid: 2390
     components:
@@ -91481,14 +91481,14 @@ entities:
       pos: 5.5,-15.5
     - type: FaxMachine
       name: Captain
-- proto: filingCabinet
+- proto: FilingCabinet
   entities:
   - uid: 15378
     components:
     - type: Transform
       parent: 8364
       pos: 57.5,3.5
-- proto: filingCabinetDrawer
+- proto: FilingCabinetDrawer
   entities:
   - uid: 5293
     components:
@@ -91515,7 +91515,7 @@ entities:
     - type: Transform
       parent: 8364
       pos: -54.5,-10.5
-- proto: filingCabinetDrawerRandom
+- proto: FilingCabinetDrawerRandom
   entities:
   - uid: 2354
     components:
@@ -91552,7 +91552,7 @@ entities:
     - type: Transform
       parent: 8364
       pos: 4.5,-51.5
-- proto: filingCabinetRandom
+- proto: FilingCabinetRandom
   entities:
   - uid: 274
     components:
@@ -91594,7 +91594,7 @@ entities:
     - type: Transform
       parent: 8364
       pos: -32.5,-31.5
-- proto: filingCabinetTall
+- proto: FilingCabinetTall
   entities:
   - uid: 17686
     components:
@@ -133477,7 +133477,7 @@ entities:
     - type: Transform
       parent: 8364
       pos: 62.5,10.5
-- proto: hydroponicsSoil
+- proto: HydroponicsSoil
   entities:
   - uid: 7364
     components:
@@ -133618,7 +133618,7 @@ entities:
     - type: Transform
       parent: 8364
       pos: -23.468409,41.671387
-- proto: hydroponicsTray
+- proto: HydroponicsTray
   entities:
   - uid: 7362
     components:
@@ -155554,7 +155554,7 @@ entities:
     components:
     - type: Transform
       parent: 8364
-      pos: -22.5,-54.5
+      pos: -31.5,-56.5
   - uid: 20933
     components:
     - type: Transform
@@ -163277,7 +163277,7 @@ entities:
     - type: Transform
       parent: 8364
       pos: 2.6832485,-34.158478
-- proto: trayScanner
+- proto: TRayScanner
   entities:
   - uid: 11590
     components:
