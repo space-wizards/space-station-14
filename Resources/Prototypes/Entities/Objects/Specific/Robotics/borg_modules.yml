@@ -913,6 +913,13 @@
         whitelist:
           components:
           - Healing
+    - item: Bloodpack
+      hand:
+        emptyLabel: borg-slot-topicals-empty
+        emptyRepresentative: Bloodpack
+        whitelist:
+          components:
+          - Healing
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: treatment-module }
 
@@ -1017,6 +1024,13 @@
       hand:
         emptyLabel: borg-slot-topicals-empty
         emptyRepresentative: Ointment
+        whitelist:
+          components:
+          - Healing
+    - item: Bloodpack
+      hand:
+        emptyLabel: borg-slot-topicals-empty
+        emptyRepresentative: Bloodpack
         whitelist:
           components:
           - Healing
