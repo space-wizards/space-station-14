@@ -1,5 +1,5 @@
 - type: entity
-  parent: MobSpiderAnimated
+  parent: MobSpiderBase
   id: MobGiantSpiderWizard
   name: wizard spider
   suffix: Wizard

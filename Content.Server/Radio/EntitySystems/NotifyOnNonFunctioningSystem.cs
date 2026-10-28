@@ -1,10 +1,10 @@
-using Content.Server.Pinpointer;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Radio.Components;
 using Content.Shared.Construction;
 using Content.Shared.Destructible;
 using Content.Shared.Lock;
+using Content.Shared.Pinpointer;
 using Content.Shared.Power.EntitySystems;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -53,10 +53,10 @@ public sealed partial class NotifyOnNonFunctioningSystem : EntitySystem
 
     /// <summary> Notify on turning off. </summary>
     [SubscribeLocalEvent]
-    private void OnIsWorkingChanges(Entity<NotifyOnNonFunctioningComponent> ent, ref PowerStateChanged args)
+    private void OnTurnedOnChanges(Entity<NotifyOnNonFunctioningComponent> ent, ref TurnedOnStateChanged args)
     {
         // deleted entity is working change should be handled during other events
-        if (args.IsWorking || !ent.Comp.LocTurnedOff.HasValue || TerminatingOrDeleted(ent))
+        if (args.IsTurnedOn || !ent.Comp.LocTurnedOff.HasValue || TerminatingOrDeleted(ent))
             return;
 
         AlertRadio(ent, ent.Comp.LocTurnedOff);
