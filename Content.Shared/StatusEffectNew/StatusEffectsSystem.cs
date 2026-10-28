@@ -165,8 +165,8 @@ public sealed partial class StatusEffectsSystem : EntitySystem
     /// </summary>
     /// <param name="target">The target entity to which the effect should be added.</param>
     /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has StatusEffectComponent on it.</param>
-    /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.</param>
-    /// <param name="delay">The delay of the effect. Leave null and the effect will be immediate.</param>
+    /// <param name="duration">Duration of status effect. Leave null (default behaviour) and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.</param>
+    /// <param name="delay">The delay of the effect. Leave null (default behaviour) and the effect will be immediate.</param>
     /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if we couldn't create one.</param>
     private bool TryAddStatusEffect(
         EntityUid target,
