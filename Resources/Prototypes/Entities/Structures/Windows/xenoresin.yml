@@ -9,7 +9,27 @@
   - type: Icon
     sprite: Structures/Windows/exo-resin.rsi
   - type: IconSmooth
+    key: windows-exo
     states:
-    - !type:CornerSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
-      base: xwindow
+    - !type:CardinalCornerSpriteSmoothing
+      mask: [ windows-exo ]
+      altMask:
+      - windows
+      - windows-reinf
+      - windows-tinted
+      - windows-plasma
+      - windows-plasma-reinf
+      - windows-uranium
+      - windows-uranium-reinf
+      - windows-shuttle
+      - windows-plastitanium
+      - windows-regal
+      - walls-exo
+      - walls-shuttle
+      - walls-plastitanium
+      - walls-material
+      - walls-marble
+      - walls
+      - grilles
+      - doors
+      base: window

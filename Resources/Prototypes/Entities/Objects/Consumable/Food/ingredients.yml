@@ -359,6 +359,8 @@
         Quantity: 50
   - type: Openable
     closeable: true
+  - type: FitsInDispenser # chemistry joke. Using plastic mayo or peanut butter jars is a common and hilarious thing in rl chemistry because some acids eat glass but not plastic.
+    solution: food
   - type: Tag
     tags:
     - Ingredient

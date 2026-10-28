@@ -39,7 +39,28 @@
     key: grilles
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls, grilles, doors, marble ]
+      mask:
+      - windows
+      - windows-reinf
+      - windows-tinted
+      - windows-plasma
+      - windows-plasma-reinf
+      - windows-uranium
+      - windows-uranium-reinf
+      - windows-exo
+      - windows-exo-borg
+      - windows-shuttle
+      - windows-plastitanium
+      - windows-regal
+      - walls-exo
+      - walls-exo-borg
+      - walls-shuttle
+      - walls-plastitanium
+      - walls-material
+      - walls-marble
+      - walls
+      - grilles
+      - doors
       base: grille
       index: 0
   - type: Electrified
@@ -123,7 +144,12 @@
     key: grilles
     states:
     - !type:DiagonalSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
+      mask:
+      - walls
+      - windows
+      - grilles
+      - marble
+      - doors
       base: state
       index: 0
   - type: Fixtures
