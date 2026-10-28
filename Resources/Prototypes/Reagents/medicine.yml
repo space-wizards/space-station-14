@@ -1622,7 +1622,7 @@
         conditions:
         - !type:ReagentCondition
           reagent: Ignisol
-          max: 11
+          max: 10
         - !type:TemperatureCondition
           max: 313.15
       - !type:AdjustTemperature

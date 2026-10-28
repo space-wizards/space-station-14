@@ -1554,7 +1554,6 @@
   - type: Solution
     solution:
       maxVol: 15
-      canReact: true
       reagents:
       - ReagentId: Ignisol
         Quantity: 8
