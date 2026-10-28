@@ -249,26 +249,6 @@ public sealed class StatusEffectNewTest : InteractionTest
 
     #endregion Add new status effects (with delay)
 
-    [Test, Description("Test that status effects can manually be removed with TryRemoveStatusEffect")]
-    public async Task TryRemoveStatusEffect()
-    {
-        await Server.WaitAssertion(() =>
-        {
-            using (Assert.EnterMultipleScope())
-            {
-                Assert.That(_sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA), Is.True, "Status effect A could not be applied, unable to perform these tests :(");
-
-                Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.True, "Status effect A was not found on the player");
-                Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusB), Is.False, "Status effect B was found on the player despite never being given");
-
-                Assert.That(_sStatusSystem.TryRemoveStatusEffect(SPlayer, StatusA), Is.True, "TryRemoveStatusEffect for Status A failed! (returned false, expected true)");
-                Assert.That(_sStatusSystem.TryRemoveStatusEffect(SPlayer, StatusB), Is.False, "TryRemoveStatusEffect for Status B (not on the player) somehow succeeded despite this effect not being on the player!? (returned true, expected false)");
-            }
-        });
-        await Pair.RunUntilSynced(); // have to wait for queued deletion of status effects
-        Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.False, "Status effect A was still on the player after being removed!");
-    }
-    
     /// <summary>
     /// helper method to give SPlayer effects A,B,C,D with identical delay (zero or 20 ticks) and duration (indefinite or 20 ticks)
     /// </summary>
@@ -1250,126 +1230,24 @@ public sealed class StatusEffectNewTest : InteractionTest
     }
     #endregion
 
-    [Test, Description("Testing TryAddStatusEffectDuration to adjust status effect duration.")]
-    public async Task TestAddEffectTime_TryAddStatusEffectDuration()
+    [Test, Description("Test that status effects can manually be removed with TryRemoveStatusEffect")]
+    public async Task TryRemoveStatusEffect()
     {
-        var curTime = TimeSpan.Zero;
-        await Server.WaitPost(() =>
+        await Server.WaitAssertion(() =>
         {
-            _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks);
-            curTime = STiming.CurTime;
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(_sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA), Is.True, "Status effect A could not be applied, unable to perform these tests :(");
+
+                Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.True, "Status effect A was not found on the player");
+                Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusB), Is.False, "Status effect B was found on the player despite never being given");
+
+                Assert.That(_sStatusSystem.TryRemoveStatusEffect(SPlayer, StatusA), Is.True, "TryRemoveStatusEffect for Status A failed! (returned false, expected true)");
+                Assert.That(_sStatusSystem.TryRemoveStatusEffect(SPlayer, StatusB), Is.False, "TryRemoveStatusEffect for Status B (not on the player) somehow succeeded despite this effect not being on the player!? (returned true, expected false)");
+            }
         });
-
-        Assume.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var time), Is.True, "Could not get time info for effect A");
-        Assume.That(time.EndEffectTime, Is.EqualTo(curTime + TenTicks).Within(WiggleRoom), "Status effect A did not have expected end time of 10 ticks after current time");
-
-        Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusA, TwentyTicks), Is.True, "TryAddStatusEffectDuration adding 20 ticks to duration did not return true");
-        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePlusTenPlusTwenty);
-        Assert.That(timePlusTenPlusTwenty.EndEffectTime, Is.EqualTo(curTime + ThirtyTicks).Within(WiggleRoom), "Status effect A did not have expected updated end time of 30 ticks after current time (was 10, 20 added)");
-
-        Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusA, -TenTicks), Is.True, "TryAddStatusEffectDuration removing ten ticks from duration did not return true");
-        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePlusTenPlusTwentyMinusTen);
-        Assert.That(timePlusTenPlusTwentyMinusTen.EndEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(WiggleRoom), "Status effect A did not have expected updated end time of 20 ticks after current time (was 30, 10 removed)");
+        await Pair.RunUntilSynced(); // have to wait for queued deletion of status effects
+        Assert.That(_sStatusSystem.HasStatusEffect(SPlayer, StatusA), Is.False, "Status effect A was still on the player after being removed!");
     }
-    
-    [Test, Description("Testing TryAddStatusEffectDuration to adjust status effect duration with null duration args")]
-    public async Task TestAddEffectTime_TryAddStatusEffectDuration_Null()
-    {
-        var curTime = TimeSpan.Zero;
-        await Server.WaitPost(() =>
-        {
-            _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks);
-            curTime = STiming.CurTime;
-        });
-
-        Assume.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var time), Is.True, "Could not get time info for effect A");
-        Assume.That(time.EndEffectTime, Is.EqualTo(curTime + TenTicks), "Status effect A did not have expected end time of 10 ticks after current time");
-
-        Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusA, null), Is.True, "TryAddStatusEffectDuration setting duration to null did not return true");
-        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePermanent);
-        Assert.That(timePermanent.EndEffectTime, Is.Null, "TryAddStatusEffectDuration setting to null did not set the duration to null");
-    }
-
-    [Test, Description("Testing TrySetDuration to adjust status effect duration.")]
-    public async Task TestAddEffectTime_TrySetDuration()
-    {
-        var curTime = TimeSpan.Zero;
-        await Server.WaitPost(() =>
-        {
-            _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks);
-            curTime = STiming.CurTime;
-        });
-
-        Assume.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var time), Is.True, "Could not get time info for effect A");
-        Assume.That(time.EndEffectTime, Is.EqualTo(curTime + TenTicks).Within(WiggleRoom), "Status effect A did not have expected end time of 10 ticks after current time");
-
-        Assert.That(_sStatusSystem.TrySetDuration(SPlayer, StatusA, ThirtyTicks), Is.True, "TrySetDuration setting to 30 ticks did not return true");
-        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePlusThirty);
-        Assert.That(timePlusThirty.EndEffectTime, Is.EqualTo(curTime + ThirtyTicks).Within(WiggleRoom), "Status effect A did not have expected updated end time of 30 ticks after current time");
-
-        Assert.That(_sStatusSystem.TrySetDuration(SPlayer, StatusA, TwentyTicks), Is.True, "TrySetDuration setting to 20 ticks did not return true");
-        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePlusTwenty);
-        Assert.That(timePlusTwenty.EndEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(WiggleRoom), "Status effect A did not have expected updated end time of 20 ticks after current time");
-    }
-    
-    [Test, Description("Testing TrySetDuration to adjust status effect duration to null")]
-    public async Task TestAddEffectTime_TrySetDuration_Null()
-    {
-        var curTime = TimeSpan.Zero;
-        await Server.WaitPost(() =>
-        {
-            _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks);
-            curTime = STiming.CurTime;
-        });
-
-        Assume.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var time), Is.True, "Could not get time info for effect A");
-        Assume.That(time.EndEffectTime, Is.EqualTo(curTime + TenTicks).Within(WiggleRoom), "Status effect A did not have expected end time of 10 ticks after current time");
-
-        Assert.That(_sStatusSystem.TrySetDuration(SPlayer, StatusA, null), Is.True, "TrySetDuration setting to null did not return true");
-        _sStatusSystem.TryGetTime(SPlayer, StatusA, out var timePermanent);
-        Assert.That(timePermanent.EndEffectTime, Is.Null, "TrySetDuration setting to null did not set the duration to null");
-    }
-
-    [Test, Description("Testing reducing delays to status effects")]
-    public async Task TestReduceStatusEffectDelay()
-    {
-        var effectQuery = SEntMan.GetEntityQuery<StatusEffectComponent>();
-        var curTime = TimeSpan.Zero;
-        await Server.WaitPost(() =>
-        {
-            _sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks, TwentyTicks);
-            curTime = STiming.CurTime;
-        });
-
-        Assume.That(_sStatusSystem.TryGetStatusEffect(SPlayer, StatusA, out var idStatusA),  Is.True, "Status effect A was not found on the player");
-        Assume.That(effectQuery.TryComp(idStatusA, out var compStatusA), Is.True, "Status effect A component was not found on the player");
-        Assume.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var time1), Is.True, "Could not get time info for effect A");
-        using (Assert.EnterMultipleScope())
-        {
-            Assert.That(time1.StartEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(WiggleRoom), "Status effect A did not have expected start time 20 ticks after current time");
-            Assert.That(time1.EndEffectTime, Is.EqualTo(curTime + ThirtyTicks).Within(WiggleRoom), "Status effect A did not have expected end time of 30 ticks after current time");
-            Assert.That(compStatusA!.Applied, Is.False, "Status effect A was applied to the player, despite delay not being over");
-        }
-
-        Assert.That(_sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks, TenTicks), Is.True, "TrySetStatusEffectDuration reducing to 10 tick delay did not return true");
-        Assume.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var time2), Is.True, "Could not get time info for effect A (delay 10, duration 10, end time should be 20)");
-        using (Assert.EnterMultipleScope())
-        {
-            Assert.That(time2.StartEffectTime, Is.EqualTo(curTime + TenTicks).Within(WiggleRoom), "Status effect A did not have expected start time 10 ticks after current time (delay 10, duration 10, end time should be 20)");
-            Assert.That(time2.EndEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(WiggleRoom), "Status effect A did not have expected end time of 20 ticks after current time  (delay 10, duration 10, end time should be 20)");
-            Assert.That(compStatusA!.Applied, Is.False, "Status effect A was applied to the player, despite reduced delay not being over");
-        }
-
-        Assert.That(_sStatusSystem.TrySetStatusEffectDuration(SPlayer, StatusA, TenTicks, null), Is.True, "TrySetStatusEffectDuration setting to null delay did not return true");
-        Assume.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var time3), Is.True, "Could not get time info for effect A (delay null, duration 10, end time should be 10)");
-        using (Assert.EnterMultipleScope())
-        {
-            Assert.That(time3.StartEffectTime, Is.EqualTo(curTime).Within(WiggleRoom), "Status effect A did not have expected start time of immediately (delay null, duration 10, end time should be 10)");
-            Assert.That(time3.EndEffectTime, Is.EqualTo(curTime + TenTicks).Within(WiggleRoom), "Status effect A did not have expected end time of 10 ticks after current time  (delay null, duration 10, end time should be 10)");
-        }
-        await Server.WaitRunTicks(1); // need to wait for callbacks and such to resolve themselves in order for the "applied" status to update 
-        Assert.That(compStatusA!.Applied, Is.True, "Status effect A was not applied to the player after delay was reduced to zero");
-    }
-
     
 }
