@@ -682,7 +682,7 @@ public sealed class StatusEffectNewTest : InteractionTest
     }
 
     [Test, Description("Testing TrySetStatusEffectDuration to adjust status effect duration of effects with delays, whilst leaving the delay argument unspecified")]
-    public async Task TrySetStatusEffectDuration_AdjustDurationsOfEffectsWithDelays_DefaultBehaviour()
+    public async Task TrySetStatusEffectDuration_Delays_DefaultBehaviour()
     {
         var curTime = await SetupStatusesSameLength(delay20:true,duration20:true);
         await Server.WaitAssertion(() =>
@@ -711,7 +711,7 @@ public sealed class StatusEffectNewTest : InteractionTest
     }
 
     [Test, Description("Testing TrySetStatusEffectDuration to adjust status effect duration of effects with delays, whilst explicitly passing a delay of null")]
-    public async Task TrySetStatusEffectDuration_AdjustDurationsOfEffectsWithDelays_PassingDelay_Null()
+    public async Task TrySetStatusEffectDuration_Delays_PassingDelay_Null()
     {
         var curTime = await SetupStatusesSameLength(delay20:true,duration20:true);
         await Server.WaitAssertion(() =>
@@ -740,7 +740,7 @@ public sealed class StatusEffectNewTest : InteractionTest
     }
 
     [Test, Description("Testing TrySetStatusEffectDuration to adjust durations & decreasing the delays of effects which already have delays")]
-    public async Task TrySetStatusEffectDuration_AdjustDurationsOfEffectsWithDelays_DecreaseDelays()
+    public async Task TrySetStatusEffectDuration_Delays_DecreaseDelays()
     {
         var curTime = await SetupStatusesSameLength(delay20:true,duration20:true);
         await Server.WaitAssertion(() =>
@@ -769,7 +769,7 @@ public sealed class StatusEffectNewTest : InteractionTest
     }
 
     [Test, Description("Testing TrySetStatusEffectDuration to adjust durations & decreasing the delays of effects which already have delays")]
-    public async Task TrySetStatusEffectDuration_AdjustDurationsOfEffectsWithDelays_DecreaseDelays_NegativeDelay_Weird()
+    public async Task TrySetStatusEffectDuration_Delays_DecreaseDelays_NegativeDelay_Weird()
     {
         var curTime = await SetupStatusesSameLength(delay20:true,duration20:true);
         await Server.WaitAssertion(() =>
@@ -798,7 +798,7 @@ public sealed class StatusEffectNewTest : InteractionTest
     }
 
     [Test, Description("Testing TrySetStatusEffectDuration to increase the delays of status effects - unsupported(?) operation, see remarks in comments.")]
-    public async Task TrySetStatusEffectDuration_AdjustDurationsOfEffectsWithDelays_IncreaseDelays_WeirdEdgeCase()
+    public async Task TrySetStatusEffectDuration_Delays_IncreaseDelays_WeirdEdgeCase()
     {
         // TODO: do we still want this method to return true when a longer (invalid) delay has been given?
         //  * if delay is given, current implementation calculates new end time as (current time + delay + duration)
@@ -911,7 +911,7 @@ public sealed class StatusEffectNewTest : InteractionTest
     }
 
     [Test, Description("Testing TryUpdateStatusEffectDuration to adjust status effect duration of effects with delays, whilst leaving the delay argument unspecified")]
-    public async Task TryUpdateStatusEffectDuration_AdjustDurationsOfEffectsWithDelays_DefaultBehaviour()
+    public async Task TryUpdateStatusEffectDuration_Delays_DefaultBehaviour()
     {
         var curTime = await SetupStatusesSameLength(delay20:true,duration20:true);
         await Server.WaitAssertion(() =>
@@ -940,7 +940,7 @@ public sealed class StatusEffectNewTest : InteractionTest
     }
 
     [Test, Description("Testing TryUpdateStatusEffectDuration to adjust status effect duration of effects with delays, whilst explicitly passing a delay of null")]
-    public async Task TryUpdateStatusEffectDuration_AdjustDurationsOfEffectsWithDelays_PassingDelay_Null()
+    public async Task TryUpdateStatusEffectDuration_Delays_PassingDelay_Null()
     {
         var curTime = await SetupStatusesSameLength(delay20:true,duration20:true);
         await Server.WaitAssertion(() =>
@@ -969,7 +969,7 @@ public sealed class StatusEffectNewTest : InteractionTest
     }
 
     [Test, Description("Testing TryUpdateStatusEffectDuration to adjust durations & decreasing the delays of effects which already have delays")]
-    public async Task TryUpdateStatusEffectDuration_AdjustDurationsOfEffectsWithDelays_DecreaseDelays()
+    public async Task TryUpdateStatusEffectDuration_Delays_DecreaseDelays()
     {
         var curTime = await SetupStatusesSameLength(delay20:true,duration20:true);
         await Server.WaitAssertion(() =>
@@ -998,7 +998,7 @@ public sealed class StatusEffectNewTest : InteractionTest
     }
 
     [Test, Description("Testing TryUpdateStatusEffectDuration to adjust durations & decreasing the delays of effects which already have delays")]
-    public async Task TryUpdateStatusEffectDuration_AdjustDurationsOfEffectsWithDelays_DecreaseDelays_NegativeDelay_Weird()
+    public async Task TryUpdateStatusEffectDuration_Delays_DecreaseDelays_NegativeDelay_Weird()
     {
         var curTime = await SetupStatusesSameLength(delay20:true,duration20:true);
         await Server.WaitAssertion(() =>
@@ -1027,7 +1027,7 @@ public sealed class StatusEffectNewTest : InteractionTest
     }
 
     [Test, Description("Testing TryUpdateStatusEffectDuration to increase the delays of status effects - unsupported(?) operation, see remarks in comments.")]
-    public async Task TryUpdateStatusEffectDuration_AdjustDurationsOfEffectsWithDelays_IncreaseDelays_WeirdEdgeCase()
+    public async Task TryUpdateStatusEffectDuration_Delays_IncreaseDelays_WeirdEdgeCase()
     {
         // TODO: do we still want this method to return true when a longer (invalid) delay has been given?
         //  * if delay is given, current implementation calculates new end time as (current time + delay + duration)
@@ -1149,6 +1149,63 @@ public sealed class StatusEffectNewTest : InteractionTest
         });
     }
 
+    [Test, Description("Testing TrySetStatusEffectDuration to adjust status effect duration of effects with delays, whilst leaving the delay argument unspecified")]
+    public async Task TryAddStatusEffectDuration_Delays_DecreaseDelays()
+    {
+        var curTime = await SetupStatusesSameLength(delay20:true,duration20:true);
+        await Server.WaitAssertion(() =>
+        {
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusA, TenTicks, TenTicks), Is.True, "Using use TryAddStatusEffectDuration to set 10 delay and add 10 duration to 20-delay 20-duration StatusA unexpectedly returned false");
+                Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusB, -TenTicks, TenTicks), Is.True, "Using use TryAddStatusEffectDuration to set 10 delay and add -10 duration ticks to 20-delay 20-duration StatusB unexpectedly returned false");
+                Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusC, TimeSpan.Zero, TenTicks), Is.False, "Using use TryAddStatusEffectDuration to set 10 delay and add zero length to 20-delay 20-duration StatusC unexpectedly returned true (should return false if given duration of zero)");
+                Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusD, null, TenTicks), Is.True, "Using use TryAddStatusEffectDuration to set 10 delay and add null length to 20-delay 20-duration StatusD (to make it indefinite) unexpectedly returned false");
+
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var timeA), Is.True, "Could not get time info for effect A");
+                Assert.That(timeA.StartEffectTime, Is.EqualTo(curTime + TenTicks).Within(WiggleRoom), "Adding 10 duration and setting 10 delay for TryAddStatusEffectDuration delay argument somehow did not overwrite the delay with current time!");
+                Assert.That(timeA.EndEffectTime, Is.EqualTo(curTime + FiftyTicks).Within(WiggleRoom), "Adding 10 duration and setting 10 delay to 20-delay 20-duration status effect did not give end time 50");
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusB, out var timeB), Is.True, "Could not get time info for effect B");
+                Assert.That(timeB.StartEffectTime, Is.EqualTo(curTime + TenTicks).Within(WiggleRoom), "Passing null for TryAddStatusEffectDuration delay argument somehow did not overwrite the delay with current time!");
+                Assert.That(timeB.EndEffectTime, Is.EqualTo(curTime + ThirtyTicks).Within(WiggleRoom), "Adding minus 10 duration and setting 10 delay to 20-delay 20-duration status effect did not give end time 30");
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusC, out var timeC), Is.True, "Could not get time info for effect C");
+                Assert.That(timeC.StartEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(WiggleRoom), "Adding zero duration and setting 10 delay to status effect C somehow overwrote the delay! (should have done nothing, zero duration should have been rejected, preventing method from being executed)");
+                Assert.That(timeC.EndEffectTime, Is.EqualTo(curTime + FortyTicks).Within(WiggleRoom), "Adding 0 duration and setting 10 delay to 20-delay 20-duration status effect did not give end time 40 (prior end time of 40 should have been preserved, invalid duration argument of 0 should have prevented method execution)");
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusD, out var timeD), Is.True, "Could not get time info for effect D");
+                Assert.That(timeD.StartEffectTime, Is.EqualTo(curTime + TenTicks).Within(WiggleRoom), "Passing null duration and setting 10 delay for TryAddStatusEffectDuration delay argument somehow did not overwrite the delay with current time!");
+                Assert.That(timeD.EndEffectTime, Is.Null, "Adding null to 20-delay 20-duration status effect did not make the effect indefinite");
+            }
+        });
+    }
+
+    [Test, Description("Testing TryAddStatusEffectDuration to adjust durations & decreasing the delays of effects which already have delays")]
+    public async Task TryAddStatusEffectDuration_Delays_DecreaseDelays_NegativeDelay_Weird()
+    {
+        var curTime = await SetupStatusesSameLength(delay20:true,duration20:true);
+        await Server.WaitAssertion(() =>
+        {
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusA, TenTicks, -TenTicks), Is.True, "Using use TryAddStatusEffectDuration to set -10 delay and add 10 duration to 20-delay 20-duration StatusA unexpectedly returned false");
+                Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusB, -TenTicks, -TenTicks), Is.True, "Using use TryAddStatusEffectDuration to set -10 delay and add -10 duration ticks to 20-delay 20-duration StatusB unexpectedly returned false");
+                Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusC, TimeSpan.Zero, -TenTicks), Is.False, "Using use TryAddStatusEffectDuration to set -10 delay and add zero length to 20-delay 20-duration StatusC unexpectedly returned true (should return false if given duration of zero)");
+                Assert.That(_sStatusSystem.TryAddStatusEffectDuration(SPlayer, StatusD, null, -TenTicks), Is.True, "Using use TryAddStatusEffectDuration to set -10 delay and add null length to 20-delay 20-duration StatusD (to make it indefinite) unexpectedly returned false");
+
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var timeA), Is.True, "Could not get time info for effect A");
+                Assert.That(timeA.StartEffectTime, Is.EqualTo(curTime - TenTicks).Within(WiggleRoom), "TryAddStatusEffectDuration passing -10 delay and adding -10 duration somehow didn't overwrite the delay of Status A to -10.");
+                Assert.That(timeA.EndEffectTime, Is.EqualTo(curTime + FiftyTicks).Within(WiggleRoom), "passing -10 delay and adding -10 duration to effect A did not result in 50-tick end time (20 delay 20 duration -> add 10 duration moves end time to 50 -> setting delay to -10 doesn't change end time)");
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusB, out var timeB), Is.True, "Could not get time info for effect B");
+                Assert.That(timeB.StartEffectTime, Is.EqualTo(curTime - TenTicks).Within(WiggleRoom), "TryAddStatusEffectDuration passing -10 delay and adding -10 duration somehow didn't overwrite the delay of Status B to -10.");
+                Assert.That(timeB.EndEffectTime, Is.EqualTo(curTime + ThirtyTicks).Within(WiggleRoom), "passing -10 delay and adding -10 duration to status effect B (from 20 delay 20 duration) didn't update end time to 30 (20 delay 20 duration -> add -10 duration moves end time to 30 -> setting delay to -10 doesn't change end time)");
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusC, out var timeC), Is.True, "Could not get time info for effect C");
+                Assert.That(timeC.StartEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(WiggleRoom), "TryAddStatusEffectDuration passing -10 delay and adding -10 duration somehow overwrote delay (should've done nothing due to invalid duration argument)");
+                Assert.That(timeC.EndEffectTime, Is.EqualTo(curTime + FortyTicks).Within(WiggleRoom), "passing -10 delay and adding 0 duration for Effect C somehow overwrote end time of 40 (should've done nothing due to invalid duration argument)");
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusD, out var timeD), Is.True, "Could not get time info for effect D");
+                Assert.That(timeD.StartEffectTime, Is.EqualTo(curTime - TenTicks).Within(WiggleRoom), "TryAddStatusEffectDuration passing -10 delay and setting null duration somehow didn't overwrite the delay of Status D to -10.");
+                Assert.That(timeD.EndEffectTime, Is.Null, "Overwriting duration of finite status effect with 20 tick delay to indefinite via passing -10 delay and setting null duration somehow made the duration non-indefinite");
+            }
+        });
+    }
     #endregion
 
     [Test, Description("Testing TryAddStatusEffectDuration to adjust status effect duration.")]
