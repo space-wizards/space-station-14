@@ -165,8 +165,22 @@ public sealed partial class MarkingManager
                     markings[i] = new Marking(marking.ID, existingColors.Concat(missingColors));
                 }
                 // If there are more colors than sprites, drop the extras
-                else if (existingColors.Count > markingColorCount)
-                    markings[i] = new Marking(marking.ID, existingColors.Take(markingColorCount));
+                else if (marking.Sprites.Count < existingColors.Count)
+                {
+                    markings[i] = new Marking(marking.ID, existingColors.Take(marking.Sprites.Count));
+                }
+
+                // Ensure the colors are clamped properly
+                if (marking.Strategy == null)
+                    continue;
+
+                var clampedColors = new List<Color>();
+                foreach (var color in markings[i].MarkingColors)
+                {
+                    clampedColors.Add(marking.Strategy.EnsureVerified(color));
+                }
+
+                markings[i] =  new Marking(marking.ID, clampedColors);
             }
         }
     }

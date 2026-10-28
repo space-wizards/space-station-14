@@ -1,18 +1,26 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "flowers_body, flowers_head, leaf_cover, thorns_body, thorns_head from https://github.com/Citadel-Station-13/Citadel-Station-13-RP/commit/38051f45d3b26bd31f6e292239f43adb36ff01fe, modified by EmoGarbage and other from https://github.com/TauCetiStation/TauCetiClassic/blob/a8c097fd0e749dcd6f66f05cf5325e51f6b081dd/icons/mob/human_face.dmi",
+  "copyright": "flowers_body, flowers_head, leaf_cover, thorns_body, thorns_head from https://github.com/Citadel-Station-13/Citadel-Station-13-RP/commit/38051f45d3b26bd31f6e292239f43adb36ff01fe, modified by EmoGarbage and other from https://github.com/TauCetiStation/TauCetiClassic/blob/a8c097fd0e749dcd6f66f05cf5325e51f6b081dd/icons/mob/human_face.dmi. All sprites except for thorns_body, thorns_head, and leaf_cover made grayscale, brightened, and split into layers by Wolfkey",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "flowers_body",
+      "name": "flowers_body_vine",
       "directions": 4
     },
     {
-      "name": "flowers_head",
+      "name": "flowers_body_flowers",
+      "directions": 4
+    },
+    {
+      "name": "flowers_head_vine",
+      "directions": 4
+    },
+    {
+      "name": "flowers_head_flowers",
       "directions": 4
     },
     {
@@ -28,7 +36,11 @@
       "directions": 4
     },
     {
-      "name": "bloom",
+      "name": "bloom_flower",
+      "directions": 4
+    },
+    {
+      "name": "bloom_leaves",
       "directions": 4
     },
     {
@@ -36,11 +48,27 @@
       "directions": 4
     },
     {
-      "name": "brush",
+      "name": "brush_branches",
       "directions": 4
     },
     {
-      "name": "cornflower",
+      "name": "brush_leaves",
+      "directions": 4
+    },
+    {
+      "name": "cornflower_branches",
+      "directions": 4
+    },
+    {
+      "name": "cornflower_leaves",
+      "directions": 4
+    },
+    {
+      "name": "cornflower_petals",
+      "directions": 4
+    },
+    {
+      "name": "cornflower_pollen",
       "directions": 4
     },
     {
@@ -48,11 +76,19 @@
       "directions": 4
     },
     {
-      "name": "garland",
+      "name": "garland_flowers",
       "directions": 4
     },
     {
-      "name": "king",
+      "name": "garland_leaves",
+      "directions": 4
+    },
+    {
+      "name": "king_flower",
+      "directions": 4
+    },
+    {
+      "name": "king_leaves",
       "directions": 4
     },
     {
@@ -64,7 +100,11 @@
       "directions": 4
     },
     {
-      "name": "lotus",
+      "name": "lotus_flower",
+      "directions": 4
+    },
+    {
+      "name": "lotus_leaves",
       "directions": 4
     },
     {
@@ -88,11 +128,19 @@
       "directions": 4
     },
     {
-      "name": "rose",
+      "name": "rose_flower",
       "directions": 4
     },
     {
-      "name": "rosey",
+      "name": "rose_leaves",
+      "directions": 4
+    },
+    {
+      "name": "rosey_flowers",
+      "directions": 4
+    },
+    {
+      "name": "rosey_leaves",
       "directions": 4
     },
     {
@@ -100,27 +148,59 @@
       "directions": 4
     },
     {
-      "name": "spinner",
+      "name": "spinner_branches",
       "directions": 4
     },
     {
-      "name": "sprout",
+      "name": "spinner_leaves",
       "directions": 4
     },
     {
-      "name": "vine",
+      "name": "spinner_eyes",
       "directions": 4
     },
     {
-      "name": "vinel",
+      "name": "sprout_leaf",
       "directions": 4
     },
     {
-      "name": "vines",
+      "name": "sprout_eyes",
       "directions": 4
     },
     {
-      "name": "wildflower",
+      "name": "vine_branches",
+      "directions": 4
+    },
+    {
+      "name": "vine_vines",
+      "directions": 4
+    },
+    {
+      "name": "vinel_vines",
+      "directions": 4
+    },
+    {
+      "name": "vinel_leaves",
+      "directions": 4
+    },
+    {
+      "name": "vines_vines",
+      "directions": 4
+    },
+    {
+      "name": "vines_leaves",
+      "directions": 4
+    },
+    {
+      "name": "wildflower_flowers",
+      "directions": 4
+    },
+    {
+      "name": "wildflower_leaves",
+      "directions": 4
+    },
+    {
+      "name": "wildflower_branches",
       "directions": 4
     }
   ]
