@@ -109,7 +109,7 @@ public abstract partial class SharedPointingSystem : EntitySystem
         if (!CanPoint(pointer, coordsPointed, pointed))
         {
             if (!InRange(pointer, coordsPointed))
-                Popup.PopupPredicted(Loc.GetString("pointing-system-try-point-cannot-reach"), pointer, pointer, Filter.Empty(), false);
+                Popup.PopupEntity(Loc.GetString("pointing-system-try-point-cannot-reach"), pointer, pointer);
 
             return false;
         }
@@ -199,7 +199,7 @@ public abstract partial class SharedPointingSystem : EntitySystem
     {
         var (pointedMessageTarget, selfMessage, othersMessage, targetMessage) = GetPointingMessages(pointer, pointed, mapCoordinates);
         var selfPopupType = pointer == pointedMessageTarget ? PopupType.Medium : PopupType.Small;
-        Popup.PopupPredicted(selfMessage, pointer, pointer, Filter.Empty(), false, selfPopupType);
+        Popup.PopupEntity(selfMessage, pointer, pointer, selfPopupType);
 
         var othersFilter = Filter.PvsExcept(pointer, entityManager: EntityManager);
         if (Exists(pointedMessageTarget) && pointedMessageTarget != pointer)
