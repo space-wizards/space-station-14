@@ -114,6 +114,16 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
         }
     }
 
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    {
+        base.ReceiveMessage(message);
+
+        if (_window is null || message is not SurveillanceCameraMonitorMapUpdateMessage mapMessage)
+            return;
+
+        _window.SetCameraMarkers(mapMessage.CameraMarkers);
+    }
+
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);

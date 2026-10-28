@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.SurveillanceCamera.Components;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Systems;
@@ -187,9 +188,28 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
         DisconnectCamera(uid, false, monitor);
     }
 
+    [SubscribeLocalEvent]
+    private void OnCameraMapMarkersChanged(Entity<SurveillanceCameraMapComponent> ent, ref SurveillanceCameraMapMarkersChangedEvent args)
+    {
+        var query = EntityQueryEnumerator<SurveillanceCameraMonitorComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var monitor, out var xform))
+        {
+            if (xform.GridUid != ent.Owner)
+                continue;
+
+            foreach (var viewer in monitor.Viewers)
+                SendCameraMapUpdate(uid, viewer, ent.Comp.Cameras);
+        }
+    }
+
     private void OnBoundUiOpen(EntityUid uid, SurveillanceCameraMonitorComponent component, BoundUIOpenedEvent args)
     {
         AddViewer(uid, args.Actor, component);
+
+        var markers = TryComp<SurveillanceCameraMapComponent>(Transform(uid).GridUid, out var mapComp)
+            ? mapComp.Cameras
+            : [];
+        SendCameraMapUpdate(uid, args.Actor, markers);
     }
 
     private void OnBoundUiClose(EntityUid uid, SurveillanceCameraMonitorComponent component, BoundUIClosedEvent args)
@@ -454,5 +474,11 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
             monitor.ActiveSubnet,
             monitor.KnownCameras);
         _userInterface.SetUiState(uid, SurveillanceCameraMonitorUiKey.Key, state);
+    }
+
+    private void SendCameraMapUpdate(EntityUid monitorUid, EntityUid actor, Dictionary<NetEntity, CameraMarker> markers)
+    {
+        var message = new SurveillanceCameraMonitorMapUpdateMessage(markers);
+        _userInterface.ServerSendUiMessage(monitorUid, SurveillanceCameraMonitorUiKey.Key, message, actor);
     }
 }

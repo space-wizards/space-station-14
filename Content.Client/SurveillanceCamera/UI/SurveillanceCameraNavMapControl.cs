@@ -1,7 +1,7 @@
 using Content.Client.Pinpointer.UI;
 using Content.Client.Resources;
 using Content.Shared.DeviceNetwork;
-using Content.Shared.SurveillanceCamera.Components;
+using Content.Shared.SurveillanceCamera;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Map;
@@ -11,7 +11,6 @@ namespace Content.Client.SurveillanceCamera.UI;
 
 public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
 {
-    [Dependency] private IEntityManager _entityManager = default!;
     [Dependency] private IResourceCache _resourceCache = default!;
 
     private static readonly Color CameraActiveColor = Color.FromHex("#FF00FF");
@@ -26,7 +25,8 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
 
     private DeviceAddress _activeCameraAddress = DeviceAddress.Invalid;
     private HashSet<ProtoId<DeviceFrequencyPrototype>> _availableSubnets = [];
-    private (Dictionary<NetEntity, CameraMarker> Cameras, DeviceAddress ActiveAddress, HashSet<ProtoId<DeviceFrequencyPrototype>> AvailableSubnets) _lastState;
+    private Dictionary<NetEntity, CameraMarker> _markers = [];
+    private bool _markersDirty = true;
 
     public bool EnableCameraSelection { get; set; }
 
@@ -55,6 +55,7 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
             return;
 
         _activeCameraAddress = address;
+        _markersDirty = true;
         ForceNavMapUpdate();
     }
 
@@ -64,32 +65,48 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
             return;
 
         _availableSubnets = subnets;
+        _markersDirty = true;
         ForceNavMapUpdate();
+    }
+
+    /// <summary>
+    /// Sets the camera markers for the camera map.
+    /// </summary>
+    public void SetCameraMarkers(Dictionary<NetEntity, CameraMarker> markers)
+    {
+        _markers = markers;
+        _markersDirty = true;
+        ForceNavMapUpdate();
+    }
+
+    /// <summary>
+    /// Attempts to get the marker for the given camera.
+    /// </summary>
+    public bool TryGetMarker(NetEntity entity, out CameraMarker marker)
+    {
+        return _markers.TryGetValue(entity, out marker);
     }
 
     protected override void UpdateNavMap()
     {
         base.UpdateNavMap();
 
-        if (MapUid is null || !_entityManager.TryGetComponent<SurveillanceCameraMapComponent>(MapUid, out var mapComp))
+        if (!_markersDirty)
             return;
 
-        var currentState = (mapComp.Cameras, _activeCameraAddress, _availableSubnets);
-        if (_lastState.Equals(currentState))
-            return;
-
-        _lastState = currentState;
-        UpdateCameraMarkers(mapComp);
+        UpdateCameraMarkers();
     }
 
-    private void UpdateCameraMarkers(SurveillanceCameraMapComponent mapComp)
+    private void UpdateCameraMarkers()
     {
         TrackedEntities.Clear();
 
         if (MapUid is null)
             return;
 
-        foreach (var (netEntity, marker) in mapComp.Cameras)
+        _markersDirty = false;
+
+        foreach (var (netEntity, marker) in _markers)
         {
             if (!marker.Visible || !_availableSubnets.Contains(marker.Subnet))
                 continue;
