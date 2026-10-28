@@ -28,8 +28,7 @@ public abstract partial class StationSystem : EntitySystem
     /// </summary>
     /// <remarks>
     /// "Largest" is determined by the total area of the grid's bounding box, not by the tile count.
-    /// If two of the station's grids have the same area, this method returns whichever happens to
-    /// be first in the station's grid list.
+    /// If multiple grids share the largest area, any of them may be returned.
     /// </remarks>
     public EntityUid? GetLargestGrid(Entity<StationDataComponent?> ent)
     {
