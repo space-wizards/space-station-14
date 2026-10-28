@@ -209,8 +209,6 @@
     tags: # ignore "WhitelistChameleon" tag so there arent duplicates
     - ClothMade
     - Recyclable
-  - type: ClothingSlowOnDamageModifier
-    modifier: 0.5
 
 - type: entity # used for chameleon to work properly
   parent: [ ClothingShoesBase, BaseSyndicateContraband ]
