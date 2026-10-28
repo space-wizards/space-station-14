@@ -505,6 +505,60 @@ public sealed class StatusEffectNewTest : InteractionTest
         }
     }
 
+    [Test, Description("Testing TrySetDuration to adjust status effect duration to indefinite status effects")]
+    public async Task TrySetDuration_Null()
+    {
+        var curTime = await SetupStatusesSameLength(delay20:false,duration20:false);
+        await Server.WaitAssertion(() =>
+        {
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(_sStatusSystem.TrySetDuration(SPlayer, StatusA, TenTicks), Is.True, "Using TrySetDuration to set duration of indefinite length StatusA to 10 ticks unexpectedly returned false");
+                Assert.That(_sStatusSystem.TrySetDuration(SPlayer, StatusB, -TenTicks), Is.True, "Using TrySetDuration to set duration of indefinite length StatusB to -10 ticks unexpectedly returned false");
+                Assert.That(_sStatusSystem.TrySetDuration(SPlayer, StatusC, TimeSpan.Zero), Is.True, "Using TrySetDuration to set duration of indefinite length StatusC to zero unexpectedly returned false");
+                Assert.That(_sStatusSystem.TrySetDuration(SPlayer, StatusD, null), Is.True, "Using TrySetDuration to to set duration of indefinite length StatusB to null (making it indefinite again) unexpectedly returned false");
+                
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var timeA), Is.True, "Could not get time info for effect A");
+                Assert.That(timeA.EndEffectTime, Is.EqualTo(curTime + TenTicks).Within(SGameTiming.TickPeriod), "Could not overwrite duration of indefinite status effect to a positive length (10 ticks)");
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusB, out var timeB), Is.True, "Could not get time info for effect B");
+                Assert.That(timeB.EndEffectTime, Is.EqualTo(curTime - TenTicks).Within(SGameTiming.TickPeriod), "Could not overwrite duration of indefinite status effect to a negative length (-10 ticks)");
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusC, out var timeC), Is.True, "Could not get time info for effect C");
+                Assert.That(timeC.EndEffectTime, Is.EqualTo(curTime).Within(SGameTiming.TickPeriod), "Could not overwrite duration of indefinite status effect to zero");
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusD, out var timeD), Is.True, "Could not get time info for effect D");
+                Assert.That(timeD.EndEffectTime, Is.Null, "Overwriting duration of indefinite status effect to null (indefinite) somehow made the duration non-indefinite");
+            }
+        });
+    }
+
+    [Test, Description("Testing TrySetDuration to adjust status effect duration of effects with delays")]
+    public async Task TrySetDuration_WithDelays()
+    {
+        var curTime = await SetupStatusesSameLength(delay20:true,duration20:true);
+        await Server.WaitAssertion(() =>
+        {
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(_sStatusSystem.TrySetDuration(SPlayer, StatusA, TenTicks), Is.True, "Using TrySetDuration to set duration of 20 length 20 delay StatusA to 10 ticks unexpectedly returned false");
+                Assert.That(_sStatusSystem.TrySetDuration(SPlayer, StatusB, -TenTicks), Is.True, "Using TrySetDuration to set duration of 20 length 20 delay StatusB to -10 ticks unexpectedly returned false");
+                Assert.That(_sStatusSystem.TrySetDuration(SPlayer, StatusC, TimeSpan.Zero), Is.True, "Using TrySetDuration to set duration of 20 length 20 delay StatusC to zero unexpectedly returned false");
+                Assert.That(_sStatusSystem.TrySetDuration(SPlayer, StatusD, null), Is.True, "Using TrySetDuration to to set duration of 20 length 20 delay StatusB to null (making it indefinite again) unexpectedly returned false");
+                
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusA, out var timeA), Is.True, "Could not get time info for effect A");
+                Assert.That(timeA.StartEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(SGameTiming.TickPeriod), "Overwriting duration of status effect A with positive value (10) somehow overwrote the delay!");
+                Assert.That(timeA.EndEffectTime, Is.EqualTo(curTime + ThirtyTicks).Within(SGameTiming.TickPeriod), "Overwriting duration of 20-delay status effect to a positive amount (10) did not result in 30-tick end time");
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusB, out var timeB), Is.True, "Could not get time info for effect B");
+                Assert.That(timeB.StartEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(SGameTiming.TickPeriod), "Overwriting duration of status effect B with negative value (-10) somehow overwrote the delay!");
+                Assert.That(timeB.EndEffectTime, Is.EqualTo(curTime + TenTicks).Within(SGameTiming.TickPeriod), "Overwriting duration of 20-delay status effect to a negative amount (-10) did not result in 10-tick end time");
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusC, out var timeC), Is.True, "Could not get time info for effect C");
+                Assert.That(timeC.StartEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(SGameTiming.TickPeriod), "Overwriting duration of status effect C with zero somehow overwrote the delay!");
+                Assert.That(timeC.EndEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(SGameTiming.TickPeriod), "Overwriting duration of 20-delay status effect to zero did not result in 20-tick end time");
+                Assert.That(_sStatusSystem.TryGetTime(SPlayer, StatusD, out var timeD), Is.True, "Could not get time info for effect D");
+                Assert.That(timeD.StartEffectTime, Is.EqualTo(curTime + TwentyTicks).Within(SGameTiming.TickPeriod), "Overwriting duration of status effect D with null somehow overwrote the delay!");
+                Assert.That(timeD.EndEffectTime, Is.Null, "Overwriting duration of finite status effect with 20 tick delay to null (indefinite) somehow made the duration non-indefinite");
+            }
+        });
+    }
+
     #endregion TrySetDuration
 
     #region TrySetStatusEffectDuration
