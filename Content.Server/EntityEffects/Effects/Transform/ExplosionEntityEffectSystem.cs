@@ -1,4 +1,4 @@
-﻿using Content.Server.Explosion.EntitySystems;
+using Content.Server.Explosion.EntitySystems;
 using Content.Shared.EntityEffects;
 using ExplosionEffect = Content.Shared.EntityEffects.Effects.Transform.Explosion;
 

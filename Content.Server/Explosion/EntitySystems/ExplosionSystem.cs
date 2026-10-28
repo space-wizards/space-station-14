@@ -18,7 +18,6 @@ using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
 using Content.Shared.Maps;
-using Content.Shared.Projectiles;
 using Content.Shared.Throwing;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
@@ -27,7 +26,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -36,10 +34,8 @@ namespace Content.Server.Explosion.EntitySystems;
 
 public sealed partial class ExplosionSystem : SharedExplosionSystem
 {
-    [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private IRobustRandom _robustRandom = default!;
     [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
@@ -64,6 +60,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     [Dependency] private EntityQuery<ActorComponent> _actorQuery = default!;
     [Dependency] private EntityQuery<DestructibleComponent> _destructibleQuery = default!;
     [Dependency] private EntityQuery<DamageableComponent> _damageableQuery = default!;
+    [Dependency] private EntityQuery<ExplosionResistanceComponent> _explosionResistanceQuery = default!;
     [Dependency] private EntityQuery<InjurableComponent> _injurableQuery = default!;
     [Dependency] private EntityQuery<AirtightComponent> _airtightQuery = default!;
     [Dependency] private EntityQuery<TileHistoryComponent> _tileHistoryQuery = default!;
@@ -79,7 +76,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     {
         base.Initialize();
 
-        DebugTools.Assert(_prototypeManager.HasIndex(DefaultExplosionPrototypeId));
+        DebugTools.Assert(ProtoMan.HasIndex(DefaultExplosionPrototypeId));
 
         // handled in ExplosionSystem.GridMap.cs
         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
@@ -102,7 +99,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         InitAirtightMap();
         InitVisuals();
 
-        _prototypeManager.PrototypesReloaded += ReloadExplosionPrototypes;
+        ProtoMan.PrototypesReloaded += ReloadExplosionPrototypes;
     }
 
     private void OnReset(RoundRestartCleanupEvent ev)
@@ -121,7 +118,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         base.Shutdown();
         _nodeGroupSystem.PauseUpdating = false;
         _pathfindingSystem.PauseUpdating = false;
-        _prototypeManager.PrototypesReloaded -= ReloadExplosionPrototypes;
+        ProtoMan.PrototypesReloaded -= ReloadExplosionPrototypes;
     }
 
     private void RelayedResistance(EntityUid uid, ExplosionResistanceComponent component,
@@ -139,7 +136,15 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     }
 
     /// <inheritdoc/>
-    public override void TriggerExplosive(EntityUid uid, ExplosiveComponent? explosive = null, bool delete = true, float? totalIntensity = null, float? radius = null, EntityUid? user = null)
+    public override void TriggerExplosive(
+        EntityUid uid,
+        ExplosiveComponent? explosive = null,
+        bool delete = true,
+        float? totalIntensity = null,
+        float? maxIntensity = null,
+        float? radius = null,
+        EntityUid? user = null
+    )
     {
         // log missing: false, because some entities (e.g. liquid tanks) attempt to trigger explosions when damaged,
         // but may not actually be explosive.
@@ -153,15 +158,17 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         explosive.Exploded = !explosive.Repeatable;
 
         // Override the explosion intensity if optional arguments were provided.
+        maxIntensity ??= explosive.MaxIntensity;
         if (radius != null)
-            totalIntensity ??= RadiusToIntensity((float)radius, explosive.IntensitySlope, explosive.MaxIntensity);
+            totalIntensity ??= RadiusToIntensity((float)radius, explosive.IntensitySlope, maxIntensity.Value);
+
         totalIntensity ??= explosive.TotalIntensity;
 
         QueueExplosion(uid,
             explosive.ExplosionType,
-            (float)totalIntensity,
+            totalIntensity.Value,
             explosive.IntensitySlope,
-            explosive.MaxIntensity,
+            maxIntensity.Value,
             explosive.TileBreakScale,
             explosive.MaxTileBreak,
             explosive.CanCreateVacuum,
@@ -282,7 +289,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         if (totalIntensity <= 0 || slope <= 0)
             return;
 
-        if (!_prototypeManager.TryIndex<ExplosionPrototype>(typeId, out var type))
+        if (!ProtoMan.TryIndex<ExplosionPrototype>(typeId, out var type))
         {
             Log.Error($"Attempted to spawn unknown explosion prototype: {type}");
             return;

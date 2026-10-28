@@ -6,7 +6,7 @@
     metabolizerTypes: [ Animal ]
 
 - type: entity
-  parent: OrganBase
+  parent: OrganBaseOrganic
   id: OrganAnimal
   abstract: true
   suffix: Animal

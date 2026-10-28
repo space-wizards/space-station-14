@@ -209,7 +209,7 @@ public sealed partial class DockingSystem
 
                     // Check if there's no intersecting grids (AKA oh god it's docking at cargo).
                     grids.Clear();
-                    _mapManager.FindGridsIntersecting(targetGridXform.MapID, dockedBounds, ref grids, includeMap: false);
+                    _mapSystem.FindGridsIntersecting(targetGridXform.MapID, dockedBounds, ref grids, includeMap: false);
                     if (grids.Any(o => o.Owner != targetGrid && o.Owner != targetGridXform.MapUid))
                     {
                         continue;
@@ -331,11 +331,11 @@ public sealed partial class DockingSystem
             // If it's a map check no hard collidable anchored entities overlap
             if (isMap)
             {
-                var localTiles = _mapSystem.GetLocalTilesEnumerator(gridEntity.Owner, gridEntity.Comp, aabb);
+                var localTiles = _mapSystem.GetLocalTilesIntersecting(gridEntity.Owner, gridEntity.Comp, aabb);
 
                 while (localTiles.MoveNext(out var tile))
                 {
-                    var anchoredEnumerator = _mapSystem.GetAnchoredEntitiesEnumerator(gridEntity.Owner, gridEntity.Comp, tile.GridIndices);
+                    var anchoredEnumerator = _mapSystem.GetAnchoredEntities(gridEntity.Owner, gridEntity.Comp, tile.GridIndices);
 
                     while (anchoredEnumerator.MoveNext(out var anc))
                     {

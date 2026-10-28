@@ -41,7 +41,7 @@ namespace Content.Client.Singularity
             _entMan.EventBus.SubscribeEvent<PixelToMapEvent>(EventSource.Local, this, OnProjectFromScreenToMap);
             ZIndex = 101; // Should be drawn after the placement overlay so admins placing items near the singularity can tell where they're going.
 
-            _configManager.OnValueChanged(CCVars.ReducedMotion, (b) => { _reducedMotion = b; }, invokeImmediately: true);
+            _configManager.OnValueChanged(CCVars.DisableSinguloWarp, (b) => { _reducedMotion = b; }, invokeImmediately: true);
         }
 
         private readonly Vector2[] _positions = new Vector2[MaxCount];
@@ -103,7 +103,6 @@ namespace Content.Client.Singularity
             var worldHandle = args.WorldHandle;
             worldHandle.UseShader(_shader);
             worldHandle.DrawRect(args.WorldAABB, Color.White);
-            worldHandle.UseShader(null);
         }
 
         /// <summary>

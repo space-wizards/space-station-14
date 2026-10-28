@@ -20,6 +20,20 @@ public sealed partial class SkinColorationPrototype : IPrototype
     /// </summary>
     [DataField(required: true)]
     public ISkinColorationStrategy Strategy = default!;
+
+    //// <summary>
+    ///     If true, will randomly generate realistic hair and eye colors.
+    ///     Will also crush randomly generated colors down to the skin's luminosity
+    ///     so markings don't appear too bright on darker skin.
+    /// </summary>
+    [DataField]
+    public bool RealisticColors;
+
+    /// <summary>
+    ///     If true, will also squash hair and eye colors to the coloration strategy.
+    /// </summary>
+    [DataField]
+    public bool SquashEyeHairColors;
 }
 
 /// <summary>
@@ -61,16 +75,47 @@ public interface ISkinColorationStrategy
     Color ClosestSkinColor(Color color);
 
     /// <summary>
-    /// Returns the input if it passes <see cref="VerifySkinColor">, otherwise returns <see cref="ClosestSkinColor" />
+    /// Returns the input if it passes <see cref="VerifyClampedSkinColor">, otherwise returns <see cref="ClosestSkinColor" />
     /// </summary>
     Color EnsureVerified(Color color)
     {
-        if (VerifySkinColor(color, out _))
+        if (VerifyClampedSkinColor(color, out _))
         {
             return color;
         }
 
         return ClosestSkinColor(color);
+    }
+
+    /// <summary>
+    /// Returns if the color, or any nearby, is valid.
+    /// Due to RGB truncation, clamped colors near a threshold may be out of spec,
+    /// so we brute force checking nearby colors.
+    /// </summary>
+    bool VerifyClampedSkinColor(Color color, [NotNullWhen(false)] out string? reason)
+    {
+        string? firstReason = null;
+        for (int i = 0; i < 8; i++)
+        {
+            Color testColor = color;
+            if ((i & 1) != 0)
+                testColor.R = Math.Min(color.R + SkinColorationUtils.Epsilon, 1.0f);
+            if ((i & 2) != 0)
+                testColor.G = Math.Min(color.G + SkinColorationUtils.Epsilon, 1.0f);
+            if ((i & 4) != 0)
+                testColor.B = Math.Min(color.B + SkinColorationUtils.Epsilon, 1.0f);
+
+            if (VerifySkinColor(testColor, out var internalReason))
+            {
+                reason = null;
+                return true;
+            }
+
+            firstReason ??= internalReason;
+        }
+
+        reason = firstReason!;
+        return false;
     }
 
     /// <summary>
@@ -133,7 +178,11 @@ public sealed partial class HumanTonedSkinColoration : ISkinColorationStrategy
 
     public Color ClosestSkinColor(Color color)
     {
-        return ValidHumanSkinTone;
+        // If our skin color is within bounds, avoid an HSV roundtrip.
+        if (VerifySkinColor(color, out _))
+            return color;
+
+        return FromUnary(ToUnary(color));
     }
 
     public Color FromUnary(float color)
@@ -247,6 +296,7 @@ public sealed partial class ClampedHsvColoration : ISkinColorationStrategy
     public Color ClosestSkinColor(Color color)
     {
         var hsv = Color.ToHsv(color);
+        var oldHsv = hsv;
 
         if (Hue is (var minHue, var maxHue))
             hsv.X = SkinColorationUtils.ClampHue(hsv.X, minHue, maxHue);
@@ -254,6 +304,10 @@ public sealed partial class ClampedHsvColoration : ISkinColorationStrategy
             hsv.Y = Math.Clamp(hsv.Y, minSat, maxSat);
         if (Value is (var minVal, var maxVal))
             hsv.Z = Math.Clamp(hsv.Z, minVal, maxVal);
+
+        // If we're within bounds, don't add inaccuracy from an HSV round trip.
+        if (hsv == oldHsv)
+            return color;
 
         return Color.FromHsv(hsv);
     }
@@ -317,6 +371,7 @@ public sealed partial class ClampedHslColoration : ISkinColorationStrategy
     public Color ClosestSkinColor(Color color)
     {
         var hsl = Color.ToHsl(color);
+        var oldHsl = hsl;
 
         if (Hue is (var minHue, var maxHue))
             hsl.X = SkinColorationUtils.ClampHue(hsl.X, minHue, maxHue);
@@ -324,6 +379,10 @@ public sealed partial class ClampedHslColoration : ISkinColorationStrategy
             hsl.Y = Math.Clamp(hsl.Y, minSat, maxSat);
         if (Lightness is (var minLight, var maxLight))
             hsl.Z = Math.Clamp(hsl.Z, minLight, maxLight);
+
+        // If we're within bounds, don't add inaccuracy from an HSV round trip.
+        if (hsl == oldHsl)
+            return color;
 
         return Color.FromHsl(hsl);
     }
@@ -342,6 +401,18 @@ public sealed partial class ClampedHslColoration : ISkinColorationStrategy
 [Serializable, NetSerializable]
 public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrategy
 {
+    // TODO: this is awful - why is it so large?
+    /// <summary>
+    /// The maximum amount of change to the saturation that we can expect between generating an HSV value
+    /// at a threshold, converting it to RGB, then resaving it.
+    /// Found experimentally by running HumanoidProfileTests.EnsureValidRandomSpecies("Vulpkanin") many times.
+    /// </summary>
+    /// <remarks>
+    /// Due to RGB colors being clamped to 8 bits, precision is lost during transformation to HSL or HSV.
+    /// The precision of the result _should be_ approximately 1/180.
+    /// </remarks>
+    public const float HSVTolerance = 0.019f;
+
     /// <summary>
     /// List of valid nodes in this coloration.
     /// </summary>
@@ -357,7 +428,7 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
 
         // Clamp the hue between the first and last node.
         // We don't want anything going outside of these values.
-        var hue = SkinColorationUtils.ClampHue(hsv.X, Nodes.First().Hue,  Nodes.Last().Hue);
+        var hue = SkinColorationUtils.ClampHue(hsv.X, Nodes.First().Hue, Nodes.Last().Hue);
 
         var range = GetNodeValuesForHue(hue);
 
@@ -369,14 +440,14 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
         }
 
         // If a range is found, check if the saturation is within the provided ranges.
-        if (hsv.Y < range.Saturation.Min - SkinColorationUtils.Epsilon || hsv.Y > range.Saturation.Max + SkinColorationUtils.Epsilon)
+        if (hsv.Y < range.Saturation.Min - HSVTolerance || hsv.Y > range.Saturation.Max + HSVTolerance)
         {
             reason = $"Saturation {hsv.Y} is outside of range of min {range.Saturation.Item1} max {range.Saturation.Item2}";
             return false;
         }
 
         // Check if the value is within provided ranges.
-        if (hsv.Z < range.Value.Min - SkinColorationUtils.Epsilon || hsv.Z > range.Value.Max + SkinColorationUtils.Epsilon)
+        if (hsv.Z < range.Value.Min - HSVTolerance || hsv.Z > range.Value.Max + HSVTolerance)
         {
             reason = $"Value {hsv.Z} is outside of range of min {range.Value.Min} max {range.Value.Max}";
             return false;
@@ -391,7 +462,8 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
         var hsv = Color.ToHsv(color);
 
         // Clamp within specified nodes.
-        hsv.X = SkinColorationUtils.ClampHue(hsv.X, Nodes.First().Hue,  Nodes.Last().Hue);
+        var oldHsv = hsv;
+        hsv.X = SkinColorationUtils.ClampHue(hsv.X, Nodes.First().Hue, Nodes.Last().Hue);
 
         var range = GetNodeValuesForHue(hsv.X);
         if (range == null)
@@ -399,6 +471,10 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
 
         hsv.Y = Math.Clamp(hsv.Y, range.Saturation.Min, range.Saturation.Max);
         hsv.Z = Math.Clamp(hsv.Z, range.Value.Min, range.Value.Max);
+
+        // If we're within bounds, don't add inaccuracy from an HSV round trip.
+        if (hsv == oldHsv)
+            return color;
 
         return Color.FromHsv(hsv);
     }
@@ -512,10 +588,10 @@ internal static class SkinColorationUtils
     public const float EpsilonHue = 0.00277f;
 
     /// <summary>
-    /// Due to RGB colors being clamped to 8 bits, precision is lost during transformation to HSL or HSV.
-    /// The precision of the result is approximately 1/180.
+    /// A value derived by dividing 1 by 255.
+    /// Due to the way these values are stored and deconstructed we can't expect much more precision than this..
     /// </summary>
-    public const float Epsilon = 0.0056f;
+    public const float Epsilon = 0.003921568627451f;
 
     /// <summary>
     /// Checks if a hue value is within a specified range, correctly handling ranges that wrap around 1.0 (e.g., reds).

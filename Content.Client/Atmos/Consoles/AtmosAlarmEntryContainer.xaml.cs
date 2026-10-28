@@ -1,4 +1,5 @@
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Palette;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
@@ -135,7 +136,7 @@ public sealed partial class AtmosAlarmEntryContainer : BoxContainer
                     {
                         Text = Loc.GetString("atmos-alerts-window-other-gases-value-nil"),
                         FontOverride = normalFont,
-                        FontColorOverride = StyleNano.DisabledFore,
+                        FontColorOverride = Palettes.Neutral.Base,
                         HorizontalAlignment = HAlignment.Center,
                         VerticalAlignment = VAlignment.Center,
                         HorizontalExpand = true,
@@ -175,13 +176,13 @@ public sealed partial class AtmosAlarmEntryContainer : BoxContainer
 
     public void SetAsFocus()
     {
-        FocusButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
+        FocusButton.AddStyleClass(StyleClass.Positive);
         ArrowTexture.TexturePath = "/Textures/Interface/Nano/inverted_triangle.svg.png";
     }
 
     public void RemoveAsFocus()
     {
-        FocusButton.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
+        FocusButton.RemoveStyleClass(StyleClass.Positive);
         ArrowTexture.TexturePath = "/Textures/Interface/Nano/triangle_right.png";
         FocusContainer.Visible = false;
     }
@@ -191,13 +192,13 @@ public sealed partial class AtmosAlarmEntryContainer : BoxContainer
         switch (alarmType)
         {
             case AtmosAlarmType.Normal:
-                return StyleNano.GoodGreenFore;
+                return Palettes.Status.Good;
             case AtmosAlarmType.Warning:
-                return StyleNano.ConcerningOrangeFore;
+                return Palettes.Status.Warning;
             case AtmosAlarmType.Danger:
-                return StyleNano.DangerousRedFore;
+                return Palettes.Status.Critical;
         }
 
-        return StyleNano.DisabledFore;
+        return Palettes.Neutral.Base;
     }
 }

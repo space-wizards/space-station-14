@@ -51,6 +51,7 @@
         volume: -12
     deactivatedSoundOnHitNoDamage:
       collection: MetalThud
+  - type: ItemToggleExaminableStatus
   - type: ItemToggle
     predictable: false
     soundActivate:

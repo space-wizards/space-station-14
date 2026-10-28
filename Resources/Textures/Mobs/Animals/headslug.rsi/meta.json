@@ -1,0 +1,31 @@
+{
+    "version": 1,
+    "license": "CC-BY-4.0",
+    "copyright": "Made by ketufaispikinut",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "slug",
+            "directions": 4
+        },
+        {
+            "name": "slug_dead"
+        },
+        {
+            "name": "icon"
+        },
+        {
+            "name": "slug_elder",
+            "directions": 4
+        },
+        {
+            "name": "slug_elder_dead"
+        },
+        {
+            "name": "shell"
+        }
+    ]
+}

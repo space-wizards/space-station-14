@@ -132,6 +132,7 @@ public sealed partial class ChangelingIdentityData
 /// A net-serializable version of <see cref="ChangelingIdentityData"/> used for networking purposes.
 /// It needs to be like this because EntityUid cannot be networked, so we convert it to NetEntity and send it over to the client using this class.
 /// </summary>
+[DataDefinition]
 [Serializable, NetSerializable]
 public sealed partial class ChangelingNetworkedIdentityData
 {
@@ -153,3 +154,13 @@ public sealed partial class ChangelingNetworkedIdentityData
     [DataField]
     public bool GrantedDna;
 }
+
+/// <summary>
+/// Event raised on the changeling and broadcast when it gains a new identity, or an existing identity data is updated when gaining an identity.
+/// Identities are never removed, so any future grants of an identity (after dropping it, for example) is an update.
+/// </summary>
+/// <param name="Changeling">The changeling that gained an identity.</param>
+/// <param name="Identity">The identity data that was obtained.</param>
+/// <param name="NewIdentity">Whether this is the first time an identity was gained.</param>
+[ByRefEvent]
+public record struct ChangelingGainedOrUpdatedIdentityEvent(EntityUid Changeling, ChangelingIdentityData Identity, bool NewIdentity);

@@ -45,6 +45,8 @@
     canChangeTransferAmount: true
   - type: SolutionItemStatus
     solution: drink
+  - type: FitsInDispenser
+    solution: drink
   - type: UserInterface
     interfaces:
       enum.TransferAmountUiKey.Key:
@@ -157,7 +159,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-aloxadone
+    localizedLabel: reagent-name-aloxadone
   - type: Solution
     solution:
       reagents:
@@ -170,7 +172,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-ambuzol
+    localizedLabel: reagent-name-ambuzol
   - type: Solution
     solution:
       reagents:
@@ -183,7 +185,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-ambuzol-plus
+    localizedLabel: reagent-name-ambuzol-plus
   - type: Solution
     solution:
       reagents:
@@ -196,7 +198,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-arithrazine
+    localizedLabel: reagent-name-arithrazine
   - type: Solution
     solution:
       reagents:
@@ -209,7 +211,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-barozine
+    localizedLabel: reagent-name-barozine
   - type: Solution
     solution:
       reagents:
@@ -222,7 +224,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-bicaridine
+    localizedLabel: reagent-name-bicaridine
   - type: Solution
     solution:
       reagents:
@@ -235,7 +237,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-bruizine
+    localizedLabel: reagent-name-bruizine
   - type: Solution
     solution:
       reagents:
@@ -248,7 +250,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-cognizine
+    localizedLabel: reagent-name-cognizine
   - type: Solution
     solution:
       reagents:
@@ -261,7 +263,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-cryoxadone
+    localizedLabel: reagent-name-cryoxadone
   - type: Solution
     solution:
       reagents:
@@ -274,7 +276,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-cryptobiolin
+    localizedLabel: reagent-name-cryptobiolin
   - type: Solution
     solution:
       reagents:
@@ -287,7 +289,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-dermaline
+    localizedLabel: reagent-name-dermaline
   - type: Solution
     solution:
       reagents:
@@ -300,7 +302,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-dexalin
+    localizedLabel: reagent-name-dexalin
   - type: Solution
     solution:
       reagents:
@@ -313,7 +315,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-dexalin-plus
+    localizedLabel: reagent-name-dexalin-plus
   - type: Solution
     solution:
       reagents:
@@ -326,7 +328,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-diphenhydramine
+    localizedLabel: reagent-name-diphenhydramine
   - type: Solution
     solution:
       reagents:
@@ -335,11 +337,11 @@
 
 - type: entity
   id: ChemistryBottleDiphenylmethylamine
-  suffix: meth
+  suffix: diphenylmethylamine
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-diphenylmethylamine
+    localizedLabel: reagent-name-diphenylmethylamine
   - type: Solution
     solution:
       reagents:
@@ -352,7 +354,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-doxarubixadone
+    localizedLabel: reagent-name-doxarubixadone
   - type: Solution
     solution:
       reagents:
@@ -365,7 +367,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-dylovene
+    localizedLabel: reagent-name-dylovene
   - type: Solution
     solution:
       reagents:
@@ -378,7 +380,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-epinephrine
+    localizedLabel: reagent-name-epinephrine
   - type: Solution
     solution:
       reagents:
@@ -391,7 +393,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-ethyloxyephedrine
+    localizedLabel: reagent-name-ethyloxyephedrine
   - type: Solution
     solution:
       reagents:
@@ -404,7 +406,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-ethylredoxrazine
+    localizedLabel: reagent-name-ethylredoxrazine
   - type: Solution
     solution:
       reagents:
@@ -417,7 +419,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-haloperidol
+    localizedLabel: reagent-name-haloperidol
   - type: Solution
     solution:
       reagents:
@@ -430,7 +432,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-holywater
+    localizedLabel: reagent-name-holywater
   - type: Solution
     solution:
       reagents:
@@ -443,7 +445,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-hyronalin
+    localizedLabel: reagent-name-hyronalin
   - type: Solution
     solution:
       reagents:
@@ -456,7 +458,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-inaprovaline
+    localizedLabel: reagent-name-inaprovaline
   - type: Solution
     solution:
       reagents:
@@ -469,7 +471,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-insuzine
+    localizedLabel: reagent-name-insuzine
   - type: Solution
     solution:
       reagents:
@@ -482,7 +484,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-ipecac
+    localizedLabel: reagent-name-ipecac
   - type: Solution
     solution:
       reagents:
@@ -495,7 +497,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-kelotane
+    localizedLabel: reagent-name-kelotane
   - type: Solution
     solution:
       reagents:
@@ -508,7 +510,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-lacerinol
+    localizedLabel: reagent-name-lacerinol
   - type: Solution
     solution:
       reagents:
@@ -521,7 +523,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-leporazine
+    localizedLabel: reagent-name-leporazine
   - type: Solution
     solution:
       reagents:
@@ -534,7 +536,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-lipozine
+    localizedLabel: reagent-name-lipozine
   - type: Solution
     solution:
       reagents:
@@ -547,7 +549,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-mannitol
+    localizedLabel: reagent-name-mannitol
   - type: Solution
     solution:
       reagents:
@@ -560,7 +562,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-oculine
+    localizedLabel: reagent-name-oculine
   - type: Solution
     solution:
       reagents:
@@ -573,7 +575,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-omnizine
+    localizedLabel: reagent-name-omnizine
   - type: Solution
     solution:
       reagents:
@@ -586,7 +588,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-opporozidone
+    localizedLabel: reagent-name-opporozidone
   - type: Solution
     solution:
       reagents:
@@ -599,7 +601,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-phalanximine
+    localizedLabel: reagent-name-phalanximine
   - type: Solution
     solution:
       reagents:
@@ -612,7 +614,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-polypyrylium-oligomers
+    localizedLabel: reagent-name-polypyrylium-oligomers
   - type: Solution
     solution:
       reagents:
@@ -625,7 +627,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-potassium-iodide
+    localizedLabel: reagent-name-potassium-iodide
   - type: Solution
     solution:
       reagents:
@@ -638,7 +640,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-psicodine
+    localizedLabel: reagent-name-psicodine
   - type: Solution
     solution:
       reagents:
@@ -651,7 +653,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-pulped-banana-peel
+    localizedLabel: reagent-name-pulped-banana-peel
   - type: Solution
     solution:
       reagents:
@@ -664,7 +666,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-puncturase
+    localizedLabel: reagent-name-puncturase
   - type: Solution
     solution:
       reagents:
@@ -677,7 +679,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-pyrazine
+    localizedLabel: reagent-name-pyrazine
   - type: Solution
     solution:
       reagents:
@@ -690,7 +692,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-saline
+    localizedLabel: reagent-name-saline
   - type: Solution
     solution:
       reagents:
@@ -703,7 +705,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-siderlac
+    localizedLabel: reagent-name-siderlac
   - type: Solution
     solution:
       reagents:
@@ -716,7 +718,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-sigynate
+    localizedLabel: reagent-name-sigynate
   - type: Solution
     solution:
       reagents:
@@ -729,7 +731,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-stellibinin
+    localizedLabel: reagent-name-stellibinin
   - type: Solution
     solution:
       reagents:
@@ -742,7 +744,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-synaptizine
+    localizedLabel: reagent-name-synaptizine
   - type: Solution
     solution:
       reagents:
@@ -755,7 +757,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-tranexamic-acid
+    localizedLabel: reagent-name-tranexamic-acid
   - type: Solution
     solution:
       reagents:
@@ -768,7 +770,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-tricordrazine
+    localizedLabel: reagent-name-tricordrazine
   - type: Solution
     solution:
       reagents:
@@ -781,7 +783,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-ultravasculine
+    localizedLabel: reagent-name-ultravasculine
   - type: Solution
     solution:
       reagents:
@@ -794,7 +796,7 @@
   suffix: charcoal
   components:
   - type: Label
-    currentLabel: reagent-name-charcoal
+    localizedLabel: reagent-name-charcoal
   - type: Solution
     solution:
       reagents:
@@ -809,7 +811,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-robust-harvest
+    localizedLabel: reagent-name-robust-harvest
   - type: Solution
     solution:
       reagents:
@@ -822,7 +824,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-e-z-nutrient
+    localizedLabel: reagent-name-e-z-nutrient
   - type: Solution
     solution:
       reagents:
@@ -835,7 +837,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-left4-zed
+    localizedLabel: reagent-name-left4-zed
   - type: Solution
     solution:
       reagents:
@@ -848,7 +850,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-unstable-mutagen
+    localizedLabel: reagent-name-unstable-mutagen
   - type: Solution
     solution:
       reagents:
@@ -861,7 +863,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-nocturine
+    localizedLabel: reagent-name-nocturine
   - type: Solution
     solution:
       reagents:
@@ -874,7 +876,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-ephedrine
+    localizedLabel: reagent-name-ephedrine
   - type: Solution
     solution:
       reagents:
@@ -887,7 +889,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-pax
+    localizedLabel: reagent-name-pax
   - type: Solution
     solution:
       reagents:
@@ -900,7 +902,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-mute-toxin
+    localizedLabel: reagent-name-mute-toxin
   - type: Solution
     solution:
       reagents:
@@ -913,7 +915,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-lead
+    localizedLabel: reagent-name-lead
   - type: Solution
     solution:
       reagents:
@@ -926,7 +928,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-toxin
+    localizedLabel: reagent-name-toxin
   - type: Solution
     solution:
       reagents:
@@ -939,7 +941,7 @@
   suffix: laughter
   components:
   - type: Label
-    currentLabel: reagent-name-laughter
+    localizedLabel: reagent-name-laughter
   - type: Solution
     solution:
       reagents:
@@ -953,7 +955,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-aluminium
+    localizedLabel: reagent-name-aluminium
   - type: Solution
     solution:
       reagents:
@@ -966,7 +968,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-carbon
+    localizedLabel: reagent-name-carbon
   - type: Solution
     solution:
       reagents:
@@ -979,7 +981,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-chlorine
+    localizedLabel: reagent-name-chlorine
   - type: Solution
     solution:
       reagents:
@@ -992,7 +994,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-copper
+    localizedLabel: reagent-name-copper
   - type: Solution
     solution:
       reagents:
@@ -1005,7 +1007,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-ethanol
+    localizedLabel: reagent-name-ethanol
   - type: Solution
     solution:
       reagents:
@@ -1018,7 +1020,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-fluorine
+    localizedLabel: reagent-name-fluorine
   - type: Solution
     solution:
       reagents:
@@ -1031,7 +1033,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-hydrogen
+    localizedLabel: reagent-name-hydrogen
   - type: Solution
     solution:
       reagents:
@@ -1044,7 +1046,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-iodine
+    localizedLabel: reagent-name-iodine
   - type: Solution
     solution:
       reagents:
@@ -1057,7 +1059,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-iron
+    localizedLabel: reagent-name-iron
   - type: Solution
     solution:
       reagents:
@@ -1070,7 +1072,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-lithium
+    localizedLabel: reagent-name-lithium
   - type: Solution
     solution:
       reagents:
@@ -1083,7 +1085,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-mercury
+    localizedLabel: reagent-name-mercury
   - type: Solution
     solution:
       reagents:
@@ -1096,7 +1098,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-nitrogen
+    localizedLabel: reagent-name-nitrogen
   - type: Solution
     solution:
       reagents:
@@ -1109,7 +1111,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-oxygen
+    localizedLabel: reagent-name-oxygen
   - type: Solution
     solution:
       reagents:
@@ -1122,7 +1124,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-phosphorus
+    localizedLabel: reagent-name-phosphorus
   - type: Solution
     solution:
       reagents:
@@ -1135,7 +1137,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-potassium
+    localizedLabel: reagent-name-potassium
   - type: Solution
     solution:
       reagents:
@@ -1148,7 +1150,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-radium
+    localizedLabel: reagent-name-radium
   - type: Solution
     solution:
       reagents:
@@ -1161,7 +1163,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-silicon
+    localizedLabel: reagent-name-silicon
   - type: Solution
     solution:
       reagents:
@@ -1174,7 +1176,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-sodium
+    localizedLabel: reagent-name-sodium
   - type: Solution
     solution:
       reagents:
@@ -1187,7 +1189,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-sugar
+    localizedLabel: reagent-name-sugar
   - type: Solution
     solution:
       reagents:
@@ -1200,7 +1202,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-name-sulfur
+    localizedLabel: reagent-name-sulfur
   - type: Solution
     solution:
       reagents:

@@ -4,7 +4,7 @@ using Content.Shared.Weapons.Ranged.Events;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
-public sealed class GunSpreadModifierSystem : EntitySystem
+public sealed partial class GunSpreadModifierSystem : EntitySystem
 {
     public override void Initialize()
     {
