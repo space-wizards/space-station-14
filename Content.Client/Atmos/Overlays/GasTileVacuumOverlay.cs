@@ -204,7 +204,11 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         if (ScreenTexture is null || res.VacuumTarget is null)
             return;
 
+        args.WorldBounds.GetCorners(out var worldBottomLeft, out var worldBottomRight, out _, out var worldTopLeft);
         _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        _shader.SetParameter("world_bottom_left", worldBottomLeft);
+        _shader.SetParameter("world_bottom_right", worldBottomRight);
+        _shader.SetParameter("world_top_left", worldTopLeft);
 
         args.WorldHandle.UseShader(_shader);
         args.WorldHandle.DrawTextureRect(res.VacuumTarget.Texture, args.WorldBounds);

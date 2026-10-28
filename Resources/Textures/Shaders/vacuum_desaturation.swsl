@@ -1,6 +1,9 @@
 uniform sampler2D SCREEN_TEXTURE;
 uniform mediump float intensity;
 uniform mediump vec3 tint;
+uniform highp vec2 world_bottom_left;
+uniform highp vec2 world_bottom_right;
+uniform highp vec2 world_top_left;
 
 void fragment()
 {
@@ -20,7 +23,10 @@ void fragment()
 
     if (tint_intensity > 0.1)
     {
-        highp vec2 frost_coords = UV / SCREEN_PIXEL_SIZE * 0.018;
+        highp vec2 world_position = world_bottom_left +
+            UV.x * (world_bottom_right - world_bottom_left) +
+            UV.y * (world_top_left - world_bottom_left);
+        highp vec2 frost_coords = world_position;
         highp vec2 time_warp = vec2(
             zNoise(frost_coords + vec2(TIME * 0.1, 0.0)),
             zNoise(frost_coords + vec2(0.0, -TIME * 0.08)));
@@ -49,4 +55,3 @@ void fragment()
 
     COLOR = screen_pixel;
 }
-
