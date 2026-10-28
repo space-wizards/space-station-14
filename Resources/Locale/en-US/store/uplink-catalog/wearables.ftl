@@ -3,6 +3,9 @@
 uplink-black-jetpack-name = Black Jetpack
 uplink-black-jetpack-desc = A black jetpack. It allows you to fly around in space. Refills not included, use your fuel wisely.
 
+uplink-clothing-no-slips-shoes-nukies-name = Blood-red No-slip Shoes
+uplink-clothing-no-slips-shoes-nukies-desc = Chameleon shoes that prevent you from slipping and reduce slowdown from injuries. Almost a must-buy for nuclear operatives. Don't want to drop that expensive gun you bought, do you?
+
 uplink-chest-rig-name = Chest Rig
 uplink-chest-rig-desc = Explosion-resistant tactical webbing used for holding traitor goods.
 
@@ -11,9 +14,6 @@ uplink-chameleon-desc = A backpack full of items that contain chameleon technolo
 
 uplink-clothing-no-slips-shoes-name = No-slip Shoes
 uplink-clothing-no-slips-shoes-desc = Chameleon shoes that prevent you from slipping. Don't want to drop that expensive gun you bought, do you?
-
-uplink-clothing-no-slips-shoes-nukies-name = Blood-red No-slip Shoes
-uplink-clothing-no-slips-shoes-nukies-desc = Chameleon shoes that prevent you from slipping and reduce slowdown from injuries. Almost a must-buy for nuclear operatives. Don't want to drop that expensive gun you bought, do you?
 
 uplink-clothing-outer-vest-web-name = Web Vest
 uplink-clothing-outer-vest-web-desc = A synthetic armor vest. This one has added webbing and ballistic plates.
