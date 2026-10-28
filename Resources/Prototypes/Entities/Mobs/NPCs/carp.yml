@@ -78,8 +78,6 @@
       - Carp
       - DoorBumpOpener
       - CannotSuicide
-    - type: ReplacementAccent
-      accent: genericAggressive
     - type: Speech
       speechVerb: LargeMob
     - type: InteractionPopup
@@ -89,8 +87,9 @@
         path: /Audio/Effects/bite.ogg
 
 - type: entity
+  abstract: true
   parent: BaseMobCarp
-  id: MobCarp
+  id: BaseMobCarpVisuals
   components:
   - type: Sprite
     layers:
@@ -107,6 +106,13 @@
         mouth: ""
 
 - type: entity
+  parent: BaseMobCarpVisuals
+  id: MobCarp
+  components:
+  - type: ReplacementAccent
+    accent: genericAggressive
+
+- type: entity
   parent: BaseMobCarp
   id: MobCarpMagic
   name: magicarp
@@ -116,6 +122,8 @@
     sprite: Mobs/Aliens/Carps/magic.rsi
   - type: TypingIndicator
     proto: guardian
+  - type: ReplacementAccent
+    accent: genericAggressive
 
 - type: entity
   parent: BaseMobCarp
@@ -139,6 +147,8 @@
         - Opaque
   - type: TypingIndicator
     proto: robot
+  - type: ReplacementAccent
+    accent: genericAggressive
 
 - type: entity
   parent: MobCarp
@@ -164,7 +174,7 @@
       30: Dead
 
 - type: entity
-  parent: [ MobDragonBrood, MobCarp ]
+  parent: [ MobDragonBrood, BaseMobCarpVisuals ]
   id: MobCarpDragon
   name: space carp
   suffix: DragonBrood
@@ -192,8 +202,9 @@
         Slash: 6
 
 - type: entity
+  abstract: true
   parent: [ BaseMobBloodsucker, BaseMobCarp, BaseSlicingRefinableButchering ]
-  id: MobShark
+  id: BaseMobShark
   name: sharkminnow
   description: A dangerous shark from the blackness of endless space, who loves to drink blood.
   components:
@@ -249,6 +260,13 @@
         Bloodloss: 5
 
 - type: entity
+  parent: BaseMobShark
+  id: MobShark
+  components:
+  - type: ReplacementAccent
+    accent: genericAggressive
+
+- type: entity
   parent: MobShark
   id: MobSharkSalvage
   suffix: "Salvage Ruleset"
@@ -260,7 +278,7 @@
       82: Dead # Might seem random, but this brings up the hits to kill with a crusher mark to 3
 
 - type: entity
-  parent: [ MobDragonBrood, MobShark ]
+  parent: [ MobDragonBrood, BaseMobShark ]
   id: MobSharkDragon
   suffix: DragonBrood
   components:
