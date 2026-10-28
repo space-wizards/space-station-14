@@ -67,16 +67,13 @@ public abstract partial class ClothingSystem : EntitySystem
             if (ClothingQuery.TryComp(slotEntity, out var existingItem) && !existingItem.QuickEquip)
                 continue;
 
-            // If the existing item has an unequip delay, TryUnequip will start a do-after (return false).
-            // Treat it as committed to this slot anyway — stop iterating to avoid triggering
-            // unequip do-afters on all other occupied slots.
-            var hasUnequipDelay = existingItem != null && existingItem.UnequipDelay > TimeSpan.Zero;
-
-            if (!_invSystem.TryUnequip(userEnt, slotDef.Name, true, inventory: userEnt, checkDoafter: true))
+            if (!_invSystem.TryUnequip(userEnt, userEnt, slotDef.Name, out _, out var doAfterStarted, silent: true, inventory: userEnt, checkDoafter: true))
             {
-                if (hasUnequipDelay)
-                    return; // do-after started, committed to this slot
-                continue;   // genuine failure (CanUnequip blocked) — try next slot
+                // Commit to this slot only if removal is actually pending.
+                if (doAfterStarted)
+                    return;
+
+                continue;
             }
 
             // Instant unequip succeeded — equip new item into the now-empty slot.
