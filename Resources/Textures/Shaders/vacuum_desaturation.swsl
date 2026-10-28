@@ -8,17 +8,45 @@ void fragment()
     mediump float tile_intensity = mask.r;
     mediump float tint_intensity = mask.g;
 
-    if (tile_intensity < 0.1 && tint_intensity < 0.1)
-        discard;
-
     mediump vec4 screen_pixel = zTextureSpec(SCREEN_TEXTURE, UV);
 
-    mediump float gray = dot(screen_pixel.rgb, vec3(0.299, 0.587, 0.114));
+    if (tile_intensity > 0.1)
+    {
+        mediump float gray = dot(screen_pixel.rgb, vec3(0.299, 0.587, 0.114));
 
-    mediump float desaturation_intensity = tile_intensity * intensity;
-    screen_pixel.rgb = mix(screen_pixel.rgb, vec3(gray), desaturation_intensity);
+        mediump float desaturation_intensity = tile_intensity * intensity;
+        screen_pixel.rgb = mix(screen_pixel.rgb, vec3(gray), desaturation_intensity);
+    }
 
-    screen_pixel.rgb = mix(screen_pixel.rgb, screen_pixel.rgb * tint, tint_intensity * 0.3);
+    if (tint_intensity > 0.1)
+    {
+        highp vec2 frost_coords = UV / SCREEN_PIXEL_SIZE * 0.018;
+        highp vec2 time_warp = vec2(
+            zNoise(frost_coords + vec2(TIME * 0.1, 0.0)),
+            zNoise(frost_coords + vec2(0.0, -TIME * 0.08)));
+
+        highp float veins = 1.0 - abs(zNoise(frost_coords * 10.0) * 2.0 - 1.0);
+        highp float crystals = zNoise(frost_coords - time_warp);
+        highp float frost_mask = max(smoothstep(0.5, 1.0, veins),smoothstep(0.5, 1, crystals) * 0.7);
+
+        highp vec2 ice_direction = time_warp * 2.0 - 1.0;
+        highp vec2 ice_offset = ice_direction * SCREEN_PIXEL_SIZE *
+            (1.5 + frost_mask * 3.5) * tint_intensity * 1.3;
+
+        mediump vec3 frozen_pixel = (
+            zTextureSpec(SCREEN_TEXTURE, UV + ice_offset).rgb +
+            zTextureSpec(SCREEN_TEXTURE, UV - ice_offset).rgb +
+            zTextureSpec(SCREEN_TEXTURE, UV + ice_offset.yx).rgb) / 3.0;
+
+        mediump vec3 ice_deformation = (frozen_pixel - screen_pixel.rgb) * tint_intensity;
+
+        mediump vec3 ice_tint = abs(
+            zTextureSpec(SCREEN_TEXTURE, UV + ice_offset).rgb -
+            zTextureSpec(SCREEN_TEXTURE, UV - ice_offset).rgb) * frost_mask * tint_intensity;
+
+        screen_pixel.rgb += ice_deformation + 2.0 * ice_tint * tint;
+    }
 
     COLOR = screen_pixel;
 }
+
