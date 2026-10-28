@@ -493,6 +493,8 @@ public sealed partial class WiresSystem : SharedWiresSystem
             {
                 wire.IsCut = false;
             }
+
+            wire.Action?.Update(wire);
         }
 
         // If we don't update the interface wires will be desynced on client.

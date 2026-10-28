@@ -1,12 +1,14 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Guardian.Components;
 
 /// <summary>
 /// Given to guardians to monitor their link with the host.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class GuardianComponent : Component
 {
     /// <summary>
@@ -50,4 +52,16 @@ public sealed partial class GuardianComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier DeathSound = new SoundPathSpecifier("/Audio/Voice/Human/malescream_guardian.ogg", AudioParams.Default.WithVariation(0.2f));
+
+    /// <summary>
+    /// The last time that the entity received an attack popup.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan LastAttackPopupTime;
+
+    /// <summary>
+    /// The delay between showing popups to the guardian when trying to attack its host.
+    /// </summary>
+    [DataField]
+    public TimeSpan AttackPopupDelay = TimeSpan.FromSeconds(1);
 }

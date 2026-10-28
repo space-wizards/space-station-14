@@ -52,6 +52,9 @@
         Piercing: 15
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,0,6
+    storedRotation: -45
   - type: Clothing
     quickEquip: false
     slots:
@@ -189,18 +192,11 @@
         !type:DamageTrigger
         damage: 20
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-          params:
-            volume: -4
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialBones1:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   name: sharkminnow tooth spear

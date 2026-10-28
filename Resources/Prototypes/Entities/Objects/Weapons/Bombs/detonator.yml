@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseItem, BaseSecurityContraband ]
+  parent: [ BaseItem, BaseItemDestructible, BaseSecurityContraband ]
   id: EmptyDetonator
   name: detonator cap
   description: A detonator cap. Requires a trigger and wire.
@@ -15,7 +15,6 @@
   - type: Construction
     graph: DetonatorGraph
     node: emptyDetonator
-  - type: Damageable
   - type: Injurable
     damageContainer: StructuralInorganic
   - type: Destructible
@@ -28,12 +27,8 @@
       - !type:TriggerBehavior
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger # the idea here is to prevent you from just beating it until it explodes.
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+    # the 50 damage destruction node is inherited from the parent
+    # idea here is to prevent you from just beating it until it explodes.
   - type: Appearance
   - type: GenericVisualizer
     visuals:

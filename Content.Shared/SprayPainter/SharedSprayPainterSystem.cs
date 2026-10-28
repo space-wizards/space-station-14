@@ -190,14 +190,14 @@ public abstract partial class SharedSprayPainterSystem : EntitySystem
             && Charges.GetCurrentCharges((args.Used, charges)) < targetGroup.Cost)
         {
             var msg = Loc.GetString("spray-painter-interact-no-charges");
-            _popup.PopupClient(msg, args.User, args.User);
+            _popup.PopupEntity(msg, args.User, args.User);
             return;
         }
 
         if (!targetGroup.Styles.TryGetValue(selectedStyle, out var proto))
         {
             var msg = Loc.GetString("spray-painter-style-not-available");
-            _popup.PopupClient(msg, args.User, args.User);
+            _popup.PopupEntity(msg, args.User, args.User);
             return;
         }
 

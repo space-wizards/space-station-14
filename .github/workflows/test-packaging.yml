@@ -1,4 +1,4 @@
-﻿name: Test Packaging
+name: Test Packaging
 
 on:
   push:
@@ -25,6 +25,10 @@ on:
       - '**.yml'
       - 'RobustToolbox'
       - 'RobustToolbox/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'merge_group' }}
 
 jobs:
   build:

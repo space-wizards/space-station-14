@@ -10,7 +10,7 @@ namespace Content.IntegrationTests.Tests.Interaction;
 ///     In particular, when construction ghosts become real entities, and when existing entities get replaced with
 ///     new ones.
 /// </summary>
-public sealed class InteractionTestSystem : EntitySystem
+public sealed partial class InteractionTestSystem : EntitySystem
 {
     public Dictionary<int, NetEntity> Ghosts = new();
     public Dictionary<NetEntity, NetEntity> EntChanges = new();

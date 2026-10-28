@@ -1,6 +1,6 @@
 using Content.Shared.Examine;
 using Content.Shared.Eye;
-using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Input;
 using Content.Shared.IdentityManagement;
@@ -33,7 +33,6 @@ public abstract partial class SharedPointingSystem : EntitySystem
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] protected SharedVisibilitySystem Visibility = default!;
     [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private IMapManager _mapManager = default!;
     [Dependency] protected ISharedPlayerManager PlayerManager = default!;
     [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private SharedMapSystem _map = default!;
@@ -299,7 +298,7 @@ public abstract partial class SharedPointingSystem : EntitySystem
 
     protected string GetTileLogPosition(MapCoordinates mapCoordinates)
     {
-        if (!_mapManager.TryFindGridAt(mapCoordinates, out var gridUid, out var grid))
+        if (!_map.TryFindGridAt(mapCoordinates, out var gridUid, out var grid))
             return mapCoordinates.ToString();
 
         return $"EntId={gridUid} {_map.WorldToTile(gridUid, grid, mapCoordinates.Position)}";
@@ -307,7 +306,7 @@ public abstract partial class SharedPointingSystem : EntitySystem
 
     private Tile? GetTile(MapCoordinates mapCoordinates)
     {
-        if (!_mapManager.TryFindGridAt(mapCoordinates, out var gridUid, out var grid))
+        if (!_map.TryFindGridAt(mapCoordinates, out var gridUid, out var grid))
             return null;
 
         return _map.GetTileRef(gridUid, grid, _map.WorldToTile(gridUid, grid, mapCoordinates.Position)).Tile;

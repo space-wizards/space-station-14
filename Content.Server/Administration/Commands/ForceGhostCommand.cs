@@ -12,7 +12,7 @@ namespace Content.Server.Administration.Commands;
 public sealed partial class ForceGhostCommand : LocalizedEntityCommands
 {
     [Dependency] private IPlayerManager _playerManager = default!;
-    [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private ServerGameTicker _gameTicker = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private GhostSystem _ghost = default!;
 

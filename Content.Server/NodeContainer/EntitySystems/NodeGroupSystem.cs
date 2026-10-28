@@ -24,7 +24,6 @@ namespace Content.Server.NodeContainer.EntitySystems
         [Dependency] private IPlayerManager _playerManager = default!;
         [Dependency] private IAdminManager _adminManager = default!;
         [Dependency] private INodeGroupFactory _nodeGroupFactory = default!;
-        [Dependency] private ILogManager _logManager = default!;
         [Dependency] private EntityQuery<NodeContainerComponent> _nodeContainerQuery = default!;
         [Dependency] private EntityQuery<TransformComponent> _xformQuery = default!;
 
@@ -60,7 +59,7 @@ namespace Content.Server.NodeContainer.EntitySystems
         {
             base.Initialize();
 
-            _sawmill = _logManager.GetSawmill("nodegroup");
+            _sawmill = LogManager.GetSawmill("nodegroup");
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 

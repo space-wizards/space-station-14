@@ -1,14 +1,20 @@
 # Snout Markings
 
 - type: marking
+  parent: [ VulpBaseMarkingClamped ]
   id: VulpSnout
   bodyPart: Snout
   groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
       state: snout
+  coloring:
+    default:
+      type:
+        !type:SkinColoring
 
 - type: marking
+  parent: [ VulpBaseMarkingClamped ]
   id: VulpSnoutNose
   bodyPart: SnoutCover
   groupWhitelist: [ Vulpkanin ]
@@ -17,6 +23,7 @@
       state: snout-nose
 
 - type: marking
+  parent: [ VulpBaseMarkingClamped ]
   id: VulpSnoutVulpine
   bodyPart: SnoutCover
   groupWhitelist: [ Vulpkanin ]
@@ -25,6 +32,7 @@
       state: vulpine
 
 - type: marking
+  parent: [ VulpBaseMarkingClamped ]
   id: VulpSnoutVulpineLines
   bodyPart: SnoutCover
   groupWhitelist: [ Vulpkanin ]
@@ -33,6 +41,7 @@
       state: vulpine-lines
 
 - type: marking
+  parent: [ VulpBaseMarkingClamped ]
   id: VulpSnoutBlaze
   bodyPart: SnoutCover
   groupWhitelist: [ Vulpkanin ]
@@ -41,6 +50,7 @@
       state: blaze
 
 - type: marking
+  parent: [ VulpBaseMarkingClamped ]
   id: VulpSnoutMask
   bodyPart: SnoutCover
   groupWhitelist: [ Vulpkanin ]
@@ -49,6 +59,7 @@
       state: mask
 
 - type: marking
+  parent: [ VulpBaseMarkingClamped ]
   id: VulpSnoutTop
   bodyPart: SnoutCover
   groupWhitelist: [ Vulpkanin ]
@@ -57,6 +68,7 @@
       state: snout-top
 
 - type: marking
+  parent: [ VulpBaseMarkingClamped ]
   id: VulpSnoutPatch
   bodyPart: SnoutCover
   groupWhitelist: [ Vulpkanin ]

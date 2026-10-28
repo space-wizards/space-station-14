@@ -18,7 +18,6 @@ public sealed partial class ChatNotificationSystem : EntitySystem
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedRoleSystem _roles = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private ILogManager _logManager = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -38,7 +37,7 @@ public sealed partial class ChatNotificationSystem : EntitySystem
 
         SubscribeLocalEvent<ActorComponent, ChatNotificationEvent>(OnChatNotification);
 
-        _sawmill = _logManager.GetSawmill("chatnotification");
+        _sawmill = LogManager.GetSawmill("chatnotification");
     }
 
     /// <summary>

@@ -1,8 +1,8 @@
 - type: entity
-  name: food cart
-  id: FoodCartBase
   abstract: true
-  parent: BaseStructureDynamic
+  parent: [ BaseStructureDynamic, StructureHealthContainer ]
+  id: FoodCartBase
+  name: food cart
   description: A cart for food.
   components:
     - type: Sprite
@@ -21,21 +21,24 @@
           mask:
           - MobMask
     - type: Damageable
-      damageModifierSet: Metallic
-    - type: Injurable
-      damageContainer: Inorganic
+      damageModifierSet: PlasticMod
     - type: Destructible
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 200
+          damage: 100
         behaviors:
         - !type:EmptyAllContainersBehaviour
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
         - !type:PlaySoundBehavior
           sound:
             collection: MetalBreak
+            params:
+              volume: -3
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetPlastic1:
+              min: 0
+              max: 2
     - type: Appearance
     - type: UserInterface
       interfaces:

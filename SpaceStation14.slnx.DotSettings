@@ -55,6 +55,7 @@
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=AL/@EntryIndexedValue">AL</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=BB/@EntryIndexedValue">BB</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=CC/@EntryIndexedValue">CC</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=DNA/@EntryIndexedValue">DNA</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=FTL/@EntryIndexedValue">FTL</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=GC/@EntryIndexedValue">GC</s:String>
     <s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=GD/@EntryIndexedValue">GD</s:String>
@@ -360,7 +361,7 @@ public enum $ENUM$ {$END$}</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C233DA875A1B54AB9906002129B9E8C/Text/@EntryValue">$HEADER$namespace $NAMESPACE$;
 
 /// &lt;inheritdoc/&gt;
-public sealed class $CLASS$ : Shared$CLASS$ {
+public sealed partial class $CLASS$ : Shared$CLASS$ {
     /// &lt;inheritdoc/&gt;
     public override void Initialize()
     {
@@ -431,7 +432,7 @@ public partial class $CLASS$ : Form
 /// &lt;summary&gt;
 /// This handles...
 /// &lt;/summary&gt;
-public sealed class $CLASS$ : EntitySystem {
+public sealed partial class $CLASS$ : EntitySystem {
     /// &lt;inheritdoc/&gt;
     public override void Initialize()
     {
@@ -530,7 +531,7 @@ public partial class $CLASS$ : UserControl
 /// &lt;summary&gt;
 /// This handles...
 /// &lt;/summary&gt;
-public abstract class $CLASS$ : EntitySystem {
+public abstract partial class $CLASS$ : EntitySystem {
     /// &lt;inheritdoc/&gt;
     public override void Initialize()
     {
@@ -581,7 +582,7 @@ namespace $NAMESPACE$;
 /// This is a prototype for...
 /// &lt;/summary&gt;
 [Prototype($END$)]
-public sealed class $CLASS$ : IPrototype, IInheritingPrototype {
+public sealed partial class $CLASS$ : IPrototype, IInheritingPrototype {
     /// &lt;inheritdoc/&gt;
     [IdDataField]
     public string ID { get; } = default!;

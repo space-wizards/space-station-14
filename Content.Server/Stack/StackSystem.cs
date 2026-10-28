@@ -1,3 +1,4 @@
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
@@ -13,20 +14,19 @@ namespace Content.Server.Stack
     [UsedImplicitly]
     public sealed partial class StackSystem : SharedStackSystem
     {
+        [Dependency] private SharedHandsSystem _hands = default!;
+        [Dependency] private SharedPopupSystem _popup = default!;
+        [Dependency] private SharedTransformSystem _transform = default!;
+
+        [Dependency] private EntityQuery<StackComponent> _stackQuery;
+
         #region Spawning
 
-        /// <summary>
-        /// Spawns a new entity and moves an amount to it from the stack.
-        /// Moves nothing if amount is greater than ent's stack count.
-        /// </summary>
-        /// <param name="ent">Entity to split in a new stack.</param>
-        /// <param name="amount">How much to move to the new entity.</param>
-        /// <param name="spawnPosition">Where to spawn the new stack</param>
-        /// <returns>Null if StackComponent doesn't resolve, or amount to move is greater than ent has available.</returns>
+        /// <inheritdoc />
         [PublicAPI]
-        public EntityUid? Split(Entity<StackComponent?> ent, int amount, EntityCoordinates spawnPosition)
+        public override EntityUid? Split(Entity<StackComponent?> ent, int amount, EntityCoordinates spawnPosition, EntityUid? user = null)
         {
-            if (!Resolve(ent.Owner, ref ent.Comp))
+            if (!_stackQuery.Resolve(ent.Owner, ref ent.Comp))
                 return null;
 
             // Try to remove the amount of things we want to split from the original stack...
@@ -40,13 +40,13 @@ namespace Content.Server.Stack
             var newEntity = SpawnAtPosition(stackType.Spawn, spawnPosition);
 
             // There should always be a StackComponent
-            var stackComp = Comp<StackComponent>(newEntity);
+            var stackComp = _stackQuery.Comp(newEntity);
 
             SetCount((newEntity, stackComp), amount);
             stackComp.Unlimited = false; // Don't let people dupe unlimited stacks
             Dirty(newEntity, stackComp);
 
-            var ev = new StackSplitEvent(newEntity);
+            var ev = new StackSplitEvent(newEntity, user);
             RaiseLocalEvent(ent, ref ev);
 
             return newEntity;
@@ -277,28 +277,6 @@ namespace Content.Server.Stack
         }
 
         #endregion
-        #endregion
-        #region Event Handlers
-
-        /// <inheritdoc />
-        protected override void UserSplit(Entity<StackComponent> stack, Entity<TransformComponent?> user, int amount)
-        {
-            if (!Resolve(user.Owner, ref user.Comp, false))
-                return;
-
-            if (amount <= 0)
-            {
-                Popup.PopupCursor(Loc.GetString("comp-stack-split-too-small"), user.Owner, PopupType.Medium);
-                return;
-            }
-
-            if (Split(stack.AsNullable(), amount, user.Comp.Coordinates) is not { } split)
-                return;
-
-            Hands.PickupOrDrop(user.Owner, split);
-
-            Popup.PopupCursor(Loc.GetString("comp-stack-split"), user.Owner);
-        }
         #endregion
     }
 }

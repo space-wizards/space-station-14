@@ -1,6 +1,7 @@
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Audio;
 
 namespace Content.Shared.Guardian.Components;
 
@@ -48,4 +49,10 @@ public sealed partial class GuardianHostComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? ActionEntity;
+
+    /// <summary>
+    /// Sound played when the guardian is released.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier ReleaseSound = new SoundPathSpecifier("/Audio/Effects/guardian_warn.ogg");
 }
