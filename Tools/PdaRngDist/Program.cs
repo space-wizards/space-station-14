@@ -15,14 +15,22 @@ for (var n = 0; n <= 99_999; n++)
 xpList.Sort();
 var total = xpList.Count;
 Console.WriteLine($"mean={xpSum / (double)total:F2} median={xpList[total / 2]}");
-Console.WriteLine("Tier shares (5-digit range):");
+Console.WriteLine("Tier shares (5-digit curated catalog):");
 foreach (PdaRngTier tier in Enum.GetValues<PdaRngTier>())
     Console.WriteLine($"  {tier,-12} {counts[(int)tier],8:N0}  ({counts[(int)tier] * 100.0 / total,6:F2}%)");
 
 Console.WriteLine();
-Console.WriteLine("Example boring / spicy rolls:");
-foreach (var n in new[] { 70348, 48291, 25000, 12345, 69, 1, 55555, 13131, 14141 })
+Console.WriteLine("Suggested min XP for top bands:");
+foreach (var (label, frac) in new (string, double)[]
 {
-    var r = PdaRngAnalyzer.Analyze(n);
-    Console.WriteLine($"  {n,5} XP={r.TotalXp,3} Tier={r.Tier,-12} pct={r.Percentile} badges={r.Badges.Count}");
+    ("Notable / top 50%", 0.50),
+    ("Irregular / top 25%", 0.75),
+    ("Anomalous / top 10%", 0.90),
+    ("Classified / top 5%", 0.95),
+    ("RealityBend / top 1%", 0.99),
+    ("Singularity / top 0.1%", 0.999),
+})
+{
+    var idx = Math.Min(total - 1, (int)(total * frac));
+    Console.WriteLine($"  {label,-28} XP >= {xpList[idx]}");
 }

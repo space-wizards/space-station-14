@@ -8,16 +8,13 @@ using Content.Shared.Paper;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Random;
+using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
 public sealed partial class PdaRngCartridgeSystem : EntitySystem
 {
-    // TEMP: unlimited rolls for local testing — set false / remove before merge.
-    private static readonly bool UnlimitedRolls = true;
-
     [Dependency] private CartridgeLoaderSystem _cartridge = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
@@ -31,7 +28,6 @@ public sealed partial class PdaRngCartridgeSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
         SubscribeLocalEvent<PdaRngCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
         SubscribeLocalEvent<PdaRngCartridgeComponent, CartridgeMessageEvent>(OnMessage);
     }
@@ -52,42 +48,17 @@ public sealed partial class PdaRngCartridgeSystem : EntitySystem
 
     private void TryPrintTicket(Entity<PdaRngCartridgeComponent> ent, EntityUid user)
     {
-        if (!UnlimitedRolls && ent.Comp.HasRolled)
+        if (ent.Comp.HasRolled)
         {
             _popup.PopupClient(Loc.GetString("pda-rng-already-rolled"), user, user);
             return;
         }
 
-        if (!UnlimitedRolls)
-        {
-            // Consume the roll immediately so prediction cannot double-print.
-            ent.Comp.HasRolled = true;
-            Dirty(ent);
-        }
-        else
-        {
-            // Keep consecutive rolls unique even within the same tick.
-            ent.Comp.DebugRollCount++;
-            Dirty(ent);
-        }
+        // Consume the roll immediately so prediction cannot double-print.
+        ent.Comp.HasRolled = true;
+        Dirty(ent);
 
-        IRobustRandom random;
-        if (UnlimitedRolls)
-        {
-            var seed = HashCode.Combine(
-                (int)_timing.CurTick.Value,
-                GetNetEntity(ent.Owner).Id,
-                GetNetEntity(user).Id,
-                ent.Comp.DebugRollCount);
-            var predicted = new RobustRandom();
-            predicted.SetSeed(seed);
-            random = predicted;
-        }
-        else
-        {
-            random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent.Owner), GetNetEntity(user));
-        }
-
+        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent.Owner), GetNetEntity(user));
         var number = random.Next(PdaRngAnalyzer.MinNumber, PdaRngAnalyzer.MaxNumber + 1);
         var result = PdaRngAnalyzer.Analyze(number);
 
@@ -100,9 +71,8 @@ public sealed partial class PdaRngCartridgeSystem : EntitySystem
         _audio.PlayEntity(ent.Comp.PrintSound, user, paper);
         _hands.PickupOrDrop(user, paper, checkActionBlocker: false);
 
-        var content = PdaRngAnalyzer.FormatTicket(result, playerName);
         var paperComp = Comp<PaperComponent>(paper);
-        _paper.SetContent((paper, paperComp), content);
+        _paper.SetContent((paper, paperComp), PdaRngAnalyzer.FormatTicket(result, playerName));
 
         _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low,
             $"{ToPrettyString(user):user} printed PDA RNG ticket {result.NumberText} ({paper})");
@@ -110,7 +80,20 @@ public sealed partial class PdaRngCartridgeSystem : EntitySystem
 
     private void UpdateUiState(Entity<PdaRngCartridgeComponent> ent, EntityUid loaderUid)
     {
-        var hasRolled = !UnlimitedRolls && ent.Comp.HasRolled;
-        _cartridge.UpdateCartridgeUiState(loaderUid, new PdaRngUiState(hasRolled));
+        _cartridge.UpdateCartridgeUiState(loaderUid, new PdaRngUiState(ent.Comp.HasRolled));
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class PdaRngPrintMessage : CartridgeMessageEvent;
+
+[Serializable, NetSerializable]
+public sealed class PdaRngUiState : BoundUserInterfaceState
+{
+    public bool HasRolled { get; }
+
+    public PdaRngUiState(bool hasRolled)
+    {
+        HasRolled = hasRolled;
     }
 }

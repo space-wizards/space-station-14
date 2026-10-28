@@ -9,21 +9,10 @@ namespace Content.Shared.CartridgeLoader.Cartridges;
 [Access(typeof(PdaRngCartridgeSystem))]
 public sealed partial class PdaRngCartridgeComponent : Component
 {
-    /// <summary>
-    /// Whether this PDA has already printed its one RNG ticket this round.
-    /// </summary>
+    /// <summary>Whether this PDA has already printed its one RNG ticket this round.</summary>
     [DataField, AutoNetworkedField]
     public bool HasRolled;
 
-    /// <summary>
-    /// TEMP testing counter so unlimited rolls get unique predicted seeds.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public int DebugRollCount;
-
-    /// <summary>
-    /// Paper entity spawned for the ticket.
-    /// </summary>
     [DataField]
     public EntProtoId PaperPrototype = "Paper";
 
