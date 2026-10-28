@@ -197,6 +197,44 @@
   - type: NoSlip
 
 - type: entity
+  parent: [ ClothingShoesAdvancedNukies, ClothingShoesChameleonNoSlips ]
+  id: ClothingShoesChameleonNoSlipsNukies
+  name: blood-red shoes
+  suffix: No-slips, Chameleon, Reduced Slowdown
+  description: Advanced shoe making techniques developped by Cybersun master shoemakers were used to produce this wonder of technology, able to resist any and all slips and to change appearance.
+  components:
+  - type: ChameleonClothing
+    default: ClothingShoesAdvancedNukies
+  - type: Tag
+    tags: # ignore "WhitelistChameleon" tag so there arent duplicates
+    - ClothMade
+    - Recyclable
+  - type: ClothingSlowOnDamageModifier
+    modifier: 0.5
+
+- type: entity # used for chameleon to work properly
+  parent: [ ClothingShoesBase, BaseSyndicateContraband ]
+  id: ClothingShoesAdvancedNukies
+  name: blood-red shoes # these will be overwritten by the chamo comp
+  suffix: Normal Shoes
+  description: Advanced shoe making techniques developped by Cybersun master shoemakers were used to produce this wonder of technology, able to resist any and all slips and to change appearance.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/nukienoslips.rsi
+    layers: []
+  - type: Item
+    inhandVisuals:
+        left:
+        - state: inhand-left
+        right:
+        - state: inhand-right
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/nukienoslips.rsi
+    clothingVisuals:
+      shoes:
+      - state: equipped-FEET
+
+- type: entity
   parent: ClothingShoesClown
   id: ClothingShoesJester
   name: jester shoes
