@@ -57,7 +57,7 @@ public abstract partial class ClothingSystem : EntitySystem
         // Second pass: no empty slot found — swap with the first occupied slot whose item allows quick-equip.
         foreach (var slotDef in userEnt.Comp1.Slots)
         {
-            if (!_invSystem.CanEquip(userEnt, toEquipEnt, slotDef.Name, out _, slotDef, userEnt, toEquipEnt))
+            if (!_invSystem.CanEquip(userEnt, toEquipEnt, slotDef.Name, out _, slotDef, userEnt, toEquipEnt, assumeEmpty: true))
                 continue;
 
             if (!_invSystem.TryGetSlotEntity(userEnt, slotDef.Name, out var slotEntity, userEnt))
