@@ -202,8 +202,9 @@
         Slash: 6
 
 - type: entity
+  abstract: true
   parent: [ BaseMobBloodsucker, BaseMobCarp, BaseSlicingRefinableButchering ]
-  id: MobShark
+  id: BaseMobShark
   name: sharkminnow
   description: A dangerous shark from the blackness of endless space, who loves to drink blood.
   components:
@@ -257,6 +258,11 @@
       types:
         Slash: 10
         Bloodloss: 5
+
+- type: entity
+  parent: BaseMobShark
+  id: MobShark
+  components:
   - type: ReplacementAccent
     accent: genericAggressive
 
@@ -272,7 +278,7 @@
       82: Dead # Might seem random, but this brings up the hits to kill with a crusher mark to 3
 
 - type: entity
-  parent: [ MobDragonBrood, MobShark ]
+  parent: [ MobDragonBrood, BaseMobShark ]
   id: MobSharkDragon
   suffix: DragonBrood
   components:
