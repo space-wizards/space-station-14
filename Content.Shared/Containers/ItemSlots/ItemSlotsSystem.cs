@@ -1,6 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Containers.ItemSlot;
 using Content.Shared.Destructible;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
@@ -8,6 +10,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 
@@ -26,6 +29,8 @@ public sealed partial class ItemSlotsSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audioSystem = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private ISerializationManager _serializationManager = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private IReflectionManager _reflection = default!;
 
     /// <summary>
     /// Spawn in starting items for any item slots that should have one.
@@ -42,6 +47,38 @@ public sealed partial class ItemSlotsSystem : EntitySystem
 
             if (slot.ContainerSlot != null)
                 _containers.Insert(item, slot.ContainerSlot);
+        }
+
+        UpdateAppearance(ent);
+    }
+
+    /// <summary>
+    /// For updating ItemSlotVisuals, checks if an item has been inserted then updates.
+    /// </summary>
+    /// <param name="ent">For accessing ItemSlotsComponent.</param>
+    private void UpdateAppearance(Entity<ItemSlotsComponent> ent)
+    {
+        if (!TryComp<ItemSlotVisualsComponent>(ent, out var visuals) || !TryComp<AppearanceComponent>(ent, out var appearance))
+            return;
+
+        foreach (var visual in visuals.SlotVisuals.Values)
+        {
+            var contains = false;
+
+            // For the items that have one ItemSlot and for multiple.
+            // Also checks the ItemSlotsVisuals Whitelist if null/valid, then assigns a Layer when finished.
+            if (string.IsNullOrEmpty(visual.SlotName))
+            {
+                contains = ent.Comp.Slots.Values.Any(slot =>
+                    slot.Item is { } item && (visual.Whitelist == null || _whitelistSystem.IsValid(visual.Whitelist, item)));
+            }
+            else if (ent.Comp.Slots.TryGetValue(visual.SlotName, out var slot) && slot.Item is { } item)
+            {
+                contains = visual.Whitelist == null || _whitelistSystem.IsValid(visual.Whitelist, item);
+            }
+
+            if (_reflection.TryParseEnumReference(visual.Layer, out var layerEnum))
+                _appearance.SetData(ent, layerEnum, contains, appearance);
         }
     }
 
@@ -209,6 +246,8 @@ public sealed partial class ItemSlotsSystem : EntitySystem
         }
 
         ent.Comp.AllowSmartEquip = state.AllowSmartEquip;
+
+        UpdateAppearance(ent);
     }
 
     [SubscribeLocalEvent]
