@@ -21,8 +21,6 @@ namespace Content.IntegrationTests.Pair;
 /// </summary>
 public sealed partial class TestPair : RobustIntegrationTest.TestPair
 {
-    private List<NetUserId> _modifiedProfiles = new();
-
     public ContentPlayerData? PlayerData => Player?.Data.ContentData();
 
     protected override async Task Initialize()
