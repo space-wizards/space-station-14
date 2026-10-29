@@ -1,4 +1,4 @@
-﻿- type: statusIcon
+- type: statusIcon
   id: NewPlayerIcon
   priority: 11
   icon:

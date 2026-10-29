@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Clothing;

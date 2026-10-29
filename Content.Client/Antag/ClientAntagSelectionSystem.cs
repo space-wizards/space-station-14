@@ -1,4 +1,4 @@
-﻿using Content.Shared.Antag;
+using Content.Shared.Antag;
 using Content.Shared.Antag.Components;
 using Content.Shared.Roles;
 using Robust.Shared.Audio;
