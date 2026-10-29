@@ -2,6 +2,7 @@ using Content.Shared.Audio;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Payloads;
 using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Payloads;
@@ -126,6 +127,13 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
             SetState(ent, true, ent.Comp);
         else if (args.Port == ent.Comp.TogglePort)
             ToggleLight(ent, ent.Comp);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnLogicSignalReceived(Entity<PoweredLightComponent> ent, ref SignalReceivedEvent<LogicStatePayload> args)
+    {
+        SignalReceivedEvent ev = args;
+        OnSignalReceived(ent, ref ev);
     }
 
     /// <summary>
