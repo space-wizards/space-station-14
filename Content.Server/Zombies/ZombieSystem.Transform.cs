@@ -15,12 +15,13 @@ using Content.Shared.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.CombatMode.Pacification;
+using Content.Shared.Cuffs;
 using Content.Shared.Ghost.Roles.Components;
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Components;
+using Content.Shared.Metabolism;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Pulling.Components;
@@ -34,12 +35,15 @@ using Content.Shared.Popups;
 using Content.Shared.Prying.Components;
 using Content.Shared.Roles;
 using Content.Shared.Speech.EntitySystems;
+using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Tag;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Traits.Assorted;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -71,12 +75,17 @@ public sealed partial class ZombieSystem
     [Dependency] private NPCSystem _npc = default!;
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private ISharedPlayerManager _player = default!;
+    [Dependency] private BodySystem _body = default!;
+    [Dependency] private SharedContainerSystem _containerSystem = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private SharedCuffableSystem _cuffable = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
     private static readonly ProtoId<NpcFactionPrototype> ZombieFaction = "Zombie";
     private static readonly string MindRoleZombie = "MindRoleZombie";
     private static readonly List<ProtoId<AntagPrototype>> BannableZombiePrototypes = ["Zombie"];
+    private static readonly EntProtoId<StatusEffectComponent> ClumsyZombieStatus = "StatusEffectClumsyZombie";
     internal static readonly HashSet<HumanoidVisualLayers> AdditionalZombieLayers = [HumanoidVisualLayers.Tail, HumanoidVisualLayers.HeadSide, HumanoidVisualLayers.HeadTop, HumanoidVisualLayers.Snout];
 
     /// <summary>
@@ -137,13 +146,19 @@ public sealed partial class ZombieSystem
         //get diseases, breath, be thirst, be hungry, die in space, get double sentience, have offspring or be paraplegic.
         RemComp<RespiratorComponent>(target);
         RemComp<BarotraumaComponent>(target);
-        RemComp<HungerComponent>(target);
-        RemComp<ThirstComponent>(target);
+        RemComp<SatiationComponent>(target);
         RemComp<ReproductiveComponent>(target);
         RemComp<ReproductivePartnerComponent>(target);
         RemComp<LegsParalyzedComponent>(target);
         RemComp<ComplexInteractionComponent>(target);
         RemComp<SentienceTargetComponent>(target);
+
+        // remove the metabolizer from all the body's organs. they're an undead.
+        var metabolizerOrgans = _body.EnumerateOrgans<MetabolizerComponent>(target);
+        foreach(var organ in metabolizerOrgans)
+        {
+            RemComp<MetabolizerComponent>(organ);
+        }
 
         //funny voice
         var accentType = "zombie";
@@ -190,7 +205,11 @@ public sealed partial class ZombieSystem
         }
 
         if (TryComp<BloodstreamComponent>(target, out var stream) && stream.BloodReferenceSolution is { } reagents)
+        {
             zombiecomp.BeforeZombifiedBloodReagents = reagents.Clone();
+            // Store the blood refresh amount for cloning later.
+            zombiecomp.BeforeZombifiedBloodRefresh = stream.BloodRefreshAmount;
+        }
 
         if (_visualBody.TryGatherMarkingsData(target, null, out var profiles, out _, out var markings))
         {
@@ -254,6 +273,9 @@ public sealed partial class ZombieSystem
         _bloodstream.SetBloodLossThreshold(target, 0f);
         //Give them zombie blood
         _bloodstream.ChangeBloodReagents(target, zombiecomp.NewBloodReagents);
+        //Stop their blood from automatically regenerating
+        _bloodstream.ChangeBloodRefreshAmount(target, 0f);
+        _bloodstream.ChangeBloodIncreaseEnabled(target, false);
 
         //This is specifically here to combat insuls, because frying zombies on grilles is funny as shit.
         _inventory.TryUnequip(target, "gloves", true, true);
@@ -313,11 +335,23 @@ public sealed partial class ZombieSystem
             MakeGhostRole(target);
         }
 
-        if (TryComp<HandsComponent>(target, out var handsComp))
+        // Uncuffing the zombie
+        foreach (var cuff in _cuffable.GetAllCuffs(target))
         {
-            _hands.RemoveHands(target);
-            RemComp(target, handsComp);
+            _cuffable.Uncuff(target, null, cuff);
         }
+
+        // forcibly empties hands (even if they contain something sticky/unremovable)
+        _hands.DropAll(target); // TODO refactor to force drop all if #45844 gets merged
+        // temp backup to get rid of unremovable items
+        foreach (var hand in _hands.EnumerateHands(target))
+        {
+            if (_containerSystem.TryGetContainer(target, hand, out var handContainer))
+                _containerSystem.EmptyContainer(handContainer, true);
+        }
+
+        // the zombie is now clumsy. it will drop anything handed to it.
+        _statusEffects.TrySetStatusEffectDuration(target, ClumsyZombieStatus);
 
         // Sloth: What the fuck?
         // How long until compregistry lmao.
@@ -330,7 +364,7 @@ public sealed partial class ZombieSystem
         //zombie gamemode stuff
         var ev = new EntityZombifiedEvent(target);
         RaiseLocalEvent(target, ref ev, true);
-        //zombies get slowdown once they convert
+        //zombies revert to their default movement speed.
         _movementSpeedModifier.RefreshMovementSpeedModifiers(target);
 
         //Need to prevent them from getting an item, they have no hands.

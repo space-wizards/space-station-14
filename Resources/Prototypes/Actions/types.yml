@@ -376,7 +376,7 @@
     layers:
     - state: icon
   - type: InstantAction
-    event: !type:EggLayInstantActionEvent
+    event: !type:EntityProductionActionEvent
 
 - type: entity
   parent: BaseMentalAction
@@ -555,7 +555,7 @@
   name: Jump boost
   components:
   - type: Action
-    useDelay: 16
+    useDelay: 10
   - type: Sprite
     sprite: Interface/Actions/actions_borg.rsi
     layers:
@@ -616,6 +616,19 @@
     - texture: Interface/Actions/shop.png
   - type: InstantAction
     event: !type:IntrinsicStoreActionEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionOpenVendingMachineInterface
+  name: Toggle UI
+  description: Select free gifts from your inventory!
+  components:
+  - type: Action
+  - type: Sprite
+    layers:
+    - texture: Interface/Actions/shop.png
+  - type: InstantAction
+    event: !type:OpenVendingUIActionEvent
 
 - type: entity
   parent: ActionChangeVoiceMask

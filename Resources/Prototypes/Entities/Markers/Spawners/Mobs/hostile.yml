@@ -6,11 +6,11 @@
   - type: Sprite
     layers:
     - state: green
-    - state: clown
-      sprite: Mobs/Animals/clownspider.rsi
+    - state: idle
+      sprite: Mobs/Animals/Spiders/clownspider.rsi
   - type: ConditionalSpawner
     prototypes:
-    - MobClownSpider
+    - MobGiantSpiderClown
 
 - type: entity
   parent: MarkerBase

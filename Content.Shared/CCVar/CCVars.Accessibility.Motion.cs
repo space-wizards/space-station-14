@@ -21,7 +21,9 @@ public sealed partial class CCVars
     ///     Replaces the AI static camera effect with a plain gradient.
     /// </summary>
     public static readonly CVarDef<bool> DisableAiStatic =
-        CVarDef.Create("accessibility.disable_ai_static", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("accessibility.disable_ai_static", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+        //TODO return default value to False
+        // This was set to True pending evaluation of the static effect visuals, due to headache potential of the current static shader
 
     /// <summary>
     ///     Replaces the movement in the blurry shader for a static effect.
@@ -40,6 +42,18 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> DisableFlashEffect =
         CVarDef.Create("accessibility.disable_flash_effect", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    ///     Decreases the intensity of the vacuum overlay 1.0f is maximum.
+    /// </summary>
+    public static readonly CVarDef<float> VacuumOverlayIntensity =
+        CVarDef.Create("accessibility.vacuum_overlay_intensity", 0.5f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    ///     Toggles vacuum overlay serverside. If you do not want it as an option for your players use this.
+    /// </summary>
+    public static readonly CVarDef<bool> VacuumOverlay =
+        CVarDef.Create("accessibility.vacuum_overlay", true, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
     /// <summary>
     ///     Decreases motion on the heat distortion shader.

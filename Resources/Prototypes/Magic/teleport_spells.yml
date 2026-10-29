@@ -18,8 +18,9 @@
     # ^ should probably add better validation that the clicked location is on the users screen somewhere,
     repeat: false
     checkCanAccess: false
+    checkCanSee: true
   - type: WorldTargetAction
-    event: !type:TeleportSpellEvent
+    event: !type:TeleportActionEvent
 
 # TODO: Second level upgrade sometime that allows swapping with all objects
 - type: entity
