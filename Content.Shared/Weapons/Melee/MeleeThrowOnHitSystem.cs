@@ -1,10 +1,10 @@
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
-using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Physics.Components;
 using System.Numerics;
+using Content.Shared.Timing.Systems;
 
 namespace Content.Shared.Weapons.Melee;
 

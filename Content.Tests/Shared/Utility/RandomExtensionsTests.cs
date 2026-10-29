@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using Content.Shared.Dataset;
 using Content.Shared.Random.Helpers;
 using NUnit.Framework;

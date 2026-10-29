@@ -1,4 +1,4 @@
-﻿using Content.Shared.Changeling.Components;
+using Content.Shared.Changeling.Components;
 using Content.Shared.Metabolism;
 
 namespace Content.Shared.Changeling.Systems;

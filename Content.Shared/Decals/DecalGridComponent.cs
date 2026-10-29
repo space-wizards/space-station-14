@@ -3,23 +3,30 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+
+#pragma warning disable CS0618 // This IS the obsolete component, this warning is redundant.
 using static Content.Shared.Decals.DecalGridComponent;
+#pragma warning restore CS0618
 
 namespace Content.Shared.Decals
 {
+    /// <summary>
+    /// Legacy load-only decal storage. Loaded data is migrated to <see cref="DecalChunkComponent"/> chunk entities.
+    /// </summary>
     [RegisterComponent]
     [Access(typeof(SharedDecalSystem))]
     [NetworkedComponent]
+    [Obsolete("DecalGridComponent is load-only. Use DecalChunkComponent on chunk entities instead.")]
     public sealed partial class DecalGridComponent : Component
     {
         [Access(Other = AccessPermissions.ReadExecute)]
         [DataField(serverOnly: true)]
-        public DecalGridChunkCollection ChunkCollection = new(new ());
+        public DecalGridChunkCollection ChunkCollection = new(new());
 
         /// <summary>
         ///     Dictionary mapping decals to their corresponding grid chunks.
         /// </summary>
-        public readonly Dictionary<uint, Vector2i> DecalIndex = new();
+        public readonly Dictionary<ushort, Vector2i> DecalIndex = new();
 
         /// <summary>
         ///     Tick at which PVS was last toggled. Ensures that all players receive a full update when toggling PVS.
@@ -30,8 +37,8 @@ namespace Content.Shared.Decals
         [Serializable, NetSerializable]
         public sealed partial class DecalChunk
         {
-            [IncludeDataField(customTypeSerializer:typeof(DictionarySerializer<uint, Decal>))]
-            public Dictionary<uint, Decal> Decals;
+            [IncludeDataField(customTypeSerializer: typeof(DictionarySerializer<ushort, Decal>))]
+            public Dictionary<ushort, Decal> Decals;
 
             [NonSerialized]
             public GameTick LastModified;
@@ -41,7 +48,7 @@ namespace Content.Shared.Decals
                 Decals = new();
             }
 
-            public DecalChunk(Dictionary<uint, Decal> decals)
+            public DecalChunk(Dictionary<ushort, Decal> decals)
             {
                 Decals = decals;
             }
@@ -57,7 +64,7 @@ namespace Content.Shared.Decals
         [DataRecord, Serializable, NetSerializable]
         public partial record DecalGridChunkCollection(Dictionary<Vector2i, DecalChunk> ChunkCollection)
         {
-            public uint NextDecalId;
+            public ushort NextDecalId;
         }
     }
 

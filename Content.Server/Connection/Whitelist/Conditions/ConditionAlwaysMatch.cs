@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Robust.Shared.Network;
 
 namespace Content.Server.Connection.Whitelist.Conditions;

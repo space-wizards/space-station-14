@@ -80,7 +80,7 @@ public sealed partial class MindTests
         await pair.Server.WaitAssertion(() =>
         {
             var oldUid = player.AttachedEntity;
-            ghostUid = entMan.SpawnEntity(GameTicker.ObserverPrototypeName, MapCoordinates.Nullspace);
+            ghostUid = entMan.SpawnEntity(ServerGameTicker.ObserverPrototypeName, MapCoordinates.Nullspace);
             mindId = mindSys.GetMind(player.UserId)!.Value;
             Assert.That(mindId, Is.Not.EqualTo(default(EntityUid)));
             mind = entMan.GetComponent<MindComponent>(mindId);

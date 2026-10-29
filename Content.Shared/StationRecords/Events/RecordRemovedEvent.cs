@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.StationRecords.Events;
+namespace Content.Shared.StationRecords.Events;
 
 /// <summary>
 ///     Event raised after a record is removed. Only the key is given

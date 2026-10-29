@@ -164,6 +164,9 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
+      - !type:EmptyContainersBehaviour
+        containers:
+        - key_slots
   - type: Machine
     board: TelecomServerCircuitboard
   - type: WiresPanel

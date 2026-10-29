@@ -15,15 +15,12 @@ public sealed partial class LaunchOnTriggerSystem : XOnTriggerSystem<LaunchOnTri
         if (!TryComp(target, out PhysicsComponent? phys))
             return;
 
-        var linearVelocity = _physics.GetMapLinearVelocity(target);
-        // If the linear velocity is length 0, this means it's not moving. Given we want to move it in some direction...
+        var directionSource = ent.Comp.UseTargetDirection ? target : ent.Owner;
+        var linearVelocity = _physics.GetMapLinearVelocity(directionSource);
         if (linearVelocity.IsLengthZero())
-            // An object that isn't moving is launched in the direction its facing, not the direction it's rotated (objects face away from their rotation).
-            linearVelocity = _transform.GetWorldRotation(target).RotateVec(Vector2.UnitY) * -1;
+            // Stationary sources use their facing direction, opposite their rotation.
+            linearVelocity = _transform.GetWorldRotation(directionSource).RotateVec(Vector2.UnitY) * -1;
 
-        // When triggered, take the direction the target is moving in (the normalized vector) and multiply it by the speed.
-        // Then apply an impulse to the target on the new vector.
-        // (If the target is moving NE at 10 m/s, this impulses it NE at speed m/s)
         _physics.ApplyLinearImpulse(target, linearVelocity.Normalized() * ent.Comp.Impulse, body: phys);
 
         args.Handled = true;

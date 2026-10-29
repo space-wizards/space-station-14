@@ -9,6 +9,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
+using Robust.Shared.Containers;
 
 namespace Content.Shared.Contraband;
 
@@ -170,6 +171,35 @@ public sealed partial class ContrabandSystem : EntitySystem
             return false;
 
         return true;
+    }
+
+    /// <summary>
+    /// Checks if a storage has contraband.
+    /// </summary>
+    /// <param name="contraband">The entity that we are checking for contraband.</param>
+    /// <param name="player">The player that we are checking if they are allowed to have certain contraband.</param>
+    /// <param name="contrabandList">All contraband prototypes present in storage.</param>
+    public bool ContainerHasContraband(Entity<ContainerManagerComponent?> contraband, EntityUid? player, out List<ProtoId<ContrabandSeverityPrototype>> contrabandList)
+    {
+        contrabandList = [];
+
+        if (!Resolve(contraband.Owner, ref contraband.Comp, false))
+            return false;
+
+        foreach (var container in contraband.Comp.Containers.Values)
+        {
+            foreach (var ent in container.ContainedEntities)
+            {
+                if (IsContraband(ent, player, out var itemContraId))
+                    contrabandList.Add((ProtoId<ContrabandSeverityPrototype>)itemContraId);
+
+                ContainerHasContraband(ent, player, out var itemContraList);
+
+                contrabandList = contrabandList.Concat(itemContraList).ToList();
+            }
+        }
+
+        return contrabandList.Any();
     }
 }
 

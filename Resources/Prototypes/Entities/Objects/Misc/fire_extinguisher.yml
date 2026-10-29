@@ -20,6 +20,9 @@
     vaporAmount: 3
     vaporSpread: 90
     sprayVelocity: 2.0
+  - type: ItemToggleExaminableStatus
+    onText: item-toggle-examined-active
+    offText: item-toggle-examined-not-active
   - type: ItemToggle
     soundActivate:
       path: /Audio/Machines/button.ogg

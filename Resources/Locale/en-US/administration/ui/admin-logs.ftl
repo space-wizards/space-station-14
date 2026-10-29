@@ -1,4 +1,4 @@
-﻿admin-logs-title = Admin Logs Panel
+admin-logs-title = Admin Logs Panel
 admin-logs-count = Showing {$showing}/{$total} of {$round}
 admin-logs-export = Export
 admin-logs-pop-out = Pop Out

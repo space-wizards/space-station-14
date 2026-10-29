@@ -6,10 +6,6 @@
   description: A square piece of metal standing on four metal legs.
   components:
   - type: Animateable
-  - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: PlaceableSurface
   - type: Fixtures
     fixtures:
@@ -27,8 +23,11 @@
   - type: Icon
     state: full
   - type: IconSmooth
-    key: state
-    base: state_
+    key: table
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ table ]
+      base: state_
   - type: Climbable
   - type: Bonkable
     bonkDamage:
@@ -59,3 +58,10 @@
         - TableMask
         layer:
         - TableLayer
+        - LowImpassable
+  - type: IconSmooth
+    key: counter
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ counter ]
+      base: state_

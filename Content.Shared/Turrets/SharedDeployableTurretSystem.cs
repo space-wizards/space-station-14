@@ -4,7 +4,8 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Components;
+using Content.Shared.Timing.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Wires;
@@ -61,7 +62,7 @@ public abstract partial class SharedDeployableTurretSystem : EntitySystem
 
     private void OnActivate(Entity<DeployableTurretComponent> ent, ref ActivateInWorldEvent args)
     {
-        if (TryComp(ent, out UseDelayComponent? useDelay) && !_useDelay.TryResetDelay((ent, useDelay), true))
+        if (!_useDelay.TryResetDelay(ent.Owner, true))
             return;
 
         if (!_accessReader.IsAllowed(args.User, ent))

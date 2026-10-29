@@ -18,10 +18,10 @@ public sealed partial class OrganRelationSystem : EntitySystem
 
     private void OnChildShutdown(Entity<ChildOrganComponent> ent, ref ComponentShutdown args)
     {
-        if (ent.Comp.Parent is not { } parentUid)
+        // Parent shut down before the child.
+        if (ent.Comp.Parent is not { } parentUid || !_parent.TryComp(parentUid, out var parentComp))
             return;
 
-        var parentComp = _parent.Comp(parentUid);
         parentComp.Children.Remove(ent);
         Dirty(parentUid, parentComp);
     }
@@ -33,9 +33,11 @@ public sealed partial class OrganRelationSystem : EntitySystem
 
         foreach (var childUid in ent.Comp.Children)
         {
-            var childComp = _child.Comp(childUid);
-            childComp.Parent = null;
+            // Child shut down before the parent.
+            if (!_child.TryComp(childUid, out var childComp))
+                continue;
 
+            childComp.Parent = null;
             Dirty(childUid, childComp);
         }
     }

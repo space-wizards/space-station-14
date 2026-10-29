@@ -8,6 +8,7 @@ using Content.Server.Mind;
 using Content.Server.Roles;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking.Rules.Components;
 using Content.Shared.Mind;
 using Content.Shared.NPC.Prototypes;
 using Content.Shared.NPC.Systems;
@@ -42,11 +43,10 @@ public sealed class TraitorRuleTest : GameTest
         var entMan = server.EntMan;
         var protoMan = server.ProtoMan;
         var compFact = server.ResolveDependency<IComponentFactory>();
-        var ticker = server.System<GameTicker>();
+        var ticker = server.System<ServerGameTicker>();
         var mindSys = server.System<MindSystem>();
         var roleSys = server.System<RoleSystem>();
         var factionSys = server.System<NpcFactionSystem>();
-        var traitorRuleSys = server.System<TraitorRuleSystem>();
 
         // Look up the minimum player count and max total objective difficulty for the game rule
         var minPlayers = 1;
@@ -96,7 +96,7 @@ public sealed class TraitorRuleTest : GameTest
             // Start the round
             ticker.StartRound();
             // Force traitor mode to start (skip the delay)
-            ticker.StartGameRule(gameRuleEnt);
+            ticker.StartGameRule(gameRuleEnt!.Value);
         });
         await pair.RunTicksSync(10);
 

@@ -3,7 +3,7 @@ using Content.Shared.Speech.Components;
 
 namespace Content.Shared.Speech.EntitySystems;
 
-public sealed class FrontalLispSystem : RelayAccentSystem<FrontalLispComponent>
+public sealed partial class FrontalLispSystem : RelayAccentSystem<FrontalLispComponent>
 {
     // @formatter:off
     private static readonly Regex RegexUpperTh = new("[T]+[Ss]+|[S]+[Cc]+(?=[IiEeYy]+)|[C]+(?=[IiEeYy]+)|[P][Ss]+|([S]+[Tt]+|[T]+)(?=[Ii]+[Oo]+[Uu]*[Nn]*)|[C]+[Hh]+(?=[Ii]*[Ee]*)|[Z]+|[S]+|[X]+(?=[Ee]+)");

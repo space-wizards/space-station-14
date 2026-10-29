@@ -1,4 +1,4 @@
-﻿using static Content.Client.Inventory.ClientInventorySystem;
+using static Content.Client.Inventory.ClientInventorySystem;
 
 namespace Content.Client.UserInterface.Controls
 {

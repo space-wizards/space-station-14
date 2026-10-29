@@ -39,3 +39,9 @@
   name: ui-options-hud-theme-ashen
   path: Ashen
   order: 5
+
+- type: hudTheme
+  id: SS14TrasenKnoxTheme
+  name: ui-options-hud-theme-trasen
+  path: TrasenKnox
+  order: 7

@@ -1,4 +1,4 @@
-﻿using Content.IntegrationTests.Tests.Interaction;
+using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;

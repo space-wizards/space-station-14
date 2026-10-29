@@ -69,7 +69,7 @@ public abstract partial class SharedCreamPieSystem : EntitySystem
         }
 
         ActivatePayload(creamPie);
-        PredictedQueueDel(creamPie);
+        QueueDel(creamPie);
     }
 
     /// <summary>
@@ -159,5 +159,17 @@ public abstract partial class SharedCreamPieSystem : EntitySystem
     private void OnToolRefine(Entity<CreamPieComponent> ent, ref BeforeToolRefinedEvent args)
     {
         ActivatePayload(ent);
+    }
+
+    public void CopyComponent(Entity<CreamPiedComponent?> entity, EntityUid clone)
+    {
+        if (!Resolve(entity, ref entity.Comp, false))
+            return;
+
+        // We don't clone whether you are actively creampied on purpose.
+        var cloneComp = EnsureComp<CreamPiedComponent>(clone);
+        cloneComp.Displacement = entity.Comp.Displacement;
+        cloneComp.Sprite = entity.Comp.Sprite;
+        Dirty(clone, cloneComp);
     }
 }

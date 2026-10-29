@@ -55,7 +55,7 @@
     - id: Wirecutter
     - id: CableApcStack10
     - id: CableMVStack10
-    - id: trayScanner
+    - id: TRayScanner
       prob: 0.9
     - !type:GroupSelector
       children:

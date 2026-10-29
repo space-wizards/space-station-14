@@ -6,7 +6,7 @@ using Content.Shared.Stealth.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Vehicle.Systems;
-using Content.Shared.Vehicle.Components;
+using Content.Shared.Vehicle;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;

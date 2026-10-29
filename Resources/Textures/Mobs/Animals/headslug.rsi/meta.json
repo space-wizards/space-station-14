@@ -16,6 +16,16 @@
         },
         {
             "name": "icon"
+        },
+        {
+            "name": "slug_elder",
+            "directions": 4
+        },
+        {
+            "name": "slug_elder_dead"
+        },
+        {
+            "name": "shell"
         }
     ]
 }

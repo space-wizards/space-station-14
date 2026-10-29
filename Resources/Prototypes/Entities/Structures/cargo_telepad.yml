@@ -29,8 +29,6 @@
     - state: idle
       map: [ "enum.CargoTelepadLayers.Beam" ]
       shader: unshaded
-  - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
@@ -42,7 +40,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 200
   - type: DeviceLinkSink
     ports:

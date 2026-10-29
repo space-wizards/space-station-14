@@ -1,12 +1,10 @@
-using Content.Server.Afk.Events;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.EUI;
-using Content.Shared.Afk;
+using Content.Shared.Afk.Events;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
-using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -32,13 +30,16 @@ public sealed partial class AfkConfirmSystem : EntitySystem
     private readonly Dictionary<ICommonSession, AfkConfirmation> _confirmations = new();
     private readonly Dictionary<ICommonSession, AfkConfirmation> _tempConfirmation = new();
 
+    private bool _afkAutomaticChecks; // CCVar
+
     public override void Initialize()
     {
         base.Initialize();
 
         // Unafking does NOT clear it, require them to confirm via the window so they don't just random mash buttons.
-        SubscribeLocalEvent<AFKEvent>(OnAfk);
+        SubscribeLocalEvent<AfkEvent>(OnAfk);
         _players.PlayerStatusChanged += OnPlayerStatusChanged;
+        Subs.CVar(_cfg, CCVars.AfkAutomaticChecks, b => _afkAutomaticChecks = b, true);
         _cfg.OnValueChanged(CCVars.AfkTime, OnAfkTimeChanged);
     }
 
@@ -56,8 +57,11 @@ public sealed partial class AfkConfirmSystem : EntitySystem
         _cfg.UnsubValueChanged(CCVars.AfkTime, OnAfkTimeChanged);
     }
 
-    private void OnAfk(ref AFKEvent ev)
+    private void OnAfk(ref AfkEvent ev)
     {
+        if (!_afkAutomaticChecks) // If no automatic checks, just don't consume the event.
+            return;
+
         TryStartConfirmation(ev.Session);
     }
 

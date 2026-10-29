@@ -1,0 +1,47 @@
+<TabContainer xmlns="https://spacestation14.io" >
+    <!-- Controls for sending radio announcements -->
+    <BoxContainer Orientation="Vertical" VerticalExpand="True"
+        TabContainer.TabTitle="{Loc 'comms-console-announce-tab-title'}">
+        <Label StyleClasses="StatusFieldTitle" Align="Center" VAlign="Top"
+            VerticalAlignment="Top"
+            Text="{Loc 'comms-console-station-announcements-header'}" />
+        <PanelContainer StyleClasses="BackgroundDark" Margin="10 6 6 6"
+            HorizontalExpand="True" VerticalExpand="True">
+            <TextEdit Name="RadioMessageInput" MinHeight="100"
+                HorizontalExpand="True" VerticalExpand="True" />
+        </PanelContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Label Name="AnnounceCharLimitLabel" Margin="10 0 0 0"
+                StyleClasses="CommsConsoleCharLimit" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <Button Name="AnnounceButton" HorizontalExpand="True" Margin="6 6 6 6"
+                Text="{Loc 'comms-console-menu-announcement-button'}"
+                ToolTip="{Loc 'comms-console-menu-announcement-button-tooltip'}" />
+        </BoxContainer>
+    </BoxContainer>
+
+    <!-- Controls for putting messages on station screens (aka broadcasting) -->
+    <BoxContainer Orientation="Vertical" VerticalExpand="True"
+        TabContainer.TabTitle="{Loc 'comms-console-broadcast-tab-title'}">
+        <Label StyleClasses="StatusFieldTitle" Align="Center" VAlign="Top"
+            VerticalAlignment="Top"
+            Text="{Loc 'comms-console-station-broadcast-header'}" />
+        <BoxContainer Orientation="Vertical" VerticalExpand="True" VerticalAlignment="Center">
+            <Label Name="BroadcastTopCharLimitLabel"
+                StyleClasses="CommsConsoleCharLimit" HorizontalAlignment="Center" Margin="0 10 0 0" />
+            <SpriteView Name="BroadcastEntityDisplay" Scale="8 8" SpriteOffset="True"
+                Margin="0 -56 0 -56" /> <!-- Forgive me for negamargin but there's just too much goddamn space - whatstone -->
+            <Label Name="BroadcastBottomCharLimitLabel"
+                StyleClasses="CommsConsoleCharLimit" HorizontalAlignment="Center" />
+        </BoxContainer>
+        <PanelContainer StyleClasses="BackgroundDark" Margin="10 6 6 6"
+            HorizontalExpand="True" VerticalExpand="True">
+            <TextEdit Name="ScreenMessageInput" MinHeight="40"
+                HorizontalExpand="True" VerticalExpand="True"/>
+        </PanelContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True"> <!-- Ensures consistent button placement vs. announcements -->
+            <Button Name="BroadcastButton" HorizontalExpand="True" Margin="10 6 6 6"
+                Text="{Loc 'comms-console-menu-broadcast-button'}"
+                ToolTip="{Loc 'comms-console-menu-broadcast-button-tooltip'}" />
+        </BoxContainer>
+    </BoxContainer>
+</TabContainer>

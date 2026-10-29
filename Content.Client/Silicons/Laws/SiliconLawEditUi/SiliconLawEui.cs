@@ -1,4 +1,4 @@
-﻿using Content.Client.Eui;
+using Content.Client.Eui;
 using Content.Shared.Eui;
 using Content.Shared.Silicons.Laws;
 

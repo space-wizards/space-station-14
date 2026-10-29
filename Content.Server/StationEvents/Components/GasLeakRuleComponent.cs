@@ -1,4 +1,4 @@
-﻿using Content.Server.StationEvents.Events;
+using Content.Server.StationEvents.Events;
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
 
@@ -33,22 +33,10 @@ public sealed partial class GasLeakRuleComponent : Component
     public float LeakCooldown = 1.0f;
 
     /// <summary>
-    /// The station where the leak is located.
-    /// </summary>
-    [DataField]
-    public EntityUid TargetStation;
-
-    /// <summary>
     /// The specific grid where the leak is located.
     /// </summary>
     [DataField]
     public EntityUid TargetGrid;
-
-    /// <summary>
-    /// The tile coordinates where the leak is located.
-    /// </summary>
-    [DataField]
-    public Vector2i TargetTile;
 
     /// <summary>
     /// The world coordinates of the leak location.

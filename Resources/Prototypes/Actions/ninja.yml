@@ -92,6 +92,20 @@
     - state: blink
   - type: TargetAction
     checkCanAccess: false
+    checkCanSee: true
     range: 0
   - type: WorldTargetAction
-    event: !type:DashEvent
+    event: !type:TeleportActionEvent
+      stopBeingPulled: true
+      stopPulling: true
+  - type: ActionUserWhitelist
+    whitelist:
+      components:
+      - SpaceNinja
+  - type: ActionProviderHeld
+    onFailPopup: dash-ability-not-held
+  - type: LimitedCharges
+    maxCharges: 3
+    onFailPopup: limited-charges-no-charges
+  - type: AutoRecharge
+    rechargeDuration: 20

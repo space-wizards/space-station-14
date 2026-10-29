@@ -70,7 +70,7 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
         if (!TryComp<AnimationPlayerComponent>(ent, out var animPlayer))
             return;
 
-        if (!_appearance.TryGetData<DeployableTurretState>(ent, DeployableTurretVisuals.Turret, out var state, args.Component))
+        if (!args.TryGetData<DeployableTurretState>(DeployableTurretVisuals.Turret, out var state))
             state = DeployableTurretState.Retracted;
 
         UpdateVisuals(ent, state, args.Sprite, animPlayer);

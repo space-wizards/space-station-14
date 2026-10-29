@@ -2,7 +2,6 @@ using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffectNew;
-using Content.Shared.StatusEffectNew.Components;
 
 namespace Content.Shared.Speech.Muting;
 
@@ -38,13 +37,7 @@ public sealed partial class MutedStatusEffectSystem : EntitySystem
         if (args.Args.Handled)
             return;
 
-        if (!TryComp<StatusEffectComponent>(ent, out var statusEffect))
-            return;
-
-        if (statusEffect.AppliedTo is not { } target)
-            return;
-
-        _popup.PopupEntity(Loc.GetString(ent.Comp.ActionPopup), target, target);
+        _popup.PopupEntity(Loc.GetString(ent.Comp.ActionPopup), args.AppliedTo, args.AppliedTo);
         args.Args.Handled = true;
     }
 

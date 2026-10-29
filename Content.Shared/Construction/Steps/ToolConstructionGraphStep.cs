@@ -1,25 +1,26 @@
 using Content.Shared.Examine;
 using Content.Shared.Tools;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Construction.Steps
 {
     [DataDefinition]
     public sealed partial class ToolConstructionGraphStep : ConstructionGraphStep
     {
-        [DataField("tool", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
-        public string Tool { get; private set; } = string.Empty;
+        [DataField(required:true)]
+        public ProtoId<ToolQualityPrototype> Tool;
 
-        [DataField("fuel")] public float Fuel { get; private set; } = 10;
+        [DataField]
+        public float Fuel = 10;
 
-        [DataField("examine")] public string ExamineOverride { get; private set; } = string.Empty;
+        [DataField]
+        public LocId? Examine;
 
         public override void DoExamine(ExaminedEvent examinedEvent)
         {
-            if (!string.IsNullOrEmpty(ExamineOverride))
+            if (Examine is { } examineOverride)
             {
-                examinedEvent.PushMarkup(Loc.GetString(ExamineOverride));
+                examinedEvent.PushMarkup(Loc.GetString(examineOverride));
                 return;
             }
 

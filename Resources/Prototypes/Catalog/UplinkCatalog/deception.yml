@@ -4,7 +4,7 @@
   id: UplinkSyndicateIDCard
   name: uplink-syndicate-id-card-name
   description: uplink-syndicate-id-card-desc
-  productEntity: SyndicateIDCard
+  productEntity: SyndicateIDCardAdaptive
   cost:
     Telecrystal: 1
   categories:
@@ -175,7 +175,7 @@
   - UplinkDeception
 
   #- type: listing
-#  id: uplinkd2DiceTricked
+#  id: Uplinkd2DiceTricked
 #  name: uplink-weighted-coin-name
 #  description: uplink-weighted-coin-desc
 #  productEntity: d2DiceTricked

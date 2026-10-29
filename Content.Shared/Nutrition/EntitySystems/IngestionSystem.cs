@@ -10,7 +10,7 @@ using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
-using Content.Shared.Forensics;
+using Content.Shared.Forensics.Systems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -56,6 +56,7 @@ public sealed partial class IngestionSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private ForensicsSystem _forensics = default!;
 
     // Body Component Dependencies
     [Dependency] private BodySystem _body = default!;
@@ -89,9 +90,6 @@ public sealed partial class IngestionSystem : EntitySystem
         // Misc
         SubscribeLocalEvent<EdibleComponent, AttemptShakeEvent>(OnAttemptShake);
         SubscribeLocalEvent<EdibleComponent, BeforeToolRefinedEvent>(OnBeforeToolRefined);
-
-        // Actions
-        SubscribeLocalEvent<ActionRequireMouthUncoveredComponent, ActionAttemptEvent>(OnMouthUncoveredActionAttempt);
 
         InitializeBlockers();
         InitializeUtensils();
@@ -497,13 +495,7 @@ public sealed partial class IngestionSystem : EntitySystem
         if (!IsEmpty(entity))
         {
             // Leave some of the consumer's DNA on the consumed item...
-            var ev = new TransferDnaEvent
-            {
-                Donor = args.Target,
-                Recipient = entity,
-                CanDnaBeCleaned = false,
-            };
-            RaiseLocalEvent(args.Target, ref ev);
+            _forensics.TransferDna(entity, args.Target, false);
 
             args.Repeat = !args.ForceFed;
             return;
@@ -538,12 +530,6 @@ public sealed partial class IngestionSystem : EntitySystem
     private void OnAttemptShake(Entity<EdibleComponent> entity, ref AttemptShakeEvent args)
     {
         if (IsEmpty(entity))
-            args.Cancelled = true;
-    }
-
-    private void OnMouthUncoveredActionAttempt(Entity<ActionRequireMouthUncoveredComponent> ent, ref ActionAttemptEvent args)
-    {
-        if (!HasMouthAvailable(args.User, ent.Comp.Slots))
             args.Cancelled = true;
     }
 }

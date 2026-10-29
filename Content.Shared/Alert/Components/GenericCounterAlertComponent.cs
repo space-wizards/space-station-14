@@ -57,7 +57,7 @@ public sealed partial class GenericCounterAlertComponent : Component
 /// <param name="Alert">The alert which is currently requesting an update.</param>
 /// <param name="Amount">The number to display on the alert.</param>
 [ByRefEvent]
-public record struct GetGenericAlertCounterAmountEvent(AlertPrototype Alert, int? Amount = null)
+public record struct GetGenericAlertCounterAmountEvent(AlertPrototype Alert, EntityUid SpriteView, int? Amount = null)
 {
     public bool Handled => Amount.HasValue;
 }

@@ -126,7 +126,7 @@ resharper_csharp_keep_existing_embedded_arrangement = false
 #csharp_indent_block_contents = true
 csharp_indent_braces = false
 #csharp_indent_case_contents = true
-#csharp_indent_case_contents_when_block = true
+csharp_indent_case_contents_when_block = false
 #csharp_indent_labels = one_less_than_current
 csharp_indent_switch_labels = true
 xmldoc_indent_text = zeroindent
@@ -341,6 +341,7 @@ dotnet_naming_symbols.type_parameters_symbols.applicable_kinds = type_parameter
 
 # ReSharper properties
 resharper_braces_for_ifelse = required_for_multiline
+resharper_csharp_case_block_braces = next_line
 resharper_csharp_wrap_arguments_style = chop_if_long
 resharper_csharp_wrap_parameters_style = chop_if_long
 resharper_keep_existing_attribute_arrangement = true

@@ -1,4 +1,4 @@
-﻿# Rules
+# Rules
 
 ui-rules-header = Wizard's Den Official Server Rules
 ui-rules-header-rp = Wizard's Den Roleplay Official Server Rules

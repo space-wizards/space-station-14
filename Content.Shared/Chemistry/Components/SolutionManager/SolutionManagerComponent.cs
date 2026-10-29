@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 

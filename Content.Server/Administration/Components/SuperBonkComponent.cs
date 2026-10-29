@@ -13,7 +13,7 @@ public sealed partial class SuperBonkComponent : Component
     /// <summary>
     /// All of the tables the target will be bonked on.
     /// </summary>
-    [DataField]
+    // TODO: Probably needs to be split into two fields
     public List<EntityUid>.Enumerator Tables;
 
     /// <summary>
@@ -27,12 +27,6 @@ public sealed partial class SuperBonkComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextBonk = TimeSpan.Zero;
-
-    /// <summary>
-    /// Whether to remove the clumsy component from the target after SuperBonk is done.
-    /// </summary>
-    [DataField]
-    public bool RemoveClumsy = true;
 
     /// <summary>
     /// Whether to stop Super Bonk on the target once he dies. Otherwise it will continue until no other tables are left

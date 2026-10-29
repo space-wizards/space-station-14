@@ -96,6 +96,9 @@
     sprite: Objects/Consumable/Food/burger.rsi
     shape:
     - 0,0,1,0
+  - type: Tag
+    tags:
+    - FinishedMeal
 
 # Custom Burger Example
 
@@ -146,6 +149,7 @@
     state: appendix
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
   - type: Item
     inhandVisuals:
@@ -186,6 +190,7 @@
         Quantity: 5
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
   - type: Item
     inhandVisuals:
@@ -204,7 +209,7 @@
 # Tastes like bun, bacon.
 
 - type: entity
-  parent: FoodBurgerBase
+  parent: [ FoodBurgerBase, BaseSportsBall ]
   id: FoodBurgerBaseball
   name: baseball burger
   description: It's still warm. The steam coming off of it smells kinda sweaty.
@@ -226,7 +231,7 @@
         Quantity: 5
   - type: Tag
     tags:
-    - Meat
+    - FinishedMeal
   - type: Item
     inhandVisuals:
       left:
@@ -259,6 +264,7 @@
     state: bearger
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
 
 - type: entity
@@ -296,6 +302,7 @@
     state: bigbite
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
 # Tastes like bun, silver, magic.
 
@@ -320,6 +327,7 @@
     state: brain
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
 # Tastes like bun, brains.
 
@@ -347,6 +355,7 @@
       - cat
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
 
 - type: entity
@@ -371,6 +380,7 @@
         Quantity: 10
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
   - type: Item
     inhandVisuals:
@@ -413,6 +423,7 @@
         Quantity: 2
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
   - type: Item
     inhandVisuals:
@@ -451,6 +462,7 @@
     state: clown
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
 
 - type: entity
@@ -476,6 +488,7 @@
         Quantity: 10
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
   - type: Item
     inhandVisuals:
@@ -498,6 +511,7 @@
     state: crab
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
   - type: Item
     inhandVisuals:
@@ -567,6 +581,7 @@
         Quantity: 4
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
 
 - type: entity
@@ -598,6 +613,7 @@
     state: chicken
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
 # Tastes like bun, duck.
 
@@ -660,6 +676,7 @@
     state: fish
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
 # Tastes like bun, fish.
 
@@ -699,6 +716,7 @@
         Quantity: 12
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
 
 # Tastes like bun, HEAT.
@@ -745,8 +763,9 @@
         Quantity: 15
   - type: Tag
     tags:
-      - ClothMade
-      - Meat
+    - ClothMade
+    - FinishedMeal
+    - Meat
 # Tastes like bun, ectoplasm.
 
 - type: entity
@@ -763,6 +782,7 @@
     state: human
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
   - type: Item
     inhandVisuals:
@@ -811,6 +831,7 @@
         Quantity: 5
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
 
 - type: entity
@@ -843,6 +864,7 @@
         Quantity: 5
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
   - type: Item
     size: Normal
@@ -905,6 +927,7 @@
     state: plain
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
   - type: Item
     inhandVisuals:
@@ -938,6 +961,7 @@
         Quantity: 1
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
   - type: Item
     inhandVisuals:
@@ -982,6 +1006,7 @@
         Quantity: 1
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
   - type: Item
     inhandVisuals:
@@ -1100,6 +1125,7 @@
     state: superbite
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
 # Tastes like bun, diabetes.
 
@@ -1155,6 +1181,7 @@
     state: x
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
   - type: Item
     inhandVisuals:
@@ -1198,5 +1225,6 @@
     state: mothroach
   - type: Tag
     tags:
+    - FinishedMeal
     - Meat
 

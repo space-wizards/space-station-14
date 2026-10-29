@@ -1,4 +1,4 @@
-﻿using Content.Shared.Stacks;
+using Content.Shared.Stacks;
 using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;

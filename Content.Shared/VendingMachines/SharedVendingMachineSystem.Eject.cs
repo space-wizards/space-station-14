@@ -81,6 +81,10 @@ public abstract partial class SharedVendingMachineSystem
         if (!Resolve(uid, ref vendComponent))
             return false;
 
+        // The vending machine itself, for example as a ghost, is always authorized.
+        if (uid == sender)
+            return true;
+
         if (!TryComp<AccessReaderComponent>(uid, out var accessReader))
             return true;
 

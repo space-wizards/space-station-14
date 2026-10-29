@@ -6,6 +6,8 @@
             <Label Text="{Loc 'ui-options-volume-label'}"
                    StyleClasses="LabelKeyText"/>
             <BoxContainer Orientation="Vertical" Margin="0 3 0 0">
+                <ui:OptionDropDown Name="DropDownAudioDevice" Title="{Loc 'ui-options-audio-device'}"
+                                   Margin="0 0 0 8" />
                 <ui:OptionSlider Name="SliderVolumeMaster" Title="{Loc 'ui-options-master-volume'}"
                                  Margin="0 0 0 8" />
                 <ui:OptionSlider Name="SliderVolumeMidi" Title="{Loc 'ui-options-midi-volume'}" />
@@ -21,6 +23,7 @@
                 <CheckBox Name="AdminSoundsCheckBox" Text="{Loc 'ui-options-admin-sounds'}" />
                 <CheckBox Name="BwoinkSoundCheckBox" Text="{Loc 'ui-options-bwoink-sound'}" />
                 <CheckBox Name="AudioHrtfCheckBox" Text="{Loc 'ui-options-audio-hrtf'}" />
+                <CheckBox Name="MuteUnfocusedCheckBox" Text="{Loc 'ui-options-mute-unfocused'}" />
             </BoxContainer>
         </BoxContainer>
         <ui:OptionsTabControlRow Name="Control" Access="Public" />

@@ -1,4 +1,4 @@
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.Disposal.Unit;
 
@@ -10,7 +10,7 @@ namespace Content.Shared.Disposal.SignalRouter;
 /// </summary>
 public sealed partial class DisposalSignallerSystem : EntitySystem
 {
-    [Dependency] private SharedDeviceLinkSystem _link = default!;
+    [Dependency] private DeviceLinkSystem _link = default!;
 
     public override void Initialize()
     {
@@ -21,11 +21,11 @@ public sealed partial class DisposalSignallerSystem : EntitySystem
 
     private void OnInit(Entity<DisposalSignallerComponent> ent, ref ComponentInit args)
     {
-        _link.EnsureSourcePorts(ent, ent.Comp.Port);
+        _link.EnsureSourcePorts(ent.Owner, ent.Comp.Port);
     }
 
     private void OnGetNextDirection(Entity<DisposalSignallerComponent> ent, ref GetDisposalsNextDirectionEvent args)
     {
-        _link.InvokePort(ent, ent.Comp.Port);
+        _link.InvokePort(ent.Owner, ent.Comp.Port);
     }
 }

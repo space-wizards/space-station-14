@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: WizardTeleportScroll
   name: teleport scroll
   suffix: Wizard

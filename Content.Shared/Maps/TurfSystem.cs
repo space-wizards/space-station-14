@@ -1,11 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Numerics;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed.Commands.Values;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Maps;
 
@@ -20,6 +23,55 @@ public sealed partial class TurfSystem : EntitySystem
     [Dependency] private ITileDefinitionManager _tileDefinitions = default!;
 
     [Dependency] private EntityQuery<FixturesComponent> _fixtureQuery = default!;
+
+    private bool[] _tileHasMapAtmosphere = [];
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        RegisterTileDefinitions();
+        RebuildTileAtmosphereCache();
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
+    {
+        if (!args.WasModified<ContentTileDefinition>())
+            return;
+
+        PreserveTileIds();
+        RebuildTileAtmosphereCache();
+    }
+
+    private void RebuildTileAtmosphereCache()
+    {
+        var maxTileId = 0;
+
+        foreach (var tileDef in _tileDefinitions)
+        {
+            maxTileId = Math.Max(maxTileId, tileDef.TileId);
+        }
+
+        var cache = new bool[maxTileId + 1];
+
+        foreach (var tileDef in _tileDefinitions)
+        {
+            if (tileDef is not ContentTileDefinition contentTile)
+                continue;
+
+            cache[contentTile.TileId] = contentTile.MapAtmosphere;
+        }
+
+        _tileHasMapAtmosphere = cache;
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+
+        _tileHasMapAtmosphere = [];
+    }
 
     /// <summary>
     /// Attempts to get the turf at or under some given coordinates or null if no such turf exists.
@@ -127,9 +179,18 @@ public sealed partial class TurfSystem : EntitySystem
     /// </summary>
     /// <param name="tile">The tile in question.</param>
     /// <returns>True if the tile is considered to be space, false otherwise.</returns>
+    [Pure]
     public bool IsSpace(Tile tile)
     {
-        return GetContentTileDefinition(tile).MapAtmosphere;
+        var typeId = tile.TypeId;
+        if (typeId < _tileHasMapAtmosphere.Length)
+            return _tileHasMapAtmosphere[typeId];
+
+        var tileDef = GetContentTileDefinition(tile);
+        DebugTools.Assert(false, $"Found non-cached tilemap atmosphere for ID {tile.TypeId}: {tileDef.ID}");
+
+        // Tile IDs are normally stable after startup but keep this in case shit breaks.
+        return tileDef.MapAtmosphere;
     }
 
     /// <summary>
@@ -137,6 +198,7 @@ public sealed partial class TurfSystem : EntitySystem
     /// </summary>
     /// <param name="tile">The tile in question.</param>
     /// <returns>True if the tile is considered to be space, false otherwise.</returns>
+    [Pure]
     public bool IsSpace(TileRef tile)
     {
         return IsSpace(tile.Tile);
@@ -155,6 +217,7 @@ public sealed partial class TurfSystem : EntitySystem
     /// <summary>
     ///     Returns the content tile definition for a tile.
     /// </summary>
+    [Pure]
     public ContentTileDefinition GetContentTileDefinition(Tile tile)
     {
         return (ContentTileDefinition)_tileDefinitions[tile.TypeId];
@@ -163,6 +226,7 @@ public sealed partial class TurfSystem : EntitySystem
     /// <summary>
     ///     Returns the content tile definition for a tile ref.
     /// </summary>
+    [Pure]
     public ContentTileDefinition GetContentTileDefinition(TileRef tile)
     {
         return GetContentTileDefinition(tile.Tile);

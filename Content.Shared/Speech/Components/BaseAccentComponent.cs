@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Speech.Components;
+namespace Content.Shared.Speech.Components;
 
 /// <summary>
 /// Base class for accent components.

@@ -1,0 +1,112 @@
+# Shuttles
+- type: entity
+  name: white shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleWhite
+  components:
+  - type: Sprite
+    state: shuttlewhite
+  - type: Item
+    heldPrefix: shuttlewhite
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorShuttleWhite
+  - type: Stack
+    stackType: FloorTileStackShuttleWhite
+
+- type: entity
+  name: blue shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleBlue
+  components:
+  - type: Sprite
+    state: shuttleblue
+  - type: Item
+    heldPrefix: shuttleblue
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorShuttleBlue
+  - type: Stack
+    stackType: FloorTileStackShuttleBlue
+
+- type: entity
+  name: orange shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleOrange
+  components:
+  - type: Sprite
+    state: shuttleorange
+  - type: Item
+    heldPrefix: shuttleorange
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorShuttleOrange
+  - type: Stack
+    stackType: FloorTileStackShuttleOrange
+
+- type: entity
+  name: purple shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttlePurple
+  components:
+  - type: Sprite
+    state: shuttlepurple
+  - type: Item
+    heldPrefix: shuttlepurple
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorShuttlePurple
+  - type: Stack
+    stackType: FloorTileStackShuttlePurple
+
+- type: entity
+  name: red shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleRed
+  components:
+  - type: Sprite
+    state: shuttlered
+  - type: Item
+    heldPrefix: shuttlered
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorShuttleRed
+  - type: Stack
+    stackType: FloorTileStackShuttleRed
+
+- type: entity
+  name: grey shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleGrey
+  components:
+  - type: Sprite
+    state: shuttlegrey
+  - type: Item
+    heldPrefix: shuttlegrey
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorShuttleGrey
+  - type: Stack
+    stackType: FloorTileStackShuttleGrey
+
+- type: entity
+  name: black shuttle floor
+  parent: FloorTileItemBase
+  id: FloorTileItemShuttleBlack
+  components:
+  - type: Sprite
+    state: shuttleblack
+  - type: Item
+    heldPrefix: shuttleblack
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorShuttleBlack
+  - type: Stack
+    stackType: FloorTileStackShuttleBlack

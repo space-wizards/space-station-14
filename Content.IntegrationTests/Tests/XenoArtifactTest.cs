@@ -363,4 +363,109 @@ public sealed class XenoArtifactTest : GameTest
         Assert.That(grouped[1].Count(), Is.GreaterThanOrEqualTo(2)); // tree is attempting sometimes to get wider (so it will look like a tree)
         Assert.That(grouped[2].Count(), Is.LessThanOrEqualTo(2)); // maintain same width or, if we used 3 nodes on previous layer - we only have 1 left!
     }
+
+    [Test]
+    [Description("Checks that triggering sibling nodes which converge on an unlockable node extends the unlocking time")]
+    [RunOnSide(Side.Server)]
+    public async Task XenoArtifactSiblingTriggerTimeTest()
+    {
+        var artifactUid = SSpawn(TestArtifact);
+        Entity<XenoArtifactComponent> artifactEnt = (artifactUid, SComp<XenoArtifactComponent>(artifactUid));
+
+        // A and B are unlocked sibling branches which both converge on the unlockable node C.
+        // To unlock C all of A, B and C have to be triggered during the same unlocking session.
+        Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var nodeA, false));
+        Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var nodeB, false));
+        Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var nodeC, false));
+
+        _sArtifactSystem.AddEdge(artifactEnt, nodeA!.Value, nodeC!.Value, false);
+        _sArtifactSystem.AddEdge(artifactEnt, nodeB!.Value, nodeC!.Value, false);
+
+        _sArtifactSystem.SetNodeUnlocked(nodeA.Value);
+        _sArtifactSystem.SetNodeUnlocked(nodeB.Value);
+
+        var indexA = _sArtifactSystem.GetIndex(artifactEnt, nodeA.Value);
+        var indexB = _sArtifactSystem.GetIndex(artifactEnt, nodeB.Value);
+        var indexC = _sArtifactSystem.GetIndex(artifactEnt, nodeC.Value);
+
+        // The trigger that starts the unlocking session doesn't extend it.
+        _sArtifactSystem.TriggerXenoArtifact(artifactEnt, nodeA.Value, force: true);
+        var unlocking = SComp<XenoArtifactUnlockingComponent>(artifactUid);
+        Assert.That(unlocking.TriggeredNodeIndexes, Is.EquivalentTo(new[] { indexA }));
+        var baseEndTime = unlocking.EndTime;
+
+        // Triggering the sibling node B has to extend the unlocking time, even though it is
+        // not on the same path as A. 
+        _sArtifactSystem.TriggerXenoArtifact(artifactEnt, nodeB.Value, force: true);
+        Assert.That(unlocking.EndTime - baseEndTime, Is.EqualTo(artifactEnt.Comp.UnlockStateIncrementPerNode));
+
+        // Triggering the unlock target itself has to extend the time as well.
+        _sArtifactSystem.TriggerXenoArtifact(artifactEnt, nodeC.Value, force: true);
+        Assert.That(unlocking.EndTime - baseEndTime, Is.EqualTo(artifactEnt.Comp.UnlockStateIncrementPerNode * 2));
+        Assert.That(unlocking.TriggeredNodeIndexes, Is.EquivalentTo(new[] { indexA, indexB, indexC }));
+
+        // With the full required set triggered, C is exactly the node that will get unlocked.
+        Assert.That(_sArtifactSystem.TryGetNodeFromUnlockState((artifactUid, unlocking, artifactEnt.Comp), out var unlockable), Is.True);
+        Assert.That(unlockable!.Value.Owner, Is.EqualTo(nodeC.Value.Owner));
+    }
+
+    [Test]
+    [Description("Checks that a trigger which makes the unlocking attempt impossible doesn't extend the time")]
+    [RunOnSide(Side.Server)]
+    public async Task XenoArtifactImpossibleTriggerTimeTest()
+    {
+        var artifactUid = SSpawn(TestArtifact);
+        Entity<XenoArtifactComponent> artifactEnt = (artifactUid, SComp<XenoArtifactComponent>(artifactUid));
+
+        // C is unlockable through A, while D is an isolated node which is only unlockable alone.
+        Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var nodeA, false));
+        Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var nodeC, false));
+        Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var nodeD, false));
+
+        _sArtifactSystem.AddEdge(artifactEnt, nodeA!.Value, nodeC!.Value, false);
+        _sArtifactSystem.SetNodeUnlocked(nodeA.Value);
+
+        _sArtifactSystem.TriggerXenoArtifact(artifactEnt, nodeA.Value, force: true);
+        var unlocking = SComp<XenoArtifactUnlockingComponent>(artifactUid);
+        var baseEndTime = unlocking.EndTime;
+
+        // D is not a predecessor of the unlockable node C, so no unlockable node has both A and D
+        // within its required set. This trigger guarantees the unlock will fail - no time is added.
+        _sArtifactSystem.TriggerXenoArtifact(artifactEnt, nodeD!.Value, force: true);
+        unlocking = SComp<XenoArtifactUnlockingComponent>(artifactUid);
+        Assert.That(unlocking.EndTime, Is.EqualTo(baseEndTime));
+
+        Assert.That(_sArtifactSystem.TryGetNodeFromUnlockState((artifactUid, unlocking, artifactEnt.Comp), out _), Is.False);
+    }
+
+    [Test]
+    [Description("Checks that a full required trigger set doesn't extend the time when artifexium is applied")]
+    [RunOnSide(Side.Server)]
+    public async Task XenoArtifactArtifexiumTimeTest()
+    {
+        var artifactUid = SSpawn(TestArtifact);
+        Entity<XenoArtifactComponent> artifactEnt = (artifactUid, SComp<XenoArtifactComponent>(artifactUid));
+
+        Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var nodeA, false));
+        Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var nodeB, false));
+        Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var nodeC, false));
+
+        _sArtifactSystem.AddEdge(artifactEnt, nodeA!.Value, nodeB!.Value, false);
+        _sArtifactSystem.AddEdge(artifactEnt, nodeB!.Value, nodeC!.Value, false);
+        _sArtifactSystem.SetNodeUnlocked(nodeA.Value);
+
+        _sArtifactSystem.TriggerXenoArtifact(artifactEnt, nodeA.Value, force: true);
+        var unlocking = SComp<XenoArtifactUnlockingComponent>(artifactUid);
+        var baseEndTime = unlocking.EndTime;
+
+        // With artifexium a trigger set one short of the required one is enough to unlock C.
+        _sArtifactSystem.SetArtifexiumApplied((artifactUid, unlocking), true);
+        Assert.That(_sArtifactSystem.TryGetNodeFromUnlockState((artifactUid, unlocking, artifactEnt.Comp), out var unlockable));
+        Assert.That(unlockable.Value.Owner, Is.EqualTo(nodeB.Value.Owner));
+
+        // Completing the full required set makes the unlock fail under artifexium - no time added.
+        _sArtifactSystem.TriggerXenoArtifact(artifactEnt, nodeC.Value, force: true);
+        unlocking = SComp<XenoArtifactUnlockingComponent>(artifactUid);
+        Assert.That(unlocking.EndTime, Is.EqualTo(baseEndTime));
+    }
 }
