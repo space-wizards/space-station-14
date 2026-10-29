@@ -29,7 +29,7 @@
             Bartender: [ 0, 1 ]
             Botanist: [ 0, 2 ]
             Chef: [ 0, 1 ]
-            Janitor: [ 0, 2 ]
+            Janitor: [ 0, 1 ]
             ServiceWorker: [ 1, 3 ]
             #engineering 2
             StationEngineer: [ 1, 2 ]
