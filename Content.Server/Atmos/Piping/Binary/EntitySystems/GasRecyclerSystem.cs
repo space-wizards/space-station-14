@@ -139,12 +139,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
             // calculate the desired dP at the end of this using our formula for P(t)
             var cst = flowRateMultiplier * pressureSlope * dt;
-            var targetPressureDelta =
-                (
-                2 * a * cst +
-                a * a +
-                MathF.Pow(cst, 2)
-                ) / 4;
+            var targetPressureDelta = (2 * a * cst + a * a + MathF.Pow(cst, 2)) / 4;
 
             // use our pressureSlope to find how many litres are needed to achieve this
             var pressureDeltaDelta = dP - targetPressureDelta;
