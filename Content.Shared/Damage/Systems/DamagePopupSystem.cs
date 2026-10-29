@@ -4,38 +4,42 @@ using Content.Shared.Popups;
 
 namespace Content.Shared.Damage.Systems;
 
+/// <summary>
+/// Handling displaying popups when an entity takes damage.
+/// </summary>
+/// <remarks>
+/// Useful for training dummies, for example.
+/// </remarks>
+/// <seealso cref="DamagePopupComponent"/>
 public sealed partial class DamagePopupSystem : EntitySystem
 {
-    [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<DamagePopupComponent, DamageChangedEvent>(OnDamageChange);
-        SubscribeLocalEvent<DamagePopupComponent, InteractHandEvent>(OnInteractHand);
-    }
+    [Dependency] private EntityQuery<DamageableComponent> _damageableQuery;
 
-    private void OnDamageChange(Entity<DamagePopupComponent> ent, ref DamageChangedEvent args)
+    [SubscribeLocalEvent]
+    private void OnDamageChange(Entity<DamagePopupComponent> ent, ref DamageDealtEvent args)
     {
-        if (args.DamageDelta != null)
+        if (!_damageableQuery.TryComp(ent, out var damageable))
+            return;
+
+        var damageTotal = _damageable.GetTotalDamage((ent, damageable));
+        var damageDelta = args.Total;
+
+        var msg = ent.Comp.Type switch
         {
-            var damageTotal = _damageable.GetTotalDamage((ent, args.Damageable));
-            var damageDelta = args.DamageDelta.GetTotal();
+            DamagePopupType.Delta => damageDelta.ToString(),
+            DamagePopupType.Total => damageTotal.ToString(),
+            DamagePopupType.Combined => damageDelta + " | " + damageTotal,
+            DamagePopupType.Hit => "!",
+            _ => "Invalid type",
+        };
 
-            var msg = ent.Comp.Type switch
-            {
-                DamagePopupType.Delta => damageDelta.ToString(),
-                DamagePopupType.Total => damageTotal.ToString(),
-                DamagePopupType.Combined => damageDelta + " | " + damageTotal,
-                DamagePopupType.Hit => "!",
-                _ => "Invalid type",
-            };
-
-            _popupSystem.PopupEntity(msg, ent.Owner);
-        }
+        _popupSystem.PopupEntity(msg, ent.Owner);
     }
 
+    [SubscribeLocalEvent]
     private void OnInteractHand(Entity<DamagePopupComponent> ent, ref InteractHandEvent args)
     {
         if (ent.Comp.AllowTypeChange)

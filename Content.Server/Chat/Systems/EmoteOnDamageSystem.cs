@@ -7,44 +7,42 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Chat.Systems;
 
+/// <summary>
+/// Handles entities emoting when taking damage.
+/// </summary>
+/// <seealso cref="EmoteOnDamageComponent"/>
 public sealed partial class EmoteOnDamageSystem : EntitySystem
 {
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private ChatSystem _chatSystem = default!;
 
-    public override void Initialize()
+    [SubscribeLocalEvent]
+    private void OnDamage(Entity<EmoteOnDamageComponent> ent, ref DamageDealtEvent args)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<EmoteOnDamageComponent, DamageChangedEvent>(OnDamage);
-    }
-
-    private void OnDamage(EntityUid uid, EmoteOnDamageComponent emoteOnDamage, DamageChangedEvent args)
-    {
-        if (!args.DamageIncreased)
+        if (!args.AnyPositive)
             return;
 
-        if (emoteOnDamage.LastEmoteTime + emoteOnDamage.EmoteCooldown > _gameTiming.CurTime)
+        if (ent.Comp.LastEmoteTime + ent.Comp.EmoteCooldown > _gameTiming.CurTime)
             return;
 
-        if (emoteOnDamage.Emotes.Count == 0)
+        if (ent.Comp.Emotes.Count == 0)
             return;
 
-        if (!_random.Prob(emoteOnDamage.EmoteChance))
+        if (!_random.Prob(ent.Comp.EmoteChance))
             return;
 
-        var emote = _random.Pick(emoteOnDamage.Emotes);
-        if (emoteOnDamage.WithChat)
+        var emote = _random.Pick(ent.Comp.Emotes);
+        if (ent.Comp.WithChat)
         {
-            _chatSystem.TryEmoteWithChat(uid, emote, emoteOnDamage.HiddenFromChatWindow ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal);
+            _chatSystem.TryEmoteWithChat(ent, emote, ent.Comp.HiddenFromChatWindow ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal);
         }
         else
         {
-            _chatSystem.TryEmoteWithoutChat(uid,emote);
+            _chatSystem.TryEmoteWithoutChat(ent, emote);
         }
 
-        emoteOnDamage.LastEmoteTime = _gameTiming.CurTime;
+        ent.Comp.LastEmoteTime = _gameTiming.CurTime;
     }
 
     /// <summary>
