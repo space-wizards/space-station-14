@@ -5,6 +5,7 @@ using Content.Client.Stylesheets;
 using Content.Shared.DeviceConfigurator;
 using Content.Shared.DeviceConfigurator.Components;
 using Content.Shared.Input;
+using Content.Shared.Item;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -26,12 +27,14 @@ public sealed partial class NetworkConfiguratorOverlaySystem : EntitySystem
 
     private static readonly EntProtoId Action = "ActionClearNetworkLinkOverlays";
 
+    public static readonly ProtoId<ItemStatusPrototype> NetworkConfiguratorItemStatus = "NetworkConfigurator";
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<ClearAllOverlaysEvent>(_ => ClearAllOverlays());
-        Subs.ItemStatus<NetworkConfiguratorComponent>(OnCollectItemStatus);
+        Subs.ItemStatus<NetworkConfiguratorComponent>(OnCollectItemStatus, NetworkConfiguratorItemStatus);
     }
 
     [SubscribeLocalEvent]
