@@ -10,6 +10,7 @@ using Content.Shared.Audio;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
@@ -115,9 +116,22 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             // find how many moles are present in a packet of gas volume k taken from the inlet
             // calculate pressure if you remove that many from the inlet and add that many to the outlet
             // take the derivitive with respect to k
+            // note that this assumes volume transfer happens in one step instead of continuously
+            // which is not accurate if we are attempting to model continuous flow through the device
             var inletPressureSlope = -inlet.TotalMoles * Atmospherics.R * inlet.Temperature / inlet.Volume / inlet.Volume;
             var outletPressureSlope = -inlet.Pressure * outlet.Temperature / outlet.Volume / inlet.Temperature;
             var pressureSlope = inletPressureSlope + outletPressureSlope;
+
+            // check for edge cases
+            // infinite pressure slope, every transfer will cause massive pressure swings, so just attempt to equalize
+            if (float.IsInfinity(pressureSlope))
+                return maxTransfer;
+            // zero pressure slope means dP never changes, so just use the capped naive flow rate
+            if (pressureSlope == 0)
+                return Math.Clamp(flowRateMultiplier * MathF.Sqrt(dP) * dt, 0, maxTransfer);
+            // with NaN, no value really makes sense, so just make an attempt
+            if (float.IsNaN(pressureSlope))
+                return maxTransfer;
 
             // let L(t) be the volume of gas transfered from the inlet
             // let P(t) be the pressure delta at time t
