@@ -24,6 +24,9 @@ public sealed partial class GameMapPrototype : IPrototype
     [DataField]
     public float MaxRandomOffset = 1000f;
 
+    [DataField]
+    public float Weight = 1.0f;
+
     /// <summary>
     /// Turns out some of the map files are actually secretly grids. Excellent. I love map loading code.
     /// </summary>
