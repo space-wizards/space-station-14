@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.Resources;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.SurveillanceCamera.Components;
@@ -73,6 +74,13 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         CameraMap.CameraSelected += OnCameraMapSelected;
     }
 
+    protected override void Resized()
+    {
+        base.Resized();
+
+        var size = MathF.Max(CameraViewBox.PixelSize.Y, 500);
+        CameraView.MinSize = new Vector2(size, size);
+    }
 
     // The UI class should get the eye from the entity, and then
     // pass it here so that the UI can change its view.
