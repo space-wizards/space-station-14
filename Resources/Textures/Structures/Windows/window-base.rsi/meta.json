@@ -41,6 +41,30 @@
         {
             "name": "window7",
             "directions": 4
+        },
+        {
+            "name": "window8",
+            "directions": 4
+        },
+        {
+            "name": "window9",
+            "directions": 4
+        },
+        {
+            "name": "window10",
+            "directions": 4
+        },
+        {
+            "name": "window11",
+            "directions": 4
+        },
+        {
+            "name": "window12",
+            "directions": 4
+        },
+        {
+            "name": "window13",
+            "directions": 4
         }
     ]
 }
