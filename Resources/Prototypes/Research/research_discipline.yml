@@ -1,6 +1,6 @@
 - type: technology
-  id: ResearchDisciplineExpansion1
-  name: research-technology-discipline-expansion-1
+  id: ResearchGrant
+  name: research-technology-grant
   icon:
     sprite: Interface/Misc/research_disciplines.rsi
     state: civilianservices
@@ -9,7 +9,7 @@
   cost: 10000
   requiresResearchCompletion: true
   genericUnlocks:
-  - unlockDescription: research-technology-cargo-grant-unlock
+  - unlockDescription: research-technology-grant-unlock
     purchaseEvent: !type:ResearchCargoGrantEvent
       amount: 1000
 
