@@ -30,8 +30,8 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, ActivateInWorldEvent>(OnChamberActivate);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, UseInHandEvent>(OnChamberUse);
 
-        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, EntInsertedIntoContainerMessage>(OnMagazineSlotChange);
-        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, EntRemovedFromContainerMessage>(OnMagazineSlotChange);
+        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, EntInsertedIntoContainerMessage>(OnChamberMagazineSlotChange);
+        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, EntRemovedFromContainerMessage>(OnChamberMagazineSlotChange);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, ExaminedEvent>(OnChamberMagazineExamine);
     }
 
@@ -69,6 +69,39 @@ public abstract partial class SharedGunSystem
             UseChambered(uid, component, args.User);
         else
             ToggleBolt(uid, component, args.User);
+    }
+
+    /// <summary>
+    /// Called when a entity is loaded into a slot in a gun
+    /// </summary>
+    private void OnChamberMagazineSlotChange(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ContainerModifiedMessage args)
+    {
+        GetMagazineEntity(uid);
+
+        switch (args.Container.ID)
+        {
+            case ChamberSlot:
+                ChamberSlotChanged((uid, component));
+                break;
+            case MagazineSlot:
+                MagazineSlotChanged((uid, component));
+                break;
+            default:
+                return;
+        }
+    }
+
+    /// <summary>
+    /// Called when a entity is loaded into the chamber of a gun
+    /// </summary>
+    private void ChamberSlotChanged(Entity<ChamberMagazineAmmoProviderComponent> ent)
+    {
+        UpdateAmmoCount(ent);
+        if (!TryComp<AppearanceComponent>(ent, out var appearance))
+            return;
+
+        var chamberEnt = GetChamberEntity(ent);
+        Appearance.SetData(ent, AmmoVisuals.HasAmmo, chamberEnt != null, appearance);
     }
 
     /// <summary>
