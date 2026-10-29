@@ -37,40 +37,43 @@ uniform highp float light_whitepoint; // = 1.0;
 void fragment() {
 	highp vec4 col = zTexture(UV);
 	highp vec2 ps = TEXTURE_PIXEL_SIZE;
+
+	// Width in screen-space terms
+	highp float width = outline_width;
 	highp float a;
 	highp float maxa = col.a;
 	highp float mina = col.a;
 
 	// note: these bypass zTexture because only alpha is queried.
-	a = texture2D(TEXTURE, UV + vec2(0.0, -outline_width)*ps).a;
+	a = texture2D(TEXTURE, UV + vec2(0.0, -width)*ps).a;
 	maxa = max(a, maxa);
 	mina = min(a, mina);
 
-    a = texture2D(TEXTURE, UV + vec2(-outline_width, -outline_width)*ps).a;
+    a = texture2D(TEXTURE, UV + vec2(-width, -width)*ps).a;
     maxa = max(a, maxa);
     mina = min(a, mina);
 
-	a = texture2D(TEXTURE, UV + vec2(0.0, outline_width)*ps).a;
+	a = texture2D(TEXTURE, UV + vec2(0.0, width)*ps).a;
 	maxa = max(a, maxa);
 	mina = min(a, mina);
 
-    a = texture2D(TEXTURE, UV + vec2(outline_width, -outline_width)*ps).a;
+    a = texture2D(TEXTURE, UV + vec2(width, -width)*ps).a;
     maxa = max(a, maxa);
     mina = min(a, mina);
 
-	a = texture2D(TEXTURE, UV + vec2(-outline_width,0.0)*ps).a;
+	a = texture2D(TEXTURE, UV + vec2(-width,0.0)*ps).a;
 	maxa = max(a, maxa);
 	mina = min(a, mina);
 
-    a = texture2D(TEXTURE, UV + vec2(-outline_width, outline_width)*ps).a;
+    a = texture2D(TEXTURE, UV + vec2(-width, width)*ps).a;
     maxa = max(a, maxa);
     mina = min(a, mina);
 
-	a = texture2D(TEXTURE, UV + vec2(outline_width, 0.0)*ps).a;
+	a = texture2D(TEXTURE, UV + vec2(width, 0.0)*ps).a;
 	maxa = max(a, maxa);
 	mina = min(a, mina);
 
-	a = texture2D(TEXTURE, UV + vec2(outline_width, outline_width)*ps).a;
+	a = texture2D(TEXTURE, UV + vec2(width, width)*ps).a;
 	maxa = max(a, maxa);
 	mina = min(a, mina);
 
