@@ -62,4 +62,34 @@ public sealed partial class RegenerativeStasisActionComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public string? InitialDescription;
-}
+
+    /// <summary>
+    /// Name that the action changes to when in stasis
+    /// </summary>
+    [DataField]
+    public LocId ActiveName = "changeling-stasis-active-name";
+
+    /// <summary>
+    /// Description of the action while in stasis
+    /// </summary>
+    [DataField]
+    public LocId ActiveDescription= "changeling-stasis-active-desc";
+
+    /// <summary>
+    /// Popup to display to the action holder when entering stasis
+    /// </summary>
+    [DataField]
+    public LocId EnterStasisPopup = "changeling-stasis-enter";
+
+    /// <summary>
+    /// Popup to display to the action holder when exiting stasis
+    /// </summary>
+    [DataField]
+    public LocId ExitStasisPopup = "changeling-stasis-exit";
+
+    /// <summary>
+    /// Popup to display to other entities when exiting stasis
+    /// </summary>
+    [DataField]
+    public LocId ExitStasisPopupOthers = "changeling-stasis-exit-others";
+    }
