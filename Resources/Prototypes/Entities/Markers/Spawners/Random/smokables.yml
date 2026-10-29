@@ -78,3 +78,37 @@
         - id: CigPackMixed
       - id: CigarGold
         weight: 0.10
+
+- type: entityTable
+  id: LighterTable
+  table: !type:GroupSelector
+    children:
+    - id: CybersunFlippo
+      weight: 3
+    - id: InterdyneFlippo
+      weight: 3
+    - id: NanotrasenFlippo
+      weight: 5
+    - id: WaffleCoFlippo
+      weight: 7
+    - id: HonkCoFlippo
+    - id: GorlexMatchbox
+      weight: 3
+    - id: DonkcoLighter
+      weight: 5
+    - id: SyndicateFlippo
+      weight: 3
+    - id: SpiderclanFlippo
+      weight: 3
+
+- type: entityTable
+  id: LighterSyndicateTable
+  table: !type:GroupSelector
+    children:
+    - id: CybersunFlippo
+    - id: InterdyneFlippo
+    - id: WaffleCoFlippo
+    - id: HonkCoFlippo
+    - id: GorlexMatchbox
+    - id: DonkcoLighter
+    - id: SyndicateFlippo
