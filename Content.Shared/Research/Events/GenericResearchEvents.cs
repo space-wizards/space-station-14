@@ -7,5 +7,12 @@ namespace Content.Shared.Research.Events;
 public sealed partial class ResearchDisciplineUnlockEvent : EntityEventArgs
 {
     [DataField]
-    public int Amount = 1;
+    public int Amount;
+}
+
+[DataDefinition]
+public sealed partial class ResearchCargoGrantEvent : EntityEventArgs
+{
+    [DataField]
+    public int Amount;
 }
