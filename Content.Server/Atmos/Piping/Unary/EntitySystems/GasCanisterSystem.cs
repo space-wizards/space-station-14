@@ -89,7 +89,7 @@ public sealed partial class GasCanisterSystem : SharedGasCanisterSystem
 
     protected override void DeviceUpdated(Entity<GasCanisterComponent> entity, ref AtmosDeviceUpdateEvent args)
     {
-        _atmos.React(entity.Comp.Air, entity.Comp);
+        _atmos.React(entity.Comp.Air, entity.Comp, args.dt);
 
         if (!TryComp<NodeContainerComponent>(entity, out var nodeContainer))
             return;
