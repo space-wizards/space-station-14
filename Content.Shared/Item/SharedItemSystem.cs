@@ -226,6 +226,23 @@ public abstract partial class SharedItemSystem : EntitySystem
     }
 
     /// <summary>
+    /// Attempts to obtain the size of an item (returning the largest possible size if this is not an item)
+    /// </summary>
+    /// <param name="ent">The entity which may or may not have an ItemComponent attached to it</param>
+    /// <param name="itemSize">Will either be the size of the item (from ItemComponent), or the largest possible size (if it had no ItemComponent)</param>
+    /// <returns>True if there was an ItemComponent (returns size from the component), false if no ItemComponent (uses largest size as fallback)</returns>
+    public bool TryGetItemSize(Entity<ItemComponent?> ent, out ItemSizePrototype itemSize)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+        {
+            itemSize = GetLargestSize();
+            return false;
+        }
+        itemSize = GetSizePrototype(ent.Comp.Size);
+        return true;
+    }
+
+    /// <summary>
     ///     Notifies any entity that is holding or wearing this item that they may need to update their sprite.
     /// </summary>
     /// <remarks>
