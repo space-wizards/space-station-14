@@ -9,6 +9,7 @@
     - id: CigPackGreen
       prob: 0.50
     - id: ClothingHeadsetAltCargo
+    - id: ClothingNeckCargomedal
     - id: DoorRemoteCargo
     - id: AstroNavCartridge
     - id: ClothingHandsKnuckleDustersQM
@@ -129,7 +130,7 @@
     - id: ClothingBackpackIan
       prob: 0.5
     - id: ClothingHeadsetCommand
-    - id: ClothingNeckGoldmedal
+    - id: ClothingNeckServicemedal
     - id: DoorRemoteService
     - id: HoPIDCard
     - id: WeaponDisabler
@@ -160,6 +161,7 @@
     - id: ClothingEyesGlassesMeson
     - id: ClothingHandsGlovesColorYellow
     - id: ClothingHeadsetAltEngineering
+    - id: ClothingNeckEngineermedal
     - id: DoorRemoteEngineering
     - id: BoxCECircuitboards
     - id: RCD
@@ -219,6 +221,7 @@
     # Standard command gear
     - id: RubberStampCMO
     - id: ClothingHeadsetAltMedical
+    - id: ClothingNeckMedicalmedal
     - id: DoorRemoteMedical
     - id: BoxEncryptionKeyMedical
     - id: BoxCMOCircuitboards
@@ -270,6 +273,7 @@
     - id: BoxRDCircuitboards
     - id: ClothingBeltUtilityFilled
     - id: ClothingHeadsetAltScience
+    - id: ClothingNeckSciencemedal
     - id: DoorRemoteResearch
     - id: HandTeleporter
     - id: RubberStampRd
@@ -324,6 +328,7 @@
     - id: ClothingBeltSecurityFilled
     - id: ClothingEyesGlassesSecurity
     - id: ClothingHeadsetAltSecurity
+    - id: ClothingNeckSecuritymedal
     - id: ClothingOuterCoatHoSTrench
     - id: ClothingShoesBootsJack
     - id: FlashlightSeclite
