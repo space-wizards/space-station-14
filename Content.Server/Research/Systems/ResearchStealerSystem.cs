@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Systems;
 using Robust.Shared.Random;
@@ -26,14 +27,13 @@ public sealed partial class ResearchStealerSystem : SharedResearchStealerSystem
         if (!TryComp<TechnologyDatabaseComponent>(target, out var database))
             return;
 
+        var unlocked = database.UnlockedTechnologies;
+        var stealable = unlocked.Where(id => !ProtoMan.Index(id).RequiresResearchCompletion).ToList();
         var ev = new ResearchStolenEvent(uid, target, new());
         var count = _random.Next(comp.MinToSteal, comp.MaxToSteal + 1);
-        for (var i = 0; i < count; i++)
+        for (var i = 0; i < count && stealable.Count > 0; i++)
         {
-            if (database.UnlockedTechnologies.Count == 0)
-                break;
-
-            var toRemove = _random.Pick(database.UnlockedTechnologies);
+            var toRemove = _random.PickAndTake(stealable);
             if (_research.TryRemoveTechnology((target, database), toRemove))
                 ev.Techs.Add(toRemove);
         }
