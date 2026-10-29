@@ -41,7 +41,8 @@ public sealed partial class PlantChemicalsSystem : EntitySystem
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
-        //No prediction until we have a better way to handle predicted random
+
+        // TODO: No prediction until we have a better way to handle predicted random.
         if (!_net.IsServer)
             return;
 
