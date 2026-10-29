@@ -101,3 +101,9 @@ signal-port-description-target-receiver = Receives target information from a tar
 
 signal-port-name-target-source = Target finder
 signal-port-description-target-source = Sends target information to a target receiver.
+
+signal-port-name-toggle-input = Toggle input
+signal-port-description-toggle-input = Toggles the input breaker of the device.
+
+signal-port-name-toggle-output = Toggle output
+signal-port-description-toggle-output = Toggles the output breaker of the device.
