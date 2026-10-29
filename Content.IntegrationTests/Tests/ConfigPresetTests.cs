@@ -4,6 +4,7 @@ using Content.IntegrationTests.Fixtures;
 using Content.Server.Entry;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -39,6 +40,7 @@ public sealed class ConfigPresetTests : GameTest
                 {
                     var stream = resources.ContentFileRead(preset);
                     Assert.DoesNotThrow(() => config.LoadDefaultsFromTomlStream(stream));
+                    Assert.That(SProtoMan.ValidateCVars(), Is.Empty);
                 }
             });
 
