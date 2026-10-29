@@ -21,7 +21,10 @@ def get_last_publish_sha() -> str:
 
     session = actions_changelog_github.make_github_session(github_token)
     return actions_changelog_github.get_last_publish_sha(
-        session, github_repository, github_run
+        session,
+        github_repository,
+        github_run,
+        os.environ.get("PUBLISH_WORKFLOW"),
     )
 
 
