@@ -55,8 +55,7 @@
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
-    - state: paper
-      sprite: Structures/Storage/Crates/labels.rsi
+    - sprite: Structures/Storage/Crates/labels.rsi
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Damageable
     damageModifierSet: SteelMod
@@ -106,8 +105,7 @@
     - state: locked
       map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
-    - state: paper
-      sprite: Structures/Storage/Crates/labels.rsi
+    - sprite: Structures/Storage/Crates/labels.rsi
       offset: "-0.5,0"
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Damageable
