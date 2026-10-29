@@ -12,16 +12,12 @@ namespace Content.Client.Shuttles.UI;
 public sealed partial class IFFConsoleWindow : FancyWindow,
     IComputerWindow<IFFConsoleBoundUserInterfaceState>
 {
-    private readonly ButtonGroup _showIFFButtonGroup = new();
     public event Action<bool>? ShowIFF;
 
     public IFFConsoleWindow()
     {
         RobustXamlLoader.Load(this);
-        ShowIFFOffButton.Group = _showIFFButtonGroup;
-        ShowIFFOnButton.Group = _showIFFButtonGroup;
-        ShowIFFOnButton.OnPressed += args => ShowIFFPressed(true);
-        ShowIFFOffButton.OnPressed += args => ShowIFFPressed(false);
+        ShowIFFSwitch.OnToggled += args => ShowIFFPressed(args.Pressed);
     }
 
     private void ShowIFFPressed(bool pressed)
@@ -33,22 +29,20 @@ public sealed partial class IFFConsoleWindow : FancyWindow,
     {
         if ((state.AllowedFlags & IFFFlags.HideLabel) != 0x0 || (state.AllowedFlags & IFFFlags.Hide) != 0x0)
         {
-            ShowIFFOffButton.Disabled = false;
-            ShowIFFOnButton.Disabled = false;
+            ShowIFFSwitch.Disabled = false;
 
             if ((state.Flags & IFFFlags.HideLabel) != 0x0 || (state.Flags & IFFFlags.Hide) != 0x0)
             {
-                ShowIFFOffButton.Pressed = true;
+                ShowIFFSwitch.Pressed = false;
             }
             else
             {
-                ShowIFFOnButton.Pressed = true;
+                ShowIFFSwitch.Pressed = true;
             }
         }
         else
         {
-            ShowIFFOffButton.Disabled = true;
-            ShowIFFOnButton.Disabled = true;
+            ShowIFFSwitch.Disabled = true;
         }
     }
 }
