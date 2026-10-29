@@ -5,6 +5,18 @@ uniform highp vec2 world_bottom_left;
 uniform highp vec2 world_bottom_right;
 uniform highp vec2 world_top_left;
 
+highp float snow_flake(highp vec2 world_position, highp float speed, highp float size)
+{
+    highp vec2 snow_position = world_position + vec2(TIME * speed, TIME * speed * 0.65);
+    highp vec2 snow_cell = floor(snow_position);
+    highp vec2 snow_local = fract(snow_position) - 0.5;
+    highp vec2 snow_offset = zRandom(snow_cell).xy * 0.35;
+    highp vec2 flake_position = snow_local - snow_offset;
+
+    flake_position.x += sin(TIME * speed * 8.0 + snow_cell.y) * 0.04;
+    return 1.0 - smoothstep(size, size * 2.0, length(flake_position));
+}
+
 void fragment()
 {
     mediump vec4 mask = zTextureSpec(TEXTURE, UV);
@@ -12,6 +24,9 @@ void fragment()
     mediump float tint_intensity = mask.g;
 
     mediump vec4 screen_pixel = zTextureSpec(SCREEN_TEXTURE, UV);
+    highp vec2 world_position = world_bottom_left +
+        UV.x * (world_bottom_right - world_bottom_left) +
+        UV.y * (world_top_left - world_bottom_left);
 
     if (tile_intensity > 0.1)
     {
@@ -23,10 +38,6 @@ void fragment()
 
     if (tint_intensity > 0.1)
     {
-        highp vec2 world_position = world_bottom_left +
-            UV.x * (world_bottom_right - world_bottom_left) +
-            UV.y * (world_top_left - world_bottom_left);
-
         highp vec2 frost_coords = world_position;
         highp vec2 time_warp = vec2(
             zNoise(frost_coords + vec2(TIME * 0.1, 0.0)),
@@ -49,7 +60,14 @@ void fragment()
 
         mediump vec3 ice_tint = abs(
             zTextureSpec(SCREEN_TEXTURE, UV + ice_offset).rgb -
-            zTextureSpec(SCREEN_TEXTURE, UV - ice_offset).rgb) * frost_mask * tint_intensity*2;
+            zTextureSpec(SCREEN_TEXTURE, UV - ice_offset).rgb) * frost_mask * tint_intensity;
+
+        // 1 iteration = 1 snowflake.
+        for (int i = 0; i < 3; i++)
+        {
+            highp float snow = snow_flake(world_position + zRandom(vec2(i)), 0.08, 0.004);
+            screen_pixel.rgb = mix(screen_pixel.rgb, tint, tint_intensity * snow * 0.5);
+        }
 
         screen_pixel.rgb += ice_deformation + 0.5 * ice_tint * tint;
     }
