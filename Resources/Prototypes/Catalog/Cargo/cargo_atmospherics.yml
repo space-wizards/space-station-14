@@ -1,5 +1,6 @@
 - type: cargoProduct
   id: AtmosphericsAir
+  name: cargoproduct-name-atmospherics-air-canister
   icon:
     sprite: Structures/Storage/canister.rsi
     state: grey
@@ -10,6 +11,7 @@
 
 - type: cargoProduct
   id: AtmosphericsOxygen
+  name: cargoproduct-name-atmospherics-oxygen-canister
   icon:
     sprite: Structures/Storage/canister.rsi
     state: blue
@@ -20,6 +22,7 @@
 
 - type: cargoProduct
   id: AtmosphericsNitrogen
+  name: cargoproduct-name-atmospherics-nitrogen-canister
   icon:
     sprite: Structures/Storage/canister.rsi
     state: red
@@ -30,6 +33,7 @@
 
 - type: cargoProduct
   id: AtmosphericsCarbonDioxide
+  name: cargoproduct-name-atmospherics-carbon-dioxide-canister
   icon:
     sprite: Structures/Storage/canister.rsi
     state: black
@@ -40,6 +44,7 @@
 
 - type: cargoProduct
   id: AtmosphericsStorage
+  name: cargoproduct-name-atmospherics-storage-canister
   icon:
     sprite: Structures/Storage/canister.rsi
     state: yellow
@@ -50,6 +55,7 @@
 
 #- type: cargoProduct
 #  id: AtmosphericsWaterVapor
+#  name: cargoproduct-name-atmospherics-water-vapor-canister
 #  icon:
 #    sprite: Structures/Storage/canister.rsi
 #    state: water_vapor
@@ -60,6 +66,7 @@
 
 - type: cargoProduct
   id: AtmosphericsPlasma
+  name: cargoproduct-name-atmospherics-plasma-canister
   icon:
     sprite: Structures/Storage/canister.rsi
     state: orange
@@ -70,6 +77,7 @@
 
 #- type: cargoProduct
 #  id: AtmosphericsTritium
+#  name: cargoproduct-name-atmospherics-tritium-canister
 #  icon:
 #    sprite: Structures/Storage/canister.rsi
 #    state: green
