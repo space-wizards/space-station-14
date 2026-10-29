@@ -590,6 +590,10 @@
   name: ore processor
   description: It produces sheets and ingots using ores.
   components:
+    - type: MagnetPickup
+      slotFlags: null
+      requirePowered: true
+      manualTriggerOnly: true
     - type: Sprite
       sprite: Structures/Machines/ore_processor.rsi
       layers:
