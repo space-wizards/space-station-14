@@ -162,6 +162,11 @@ public sealed partial class GasTileOverlaySystem : SharedGasTileOverlaySystem
             _thresholds) * 255 / (_thresholds - 1));
     }
 
+    private static byte GetPressure(float pressure)
+    {
+        return (byte)MathHelper.Clamp(pressure, 0f, byte.MaxValue);
+    }
+
     public GasOverlayData GetOverlayData(GasMixture? mixture)
     {
         ThermalByte byteTemp;
@@ -173,7 +178,8 @@ public sealed partial class GasTileOverlaySystem : SharedGasTileOverlaySystem
         else
             byteTemp = new(mixture.Temperature);
 
-        var data = new GasOverlayData(0, new byte[VisibleGasId.Length], byteTemp);
+        var pressure = GetPressure(mixture?.Pressure ?? 0f);
+        var data = new GasOverlayData(0, new byte[VisibleGasId.Length], byteTemp, pressure);
 
         for (var i = 0; i < VisibleGasId.Length; i++)
         {
@@ -215,6 +221,7 @@ public sealed partial class GasTileOverlaySystem : SharedGasTileOverlaySystem
         var changed = false;
 
         ThermalByte newByteTemp = new();
+        var newPressure = GetPressure(tile.Air?.Pressure ?? 0f);
 
         if (tile.Hotspot.Valid)
             newByteTemp.SetTemperature(tile.Hotspot.Temperature);
@@ -226,14 +233,15 @@ public sealed partial class GasTileOverlaySystem : SharedGasTileOverlaySystem
         if (oldData.Equals(default))
         {
             changed = true;
-            oldData = new GasOverlayData(tile.Hotspot.State, new byte[VisibleGasId.Length], newByteTemp);
+            oldData = new GasOverlayData(tile.Hotspot.State, new byte[VisibleGasId.Length], newByteTemp, newPressure);
         }
         else if (oldData.FireState != tile.Hotspot.State ||
                  Math.Abs(oldData.ByteGasTemperature.Value - newByteTemp.Value) > 1 || // Dirty Temperature when there is more then 1 byte difference. That should measure up to minimum 4 degreese difference, 6 degreese on average.
-                 oldData.ByteGasTemperature.Value != newByteTemp.Value && newByteTemp.Value > ThermalByte.TempResolution) // change of special ThermalByte value
+                 oldData.ByteGasTemperature.Value != newByteTemp.Value && newByteTemp.Value > ThermalByte.TempResolution || // change of special ThermalByte value
+                 Math.Abs(oldData.Pressure - newPressure) > 1)
         {
             changed = true;
-            oldData = new GasOverlayData(tile.Hotspot.State, oldData.Opacity, newByteTemp);
+            oldData = new GasOverlayData(tile.Hotspot.State, oldData.Opacity, newByteTemp, newPressure);
         }
 
         if (tile is {Air: not null, NoGridTile: false})

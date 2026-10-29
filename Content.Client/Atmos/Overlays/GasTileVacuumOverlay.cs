@@ -15,7 +15,7 @@ using Color = Robust.Shared.Maths.Color;
 namespace Content.Client.Atmos.Overlays;
 
 /// <summary>
-/// Overlay responsible for rendering vacuum overlay.
+/// Desaturates areas based on pressure, and tints cold areas blue based on temperature.
 /// </summary>
 public sealed partial class GasTileVacuumOverlay : Overlay
 {
@@ -28,7 +28,6 @@ public sealed partial class GasTileVacuumOverlay : Overlay
     private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
     private static readonly ProtoId<ShaderPrototype> VacuumOverlayShader = "VacuumDesaturation";
     private static readonly Color EmptyColor = new(0, 0, 0, 0);
-    private static readonly Color MarkerColor = new(255f, 0, 0);
 
     [Dependency] private IEntityManager _entManager = default!;
     [Dependency] private IPrototypeManager _proto = default!;
@@ -46,6 +45,15 @@ public sealed partial class GasTileVacuumOverlay : Overlay
     // Overlay settings
     private float _intensity; // overlay intensity. 0.0f = turned off, 1.0f = full grayscale
 
+    /// <summary>
+    /// The temperature at which maximum tint effect is applied, decreasing linearly to 0 at 0°C.
+    /// </summary>
+    private const float MaxTintTemperatureKelvin = 223f;
+    /// <summary>
+    /// kPa pressure threshold to start diminishing the tint effect, increasing linearly to full effect at 0 pressure.
+    /// </summary>
+    private const float MinTintModifierPressureKPa = 40f;
+
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
     public GasTileVacuumOverlay()
@@ -58,6 +66,8 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         _unshader = _proto.Index(UnshadedShader).Instance();
         _shader = _proto.Index(VacuumOverlayShader).InstanceUnique();
         _configManager.OnValueChanged(CCVars.VacuumOverlayIntensity, SetVacuumOverlayIntensity, invokeImmediately: true);
+
+        _shader.SetParameter("tint", new Vector3(0f, 0f, 1.0f));
     }
 
     private void SetVacuumOverlayIntensity(float intensity)
@@ -95,10 +105,9 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         var worldHandle = args.WorldHandle;
         var worldToViewportLocal = args.Viewport.GetWorldToLocalMatrix();
 
-        // If there is no Vacuum after checking all visible tiles, we can bail early
-        var anyVacuum = false;
+        // If there is no affected tile after checking all visible tiles, we can bail early.
+        var anyDesaturation = false;
 
-        // We're rendering in the context of the vacuum target texture, which will encode data as to where vacuum effect will be
         args.WorldHandle.RenderInRenderTarget(res.VacuumTarget,
             () =>
             {
@@ -136,15 +145,28 @@ public sealed partial class GasTileVacuumOverlay : Overlay
                             if (!localBounds.Contains(tilePosition))
                                 continue;
 
-                            if (tileGas.ByteGasTemperature.Value != ThermalByte.StateVacuum)
+                            if (tileGas.ByteGasTemperature.Value == ThermalByte.AtmosImpossible)
                                 continue;
 
-                            // Encode the strength in the red channel
-                            // alpha set to 1 as tile is active
+                            var tintStrength = GetTemperatureEffectStrength(tileGas.ByteGasTemperature,
+                                MaxTintTemperatureKelvin,
+                                false);
+                            var desaturationStrength =
+                                1f - MathHelper.Clamp01(tileGas.Pressure / MinTintModifierPressureKPa);
+
+                            // Diminish cold blue tint effect as pressure decreases.
+                            // A pressurized room with temperature problems will be visibly cold, but a spaced room will not.
+                            tintStrength *= 1f - desaturationStrength;
+
+                            if (tintStrength <= 0f && desaturationStrength <= 0f)
+                                continue;
+
+
+                            // Encode desaturation and tint in separate color channels.
                             worldHandle.DrawRect(Box2.CenteredAround(tilePosition + grid.Comp.TileSizeHalfVector,
                                     grid.Comp.TileSizeVector),
-                                MarkerColor);
-                            anyVacuum = true;
+                                new Color(desaturationStrength, tintStrength, 0f));
+                            anyDesaturation = true;
                         }
                     }
                 }
@@ -152,8 +174,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
             // This clears the buffer to all zero first...
             EmptyColor);
 
-        // no distortion, no need to render
-        if (!anyVacuum)
+        if (!anyDesaturation)
         {
             args.WorldHandle.UseShader(null);
             args.WorldHandle.SetTransform(Matrix3x2.Identity);
@@ -161,6 +182,24 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         }
 
         return true;
+    }
+
+    private static float GetTemperatureEffectStrength(ThermalByte temperature, float maxIntensityTemperature, bool worksInVacuum = true)
+    {
+        if (temperature.IsVacuum)
+            return worksInVacuum ? 1f : 0f;
+
+        if (!temperature.TryGetTemperature(out var kelvinTemperature))
+            return 0f;
+
+        if (kelvinTemperature <= maxIntensityTemperature)
+            return 1f;
+
+        var temperatureRange = Atmospherics.T0C - maxIntensityTemperature;
+        if (temperatureRange <= 0f)
+            return 0f;
+
+        return MathHelper.Clamp01((Atmospherics.T0C - kelvinTemperature) / temperatureRange);
     }
 
     protected override void Draw(in OverlayDrawArgs args)
