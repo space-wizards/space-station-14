@@ -13,21 +13,30 @@ public sealed class CompConstraint(Type tComp, IIntegrationInstance instance, IC
 {
     public override ConstraintResult ApplyTo<TActual>(TActual actual)
     {
-        if (!ConstraintHelpers.TryActualAsEnt(actual, instance, out var ent, out var error))
+        if (ConstraintHelpers.TryActualAsEnt(actual, instance, out var ent, out var invalidType))
         {
-            if (error)
-            {
-                throw new NotImplementedException(
-                    $"The input type {typeof(TActual)} to {nameof(CompExistsConstraint)} is not a supported entity id.");
-            }
+            if (!instance.EntMan.TryGetComponent(ent, tComp, out var comp))
+                return new ConstraintResult(this, actual, ConstraintStatus.Failure);
 
+            var baseResult = Reflect.InvokeApplyTo(constraint: baseConstraint, tComp, comp);
+            return new ConstraintResult(this, baseResult.ActualValue, baseResult.Status);
+        }
+        if (!invalidType)
+        {
+            // TActual can be converted to an EntityUid, but is null
             return new ConstraintResult(this, actual, ConstraintStatus.Failure);
         }
+        if (ConstraintHelpers.TryActualAsEntityPrototype(actual, instance, out var proto, out invalidType))
+        {
+            var compName = instance.EntMan.ComponentFactory.GetComponentName(tComp);
+            if (!proto.Components.TryGetValue(compName, out var comp))
+                return new ConstraintResult(this, actual, ConstraintStatus.Failure);
 
-        if (!instance.EntMan.TryGetComponent(ent, tComp, out var comp))
-            return new ConstraintResult(this, actual, ConstraintStatus.Failure);
+            var baseResult = Reflect.InvokeApplyTo(constraint: baseConstraint, tComp, comp.Component);
+            return new ConstraintResult(this, baseResult.ActualValue, baseResult.Status);
+        }
 
-        var baseResult = Reflect.InvokeApplyTo(constraint: baseConstraint, tComp, comp);
-        return new ConstraintResult(this, baseResult.ActualValue, baseResult.Status);
+        throw new NotImplementedException(
+            $"The input type {typeof(TActual)} to {nameof(CompConstraint)} is not a supported entity id or entity prototype.");
     }
 }
