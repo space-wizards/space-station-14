@@ -91,60 +91,64 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             UpdateAppearance(ent, comp);
             _ambientSoundSystem.SetAmbience(ent, true);
         }
+
         public float PassiveTransferVol(GasMixture inlet, GasMixture outlet, float dt)
         {
             var dP = inlet.Pressure - outlet.Pressure;
             if (dt <= 0f || dP <= 0f || inlet.Volume <= 0f)
                 return 0;
 
-            // step 1: passive equalization budget, must not exceed
+            // recyclers are passive, so they cannot create more pressure in their outlet than the inlet
+            // calculate how much we can be allowed to transfer to reach that point and clamp transfer later
             var passiveRatio = Math.Clamp(_atmosphereSystem.FractionToEqualizePressure(inlet, outlet), 0f, 1f);
-            var affected = inlet.Volume * passiveRatio;
-            if (affected <= 0f) // also reject bogus budgets, need only ratio
+            var maxTransfer = inlet.Volume * passiveRatio;
+            // ensure transfer can occur
+            if (maxTransfer <= 0f || float.IsNaN(maxTransfer))
                 return 0;
 
-            // step 2: naive gas recycler flow
-            // unlike linear devices gas recycler follows sqrt law, so model differently from base PassiveTransferVol
-            // to eventually integrate
+            var overPressConst = 300f; // pressure difference (in atm) to get 200 L/sec transfer rate (assuming PumpSpeedup of 1)
+            // multiplying flowRateMultiplier by sqrt(dP) gives the recyclers flow rate
+            // however dP changes over time, and Euler's method is too course to give good results here
+            var flowRateMultiplier = MathF.Sqrt(1 / (overPressConst * Atmospherics.OneAtmosphere)) * Atmospherics.MaxTransferRate * _atmosphereSystem.PumpSpeedup();
 
-            float overPressConst = 300f; // pressure difference (in atm) to get 200 L/sec transfer rate
-                                         // old alpha = maxFlow / sqrt(scale), hence flowRate = alpha * sqrt(dP)
-            var flowRate = Atmospherics.MaxTransferRate * _atmosphereSystem.PumpSpeedup() * (float)Math.Sqrt(dP / (overPressConst * Atmospherics.OneAtmosphere));
-            var naiveRatio = flowRate / inlet.Volume;
+            // if we remove a litre from the inlet, how much does dP change
+            // find how many moles are present in a packet of gas volume k taken from the inlet
+            // calculate pressure if you remove that many from the inlet and add that many to the outlet
+            // take the derivitive with respect to k
+            var inletPressureSlope = -inlet.TotalMoles * Atmospherics.R * inlet.Temperature / inlet.Volume / inlet.Volume;
+            var outletPressureSlope = -inlet.Pressure * outlet.Temperature / outlet.Volume / inlet.Temperature;
+            var pressureSlope = inletPressureSlope + outletPressureSlope;
 
-            // step 3: math jumpscare
-            // integrate df/dt = naiveRatio * (1 - f) * sqrt(1 - f / passiveRatio); where f = removedRatio
-            // assume dP falling linearly with f, (1-f) accounts for density
-            // sub u = sqrt(1 - f / passiveRatio)
-            var beta = (1f - passiveRatio) / passiveRatio;
+            // let L(t) be the volume of gas transfered from the inlet
+            // let P(t) be the pressure delta at time t
+            // L'(t) = c * sqrt(p(t)) where c is the flow rate multiplier
+            // P'(t) = s * L'(t) where s is the pressure slope
+            // i.e. the flow rate is proportional to the square root of the pressure delta
+            // and the rate at which the pressure delta changes is proportional to the flow rate
+            // P'(t) = c * s * sqrt(p(t))
+            // solve the ODE:
+            // P(t) = (2acst + aa + ccsstt)/4 for some constant a
+            // P(0) = dP  =>  dP = a^2/4  =>  a = 2 * sqrt(dP)
+            // quadratic has exactly one zero at -a/(cs)
 
-            var h = 0.5f * naiveRatio * dt;
-            if (beta == 0f) // early out or we end up infecting with nonfinites, bad
-            {
-                var z = h >= 1f // true branch: handle infinities at the source more expensively
-                    ? 1f / (1f + 1f / h)
-                    : h / (1f + h);
-                return inlet.Volume * (z * (2f - z));
-            }
+            // check if we complete the transfer during this update
+            var a = 2 * MathF.Sqrt(dP);
+            var interceptTime = -a / flowRateMultiplier / pressureSlope;
+            if (dt >= interceptTime)
+                return maxTransfer;
 
-            var rtBeta = MathF.Sqrt(beta);
-            var x = rtBeta * h;
+            // calculate the desired dP at the end of this using our formula for P(t)
+            var cst = flowRateMultiplier * pressureSlope * dt;
+            var targetPressureDelta =
+                (
+                2 * a * cst +
+                a * a +
+                MathF.Pow(cst, 2)
+                ) / 4;
 
-            // equilibrium reached in finite time for beta > 0
-            if (x >= MathF.Atan2(1f, rtBeta))
-                return inlet.Volume * passiveRatio;
-
-            var cX = MathF.Cos(x);
-            var y = h * (x == 0f ? 1f : MathF.Sin(x) / x);
-
-            //var u = (cX - beta * y) / (cX + y);
-            //but account for low dt
-            var denom = cX + y;
-            var removedRatio =
-                y * (2f * cX + (1f - beta) * y)
-                / (denom * denom);
-
-            return inlet.Volume * Math.Clamp(removedRatio, 0f, passiveRatio);
+            // use our pressureSlope to find how many litres are needed to achieve this
+            var pressureDeltaDelta = dP - targetPressureDelta;
+            return -pressureDeltaDelta / pressureSlope;
         }
 
         private void OnDisabled(EntityUid uid, GasRecyclerComponent comp, ref AtmosDeviceDisabledEvent args)
