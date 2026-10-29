@@ -3,10 +3,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using Content.Shared.Tools;
 using Robust.Shared.GameStates;
-using Content.Shared.DoAfter;
-using Robust.Shared.Serialization;
 using Robust.Shared.Audio;
 using Content.Shared.Whitelist;
 using Content.Shared.Damage;
@@ -23,11 +20,21 @@ namespace Content.Shared.Storage.Components
     public sealed partial class SecretStashComponent : Component
     {
         /// <summary>
-        ///     Max item size that can be inserted into secret stash.
-        ///     If null, uses the stash's <see cref="ItemComponent"/> size.
+        /// Max item size that can be inserted into secret stash.
+        /// If this null, and <see cref="UseItemSizeAsMaxSize"/> is true,
+        ///   uses the stash's <see cref="ItemComponent"/> size (no max size if it doesn't have one).
+        /// If this is null, but <see cref="UseItemSizeAsMaxSize"/> is false, there is no maximum size.
         /// </summary>
         [DataField]
         public ProtoId<ItemSizePrototype>? MaxItemSize;
+
+        /// <summary>
+        /// Set this to true to make <see cref="MaxItemSize"/> use
+        /// the stash's <see cref="ItemComponent"/> size as a default value.
+        /// No effect if <see cref="MaxItemSize"/> is not null.
+        /// </summary>
+        [DataField]
+        public bool UseItemSizeAsMaxSize;
 
         /// <summary>
         ///     Entity blacklist for secret stashes.

@@ -108,22 +108,18 @@ public sealed partial class SecretStashSystem : EntitySystem
             return false;
         }
 
-        // Check if item is too big to fit into secret stash, or is in the blacklist, or is itself a secret stash or a wrapped parcel.
-        ProtoId<ItemSizePrototype> maxItemSize;
+        // Check if item is too big to fit into secret stash, or is in the blacklist.
+        ProtoId<ItemSizePrototype>? maxItemSize = null;
         if (entity.Comp.MaxItemSize != null)
         {
             maxItemSize = entity.Comp.MaxItemSize.Value;
         }
-        else if (TryComp<ItemComponent>(entity, out var stashItem))
+        else if (entity.Comp.UseItemSizeAsMaxSize && TryComp<ItemComponent>(entity, out var stashItem))
         {
             maxItemSize = stashItem.Size;
         }
-        else
-        {
-            return false;
-        }
 
-        if (_item.GetSizePrototype(itemComp.Size) > _item.GetSizePrototype(maxItemSize) ||
+        if ((maxItemSize.HasValue && _item.GetSizePrototype(itemComp.Size) > _item.GetSizePrototype(maxItemSize.Value)) ||
             _whitelistSystem.IsWhitelistPass(entity.Comp.Blacklist, itemToHideUid))
         {
             var msg = Loc.GetString("comp-secret-stash-action-hide-item-too-big",
