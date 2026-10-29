@@ -52,7 +52,6 @@ public sealed partial class PlantChemicalsSystem : EntitySystem
 
         IRobustRandom random = new RobustRandom();
         random.SetSeed(SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id, ent.Comp.MutationSalt++));
-        Dirty(ent, ent.Comp);
         var selectedWeight = random.NextFloat() * totalWeight;
         var accumulatedWeight = 0f;
         WeightedRandomFillSolutionPrototype? selectedTable = null;
