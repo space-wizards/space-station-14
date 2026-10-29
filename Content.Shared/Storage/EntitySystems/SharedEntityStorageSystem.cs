@@ -215,11 +215,10 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        var uidXform = Transform(uid);
         var containedArr = component.Contents.ContainedEntities.ToArray();
         foreach (var contained in containedArr)
         {
-            Remove(contained, uid, component, uidXform);
+            Remove(contained);
         }
     }
 
@@ -317,39 +316,55 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
         return true;
     }
 
-    public bool Remove(EntityUid toRemove, EntityUid container, EntityStorageComponent? component = null, TransformComponent? xform = null)
+    /// <summary>
+    /// Removes an entity from it's parent container, taking <see cref="EntityStorageComponent"/> into account.
+    /// Ensures that the entity appears in the next eligible parent container, or offset onto its grid/map.
+    /// </summary>
+    /// <param name="toRemove">The entity to remove.</param>
+    /// <returns>True if the entity was successfully removed without errors.</returns>
+    public bool Remove(EntityUid toRemove)
     {
-        if (!Resolve(container, ref xform, false))
-            return false;
+        var parentContainers = _container.GetContainingContainers(toRemove);
 
-        if (!Resolve(container, ref component))
-            return false;
-
-        // Get our new parent: either the grid the entity is on, or the
-        var newParent = xform.GridUid ?? xform.MapUid;
-        if (!TryComp(newParent, out TransformComponent? parentXform))
-            return false;
-
-        // Reparent the removed entity to our grid, or the map!
-        var (pos, rot) = TransformSystem.GetWorldPositionRotation(xform);
-        pos += rot.RotateVec(component.EnteringOffset);
-        pos = Vector2.Transform(pos, TransformSystem.GetInvWorldMatrix(parentXform));
-        if (!_container.Remove(toRemove, component.Contents, destination: new(newParent.Value, pos)))
-            return false;
-
-        if (_container.IsEntityInContainer(container)
-            && _container.TryGetOuterContainer(container, Transform(container), out var outerContainer))
+        foreach (var parentContainer in parentContainers)
         {
-            var attemptEvent = new EntityStorageIntoContainerAttemptEvent(outerContainer);
-            RaiseLocalEvent(outerContainer.Owner, ref attemptEvent);
-            if (!attemptEvent.Cancelled)
+            var parent = parentContainer.Owner;
+            var xform = Transform(parent);
+
+            if (!_container.IsEntityInContainer(parent))
             {
-                _container.Insert(toRemove, outerContainer);
-                return true;
+                if (!TryComp<EntityStorageComponent>(parent, out var entStorageComp) || entStorageComp.EnteringOffset == Vector2.Zero)
+                {
+                    if (!_container.Remove(toRemove, parentContainer))
+                        return false;
+                    break;
+                }
+
+                if (!TransformSystem.TryGetMapOrGridCoordinates(parent, out var coordinates, xform))
+                    return false;
+
+                var rot = xform.LocalRotation;
+
+                if (!_container.Remove(toRemove,
+                        parentContainer,
+                        destination: coordinates.Value.Offset(rot.RotateVec(entStorageComp.EnteringOffset))))
+                    return false;
+
+                break;
             }
+
+            if (!_container.Remove(toRemove, parentContainer))
+                return false;
+
+            var attemptEvent = new EntityStorageIntoContainerAttemptEvent(parentContainer);
+            RaiseLocalEvent(xform.ParentUid, ref attemptEvent);
+            if (!attemptEvent.Cancelled)
+                break;
         }
 
-        RemComp<InsideEntityStorageComponent>(toRemove);
+        if (!_container.IsEntityInContainer(toRemove))
+            RemComp<InsideEntityStorageComponent>(toRemove);
+
         return true;
     }
 
