@@ -10,6 +10,7 @@ using Content.Shared.Audio;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
@@ -76,7 +77,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
             // The gas recycler is a passive device, so it permits gas flow even if nothing is being reacted.
             comp.Reacting = inlet.Air.Temperature >= comp.MinTemp && inlet.Air.Pressure >= comp.MinPressure;
-            var removed = inlet.Air.RemoveVolume(PassiveTransferVol(inlet.Air, outlet.Air));
+            var removed = inlet.Air.RemoveVolume(PassiveTransferVol(inlet.Air, outlet.Air, args.dt));
             if (comp.Reacting)
             {
                 var nCO2 = removed.GetMoles(Gas.CarbonDioxide);
@@ -92,15 +93,71 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             _ambientSoundSystem.SetAmbience(ent, true);
         }
 
-        public float PassiveTransferVol(GasMixture inlet, GasMixture outlet)
+        public float PassiveTransferVol(GasMixture inlet, GasMixture outlet, float dt)
         {
-            if (inlet.Pressure < outlet.Pressure)
-            {
+            var dP = inlet.Pressure - outlet.Pressure;
+            if (dt <= 0f || dP <= 0f || inlet.Volume <= 0f)
                 return 0;
-            }
-            float overPressConst = 300; // pressure difference (in atm) to get 200 L/sec transfer rate
-            float alpha = Atmospherics.MaxTransferRate * _atmosphereSystem.PumpSpeedup() / (float)Math.Sqrt(overPressConst*Atmospherics.OneAtmosphere);
-            return alpha * (float)Math.Sqrt(inlet.Pressure - outlet.Pressure);
+
+            // recyclers are passive, so they cannot create more pressure in their outlet than the inlet
+            // calculate how much we can be allowed to transfer to reach that point and clamp transfer later
+            var passiveRatio = Math.Clamp(_atmosphereSystem.FractionToEqualizePressure(inlet, outlet), 0f, 1f);
+            var maxTransfer = inlet.Volume * passiveRatio;
+            // ensure transfer can occur
+            if (maxTransfer <= 0f || float.IsNaN(maxTransfer))
+                return 0;
+
+            var overPressConst = 300f; // pressure difference (in atm) to get 200 L/sec transfer rate (assuming PumpSpeedup of 1)
+            // multiplying flowRateMultiplier by sqrt(dP) gives the recyclers flow rate
+            // however dP changes over time, and Euler's method is too course to give good results here
+            var flowRateMultiplier = MathF.Sqrt(1 / (overPressConst * Atmospherics.OneAtmosphere)) * Atmospherics.MaxTransferRate * _atmosphereSystem.PumpSpeedup();
+
+            // if we remove a litre from the inlet, how much does dP change
+            // find how many moles are present in a packet of gas volume k taken from the inlet
+            // calculate pressure if you remove that many from the inlet and add that many to the outlet
+            // take the derivitive with respect to k
+            // note that this assumes volume transfer happens in one step instead of continuously
+            // which is not accurate if we are attempting to model continuous flow through the device
+            var inletPressureSlope = -inlet.TotalMoles * Atmospherics.R * inlet.Temperature / inlet.Volume / inlet.Volume;
+            var outletPressureSlope = -inlet.Pressure * outlet.Temperature / outlet.Volume / inlet.Temperature;
+            var pressureSlope = inletPressureSlope + outletPressureSlope;
+
+            // check for edge cases
+            // infinite pressure slope, every transfer will cause massive pressure swings, so just attempt to equalize
+            if (float.IsInfinity(pressureSlope))
+                return maxTransfer;
+            // zero pressure slope means dP never changes, so just use the capped naive flow rate
+            if (pressureSlope == 0)
+                return Math.Clamp(flowRateMultiplier * MathF.Sqrt(dP) * dt, 0, maxTransfer);
+            // with NaN, no value really makes sense, so just make an attempt
+            if (float.IsNaN(pressureSlope))
+                return maxTransfer;
+
+            // let L(t) be the volume of gas transfered from the inlet
+            // let P(t) be the pressure delta at time t
+            // L'(t) = c * sqrt(p(t)) where c is the flow rate multiplier
+            // P'(t) = s * L'(t) where s is the pressure slope
+            // i.e. the flow rate is proportional to the square root of the pressure delta
+            // and the rate at which the pressure delta changes is proportional to the flow rate
+            // P'(t) = c * s * sqrt(p(t))
+            // solve the ODE:
+            // P(t) = (2acst + aa + ccsstt)/4 for some constant a
+            // P(0) = dP  =>  dP = a^2/4  =>  a = 2 * sqrt(dP)
+            // quadratic has exactly one zero at -a/(cs)
+
+            // check if we complete the transfer during this update
+            var a = 2 * MathF.Sqrt(dP);
+            var interceptTime = -a / flowRateMultiplier / pressureSlope;
+            if (dt >= interceptTime)
+                return maxTransfer;
+
+            // calculate the desired dP at the end of this using our formula for P(t)
+            var cst = flowRateMultiplier * pressureSlope * dt;
+            var targetPressureDelta = (2 * a * cst + a * a + MathF.Pow(cst, 2)) / 4;
+
+            // use our pressureSlope to find how many litres are needed to achieve this
+            var pressureDeltaDelta = dP - targetPressureDelta;
+            return -pressureDeltaDelta / pressureSlope;
         }
 
         private void OnDisabled(EntityUid uid, GasRecyclerComponent comp, ref AtmosDeviceDisabledEvent args)
