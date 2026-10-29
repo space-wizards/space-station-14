@@ -47,6 +47,13 @@ public sealed partial class TechnologyPrototype : IPrototype
     public bool Hidden;
 
     /// <summary>
+    /// Repeatable tech isn't actually saved as having been researched.
+    /// This means it can be researched multiple times and just triggers the effects of researching it.
+    /// </summary>
+    [DataField]
+    public bool Repeatable;
+
+    /// <summary>
     /// How much research is needed to unlock.
     /// </summary>
     [DataField]

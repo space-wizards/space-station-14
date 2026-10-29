@@ -7,6 +7,7 @@
   discipline: CivilianServices
   tier: 1
   cost: 10000
+  repeatable: true
   requiresResearchCompletion: true
   genericUnlocks:
   - unlockDescription: research-technology-grant-unlock

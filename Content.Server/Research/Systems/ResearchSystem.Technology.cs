@@ -120,7 +120,8 @@ public sealed partial class ResearchSystem
                 RaiseLocalEvent(uid, generic.PurchaseEvent);
         }
 
-        component.UnlockedTechnologies.Add(technology.ID);
+        if (!technology.Repeatable)
+            component.UnlockedTechnologies.Add(technology.ID);
         var addedRecipes = new List<string>();
         foreach (var unlock in technology.RecipeUnlocks)
         {
