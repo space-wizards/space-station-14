@@ -1,4 +1,5 @@
 using Content.Shared.DeviceNetwork;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Radio;
@@ -47,4 +48,10 @@ public sealed partial class RadioChannelPrototype : IPrototype
     /// </summary>
     [DataField]
     public bool LongRange;
+
+    /// <summary>
+    /// Additional requirements to send and receive using this channel, as well as see that the channel exists.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Whitelist;
 }

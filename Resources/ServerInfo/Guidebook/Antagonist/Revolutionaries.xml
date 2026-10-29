@@ -50,4 +50,15 @@
   A [color=red]Revolutionary[/color] is a crew member that has been converted by a [bold][color=#5e9cff]Head Revolutionary[/color][/bold].
 
   [bold][color=red]Revolutionaries[/color] can't convert people themselves,[/bold] but they're more than capable of doing dirty work and carrying out orders.
+
+  The minds of all revolutionaries have been tuned to pick out a subtle frequency they were previously deaf to, and have access to the [bold][color=#318df8]Undercommon[/color][/bold] radio channel [bold][color=#318df8](:r)[/bold]. This channel is innately tied to the publically-facing [bold][color=#2cdb2c]Common[/color][/bold] radio channel. Should the Common telecommunications server be taken offline such as through a power outage, solar flare, or intentional disabling, this channel will go down too.
+
+  Scientist revolutionaries may wish to research and construct a secondary Common telecommunication server to ensure the tyrants of the station don't take away a key communication tool.
+
+  <Box>
+    <GuideEntityEmbed Entity="BaseBallBat"/>
+    <GuideEntityEmbed Entity="TelecomServerFilledCommon"/>
+    <GuideEntityEmbed Entity="ClothingHeadsetGrey"/>
+  </Box>
+
 </Document>

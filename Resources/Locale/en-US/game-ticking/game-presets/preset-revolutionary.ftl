@@ -11,6 +11,7 @@ head-rev-role-greeting =
 head-rev-briefing =
     Use flashes to convert people to your cause.
     Kill, restrain, or convert all members of Command to take over the station.
+    Use (:r) to access the Undercommon radio channel if it is available to command your fellow Revolutionaries.
 
 head-rev-break-mindshield = The mindshield implant was destroyed!
 
@@ -27,6 +28,7 @@ rev-role-greeting =
     Viva la revolución!
 
 rev-briefing = Help the head revolutionaries kill, restrain, or convert all members of Command to take over the station.
+    Use (:r) to access the Undercommon radio channel if it is available and follow the commands of your Head Revolutionaries.
 
 ## General
 
