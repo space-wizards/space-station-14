@@ -45,9 +45,9 @@ public sealed partial class GasTileVacuumOverlay : Overlay
     /// </summary>
     private const float MaxTintTemperatureKelvin = 223f;
     /// <summary>
-    /// kPa pressure threshold to start diminishing the tint effect, increasing linearly to full effect at 0 pressure.
+    /// kPa pressure threshold to start desaturating the area.
     /// </summary>
-    private const float MinTintModifierPressureKPa = 40f;
+    private const float DesaturationStartPressureKPa = 40f;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -61,7 +61,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         _shader = _proto.Index(VacuumOverlayShader).InstanceUnique();
         _configManager.OnValueChanged(CCVars.VacuumOverlayIntensity, SetVacuumOverlayIntensity, invokeImmediately: true);
 
-        var tintColor = Color.MidnightBlue;
+        var tintColor = Color.LightSkyBlue;
         _shader.SetParameter("tint", new Vector3(tintColor.R, tintColor.G, tintColor.B));
     }
 
@@ -147,7 +147,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
                                 MaxTintTemperatureKelvin,
                                 false);
                             var desaturationStrength =
-                                1f - MathHelper.Clamp01(tileGas.Pressure / MinTintModifierPressureKPa);
+                                1f - MathHelper.Clamp01(tileGas.Pressure / DesaturationStartPressureKPa);
 
                             // Diminish cold blue tint effect as pressure decreases.
                             // A pressurized room with temperature problems will be visibly cold, but a spaced room will not.

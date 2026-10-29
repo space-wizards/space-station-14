@@ -26,10 +26,11 @@ void fragment()
         highp vec2 world_position = world_bottom_left +
             UV.x * (world_bottom_right - world_bottom_left) +
             UV.y * (world_top_left - world_bottom_left);
+
         highp vec2 frost_coords = world_position;
         highp vec2 time_warp = vec2(
             zNoise(frost_coords + vec2(TIME * 0.1, 0.0)),
-            zNoise(frost_coords + vec2(0.0, -TIME * 0.08)));
+            zNoise(frost_coords + vec2(0.0, -TIME * 0.01)));
 
         highp float veins = 1.0 - abs(zNoise(frost_coords * 10.0) * 2.0 - 1.0);
         highp float crystals = zNoise(frost_coords - time_warp);
@@ -37,7 +38,7 @@ void fragment()
 
         highp vec2 ice_direction = time_warp * 2.0 - 1.0;
         highp vec2 ice_offset = ice_direction * SCREEN_PIXEL_SIZE *
-            (1.5 + frost_mask * 3.5) * tint_intensity * 1.3;
+            (1.5 + frost_mask * 3.5) * tint_intensity;
 
         mediump vec3 frozen_pixel = (
             zTextureSpec(SCREEN_TEXTURE, UV + ice_offset).rgb +
@@ -48,9 +49,9 @@ void fragment()
 
         mediump vec3 ice_tint = abs(
             zTextureSpec(SCREEN_TEXTURE, UV + ice_offset).rgb -
-            zTextureSpec(SCREEN_TEXTURE, UV - ice_offset).rgb) * frost_mask * tint_intensity;
+            zTextureSpec(SCREEN_TEXTURE, UV - ice_offset).rgb) * frost_mask * tint_intensity*2;
 
-        screen_pixel.rgb += ice_deformation + 2.0 * ice_tint * tint;
+        screen_pixel.rgb += ice_deformation + 0.5 * ice_tint * tint;
     }
 
     COLOR = screen_pixel;
