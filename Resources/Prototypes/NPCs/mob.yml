@@ -26,12 +26,15 @@
   id: MouseCompound
   branches:
     - tasks:
+      - !type:HTNCompoundTask
+        task: CableEatingCompound
+    - tasks:
         - !type:HTNCompoundTask
           task: FoodCompound
     - tasks:
         - !type:HTNCompoundTask
           task: IdleCompound
-          
+
 - type: htnCompound
   id: MoproachCompound
   branches:
@@ -106,3 +109,27 @@
     - tasks:
         - !type:HTNCompoundTask
           task: IdleCompound
+
+- type: htnCompound
+  id: CableEatingCompound
+  branches:
+  - tasks:
+    - !type:HTNPrimitiveTask
+      preconditions:
+      - !type:RandomPrecondition
+        chance: 0.01
+      operator: !type:UtilityOperator
+        proto: NearbyCable
+
+    - !type:HTNPrimitiveTask
+      operator: !type:MoveToOperator
+        pathfindInPlanning: true
+        removeKeyOnFinish: false
+        rangeKey: MeleeRange
+
+    - !type:HTNPrimitiveTask
+      operator: !type:AltInteractOperator
+
+    - !type:HTNPrimitiveTask
+      operator: !type:WaitOperator
+        key: IdleTime
