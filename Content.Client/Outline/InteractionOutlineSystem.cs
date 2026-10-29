@@ -128,19 +128,22 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
 
         EntityUid? entityToClick = null;
 
-        if (_uiManager.CurrentlyHovered is IViewportControl vp
-            && _inputManager.MouseScreenPosition.IsValid)
+        switch (_uiManager.CurrentlyHovered)
         {
-            var mousePosWorld = vp.PixelToMap(_inputManager.MouseScreenPosition.Position);
+            case IViewportControl vp
+                when _inputManager.MouseScreenPosition.IsValid:
+            {
+                var mousePosWorld = vp.PixelToMap(_inputManager.MouseScreenPosition.Position);
 
-            if (vp is ScalingViewport svp)
-                entityToClick = screen.GetClickedEntity(mousePosWorld, svp.Eye);
-            else
-                entityToClick = screen.GetClickedEntity(mousePosWorld);
-        }
-        else if (_uiManager.CurrentlyHovered is EntityMenuElement element)
-        {
-            entityToClick = element.Entity;
+                if (vp is ScalingViewport svp)
+                    entityToClick = screen.GetClickedEntity(mousePosWorld, svp.Eye);
+                else
+                    entityToClick = screen.GetClickedEntity(mousePosWorld);
+                break;
+            }
+            case EntityMenuElement element:
+                entityToClick = element.Entity;
+                break;
         }
 
         var inRange = false;
