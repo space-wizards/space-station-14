@@ -6,5 +6,8 @@ encryption-keys-are-locked = Encryption key slots are locked!
 encryption-keys-panel-locked = Open maintenance panel first!
 
 examine-encryption-channels-prefix = Available frequencies:
-examine-encryption-channel = [color={$color}]{$key} for {$id} ({$freq})[/color]
+examine-encryption-channel = [color={$color}]{$key} for {$id} ({$freq}){$receiveOnly ->
+[true]{" "}(receive-only)
+*[false] {""}
+}[/color]
 examine-encryption-default-channel = The default channel is [color={$color}]{$channel}[/color].

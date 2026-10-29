@@ -4,6 +4,7 @@
   keycode: ";"
   frequency: 145.9
   color: "#2cdb2c"
+  allowHeadsetSend: false
 
 - type: radioChannel
   id: CentCom
