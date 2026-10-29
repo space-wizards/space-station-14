@@ -1,13 +1,14 @@
 using Content.Shared.Destructible.Thresholds;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Content.Shared.Xenoarchaeology.Equipment;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.Components;
 
 /// <summary>
 /// Stores metadata about a particular artifact node
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedXenoArtifactSystem)), AutoGenerateComponentState, EntityCategory("XenoArtifactEffects")]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedXenoArtifactSystem), typeof(SharedArtifactCrusherSystem)), AutoGenerateComponentState, EntityCategory("XenoArtifactEffects")]
 public sealed partial class XenoArtifactNodeComponent : Component
 {
     /// <summary>
