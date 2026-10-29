@@ -261,7 +261,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (tile.Air == null)
                     return;
 
-                ShuntTileVolume(tile);
+                ShuntTileVolume(ent, tile);
                 NotifyDeviceTileChanged((ent.Owner, ent.Comp1, ent.Comp3), tile.GridIndices);
                 return;
             }
