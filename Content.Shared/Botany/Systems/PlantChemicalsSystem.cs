@@ -22,7 +22,6 @@ public sealed partial class PlantChemicalsSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
 
-
     [SubscribeLocalEvent]
     private void OnCrossPollinate(Entity<PlantChemicalsComponent> ent, ref PlantCrossPollinateEvent args)
     {
