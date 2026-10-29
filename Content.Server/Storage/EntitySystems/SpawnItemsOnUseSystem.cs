@@ -35,6 +35,9 @@ namespace Content.Server.Storage.EntitySystems
 
             foreach (var entry in ungrouped)
             {
+                if (entry.PrototypeId == null)
+                    continue;
+
                 var protUid = Spawn(entry.PrototypeId, MapCoordinates.Nullspace);
 
                 // Calculate the average price of the possible spawned items
@@ -47,6 +50,9 @@ namespace Content.Server.Storage.EntitySystems
             {
                 foreach (var entry in group.Entries)
                 {
+                    if (entry.PrototypeId == null)
+                        continue;
+
                     var protUid = Spawn(entry.PrototypeId, MapCoordinates.Nullspace);
 
                     // Calculate the average price of the possible spawned items
