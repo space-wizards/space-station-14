@@ -96,6 +96,7 @@ guide-entry-service = Service
 guide-entry-civilian = Civilian
 
 guide-entry-newplayer = New? Start here!
+guide-entry-settingintroduction = Setting Introduction
 guide-entry-charactercreation = Creating Characters
 guide-entry-species = Species
 guide-entry-yourfirstcharacter = Your First Character
