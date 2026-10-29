@@ -144,7 +144,7 @@ public sealed class AirAlarmWideFilterMode : AirAlarmModeExecutor
 
         foreach (var (addr, device) in alarm.VentData)
         {
-            AirAlarmSystem.SetData(uid, addr, GasVentPumpData.FilterModePreset);
+            AirAlarmSystem.SetData(uid, addr, GasVentPumpData.WideFilterModePreset);
         }
 
         foreach (var (addr, device) in alarm.ScrubberData)
