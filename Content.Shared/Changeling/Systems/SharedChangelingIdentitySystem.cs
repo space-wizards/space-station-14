@@ -175,7 +175,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
             return null;
 
         var mapCoords = new MapCoordinates(0, 0, PausedMapId.Value);
-        if (!_cloningSystem.TryCloning(target, mapCoords, settings, out var clone))
+        if (!_cloningSystem.TryCloneHumanoid(target, mapCoords, settings, out var clone))
             return null;
 
         var storedIdentity = EnsureComp<ChangelingStoredIdentityComponent>(clone.Value);

@@ -39,6 +39,12 @@ public sealed partial class CloningSettingsPrototype : IPrototype, IInheritingPr
     public SlotFlags? CopyEquipment = SlotFlags.All;
 
     /// <summary>
+    /// Whether or not to copy items held in hands.
+    /// </summary>
+    [DataField]
+    public bool CopyHands = true;
+
+    /// <summary>
     /// Whether or not to copy slime storage and storage implant contents.
     /// </summary>
     [DataField]

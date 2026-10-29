@@ -1,6 +1,7 @@
-using Content.Shared.Body.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Nuke;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Clothing.Components;
@@ -10,6 +11,7 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Forensics.Systems;
+using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.Labels.Components;
 using Content.Shared.Labels.EntitySystems;
@@ -51,6 +53,7 @@ public sealed partial class CloningSystem
     [Dependency] private ForensicsSystem _forensics = default!;
     [Dependency] private FlammableSystem _flammable = default!;
     [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private NukeSystem _nuke = default!;
 
     public override void Initialize()
     {
@@ -197,5 +200,23 @@ public sealed partial class CloningSystem
             return;
 
         _damageable.CopyComponent(ent.AsNullable(), args.CloneUid);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnCloneHumanoidProfile(Entity<HumanoidProfileComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        _visualBody.CopyAppearanceFrom(ent.Owner, args.CloneUid);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnCloneNuke(Entity<NukeComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        _nuke.CloneNuke(ent, args.CloneUid);
     }
 }
