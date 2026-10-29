@@ -10,7 +10,6 @@ using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Gibbing;
 using Content.Shared.Mobs;
-using Content.Shared.Popups;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Events;
@@ -29,7 +28,6 @@ public sealed partial class InnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private JitteringSystem _jitter = default!;
     [Dependency] private MindSystem _mind = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private StunSystem _stun = default!;
 
     private readonly Color _messageColor = Color.FromSrgb(new Color(201, 22, 94));
@@ -113,8 +111,6 @@ public sealed partial class InnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
                 session.Channel,
                 _messageColor);
 
-            _popup.PopupEntity(message, ent, ent, PopupType.MediumCaution);
-
             _adminLog.Add(LogType.Anomaly,LogImpact.Medium,$"{ToPrettyString(ent)} became anomaly host.");
         }
         Dirty(ent);
@@ -171,8 +167,6 @@ public sealed partial class InnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
             false,
             session.Channel,
             _messageColor);
-
-        _popup.PopupEntity(message, ent, ent, PopupType.MediumCaution);
     }
 
     private void OnMobStateChanged(Entity<InnerBodyAnomalyComponent> ent, ref MobStateChangedEvent args)
@@ -222,9 +216,6 @@ public sealed partial class InnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
                 false,
                 session.Channel,
                 _messageColor);
-
-
-            _popup.PopupEntity(message, ent, ent, PopupType.MediumCaution);
 
             _adminLog.Add(LogType.Anomaly, LogImpact.Medium,$"{ToPrettyString(ent)} is no longer a host for the anomaly.");
         }
