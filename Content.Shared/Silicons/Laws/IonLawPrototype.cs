@@ -90,7 +90,7 @@ public sealed partial class JoinedDatasetFill : IonLawSelector
     /// The list of selectors to use.
     /// </summary>
     [DataField]
-    public List<IonLawSelector> Selectors = new();
+    public List<IonLawSelector> Selectors = [];
 }
 
 /// <summary>
@@ -102,13 +102,13 @@ public sealed partial class TranslateFill : IonLawSelector
     /// The localization key.
     /// </summary>
     [DataField]
-    public string Key = string.Empty;
+    public LocId Key = string.Empty;
 
     /// <summary>
     /// Arguments for the localization string.
     /// </summary>
     [DataField]
-    public Dictionary<string, IonLawSelector> Args = new();
+    public Dictionary<string, IonLawSelector> Args = [];
 }
 
 /// <summary>
