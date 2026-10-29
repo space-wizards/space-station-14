@@ -14,7 +14,6 @@ using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
-using Robust.Shared.Graphics;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Outline;
@@ -25,7 +24,6 @@ namespace Content.Client.Outline;
 public sealed partial class InteractionOutlineSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _configManager = default!;
-    [Dependency] private IEyeManager _eyeManager = default!;
     [Dependency] private IInputManager _inputManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IPrototypeManager _prototype = default!;
@@ -46,12 +44,12 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
     private const float DesiredOutlineThickness = 1f;
 
     /// <summary>
-    ///     Whether to currently draw the outline. The outline may be temporarily disabled by other systems
+    /// Whether to currently draw the outline. The outline may be temporarily disabled by other systems
     /// </summary>
     private bool _enabled = true;
 
     /// <summary>
-    ///     Whether to draw the outline at all. Overrides <see cref="_enabled"/>.
+    /// Whether to draw the outline at all. Overrides <see cref="_enabled"/>.
     /// </summary>
     private bool _cvarEnabled = true;
 
@@ -75,7 +73,7 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnShutdown(Entity<InteractionOutlineComponent> ent, ref ComponentShutdown args)
     {
-        RemoveOutline(ent);
+        RemoveOutline(ent.Owner);
 
         if (_lastHoveredEntity == ent.Owner)
             _lastHoveredEntity = null;
@@ -85,16 +83,8 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
     {
         _cvarEnabled = cvarEnabled;
 
-        // clear last hover if required:
-
-        if (_cvarEnabled)
-            return;
-
-        if (_lastHoveredEntity == null || Deleted(_lastHoveredEntity))
-            return;
-
-        if (_outlineQuery.TryComp(_lastHoveredEntity, out var outline))
-            RemoveOutline((_lastHoveredEntity.Value, outline));
+        if (!_cvarEnabled)
+            ClearOutline();
     }
 
     public void SetEnabled(bool enabled)
@@ -104,17 +94,8 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
 
         _enabled = enabled;
 
-        if (enabled)
-            return;
-
-        if (_lastHoveredEntity == null || Deleted(_lastHoveredEntity))
-        {
-            _lastHoveredEntity = null;
-            return;
-        }
-
-        if (_outlineQuery.TryComp(_lastHoveredEntity, out var outline))
-            RemoveOutline((_lastHoveredEntity.Value, outline));
+        if (!enabled)
+            ClearOutline();
     }
 
     public override void FrameUpdate(float frameTime)
@@ -153,13 +134,9 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
             var mousePosWorld = vp.PixelToMap(_inputManager.MouseScreenPosition.Position);
 
             if (vp is ScalingViewport svp)
-            {
                 entityToClick = screen.GetClickedEntity(mousePosWorld, svp.Eye);
-            }
             else
-            {
                 entityToClick = screen.GetClickedEntity(mousePosWorld);
-            }
         }
         else if (_uiManager.CurrentlyHovered is EntityMenuElement element)
         {
@@ -170,65 +147,32 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
         if (localSession.AttachedEntity != null && !Deleted(entityToClick))
             inRange = _interactionSystem.InRangeUnobstructed(localSession.AttachedEntity.Value, entityToClick.Value);
 
-        InteractionOutlineComponent? outline;
+        if (entityToClick != _lastHoveredEntity)
+            ClearOutline();
 
-        if (entityToClick == _lastHoveredEntity)
+        if (entityToClick != null && !Deleted(entityToClick) && _outlineQuery.HasComp(entityToClick.Value))
         {
-            if (entityToClick != null && _outlineQuery.TryComp(entityToClick, out outline))
-            {
-                UpdateOutline((entityToClick.Value, outline), inRange);
-            }
-            else
-            {
-                ClearOutline();
-            }
-
-            return;
-        }
-
-        if (_lastHoveredEntity != null &&
-            !Deleted(_lastHoveredEntity) &&
-            _outlineQuery.TryComp(_lastHoveredEntity, out outline))
-        {
-            RemoveOutline((_lastHoveredEntity.Value, outline));
+            _lastHoveredEntity = entityToClick;
+            SetPostShader(entityToClick.Value, inRange);
         }
         else
         {
             ClearOutline();
         }
-
-        _lastHoveredEntity = entityToClick;
-
-        if (_lastHoveredEntity != null && _outlineQuery.TryComp(_lastHoveredEntity, out outline))
-        {
-            AddOutline((_lastHoveredEntity.Value, outline), inRange);
-        }
     }
 
-    private void AddOutline(Entity<InteractionOutlineComponent> ent, bool inInteractionRange)
+    private void RemoveOutline(EntityUid uid)
     {
-        SetPostShader(ent.Owner, inInteractionRange);
-    }
-
-    private void RemoveOutline(Entity<InteractionOutlineComponent> ent)
-    {
-        if (_spriteQuery.TryComp(ent.Owner, out var sprite))
-            _sprite.RemovePostShader((ent.Owner, sprite), ContentPostShaderIds.InteractionOutline);
-    }
-
-    private void UpdateOutline(Entity<InteractionOutlineComponent> ent, bool inInteractionRange)
-    {
-        SetPostShader(ent.Owner, inInteractionRange);
+        if (_spriteQuery.TryComp(uid, out var sprite))
+            _sprite.RemovePostShader((uid, sprite), ContentPostShaderIds.InteractionOutline);
     }
 
     private void ClearOutline()
     {
-        if (_lastHoveredEntity != null &&
-            !Deleted(_lastHoveredEntity) &&
-            _spriteQuery.TryComp(_lastHoveredEntity, out var sprite))
-        {
-            _sprite.RemovePostShader((_lastHoveredEntity.Value, sprite), ContentPostShaderIds.InteractionOutline);
-        }
+        if (_lastHoveredEntity != null && !Deleted(_lastHoveredEntity))
+            RemoveOutline(_lastHoveredEntity.Value);
+
+        _lastHoveredEntity = null;
     }
 
     private void SetPostShader(EntityUid uid, bool inInteractionRange)
