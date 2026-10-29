@@ -1082,6 +1082,9 @@
   id: ParcelWrapBlacklist # Tagged entities can't be wrapped in ParcelWrap.
 
 - type: Tag
+  id: PatientTransport # Cyborg hand whitelist: roller beds and body bag for medical cyborg
+
+- type: Tag
   id: Payload # Used by PayloadSystem to find entities to send TriggerEvent. ConstructionGraph: ModularGrenadeGraph, ModularMineGraph
 
 - type: Tag

@@ -86,6 +86,9 @@
     folded: true
   - type: Strap
     enabled: False
+  - type: Tag
+    tags:
+    - PatientTransport
 
 - type: entity
   id: CheapRollerBed
@@ -115,6 +118,9 @@
     folded: true
   - type: Strap
     enabled: False
+  - type: Tag
+    tags:
+    - PatientTransport
 
 - type: entity
   id: EmergencyRollerBed
@@ -144,3 +150,6 @@
     folded: true
   - type: Strap
     enabled: False
+  - type: Tag
+    tags:
+    - PatientTransport

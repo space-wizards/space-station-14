@@ -8,6 +8,7 @@ borg-slot-injector-dropper-empty = Precision injectors
 borg-slot-small-containers-empty = Small containers
 borg-slot-chemical-containers-empty = Chemical containers
 borg-slot-pills-chemical-containers-empty = Pills and chemicals
+borg-slot-patient-transport-empty = Patient transports
 borg-slot-documents-empty = Books and papers
 borg-slot-soap-empty = Soap
 borg-slot-instruments-empty = Instruments

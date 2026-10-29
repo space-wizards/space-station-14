@@ -948,9 +948,20 @@
     hands:
     - item: HandheldHealthAnalyzer
     - item: DefibrillatorOneHandedUnpowered
-    - item: Crowbar
-    - item: BorgFireExtinguisher
-    - item: BorgHandheldGPSBasic
+    - item: EmergencyRollerBedSpawnFolded
+      hand:
+        emptyLabel: borg-slot-patient-transport-empty
+        emptyRepresentative: EmergencyRollerBedSpawnFolded
+        whitelist:
+          tags:
+          - PatientTransport
+    - item: BodyBagFolded
+      hand:
+        emptyLabel: borg-slot-patient-transport-empty
+        emptyRepresentative: BodyBagFolded
+        whitelist:
+          tags:
+          - PatientTransport
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: defib-module }
 
