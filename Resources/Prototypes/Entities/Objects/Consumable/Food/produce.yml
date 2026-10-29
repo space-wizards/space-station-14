@@ -1580,8 +1580,8 @@
 - type: entity
   parent: [ ProduceBase, BaseSlicingRefinable ]
   id: FoodDragonTail
-  name: dragon's tail fruit
-  description: A long, spiraling fruit that glows with a soft emerald light. Its flesh can be processed into a soothing salve.
+  name: dragon's tail stalk
+  description: A long, spiraling stalk that glows with a soft emerald light. It can be processed into useful compress to sooth burns.
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/dragon_tail.rsi
