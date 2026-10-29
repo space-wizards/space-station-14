@@ -19,6 +19,11 @@ public sealed partial class PlantChemicalsComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public Dictionary<ProtoId<ReagentPrototype>, PlantChemQuantity> Chemicals = [];
+    /// <summary>
+    /// Necessary to salt the PRNG for when mutations are triggered multiple times in a single tick.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int MutationSalt = 0;
 }
 
 [DataDefinition]

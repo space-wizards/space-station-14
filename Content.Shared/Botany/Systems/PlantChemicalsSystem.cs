@@ -5,6 +5,7 @@ using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Botany.Systems;
@@ -49,7 +50,9 @@ public sealed partial class PlantChemicalsSystem : EntitySystem
         if (totalWeight <= 0f)
             return;
 
-        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
+        IRobustRandom random = new RobustRandom();
+        random.SetSeed(SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id, ent.Comp.MutationSalt++));
+        Dirty(ent, ent.Comp);
         var selectedWeight = random.NextFloat() * totalWeight;
         var accumulatedWeight = 0f;
         WeightedRandomFillSolutionPrototype? selectedTable = null;
