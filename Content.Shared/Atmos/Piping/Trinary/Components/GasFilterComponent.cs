@@ -50,4 +50,11 @@ public sealed partial class GasFilterComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public Gas? FilteredGas;
+
+    /// <summary>
+    /// Indicates whether the selected gas is sent through the side outlet.
+    /// When false, the selected gas is sent through the front outlet instead.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool FilteredGasOnFilterOutlet = true;
 }

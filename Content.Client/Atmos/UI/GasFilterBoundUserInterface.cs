@@ -26,6 +26,7 @@ public sealed partial class GasFilterBoundUserInterface(EntityUid owner, Enum ui
         _window.PopulateGasList(_atmosphere.Gases);
 
         _window.ToggleStatusButtonPressed += OnToggleStatusButtonPressed;
+        _window.FilteredGasOutletChanged += OnFilteredGasOutletChanged;
         _window.FilterTransferRateChanged += OnFilterTransferRatePressed;
         _window.SelectGasPressed += OnSelectGasPressed;
 
@@ -41,6 +42,7 @@ public sealed partial class GasFilterBoundUserInterface(EntityUid owner, Enum ui
 
         _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
         _window.SetFilterStatus(filter.Enabled);
+        _window.SetFilteredGasOutlet(filter.FilteredGasOnFilterOutlet);
         _window.SetTransferRate(filter.TransferRate);
 
         if (filter.FilteredGas is { } filtered)
@@ -57,6 +59,11 @@ public sealed partial class GasFilterBoundUserInterface(EntityUid owner, Enum ui
     private void OnToggleStatusButtonPressed(bool status)
     {
         SendPredictedMessage(new GasFilterToggleStatusMessage(status));
+    }
+
+    private void OnFilteredGasOutletChanged(bool filterOutlet)
+    {
+        SendPredictedMessage(new GasFilterToggleOutputMessage(filterOutlet));
     }
 
     private void OnFilterTransferRatePressed(string value)
