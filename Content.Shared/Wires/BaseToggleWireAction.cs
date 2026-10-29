@@ -1,4 +1,4 @@
-namespace Content.Server.Wires;
+namespace Content.Shared.Wires;
 
 /// <summary>
 ///     Utility class meant to be implemented. This is to

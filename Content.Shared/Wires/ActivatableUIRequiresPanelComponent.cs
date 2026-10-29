@@ -5,7 +5,7 @@ namespace Content.Shared.Wires;
 /// <summary>
 /// This is used for activatable UIs that require the entity to have a panel in a certain state.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedWiresSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(WiresSystem))]
 public sealed partial class ActivatableUIRequiresPanelComponent : Component
 {
     /// <summary>
