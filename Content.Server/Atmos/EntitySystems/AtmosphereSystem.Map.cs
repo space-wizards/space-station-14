@@ -20,7 +20,8 @@ public partial class AtmosphereSystem
     private void OnMapStartup(EntityUid uid, MapAtmosphereComponent component, ComponentInit args)
     {
         component.Mixture.MarkImmutable();
-        component.Overlay = _gasTileOverlaySystem.GetOverlayData(component.Mixture);
+        component.SharedVisibleGasData = _gasTileOverlaySystem.GetVisibleGasData(component.Mixture);
+        component.SharedGasTemperatureData = _gasTileOverlaySystem.GetTemperatureData(component.Mixture);
     }
 
     private void OnMapRemove(EntityUid uid, MapAtmosphereComponent component, ComponentRemove args)
@@ -31,7 +32,7 @@ public partial class AtmosphereSystem
 
     private void OnMapGetState(EntityUid uid, MapAtmosphereComponent component, ref ComponentGetState args)
     {
-        args.State = new MapAtmosphereComponentState(component.Overlay);
+        args.State = new MapAtmosphereComponentState(component.SharedFireData, component.VisibleGasData, component.SharedGasTemperatureData);
     }
 
     public void SetMapAtmosphere(EntityUid uid, bool space, GasMixture mixture)
@@ -55,7 +56,8 @@ public partial class AtmosphereSystem
         }
 
         component.Mixture = mixture;
-        component.Overlay = _gasTileOverlaySystem.GetOverlayData(component.Mixture);
+        component.VisibleGasData = _gasTileOverlaySystem.GetVisibleGasData(component.Mixture);
+        component.SharedGasTemperatureData = _gasTileOverlaySystem.GetTemperatureData(component.Mixture);
         Dirty(uid, component);
         if (updateTiles)
             RefreshAllGridMapAtmospheres(uid);
