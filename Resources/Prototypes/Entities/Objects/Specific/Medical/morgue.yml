@@ -26,6 +26,7 @@
   - type: Tag
     tags:
     - BodyBag
+    - PatientTransport
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure
@@ -94,9 +95,6 @@
   components:
   - type: Foldable
     folded: true
-  - type: Tag
-    tags:
-    - PatientTransport
 
 #  - type: BodyBagItem #TODO: we need some kind of generic placable, like thus:
 # - type: Placeable

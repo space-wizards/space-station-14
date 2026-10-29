@@ -76,6 +76,9 @@
           True: {visible: false}
   - type: StaticPrice
     price: 120
+  - type: Tag
+    tags:
+    - PatientTransport
 
 - type: entity
   parent: RollerBed
@@ -86,9 +89,6 @@
     folded: true
   - type: Strap
     enabled: False
-  - type: Tag
-    tags:
-    - PatientTransport
 
 - type: entity
   id: CheapRollerBed
@@ -118,9 +118,6 @@
     folded: true
   - type: Strap
     enabled: False
-  - type: Tag
-    tags:
-    - PatientTransport
 
 - type: entity
   id: EmergencyRollerBed
@@ -150,6 +147,3 @@
     folded: true
   - type: Strap
     enabled: False
-  - type: Tag
-    tags:
-    - PatientTransport
