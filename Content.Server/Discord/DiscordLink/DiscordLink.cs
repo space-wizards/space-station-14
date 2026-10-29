@@ -226,9 +226,9 @@ public sealed partial class DiscordLink : IPostInjectInit
     #region Proxy methods
 
     /// <summary>
-    /// Sends a message to a Discord channel with the specified ID. Without any mentions.
+    /// Sends a message to a Discord channel with the specified ID. Without any mentions, unless specified otherwise.
     /// </summary>
-    public async Task SendMessageAsync(ulong channelId, string message)
+    public async Task SendMessageAsync(ulong channelId, string message, AllowedMentionsProperties? allowedMentions = null)
     {
         if (_client == null)
         {
@@ -244,9 +244,34 @@ public sealed partial class DiscordLink : IPostInjectInit
 
         await channel.SendMessageAsync(new MessageProperties()
         {
-            AllowedMentions = AllowedMentionsProperties.None,
+            AllowedMentions = allowedMentions ?? AllowedMentionsProperties.None,
             Content = message,
         });
+    }
+
+    /// <summary>
+    /// Creates a thread in a Discord forum channel with the specified ID. Without any mentions.
+    /// </summary>
+    /// <param name="channelId">The ID of the forum channel.</param>
+    /// <param name="name">The name of the thread.</param>
+    /// <param name="message">The content of the first message in the thread.</param>
+    /// <returns>The ID of the created thread, or null if the bot is not connected.</returns>
+    public async Task<ulong?> CreateForumThreadAsync(ulong channelId, string name, string message)
+    {
+        if (_client == null)
+        {
+            return null;
+        }
+
+        var thread = await _client.Rest.CreateForumGuildThreadAsync(channelId,
+            new ForumGuildThreadProperties(name,
+                new ForumGuildThreadMessageProperties()
+                {
+                    AllowedMentions = AllowedMentionsProperties.None,
+                    Content = message,
+                }));
+
+        return thread.Id;
     }
 
     #endregion

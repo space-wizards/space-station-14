@@ -33,5 +33,6 @@ bwoink-system-player-banned = has been banned for: {$banReason}
 
 bwoink-message-admin-only = (Admin Only)
 bwoink-message-silent = (S)
+bwoink-message-discord-wrap = [bold](D){$senderName}:[/bold] {$message}
 
 bwoink-message-name-link = (?)
