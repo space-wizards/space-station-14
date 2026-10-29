@@ -43,21 +43,25 @@
   id: ScientistJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitScientist
+  groupBy: "base"
 
 - type: loadout
   id: ScientistJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtScientist
+  groupBy: "base"
 
 - type: loadout
   id: RoboticistJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitRoboticist
+  groupBy: "roboticist"
 
 - type: loadout
   id: RoboticistJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtRoboticist
+  groupBy: "roboticist"
 
 - type: loadout
   id: SeniorResearcherJumpsuit
@@ -66,6 +70,7 @@
     proto: SeniorResearcher
   equipment:
     jumpsuit: ClothingUniformJumpsuitSeniorResearcher
+  groupBy: "senior"
 
 - type: loadout
   id: SeniorResearcherJumpskirt
@@ -74,6 +79,7 @@
     proto: SeniorResearcher
   equipment:
     jumpsuit: ClothingUniformJumpskirtSeniorResearcher
+  groupBy: "senior"
 
 # Back
 - type: loadout
@@ -96,26 +102,31 @@
   id: RegularLabCoat
   equipment:
     outerClothing: ClothingOuterCoatLab
+  groupBy: "coat"
 
 - type: loadout
   id: ScienceLabCoat
   equipment:
     outerClothing: ClothingOuterCoatRnd
+  groupBy: "coat"
 
 - type: loadout
   id: ScienceWintercoat
   equipment:
     outerClothing: ClothingOuterWinterSci
+  groupBy: "wintercoat"
 
 - type: loadout
   id: RoboticistLabCoat
   equipment:
     outerClothing: ClothingOuterCoatRobo
+  groupBy: "coat"
 
 - type: loadout
   id: RoboticistWintercoat
   equipment:
     outerClothing: ClothingOuterWinterRobo
+  groupBy: "wintercoat"
 
 - type: loadout
   id: SeniorResearcherLabCoat
@@ -124,6 +135,7 @@
     proto: SeniorResearcher
   equipment:
     outerClothing: ClothingOuterCoatLabSeniorResearcher
+  groupBy: "coat"
 
 # Gloves
 - type: loadout
