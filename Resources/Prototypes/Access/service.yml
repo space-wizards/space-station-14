@@ -30,6 +30,10 @@
   id: Lawyer
   name: id-card-access-level-lawyer
 
+- type: accessLevel
+  id: Psychologist
+  name: id-card-access-level-psychologist
+
 - type: accessGroup
   id: Service
   tags:
@@ -42,3 +46,4 @@
   - Theatre
   - Chapel
   - Lawyer
+  - Psychologist

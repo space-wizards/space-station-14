@@ -484,7 +484,7 @@
   groups:
   - GroupTankHarness
   - PsychologistJumpsuit
-  - MedicalBackpack
+  - CommonBackpack
   - Glasses
   - AssistiveItems
   - Survival
