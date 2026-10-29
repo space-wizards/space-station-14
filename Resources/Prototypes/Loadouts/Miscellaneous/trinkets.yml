@@ -37,107 +37,6 @@
     - Wristwatch
   groupBy: "accessory"
 
-# Plushies
-# MEMO: Plushies available as trinkets should only be "common" plushies; the rare and goofy ones should be fun mid-round loot.
-# Use the highest-weight plushies in AllPlushiesTable as a guideline.
-- type: loadout
-  id: PlushiePenguin
-  storage:
-    back:
-    - PlushiePenguin
-  groupBy: "plushie"
-
-- type: loadout
-  id: PlushieSharkBlue
-  storage:
-    back:
-    - PlushieSharkBlue
-  groupBy: "plushie"
-
-- type: loadout
-  id: PlushieSharkGrey
-  storage:
-    back:
-    - PlushieSharkGrey
-  groupBy: "plushie"
-
-- type: loadout
-  id: PlushieSharkPink
-  storage:
-    back:
-    - PlushieSharkPink
-  groupBy: "plushie"
-
-- type: loadout
-  id: PlushieSheep
-  storage:
-    back:
-    - PlushieSheep
-  groupBy: "plushie"
-
-- type: loadout
-  id: PlushieSnake
-  storage:
-    back:
-    - PlushieSnake
-  groupBy: "plushie"
-
-- type: loadout
-  id: PlushieArachind
-  storage:
-    back:
-    - PlushieArachind
-  groupBy: "plushie"
-
-- type: loadout
-  id: PlushieDiona
-  storage:
-    back:
-    - PlushieDiona
-  groupBy: "plushie"
-
-- type: loadout
-  id: PlushieLizard
-  storage:
-    back:
-    - PlushieLizard
-  groupBy: "plushie"
-
-- type: loadout
-  id: PlushieSpaceLizard
-  storage:
-    back:
-    - PlushieSpaceLizard
-  groupBy: "plushie"
-
-- type: loadout
-  id: PlushieMoth
-  storage:
-    back:
-    - PlushieMoth
-  groupBy: "plushie"
-
-- type: loadout
-  id: PlushieSlime
-  storage:
-    back:
-    - PlushieSlime
-  groupBy: "plushie"
-
-- type: loadout
-  id: PlushieVox
-  storage:
-    back:
-    - PlushieVox
-  groupBy: "plushie"
-
-- type: loadout
-  id: PlushieVulp
-  storage:
-    back:
-    - PlushieVulp
-  groupBy: "plushie"
-
 # Pins
 - type: loadout
   id: ClothingNeckLGBTPin
@@ -264,6 +163,107 @@
     back:
     - ClothingNeckGenderfluidPin
   groupBy: "pin"
+
+# Plushies
+# MEMO: Plushies available as trinkets should only be "common" plushies; the rare and goofy ones should be fun mid-round loot.
+# Use the highest-weight plushies in AllPlushiesTable as a guideline.
+- type: loadout
+  id: PlushiePenguin
+  storage:
+    back:
+    - PlushiePenguin
+  groupBy: "plushie"
+
+- type: loadout
+  id: PlushieSharkBlue
+  storage:
+    back:
+    - PlushieSharkBlue
+  groupBy: "plushie"
+
+- type: loadout
+  id: PlushieSharkGrey
+  storage:
+    back:
+    - PlushieSharkGrey
+  groupBy: "plushie"
+
+- type: loadout
+  id: PlushieSharkPink
+  storage:
+    back:
+    - PlushieSharkPink
+  groupBy: "plushie"
+
+- type: loadout
+  id: PlushieSheep
+  storage:
+    back:
+    - PlushieSheep
+  groupBy: "plushie"
+
+- type: loadout
+  id: PlushieSnake
+  storage:
+    back:
+    - PlushieSnake
+  groupBy: "plushie"
+
+- type: loadout
+  id: PlushieArachind
+  storage:
+    back:
+    - PlushieArachind
+  groupBy: "plushie"
+
+- type: loadout
+  id: PlushieDiona
+  storage:
+    back:
+    - PlushieDiona
+  groupBy: "plushie"
+
+- type: loadout
+  id: PlushieLizard
+  storage:
+    back:
+    - PlushieLizard
+  groupBy: "plushie"
+
+- type: loadout
+  id: PlushieSpaceLizard
+  storage:
+    back:
+    - PlushieSpaceLizard
+  groupBy: "plushie"
+
+- type: loadout
+  id: PlushieMoth
+  storage:
+    back:
+    - PlushieMoth
+  groupBy: "plushie"
+
+- type: loadout
+  id: PlushieSlime
+  storage:
+    back:
+    - PlushieSlime
+  groupBy: "plushie"
+
+- type: loadout
+  id: PlushieVox
+  storage:
+    back:
+    - PlushieVox
+  groupBy: "plushie"
+
+- type: loadout
+  id: PlushieVulp
+  storage:
+    back:
+    - PlushieVulp
+  groupBy: "plushie"
 
 # Towels
 - type: loadout
