@@ -54,3 +54,17 @@
     - stampedName: stamp-component-stamped-name-syndicate
       stampedColor: "#850000FF"
     stampState: paper_stamp-syndicate
+
+- type: entity
+  id: PaperLootboxInformation
+  name: lock box delivery procedures
+  description: An inspirational memo on appropriate delivery procedures that seems to have been mixed in with its contents.
+  parent: Paper
+  components:
+  - type: Paper
+    contentSize: 12000
+    content: book-text-lootbox-manual
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#329632FF'
+      stampedName: stamp-lootbox-logistics
