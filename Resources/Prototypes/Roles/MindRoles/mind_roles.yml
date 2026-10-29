@@ -205,6 +205,11 @@
   - type: MindRole
     roleType: SoloAntagonist
 
+- type: entity
+  parent: MindRoleNukeops
+  id: MindRoleInstigator
+  name: Instigator Role
+
 # Not a MindRoleNukeops child on purpose, NukeopsRole is what counts towards the war declaration minimum
 - type: entity
   parent: MindRoleGhostRoleTeamAntagonist
