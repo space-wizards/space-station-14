@@ -49,6 +49,7 @@
     overpressure: 3039.75
     maxIntegrity: 5
     integrity: 5
+    relativeExplosiveIntensity: 7
   - type: Explosive
     explosionType: Minibomb # Mostly a pressure wave explosive so primarily blunt damage
     maxIntensity: 20
