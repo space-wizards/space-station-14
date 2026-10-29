@@ -35,7 +35,7 @@ public sealed partial class ItemSlotsSystem
     /// </summary>
     public void SetLock(Entity<ItemSlotsComponent?> ent, string id, bool locked)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!_itemSlotsQuery.Resolve(ent, ref ent.Comp))
             return;
 
         if (!ent.Comp.Slots.TryGetValue(id, out var slot))
@@ -49,7 +49,7 @@ public sealed partial class ItemSlotsSystem
     /// </summary>
     public void SetLock(Entity<ItemSlotsComponent?> ent, ItemSlot slot, bool locked)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!_itemSlotsQuery.Resolve(ent, ref ent.Comp))
             return;
 
         slot.Locked = locked;
