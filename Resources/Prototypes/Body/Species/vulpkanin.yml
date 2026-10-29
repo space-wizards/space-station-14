@@ -146,6 +146,10 @@
   id: MobVulpkanin
   name: Urist McArfArf
   components:
+  - type: FootstepTrack
+    footprints:
+    - BloodPawprint1
+    - BloodPawprint2
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
