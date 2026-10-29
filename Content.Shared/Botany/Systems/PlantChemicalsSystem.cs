@@ -4,7 +4,9 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using JetBrains.Annotations;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Botany.Systems;
@@ -14,9 +16,11 @@ namespace Content.Shared.Botany.Systems;
 /// </summary>
 public sealed partial class PlantChemicalsSystem : EntitySystem
 {
+    [Dependency] private INetManager _net = default!;
     [Dependency] private BotanySystem _botany = default!;
     [Dependency] private PlantMutationSystem _mutation = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     [SubscribeLocalEvent]
     private void OnCrossPollinate(Entity<PlantChemicalsComponent> ent, ref PlantCrossPollinateEvent args)
@@ -37,6 +41,10 @@ public sealed partial class PlantChemicalsSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
+        // TODO: No prediction until we have a better way to handle predicted random.
+        if (!_net.IsServer)
+            return;
+
         var totalWeight = 0f;
         foreach (var table in randomChemTables)
         {
@@ -49,8 +57,7 @@ public sealed partial class PlantChemicalsSystem : EntitySystem
         if (totalWeight <= 0f)
             return;
 
-        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
-        var selectedWeight = random.NextFloat() * totalWeight;
+        var selectedWeight = _random.NextFloat() * totalWeight;
         var accumulatedWeight = 0f;
         WeightedRandomFillSolutionPrototype? selectedTable = null;
 
@@ -72,9 +79,9 @@ public sealed partial class PlantChemicalsSystem : EntitySystem
         if (selectedTable == null)
             return;
 
-        var (chemicalId, quantity) = selectedTable.Pick(random);
+        var (chemicalId, quantity) = selectedTable.Pick(_random);
 
-        var amount = FixedPoint2.Max(random.NextFloat(0f, 1f) * quantity, FixedPoint2.Epsilon);
+        var amount = FixedPoint2.Max(_random.NextFloat(0f, 1f) * quantity, FixedPoint2.Epsilon);
         var seedChemQuantity = new PlantChemQuantity();
         if (ent.Comp.Chemicals.TryGetValue(chemicalId, out var value))
         {
