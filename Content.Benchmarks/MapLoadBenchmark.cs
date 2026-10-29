@@ -62,7 +62,8 @@ public class MapLoadBenchmark
         "TestTeg",
         "Tram2",
         "Snowball",
-        "Hike"
+        "Hike",
+        "gear"
     };
 
     [ParamsSource(nameof(MapsSource))]
