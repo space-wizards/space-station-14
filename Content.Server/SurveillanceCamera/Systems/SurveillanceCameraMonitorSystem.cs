@@ -192,24 +192,19 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
     private void OnCameraMapMarkersChanged(Entity<SurveillanceCameraMapComponent> ent, ref SurveillanceCameraMapMarkersChangedEvent args)
     {
         var query = EntityQueryEnumerator<SurveillanceCameraMonitorComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var monitor, out var xform))
+        while (query.MoveNext(out var uid, out _, out var xform))
         {
             if (xform.GridUid != ent.Owner)
                 continue;
 
-            foreach (var viewer in monitor.Viewers)
-                SendCameraMapUpdate(uid, viewer, ent.Comp.Cameras);
+            if (_userInterface.IsUiOpen(uid, SurveillanceCameraMonitorUiKey.Key))
+                SendCameraMapUpdate(uid);
         }
     }
 
     private void OnBoundUiOpen(EntityUid uid, SurveillanceCameraMonitorComponent component, BoundUIOpenedEvent args)
     {
         AddViewer(uid, args.Actor, component);
-
-        var markers = TryComp<SurveillanceCameraMapComponent>(Transform(uid).GridUid, out var mapComp)
-            ? mapComp.Cameras
-            : [];
-        SendCameraMapUpdate(uid, args.Actor, markers);
     }
 
     private void OnBoundUiClose(EntityUid uid, SurveillanceCameraMonitorComponent component, BoundUIClosedEvent args)
