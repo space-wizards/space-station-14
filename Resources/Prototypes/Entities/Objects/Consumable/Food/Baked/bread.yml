@@ -971,6 +971,8 @@
   - type: Speech
     speechSounds: Dog
     speechVerb: SmallMob
+  - type: ReplacementAccent
+    accent: noreplacement
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
     baseSprintSpeed : 5

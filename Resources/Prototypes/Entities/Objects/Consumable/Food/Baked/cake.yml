@@ -1140,10 +1140,9 @@
   - type: CanEscapeInventory
     baseResistTime: 2
   - type: Puller
-    needsHands: false
-  - type: Examiner
-  - type: DoAfter
-  - type: CombatMode
+    needsHands: False
+  - type: ReplacementAccent
+    accent: noreplacement
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Animals/cat_hiss.ogg
