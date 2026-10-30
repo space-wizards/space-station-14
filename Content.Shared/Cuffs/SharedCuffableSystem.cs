@@ -453,7 +453,7 @@ public abstract partial class SharedCuffableSystem : EntitySystem
             if (HasComp<UnremoveableComponent>(held))
                 continue;
 
-            _hands.DoDrop(uid, hand, true);
+            _hands.DoDrop(uid, hand);
             freeHands++;
             if (freeHands == 2)
                 break;
@@ -710,7 +710,7 @@ public abstract partial class SharedCuffableSystem : EntitySystem
 
         if (cuffsToRemove.Comp.BreakOnRemove)
         {
-            PredictedQueueDel(cuffsToRemove);
+            QueueDel(cuffsToRemove);
             var trash = PredictedSpawnAtPosition(cuffsToRemove.Comp.BrokenPrototype, Transform(cuffsToRemove).Coordinates);
             _hands.PickupOrDrop(user, trash);
         }
@@ -777,6 +777,7 @@ public abstract partial class SharedCuffableSystem : EntitySystem
             }
         }
         cuffsToRemove.Comp.Removing = false;
+        Dirty(cuffsToRemove);
     }
 
     #region ActionBlocker
