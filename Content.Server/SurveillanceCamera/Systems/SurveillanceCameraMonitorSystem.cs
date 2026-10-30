@@ -27,7 +27,6 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
             subs.Event<SurveillanceCameraDisconnectMessage>(OnDisconnectMessage);
             subs.Event<SurveillanceCameraMonitorSubnetRequestMessage>(OnSubnetRequest);
             subs.Event<SurveillanceCameraMonitorSwitchMessage>(OnSwitchMessage);
-            subs.Event<SurveillanceCameraMonitorMapRequestMessage>(OnMapRequest);
             subs.Event<BoundUIClosedEvent>(OnBoundUiClose);
             subs.Event<BoundUIOpenedEvent>(OnBoundUiOpen);
         });
@@ -165,11 +164,6 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
         TrySwitchCameraByAddress(uid, message.Address, message.CameraSubnet, component);
     }
 
-    private void OnMapRequest(Entity<SurveillanceCameraMonitorComponent> ent, ref SurveillanceCameraMonitorMapRequestMessage args)
-    {
-        SendCameraMapUpdate(ent);
-    }
-
     [SubscribeLocalEvent]
     private void OnPowerChanged(EntityUid uid, SurveillanceCameraMonitorComponent component, ref PowerChangedEvent args)
     {
@@ -211,6 +205,7 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
     private void OnBoundUiOpen(EntityUid uid, SurveillanceCameraMonitorComponent component, BoundUIOpenedEvent args)
     {
         AddViewer(uid, args.Actor, component);
+        SendCameraMapUpdate(uid);
     }
 
     private void OnBoundUiClose(EntityUid uid, SurveillanceCameraMonitorComponent component, BoundUIClosedEvent args)

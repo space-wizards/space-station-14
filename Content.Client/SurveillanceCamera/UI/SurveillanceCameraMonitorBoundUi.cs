@@ -35,8 +35,6 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
         _window.SubnetRefresh += OnSubnetRefresh;
         _window.CameraSwitchTimer += OnCameraSwitchTimer;
         _window.CameraDisconnect += OnCameraDisconnect;
-
-        SendMessage(new SurveillanceCameraMonitorMapRequestMessage());
     }
 
     private void OnCameraSelected(DeviceAddress address, ProtoId<DeviceFrequencyPrototype>? subnet)
