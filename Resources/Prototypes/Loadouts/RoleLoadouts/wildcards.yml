@@ -11,7 +11,7 @@
   #- PsychologistJobTrinkets
   - GroupSpeciesBreathTool
 
-  - type: roleLoadout
+- type: roleLoadout
   id: JobReporter
   groups:
   - GroupTankHarness
