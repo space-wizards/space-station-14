@@ -14,7 +14,7 @@ public sealed partial class HandheldLightComponent : Component
     public bool Activated;
 
     /// <summary>
-    /// How much joules will be drained from the powercell slot every update
+    /// How much joules will be drained from the powercell slot entity every update
     /// </summary>
     [DataField]
     public float Wattage = .8f;
