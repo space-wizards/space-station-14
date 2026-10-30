@@ -905,6 +905,10 @@
   parent: [SimpleMobBase, BaseMobDestructible, SolutionLarge, FoodBase, BaseSlicingRefinableFood]
   description: It's a bread. It's a dog. It's a... breaddog?
   components:
+  - type: EntityTableContainerFill # drops nothing on gib
+    containers:
+      body_organs: !type:AllSelector
+        children: []
   - type: Edible
     requireDead: false
   - type: CollisionWake

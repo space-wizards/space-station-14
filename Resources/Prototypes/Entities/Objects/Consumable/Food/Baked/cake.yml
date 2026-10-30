@@ -1042,6 +1042,10 @@
   parent: [MobCat, SolutionLarge, FoodBase]
   description: It's a cake. It's a cat. It's a cak.
   components:
+  - type: EntityTableContainerFill # drops nothing on gib
+    containers:
+      body_organs: !type:AllSelector
+        children: []
   - type: Edible
     requireDead: false
   - type: CollisionWake
