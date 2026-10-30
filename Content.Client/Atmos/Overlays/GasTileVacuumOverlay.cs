@@ -15,7 +15,7 @@ using Color = Robust.Shared.Maths.Color;
 namespace Content.Client.Atmos.Overlays;
 
 /// <summary>
-/// Desaturates areas based on pressure, and tints cold areas blue based on temperature.
+/// Desaturates areas based on pressure, and applies a cold effect to areas based on temperature.
 /// </summary>
 public sealed partial class GasTileVacuumOverlay : Overlay
 {
@@ -41,9 +41,9 @@ public sealed partial class GasTileVacuumOverlay : Overlay
     private float _intensity; // overlay intensity. 0.0f = turned off, 1.0f = full grayscale
 
     /// <summary>
-    /// The temperature at which maximum tint effect is applied, decreasing linearly to 0 at 0°C.
+    /// The temperature at which maximum cold effect is applied, decreasing linearly to 0 at 0°C.
     /// </summary>
-    private const float MaxTintTemperatureKelvin = 223f;
+    private const float MaxColdEffectTemperatureKelvin = 223f;
     /// <summary>
     /// kPa pressure threshold to start desaturating the area.
     /// </summary>
@@ -61,8 +61,8 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         _shader = _proto.Index(VacuumOverlayShader).InstanceUnique();
         _configManager.OnValueChanged(CCVars.VacuumOverlayIntensity, SetVacuumOverlayIntensity, invokeImmediately: true);
 
-        var tintColor = new Vector3(0.78f, 0.9f, 1.0f);
-        _shader.SetParameter("tint", tintColor);
+        var coldTint = new Vector3(0.78f, 0.9f, 1.0f);
+        _shader.SetParameter("cold_tint", coldTint);
     }
 
     private void SetVacuumOverlayIntensity(float intensity)
@@ -143,24 +143,24 @@ public sealed partial class GasTileVacuumOverlay : Overlay
                             if (tileGas.ByteGasTemperature.Value == ThermalByte.AtmosImpossible)
                                 continue;
 
-                            var tintStrength = GetTemperatureEffectStrength(tileGas.ByteGasTemperature,
-                                MaxTintTemperatureKelvin,
+                            var coldStrength = GetTemperatureEffectStrength(tileGas.ByteGasTemperature,
+                                MaxColdEffectTemperatureKelvin,
                                 false);
                             var desaturationStrength =
                                 1f - MathHelper.Clamp01(tileGas.Pressure / DesaturationStartPressureKPa);
 
-                            // Diminish cold blue tint effect as pressure decreases.
+                            // Diminish cold effect as pressure decreases.
                             // A pressurized room with temperature problems will be visibly cold, but a spaced room will not.
-                            tintStrength *= 1f - desaturationStrength;
+                            coldStrength *= 1f - desaturationStrength;
 
-                            if (tintStrength <= 0f && desaturationStrength <= 0f)
+                            if (coldStrength <= 0f && desaturationStrength <= 0f)
                                 continue;
 
 
-                            // Encode desaturation and tint in separate color channels.
+                            // Encode desaturation and cold in separate color channels.
                             worldHandle.DrawRect(Box2.CenteredAround(tilePosition + grid.Comp.TileSizeHalfVector,
                                     grid.Comp.TileSizeVector),
-                                new Color(desaturationStrength, tintStrength, 0f));
+                                new Color(desaturationStrength, coldStrength, 0f));
                             anyDesaturation = true;
                         }
                     }
