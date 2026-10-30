@@ -7,6 +7,7 @@ namespace Content.Shared.Actions.Components;
 
 /// <summary>
 /// Prevents an action from being used by entities that do not pass the configured whitelist.
+/// If the action is granted by an item, this also prevents it if the item holder/wearer isn't whitelisted.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(ActionRestrictionsSystem))]
 [EntityCategory("Actions")]

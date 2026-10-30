@@ -32,8 +32,7 @@ public abstract partial class SharedNinjaSuitSystem : EntitySystem
         SubscribeLocalEvent<NinjaSuitComponent, ClothingGotEquippedEvent>(OnEquipped);
         SubscribeLocalEvent<NinjaSuitComponent, GetItemActionsEvent>(OnGetItemActions);
         SubscribeLocalEvent<NinjaSuitComponent, ToggleClothingCheckEvent>(OnCloakCheck);
-        SubscribeLocalEvent<NinjaSuitComponent, CheckItemActionGrantAccessEvent>(OnItemActionGrantAccess);
-        SubscribeLocalEvent<NinjaSuitComponent, CreateItemAttemptEvent>(OnCreateStarAttempt);
+        SubscribeLocalEvent<NinjaSuitComponent, CreateItemAttemptEvent>(OnCreateEquipmentAttempt);
         SubscribeLocalEvent<NinjaSuitComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
         SubscribeLocalEvent<NinjaSuitComponent, GotUnequippedEvent>(OnUnequipped);
     }
@@ -81,13 +80,10 @@ public abstract partial class SharedNinjaSuitSystem : EntitySystem
             args.Cancelled = true;
     }
 
-    private void OnItemActionGrantAccess(Entity<NinjaSuitComponent> ent, ref CheckItemActionGrantAccessEvent args)
-    {
-        if (!_ninja.IsNinja(args.User))
-            args.Cancelled = true;
-    }
-
-    private void OnCreateStarAttempt(Entity<NinjaSuitComponent> ent, ref CreateItemAttemptEvent args)
+    /// <summary>
+    /// Any item creation dependent on the ninja suit requires the suit not being disabled!
+    /// </summary>
+    private void OnCreateEquipmentAttempt(Entity<NinjaSuitComponent> ent, ref CreateItemAttemptEvent args)
     {
         if (CheckDisabled(ent, args.User))
             args.Cancelled = true;

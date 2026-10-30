@@ -12,6 +12,6 @@ public sealed partial class ExecutionDoAfterEvent : SimpleDoAfterEvent
 /// Raised on the victim when the doafter for an execution begins.
 /// </summary>
 [ByRefEvent]
-public record struct ExecutionStartedEvent(EntityUid Attacker, EntityUid Weapon, bool CancelExecution = false, LocId? CancelMessage = null)
+public record struct AttemptExecutionStartEvent(EntityUid Attacker, EntityUid Weapon, bool Cancelled = false, LocId? CancelledMessage = null)
 {
 }

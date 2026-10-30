@@ -25,7 +25,7 @@ public sealed partial class ChargeCostActionSystem : EntitySystem
             return;
 
         if (!_powerCell.TryGetBatteryFromSlotOrEntity((action.Container.Value, null), out var battery)
-            || _battery.GetCharge(battery.Value.AsNullable()) < ent.Comp.Charge)
+            || _battery.GetCharge(battery.Value.AsNullable()) < ent.Comp.ChargePerUse)
         {
             _popup.PopupEntity(Loc.GetString(ent.Comp.NoPowerPopup), args.User, args.User);
             args.Cancelled = true;
@@ -39,6 +39,6 @@ public sealed partial class ChargeCostActionSystem : EntitySystem
             return;
 
         if (_powerCell.TryGetBatteryFromSlotOrEntity((action.Container.Value, null), out var battery))
-            _battery.UseCharge(battery.Value.AsNullable(), ent.Comp.Charge);
+            _battery.UseCharge(battery.Value.AsNullable(), ent.Comp.ChargePerUse);
     }
 }

@@ -15,7 +15,7 @@ public sealed partial class ChargeCostActionComponent : Component
     /// Battery charge used to perform the action.
     /// </summary>
     [DataField(required: true)]
-    public float Charge = 14.4f;
+    public float ChargePerUse = 14.4f;
 
     /// <summary>
     /// Popup shown to the user when there isn't enough power to create an item.

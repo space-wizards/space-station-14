@@ -28,7 +28,6 @@ using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Rejuvenate;
-using Content.Shared.Stunnable;
 using Content.Shared.Timing.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
@@ -163,9 +162,6 @@ namespace Content.Shared.Cuffs
 
         private void OnCuffsRemovedFromContainer(EntityUid uid, CuffableComponent component, EntRemovedFromContainerMessage args)
         {
-            if (_timing.ApplyingState)
-                return;
-
             // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
             if (args.Container.ID != component.Container?.ID)
                 return;
@@ -358,13 +354,13 @@ namespace Content.Shared.Cuffs
         }
 
         [SubscribeLocalEvent]
-        private void OnExecutionStarted(Entity<CuffableComponent> ent, ref ExecutionStartedEvent args)
+        private void OnExecutionStarted(Entity<CuffableComponent> ent, ref AttemptExecutionStartEvent args)
         {
             var foundDestroyedCuffs = false;
             foreach (var cuffsEnt in GetAllCuffs(ent.AsNullable()))
             {
                 if (!TryComp<HandcuffComponent>(cuffsEnt, out var handcuff))
-                    return;
+                    continue;
 
                 if (handcuff.BreakOnDamageThreshold != null)
                 {
@@ -376,8 +372,8 @@ namespace Content.Shared.Cuffs
             if(!foundDestroyedCuffs)
                 return;
 
-            args.CancelExecution = true;
-            args.CancelMessage = Loc.GetString("handcuff-component-cuffs-broke");
+            args.Cancelled = true;
+            args.CancelledMessage = Loc.GetString("handcuff-component-cuffs-broke");
         }
 
         private void OnCuffAfterInteract(EntityUid uid, HandcuffComponent component, AfterInteractEvent args)

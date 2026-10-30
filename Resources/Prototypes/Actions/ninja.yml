@@ -24,11 +24,15 @@
     layers:
     - state: icon
   - type: ChargeCostAction
-    charge: 14.4
+    chargePerUse: 14.4
     noPowerPopup: ninja-no-power
   - type: InstantAction
     event: !type:CreateItemEvent
       protoId: ThrowingStarNinja
+  - type: ActionUserWhitelist
+    whitelist:
+      components:
+      - SpaceNinja
 
 - type: entity
   parent: BaseAction
@@ -91,11 +95,15 @@
     layers:
     - state: nanocuff
   - type: ChargeCostAction
-    charge: 14.4
+    chargePerUse: 14.4
     noPowerPopup: ninja-no-power
   - type: InstantAction
     event: !type:CreateItemEvent
       protoId: NanostrapsNinja
+  - type: ActionUserWhitelist
+    whitelist:
+      components:
+      - SpaceNinja
 
 # katana
 - type: entity
