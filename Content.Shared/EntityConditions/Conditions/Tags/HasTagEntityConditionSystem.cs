@@ -1,4 +1,4 @@
-﻿using Content.Shared.Tag;
+using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Tags;
@@ -20,6 +20,9 @@ public sealed partial class HasTagEntityConditionSystem : EntityConditionSystem<
 /// <inheritdoc cref="EntityCondition"/>
 public sealed partial class TagCondition : EntityConditionBase<TagCondition>
 {
+    /// <summary>
+    /// Tag required to fulfill this condition.
+    /// </summary>
     [DataField(required: true)]
     public ProtoId<TagPrototype> Tag;
 

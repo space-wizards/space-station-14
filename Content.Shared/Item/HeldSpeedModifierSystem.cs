@@ -17,16 +17,17 @@ public sealed partial class HeldSpeedModifierSystem : EntitySystem
         SubscribeLocalEvent<HeldSpeedModifierComponent, GotEquippedHandEvent>(OnGotEquippedHand);
         SubscribeLocalEvent<HeldSpeedModifierComponent, GotUnequippedHandEvent>(OnGotUnequippedHand);
         SubscribeLocalEvent<HeldSpeedModifierComponent, HeldRelayedEvent<RefreshMovementSpeedModifiersEvent>>(OnRefreshMovementSpeedModifiers);
+        SubscribeLocalEvent<HeldSpeedModifierComponent, HeldRelayedEvent<RefreshWeightlessModifiersEvent>>(OnRefreshWeightlessModifiers);
     }
 
     private void OnGotEquippedHand(Entity<HeldSpeedModifierComponent> ent, ref GotEquippedHandEvent args)
     {
-        _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
+        _movementSpeedModifier.RefreshMovementModifiers(args.User);
     }
 
     private void OnGotUnequippedHand(Entity<HeldSpeedModifierComponent> ent, ref GotUnequippedHandEvent args)
     {
-        _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
+        _movementSpeedModifier.RefreshMovementModifiers(args.User);
     }
 
     public (float,float) GetHeldMovementSpeedModifiers(EntityUid uid, HeldSpeedModifierComponent component)
@@ -42,9 +43,28 @@ public sealed partial class HeldSpeedModifierSystem : EntitySystem
         return (walkMod, sprintMod);
     }
 
+    /// <summary>
+    /// Changes movement speed modifier.
+    /// </summary>
+    public void ChangeModifiers(Entity<HeldSpeedModifierComponent?> ent, float walkMod, float sprintMod)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        ent.Comp.SprintModifier = sprintMod;
+        ent.Comp.WalkModifier = walkMod;
+        Dirty(ent);
+    }
+
     private void OnRefreshMovementSpeedModifiers(EntityUid uid, HeldSpeedModifierComponent component, HeldRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
     {
         var (walkMod, sprintMod) = GetHeldMovementSpeedModifiers(uid, component);
         args.Args.ModifySpeed(walkMod, sprintMod);
+    }
+
+    private void OnRefreshWeightlessModifiers(Entity<HeldSpeedModifierComponent> ent, ref HeldRelayedEvent<RefreshWeightlessModifiersEvent> args)
+    {
+        args.Args.ModifyAcceleration(ent.Comp.WeightlessAcceleration);
+        args.Args.WeightlessModifierMod *= ent.Comp.ZeroGravityModifier;
     }
 }

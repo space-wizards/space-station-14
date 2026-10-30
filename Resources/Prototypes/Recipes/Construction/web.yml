@@ -1,89 +1,59 @@
+# region Base
 - type: construction
-  id: WallWeb
+  abstract: true
+  id: BaseWebStructure
   graph: WebStructures
-  startNode: start
+  category: construction-category-furniture
+  placementMode: SnapgridCenter
+  canRotate: false
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+# endregion Base
+
+# region Web
+- type: construction
+  parent: BaseWebStructure
+  id: WallWeb
   targetNode: wall
   category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-  canBuildInImpassable: false
-  entityWhitelist:
-    tags:
-    - SpiderCraft
   conditions:
-    - !type:TileNotBlocked
+  - !type:TileNotBlocked
 
 - type: construction
+  parent: BaseWebStructure
   id: TableWeb
-  graph: WebStructures
-  startNode: start
   targetNode: table
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-  canBuildInImpassable: false
-  entityWhitelist:
-    tags:
-    - SpiderCraft
   conditions:
-    - !type:TileNotBlocked
+  - !type:TileNotBlocked
 
 - type: construction
+  parent: BaseWebStructure
   id: WebBed
-  graph: WebStructures
-  startNode: start
   targetNode: bed
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-  canBuildInImpassable: false
-  entityWhitelist:
-    tags:
-    - SpiderCraft
   conditions:
-    - !type:TileNotBlocked
+  - !type:TileNotBlocked
 
 - type: construction
+  parent: BaseWebStructure
   id: ChairWeb
-  graph: WebStructures
-  startNode: start
   targetNode: chair
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  entityWhitelist:
-    tags:
-    - SpiderCraft
+  canRotate: true
+  conditions:
+  - !type:TileNotBlocked
 
 - type: construction
+  parent: BaseWebStructure
   id: CrateWeb
-  graph: WebStructures
-  startNode: start
   targetNode: crate
+  placementMode: PlaceFree
   category: construction-category-storage
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-  canBuildInImpassable: false
-  entityWhitelist:
-    tags:
-    - SpiderCraft
 
 - type: construction
+  parent: BaseWebStructure
   id: WebDoor
-  graph: WebStructures
-  startNode: start
   targetNode: door
   category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  entityWhitelist:
-    tags:
-    - SpiderCraft
   conditions:
-    - !type:TileNotBlocked
+  - !type:TileNotBlocked
+# endregion Web

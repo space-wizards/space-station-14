@@ -10,7 +10,7 @@ namespace Content.Server.Lathe;
 /// </summary>
 public sealed partial class LatheProducingSystem : EntitySystem
 {
-    [Dependency] private SharedPowerStateSystem _powerState = default!;
+    [Dependency] private PowerStateSystem _powerState = default!;
 
     public override void Initialize()
     {

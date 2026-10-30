@@ -2,7 +2,7 @@
   parent: BoxCardboard
   name: monkey cube box
   id: MonkeyCubeBox
-  description: Drymate brand monkey cubes. Just add water!
+  description: Drymate® brand monkey cubes. Just add water!
   components:
   - type: EntityTableContainerFill
     containers:
@@ -26,6 +26,9 @@
       path: /Audio/Effects/unwrap.ogg
   - type: Sprite
     sprite: Objects/Misc/monkeycube.rsi
+  - type: Tag
+    tags:
+    - WrappedCube
 
 - type: entity
   parent: BaseWrappedCube
@@ -41,6 +44,7 @@
   - type: Tag
     tags:
     - MonkeyCube
+    - WrappedCube
 
 - type: entity
   parent: MonkeyCubeBox
@@ -92,7 +96,7 @@
   name: monkey cube box
   suffix: Syndicate
   id: SyndicateSpongeBox
-  description: Drymate brand monkey cubes. Just add water!
+  description: Drymate® brand monkey cubes. Just add water!
   components:
   - type: EntityTableContainerFill
     containers:
@@ -112,3 +116,30 @@
   - type: SpawnItemsOnUse
     items:
       - id: SyndicateSponge
+
+- type: entity
+  parent: BaseWrappedCube
+  id: SlimeCubeWrapped
+  name: slime cube
+  description: Unwrap this to get a slime cube.
+  components:
+  - type: SpawnItemsOnUse
+    items:
+    - id: SlimeCube
+  - type: Sprite
+    state: wrapper_slime
+
+- type: entity
+  parent: MonkeyCubeBox
+  id: SlimeCubeBox
+  name: slime cube box
+  description: Condensed slimes in a cube. Just add water! Drymate® is not responsible for undue hostility from inappropriate fluid application.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: SlimeCubeWrapped
+        amount: 8
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: box_slime

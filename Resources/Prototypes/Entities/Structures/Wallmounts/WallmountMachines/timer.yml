@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseWallmountMachine
+  parent: [ BaseWallmountMachine, StructureHealthMachineFlimsy ]
   id: SignalTimer
   name: signal timer
   description: It's a timer for sending timed signals to things.
@@ -16,10 +16,8 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 50
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
@@ -63,17 +61,28 @@
   components:
   - type: SignalTimer
     canEditLabel: true
+  - type: TextScreenTimerVisuals
+    runningState: running
+    finishedState: finished
   - type: TextScreenVisuals
     color: FloralWhite
-    textOffset: 0,6
-    timerOffset: 0,6
-    # textLength: 5 This field does not exist. Bug?
-    rows: 1
+    scrollEnabled: true
+    rowData: [{}]
+    horizontalScrollOffset: 1
+    leftInvisiblePixels: 2
+    rightInvisiblePixels: 1
+    maxScrollingCharacters: 16
+    frameState:
+      state: outer_frame
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/signalscreen.rsi
-    state: signalscreen
-    noRot: true
+    layers:
+    - state: signalscreen
+    - state: finished
+      shader: unshaded
+      map: [ enum.TimerVisualLayers.Light ]
+    # noRot: true # TODO From an accessibility standpoint, screens with text shouldn't be rotatable; Mapping Lead already have concerns about this.
   - type: Construction
     graph: Timer
     node: screen

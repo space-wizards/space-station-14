@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseSign
+  parent: BaseSignWeak
   id: PaintingBase
   abstract: true
   components:

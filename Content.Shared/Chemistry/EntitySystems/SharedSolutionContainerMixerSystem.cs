@@ -22,7 +22,7 @@ public abstract partial class SharedSolutionContainerMixerSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedSolutionContainerSystem _solution = default!;
-    [Dependency] private SharedPowerStateSystem _powerState = default!;
+    [Dependency] private PowerStateSystem _powerState = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -60,14 +60,14 @@ public abstract partial class SharedSolutionContainerMixerSystem : EntitySystem
         if (!HasPower(entity))
         {
             if (user != null)
-                _popup.PopupClient(Loc.GetString("solution-container-mixer-no-power"), entity, user.Value);
+                _popup.PopupEntity(Loc.GetString("solution-container-mixer-no-power"), entity, user.Value);
             return;
         }
 
         if (!_container.TryGetContainer(uid, comp.ContainerId, out var container) || container.Count == 0)
         {
             if (user != null)
-                _popup.PopupClient(Loc.GetString("solution-container-mixer-popup-nothing-to-mix"), entity, user.Value);
+                _popup.PopupEntity(Loc.GetString("solution-container-mixer-popup-nothing-to-mix"), entity, user.Value);
             return;
         }
 

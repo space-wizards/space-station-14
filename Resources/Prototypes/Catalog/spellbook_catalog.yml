@@ -65,6 +65,19 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: SpellbookGuardianDeck
+  name: spellbook-guardian-deck-name
+  description: spellbook-guardian-deck-description
+  productEntity: GuardianDeck
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookOffensive
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 # Defensive
 - type: listing
   id: SpellbookForceWall

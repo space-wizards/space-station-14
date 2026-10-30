@@ -1,9 +1,10 @@
-﻿### Verbs
+### Verbs
 artifact-verb-make-always-active = Make artifact always active
 artifact-verb-activate = Activate artifact
 
 ### Unlocking
 artifact-unlock-state-begin = It begins to shift in strange ways...
+artifact-unlock-state-continue = The shifting continues, intensifying...
 artifact-unlock-state-end-success = It slows down, visibly changed.
 artifact-unlock-state-end-failure = It slows down before uneventfully stopping.
 

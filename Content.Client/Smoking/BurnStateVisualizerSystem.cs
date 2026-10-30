@@ -3,13 +3,13 @@ using Content.Shared.Smoking;
 
 namespace Content.Client.Smoking;
 
-public sealed class BurnStateVisualizerSystem : VisualizerSystem<BurnStateVisualsComponent>
+public sealed partial class BurnStateVisualizerSystem : VisualizerSystem<BurnStateVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, BurnStateVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
-        if (!args.AppearanceData.TryGetValue(SmokingVisuals.Smoking, out var burnState))
+        if (!args.TryGetData<SmokableState>(SmokingVisuals.Smoking, out var burnState))
             return;
 
         var state = burnState switch

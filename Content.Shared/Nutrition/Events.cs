@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.Prototypes;
@@ -55,20 +55,6 @@ public sealed partial class VapeDoAfterEvent : DoAfterEvent
     }
 
     public override DoAfterEvent Clone() => this;
-}
-
-/// <summary>
-/// Raised before food is sliced
-/// </summary>
-[ByRefEvent]
-public record struct SliceFoodEvent();
-
-/// <summary>
-/// is called after a successful attempt at slicing food.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed partial class SliceFoodDoAfterEvent : SimpleDoAfterEvent
-{
 }
 
 /// <summary>

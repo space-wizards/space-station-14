@@ -22,12 +22,13 @@
   name: Listen with stethoscope
   components:
   - type: Action
-    icon:
-      sprite: Clothing/Neck/Misc/stethoscope.rsi
-      state: icon
     priority: -1
     itemIconStyle: BigAction
     checkCanInteract: false
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/stethoscope.rsi
+    layers:
+    - state: icon
   - type: TargetAction
   - type: EntityTargetAction
     event: !type:StethoscopeActionEvent

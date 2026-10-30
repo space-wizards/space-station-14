@@ -32,12 +32,12 @@ public sealed partial class RehydratableSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
-        var quantity = _solutions.GetTotalPrototypeQuantity(ent.Owner, ent.Comp.CatalystPrototype);
+        var quantity = _solutions.GetTotalPrototypeQuantity(ent.Owner, ent.Comp.CatalystPrototypes);
+        if (quantity <= FixedPoint2.Zero || quantity < ent.Comp.CatalystMinimum)
+            return;
+
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner)} was hydrated, now contains a solution of: {SharedSolutionContainerSystem.ToPrettyString(args.Solution.Comp.Solution)}.");
-        if (quantity != FixedPoint2.Zero && quantity >= ent.Comp.CatalystMinimum)
-        {
-            Expand(ent);
-        }
+        Expand(ent);
     }
 
     // Try not to make this public if you can help it.
@@ -50,12 +50,14 @@ public sealed partial class RehydratableSystem : EntitySystem
 
         var randomMob = _random.Pick(comp.PossibleSpawns);
 
-        var target = Spawn(randomMob, Transform(uid).Coordinates);
+        if (!_xform.TryGetMapOrGridCoordinates(uid, out var spawnCoordinates))
+            return;
+
+        var target = Spawn(randomMob, spawnCoordinates.Value);
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner)} has been hydrated correctly and spawned: {ToPrettyString(target)}.");
 
         _popup.PopupEntity(Loc.GetString("rehydratable-component-expands-message", ("owner", uid)), target);
 
-        _xform.AttachToGridOrMap(target);
         var ev = new GotRehydratedEvent(target);
         RaiseLocalEvent(uid, ref ev);
 

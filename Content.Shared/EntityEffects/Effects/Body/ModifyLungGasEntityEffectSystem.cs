@@ -1,4 +1,4 @@
-﻿using Content.Shared.Atmos;
+using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 
 namespace Content.Shared.EntityEffects.Effects.Body;
@@ -28,6 +28,9 @@ public sealed partial class ModifyLungGasEntityEffectSystem : EntityEffectSystem
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class ModifyLungGas : EntityEffectBase<ModifyLungGas>
 {
+    /// <summary>
+    /// The new gas composition to set in the lung.
+    /// </summary>
     [DataField(required: true)]
     public Dictionary<Gas, float> Ratios = default!;
 }

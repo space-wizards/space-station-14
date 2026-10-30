@@ -1,0 +1,12 @@
+- type: adminVerbCategory
+  id: Smite
+  name: verb-categories-smite
+  requiredFlags: Fun
+  impact: Extreme
+  icon: /Textures/Interface/VerbIcons/smite.svg.192dpi.png
+  iconsOnly: true
+  columns: 6
+  blacklist:
+    components:
+    - Map
+    - MapGrid

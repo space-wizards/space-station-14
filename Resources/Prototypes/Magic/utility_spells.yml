@@ -7,9 +7,10 @@
   - type: Action
     useDelay: 30
     itemIconStyle: BigAction
-    icon:
-      sprite: Objects/Weapons/Guns/Basic/wands.rsi
-      state: nothing
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/wands.rsi
+    layers:
+    - state: nothing
   - type: InstantAction
     event: !type:ChargeSpellEvent
       charge: 1

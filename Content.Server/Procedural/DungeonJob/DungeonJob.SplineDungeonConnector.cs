@@ -17,7 +17,7 @@ public sealed partial class DungeonJob
         SplineDungeonConnectorDunGen gen,
         List<Dungeon> dungeons,
         HashSet<Vector2i> reservedTiles,
-        Random random)
+        IRobustRandom random)
     {
         // NOOP
         if (dungeons.Count <= 1)

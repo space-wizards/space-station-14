@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
@@ -19,10 +19,6 @@ namespace Content.Shared.Administration
         protected virtual void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
         {
             // Specific side code in target.
-        }
-
-        protected void LogBwoink(BwoinkTextMessage message)
-        {
         }
 
         [Serializable, NetSerializable]

@@ -1,5 +1,6 @@
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Power.Components;
+using Content.Server.Power.Events;
 using Content.Server.Power.Nodes;
 using Content.Server.Power.NodeGroups;
 using Content.Server.StationEvents.Components;
@@ -152,7 +153,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
     public void OnCableAnchorStateChanged(EntityUid uid, CableComponent component, CableAnchorStateChangedEvent args)
     {
-        var xform = args.Transform;
+        var xform = args.Cable.Comp;
 
         if (xform.GridUid == null || !TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return;
@@ -239,7 +240,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
     private void OnPowerGridCheckStarted(ref GameRuleStartedEvent ev)
     {
-        if (!TryComp<PowerGridCheckRuleComponent>(ev.RuleEntity, out var rule))
+        if (!TryComp<PowerGridCheckRuleComponent>(ev.Rule, out var rule))
             return;
 
         var query = AllEntityQuery<PowerMonitoringConsoleComponent, TransformComponent>();
@@ -255,7 +256,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
     private void OnPowerGridCheckEnded(ref GameRuleEndedEvent ev)
     {
-        if (!TryComp<PowerGridCheckRuleComponent>(ev.RuleEntity, out var rule))
+        if (!TryComp<PowerGridCheckRuleComponent>(ev.Rule, out var rule))
             return;
 
         var query = AllEntityQuery<PowerMonitoringConsoleComponent, TransformComponent>();

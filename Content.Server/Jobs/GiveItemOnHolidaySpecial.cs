@@ -3,7 +3,6 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Jobs
 {
@@ -11,17 +10,14 @@ namespace Content.Server.Jobs
     [DataDefinition]
     public sealed partial class GiveItemOnHolidaySpecial : JobSpecial
     {
-        [DataField("holiday", customTypeSerializer:typeof(PrototypeIdSerializer<HolidayPrototype>))]
-        public string Holiday { get; private set; } = string.Empty;
+        [DataField(required: true)]
+        public ProtoId<HolidayPrototype> Holiday;
 
-        [DataField("prototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string Prototype { get; private set; } = string.Empty;
+        [DataField(required: true)]
+        public EntProtoId Prototype;
 
         public override void AfterEquip(EntityUid mob)
         {
-            if (string.IsNullOrEmpty(Holiday) || string.IsNullOrEmpty(Prototype))
-                return;
-
             var sysMan = IoCManager.Resolve<IEntitySystemManager>();
 
             if (!sysMan.GetEntitySystem<HolidaySystem>().IsCurrentlyHoliday(Holiday))

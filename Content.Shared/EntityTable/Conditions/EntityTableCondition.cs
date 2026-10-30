@@ -16,6 +16,9 @@ public abstract partial class EntityTableCondition
     [DataField]
     public bool Invert;
 
+    /// <summary>
+    /// Evaluates a condition for a given context.
+    /// </summary>
     public bool Evaluate(EntityTableSelector root, IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
     {
         var res = EvaluateImplementation(root, entMan, proto, ctx);

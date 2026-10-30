@@ -1,7 +1,7 @@
 - type: entity
-  name: spaceshroom
-  parent: BaseStructure
+  parent: [ BaseStructure, StructureHealthFurniture ]
   id: Spaceshroom
+  name: spaceshroom
   suffix: Structure
   description: A cluster of wild mushrooms that likes to grow in dark, moist environments.
   components:
@@ -28,17 +28,26 @@
           children:
           - id: FoodSpaceshroom
     - type: Damageable
-      damageModifierSet: Wood
+      damageModifierSet: WoodMod
     - type: Injurable
-      damageContainer: StructuralInorganic
+      damageContainer: StructuralBiological
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 150
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 40
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            path: /Audio/Effects/tree_fell.ogg
+            params:
+              volume: -5
+              variation: 0.05
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            FoodSpaceshroom:
+              min: 0
+              max: 1
 
 - type: entity
   name: spaceshroom
@@ -87,12 +96,11 @@
     defaultTarget: cooked spaceshroom
   - type: AtmosExposed
   - type: Temperature
-    currentTemperature: 290
+    thermalConductivity: 1
+    temperature: 293.15
+    heatCapacity: 750
   - type: TemperatureDamage
   - type: InternalTemperature
-    thickness: 0.02
-    area: 0.02
-    conductivity: 0.43
   - type: Tag
     tags:
     - Mushroom

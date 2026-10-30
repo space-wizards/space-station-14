@@ -5,7 +5,6 @@ using Content.Shared.GridPreloader.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using System.Numerics;
@@ -15,13 +14,13 @@ using JetBrains.Annotations;
 using Robust.Shared.EntitySerialization.Systems;
 
 namespace Content.Server.GridPreloader;
+
 public sealed partial class GridPreloaderSystem : SharedGridPreloaderSystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private MapSystem _map = default!;
     [Dependency] private MapLoaderSystem _mapLoader = default!;
     [Dependency] private MetaDataSystem _meta = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
     /// <summary>
@@ -68,7 +67,7 @@ public sealed partial class GridPreloaderSystem : SharedGridPreloaderSystem
         _map.SetPaused(mapId, true);
 
         var globalXOffset = 0f;
-        foreach (var proto in _prototype.EnumeratePrototypes<PreloadedGridPrototype>())
+        foreach (var proto in ProtoMan.EnumeratePrototypes<PreloadedGridPrototype>())
         {
             for (var i = 0; i < proto.Copies; i++)
             {

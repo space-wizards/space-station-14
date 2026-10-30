@@ -1,4 +1,4 @@
-﻿- type: localizedDataset
+- type: localizedDataset
   id: RatKingCommandStay
   values:
     prefix: rat-king-command-stay-

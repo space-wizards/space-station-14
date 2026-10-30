@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseStructure
+  parent: [ BaseStructure, StructureHealthContainerFlimsy ]
   id: Rack
   name: rack
   description: A rack for storing things on.
@@ -31,20 +31,12 @@
         layer:
         - TableLayer
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 60
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 30
+        damage: 20
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -54,10 +46,8 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
-            min: 1
+            min: 0
             max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Climbable
   - type: StaticPrice
     price: 30

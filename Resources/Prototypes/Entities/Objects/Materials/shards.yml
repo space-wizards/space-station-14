@@ -1,10 +1,15 @@
 - type: entity
   abstract: true
-  parent: MaterialBase
+  parent: [SolutionCryo, SolutionCompositeNormalStackable, BaseItem, BaseItemDestructible]
   id: ShardBase
   description: It's a shard of some unknown material.
   components:
-  - type: Sharp
+  - type: Appearance
+  - type: Extractable
+    grindableSolutionName: composite
+  - type: Tool
+    qualities:
+    - Slicing
   - type: Execution
     doAfterDuration: 4.0
   - type: Sprite
@@ -54,16 +59,6 @@
   - type: SpaceGarbage
   - type: Damageable
     damageModifierSet: Glass
-  - type: Injurable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: StepTrigger
     intersectRatio: 0.2
   - type: PreventableStepTrigger
@@ -93,6 +88,9 @@
   - type: ToolRefinable
     refineResult:
     - id: SheetGlass1
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 50
   - type: DamageOnTrigger
     damage:
       types:
@@ -127,6 +125,10 @@
     refineResult:
     - id: SheetGlass1
     - id: PartRodMetal1
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 50
+      Steel: 25
   - type: DamageOnTrigger
     damage:
       types:
@@ -164,6 +166,10 @@
     refineResult:
     - id: SheetGlass1
     - id: SheetPlasma1
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 50
+      Plasma: 50
   - type: DamageOnTrigger
     damage:
       types:
@@ -200,6 +206,10 @@
     refineResult:
     - id: SheetGlass1
     - id: SheetUranium1
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 50
+      Uranium: 50
   - type: DamageOnTrigger
     damage:
       types:
@@ -232,6 +242,10 @@
     refineResult:
     - id: SheetGlass1
     - id: SheetBrass1
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 50
+      Brass: 50
   - type: DamageOnTrigger
     damage:
       types:
@@ -241,7 +255,5 @@
       reagents:
       - ReagentId: Silicon
         Quantity: 5
-      - ReagentId: Zinc
-        Quantity: 1.65
-      - ReagentId: Copper
-        Quantity: 3.35
+      - ReagentId: Brass
+        Quantity: 5

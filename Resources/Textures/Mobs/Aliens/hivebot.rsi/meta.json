@@ -72,10 +72,6 @@
                     0.2
                 ]
             ]
-        },
-        {
-            "name": "EngBot",
-            "directions": 4
         }
     ]
 }

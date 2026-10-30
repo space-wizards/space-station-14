@@ -266,4 +266,42 @@ dialog:color{
     end
 }
 
+dialog:button{
+    id = "save-displaced",
+    text = "Copy Displaced Sprite To New Canvas",
+    onclick = function(ev)
+        local layerDisplacement = findLayer(sprite, dialog.data["displacement-select"])
+        local layerTarget = findLayer(sprite, dialog.data["reference-select"])
+        if not layerDisplacement or not layerTarget then
+            app.alert("Select both displacement and reference layers!")
+            return
+        end
+
+        local celDisplacement = layerDisplacement:cel(1)
+        local celTarget = layerTarget:cel(1)
+        if not celDisplacement or not celTarget then
+            app.alert("Selected layers must have a cel in the first frame!")
+            return
+        end
+
+        local displacedImage = applyDisplacementMap(
+            sprite.width, sprite.height,
+            celDisplacement,
+            celTarget
+        )
+
+        local newSprite = Sprite(sprite.width, sprite.height, sprite.colorMode)
+        if sprite.colorMode == ColorMode.INDEXED then
+            for i=0,sprite.palettes[1].size-1 do
+                newSprite.palettes[1]:setColor(i, sprite.palettes[1]:getColor(i))
+            end
+        end
+
+        local newLayer = newSprite.layers[1]
+        local newCel = newLayer:cel(1)
+        newCel.image:drawImage(displacedImage, 0, 0)
+        app.activeSprite = newSprite
+    end
+}
+
 dialog:show{wait = false}

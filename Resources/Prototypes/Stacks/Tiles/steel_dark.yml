@@ -8,18 +8,6 @@
 
 - type: stack
   parent: BaseTileStack
-  id: FloorTileDarkDiagonalMini
-  name: stack-dark-steel-diagonal-mini-tile
-  spawn: FloorTileItemDarkDiagonalMini
-
-- type: stack
-  parent: BaseTileStack
-  id: FloorTileDarkDiagonal
-  name: stack-dark-steel-diagonal-tile
-  spawn: FloorTileItemDarkDiagonal
-
-- type: stack
-  parent: BaseTileStack
   id: FloorTileDarkHerringbone
   name: stack-dark-steel-herringbone
   spawn: FloorTileItemDarkHerringbone
@@ -50,21 +38,9 @@
 
 - type: stack
   parent: BaseTileStack
-  id: FloorTileDarkOffset
-  name: stack-offset-dark-steel-tile
-  spawn: FloorTileItemDarkOffset
-
-- type: stack
-  parent: BaseTileStack
   id: FloorTileDarkVerticalSlatsBordered
   name: stack-dark-steel-vertical-slats-tile-bordered
   spawn: FloorTileItemDarkVerticalSlatsBordered
-
-- type: stack
-  parent: BaseTileStack
-  id: FloorTileDarkSlatsContinuous
-  name: stack-dark-steel-slats-tile-continuous
-  spawn: FloorTileItemDarkSlatsContinuous
 
 - type: stack
   parent: BaseTileStack

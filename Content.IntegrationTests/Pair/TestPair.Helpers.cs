@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Preferences.Managers;
@@ -52,6 +52,8 @@ public sealed partial class TestPair
         mapData.CMapUid = ToClientUid(mapData.MapUid);
         mapData.CGridUid = ToClientUid(mapData.Grid);
         mapData.CGridCoords = new EntityCoordinates(mapData.CGridUid, 0, 0);
+
+        TestMap = mapData;
 
         return mapData;
     }

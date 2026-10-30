@@ -1,4 +1,4 @@
-﻿using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.GameTicking;
 using Content.Shared.GameTicking;
 using Robust.Shared.GameObjects;
@@ -8,9 +8,9 @@ namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
     [TestOf(typeof(RoundRestartCleanupEvent))]
-    public sealed class ResettingEntitySystemTests : GameTest
+    public sealed partial class ResettingEntitySystemTests : GameTest
     {
-        public sealed class TestRoundRestartCleanupEvent : EntitySystem
+        public sealed partial class TestRoundRestartCleanupEvent : EntitySystem
         {
             public bool HasBeenReset { get; set; }
 
@@ -41,7 +41,7 @@ namespace Content.IntegrationTests.Tests
             var server = pair.Server;
 
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
-            var gameTicker = entitySystemManager.GetEntitySystem<GameTicker>();
+            var gameTicker = entitySystemManager.GetEntitySystem<ServerGameTicker>();
 
             await server.WaitAssertion(() =>
             {

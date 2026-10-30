@@ -22,4 +22,19 @@ public sealed partial class DamageTrigger : IThresholdTrigger
     {
         return system.Damageable.GetTotalDamage(damageable.AsNullable()) >= Damage;
     }
+
+    public int CompareTo(IThresholdTrigger? other)
+    {
+        if (other is DamageTrigger trigger)
+        {
+            return Damage.CompareTo(trigger.Damage);
+        }
+
+        return 0;
+    }
+
+    public bool Equals(IThresholdTrigger? other)
+    {
+        return other is DamageTrigger trigger && trigger.Damage == Damage;
+    }
 }

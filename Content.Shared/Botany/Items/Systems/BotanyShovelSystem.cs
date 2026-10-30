@@ -1,0 +1,65 @@
+using Content.Shared.Botany.Components;
+using Content.Shared.Botany.Events;
+using Content.Shared.Botany.Systems;
+using Content.Shared.Burial.Components;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
+using Content.Shared.Popups;
+using Robust.Shared.Player;
+
+namespace Content.Shared.Botany.Items.Systems;
+
+/// <summary>
+/// System for using a shovel on a plant.
+/// </summary>
+public sealed partial class BotanyShovelSystem : EntitySystem
+{
+    [Dependency] private PlantSystem _plant = default!;
+    [Dependency] private PlantTraySystem _plantTray = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+
+    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery;
+
+    [SubscribeLocalEvent]
+    private void OnAfterInteract(Entity<ShovelComponent> ent, ref AfterInteractEvent args)
+    {
+        if (args.Target == null || args.Handled || !args.CanReach)
+            return;
+
+        if (!_trayQuery.HasComp(args.Target.Value))
+            return;
+
+        var ev = new TrayShovelAttemptEvent(ent, args.User);
+        RaiseLocalEvent(args.Target.Value, ref ev);
+
+        args.Handled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnTrayShovelAttempt(Entity<PlantTrayComponent> ent, ref TrayShovelAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (!_plantTray.TryGetPlant(ent.AsNullable(), out var plantUid))
+        {
+            _popup.PopupCursor(
+                Loc.GetString("plant-shovel-component-no-plant-popup", ("name", ent.Owner)),
+                args.User);
+            return;
+        }
+
+        _popup.PopupCursor(
+            Loc.GetString("plant-shovel-component-remove-plant-popup", ("name", ent.Owner)),
+            args.User,
+            PopupType.Medium);
+        _popup.PopupEntity(
+            Loc.GetString("plant-shovel-component-remove-plant-others-popup",
+                ("name", Identity.Entity(args.User, EntityManager))),
+            ent.Owner,
+            Filter.PvsExcept(args.User),
+            true);
+
+        _plant.RemovePlant(plantUid.Value);
+    }
+}

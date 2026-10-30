@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Shared.Eui;
 using Robust.Client.GameStates;
@@ -18,6 +18,20 @@ namespace Content.Client.Eui
 
         private readonly Dictionary<uint, EuiData> _openUis = new();
 
+        public bool IsOpen<T>() where T : BaseEui
+        {
+            foreach (var eui in _openUis.Values)
+            {
+                if (eui.Eui is T)
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Initialisation of the EuiManager.
+        /// </summary>
         public void Initialize()
         {
             _net.RegisterNetMessage<MsgEuiCtl>(RxMsgCtl);

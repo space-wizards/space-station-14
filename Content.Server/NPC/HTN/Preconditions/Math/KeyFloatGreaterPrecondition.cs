@@ -1,4 +1,4 @@
-﻿namespace Content.Server.NPC.HTN.Preconditions.Math;
+namespace Content.Server.NPC.HTN.Preconditions.Math;
 
 /// <summary>
 /// Checks if there is a float value for the specified <see cref="KeyFloatGreaterPrecondition.Key"/>

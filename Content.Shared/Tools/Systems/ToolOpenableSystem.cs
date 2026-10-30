@@ -51,7 +51,7 @@ public sealed partial class ToolOpenableSystem : EntitySystem
         if (toolToToggle == null || neededToolQuantity == null)
             return false;
 
-        return _tool.UseTool(toolToToggle.Value, user, entity, time, neededToolQuantity, evt);
+        return _tool.UseTool(toolToToggle.Value, user, entity, time, neededToolQuantity.Value, evt);
     }
 
     private void OnOpenableStateToggled(Entity<ToolOpenableComponent> entity, ref ToolOpenableDoAfterEventToggleOpen args)

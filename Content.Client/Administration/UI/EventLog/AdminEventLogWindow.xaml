@@ -1,0 +1,19 @@
+﻿<ui:FancyWindow xmlns="https://spacestation14.io"
+               xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+               Title="{Loc 'admin-event-log-title'}"
+               MinWidth="600"
+               MinHeight="180">
+    <BoxContainer Orientation="Vertical" Margin="10">
+        <BoxContainer Orientation="Horizontal" MinWidth="400">
+            <Label Text="{Loc admin-event-round}"/>
+            <SpinBox Name="RoundSpinBox" Value="0" MinWidth="150" Access="Public"/>
+            <Button Name="ResetRoundButton" Text="{Loc admin-event-round-reset}"
+                    StyleClasses="Open"/>
+        </BoxContainer>
+        <TextEdit Name="EventTextEdit" HorizontalExpand="True" VerticalExpand="True" Access="Public"/>
+        <BoxContainer Orientation="Horizontal">
+            <Button Name="SendEventLog" Text="{Loc admin-event-send}" HorizontalAlignment="Left"
+                    StyleClasses="Open" Access="Public"/>
+        </BoxContainer>
+    </BoxContainer>
+</ui:FancyWindow>

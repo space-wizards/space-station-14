@@ -11,12 +11,11 @@ namespace Content.Server.Xenoarchaeology.Artifact.XAE;
 /// <summary>
 /// System for xeno artifact effect that creates puddle of chemical reagents under artifact.
 /// </summary>
-public sealed partial class XAECreatePuddleSystem: BaseXAESystem<XAECreatePuddleComponent>
+public sealed partial class XAECreatePuddleSystem : BaseXAESystem<XAECreatePuddleComponent>
 {
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private PuddleSystem _puddle = default!;
-    [Dependency] private MetaDataSystem _metaData= default!;
-    [Dependency] private IPrototypeManager _prototypeManager= default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -49,7 +48,7 @@ public sealed partial class XAECreatePuddleSystem: BaseXAESystem<XAECreatePuddle
             var reagentNames = new HashSet<string>();
             foreach (var chemProtoId in component.SelectedChemicals)
             {
-                var reagent = _prototypeManager.Index(chemProtoId);
+                var reagent = ProtoMan.Index(chemProtoId);
                 reagentNames.Add(reagent.LocalizedName);
             }
 

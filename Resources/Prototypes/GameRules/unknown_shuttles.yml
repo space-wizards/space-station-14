@@ -7,6 +7,7 @@
     - id: LoneOpsSpawn
     - id: UnknownShuttleManOWar
     - id: UnknownShuttleInstigator
+    - id: UnknownShuttleNTQuark
 
 # Shuttle Game Rules
 
@@ -19,6 +20,7 @@
     weight: 10 # 10 default
     reoccurrenceDelay: 30
     duration: 1
+    occursDuringRoundEnd: false
     maxOccurrences: 1
   - type: RuleGrids
   - type: LoadMapRule

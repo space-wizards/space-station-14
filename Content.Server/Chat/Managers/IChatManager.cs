@@ -14,7 +14,8 @@ namespace Content.Server.Chat.Managers
         /// </summary>
         /// <param name="message"></param>
         /// <param name="colorOverride">Override the color of the message being sent.</param>
-        void DispatchServerAnnouncement(string message, Color? colorOverride = null);
+        /// <param name="sender">Session of the administrator who initiated the announcement.</param>
+        void DispatchServerAnnouncement(string message, Color? colorOverride = null, ICommonSession? sender = null);
 
         void DispatchServerMessage(ICommonSession player, string message, bool suppressLog = false);
 

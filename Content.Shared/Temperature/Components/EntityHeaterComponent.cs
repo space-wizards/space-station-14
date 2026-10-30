@@ -16,7 +16,7 @@ public sealed partial class EntityHeaterComponent : Component
     /// Low and medium are 33% and 66% respectively.
     /// </summary>
     [DataField]
-    public float Power = 2400f;
+    public float Power = 12000f;
 
     /// <summary>
     /// Current setting of the heater. If it is off or unpowered it won't heat anything.

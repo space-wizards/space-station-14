@@ -1,4 +1,4 @@
-﻿using Content.Client.Gameplay;
+using Content.Client.Gameplay;
 using Content.Client.Mapping;
 using Content.IntegrationTests.Fixtures;
 using Robust.Client.State;

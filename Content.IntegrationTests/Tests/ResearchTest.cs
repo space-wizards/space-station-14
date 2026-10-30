@@ -69,12 +69,12 @@ public sealed class ResearchTest : GameTest
                 if (pair.IsTestPrototype(proto))
                     continue;
 
-                if (!proto.TryGetComponent<LatheComponent>(out var lathe, compFact))
+                if (!proto.TryComp<LatheComponent>(out var lathe, compFact))
                     continue;
 
                 latheSys.AddRecipesFromPacks(latheTechs, lathe.DynamicPacks);
 
-                if (proto.TryGetComponent<EmagLatheRecipesComponent>(out var emag, compFact))
+                if (proto.TryComp<EmagLatheRecipesComponent>(out var emag, compFact))
                     latheSys.AddRecipesFromPacks(latheTechs, emag.EmagDynamicPacks);
             }
 

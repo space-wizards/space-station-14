@@ -78,6 +78,11 @@
   copyright: "170048@virtualwindow.co.za on freesound.org"
   source: "https://freesound.org/people/170048@virtualwindow.co.za/sounds/408041/"
 
+- files: ["custom_deny.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "From eris/bay at commit 35bbad6764b14e15c03a816e3e89aa1751660ba9"
+  source: "https://github.com/discordia-space/CEV-Eris/commit/35bbad6764b14e15c03a816e3e89aa1751660ba9"
+
 - files: ["diagnoser_printing.ogg"]
   license: "CC0-1.0"
   copyright: "RobSp1derp1g on freesound.org"

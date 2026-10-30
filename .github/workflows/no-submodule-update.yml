@@ -2,13 +2,36 @@ name: No submodule update checker
 
 on:
   pull_request:
+    types: [ opened, reopened, synchronize, ready_for_review ]
     paths:
       - 'RobustToolbox'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 
 jobs:
   this_aint_right:
     name: Submodule update in pr found
+    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
-      - name: Fail
-        run: exit 1
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Check changed files
+        shell: pwsh
+        run: |
+          $changedFiles = @(git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.event.pull_request.head.sha }}")
+
+          if ($changedFiles.Count -eq 1 -and $changedFiles[0] -eq "RobustToolbox") {
+            Write-Host "Only RobustToolbox was changed; allowing standalone submodule update."
+            exit 0
+          }
+
+          Write-Host "RobustToolbox was updated alongside other files:"
+          foreach ($file in $changedFiles) {
+            Write-Host " - $file"
+          }
+          exit 1

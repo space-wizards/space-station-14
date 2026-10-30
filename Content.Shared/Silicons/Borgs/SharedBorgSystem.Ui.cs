@@ -1,4 +1,4 @@
-﻿using Content.Shared.CCVar;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Silicons.Borgs.Components;

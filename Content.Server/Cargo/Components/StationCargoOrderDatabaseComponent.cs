@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Shared.Cargo;
-using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Station.Components;
 using Robust.Shared.Prototypes;
@@ -19,14 +18,20 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     [DataField]
     public int Capacity = 20;
 
+    /// <summary>
+    /// Every outstanding order across every account.
+    /// </summary>
     [ViewVariables]
     public IEnumerable<CargoOrderData> AllOrders => Orders.SelectMany(p => p.Value);
 
+    /// <summary>
+    /// A dictionary containing every outstanding order on the system, indexed by account.
+    /// </summary>
     [DataField]
     public Dictionary<ProtoId<CargoAccountPrototype>, List<CargoOrderData>> Orders = new();
 
     /// <summary>
-    /// Used to determine unique order IDs
+    /// Used to determine unique order IDs.
     /// </summary>
     [ViewVariables]
     public int NumOrdersCreated;
@@ -49,7 +54,7 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     public EntityUid? Shuttle;
 
     /// <summary>
-    ///     The paper-type prototype to spawn with the order information.
+    /// The paper-type prototype to spawn with the order information.
     /// </summary>
     [DataField]
     public EntProtoId PrinterOutput = "PaperCargoInvoice";
@@ -59,12 +64,25 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
 /// Event broadcast before a cargo order is fulfilled, allowing alternate systems to fulfill the order.
 /// </summary>
 [ByRefEvent]
-public record struct FulfillCargoOrderEvent(Entity<StationDataComponent> Station, CargoOrderData Order, Entity<CargoOrderConsoleComponent> OrderConsole)
+public record struct FulfillCargoOrderEvent(Entity<StationDataComponent> Station, CargoOrderData Order)
 {
-    public Entity<CargoOrderConsoleComponent> OrderConsole = OrderConsole;
-    public Entity<StationDataComponent> Station = Station;
-    public CargoOrderData Order = Order;
+    /// <summary>
+    /// The station that placed the order.
+    /// </summary>
+    public readonly Entity<StationDataComponent> Station = Station;
 
+    /// <summary>
+    /// The <see cref="CargoOrderData"/> representing the order.
+    /// </summary>
+    public readonly CargoOrderData Order = Order;
+
+    /// <summary>
+    /// The entity that is fulfilling the order, e.g. the telepad where an order will arrive.
+    /// </summary>
     public EntityUid? FulfillmentEntity;
+
+    /// <summary>
+    /// If this event has already been handled.
+    /// </summary>
     public bool Handled = false;
 }

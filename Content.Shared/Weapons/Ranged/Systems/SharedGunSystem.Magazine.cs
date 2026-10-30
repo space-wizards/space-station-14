@@ -182,6 +182,7 @@ public abstract partial class SharedGunSystem
         // Copy the magazine's appearance data
         Appearance.SetData(uid, AmmoVisuals.MagLoaded, magLoaded, appearance);
         Appearance.SetData(uid, AmmoVisuals.HasAmmo, count != 0, appearance);
+        Appearance.SetData(uid, AmmoVisuals.IsFull, count == capacity, appearance);
         Appearance.SetData(uid, AmmoVisuals.AmmoCount, count, appearance);
         Appearance.SetData(uid, AmmoVisuals.AmmoMax, capacity, appearance);
     }

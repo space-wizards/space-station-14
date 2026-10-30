@@ -68,7 +68,7 @@ public sealed partial class FtlArrivalOverlay : Overlay
             args.WorldHandle.SetTransform(worldMatrix);
             var localAABB = invMatrix.TransformBox(args.WorldBounds);
 
-            var tilesEnumerator = _maps.GetLocalTilesEnumerator(grid, mapGrid, localAABB);
+            var tilesEnumerator = _maps.GetLocalTilesIntersecting(grid, mapGrid, localAABB);
 
             while (tilesEnumerator.MoveNext(out var tile))
             {
@@ -77,8 +77,5 @@ public sealed partial class FtlArrivalOverlay : Overlay
                 args.WorldHandle.DrawTextureRect(texture, bounds);
             }
         }
-
-        args.WorldHandle.UseShader(null);
-        args.WorldHandle.SetTransform(Matrix3x2.Identity);
     }
 }

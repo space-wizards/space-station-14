@@ -3,7 +3,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.ParticleAccelerator;
 
-public sealed class ParticleAcceleratorPartVisualizerSystem : VisualizerSystem<ParticleAcceleratorPartVisualsComponent>
+public sealed partial class ParticleAcceleratorPartVisualizerSystem : VisualizerSystem<ParticleAcceleratorPartVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, ParticleAcceleratorPartVisualsComponent comp, ref AppearanceChangeEvent args)
     {
@@ -13,7 +13,7 @@ public sealed class ParticleAcceleratorPartVisualizerSystem : VisualizerSystem<P
         if (!SpriteSystem.LayerMapTryGet((uid, args.Sprite), ParticleAcceleratorVisualLayers.Unlit, out var index, false))
             return;
 
-        if (!AppearanceSystem.TryGetData<ParticleAcceleratorVisualState>(uid, ParticleAcceleratorVisuals.VisualState, out var state, args.Component))
+        if (!args.TryGetData<ParticleAcceleratorVisualState>(ParticleAcceleratorVisuals.VisualState, out var state))
         {
             state = ParticleAcceleratorVisualState.Unpowered;
         }

@@ -1,12 +1,12 @@
-﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.EntityTable;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Systems;
 using Content.Shared.Trigger.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Network;
@@ -40,7 +40,7 @@ public sealed partial class TriggerSystem : EntitySystem
     [Dependency] private UseDelaySystem _useDelay = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private ItemToggleSystem _itemToggle = default!;
-    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
     [Dependency] private SharedRoleSystem _role = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private EntityTableSystem _entityTable = default!;
@@ -108,7 +108,7 @@ public sealed partial class TriggerSystem : EntitySystem
         }
 
         if (ent.Comp.Popup != null)
-            _popup.PopupPredicted(Loc.GetString(ent.Comp.Popup.Value, ("device", ent.Owner)), ent.Owner, user);
+            _popup.PopupEntity(Loc.GetString(ent.Comp.Popup.Value, ("device", ent.Owner)), ent.Owner, user);
 
         AddComp<ActiveTimerTriggerComponent>(ent);
         var curTime = _timing.CurTime;

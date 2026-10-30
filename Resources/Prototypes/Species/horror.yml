@@ -1,0 +1,8 @@
+- type: species
+  id: Horror
+  name: species-name-horror
+  roundStart: false
+  prototype: MobHorror
+  dollPrototype: AppearanceHorror
+  skinColoration: HumanToned
+  defaultSkinTone: "#FFFFFFFF"

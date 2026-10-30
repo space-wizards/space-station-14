@@ -39,7 +39,7 @@ public sealed partial class VoteWebhooks : IPostInjectInit
             fields.Add(newVote);
         }
 
-        var gameTicker = _entSys.GetEntitySystemOrNull<GameTicker>();
+        var gameTicker = _entSys.GetEntitySystemOrNull<ServerGameTicker>();
         _sawmill = Logger.GetSawmill("discord");
 
         var runLevel = gameTicker != null ? Loc.GetString($"game-run-level-{gameTicker.RunLevel}") : "";

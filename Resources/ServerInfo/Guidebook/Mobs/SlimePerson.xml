@@ -5,20 +5,24 @@
     <GuideEntityEmbed Entity="MobSlimePerson" Caption=""/>
   </Box>
 
-  They breathe nitrogen instead of oxygen, which is abundant in the station air, but harder to find compressed into gas tanks. They take significant damage if they are sprayed or splashed with water, but can
-  (and like other species, need to) drink it safely to stay hydrated.
-  They exhale nitrous oxide and are unaffected by it.
-  Their body can process 6 reagents at the same time instead of just 2.
+  ## General Information
 
-  Slimepeople have an [bold]internal 2x3 storage inventory[/bold] inside of their slime membrane. Anyone can see what's inside and take it out of you without asking,
-  so be careful.
+  Slimes breathe nitrogen instead of oxygen (though inhaling oxygen has no ill effect on them). They exhale nitrous oxide and are unaffected by inhaling it.
 
-  Slimepeople have roughly [color=#1e90ff]double[/color] regeneration compared to other humanoids and can regenerate from far greater wounds up to [color=#1e90ff]triple[/color] compared to others.
+  They have an [color=lightgreen]internal 2x3 slot inventory[/color] inside of their slime membrane. This allows them to carry a bit more than other species,
+  though [italic]anyone[/italic] is able to reach inside this inventory without asking.
 
-  Their slime "blood" can not be regenerated from Iron. Slime Blood is technically a source of
-  moderately filling food for other species, although drinking the blood of your coworkers is usually frowned upon.
-  They suffocate 80% slower, but take pressure damage 9% faster. This makes them by far the species most capable to survive in hard vacuum. For a while.
+  They have slime rather than blood, which is replenished when metabolizing iron or drinking slime.
+  Slime is moderately nutritious when consumed by other species, though drinking the blood of your coworkers is usually frowned upon.
 
-  They take [color=#1e90ff]40% less Blunt damage[/color], but [color=#ffa500]50% more Cold damage, 20% more Slash damage and 20% more Piercing damage[/color].
+  They metabolize reagents with a single organ, up to six reagents per metabolism stage (digestion, bloodstream, and metabolites).
+
+  They take [color=lightgreen]40% less Blunt damage[/color] and [color=lightgreen]20% less Poison damage[/color], but
+  [color=palevioletred]50% more Cold damage[/color], [color=palevioletred]20% more Slash damage[/color], and [color=palevioletred]20% more Piercing damage[/color].
+  They naturally recover from Heat damage [color=lightgreen]twice as fast[/color] as most other species do (though proper medical treatment isn't any faster).
+
+  They [color=lightgreen]suffocate five times slower[/color], but [color=palevioletred]take pressure damage 9% faster[/color]. This makes them by far the most capable of surviving the longest unprotected in a hard vacuum.
+
+  They take [color=palevioletred]minor Heat damage[/color] if their outer membranes come into contact with water or water vapor, though they can still drink water normally with no ill effect.
 
 </Document>

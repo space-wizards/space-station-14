@@ -6,7 +6,6 @@ using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Strip.Components;
-using Robust.Shared.GameStates;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
@@ -16,29 +15,20 @@ public abstract partial class ClothingSystem : EntitySystem
     [Dependency] private InventorySystem _invSystem = default!;
     [Dependency] private SharedHandsSystem _handsSystem = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
+    [Dependency] protected EntityQuery<ClothingComponent> ClothingQuery;
+    [Dependency] private EntityQuery<HandsComponent> _handsQuery;
+    [Dependency] protected EntityQuery<InventoryComponent> InventoryQuery;
 
-        SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<ClothingComponent, AfterAutoHandleStateEvent>(AfterAutoHandleState);
-        SubscribeLocalEvent<ClothingComponent, GotEquippedEvent>(OnGotEquipped);
-        SubscribeLocalEvent<ClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
-
-        SubscribeLocalEvent<ClothingComponent, ClothingEquipDoAfterEvent>(OnEquipDoAfter);
-        SubscribeLocalEvent<ClothingComponent, ClothingUnequipDoAfterEvent>(OnUnequipDoAfter);
-
-        SubscribeLocalEvent<ClothingComponent, BeforeItemStrippedEvent>(OnItemStripped);
-    }
-
+    #region Event Handlers
+    [SubscribeLocalEvent]
     private void OnUseInHand(Entity<ClothingComponent> ent, ref UseInHandEvent args)
     {
         if (args.Handled || !ent.Comp.QuickEquip)
             return;
 
         var user = args.User;
-        if (!TryComp(user, out InventoryComponent? inv) ||
-            !TryComp(user, out HandsComponent? hands))
+        if (!InventoryQuery.TryComp(user, out InventoryComponent? inv) ||
+            !_handsQuery.TryComp(user, out HandsComponent? hands))
             return;
 
         QuickEquip(ent, (user, inv, hands));
@@ -50,35 +40,50 @@ public abstract partial class ClothingSystem : EntitySystem
         Entity<ClothingComponent> toEquipEnt,
         Entity<InventoryComponent, HandsComponent> userEnt)
     {
+        // First pass: try to find an empty slot that can accept the item.
         foreach (var slotDef in userEnt.Comp1.Slots)
         {
-            if (!_invSystem.CanEquip(userEnt, toEquipEnt, slotDef.Name, out _, slotDef, userEnt, toEquipEnt))
+            if (!_invSystem.CanEquip(userEnt, toEquipEnt, slotDef.Name, out _, slotDef, userEnt, toEquipEnt, assumeEmpty: true))
                 continue;
 
-            if (_invSystem.TryGetSlotEntity(userEnt, slotDef.Name, out var slotEntity, userEnt))
+            if (_invSystem.TryGetSlotEntity(userEnt, slotDef.Name, out _, userEnt))
+                continue; // slot occupied — skip in first pass
+
+            // Found a valid empty slot. Equip (or start do-after) and stop regardless of return value.
+            _invSystem.TryEquip(userEnt, toEquipEnt, slotDef.Name, inventory: userEnt, clothing: toEquipEnt, checkDoafter: true, triggerHandContact: true);
+            return;
+        }
+
+        // Second pass: no empty slot found — swap with the first occupied slot whose item allows quick-equip.
+        foreach (var slotDef in userEnt.Comp1.Slots)
+        {
+            if (!_invSystem.CanEquip(userEnt, toEquipEnt, slotDef.Name, out _, slotDef, userEnt, toEquipEnt, assumeEmpty: true))
+                continue;
+
+            if (!_invSystem.TryGetSlotEntity(userEnt, slotDef.Name, out var slotEntity, userEnt))
+                continue; // empty slot — already tried in first pass
+
+            // Item in slot has to be quick equipable as well
+            if (ClothingQuery.TryComp(slotEntity, out var existingItem) && !existingItem.QuickEquip)
+                continue;
+
+            if (!_invSystem.TryUnequip(userEnt, userEnt, slotDef.Name, out _, out var doAfterStarted, silent: true, inventory: userEnt, checkDoafter: true))
             {
-                // Item in slot has to be quick equipable as well
-                if (TryComp(slotEntity, out ClothingComponent? item) && !item.QuickEquip)
-                    continue;
+                // Commit to this slot only if removal is actually pending.
+                if (doAfterStarted)
+                    return;
 
-                if (!_invSystem.TryUnequip(userEnt, slotDef.Name, true, inventory: userEnt, checkDoafter: true))
-                    continue;
-
-                if (!_invSystem.TryEquip(userEnt, toEquipEnt, slotDef.Name, inventory: userEnt, clothing: toEquipEnt, checkDoafter: true, triggerHandContact: true))
-                    continue;
-
-                _handsSystem.PickupOrDrop(userEnt, slotEntity.Value, handsComp: userEnt);
-            }
-            else
-            {
-                if (!_invSystem.TryEquip(userEnt, toEquipEnt, slotDef.Name, inventory: userEnt, clothing: toEquipEnt, checkDoafter: true, triggerHandContact: true))
-                    continue;
+                continue;
             }
 
-            break;
+            // Instant unequip succeeded — equip new item into the now-empty slot.
+            _invSystem.TryEquip(userEnt, toEquipEnt, slotDef.Name, inventory: userEnt, clothing: toEquipEnt, checkDoafter: true, triggerHandContact: true);
+            _handsSystem.PickupOrDrop(userEnt, slotEntity.Value, handsComp: userEnt);
+            return;
         }
     }
 
+    [SubscribeLocalEvent]
     protected virtual void OnGotEquipped(EntityUid uid, ClothingComponent component, GotEquippedEvent args)
     {
         component.InSlot = args.Slot;
@@ -95,6 +100,7 @@ public abstract partial class ClothingSystem : EntitySystem
         RaiseLocalEvent(args.EquipTarget, ref didEquippedEvent);
     }
 
+    [SubscribeLocalEvent]
     protected virtual void OnGotUnequipped(EntityUid uid, ClothingComponent component, GotUnequippedEvent args)
     {
         if ((component.Slots & args.SlotFlags) != SlotFlags.NONE)
@@ -111,11 +117,13 @@ public abstract partial class ClothingSystem : EntitySystem
         Dirty(uid, component);
     }
 
+    [SubscribeLocalEvent]
     private void AfterAutoHandleState(Entity<ClothingComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         _itemSys.VisualsChanged(ent.Owner);
     }
 
+    [SubscribeLocalEvent]
     private void OnEquipDoAfter(Entity<ClothingComponent> ent, ref ClothingEquipDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Target is not { } target)
@@ -123,6 +131,7 @@ public abstract partial class ClothingSystem : EntitySystem
         args.Handled = _invSystem.TryEquip(args.User, target, ent, args.Slot, clothing: ent.Comp, predicted: true, checkDoafter: false);
     }
 
+    [SubscribeLocalEvent]
     private void OnUnequipDoAfter(Entity<ClothingComponent> ent, ref ClothingUnequipDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Target is not { } target)
@@ -132,10 +141,12 @@ public abstract partial class ClothingSystem : EntitySystem
             _handsSystem.TryPickup(args.User, ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnItemStripped(Entity<ClothingComponent> ent, ref BeforeItemStrippedEvent args)
     {
         args.Additive += ent.Comp.StripDelay;
     }
+    #endregion Event Handlers
 
     #region Public API
 
@@ -146,6 +157,11 @@ public abstract partial class ClothingSystem : EntitySystem
     public bool IsEquipped(Entity<ClothingComponent?> item)
     {
         if (!Resolve(item, ref item.Comp, false))
+            return false;
+
+        // If the entity is in a user's hand, or not on their body at all,
+        // the flag is null, and the bitwise and below returns null!
+        if (item.Comp.InSlotFlag == null)
             return false;
 
         if ((item.Comp.Slots & item.Comp.InSlotFlag) != SlotFlags.NONE)
@@ -205,6 +221,7 @@ public abstract partial class ClothingSystem : EntitySystem
             layer.Color = color;
         }
     }
+
     public void SetLayerState(ClothingComponent clothing, string slot, string mapKey, string state)
     {
         foreach (var layer in clothing.ClothingVisuals[slot])

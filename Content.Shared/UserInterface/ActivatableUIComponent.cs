@@ -1,4 +1,4 @@
-﻿using Content.Shared.Whitelist;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
@@ -8,7 +8,7 @@ namespace Content.Shared.UserInterface
     public sealed partial class ActivatableUIComponent : Component
     {
         [DataField(required: true, customTypeSerializer: typeof(EnumSerializer))]
-        public Enum? Key;
+        public Enum Key;
 
         /// <summary>
         /// Whether the item must be held in one of the user's hands to work.

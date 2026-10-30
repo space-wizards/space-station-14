@@ -58,9 +58,6 @@ public abstract partial class BaseXATSystem<T> : EntitySystem where T : Componen
     /// </summary>
     protected void Trigger(Entity<XenoArtifactComponent> artifact, Entity<T, XenoArtifactNodeComponent> node)
     {
-        if (!Timing.IsFirstTimePredicted)
-            return;
-
         Log.Debug($"Activated trigger {typeof(T).Name} on node {ToPrettyString(node)} for {ToPrettyString(artifact)}");
         XenoArtifact.TriggerXenoArtifact(artifact, (node.Owner, node.Comp2));
     }

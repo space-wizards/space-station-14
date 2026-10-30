@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Construction;
 using Content.Shared.Destructible;
@@ -12,58 +12,69 @@ public abstract partial class SharedBuckleSystem
 {
     private void InitializeStrap()
     {
-        SubscribeLocalEvent<StrapComponent, ComponentStartup>(OnStrapStartup);
-        SubscribeLocalEvent<StrapComponent, ComponentShutdown>(OnStrapShutdown);
-        SubscribeLocalEvent<StrapComponent, EntityTerminatingEvent>(OnStrapTerminating);
-        SubscribeLocalEvent<StrapComponent, ComponentRemove>((e, c, _) => StrapRemoveAll(e, c));
-
-        SubscribeLocalEvent<StrapComponent, ContainerGettingInsertedAttemptEvent>(OnStrapContainerGettingInsertedAttempt);
-        SubscribeLocalEvent<StrapComponent, DestructionEventArgs>((e, c, _) => StrapRemoveAll(e, c));
-        SubscribeLocalEvent<StrapComponent, BreakageEventArgs>((e, c, _) => StrapRemoveAll(e, c));
-
-        SubscribeLocalEvent<StrapComponent, FoldAttemptEvent>(OnAttemptFold);
-        SubscribeLocalEvent<StrapComponent, MachineDeconstructedEvent>((e, c, _) => StrapRemoveAll(e, c));
+        SubscribeLocalEvent<StrapComponent, ComponentRemove>((e, ref _) => StrapRemoveAll(e));
+        SubscribeLocalEvent<StrapComponent, DestructionEventArgs>((e, ref _) => StrapRemoveAll(e));
+        SubscribeLocalEvent<StrapComponent, BreakageEventArgs>((e, ref _) => StrapRemoveAll(e));
+        SubscribeLocalEvent<StrapComponent, MachineDeconstructedEvent>((e, ref _) => StrapRemoveAll(e));
     }
 
-    private void OnStrapStartup(EntityUid uid, StrapComponent component, ComponentStartup args)
+    [SubscribeLocalEvent]
+    private void OnStrapStartup(Entity<StrapComponent> ent, ref ComponentStartup args)
     {
-        Appearance.SetData(uid, StrapVisuals.State, component.BuckledEntities.Count != 0);
+        Appearance.SetData(ent, StrapVisuals.State, ent.Comp.BuckledEntities.Count != 0);
+
+        // Raise events on anything that starts buckled.
+        foreach (var buckle in ent.Comp.BuckledEntities)
+        {
+            if (!TryComp<BuckleComponent>(buckle, out var buckleComp))
+                continue;
+
+            var ev = new StrappedEvent(ent, (buckle, buckleComp));
+            RaiseLocalEvent(ent, ref ev);
+
+            var gotEv = new BuckledEvent(ent, (buckle, buckleComp));
+            RaiseLocalEvent(buckle, ref gotEv);
+        }
     }
 
-    private void OnStrapShutdown(EntityUid uid, StrapComponent component, ComponentShutdown args)
+    [SubscribeLocalEvent]
+    private void OnStrapShutdown(Entity<StrapComponent> ent, ref ComponentShutdown args)
     {
-        if (!TerminatingOrDeleted(uid))
-            StrapRemoveAll(uid, component);
+        if (!TerminatingOrDeleted(ent))
+            StrapRemoveAll(ent);
     }
 
-    private void OnStrapTerminating(Entity<StrapComponent> entity, ref EntityTerminatingEvent args)
+    [SubscribeLocalEvent]
+    private void OnStrapTerminating(Entity<StrapComponent> ent, ref EntityTerminatingEvent args)
     {
-        StrapRemoveAll(entity, entity.Comp);
+        StrapRemoveAll(ent);
     }
 
-    private void OnStrapContainerGettingInsertedAttempt(EntityUid uid, StrapComponent component, ContainerGettingInsertedAttemptEvent args)
+    [SubscribeLocalEvent]
+    private void OnStrapContainerGettingInsertedAttempt(Entity<StrapComponent> ent, ref ContainerGettingInsertedAttemptEvent args)
     {
         // If someone is attempting to put this item inside of a backpack, ensure that it has no entities strapped to it.
-        if (args.Container.ID == StorageComponent.ContainerId && component.BuckledEntities.Count != 0)
+        if (args.Container.ID == StorageComponent.ContainerId && ent.Comp.BuckledEntities.Count != 0)
             args.Cancel();
     }
 
-    private void OnAttemptFold(EntityUid uid, StrapComponent component, ref FoldAttemptEvent args)
+    [SubscribeLocalEvent]
+    private void OnAttemptFold(Entity<StrapComponent> ent, ref FoldAttemptEvent args)
     {
         if (args.Cancelled)
             return;
 
-        args.Cancelled = component.BuckledEntities.Count != 0;
+        args.Cancelled = ent.Comp.BuckledEntities.Count != 0;
     }
 
     /// <summary>
     /// Remove everything attached to the strap
     /// </summary>
-    private void StrapRemoveAll(EntityUid uid, StrapComponent strapComp)
+    private void StrapRemoveAll(Entity<StrapComponent> ent)
     {
-        foreach (var entity in strapComp.BuckledEntities.ToArray())
+        foreach (var buckle in ent.Comp.BuckledEntities.ToArray())
         {
-            Unbuckle(entity, entity);
+            Unbuckle(buckle, buckle);
         }
     }
 
@@ -94,6 +105,6 @@ public abstract partial class SharedBuckleSystem
         Dirty(strapUid, strapComp);
 
         if (!enabled)
-            StrapRemoveAll(strapUid, strapComp);
+            StrapRemoveAll((strapUid, strapComp));
     }
 }

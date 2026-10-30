@@ -1,5 +1,5 @@
 using Content.Shared.EntityTable.EntitySelectors;
-using Content.Shared.GameTicking.Rules;
+using Content.Shared.GameTicking.Rules.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityTable.Conditions;
@@ -9,7 +9,7 @@ namespace Content.Shared.EntityTable.Conditions;
 /// </summary>
 public sealed partial class HasBudgetCondition : EntityTableCondition
 {
-    public const string BudgetContextKey = "Budget";
+    public static readonly EntityTableContextKey<float> BudgetContextKey = new("Budget");
 
     /// <summary>
     /// Used for determining the cost for the budget.
@@ -36,7 +36,7 @@ public sealed partial class HasBudgetCondition : EntityTableCondition
             if (root is not EntSelector entSelector)
                 return false;
 
-            if (!proto.Index(entSelector.Id).TryGetComponent(out DynamicRuleCostComponent? costComponent, entMan.ComponentFactory))
+            if (!proto.Index(entSelector.Id).TryComp(out DynamicRuleCostComponent? costComponent, entMan.ComponentFactory))
             {
                 var log = Logger.GetSawmill("HasBudgetCondition");
                 log.Error($"Rule {entSelector.Id} does not have a DynamicRuleCostComponent.");

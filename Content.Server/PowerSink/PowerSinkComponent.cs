@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Audio;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.PowerSink
@@ -38,7 +38,7 @@ namespace Content.Server.PowerSink
             new SoundPathSpecifier("/Audio/Effects/PowerSink/electric.ogg")
             {
                 Params = AudioParams.Default
-                    .WithVolume(15f) // audible even behind walls
+                    .AddVolume(15f) // audible even behind walls
                     .WithRolloffFactor(10)
             };
     }

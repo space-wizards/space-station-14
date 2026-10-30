@@ -1,4 +1,4 @@
-﻿advertisement-cola-1 = Refreshing!
+advertisement-cola-1 = Refreshing!
 advertisement-cola-2 = Hope you're thirsty!
 advertisement-cola-3 = Over 1 million drinks sold!
 advertisement-cola-4 = Thirsty? Why not cola?

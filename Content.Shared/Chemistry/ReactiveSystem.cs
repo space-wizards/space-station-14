@@ -9,8 +9,8 @@ namespace Content.Shared.Chemistry;
 [UsedImplicitly]
 public sealed partial class ReactiveSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _proto = default!;
 
+    // TODO: Someone add documentation, I beg you
     public void DoEntityReaction(EntityUid uid, Solution solution, ReactionMethod method)
     {
         foreach (var reagent in solution.Contents.ToArray())
@@ -25,7 +25,7 @@ public sealed partial class ReactiveSystem : EntitySystem
             return;
 
         // We throw if the reagent specified doesn't exist.
-        if (!_proto.Resolve<ReagentPrototype>(reagentQuantity.Reagent.Prototype, out var proto))
+        if (!ProtoMan.Resolve<ReagentPrototype>(reagentQuantity.Reagent.Prototype, out var proto))
             return;
 
         var ev = new ReactionEntityEvent(method, reagentQuantity, proto);

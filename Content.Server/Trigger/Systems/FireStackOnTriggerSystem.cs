@@ -53,7 +53,7 @@ public sealed partial class FireStackOnTriggerSystem : EntitySystem
         if (!TryComp<FlammableComponent>(target.Value, out var flammable))
             return;
 
-        _flame.Extinguish(target.Value, flammable: flammable);
+        _flame.TryExtinguish((target.Value, flammable));
 
         args.Handled = true;
     }

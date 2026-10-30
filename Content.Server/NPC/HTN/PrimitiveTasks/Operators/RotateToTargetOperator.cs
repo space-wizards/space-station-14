@@ -5,7 +5,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 public sealed partial class RotateToTargetOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entityManager = default!;
-    private RotateToFaceSystem _rotate = default!;
+    [Dependency] private RotateToFaceSystem _rotate = default!;
 
     [DataField("targetKey")]
     public string TargetKey = "RotateTarget";
@@ -16,12 +16,6 @@ public sealed partial class RotateToTargetOperator : HTNOperator
     // Didn't use a key because it's likely the same between all NPCs
     [DataField("tolerance")]
     public Angle Tolerance = Angle.FromDegrees(1);
-
-    public override void Initialize(IEntitySystemManager sysManager)
-    {
-        base.Initialize(sysManager);
-        _rotate = sysManager.GetEntitySystem<RotateToFaceSystem>();
-    }
 
     public override void TaskShutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
     {
