@@ -103,7 +103,7 @@ namespace Content.Server.Light.EntitySystems
 
         private byte? GetLevel(Entity<HandheldLightComponent> ent)
         {
-            // Curently every single flashlight has the same number of levels for status and that's all it uses the charge for
+            // Currently every single flashlight has the same number of levels for status and that's all it uses the charge for
             // Thus we'll just check if the level changes.
 
             if (!_powerCell.TryGetBatteryFromSlotOrEntity(ent.Owner, out var battery))
@@ -114,7 +114,7 @@ namespace Content.Server.Light.EntitySystems
             if (MathHelper.CloseToPercent(currentCharge, 0) || ent.Comp.Wattage > currentCharge)
                 return 0;
 
-            return (byte?)ContentHelpers.RoundToNearestLevels(currentCharge / battery.Value.Comp.MaxCharge * 255, 255, HandheldLightComponent.StatusLevels);
+            return (byte?)ContentHelpers.RoundToNearestLevels(currentCharge / ent.Comp.WattageCoof * 255, 255, HandheldLightComponent.StatusLevels);
         }
 
         private void OnRemove(Entity<HandheldLightComponent> ent, ref ComponentRemove args)

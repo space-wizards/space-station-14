@@ -14,7 +14,10 @@ public sealed partial class HandheldLightComponent : Component
     public bool Activated;
 
     [DataField]
-    public float Wattage { get; set; } = .8f;
+    public float Wattage = .8f;
+
+    [DataField]
+    public float WattageCoof = 360;
 
     [DataField]
     public SoundSpecifier TurnOnSound = new SoundPathSpecifier("/Audio/Items/flashlight_on.ogg");
