@@ -1,0 +1,147 @@
+# Chief Engineer
+
+- type: loadoutGroup
+  parent: BaseHead
+  id: ChiefEngineerHead
+  loadouts:
+  - ChiefEngineerHead
+  - ChiefEngineerBeret
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: ChiefEngineerJumpsuit
+  loadouts:
+  - ChiefEngineerJumpsuit
+  - ChiefEngineerJumpskirt
+  - ChiefEngineerTurtleneck
+  - ChiefEngineerTurtleneckSkirt
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: ChiefEngineerOuterClothing
+  loadouts:
+  - ChiefEngineerWintercoat
+
+- type: loadoutGroup
+  parent: BaseNeck
+  id: ChiefEngineerNeck
+  loadouts:
+  - ChiefEngineerCloak
+  - ChiefEngineerMantle
+
+- type: loadoutGroup
+  parent: BaseShoes
+  id: ChiefEngineerShoes
+  loadouts:
+  - BrownShoes
+  - EngineeringWinterBoots
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: ChiefEngineerJobTrinkets
+#  loadouts: []
+
+# Atmospheric Technician
+
+- type: loadoutGroup
+  parent: BaseBackpack
+  id: AtmosphericTechnicianBackpack
+  loadouts:
+  - AtmosphericTechnicianBackpack
+  - AtmosphericTechnicianSatchel
+  - AtmosphericTechnicianDuffel
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: AtmosphericTechnicianJumpsuit
+  loadouts:
+  - AtmosphericTechnicianJumpsuit
+  - AtmosphericTechnicianJumpskirt
+  - AtmosphericTechnicianJumpsuitCasual
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: AtmosphericTechnicianOuterClothing
+  loadouts:
+  - AtmosphericTechnicianWintercoat
+
+- type: loadoutGroup
+  parent: BaseShoes
+  id: AtmosphericTechnicianShoes
+  loadouts:
+  - WhiteShoes
+  - EngineeringWinterBoots
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: AtmosphericTechnicianJobTrinkets
+#  loadouts: []
+
+# Station Engineer
+
+- type: loadoutGroup
+  parent: BaseHead
+  id: StationEngineerHead
+  loadouts:
+  - StationEngineerHardhatYellow
+  - StationEngineerHardhatOrange
+  - StationEngineerHardhatRed
+  - SeniorEngineerBeret
+
+- type: loadoutGroup
+  parent: BaseBackpack
+  id: StationEngineerBackpack
+  loadouts:
+  - StationEngineerBackpack
+  - StationEngineerSatchel
+  - StationEngineerDuffel
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: StationEngineerJumpsuit
+  loadouts:
+  - StationEngineerJumpsuit
+  - StationEngineerJumpskirt
+  - StationEngineerHazardsuit
+  - SeniorEngineerJumpsuit
+  - SeniorEngineerJumpskirt
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: StationEngineerOuterClothing
+  loadouts:
+  - StationEngineerOuterVest
+  - StationEngineerWintercoat
+
+- type: loadoutGroup
+  parent: BaseShoes
+  id: StationEngineerShoes
+  loadouts:
+  - WorkBoots
+  - EngineeringWinterBoots
+
+- type: loadoutGroup
+  parent: BasePDA
+  id: StationEngineerPDA
+  loadouts:
+  - StationEngineerPDA
+  - SeniorEngineerPDA
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: StationEngineerJobTrinkets
+#  loadouts: []
+
+# Technical Assistant
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: TechnicalAssistantJumpsuit
+  loadouts:
+  - YellowJumpsuit
+  - YellowJumpskirt
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: TechnicalAssistantJobTrinkets
+#  loadouts:

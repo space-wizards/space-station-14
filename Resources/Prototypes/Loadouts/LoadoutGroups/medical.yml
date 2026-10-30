@@ -1,4 +1,4 @@
-# Generic
+# Generic departmental
 
 - type: loadoutGroup
   parent: BaseMask
@@ -20,14 +20,6 @@
   loadouts:
   - WhiteShoes
   - MedicalWinterBoots
-
-- type: loadoutGroup
-  parent: BaseSurvival
-  id: MedicalSurvival
-  loadouts:
-  - EmergencyNitrogenMedical
-  - EmergencyOxygenMedical
-  - LoadoutSpeciesVoxNitrogen
 
 # Chief Medical Officer
 
@@ -71,7 +63,37 @@
 #- type: loadoutGroup
 #  parent: BaseJobTrinkets
 #  id: ChiefMedicalOfficerJobTrinkets
-#  loadouts:
+#  loadouts: []
+
+# Chemist
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: ChemistJumpsuit
+  loadouts:
+  - ChemistJumpsuit
+  - ChemistJumpskirt
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: ChemistOuterClothing
+  loadouts:
+  - RegularLabCoat
+  - ChemistLabCoat
+  - ChemistWintercoat
+
+- type: loadoutGroup
+  parent: BaseBackpack
+  id: ChemistBackpack
+  loadouts:
+  - ChemistBackpack
+  - ChemistSatchel
+  - ChemistDuffel
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: ChemistJobTrinkets
+#  loadouts: []
 
 # Medical Doctor
 
@@ -117,7 +139,7 @@
 #- type: loadoutGroup
 #  parent: BaseJobTrinkets
 #  id: MedicalDoctorJobTrinkets
-#  loadouts:
+#  loadouts: []
 
 # Medical Intern
 
@@ -131,37 +153,7 @@
 #- type: loadoutGroup
 #  parent: BaseJobTrinkets
 #  id: MedicalInternJobTrinkets
-#  loadouts:
-
-# Chemist
-
-- type: loadoutGroup
-  parent: BaseJumpsuit
-  id: ChemistJumpsuit
-  loadouts:
-  - ChemistJumpsuit
-  - ChemistJumpskirt
-
-- type: loadoutGroup
-  parent: BaseOuterClothing
-  id: ChemistOuterClothing
-  loadouts:
-  - RegularLabCoat
-  - ChemistLabCoat
-  - ChemistWintercoat
-
-- type: loadoutGroup
-  parent: BaseBackpack
-  id: ChemistBackpack
-  loadouts:
-  - ChemistBackpack
-  - ChemistSatchel
-  - ChemistDuffel
-
-#- type: loadoutGroup
-#  parent: BaseJobTrinkets
-#  id: ChemistJobTrinkets
-#  loadouts:
+#  loadouts: []
 
 # Paramedic
 
@@ -196,4 +188,4 @@
 #- type: loadoutGroup
 #  parent: BaseJobTrinkets
 #  id: ParamedicJobTrinkets
-#  loadouts:
+#  loadouts: []

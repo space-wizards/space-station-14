@@ -9,7 +9,7 @@
   - CaptainOuterClothing
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   #- CaptainJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -22,10 +22,10 @@
   - HoPJumpsuit
   - HoPBackpack
   - HoPOuterClothing
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   #- HoPJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -48,14 +48,14 @@
   - PassengerJumpsuit
   - CommonBackpack
   - PassengerNeck
-  - PassengerFace
+  - PassengerMask
   - PassengerGloves
   - PassengerOuterClothing
   - PassengerShoes
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   #- PassengerJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -67,10 +67,10 @@
   - BartenderJumpsuit
   - CommonBackpack
   - BartenderOuterClothing
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   - BartenderJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -80,10 +80,10 @@
   - GroupTankHarness
   - BartenderJumpsuit
   - CommonBackpack
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   #- ServiceWorkerJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -96,10 +96,10 @@
   - ChefJumpsuit
   - CommonBackpack
   - ChefOuterClothing
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   #- ChefJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -109,10 +109,10 @@
   - GroupTankHarness
   - LibrarianJumpsuit
   - CommonBackpack
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   #- LibrarianJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -123,10 +123,10 @@
   - LawyerNeck
   - LawyerJumpsuit
   - CommonBackpack
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   #- LawyerJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -143,10 +143,10 @@
   - ChaplainOuterClothing
   - ChaplainShoes
   - ChaplainBible
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   #- ChaplainJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -159,10 +159,10 @@
   - JanitorGloves
   - CommonBackpack
   - JanitorOuterClothing
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   - JanitorJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -174,10 +174,10 @@
   - BotanistJumpsuit
   - BotanistBackpack
   - BotanistOuterClothing
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   #- BotanistJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -191,10 +191,10 @@
   - ClownBackpack
   - ClownOuterClothing
   - ClownShoes
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - SurvivalClown
-  - Trinkets
+  - CommonTrinkets
   - ClownJobTrinkets
 
 - type: roleLoadout
@@ -208,10 +208,10 @@
   - MimeBackpack
   - MimeOuterClothing
   - MimeBelt
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   #- MimeJobTrinkets
 
 - type: roleLoadout
@@ -223,10 +223,10 @@
   - CommonBackpack
   - MusicianOuterClothing
   - Instruments
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   #- MusicianJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -241,10 +241,10 @@
   - CargoTechnicianBackpack
   - QuartermasterOuterClothing
   - QuartermasterShoes
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   #- QuartermasterJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -258,10 +258,10 @@
   - CargoTechnicianOuterClothing
   - CargoTechnicianShoes
   - CargoTechnicianID
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   #- CargoTechnicianJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -272,10 +272,10 @@
   - SalvageSpecialistBackpack
   - SalvageSpecialistOuterClothing
   - SalvageSpecialistShoes
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   #- SalvageSpecialistJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -292,7 +292,7 @@
   - ChiefEngineerShoes
   - AssistiveItems
   - SurvivalExtended
-  - Trinkets
+  - CommonTrinkets
   #- ChiefEngineerJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -304,7 +304,7 @@
   - StationEngineerBackpack
   - AssistiveItems
   - SurvivalExtended
-  - Trinkets
+  - CommonTrinkets
   #- TechnicalAssistantJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -320,7 +320,7 @@
   - StationEngineerID
   - AssistiveItems
   - SurvivalExtended
-  - Trinkets
+  - CommonTrinkets
   #- StationEngineerJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -334,7 +334,7 @@
   - AtmosphericTechnicianShoes
   - AssistiveItems
   - SurvivalExtended
-  - Trinkets
+  - CommonTrinkets
   #- AtmosphericTechnicianJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -350,10 +350,10 @@
   - ResearchDirectorOuterClothing
   - ScientistGloves
   - ResearchDirectorShoes
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   #- ResearchDirectorJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -369,10 +369,10 @@
   - ScientistGloves
   - ScientistShoes
   - ScientistPDA
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   #- ScientistJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -382,10 +382,10 @@
   - GroupTankHarness
   - ResearchAssistantJumpsuit
   - ScientistBackpack
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   #- ResearchAssistantJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -402,7 +402,7 @@
   - SecurityShoes
   - AssistiveItems
   - SurvivalSecurity
-  - Trinkets
+  - CommonTrinkets
   - HeadofSecurityJobTrinkets
   - GroupSpeciesBreathToolSecurity
 
@@ -417,7 +417,7 @@
   - SecurityShoes
   - AssistiveItems
   - SurvivalSecurity
-  - Trinkets
+  - CommonTrinkets
   - WardenJobTrinkets
   - GroupSpeciesBreathToolSecurity
 
@@ -433,7 +433,7 @@
   - SecurityBelt
   - AssistiveItems
   - SurvivalSecurity
-  - Trinkets
+  - CommonTrinkets
   - SecurityJobTrinkets
   - GroupSpeciesBreathToolSecurity
 
@@ -448,7 +448,7 @@
   - SecurityShoes
   - AssistiveItems
   - SurvivalSecurity
-  - Trinkets
+  - CommonTrinkets
   - DetectiveJobTrinkets
   - GroupSpeciesBreathToolSecurity
 
@@ -459,7 +459,7 @@
   - SecurityBackpack
   - AssistiveItems
   - SurvivalSecurity
-  - Trinkets
+  - CommonTrinkets
   #- SecurityCadetJobTrinkets
   - GroupSpeciesBreathToolSecurity
 
@@ -472,10 +472,10 @@
   - ReporterHead
   - ReporterOuterClothing
   - CommonBackpack
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   #- ReporterJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -485,10 +485,10 @@
   - GroupTankHarness
   - PsychologistJumpsuit
   - MedicalBackpack
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   #- PsychologistJobTrinkets
   - GroupSpeciesBreathTool
 
@@ -499,12 +499,12 @@
   - CommonBackpack
   - TramDriverJumpsuit
   - TramDriverOuterClothing #Vest and such
-  - TramDriverHat
+  - TramDriverHead
   - TramDriverGloves
-  - Eyewear
+  - CommonEyewear
   - AssistiveItems
   - Survival
-  - Trinkets
+  - CommonTrinkets
   #- TramDriverJobTrinkets
   - GroupSpeciesBreathTool
 
