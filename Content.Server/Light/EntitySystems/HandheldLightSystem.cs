@@ -101,20 +101,23 @@ namespace Content.Server.Light.EntitySystems
             _actions.RemoveAction(uid, component.SelfToggleActionEntity);
         }
 
-        private byte? GetLevel(Entity<HandheldLightComponent> ent)
+        private byte? GetLevel(Entity<HandheldLightComponent> ent, float? charge = null)
         {
             // Currently every single flashlight has the same number of levels for status and that's all it uses the charge for
             // Thus we'll just check if the level changes.
 
-            if (!_powerCell.TryGetBatteryFromSlotOrEntity(ent.Owner, out var battery))
-                return null;
+            if (charge == null)
+            {
+                if (!_powerCell.TryGetBatteryFromSlotOrEntity(ent.Owner, out var battery))
+                    return null;
 
-            var currentCharge = _battery.GetCharge(battery.Value.AsNullable());
+                charge = _battery.GetCharge(battery.Value.AsNullable());
+            }
 
-            if (MathHelper.CloseToPercent(currentCharge, 0) || ent.Comp.Wattage > currentCharge)
+            if (MathHelper.CloseToPercent(charge.Value, 0) || ent.Comp.Wattage > charge)
                 return 0;
 
-            return (byte?)ContentHelpers.RoundToNearestLevels(currentCharge / ent.Comp.WattageCoof * 255, 255, HandheldLightComponent.StatusLevels);
+            return (byte?)ContentHelpers.RoundToNearestLevels(charge.Value / ent.Comp.ChargeAmount * 255, 255, HandheldLightComponent.StatusLevels);
         }
 
         private void OnRemove(Entity<HandheldLightComponent> ent, ref ComponentRemove args)
@@ -229,7 +232,7 @@ namespace Content.Server.Light.EntitySystems
             var appearanceComponent = EntityManager.GetComponentOrNull<AppearanceComponent>(uid);
 
             var currentCharge = _battery.GetCharge(battery.Value.AsNullable());
-            var chargeFraction = currentCharge / uid.Comp.WattageCoof;
+            var chargeFraction = currentCharge / uid.Comp.ChargeAmount;
 
             if (chargeFraction >= 0.30)
             {
@@ -247,12 +250,12 @@ namespace Content.Server.Light.EntitySystems
             if (component.Activated && !_battery.TryUseCharge(battery.Value.AsNullable(), component.Wattage * frameTime))
                 TurnOff(uid, false);
 
-            UpdateLevel(uid);
+            UpdateLevel(uid, currentCharge);
         }
 
-        private void UpdateLevel(Entity<HandheldLightComponent> ent)
+        private void UpdateLevel(Entity<HandheldLightComponent> ent, float? charge = null)
         {
-            var level = GetLevel(ent);
+            var level = GetLevel(ent, charge);
 
             if (level == ent.Comp.Level)
                 return;
