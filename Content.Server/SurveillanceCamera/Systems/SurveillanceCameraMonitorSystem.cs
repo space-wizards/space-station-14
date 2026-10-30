@@ -27,6 +27,7 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
             subs.Event<SurveillanceCameraDisconnectMessage>(OnDisconnectMessage);
             subs.Event<SurveillanceCameraMonitorSubnetRequestMessage>(OnSubnetRequest);
             subs.Event<SurveillanceCameraMonitorSwitchMessage>(OnSwitchMessage);
+            subs.Event<SurveillanceCameraMonitorMapRequestMessage>(OnMapRequest);
             subs.Event<BoundUIClosedEvent>(OnBoundUiClose);
             subs.Event<BoundUIOpenedEvent>(OnBoundUiOpen);
         });
@@ -162,6 +163,11 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
         // whichever one is the "latest" switch message gets to
         // do the switch
         TrySwitchCameraByAddress(uid, message.Address, message.CameraSubnet, component);
+    }
+
+    private void OnMapRequest(Entity<SurveillanceCameraMonitorComponent> ent, ref SurveillanceCameraMonitorMapRequestMessage args)
+    {
+        SendCameraMapUpdate(ent);
     }
 
     [SubscribeLocalEvent]
@@ -471,9 +477,13 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
         _userInterface.SetUiState(uid, SurveillanceCameraMonitorUiKey.Key, state);
     }
 
-    private void SendCameraMapUpdate(EntityUid monitorUid, EntityUid actor, Dictionary<NetEntity, CameraMarker> markers)
+    private void SendCameraMapUpdate(EntityUid uid)
     {
-        var message = new SurveillanceCameraMonitorMapUpdateMessage(markers);
-        _userInterface.ServerSendUiMessage(monitorUid, SurveillanceCameraMonitorUiKey.Key, message, actor);
+        if (Transform(uid).GridUid is not { } grid)
+            return;
+
+        var markers = TryComp<SurveillanceCameraMapComponent>(grid, out var map) ? map.Cameras : [];
+        var message = new SurveillanceCameraMonitorMapUpdateMessage(GetNetEntity(grid), markers);
+        _userInterface.ServerSendUiMessage(uid, SurveillanceCameraMonitorUiKey.Key, message);
     }
 }

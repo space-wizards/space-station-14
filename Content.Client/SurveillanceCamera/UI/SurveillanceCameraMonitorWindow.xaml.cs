@@ -200,7 +200,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     /// </summary>
     public void SetMap(EntityUid mapUid)
     {
-        CameraMap.MapUid = mapUid;
+        CameraMap.SetMap(mapUid);
     }
 
     /// <summary>

@@ -36,11 +36,7 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
         _window.CameraSwitchTimer += OnCameraSwitchTimer;
         _window.CameraDisconnect += OnCameraDisconnect;
 
-        var xform = EntMan.GetComponent<TransformComponent>(Owner);
-        var gridUid = xform.GridUid;
-
-        if (gridUid is not null)
-            _window?.SetMap(gridUid.Value);
+        SendMessage(new SurveillanceCameraMonitorMapRequestMessage());
     }
 
     private void OnCameraSelected(DeviceAddress address, ProtoId<DeviceFrequencyPrototype>? subnet)
@@ -121,6 +117,7 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
         if (_window is null || message is not SurveillanceCameraMonitorMapUpdateMessage mapMessage)
             return;
 
+        _window.SetMap(EntMan.GetEntity(mapMessage.Map));
         _window.SetCameraMarkers(mapMessage.CameraMarkers);
     }
 

@@ -26,7 +26,7 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
     private DeviceAddress _activeCameraAddress = DeviceAddress.Invalid;
     private HashSet<ProtoId<DeviceFrequencyPrototype>> _availableSubnets = [];
     private Dictionary<NetEntity, CameraMarker> _markers = [];
-    private bool _markersDirty = true;
+    private bool _mapDirty = true;
 
     public bool EnableCameraSelection { get; set; }
 
@@ -55,7 +55,7 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
             return;
 
         _activeCameraAddress = address;
-        _markersDirty = true;
+        _mapDirty = true;
         ForceNavMapUpdate();
     }
 
@@ -65,7 +65,7 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
             return;
 
         _availableSubnets = subnets;
-        _markersDirty = true;
+        _mapDirty = true;
         ForceNavMapUpdate();
     }
 
@@ -75,7 +75,23 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
     public void SetCameraMarkers(Dictionary<NetEntity, CameraMarker> markers)
     {
         _markers = markers;
-        _markersDirty = true;
+        _mapDirty = true;
+        ForceNavMapUpdate();
+    }
+
+    /// <summary>
+    /// Sets the map for the camera map.
+    /// </summary>
+    public void SetMap(EntityUid? mapUid)
+    {
+        if (mapUid is { Valid: false })
+            mapUid = null;
+
+        if (MapUid == mapUid)
+            return;
+
+        MapUid = mapUid;
+        _mapDirty = true;
         ForceNavMapUpdate();
     }
 
@@ -91,7 +107,7 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
     {
         base.UpdateNavMap();
 
-        if (!_markersDirty)
+        if (!_mapDirty)
             return;
 
         UpdateCameraMarkers();
@@ -104,7 +120,7 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
         if (MapUid is null)
             return;
 
-        _markersDirty = false;
+        _mapDirty = false;
 
         foreach (var (netEntity, marker) in _markers)
         {
