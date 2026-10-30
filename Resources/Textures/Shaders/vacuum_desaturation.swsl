@@ -5,15 +5,26 @@ uniform highp vec2 world_bottom_left;
 uniform highp vec2 world_bottom_right;
 uniform highp vec2 world_top_left;
 
+highp vec2 world_offset_to_uv(highp vec2 world_offset)
+{
+    highp vec2 world_u = world_bottom_right - world_bottom_left;
+    highp vec2 world_v = world_top_left - world_bottom_left;
+    highp float determinant = world_u.x * world_v.y - world_u.y * world_v.x;
+
+    return vec2(
+        (world_offset.x * world_v.y - world_offset.y * world_v.x) / determinant,
+        (world_u.x * world_offset.y - world_u.y * world_offset.x) / determinant);
+}
+
 highp float snow_flake(highp vec2 world_position, highp float speed, highp float size)
 {
-    highp vec2 snow_position = world_position + vec2(TIME * speed, TIME * speed * 0.65);
+    highp vec2 snow_position = world_position + vec2(TIME * speed,- TIME * speed * 0.65);
     highp vec2 snow_cell = floor(snow_position);
     highp vec2 snow_local = fract(snow_position) - 0.5;
     highp vec2 snow_offset = zRandom(snow_cell).xy * 0.35;
     highp vec2 flake_position = snow_local - snow_offset;
 
-    flake_position.x += sin(TIME * speed * 8.0 + snow_cell.y) * 0.04;
+    flake_position.x += sin(TIME * speed * 16.0 + snow_cell.y) * 0.04;
     return 1.0 - smoothstep(size, size * 2.0, length(flake_position));
 }
 
@@ -48,8 +59,10 @@ void fragment()
         highp float frost_mask = max(smoothstep(0.5, 1.0, veins),smoothstep(0.5, 1, crystals) * 0.7);
 
         highp vec2 ice_direction = time_warp * 2.0 - 1.0;
-        highp vec2 ice_offset = ice_direction * SCREEN_PIXEL_SIZE *
-            (1.5 + frost_mask * 3.5) * tint_intensity;
+
+        highp vec2 ice_world_offset = ice_direction * (frost_mask * 2.5) / 32.0 * tint_intensity;
+        // Make it independent of client zoom.
+        highp vec2 ice_offset =  world_offset_to_uv(ice_world_offset);
 
         mediump vec3 frozen_pixel = (
             zTextureSpec(SCREEN_TEXTURE, UV + ice_offset).rgb +
