@@ -37,6 +37,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     public event Action? CameraSwitchTimer;
     public event Action? CameraDisconnect;
 
+    private const int CameraViewSize = 500;
     private DeviceAddress _currentAddress = DeviceAddress.Invalid;
     private bool _isSwitching;
     private readonly FixedEye _defaultEye = new();
@@ -52,7 +53,9 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         var texture = _resourceCache.GetTexture("/Textures/Interface/Nano/square_black.png");
         var shader = _prototypeManager.Index(CameraStaticShader).Instance().Duplicate();
 
-        CameraView.ViewportSize = new Vector2i(500, 500);
+        CameraView.ViewportSize = new Vector2i(CameraViewSize, CameraViewSize);
+        CameraView.MinSize = new Vector2(CameraViewSize, CameraViewSize);
+        CameraViewBackground.MinSize = new Vector2(CameraViewSize, CameraViewSize);
         CameraView.Eye = _defaultEye; // sure
         CameraViewBackground.Stretch = TextureRect.StretchMode.Scale;
         CameraViewBackground.Texture = texture;
@@ -78,8 +81,9 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     {
         base.Resized();
 
-        var size = MathF.Max(CameraViewBox.PixelSize.Y, 500);
+        var size = MathF.Max(CameraViewBox.PixelSize.Y, CameraViewSize);
         CameraView.MinSize = new Vector2(size, size);
+        CameraViewBackground.MinSize = new Vector2(size, size);
     }
 
     // The UI class should get the eye from the entity, and then
