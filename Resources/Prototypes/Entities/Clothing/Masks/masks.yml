@@ -335,6 +335,7 @@
   - type: EmoteBlocker
     blocksCategories:
     - Vocal
+    - Hands
   - type: Construction
     graph: Muzzle
     node: muzzle
