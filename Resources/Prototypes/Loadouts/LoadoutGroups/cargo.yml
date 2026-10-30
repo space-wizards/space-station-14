@@ -1,3 +1,13 @@
+# Generic departmental
+
+- type: loadoutGroup
+  parent: BaseBackpack
+  id: CargoBackpack
+  loadouts:
+  - CargoTechnicianBackpack
+  - CargoTechnicianSatchel
+  - CargoTechnicianDuffel
+
 # Quartermaster
 
 - type: loadoutGroup
@@ -50,14 +60,6 @@
   id: CargoTechnicianHead
   loadouts:
   - CargoTechnicianHead
-
-- type: loadoutGroup
-  parent: BaseBackpack
-  id: CargoTechnicianBackpack
-  loadouts:
-  - CargoTechnicianBackpack
-  - CargoTechnicianSatchel
-  - CargoTechnicianDuffel
 
 - type: loadoutGroup
   parent: BaseJumpsuit

@@ -67,7 +67,7 @@
 
 - type: loadoutGroup
   parent: SurvivalBase
-  id: SurvivalCommon
+  id: Survival
   loadouts:
   - EmergencyNitrogen
   - EmergencyOxygen

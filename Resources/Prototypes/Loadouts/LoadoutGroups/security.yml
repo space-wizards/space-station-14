@@ -1,3 +1,27 @@
+# Generic departmental
+
+- type: loadoutGroup
+  parent: BaseBackpack
+  id: SecurityBackpack
+  loadouts:
+  - SecurityBackpack
+  - SecuritySatchel
+  - SecurityDuffel
+
+- type: loadoutGroup
+  parent: BaseBelt
+  id: SecurityBelt
+  loadouts:
+  - SecurityBelt
+  - SecurityWebbing
+
+- type: loadoutGroup
+  parent: BaseShoes
+  id: SecurityShoes
+  loadouts:
+  - JackBoots
+  - SecurityWinterBoots
+
 # Head of Security
 
 - type: loadoutGroup
@@ -128,7 +152,7 @@
 
 - type: loadoutGroup
   parent: BaseHead
-  id: SecurityHead
+  id: SecurityOfficerHead
   loadouts:
   - SecurityHelmet
   - SecurityBeret
@@ -136,23 +160,8 @@
   - TrooperHat
 
 - type: loadoutGroup
-  parent: BaseBackpack
-  id: SecurityBackpack
-  loadouts:
-  - SecurityBackpack
-  - SecuritySatchel
-  - SecurityDuffel
-
-- type: loadoutGroup
-  parent: BaseBelt
-  id: SecurityBelt
-  loadouts:
-  - SecurityBelt
-  - SecurityWebbing
-
-- type: loadoutGroup
   parent: BaseJumpsuit
-  id: SecurityJumpsuit
+  id: SecurityOfficerJumpsuit
   loadouts:
   - SecurityJumpsuit
   - SecurityJumpskirt
@@ -164,7 +173,7 @@
 
 - type: loadoutGroup
   parent: BaseOuterClothing
-  id: SecurityOuterClothing
+  id: SecurityOfficerOuterClothing
   minLimit: 1
   loadouts:
   - ArmorVest
@@ -172,15 +181,8 @@
   - SecurityOfficerWintercoat
 
 - type: loadoutGroup
-  parent: BaseShoes
-  id: SecurityShoes
-  loadouts:
-  - JackBoots
-  - SecurityWinterBoots
-
-- type: loadoutGroup
   parent: BasePDA
-  id: SecurityPDA
+  id: SecurityOfficerPDA
   loadouts:
   - SecurityPDA
   - SeniorOfficerPDA

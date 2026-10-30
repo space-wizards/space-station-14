@@ -1,3 +1,13 @@
+# Generic departmental
+
+- type: loadoutGroup
+  parent: BaseBackpack
+  id: EngineeringBackpack
+  loadouts:
+  - StationEngineerBackpack
+  - StationEngineerSatchel
+  - StationEngineerDuffel
+
 # Chief Engineer
 
 - type: loadoutGroup
@@ -87,14 +97,6 @@
   - StationEngineerHardhatOrange
   - StationEngineerHardhatRed
   - SeniorEngineerBeret
-
-- type: loadoutGroup
-  parent: BaseBackpack
-  id: StationEngineerBackpack
-  loadouts:
-  - StationEngineerBackpack
-  - StationEngineerSatchel
-  - StationEngineerDuffel
 
 - type: loadoutGroup
   parent: BaseJumpsuit

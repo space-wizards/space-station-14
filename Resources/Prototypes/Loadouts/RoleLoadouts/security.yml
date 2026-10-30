@@ -1,0 +1,72 @@
+- type: roleLoadout
+  id: JobHeadOfSecurity
+  groups:
+  - HeadofSecurityHead
+  - SecurityBackpack
+  - SecurityBelt
+  - HeadofSecurityJumpsuit
+  - HeadofSecurityOuterClothing
+  - HeadofSecurityNeck
+  - SecurityShoes
+  - CommonAssistiveItems
+  - SurvivalSecurity
+  - CommonTrinkets
+  - HeadofSecurityJobTrinkets
+  - GroupSpeciesBreathToolSecurity
+
+- type: roleLoadout
+  id: JobWarden
+  groups:
+  - WardenHead
+  - SecurityBackpack
+  - SecurityBelt
+  - WardenJumpsuit
+  - WardenOuterClothing
+  - SecurityShoes
+  - CommonAssistiveItems
+  - SurvivalSecurity
+  - CommonTrinkets
+  - WardenJobTrinkets
+  - GroupSpeciesBreathToolSecurity
+
+- type: roleLoadout
+  id: JobDetective
+  groups:
+  - DetectiveHead
+  - SecurityBackpack
+  - DetectiveJumpsuit
+  - DetectiveOuterClothing
+  - DetectiveNeck
+  - SecurityShoes
+  - CommonAssistiveItems
+  - SurvivalSecurity
+  - CommonTrinkets
+  - DetectiveJobTrinkets
+  - GroupSpeciesBreathToolSecurity
+
+- type: roleLoadout
+  id: JobSecurityCadet
+  groups:
+  - SecurityBackpack
+  - SecurityCadetJumpsuit
+  - CommonAssistiveItems
+  - SurvivalSecurity
+  - CommonTrinkets
+  #- SecurityCadetJobTrinkets
+  - GroupSpeciesBreathToolSecurity
+
+- type: roleLoadout
+  id: JobSecurityOfficer
+  groups:
+  - SecurityOfficerHead
+  - SecurityBackpack
+  - SecurityOfficerJumpsuit
+  - SecurityOfficerOuterClothing
+  - SecurityShoes
+  - SecurityOfficerPDA
+  - SecurityBelt
+  - CommonAssistiveItems
+  - SurvivalSecurity
+  - CommonTrinkets
+  - SecurityJobTrinkets
+  - GroupSpeciesBreathToolSecurity

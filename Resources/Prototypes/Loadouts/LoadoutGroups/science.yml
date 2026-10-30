@@ -1,3 +1,21 @@
+# Generic departmental
+
+- type: loadoutGroup
+  parent: BaseBackpack
+  id: ScienceBackpack
+  loadouts:
+  - ScientistBackpack
+  - ScientistSatchel
+  - ScientistDuffel
+
+- type: loadoutGroup
+  parent: BaseGloves
+  id: ScienceGloves
+  loadouts:
+  - LatexGloves
+  - PurpleGloves
+  - RobohandsGloves
+
 # Research Director
 
 - type: loadoutGroup
@@ -64,14 +82,6 @@
   - ScientificBeret
 
 - type: loadoutGroup
-  parent: BaseBackpack
-  id: ScientistBackpack
-  loadouts:
-  - ScientistBackpack
-  - ScientistSatchel
-  - ScientistDuffel
-
-- type: loadoutGroup
   parent: BaseJumpsuit
   id: ScientistJumpsuit
   loadouts:
@@ -98,14 +108,6 @@
   id: ScientistNeck
   loadouts:
   - ScientistTie
-
-- type: loadoutGroup
-  parent: BaseGloves
-  id: ScientistGloves
-  loadouts:
-  - LatexGloves
-  - PurpleGloves
-  - RobohandsGloves
 
 - type: loadoutGroup
   parent: BaseShoes
