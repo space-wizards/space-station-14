@@ -5,15 +5,15 @@
   groups:
   - GroupTankHarness
   - ChiefMedicalOfficerHead
+  - Eyewear
   - MedicalMask
   - ChiefMedicalOfficerJumpsuit
   - MedicalBackpack
   - ChiefMedicalOfficerOuterClothing
   - ChiefMedicalOfficerNeck
   - ChiefMedicalOfficerShoes
-  - Glasses
   - AssistiveItems
-  - SurvivalMedical
+  - MedicalSurvival
   - Trinkets
 #  - ChiefMedicalOfficerJobTrinkets
   - GroupSpeciesBreathToolMedical
@@ -23,15 +23,15 @@
   groups:
   - GroupTankHarness
   - MedicalDoctorHead
+  - Eyewear
   - MedicalMask
   - MedicalDoctorJumpsuit
   - MedicalBackpack
   - MedicalDoctorOuterClothing
   - MedicalShoes
   - MedicalDoctorPDA
-  - Glasses
   - AssistiveItems
-  - SurvivalMedical
+  - MedicalSurvival
   - Trinkets
 #  - MedicalDoctorJobTrinkets
   - GroupSpeciesBreathToolMedical
@@ -40,11 +40,11 @@
   id: JobMedicalIntern
   groups:
   - GroupTankHarness
+  - Eyewear
   - MedicalInternJumpsuit
   - MedicalBackpack
-  - Glasses
   - AssistiveItems
-  - SurvivalMedical
+  - MedicalSurvival
   - Trinkets
 #  - MedicalInternJobTrinkets
   - GroupSpeciesBreathToolMedical
@@ -53,14 +53,14 @@
   id: JobChemist
   groups:
   - GroupTankHarness
+  - Eyewear
   - MedicalMask
   - ChemistJumpsuit
   - ChemistBackpack
   - ChemistOuterClothing
   - MedicalShoes
-  - Glasses
   - AssistiveItems
-  - SurvivalMedical
+  - MedicalSurvival
   - Trinkets
 #  - ChemistJobTrinkets
   - GroupSpeciesBreathToolMedical
@@ -70,14 +70,14 @@
   groups:
   - GroupTankHarness
   - ParamedicHead
+  - Eyewear
   - MedicalMask
   - ParamedicJumpsuit
   - MedicalBackpack
   - ParamedicOuterClothing
   - ParamedicShoes
-  - Glasses
   - AssistiveItems
-  - SurvivalMedical
+  - MedicalSurvival
   - Trinkets
 #  - ParamedicJobTrinkets
   - GroupSpeciesBreathToolMedical

@@ -1,7 +1,7 @@
 # Miscellaneous
 - type: loadoutGroup
-  id: Glasses
-  name: loadout-group-glasses
+  id: Eyewear
+  name: loadout-group-eyes
   minLimit: 0
   loadouts:
   - Glasses
@@ -646,7 +646,7 @@
 
 - type: loadoutGroup
   id: Instruments
-  name: loadout-group-instruments
+  name: loadout-group-musician-instruments
   minLimit: 0
   maxLimit: 2
   loadouts:

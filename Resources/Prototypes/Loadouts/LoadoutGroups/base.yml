@@ -1,0 +1,51 @@
+# These base prototypes exist so that other loadout groups can parent from them.
+# That way if we want to change the name of one of the locale strings used, we just change it here (and in loadout-groups.ftl),
+# instead of needing to change literally every prototype that uses that string.
+# Ditto for stuff like item limits.
+
+- type: loadoutGroup
+  id: BaseHead
+  name: loadout-group-head
+  minLimit: 0
+
+- type: loadoutGroup
+  id: BaseMask
+  name: loadout-group-mask
+  minLimit: 0
+
+- type: loadoutGroup
+  id: BaseBackpack
+  name: loadout-group-back
+
+- type: loadoutGroup
+  id: BaseJumpsuit
+  name: loadout-group-jumpsuit
+
+- type: loadoutGroup
+  id: BaseOuterClothing
+  name: loadout-group-outerclothing
+  minLimit: 0
+
+- type: loadoutGroup
+  id: BaseNeck
+  name: loadout-group-neck
+  minLimit: 0
+
+- type: loadoutGroup
+  id: BaseShoes
+  name: loadout-group-shoes
+
+- type: loadoutGroup
+  id: BasePDA
+  name: loadout-group-pda
+
+- type: loadoutGroup
+  id: BaseJobTrinkets
+  name: loadout-group-jobtrinkets
+  minLimit: 0
+
+- type: loadoutGroup
+  id: BaseSurvival
+  name: loadout-group-survival
+  minLimit: 2
+  hidden: true

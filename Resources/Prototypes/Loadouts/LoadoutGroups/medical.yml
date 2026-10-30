@@ -1,32 +1,29 @@
 # Generic
 
 - type: loadoutGroup
+  parent: BaseMask
   id: MedicalMask
-  name: loadout-group-medical-mask
-  minLimit: 0
   loadouts:
   - SterileMask
 
 - type: loadoutGroup
+  parent: BaseBackpack
   id: MedicalBackpack
-  name: loadout-group-medical-doctor-backpack
   loadouts:
   - MedicalDoctorBackpack
   - MedicalDoctorSatchel
   - MedicalDoctorDuffel
 
 - type: loadoutGroup
+  parent: BaseShoes
   id: MedicalShoes
-  name: loadout-group-medical-doctor-shoes
   loadouts:
   - WhiteShoes
   - MedicalWinterBoots
 
 - type: loadoutGroup
-  id: SurvivalMedical
-  name: loadout-group-survival-medical
-  minLimit: 2
-  hidden: true
+  parent: BaseSurvival
+  id: MedicalSurvival
   loadouts:
   - EmergencyNitrogenMedical
   - EmergencyOxygenMedical
@@ -35,16 +32,15 @@
 # Chief Medical Officer
 
 - type: loadoutGroup
+  parent: BaseHead
   id: ChiefMedicalOfficerHead
-  name: loadout-group-chief-medical-officer-head
-  minLimit: 0
   loadouts:
   - ChiefMedicalOfficerBeret
   - CMOMedicalHeadMirror
 
 - type: loadoutGroup
+  parent: BaseJumpsuit
   id: ChiefMedicalOfficerJumpsuit
-  name: loadout-group-chief-medical-officer-jumpsuit
   loadouts:
   - ChiefMedicalOfficerJumpsuit
   - ChiefMedicalOfficerJumpskirt
@@ -52,40 +48,36 @@
   - ChiefMedicalOfficerTurtleneckJumpskirt
 
 - type: loadoutGroup
+  parent: BaseOuterClothing
   id: ChiefMedicalOfficerOuterClothing
-  name: loadout-group-chief-medical-officer-outerclothing
-  minLimit: 0
   loadouts:
   - ChiefMedicalOfficerLabCoat
   - ChiefMedicalOfficerWintercoat
 
 - type: loadoutGroup
+  parent: BaseNeck
   id: ChiefMedicalOfficerNeck
-  name: loadout-group-chief-medical-officer-neck
-  minLimit: 0
   loadouts:
   - ChiefMedicalOfficerCloak
   - ChiefMedicalOfficerMantle
 
 - type: loadoutGroup
+  parent: BaseShoes
   id: ChiefMedicalOfficerShoes
-  name: loadout-group-chief-medical-officer-shoes
   loadouts:
   - BrownShoes
   - MedicalWinterBoots
 
 #- type: loadoutGroup
+#  parent: BaseJobTrinkets
 #  id: ChiefMedicalOfficerJobTrinkets
-#  name: loadout-group-jobtrinkets
-#  minLimit: 0
 #  loadouts:
 
 # Medical Doctor
 
 - type: loadoutGroup
+  parent: BaseHead
   id: MedicalDoctorHead
-  name: loadout-group-medical-doctor-head
-  minLimit: 0
   loadouts:
   - MedicalBeret
   - SeniorPhysicianBeret
@@ -96,8 +88,8 @@
   - NurseHat
 
 - type: loadoutGroup
+  parent: BaseJumpsuit
   id: MedicalDoctorJumpsuit
-  name: loadout-group-medical-doctor-jumpsuit
   loadouts:
   - MedicalDoctorJumpsuit
   - MedicalDoctorJumpskirt
@@ -108,108 +100,100 @@
   - MedicalPurpleScrubs
 
 - type: loadoutGroup
+  parent: BaseOuterClothing
   id: MedicalDoctorOuterClothing
-  name: loadout-group-medical-doctor-outerclothing
-  minLimit: 0
   loadouts:
   - RegularLabCoat
   - MedicalDoctorWintercoat
   - SeniorPhysicianLabCoat
 
 - type: loadoutGroup
+  parent: BasePDA
   id: MedicalDoctorPDA
-  name: loadout-group-medical-doctor-id
   loadouts:
   - MedicalDoctorPDA
   - SeniorPhysicianPDA
 
 #- type: loadoutGroup
+#  parent: BaseJobTrinkets
 #  id: MedicalDoctorJobTrinkets
-#  name: loadout-group-jobtrinkets
-#  minLimit: 0
 #  loadouts:
 
 # Medical Intern
 
 - type: loadoutGroup
+  parent: BaseJumpsuit
   id: MedicalInternJumpsuit
-  name: loadout-group-medical-intern-jumpsuit
   loadouts:
   - WhiteJumpsuit
   - WhiteJumpskirt
 
 #- type: loadoutGroup
+#  parent: BaseJobTrinkets
 #  id: MedicalInternJobTrinkets
-#  name: loadout-group-jobtrinkets
-#  minLimit: 0
 #  loadouts:
 
 # Chemist
 
 - type: loadoutGroup
+  parent: BaseJumpsuit
   id: ChemistJumpsuit
-  name: loadout-group-chemist-jumpsuit
   loadouts:
   - ChemistJumpsuit
   - ChemistJumpskirt
 
 - type: loadoutGroup
+  parent: BaseOuterClothing
   id: ChemistOuterClothing
-  name: loadout-group-chemist-outerclothing
-  minLimit: 0
   loadouts:
   - RegularLabCoat
   - ChemistLabCoat
   - ChemistWintercoat
 
 - type: loadoutGroup
+  parent: BaseBackpack
   id: ChemistBackpack
-  name: loadout-group-chemist-backpack
   loadouts:
   - ChemistBackpack
   - ChemistSatchel
   - ChemistDuffel
 
 #- type: loadoutGroup
+#  parent: BaseJobTrinkets
 #  id: ChemistJobTrinkets
-#  name: loadout-group-jobtrinkets
-#  minLimit: 0
 #  loadouts:
 
 # Paramedic
 
 - type: loadoutGroup
+  parent: BaseHead
   id: ParamedicHead
-  name: loadout-group-paramedic-head
-  minLimit: 0
   loadouts:
   - ParamedicHead
 
 - type: loadoutGroup
+  parent: BaseJumpsuit
   id: ParamedicJumpsuit
-  name: loadout-group-paramedic-jumpsuit
   loadouts:
   - ParamedicJumpsuit
   - ParamedicJumpskirt
 
 - type: loadoutGroup
+  parent: BaseOuterClothing
   id: ParamedicOuterClothing
-  name: loadout-group-paramedic-outerclothing
-  minLimit: 0
   loadouts:
   - ParamedicWindbreaker
   - ParamedicWintercoat
 
 - type: loadoutGroup
+  parent: BaseShoes
   id: ParamedicShoes
-  name: loadout-group-paramedic-shoes
   loadouts:
   - BlueShoes
   - WhiteShoes
   - MedicalWinterBoots
 
 #- type: loadoutGroup
+#  parent: BaseJobTrinkets
 #  id: ParamedicJobTrinkets
-#  name: loadout-group-jobtrinkets
-#  minLimit: 0
 #  loadouts:
