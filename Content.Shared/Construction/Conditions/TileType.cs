@@ -1,4 +1,4 @@
-﻿using Content.Shared.Maps;
+using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;

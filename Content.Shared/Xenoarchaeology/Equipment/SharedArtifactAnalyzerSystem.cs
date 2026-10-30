@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Placeable;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
@@ -15,7 +16,7 @@ namespace Content.Shared.Xenoarchaeology.Equipment;
 public abstract partial class SharedArtifactAnalyzerSystem : EntitySystem
 {
     [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
-    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -26,12 +27,12 @@ public abstract partial class SharedArtifactAnalyzerSystem : EntitySystem
         SubscribeLocalEvent<ArtifactAnalyzerComponent, ItemRemovedEvent>(OnItemRemoved);
         SubscribeLocalEvent<ArtifactAnalyzerComponent, NewLinkEvent>(OnNewLinkAnalyzer);
         SubscribeLocalEvent<ArtifactAnalyzerComponent, LinkAttemptEvent>(OnLinkAttemptAnalyzer);
-        SubscribeLocalEvent<ArtifactAnalyzerComponent, PortDisconnectedEvent>(OnPortDisconnectedAnalyzer);
+        SubscribeLocalEvent<ArtifactAnalyzerComponent, SinkPortDisconnectedEvent>(OnPortDisconnectedAnalyzer);
 
         SubscribeLocalEvent<AnalysisConsoleComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AnalysisConsoleComponent, NewLinkEvent>(OnNewLinkConsole);
         SubscribeLocalEvent<AnalysisConsoleComponent, LinkAttemptEvent>(OnLinkAttemptConsole);
-        SubscribeLocalEvent<AnalysisConsoleComponent, PortDisconnectedEvent>(OnPortDisconnectedConsole);
+        SubscribeLocalEvent<AnalysisConsoleComponent, SourcePortDisconnectedEvent>(OnPortDisconnectedConsole);
     }
 
     private void OnItemPlaced(Entity<ArtifactAnalyzerComponent> ent, ref ItemPlacedEvent args)
@@ -90,16 +91,16 @@ public abstract partial class SharedArtifactAnalyzerSystem : EntitySystem
     private void OnLinkAttemptConsole(Entity<AnalysisConsoleComponent> ent, ref LinkAttemptEvent args)
     {
         if (ent.Comp.AnalyzerEntity != null)
-            args.Cancel(); // can only link to one device at a time
+            args.Cancelled = true; // can only link to one device at a time
     }
 
     private void OnLinkAttemptAnalyzer(Entity<ArtifactAnalyzerComponent> ent, ref LinkAttemptEvent args)
     {
         if (ent.Comp.Console != null)
-            args.Cancel(); // can only link to one device at a time
+            args.Cancelled = true; // can only link to one device at a time
     }
 
-    private void OnPortDisconnectedConsole(Entity<AnalysisConsoleComponent> ent, ref PortDisconnectedEvent args)
+    private void OnPortDisconnectedConsole(Entity<AnalysisConsoleComponent> ent, ref SourcePortDisconnectedEvent args)
     {
         if (args.Port != ent.Comp.LinkingPort || ent.Comp.AnalyzerEntity == null)
             return;
@@ -108,7 +109,7 @@ public abstract partial class SharedArtifactAnalyzerSystem : EntitySystem
         Dirty(ent);
     }
 
-    private void OnPortDisconnectedAnalyzer(Entity<ArtifactAnalyzerComponent> ent, ref PortDisconnectedEvent args)
+    private void OnPortDisconnectedAnalyzer(Entity<ArtifactAnalyzerComponent> ent, ref SinkPortDisconnectedEvent args)
     {
         if (args.Port != ent.Comp.LinkingPort || ent.Comp.Console == null)
             return;

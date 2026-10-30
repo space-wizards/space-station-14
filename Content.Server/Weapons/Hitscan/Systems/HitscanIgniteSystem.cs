@@ -1,4 +1,4 @@
-﻿using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Hitscan.Events;

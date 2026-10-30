@@ -1,4 +1,4 @@
-﻿using Content.Client.Light.EntitySystems;
+using Content.Client.Light.EntitySystems;
 using Content.Shared.Trigger;
 using Content.Shared.Trigger.Components.Effects;
 using Robust.Shared.Timing;

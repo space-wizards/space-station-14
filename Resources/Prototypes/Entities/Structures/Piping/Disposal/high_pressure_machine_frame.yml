@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: StructureHealthMachineWeak
   id: DisposalMachineFrame
   name: high pressure machine frame

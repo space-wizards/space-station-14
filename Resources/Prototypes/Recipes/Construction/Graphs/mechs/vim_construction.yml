@@ -7,8 +7,7 @@
     - to: vim
       steps:
       - assemblyId: Vim
-        guideString: mech-construction-guide-string
-
+        guideString: mech-construction-guide-string-vim
       - tag: VoiceTrigger
         name: construction-graph-tag-voice-trigger
         icon:

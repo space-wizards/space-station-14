@@ -83,13 +83,13 @@ public sealed partial class VocalSystem : EntitySystem
         if (!Resolve(source, ref source.Comp))
             return;
 
-        var targetComp = EnsureComp<VocalComponent>(target);
+        var targetComp = Factory.GetComponent<VocalComponent>();
         targetComp.ScreamId = source.Comp.ScreamId;
         targetComp.Wilhelm = source.Comp.Wilhelm;
         targetComp.WilhelmProbability = source.Comp.WilhelmProbability;
-        LoadSounds((target, targetComp));
-
-        Dirty(target, targetComp);
+        targetComp.EmoteAction = source.Comp.EmoteAction;
+        targetComp.EmoteSounds = source.Comp.EmoteSounds;
+        AddComp(target, targetComp, true);
     }
 
     private bool TryPlayScreamSound(Entity<VocalComponent> ent, EntityUid user)

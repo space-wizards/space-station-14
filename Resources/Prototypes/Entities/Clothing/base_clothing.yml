@@ -44,6 +44,7 @@
   id: ClothingSlotBase
   components:
   - type: ItemSlots
+    allowSmartEquip: true
   - type: ContainerContainer
     containers:
       item: !type:ContainerSlot

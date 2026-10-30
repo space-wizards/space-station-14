@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Chemistry.Components;
+namespace Content.Server.Chemistry.Components;
 
 /// <summary>
 /// Used for melee weapon entities that should try to inject a

@@ -153,7 +153,9 @@ tiles-astro-ironsand-borderless = borderless astro-ironsand
 tiles-desert-astro-sand = desert astro-sand
 tiles-wood-large = large wood
 tiles-white-marble = white marble tile
+tiles-white-marble-mono = white marble mono tile
 tiles-dark-marble = dark marble tile
+tiles-dark-marble-mono = dark marble mono tile
 tiles-plasma-marble = plasmarble tile
 tiles-uranium-marble = uranium marble tile
 

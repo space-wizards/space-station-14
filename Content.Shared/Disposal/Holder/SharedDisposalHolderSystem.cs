@@ -265,7 +265,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
             // Remove any disposal holders that were somehow emptied
             if (holder.Container?.Count == 0)
             {
-                PredictedQueueDel(uid);
+                QueueDel(uid);
                 continue;
             }
 

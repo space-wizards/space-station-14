@@ -28,7 +28,8 @@
         sprite: /Textures/Interface/Actions/actions_ai.rsi
         state: emergency_on
   - type: StealTarget
-    stealGroup: DoorRemote
+    stealGroup:
+    - DoorRemote
   - type: ActivatableUI
     inHandsOnly: true
     key: enum.DoorRemoteUiKey.Key

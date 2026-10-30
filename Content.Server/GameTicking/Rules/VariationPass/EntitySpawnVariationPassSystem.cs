@@ -1,4 +1,4 @@
-﻿using Content.Server.GameTicking.Rules.VariationPass.Components;
+using Content.Server.GameTicking.Rules.VariationPass.Components;
 using Content.Shared.Storage;
 using Robust.Shared.Random;
 
@@ -16,7 +16,7 @@ public sealed partial class EntitySpawnVariationPassSystem : VariationPassSystem
 
         for (var i = 0; i < trashTiles; i++)
         {
-            if (!TryFindRandomTileOnStation(args.Station, out _, out _, out var coords))
+            if (!Stations.TryFindRandomTileOnStation(args.Station, out _, out _, out var coords))
                 continue;
 
             var ents = EntitySpawnCollection.GetSpawns(ent.Comp.Entities, Random);

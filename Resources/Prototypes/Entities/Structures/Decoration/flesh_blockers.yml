@@ -28,7 +28,6 @@
           closed: ""
           ajar: ""
           open: ""
-  - type: Damageable
   - type: Injurable
     damageContainer: StructuralBiological
   - type: Destructible

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Materials;
@@ -118,54 +118,9 @@ public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
         return true;
     }
 
-    /// <summary>
-    ///     Spawn an amount of a material in stack entities.
-    ///     Note the 'amount' is material dependent.
-    ///     1 biomass = 1 biomass in its stack,
-    ///     but 100 plasma = 1 sheet of plasma, etc.
-    /// </summary>
-    public List<EntityUid> SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates)
-    {
-        return SpawnMultipleFromMaterial(amount, material, coordinates, out _);
-    }
-
-    /// <summary>
-    ///     Spawn an amount of a material in stack entities.
-    ///     Note the 'amount' is material dependent.
-    ///     1 biomass = 1 biomass in its stack,
-    ///     but 100 plasma = 1 sheet of plasma, etc.
-    /// </summary>
-    public List<EntityUid> SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates, out int overflowMaterial)
-    {
-        overflowMaterial = 0;
-        if (!ProtoMan.TryIndex<MaterialPrototype>(material, out var stackType))
-        {
-            Log.Error("Failed to index material prototype " + material);
-            return new List<EntityUid>();
-        }
-
-        return SpawnMultipleFromMaterial(amount, stackType, coordinates, out overflowMaterial);
-    }
-
-    /// <summary>
-    ///     Spawn an amount of a material in stack entities.
-    ///     Note the 'amount' is material dependent.
-    ///     1 biomass = 1 biomass in its stack,
-    ///     but 100 plasma = 1 sheet of plasma, etc.
-    /// </summary>
+    /// <inheritdoc/>
     [PublicAPI]
-    public List<EntityUid> SpawnMultipleFromMaterial(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates)
-    {
-        return SpawnMultipleFromMaterial(amount, materialProto, coordinates, out _);
-    }
-
-    /// <summary>
-    ///     Spawn an amount of a material in stack entities.
-    ///     Note the 'amount' is material dependent.
-    ///     1 biomass = 1 biomass in its stack,
-    ///     but 100 plasma = 1 sheet of plasma, etc.
-    /// </summary>
-    public List<EntityUid> SpawnMultipleFromMaterial(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates, out int overflowMaterial)
+    public override List<EntityUid> SpawnMultipleFromMaterial(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates, out int overflowMaterial)
     {
         overflowMaterial = 0;
 
@@ -224,11 +179,13 @@ public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
     /// <param name="entity">The entity with storage to eject from.</param>
     /// <param name="coordinates">The position where to spawn the created sheets. If not given, they're spawned next to the entity.</param>
     /// <param name="component">The storage component on <paramref name="entity"/>. Resolved automatically if not given.</param>
+    /// <param name="mergeContacts">If true, spawned stacks will attempt to merge with existing stacks in the area.</param>
     /// <returns>The stack entities that were spawned.</returns>
     public List<EntityUid> EjectAllMaterial(
         EntityUid entity,
         EntityCoordinates? coordinates = null,
-        MaterialStorageComponent? component = null)
+        MaterialStorageComponent? component = null,
+        bool mergeContacts = false)
     {
         if (!Resolve(entity, ref component))
             return new List<EntityUid>();
@@ -240,6 +197,14 @@ public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
         {
             var spawned = EjectMaterial(entity, material, null, coordinates, component);
             allSpawned.AddRange(spawned);
+        }
+
+        if (mergeContacts)
+        {
+            foreach (var stack in allSpawned)
+            {
+                _stackSystem.TryMergeToContacts(stack);
+            }
         }
 
         return allSpawned;

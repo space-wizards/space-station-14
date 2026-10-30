@@ -45,7 +45,8 @@
     containers:
       delivery: !type:Container
   - type: StealTarget
-    stealGroup: Mail
+    stealGroup:
+    - Mail
   - type: SimpleToolUsage
     doAfter: 4
     usageVerb: delivery-slice-verb

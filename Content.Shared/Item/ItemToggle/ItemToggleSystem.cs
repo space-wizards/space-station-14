@@ -384,7 +384,7 @@ public sealed partial class ItemToggleSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (_battery.GetCharge(ent.Owner) >= ent.Comp.RequiredCharge)
+        if (_battery.GetCharge(ent.Owner).Charge >= ent.Comp.RequiredCharge)
             return;
 
         args.Popup = Loc.GetString(ent.Comp.FailPopup);
@@ -394,7 +394,7 @@ public sealed partial class ItemToggleSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnChargeChanged(Entity<ItemToggleRequiresChargeComponent> ent, ref ChargeChangedEvent args)
     {
-        if (_battery.GetCharge(ent.Owner) >= ent.Comp.RequiredCharge)
+        if (_battery.GetCharge(ent.Owner).Charge >= ent.Comp.RequiredCharge)
             return;
 
         TryDeactivate(ent.Owner);

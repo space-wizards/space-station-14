@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
@@ -45,7 +45,7 @@ public sealed partial class EntityPickupAnimationSystem : EntitySystem
         if (IsPaused(uid, metadata))
             return;
 
-        var animatableClone = Spawn("clientsideclone", initial);
+        var animatableClone = Spawn("ClientsideClone", initial);
         EnsureComp<EntityPickupAnimationComponent>(animatableClone);
         var val = metadata.EntityName;
         _metaData.SetEntityName(animatableClone, val);

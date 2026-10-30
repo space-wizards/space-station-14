@@ -21,6 +21,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.VirtualItem;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -68,6 +69,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
     [Dependency] private SharedStaminaSystem _stamina = default!;
     [Dependency] private DamageExamineSystem _damageExamine = default!;
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
+    [Dependency] private ItemToggleSystem _toggle = default!;
 
     [Dependency] private EntityQuery<DamageableComponent> _damageQuery = default!;
 
@@ -146,10 +148,19 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
 
         var damageSpec = GetDamage(uid, args.User, component);
 
+        float? stamina = null;
+        if (TryComp<StaminaDamageOnHitComponent>(uid, out var comp))
+        {
+            var attempt = new StaminaDamageOnHitAttemptEvent();
+            RaiseLocalEvent(uid, ref attempt);
+            if (!attempt.Cancelled)
+                stamina = comp.Damage;
+        }
+
         if (damageSpec.Empty)
             return;
 
-        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), Loc.GetString("damage-melee"));
+        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), Loc.GetString("damage-melee"), stamina);
     }
     private void OnMeleeSelected(EntityUid uid, MeleeWeaponComponent component, HandSelectedEvent args)
     {
@@ -527,7 +538,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
                     LogImpact.Low,
                     $"{ToPrettyString(user):actor} melee attacked (light) using {ToPrettyString(meleeUid):tool} and missed");
             }
-            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, meleeUid, damage, null);
+            var missEvent = new MeleeHitEvent(new HashSet<EntityUid>(), user, meleeUid, damage, null);
             RaiseLocalEvent(meleeUid, missEvent);
             _meleeSound.PlaySwingSound(user, meleeUid, component);
             return;
@@ -536,15 +547,15 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         // Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
 
         // Raise event before doing damage so we can cancel damage if the event is handled
-        var hitEvent = new MeleeHitEvent(new List<EntityUid> { target.Value }, user, meleeUid, damage, null);
+        var hitEvent = new MeleeHitEvent(new HashSet<EntityUid> { target.Value }, user, meleeUid, damage, null);
         RaiseLocalEvent(meleeUid, hitEvent);
 
         if (hitEvent.Handled)
             return;
 
-        var targets = new List<EntityUid>(1)
+        var targets = new HashSet<EntityUid>(1)
         {
-            target.Value
+            target.Value,
         };
 
         var weapon = GetEntity(ev.Weapon);
@@ -601,7 +612,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         }
     }
 
-    protected abstract void DoDamageEffect(List<EntityUid> targets, EntityUid? user,  TransformComponent targetXform);
+    protected abstract void DoDamageEffect(HashSet<EntityUid> targets, EntityUid? user,  TransformComponent targetXform);
 
     private bool DoHeavyAttack(EntityUid user, HeavyAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)
     {
@@ -620,7 +631,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
 
         var damage = GetDamage(meleeUid, user, component);
         var resistanceBypass = GetResistanceBypass(meleeUid, user, component);
-        var entities = GetEntityList(ev.Entities);
+        var entities = GetEntitySet(ev.Entities);
 
         if (entities.Count == 0)
         {
@@ -636,7 +647,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
                     LogImpact.Low,
                     $"{ToPrettyString(user):actor} melee attacked (heavy) using {ToPrettyString(meleeUid):tool} and missed");
             }
-            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, meleeUid, damage, direction);
+            var missEvent = new MeleeHitEvent(new HashSet<EntityUid>(), user, meleeUid, damage, direction);
             RaiseLocalEvent(meleeUid, missEvent);
 
             // immediate audio feedback
@@ -648,35 +659,21 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         // Naughty input
         if (entities.Count > MaxTargets)
         {
-            entities.RemoveRange(MaxTargets, entities.Count - MaxTargets);
+            entities = entities.Take(MaxTargets).ToHashSet();
         }
 
         // Validate client
-        for (var i = entities.Count - 1; i >= 0; i--)
-        {
-            var entity = entities[i];
+        entities.RemoveWhere(entity => TerminatingOrDeleted(entity) ||
+                                       !ArcRaySuccessful(entity,
+                                        userPos,
+                                        direction.ToWorldAngle(),
+                                        component.Angle,
+                                        distance,
+                                        userXform.MapID,
+                                        user,
+                                        session));
 
-            if (TerminatingOrDeleted(entity))
-            {
-                entities.RemoveAt(i);
-                continue;
-            }
-
-            if (!ArcRaySuccessful(entity,
-                    userPos,
-                    direction.ToWorldAngle(),
-                    component.Angle,
-                    distance,
-                    userXform.MapID,
-                    user,
-                    session))
-            {
-                // Bad input
-                entities.RemoveAt(i);
-            }
-        }
-
-        var targets = new List<EntityUid>();
+        var targets = new HashSet<EntityUid>();
         foreach (var entity in entities)
         {
             if (entity == user ||
@@ -710,17 +707,17 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         }
 
         var appliedDamage = new DamageSpecifier();
+        var filteredTargets = new HashSet<EntityUid>();
 
-        for (var i = targets.Count - 1; i >= 0; i--)
+        foreach (var entity in targets)
         {
-            var entity = targets[i];
             // We raise an attack attempt here as well,
             // primarily because this was an untargeted wideswing: if a subscriber to that event cared about
             // the potential target (such as for pacifism), they need to be made aware of the target here.
             // In that case, just continue.
             if (!Blocker.CanAttack(user, entity, (weapon, component)))
             {
-                targets.RemoveAt(i);
+                filteredTargets.Add(entity);
                 continue;
             }
 
@@ -755,8 +752,10 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
             }
 
             if (TerminatingOrDeleted(entity))
-                targets.RemoveAt(i);
+                filteredTargets.Add(entity);
         }
+
+        targets.ExceptWith(filteredTargets);
 
         if (entities.Count != 0)
         {
@@ -768,12 +767,12 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         {
             if (appliedDamage.GetTotal() > FixedPoint2.Zero)
             {
-                DoDamageEffect(targets, user, Transform(targets[0]));
+                DoDamageEffect(targets, user, Transform(targets.First()));
                 ResetUndamagedSwingsCount((meleeUid, component));
             }
             else
             {
-                UndamagedAttack((meleeUid, component), targets[0], user);
+                UndamagedAttack((meleeUid, component), targets.First(), user);
             }
         }
 

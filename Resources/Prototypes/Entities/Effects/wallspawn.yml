@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: WallSpawnAsteroid
   categories: [ HideSpawnMenu ]
   components:

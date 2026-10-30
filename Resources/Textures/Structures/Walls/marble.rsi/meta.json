@@ -43,35 +43,27 @@
             "directions": 4
         },
         {
-            "name": "wall-border0",
+            "name": "wall8",
             "directions": 4
         },
         {
-            "name": "wall-border1",
+            "name": "wall9",
             "directions": 4
         },
         {
-            "name": "wall-border2",
+            "name": "wall10",
             "directions": 4
         },
         {
-            "name": "wall-border3",
+            "name": "wall11",
             "directions": 4
         },
         {
-            "name": "wall-border4",
+            "name": "wall12",
             "directions": 4
         },
         {
-            "name": "wall-border5",
-            "directions": 4
-        },
-        {
-            "name": "wall-border6",
-            "directions": 4
-        },
-        {
-            "name": "wall-border7",
+            "name": "wall13",
             "directions": 4
         }
     ]

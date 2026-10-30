@@ -33,12 +33,13 @@
   id: Body
   components:
   # general
-  - CreamPied
   - DetailExaminable
   - Dna
   - Fingerprint
+  - FootstepModifier # Footstep sounds!
   - Grammar # Pronouns
   - HumanoidProfile # Age, Sex, Gender
+  - InnerBodyAnomalyVisuals # How you look with anomalies
   - MeleeWeapon # Attack animation, damage and sound
   - NpcFactionMember
   - RandomPrice
@@ -73,8 +74,13 @@
   - SpanishAccent
   - StutteringAccent
   eventComponents:
+  - Damageable # Sprites and damage modifier
+  - Flammable # Displacements
+  - CreamPied # Displacements
+  - Hands # displacements
   - Puller
   - Vocal # voice sounds
+  - EyeBlinking # for rsiPath and other blinking settings
 
 # for job-specific traits etc.
 - type: cloningSettings
@@ -143,6 +149,13 @@
   - TemperatureProtection
   - TypingIndicator
   - ScaleVisuals # for dwarf height
+  # - for horror form
+  - ChangelingHorror
+  - SlowOnDamage
+  - PassiveDamage
+  - Crawler
+  - PermanentStatusEffects
+  - Tag
   eventComponents:
   # these need special treatment in the event subscription
   - Inventory # arachnid pockets and diona feet
@@ -153,6 +166,7 @@
   - MovementSpeedModifier # moths when weightless
   - JumpAbility # vulp leaping
   - Bloodstream # blood reagents
+  - Damageable # for horror form
   copyInternalStorage: false
   copyImplants: false
   raiseEntityRenamedEvent: false
@@ -187,6 +201,7 @@
   - PlantTraitLigneous
   - PlantTraitScream
   - PlantTraitUnviable
+  - PlantTraitSeedless
 
 # for plant lifecycle clones
 - type: cloningSettings
@@ -195,6 +210,5 @@
   components:
   # traits
   - PlantTraitSampled
-  - PlantTraitSeedless
   eventComponents:
   - PlantHolder

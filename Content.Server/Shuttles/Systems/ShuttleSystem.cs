@@ -2,7 +2,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Buckle.Systems;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
-using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Systems;
 using Content.Server.Stunnable;
@@ -10,8 +9,10 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Gibbing;
 using Content.Shared.Light.Components;
+using Content.Shared.Maps;
 using Content.Shared.Movement.Events;
 using Content.Shared.Salvage;
+using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
@@ -26,7 +27,6 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Content.Shared.Maps;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -53,7 +53,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedSalvageSystem _salvage = default!;
     [Dependency] private ShuttleConsoleSystem _console = default!;
-    [Dependency] private StationSystem _station = default!;
+    [Dependency] private ServerStationSystem _station = default!;
     [Dependency] private StunSystem _stuns = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
     [Dependency] private ThrusterSystem _thruster = default!;

@@ -28,9 +28,9 @@
     program: 27
   - type: SwappableInstrument
     instrumentList:
-      "Clean": {27: 0}
-      "Jazz": {26: 0}
-      "Muted": {28: 0}
+      swappable-instrument-style-clean: {27: 0}
+      swappable-instrument-style-jazz: {26: 0}
+      swappable-instrument-style-muted: {28: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/eguitar.rsi
 
@@ -44,10 +44,10 @@
     program: 33
   - type: SwappableInstrument
     instrumentList:
-      "Fingered": {33: 0}
-      "Pick": {34: 0}
-      "Slap": {36: 0}
-      "Slap (XTra Funky)": {37: 0}
+      swappable-instrument-style-fingered: {33: 0}
+      swappable-instrument-style-pick: {34: 0}
+      swappable-instrument-style-slap: {36: 0}
+      swappable-instrument-style-slap-extra-funky: {37: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/bassguitar.rsi
 
@@ -61,9 +61,9 @@
     program: 35
   - type: SwappableInstrument
     instrumentList:
-      "Fretless": {35: 0}
-      "Slap": {36: 0}
-      "Slap (XTra Funky)": {37: 0}
+      swappable-instrument-style-fretless: {35: 0}
+      swappable-instrument-style-slap: {36: 0}
+      swappable-instrument-style-slap-extra-funky: {37: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/bassguitarfretless.rsi
     state: icon
@@ -90,9 +90,9 @@
     program: 29
   - type: SwappableInstrument
     instrumentList:
-      "Overdrive": {29: 0}
-      "Distortion": {30: 0}
-      "Harmonics": {31: 0}
+      swappable-instrument-style-overdrive: {29: 0}
+      swappable-instrument-style-distortion: {30: 0}
+      swappable-instrument-style-harmonics: {31: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/rockguitar.rsi
   - type: MeleeWeapon
@@ -118,8 +118,8 @@
     program: 24
   - type: SwappableInstrument
     instrumentList:
-      "Nylon": {24: 0}
-      "Steel": {25: 0}
+      swappable-instrument-style-nylon: {24: 0}
+      swappable-instrument-style-steel: {25: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/guitar.rsi
   - type: Wieldable
@@ -188,8 +188,8 @@
     program: 40
   - type: SwappableInstrument
     instrumentList:
-      "Classical": {40: 0}
-      "Bluegrass": {110: 0}
+      swappable-instrument-style-classical: {40: 0}
+      swappable-instrument-style-bluegrass: {110: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/violin.rsi
 

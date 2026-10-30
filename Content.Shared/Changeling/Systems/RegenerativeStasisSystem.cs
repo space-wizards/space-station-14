@@ -1,4 +1,4 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Changeling.Components;
@@ -62,10 +62,17 @@ public sealed partial class RegenerativeStasisSystem : EntitySystem
         EnterStasis((ent, ent.Comp), args.Performer);
     }
 
+    [SubscribeLocalEvent]
+    private void OnHeadslugTookBody(Entity<RegenerativeStasisActionComponent> ent, ref ActionRelayedEvent<BodyTakenByHeadslugEvent> args)
+    {
+        if (args.Args.StartStasis)
+            EnterStasis(ent.AsNullable(), args.Args.Target, args.Args.StasisDurationMultiplier);
+    }
+
     /// <summary>
     /// Enter the stasis and set the action cooldown depending on the damage you have taken.
     /// </summary>
-    public void EnterStasis(Entity<RegenerativeStasisActionComponent?> ent, EntityUid target)
+    public void EnterStasis(Entity<RegenerativeStasisActionComponent?> ent, EntityUid target, float durationMultiplier = 1f)
     {
         if (!Resolve(ent.Owner, ref ent.Comp))
             return;
@@ -92,7 +99,8 @@ public sealed partial class RegenerativeStasisSystem : EntitySystem
         var stasisDuration = ent.Comp.MinStasisCooldown;
 
         stasisDuration += ent.Comp.BonusCooldownPerDamage * (double)_damage.GetTotalDamage(target);
-        stasisDuration = new TimeSpan(Math.Clamp(stasisDuration.Ticks, ent.Comp.MinStasisCooldown.Ticks, ent.Comp.MaxStasisCooldown.Ticks)); // No clamp method for TimeSpans
+        var calculatedDuration = (long)(Math.Clamp(stasisDuration.Ticks, ent.Comp.MinStasisCooldown.Ticks, ent.Comp.MaxStasisCooldown.Ticks) * durationMultiplier); // No clamp method for TimeSpans
+        stasisDuration = new TimeSpan(calculatedDuration);
 
         _metaData.SetEntityName(ent, Loc.GetString("changeling-stasis-active-name"));
         _metaData.SetEntityDescription(ent, Loc.GetString("changeling-stasis-active-desc"));
@@ -160,6 +168,7 @@ public sealed partial class RegenerativeStasisSystem : EntitySystem
             _metaData.SetEntityDescription(ent, ent.Comp.InitialDescription);
 
         _actions.SetToggled(ent.Owner, ent.Comp.IsInStasis);
+        _actions.SetCooldown(ent.Owner, ent.Comp.MinStasisCooldown); // Don't allow entering stasis right after cancelling it.
     }
 }
 

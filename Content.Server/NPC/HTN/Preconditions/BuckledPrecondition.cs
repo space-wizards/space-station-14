@@ -7,15 +7,10 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// </summary>
 public sealed partial class BuckledPrecondition : HTNPrecondition
 {
-    private SharedBuckleSystem _buckle = default!;
+    [Dependency] private SharedBuckleSystem _buckle = default!;
 
-    [ViewVariables(VVAccess.ReadWrite)] [DataField("isBuckled")] public bool IsBuckled = true;
-
-    public override void Initialize(IEntitySystemManager sysManager)
-    {
-        base.Initialize(sysManager);
-        _buckle = sysManager.GetEntitySystem<SharedBuckleSystem>();
-    }
+    [ViewVariables(VVAccess.ReadWrite)] [DataField("isBuckled")]
+    public bool IsBuckled = true;
 
     public override bool IsMet(NPCBlackboard blackboard)
     {

@@ -10,7 +10,7 @@ uplink-chameleon-name = Chameleon Kit
 uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anyone on the station, and more! Comes with a free Agent ID card! Don't forget that Mindshield implant if attempting to impersonate Security or Command.
 
 uplink-clothing-no-slips-shoes-name = No-slip Shoes
-uplink-clothing-no-slips-shoes-desc = Chameleon shoes that protect you from slips. Almost a must-buy for Nuclear Operatives. Don't want to lose that expensive gun you bought do you?
+uplink-clothing-no-slips-shoes-desc = Chameleon shoes that prevent you from slipping. Almost a must-buy for nuclear operatives. Don't want to drop that expensive gun you bought, do you?
 
 uplink-clothing-outer-vest-web-name = Web Vest
 uplink-clothing-outer-vest-web-desc = A synthetic armor vest. This one has added webbing and ballistic plates.

@@ -14,3 +14,4 @@ mech-energy-missing = Energy: MISSING
 mech-slot-display = Open Slots: {$amount}
 
 mech-construction-guide-string = All mech parts must be attached to the harness.
+mech-construction-guide-string-vim = Two borg legs and an EVA helmet must be attached to the harness.

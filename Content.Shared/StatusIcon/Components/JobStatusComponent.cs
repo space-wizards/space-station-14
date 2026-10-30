@@ -1,4 +1,4 @@
-﻿using Content.Shared.Overlays;
+using Content.Shared.Overlays;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 

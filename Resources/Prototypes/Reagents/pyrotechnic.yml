@@ -1,4 +1,4 @@
-﻿- type: reagent
+- type: reagent
   id: BasePyrotechnic
   group: Pyrotechnic
   abstract: true

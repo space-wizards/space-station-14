@@ -109,7 +109,7 @@
       Extinguish: [ Touch ]
       Acidic: [Touch, Ingestion]
     reactions:
-    - reagents: [Water, SpaceCleaner]
+    - reagents: [ Water, Holywater, SpaceCleaner ]
       methods: [Touch]
       effects:
       - !type:WashCreamPie
@@ -262,6 +262,9 @@
     data:
       sprite: Mobs/Customization/eyes.rsi
       state: diona
+  - type: EyeBlinking
+    eyelidsSprite: /Textures/Mobs/Species/Diona/parts.rsi
+  - type: Appearance
 
 - type: entity
   parent: [ OrganBaseLungs, OrganDionaInternal, OrganDionaMetabolizer ]

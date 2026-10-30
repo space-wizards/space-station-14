@@ -1,4 +1,4 @@
-﻿using Content.Shared.Armor;
+using Content.Shared.Armor;
 
 namespace Content.Client.Armor;
 

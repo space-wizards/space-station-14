@@ -11,16 +11,13 @@
             "name": "tablet"
         },
         {
-            "name": "tabletsol"
-        },
-        {
             "name": "generic",
-        "delays": [
-            [
-            0.3,
-            0.3
+            "delays": [
+                [
+                    0.3,
+                    0.3
+                ]
             ]
-        ]
         },
         {
             "name": "inhand-left",
@@ -32,12 +29,12 @@
         },
         {
             "name": "syndie",
-        "delays": [
-            [
-            0.3,
-            0.3
+            "delays": [
+                [
+                    0.3,
+                    0.3
+                ]
             ]
-        ]
         },
         {
             "name": "inhand-left-syndie",

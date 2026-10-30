@@ -1,4 +1,4 @@
-﻿accent-scottish-words-1 = do
+accent-scottish-words-1 = do
 accent-scottish-words-replace-1 = dae
 
 accent-scottish-words-2 = don't

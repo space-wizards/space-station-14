@@ -1,18 +1,18 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 288.0.1
+  engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/12/2026 22:18:17
-  entityCount: 839
+  time: 08/22/2026 21:27:00
+  entityCount: 838
 maps: []
 grids:
 - 1
 orphans:
 - 1
 nullspace:
-- 466
+- 530
 - 837
 - 838
 - 839
@@ -173,7 +173,7 @@ entities:
     - type: GridSplitNode
     - type: ChunkContainer
       chunkEntities:
-      - 466
+      - 530
       - 837
       - 838
       - 839
@@ -340,6 +340,7 @@ entities:
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: 11.5,-5.5
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -352,6 +353,7 @@ entities:
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: 9.5,-5.5
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -371,6 +373,7 @@ entities:
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: 0.5,3.5
   - uid: 382
     components:
@@ -381,6 +384,7 @@ entities:
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: 3.5,-4.5
 - proto: AirlockMaint
   entities:
@@ -388,6 +392,7 @@ entities:
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: 8.5,-2.5
 - proto: AirlockMedicalGlassLocked
   entities:
@@ -1997,7 +2002,7 @@ entities:
       pos: 1.3022232,-10.267988
 - proto: ChunkEntity
   entities:
-  - uid: 466
+  - uid: 530
     components:
     - type: ChunkEntity
       root: 1
@@ -4373,6 +4378,17 @@ entities:
       pos: 3.5,-10.5
 - proto: Poweredlight
   entities:
+  - uid: 429
+    components:
+    - type: Transform
+      parent: 1
+      pos: 10.5,-8.5
+  - uid: 431
+    components:
+    - type: Transform
+      parent: 1
+      rot: 3.141592653589793 rad
+      pos: 2.5,6.5
   - uid: 517
     components:
     - type: Transform
@@ -4397,18 +4413,12 @@ entities:
       parent: 1
       rot: 3.141592653589793 rad
       pos: 5.5,-10.5
-  - uid: 521
-    components:
-    - type: Transform
-      parent: 1
-      rot: -1.5707963267948966 rad
-      pos: 10.5,-10.5
   - uid: 522
     components:
     - type: Transform
       parent: 1
       rot: 1.5707963267948966 rad
-      pos: 7.5,-10.5
+      pos: 7.5,-9.5
   - uid: 523
     components:
     - type: Transform
@@ -4450,12 +4460,6 @@ entities:
       parent: 1
       rot: 3.141592653589793 rad
       pos: 5.5,6.5
-  - uid: 530
-    components:
-    - type: Transform
-      parent: 1
-      rot: 3.141592653589793 rad
-      pos: 1.5,6.5
   - uid: 772
     components:
     - type: Transform
@@ -4585,24 +4589,6 @@ entities:
       pos: 7.5,0.5
 - proto: Screen
   entities:
-  - uid: 428
-    components:
-    - type: Transform
-      parent: 1
-      rot: 1.5707963267948966 rad
-      pos: 8.5,-1.5
-  - uid: 429
-    components:
-    - type: Transform
-      parent: 1
-      rot: 1.5707963267948966 rad
-      pos: 0.5,5.5
-  - uid: 431
-    components:
-    - type: Transform
-      parent: 1
-      rot: 1.5707963267948966 rad
-      pos: 0.5,-7.5
   - uid: 432
     components:
     - type: Transform
@@ -4613,15 +4599,26 @@ entities:
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
-      pos: 6.5,-7.5
+      pos: 1.5,5.5
+  - uid: 466
+    components:
+    - type: Transform
+      parent: 1
+      rot: 3.141592653589793 rad
+      pos: 8.5,-13.5
+  - uid: 521
+    components:
+    - type: Transform
+      parent: 1
+      rot: 3.141592653589793 rad
+      pos: 0.5,5.5
 - proto: ShuttersNormalOpen
   entities:
   - uid: 551
     components:
     - type: Transform
       parent: 1
-      rot: 3.141592653589793 rad
+      rot: 4.71238898038469 rad
       pos: 7.5,8.5
   - uid: 552
     components:
@@ -4657,7 +4654,7 @@ entities:
     components:
     - type: Transform
       parent: 1
-      rot: 3.141592653589793 rad
+      rot: 4.71238898038469 rad
       pos: -0.5,8.5
   - uid: 558
     components:
@@ -5741,7 +5738,7 @@ entities:
     - type: Transform
       parent: 1
       pos: 1.5,8.5
-- proto: WindoorSecureAtmosphericsLocked
+- proto: WindoorEngineeringLocked
   entities:
   - uid: 761
     components:
@@ -5749,7 +5746,7 @@ entities:
       parent: 1
       rot: 3.141592653589793 rad
       pos: -2.5,-11.5
-- proto: WindoorSecureSecurityLocked
+- proto: WindoorSecurityLocked
   entities:
   - uid: 762
     components:

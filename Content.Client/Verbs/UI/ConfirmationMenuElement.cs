@@ -1,4 +1,4 @@
-﻿using Content.Client.ContextMenu.UI;
+using Content.Client.ContextMenu.UI;
 using Content.Shared.Verbs;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;

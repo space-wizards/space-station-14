@@ -1,17 +1,19 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 286.0.0
+  engineVersion: 289.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/04/2026 13:00:10
-  entityCount: 202
+  time: 08/22/2026 21:21:23
+  entityCount: 205
 maps: []
 grids:
 - 1
 orphans:
 - 1
-nullspace: []
+nullspace:
+- 205
+- 206
 tilemap:
   0: Space
   84: FloorReinforced
@@ -56,52 +58,6 @@ entities:
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
-    - type: DecalGrid
-      chunkCollection:
-        version: 2
-        nodes:
-        - node:
-            id: Box
-            color: '#FFFFFFFF'
-          decals:
-            0: 4,-2
-            1: 5,-2
-        - node:
-            id: LoadingArea
-            color: '#FFFFFFFF'
-            angle: 1.5707963267948966 rad
-          decals:
-            17: 3,-2
-            18: 3,2
-        - node:
-            id: WarnCornerSE
-            color: '#FFFFFFFF'
-          decals:
-            13: 2,4
-        - node:
-            id: WarnCornerSW
-            color: '#FFFFFFFF'
-          decals:
-            14: 4,4
-        - node:
-            id: WarnLineE
-            color: '#FFFFFFFF'
-          decals:
-            16: 2,5
-        - node:
-            id: WarnLineS
-            color: '#FFFFFFFF'
-          decals:
-            15: 4,5
-        - node:
-            id: WarnLineW
-            color: '#FFFFFFFF'
-          decals:
-            2: 1,-3
-            3: 2,-3
-            4: 3,-3
-            5: 4,-3
-            6: 5,-3
     - type: GridAtmosphere
       version: 2
       data:
@@ -151,7 +107,9 @@ entities:
     - type: ImplicitRoof
     - type: ExplosionAirtightGrid
     - type: ChunkContainer
-      chunkEntities: []
+      chunkEntities:
+      - 205
+      - 206
 - proto: AirAlarm
   entities:
   - uid: 11
@@ -268,11 +226,13 @@ entities:
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: 0.5,-1.5
   - uid: 147
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: 0.5,2.5
 - proto: ButtonFrameCaution
   entities:
@@ -547,6 +507,74 @@ entities:
       parent: 1
       rot: 3.141592653589793 rad
       pos: 3.5,6.5
+- proto: ChunkEntity
+  entities:
+  - uid: 205
+    components:
+    - type: ChunkEntity
+      root: 1
+      chunk: 0,-1
+    - type: DecalChunk
+      maxDecalId: 17
+      decals:
+        version: 1
+        nodes:
+        - node:
+            id: Box
+            color: '#FFFFFFFF'
+          decals:
+            0: 4,-2
+            1: 5,-2
+        - node:
+            id: LoadingArea
+            color: '#FFFFFFFF'
+            angle: 1.5707963267948966 rad
+          decals:
+            17: 3,-2
+        - node:
+            id: WarnLineW
+            color: '#FFFFFFFF'
+          decals:
+            2: 1,-3
+            3: 2,-3
+            4: 3,-3
+            5: 4,-3
+            6: 5,-3
+  - uid: 206
+    components:
+    - type: ChunkEntity
+      root: 1
+    - type: DecalChunk
+      maxDecalId: 18
+      decals:
+        version: 1
+        nodes:
+        - node:
+            id: LoadingArea
+            color: '#FFFFFFFF'
+            angle: 1.5707963267948966 rad
+          decals:
+            18: 3,2
+        - node:
+            id: WarnCornerSE
+            color: '#FFFFFFFF'
+          decals:
+            13: 2,4
+        - node:
+            id: WarnCornerSW
+            color: '#FFFFFFFF'
+          decals:
+            14: 4,4
+        - node:
+            id: WarnLineE
+            color: '#FFFFFFFF'
+          decals:
+            16: 2,5
+        - node:
+            id: WarnLineS
+            color: '#FFFFFFFF'
+          decals:
+            15: 4,5
 - proto: ComputerAtmosMonitoring
   entities:
   - uid: 115
@@ -997,11 +1025,13 @@ entities:
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: 0.5,-1.5
   - uid: 145
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: 0.5,2.5
 - proto: Poweredlight
   entities:
@@ -1021,16 +1051,21 @@ entities:
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
-      pos: 1.5,0.5
-- proto: PoweredSmallLight
-  entities:
-  - uid: 50
+      pos: 1.5,3.5
+  - uid: 204
     components:
     - type: Transform
       parent: 1
-      rot: 1.5707963267948966 rad
-      pos: 2.5,6.5
+      rot: 3.141592653589793 rad
+      pos: 1.5,-2.5
+- proto: PoweredSmallLight
+  entities:
+  - uid: 203
+    components:
+    - type: Transform
+      parent: 1
+      rot: -1.5707963267948966 rad
+      pos: 4.5,5.5
 - proto: ReinforcedPlasmaWindow
   entities:
   - uid: 15
@@ -1469,7 +1504,7 @@ entities:
       parent: 1
       rot: -1.5707963267948966 rad
       pos: 0.5,0.5
-- proto: WindoorSecureCargoLocked
+- proto: WindoorCargoLocked
   entities:
   - uid: 162
     components:

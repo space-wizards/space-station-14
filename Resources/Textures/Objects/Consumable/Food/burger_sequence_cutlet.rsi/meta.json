@@ -1,0 +1,38 @@
+{
+    "version": 1,
+    "license": "CC0-1.0",
+    "copyright": "Sprites by portfiend (GitHub) from https://github.com/portfiend/ss14-cc0-assets",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "bear"
+        },
+        {
+            "name": "dragon"
+        },
+        {
+            "name": "fish"
+        },
+        {
+            "name": "lizard"
+        },
+        {
+            "name": "meat"
+        },
+        {
+            "name": "poultry"
+        },
+        {
+            "name": "spider"
+        },
+        {
+            "name": "tofu"
+        },
+        {
+            "name": "xeno"
+        }
+    ]
+}

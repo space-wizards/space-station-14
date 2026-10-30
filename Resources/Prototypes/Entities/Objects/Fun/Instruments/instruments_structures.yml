@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: piano
   parent: BasePlaceableInstrumentRotatable
   id: PianoInstrument

@@ -2,67 +2,35 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.MachineLinking;
 
+/// <summary>
+/// Bound user interface key for the signal timer.
+/// </summary>
 [Serializable, NetSerializable]
 public enum SignalTimerUiKey : byte
 {
-    Key
+    Key,
 }
 
 /// <summary>
-/// Represents a SignalTimerComponent state that can be sent to the client
+/// Message requesting a change to the signal timer's displayed text.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class SignalTimerBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class SignalTimerTextChangedMessage(string text) : BoundUserInterfaceMessage
 {
-    public string CurrentText;
-    public string CurrentDelayMinutes;
-    public string CurrentDelaySeconds;
-    public bool ShowText;
-    public TimeSpan TriggerTime;
-    public bool TimerStarted;
-    public bool HasAccess;
-
-    public SignalTimerBoundUserInterfaceState(string currentText,
-        string currentDelayMinutes,
-        string currentDelaySeconds,
-        bool showText,
-        TimeSpan triggerTime,
-        bool timerStarted,
-        bool hasAccess)
-    {
-        CurrentText = currentText;
-        CurrentDelayMinutes = currentDelayMinutes;
-        CurrentDelaySeconds = currentDelaySeconds;
-        ShowText = showText;
-        TriggerTime = triggerTime;
-        TimerStarted = timerStarted;
-        HasAccess = hasAccess;
-    }
+    public readonly string Text = text;
 }
 
+/// <summary>
+/// Message requesting a change to the signal timer's delay.
+/// </summary>
 [Serializable, NetSerializable]
-public sealed class SignalTimerTextChangedMessage : BoundUserInterfaceMessage
+public sealed class SignalTimerDelayChangedMessage(TimeSpan delay) : BoundUserInterfaceMessage
 {
-    public string Text { get; }
-
-    public SignalTimerTextChangedMessage(string text)
-    {
-        Text = text;
-    }
+    public readonly TimeSpan Delay = delay;
 }
 
+/// <summary>
+/// Message requesting that the signal timer start counting down.
+/// </summary>
 [Serializable, NetSerializable]
-public sealed class SignalTimerDelayChangedMessage : BoundUserInterfaceMessage
-{
-    public TimeSpan Delay { get; }
-    public SignalTimerDelayChangedMessage(TimeSpan delay)
-    {
-        Delay = delay;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class SignalTimerStartMessage : BoundUserInterfaceMessage
-{
-
-}
+public sealed class SignalTimerStartMessage : BoundUserInterfaceMessage;

@@ -32,6 +32,18 @@ public sealed partial class ChangelingSlugComponent : Component
     public TimeSpan TakeOverDuration = TimeSpan.FromSeconds(5);
 
     /// <summary>
+    /// Whether the body should automatically enter regen stasis after being taken over.
+    /// </summary>
+    [DataField]
+    public bool AutoStasis = true;
+
+    /// <summary>
+    /// The multiplier for the duration of the automatic stasis.
+    /// </summary>
+    [DataField]
+    public float AutoStasisDurationMultiplier = 1f;
+
+    /// <summary>
     /// The sound to play when starting the takeover.
     /// </summary>
     [DataField]

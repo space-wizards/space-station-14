@@ -21,7 +21,7 @@
         # axes are kinda like sharp hammers, you know?
         Blunt: 5
         Slash: 10
-        Structural: 5
+        Structural: 3
     soundHit:
       collection: MetalThud
   - type: Wieldable
@@ -54,7 +54,8 @@
   - type: UseDelay
     delay: 1
   - type: StealTarget
-    stealGroup: FireAxe
+    stealGroup:
+    - FireAxe
   - type: IgniteOnMeleeHit
     fireStacks: -4
 

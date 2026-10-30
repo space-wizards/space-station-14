@@ -1,4 +1,4 @@
-﻿using Content.Shared.Body.Events;
+using Content.Shared.Body.Events;
 using Content.Shared.StatusEffectNew;
 
 namespace Content.Shared.Traits.Assorted;

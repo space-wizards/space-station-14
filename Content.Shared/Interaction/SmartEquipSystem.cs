@@ -115,8 +115,9 @@ public sealed partial class SmartEquipSystem : EntitySystem
         //    - with hand item: try to put it in storage
         //    - without hand item: try to take the last stored item and put it in our hands
         // 3) has an item, and that item is an item slots holder
-        //    - with hand item: get the highest priority item slot with a valid whitelist and try to insert it
         //    - without hand item: get the highest priority item slot with an item and try to eject it
+        //    - with hand item: if AllowSmartEquip is enabled, get the highest priority item slot with a valid whitelist
+        //          and try to insert it. If not, go to step 4.
         // 4) has an item, with no special storage components
         //    - with hand item: fail
         //    - without hand item: try to put the item into your hand
@@ -139,7 +140,6 @@ public sealed partial class SmartEquipSystem : EntitySystem
                 return;
             }
 
-            _hands.TryDrop((uid, hands), hands.ActiveHandId!);
             _inventory.TryEquip(uid, handItem.Value, equipmentSlot, predicted: true, checkDoafter:true);
             return;
         }
@@ -167,7 +167,6 @@ public sealed partial class SmartEquipSystem : EntitySystem
                 return;
             }
 
-            _hands.TryDrop((uid, hands), hands.ActiveHandId!);
             _storage.Insert(slotItem, handItem.Value, out var stacked, out _, user: uid);
 
             // if the hand item stacked with the things in inventory, but there's no more space left for the rest
@@ -184,7 +183,33 @@ public sealed partial class SmartEquipSystem : EntitySystem
         // case 3 (itemslot item):
         if (TryComp<ItemSlotsComponent>(slotItem, out var slots))
         {
-            if (handItem == null)
+            if (handItem != null)
+            {
+                ItemSlot? toInsertTo = null;
+
+                foreach (var slot in slots.Slots.Values)
+                {
+                    if (!slot.HasItem
+                        && _whitelistSystem.IsWhitelistPassOrNull(slot.Whitelist, handItem.Value)
+                        && slot.Priority > (toInsertTo?.Priority ?? int.MinValue))
+                    {
+                        toInsertTo = slot;
+                    }
+                }
+
+                if (toInsertTo == null)
+                {
+                    _popup.PopupEntity(Loc.GetString("smart-equip-no-valid-item-slot-insert", ("item", handItem.Value)),
+                        uid,
+                        uid);
+                    return;
+                }
+
+                _slots.TryInsertFromHand(slotItem, toInsertTo, (uid, hands), excludeUserAudio: true);
+                return;
+            }
+
+            if (slots.AllowSmartEquip)
             {
                 ItemSlot? toEjectFrom = null;
 
@@ -203,27 +228,6 @@ public sealed partial class SmartEquipSystem : EntitySystem
                 _slots.TryEjectToHands(slotItem, toEjectFrom, uid, excludeUserAudio: true);
                 return;
             }
-
-            ItemSlot? toInsertTo = null;
-
-            foreach (var slot in slots.Slots.Values)
-            {
-                if (!slot.HasItem
-                    && _whitelistSystem.IsWhitelistPassOrNull(slot.Whitelist, handItem.Value)
-                    && slot.Priority > (toInsertTo?.Priority ?? int.MinValue))
-                {
-                    toInsertTo = slot;
-                }
-            }
-
-            if (toInsertTo == null)
-            {
-                _popup.PopupEntity(Loc.GetString("smart-equip-no-valid-item-slot-insert", ("item", handItem.Value)), uid, uid);
-                return;
-            }
-
-            _slots.TryInsertFromHand(slotItem, toInsertTo, (uid, hands), excludeUserAudio: true);
-            return;
         }
 
         // case 4 (just an item):

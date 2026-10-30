@@ -29,6 +29,22 @@
     range: 2
 
 - type: ambientMusic
+  id: Arrivals
+  sound:
+    params:
+      volume: -13
+    collection: AmbienceArrivals
+  priority: 2
+  allowRepeat: false
+  conditions:
+  - !type:NearbyComponentsCondition
+    anchored: true
+    count: 3
+    components:
+    - type: AmbientMusicMarkerArrivals
+    range: 7
+
+- type: ambientMusic
   id: Space
   sound:
     params:

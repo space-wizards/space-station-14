@@ -1,4 +1,4 @@
-﻿using Content.Server.Objectives.Components;
+using Content.Server.Objectives.Components;
 using Content.Shared.EntityConditions;
 using Content.Shared.EntityConditions.Conditions.Mind;
 using Content.Shared.Mind;

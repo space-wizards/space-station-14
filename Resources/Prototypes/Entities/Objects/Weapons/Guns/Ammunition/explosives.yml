@@ -59,6 +59,7 @@
   parent: BaseGrenade
   id: GrenadeBaton
   name: baton grenade
+  description: A grenade round containing a single non-lethal projectile. Like being punched in the solar plexus.
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeBaton
@@ -75,7 +76,8 @@
 - type: entity
   parent: BaseGrenade
   id: GrenadeBlast
-  name: blast grenade
+  name: blast grenade round
+  description: A grenade round containing an explosive compound made specifically for breaching the reinforced hulls of space stations.
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeBlast
@@ -92,7 +94,8 @@
 - type: entity
   parent: BaseGrenade
   id: GrenadeFlash
-  name: flash grenade
+  name: flash grenade round
+  description: A grenade round containing a chemical compound causing a blinding flash of light on impact.
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeFlash
@@ -109,7 +112,8 @@
 - type: entity
   parent: BaseGrenade
   id: GrenadeFrag
-  name: frag grenade
+  name: frag grenade round
+  description: A grenade round containing a concentrated anti-personnel explosive alongside shrapnel, shredding anyone close to the impact zone.
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeFrag
@@ -127,6 +131,7 @@
   parent: BaseGrenade
   id: GrenadeCleanade
   name: cleanade grenade round
+  description: A grenade round containing space cleaner foam. For when you need to declare war on the concept of messiness.
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeCleanade
@@ -143,7 +148,8 @@
 - type: entity
   parent: BaseGrenade
   id: GrenadeEMP
-  name: EMP grenade
+  name: EMP grenade round
+  description: A grenade round containing an chemical compound calibrated to cause an electromagnetic pulse on impact.
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeEMP
@@ -177,6 +183,7 @@
   id: CannonBall
   name: cannonball
   suffix: Pirate
+  description: Extreme dodgeball.
   components:
   - type: CartridgeAmmo
     proto: BulletCannonBall
@@ -190,6 +197,7 @@
   id: CannonBallGrapeshot
   name: grapeshot
   suffix: Pirate
+  description: A spread of small iron balls that scatter upon being fired. For when you need to send a strongly worded message but don't know exactly where your enemy is.
   components:
   - type: CartridgeAmmo
     proto: PelletGrapeshotSpread
@@ -203,6 +211,7 @@
   id: CannonBallGlassshot
   name: glassshot
   suffix: Pirate
+  description: Turns out you can just put a bunch of glass into a cannon and fire it. Causes nasty cuts.
   components:
   - type: CartridgeAmmo
     proto: PelletGlassSpread

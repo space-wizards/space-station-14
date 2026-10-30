@@ -28,7 +28,8 @@ using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Rejuvenate;
-using Content.Shared.Timing;
+using Content.Shared.Stunnable;
+using Content.Shared.Timing.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio.Systems;
@@ -550,12 +551,15 @@ namespace Content.Shared.Cuffs
             if (TryComp<HandsComponent>(target, out var hands) && hands.Count <= component.CuffedHandCount)
                 return false;
 
+            var beforeEv = new BeforeTargetHandcuffedEvent(user);
+            RaiseLocalEvent(target, ref beforeEv);
+
             // Success!
             _hands.TryDrop(user, handcuff);
 
             _container.Insert(handcuff, component.Container);
 
-            var ev = new TargetHandcuffedEvent();
+            var ev = new TargetHandcuffedEvent(user);
             RaiseLocalEvent(target, ref ev);
 
             var evCuffs = new CuffsAppliedEvent(target);
@@ -710,10 +714,7 @@ namespace Content.Shared.Cuffs
 
             if (isOwner)
             {
-                if (!TryComp(cuff, out UseDelayComponent? useDelay))
-                    return;
-
-                if (!_delay.TryResetDelay((cuff, useDelay), true))
+                if (!_delay.TryResetDelay(cuff.Owner, true))
                 {
                     return;
                 }
@@ -946,11 +947,24 @@ namespace Content.Shared.Cuffs
     public sealed partial class AddCuffDoAfterEvent : SimpleDoAfterEvent;
 
     /// <summary>
+    /// Raised on the target before they get handcuffed.
+    /// Relayed to their held items.
+    /// </summary>
+    [ByRefEvent]
+    public record struct BeforeTargetHandcuffedEvent(EntityUid User) : IInventoryRelayEvent
+    {
+        /// <summary>
+        /// All slots to relay to
+        /// </summary>
+        public SlotFlags TargetSlots { get; set; }
+    }
+
+    /// <summary>
     /// Raised on the target when they get handcuffed.
     /// Relayed to their held items.
     /// </summary>
     [ByRefEvent]
-    public record struct TargetHandcuffedEvent : IInventoryRelayEvent
+    public record struct TargetHandcuffedEvent(EntityUid User) : IInventoryRelayEvent
     {
         /// <summary>
         /// All slots to relay to

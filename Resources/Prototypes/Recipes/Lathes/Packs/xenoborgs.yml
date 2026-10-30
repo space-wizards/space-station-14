@@ -18,9 +18,19 @@
   recipes:
   # engi xenoborg
   - XenoborgModuleDoorControlRecipe
+  - XenoborgModuleDeflectorFieldRecipe
+  - XenoborgModuleZapRecipe
+  - XenoborgModuleOilGunRecipe
+  - XenoborgModuleNaniteGunRecipe
   # heavy xenoborg
   - XenoborgModuleHeavyLaserRecipe
+  - XenoborgModuleGuidedMissileLauncherRecipe
+  - XenoborgModuleRocketRecipe
+  - XenoborgModuleBurstFireLaserRecipe
+  - XenoborgModuleHeavyRadioactiveRecipe
   # scout xenoborg
   - XenoborgModuleEnergySwordRecipe
+  - XenoborgModuleJumpRecipe
+  - XenoborgModuleBioKinfeRecipe
   # stealth xenoborg
   - XenoborgModuleSuperCloakDeviceRecipe
