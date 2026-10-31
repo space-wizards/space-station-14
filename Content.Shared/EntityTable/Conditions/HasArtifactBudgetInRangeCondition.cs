@@ -6,9 +6,8 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityTable.Conditions;
 
 /// <summary>
-/// Condition that will be successful only if budget value from context by <see cref="BudgetContextKey"/>
-/// key will be between min and max of <see cref="XenoArtifactTriggerBudgetRangeComponent.BudgetRange"/> (borders included).
-/// TODO: move this into xenoarcheology folder? this is VERY specific, because xenoarch logic will use budget range on each item that was picked, to decide by how much effects will need to be amplified.
+/// Condition that will be successful only if budget value from context by <see cref="BudgetContextKey"/> key
+/// will be between min and max of <see cref="XenoArtifactTriggerBudgetRangeComponent.BudgetRange"/> (borders included).
 /// </summary>
 public sealed partial class HasArtifactBudgetInRangeCondition : EntityTableCondition
 {
@@ -26,10 +25,10 @@ public sealed partial class HasArtifactBudgetInRangeCondition : EntityTableCondi
         EntityTableContext ctx
     )
     {
-        if (!ctx.TryGetData(BudgetContextKey, out var budget))
+        if (root is not EntSelector entSelector)
             return false;
 
-        if (root is not EntSelector entSelector)
+        if (!ctx.TryGetData(BudgetContextKey, out var budget))
             return false;
 
         MinMax? range = null;
