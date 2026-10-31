@@ -1,7 +1,39 @@
+# These startingGear prototypes are mostly for use with the "Set Outfit" debug verb
+- type: startingGear
+  id: SusGear
+  equipment:
+    head: ClothingHeadHatBeret
+    eyes: ClothingEyesGlassesSunglasses
+    ears: ClothingHeadsetGrey
+    mask: ClothingMaskGas
+    outerClothing: ClothingOuterVest
+    jumpsuit: ClothingUniformJumpsuitColorBlack
+    neck: ClothingNeckScarfStripedRed
+    back: ClothingBackpack
+    gloves: ClothingHandsGlovesColorBlack
+    shoes: ClothingShoesColorBlack
+    id: PassengerPDA
+
+- type: startingGear
+  id: SusChameleonGear
+  equipment:
+    head: ClothingHeadHatChameleon
+    eyes: ClothingEyesChameleon
+    ears: ClothingHeadsetChameleon
+    mask: ClothingMaskGasChameleon
+    outerClothing: ClothingOuterChameleon
+    jumpsuit: ClothingUniformJumpsuitChameleon
+    neck: ClothingNeckChameleon
+    back: ClothingBackpack
+    gloves: ClothingHandsChameleon
+    shoes: ClothingShoesChameleon
+    id: ChameleonAgentPDA # so they can fake job title / icon
+    pocket1: ChameleonControllerImplanter # so they can actually easily use all this chameleon stuff
+
 - type: chameleonOutfit
   id: SusChameleonOutfit
   loadoutName: chameleon-outfit-sus-name
-  name: job-name-passenger
+  name: job-name-sus
   icon: "JobIconSus"
   equipment:
     head: ClothingHeadHatBeret
