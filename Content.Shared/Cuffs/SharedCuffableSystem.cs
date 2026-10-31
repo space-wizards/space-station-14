@@ -28,6 +28,7 @@ using Content.Shared.Rejuvenate;
 using Content.Shared.Timing.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
+using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -495,6 +496,7 @@ public abstract partial class SharedCuffableSystem : EntitySystem
     }
 
     /// <returns>False if the target entity isn't cuffable.</returns>
+    [PublicAPI]
     public bool TryCuffing(EntityUid user, Entity<CuffableComponent?> target, Entity<HandcuffComponent?> handcuff)
     {
         if (!Resolve(handcuff, ref handcuff.Comp) || !Resolve(target, ref target.Comp, false))
@@ -591,6 +593,7 @@ public abstract partial class SharedCuffableSystem : EntitySystem
     }
 
     /// <inheritdoc cref="TryUncuff(Entity{CuffableComponent?},EntityUid,Entity{HandcuffComponent?})"/>
+    [PublicAPI]
     public void TryUncuff(Entity<CuffableComponent?> target, EntityUid user)
     {
         if (!TryGetLastCuff(target, out var cuff))
@@ -606,6 +609,7 @@ public abstract partial class SharedCuffableSystem : EntitySystem
     /// <param name="target">The entity we're trying to remove cuffs from.</param>
     /// <param name="user">The entity doing the cuffing.</param>
     /// <param name="cuff">The handcuff entity we're attempting to remove.</param>
+    [PublicAPI]
     public void TryUncuff(Entity<CuffableComponent?> target, EntityUid user, Entity<HandcuffComponent?> cuff)
     {
         if (!Resolve(target, ref target.Comp) || !Resolve(cuff, ref cuff.Comp))
@@ -686,6 +690,13 @@ public abstract partial class SharedCuffableSystem : EntitySystem
         _audio.PlayPredicted(isOwner ? cuff.Comp.StartBreakoutSound : cuff.Comp.StartUncuffSound, target, user);
     }
 
+    /// <summary>
+    /// Attempts to uncuff the target and place the cuffs in the hands of the user, if possible.
+    /// </summary>
+    /// <param name="target">The target to uncuff.</param>
+    /// <param name="user">The user who is uncuffing the target.</param>
+    /// <param name="cuffsToRemove">The cuffs that are being removed from the target.</param>
+    [PublicAPI]
     public void Uncuff(Entity<CuffableComponent?> target, EntityUid? user, Entity<HandcuffComponent?> cuffsToRemove)
     {
         if (_timing.ApplyingState || !Resolve(target, ref target.Comp) || !Resolve(cuffsToRemove, ref cuffsToRemove.Comp))
