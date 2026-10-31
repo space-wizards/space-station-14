@@ -56,7 +56,7 @@ void fragment()
 
         highp float veins = 1.0 - abs(zNoise(frost_coords * 10.0) * 2.0 - 1.0);
         highp float crystals = zNoise(frost_coords - time_warp);
-        highp float frost_mask = max(smoothstep(0.5, 1.0, veins),smoothstep(0.5, 1, crystals) * 0.7);
+        highp float frost_mask = max(smoothstep(0.5, 1.0, veins), smoothstep(0.5, 1.0, crystals) * 0.7);
 
         highp vec2 ice_direction = time_warp * 2.0 - 1.0;
 
