@@ -74,7 +74,6 @@ public sealed partial class XenoArtifactNodeComponent : Component
     /// <summary>
     /// Value of budget, accumulated to the moment of generating this node.
     /// Dictates amount of amplification/dampening effect will get when activated.
-    /// Is used by <see cref="XenoArtifactNodeComponent.ModifyBy"/>.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float PlacementInBudget;
