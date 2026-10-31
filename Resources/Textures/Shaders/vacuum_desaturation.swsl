@@ -1,24 +1,24 @@
 uniform sampler2D SCREEN_TEXTURE;
 uniform mediump float intensity;
 uniform mediump vec3 cold_tint;
-uniform highp vec2 world_bottom_left;
-uniform highp vec2 world_bottom_right;
-uniform highp vec2 world_top_left;
+uniform highp vec2 station_bottom_left;
+uniform highp vec2 station_bottom_right;
+uniform highp vec2 station_top_left;
 
-highp vec2 world_offset_to_uv(highp vec2 world_offset)
+highp vec2 station_offset_to_uv(highp vec2 station_offset)
 {
-    highp vec2 world_u = world_bottom_right - world_bottom_left;
-    highp vec2 world_v = world_top_left - world_bottom_left;
-    highp float determinant = world_u.x * world_v.y - world_u.y * world_v.x;
+    highp vec2 station_u = station_bottom_right - station_bottom_left;
+    highp vec2 station_v = station_top_left - station_bottom_left;
+    highp float determinant = station_u.x * station_v.y - station_u.y * station_v.x;
 
     return vec2(
-        (world_offset.x * world_v.y - world_offset.y * world_v.x) / determinant,
-        (world_u.x * world_offset.y - world_u.y * world_offset.x) / determinant);
+        (station_offset.x * station_v.y - station_offset.y * station_v.x) / determinant,
+        (station_u.x * station_offset.y - station_u.y * station_offset.x) / determinant);
 }
 
-highp float snow_flake(highp vec2 world_position, highp float speed, highp float size)
+highp float snow_flake(highp vec2 station_position, highp float speed, highp float size)
 {
-    highp vec2 snow_position = world_position + vec2(TIME * speed, TIME * speed * 0.65);
+    highp vec2 snow_position = station_position + vec2(TIME * speed, TIME * speed * 0.65);
     highp vec2 snow_cell = floor(snow_position);
     highp vec2 snow_local = fract(snow_position) - 0.5;
     highp vec2 snow_offset = zRandom(snow_cell).xy * 0.35;
@@ -35,9 +35,9 @@ void fragment()
     mediump float cold_intensity = mask.g;
 
     mediump vec4 screen_pixel = zTextureSpec(SCREEN_TEXTURE, UV);
-    highp vec2 world_position = world_bottom_left +
-        UV.x * (world_bottom_right - world_bottom_left) +
-        UV.y * (world_top_left - world_bottom_left);
+    highp vec2 station_position = station_bottom_left +
+        UV.x * (station_bottom_right - station_bottom_left) +
+        UV.y * (station_top_left - station_bottom_left);
 
     if (tile_intensity > 0.1)
     {
@@ -49,7 +49,7 @@ void fragment()
 
     if (cold_intensity > 0.1)
     {
-        highp vec2 frost_coords = world_position;
+        highp vec2 frost_coords = station_position;
         highp vec2 time_warp = vec2(
             zNoise(frost_coords + vec2(TIME * 0.1, 0.0)),
             zNoise(frost_coords + vec2(0.0, -TIME * 0.01)));
@@ -62,7 +62,7 @@ void fragment()
 
         highp vec2 ice_world_offset = ice_direction * (frost_mask * 2.5) / 32.0 * cold_intensity;
         // Make it independent of client zoom.
-        highp vec2 ice_offset =  world_offset_to_uv(ice_world_offset);
+        highp vec2 ice_offset =  station_offset_to_uv(ice_world_offset);
 
         mediump vec3 frozen_pixel = (
             zTextureSpec(SCREEN_TEXTURE, UV + ice_offset).rgb +
@@ -78,7 +78,7 @@ void fragment()
         // 1 iteration = 1 snowflake.
         for (int i = 0; i < 3; i++)
         {
-            highp float snow = snow_flake(world_position + zRandom(vec2(i)), 0.08, 0.008);
+            highp float snow = snow_flake(station_position + zRandom(vec2(i)), 0.08, 0.008);
             screen_pixel.rgb = mix(screen_pixel.rgb, cold_tint, cold_intensity * snow * 0.5 * sqrt(dot(screen_pixel.rgb, vec3(0.299, 0.587, 0.114))));
         }
 

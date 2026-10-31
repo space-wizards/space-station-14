@@ -4,6 +4,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.CCVar;
+using Content.Shared.Station.Systems;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -31,6 +32,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
 
     private readonly SharedMapSystem _maps;
     private readonly SharedTransformSystem _xformSys;
+    private readonly StationSystem _station;
     private readonly ShaderInstance _unshader;
     private readonly ShaderInstance _shader;
 
@@ -56,6 +58,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         IoCManager.InjectDependencies(this);
         _maps = _entManager.System<SharedMapSystem>();
         _xformSys = _entManager.System<SharedTransformSystem>();
+        _station = _entManager.System<StationSystem>();
 
         _unshader = _proto.Index(UnshadedShader).Instance();
         _shader = _proto.Index(VacuumOverlayShader).InstanceUnique();
@@ -205,10 +208,25 @@ public sealed partial class GasTileVacuumOverlay : Overlay
             return;
 
         args.WorldBounds.GetCorners(out var worldBottomLeft, out var worldBottomRight, out _, out var worldTopLeft);
+
+        // Lock the effect relative to the station so it doesn't move relative to it when it moves.
+        var station = _station.GetStationInMap(args.MapId);
+        var stationGrid = station is { } stationUid
+            ? _station.GetLargestGrid(stationUid)
+            : null;
+        var worldToStation = Matrix3x2.Identity;
+        if (stationGrid is { } stationGridUid)
+        {
+            (_, _, _, worldToStation) = _xformSys.GetWorldPositionRotationMatrixWithInv(stationGridUid);
+        }
+
+        var stationBottomLeft = Vector2.Transform(worldBottomLeft, worldToStation);
+        var stationBottomRight = Vector2.Transform(worldBottomRight, worldToStation);
+        var stationTopLeft = Vector2.Transform(worldTopLeft, worldToStation);
         _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-        _shader.SetParameter("world_bottom_left", worldBottomLeft);
-        _shader.SetParameter("world_bottom_right", worldBottomRight);
-        _shader.SetParameter("world_top_left", worldTopLeft);
+        _shader.SetParameter("station_bottom_left", stationBottomLeft);
+        _shader.SetParameter("station_bottom_right", stationBottomRight);
+        _shader.SetParameter("station_top_left", stationTopLeft);
 
         args.WorldHandle.UseShader(_shader);
         args.WorldHandle.DrawTextureRect(res.VacuumTarget.Texture, args.WorldBounds);
