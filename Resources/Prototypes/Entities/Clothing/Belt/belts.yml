@@ -133,6 +133,17 @@
     size: Ginormous
     shape:
     - 0,0,4,1
+  - type: ActivatableUI
+    key: enum.ItemSlotRadialUiKey.Key
+    requireEmptyHand: true
+    requireActiveHand: true
+    verbText: open-radial-menu-text
+  - type: ActivatableUIRequiresFilledItemSlot
+    compactSimilarItemsInRadialMenu: false
+  - type: UserInterface
+    interfaces:
+      enum.ItemSlotRadialUiKey.Key:
+        type: RadialItemSlotMenuBoundUserInterface
   - type: ItemSlots
     slots:
       sidearm_slot:
@@ -242,6 +253,17 @@
     size: Ginormous
     shape:
     - 0,0,4,2
+  - type: ActivatableUI
+    key: enum.ItemSlotRadialUiKey.Key
+    requireEmptyHand: true
+    requireActiveHand: true
+    verbText: open-radial-menu-text
+  - type: ActivatableUIRequiresFilledItemSlot
+    compactSimilarItemsInRadialMenu: false
+  - type: UserInterface
+    interfaces:
+      enum.ItemSlotRadialUiKey.Key:
+        type: RadialItemSlotMenuBoundUserInterface
   - type: ItemSlots
     slots:
       upgraded_sidearm_slot: # Move this in the middle of gun_slot & upgraded_utility_slot when all weapons that fit in gun_slot don't require wielding.
