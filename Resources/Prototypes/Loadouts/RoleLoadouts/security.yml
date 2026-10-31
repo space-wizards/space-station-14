@@ -60,11 +60,11 @@
   groups:
   - SecurityOfficerHead
   - SecurityBackpack
+  - SecurityBelt
   - SecurityOfficerJumpsuit
   - SecurityOfficerOuterClothing
   - SecurityShoes
   - SecurityOfficerPDA
-  - SecurityBelt
   - CommonAssistiveItems
   - SurvivalSecurity
   - CommonTrinkets
