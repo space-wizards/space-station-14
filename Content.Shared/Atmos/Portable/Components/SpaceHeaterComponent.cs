@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Portable.Components;
 
-[RegisterComponent, AutoGenerateComponentState(true), NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class SpaceHeaterComponent : Component
 {
     /// <summary>

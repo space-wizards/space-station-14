@@ -23,39 +23,34 @@ public sealed class SpaceHeaterBoundUserInterface : BoundUserInterface
         base.Open();
 
         _window = this.CreateWindow<SpaceHeaterWindow>();
-        _window.ToggleStatusButton.OnToggled += _ => ToggleStatus();
-        _window.IncreaseTempRange.OnPressed += _ => ChangeTemperature(_window.TemperatureChangeDelta);
-        _window.DecreaseTempRange.OnPressed += _ => ChangeTemperature(-_window.TemperatureChangeDelta);
-        _window.ModeSelector.OnItemSelected += args => ChangeMode((SpaceHeaterMode)args.Id);
-        _window.PowerLevelSelector.OnItemSelected += args => ChangePowerLevel((SpaceHeaterPowerLevel)args.Id);
+        _window.ToggleStatusButton.OnToggled += _ => OnToggleStatusButtonPressed();
+        _window.IncreaseTempRange.OnPressed += _ => OnTemperatureRangeChanged(_window.TemperatureChangeDelta);
+        _window.DecreaseTempRange.OnPressed += _ => OnTemperatureRangeChanged(-_window.TemperatureChangeDelta);
+        _window.ModeSelector.OnItemSelected += args => OnModeChanged((SpaceHeaterMode)args.Id);
+        _window.PowerLevelSelector.OnItemSelected += args => OnPowerLevelChanged((SpaceHeaterPowerLevel)args.Id);
 
         Update();
     }
 
-    private void ToggleStatus()
+    private void OnToggleStatusButtonPressed()
     {
         SendPredictedMessage(new SpaceHeaterToggleMessage());
-        Update();
     }
 
-    private void ChangeTemperature(float delta)
+    private void OnTemperatureRangeChanged(float delta)
     {
         SendPredictedMessage(new SpaceHeaterChangeTemperatureMessage(delta));
-        Update();
     }
 
-    private void ChangeMode(SpaceHeaterMode mode)
+    private void OnModeChanged(SpaceHeaterMode mode)
     {
         SendPredictedMessage(new SpaceHeaterChangeModeMessage(mode));
-        Update();
     }
 
-    private void ChangePowerLevel(SpaceHeaterPowerLevel level)
+    private void OnPowerLevelChanged(SpaceHeaterPowerLevel level)
     {
         SendPredictedMessage(new SpaceHeaterChangePowerLevelMessage(level));
-        Update();
     }
-
 
     public override void Update()
     {
@@ -71,13 +66,5 @@ public sealed class SpaceHeaterBoundUserInterface : BoundUserInterface
         _window.PowerLevelSelector.Select((int)spaceHeaterComp.PowerLevel);
 
         _window.SetTemperature(gasThermoMachine.TargetTemperature, spaceHeaterComp.MinTemperature, spaceHeaterComp.MaxTemperature);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        Close();
-        if (_window == null)
-            return;
-        _window.Close();
     }
 }

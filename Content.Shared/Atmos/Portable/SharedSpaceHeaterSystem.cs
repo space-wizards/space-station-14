@@ -2,7 +2,6 @@ using Content.Shared.Atmos.Piping.Portable.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Visuals;
 using Content.Shared.Popups;
-using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.UserInterface;
 
@@ -14,6 +13,8 @@ public abstract partial class SharedSpaceHeaterSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private EntityQuery<GasThermoMachineComponent> _thermoQuery = default!;
+    [Dependency] protected SharedUserInterfaceSystem _ui = default!;
+
 
     [SubscribeLocalEvent]
     private void OnInit(Entity<SpaceHeaterComponent> ent, ref MapInitEvent args)
@@ -45,6 +46,7 @@ public abstract partial class SharedSpaceHeaterSystem : EntitySystem
 
         if (!ent.Comp.Active)
             SetOff(ent);
+        UpdateUi(ent);
     }
 
     [SubscribeLocalEvent]
@@ -58,6 +60,7 @@ public abstract partial class SharedSpaceHeaterSystem : EntitySystem
                                                       ent.Comp.MaxTemperature);
 
         Dirty(ent, thermoMachine);
+        UpdateUi(ent);
     }
 
     [SubscribeLocalEvent]
@@ -73,7 +76,9 @@ public abstract partial class SharedSpaceHeaterSystem : EntitySystem
             thermoMachine.Cp = ent.Comp.HeatingCp;
         else if (ent.Comp.Mode == SpaceHeaterMode.Cool)
             thermoMachine.Cp = ent.Comp.CoolingCp;
-        SetStandBy(ent); // Set appearance to stand by until the server can figure out if it's actually running or not
+        if (ent.Comp.Active)
+            SetStandBy(ent); // Set appearance to stand by until the server can figure out if it's actually running or not
+        UpdateUi(ent);
     }
 
     [SubscribeLocalEvent]
@@ -99,6 +104,7 @@ public abstract partial class SharedSpaceHeaterSystem : EntitySystem
                 thermoMachine.HeatCapacity = ent.Comp.PowerConsumption * 2;
                 break;
         }
+        UpdateUi(ent);
     }
 
     protected void UpdateAppearance(EntityUid uid, GasThermoMachineComponent? thermoMachine = null)
@@ -139,5 +145,9 @@ public abstract partial class SharedSpaceHeaterSystem : EntitySystem
     protected void SetCooling(EntityUid uid)
     {
         _appearance.SetData(uid, SpaceHeaterVisuals.State, SpaceHeaterState.Cooling);
+    }
+
+    protected virtual void UpdateUi(Entity<SpaceHeaterComponent> ent)
+    {
     }
 }
