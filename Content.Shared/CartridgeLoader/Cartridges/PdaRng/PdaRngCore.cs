@@ -227,7 +227,11 @@ public static class PdaRngAnalyzer
         badges.Add(new("StrictlyAscending", 70, static (_, s) => IsStrictMono(s, up: true)));
         badges.Add(new("StrictlyDescending", 70, static (_, s) => IsStrictMono(s, up: false)));
         badges.Add(new("Doublet", 4, static (_, s) => HasRun(s, 2)));
+        badges.Add(new("MultipleDoublets", 22, static (_, s) => CountDoubletRuns(s) >= 2));
         badges.Add(new("Triplet", 28, static (_, s) => HasRun(s, 3)));
+        badges.Add(new("ThreeOfAKind", 14, static (_, s) => HasDigitCount(s, 3)));
+        badges.Add(new("FourOfAKind", 48, static (_, s) => HasDigitCount(s, 4)));
+        badges.Add(new("FiveOfAKind", 90, static (_, s) => HasDigitCount(s, 5)));
         badges.Add(new("RepeatingBlock", 55, static (_, s) => IsRepeatingBlock(s)));
         badges.Add(new("ConsecutiveDigram", 28, static (_, s) => HasConsecutiveDigram(s)));
         badges.Add(new("BinaryLooking", 30, static (_, s) => OnlyDigits(s, "01")));
@@ -443,6 +447,51 @@ public static class PdaRngAnalyzer
         {
             run = s[i] == s[i - 1] ? run + 1 : 1;
             if (run >= runLength)
+                return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>Counts separate runs of 2+ identical digits (e.g. 1122 → 2).</summary>
+    private static int CountDoubletRuns(string s)
+    {
+        var count = 0;
+        var run = 1;
+        for (var i = 1; i < s.Length; i++)
+        {
+            if (s[i] == s[i - 1])
+            {
+                run++;
+            }
+            else
+            {
+                if (run >= 2)
+                    count++;
+                run = 1;
+            }
+        }
+
+        if (run >= 2)
+            count++;
+
+        return count;
+    }
+
+    private static bool HasDigitCount(string s, int minCount)
+    {
+        if (s.Length < minCount)
+            return false;
+
+        var counts = new int[10];
+        foreach (var ch in s)
+        {
+            counts[ch - '0']++;
+        }
+
+        for (var i = 0; i < counts.Length; i++)
+        {
+            if (counts[i] >= minCount)
                 return true;
         }
 

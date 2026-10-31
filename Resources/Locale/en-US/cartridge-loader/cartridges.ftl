@@ -104,7 +104,7 @@ wanted-list-history-table-initiator-col = Initiator
 
 # PDA RNG cartridge
 pda-rng-program-name = PDA RNG
-pda-rng-ui-description = Generate one random number ticket this shift. Results are printed on paper.
+pda-rng-ui-description = Generate one random number this shift. Results are printed on paper.
 pda-rng-ui-print-button = Print Ticket
 pda-rng-ui-status-ready = Ready — one roll remaining.
 pda-rng-ui-status-rolled = Already rolled this shift.
@@ -178,8 +178,16 @@ pda-rng-badge-StrictlyDescending = Strictly Descending
     .desc = Each digit is smaller than the last.
 pda-rng-badge-Doublet = Doublet
     .desc = Contains two identical digits in a row.
+pda-rng-badge-MultipleDoublets = Multiple Doublets
+    .desc = Contains at least two separate pairs of identical digits in a row.
 pda-rng-badge-Triplet = Triplet
     .desc = Contains three identical digits in a row.
+pda-rng-badge-ThreeOfAKind = Three of a Kind
+    .desc = Contains the same digit at least three times.
+pda-rng-badge-FourOfAKind = Four of a Kind
+    .desc = Contains the same digit at least four times.
+pda-rng-badge-FiveOfAKind = Five of a Kind
+    .desc = Contains the same digit five times.
 pda-rng-badge-RepeatingBlock = Repeating Block
     .desc = The first half equals the second half.
 pda-rng-badge-ConsecutiveDigram = Consecutive Pair
