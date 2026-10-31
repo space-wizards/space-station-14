@@ -1518,6 +1518,7 @@
     name: seeds-aloe-name
     packetPrototype: AloeSeeds
     productPrototypes: [ FoodAloe ]
+    mutationPrototypes: [ AloeIgnisPlants ]
   - type: Plant
     lifespan: 25
     maturation: 10
@@ -1537,6 +1538,66 @@
         min: 1
         max: 10
         potencyDivisor: 10
+
+- type: entity
+  parent: BasePlant
+  id: AloeIgnisPlants
+  categories: [ HideSpawnMenu ]
+  name: aloe ignis
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/aloe_ignis.rsi
+  - type: PlantData
+    name: seeds-aloe-ignis-name
+    packetPrototype: AloeIgnisSeeds
+    productPrototypes: [ FoodAloeIgnis ]
+    mutationPrototypes: [ DragonTailPlants ]
+  - type: Plant
+    lifespan: 25
+    maturation: 10
+    production: 3
+    yield: 3
+    potency: 10
+    growthStages: 5
+  - type: PlantGrowth
+    waterConsumption: 0.3
+    nutrientConsumption: 0.4
+  - type: PlantChemicals
+    chemicals:
+      Ignisol:
+        min: 5
+        max: 15
+        potencyDivisor: 10
+      Carbon:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+
+- type: entity
+  parent: BasePlant
+  id: DragonTailPlants
+  categories: [ HideSpawnMenu ]
+  name: dragon's tail
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/dragon_tail.rsi
+  - type: PlantData
+    name: seeds-dragontail-name
+    packetPrototype: DragonTailSeeds
+    productPrototypes: [ FoodDragonTail ]
+  - type: Plant
+    lifespan: 35
+    maturation: 10
+    production: 4
+    yield: 3
+    potency: 10
+    growthStages: 5
+  - type: PlantChemicals
+    chemicals:
+      Ignisol:
+        min: 5
+        max: 10
+        potencyDivisor: 20
 
 - type: entity
   parent: BasePlant
