@@ -71,6 +71,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
     [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private EntityQuery<PuddleComponent> _puddleQuery = default!;
+    [Dependency] private SharedSubFloorHideSystem _subFloorHide = default!;
 
     private ObjectPool<HashSet<EntityUid>> _entPool =
         new DefaultObjectPool<HashSet<EntityUid>>(new SetPolicy<EntityUid>(), 256);
@@ -241,13 +242,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
                     return 0f;
                 }
 
-                // Deny subfloor targets if hidden under floor tiles.
-                if (HasComp<SubFloorHideComponent>(targetUid)
-                    && TryComp(targetUid, out TransformComponent? targetXform)
-                    && targetXform is { Anchored: true, GridUid: { } gridUid }
-                    && TryComp<MapGridComponent>(gridUid, out var grid)
-                    && _map.TryGetTileRef(gridUid, grid, targetXform.Coordinates, out var tileRef)
-                    && !((ContentTileDefinition)_tileDefinitionManager[tileRef.Tile.TypeId]).IsSubFloor)
+                if (_subFloorHide.IsHidden(targetUid))
                 {
                     return 0f;
                 }

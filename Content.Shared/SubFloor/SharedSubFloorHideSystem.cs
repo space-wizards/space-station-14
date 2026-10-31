@@ -171,6 +171,31 @@ namespace Content.Shared.SubFloor
             return !tileDef.IsSubFloor;
         }
 
+        /// <summary>
+        ///    Returns true if the subfloor entity is currently hidden under a floor tile.
+        /// </summary>
+        /// <param name="ent">The subfloor entity to check</param>
+        /// <returns>Whether <see cref="ent"/> is hidden under floor tiles.</returns>
+        public bool IsHidden(Entity<SubFloorHideComponent?> ent)
+        {
+            TransformComponent? xform = null;
+            if (!Resolve(ent.Owner, ref ent.Comp, ref xform))
+                return false;
+
+            if (!(xform is { Anchored: true, GridUid: { } gridUid }))
+                return false;
+
+            if (!TryComp<MapGridComponent>(gridUid, out var grid))
+                return false;
+
+            if (!Map.TryGetTileRef(gridUid, grid, xform.Coordinates, out var tileRef))
+                return false;
+
+            var isTileOverEntity = HasFloorCover(gridUid, grid, tileRef.GridIndices);
+
+            return isTileOverEntity;
+        }
+
         private void UpdateTile(EntityUid gridUid, MapGridComponent grid, Vector2i position)
         {
             var covered = HasFloorCover(gridUid, grid, position);
