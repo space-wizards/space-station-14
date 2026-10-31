@@ -133,7 +133,7 @@ public sealed partial class EyeBlinkingComponent : Component
     /// The prototype to grant to enable eye-toggling action.
     /// </summary>
     [DataField]
-    public EntProtoId EyeToggleAction = "ActionToggleEyes";
+    public EntProtoId? EyeToggleAction;
 
     /// <summary>
     /// The actual eye toggling action entity itself.

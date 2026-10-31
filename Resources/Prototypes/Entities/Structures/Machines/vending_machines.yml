@@ -101,6 +101,9 @@
   - type: ApcPowerReceiver
     powerLoad: 200
   - type: Actions
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-mechanical
+    weight: 0.025 # fuck you in particular (it now needs 40 vending machines to be as likely as 1 interesting animal)
   - type: StaticPrice
     price: 100
   - type: Appearance
@@ -1426,6 +1429,14 @@
     - Salvage
 
 - type: entity
+  parent: VendingMachineSalvage
+  id: VendingMachineSalvageCargo
+  suffix: Cargo Access
+  components:
+  - type: AccessReader
+    access: [["Salvage"], ["Cargo"]]
+
+- type: entity
   parent: VendingMachine
   id: VendingMachineDonut
   name: Monkin' Donuts
@@ -2113,6 +2124,14 @@
     - Chemicals
     - Chemist
   - type: AmbientMusicMarkerMedical
+
+- type: entity
+  parent: VendingMachineChemicals
+  id: VendingMachineChemicalsMed
+  suffix: Medical Access
+  components:
+  - type: AccessReader
+    access: [["Chemistry"], ["Medical"]]
 
 - type: entity
   parent: VendingMachineChemicals

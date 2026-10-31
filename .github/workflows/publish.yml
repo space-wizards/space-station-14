@@ -95,8 +95,9 @@ jobs:
             fi
           else
             git commit -m "Update changelog"
-            git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
+            git -c http.https://github.com/.extraheader= \
+              push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+              "HEAD:${GITHUB_REF_NAME}"
             echo "committed=true" >> "$GITHUB_OUTPUT"
           fi
         fi
@@ -114,7 +115,9 @@ jobs:
           echo "DRY-RUN: would create tag '${VERSION_TAG}' at ${HEAD_SHA} and push it."
         else
           git tag "${VERSION_TAG}"
-          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "refs/tags/${VERSION_TAG}"
+          git -c http.https://github.com/.extraheader= \
+            push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+            "refs/tags/${VERSION_TAG}"
         fi
 
     - name: Create PR from stable to master

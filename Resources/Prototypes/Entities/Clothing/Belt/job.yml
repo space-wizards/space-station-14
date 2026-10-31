@@ -141,11 +141,7 @@
       - WireBrush
       - LightReplacer
       - CleanerGrenade
-      - Screwdriver
-      - Crowbar
-      - Powerdrill
       components:
-      - TRayScanner
       - SprayPainter
       - SprayPainterAmmo
   - type: ItemMapper
