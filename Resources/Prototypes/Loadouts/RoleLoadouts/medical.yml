@@ -10,8 +10,8 @@
   - ChiefMedicalOfficerOuterClothing
   - ChiefMedicalOfficerNeck
   - ChiefMedicalOfficerShoes
-  - AssistiveItems
-  - MedicalSurvival
+  - CommonAssistiveItems
+  - SurvivalMedical
   - CommonTrinkets
 #  - ChiefMedicalOfficerJobTrinkets
   - GroupSpeciesBreathToolMedical
@@ -26,8 +26,8 @@
   - ChemistJumpsuit
   - ChemistOuterClothing
   - MedicalShoes
-  - AssistiveItems
-  - MedicalSurvival
+  - CommonAssistiveItems
+  - SurvivalMedical
   - CommonTrinkets
 #  - ChemistJobTrinkets
   - GroupSpeciesBreathToolMedical
@@ -44,8 +44,8 @@
   - MedicalDoctorOuterClothing
   - MedicalShoes
   - MedicalDoctorPDA
-  - AssistiveItems
-  - MedicalSurvival
+  - CommonAssistiveItems
+  - SurvivalMedical
   - CommonTrinkets
 #  - MedicalDoctorJobTrinkets
   - GroupSpeciesBreathToolMedical
@@ -57,8 +57,8 @@
   - CommonEyewear
   - MedicalBackpack
   - MedicalInternJumpsuit
-  - AssistiveItems
-  - MedicalSurvival
+  - CommonAssistiveItems
+  - SurvivalMedical
   - CommonTrinkets
 #  - MedicalInternJobTrinkets
   - GroupSpeciesBreathToolMedical
@@ -74,8 +74,8 @@
   - ParamedicJumpsuit
   - ParamedicOuterClothing
   - ParamedicShoes
-  - AssistiveItems
-  - MedicalSurvival
+  - CommonAssistiveItems
+  - SurvivalMedical
   - CommonTrinkets
 #  - ParamedicJobTrinkets
   - GroupSpeciesBreathToolMedical
