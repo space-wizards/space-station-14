@@ -428,39 +428,6 @@
     },
     {
       "name": "poster54_contraband"
-    },
-    {
-      "name": "bagelmap"
-    },
-    {
-      "name": "deltamap"
-    },
-    {
-      "name": "marathonmap"
-    },
-    {
-      "name": "originmap"
-    },
-    {
-      "name": "moosemap"
-    },
-    {
-      "name": "packedmap"
-    },
-    {
-      "name": "pillarmap"
-    },
-    {
-      "name": "salternmap"
-    },
-    {
-      "name": "splitmap"
-    },
-    {
-      "name": "lighthousemap"
-    },
-    {
-      "name": "waystationmap"
     }
   ]
 }
