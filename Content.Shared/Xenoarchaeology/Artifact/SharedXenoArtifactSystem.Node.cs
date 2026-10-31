@@ -123,7 +123,12 @@ public abstract partial class SharedXenoArtifactSystem
         var pr = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
         // step 3 - pick trigger using budget we accumulated
         EntProtoId? triggerProtoId;
-        using (var _ = new TemporarilyAddToContext<float>(triggerPool.Context, HasArtifactBudgetInRangeCondition.BudgetContextKey, virtualNodeBudget))
+        using (var _ = new EntityTableContext.TemporarilyAddToContext<float>(
+                        triggerPool.Context,
+                        HasArtifactBudgetInRangeCondition.BudgetContextKey,
+                        virtualNodeBudget
+                   )
+                )
         {
             triggerProtoId = _entityTable.GetFirstOrNull(ent.Comp.TriggersTable, pr, triggerPool.Context);
         }
@@ -451,37 +456,6 @@ public abstract partial class SharedXenoArtifactSystem
 
         var predecessorNodes = GetPredecessorNodes((artifact, artifact), node);
         nodeComponent.ResearchValue = (int)(Math.Pow(1.25, Math.Pow(predecessorNodes.Count, 1.5f)) * nodeComponent.BasePointValue * durabilityMultiplier);
-    }
-
-    /// <summary>
-    /// Structure that holds values that were temporarily added to <see cref="EntityTableContext"/>
-    /// and should be removed on dispose call.
-    /// </summary>
-    /// <typeparam name="T">Type of value in context, for which we want to control lifetime.</typeparam>
-    private readonly struct TemporarilyAddToContext<T> : IDisposable where T : notnull
-    {
-        private readonly EntityTableContext _context;
-        private readonly EntityTableContextKey<T> _key;
-
-        /// <summary>
-        /// Creates marker struct that will add <paramref cref="value"/> to <paramref cref="context"/>
-        /// immidiately, and will remove it during <see cref="Dispose"/> call.
-        /// </summary>
-        /// <param name="context">Context with which we want to control.</param>
-        /// <param name="key">Key for storing and removing value.</param>
-        /// <param name="value">Value to store now, and removed on disposal of this struct.</param>
-        public TemporarilyAddToContext(EntityTableContext context, EntityTableContextKey<T> key, T value)
-        {
-            _context = context;
-            _key = key;
-            _context.SetData(_key, value);
-        }
-
-        /// <inheritdoc/>
-        public void Dispose()
-        {
-            _context.RemoveData(_key);
-        }
     }
 
     /// <summary>
