@@ -212,7 +212,7 @@ public abstract partial class SharedCuffableSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnPull(Entity<CuffableComponent> ent, ref PullStartedMessage args)
+    private void OnPullStarted(Entity<CuffableComponent> ent, ref PullStartedMessage args)
     {
         if (!ent.Comp.CanStillInteract)
             _actionBlocker.UpdateCanMove(ent);
