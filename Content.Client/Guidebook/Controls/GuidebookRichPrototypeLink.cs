@@ -61,7 +61,7 @@ public sealed class GuidebookRichPrototypeLink : Control, IPrototypeLinkControl
             args.Handle();
         }
         else
-            Logger.Warning("Warning! No valid IAnchorClickHandler found.");
+            Log.Warning("Warning! No valid IAnchorClickHandler found.");
     }
 }
 
