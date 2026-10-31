@@ -384,7 +384,12 @@ public sealed partial class MarkingsViewModel
         if (markingIdx == -1)
             return;
 
-        markings[markingIdx] = markings[markingIdx].WithColorAt(colorIndex, color);
+        var markingProto = _prototype.Index(markingId);
+        var newColor = color;
+        if (markingProto.Strategy != null)
+            newColor = markingProto.Strategy.ClosestSkinColor(color);
+
+        markings[markingIdx] = markings[markingIdx].WithColorAt(colorIndex, newColor);
         MarkingsChanged?.Invoke(organ, layer);
     }
 
