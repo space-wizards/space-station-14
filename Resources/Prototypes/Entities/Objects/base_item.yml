@@ -242,7 +242,6 @@
   id: BaseStash
   components:
   - type: SecretStash
-    useItemSizeAsMaxSize: true
     blacklist:
       components:
       - NukeDisk # Because a core mechanic of nukies should not be "where in this bag is the fucking disk"

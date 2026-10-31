@@ -30,11 +30,12 @@ namespace Content.Shared.Storage.Components
 
         /// <summary>
         /// Set this to true to make <see cref="MaxItemSize"/> use
-        /// the stash's <see cref="ItemComponent"/> size as a default value.
+        /// the stash's <see cref="ItemComponent"/> size as a default value (if its value is null).
+        /// Set it to false to default to no maximum size (assuming <see cref="MaxItemSize"/> is null)
         /// No effect if <see cref="MaxItemSize"/> is not null.
         /// </summary>
         [DataField]
-        public bool UseItemSizeAsMaxSize;
+        public bool UseItemSizeAsMaxSize = true;
 
         /// <summary>
         ///     Entity blacklist for secret stashes.
