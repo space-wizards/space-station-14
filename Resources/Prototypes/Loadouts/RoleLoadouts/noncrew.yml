@@ -42,7 +42,7 @@
 - type: roleLoadout
   id: RoleSurvivalMedical
   groups:
-  - MedicalSurvival
+  - SurvivalMedical
   - GroupSpeciesBreathToolMedical
   - GroupTankHarness
 
