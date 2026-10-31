@@ -1,0 +1,9 @@
+- type: roleLoadout
+  id: JobStationAi
+  nameDataset: NamesAI
+  canCustomizeName: true
+
+- type: roleLoadout
+  id: JobBorg
+  nameDataset: NamesBorg
+  canCustomizeName: true

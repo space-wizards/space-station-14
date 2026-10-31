@@ -1,0 +1,194 @@
+# Generic departmental
+
+- type: loadoutGroup
+  parent: BaseBackpack
+  id: SecurityBackpack
+  loadouts:
+  - SecurityBackpack
+  - SecuritySatchel
+  - SecurityDuffel
+
+- type: loadoutGroup
+  parent: BaseBelt
+  id: SecurityBelt
+  loadouts:
+  - SecurityBelt
+  - SecurityWebbing
+
+- type: loadoutGroup
+  parent: BaseShoes
+  id: SecurityShoes
+  loadouts:
+  - JackBoots
+  - SecurityWinterBoots
+
+# Head of Security
+
+- type: loadoutGroup
+  parent: BaseHead
+  id: HeadofSecurityHead
+  loadouts:
+  - HeadofSecurityHead
+  - HeadofSecurityBeret
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: HeadofSecurityJumpsuit
+  loadouts:
+  - HeadofSecurityJumpsuit
+  - HeadofSecurityJumpskirt
+  - HeadofSecurityTurtleneck
+  - HeadofSecurityTurtleneckSkirt
+  - HeadofSecurityFormalSuit
+  - HeadofSecurityFormalSkirt
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: HeadofSecurityOuterClothing
+  minLimit: 1
+  loadouts:
+  - HeadofSecurityCoat
+  - HeadofSecurityWinterCoat
+
+- type: loadoutGroup
+  parent: BaseNeck
+  id: HeadofSecurityNeck
+  loadouts:
+  - HeadofSecurityCloak
+  - HeadofSecurityMantle
+
+- type: loadoutGroup
+  parent: BaseJobTrinkets
+  id: HeadofSecurityJobTrinkets
+  loadouts:
+  - SecStar
+
+# Warden
+
+- type: loadoutGroup
+  parent: BaseHead
+  id: WardenHead
+  loadouts:
+  - WardenHead
+  - WardenBeret
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: WardenJumpsuit
+  loadouts:
+  - WardenJumpsuit
+  - WardenJumpskirt
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: WardenOuterClothing
+  minLimit: 1
+  loadouts:
+  - WardenCoat
+  - WardenArmoredWinterCoat
+
+- type: loadoutGroup
+  parent: BaseJobTrinkets
+  id: WardenJobTrinkets
+  name: loadout-group-jobtrinkets
+  loadouts:
+  - SecStar
+
+# Detective
+
+- type: loadoutGroup
+  parent: BaseHead
+  id: DetectiveHead
+  loadouts:
+  - DetectiveFedora
+  - DetectiveFedoraGrey
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: DetectiveJumpsuit
+  loadouts:
+  - DetectiveJumpsuit
+  - DetectiveJumpskirt
+  - NoirJumpsuit
+  - NoirJumpskirt
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: DetectiveOuterClothing
+  minLimit: 1
+  loadouts:
+  - DetectiveArmorVest
+  - DetectiveCoat
+  - DetectiveCoatGrey
+  - SecurityOfficerWintercoat
+
+- type: loadoutGroup
+  parent: BaseNeck
+  id: DetectiveNeck
+  loadouts:
+  - DetectiveTie
+
+- type: loadoutGroup
+  parent: BaseJobTrinkets
+  id: DetectiveJobTrinkets
+  loadouts:
+  - SecStar
+
+# Security Cadet
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: SecurityCadetJumpsuit
+  loadouts:
+  - RedJumpsuit
+  - RedJumpskirt
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: SecurityCadetJobTrinkets
+#  loadouts: []
+
+# Security Officer
+
+- type: loadoutGroup
+  parent: BaseHead
+  id: SecurityOfficerHead
+  loadouts:
+  - SecurityHelmet
+  - SecurityBeret
+  - SecurityHat
+  - TrooperHat
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: SecurityOfficerJumpsuit
+  loadouts:
+  - SecurityJumpsuit
+  - SecurityJumpskirt
+  - SecurityJumpsuitGrey
+  - SecurityJumpskirtGrey
+  - SeniorOfficerJumpsuit
+  - SeniorOfficerJumpskirt
+  - TrooperUniform
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: SecurityOfficerOuterClothing
+  minLimit: 1
+  loadouts:
+  - ArmorVest
+  - ArmorVestSlim
+  - SecurityOfficerWintercoat
+
+- type: loadoutGroup
+  parent: BasePDA
+  id: SecurityOfficerPDA
+  loadouts:
+  - SecurityPDA
+  - SeniorOfficerPDA
+
+- type: loadoutGroup
+  parent: BaseJobTrinkets
+  id: SecurityJobTrinkets
+  loadouts:
+  - SecStar

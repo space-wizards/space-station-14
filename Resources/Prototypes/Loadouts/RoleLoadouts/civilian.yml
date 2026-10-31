@@ -1,0 +1,17 @@
+- type: roleLoadout
+  id: JobPassenger
+  groups:
+  - GroupTankHarness
+  - CommonEyewear
+  - PassengerMask
+  - CommonBackpack
+  - PassengerJumpsuit
+  - PassengerOuterClothing
+  - PassengerNeck
+  - PassengerGloves
+  - PassengerShoes
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  #- PassengerJobTrinkets
+  - GroupSpeciesBreathTool

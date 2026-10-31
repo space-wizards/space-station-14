@@ -1,0 +1,122 @@
+# Generic departmental
+
+- type: loadoutGroup
+  parent: BaseBackpack
+  id: CargoBackpack
+  loadouts:
+  - CargoTechnicianBackpack
+  - CargoTechnicianSatchel
+  - CargoTechnicianDuffel
+
+# Quartermaster
+
+- type: loadoutGroup
+  parent: BaseHead
+  id: QuartermasterHead
+  loadouts:
+  - QuartermasterHead
+  - QuartermasterBeret
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: QuartermasterJumpsuit
+  loadouts:
+  - QuartermasterJumpsuit
+  - QuartermasterJumpskirt
+  - QuartermasterTurtleneck
+  - QuartermasterTurtleneckSkirt
+  - QuartermasterFormalSuit
+  - QuartermasterFormalDress
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: QuartermasterOuterClothing
+  loadouts:
+  - QuartermasterWintercoat
+
+- type: loadoutGroup
+  parent: BaseNeck
+  id: QuartermasterNeck
+  loadouts:
+  - QuartermasterCloak
+  - QuartermasterMantle
+
+- type: loadoutGroup
+  parent: BaseShoes
+  id: QuartermasterShoes
+  loadouts:
+  - BrownShoes
+  - CargoWinterBoots
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: QuartermasterJobTrinkets
+#  loadouts: []
+
+# Cargo Technician
+
+- type: loadoutGroup
+  parent: BaseHead
+  id: CargoTechnicianHead
+  loadouts:
+  - CargoTechnicianHead
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: CargoTechnicianJumpsuit
+  loadouts:
+  - CargoTechnicianJumpsuit
+  - CargoTechnicianJumpskirt
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: CargoTechnicianOuterClothing
+  loadouts:
+  - CargoTechnicianWintercoat
+
+- type: loadoutGroup
+  parent: BaseShoes
+  id: CargoTechnicianShoes
+  loadouts:
+  - BlackShoes
+  - CargoWinterBoots
+
+- type: loadoutGroup
+  parent: BasePDA
+  id: CargoTechnicianPDA
+  loadouts:
+  - CargoTechnicianPDA
+  - SeniorCourierPDA
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: CargoTechnicianJobTrinkets
+#  loadouts: []
+
+# Salvage Specialist
+
+- type: loadoutGroup
+  parent: BaseBackpack
+  id: SalvageSpecialistBackpack
+  loadouts:
+  - SalvageSpecialistBackpack
+  - SalvageSpecialistSatchel
+  - SalvageSpecialistDuffel
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: SalvageSpecialistOuterClothing
+  loadouts:
+  - SalvageSpecialistWintercoat
+
+- type: loadoutGroup
+  parent: BaseShoes
+  id: SalvageSpecialistShoes
+  loadouts:
+  - SalvageBoots
+  - CargoWinterBoots
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: SalvageSpecialistJobTrinkets
+#  loadouts: []
