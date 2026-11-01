@@ -7,8 +7,7 @@ namespace Content.Shared.NameModifier.Components;
 /// Used to manage modifiers on an entity's name and handle renaming in a way
 /// that survives being renamed by multiple systems.
 /// </summary>
-[RegisterComponent]
-[NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(NameModifierSystem))]
 public sealed partial class NameModifierComponent : Component
 {
