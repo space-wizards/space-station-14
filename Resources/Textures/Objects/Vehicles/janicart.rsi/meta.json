@@ -38,6 +38,10 @@
       ]
     },
     {
+      "name": "vehicle-overlay",
+      "directions": 4
+    },
+    {
       "name": "storage",
       "directions": 4
     },
