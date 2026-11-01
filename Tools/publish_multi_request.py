@@ -28,6 +28,9 @@ def get_publish_token() -> str:
 def simulate_publish(fork_id: str, version: str) -> None:
     print(f"[DRY RUN] Would publish version {version} to Robust.CDN fork '{fork_id}'")
     print(f"[DRY RUN]   engine version: {get_engine_version()}")
+    print("[DRY RUN]   source info:")
+    for key, value in get_source_info().items():
+        print(f"[DRY RUN]     {key}: {value or '<unknown>'}")
     files = list(get_files_to_publish())
     print(f"[DRY RUN]   files to upload ({len(files)}):")
     for file in files:
@@ -57,6 +60,7 @@ def main():
     data = {
         "version": VERSION,
         "engineVersion": get_engine_version(),
+        **get_source_info(),
     }
     headers = {
         "Content-Type": "application/json"
@@ -101,6 +105,19 @@ def get_engine_version() -> str:
     tag = proc.stdout.strip()
     assert tag.startswith("v")
     return tag[1:] # Cut off v prefix.
+
+
+def get_source_info() -> dict[str, str | None]:
+    # Unknown values are sent as null rather than an empty string, so the CDN can tell
+    # "we don't know" apart from an intentionally empty value.
+    return {
+        "sourceUrl": os.environ.get("SOURCE_URL") or None,
+        "sourceCommitId": os.environ.get("SOURCE_COMMIT_ID") or None,
+        "sourceBranchName": os.environ.get("SOURCE_BRANCH_NAME") or None,
+        "engineSourceUrl": os.environ.get("ENGINE_SOURCE_URL") or None,
+        "engineSourceCommitId": os.environ.get("ENGINE_SOURCE_COMMIT_ID") or None,
+        "engineSourceBranchName": os.environ.get("ENGINE_SOURCE_BRANCH_NAME") or None,
+    }
 
 
 if __name__ == '__main__':
