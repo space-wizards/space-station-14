@@ -44,3 +44,6 @@ uplink-clothing-eyes-hud-syndicate-desc = The syndicate's professional head-up d
 
 uplink-backpack-syndicate-name = Syndicate backpack
 uplink-backpack-syndicate-desc = A lightweight expanded backpack with explosion proofing for holding various traitor goods.
+
+uplink-holster-name = Shoulder Holster
+uplink-holster-desc = A heavily modified deep shoulder holster capable of holding many types of ballistics. Unable to store LMG's, Snipers, or Launchers.
