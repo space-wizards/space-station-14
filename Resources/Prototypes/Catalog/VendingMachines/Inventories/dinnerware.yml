@@ -1,35 +1,49 @@
 - type: vendingMachineInventory
   id: DinnerwareInventory
-  startingInventory:
-    ButchCleaver: 1
-    KitchenKnife: 5
-    RollingPin: 4
-    Spoon: 4
-    Fork: 4
-    PairedChopsticks: 4
-    FoodBowlBig: 10
-    FoodPlate: 10
-    FoodPlateSmall: 10
-    FoodPlateTin: 5
-    FoodPlateMuffinTin: 5
-    FoodKebabSkewer: 5
-    DrinkGlass: 5
-    Beaker: 5
-    LargeBeaker: 5
-    Pitcher: 2
-    DrinkMug: 5
-    DrinkMugBlack: 2
-    DrinkMugBlue: 2
-    DrinkMugGreen: 2
-    DrinkMugHeart: 1
-    DrinkMugMetal: 2
-    DrinkMugMoebius: 1
-    DrinkMugOne: 1
-    DrinkMugRainbow: 2
-    DrinkMugRed: 2
-    MortarAndPestle: 1
-    HandheldJuicer: 1
-  contrabandInventory:
-    CandyBowl: 1
-    BarSpoon: 2
-    DrinkShaker: 2
+  categories:
+  - name: vending-machine-category-kitchen-tools
+    icon: { entity: KitchenKnife }
+    startingInventory:
+      ButchCleaver: 1
+      KitchenKnife: 5
+      RollingPin: 4
+      MortarAndPestle: 1
+      HandheldJuicer: 1
+  - name: vending-machine-category-cutlery
+    icon: { entity: Fork }
+    startingInventory:
+      Spoon: 4
+      Fork: 4
+      PairedChopsticks: 4
+    contrabandInventory:
+      BarSpoon: 2
+  - name: vending-machine-category-tableware
+    icon: { entity: FoodPlate }
+    startingInventory:
+      FoodBowlBig: 10
+      FoodPlate: 10
+      FoodPlateSmall: 10
+      FoodPlateTin: 5
+      FoodPlateMuffinTin: 5
+      FoodKebabSkewer: 5
+    contrabandInventory:
+      CandyBowl: 1
+  - name: vending-machine-category-drinkware
+    icon: { entity: DrinkGlass }
+    startingInventory:
+      DrinkGlass: 5
+      Beaker: 5
+      LargeBeaker: 5
+      Pitcher: 2
+      DrinkMug: 5
+      DrinkMugBlack: 2
+      DrinkMugBlue: 2
+      DrinkMugGreen: 2
+      DrinkMugHeart: 1
+      DrinkMugMetal: 2
+      DrinkMugMoebius: 1
+      DrinkMugOne: 1
+      DrinkMugRainbow: 2
+      DrinkMugRed: 2
+    contrabandInventory:
+      DrinkShaker: 2
