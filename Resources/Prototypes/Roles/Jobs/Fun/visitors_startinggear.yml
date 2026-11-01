@@ -708,10 +708,8 @@
     head: ClothingHeadHatMagician
     neck: ClothingNeckTieRed
     id: VisitorPDA
-    belt: ClothingBeltMedicalFilled
     back: ClothingBackpackSatchelLeather
-    ears: ClothingHeadsetMedical
-    eyes: ClothingEyesHudMedical
+    ears: ClothingHeadsetService
     pocket1: WhoopieCushion
     pocket2: PillSpaceDrugs
   inhand:
@@ -725,10 +723,8 @@
     shoes: ClothingShoesLeather
     head: ClothingHeadHatAnimalCat
     id: VisitorPDA
-    belt: ClothingBeltMedicalFilled
     back: ClothingBackpackSatchelLeather
-    ears: ClothingHeadsetMedical
-    eyes: ClothingEyesHudMedical
+    ears: ClothingHeadsetService
     pocket1: BulletFoam
     pocket2: PillSpaceDrugs
   inhand:
