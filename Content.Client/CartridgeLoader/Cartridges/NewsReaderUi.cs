@@ -5,6 +5,9 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
+/// <summary>
+/// A UI fragment for the NewsReader PDA app.
+/// </summary>
 public sealed partial class NewsReaderUi : UIFragment
 {
     private NewsReaderUiFragment? _fragment;
@@ -16,7 +19,7 @@ public sealed partial class NewsReaderUi : UIFragment
 
     public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
-        _fragment = new NewsReaderUiFragment();
+        _fragment = userInterface.CreateDisposableControl<NewsReaderUiFragment>();
 
         _fragment.OnNextButtonPressed += () =>
         {

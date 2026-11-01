@@ -7,15 +7,15 @@ using Robust.Shared.Map;
 
 namespace Content.Client.Shuttles.BUI;
 
+/// <summary>
+/// A BUI for piloting a shuttle. Wraps a <see cref="ShuttleConsoleWindow"/>.
+/// </summary>
+/// <seealso cref="ShuttleConsoleComponent"/>
 [UsedImplicitly]
-public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
+public sealed class ShuttleConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private ShuttleConsoleWindow? _window;
-
-    public ShuttleConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {
@@ -61,16 +61,6 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
             Coordinates = obj,
             Angle = angle,
         });
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-
-        if (disposing)
-        {
-            _window?.Dispose();
-        }
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
