@@ -12,13 +12,15 @@
         "directions": 4
     },
     {
-      "name": "christmaslamp"
-    },
-    {
-      "name": "christmaslamp-on"
-    },
-    {
         "name": "lamp-on",
+        "directions": 4
+    },
+    {
+        "name": "christmaslamp",
+        "directions": 4
+    },
+    {
+        "name": "christmaslamp-on",
         "directions": 4
     },
     {
