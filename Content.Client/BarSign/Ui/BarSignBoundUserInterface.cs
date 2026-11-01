@@ -30,6 +30,7 @@ public sealed partial class BarSignBoundUserInterface(EntityUid owner, Enum uiKe
         };
 
         _menu.OnClose += Close;
+        Update();
         _menu.OpenToLeft();
     }
 
