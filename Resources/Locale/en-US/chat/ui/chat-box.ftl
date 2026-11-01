@@ -40,3 +40,12 @@ hud-chatbox-highlights-tooltip = The words need to be separated by a newline,
 hud-chatbox-highlights-placeholder = @McHands
                                      "Judge"
                                      Medical
+
+hud-chatbox-word-filters = Word Filters:
+hud-chatbox-word-filters-button = Submit
+hud-chatbox-word-filters-tooltip = The words need to be separated by a newline,
+                                   if wrapped around " they will be masked
+                                   only if separated by spaces or punctuation.
+hud-chatbox-word-filters-placeholder = Silly
+                                       "Idiot"
+                                       Noobie
