@@ -19,6 +19,7 @@ chat-manager-no-headset-on-message = You don't have a headset on!
 chat-manager-no-radio-key = No radio key specified!
 chat-manager-no-such-channel = There is no channel with key '{$key}'!
 chat-manager-whisper-headset-on-message = You can't whisper on the radio!
+chat-manager-radio-channel-forbidden-for-headset = This radio channel is receive-only.
 
 # Unicode U+201C and U+201D Double quotes.
 chat-manager-speech-double-quote-begin = “
