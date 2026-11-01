@@ -1231,6 +1231,9 @@
   id: ReptilianFood # SpecialDigestible: OrganReptilianStomach
 
 - type: Tag
+  id: RevolutionaryRadio # Tag that allows something to access "Undercommon" revolutionary channel without being a revolutionary
+
+- type: Tag
   id: RifleStock # ConstructionGraph: ImprovisedShotgunGraph
 
 - type: Tag
