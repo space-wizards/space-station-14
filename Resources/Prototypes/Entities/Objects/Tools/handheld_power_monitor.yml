@@ -1,0 +1,51 @@
+- type: entity
+  parent: BaseHandheldComputer
+  id: HandheldPowerMonitor
+  name: handheld power monitor
+  description: A hand-held power monitor that shows the station's wiring and power levels
+  components:
+  - type: Item
+    heldPrefix: scanner
+  - type: Sprite
+    sprite: Objects/Tools/handheld_power_monitor.rsi
+    layers:
+    - state: base
+    - state: screen
+      shader: unshaded
+      visible: false
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: Appearance
+  - type: BatteryVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.BatteryVisuals.State:
+        enum.PowerDeviceVisualLayers.Powered:
+          Full: { visible: true }
+          Neither: { visible: true }
+          Empty: { visible: false }
+  - type: PowerMonitoringConsole
+  - type: PowerMonitoringCableNetworks
+  - type: WirelessNetwork
+    range: 500
+  - type: StationLimitedNetwork
+  - type: StationTracker
+  - type: StaticPrice
+    price: 500
+  - type: ActivatableUI
+    key: enum.PowerMonitoringConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.PowerMonitoringConsoleUiKey.Key:
+        type: PowerMonitoringConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+
+- type: entity
+  id: HandheldPowerMonitorEmpty
+  parent: HandheldPowerMonitor
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
