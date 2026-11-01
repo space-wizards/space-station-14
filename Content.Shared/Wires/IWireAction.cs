@@ -1,6 +1,4 @@
-using Content.Shared.Wires;
-
-namespace Content.Server.Wires;
+namespace Content.Shared.Wires;
 
 /// <summary>
 ///     An interface used by WiresSystem to allow compositional wiresets.
