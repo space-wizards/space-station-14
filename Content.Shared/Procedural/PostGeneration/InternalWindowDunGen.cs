@@ -1,4 +1,4 @@
-using Content.Shared.EntityTable;
+using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
 
@@ -13,5 +13,5 @@ public sealed partial class InternalWindowDunGen : IDunGenLayer
     public ProtoId<ContentTileDefinition> Tile;
 
     [DataField(required: true)]
-    public ProtoId<EntityTablePrototype> Contents;
+    public EntityTableSelector Contents = default!;
 }
