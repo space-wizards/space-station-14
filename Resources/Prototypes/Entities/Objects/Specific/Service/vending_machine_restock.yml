@@ -481,3 +481,19 @@
     - state: green_bit
       shader: unshaded
     - state: refill_medical
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockMothSnacks
+  name: Vend-O-Moth's restock box
+  description: A box full of fiber and cotton, perfect for a growing moth! *not suitable for moths under the age of 14*
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - MothSnackInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_moth

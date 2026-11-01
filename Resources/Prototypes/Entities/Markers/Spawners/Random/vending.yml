@@ -33,6 +33,7 @@
       - id: VendingMachineSovietSoda #Boda
       - id: VendingMachineSpaceUp
       - id: VendingMachineStarkist
+      - id: VendingMachineMothSnacks
 
 
 - type: entityTable
