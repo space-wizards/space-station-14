@@ -938,7 +938,7 @@
   parent: BaseSecurityPDA
   id: CentcomLawyerPDA
   name: CentComm lawyer PDA
-  description: Strikes fear into the hearts of those who would dare to stand on the other side of the courtroom.
+  description: Strikes fear into the hearts of those who would dare stand on the other side of the courtroom.
   components:
   - type: Pda
     id: CentcomLawyerIDCard
@@ -952,11 +952,12 @@
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
-       pda-security # TODO
-  - type: PdaBorderColor # TODO: unique border color
+       pda-centcomlawyer
+  - type: PdaBorderColor
     borderColor: "#6f6192"
+    accentVColor: "#A99D3D"
   - type: Icon
-    state: pda-security # TODO
+    state: pda-centcomlawyer
 
 - type: entity
   parent: BaseSecurityPDA
