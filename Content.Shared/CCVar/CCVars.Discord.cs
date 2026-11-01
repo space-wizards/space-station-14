@@ -71,6 +71,16 @@ public sealed partial class CCVars
         CVarDef.Create("discord.prefix", "!", CVar.SERVERONLY);
 
     /// <summary>
+    ///     Whether the Discord bot requests the privileged Message Content intent.
+    ///     If enabled, regular messages in linked channels are relayed to the game, and prefix commands work.
+    ///     If disabled, the /reply slash command is registered instead.
+    ///     Apps with 10,000 or more users need to be approved by Discord to use it, otherwise the bot will fail to connect.
+    ///     Cannot be changed while the bot is connected.
+    /// </summary>
+    public static readonly CVarDef<bool> DiscordMessageContentIntent =
+        CVarDef.Create("discord.message_content_intent", true, CVar.SERVERONLY);
+
+    /// <summary>
     ///     URL of the Discord webhook which will relay watchlist connection notifications. If left empty, disables the webhook.
     /// </summary>
     public static readonly CVarDef<string> DiscordWatchlistConnectionWebhook =
