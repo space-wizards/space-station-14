@@ -13,8 +13,19 @@ public sealed partial class HandheldLightComponent : Component
     [DataField]
     public bool Activated;
 
+    /// <summary>
+    /// How much joules will be drained from the powercell slot entity every update
+    /// </summary>
     [DataField]
-    public float Wattage { get; set; } = .8f;
+    public float Wattage = .8f;
+
+    /// <summary>
+    /// Joules amount for the charge fraction calculation (fraction = currentCharge / maxCharge)
+    /// By default equal to the small powercell max charge
+    /// Not using max charge of the battery itself because it ties batteries to their percentage and makes batteries with bigger max charge worse to use.
+    /// </summary>
+    [DataField]
+    public float ChargeAmount = 360f;
 
     [DataField]
     public SoundSpecifier TurnOnSound = new SoundPathSpecifier("/Audio/Items/flashlight_on.ogg");
