@@ -7,4 +7,6 @@ paradox-clone-role-greeting =
     Your existence here is an unstable paradox. You must find, kill, and replace this reality's version of you so that you can go back to living your normal life.
     Remember: only one of you two can survive.
 
+paradox-clone-role-briefing-age = You are {$age} years old.
+
 paradox-clone-ghost-name-modifier = {$baseName} (clone)
