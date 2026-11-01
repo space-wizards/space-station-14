@@ -960,6 +960,17 @@
     state: pda-centcomlawyer
 
 - type: entity
+  parent: CentcomLawyerPDA
+  id: VisitorCentcomLawyerPDA
+  suffix: Visitor
+  components:
+  - type: Pda
+    id: VisitorIDCard
+  - type: Tag #  Ignore Chameleon tags
+    tags:
+    - DoorBumpOpener
+
+- type: entity
   parent: BaseSecurityPDA
   id: CentcomPDA
   name: CentComm PDA

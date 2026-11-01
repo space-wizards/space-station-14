@@ -1199,7 +1199,7 @@
     gloves: ClothingHandsGlovesColorBrown
     head: BladedFlatcapBrown
     neck: ClothingNeckLawyerbadge
-    id: VisitorLawyerPDA #TODO: visitor version of centcomm lawyer PDA?
+    id: VisitorCentcomLawyerPDA
     back: ClothingBackpackSatchelLeather
     belt: ClothingBeltStorageWaistbag
     eyes: ClothingEyesGlassesSunglasses
