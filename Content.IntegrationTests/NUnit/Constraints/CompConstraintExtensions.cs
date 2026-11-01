@@ -38,7 +38,7 @@ public static class CompConstraintExtensions
     {
         /// <summary>
         /// Returns a new constraint which will either test for the existence of a <typeparamref name="T"/>
-        /// on the entity being tested or apply any following constraint to that component.
+        /// on the entity or entity prototype being tested or apply any following constraint to that component.
         /// </summary>
         /// <typeparam name="T">The component Type to check for.</typeparam>
         /// <param name="instance">The <see cref="IIntegrationInstance"/> (i.e. Server or Client) on which to perform the test.</param>
@@ -64,7 +64,7 @@ public static class CompConstraintExtensions
 
         /// <summary>
         /// Returns a new constraint which will either test for the existence of a component of the specified type
-        /// on the entity being tested or apply any following constraint to that component.
+        /// on the entity or entity prototype being tested or apply any following constraint to that component.
         /// </summary>
         /// <param name="t">The Type of the component to check for.</param>
         /// <param name="instance">The <see cref="IIntegrationInstance"/> (i.e. Server or Client) on which to perform the test.</param>
