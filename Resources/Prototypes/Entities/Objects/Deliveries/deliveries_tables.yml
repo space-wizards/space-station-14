@@ -162,4 +162,7 @@
     - !type:NestedSelector
       tableId: SyndieMaintLoot
       weight: 0.5
-      
+    - !type:NestedSelector
+      tableId: LootboxMaintsSpawnTable
+      weight: 0.5
+

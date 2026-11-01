@@ -26,29 +26,4 @@ public sealed partial class XenoArtifactUnlockingComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool ArtifexiumApplied;
-
-    /// <summary>
-    /// The sound that plays when an artifact finishes unlocking successfully (with node unlocked).
-    /// </summary>
-    [DataField]
-    public SoundSpecifier UnlockActivationSuccessfulSound = new SoundCollectionSpecifier("ArtifactUnlockingActivationSuccess")
-    {
-        Params = new()
-        {
-            Variation = 0.1f,
-            Volume = 3f
-        }
-    };
-
-    /// <summary>
-    /// The sound that plays when artifact finishes unlocking non-successfully.
-    /// </summary>
-    [DataField]
-    public SoundSpecifier? UnlockActivationFailedSound = new SoundCollectionSpecifier("ArtifactUnlockActivationFailure")
-    {
-        Params = new()
-        {
-            Variation = 0.1f
-        }
-    };
 }
