@@ -1,13 +1,17 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body;
 using Content.Shared.Cloning;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Database;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Inventory;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
+using Content.Shared.Inventory;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.StatusEffect;
 using Content.Shared.Storage;
@@ -16,8 +20,6 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Content.Server.Cloning;
 
@@ -27,18 +29,19 @@ namespace Content.Server.Cloning;
 /// </summary>
 public sealed partial class CloningSystem : SharedCloningSystem
 {
-    [Dependency] private InventorySystem _inventory = default!;
-    [Dependency] private MetaDataSystem _metaData = default!;
-    [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private IdentitySystem _identity = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private NameModifierSystem _nameMod = default!;
     [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedStorageSystem _storage = default!;
     [Dependency] private SharedSubdermalImplantSystem _subdermalImplant = default!;
     [Dependency] private SharedVisualBodySystem _visualBody = default!;
-    [Dependency] private NameModifierSystem _nameMod = default!;
-    [Dependency] private IdentitySystem _identity = default!;
 
-    public override bool TryCloning(
+    public override bool TryCloneHumanoid(
         EntityUid original,
         MapCoordinates? coords,
         ProtoId<CloningSettingsPrototype> settingsId,
@@ -54,6 +57,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
         if (!ProtoMan.Resolve(humanoid.Species, out var speciesPrototype))
             return false; // invalid species
 
+        // TODO: This should not be in this system since this is SPECIFIC TO CLONING PODS!!!
         if (!settings.ForceCloning)
         {
             var attemptEv = new CloningAttemptEvent(settings);
@@ -63,36 +67,68 @@ public sealed partial class CloningSystem : SharedCloningSystem
         }
 
         clone = coords == null ? Spawn(speciesPrototype.Prototype) : Spawn(speciesPrototype.Prototype, coords.Value);
-        _visualBody.CopyAppearanceFrom(original, clone.Value);
+        Clone(original, clone.Value, settings);
 
-        CloneComponents(original, clone.Value, settings);
+        _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"The body of {original:player} was cloned as {clone.Value:player}");
+        return true;
+    }
+
+    public override bool TryClone(
+        EntityUid original,
+        MapCoordinates? coords,
+        ProtoId<CloningSettingsPrototype> settingsId,
+        [NotNullWhen(true)] out EntityUid? clone)
+    {
+        clone = null;
+        if (!ProtoMan.Resolve(settingsId, out var settings))
+            return false; // invalid settings
+
+        if (MetaData(original).EntityPrototype is not { } prototype)
+            return false;
+
+        clone = coords == null ? Spawn(prototype.ID) : Spawn(prototype.ID, coords.Value);
+        Clone(original, clone.Value, settings);
+        return true;
+    }
+
+    public override void Clone(EntityUid original, EntityUid clone, ProtoId<CloningSettingsPrototype> settings)
+    {
+        if (!ProtoMan.Resolve(settings, out var proto))
+            return;
+
+        Clone(original, clone, proto);
+    }
+
+    public override void Clone(EntityUid original, EntityUid clone, CloningSettingsPrototype settings)
+    {
+        CloneComponents(original, clone, settings);
 
         // Add equipment first so that SetEntityName also renames the ID card.
         if (settings.CopyEquipment != null)
-            CopyEquipment(original, clone.Value, settings.CopyEquipment.Value, settings.EquipmentWhitelist, settings.EquipmentBlacklist);
+            CopyEquipment(original, clone, settings.CopyEquipment.Value, settings.EquipmentWhitelist, settings.EquipmentBlacklist);
+
+        if (settings.CopyHands)
+            CopyHands(original, clone, settings.EquipmentWhitelist, settings.EquipmentBlacklist);
 
         // Copy storage on the mob itself as well.
         // This is needed for slime storage.
         if (settings.CopyInternalStorage)
-            CopyStorage(original, clone.Value, settings.EquipmentWhitelist, settings.EquipmentBlacklist);
+            CopyStorage(original, clone, settings.EquipmentWhitelist, settings.EquipmentBlacklist);
 
         // copy implants and their storage contents
         if (settings.CopyImplants)
-            CopyImplants(original, clone.Value, settings.CopyInternalStorage, settings.EquipmentWhitelist, settings.EquipmentBlacklist);
+            CopyImplants(original, clone, settings.CopyInternalStorage, settings.EquipmentWhitelist, settings.EquipmentBlacklist);
 
         // Copy permanent status effects
         if (settings.CopyStatusEffects)
-            CopyStatusEffects(original, clone.Value, settings.StatusEffectWhitelist, settings.StatusEffectBlacklist);
+            CopyStatusEffects(original, clone, settings.StatusEffectWhitelist, settings.StatusEffectBlacklist);
 
         var originalName = _nameMod.GetBaseName(original);
 
         // Set the clone's name. The raised events will also adjust their PDA and ID card names.
-        _metaData.SetEntityName(clone.Value, originalName, raiseEvents: settings.RaiseEntityRenamedEvent);
-        _metaData.SetEntityDescription(clone.Value, Description(original));
-        _identity.QueueIdentityUpdate(clone.Value); // We have to manually refresh the identity in case we did not raise events.
-
-        _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"The body of {original:player} was cloned as {clone.Value:player}");
-        return true;
+        _metaData.SetEntityName(clone, originalName, raiseEvents: settings.RaiseEntityRenamedEvent);
+        _metaData.SetEntityDescription(clone, Description(original));
+        _identity.QueueIdentityUpdate(clone); // We have to manually refresh the identity in case we did not raise events.
     }
 
     public override void CloneComponents(
@@ -162,7 +198,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
         EntityWhitelist? whitelist = null,
         EntityWhitelist? blacklist = null)
     {
-        if (!Resolve(original, ref original.Comp) || !Resolve(clone, ref clone.Comp))
+        if (!Resolve(original, ref original.Comp, false) || !Resolve(clone, ref clone.Comp))
             return;
 
         var coords = Transform(clone).Coordinates;
@@ -175,6 +211,28 @@ public sealed partial class CloningSystem : SharedCloningSystem
 
             if (cloneItem != null && !_inventory.TryEquip(clone, cloneItem.Value, slot.Name, silent: true, inventory: clone.Comp))
                 Del(cloneItem); // delete it again if the clone cannot equip it
+        }
+    }
+
+    public override void CopyHands(Entity<HandsComponent?> original,
+        Entity<HandsComponent?> clone,
+        EntityWhitelist? whitelist = null,
+        EntityWhitelist? blacklist = null)
+    {
+        if (!Resolve(original, ref original.Comp, false) || !Resolve(clone, ref clone.Comp))
+            return;
+
+        var coords = Transform(clone).Coordinates;
+
+        foreach (var hand in _hands.EnumerateHands(original))
+        {
+            if (!_hands.TryGetHeldItem(original, hand, out var item))
+                continue;
+
+            if (CopyItem(item.Value, coords, whitelist, blacklist) is not { } cloned)
+                continue;
+
+            _hands.DoPickup(clone, hand, cloned, clone.Comp);
         }
     }
 
