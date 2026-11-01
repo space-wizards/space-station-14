@@ -23,33 +23,14 @@ public sealed class SpaceHeaterBoundUserInterface : BoundUserInterface
         base.Open();
 
         _window = this.CreateWindow<SpaceHeaterWindow>();
-        _window.ToggleStatusButton.OnToggled += _ => OnToggleStatusButtonPressed();
-        _window.IncreaseTempRange.OnPressed += _ => OnTemperatureRangeChanged(_window.TemperatureChangeDelta);
-        _window.DecreaseTempRange.OnPressed += _ => OnTemperatureRangeChanged(-_window.TemperatureChangeDelta);
-        _window.ModeSelector.OnItemSelected += args => OnModeChanged((SpaceHeaterMode)args.Id);
-        _window.PowerLevelSelector.OnItemSelected += args => OnPowerLevelChanged((SpaceHeaterPowerLevel)args.Id);
+
+        _window.ToggleStatusButton.OnToggled += _ => SendPredictedMessage(new SpaceHeaterToggleMessage());
+        _window.IncreaseTempRange.OnPressed += _ => SendPredictedMessage(new SpaceHeaterChangeTemperatureMessage(_window.TemperatureChangeDelta));
+        _window.DecreaseTempRange.OnPressed += _ => SendPredictedMessage(new SpaceHeaterChangeTemperatureMessage(-_window.TemperatureChangeDelta));
+        _window.ModeSelector.OnItemSelected += args => SendPredictedMessage(new SpaceHeaterChangeModeMessage((SpaceHeaterMode)args.Id));
+        _window.PowerLevelSelector.OnItemSelected += args => SendPredictedMessage(new SpaceHeaterChangePowerLevelMessage((SpaceHeaterPowerLevel)args.Id));
 
         Update();
-    }
-
-    private void OnToggleStatusButtonPressed()
-    {
-        SendPredictedMessage(new SpaceHeaterToggleMessage());
-    }
-
-    private void OnTemperatureRangeChanged(float delta)
-    {
-        SendPredictedMessage(new SpaceHeaterChangeTemperatureMessage(delta));
-    }
-
-    private void OnModeChanged(SpaceHeaterMode mode)
-    {
-        SendPredictedMessage(new SpaceHeaterChangeModeMessage(mode));
-    }
-
-    private void OnPowerLevelChanged(SpaceHeaterPowerLevel level)
-    {
-        SendPredictedMessage(new SpaceHeaterChangePowerLevelMessage(level));
     }
 
     public override void Update()
