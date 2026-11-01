@@ -1,8 +1,10 @@
+using System.Buffers;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Reactions;
+using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
@@ -267,35 +269,40 @@ public sealed partial class AtmosphereSystem
     /// <summary>
     /// Takes the gas from this tile volume and shoves it into adjacent tiles, then deletes this tile's air
     /// </summary>
+    /// <param name="grid">Grid that this tile atmosphere exists on, needed for shunting</param>
     /// <param name="tile">Tile we are shunting the air from.</param>
-    private void ShuntTileVolume(TileAtmosphere tile)
+    private void ShuntTileVolume(Entity<GridAtmosphereComponent> grid, TileAtmosphere tile)
     {
         DebugTools.AssertNotNull(tile.Air);
         DebugTools.Assert(tile.Air?.Immutable == false);
 
+        var adjacent = ArrayPool<GasMixture>.Shared.Rent(Atmospherics.Directions);
         var count = 0;
-        foreach (var adj in tile.AdjacentTiles)
+        for (var i = 0; i < Atmospherics.Directions; i++)
         {
-            if (adj?.Air != null)
-                count++;
+            var direction = (AtmosDirection)(1 << i);
+            var offset = tile.GridIndices.Offset(direction);
+            if (grid.Comp.Tiles.GetValueOrDefault(offset) is not { } adj
+                || adj.AirtightData.BlockedDirections.HasFlag(direction.GetOpposite())
+                || adj.Air is not { } air)
+                continue;
+
+            adjacent[count++] = air;
         }
 
         if (count > 0)
         {
             var ratio = 1f / count;
 
-            // Remove a ratio from this gas mixture.
             var mix = tile.Air.RemoveRatio(ratio);
 
-            foreach (var adj in tile.AdjacentTiles)
+            for (var i = 0; i < count; i++)
             {
-                if (adj?.Air == null)
-                    continue;
-
-                // And merge it to the new tile air.
-                Merge(adj.Air, mix);
+                Merge(adjacent[i], mix);
             }
         }
+
+        ArrayPool<GasMixture>.Shared.Return(adjacent);
 
         tile.Air = null;
         tile.AirArchived = null;
