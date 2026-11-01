@@ -68,3 +68,7 @@ trait-impaired-mobility-desc = You have difficulty moving without a mobility aid
 
 trait-blink-dyspraxia-name = Blink Dyspraxia
 trait-blink-dyspraxia-desc = Your eyelids lack coordination. Blinking requires conscious effort, and sometimes your eyes just refuse to sync up.
+
+trait-kleptomaniac-name = Kleptomaniac
+trait-kleptomaniac-desc = You have an irresistible urge to steal things. You sometimes wonder, "How did this nuclear disk end up in my backpack?".
+
