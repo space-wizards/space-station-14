@@ -94,15 +94,15 @@
                                 </GridContainer>
                                 <Button Name="HeritageSlot" ToggleMode="True" Text="{Loc 'cf-character-builder-heritage-slot'}" HorizontalExpand="True" />
                                 <Button Name="SpriteSlot" ToggleMode="True" Text="{Loc 'cf-character-builder-sprite-slot'}" HorizontalExpand="True" />
-                                <Button Name="AncestryFeatSlot" Text="{Loc 'cf-character-builder-ancestry-feat-slot'}" HorizontalExpand="True" />
-                                <Button Name="ClassFeatSlot" Text="{Loc 'cf-character-builder-class-feat-slot'}" HorizontalExpand="True" />
+                                <Button Name="AncestryFeatSlot" ToggleMode="True" Text="{Loc 'cf-character-builder-ancestry-feat-slot'}" HorizontalExpand="True" />
+                                <Button Name="ClassFeatSlot" ToggleMode="True" Text="{Loc 'cf-character-builder-class-feat-slot'}" HorizontalExpand="True" />
                             </BoxContainer>
                         </PanelContainer>
                         <PanelContainer StyleClasses="PanelDark">
                             <BoxContainer Name="Level2" Orientation="Vertical" Margin="8" SeparationOverride="4">
                                 <Button Name="Level2Toggle" Text="{Loc 'cf-character-builder-level-2'}" ToggleMode="True" Pressed="True" HorizontalExpand="True" />
                                 <BoxContainer Name="Level2Body" Orientation="Vertical">
-                                    <Button Name="Level2FeatSlot" Text="{Loc 'cf-character-builder-class-feat-slot'}" HorizontalExpand="True" />
+                                    <Button Name="Level2FeatSlot" ToggleMode="True" Text="{Loc 'cf-character-builder-class-feat-level-2-slot'}" HorizontalExpand="True" />
                                 </BoxContainer>
                             </BoxContainer>
                         </PanelContainer>

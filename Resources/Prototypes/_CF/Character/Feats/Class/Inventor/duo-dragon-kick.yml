@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Tian Xia Character Guide
+- type: cfFeat
+  id: CFDuoDragonKick
+  name: "Duo Dragon Kick"
+  description: "Requires construct innovation. Changes an item. Costs 2 actions. This feature will be implemented later."
+  class: Inventor
+  level: 4
+  traits:
+    - "Inventor"
+  prerequisites:
+    - "construct innovation"
+  action: Action
+  pendingAction: true

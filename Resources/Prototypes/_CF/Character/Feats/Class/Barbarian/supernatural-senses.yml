@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFSupernaturalSenses
+  name: "Supernatural Senses"
+  description: "Requires Acute Scent or scent."
+  class: Barbarian
+  level: 4
+  traits:
+    - "Barbarian"
+    - "Rage"
+  prerequisites:
+    - "Acute Scent or scent"

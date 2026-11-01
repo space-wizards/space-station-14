@@ -1,0 +1,11 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFGeckosGrip
+  name: "Gecko's Grip"
+  description: "Also grants Combat Climber. Improves Athletics results. Not applied in play yet. Climb Speed 15 feet. Not applied in play yet. TBA - action will be added"
+  ancestry: Lizardfolk
+  level: 5
+  traits:
+    - "Lizardfolk"
+  pendingAction: true

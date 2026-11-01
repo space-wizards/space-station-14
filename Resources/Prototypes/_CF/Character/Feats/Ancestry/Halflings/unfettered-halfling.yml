@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFUnfetteredHalfling
+  name: "Unfettered Halfling"
+  description: "Improves Saving Throw results. Not applied in play yet. Improves Skill Check results. Not applied in play yet. Improves Attack Roll results. Not applied in play yet."
+  ancestry: Halfling
+  level: 1
+  traits:
+    - "Halfling"

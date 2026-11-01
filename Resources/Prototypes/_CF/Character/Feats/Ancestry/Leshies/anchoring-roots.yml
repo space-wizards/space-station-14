@@ -1,0 +1,11 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFAnchoringRoots
+  name: "Anchoring Roots"
+  description: "Also grants Steady Balance. Grants Anchor. Not added in play yet. TBA - action will be added"
+  ancestry: Leshy
+  level: 5
+  traits:
+    - "Leshy"
+  pendingAction: true

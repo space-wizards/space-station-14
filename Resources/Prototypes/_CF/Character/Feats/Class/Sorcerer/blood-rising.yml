@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFBloodRising
+  name: "Blood Rising"
+  description: "Changes an item. Reaction. This feature will be implemented later."
+  class: Sorcerer
+  level: 1
+  traits:
+    - "Sorcerer"
+  action: Reaction
+  pendingAction: true

@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder War of Immortals
+- type: cfFeat
+  id: CFOnlytheWorthy
+  name: "Only the Worthy"
+  description: "This feature will be implemented later."
+  class: Exemplar
+  level: 4
+  traits:
+    - "Exemplar"
+    - "Ikon"

@@ -1,0 +1,13 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Cheliax, Infernal Inheritance
+- type: cfFeat
+  id: CFStrixLore
+  name: "Strix Lore"
+  description: "Trained in Acrobatics and Nature."
+  ancestry: Strix
+  level: 1
+  traits:
+    - "Strix"
+  trainedSkills:
+    - Acrobatics
+    - Nature

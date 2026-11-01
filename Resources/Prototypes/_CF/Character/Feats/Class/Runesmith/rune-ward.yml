@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFRuneWard
+  name: "Rune Ward"
+  description: "+1 circumstance bonus to Ac and Saving Throw. Reaction. This feature will be implemented later."
+  class: Runesmith
+  level: 1
+  traits:
+    - "Runesmith"
+  action: Reaction
+  pendingAction: true

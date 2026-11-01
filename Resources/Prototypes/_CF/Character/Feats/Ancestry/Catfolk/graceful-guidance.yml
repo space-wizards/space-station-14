@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFGracefulGuidance
+  name: "Graceful Guidance"
+  description: "Passive feat. Its special rule is not applied in play yet."
+  ancestry: Catfolk
+  level: 5
+  traits:
+    - "Catfolk"

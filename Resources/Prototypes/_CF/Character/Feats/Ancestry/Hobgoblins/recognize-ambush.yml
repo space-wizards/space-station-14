@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFRecognizeAmbush
+  name: "Recognize Ambush"
+  description: "Free action. TBA - action will be added"
+  ancestry: Hobgoblin
+  level: 5
+  traits:
+    - "Hobgoblin"
+  action: Free
+  pendingAction: true

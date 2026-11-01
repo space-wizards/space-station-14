@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Guns & Gears
+- type: cfFeat
+  id: CFDefensiveArmaments
+  name: "Defensive Armaments"
+  description: "Changes an item. Changes a modifier. This feature will be implemented later."
+  class: Gunslinger
+  level: 2
+  traits:
+    - "Gunslinger"
+  pendingAction: true

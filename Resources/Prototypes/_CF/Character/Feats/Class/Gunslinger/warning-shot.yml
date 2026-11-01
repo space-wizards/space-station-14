@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Guns & Gears
+- type: cfFeat
+  id: CFWarningShot
+  name: "Warning Shot"
+  description: "Requires trained in Intimidation. Costs 1 action. This feature will be implemented later."
+  class: Gunslinger
+  level: 2
+  traits:
+    - "Gunslinger"
+  prerequisites:
+    - "trained in Intimidation"
+  action: Action
+  pendingAction: true

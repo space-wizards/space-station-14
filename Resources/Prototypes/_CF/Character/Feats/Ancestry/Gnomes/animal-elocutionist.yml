@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFAnimalElocutionist
+  name: "Animal Elocutionist"
+  description: "+1 circumstance bonus to Diplomacy. Not applied in play yet."
+  ancestry: Gnome
+  level: 1
+  traits:
+    - "Gnome"

@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFMomentofClarity
+  name: "Moment of Clarity"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Barbarian
+  level: 1
+  traits:
+    - "Barbarian"
+    - "Concentrate"
+    - "Rage"
+  action: Action
+  pendingAction: true

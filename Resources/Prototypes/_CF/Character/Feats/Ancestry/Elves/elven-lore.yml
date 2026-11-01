@@ -1,0 +1,16 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFElvenLore
+  name: "Elven Lore"
+  description: "Lore: Elf Lore. Trained in Arcana and Nature."
+  ancestry: Elf
+  level: 1
+  traits:
+    - "Elf"
+  trainedSkills:
+    - Arcana
+    - Nature
+    - Lore
+  lores:
+    - "Elf Lore"

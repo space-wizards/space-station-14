@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFSwaggeringInitiative
+  name: "Swaggering Initiative"
+  description: "+2 circumstance bonus to Initiative. Free action. This feature will be implemented later."
+  class: Swashbuckler
+  level: 4
+  traits:
+    - "Swashbuckler"
+  action: Free
+  pendingAction: true

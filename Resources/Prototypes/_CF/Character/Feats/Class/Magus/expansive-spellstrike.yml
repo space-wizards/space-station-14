@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFExpansiveSpellstrike
+  name: "Expansive Spellstrike"
+  description: "Requires Spellstrike."
+  class: Magus
+  level: 2
+  traits:
+    - "Magus"
+  prerequisites:
+    - "Spellstrike"

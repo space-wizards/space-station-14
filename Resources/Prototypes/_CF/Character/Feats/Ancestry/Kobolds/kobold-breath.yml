@@ -1,0 +1,15 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Draconic Codex
+- type: cfFeat
+  id: CFKoboldBreath
+  name: "Kobold Breath"
+  description: "Requires dragonscaled kobold heritage. Grants Draconic Benefactor. Not added in play yet. Changes an item. Not applied in play yet. Costs 2 actions. TBA - action will be added"
+  ancestry: Kobold
+  level: 1
+  traits:
+    - "Kobold"
+    - "Magical"
+  prerequisites:
+    - "dragonscaled kobold heritage"
+  action: Action
+  pendingAction: true

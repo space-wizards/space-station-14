@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFDefytheDarkness
+  name: "Defy the Darkness"
+  description: "Requires darkvision."
+  ancestry: Dwarf
+  level: 5
+  traits:
+    - "Dwarf"
+  prerequisites:
+    - "darkvision"

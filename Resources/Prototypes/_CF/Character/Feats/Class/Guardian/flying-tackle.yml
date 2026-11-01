@@ -1,0 +1,15 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Battlecry!
+- type: cfFeat
+  id: CFFlyingTackle
+  name: "Flying Tackle"
+  description: "Requires trained in Athletics. Improves Athletics results. Costs 2 actions. This feature will be implemented later."
+  class: Guardian
+  level: 4
+  traits:
+    - "Flourish"
+    - "Guardian"
+  prerequisites:
+    - "trained in Athletics"
+  action: Action
+  pendingAction: true

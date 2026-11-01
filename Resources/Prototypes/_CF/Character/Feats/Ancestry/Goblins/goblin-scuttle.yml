@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFGoblinScuttle
+  name: "Goblin Scuttle"
+  description: "Reaction. TBA - action will be added"
+  ancestry: Goblin
+  level: 1
+  traits:
+    - "Goblin"
+  action: Reaction
+  pendingAction: true

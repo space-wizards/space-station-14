@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFMarshRunner
+  name: "Marsh Runner"
+  description: "Requires You have a swim Speed."
+  ancestry: Lizardfolk
+  level: 1
+  traits:
+    - "Lizardfolk"
+  prerequisites:
+    - "You have a swim Speed"

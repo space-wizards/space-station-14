@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFBleedOut
+  name: "Bleed Out"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Sorcerer
+  level: 2
+  traits:
+    - "Attack"
+    - "Sorcerer"
+  action: Action
+  pendingAction: true

@@ -1,0 +1,15 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFHoldMark
+  name: "Hold Mark"
+  description: "Trained in Diplomacy, Survival, Religion, and Intimidation. +1 status bonus to Saving Throw. Not applied in play yet."
+  ancestry: Orc
+  level: 1
+  traits:
+    - "Orc"
+  trainedSkills:
+    - Diplomacy
+    - Survival
+    - Religion
+    - Intimidation

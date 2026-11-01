@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFAsktheBones
+  name: "Ask the Bones"
+  description: "Free action. TBA - action will be added"
+  ancestry: Kholo
+  level: 1
+  traits:
+    - "Kholo"
+  action: Free
+  pendingAction: true

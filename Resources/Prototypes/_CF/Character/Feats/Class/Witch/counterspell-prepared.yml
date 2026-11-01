@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFCounterspellPreparedWitch
+  name: "Counterspell (Prepared)"
+  description: "Reaction. This feature will be implemented later."
+  class: Witch
+  level: 1
+  traits:
+    - "Witch"
+    - "Wizard"
+  action: Reaction
+  pendingAction: true

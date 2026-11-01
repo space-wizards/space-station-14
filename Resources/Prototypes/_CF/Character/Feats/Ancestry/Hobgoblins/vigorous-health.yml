@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFVigorousHealth
+  name: "Vigorous Health"
+  description: "Passive feat. Its special rule is not applied in play yet."
+  ancestry: Hobgoblin
+  level: 1
+  traits:
+    - "Hobgoblin"

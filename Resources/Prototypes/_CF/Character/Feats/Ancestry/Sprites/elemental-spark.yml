@@ -1,0 +1,13 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Tian Xia Character Guide
+- type: cfFeat
+  id: CFElementalSpark
+  name: "Elemental Spark"
+  description: "Requires Sprite's Spark. Changes an item. Not applied in play yet."
+  ancestry: Sprite
+  level: 5
+  rarity: Uncommon
+  traits:
+    - "Sprite"
+  prerequisites:
+    - "Sprite's Spark"

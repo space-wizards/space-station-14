@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Guns & Gears
+- type: cfFeat
+  id: CFTamper
+  name: "Tamper"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Inventor
+  level: 1
+  traits:
+    - "Inventor"
+    - "Manipulate"
+  action: Action
+  pendingAction: true

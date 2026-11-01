@@ -1,0 +1,47 @@
+# CarpFinder: remaster class, levels 1-5.
+- type: cfClass
+  id: Fighter
+  name: cf-class-fighter
+  description: cf-class-description-fighter
+  hitPoints: 10
+  keyAbility: Strength
+  hitPointsAbility: Constitution
+  classDC: cf-class-fighter
+  proficiencies:
+    perception:
+      expert:
+        - Perception
+    savingThrows:
+      trained:
+        - Will
+      expert:
+        - Fortitude
+        - Reflex
+    attacks:
+      trained:
+        - AdvancedWeapons
+      expert:
+        - MartialWeapons
+        - SimpleWeapons
+        - Unarmed
+    defenses:
+      trained:
+        - Unarmored
+        - MediumArmor
+        - HeavyArmor
+        - LightArmor
+  additionalSkillTrainings: 3
+  features:
+    - level: 1
+      name: "Reactive Strike"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Shield Block"
+      description: "This feature will be implemented later."
+    - level: 3
+      name: "Bravery"
+      description: "This feature will be implemented later."
+    - level: 5
+      name: "Fighter Weapon Mastery"
+      description: "This feature will be implemented later."
+  # Class key-attribute boost is applied from keyAbility in code (PF2e).

@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFWitchsArmaments
+  name: "Witch's Armaments"
+  description: "Unarmed attack (Nails) 1d6 Slashing. Unarmed attack (Jaws) 1d8 Piercing. Unarmed attack (Unarmed) 1d4 Bludgeoning. Changes an item. This feature will be implemented later."
+  class: Witch
+  level: 1
+  traits:
+    - "Witch"
+  pendingAction: true

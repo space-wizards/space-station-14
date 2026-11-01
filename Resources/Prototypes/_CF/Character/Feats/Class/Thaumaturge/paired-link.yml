@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Dark Archive (Remastered)
+- type: cfFeat
+  id: CFPairedLink
+  name: "Paired Link"
+  description: "This feature will be implemented later."
+  class: Thaumaturge
+  level: 4
+  traits:
+    - "Esoterica"
+    - "Fortune"
+    - "Occult"
+    - "Thaumaturge"

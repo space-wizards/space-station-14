@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFBespellStrikesSorcerer
+  name: "Bespell Strikes"
+  description: "Changes an item. Free action. This feature will be implemented later."
+  class: Sorcerer
+  level: 4
+  traits:
+    - "Oracle"
+    - "Sorcerer"
+    - "Wizard"
+  action: Free
+  pendingAction: true

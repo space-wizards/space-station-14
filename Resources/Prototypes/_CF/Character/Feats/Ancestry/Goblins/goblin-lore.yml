@@ -1,0 +1,16 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFGoblinLore
+  name: "Goblin Lore"
+  description: "Lore: Goblin Lore. Trained in Nature and Stealth."
+  ancestry: Goblin
+  level: 1
+  traits:
+    - "Goblin"
+  trainedSkills:
+    - Nature
+    - Stealth
+    - Lore
+  lores:
+    - "Goblin Lore"

@@ -1,0 +1,15 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder War of Immortals
+- type: cfFeat
+  id: CFHaftStrikerStanceRogue
+  name: "Haft Striker Stance"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Rogue
+  level: 4
+  traits:
+    - "Fighter"
+    - "Ranger"
+    - "Rogue"
+    - "Stance"
+  action: Action
+  pendingAction: true

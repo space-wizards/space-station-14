@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Dark Archive (Remastered)
+- type: cfFeat
+  id: CFBreachedDefenses
+  name: "Breached Defenses"
+  description: "Requires Exploit Vulnerability."
+  class: Thaumaturge
+  level: 4
+  traits:
+    - "Thaumaturge"
+  prerequisites:
+    - "Exploit Vulnerability"

@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFVandal
+  name: "Vandal"
+  description: "Trained in Thievery."
+  ancestry: Goblin
+  level: 5
+  traits:
+    - "Goblin"
+  trainedSkills:
+    - Thievery

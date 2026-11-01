@@ -1,0 +1,16 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Howl of the Wild
+- type: cfFeat
+  id: CFNaturalConduit
+  name: "Natural Conduit"
+  description: "Requires warden spells. Costs 1 action. This feature will be implemented later."
+  class: Ranger
+  level: 4
+  traits:
+    - "Concentrate"
+    - "Ranger"
+    - "Spellshape"
+  prerequisites:
+    - "warden spells"
+  action: Action
+  pendingAction: true

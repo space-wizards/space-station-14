@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFDivineAegis
+  name: "Divine Aegis"
+  description: "Reaction. This feature will be implemented later."
+  class: Oracle
+  level: 2
+  traits:
+    - "Divine"
+    - "Oracle"
+  action: Reaction
+  pendingAction: true

@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFStarlitEyes
+  name: "Starlit Eyes"
+  description: "Requires starlit span hybrid study."
+  class: Magus
+  level: 4
+  traits:
+    - "Magus"
+  prerequisites:
+    - "starlit span hybrid study"

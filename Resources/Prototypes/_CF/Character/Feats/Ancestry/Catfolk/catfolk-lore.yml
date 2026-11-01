@@ -1,0 +1,16 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFCatfolkLore
+  name: "Catfolk Lore"
+  description: "Lore: Catfolk Lore. Trained in Acrobatics and Survival."
+  ancestry: Catfolk
+  level: 1
+  traits:
+    - "Catfolk"
+  trainedSkills:
+    - Acrobatics
+    - Survival
+    - Lore
+  lores:
+    - "Catfolk Lore"

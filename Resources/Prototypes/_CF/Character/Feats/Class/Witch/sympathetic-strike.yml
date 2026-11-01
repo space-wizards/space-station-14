@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFSympatheticStrike
+  name: "Sympathetic Strike"
+  description: "Requires Witch's Armaments. Costs 1 action. This feature will be implemented later."
+  class: Witch
+  level: 4
+  traits:
+    - "Witch"
+  prerequisites:
+    - "Witch's Armaments"
+  action: Action
+  pendingAction: true

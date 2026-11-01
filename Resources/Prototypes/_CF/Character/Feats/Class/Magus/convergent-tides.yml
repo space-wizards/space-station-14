@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Rival Academies
+- type: cfFeat
+  id: CFConvergentTides
+  name: "Convergent Tides"
+  description: "Requires Arcane Cascade."
+  class: Magus
+  level: 2
+  rarity: Uncommon
+  traits:
+    - "Magus"
+    - "Water"
+  prerequisites:
+    - "Arcane Cascade"

@@ -1,0 +1,14 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Cheliax, Infernal Inheritance
+- type: cfFeat
+  id: CFExtinguishLight
+  name: "Extinguish Light"
+  description: "Costs 2 actions. TBA - action will be added"
+  ancestry: Fetchling
+  level: 5
+  traits:
+    - "Darkness"
+    - "Fetchling"
+    - "Occult"
+  action: Action
+  pendingAction: true

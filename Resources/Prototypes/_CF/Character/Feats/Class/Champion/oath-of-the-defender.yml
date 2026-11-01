@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Divine Mysteries
+- type: cfFeat
+  id: CFOathoftheDefender
+  name: "Oath of the Defender"
+  description: "This feature will be implemented later."
+  class: Champion
+  level: 2
+  traits:
+    - "Champion"
+    - "Oath"

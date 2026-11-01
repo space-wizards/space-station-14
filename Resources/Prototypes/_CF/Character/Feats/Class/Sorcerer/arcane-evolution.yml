@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFArcaneEvolution
+  name: "Arcane Evolution"
+  description: "Requires bloodline that grants arcane spells."
+  class: Sorcerer
+  level: 4
+  traits:
+    - "Arcane"
+    - "Sorcerer"
+  prerequisites:
+    - "bloodline that grants arcane spells"

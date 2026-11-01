@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Battlecry!
+- type: cfFeat
+  id: CFDeceptiveTactics
+  name: "Deceptive Tactics"
+  description: "Also grants Lengthy Diversion. This feature will be implemented later."
+  class: Commander
+  level: 1
+  traits:
+    - "Commander"
+  pendingAction: true

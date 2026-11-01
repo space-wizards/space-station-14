@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFTigerStance
+  name: "Tiger Stance"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Monk
+  level: 1
+  traits:
+    - "Monk"
+    - "Stance"
+  action: Action
+  pendingAction: true

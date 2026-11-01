@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFHarmonizeSelf
+  name: "Harmonize Self"
+  description: "Requires Qi Spells."
+  class: Monk
+  level: 4
+  traits:
+    - "Monk"
+  prerequisites:
+    - "Qi Spells"

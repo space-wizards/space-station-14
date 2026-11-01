@@ -1,0 +1,17 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder #202: Severed at the Root
+- type: cfFeat
+  id: CFBorntotheTrees
+  name: "Born to the Trees"
+  description: "Costs 2 actions. This feature will be implemented later."
+  class: Kineticist
+  level: 4
+  rarity: Uncommon
+  traits:
+    - "Impulse"
+    - "Kineticist"
+    - "Morph"
+    - "Primal"
+    - "Wood"
+  action: Action
+  pendingAction: true

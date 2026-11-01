@@ -1,0 +1,56 @@
+# CarpFinder: remaster class, levels 1-5.
+- type: cfClass
+  id: Sorcerer
+  name: cf-class-sorcerer
+  description: cf-class-description-sorcerer
+  hitPoints: 6
+  keyAbility: Charisma
+  hitPointsAbility: Constitution
+  classDC: cf-class-sorcerer
+  proficiencies:
+    perception:
+      trained:
+        - Perception
+    savingThrows:
+      trained:
+        - Fortitude
+        - Reflex
+      expert:
+        - Will
+    attacks:
+      trained:
+        - SimpleWeapons
+        - Unarmed
+    defenses:
+      trained:
+        - Unarmored
+  additionalSkillTrainings: 2
+  spellcasting:
+    tradition: Arcane
+    ability: Charisma
+    cantrips: 5
+    slots:
+      - 3
+  features:
+    - level: 1
+      name: "Bloodline"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Bloodline Spells"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Sorcerer Spellcasting"
+      description: "Level 1 cantrips and spell slots are on the spell sheet."
+    - level: 1
+      name: "Sorcerous Potency"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Spell Repertoire"
+      description: "Level 1 cantrips and spell slots are on the spell sheet."
+    - level: 3
+      name: "Signature Spells"
+      description: "This feature will be implemented later."
+    - level: 5
+      name: "Magical Fortitude"
+      description: "This feature will be implemented later."
+  # Class key-attribute boost is applied from keyAbility in code (PF2e).

@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFBrilliantFlash
+  name: "Brilliant Flash"
+  description: "Requires grandeur cause. Changes an item. This feature will be implemented later."
+  class: Champion
+  level: 1
+  traits:
+    - "Champion"
+  prerequisites:
+    - "grandeur cause"
+  pendingAction: true

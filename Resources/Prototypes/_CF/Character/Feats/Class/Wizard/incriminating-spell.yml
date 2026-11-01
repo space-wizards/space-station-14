@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFIncriminatingSpell
+  name: "Incriminating Spell"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Wizard
+  level: 4
+  traits:
+    - "Concentrate"
+    - "Spellshape"
+    - "Wizard"
+  action: Action
+  pendingAction: true

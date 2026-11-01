@@ -1,0 +1,64 @@
+# CarpFinder: remaster class, levels 1-5.
+- type: cfClass
+  id: Swashbuckler
+  name: cf-class-swashbuckler
+  description: cf-class-description-swashbuckler
+  hitPoints: 10
+  keyAbility: Dexterity
+  hitPointsAbility: Constitution
+  classDC: cf-class-swashbuckler
+  proficiencies:
+    perception:
+      expert:
+        - Perception
+    savingThrows:
+      trained:
+        - Fortitude
+      expert:
+        - Reflex
+        - Will
+    skills:
+      trained:
+        - Acrobatics
+    attacks:
+      trained:
+        - MartialWeapons
+        - SimpleWeapons
+        - Unarmed
+    defenses:
+      trained:
+        - Unarmored
+        - LightArmor
+  additionalSkillTrainings: 4
+  features:
+    - level: 1
+      name: "Confident Finisher"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Panache"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Precise Strike"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Stylish Combatant"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Swashbuckler's Style"
+      description: "This feature will be implemented later."
+    - level: 3
+      name: "Fortitude Expertise"
+      description: "This feature will be implemented later."
+    - level: 3
+      name: "Opportune Riposte"
+      description: "This feature will be implemented later."
+    - level: 3
+      name: "Stylish Tricks"
+      description: "This feature will be implemented later."
+    - level: 3
+      name: "Vivacious Speed"
+      description: "This feature will be implemented later."
+    - level: 5
+      name: "Weapon Expertise"
+      description: "This feature will be implemented later."
+  # Class key-attribute boost is applied from keyAbility in code (PF2e).

@@ -1,0 +1,14 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFShedTail
+  name: "Shed Tail"
+  description: "Requires Iruxi Armaments (Tail). Reaction. TBA - action will be added"
+  ancestry: Lizardfolk
+  level: 5
+  traits:
+    - "Lizardfolk"
+  prerequisites:
+    - "Iruxi Armaments (Tail)"
+  action: Reaction
+  pendingAction: true

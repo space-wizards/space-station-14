@@ -1,0 +1,17 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Tian Xia Character Guide
+- type: cfFeat
+  id: CFOilFire
+  name: "Oil Fire"
+  description: "Requires armor innovation. Costs 1 action. This feature will be implemented later."
+  class: Inventor
+  level: 2
+  traits:
+    - "Fire"
+    - "Inventor"
+    - "Manipulate"
+    - "Unstable"
+  prerequisites:
+    - "armor innovation"
+  action: Action
+  pendingAction: true

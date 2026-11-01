@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFBodyShield
+  name: "Body Shield"
+  description: "+2 bonus to Ac. Has a resistance. Reaction. This feature will be implemented later."
+  class: Necromancer
+  level: 4
+  traits:
+    - "Necromancer"
+    - "Occult"
+  action: Reaction
+  pendingAction: true

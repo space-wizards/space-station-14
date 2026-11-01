@@ -1,0 +1,18 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFEnhancedFamiliarWizard
+  name: "Enhanced Familiar"
+  description: "Requires a familiar."
+  class: Wizard
+  level: 2
+  traits:
+    - "Animist"
+    - "Druid"
+    - "Magus"
+    - "Sorcerer"
+    - "Thaumaturge"
+    - "Witch"
+    - "Wizard"
+  prerequisites:
+    - "a familiar"

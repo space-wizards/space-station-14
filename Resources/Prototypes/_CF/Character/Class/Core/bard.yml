@@ -1,0 +1,59 @@
+# CarpFinder: remaster class, levels 1-5.
+- type: cfClass
+  id: Bard
+  name: cf-class-bard
+  description: cf-class-description-bard
+  hitPoints: 8
+  keyAbility: Charisma
+  hitPointsAbility: Constitution
+  classDC: cf-class-bard
+  proficiencies:
+    perception:
+      expert:
+        - Perception
+    savingThrows:
+      trained:
+        - Fortitude
+        - Reflex
+      expert:
+        - Will
+    skills:
+      trained:
+        - Occultism
+        - Performance
+    attacks:
+      trained:
+        - MartialWeapons
+        - SimpleWeapons
+        - Unarmed
+    defenses:
+      trained:
+        - Unarmored
+        - LightArmor
+  additionalSkillTrainings: 4
+  spellcasting:
+    tradition: Occult
+    ability: Charisma
+    cantrips: 5
+    slots:
+      - 2
+  features:
+    - level: 1
+      name: "Bard Spellcasting"
+      description: "Level 1 cantrips and spell slots are on the spell sheet."
+    - level: 1
+      name: "Composition Spells"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Muses"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Spell Repertoire"
+      description: "Level 1 cantrips and spell slots are on the spell sheet."
+    - level: 3
+      name: "Reflex Expertise"
+      description: "This feature will be implemented later."
+    - level: 3
+      name: "Signature Spells"
+      description: "This feature will be implemented later."
+  # Class key-attribute boost is applied from keyAbility in code (PF2e).

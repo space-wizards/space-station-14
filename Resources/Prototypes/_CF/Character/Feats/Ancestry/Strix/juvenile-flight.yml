@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Cheliax, Infernal Inheritance
+- type: cfFeat
+  id: CFJuvenileFlight
+  name: "Juvenile Flight"
+  description: "Requires Fledgling Flight. +10 bonus to Fly Speed. Not applied in play yet. Changes an item. Not applied in play yet."
+  ancestry: Strix
+  level: 5
+  traits:
+    - "Strix"
+  prerequisites:
+    - "Fledgling Flight"

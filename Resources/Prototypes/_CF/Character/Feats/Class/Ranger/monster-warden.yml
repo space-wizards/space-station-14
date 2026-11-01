@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFMonsterWarden
+  name: "Monster Warden"
+  description: "Requires Monster Hunter. Changes an item. This feature will be implemented later."
+  class: Ranger
+  level: 2
+  traits:
+    - "Ranger"
+  prerequisites:
+    - "Monster Hunter"
+  pendingAction: true

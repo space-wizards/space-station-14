@@ -1,0 +1,59 @@
+# CarpFinder: remaster class, levels 1-5.
+- type: cfClass
+  id: Thaumaturge
+  name: cf-class-thaumaturge
+  description: cf-class-description-thaumaturge
+  hitPoints: 8
+  keyAbility: Charisma
+  hitPointsAbility: Constitution
+  classDC: cf-class-thaumaturge
+  proficiencies:
+    perception:
+      expert:
+        - Perception
+    savingThrows:
+      trained:
+        - Reflex
+      expert:
+        - Fortitude
+        - Will
+    skills:
+      trained:
+        - Arcana
+        - Nature
+        - Occultism
+        - Religion
+    attacks:
+      trained:
+        - MartialWeapons
+        - SimpleWeapons
+        - Unarmed
+    defenses:
+      trained:
+        - Unarmored
+        - MediumArmor
+        - LightArmor
+  additionalSkillTrainings: 3
+  features:
+    - level: 1
+      name: "Esoteric Lore"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Exploit Vulnerability"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "First Implement and Esoterica"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Implement's Empowerment"
+      description: "This feature will be implemented later."
+    - level: 3
+      name: "Reflex Expertise"
+      description: "This feature will be implemented later."
+    - level: 5
+      name: "Second Implement"
+      description: "This feature will be implemented later."
+    - level: 5
+      name: "Weapon Expertise"
+      description: "This feature will be implemented later."
+  # Class key-attribute boost is applied from keyAbility in code (PF2e).

@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFQuickDrawRogue
+  name: "Quick Draw"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Rogue
+  level: 2
+  traits:
+    - "Gunslinger"
+    - "Ranger"
+    - "Rogue"
+  action: Action
+  pendingAction: true

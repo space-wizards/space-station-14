@@ -1,0 +1,15 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Cheliax, Infernal Inheritance
+- type: cfFeat
+  id: CFShadowBlending
+  name: "Shadow Blending"
+  description: "Reaction. TBA - action will be added"
+  ancestry: Fetchling
+  level: 1
+  traits:
+    - "Fetchling"
+    - "Illusion"
+    - "Occult"
+    - "Shadow"
+  action: Reaction
+  pendingAction: true

@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Tian Xia Character Guide
+- type: cfFeat
+  id: CFFriendoftheFamily
+  name: "Friend of the Family"
+  description: "Requires heavenscribe kobold heritage. +2 circumstance bonus to Diplomacy. Not applied in play yet."
+  ancestry: Kobold
+  level: 5
+  traits:
+    - "Kobold"
+  prerequisites:
+    - "heavenscribe kobold heritage"

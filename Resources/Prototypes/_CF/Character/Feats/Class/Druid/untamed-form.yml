@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFUntamedForm
+  name: "Untamed Form"
+  description: "Requires untamed order."
+  class: Druid
+  level: 1
+  traits:
+    - "Druid"
+  prerequisites:
+    - "untamed order"

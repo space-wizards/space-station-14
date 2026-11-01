@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFTwinFeint
+  name: "Twin Feint"
+  description: "Costs 2 actions. This feature will be implemented later."
+  class: Rogue
+  level: 1
+  traits:
+    - "Rogue"
+  action: Action
+  pendingAction: true

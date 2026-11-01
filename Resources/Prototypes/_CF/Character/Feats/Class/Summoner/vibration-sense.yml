@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFVibrationSense
+  name: "Vibration Sense"
+  description: "This feature will be implemented later."
+  class: Summoner
+  level: 4
+  traits:
+    - "Evolution"
+    - "Summoner"

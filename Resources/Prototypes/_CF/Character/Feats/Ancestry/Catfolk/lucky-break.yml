@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFLuckyBreak
+  name: "Lucky Break"
+  description: "Requires Cat's Luck."
+  ancestry: Catfolk
+  level: 5
+  traits:
+    - "Catfolk"
+  prerequisites:
+    - "Cat's Luck"

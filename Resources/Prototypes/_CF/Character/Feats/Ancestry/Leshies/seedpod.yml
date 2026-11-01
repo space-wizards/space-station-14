@@ -1,0 +1,11 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFSeedpod
+  name: "Seedpod"
+  description: "Unarmed attack (Unarmed) 1d4 Bludgeoning. TBA - action will be added"
+  ancestry: Leshy
+  level: 1
+  traits:
+    - "Leshy"
+  pendingAction: true

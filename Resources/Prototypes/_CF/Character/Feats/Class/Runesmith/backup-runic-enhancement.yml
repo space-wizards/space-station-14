@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFBackupRunicEnhancement
+  name: "Backup Runic Enhancement"
+  description: "Requires trained in Arcana, Nature, Occultism, or Religion."
+  class: Runesmith
+  level: 1
+  traits:
+    - "Runesmith"
+  prerequisites:
+    - "trained in Arcana, Nature, Occultism, or Religion"

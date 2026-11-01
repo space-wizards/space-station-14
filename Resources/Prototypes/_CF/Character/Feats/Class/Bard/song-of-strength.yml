@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFSongofStrength
+  name: "Song of Strength"
+  description: "Requires warrior muse."
+  class: Bard
+  level: 2
+  traits:
+    - "Bard"
+  prerequisites:
+    - "warrior muse"

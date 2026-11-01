@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Howl of the Wild
+- type: cfFeat
+  id: CFZoophonicComposition
+  name: "Zoophonic Composition"
+  description: "Requires zoophonia muse. Free action. This feature will be implemented later."
+  class: Bard
+  level: 4
+  traits:
+    - "Bard"
+  prerequisites:
+    - "zoophonia muse"
+  action: Free
+  pendingAction: true

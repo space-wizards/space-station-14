@@ -1,0 +1,54 @@
+# CarpFinder: remaster class, levels 1-5.
+- type: cfClass
+  id: Commander
+  name: cf-class-commander
+  description: cf-class-description-commander
+  hitPoints: 8
+  keyAbility: Intelligence
+  hitPointsAbility: Constitution
+  classDC: cf-class-commander
+  proficiencies:
+    perception:
+      expert:
+        - Perception
+    savingThrows:
+      trained:
+        - Fortitude
+      expert:
+        - Reflex
+        - Will
+    skills:
+      trained:
+        - Society
+    attacks:
+      trained:
+        - MartialWeapons
+        - SimpleWeapons
+        - Unarmed
+    defenses:
+      trained:
+        - Unarmored
+        - MediumArmor
+        - HeavyArmor
+        - LightArmor
+  additionalSkillTrainings: 2
+  features:
+    - level: 1
+      name: "Commander's Banner"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Drilled Reactions"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Shield Block"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Tactics"
+      description: "This feature will be implemented later."
+    - level: 3
+      name: "Warfare Expertise"
+      description: "This feature will be implemented later."
+    - level: 5
+      name: "Military Expertise"
+      description: "This feature will be implemented later."
+  # Class key-attribute boost is applied from keyAbility in code (PF2e).

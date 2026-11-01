@@ -43,8 +43,26 @@ public sealed partial class CFClassPrototype : IPrototype
     [DataField]
     public CFSpellcasting? Spellcasting;
 
+    /// <summary>Class features from level 1 through 5.</summary>
+    [DataField]
+    public List<CFClassFeature> Features = new();
+
     [DataField]
     public CFRarity Rarity = CFRarity.Common;
+}
+
+/// <summary>One class feature gained by the given level. Later levels are not imported.</summary>
+[DataDefinition]
+public sealed partial class CFClassFeature
+{
+    [DataField]
+    public int Level = 1;
+
+    [DataField(required: true)]
+    public string Name { get; private set; } = "";
+
+    [DataField]
+    public string Description { get; private set; } = "";
 }
 
 /// <summary>

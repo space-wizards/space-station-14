@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Dark Archive (Remastered)
+- type: cfFeat
+  id: CFCounterThought
+  name: "Counter Thought"
+  description: "Reaction. This feature will be implemented later."
+  class: Psychic
+  level: 1
+  traits:
+    - "Occult"
+    - "Psychic"
+  action: Reaction
+  pendingAction: true

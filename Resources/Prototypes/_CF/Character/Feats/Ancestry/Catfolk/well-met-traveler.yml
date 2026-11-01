@@ -1,0 +1,13 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFWellMetTraveler
+  name: "Well-Met Traveler"
+  description: "Trained in Diplomacy. Also grants Hobnobber. TBA - action will be added"
+  ancestry: Catfolk
+  level: 1
+  traits:
+    - "Catfolk"
+  trainedSkills:
+    - Diplomacy
+  pendingAction: true

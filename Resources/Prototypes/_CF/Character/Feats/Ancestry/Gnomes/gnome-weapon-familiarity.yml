@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFGnomeWeaponFamiliarity
+  name: "Gnome Weapon Familiarity"
+  description: "Ancestry weapons count as a simpler group for proficiency. Not applied in combat yet."
+  ancestry: Gnome
+  level: 1
+  traits:
+    - "Gnome"

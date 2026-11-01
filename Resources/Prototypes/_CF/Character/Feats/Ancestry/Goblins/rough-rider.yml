@@ -1,0 +1,11 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFRoughRider
+  name: "Rough Rider"
+  description: "Also grants Ride. +1 circumstance bonus to Nature. Not applied in play yet. TBA - action will be added"
+  ancestry: Goblin
+  level: 1
+  traits:
+    - "Goblin"
+  pendingAction: true

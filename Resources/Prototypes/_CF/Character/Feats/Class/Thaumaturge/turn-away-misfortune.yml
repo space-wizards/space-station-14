@@ -1,0 +1,16 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Dark Archive (Remastered)
+- type: cfFeat
+  id: CFTurnAwayMisfortune
+  name: "Turn Away Misfortune"
+  description: "Reaction. This feature will be implemented later."
+  class: Thaumaturge
+  level: 2
+  traits:
+    - "Esoterica"
+    - "Fortune"
+    - "Manipulate"
+    - "Occult"
+    - "Thaumaturge"
+  action: Reaction
+  pendingAction: true

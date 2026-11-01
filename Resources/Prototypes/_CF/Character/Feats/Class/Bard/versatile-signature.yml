@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFVersatileSignature
+  name: "Versatile Signature"
+  description: "Requires polymath muse."
+  class: Bard
+  level: 4
+  traits:
+    - "Bard"
+  prerequisites:
+    - "polymath muse"

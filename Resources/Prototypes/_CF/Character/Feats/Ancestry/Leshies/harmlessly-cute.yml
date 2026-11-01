@@ -1,0 +1,11 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFHarmlesslyCute
+  name: "Harmlessly Cute"
+  description: "+1 circumstance bonus to Initiative. Not applied in play yet. Also grants Shameless Request. TBA - action will be added"
+  ancestry: Leshy
+  level: 1
+  traits:
+    - "Leshy"
+  pendingAction: true

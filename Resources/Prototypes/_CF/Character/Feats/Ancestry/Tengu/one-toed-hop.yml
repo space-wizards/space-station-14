@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFOneToedHop
+  name: "One-Toed Hop"
+  description: "Costs 1 action. TBA - action will be added"
+  ancestry: Tengu
+  level: 1
+  traits:
+    - "Tengu"
+  action: Action
+  pendingAction: true

@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Battlecry!
+- type: cfFeat
+  id: CFPlantBanner
+  name: "Plant Banner"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Commander
+  level: 1
+  traits:
+    - "Commander"
+    - "Manipulate"
+  action: Action
+  pendingAction: true

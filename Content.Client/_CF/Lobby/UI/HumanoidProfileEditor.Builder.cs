@@ -31,6 +31,9 @@ public sealed partial class HumanoidProfileEditor
         Job,
         Heritage,
         Sprite,
+        AncestryFeat,
+        ClassFeat,
+        ClassFeatLevel2,
     }
 
     private enum SkillAssignMode
@@ -76,6 +79,9 @@ public sealed partial class HumanoidProfileEditor
         BoostView.OnAccept += AcceptBoostAssignment;
         SetAbilitiesButton.OnPressed += _ => ShowBoostAssignment();
         HeritageSlot.OnPressed += _ => ShowHeritageSelection();
+        AncestryFeatSlot.OnPressed += _ => ShowAncestryFeatSelection();
+        ClassFeatSlot.OnPressed += _ => ShowClassFeatSelection(1);
+        Level2FeatSlot.OnPressed += _ => ShowClassFeatSelection(2);
         SpriteSlot.OnPressed += _ => ShowSpriteSelection();
 
         SkillView.OnClosed += ClosePicker;
@@ -133,6 +139,9 @@ public sealed partial class HumanoidProfileEditor
         JobButton.Pressed = false;
         HeritageSlot.Pressed = false;
         SpriteSlot.Pressed = false;
+        AncestryFeatSlot.Pressed = false;
+        ClassFeatSlot.Pressed = false;
+        Level2FeatSlot.Pressed = false;
     }
 
     private void OpenPicker()
@@ -205,6 +214,10 @@ public sealed partial class HumanoidProfileEditor
                     && _prototypeManager.TryIndex(build.Heritage.Value, out CFHeritagePrototype? heritage)
                     && !heritage.Fits(picked?.ID))
                     build.Heritage = null;
+                if (build.AncestryFeat != null
+                    && _prototypeManager.TryIndex(build.AncestryFeat.Value, out CFFeatPrototype? feat)
+                    && !feat.Fits(picked?.ID, build.Level))
+                    build.AncestryFeat = null;
                 SetBuild(build);
                 break;
             }
@@ -218,6 +231,13 @@ public sealed partial class HumanoidProfileEditor
                 next.BackgroundBoost = null;
                 next.BackgroundFreeBoost = null;
                 next.BackgroundTrainedSkills.Clear();
+                SetBuild(next);
+                break;
+            }
+            case BuilderSelection.AncestryFeat:
+            {
+                var next = CurrentBuild();
+                next.AncestryFeat = id;
                 SetBuild(next);
                 break;
             }
@@ -239,6 +259,32 @@ public sealed partial class HumanoidProfileEditor
                 var next = CurrentBuild();
                 next.Class = id;
                 next.ClassTrainedSkills.Clear();
+                if (next.ClassFeat != null
+                    && _prototypeManager.TryIndex(next.ClassFeat.Value, out CFFeatPrototype? classFeat)
+                    && !classFeat.FitsClass(id, 1))
+                    next.ClassFeat = null;
+                if (next.ClassFeatLevel2 != null
+                    && _prototypeManager.TryIndex(next.ClassFeatLevel2.Value, out CFFeatPrototype? classFeatLevel2)
+                    && !classFeatLevel2.FitsClass(id, 2))
+                    next.ClassFeatLevel2 = null;
+                SetBuild(next);
+                break;
+            }
+            case BuilderSelection.ClassFeat:
+            {
+                var next = CurrentBuild();
+                next.ClassFeat = id;
+                if (next.ClassFeatLevel2?.Id == id)
+                    next.ClassFeatLevel2 = null;
+                SetBuild(next);
+                break;
+            }
+            case BuilderSelection.ClassFeatLevel2:
+            {
+                var next = CurrentBuild();
+                next.ClassFeatLevel2 = id;
+                if (next.ClassFeat?.Id == id)
+                    next.ClassFeat = null;
                 SetBuild(next);
                 break;
             }
@@ -348,7 +394,7 @@ public sealed partial class HumanoidProfileEditor
                 Name = Loc.GetString(cls.Name),
                 Rarity = cls.Rarity,
                 Traits = Loc.GetString("cf-character-builder-class-key-ability", ("ability", AbilityName(cls.KeyAbility))),
-                Description = Loc.GetString(cls.Description),
+                Description = DescribeClass(cls),
                 HitPoints = Stat("cf-character-builder-stat-hp", cls.HitPoints.ToString()),
                 Boosts = Stat("cf-character-builder-stat-boosts", AbilityName(cls.KeyAbility)),
                 Rules = string.Join('\n', new[]
@@ -367,6 +413,112 @@ public sealed partial class HumanoidProfileEditor
         OpenPicker();
     }
 
+    private static string DescribeClass(CFClassPrototype cls)
+    {
+        var text = Loc.GetString(cls.Description);
+        if (cls.Features.Count == 0)
+            return text;
+
+        var lines = new List<string> { text };
+        foreach (var feature in cls.Features.OrderBy(feature => feature.Level).ThenBy(feature => feature.Name, StringComparer.Ordinal))
+            lines.Add($"Level {feature.Level}: {feature.Name}. {feature.Description}");
+
+        return string.Join("\n", lines);
+    }
+
+    private void ShowAncestryFeatSelection()
+    {
+        if (Profile == null)
+            return;
+
+        _selection = BuilderSelection.AncestryFeat;
+        _prdUrl = AncestryPrd;
+        AncestryButton.Pressed = false;
+        BackgroundButton.Pressed = false;
+        ClassButton.Pressed = false;
+        JobButton.Pressed = false;
+        HeritageSlot.Pressed = false;
+        SpriteSlot.Pressed = false;
+        AncestryFeatSlot.Pressed = true;
+        ClassFeatSlot.Pressed = false;
+        Level2FeatSlot.Pressed = false;
+
+        var build = CurrentBuild();
+        var ancestry = CFAttributeMath.FindAncestry(_prototypeManager, Profile.Species);
+        var selected = build.AncestryFeat?.Id;
+        _pendingId = selected;
+        var options = new List<Pf2eListEntry>();
+
+        foreach (var feat in _prototypeManager.EnumeratePrototypes<CFFeatPrototype>()
+                     .Where(feat => ancestry != null && feat.Fits(ancestry.ID, build.Level))
+                     .OrderBy(feat => feat.Level)
+                     .ThenBy(feat => Loc.GetString(feat.Name), StringComparer.CurrentCultureIgnoreCase))
+        {
+            options.Add(new Pf2eListEntry
+            {
+                Id = feat.ID,
+                Name = Loc.GetString(feat.Name),
+                Rarity = feat.Rarity,
+                Traits = Loc.GetString("cf-character-builder-feat-level", ("level", feat.Level)),
+                Description = Loc.GetString(feat.Description),
+            });
+        }
+
+        SelectionView.Show(
+            Loc.GetString("cf-character-builder-title-ancestry-feat"),
+            Loc.GetString("cf-character-builder-filter-all-ancestry-feats"),
+            options,
+            selected);
+        OpenPicker();
+    }
+
+    private void ShowClassFeatSelection(int maxLevel)
+    {
+        if (Profile == null)
+            return;
+
+        _selection = maxLevel <= 1 ? BuilderSelection.ClassFeat : BuilderSelection.ClassFeatLevel2;
+        _prdUrl = AncestryPrd;
+        AncestryButton.Pressed = false;
+        BackgroundButton.Pressed = false;
+        ClassButton.Pressed = false;
+        JobButton.Pressed = false;
+        HeritageSlot.Pressed = false;
+        SpriteSlot.Pressed = false;
+        AncestryFeatSlot.Pressed = false;
+        ClassFeatSlot.Pressed = maxLevel <= 1;
+        Level2FeatSlot.Pressed = maxLevel > 1;
+
+        var build = CurrentBuild();
+        var classId = build.Class?.Id;
+        var selected = maxLevel <= 1 ? build.ClassFeat?.Id : build.ClassFeatLevel2?.Id;
+        var other = maxLevel <= 1 ? build.ClassFeatLevel2?.Id : build.ClassFeat?.Id;
+        _pendingId = selected;
+        var options = new List<Pf2eListEntry>();
+
+        foreach (var feat in _prototypeManager.EnumeratePrototypes<CFFeatPrototype>()
+                     .Where(feat => feat.FitsClass(classId, maxLevel) && feat.ID != other)
+                     .OrderBy(feat => feat.Level)
+                     .ThenBy(feat => Loc.GetString(feat.Name), StringComparer.CurrentCultureIgnoreCase))
+        {
+            options.Add(new Pf2eListEntry
+            {
+                Id = feat.ID,
+                Name = Loc.GetString(feat.Name),
+                Rarity = feat.Rarity,
+                Traits = Loc.GetString("cf-character-builder-feat-level", ("level", feat.Level)),
+                Description = Loc.GetString(feat.Description),
+            });
+        }
+
+        SelectionView.Show(
+            Loc.GetString("cf-character-builder-title-class-feat"),
+            Loc.GetString("cf-character-builder-filter-all-class-feats"),
+            options,
+            selected);
+        OpenPicker();
+    }
+
     private void ShowHeritageSelection()
     {
         if (Profile == null)
@@ -380,6 +532,9 @@ public sealed partial class HumanoidProfileEditor
         JobButton.Pressed = false;
         HeritageSlot.Pressed = true;
         SpriteSlot.Pressed = false;
+        AncestryFeatSlot.Pressed = false;
+        ClassFeatSlot.Pressed = false;
+        Level2FeatSlot.Pressed = false;
 
         var ancestry = CFAttributeMath.FindAncestry(_prototypeManager, Profile.Species);
         var selected = Profile.CFBuild.Heritage?.Id;
@@ -431,6 +586,9 @@ public sealed partial class HumanoidProfileEditor
         JobButton.Pressed = false;
         HeritageSlot.Pressed = false;
         SpriteSlot.Pressed = true;
+        AncestryFeatSlot.Pressed = false;
+        ClassFeatSlot.Pressed = false;
+        Level2FeatSlot.Pressed = false;
 
         var ancestry = CFAttributeMath.FindAncestry(_prototypeManager, Profile.Species);
         var selected = Profile.Species.Id;
@@ -893,6 +1051,21 @@ public sealed partial class HumanoidProfileEditor
             heritageName = Loc.GetString(chosenHeritage.Name);
         HeritageSlot.Text = Loc.GetString("cf-character-builder-heritage-selected", ("name", heritageName));
 
+        var featName = Loc.GetString("cf-character-builder-none");
+        if (build.AncestryFeat != null && _prototypeManager.TryIndex(build.AncestryFeat.Value, out CFFeatPrototype? chosenFeat))
+            featName = Loc.GetString(chosenFeat.Name);
+        AncestryFeatSlot.Text = Loc.GetString("cf-character-builder-ancestry-feat-selected", ("name", featName));
+
+        var classFeatName = Loc.GetString("cf-character-builder-none");
+        if (build.ClassFeat != null && _prototypeManager.TryIndex(build.ClassFeat.Value, out CFFeatPrototype? chosenClassFeat))
+            classFeatName = Loc.GetString(chosenClassFeat.Name);
+        ClassFeatSlot.Text = Loc.GetString("cf-character-builder-class-feat-selected", ("name", classFeatName));
+
+        var classFeatLevel2Name = Loc.GetString("cf-character-builder-none");
+        if (build.ClassFeatLevel2 != null && _prototypeManager.TryIndex(build.ClassFeatLevel2.Value, out CFFeatPrototype? chosenClassFeatLevel2))
+            classFeatLevel2Name = Loc.GetString(chosenClassFeatLevel2.Name);
+        Level2FeatSlot.Text = Loc.GetString("cf-character-builder-class-feat-level-2-selected", ("name", classFeatLevel2Name));
+
         var spriteName = Loc.GetString("cf-sprite-humanoid");
         if (Profile != null)
         {
@@ -1118,10 +1291,17 @@ public sealed partial class HumanoidProfileEditor
 
     private static void AppendProficiency(List<string> lines, string label, CFProficiencyList list)
     {
-        var trained = list.Trained;
-        if (trained.Count == 0)
+        AddRank(lines, "cf-character-builder-trained", label, list.Trained);
+        AddRank(lines, "cf-character-builder-expert", label, list.Expert);
+        AddRank(lines, "cf-character-builder-master", label, list.Master);
+        AddRank(lines, "cf-character-builder-legendary", label, list.Legendary);
+    }
+
+    private static void AddRank(List<string> lines, string loc, string label, List<string> items)
+    {
+        if (items.Count == 0)
             return;
 
-        lines.Add(Loc.GetString("cf-character-builder-trained", ("items", $"{label}: {string.Join(", ", trained)}")));
+        lines.Add(Loc.GetString(loc, ("items", $"{label}: {string.Join(", ", items)}")));
     }
 }

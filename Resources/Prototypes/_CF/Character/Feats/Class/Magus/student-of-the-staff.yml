@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFStudentoftheStaff
+  name: "Student of the Staff"
+  description: "Requires Arcane Cascade and twisting tree hybrid study. Changes an item. This feature will be implemented later."
+  class: Magus
+  level: 4
+  traits:
+    - "Magus"
+  prerequisites:
+    - "Arcane Cascade"
+    - "twisting tree hybrid study"
+  pendingAction: true

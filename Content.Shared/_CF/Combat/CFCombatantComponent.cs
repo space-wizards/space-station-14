@@ -33,6 +33,10 @@ public sealed partial class CFCombatantComponent : Component
     [DataField, AutoNetworkedField]
     public List<string> TrainedSkills = new();
 
+    /// <summary>Specific Lore names from the chosen ancestry feat, shown on the Lore row.</summary>
+    [DataField, AutoNetworkedField]
+    public List<string> LoreNames = new();
+
     [DataField, AutoNetworkedField]
     public int TemporaryHp;
 

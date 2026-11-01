@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFFamiliarThaumaturge
+  name: "Familiar"
+  description: "Also grants Pet. This feature will be implemented later."
+  class: Thaumaturge
+  level: 1
+  traits:
+    - "Magus"
+    - "Sorcerer"
+    - "Thaumaturge"
+    - "Wizard"
+  pendingAction: true

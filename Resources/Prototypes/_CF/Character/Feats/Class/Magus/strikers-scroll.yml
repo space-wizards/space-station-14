@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFStrikersScroll
+  name: "Striker's Scroll"
+  description: "Requires Spellstrike."
+  class: Magus
+  level: 4
+  traits:
+    - "Magus"
+  prerequisites:
+    - "Spellstrike"

@@ -1,0 +1,15 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFSnareSetter
+  name: "Snare Setter"
+  description: "Requires trained in Crafting. Trained in Crafting. Also grants Snare Crafting. TBA - action will be added"
+  ancestry: Kobold
+  level: 1
+  traits:
+    - "Kobold"
+  prerequisites:
+    - "trained in Crafting"
+  trainedSkills:
+    - Crafting
+  pendingAction: true

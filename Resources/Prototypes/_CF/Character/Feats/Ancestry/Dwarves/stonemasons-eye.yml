@@ -1,0 +1,13 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFStonemasonsEye
+  name: "Stonemason's Eye"
+  description: "Trained in Crafting. +2 circumstance bonus to Perception. Not applied in play yet. Also grants Specialty Crafting. TBA - action will be added"
+  ancestry: Dwarf
+  level: 1
+  traits:
+    - "Dwarf"
+  trainedSkills:
+    - Crafting
+  pendingAction: true

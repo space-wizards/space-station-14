@@ -1,0 +1,18 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFSongofGloriousInvocation
+  name: "Song of Glorious Invocation"
+  description: "Requires Rune-Singer. Costs 1 action. This feature will be implemented later."
+  class: Runesmith
+  level: 4
+  traits:
+    - "Auditory"
+    - "Concentrate"
+    - "Emotion"
+    - "Mental"
+    - "Runesmith"
+  prerequisites:
+    - "Rune-Singer"
+  action: Action
+  pendingAction: true

@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Guns & Gears
+- type: cfFeat
+  id: CFAdvancedConstructCompanion
+  name: "Advanced Construct Companion"
+  description: "Requires construct companion."
+  class: Inventor
+  level: 4
+  traits:
+    - "Inventor"
+  prerequisites:
+    - "construct companion"

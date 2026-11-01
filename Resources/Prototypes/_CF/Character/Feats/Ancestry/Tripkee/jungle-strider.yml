@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFJungleStrider
+  name: "Jungle Strider"
+  description: "Improves Acrobatics results. Not applied in play yet."
+  ancestry: Tripkee
+  level: 1
+  traits:
+    - "Tripkee"

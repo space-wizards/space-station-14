@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFPlantEvidence
+  name: "Plant Evidence"
+  description: "Requires Pickpocket. Costs 1 action. This feature will be implemented later."
+  class: Rogue
+  level: 1
+  traits:
+    - "Rogue"
+  prerequisites:
+    - "Pickpocket"
+  action: Action
+  pendingAction: true

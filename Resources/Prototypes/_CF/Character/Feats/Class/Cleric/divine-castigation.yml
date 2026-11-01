@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFDivineCastigation
+  name: "Divine Castigation"
+  description: "Requires holy or unholy trait. Changes an item. This feature will be implemented later."
+  class: Cleric
+  level: 1
+  traits:
+    - "Cleric"
+  prerequisites:
+    - "holy or unholy trait"
+  pendingAction: true

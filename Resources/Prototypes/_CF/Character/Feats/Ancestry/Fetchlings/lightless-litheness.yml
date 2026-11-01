@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Cheliax, Infernal Inheritance
+- type: cfFeat
+  id: CFLightlessLitheness
+  name: "Lightless Litheness"
+  description: "Improves Skill Check results. Not applied in play yet. Improves Attack Roll results. Not applied in play yet."
+  ancestry: Fetchling
+  level: 5
+  traits:
+    - "Fetchling"

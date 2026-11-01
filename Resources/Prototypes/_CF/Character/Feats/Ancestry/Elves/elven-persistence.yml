@@ -1,0 +1,13 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Shining Kingdoms
+- type: cfFeat
+  id: CFElvenPersistence
+  name: "Elven Persistence"
+  description: "Free action. TBA - action will be added"
+  ancestry: Elf
+  level: 5
+  traits:
+    - "Elf"
+    - "Fortune"
+  action: Free
+  pendingAction: true

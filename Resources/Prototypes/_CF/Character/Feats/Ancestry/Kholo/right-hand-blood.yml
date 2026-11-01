@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFRightHandBlood
+  name: "Right-Hand Blood"
+  description: "+1 item bonus to Medicine. Not applied in play yet."
+  ancestry: Kholo
+  level: 5
+  traits:
+    - "Kholo"

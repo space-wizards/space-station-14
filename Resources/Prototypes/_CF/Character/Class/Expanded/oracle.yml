@@ -1,0 +1,57 @@
+# CarpFinder: remaster class, levels 1-5.
+- type: cfClass
+  id: Oracle
+  name: cf-class-oracle
+  description: cf-class-description-oracle
+  hitPoints: 8
+  keyAbility: Charisma
+  hitPointsAbility: Constitution
+  classDC: cf-class-oracle
+  proficiencies:
+    perception:
+      trained:
+        - Perception
+    savingThrows:
+      trained:
+        - Fortitude
+        - Reflex
+      expert:
+        - Will
+    skills:
+      trained:
+        - Religion
+    attacks:
+      trained:
+        - SimpleWeapons
+        - Unarmed
+    defenses:
+      trained:
+        - Unarmored
+        - LightArmor
+  additionalSkillTrainings: 3
+  spellcasting:
+    tradition: Divine
+    ability: Charisma
+    cantrips: 5
+    slots:
+      - 3
+  features:
+    - level: 1
+      name: "Mystery"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Oracle Spellcasting"
+      description: "Level 1 cantrips and spell slots are on the spell sheet."
+    - level: 1
+      name: "Oracular Curse"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Revelation Spells"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Spell Repertoire"
+      description: "Level 1 cantrips and spell slots are on the spell sheet."
+    - level: 3
+      name: "Signature Spells"
+      description: "This feature will be implemented later."
+  # Class key-attribute boost is applied from keyAbility in code (PF2e).

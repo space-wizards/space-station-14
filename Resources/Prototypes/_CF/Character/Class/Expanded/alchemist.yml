@@ -1,0 +1,47 @@
+# CarpFinder: remaster class, levels 1-5.
+- type: cfClass
+  id: Alchemist
+  name: cf-class-alchemist
+  description: cf-class-description-alchemist
+  hitPoints: 8
+  keyAbility: Intelligence
+  hitPointsAbility: Constitution
+  classDC: cf-class-alchemist
+  proficiencies:
+    perception:
+      trained:
+        - Perception
+    savingThrows:
+      trained:
+        - Will
+      expert:
+        - Fortitude
+        - Reflex
+    skills:
+      trained:
+        - Crafting
+    attacks:
+      trained:
+        - SimpleWeapons
+        - Unarmed
+        - AlchemicalWeapons
+    defenses:
+      trained:
+        - Unarmored
+        - MediumArmor
+        - LightArmor
+  additionalSkillTrainings: 3
+  features:
+    - level: 1
+      name: "Alchemy"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Research Field"
+      description: "This feature will be implemented later."
+    - level: 5
+      name: "Field Discovery"
+      description: "This feature will be implemented later."
+    - level: 5
+      name: "Powerful Alchemy"
+      description: "This feature will be implemented later."
+  # Class key-attribute boost is applied from keyAbility in code (PF2e).

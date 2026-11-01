@@ -1,0 +1,10 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFTumbleBehindRogue
+  name: "Tumble Behind (Rogue)"
+  description: "This feature will be implemented later."
+  class: Rogue
+  level: 1
+  traits:
+    - "Rogue"

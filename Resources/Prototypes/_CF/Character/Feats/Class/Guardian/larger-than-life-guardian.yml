@@ -1,0 +1,10 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Battlecry!
+- type: cfFeat
+  id: CFLargerThanLifeGuardian
+  name: "Larger Than Life (Guardian)"
+  description: "This feature will be implemented later."
+  class: Guardian
+  level: 1
+  traits:
+    - "Guardian"

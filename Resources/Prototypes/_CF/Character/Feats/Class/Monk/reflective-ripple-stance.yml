@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Rival Academies
+- type: cfFeat
+  id: CFReflectiveRippleStance
+  name: "Reflective Ripple Stance"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Monk
+  level: 1
+  traits:
+    - "Monk"
+    - "Stance"
+    - "Water"
+  action: Action
+  pendingAction: true

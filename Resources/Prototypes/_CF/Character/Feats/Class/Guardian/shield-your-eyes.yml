@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Battlecry!
+- type: cfFeat
+  id: CFShieldYourEyes
+  name: "Shield Your Eyes"
+  description: "+2 circumstance bonus to Ac, Fortitude, Reflex, and Will. Improves Fortitude results. Improves Reflex results. Improves Will results. This feature will be implemented later."
+  class: Guardian
+  level: 2
+  traits:
+    - "Guardian"
+  pendingAction: true

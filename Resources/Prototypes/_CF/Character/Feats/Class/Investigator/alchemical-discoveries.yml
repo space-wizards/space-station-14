@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFAlchemicalDiscoveries
+  name: "Alchemical Discoveries"
+  description: "Requires alchemical sciences methodology."
+  class: Investigator
+  level: 4
+  traits:
+    - "Investigator"
+  prerequisites:
+    - "alchemical sciences methodology"

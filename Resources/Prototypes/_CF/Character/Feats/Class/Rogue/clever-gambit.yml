@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFCleverGambit
+  name: "Clever Gambit"
+  description: "Requires mastermind racket. Reaction. This feature will be implemented later."
+  class: Rogue
+  level: 2
+  traits:
+    - "Rogue"
+  prerequisites:
+    - "mastermind racket"
+  action: Reaction
+  pendingAction: true

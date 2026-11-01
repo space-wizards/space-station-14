@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFGleanLore
+  name: "Glean Lore"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Oracle
+  level: 1
+  traits:
+    - "Divine"
+    - "Oracle"
+    - "Secret"
+  action: Action
+  pendingAction: true

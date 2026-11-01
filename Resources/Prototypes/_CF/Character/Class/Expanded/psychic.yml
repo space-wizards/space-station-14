@@ -1,0 +1,65 @@
+# CarpFinder: remaster class, levels 1-5.
+- type: cfClass
+  id: Psychic
+  name: cf-class-psychic
+  description: cf-class-description-psychic
+  hitPoints: 6
+  keyAbility: Intelligence
+  hitPointsAbility: Constitution
+  classDC: cf-class-psychic
+  proficiencies:
+    perception:
+      trained:
+        - Perception
+    savingThrows:
+      trained:
+        - Fortitude
+        - Reflex
+      expert:
+        - Will
+    skills:
+      trained:
+        - Occultism
+    attacks:
+      trained:
+        - SimpleWeapons
+        - Unarmed
+    defenses:
+      trained:
+        - Unarmored
+  additionalSkillTrainings: 3
+  spellcasting:
+    tradition: Occult
+    ability: Intelligence
+    cantrips: 5
+    slots:
+      - 1
+  features:
+    - level: 1
+      name: "Conscious Mind"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Psi Cantrips and Amps"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Psychic Spellcasting"
+      description: "Level 1 cantrips and spell slots are on the spell sheet."
+    - level: 1
+      name: "Spell Repertoire"
+      description: "Level 1 cantrips and spell slots are on the spell sheet."
+    - level: 1
+      name: "Subconscious Mind"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Unleash Psyche"
+      description: "This feature will be implemented later."
+    - level: 3
+      name: "Signature Spells"
+      description: "This feature will be implemented later."
+    - level: 5
+      name: "Clarity of Focus"
+      description: "This feature will be implemented later."
+    - level: 5
+      name: "Precognitive Reflexes"
+      description: "This feature will be implemented later."
+  # Class key-attribute boost is applied from keyAbility in code (PF2e).

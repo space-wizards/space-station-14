@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFPatternFlight
+  name: "Pattern Flight"
+  description: "Costs 2 actions. This feature will be implemented later."
+  class: Runesmith
+  level: 2
+  traits:
+    - "Flourish"
+    - "Runesmith"
+  action: Action
+  pendingAction: true

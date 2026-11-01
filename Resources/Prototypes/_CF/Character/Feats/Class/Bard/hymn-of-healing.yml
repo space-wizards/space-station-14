@@ -1,0 +1,10 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFHymnofHealing
+  name: "Hymn of Healing"
+  description: "This feature will be implemented later."
+  class: Bard
+  level: 1
+  traits:
+    - "Bard"

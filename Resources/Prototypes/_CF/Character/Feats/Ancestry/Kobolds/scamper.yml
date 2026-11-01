@@ -1,0 +1,13 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFScamper
+  name: "Scamper"
+  description: "Speed +5 feet. +2 circumstance bonus to Ac. Not applied in play yet. Costs 1 action. TBA - action will be added"
+  ancestry: Kobold
+  level: 1
+  traits:
+    - "Kobold"
+  speedBonus: 5
+  action: Action
+  pendingAction: true

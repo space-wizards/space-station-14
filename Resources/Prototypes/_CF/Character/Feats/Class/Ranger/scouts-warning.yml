@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFScoutsWarningRanger
+  name: "Scout's Warning"
+  description: "Free action. This feature will be implemented later."
+  class: Ranger
+  level: 4
+  traits:
+    - "Ranger"
+    - "Rogue"
+  action: Free
+  pendingAction: true

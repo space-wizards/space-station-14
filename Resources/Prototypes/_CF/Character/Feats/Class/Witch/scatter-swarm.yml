@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Howl of the Wild
+- type: cfFeat
+  id: CFScatterSwarm
+  name: "Scatter Swarm"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Witch
+  level: 2
+  traits:
+    - "Magical"
+    - "Witch"
+  action: Action
+  pendingAction: true

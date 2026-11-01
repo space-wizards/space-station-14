@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder War of Immortals
+- type: cfFeat
+  id: CFSpiritFamiliarAnimist
+  name: "Spirit Familiar (Animist)"
+  description: "Also grants Pet. This feature will be implemented later."
+  class: Animist
+  level: 1
+  traits:
+    - "Animist"
+  pendingAction: true

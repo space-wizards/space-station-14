@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFTenaciousNet
+  name: "Tenacious Net"
+  description: "Passive feat. Its special rule is not applied in play yet."
+  ancestry: Tripkee
+  level: 5
+  traits:
+    - "Tripkee"

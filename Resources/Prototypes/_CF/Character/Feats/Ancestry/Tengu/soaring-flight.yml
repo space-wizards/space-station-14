@@ -1,0 +1,14 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFSoaringFlight
+  name: "Soaring Flight"
+  description: "Requires skyborn tengu heritage. Fly Speed 20 feet. Not applied in play yet. Costs 1 action. TBA - action will be added"
+  ancestry: Tengu
+  level: 5
+  traits:
+    - "Tengu"
+  prerequisites:
+    - "skyborn tengu heritage"
+  action: Action
+  pendingAction: true

@@ -1,0 +1,15 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder War of Immortals
+- type: cfFeat
+  id: CFSpiritualExpansionSpell
+  name: "Spiritual Expansion Spell"
+  description: "Changes an item. Costs 1 action. This feature will be implemented later."
+  class: Animist
+  level: 2
+  traits:
+    - "Animist"
+    - "Apparition"
+    - "Concentrate"
+    - "Spellshape"
+  action: Action
+  pendingAction: true

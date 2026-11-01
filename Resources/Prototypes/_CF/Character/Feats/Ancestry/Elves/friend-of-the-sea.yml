@@ -1,0 +1,11 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens High Seas
+- type: cfFeat
+  id: CFFriendoftheSea
+  name: "Friend of the Sea"
+  description: "Also grants Pet. TBA - action will be added"
+  ancestry: Elf
+  level: 1
+  traits:
+    - "Elf"
+  pendingAction: true

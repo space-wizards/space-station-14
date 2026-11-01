@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFDualEnergyHeart
+  name: "Dual Energy Heart"
+  description: "Requires Energy Heart."
+  class: Summoner
+  level: 4
+  traits:
+    - "Evolution"
+    - "Summoner"
+  prerequisites:
+    - "Energy Heart"

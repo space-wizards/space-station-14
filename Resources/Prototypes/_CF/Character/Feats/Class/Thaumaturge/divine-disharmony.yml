@@ -1,0 +1,15 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Dark Archive (Remastered)
+- type: cfFeat
+  id: CFDivineDisharmony
+  name: "Divine Disharmony"
+  description: "+2 circumstance bonus to Intimidation and Deception. Costs 1 action. This feature will be implemented later."
+  class: Thaumaturge
+  level: 1
+  traits:
+    - "Divine"
+    - "Esoterica"
+    - "Manipulate"
+    - "Thaumaturge"
+  action: Action
+  pendingAction: true

@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Tian Xia Character Guide
+- type: cfFeat
+  id: CFBrinyBeverage
+  name: "Briny Beverage"
+  description: "Requires kijimuna gnome heritage."
+  ancestry: Gnome
+  level: 5
+  traits:
+    - "Gnome"
+  prerequisites:
+    - "kijimuna gnome heritage"

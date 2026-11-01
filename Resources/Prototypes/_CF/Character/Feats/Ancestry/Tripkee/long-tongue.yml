@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFLongTongue
+  name: "Long Tongue"
+  description: "Requires snaptongue tripkee."
+  ancestry: Tripkee
+  level: 5
+  traits:
+    - "Tripkee"
+  prerequisites:
+    - "snaptongue tripkee"

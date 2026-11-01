@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Battlecry!
+- type: cfFeat
+  id: CFShieldingTaunt
+  name: "Shielding Taunt"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Guardian
+  level: 2
+  traits:
+    - "Flourish"
+    - "Guardian"
+  action: Action
+  pendingAction: true

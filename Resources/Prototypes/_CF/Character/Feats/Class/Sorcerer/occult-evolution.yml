@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFOccultEvolution
+  name: "Occult Evolution"
+  description: "Requires bloodline the grants occult spells."
+  class: Sorcerer
+  level: 4
+  traits:
+    - "Occult"
+    - "Sorcerer"
+  prerequisites:
+    - "bloodline the grants occult spells"

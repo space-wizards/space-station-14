@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFElementalDefense
+  name: "Elemental Defense"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Wizard
+  level: 2
+  traits:
+    - "Spellshape"
+    - "Wizard"
+  action: Action
+  pendingAction: true

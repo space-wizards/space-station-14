@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Cheliax, Infernal Inheritance
+- type: cfFeat
+  id: CFFeatheredCloak
+  name: "Feathered Cloak"
+  description: "+2 circumstance bonus to Deception. Not applied in play yet. +2 circumstance bonus to Stealth. Not applied in play yet."
+  ancestry: Strix
+  level: 5
+  traits:
+    - "Strix"

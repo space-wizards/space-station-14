@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFHeadStomp
+  name: "Head Stomp"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Rogue
+  level: 4
+  traits:
+    - "Rogue"
+  action: Action
+  pendingAction: true

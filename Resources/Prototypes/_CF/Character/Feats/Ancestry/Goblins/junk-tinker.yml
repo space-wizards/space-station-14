@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFJunkTinker
+  name: "Junk Tinker"
+  description: "Passive feat. Its special rule is not applied in play yet."
+  ancestry: Goblin
+  level: 1
+  traits:
+    - "Goblin"

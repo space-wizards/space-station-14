@@ -11,6 +11,7 @@ cf-sheet-abilities = Ability Scores
 cf-sheet-proficiency = Proficiency:
 cf-sheet-proficiency-legend = U(+0) T(+2) E(+4) M(+6) L(+8)
 cf-sheet-speed = Speed:
+cf-sheet-lore-named = Lore: { $lores }
 cf-sheet-speed-value = { $feet } ft
 cf-sheet-ac = ARMOR CLASS
 cf-sheet-ac-formula = 10 + Prof + Dex + Item

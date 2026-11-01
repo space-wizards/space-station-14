@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFDragonsPresence
+  name: "Dragon's Presence"
+  description: "Requires dragonscaled kobold heritage. +1 circumstance bonus to Intimidation. Not applied in play yet. Improves Saving Throw results. Not applied in play yet."
+  ancestry: Kobold
+  level: 1
+  traits:
+    - "Kobold"
+  prerequisites:
+    - "dragonscaled kobold heritage"

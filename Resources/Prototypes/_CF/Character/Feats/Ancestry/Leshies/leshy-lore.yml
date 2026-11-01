@@ -1,0 +1,16 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFLeshyLore
+  name: "Leshy Lore"
+  description: "Lore: Leshy Lore. Trained in Nature and Stealth."
+  ancestry: Leshy
+  level: 1
+  traits:
+    - "Leshy"
+  trainedSkills:
+    - Nature
+    - Stealth
+    - Lore
+  lores:
+    - "Leshy Lore"

@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Guns & Gears
+- type: cfFeat
+  id: CFDualFormWeapon
+  name: "Dual-Form Weapon"
+  description: "Requires expert overdrive and weapon innovation."
+  class: Inventor
+  level: 4
+  traits:
+    - "Inventor"
+    - "Modification"
+  prerequisites:
+    - "expert overdrive"
+    - "weapon innovation"

@@ -1,0 +1,11 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder #210: Whispers in the Dirt
+- type: cfFeat
+  id: CFTraditionalWays
+  name: "Traditional Ways"
+  description: "+2 circumstance bonus to Nature, Society, and Lore. Not applied in play yet. +1 circumstance bonus to Saving Throw. Not applied in play yet."
+  ancestry: Elf
+  level: 1
+  rarity: Uncommon
+  traits:
+    - "Elf"

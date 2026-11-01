@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFVersatileFont
+  name: "Versatile Font"
+  description: "Requires harmful font or healing font and deity that allows clerics to have both fonts."
+  class: Cleric
+  level: 2
+  traits:
+    - "Cleric"
+  prerequisites:
+    - "harmful font or healing font"
+    - "deity that allows clerics to have both fonts"

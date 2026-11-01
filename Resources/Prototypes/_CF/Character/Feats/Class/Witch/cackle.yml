@@ -1,0 +1,10 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFCackle
+  name: "Cackle"
+  description: "This feature will be implemented later."
+  class: Witch
+  level: 1
+  traits:
+    - "Witch"

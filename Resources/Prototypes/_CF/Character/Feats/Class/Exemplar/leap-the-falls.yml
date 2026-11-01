@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder War of Immortals
+- type: cfFeat
+  id: CFLeaptheFalls
+  name: "Leap the Falls"
+  description: "This feature will be implemented later."
+  class: Exemplar
+  level: 2
+  traits:
+    - "Exemplar"
+    - "Ikon"

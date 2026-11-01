@@ -118,9 +118,12 @@ public sealed partial class CFCharacterSheetTab : BoxContainer
 
             var rank = CFSkills.GetSkillRank(cls, background, skillId, combatant.TrainedSkills);
             var mod = CFSkills.SkillModifier(abilities.AbilityModifiers, skill.Ability, combatant.Level, rank);
+            var skillName = Loc.GetString(skill.Name);
+            if (skillId == "Lore" && combatant.LoreNames.Count > 0)
+                skillName = Loc.GetString("cf-sheet-lore-named", ("lores", string.Join(", ", combatant.LoreNames)));
             row.Set(
                 skillId,
-                Loc.GetString(skill.Name),
+                skillName,
                 AbilityAbbr(skill.Ability),
                 rank,
                 mod);

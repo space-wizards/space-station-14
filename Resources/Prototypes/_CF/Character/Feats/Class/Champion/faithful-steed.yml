@@ -1,0 +1,10 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFFaithfulSteed
+  name: "Faithful Steed"
+  description: "This feature will be implemented later."
+  class: Champion
+  level: 1
+  traits:
+    - "Champion"

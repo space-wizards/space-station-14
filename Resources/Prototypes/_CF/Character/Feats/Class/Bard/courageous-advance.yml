@@ -1,0 +1,17 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFCourageousAdvance
+  name: "Courageous Advance"
+  description: "Requires warrior muse. Changes an item. Costs 1 action. This feature will be implemented later."
+  class: Bard
+  level: 4
+  traits:
+    - "Auditory"
+    - "Bard"
+    - "Concentrate"
+    - "Spellshape"
+  prerequisites:
+    - "warrior muse"
+  action: Action
+  pendingAction: true

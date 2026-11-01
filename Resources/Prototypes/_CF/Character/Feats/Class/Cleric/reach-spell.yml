@@ -1,0 +1,20 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFReachSpellCleric
+  name: "Reach Spell"
+  description: "Changes an item. Costs 1 action. This feature will be implemented later."
+  class: Cleric
+  level: 1
+  traits:
+    - "Bard"
+    - "Cleric"
+    - "Concentrate"
+    - "Druid"
+    - "Oracle"
+    - "Sorcerer"
+    - "Spellshape"
+    - "Witch"
+    - "Wizard"
+  action: Action
+  pendingAction: true

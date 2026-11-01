@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFScavengersSearch
+  name: "Scavenger's Search"
+  description: "+2 circumstance bonus to Perception. Not applied in play yet."
+  ancestry: Tengu
+  level: 1
+  traits:
+    - "Tengu"

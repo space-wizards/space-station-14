@@ -1,0 +1,17 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Guns & Gears
+- type: cfFeat
+  id: CFSparkFist
+  name: "Spark Fist"
+  description: "Requires expert in Crafting. Costs 1 action. TBA - action will be added"
+  ancestry: Dwarf
+  level: 5
+  rarity: Uncommon
+  traits:
+    - "Dwarf"
+    - "Fire"
+    - "Manipulate"
+  prerequisites:
+    - "expert in Crafting"
+  action: Action
+  pendingAction: true

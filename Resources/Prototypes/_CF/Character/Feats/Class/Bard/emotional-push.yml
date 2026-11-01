@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFEmotionalPush
+  name: "Emotional Push"
+  description: "Reaction. This feature will be implemented later."
+  class: Bard
+  level: 2
+  traits:
+    - "Bard"
+    - "Concentrate"
+  action: Reaction
+  pendingAction: true

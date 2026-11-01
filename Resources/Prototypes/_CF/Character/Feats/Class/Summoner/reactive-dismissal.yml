@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFReactiveDismissal
+  name: "Reactive Dismissal"
+  description: "Reaction. This feature will be implemented later."
+  class: Summoner
+  level: 4
+  traits:
+    - "Summoner"
+  action: Reaction
+  pendingAction: true

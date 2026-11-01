@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFStormBorn
+  name: "Storm Born"
+  description: "Requires storm order."
+  class: Druid
+  level: 1
+  traits:
+    - "Druid"
+  prerequisites:
+    - "storm order"

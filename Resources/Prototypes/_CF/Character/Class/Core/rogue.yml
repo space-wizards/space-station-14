@@ -1,0 +1,49 @@
+# CarpFinder: remaster class, levels 1-5.
+- type: cfClass
+  id: Rogue
+  name: cf-class-rogue
+  description: cf-class-description-rogue
+  hitPoints: 8
+  keyAbility: Dexterity
+  hitPointsAbility: Constitution
+  classDC: cf-class-rogue
+  proficiencies:
+    perception:
+      expert:
+        - Perception
+    savingThrows:
+      trained:
+        - Fortitude
+      expert:
+        - Reflex
+        - Will
+    skills:
+      trained:
+        - Stealth
+    attacks:
+      trained:
+        - MartialWeapons
+        - SimpleWeapons
+        - Unarmed
+    defenses:
+      trained:
+        - Unarmored
+        - LightArmor
+  additionalSkillTrainings: 7
+  features:
+    - level: 1
+      name: "Rogue's Racket"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Sneak Attack"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Surprise Attack"
+      description: "This feature will be implemented later."
+    - level: 3
+      name: "Deny Advantage"
+      description: "This feature will be implemented later."
+    - level: 5
+      name: "Weapon Tricks"
+      description: "This feature will be implemented later."
+  # Class key-attribute boost is applied from keyAbility in code (PF2e).

@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFDefensiveAdvanceChampion
+  name: "Defensive Advance"
+  description: "Costs 2 actions. This feature will be implemented later."
+  class: Champion
+  level: 1
+  traits:
+    - "Champion"
+    - "Flourish"
+    - "Guardian"
+  action: Action
+  pendingAction: true

@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder War of Immortals
+- type: cfFeat
+  id: CFChannelersStance
+  name: "Channeler's Stance"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Animist
+  level: 1
+  traits:
+    - "Animist"
+    - "Stance"
+  action: Action
+  pendingAction: true

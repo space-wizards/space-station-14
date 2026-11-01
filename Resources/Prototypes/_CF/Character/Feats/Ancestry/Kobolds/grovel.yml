@@ -1,0 +1,18 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFGrovel
+  name: "Grovel"
+  description: "Requires trained in Deception. Costs 1 action. TBA - action will be added"
+  ancestry: Kobold
+  level: 5
+  traits:
+    - "Auditory"
+    - "Concentrate"
+    - "Emotion"
+    - "Kobold"
+    - "Mental"
+  prerequisites:
+    - "trained in Deception"
+  action: Action
+  pendingAction: true

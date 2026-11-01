@@ -1,0 +1,15 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder War of Immortals
+- type: cfFeat
+  id: CFApparitionsEnhancement
+  name: "Apparition's Enhancement"
+  description: "Free action. This feature will be implemented later."
+  class: Animist
+  level: 4
+  traits:
+    - "Animist"
+    - "Apparition"
+    - "Divine"
+    - "Spirit"
+  action: Free
+  pendingAction: true

@@ -1,0 +1,16 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Tian Xia Character Guide
+- type: cfFeat
+  id: CFNobleBloom
+  name: "Noble Bloom"
+  description: "Reaction. TBA - action will be added"
+  ancestry: Leshy
+  level: 5
+  rarity: Uncommon
+  traits:
+    - "Emotion"
+    - "Leshy"
+    - "Mental"
+    - "Visual"
+  action: Reaction
+  pendingAction: true

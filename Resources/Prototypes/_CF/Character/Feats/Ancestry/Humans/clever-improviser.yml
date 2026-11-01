@@ -1,0 +1,11 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFCleverImproviser
+  name: "Clever Improviser"
+  description: "Also grants Untrained Improvisation. TBA - action will be added"
+  ancestry: Human
+  level: 5
+  traits:
+    - "Human"
+  pendingAction: true

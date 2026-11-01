@@ -1,0 +1,16 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFTripkeeLore
+  name: "Tripkee Lore"
+  description: "Lore: Tripkee Lore. Trained in Nature and Stealth."
+  ancestry: Tripkee
+  level: 1
+  traits:
+    - "Tripkee"
+  trainedSkills:
+    - Nature
+    - Stealth
+    - Lore
+  lores:
+    - "Tripkee Lore"

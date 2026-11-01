@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFRechargingFlurry
+  name: "Recharging Flurry"
+  description: "Requires twofold tine hybrid study. Costs 2 actions. This feature will be implemented later."
+  class: Magus
+  level: 4
+  traits:
+    - "Magus"
+  prerequisites:
+    - "twofold tine hybrid study"
+  action: Action
+  pendingAction: true

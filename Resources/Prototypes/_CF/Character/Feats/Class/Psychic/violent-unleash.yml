@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Dark Archive (Remastered)
+- type: cfFeat
+  id: CFViolentUnleash
+  name: "Violent Unleash"
+  description: "Changes an item. Costs 1 action. This feature will be implemented later."
+  class: Psychic
+  level: 4
+  traits:
+    - "Mindshift"
+    - "Occult"
+    - "Psychic"
+  action: Action
+  pendingAction: true

@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Dark Archive (Remastered)
+- type: cfFeat
+  id: CFEsotericWarden
+  name: "Esoteric Warden"
+  description: "Requires Exploit Vulnerability."
+  class: Thaumaturge
+  level: 2
+  traits:
+    - "Thaumaturge"
+  prerequisites:
+    - "Exploit Vulnerability"

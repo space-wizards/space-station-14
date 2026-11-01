@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFLoremastersEtude
+  name: "Loremaster's Etude"
+  description: "Requires enigma muse."
+  class: Bard
+  level: 2
+  traits:
+    - "Bard"
+    - "Fortune"
+  prerequisites:
+    - "enigma muse"

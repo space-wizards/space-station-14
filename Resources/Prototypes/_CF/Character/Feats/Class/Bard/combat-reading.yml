@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFCombatReading
+  name: "Combat Reading"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Bard
+  level: 4
+  traits:
+    - "Bard"
+    - "Secret"
+  action: Action
+  pendingAction: true

@@ -1,0 +1,15 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFCringe
+  name: "Cringe"
+  description: "Reaction. TBA - action will be added"
+  ancestry: Kobold
+  level: 1
+  traits:
+    - "Emotion"
+    - "Kobold"
+    - "Mental"
+    - "Visual"
+  action: Reaction
+  pendingAction: true

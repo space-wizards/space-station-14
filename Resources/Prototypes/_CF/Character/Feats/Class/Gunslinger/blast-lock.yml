@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Guns & Gears
+- type: cfFeat
+  id: CFBlastLock
+  name: "Blast Lock"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Gunslinger
+  level: 1
+  traits:
+    - "Attack"
+    - "Gunslinger"
+  action: Action
+  pendingAction: true

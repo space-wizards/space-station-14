@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFGraspingReach
+  name: "Grasping Reach"
+  description: "Changes an item. Not applied in play yet. Costs 1 action. TBA - action will be added"
+  ancestry: Leshy
+  level: 1
+  traits:
+    - "Leshy"
+  action: Action
+  pendingAction: true

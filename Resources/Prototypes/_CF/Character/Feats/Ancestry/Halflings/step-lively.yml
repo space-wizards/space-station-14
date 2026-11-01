@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFStepLively
+  name: "Step Lively"
+  description: "Reaction. TBA - action will be added"
+  ancestry: Halfling
+  level: 5
+  traits:
+    - "Halfling"
+  action: Reaction
+  pendingAction: true

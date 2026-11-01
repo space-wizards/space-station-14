@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFVoidSiphonNecromancer
+  name: "Void Siphon (Necromancer)"
+  description: "Has a resistance. Reaction. This feature will be implemented later."
+  class: Necromancer
+  level: 4
+  traits:
+    - "Concentrate"
+    - "Necromancer"
+    - "Occult"
+  action: Reaction
+  pendingAction: true

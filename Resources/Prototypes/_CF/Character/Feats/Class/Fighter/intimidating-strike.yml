@@ -1,0 +1,16 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFIntimidatingStrikeFighter
+  name: "Intimidating Strike"
+  description: "Costs 2 actions. This feature will be implemented later."
+  class: Fighter
+  level: 2
+  traits:
+    - "Barbarian"
+    - "Emotion"
+    - "Fear"
+    - "Fighter"
+    - "Mental"
+  action: Action
+  pendingAction: true

@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFVampiricSpell
+  name: "Vampiric Spell"
+  description: "Changes an item. Costs 1 action. This feature will be implemented later."
+  class: Necromancer
+  level: 4
+  traits:
+    - "Concentrate"
+    - "Necromancer"
+    - "Spellshape"
+  action: Action
+  pendingAction: true

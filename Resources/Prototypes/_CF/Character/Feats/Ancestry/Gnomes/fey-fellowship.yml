@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFFeyFellowship
+  name: "Fey Fellowship"
+  description: "+2 circumstance bonus to Perception. Not applied in play yet. +2 circumstance bonus to Saving Throw. Not applied in play yet."
+  ancestry: Gnome
+  level: 1
+  traits:
+    - "Gnome"

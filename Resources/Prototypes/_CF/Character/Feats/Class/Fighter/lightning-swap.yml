@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFLightningSwapFighter
+  name: "Lightning Swap"
+  description: "Changes an item. Costs 1 action. This feature will be implemented later."
+  class: Fighter
+  level: 2
+  traits:
+    - "Exemplar"
+    - "Fighter"
+    - "Flourish"
+  action: Action
+  pendingAction: true

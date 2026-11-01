@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFSquawk
+  name: "Squawk!"
+  description: "Reaction. TBA - action will be added"
+  ancestry: Tengu
+  level: 1
+  traits:
+    - "Tengu"
+  action: Reaction
+  pendingAction: true

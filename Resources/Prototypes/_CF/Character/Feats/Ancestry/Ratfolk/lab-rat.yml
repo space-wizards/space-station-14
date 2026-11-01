@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFLabRat
+  name: "Lab Rat"
+  description: "+1 circumstance bonus to Saving Throw. Not applied in play yet. Improves Saving Throw results. Not applied in play yet."
+  ancestry: Ratfolk
+  level: 5
+  traits:
+    - "Ratfolk"

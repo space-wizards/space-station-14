@@ -1,0 +1,10 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFRallyingAnthem
+  name: "Rallying Anthem"
+  description: "This feature will be implemented later."
+  class: Bard
+  level: 4
+  traits:
+    - "Bard"

@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Dark Archive (Remastered)
+- type: cfFeat
+  id: CFThoughtformSummoning
+  name: "Thoughtform Summoning"
+  description: "Changes an item. This feature will be implemented later."
+  class: Psychic
+  level: 4
+  traits:
+    - "Psychic"
+  pendingAction: true

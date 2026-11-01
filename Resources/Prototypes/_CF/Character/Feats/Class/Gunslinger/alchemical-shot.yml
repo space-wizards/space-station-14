@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Guns & Gears
+- type: cfFeat
+  id: CFAlchemicalShot
+  name: "Alchemical Shot"
+  description: "Costs 2 actions. This feature will be implemented later."
+  class: Gunslinger
+  level: 4
+  traits:
+    - "Gunslinger"
+  action: Action
+  pendingAction: true

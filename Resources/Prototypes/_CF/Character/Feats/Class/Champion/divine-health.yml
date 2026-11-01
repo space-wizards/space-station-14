@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFDivineHealth
+  name: "Divine Health"
+  description: "+2 status bonus to Saving Throw. Improves Saving Throw results. This feature will be implemented later."
+  class: Champion
+  level: 2
+  traits:
+    - "Champion"
+  pendingAction: true

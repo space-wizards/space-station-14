@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Draconic Codex
+- type: cfFeat
+  id: CFBenefactorsResistance
+  name: "Benefactor's Resistance"
+  description: "Requires dragonscaled kobold heritage. Grants Draconic Benefactor. Not added in play yet. Has a resistance. Not applied in play yet."
+  ancestry: Kobold
+  level: 1
+  traits:
+    - "Kobold"
+  prerequisites:
+    - "dragonscaled kobold heritage"

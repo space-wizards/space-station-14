@@ -1,0 +1,13 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFHalflingLuck
+  name: "Halfling Luck"
+  description: "Free action. TBA - action will be added"
+  ancestry: Halfling
+  level: 1
+  traits:
+    - "Fortune"
+    - "Halfling"
+  action: Free
+  pendingAction: true

@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Battlecry!
+- type: cfFeat
+  id: CFShieldWarfare
+  name: "Shield Warfare"
+  description: "Changes an item. This feature will be implemented later."
+  class: Guardian
+  level: 1
+  traits:
+    - "Guardian"
+  pendingAction: true

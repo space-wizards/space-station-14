@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFUnbalancingBlow
+  name: "Unbalancing Blow"
+  description: "Requires thief racket."
+  class: Rogue
+  level: 2
+  traits:
+    - "Rogue"
+  prerequisites:
+    - "thief racket"

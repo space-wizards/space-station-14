@@ -1,0 +1,15 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Dark Archive (Remastered)
+- type: cfFeat
+  id: CFRoottoLife
+  name: "Root to Life"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Thaumaturge
+  level: 1
+  traits:
+    - "Esoterica"
+    - "Manipulate"
+    - "Primal"
+    - "Thaumaturge"
+  action: Action
+  pendingAction: true

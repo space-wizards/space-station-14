@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Guns & Gears
+- type: cfFeat
+  id: CFMegatonStrike
+  name: "Megaton Strike"
+  description: "Requires armor, construct, or weapon innovation. Changes an item. Costs 2 actions. This feature will be implemented later."
+  class: Inventor
+  level: 4
+  traits:
+    - "Inventor"
+  prerequisites:
+    - "armor, construct, or weapon innovation"
+  action: Action
+  pendingAction: true

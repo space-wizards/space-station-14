@@ -23,6 +23,18 @@ public sealed partial class CFCharacterBuildData : IEquatable<CFCharacterBuildDa
     [DataField]
     public ProtoId<CFHeritagePrototype>? Heritage;
 
+    /// <summary>Level 1 ancestry feat. Must match the ancestry and be no higher than <see cref="Level"/>.</summary>
+    [DataField]
+    public ProtoId<CFFeatPrototype>? AncestryFeat;
+
+    /// <summary>Level 1 class feat.</summary>
+    [DataField]
+    public ProtoId<CFFeatPrototype>? ClassFeat;
+
+    /// <summary>Level 2 class feat. It can be a class feat of level 2 or lower.</summary>
+    [DataField]
+    public ProtoId<CFFeatPrototype>? ClassFeatLevel2;
+
     /// <summary>
     /// Free attribute boosts granted by ancestry (one entry per Free in the ancestry prototype).
     /// </summary>
@@ -75,6 +87,9 @@ public sealed partial class CFCharacterBuildData : IEquatable<CFCharacterBuildDa
             Background = Background,
             Class = Class,
             Heritage = Heritage,
+            AncestryFeat = AncestryFeat,
+            ClassFeat = ClassFeat,
+            ClassFeatLevel2 = ClassFeatLevel2,
             AncestryFreeBoosts = AncestryFreeBoosts.ToList(),
             BackgroundBoost = BackgroundBoost,
             BackgroundFreeBoost = BackgroundFreeBoost,
@@ -94,6 +109,9 @@ public sealed partial class CFCharacterBuildData : IEquatable<CFCharacterBuildDa
         return Background == other.Background
                && Class == other.Class
                && Heritage == other.Heritage
+               && AncestryFeat == other.AncestryFeat
+               && ClassFeat == other.ClassFeat
+               && ClassFeatLevel2 == other.ClassFeatLevel2
                && Level == other.Level
                && BackgroundBoost == other.BackgroundBoost
                && BackgroundFreeBoost == other.BackgroundFreeBoost
@@ -115,6 +133,9 @@ public sealed partial class CFCharacterBuildData : IEquatable<CFCharacterBuildDa
         hash.Add(Background);
         hash.Add(Class);
         hash.Add(Heritage);
+        hash.Add(AncestryFeat);
+        hash.Add(ClassFeat);
+        hash.Add(ClassFeatLevel2);
         hash.Add(Level);
         hash.Add(BackgroundBoost);
         hash.Add(BackgroundFreeBoost);

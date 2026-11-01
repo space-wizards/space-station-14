@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Divine Mysteries
+- type: cfFeat
+  id: CFSplinterFaithChampion
+  name: "Splinter Faith"
+  description: "This feature will be implemented later."
+  class: Champion
+  level: 1
+  traits:
+    - "Champion"
+    - "Cleric"

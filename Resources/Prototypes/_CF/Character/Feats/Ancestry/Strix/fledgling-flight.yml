@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Cheliax, Infernal Inheritance
+- type: cfFeat
+  id: CFFledglingFlight
+  name: "Fledgling Flight"
+  description: "Fly Speed 15 feet. Not applied in play yet. Costs 1 action. TBA - action will be added"
+  ancestry: Strix
+  level: 1
+  traits:
+    - "Strix"
+  action: Action
+  pendingAction: true

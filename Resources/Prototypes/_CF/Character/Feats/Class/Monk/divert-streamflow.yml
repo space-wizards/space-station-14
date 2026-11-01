@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Rival Academies
+- type: cfFeat
+  id: CFDivertStreamflow
+  name: "Divert Streamflow"
+  description: "Reaction. This feature will be implemented later."
+  class: Monk
+  level: 4
+  rarity: Uncommon
+  traits:
+    - "Monk"
+  action: Reaction
+  pendingAction: true

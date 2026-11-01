@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Dark Archive (Remastered)
+- type: cfFeat
+  id: CFMentalBuffer
+  name: "Mental Buffer"
+  description: "Has a resistance. This feature will be implemented later."
+  class: Psychic
+  level: 1
+  traits:
+    - "Psychic"
+  pendingAction: true

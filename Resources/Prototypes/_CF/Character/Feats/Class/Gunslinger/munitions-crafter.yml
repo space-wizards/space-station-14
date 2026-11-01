@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Guns & Gears
+- type: cfFeat
+  id: CFMunitionsCrafter
+  name: "Munitions Crafter"
+  description: "Trained in Crafting. Also grants Alchemical Crafting. This feature will be implemented later."
+  class: Gunslinger
+  level: 1
+  traits:
+    - "Gunslinger"
+  trainedSkills:
+    - Crafting
+  pendingAction: true

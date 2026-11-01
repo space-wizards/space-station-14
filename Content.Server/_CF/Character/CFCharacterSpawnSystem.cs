@@ -85,7 +85,21 @@ public sealed partial class CFCharacterSpawnSystem : EntitySystem
         combatant.CurrentHp = sheet.MaxHp;
         combatant.ClassId = profile.CFBuild.Class?.Id;
         combatant.BackgroundId = profile.CFBuild.Background?.Id;
-        combatant.TrainedSkills = CFSkills.CollectTrainedSkills(_prototypes, profile.CFBuild);
+        var ancestryId = sheet.Ancestry?.ID;
+        var classId = sheet.Class?.ID;
+        var chosenFeats = CFSkills.SelectedFeats(_prototypes, profile.CFBuild, ancestryId, classId);
+        var speedBonus = 0;
+        combatant.TrainedSkills = CFSkills.CollectTrainedSkills(_prototypes, profile.CFBuild, ancestryId, classId);
+        combatant.LoreNames.Clear();
+        foreach (var chosen in chosenFeats)
+        {
+            speedBonus += Math.Max(0, chosen.SpeedBonus);
+            foreach (var lore in chosen.Lores)
+            {
+                if (!combatant.LoreNames.Contains(lore))
+                    combatant.LoreNames.Add(lore);
+            }
+        }
         combatant.TemporaryHp = 0;
         combatant.Dying = 0;
         combatant.Wounded = 0;
@@ -95,7 +109,7 @@ public sealed partial class CFCharacterSpawnSystem : EntitySystem
             _prototypes.TryIndex(profile.CFBuild.Heritage.Value, out heritage);
         if (heritage != null && !heritage.Fits(sheet.Ancestry?.ID))
             heritage = null;
-        ApplyAncestry(mob, sheet.Ancestry, heritage);
+        ApplyAncestry(mob, sheet.Ancestry, heritage, speedBonus);
         _actionPool.Ensure(mob);
         ApplySpellbook(mob, profile, sheet.Class);
         GrantSpellActions(mob, profile);
@@ -104,9 +118,9 @@ public sealed partial class CFCharacterSpawnSystem : EntitySystem
     /// <summary>
     /// Speed scales the usual walk and sprint. Darkvision uses the same night-vision overlay as goblins.
     /// </summary>
-    private void ApplyAncestry(EntityUid mob, CFAncestryPrototype? ancestry, CFHeritagePrototype? heritage)
+    private void ApplyAncestry(EntityUid mob, CFAncestryPrototype? ancestry, CFHeritagePrototype? heritage, int speedBonus)
     {
-        var speed = CFAttributeMath.EffectiveSpeed(ancestry, heritage);
+        var speed = CFAttributeMath.EffectiveSpeed(ancestry, heritage) + Math.Max(0, speedBonus);
         if (speed > 0 && speed != (int) BaselineSpeedFeet)
         {
             var scale = speed / BaselineSpeedFeet;

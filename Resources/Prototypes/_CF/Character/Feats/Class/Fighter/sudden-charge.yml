@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFSuddenChargeFighter
+  name: "Sudden Charge"
+  description: "Costs 2 actions. This feature will be implemented later."
+  class: Fighter
+  level: 1
+  traits:
+    - "Barbarian"
+    - "Fighter"
+    - "Flourish"
+  action: Action
+  pendingAction: true

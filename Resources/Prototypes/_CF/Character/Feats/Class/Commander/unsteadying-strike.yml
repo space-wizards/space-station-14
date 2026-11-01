@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Battlecry!
+- type: cfFeat
+  id: CFUnsteadyingStrike
+  name: "Unsteadying Strike"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Commander
+  level: 4
+  traits:
+    - "Commander"
+    - "Flourish"
+  action: Action
+  pendingAction: true

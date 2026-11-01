@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFVomitStomach
+  name: "Vomit Stomach"
+  description: "Reaction. TBA - action will be added"
+  ancestry: Tripkee
+  level: 5
+  traits:
+    - "Tripkee"
+  action: Reaction
+  pendingAction: true

@@ -1,0 +1,17 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFOracularWarning
+  name: "Oracular Warning"
+  description: "Free action. This feature will be implemented later."
+  class: Oracle
+  level: 1
+  traits:
+    - "Auditory"
+    - "Cursebound"
+    - "Divine"
+    - "Emotion"
+    - "Mental"
+    - "Oracle"
+  action: Free
+  pendingAction: true

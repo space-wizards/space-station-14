@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFAnthropomorphicShape
+  name: "Anthropomorphic Shape"
+  description: "Requires Untamed Form."
+  class: Druid
+  level: 4
+  traits:
+    - "Druid"
+  prerequisites:
+    - "Untamed Form"

@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFDesperatePrayer
+  name: "Desperate Prayer"
+  description: "Free action. This feature will be implemented later."
+  class: Champion
+  level: 1
+  traits:
+    - "Champion"
+  action: Free
+  pendingAction: true

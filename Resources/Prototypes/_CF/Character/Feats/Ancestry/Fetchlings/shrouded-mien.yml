@@ -1,0 +1,13 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Cheliax, Infernal Inheritance
+- type: cfFeat
+  id: CFShroudedMien
+  name: "Shrouded Mien"
+  description: "Trained in Deception. Also grants Lengthy Diversion. TBA - action will be added"
+  ancestry: Fetchling
+  level: 1
+  traits:
+    - "Fetchling"
+  trainedSkills:
+    - Deception
+  pendingAction: true

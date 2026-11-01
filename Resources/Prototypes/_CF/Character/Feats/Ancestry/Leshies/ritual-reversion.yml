@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFRitualReversion
+  name: "Ritual Reversion"
+  description: "Passive feat. Its special rule is not applied in play yet."
+  ancestry: Leshy
+  level: 5
+  traits:
+    - "Leshy"
+    - "Polymorph"
+    - "Primal"

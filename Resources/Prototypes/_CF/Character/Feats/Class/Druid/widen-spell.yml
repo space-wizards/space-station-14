@@ -1,0 +1,18 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFWidenSpellDruid
+  name: "Widen Spell"
+  description: "Changes an item. Costs 1 action. This feature will be implemented later."
+  class: Druid
+  level: 1
+  traits:
+    - "Druid"
+    - "Manipulate"
+    - "Oracle"
+    - "Sorcerer"
+    - "Spellshape"
+    - "Witch"
+    - "Wizard"
+  action: Action
+  pendingAction: true

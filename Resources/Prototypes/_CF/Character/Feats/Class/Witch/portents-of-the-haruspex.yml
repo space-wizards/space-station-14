@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Howl of the Wild
+- type: cfFeat
+  id: CFPortentsoftheHaruspex
+  name: "Portents of the Haruspex"
+  description: "Reaction. This feature will be implemented later."
+  class: Witch
+  level: 4
+  traits:
+    - "Concentrate"
+    - "Prediction"
+    - "Witch"
+  action: Reaction
+  pendingAction: true

@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFViciousVengeance
+  name: "Vicious Vengeance"
+  description: "Requires iniquity cause."
+  class: Champion
+  level: 1
+  rarity: Uncommon
+  traits:
+    - "Champion"
+  prerequisites:
+    - "iniquity cause"

@@ -1,0 +1,16 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Tian Xia Character Guide
+- type: cfFeat
+  id: CFTangleofLimbs
+  name: "Tangle of Limbs"
+  description: "Requires dokkaebi goblin heritage or Tian Xia origin. Trained in Athletics. Also grants Titan Wrestler. TBA - action will be added"
+  ancestry: Goblin
+  level: 1
+  rarity: Uncommon
+  traits:
+    - "Goblin"
+  prerequisites:
+    - "dokkaebi goblin heritage or Tian Xia origin"
+  trainedSkills:
+    - Athletics
+  pendingAction: true

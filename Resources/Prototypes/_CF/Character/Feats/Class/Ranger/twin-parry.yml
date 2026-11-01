@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFTwinParryRanger
+  name: "Twin Parry"
+  description: "Changes a modifier. Costs 1 action. This feature will be implemented later."
+  class: Ranger
+  level: 4
+  traits:
+    - "Fighter"
+    - "Ranger"
+  action: Action
+  pendingAction: true

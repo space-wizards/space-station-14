@@ -1,0 +1,16 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFBardicLore
+  name: "Bardic Lore"
+  description: "Requires enigma muse. Lore: Bardic Lore."
+  class: Bard
+  level: 1
+  traits:
+    - "Bard"
+  prerequisites:
+    - "enigma muse"
+  trainedSkills:
+    - Lore
+  lores:
+    - "Bardic Lore"

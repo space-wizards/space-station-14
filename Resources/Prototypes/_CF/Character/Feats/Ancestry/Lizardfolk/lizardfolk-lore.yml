@@ -1,0 +1,13 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFLizardfolkLore
+  name: "Lizardfolk Lore"
+  description: "Trained in Nature and Survival. Trained in a skill of your choice. That choice is not recorded yet."
+  ancestry: Lizardfolk
+  level: 1
+  traits:
+    - "Lizardfolk"
+  trainedSkills:
+    - Nature
+    - Survival

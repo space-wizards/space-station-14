@@ -1,0 +1,15 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFRabidSprint
+  name: "Rabid Sprint"
+  description: "Requires dog kholo heritage. Costs 2 actions. TBA - action will be added"
+  ancestry: Kholo
+  level: 5
+  traits:
+    - "Flourish"
+    - "Kholo"
+  prerequisites:
+    - "dog kholo heritage"
+  action: Action
+  pendingAction: true

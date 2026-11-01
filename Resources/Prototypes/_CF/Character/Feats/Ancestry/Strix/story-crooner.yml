@@ -1,0 +1,13 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Cheliax, Infernal Inheritance
+- type: cfFeat
+  id: CFStoryCrooner
+  name: "Story Crooner"
+  description: "Trained in Performance. Also grants Impressive Performance. +1 circumstance bonus to Performance. Not applied in play yet. TBA - action will be added"
+  ancestry: Strix
+  level: 1
+  traits:
+    - "Strix"
+  trainedSkills:
+    - Performance
+  pendingAction: true

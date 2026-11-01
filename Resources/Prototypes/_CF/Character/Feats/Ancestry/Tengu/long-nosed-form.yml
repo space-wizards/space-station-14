@@ -1,0 +1,15 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFLongNosedForm
+  name: "Long-Nosed Form"
+  description: "Costs 1 action. TBA - action will be added"
+  ancestry: Tengu
+  level: 5
+  traits:
+    - "Concentrate"
+    - "Polymorph"
+    - "Primal"
+    - "Tengu"
+  action: Action
+  pendingAction: true

@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFRaiseSymbol
+  name: "Raise Symbol"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Cleric
+  level: 4
+  traits:
+    - "Cleric"
+  action: Action
+  pendingAction: true
