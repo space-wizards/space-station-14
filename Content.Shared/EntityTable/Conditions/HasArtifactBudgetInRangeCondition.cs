@@ -6,16 +6,16 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityTable.Conditions;
 
 /// <summary>
-/// Condition that will be successful only if budget value from context by <see cref="BudgetContextKey"/> key
-/// will be between min and max of <see cref="XenoArtifactTriggerBudgetRangeComponent.BudgetRange"/> (borders included).
+/// Condition that will be successful only if intensity value from context by <see cref="IntensityContextKey"/> key
+/// will be between min and max of <see cref="XenoArtifactTriggerIntensityRangeComponent.IntensityRange"/> (borders included).
 /// </summary>
-public sealed partial class HasArtifactBudgetInRangeCondition : EntityTableCondition
+public sealed partial class HasArtifactIntensityInRangeCondition : EntityTableCondition
 {
     /// <summary>
-    /// Key for <see cref="EntityTableContext"/> that can be used to hold current budget value,
-    /// that should be compared against budget ranges.
+    /// Key for <see cref="EntityTableContext"/> that can be used to hold current intensity value,
+    /// that should be compared against intensity ranges.
     /// </summary>
-    public static readonly EntityTableContextKey<float> BudgetContextKey = new("Budget");
+    public static readonly EntityTableContextKey<float> IntensityContextKey = new("Intensity");
 
     /// <inheritdoc/>
     protected override bool EvaluateImplementation(
@@ -28,20 +28,20 @@ public sealed partial class HasArtifactBudgetInRangeCondition : EntityTableCondi
         if (root is not EntSelector entSelector)
             return false;
 
-        if (!ctx.TryGetData(BudgetContextKey, out var budget))
+        if (!ctx.TryGetData(IntensityContextKey, out var intensity))
             return false;
 
         MinMax? range = null;
         var entityPrototype = proto.Index(entSelector.Id);
-        if(entityPrototype.TryComp(out XenoArtifactTriggerBudgetRangeComponent? triggerComp, entMan.ComponentFactory))
+        if (entityPrototype.TryComp(out XenoArtifactTriggerIntensityRangeComponent? triggerComp, entMan.ComponentFactory))
         {
-            range = triggerComp.BudgetRange;
+            range = triggerComp.IntensityRange;
         }
         else if (entityPrototype.TryComp(out XenoArtifactNodeComponent? nodeComp, entMan.ComponentFactory))
         {
-            range = nodeComp.BudgetRange;
+            range = nodeComp.IntensityRange;
         }
 
-        return range.HasValue && budget >= range.Value.Min && budget <= range.Value.Max;
+        return range.HasValue && intensity >= range.Value.Min && intensity <= range.Value.Max;
     }
 }

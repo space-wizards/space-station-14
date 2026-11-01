@@ -125,7 +125,7 @@ public sealed class XenoArtifactTest : GameTest
   id: TestEffectTableWithBudgetRestrictions
   table: !type:GroupSelector
     conditionsForChildren:
-    - !type:HasArtifactBudgetInRangeCondition
+    - !type:HasArtifactIntensityInRangeCondition
     children:
     - id: TestEffect1
     - id: TestEffect2
@@ -135,7 +135,7 @@ public sealed class XenoArtifactTest : GameTest
   table: !type:GroupSelector
     conditionsForChildren:
       - !type:ExcludeEntitiesFromContextCondition
-      - !type:HasArtifactBudgetInRangeCondition
+      - !type:HasArtifactIntensityInRangeCondition
     children:
     - id: TestTrigger1
     - id: TestTrigger2
@@ -145,9 +145,9 @@ public sealed class XenoArtifactTest : GameTest
   id: TestTrigger1
   name: test-trigger-1
   components:
-  - type: XenoArtifactTriggerBudgetRange
-    actualBudget: 2000
-    budgetRange:
+  - type: XenoArtifactTriggerIntensityRange
+    actualIntensity: 2000
+    intensityRange:
       min: 0
       max: 2000
 
@@ -156,9 +156,9 @@ public sealed class XenoArtifactTest : GameTest
   id: TestTrigger2
   name: test-trigger-2
   components:
-  - type: XenoArtifactTriggerBudgetRange
-    actualBudget: 5000
-    budgetRange:
+  - type: XenoArtifactTriggerIntensityRange
+    actualIntensity: 5000
+    intensityRange:
       min: 2000
       max: 5000
 
@@ -168,7 +168,7 @@ public sealed class XenoArtifactTest : GameTest
   description: Test effect 1
   components:
   - type: XenoArtifactNode
-    budgetRange:
+    intensityRange:
       min: 0
       max: 2000
 
@@ -178,7 +178,7 @@ public sealed class XenoArtifactTest : GameTest
   description: Test effect 2
   components:
   - type: XenoArtifactNode
-    budgetRange:
+    intensityRange:
       min: 5000
       max: 7000
 
@@ -208,7 +208,7 @@ public sealed class XenoArtifactTest : GameTest
   id: TestEffectTableWithBudgetRestrictions2
   table: !type:GroupSelector
     conditionsForChildren:
-    - !type:HasArtifactBudgetInRangeCondition
+    - !type:HasArtifactIntensityInRangeCondition
     children:
     - id: TestEffect1
     - id: TestEffect3
@@ -219,7 +219,7 @@ public sealed class XenoArtifactTest : GameTest
   description: Test effect 3
   components:
   - type: XenoArtifactNode
-    budgetRange:
+    intensityRange:
       min: 7001
       max: 10000
 
@@ -249,7 +249,7 @@ public sealed class XenoArtifactTest : GameTest
   table: !type:GroupSelector
     conditionsForChildren:
       - !type:ExcludeEntitiesFromContextCondition
-      - !type:HasArtifactBudgetInRangeCondition
+      - !type:HasArtifactIntensityInRangeCondition
     children:
     - id: TestTrigger1
     - id: TestTrigger3
@@ -259,9 +259,9 @@ public sealed class XenoArtifactTest : GameTest
   id: TestTrigger3
   name: test-trigger-3
   components:
-  - type: XenoArtifactTriggerBudgetRange
-    actualBudget: 10000
-    budgetRange:
+  - type: XenoArtifactTriggerIntensityRange
+    actualIntensity: 10000
+    intensityRange:
       min: 5001
       max: 10000
 
@@ -290,7 +290,7 @@ public sealed class XenoArtifactTest : GameTest
   id: TestEffectTableWithBudgetRestrictions3
   table: !type:GroupSelector
     conditionsForChildren:
-    - !type:HasArtifactBudgetInRangeCondition
+    - !type:HasArtifactIntensityInRangeCondition
     children:
     - id: TestEffect1
     - id: TestEffect4
@@ -301,7 +301,7 @@ public sealed class XenoArtifactTest : GameTest
   description: Test effect 4
   components:
   - type: XenoArtifactNode
-    budgetRange:
+    intensityRange:
       min: 3000
       max: 3001
 
@@ -331,7 +331,7 @@ public sealed class XenoArtifactTest : GameTest
   table: !type:GroupSelector
     conditionsForChildren:
       - !type:ExcludeEntitiesFromContextCondition
-      - !type:HasArtifactBudgetInRangeCondition
+      - !type:HasArtifactIntensityInRangeCondition
     children:
     - id: TestTrigger1
     - id: TestTrigger4
@@ -341,9 +341,9 @@ public sealed class XenoArtifactTest : GameTest
   id: TestTrigger4
   name: test-trigger-4
   components:
-  - type: XenoArtifactTriggerBudgetRange
-    actualBudget: 2002
-    budgetRange:
+  - type: XenoArtifactTriggerIntensityRange
+    actualIntensity: 2002
+    intensityRange:
       min: 2001
       max: 2002
 ";
@@ -648,7 +648,7 @@ public sealed class XenoArtifactTest : GameTest
         var baseEndTime = unlocking.EndTime;
 
         // Triggering the sibling node B has to extend the unlocking time, even though it is
-        // not on the same path as A. 
+        // not on the same path as A.
         _sArtifactSystem.TriggerXenoArtifact(artifactEnt, nodeB.Value, force: true);
         Assert.That(unlocking.EndTime - baseEndTime, Is.EqualTo(artifactEnt.Comp.UnlockStateIncrementPerNode));
 
@@ -723,9 +723,9 @@ public sealed class XenoArtifactTest : GameTest
     }
 
     [Test]
-    [Description("Checks that when using entity table of triggers and effects with budget range, budget is respected")]
+    [Description("Checks that when using entity table of triggers and effects with intensity range, intensity is respected")]
     [RunOnSide(Side.Server)]
-    public void XenoArtifactGenerateBasedOnBudget()
+    public void XenoArtifactGenerateBasedOnIntensityRanges()
     {
         var artifactUid = SSpawn(TestGenArtifactWithBudget);
         Entity<XenoArtifactComponent> artifactEnt = (artifactUid, SComp<XenoArtifactComponent>(artifactUid));
@@ -748,15 +748,15 @@ public sealed class XenoArtifactTest : GameTest
 
     [Test]
     [Description(
-        "Checks that when using entity table of triggers and effects with budget range, "
-        + "but current budget is too low or too big for picking trigger or effect, even if it is desired, and artifact will have less nodes"
+        "Checks that when using entity table of triggers and effects with intensity range, "
+        + "but current intensity is too low or too big for picking trigger or effect, even if it is desired, and artifact will have less nodes"
     )]
     [RunOnSide(Side.Server)]
     [TestCase(TestGenArtifactWithNotEnoughBudgetForEffect)]
     [TestCase(TestGenArtifactWithNotEnoughBudgetForTrigger)]
     [TestCase(TestGenArtifactWithTooBigBudgetForEffect)]
     [TestCase(TestGenArtifactWithTooBigBudgetForTrigger)]
-    public void XenoArtifactGenerateBasedOnBudgetButNotEnoughBudget(string prototypeToSpawn)
+    public void XenoArtifactGenerateBasedOnIntensityRangesButNotEnoughIntensity(string prototypeToSpawn)
     {
         var artifactUid = SSpawn(prototypeToSpawn);
         Entity<XenoArtifactComponent> artifactEnt = (artifactUid, SComp<XenoArtifactComponent>(artifactUid));

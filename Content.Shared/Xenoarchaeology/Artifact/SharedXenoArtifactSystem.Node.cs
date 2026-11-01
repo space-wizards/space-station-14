@@ -99,17 +99,17 @@ public abstract partial class SharedXenoArtifactSystem
 
         EntityManager.AddComponents(nodeEnt.Value, trigger.Components);
 
-        if(dirty)
+        if (dirty)
             Dirty(nodeEnt.Value);
 
         return nodeEnt.Value;
     }
 
     /// <summary>
-    /// Creates artifact node entity. To do this, we first calculated sum of node budget for
+    /// Creates artifact node entity. To do this, we first calculated sum of node intensity for
     /// direct predecessors, then we account for current depth, after which we pick
-    /// trigger based on resulting budget. If we are successful, then we add actual
-    /// budget from trigger and pick effect. If we fail to find proper effect or
+    /// trigger based on resulting intensity. If we are successful, then we add actual
+    /// intensity from trigger and pick effect. If we fail to find proper effect or
     /// trigger - we return null, and consider further generation fruitless.
     /// </summary>
     protected Entity<XenoArtifactNodeComponent>? CreateNode(
@@ -119,22 +119,22 @@ public abstract partial class SharedXenoArtifactSystem
         int depth = 0
     )
     {
-        // step 1 - accumulate predecessors budget
-        float predecessorBudgetSum = 0;
+        // step 1 - accumulate predecessors intensity
+        float predecessorIntensitySum = 0;
         if (directPredecessors.Count > 0)
-            predecessorBudgetSum = directPredecessors.Sum(x => x.Comp.ActualBudget);
+            predecessorIntensitySum = directPredecessors.Sum(x => x.Comp.ActualIntensity);
 
         // step 2 - account for depth
-        var virtualNodeAdditionalBudget = ent.Comp.PerDepthAdditionalBudgetBase * depth;
-        var virtualNodeBudget = predecessorBudgetSum + virtualNodeAdditionalBudget;
+        var incrementForPotentialIntensity = ent.Comp.PerDepthAdditionalIntensityBase * depth;
+        var potentialIntensity = predecessorIntensitySum + incrementForPotentialIntensity;
 
         var pr = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
-        // step 3 - pick trigger using budget we accumulated
+        // step 3 - pick trigger using intensity we accumulated
         EntProtoId? triggerProtoId;
         using (var _ = new EntityTableContext.TemporarilyAddToContext<float>(
                         triggerPool.Context,
-                        HasArtifactBudgetInRangeCondition.BudgetContextKey,
-                        virtualNodeBudget
+                        HasArtifactIntensityInRangeCondition.IntensityContextKey,
+                        potentialIntensity
                    )
                 )
         {
@@ -145,19 +145,19 @@ public abstract partial class SharedXenoArtifactSystem
             return null;
 
         var trigger = ProtoMan.Index(triggerProtoId.Value);
-        float actualBudgetFromTrigger = 0;
-        // TODO: invert condition and add warning + return null after all budgets are added to prototypes
-        if (trigger.Components.TryGetComponent<XenoArtifactTriggerBudgetRangeComponent>(Factory, out var triggerBudget))
+        float actualIntensityFromTrigger = 0;
+        // TODO: invert condition and add warning + return null after all intensity are added to prototypes
+        if (trigger.Components.TryGetComponent<XenoArtifactTriggerIntensityRangeComponent>(Factory, out var triggerIntensity))
         {
-            actualBudgetFromTrigger = triggerBudget.ActualBudget;
+            actualIntensityFromTrigger = triggerIntensity.ActualIntensity;
         }
 
-        var actualBudget = predecessorBudgetSum + actualBudgetFromTrigger;
+        var actualIntensity = predecessorIntensitySum + actualIntensityFromTrigger;
 
-        // step 4 - pick effect based on effect ranges and actual node budget.
+        // step 4 - pick effect based on effect ranges and actual node intensity.
         var ctx = new EntityTableContext
         {
-            { HasArtifactBudgetInRangeCondition.BudgetContextKey, actualBudget }
+            { HasArtifactIntensityInRangeCondition.IntensityContextKey, actualIntensity }
         };
         var effect = _entityTable.GetFirstOrNull(ent.Comp.EffectsTable, pr, ctx);
         if (effect == null)
@@ -168,13 +168,14 @@ public abstract partial class SharedXenoArtifactSystem
 
         var nodeEnt = CreateNode(ent, effect.Value, trigger, depth, dirty: false);
 
-        nodeEnt.Comp.ActualBudget = actualBudget;
+        nodeEnt.Comp.ActualIntensity = actualIntensity;
 
-        // TODO: apply actual placement in budget - pick attribute distribution strategy and add modifiers
-        // TODO: Collect OnInitEffectModifiers that were applied by placement in budget
+        // TODO: apply actual 'placement in budget' - pick attribute distribution strategy and add modifiers
+        // TODO: Collect OnInitEffectModifiers that were applied by 'placement in budget'
         // TODO: raise XenoArtifactCollectEffectModificationsOnInitEvent
 
         Dirty(nodeEnt);
+
         return nodeEnt;
     }
 

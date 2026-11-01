@@ -60,19 +60,19 @@ public sealed partial class XenoArtifactNodeComponent : Component
     public MinMax MaxDurabilityCanDecreaseBy = new(0, 2);
 
     /// <summary>
-    /// Minimum and maximum borders for budget.
+    /// Minimum and maximum borders for intensity.
     /// </summary>
     [DataField] // TODO: make required
-    public MinMax BudgetRange;
+    public MinMax IntensityRange;
 
     /// <summary>
-    /// Actual budget value that this node got assigned during artifact generation.
+    /// Actual intensity value that this node got assigned during artifact generation.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float ActualBudget;
+    public float ActualIntensity;
 
     /// <summary>
-    /// Value of budget, accumulated to the moment of generating this node.
+    /// Value of intensity, accumulated to the moment of generating this node.
     /// Dictates amount of amplification/dampening effect will get when activated.
     /// </summary>
     [DataField, AutoNetworkedField]
