@@ -70,6 +70,15 @@ public sealed partial class SharedExecutionSystem : EntitySystem
         if (!CanBeExecuted(victim, attacker))
             return;
 
+        var ev = new AttemptExecutionStartEvent(attacker, weapon);
+        RaiseLocalEvent(victim, ref ev);
+        if (ev.Cancelled)
+        {
+            if (ev.CancelledMessage != null)
+                _popup.PopupEntity(ev.CancelledMessage, victim, PopupType.MediumCaution); //TODO: When cuff breaking is predicted, null should be changed to attacker. Otherwise the cuffs breaking looks oddly delayed.
+            return;
+        }
+
         if (attacker == victim)
         {
             ShowExecutionPopup(comp.InternalSelfExecutionMessage, comp.ExternalSelfExecutionMessage, attacker, victim, weapon);
