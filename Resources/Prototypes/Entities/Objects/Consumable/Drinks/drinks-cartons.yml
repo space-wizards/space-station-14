@@ -9,6 +9,9 @@
     closeable: true
     closeSound:
       collection: bottleCloseSounds
+  - type: Tag
+    tags:
+    - Ingredient
 
 - type: entity
   abstract: true
@@ -17,7 +20,8 @@
   suffix: Full
   components:
   - type: Tag
-    tags: []
+    tags:
+    - Ingredient
 
 - type: entity
   abstract: true
@@ -26,6 +30,9 @@
   components:
   - type: Item
     size: Normal
+  - type: Tag
+    tags:
+    - Ingredient
 
 - type: entity
   abstract: true
@@ -34,7 +41,8 @@
   suffix: Full
   components:
   - type: Tag
-    tags: [ ]
+    tags:
+    - Ingredient
 
 - type: entity
   abstract: true
@@ -82,7 +90,8 @@
       - ReagentId: JuiceLime
         Quantity: 60
   - type: Tag
-    tags: [ ]
+    tags:
+    - Ingredient
 
 - type: entity
   parent: DrinkCartonBase
@@ -104,7 +113,8 @@
       - ReagentId: JuiceOrange
         Quantity: 60
   - type: Tag
-    tags: [ ]
+    tags:
+    - Ingredient
 
 - type: entity
   parent: DrinkCartonBase
@@ -126,7 +136,8 @@
       - ReagentId: JuiceTomato
         Quantity: 60
   - type: Tag
-    tags: []
+    tags:
+    - Ingredient
 
 - type: entity
   parent: DrinkCartonBaseFull
@@ -162,7 +173,8 @@
       - ReagentId: Cream
         Quantity: 60
   - type: Tag
-    tags: [ ]
+    tags:
+    - Ingredient
 
 - type: entity
   parent: [DrinkBaseMaterialPlastic, DrinkCartonBaseFull]
@@ -214,7 +226,8 @@
       - ReagentId: Milk
         Quantity: 120
   - type: Tag
-    tags: [ ]
+    tags:
+    - Ingredient
 
 - type: entity
   parent: DrinkCartonNormalBase
@@ -236,7 +249,8 @@
       - ReagentId: MilkSoy
         Quantity: 120
   - type: Tag
-    tags: [ ]
+    tags:
+    - Ingredient
 
 - type: entity
   parent: [DrinkBaseMaterialPlastic, DrinkCartonNormalBase]
@@ -259,7 +273,8 @@
       - ReagentId: MilkOat
         Quantity: 120
   - type: Tag
-    tags: [ ]
+    tags:
+    - Ingredient
 
 # Large cartons
 

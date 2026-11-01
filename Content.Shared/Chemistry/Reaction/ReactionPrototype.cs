@@ -27,6 +27,12 @@ namespace Content.Shared.Chemistry.Reaction
         public Dictionary<ProtoId<ReagentPrototype>, ReactantInfo> Reactants = new();
 
         /// <summary>
+        ///     Optional extension to handle metadata for the reaction.
+        /// </summary>
+        [DataField]
+        public ReactionExtension? Extension;
+
+        /// <summary>
         ///     The minimum temperature the reaction can occur at.
         /// </summary>
         [DataField("minTemp")]

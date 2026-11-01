@@ -301,10 +301,11 @@
     totalIntensity: 20000 # ~15 tile radius.
     intensitySlope: 5
     maxIntensity: 50
+    tileBreakScale: 2
   - type: Appearance
   - type: TimerTriggerVisuals
     primingSound:
-      path: /Audio/Effects/countdown.ogg
+      path: /Audio/Effects/deltaalarm.ogg
 
 - type: entity
   parent: [ BaseItem, BaseItemDestructible ]

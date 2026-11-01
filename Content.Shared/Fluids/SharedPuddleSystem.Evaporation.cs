@@ -73,7 +73,7 @@ public abstract partial class SharedPuddleSystem
                 // Spawn a *sparkle*
                 if (_net.IsServer) // TODO: Change this once we have entity spawn prediction V2
                     SpawnAttachedTo(evaporation.EvaporationEffect, Transform(uid).Coordinates);
-                PredictedQueueDel(uid);
+                QueueDel(uid);
             }
 
             _solutionContainerSystem.UpdateChemicals(puddle.Solution.Value);

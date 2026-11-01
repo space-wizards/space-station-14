@@ -15,7 +15,7 @@ using Direction = Robust.Shared.Maths.Direction;
 namespace Content.Client.Atmos.UI
 {
     [GenerateTypedNameReferences]
-    public sealed partial class GasAnalyzerWindow : DefaultWindow
+    public sealed partial class GasAnalyzerWindow : FancyWindow
     {
         private readonly SharedAtmosphereSystem _atmosphere;
         private NetEntity _currentEntity = NetEntity.Invalid;

@@ -13,7 +13,7 @@ public sealed partial class ExcludeEntitiesFromContextCondition : EntityTableCon
     /// Context key used to track which entity prototypes should not be spawned.
     /// Value should be <see cref="HashSet{EntityUid}"/>.
     /// </summary>
-    public const string EntitiesToExclude = "EntitiesToExclude";
+    public static readonly EntityTableContextKey<HashSet<EntProtoId>> EntitiesToExclude = new("EntitiesToExclude");
 
     /// <inheritdoc/>>
     protected override bool EvaluateImplementation(
@@ -23,7 +23,7 @@ public sealed partial class ExcludeEntitiesFromContextCondition : EntityTableCon
         EntityTableContext ctx
     )
     {
-        if (!ctx.TryGetData<HashSet<EntProtoId>>(EntitiesToExclude, out var used))
+        if (!ctx.TryGetData(EntitiesToExclude, out var used))
             return true;
 
         if (root is not EntSelector entSelector)

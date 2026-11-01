@@ -93,9 +93,6 @@
             "directions": 4
         },
         {
-            "name": "c"
-        },
-        {
             "name": "cat"
         },
         {
@@ -108,9 +105,6 @@
         },
         {
             "name": "cheese"
-        },
-        {
-            "name": "cheesealt"
         },
         {
             "name": "chicken"
@@ -336,9 +330,6 @@
             ]
         },
         {
-            "name": "screwed"
-        },
-        {
             "name": "spell"
         },
         {
@@ -359,9 +350,6 @@
         {
             "name": "burger-super-inhand-right",
             "directions": 4
-        },
-        {
-            "name": "plate"
         },
         {
             "name": "tofu"

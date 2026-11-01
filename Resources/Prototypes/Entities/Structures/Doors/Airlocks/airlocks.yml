@@ -1,5 +1,15 @@
 - type: entity
   parent: Airlock
+  id: AirlockService
+  suffix: Service
+  components:
+  - type: Wires
+    layoutId: AirlockService
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/service-base.rsi
+
+- type: entity
+  parent: Airlock
   id: AirlockFreezer
   suffix: Freezer
   components:
@@ -154,7 +164,7 @@
 - type: entity
   parent: Airlock
   id: AirlockMaint
-  name: maintenance access
+  suffix: Maintenance
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/airlock-maints.rsi
@@ -170,7 +180,7 @@
 - type: entity
   parent: AirlockCargo
   id: AirlockMining
-  suffix: Mining(Salvage)
+  suffix: Mining
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/cargo-mining.rsi
@@ -190,7 +200,7 @@
 - type: entity
   parent: Airlock
   id: AirlockHatch
-  name: airtight hatch
+  name: airtight hatch # unique airlock that opens in 4 directions
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/airlock-hatch.rsi
@@ -200,7 +210,8 @@
 - type: entity
   parent: Airlock
   id: AirlockXenoborg
-  name: mechadermis airlock
+  name: mechadermis airlock # unique airlock you can't make
+  suffix: Xenoborg
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/exo-xenoborg.rsi
@@ -245,9 +256,9 @@
     group: null
 
 - type: entity
-  parent: Airlock
+  parent: AirlockHatch # parenting to hatch for the name
   id: AirlockHatchMaintenance
-  name: maintenance hatch
+  suffix: Maintenance
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/airlock-hatch-maints.rsi
@@ -255,9 +266,8 @@
     group: null
 
 - type: entity
-  parent: Airlock
+  parent: AirlockHatch
   id: AirlockHatchSyndicate
-  name: airtight hatch
   suffix: Syndicate
   components:
   - type: Sprite
@@ -389,7 +399,7 @@
 - type: entity
   parent: AirlockCargoGlass
   id: AirlockMiningGlass
-  suffix: Mining(Salvage)
+  suffix: Mining
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/cargo-mining.rsi
@@ -399,24 +409,16 @@
 - type: entity
   parent: AirlockCommandGlass # see standard
   id: AirlockCentralCommandGlass
-  suffix: Central Command
+  suffix: CentralCommand
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/centcomm-base.rsi
 
 - type: entity
-  parent: AirlockGlass
-  id: AirlockStandardGlass
-  suffix: Service
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/airlock-base.rsi
-
-- type: entity
   parent: Airlock
   id: AirlockXeno
   suffix: Exo
-  name: exodermis airlock
+  name: exodermis airlock # unique airlock you can't make
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/exo-base.rsi

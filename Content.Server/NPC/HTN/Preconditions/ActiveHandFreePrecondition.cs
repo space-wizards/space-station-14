@@ -1,5 +1,3 @@
-using Content.Shared.Hands.Components;
-
 namespace Content.Server.NPC.HTN.Preconditions;
 
 /// <summary>

@@ -77,8 +77,5 @@ public sealed partial class FtlArrivalOverlay : Overlay
                 args.WorldHandle.DrawTextureRect(texture, bounds);
             }
         }
-
-        args.WorldHandle.UseShader(null);
-        args.WorldHandle.SetTransform(Matrix3x2.Identity);
     }
 }

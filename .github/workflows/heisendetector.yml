@@ -17,7 +17,7 @@ jobs:
     - name: Checkout Master
       uses: actions/checkout@v6
       with:
-          submodules: recursive
+        submodules: recursive
 
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v4.1.0
@@ -81,6 +81,10 @@ jobs:
           FULLNAME: ${{ matrix.value.fullname }}
           OUTPUT: ${{ matrix.value.output }}
           FAILURE: ${{ matrix.value.failure }}
+          GITHUB_SERVER_URL: ${{ vars.GITHUB_SERVER_URL }}
+          GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
+          GITHUB_RUN_ID: ${{ vars.GITHUB_RUN_ID }}
+          GITHUB_SHA: ${{ vars.GITHUB_SHA }}
         with:
           filename: .github/ISSUE_TEMPLATE/heisentest_template.md
           update_existing: true

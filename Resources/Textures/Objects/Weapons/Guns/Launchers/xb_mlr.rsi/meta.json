@@ -7,26 +7,26 @@
         "y": 32
     },
     "states": [
-	{
-		"name": "mlr"
-	},
-	{
-		"name": "mag-1"
-	},
-    {
-        "name": "mag-2"
-    },
-    {
-		"name": "mag-3"
-	},
-    {
-		"name": "mag-4"
-	},
-    {
-		"name": "mag-5"
-	},
-    {
-		"name": "mag-6"
-	}
+        {
+            "name": "mlr"
+        },
+        {
+            "name": "mag-1"
+        },
+        {
+            "name": "mag-2"
+        },
+        {
+            "name": "mag-3"
+        },
+        {
+            "name": "mag-4"
+        },
+        {
+            "name": "mag-5"
+        },
+        {
+            "name": "mag-6"
+        }
     ]
 }

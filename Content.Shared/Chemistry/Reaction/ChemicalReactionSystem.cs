@@ -165,12 +165,14 @@ namespace Content.Shared.Chemistry.Reaction
         ///     Perform a reaction on a solution. This assumes all reaction criteria are met.
         ///     Removes the reactants from the solution, adds products, and returns a list of products.
         /// </summary>
-        private List<ProtoId<ReagentPrototype>> PerformReaction(Entity<SolutionComponent> soln, ReactionPrototype reaction, FixedPoint2 unitReactions)
+        private List<ReagentQuantity> PerformReaction(Entity<SolutionComponent> soln, ReactionPrototype reaction, FixedPoint2 unitReactions)
         {
             var (uid, comp) = soln;
             var solution = comp.Solution;
 
             var energy = reaction.ConserveEnergy ? solution.GetThermalEnergy(ProtoMan) : 0;
+
+            var consumed = reaction.Extension != null ? new List<ReagentQuantity>(reaction.Reactants.Count) : null;
 
             //Remove reactants
             foreach (var reactant in reaction.Reactants)
@@ -178,16 +180,24 @@ namespace Content.Shared.Chemistry.Reaction
                 if (!reactant.Value.Catalyst)
                 {
                     var amountToRemove = unitReactions * reactant.Value.Amount;
-                    solution.RemoveReagent(reactant.Key, amountToRemove, ignoreReagentData: true);
+                    solution.RemoveReagent(new ReagentQuantity(reactant.Key, amountToRemove),
+                        ignoreReagentData: true, removedReagents: consumed);
                 }
             }
 
             //Create products
-            var products = new List<ProtoId<ReagentPrototype>>();
+            var products = new List<ReagentQuantity>(reaction.Products.Count);
             foreach (var product in reaction.Products)
             {
-                products.Add(product.Key);
-                solution.AddReagent(product.Key, product.Value * unitReactions);
+                products.Add(new ReagentQuantity(product.Key, product.Value * unitReactions));
+            }
+
+            if (consumed != null)
+                reaction.Extension!.React(consumed, products);
+
+            foreach (var product in products)
+            {
+                solution.AddReagent(product);
             }
 
             if (reaction.ConserveEnergy)
@@ -225,7 +235,7 @@ namespace Content.Shared.Chemistry.Reaction
         /// </summary>
         private bool ProcessReactions(Entity<SolutionComponent> soln, SortedSet<ReactionPrototype> reactions, ReactionMixerComponent? mixerComponent)
         {
-            List<ProtoId<ReagentPrototype>>? products = null;
+            List<ReagentQuantity>? products = null;
 
             // attempt to perform any applicable reaction
             foreach (var reaction in reactions)
@@ -250,7 +260,7 @@ namespace Content.Shared.Chemistry.Reaction
             // over previously. The new product may mean the reactions are applicable again and need to be processed.
             foreach (var product in products)
             {
-                if (_reactions.TryGetValue(product, out var reactantReactions))
+                if (_reactions.TryGetValue(product.Reagent.Prototype, out var reactantReactions))
                     reactions.UnionWith(reactantReactions);
             }
 

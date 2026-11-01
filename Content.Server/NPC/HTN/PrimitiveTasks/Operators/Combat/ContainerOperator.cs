@@ -5,7 +5,8 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat;
 public sealed partial class ContainerOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entManager = default!;
-    private ContainerSystem _container = default!;
+    [Dependency] private ContainerSystem _container = default!;
+
     private EntityQuery<TransformComponent> _transformQuery;
 
     [DataField("shutdownState")]
@@ -14,10 +15,9 @@ public sealed partial class ContainerOperator : HTNOperator
     [DataField("targetKey", required: true)]
     public string TargetKey = default!;
 
-    public override void Initialize(IEntitySystemManager sysManager)
+    public override void Initialize(IDependencyCollection deps)
     {
-        base.Initialize(sysManager);
-        _container = sysManager.GetEntitySystem<ContainerSystem>();
+        base.Initialize(deps);
         _transformQuery = _entManager.GetEntityQuery<TransformComponent>();
     }
 

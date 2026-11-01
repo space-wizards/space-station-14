@@ -234,7 +234,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StaminaDamageOnCollide
-    damage: 15
+    damage: 9
 
 - type: entity
   parent: BulletDisablerSmgStunning
@@ -244,7 +244,7 @@
   components:
   - type: ProjectileSpread
     proto: BulletDisablerSmgStunning
-    count: 3 #bit stronger than a disabler if you hit your shots you goober, still not a 2 hit stun though
+    count: 3 # Capable of a 4-hit stun if all 12 shots collide, will in most cases take 5 shots.
     spread: 9
 
 # Energy crossbow

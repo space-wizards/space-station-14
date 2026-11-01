@@ -21,7 +21,7 @@ entity-effect-guidebook-spawn-entity =
         [1] Creates
         *[other] create
     } { $amount ->
-        [1] {INDEFINITE($entname)}
+        [1] {INDEFINITE($entname)} {$entname}
         *[other] {$amount} {MAKEPLURAL($entname)}
     }
 
@@ -555,3 +555,9 @@ entity-effect-disarm =
         [1] Disarms
         *[other] disarms
     } the entity
+
+entity-effect-guidebook-make-trap-in-container =
+    { $chance ->
+        [1] Traps
+        *[other] traps
+    } the metabolizer inside a { $entityname }

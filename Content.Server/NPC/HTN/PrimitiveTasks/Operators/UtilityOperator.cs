@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,11 +13,13 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 /// </summary>
 public sealed partial class UtilityOperator : HTNOperator
 {
-    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private NPCUtilitySystem _npcUtilitySystem = default!;
 
-    [DataField] public string Key = "Target";
+    [DataField]
+    public string Key = "Target";
 
-    [DataField] public ReturnTypeResult ReturnType = ReturnTypeResult.Highest;
+    [DataField]
+    public ReturnTypeResult ReturnType = ReturnTypeResult.Highest;
 
     /// <summary>
     /// The EntityCoordinates of the specified target.
@@ -32,7 +33,7 @@ public sealed partial class UtilityOperator : HTNOperator
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
         CancellationToken cancelToken)
     {
-        var result = _entManager.System<NPCUtilitySystem>().GetEntities(blackboard, Prototype);
+        var result = _npcUtilitySystem.GetEntities(blackboard, Prototype);
         Dictionary<string, object> effects;
 
         switch (ReturnType)

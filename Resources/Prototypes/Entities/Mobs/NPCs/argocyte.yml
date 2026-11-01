@@ -51,7 +51,7 @@
     group: GenericNumber
 
 - type: entity
-  parent: [BaseMobArgocyte, BaseSlicingRefinable]
+  parent: [BaseMobArgocyte, BaseSlicingRefinableButchering]
   id: MobArgocyteSlurva
   name: slurva
   description: A pathetic creature, incapable of doing much.
@@ -86,7 +86,7 @@
         Blunt: 3
 
 - type: entity
-  parent: [BaseMobArgocyte, BaseSlicingRefinable]
+  parent: [BaseMobArgocyte, BaseSlicingRefinableButchering]
   id: MobArgocyteBarrier
   name: barrier
   components:
@@ -128,7 +128,7 @@
         Blunt: 3
 
 - type: entity
-  parent: [BaseMobArgocyte, BaseSlicingRefinable]
+  parent: [BaseMobArgocyte, BaseSlicingRefinableButchering]
   id: MobArgocyteSkitter
   name: skitter
   description: A devious little alien... Make sure they don't run off with your rations!
@@ -168,7 +168,7 @@
         Slash: 3
 
 - type: entity
-  parent: [BaseMobArgocyte, BaseSlicingRefinable]
+  parent: [BaseMobArgocyte, BaseSlicingRefinableButchering]
   id: MobArgocyteSwiper
   name: swiper
   description: Where did that stack of steel go?
@@ -195,7 +195,7 @@
     baseSprintSpeed : 5
 
 - type: entity
-  parent: [BaseMobArgocyte, BaseSlicingRefinable]
+  parent: [BaseMobArgocyte, BaseSlicingRefinableButchering]
   id: MobArgocyteMolder
   name: molder
   components:
@@ -222,7 +222,7 @@
     baseWalkSpeed : 3.5
 
 - type: entity
-  parent: [BaseMobArgocyte, BaseSlicingRefinable]
+  parent: [BaseMobArgocyte, BaseSlicingRefinableButchering]
   id: MobArgocytePouncer
   name: pouncer
   components:
@@ -251,7 +251,7 @@
         Slash: 7.5
 
 - type: entity
-  parent: [BaseMobArgocyte, BaseSlicingRefinable]
+  parent: [BaseMobArgocyte, BaseSlicingRefinableButchering]
   id: MobArgocyteGlider
   name: glider
   components:
@@ -283,7 +283,7 @@
     baseWalkSpeed: 4.5
 
 - type: entity
-  parent: [BaseMobArgocyte, BaseSlicingRefinable]
+  parent: [BaseMobArgocyte, BaseSlicingRefinableButchering]
   id: MobArgocyteHarvester
   name: harvester
   components:
@@ -312,7 +312,7 @@
         Slash: 10
 
 - type: entity
-  parent: [BaseMobArgocyte, BaseSlicingRefinable]
+  parent: [BaseMobArgocyte, BaseSlicingRefinableButchering]
   id: MobArgocyteCrawler
   name: crawler
   description: Deadly, pack-animals that maul unsuspecting travelers.
@@ -345,7 +345,7 @@
     baseWalkSpeed: 5
 
 - type: entity
-  parent: [BaseMobArgocyte, BaseSlicingRefinable]
+  parent: [BaseMobArgocyte, BaseSlicingRefinableButchering]
   id: MobArgocyteEnforcer
   name: enforcer
   components:

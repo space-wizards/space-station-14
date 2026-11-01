@@ -1,5 +1,4 @@
 using Content.Shared.EntityTable.EntitySelectors;
-using Content.Shared.GameTicking.Rules;
 using Content.Shared.GameTicking.Rules.Components;
 using Robust.Shared.Prototypes;
 
@@ -10,7 +9,7 @@ namespace Content.Shared.EntityTable.Conditions;
 /// </summary>
 public sealed partial class HasBudgetCondition : EntityTableCondition
 {
-    public const string BudgetContextKey = "Budget";
+    public static readonly EntityTableContextKey<float> BudgetContextKey = new("Budget");
 
     /// <summary>
     /// Used for determining the cost for the budget.

@@ -109,7 +109,7 @@ public abstract partial class SharedDoorRemoteSystem : EntitySystem
                 {
                     if (!boltsComp.BoltWireCut)
                     {
-                        _doorSystem.SetBoltsDown((args.Target.Value, boltsComp), !boltsComp.BoltsDown, user: args.User, predicted: true);
+                        _doorSystem.TrySetBoltDown((args.Target.Value, boltsComp), !boltsComp.BoltsDown, user: args.User, predicted: true);
                         _adminLogger.Add(LogType.Action,
                             LogImpact.Medium,
                             $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to {(boltsComp.BoltsDown ? "" : "un")}bolt it");

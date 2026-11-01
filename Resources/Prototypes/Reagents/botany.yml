@@ -51,6 +51,20 @@
           type: [Plant]
 
 - type: reagent
+  id: MutagenicFertilizer
+  name: reagent-name-mutagenic-fertilizer
+  group: Botanical
+  desc: reagent-desc-mutagenic-fertilizer
+  physicalDesc: reagent-physical-desc-clumpy
+  flavor: earthy
+  color: "#759923"
+  recognizable: false
+  plantMetabolism:
+  - !type:PlantAdjustMutationLevel
+    amount: 1
+    mutationTable: FarmingPlantMutations
+
+- type: reagent
   id: PestKiller
   name: reagent-name-pest-killer
   group: Botanical

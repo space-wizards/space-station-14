@@ -21,6 +21,9 @@
         Quantity: 15
       - ReagentId: Vitamin
         Quantity: 15
+  - type: Tag
+    tags:
+    - FinishedMeal
 
 # Breakfasts
 

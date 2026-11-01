@@ -3,7 +3,7 @@
 
 - type: entity
   parent: [SolutionNormal, FoodInjectableBase]
-  id: FoodCakeBase
+  id: FoodCakeBaseNoSecretStash
   abstract: true
   components:
   - type: FlavorProfile
@@ -25,22 +25,14 @@
   - type: Tag
     tags:
     - Cake
-  - type: SecretStash
-    maxItemSize: "Normal"
-    secretStashName: secret-stash-cake
-    damageEatenItemInside:
-      types:
-        Slash: 7.5
-  - type: ToolOpenable
-    openToolQualityNeeded: Slicing
-    closeToolQualityNeeded: Slicing
-    verbOnly: true
-  - type: ContainerContainer
-    containers:
-      stash: !type:ContainerSlot {}
 
 - type: entity
-  parent: [SolutionVeryTiny, FoodCakeBase]
+  abstract: true
+  parent: [FoodCakeBaseNoSecretStash, BaseStashCake]
+  id: FoodCakeBase
+
+- type: entity
+  parent: [SolutionVeryTiny, FoodCakeBaseNoSecretStash] # no secret stash since it's tiny!
   id: FoodCakeSliceBase
   abstract: true
   description: Just a slice of cake, it is enough for everyone.
@@ -85,6 +77,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Fruit
   - type: Item
     inhandVisuals:
@@ -111,6 +104,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Fruit
     - Slice
   - type: Item
@@ -182,6 +176,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Vegetable
   - type: Item
     inhandVisuals:
@@ -220,8 +215,9 @@
   - type: Tag
     tags:
     - Cake
-    - Vegetable
+    - FinishedMeal
     - Slice
+    - Vegetable
   - type: Item
     inhandVisuals:
       left:
@@ -252,6 +248,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Meat
   - type: Item
     inhandVisuals:
@@ -277,6 +274,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Meat
     - Slice
   - type: Item
@@ -354,6 +352,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Fruit
   - type: Item
     inhandVisuals:
@@ -379,6 +378,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Fruit
     - Slice
   - type: Item
@@ -411,6 +411,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Fruit
   - type: Item
     inhandVisuals:
@@ -436,6 +437,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Fruit
     - Slice
   - type: Item
@@ -468,6 +470,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Fruit
   - type: Item
     inhandVisuals:
@@ -493,6 +496,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Fruit
     - Slice
   - type: Item
@@ -539,6 +543,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Fruit
   - type: Item
     heldPrefix: lemoon
@@ -571,6 +576,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Fruit
     - Slice
   - type: Item
@@ -672,6 +678,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Fruit
   - type: Item
     inhandVisuals:
@@ -698,6 +705,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Fruit
     - Slice
   - type: Item
@@ -728,6 +736,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Meat
   - type: Item
     inhandVisuals:
@@ -753,6 +762,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Meat
     - Slice
   - type: Item
@@ -793,6 +803,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Fruit
   - type: Item
     inhandVisuals:
@@ -825,6 +836,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Fruit
     - Slice
   - type: Item
@@ -854,6 +866,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Fruit
   - type: Item
     inhandVisuals:
@@ -874,6 +887,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Fruit
     - Slice
   - type: Item
@@ -1101,8 +1115,9 @@
   - type: Tag
     tags:
     - VimPilot
-    - DoorBumpOpener
     - Cake
+    - DoorBumpOpener
+    - FinishedMeal
   - type: CanEscapeInventory
     baseResistTime: 2
   - type: Puller
@@ -1181,6 +1196,7 @@
     energy: 2.5
   - type: Tag
     tags:
+    - FinishedMeal
     - Slice
   - type: FoodSequenceElement
     entries:
@@ -1205,6 +1221,7 @@
     tags:
     - Cake
     - ClothMade
+    - FinishedMeal
   - type: Solution
     solution:
       reagents:
@@ -1231,6 +1248,7 @@
     tags:
     - Cake
     - ClothMade
+    - FinishedMeal
     - Slice
   - type: Solution
     solution:
@@ -1281,6 +1299,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Fruit
   - type: Item
     inhandVisuals:
@@ -1322,6 +1341,7 @@
   - type: Tag
     tags:
     - Cake
+    - FinishedMeal
     - Fruit
     - Slice
   - type: Item

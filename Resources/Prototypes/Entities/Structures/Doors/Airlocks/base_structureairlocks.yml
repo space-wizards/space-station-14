@@ -60,8 +60,7 @@
       shader: unshaded
       visible: false
   - type: IconSmooth
-    key: walls
-    mode: NoSprite
+    key: doors
   - type: AnimationPlayer
   - type: Physics
   - type: Fixtures
@@ -162,7 +161,6 @@
 - type: entity
   parent: [ BaseAirlockIndestructible, StructureHealthDoor ]
   id: Airlock
-  name: airlock
   description: It opens, it closes, and maybe crushes you.
   components:
   - type: LayerChangeOnWeld
@@ -177,7 +175,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 200
   - type: DeviceLinkSink
     ports:
@@ -193,8 +191,14 @@
     lastSignals:
       DoorStatus: false
       DoorBoltStatus: false
-  - type: SoundOnOverload
-  - type: SpawnOnOverload
+  - type: EntityEffectOnDeviceOverload
+    effects:
+    - !type:SpawnEntity
+      entity: EffectSparks
+      predicted: false
+    - !type:PlaySound
+      sound: /Audio/Items/Defib/defib_zap.ogg
+      predicted: false
   - type: RCDDeconstructable
     cost: 6
     delay: 8

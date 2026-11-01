@@ -221,7 +221,8 @@
     - type: ComputerBoard
       prototype: ComputerSalvageExpedition
     - type: StealTarget
-      stealGroup: SalvageExpeditionsComputerCircuitboard
+      stealGroup:
+      - SalvageExpeditionsComputerCircuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -234,7 +235,8 @@
   - type: ComputerBoard
     prototype: ComputerShuttleCargo
   - type: StealTarget
-    stealGroup: CargoShuttleConsoleCircuitboard
+    stealGroup:
+    - CargoShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -353,7 +355,7 @@
     - type: Sprite
       state: cpu_medical
     - type: ComputerBoard
-      prototype: computerBodyScanner
+      prototype: ComputerBodyScanner
 
 - type: entity
   parent: [ BaseComputerCircuitboard, BaseCommandContraband ]

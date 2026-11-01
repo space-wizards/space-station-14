@@ -1745,5 +1745,33 @@ Entries:
   id: 234
   time: '2026-08-08T22:59:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34166
+- author: Hitlinemoss
+  changes:
+  - message: The "Set Outfit" debug verb now includes prisoner outfits.
+    type: Add
+  id: 235
+  time: '2026-08-29T00:49:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45701
+- author: SlamBamActionman
+  changes:
+  - message: The heart attack smite is now available in the smite menu, instantly killing the target with Asphyxiation damage.
+    type: Add
+  id: 236
+  time: '2026-09-04T13:14:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45837
+- author: SlamBamActionman
+  changes:
+  - message: Industrial Shredders have been added as an admin-only item. Please be aware that these are still being tested and may be able to delete entities unintentionally.
+    type: Add
+  id: 237
+  time: '2026-09-22T09:17:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43651
+- author: AlbertSnows
+  changes:
+  - message: Added the ftlproximity:ftl_launch command for moving a grid next to another grid, as FTL arrival would.
+    type: Add
+  id: 238
+  time: '2026-10-07T08:28:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46366
 Name: Admin
 Order: 3

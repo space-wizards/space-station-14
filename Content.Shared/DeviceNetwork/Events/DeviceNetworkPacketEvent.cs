@@ -2,9 +2,6 @@ using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Shared.DeviceNetwork.Events;
 
-/// <summary>
-/// Event raised when a device network packet is received by an entity.
-/// </summary>
 /// <param name="NetId">
 /// ID of the network that this packet is translated on.
 /// Device networks are currently global and only represent the way of signal transmission.
@@ -31,8 +28,8 @@ namespace Content.Shared.DeviceNetwork.Events;
 [ByRefEvent]
 public readonly record struct DeviceNetworkPacketEvent<T>(
     int NetId,
-    string? Address,
-    uint Frequency,
-    string SenderAddress,
+    DeviceAddress? Address,
+    DeviceFrequency Frequency,
+    DeviceAddress SenderAddress,
     Entity<DeviceNetworkComponent> Sender,
     T Data) where T : INetworkPayload;

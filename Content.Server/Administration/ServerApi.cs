@@ -18,7 +18,6 @@ using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.GameTicking.Prototypes;
-using Content.Shared.Prototypes;
 using Robust.Server.ServerStatus;
 using Robust.Shared.Asynchronous;
 using Robust.Shared.Configuration;
@@ -516,7 +515,7 @@ public sealed partial class ServerApi : IPostInjectInit
             if (gameRule.Abstract)
                 continue;
 
-            if (gameRule.HasComponent<GameRuleComponent>(_componentFactory))
+            if (gameRule.HasComp<GameRuleComponent>(_componentFactory))
                 gameRules.Add(gameRule.ID);
         }
 

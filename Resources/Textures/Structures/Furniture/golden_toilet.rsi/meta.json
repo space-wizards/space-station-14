@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-NC-SA-3.0",
-    "copyright": "Made by brainfood1183 (github) for ss14, modified Nimfar11",
+    "copyright": "Made by brainfood1183 (github) for ss14, modified by Nimfar11",
     "size": {
         "x": 32,
         "y": 32
@@ -13,10 +13,6 @@
         },
         {
             "name": "disposal-open",
-            "directions": 4
-        },
-        {
-            "name": "disposal-closed",
             "directions": 4
         },
         {
@@ -40,45 +36,37 @@
             "directions": 4,
             "delays": [
                 [
-                    1.0,
-                    1.0,
-                    1.0,
-                    1.0,
-                    1.0
+                    0.24,
+                    0.24,
+                    0.24,
+                    0.24,
+                    0.24
                 ],
                 [
-                    1.0,
-                    1.0,
-                    1.0,
-                    1.0,
-                    1.0
+                    0.24,
+                    0.24,
+                    0.24,
+                    0.24,
+                    0.24
                 ],
                 [
-                    1.0,
-                    1.0,
-                    1.0,
-                    1.0,
-                    1.0
+                    0.24,
+                    0.24,
+                    0.24,
+                    0.24,
+                    0.24
                 ],
                 [
-                    1.0,
-                    1.0,
-                    1.0,
-                    1.0,
-                    1.0
+                    0.24,
+                    0.24,
+                    0.24,
+                    0.24,
+                    0.24
                 ]
             ]
         },
         {
             "name": "dispover-charge",
-            "directions": 4
-        },
-        {
-            "name": "dispover-full",
-            "directions": 4
-        },
-        {
-            "name": "dispover-handle",
             "directions": 4
         },
         {

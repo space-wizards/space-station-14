@@ -1,7 +1,7 @@
 - type: entity
   name: laser raptor
   id: MobLaserRaptor
-  parent: [SimpleMobBase, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   description: From the Viking age.
   components:
     - type: NpcFactionMember
@@ -99,7 +99,7 @@
       Flammable: [ Touch ]
       Extinguish: [ Touch ]
     reactions:
-    - reagents: [ Water ]
+    - reagents: [ Water, Holywater ]
       methods: [ Touch ]
       effects:
       - !type:EvenHealthChange
@@ -139,10 +139,6 @@
   - type: HTN
     rootTask:
       task: KillerTomatoCompound
-  - type: NPCImprintingOnSpawnBehaviour
-    whitelist:
-      components:
-      - HumanoidProfile
   - type: Sprite
     sprite: Mobs/Demons/tomatokiller.rsi
     noRot: true

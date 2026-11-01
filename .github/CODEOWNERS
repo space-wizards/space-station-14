@@ -8,16 +8,14 @@
 /Resources/ServerInfo/ @crazybrain23
 /Resources/ServerInfo/Guidebook/ServerRules/ @crazybrain23
 
-/Resources/Prototypes/Maps/** @Emisse @ArtisticRoomba
-/Resources/Maps/** @Emisse @ArtisticRoomba
+/Resources/Prototypes/Maps/** @Emisse
+/Resources/Maps/** @Emisse
 
-/Resources/Prototypes/Body/ @DrSmugleaf @sowelipililimute # suffering
+/Resources/Prototypes/Body/ @DrSmugleaf # suffering
 /Resources/Prototypes/Entities/Mobs/Player/ @DrSmugleaf
 /Resources/Prototypes/Entities/Mobs/Species/ @DrSmugleaf
 /Resources/Prototypes/Guidebook/rules.yml @crazybrain23
-/Content.*/Body/ @DrSmugleaf @sowelipililimute
-/Content.*/Humanoid/ @sowelipililimute
-/Content.Client/Lobby/UI/Humanoid* @sowelipililimute
+/Content.*/Body/ @DrSmugleaf
 /Content.YAMLLinter @DrSmugleaf
 /Content.Shared/Damage/ @DrSmugleaf
 
@@ -26,16 +24,8 @@
 
 /Content.*/Forensics/ @ficcialfaint
 
-/Content.*/HeatContainer/ @slarticodefast
-
-/Content.*/Stunnable/ @Princess-Cheeseballs
-/Content.*/Nutrition/ @Princess-Cheeseballs
-/Content.*/EntityEffects @Princess-Cheeseballs @sowelipililimute
-
 # SKREEEE
 /Content.*.Database/ @DrSmugleaf
 /Content.Shared.Database/Log*.cs @DrSmugleaf @crazybrain23
 
 /Content.Server/Discord/ @Simyon264
-
-/Content.*/Atmos/** @ArtisticRoomba

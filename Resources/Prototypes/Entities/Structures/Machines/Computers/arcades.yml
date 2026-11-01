@@ -11,16 +11,14 @@
     energy: 3.0
     color: "#3db83b"
   - type: LitOnPowered
+  - type: ComputerVisuals
+    stateFrame: arcade
+    stateKeyboard: null
+    stateScreen: screen_invaders
+    stateKeys: null
+    statePanel: panel
   - type: Sprite
     sprite: Structures/Machines/arcade.rsi
-    layers:
-    - map: ["computerLayerBody"]
-      state: arcade
-    - map: ["computerLayerScreen"]
-      state: screen_invaders
-    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
-      state: panel
-      visible: false
   - type: Icon
     sprite: Structures/Machines/arcade.rsi
     state: arcade
@@ -57,16 +55,8 @@
   name: space villain arcade
   parent: ArcadeBase
   components:
-  - type: Sprite
-    sprite: Structures/Machines/arcade.rsi
-    layers:
-    - map: ["computerLayerBody"]
-      state: arcade
-    - map: ["computerLayerScreen"]
-      state: screen_spacevillain
-    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
-      state: panel
-      visible: false
+  - type: ComputerVisuals
+    stateScreen: screen_spacevillain
   - type: PointLight
     color: "#e3a136"
   - type: SpaceVillainArcade
@@ -196,16 +186,8 @@
   name: NT block game
   parent: ArcadeBase
   components:
-  - type: Sprite
-    sprite: Structures/Machines/arcade.rsi
-    layers:
-    - map: ["computerLayerBody"]
-      state: arcade
-    - map: ["computerLayerScreen"]
-      state: screen_blockgame
-    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
-      state: panel
-      visible: false
+  - type: ComputerVisuals
+    stateScreen: screen_blockgame
   - type: BlockGameArcade
   - type: ActivatableUI
     key: enum.BlockGameUiKey.Key

@@ -1,7 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Systems;
 using Content.Server.Cloning.Components;
-using Content.Server.DeviceLinking.Systems;
 using Content.Server.EUI;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Materials;
@@ -31,6 +30,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage.Systems;
+using Content.Shared.DeviceLinking.Systems;
 
 namespace Content.Server.Cloning;
 
@@ -70,7 +70,7 @@ public sealed partial class CloningPodSystem : EntitySystem
         SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
         SubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
         SubscribeLocalEvent<CloningPodComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<CloningPodComponent, PortDisconnectedEvent>(OnPortDisconnected);
+        SubscribeLocalEvent<CloningPodComponent, SinkPortDisconnectedEvent>(OnPortDisconnected);
         SubscribeLocalEvent<CloningPodComponent, AnchorStateChangedEvent>(OnAnchor);
         SubscribeLocalEvent<CloningPodComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<CloningPodComponent, GotEmaggedEvent>(OnEmagged);
@@ -107,9 +107,11 @@ public sealed partial class CloningPodSystem : EntitySystem
         }
         UpdateStatus(clonedComponent.Parent, CloningPodStatus.Cloning, cloningPodComponent);
     }
-    private void OnPortDisconnected(Entity<CloningPodComponent> ent, ref PortDisconnectedEvent args)
+
+    private void OnPortDisconnected(Entity<CloningPodComponent> ent, ref SinkPortDisconnectedEvent args)
     {
-        ent.Comp.ConnectedConsole = null;
+        if (ent.Comp.PodPort == args.Port)
+            ent.Comp.ConnectedConsole = null;
     }
 
     private void OnAnchor(Entity<CloningPodComponent> ent, ref AnchorStateChangedEvent args)

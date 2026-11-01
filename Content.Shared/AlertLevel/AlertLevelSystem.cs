@@ -20,10 +20,10 @@ public sealed partial class AlertLevelSystem : EntitySystem
     [Dependency] private SharedChatSystem _chat = default!;
     [Dependency] private StationSystem _station = default!;
 
-    private static string _fallbackAlertKey = "alert-level-unknown";
-    private static string _fallbackAlertName = $"{_fallbackAlertKey}";
-    private static string _fallbackAlertAnnouncement = $"{_fallbackAlertKey}";
-    private static string _fallbackAlertInstructions = $"{_fallbackAlertKey}";
+    // Absolute worst case fallbacks.
+    private static string _fallbackAlertName = "generic-unknown-title";
+    private static string _fallbackAlertAnnouncement = "alert-level-unknown-announcement";
+    private static string _fallbackAlertInstructions = "alert-level-unknown-instructions";
 
     public override void Update(float time)
     {

@@ -54,6 +54,7 @@
   parent: BaseGasDevice
   id: BaseGasTrinary
   graph: GasTrinary
+  placementMode: AlignAtmosPipeLayers
 # endregion Base
 
 # region Machines

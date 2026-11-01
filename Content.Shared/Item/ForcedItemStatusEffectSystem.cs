@@ -150,7 +150,7 @@ public sealed partial class ForcedItemStatusEffectSystem : EntitySystem
             RemComp<UnremoveableComponent>(entity);
 
         // Cleanup is handled via shutdown of the item.
-        PredictedQueueDel(entity);
+        QueueDel(entity);
 
         if (!playSound)
             return;

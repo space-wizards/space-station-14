@@ -77,6 +77,7 @@
   weights:
     HeadCloakStealCollectionObjective: 1                #command
     HeadBedsheetStealCollectionObjective: 1
+    HeadHardsuitStealCollectionObjective: 1
     StampStealCollectionObjective: 1
     DoorRemoteStealCollectionObjective: 1
     OfficerHandgunsStealCollectionObjective: 1         #sec

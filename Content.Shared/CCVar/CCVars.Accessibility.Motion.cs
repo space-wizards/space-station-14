@@ -44,6 +44,18 @@ public sealed partial class CCVars
         CVarDef.Create("accessibility.disable_flash_effect", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
+    ///     Decreases the intensity of the vacuum overlay 1.0f is maximum.
+    /// </summary>
+    public static readonly CVarDef<float> VacuumOverlayIntensity =
+        CVarDef.Create("accessibility.vacuum_overlay_intensity", 0.5f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    ///     Toggles vacuum overlay serverside. If you do not want it as an option for your players use this.
+    /// </summary>
+    public static readonly CVarDef<bool> VacuumOverlay =
+        CVarDef.Create("accessibility.vacuum_overlay", true, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+
+    /// <summary>
     ///     Decreases motion on the heat distortion shader.
     /// </summary>
     public static readonly CVarDef<bool> DisableHeatDistortion =

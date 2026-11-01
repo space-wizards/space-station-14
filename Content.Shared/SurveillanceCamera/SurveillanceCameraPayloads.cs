@@ -11,7 +11,7 @@ namespace Content.Shared.SurveillanceCamera;
 public partial record struct SurveillanceCameraConnectPayload : IRoutableNetworkPayload
 {
     [DataField]
-    public string? SenderAddress { get; set; }
+    public DeviceAddress? SenderAddress { get; set; }
 
     [DataField]
     public EntityUid Sender { get; set; }
@@ -23,7 +23,7 @@ public partial record struct SurveillanceCameraConnectPayload : IRoutableNetwork
 public partial record struct SurveillanceCameraConnectRequestPayload : IRoutableNetworkPayload
 {
     [DataField]
-    public string? SenderAddress { get; set; }
+    public DeviceAddress? SenderAddress { get; set; }
 
     [DataField]
     public EntityUid Sender { get; set; }
@@ -35,7 +35,7 @@ public partial record struct SurveillanceCameraConnectRequestPayload : IRoutable
 public partial record struct SurveillanceCameraHeartbeatRequestPayload : IRoutableNetworkPayload
 {
     [DataField]
-    public string? SenderAddress { get; set; }
+    public DeviceAddress? SenderAddress { get; set; }
 
     [DataField]
     public EntityUid Sender { get; set; }
@@ -47,7 +47,7 @@ public partial record struct SurveillanceCameraHeartbeatRequestPayload : IRoutab
 public partial record struct SurveillanceCameraHeartbeatPayload : IRoutableNetworkPayload
 {
     [DataField]
-    public string? SenderAddress { get; set; }
+    public DeviceAddress? SenderAddress { get; set; }
 
     [DataField]
     public EntityUid Sender { get; set; }
@@ -62,7 +62,7 @@ public partial record struct SurveillanceCameraPingPayload : IRoutableNetworkPay
     public string Subnet;
 
     [DataField]
-    public string? SenderAddress { get; set; }
+    public DeviceAddress? SenderAddress { get; set; }
 
     [DataField]
     public EntityUid Sender { get; set; }
@@ -80,7 +80,7 @@ public partial record struct SurveillanceCameraDataPayload : IRoutableNetworkPay
     public string Subnet;
 
     [DataField]
-    public string? SenderAddress { get; set; }
+    public DeviceAddress? SenderAddress { get; set; }
 
     [DataField]
     public EntityUid Sender { get; set; }
