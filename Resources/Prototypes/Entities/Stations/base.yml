@@ -10,13 +10,6 @@
   components:
     - type: StationBankAccount
     - type: StationCargoOrderDatabase
-      orders:
-        Cargo: [ ]
-        Engineering: [ ]
-        Medical: [ ]
-        Science: [ ]
-        Security: [ ]
-        Service: [ ]
     - type: StationCargoBountyDatabase
 
 - type: entity
