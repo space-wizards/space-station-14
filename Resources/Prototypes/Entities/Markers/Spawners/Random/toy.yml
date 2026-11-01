@@ -90,6 +90,8 @@
       weight: 8
     - id: PlushieSpaceLizard
       weight: 1
+    - id: PlushieLizardSalamander
+      weight: 0.8
     - id: PlushieLizardInversed
       weight: 0.1 # 1 in >100
     - !type:GroupSelector # Lizard gets a job table
