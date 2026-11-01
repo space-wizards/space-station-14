@@ -591,8 +591,8 @@
       roleLoadout: [ RoleSurvivalStandard ]
 
 - type: entity
-  name: CentComm lawyer
   id: RandomHumanoidSpawnerCentcomLawyer
+  name: CentComm lawyer
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
