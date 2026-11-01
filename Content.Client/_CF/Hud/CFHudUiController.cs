@@ -42,7 +42,8 @@ public sealed class CFHudUiController : UIController
         }
 
         hud.Ball.Visible = true;
-        hud.Ball.Set(combatant.CurrentHp, combatant.MaxHp, combatant.TemporaryHp, combatant.ArmorClass);
+        var offGuard = EntityManager.TryGetComponent(player, out CFOffGuardComponent? flanked) && flanked.Active;
+        hud.Ball.Set(combatant.CurrentHp, combatant.MaxHp, combatant.TemporaryHp, combatant.ArmorClass, offGuard);
         EntityManager.TryGetComponent<CFActionPoolComponent>(player, out var actions);
         hud.ActionPips.Set(actions);
         EntityManager.TryGetComponent<CFSpellbookComponent>(player, out var book);

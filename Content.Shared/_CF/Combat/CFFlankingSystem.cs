@@ -6,6 +6,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.NPC.Systems;
+using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.StatusIcon;
 using Content.Shared.Weapons.Melee;
@@ -13,18 +14,24 @@ using System.Numerics;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 
 namespace Content.Shared.CF.Combat;
 
 /// <summary>
-/// Applies the Pathfinder 2e off-guard condition while a creature is flanked.
+/// Off-guard while a creature is flanked. Reach is a sensor fixture. The line test runs only for bodies
+/// that sensor is touching, and only when a contact or a move says the geometry may have changed.
 /// </summary>
 public sealed partial class CFFlankingSystem : EntitySystem
 {
     [Dependency] private INetManager _net = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private FixtureSystem _fixtures = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private ActionBlockerSystem _blocker = default!;
     [Dependency] private NpcFactionSystem _factions = default!;
@@ -34,40 +41,109 @@ public sealed partial class CFFlankingSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedStatusIconSystem _statusIcons = default!;
 
-    private readonly List<EntityUid> _affected = new();
-    private readonly List<EntityUid> _refreshSnapshot = new();
-    private readonly List<FlankCandidate> _candidates = new();
+    /// <summary>Foe to the allies whose reach sensors currently overlap that foe.</summary>
+    private readonly Dictionary<EntityUid, HashSet<EntityUid>> _inReach = new();
+
+    /// <summary>Ally to the foes their sensor currently overlaps.</summary>
+    private readonly Dictionary<EntityUid, HashSet<EntityUid>> _overlapping = new();
+
+    private readonly HashSet<EntityUid> _dirty = new();
+    private readonly List<EntityUid> _dirtyCopy = new();
+    private readonly List<EntityUid> _pair = new();
     private readonly HashSet<EntityUid> _flankers = new();
-    private readonly HashSet<EntityUid> _moveRefresh = new();
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        UpdatesAfter.Add(typeof(SharedPhysicsSystem));
+    }
 
     public override void Update(float frameTime)
     {
-        if (!_net.IsServer || _moveRefresh.Count == 0)
+        if (!_net.IsServer || _dirty.Count == 0)
             return;
 
-        _affected.Clear();
-        foreach (var uid in _moveRefresh)
+        _dirtyCopy.Clear();
+        foreach (var uid in _dirty)
+            _dirtyCopy.Add(uid);
+
+        _dirty.Clear();
+        foreach (var uid in _dirtyCopy)
         {
-            if (TerminatingOrDeleted(uid))
-                continue;
-
-            _affected.Add(uid);
-            if (!TryComp(uid, out TransformComponent? xform))
-                continue;
-
-            foreach (var other in _lookup.GetEntitiesInRange<MobStateComponent>(xform.Coordinates, CFFlanking.SearchRange))
-                _affected.Add(other.Owner);
+            if (!TerminatingOrDeleted(uid))
+                Evaluate(uid);
         }
+    }
 
-        _moveRefresh.Clear();
-        _refreshSnapshot.Clear();
-        _refreshSnapshot.AddRange(_affected);
+    [SubscribeLocalEvent]
+    private void OnMobInit(Entity<MobStateComponent> ent, ref MapInitEvent args)
+    {
+        EnsureSensor(ent.Owner);
+    }
 
-        foreach (var id in _refreshSnapshot)
-        {
-            if (!TerminatingOrDeleted(id))
-                Refresh(id);
-        }
+    [SubscribeLocalEvent]
+    private void OnFixturesInit(Entity<FixturesComponent> ent, ref MapInitEvent args)
+    {
+        if (!HasComp<MobStateComponent>(ent))
+            return;
+
+        EnsureSensor(ent.Owner);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnSensorShutdown(Entity<CFFlankSensorComponent> ent, ref ComponentShutdown args)
+    {
+        if (!_net.IsServer)
+            return;
+
+        if (MetaData(ent.Owner).EntityLifeStage < EntityLifeStage.Terminating
+            && _fixtures.GetFixtureOrNull(ent.Owner, CFFlankSensorComponent.FixtureId) != null)
+            _fixtures.DestroyFixture(ent.Owner, CFFlankSensorComponent.FixtureId);
+
+        if (!_overlapping.TryGetValue(ent.Owner, out var targets))
+            return;
+
+        _pair.Clear();
+        foreach (var target in targets)
+            _pair.Add(target);
+
+        _overlapping.Remove(ent.Owner);
+        foreach (var target in _pair)
+            RemoveOverlap(ent.Owner, target);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPreventCollide(Entity<CFFlankSensorComponent> ent, ref PreventCollideEvent args)
+    {
+        if (!IsSensor(ent.Owner, args.OurFixture))
+            return;
+
+        // The real body still collides. Only the reach circle is filtered.
+        if (args.OtherEntity == ent.Owner
+            || !HasComp<MobStateComponent>(args.OtherEntity)
+            || !IsHostileTo(ent.Owner, args.OtherEntity))
+            args.Cancelled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnStartCollide(Entity<CFFlankSensorComponent> ent, ref StartCollideEvent args)
+    {
+        if (!_net.IsServer || args.OurFixtureId != CFFlankSensorComponent.FixtureId)
+            return;
+
+        if (args.OtherEntity == ent.Owner || !HasComp<MobStateComponent>(args.OtherEntity))
+            return;
+
+        AddOverlap(ent.Owner, args.OtherEntity);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnEndCollide(Entity<CFFlankSensorComponent> ent, ref EndCollideEvent args)
+    {
+        if (!_net.IsServer || args.OurFixtureId != CFFlankSensorComponent.FixtureId)
+            return;
+
+        RemoveOverlap(ent.Owner, args.OtherEntity);
     }
 
     [SubscribeLocalEvent]
@@ -76,24 +152,28 @@ public sealed partial class CFFlankingSystem : EntitySystem
         if (!_net.IsServer || args.OnlyRotation)
             return;
 
-        // A dying or dead body keeps sliding in the physics step. That must not schedule flanking.
-        // Dying recovery itself already runs once per game tick in CFDyingSystem.Update.
         if (IsDeadOrDying(ent.Owner, ent.Comp))
             return;
 
-        // One flanking pass per tick, not one per physics step.
-        _moveRefresh.Add(ent.Owner);
+        // The circle already tracks enter and leave. A move only matters while a contact exists,
+        // because that is when the line between centers can slide off the foe.
+        if (_overlapping.TryGetValue(ent.Owner, out var targets))
+        {
+            foreach (var target in targets)
+                _dirty.Add(target);
+        }
+
+        if (_inReach.ContainsKey(ent.Owner))
+            _dirty.Add(ent.Owner);
     }
 
-    // By-value broadcast. The directed MobStateComponent subscription is already taken by stun,
-    // and the existing broadcast handlers are by-value.
     [SubscribeLocalEvent]
     private void OnRevived(Entity<CFCombatantComponent> ent, ref CFCombatantRevivedEvent args)
     {
         if (!_net.IsServer)
             return;
 
-        RefreshAround(ent.Owner);
+        MarkDirty(ent.Owner);
     }
 
     [SubscribeLocalEvent]
@@ -102,7 +182,7 @@ public sealed partial class CFFlankingSystem : EntitySystem
         if (!_net.IsServer)
             return;
 
-        RefreshAround(args.Target);
+        MarkDirty(args.Target);
     }
 
     [SubscribeLocalEvent]
@@ -111,7 +191,8 @@ public sealed partial class CFFlankingSystem : EntitySystem
         if (!_net.IsServer)
             return;
 
-        RefreshAround(ent.Owner);
+        EnsureSensor(ent.Owner);
+        MarkDirty(ent.Owner);
     }
 
     [SubscribeLocalEvent]
@@ -120,7 +201,8 @@ public sealed partial class CFFlankingSystem : EntitySystem
         if (!_net.IsServer)
             return;
 
-        RefreshAround(ent.Owner);
+        EnsureSensor(ent.Owner);
+        MarkDirty(ent.Owner);
     }
 
     [SubscribeLocalEvent]
@@ -151,36 +233,110 @@ public sealed partial class CFFlankingSystem : EntitySystem
 
     /// <summary>
     /// True when <paramref name="attacker"/> is flanking <paramref name="target"/> with an ally.
-    /// Refreshes the off-guard condition as a side effect.
     /// </summary>
     public bool IsOffGuardTo(EntityUid target, EntityUid attacker)
     {
         if (!_net.IsServer)
             return false;
 
-        Refresh(target);
+        Evaluate(target);
         return TryComp(target, out CFOffGuardComponent? comp) && comp.FlankedBy.Contains(attacker);
     }
 
-    private void RefreshAround(EntityUid uid)
+    private void EnsureSensor(EntityUid uid)
     {
-        _affected.Clear();
-        _affected.Add(uid);
+        if (!_net.IsServer || TerminatingOrDeleted(uid) || !HasComp<FixturesComponent>(uid))
+            return;
 
-        if (TryComp(uid, out TransformComponent? xform))
+        var reach = GetMeleeReachFeet(uid);
+        var radius = MathF.Min(CFFlanking.SearchRange, CFFlanking.ReachInUnits(reach));
+        if (radius <= 0f)
         {
-            foreach (var other in _lookup.GetEntitiesInRange<MobStateComponent>(xform.Coordinates, CFFlanking.SearchRange))
-            {
-                if (other.Owner != uid)
-                    _affected.Add(other.Owner);
-            }
+            if (HasComp<CFFlankSensorComponent>(uid))
+                RemComp<CFFlankSensorComponent>(uid);
+            return;
         }
 
-        foreach (var id in _affected)
-            Refresh(id);
+        var sensor = EnsureComp<CFFlankSensorComponent>(uid);
+        var existing = _fixtures.GetFixtureOrNull(uid, CFFlankSensorComponent.FixtureId);
+        if (sensor.ReachFeet == reach && existing != null)
+            return;
+
+        if (existing != null)
+            _fixtures.DestroyFixture(uid, CFFlankSensorComponent.FixtureId);
+
+        var created = _fixtures.TryCreateFixture(
+            uid,
+            new PhysShapeCircle(radius),
+            CFFlankSensorComponent.FixtureId,
+            density: 0f,
+            hard: false,
+            collisionLayer: (int) CollisionGroup.None,
+            collisionMask: (int) CollisionGroup.MobLayer);
+
+        if (created)
+            sensor.ReachFeet = reach;
     }
 
-    private void Refresh(EntityUid target)
+    private bool IsSensor(EntityUid uid, Fixture fixture)
+    {
+        return ReferenceEquals(_fixtures.GetFixtureOrNull(uid, CFFlankSensorComponent.FixtureId), fixture);
+    }
+
+    private void AddOverlap(EntityUid flanker, EntityUid target)
+    {
+        if (flanker == target)
+            return;
+
+        if (!_inReach.TryGetValue(target, out var flankers))
+        {
+            flankers = new HashSet<EntityUid>();
+            _inReach[target] = flankers;
+        }
+
+        if (!flankers.Add(flanker))
+            return;
+
+        if (!_overlapping.TryGetValue(flanker, out var targets))
+        {
+            targets = new HashSet<EntityUid>();
+            _overlapping[flanker] = targets;
+        }
+
+        targets.Add(target);
+        _dirty.Add(target);
+    }
+
+    private void RemoveOverlap(EntityUid flanker, EntityUid target)
+    {
+        if (_inReach.TryGetValue(target, out var flankers))
+        {
+            flankers.Remove(flanker);
+            if (flankers.Count == 0)
+                _inReach.Remove(target);
+        }
+
+        if (_overlapping.TryGetValue(flanker, out var targets))
+        {
+            targets.Remove(target);
+            if (targets.Count == 0)
+                _overlapping.Remove(flanker);
+        }
+
+        _dirty.Add(target);
+    }
+
+    private void MarkDirty(EntityUid uid)
+    {
+        _dirty.Add(uid);
+        if (!_overlapping.TryGetValue(uid, out var targets))
+            return;
+
+        foreach (var target in targets)
+            _dirty.Add(target);
+    }
+
+    private void Evaluate(EntityUid target)
     {
         if (!TryComp(target, out MobStateComponent? state) || IsDeadOrDying(target, state))
         {
@@ -188,22 +344,40 @@ public sealed partial class CFFlankingSystem : EntitySystem
             return;
         }
 
-        CollectFlankers(target, _candidates);
-        _flankers.Clear();
-        for (var i = 0; i < _candidates.Count; i++)
+        if (!TryGetWorld(target, out var targetPos))
         {
-            for (var j = i + 1; j < _candidates.Count; j++)
+            Clear(target, announce: false);
+            return;
+        }
+
+        _pair.Clear();
+        if (_inReach.TryGetValue(target, out var overlapping))
+        {
+            foreach (var uid in overlapping)
+                _pair.Add(uid);
+        }
+
+        _flankers.Clear();
+        for (var i = 0; i < _pair.Count; i++)
+        {
+            var uid = _pair[i];
+            if (!TryFlanker(uid, target, out var position))
+                continue;
+
+            for (var j = i + 1; j < _pair.Count; j++)
             {
-                var a = _candidates[i];
-                var b = _candidates[j];
-                if (!AreAllies(a.Uid, b.Uid))
+                var other = _pair[j];
+                if (!TryFlanker(other, target, out var otherPos))
                     continue;
 
-                if (!CFFlanking.LineFlanks(a.Position, b.Position, a.TargetPosition))
+                if (!PairFlanks(uid, other, target))
                     continue;
 
-                _flankers.Add(a.Uid);
-                _flankers.Add(b.Uid);
+                if (!CFFlanking.LineFlanks(position, otherPos, targetPos.Position))
+                    continue;
+
+                _flankers.Add(uid);
+                _flankers.Add(other);
             }
         }
 
@@ -233,6 +407,19 @@ public sealed partial class CFFlankingSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("cf-combat-off-guard"), target, PopupType.Medium);
     }
 
+    private bool TryFlanker(EntityUid uid, EntityUid target, out Vector2 position)
+    {
+        position = default;
+        if (uid == target || TerminatingOrDeleted(uid) || !CanAct(uid))
+            return false;
+
+        if (!TryGetWorld(uid, out var coords) || !TryGetWorld(target, out var targetPos) || coords.MapId != targetPos.MapId)
+            return false;
+
+        position = coords.Position;
+        return true;
+    }
+
     private void Clear(EntityUid target, bool announce = true)
     {
         var wasActive = false;
@@ -247,9 +434,6 @@ public sealed partial class CFFlankingSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("cf-combat-off-guard-cleared"), target, PopupType.Small);
     }
 
-    /// <summary>
-    /// Dead and dying creatures do not take the flanking off-guard condition.
-    /// </summary>
     private bool IsDeadOrDying(EntityUid uid, MobStateComponent state)
     {
         if (state.CurrentState != MobState.Alive)
@@ -259,50 +443,9 @@ public sealed partial class CFFlankingSystem : EntitySystem
             && (_dying.IsDying(combat) || _dying.IsDown(combat));
     }
 
-    private void EnsureFlankIcon(EntityUid uid)
+    private bool CanAct(EntityUid uid)
     {
-        if (_statusIcons.CFTryAddStatusIcon(uid))
-            EnsureComp<CFAddedStatusIconComponent>(uid);
-    }
-
-    private void RemoveFlankIcon(EntityUid uid)
-    {
-        if (!HasComp<CFAddedStatusIconComponent>(uid))
-            return;
-
-        RemComp<CFAddedStatusIconComponent>(uid);
-        _statusIcons.CFRemoveStatusIcon(uid);
-    }
-
-    private void CollectFlankers(EntityUid target, List<FlankCandidate> candidates)
-    {
-        candidates.Clear();
-        if (!TryGetWorld(target, out var targetPos))
-            return;
-
-        foreach (var other in _lookup.GetEntitiesInRange<MobStateComponent>(Transform(target).Coordinates, CFFlanking.SearchRange))
-        {
-            var uid = other.Owner;
-            if (uid == target || !CanFlank(uid))
-                continue;
-
-            if (AreAllies(uid, target))
-                continue;
-
-            if (!TryGetWorld(uid, out var pos) || pos.MapId != targetPos.MapId)
-                continue;
-
-            var reach = GetMeleeReachFeet(uid);
-            if (!CFFlanking.InReach(pos.Position, targetPos.Position, reach))
-                continue;
-
-            candidates.Add(new FlankCandidate(uid, pos.Position, targetPos.Position));
-        }
-    }
-
-    private bool CanFlank(EntityUid uid)
-    {
-        if (TerminatingOrDeleted(uid))
+        if (TerminatingOrDeleted(uid) || _container.IsEntityInContainer(uid))
             return false;
 
         if (TryComp(uid, out MobStateComponent? state) && state.CurrentState != MobState.Alive)
@@ -311,14 +454,7 @@ public sealed partial class CFFlankingSystem : EntitySystem
         if (TryComp(uid, out CFCombatantComponent? combat) && _dying.IsDown(combat))
             return false;
 
-        if (_container.IsEntityInContainer(uid))
-            return false;
-
-        // Stunned, pacified, and other effects that cancel attacks.
-        if (!_blocker.CanAttack(uid))
-            return false;
-
-        return GetMeleeReachFeet(uid) > 0;
+        return _blocker.CanAttack(uid);
     }
 
     private int GetMeleeReachFeet(EntityUid uid)
@@ -350,6 +486,14 @@ public sealed partial class CFFlankingSystem : EntitySystem
     }
 
     /// <summary>
+    /// The two flankers share a side, and each one is an enemy of the target.
+    /// </summary>
+    private bool PairFlanks(EntityUid a, EntityUid b, EntityUid target)
+    {
+        return AreAllies(a, b) && IsHostileTo(a, target) && IsHostileTo(b, target);
+    }
+
+    /// <summary>
     /// Party members flank together. Creatures with no CF faction fall back to the stock NPC faction,
     /// or two player characters with no NPC faction.
     /// </summary>
@@ -364,10 +508,39 @@ public sealed partial class CFFlankingSystem : EntitySystem
         if (_factions.IsEntityFriendly(a, b) || _factions.IsEntityFriendly(b, a))
             return true;
 
-        // IsEntityFriendly(self, self) is true only when the entity belongs to a faction.
         var aFaction = _factions.IsEntityFriendly(a, a);
         var bFaction = _factions.IsEntityFriendly(b, b);
         return !aFaction && !bFaction && HasComp<ActorComponent>(a) && HasComp<ActorComponent>(b);
+    }
+
+    /// <summary>
+    /// CF factions must be Opposition. Anyone else is hostile when they are not allies,
+    /// so two players can still flank a creature that has no CF faction.
+    /// </summary>
+    private bool IsHostileTo(EntityUid flanker, EntityUid target)
+    {
+        if (flanker == target)
+            return false;
+
+        if (HasComp<CFFactionComponent>(flanker) && HasComp<CFFactionComponent>(target))
+            return _cfFactions.GetAlliance(flanker, target) == CFAlliance.Opposition;
+
+        return !AreAllies(flanker, target);
+    }
+
+    private void EnsureFlankIcon(EntityUid uid)
+    {
+        if (_statusIcons.CFTryAddStatusIcon(uid))
+            EnsureComp<CFAddedStatusIconComponent>(uid);
+    }
+
+    private void RemoveFlankIcon(EntityUid uid)
+    {
+        if (!HasComp<CFAddedStatusIconComponent>(uid))
+            return;
+
+        RemComp<CFAddedStatusIconComponent>(uid);
+        _statusIcons.CFRemoveStatusIcon(uid);
     }
 
     private bool TryGetWorld(EntityUid uid, out MapCoordinates coords)
@@ -379,6 +552,4 @@ public sealed partial class CFFlankingSystem : EntitySystem
         coords = _transform.GetMapCoordinates(uid, xform);
         return coords.MapId != MapId.Nullspace;
     }
-
-    private readonly record struct FlankCandidate(EntityUid Uid, Vector2 Position, Vector2 TargetPosition);
 }
