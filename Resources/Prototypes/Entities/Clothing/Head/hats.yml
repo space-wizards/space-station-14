@@ -1324,6 +1324,7 @@
   - type: Tag
     tags:
     - BrimFlatcapGrey
+    - WhitelistChameleon
   - type: Sprite
     sprite: Clothing/Head/Hats/greyflatcap.rsi
   - type: Clothing
@@ -1338,6 +1339,7 @@
   - type: Tag
     tags:
     - BrimFlatcapBrown
+    - WhitelistChameleon
   - type: Sprite
     sprite: Clothing/Head/Hats/brownflatcap.rsi
   - type: Clothing
