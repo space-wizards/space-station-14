@@ -33,6 +33,11 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Speech
+    speechVerb: LargeMob
+    speechSounds: Bass
+  - type: ReplacementAccent
+    accent: cow
   - type: DamageStateVisuals
     states:
       Alive:
