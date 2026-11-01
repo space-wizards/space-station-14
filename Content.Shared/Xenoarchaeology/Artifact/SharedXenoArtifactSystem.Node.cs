@@ -82,7 +82,13 @@ public abstract partial class SharedXenoArtifactSystem
     /// <summary>
     /// Creates artifact node entity, attaching trigger and marking depth level for future use.
     /// </summary>
-    public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, EntProtoId effect, EntityPrototype trigger, int depth = 0)
+    public Entity<XenoArtifactNodeComponent> CreateNode(
+        Entity<XenoArtifactComponent> ent,
+        EntProtoId effect,
+        EntityPrototype trigger,
+        int depth = 0,
+        bool dirty = true
+    )
     {
         AddNode((ent, ent), effect, out var nodeEnt, dirty: false);
         DebugTools.Assert(nodeEnt.HasValue, "Failed to create node on artifact.");
@@ -93,7 +99,9 @@ public abstract partial class SharedXenoArtifactSystem
 
         EntityManager.AddComponents(nodeEnt.Value, trigger.Components);
 
-        Dirty(nodeEnt.Value);
+        if(dirty)
+            Dirty(nodeEnt.Value);
+
         return nodeEnt.Value;
     }
 
@@ -158,16 +166,9 @@ public abstract partial class SharedXenoArtifactSystem
         // step 5 - prepare artifact and apply things related to budget, mark trigger as used
         triggerPool.AddTriggerAsUsed(triggerProtoId.Value);
 
-        AddNode((ent, ent), effect.Value, out var nodeEntObj, dirty: false);
-        DebugTools.Assert(nodeEntObj.HasValue, "Failed to create node on artifact.");
+        var nodeEnt = CreateNode(ent, effect.Value, trigger, depth, dirty: false);
 
-        var nodeEnt = nodeEntObj.Value;
-        var nodeComponent = nodeEnt.Comp;
-        nodeComponent.Depth = depth;
-        nodeComponent.ActualBudget = actualBudget;
-
-        nodeComponent.TriggerTip = trigger.Name;
-        EntityManager.AddComponents(nodeEnt, trigger.Components);
+        nodeEnt.Comp.ActualBudget = actualBudget;
 
         // TODO: apply actual placement in budget - pick attribute distribution strategy and add modifiers
         // TODO: Collect OnInitEffectModifiers that were applied by placement in budget
