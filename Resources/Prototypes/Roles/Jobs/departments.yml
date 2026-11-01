@@ -17,6 +17,7 @@
   editorHidden: true
   roles:
   - CentralCommandOfficial
+  - CentralCommandLawyer
 
 - type: department
   id: Civilian

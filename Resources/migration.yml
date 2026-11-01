@@ -1176,3 +1176,6 @@ voicesensor: VoiceSensor
 # 2026-10-17
 AirlockChapelStandardGlassLocked: AirlockChapelGlassLocked
 AirlockStandardGlass: AirlockGlass
+
+# 2026-11-01
+ClothingUniformJumpsuitCentcomAgent: ClothingUniformJumpsuitCentcommLawyer

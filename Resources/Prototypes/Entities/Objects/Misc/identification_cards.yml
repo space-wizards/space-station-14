@@ -1242,6 +1242,26 @@
 
 - type: entity
   parent: IDCardStandard
+  id: CentcomLawyerIDCard
+  name: CentComm lawyer ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: centcom
+    - state: stripe_top
+      color: *color-centcomm-top
+    - state: stripe_bottom
+      color: *color-centcomm-bottom
+    - sprite: *icon-rsi
+      offset: *icon-offset
+      state: CentcommLawyer
+  - type: Item
+    heldPrefix: blue
+  - type: PresetIdCard
+    job: CentralCommandLawyer
+
+- type: entity
+  parent: IDCardStandard
   id: ERTLeaderIDCard
   name: ERT leader ID card
   components:
