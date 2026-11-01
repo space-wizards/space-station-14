@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Content.Shared.Actions;
+﻿using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Inventory;
@@ -129,7 +128,8 @@ public abstract partial class SharedWaypointerSystem : EntitySystem
         foreach (var newWaypointer in ev.Waypointers)
         {
             // Little sanity check for when it somehow tries to add an existing waypointer.
-            DebugTools.Assert(comp.WaypointerProtoIds.TryAdd(newWaypointer, true));
+            if (!comp.WaypointerProtoIds.TryAdd(newWaypointer, true))
+                DebugTools.Assert(false);
         }
 
         Dirty(player, comp);
