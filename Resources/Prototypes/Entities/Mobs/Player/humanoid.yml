@@ -606,8 +606,8 @@
   randomizeName: true # so that they have "regular" names as per their species
   components:
     - type: GhostRole
-      name: ghost-role-information-centcom-lawyer-name # TODO
-      description: ghost-role-information-centcom-lawyer-description # TODO
+      name: ghost-role-information-centcom-lawyer-name
+      description: ghost-role-information-centcom-lawyer-description
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: default
