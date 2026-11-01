@@ -6,15 +6,15 @@ using Robust.Shared.Utility;
 namespace Content.Shared.FixedPoint
 {
     /// <summary>
-    ///     Represents a quantity of something, to a precision of 0.01.
-    ///     To enforce this level of precision, floats are shifted by 2 decimal points, rounded, and converted to an int.
+    ///     Represents a quantity of something, to a precision of 0.0001.
+    ///     To enforce this level of precision, floats are shifted by 4 decimal points, rounded, and converted to a long.
     /// </summary>
     [Serializable, CopyByRef]
     public struct FixedPoint4 : ISelfSerialize, IComparable<FixedPoint4>, IEquatable<FixedPoint4>, IFormattable
     {
         public long Value { get; private set; }
-        private const long Shift = 4;
-        private const long ShiftConstant = 10000; // Must be equal to pow(10, Shift)
+        private const long Shift = 4L;
+        private const long ShiftConstant = 10000L; // Must be equal to pow(10, Shift)
 
         public static FixedPoint4 MaxValue { get; } = new(long.MaxValue);
         public static FixedPoint4 Epsilon { get; } = new(1);
