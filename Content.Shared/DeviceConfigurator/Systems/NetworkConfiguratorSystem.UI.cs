@@ -2,6 +2,7 @@
 using Content.Shared.DeviceConfigurator.Components;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Popups;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.DeviceConfigurator.Systems;
 
@@ -302,8 +303,11 @@ public sealed partial class NetworkConfiguratorSystem
             LogImpact.Low,
             $"{ToPrettyString(args.Actor):actor} set device links to {ToPrettyString(ent.Comp.ActiveDeviceList.Value):subject} with {ToPrettyString(ent):tool}");
 
-        var result = _deviceListSystem.UpdateDeviceList(ent.Comp.ActiveDeviceList.Value,
-            new HashSet<EntityUid>(ent.Comp.Devices.Values));
+        Extensions.EnsureLength(ref _uidCache, ent.Comp.Devices.Count);
+        ent.Comp.Devices.Values.CopyTo(_uidCache, 0);
+        var result = _deviceListSystem.UpdateDeviceList(
+            ent.Comp.ActiveDeviceList.Value,
+            _uidCache.AsSpan(0, ent.Comp.Devices.Count));
 
         AfterButtonPressed(ent, args.Actor, result);
     }
@@ -318,8 +322,10 @@ public sealed partial class NetworkConfiguratorSystem
             LogImpact.Low,
             $"{ToPrettyString(args.Actor):actor} added device links to {ToPrettyString(ent.Comp.ActiveDeviceList.Value):subject} with {ToPrettyString(ent):tool}");
 
+        Extensions.EnsureLength(ref _uidCache, ent.Comp.Devices.Count);
+        ent.Comp.Devices.Values.CopyTo(_uidCache, 0);
         var result = _deviceListSystem.UpdateDeviceList(ent.Comp.ActiveDeviceList.Value,
-            new HashSet<EntityUid>(ent.Comp.Devices.Values),
+            _uidCache.AsSpan(0, ent.Comp.Devices.Count),
             true);
 
         AfterButtonPressed(ent, args.Actor, result);
@@ -337,9 +343,11 @@ public sealed partial class NetworkConfiguratorSystem
 
         ClearDevices(ent);
 
-        foreach (var (_, (device, _)) in _deviceListSystem.GetDeviceList(ent.Comp.ActiveDeviceList.Value))
+        _deviceCache.Clear();
+        _deviceListSystem.GetDeviceList(ent.Comp.ActiveDeviceList.Value, _deviceCache);
+        foreach (var address in _deviceCache)
         {
-            AddDevice(ent.AsNullable(), device);
+            AddDevice(ent.AsNullable(), address.Uid);
         }
 
         DirtyFields(ent.AsNullable(), null, nameof(NetworkConfiguratorComponent.Devices), nameof(NetworkConfiguratorComponent.NamedDevices));
@@ -357,7 +365,7 @@ public sealed partial class NetworkConfiguratorSystem
             LogImpact.Low,
             $"{ToPrettyString(args.Actor):actor} cleared device links from {ToPrettyString(ent.Comp.ActiveDeviceList.Value):subject} with {ToPrettyString(ent):tool}");
 
-        var result = _deviceListSystem.UpdateDeviceList(ent.Comp.ActiveDeviceList.Value, new HashSet<EntityUid>());
+        var result = _deviceListSystem.UpdateDeviceList(ent.Comp.ActiveDeviceList.Value, Span<EntityUid>.Empty);
 
         AfterButtonPressed(ent, args.Actor, result);
     }

@@ -65,7 +65,7 @@ public sealed partial class WaypointerMenuBoundUserinterface(EntityUid owner, En
             var toggleWaypointer = new RadialMenuActionOption<ProtoId<WaypointerPrototype>>(HandleRadialMenuClick, pair.Key)
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(waypointerSprite),
-                ToolTip = Loc.GetString(pair.Value ? "waypointer-disable" : "waypointer-enable", ("waypointer", prototype.Name)),
+                ToolTip = Loc.GetString(pair.Value ? "waypointer-disable" : "waypointer-enable", ("waypointer", Loc.GetString(prototype.Name))),
             };
             options.Add(toggleWaypointer);
         }

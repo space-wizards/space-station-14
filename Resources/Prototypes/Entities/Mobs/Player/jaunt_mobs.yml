@@ -2,7 +2,7 @@
   name: jaunt
   parent: [Incorporeal, BaseMob]
   id: BaseMobJaunt
-  description: Faint traces of a humanoid figure linger here
+  description: A faint image of a humanoid figure.
   suffix: Ethereal
   components:
   - type: ContentEye

@@ -215,7 +215,7 @@
         reagent: Blood
         solution: cube
   - type: Rehydratable
-    catalyst: Blood # blood is fuel
+    catalysts: [Blood] # blood is fuel
     possibleSpawns:
     - MobAbomination
 

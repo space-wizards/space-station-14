@@ -1,7 +1,6 @@
 using System.Numerics;
 using Content.Shared.CCVar;
 using Content.Shared.Singularity.Components;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
@@ -17,7 +16,7 @@ namespace Content.Client.Singularity
         [Dependency] private IEntityManager _entMan = default!;
         [Dependency] private IPrototypeManager _prototypeManager = default!;
         [Dependency] private IConfigurationManager _configManager = default!;
-        private TransformSystem? _xformSystem = null;
+        private SharedTransformSystem? _xformSystem = null;
 
         /// <summary>
         ///     Maximum number of distortions that can be shown on screen at a time.
@@ -66,7 +65,7 @@ namespace Content.Client.Singularity
                 if (xform.MapID != args.MapId)
                     continue;
 
-                var mapPos = _xformSystem.GetRenderWorldPosition((uid, xform));
+                var mapPos = _xformSystem.GetWorldPosition(uid);
 
                 // is the distortion in range?
                 if ((mapPos - args.WorldAABB.ClosestPoint(mapPos)).LengthSquared() > MaxDistance * MaxDistance)

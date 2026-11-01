@@ -11,6 +11,7 @@ using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DeviceConfigurator;
 using Content.Shared.DeviceConfigurator.Systems;
+using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceNetwork;
 
 namespace Content.Server.TurretController;
@@ -23,6 +24,8 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
     [Dependency] private DeviceListSystem _deviceList = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
 
+    private readonly List<OptionDeviceAddress> _deviceCache = new();
+
     [SubscribeLocalEvent]
     private void OnBUIOpened(Entity<DeployableTurretControllerComponent> ent, ref BoundUIOpenedEvent args)
     {
@@ -30,9 +33,12 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
             return;
 
         var payload = new TurretControllerRequestPayload();
-        foreach (var (address, _) in _deviceList.GetDeviceList(ent.Owner))
+        _deviceCache.Clear();
+        _deviceList.GetDeviceList(ent.Owner, _deviceCache);
+        foreach (var option in _deviceCache)
         {
-            _deviceNetwork.SendPacket((ent.Owner, deviceNetwork), address, ref payload);
+            if (option.TryGetAddress(out var address))
+                _deviceNetwork.SendPacket((ent.Owner, deviceNetwork), address, ref payload);
         }
 
         UpdateUIState(ent);

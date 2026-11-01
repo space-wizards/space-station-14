@@ -7,6 +7,8 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.Input;
 using Content.Shared.Inventory;
+using Content.Shared.Item.ItemToggle;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.SubFloor;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -25,13 +27,16 @@ public sealed partial class TRayScannerSystem : SharedTRayScannerSystem
     [Dependency] private AnimationPlayerSystem _animation = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private ItemToggleSystem _itemToggle = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private TrayScanRevealSystem _trayScanReveal = default!;
     [Dependency] private IInputManager _inputManager = default!;
-    [Dependency] private EntityQuery<TRayScannerComponent> _trayScannerQuery = default!;
-    [Dependency] private EntityQuery<SubFloorHideComponent> _subFloorHideQuery = default!;
+
+    [Dependency] private EntityQuery<TRayScannerComponent> _trayScannerQuery;
+    [Dependency] private EntityQuery<SubFloorHideComponent> _subFloorHideQuery;
+    [Dependency] private EntityQuery<ItemToggleComponent> _itemToggleQuery;
 
     private const string TRayAnimationKey = "trays";
     private const double AnimationLength = 0.3;
@@ -69,7 +74,7 @@ public sealed partial class TRayScannerSystem : SharedTRayScannerSystem
 
         foreach (var item in _inventory.GetHandOrInventoryEntities(player.Value, SlotFlags.POCKET))
         {
-            if (!_trayScannerQuery.TryGetComponent(item, out var scanner) || !scanner.Enabled)
+            if (!_trayScannerQuery.TryGetComponent(item, out var scanner) || !_itemToggle.IsActivated(item))
                 continue;
 
             range = MathF.Max(scanner.Range, range);
@@ -193,27 +198,30 @@ public sealed partial class TRayScannerSystem : SharedTRayScannerSystem
     #region UI
     private Control OnCollectItemStatus(Entity<TRayScannerComponent> entity)
     {
-        _inputManager.TryGetKeyBinding((ContentKeyFunctions.AltUseItemInHand), out var binding);
-        return new StatusControl(entity, binding?.GetKeyString() ?? "");
+        _inputManager.TryGetKeyBinding(ContentKeyFunctions.AltUseItemInHand, out var binding);
+        _itemToggleQuery.TryComp(entity, out var toggle);
+        return new StatusControl(entity, toggle, binding?.GetKeyString() ?? "");
     }
 
     private sealed class StatusControl : PollingItemStatusControl<StatusControl.TRayData>
     {
         private readonly RichTextLabel _label;
         private readonly TRayScannerComponent _scanner;
+        private readonly ItemToggleComponent? _toggle;
         private readonly string _keyBindingName;
 
-        public StatusControl(TRayScannerComponent scanner, string keyBindingName)
+        public StatusControl(TRayScannerComponent scanner, ItemToggleComponent? toggle, string keyBindingName)
         {
             _scanner = scanner;
             _keyBindingName = keyBindingName;
+            _toggle = toggle;
             _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
             AddChild(_label);
         }
 
         protected override TRayData PollData()
         {
-            return new TRayData(_scanner.Enabled, _scanner.Mode);
+            return new TRayData(_scanner.Mode, _toggle == null || _toggle.Activated);
         }
 
         protected override void Update(in TRayData data)
@@ -237,7 +245,7 @@ public sealed partial class TRayScannerSystem : SharedTRayScannerSystem
                 ("keybinding", _keyBindingName)));
         }
 
-        public readonly record struct TRayData(bool Enabled, TrayScannerMode Mode);
+        public readonly record struct TRayData(TrayScannerMode Mode, bool Enabled);
     }
     #endregion
 }

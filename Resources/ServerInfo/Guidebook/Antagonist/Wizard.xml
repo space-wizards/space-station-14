@@ -2,14 +2,13 @@
   # The Wizard
 
   <Box>
-    [color=#457573][italic]IT'S WIZARD TIME MOTHERF-...[italic][/color]
+    [color=#999999][italic]IT'S WIZARD TIME MOTHERF-...[/italic][/color]
   </Box>
   <Box>
     <GuideEntityEmbed Entity="ToyFigurineWizard" Caption=""/>
   </Box>
-  Wizards are a force of chaos and unpredictability. You never know what one is going to do next.
-  Generally sent by the [color=#40E0D0]Space Wizards Federation[/color] or some schmuck turned into one by rolling a nat 20 on a cursed die.
-  And since a Wizard is highly unpredictable, one may show up when you least expect it!
+  Wizards are a force of chaos and unpredictability, generally sent by the [color=#FF00FF]Space Wizards Federation[/color]. You never know when one is going to show up, or what they'll do!
+  Wizards generally do as they please, having [bold]no specific objectives[/bold] other than to cause chaos on the station. What form that chaos takes is up to you; you might elect to vaporize the Clown for telling a bad joke, steal valuable items just to prove that you can, turn the Captain into a monkey, or just indiscriminately throw fireballs at people.
 
   ## The Grimoire
   <Box>

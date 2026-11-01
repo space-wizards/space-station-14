@@ -157,7 +157,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         {
             if (_deviceLinkSourceQuery.TryComp(sourceUid, out var source))
                 RemoveSinkFromSourceInternal((sourceUid, source), sink);
-            else
+            else if (!EntityManager.ShuttingDown)
                 Log.Error($"Device sink {ToPrettyString(sink)} source list contains invalid entity: {ToPrettyString(sourceUid)}");
         }
     }

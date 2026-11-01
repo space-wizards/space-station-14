@@ -11,20 +11,26 @@ namespace Content.Server.StationEvents.Components;
 public sealed partial class VendorMalfunctionRuleComponent : Component
 {
     /// <summary>
-    /// quantity of machines which may be affected by this event. minimum should be at least 1.
+    /// Percentage of machines which may be affected by this event. Minimum should be greater than zero, max shouldn't exceed 1
     /// </summary>
     [DataField]
-    public MinMax AffectedMachines;
+    public MinMax AffectedMachines = new MinMax(0.05f, 0.2f);
 
     /// <summary>
-    /// chance of the 'contraband' inventory of the vending machine being enabled.
+    /// Minimum number of machines to hit. Should be at least 1.
+    /// </summary>
+    [DataField]
+    public int MinimumToAffect = 5;
+
+    /// <summary>
+    /// Chance of the 'contraband' inventory of the vending machine being enabled.
     /// </summary>
     [DataField] 
-    public float ContrabandChance;
+    public float ContrabandChance = 0.5f;
 
     /// <summary>
-    /// quantity of items to be ejected by affected machines.
+    /// Quantity of items to be ejected by affected machines.
     /// </summary>
     [DataField]
-    public MinMax ItemsToEject;
+    public MinMax ItemsToEject = new MinMax(1, 6);
 }

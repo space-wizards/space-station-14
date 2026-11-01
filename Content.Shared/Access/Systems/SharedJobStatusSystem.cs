@@ -11,6 +11,7 @@ namespace Content.Shared.Access.Systems;
 public abstract partial class SharedJobStatusSystem : EntitySystem
 {
     [Dependency] private AccessReaderSystem _accessReader = default!;
+    [Dependency] private SharedIdCardSystem _idCard = default!;
 
     private static readonly ProtoId<JobIconPrototype> JobIconForNoId = "JobIconNoId";
 
@@ -67,12 +68,6 @@ public abstract partial class SharedJobStatusSystem : EntitySystem
     /// </summary>
     public void UpdateIdHolderStatus(EntityUid idCard)
     {
-        var holder = Transform(idCard).ParentUid;
-
-        // ID is inside a PDA, ascend to whoever is wearing/holding the PDA.
-        if (HasComp<PdaComponent>(holder))
-            holder = Transform(holder).ParentUid;
-
-        UpdateStatus(holder);
+        UpdateStatus(_idCard.GetIdHolder(idCard));
     }
 }

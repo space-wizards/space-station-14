@@ -457,7 +457,8 @@ public sealed partial class IconSmoothSystem : EntitySystem
             ExpandCache();
 
         var index = _freeListHead;
-        _freeListHead = _keyCaches[index].RefCount;
+        DebugTools.Assert(_keyCaches[index].RefCount <= 255, $"Cache entry ref count exceeded valid _freeListHead limit (RefCount: {_keyCaches[index].RefCount}, limit is 255)"); // ensuring it did not exceed 255 before overwriting _freeListHead
+        _freeListHead = (short)_keyCaches[index].RefCount;
         _keyCaches[index] = new KeyCache(_workingKeyRing);
 
         return (byte)index;
@@ -560,7 +561,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
         /// When empty, stores a reference to the next available index in _keyCache
         /// If there is no reference available, is set to -1
         /// </summary>
-        public short RefCount = 1; // Doubles as freelist chain
+        public int RefCount = 1; // Doubles as freelist chain
     }
 }
 

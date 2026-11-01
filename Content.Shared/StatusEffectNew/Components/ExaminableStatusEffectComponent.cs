@@ -19,4 +19,11 @@ public sealed partial class ExaminableStatusEffectComponent : Component
     /// </value>
     [DataField(required: true)]
     public LocId MessageId;
+
+    /// <summary>
+    /// If true, will only display the status effect if the afflicted has a
+    /// <see cref="MobStateComponent" /> whose status is not critical or dead.
+    /// </summary>
+    [DataField]
+    public bool RequiresConciousness = false;
 }
