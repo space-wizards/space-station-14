@@ -40,4 +40,10 @@ public sealed partial class PassiveDamageComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public TimeSpan IntervalHaltOnDamageTaken;
+    
+    /// <summary>
+    /// Disables the passive health change when the entity is inside a container
+    /// </summary>
+    [DataField]
+    public bool PauseWhenStored = false;
 }
