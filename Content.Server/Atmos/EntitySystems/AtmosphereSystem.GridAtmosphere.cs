@@ -153,7 +153,8 @@ public sealed partial class AtmosphereSystem
         if (!component.Tiles.TryGetValue(args.Tile, out var tile))
             return;
 
-        args.Result = tile.Air is { } air ? React(air, tile) : ReactionResult.NoReaction;
+        // TODO: This entire system is stupid --princesscheeseballs
+        args.Result = tile.Air is { } air ? React(air, tile, 0.5f) : ReactionResult.NoReaction;
         args.Handled = true;
     }
 

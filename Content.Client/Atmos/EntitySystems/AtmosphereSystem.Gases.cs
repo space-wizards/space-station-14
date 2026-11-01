@@ -18,7 +18,7 @@ public sealed partial class AtmosphereSystem
     /// <inheritdoc/>
     /// <remarks>No-op on client as reactions aren't entirely in shared.
     /// Don't call it. Smile.</remarks>
-    public override ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
+    public override ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, float deltaTime)
     {
         // Reactions don't work on client so don't even try.
         throw new NotImplementedException();

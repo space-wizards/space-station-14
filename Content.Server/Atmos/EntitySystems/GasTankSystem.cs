@@ -57,7 +57,7 @@ public sealed partial class GasTankSystem : SharedGasTankSystem
             }
         }
 
-        Atmos.React(entity.Comp.Air, entity.Comp);
+        Atmos.React(entity.Comp.Air, entity.Comp, args.dt);
 
         if (entity.Comp.IsConnected || entity.Comp.ReleaseValveOpen)
         {
