@@ -936,6 +936,30 @@
 
 - type: entity
   parent: BaseSecurityPDA
+  id: CentcomLawyerPDA
+  name: CentComm lawyer PDA
+  description: Strikes fear into the hearts of those who would dare to stand on the other side of the courtroom.
+  components:
+  - type: Pda
+    id: CentcomLawyerIDCard
+    penSlot:
+      startingItem: LuxuryPen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-security # TODO
+  - type: PdaBorderColor # TODO: unique border color
+    borderColor: "#6f6192"
+  - type: Icon
+    state: pda-security # TODO
+
+- type: entity
+  parent: BaseSecurityPDA
   id: CentcomPDA
   name: CentComm PDA
   description: Light green sign of walking bureaucracy.

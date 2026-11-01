@@ -1196,10 +1196,10 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitCentcommLawyer
     shoes: ClothingShoesLeather
-    gloves: ClothingHandsGlovesLeather
+    gloves: ClothingHandsGlovesColorBrown
     head: BladedFlatcapBrown
     neck: ClothingNeckLawyerbadge
-    id: VisitorLawyerPDA
+    id: VisitorLawyerPDA #TODO: visitor version of centcomm lawyer PDA?
     back: ClothingBackpackSatchelLeather
     belt: ClothingBeltStorageWaistbag
     eyes: ClothingEyesGlassesSunglasses

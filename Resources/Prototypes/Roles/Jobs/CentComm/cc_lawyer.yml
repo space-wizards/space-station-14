@@ -1,13 +1,13 @@
 - type: job
   id: CentralCommandLawyer
-  name: job-name-centcommlawyer # TODO
-  description: job-description-centcommlawyer # TODO
+  name: job-name-centcommlawyer
+  description: job-description-centcommlawyer
   playTimeTracker: JobCentralCommandLawyer
   setPreference: false
   startingGear: CentcommLawyerGear
-  icon: "JobIconCentcommLawyer" # TODO
+  icon: "JobIconCentcommLawyer"
   supervisors: job-supervisors-centcom
-  access: # doesn't get AA because they work FOR CentComm but they're not part of the actual leadership
+  access: # doesn't get AA or CentralCommand access since they're not supposed to have direct authority over the station the way CC officials do
   - Service
   - Lawyer
   - Brig
@@ -19,24 +19,26 @@
 - type: startingGear
   id: CentcommLawyerGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitCentcommLawyer
-    shoes: ClothingShoesLeather
-    neck: ClothingNeckLawyerbadge
-    id: VisitorLawyerPDA
-    back: ClothingBackpackSatchelLeather
     eyes: ClothingEyesGlassesSunglasses
     ears: ClothingHeadsetCentCom
+    back: ClothingBackpackSatchelLeather
+    jumpsuit: ClothingUniformJumpsuitCentcommLawyer
+    neck: ClothingNeckLawyerbadge
+    shoes: ClothingShoesLeather
+    id: CentcomLawyerPDA #TODO
   inhand:
   - BriefcaseBrownFilled
   storage:
     back:
-    - RubberStampLawyer #TODO needs a unique stamp probably?
+    - RubberStampLawyer # could benefit from a unique stamp, but that might be too granular for an admeme-only role
     - BookSpaceLaw
 
-
 - type: chameleonOutfit
-  id: CentralCommandLawyerOutfit #TODO need to actually fill this out
+  id: CentralCommandLawyerOutfit
   job: CentralCommandLawyer
   hasMindShield: true
   equipment:
-    mask: ClothingMaskGasCentcom
+    head: ClothingHeadHatBrownFlatcap
+    mask: ClothingMaskBreath
+    outerClothing: ClothingOuterWinterCentcom
+    gloves: ClothingHandsGlovesColorBrown
