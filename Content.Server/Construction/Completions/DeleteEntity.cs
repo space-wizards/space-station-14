@@ -23,7 +23,7 @@ namespace Content.Server.Construction.Completions
             entityManager.EventBus.RaiseLocalEvent(uid, ev);
 
             if (!ev.Cancelled)
-                entityManager.DeleteEntity(uid);
+                entityManager.QueueDeleteEntity(uid);
         }
     }
 }
