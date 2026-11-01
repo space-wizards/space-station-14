@@ -59,15 +59,23 @@
     - type: IgniteOnMeleeHit
     - type: DisarmMalus
       malus: 0.6
-  - type: ToggleableVisuals
-    spriteLayer: flame
-    inhandVisuals:
-      left:
-      - state: inhand-left-flame
-        shader: unshaded
-      right:
-      - state: inhand-right-flame
-        shader: unshaded
+  - type: AttachedVisuals
+    sprite: Objects/Tools/welder.rsi
+    attachedVisuals:
+      - attachmentId: InhandLeft
+        layers:
+        - state: inhand-left
+        - state: inhand-left-flame
+          map: [ "enum.ToggleableVisuals.Layer" ]
+          shader: unshaded
+          visible: false
+      - attachmentId: InhandRight
+        layers:
+        - state: inhand-right
+        - state: inhand-right-flame
+          map: [ "enum.ToggleableVisuals.Layer" ]
+          shader: unshaded
+          visible: false
   - type: UseDelay
   - type: MeleeWeapon
     wideAnimationRotation: -90
@@ -129,6 +137,7 @@
   - type: Sprite
     sprite: Objects/Tools/welder_industrial.rsi
   - type: Item
+  - type: AttachedVisuals
     sprite: Objects/Tools/welder_industrial.rsi
 
 - type: entity
@@ -153,6 +162,8 @@
     sprite: Objects/Tools/welder_industrialadv.rsi
   - type: Item
     sprite: Objects/Tools/welder_industrialadv.rsi
+  - type: AttachedVisuals
+    sprite: Objects/Tools/welder_industrialadv.rsi
   - type: Tool
     speedModifier: 1.3
 
@@ -165,6 +176,8 @@
   - type: Sprite
     sprite: Objects/Tools/welder_experimental.rsi
   - type: Item
+    sprite: Objects/Tools/welder_experimental.rsi
+  - type: AttachedVisuals
     sprite: Objects/Tools/welder_experimental.rsi
   - type: PointLight
     enabled: false

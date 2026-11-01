@@ -155,6 +155,117 @@
       Kidneys: OrganVoxKidneys
   - type: HumanoidProfile
     species: Vox
+  - type: AttachedVisuals
+    attachments:
+    - attachment: InhandLeft
+      container: left
+      order: 100
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: hand_l
+    - attachment: InhandRight
+      container: right
+      order: 100
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: hand_r
+    - attachment: EquippedBack
+      container: back
+      order: 70
+      speciesOverride: vox
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: back
+    - attachment: EquippedBelt
+      container: belt
+      order: 65
+      speciesOverride: vox
+    - attachment: EquippedId
+      container: id
+      order: 60
+      speciesOverride: vox
+    - attachment: EquippedSuitStorage
+      container: suitstorage
+      order: 55
+      speciesOverride: vox
+    - attachment: EquippedHead
+      container: head
+      order: 50
+      speciesOverride: vox
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: head
+    - attachment: EquippedEars
+      container: ears
+      order: 45
+      speciesOverride: vox
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: ears
+    - attachment: EquippedEyes
+      container: eyes
+      order: 40
+      speciesOverride: vox
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: eyes
+    - attachment: EquippedMask
+      container: mask
+      order: 35
+      speciesOverride: vox
+    - attachment: EquippedNeck
+      container: neck
+      order: 30
+      speciesOverride: vox
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: neck
+    - attachment: EquippedGloves
+      container: gloves
+      order: 25
+      speciesOverride: vox
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: hand
+    - attachment: EquippedOuterClothing
+      container: outerclothing
+      order: 20
+      speciesOverride: vox
+    - attachment: EquippedJumpsuit
+      container: jumpsuit
+      order: 15
+      speciesOverride: vox
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: jumpsuit
+    - attachment: EquippedShoes
+      container: shoes
+      order: 10
+      speciesOverride: vox
+      displacementData:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: shoes
+
 
 - type: entity
   parent:
