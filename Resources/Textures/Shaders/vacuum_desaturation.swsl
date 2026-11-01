@@ -1,14 +1,89 @@
 uniform sampler2D SCREEN_TEXTURE;
 uniform mediump float intensity;
+uniform mediump vec3 cold_tint;
+uniform highp vec2 station_bottom_left;
+uniform highp vec2 station_bottom_right;
+uniform highp vec2 station_top_left;
+
+highp vec2 station_offset_to_uv(highp vec2 station_offset)
+{
+    highp vec2 station_u = station_bottom_right - station_bottom_left;
+    highp vec2 station_v = station_top_left - station_bottom_left;
+    highp float determinant = station_u.x * station_v.y - station_u.y * station_v.x;
+
+    return vec2(
+        (station_offset.x * station_v.y - station_offset.y * station_v.x) / determinant,
+        (station_u.x * station_offset.y - station_u.y * station_offset.x) / determinant);
+}
+
+highp float snow_flake(highp vec2 station_position, highp float speed, highp float size)
+{
+    highp vec2 snow_position = station_position + vec2(TIME * speed, TIME * speed * 0.65);
+    highp vec2 snow_cell = floor(snow_position);
+    highp vec2 snow_local = fract(snow_position) - 0.5;
+    highp vec2 snow_offset = zRandom(snow_cell).xy * 0.35;
+    highp vec2 flake_position = snow_local - snow_offset;
+
+    flake_position.x += sin(TIME * speed * 16.0 + snow_cell.y) * 0.04;
+    return 1.0 - smoothstep(size, size * 2.0, length(flake_position));
+}
 
 void fragment()
 {
-    if (texture2D(TEXTURE, UV).r < 0.1)
-        discard;
+    mediump vec4 mask = zTextureSpec(TEXTURE, UV);
+    mediump float tile_intensity = mask.r;
+    mediump float cold_intensity = mask.g;
 
-    mediump vec4 screen_pixel = texture2D(SCREEN_TEXTURE, UV);
-    mediump float gray = dot(screen_pixel.rgb, vec3(0.299, 0.587, 0.114));
+    mediump vec4 screen_pixel = zTextureSpec(SCREEN_TEXTURE, UV);
+    highp vec2 station_position = station_bottom_left +
+        UV.x * (station_bottom_right - station_bottom_left) +
+        UV.y * (station_top_left - station_bottom_left);
 
-    screen_pixel.rgb = mix(screen_pixel.rgb, vec3(gray), intensity);
+    if (tile_intensity > 0.1)
+    {
+        mediump float gray = dot(screen_pixel.rgb, vec3(0.299, 0.587, 0.114));
+
+        mediump float desaturation_intensity = tile_intensity * intensity;
+        screen_pixel.rgb = mix(screen_pixel.rgb, vec3(gray), desaturation_intensity);
+    }
+
+    if (cold_intensity > 0.1)
+    {
+        highp vec2 frost_coords = station_position;
+        highp vec2 time_warp = vec2(
+            zNoise(frost_coords + vec2(TIME * 0.1, 0.0)),
+            zNoise(frost_coords + vec2(0.0, -TIME * 0.01)));
+
+        highp float veins = 1.0 - abs(zNoise(frost_coords * 10.0) * 2.0 - 1.0);
+        highp float crystals = zNoise(frost_coords - time_warp);
+        highp float frost_mask = max(smoothstep(0.5, 1.0, veins), smoothstep(0.5, 1.0, crystals) * 0.7);
+
+        highp vec2 ice_direction = time_warp * 2.0 - 1.0;
+
+        highp vec2 ice_world_offset = ice_direction * (frost_mask * 2.5) / 32.0 * cold_intensity;
+        // Make it independent of client zoom.
+        highp vec2 ice_offset =  station_offset_to_uv(ice_world_offset);
+
+        mediump vec3 frozen_pixel = (
+            zTextureSpec(SCREEN_TEXTURE, UV + ice_offset).rgb +
+            zTextureSpec(SCREEN_TEXTURE, UV - ice_offset).rgb +
+            zTextureSpec(SCREEN_TEXTURE, UV + ice_offset.yx).rgb) / 3.0;
+
+        mediump vec3 ice_deformation = (frozen_pixel - screen_pixel.rgb) * cold_intensity;
+
+        mediump vec3 ice_tint = abs(
+            zTextureSpec(SCREEN_TEXTURE, UV + ice_offset).rgb -
+            zTextureSpec(SCREEN_TEXTURE, UV - ice_offset).rgb) * frost_mask * cold_intensity;
+
+        // 1 iteration = 1 snowflake.
+        for (int i = 0; i < 3; i++)
+        {
+            highp float snow = snow_flake(station_position + zRandom(vec2(i)), 0.08, 0.008);
+            screen_pixel.rgb = mix(screen_pixel.rgb, cold_tint, cold_intensity * snow * 0.5 * sqrt(dot(screen_pixel.rgb, vec3(0.299, 0.587, 0.114))));
+        }
+
+        screen_pixel.rgb += ice_deformation + 0.5 * ice_tint * cold_tint;
+    }
+
     COLOR = screen_pixel;
 }
