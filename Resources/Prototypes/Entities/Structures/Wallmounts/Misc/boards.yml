@@ -63,8 +63,7 @@
     sprite: Structures/Wallmounts/postboard.rsi
     layers:
     - state: postboard
-    - state: paper
-      map: ["enum.PaperLabelVisuals.Layer"]
+    - map: ["enum.PaperLabelVisuals.Layer"]
     - state: postboard_over
   - type: Construction
     graph: WallBoard
