@@ -136,13 +136,19 @@ public sealed partial class FoodSequenceSystem : SharedFoodSequenceSystem
         }
 
         //Generate new visual layer
-        var flip = start.Comp.AllowHorizontalFlip && _random.Prob(0.5f);
+        var canFlip = start.Comp.AllowHorizontalFlip && elementIndexed.CanFlip;
+        var flip = canFlip && _random.Prob(0.5f);
+
+        var offset = elementIndexed.Offset;
+        if (elementIndexed.UseRandomOffset)
+            offset += new Vector2(
+                _random.NextFloat(start.Comp.MinLayerOffset.X, start.Comp.MaxLayerOffset.X),
+                _random.NextFloat(start.Comp.MinLayerOffset.Y, start.Comp.MaxLayerOffset.Y));
+
         var layer = new FoodSequenceVisualLayer(elementIndexed,
             _random.Pick(elementIndexed.Sprites),
             new Vector2(flip ? -elementIndexed.Scale.X : elementIndexed.Scale.X, elementIndexed.Scale.Y),
-            new Vector2(
-                _random.NextFloat(start.Comp.MinLayerOffset.X, start.Comp.MaxLayerOffset.X),
-                _random.NextFloat(start.Comp.MinLayerOffset.Y, start.Comp.MaxLayerOffset.Y))
+            offset
         );
 
         start.Comp.FoodLayers.Add(layer);
