@@ -547,6 +547,21 @@
   - type: AccessReader
     access: [["SyndicateAgent"]]
 
+- type: entity
+  parent: LockerBase
+  id: LockerSyndicatePersonalAgent
+  name: nuclear corpsman locker
+  suffix: "Locked"
+  description: It's a personal storage unit for corpsmen with a medical blood-red design.
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: syndicate_agent
+    stateDoorOpen: syndicate_open_agent
+    stateDoorClosed: syndicate_door_agent
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
 # Bluespace
 - type: entity
   parent: LockerBase
