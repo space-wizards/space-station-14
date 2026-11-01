@@ -58,6 +58,25 @@ public sealed partial class XenoArtifactNodeComponent : Component
     /// </summary>
     [DataField]
     public MinMax MaxDurabilityCanDecreaseBy = new(0, 2);
+
+    /// <summary>
+    /// Minimum and maximum borders for intensity.
+    /// </summary>
+    [DataField] // TODO: make required
+    public MinMax IntensityRange;
+
+    /// <summary>
+    /// Actual intensity value that this node got assigned during artifact generation.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float ActualIntensity;
+
+    /// <summary>
+    /// Value of intensity, accumulated to the moment of generating this node.
+    /// Dictates amount of amplification/dampening effect will get when activated.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float PlacementInBudget;
     #endregion
 
     #region Research
