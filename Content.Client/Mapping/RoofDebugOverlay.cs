@@ -7,9 +7,7 @@ using Robust.Client.UserInterface;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Content.Shared.Mapping;
 using static Content.Shared.Mapping.RoofDebugOverlaySystem;
-using Content.Shared.Light.Components;
 
 namespace Content.Client.Mapping;
 
@@ -71,7 +69,7 @@ public sealed partial class RoofDebugOverlay : Overlay
         var tile = data.Indices;
 
         if (data.HasEntity)
-            handle.DrawRect(Box2.FromDimensions(new Vector2(tile.X + 0.1f, tile.Y + 0.1f), new Vector2(0.8f, 0.8f)), Color.Cyan.WithAlpha(0.20f));
+            handle.DrawRect(Box2.FromDimensions(new Vector2(tile.X + 0.1f, tile.Y + 0.1f), new Vector2(0.8f, 0.8f)), Color.Cyan.WithAlpha(0.10f));
 
         Color res;
         if (data.HasRoof)
@@ -81,7 +79,7 @@ public sealed partial class RoofDebugOverlay : Overlay
         else
             return;
 
-        res = res.WithAlpha(0.20f);
+        res = res.WithAlpha(0.10f);
 
         handle.DrawRect(Box2.FromDimensions(new Vector2(tile.X, tile.Y), new Vector2(1, 1)), res);
     }
