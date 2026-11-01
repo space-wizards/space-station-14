@@ -36,19 +36,23 @@ public sealed partial class ServerRoofDebugOverlaySystem : RoofDebugOverlaySyste
         base.Initialize();
         _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
     }
+
     public override void Shutdown()
     {
         base.Shutdown();
         _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
     }
+
     public bool AddObserver(ICommonSession observer)
     {
         return _playerObservers.Add(observer);
     }
+
     public bool HasObserver(ICommonSession observer)
     {
         return _playerObservers.Contains(observer);
     }
+
     public bool RemoveObserver(ICommonSession observer)
     {
         if (!_playerObservers.Remove(observer))

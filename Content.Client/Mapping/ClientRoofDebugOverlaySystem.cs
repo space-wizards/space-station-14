@@ -8,8 +8,8 @@ public sealed partial class ClientRoofDebugOverlaySystem : RoofDebugOverlaySyste
 {
     [Dependency] private IOverlayManager _overlayManager = default!;
     public readonly Dictionary<EntityUid, RoofDebugOverlayMessage> TileData = [];
-    // }
     private RoofDebugOverlay? _overlay;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -18,6 +18,7 @@ public sealed partial class ClientRoofDebugOverlaySystem : RoofDebugOverlaySyste
         SubscribeNetworkEvent<RoofDebugOverlayDisableMessage>(HandleRoofDebugOverlayDisableMessage);
         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
     }
+
     private void OnGridRemoved(GridRemovalEvent ev)
     {
         if (TileData.ContainsKey(ev.EntityUid))
@@ -25,6 +26,7 @@ public sealed partial class ClientRoofDebugOverlaySystem : RoofDebugOverlaySyste
             TileData.Remove(ev.EntityUid);
         }
     }
+
     private void HandleRoofDebugOverlayMessage(RoofDebugOverlayMessage message)
     {
         TileData[GetEntity(message.GridId)] = message;
@@ -33,24 +35,29 @@ public sealed partial class ClientRoofDebugOverlaySystem : RoofDebugOverlaySyste
         _overlay = new RoofDebugOverlay(this);
         _overlayManager.AddOverlay(_overlay);
     }
+
     private void HandleRoofDebugOverlayDisableMessage(RoofDebugOverlayDisableMessage ev)
     {
         TileData.Clear();
         RemoveOverlay();
     }
+
     public override void Shutdown()
     {
         base.Shutdown();
         RemoveOverlay();
     }
+
     public void Reset(RoundRestartCleanupEvent ev)
     {
         TileData.Clear();
     }
+
     public bool HasData(EntityUid gridId)
     {
         return TileData.ContainsKey(gridId);
     }
+
     private void RemoveOverlay()
     {
         if (_overlay is null)

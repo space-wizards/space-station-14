@@ -18,6 +18,7 @@ public sealed partial class RoofDebugOverlay : Overlay
     [Dependency] private IInputManager _input = default!;
     [Dependency] private IUserInterfaceManager _ui = default!;
     [Dependency] private IResourceCache _cache = default!;
+
     private readonly SharedTransformSystem _transform;
     private readonly ClientRoofDebugOverlaySystem _system;
     private readonly SharedMapSystem _map;
