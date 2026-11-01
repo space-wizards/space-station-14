@@ -173,16 +173,28 @@ public sealed partial class TegSystem : EntitySystem
             }
         }
 
+        component.StoredEnergy += electricalEnergy;
+
+        // Calculate exponential energy discharge as a portion of stored energy
+        var dischargeEnergy = MathF.Min(component.StoredEnergy, component.StoredEnergy * component.StoredEnergyDischargeRate * args.dt);
+        if (dischargeEnergy / args.dt < component.LinearDischargeThreshold)
+        {
+            // Assuming no new energy is added to the buffer, we want wattage to decrease by a fixed amount each second.
+            // Mathematically, the plot of power vs time is going to be a right triangle with y intercept equal to the
+            // wattage at which we switch from exponential to linear discharging. The area of this triangle is time * power, so
+            // to conserve energy, must be equal to the energy stored in the buffer at that transition. When our current energy
+            // is less than that, we are working with a smaller, similar triangle. Similarities means the ratio of heights
+            // of the two triangles is going to be the same as the sqrt of the raio of their areas, and height is power.
+            var maxLinearStorage = component.LinearDischargeThreshold / component.StoredEnergyDischargeRate;
+            var targetDischargeRatio = MathF.Sqrt(component.StoredEnergy / maxLinearStorage);
+            dischargeEnergy = MathF.Min(component.StoredEnergy, component.LinearDischargeThreshold * targetDischargeRatio * args.dt);
+        }
+
+        // Turn energy (at the tick rate) into wattage
+        supplier.MaxSupply = dischargeEnergy / args.dt;
+        component.StoredEnergy -= dischargeEnergy;
+
         component.LastGeneration = electricalEnergy;
-
-        // Turn energy (at atmos tick rate) into wattage.
-        var power = electricalEnergy / args.dt;
-
-        // Add ramp factor. This magics slight power into existence, but allows us to ramp up.
-        // Also apply an exponential moving average to smooth out fluttering, as it was causing
-        // seizures.
-        supplier.MaxSupply = component.PowerSmoothingFactor * (power * component.RampFactor) +
-                             (1 - component.PowerSmoothingFactor) * supplier.MaxSupply;
 
         var circAComp = Comp<TegCirculatorComponent>(circA);
         var circBComp = Comp<TegCirculatorComponent>(circB);
