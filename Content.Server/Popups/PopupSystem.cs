@@ -1,6 +1,8 @@
+using System.Linq;
+using Content.Shared.Chat;
+using Content.Shared.Ghost.Components;
 using Content.Shared.Popups;
 using Robust.Server.Player;
-using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 
@@ -9,7 +11,6 @@ namespace Content.Server.Popups;
 public sealed partial class PopupSystem : SharedPopupSystem
 {
     [Dependency] private IPlayerManager _player = default!;
-    [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
     public override void PopupCursor(string? message, EntityUid? recipient, PopupType type = PopupType.Small)
@@ -43,7 +44,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
             return;
 
         var mapPos = _transform.ToMapCoordinates(coordinates);
-        var filter = Filter.Empty().AddPlayersByPvs(mapPos, entManager: EntityManager, playerMan: _player, cfgMan: _cfg);
+        var filter = VoiceRangeFilter(mapPos);
         RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, Timing.CurTick, GetNetCoordinates(coordinates), predictionKey), filter);
     }
 
@@ -69,7 +70,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
         if (string.IsNullOrWhiteSpace(message))
             return;
 
-        RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, Timing.CurTick, GetNetCoordinates(coordinates), predictionKey), filter, recordReplay);
+        RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, Timing.CurTick, GetNetCoordinates(coordinates), predictionKey), RestrictToVoiceRange(filter, _transform.ToMapCoordinates(coordinates)), recordReplay);
     }
 
     public override void PopupEntity(string? message, EntityUid uid, PopupType type = PopupType.Small)
@@ -77,7 +78,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
         if (string.IsNullOrWhiteSpace(message))
             return;
 
-        var filter = Filter.Empty().AddPlayersByPvs(uid, entityManager: EntityManager, playerMan: _player, cfgMan: _cfg);
+        var filter = VoiceRangeFilter(_transform.GetMapCoordinates(uid));
         RaiseNetworkEvent(new PopupEntityEvent(message, type, Timing.CurTick, GetNetEntity(uid)), filter);
     }
 
@@ -103,6 +104,19 @@ public sealed partial class PopupSystem : SharedPopupSystem
         if (string.IsNullOrWhiteSpace(message))
             return;
 
-        RaiseNetworkEvent(new PopupEntityEvent(message, type, Timing.CurTick, GetNetEntity(uid)), filter, recordReplay);
+        RaiseNetworkEvent(new PopupEntityEvent(message, type, Timing.CurTick, GetNetEntity(uid)), RestrictToVoiceRange(filter, _transform.GetMapCoordinates(uid)), recordReplay);
+    }
+
+    private Filter VoiceRangeFilter(MapCoordinates origin)
+    {
+        return Filter.Empty()
+            .AddInRange(origin, SharedChatSystem.VoiceRange, _player, EntityManager)
+            .AddWhereAttachedEntity(HasComp<GhostHearingComponent>);
+    }
+
+    private Filter RestrictToVoiceRange(Filter filter, MapCoordinates origin)
+    {
+        var voiceRangeRecipients = VoiceRangeFilter(origin).Recipients;
+        return filter.Clone().RemoveWhere(session => !voiceRangeRecipients.Contains(session));
     }
 }
