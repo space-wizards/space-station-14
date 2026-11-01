@@ -6,15 +6,18 @@ using Content.Shared.Labels.Components;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Paper;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Labels.EntitySystems;
 
-public sealed partial class LabelSystem : EntitySystem
+public abstract partial class LabelSystem : EntitySystem
 {
     [Dependency] private NameModifierSystem _nameModifier = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private ISharedPlayerManager _playerManager = default!;
 
     public const string ContainerName = "paper_label";
 
@@ -60,8 +63,9 @@ public sealed partial class LabelSystem : EntitySystem
     /// <param name="text">intended label text (null to remove)</param>
     /// <param name="label">label component for resolve</param>
     /// <param name="metadata">metadata component for resolve</param>
+    /// <param name="labelApplier">The session, if any, applying the label</param>
     // TODO - Change signature to `Label(Entity<LabelComponent?> ent, string? text)`
-    public void Label(EntityUid uid, string? text, MetaDataComponent? metadata = null, LabelComponent? label = null)
+    public void Label(EntityUid uid, string? text, MetaDataComponent? metadata = null, LabelComponent? label = null, ICommonSession? labelApplier = null)
     {
         // If setting the label to be blank, just remove the label.
         if (string.IsNullOrEmpty(text))
@@ -74,6 +78,8 @@ public sealed partial class LabelSystem : EntitySystem
 
         label.CurrentLabel = FormattedMessage.EscapeText(text);
         _nameModifier.RefreshNameModifiers(uid);
+
+        label.LabelApplier = labelApplier;
 
         Dirty(uid, label);
     }
@@ -213,5 +219,20 @@ public sealed partial class LabelSystem : EntitySystem
 
         label = (labelEnt, labelComp);
         return true;
+    }
+
+    /// <summary>
+    /// Erase all labels from a specified player.
+    /// </summary>
+    /// <param name="playerNetUserId">The player of whom to erase labels.</param>
+    protected void ErasePlayerLabels(NetUserId playerNetUserId)
+    {
+        // query to enumerate all entities with a memorycomponent
+        var query = EntityQueryEnumerator<LabelComponent>();
+        while (query.MoveNext(out var ent, out var label))
+        {
+            if (_playerManager.GetSessionById(playerNetUserId) == label.LabelApplier)
+                RemoveLabel((ent, label));
+        }
     }
 }
