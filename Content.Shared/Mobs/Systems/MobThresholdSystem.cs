@@ -24,7 +24,6 @@ public sealed partial class MobThresholdSystem : EntitySystem
 
         SubscribeLocalEvent<MobThresholdsComponent, ComponentShutdown>(MobThresholdShutdown);
         SubscribeLocalEvent<MobThresholdsComponent, ComponentStartup>(MobThresholdStartup);
-        SubscribeLocalEvent<MobThresholdsComponent, DamageChangedEvent>(OnDamaged);
         SubscribeLocalEvent<MobThresholdsComponent, MobStateChangedEvent>(OnThresholdsMobState);
     }
 
@@ -399,7 +398,7 @@ public sealed partial class MobThresholdSystem : EntitySystem
             {
                 percentage = FixedPoint2.Clamp(percentage.Value, 0, 1);
 
-                severity = (short) MathF.Round(
+                severity = (short)MathF.Round(
                     MathHelper.Lerp(
                         _alerts.GetMinSeverity(currentAlert),
                         _alerts.GetMaxSeverity(currentAlert),
@@ -413,14 +412,15 @@ public sealed partial class MobThresholdSystem : EntitySystem
         }
     }
 
-    private void OnDamaged(EntityUid target, MobThresholdsComponent thresholds, DamageChangedEvent args)
+    [SubscribeLocalEvent]
+    private void OnDamaged(Entity<MobThresholdsComponent> ent, ref DamageChangedEvent args)
     {
-        if (!TryComp<MobStateComponent>(target, out var mobState))
+        if (!TryComp<MobStateComponent>(ent, out var mobState))
             return;
-        CheckThresholds(target, mobState, thresholds, args.Damageable, args.Origin);
-        var ev = new MobThresholdChecked(target, mobState, thresholds, args.Damageable);
-        RaiseLocalEvent(target, ref ev, true);
-        UpdateAlerts(target, mobState.CurrentState, thresholds, args.Damageable);
+        CheckThresholds(ent, mobState, ent.Comp, args.Damageable, args.Origin);
+        var ev = new MobThresholdChecked(ent, mobState, ent.Comp, args.Damageable);
+        RaiseLocalEvent(ent, ref ev, true);
+        UpdateAlerts(ent, mobState.CurrentState, ent.Comp, args.Damageable);
     }
 
     private void MobThresholdStartup(EntityUid target, MobThresholdsComponent thresholds, ComponentStartup args)

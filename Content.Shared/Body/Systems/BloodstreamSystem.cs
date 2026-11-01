@@ -190,18 +190,16 @@ public sealed partial class BloodstreamSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnDamageChanged(Entity<BloodstreamComponent> ent, ref DamageChangedEvent args)
+    private void OnDamageDealt(Entity<BloodstreamComponent> ent, ref DamageDealtEvent args)
     {
-        // The incoming state from the server raises a DamageChangedEvent as well.
+        // The incoming state from the server raises a DamageDealtEvent as well.
         // But the changes to the bloodstream have also been dirtied,
         // so we prevent applying them twice.
         if (_timing.ApplyingState)
             return;
 
-        if (args.DamageDelta is null || !args.DamageIncreased)
-        {
+        if (!args.AnyPositive)
             return;
-        }
 
         // TODO probably cache this or something. humans get hurt a lot
         if (!ProtoMan.Resolve(ent.Comp.DamageBleedModifiers, out var modifiers))
@@ -209,7 +207,7 @@ public sealed partial class BloodstreamSystem : EntitySystem
 
         // some reagents may deal and heal different damage types in the same tick, which means DamageIncreased will be true
         // but we only want to consider the dealt damage when causing bleeding
-        var damage = DamageSpecifier.GetPositive(args.DamageDelta);
+        var damage = DamageSpecifier.GetPositive(args.Damage);
         var bloodloss = DamageSpecifier.ApplyModifierSet(damage, modifiers);
 
         if (bloodloss.Empty)
