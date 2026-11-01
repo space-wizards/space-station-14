@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Server.Stack;
 using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CombatMode;
@@ -10,7 +9,6 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
-using Content.Shared.Stacks;
 using Content.Shared.Standing;
 using Content.Shared.Throwing;
 using Robust.Shared.GameStates;
@@ -27,12 +25,12 @@ namespace Content.Server.Hands.Systems
     {
         [Dependency] private IGameTiming _timing = default!;
         [Dependency] private IRobustRandom _random = default!;
-        [Dependency] private StackSystem _stackSystem = default!;
         [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private SharedTransformSystem _transformSystem = default!;
         [Dependency] private PullingSystem _pullingSystem = default!;
         [Dependency] private ThrowingSystem _throwingSystem = default!;
-        [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
+
+        [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery;
 
         /// <summary>
         /// Items dropped when the holder falls down will be launched in
@@ -146,15 +144,13 @@ namespace Content.Server.Hands.Systems
                 return false;
             hands.NextThrowTime = _timing.CurTime + hands.ThrowCooldown;
 
-            if (TryComp(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
-            {
-                var splitStack = _stackSystem.Split((throwEnt.Value, stack), 1, Comp<TransformComponent>(player).Coordinates);
+            var prepareThrow = new PrepareThrowEvent(player, Transform(player).Coordinates, throwEnt.Value);
+            RaiseLocalEvent(throwEnt.Value, ref prepareThrow);
+            if (prepareThrow is { Handled: true, ItemUid: null })
+                return false;
 
-                if (splitStack is not {Valid: true})
-                    return false;
-
-                throwEnt = splitStack.Value;
-            }
+            if (prepareThrow.ItemUid != null)
+                throwEnt = prepareThrow.ItemUid;
 
             var direction = _transformSystem.ToMapCoordinates(coordinates).Position - _transformSystem.GetWorldPosition(player);
             if (direction == Vector2.Zero)
