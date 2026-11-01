@@ -12,7 +12,7 @@
         <ScrollContainer Name="ScrollContainer" Access="Public" VerticalExpand="True"
                          ReserveScrollbarSpace="True">
             <BoxContainer Name="PrototypeList" Access="Public" Orientation="Vertical" />
-            <PrototypeListContainer Name="SearchList" Access="Public" Visible="False" />
+            <VirtualListContainer Name="SearchList" Access="Public" Visible="False" />
         </ScrollContainer>
         <mapping:MappingDoNotMeasure Visible="False">
             <mapping:MappingSpawnButton Name="MeasureButton" Access="Public" />
