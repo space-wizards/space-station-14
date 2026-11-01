@@ -15,6 +15,7 @@ using Robust.Server.Player;
 using Robust.Shared.Asynchronous;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
+using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -171,6 +172,28 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         KickMatchingConnectedPlayers(banDef, "newly placed ban");
     }
 
+    public NoteSeverity GetServerBanSeverity()
+    {
+        if (!Enum.TryParse(_cfg.GetCVar(CCVars.ServerBanDefaultSeverity), out NoteSeverity severity))
+        {
+            _logManager.GetSawmill("admin.server_ban")
+                .Warning("Server ban severity could not be parsed from config! Defaulting to high.");
+            severity = NoteSeverity.High;
+        }
+
+        return severity;
+    }
+
+    public ImmutableArray<CompletionOption> BanDurations =>
+    [
+        new("0", Loc.GetString("cmd-ban-hint-duration-1")),
+        new("1440", Loc.GetString("cmd-ban-hint-duration-2")),
+        new("4320", Loc.GetString("cmd-ban-hint-duration-3")),
+        new("10080", Loc.GetString("cmd-ban-hint-duration-4")),
+        new("20160", Loc.GetString("cmd-ban-hint-duration-5")),
+        new("43800", Loc.GetString("cmd-ban-hint-duration-6")),
+    ];
+
     private NoteSeverity GetSeverityForServerBan(CreateBanInfo banInfo, CVarDef<string> defaultCVar)
     {
         if (banInfo.Severity != null)
@@ -217,7 +240,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         var message = def.FormatBanMessage(_cfg, _localizationManager);
         player.Channel.Disconnect(message);
     }
-
+    
     #endregion
 
     #region Role Bans
