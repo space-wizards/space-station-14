@@ -14,6 +14,7 @@ public sealed class WeaponTests : InteractionTest
     protected override string PlayerPrototype => "MobHuman"; // The default test mob only has one hand
     private static readonly EntProtoId MobHuman = "MobHuman";
     private static readonly EntProtoId SniperMosin = "WeaponSniperMosin";
+    private static readonly EntProtoId PistolMk58 = "WeaponPistolMk58";
 
     [Test]
     public async Task GunRequiresWieldTest()
@@ -62,5 +63,49 @@ public sealed class WeaponTests : InteractionTest
         Assert.That(damageSystem.GetTotalDamage(ToServer(urist)),
             Is.GreaterThan(FixedPoint2.Zero),
             "Mosin was fired but urist sustained no damage!");
+    }
+
+    [Test]
+    public async Task SpentCartridgeDoesNotCycleTest()
+    {
+        var gunSystem = SEntMan.System<SharedGunSystem>();
+
+        await AddAtmosphere(); // prevent the Urist from suffocating
+
+        var urist = await SpawnTarget(MobHuman);
+
+        var pistolNet = await PlaceInHands(PistolMk58);
+        var pistolEnt = ToServer(pistolNet);
+
+        await Pair.RunSeconds(2f); // Guns have a cooldown when picking them up.
+
+        await UseInHand(); // Rack the pistol to chamber a round.
+
+        var chambered = gunSystem.GetChamberEntity(pistolEnt);
+        Assert.That(chambered, Is.Not.Null, "Pistol has nothing chambered after racking!");
+
+        var cartridge = SEntMan.GetComponent<CartridgeAmmoComponent>(chambered.Value);
+        await Server.WaitPost(() =>
+        {
+            cartridge.Spent = true;
+            SEntMan.Dirty(chambered.Value, cartridge);
+        });
+
+        var startAmmo = gunSystem.GetAmmoCount(pistolEnt);
+
+        await AttemptShoot(urist);
+
+        Assert.That(gunSystem.GetChamberEntity(pistolEnt),
+            Is.EqualTo(chambered),
+            "Spent cartridge was cycled out of the chamber!");
+        Assert.That(gunSystem.GetAmmoCount(pistolEnt),
+            Is.EqualTo(startAmmo),
+            "Spent cartridge pulled a fresh round from the magazine!");
+
+        await UseInHand(); // Racking should still clear the dud.
+
+        Assert.That(gunSystem.GetChamberEntity(pistolEnt),
+            Is.Not.EqualTo(chambered),
+            "Racking did not eject the spent cartridge!");
     }
 }
