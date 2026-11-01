@@ -1,4 +1,4 @@
-﻿using Content.Shared.Effects.Components;
+using Content.Shared.Effects.Components;
 
 namespace Content.Shared.Effects.Systems;
 

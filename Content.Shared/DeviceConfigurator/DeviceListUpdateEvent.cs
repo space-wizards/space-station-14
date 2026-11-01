@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.DeviceConfigurator;
+namespace Content.Shared.DeviceConfigurator;
 
 /// <summary>
 /// Event raised to update the devices stored in a device list.

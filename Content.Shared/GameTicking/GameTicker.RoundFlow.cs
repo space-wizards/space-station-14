@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Shared.Maps;
 using Content.Shared.Preferences;
 using Robust.Shared.EntitySerialization;

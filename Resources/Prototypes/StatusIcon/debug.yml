@@ -1,4 +1,4 @@
-﻿- type: statusIcon
+- type: statusIcon
   id: DebugStatus
   icon:
     sprite: /Textures/Interface/Misc/research_disciplines.rsi
