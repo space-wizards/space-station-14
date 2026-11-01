@@ -120,6 +120,15 @@ public sealed partial class DisposalUnitComponent : Component
     public TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
 
     /// <summary>
+    /// Sound to play when an entity exits the disposal system through this disposal unit
+    /// </summary>
+    /// <remarks>
+    /// Does not play when ejecting unflushed entities
+    /// </remarks>
+    [DataField("soundExit")]
+    public SoundSpecifier? ExitSound;
+
+    /// <summary>
     /// Sets whether the unit should automatically flush
     /// after something is inserted into it.
     /// </summary>
