@@ -1,0 +1,23 @@
+- type: entity
+  name: random scripture spawner
+  id: BibleSpawner
+  parent: MarkerBase
+  placement:
+    mode: PlaceFree
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Specific/Chapel/bible.rsi
+          state: icon
+    - type: EntityTableSpawner
+      table: !type:GroupSelector
+        children:
+          - id: Bible
+          - id: BibleDruid
+          - id: BibleCommunistManifesto
+          - id: BibleNarsie
+          - id: BibleNanoTrasen
+          - id: BibleHonk
+          - id: BibleRatvar
+      offset: 0.0
