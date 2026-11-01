@@ -1,5 +1,6 @@
 using System.Threading;
 using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Audio;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Explosion;
 using Content.Shared.Nuke;
@@ -86,6 +87,7 @@ namespace Content.Server.Nuke
         public SoundSpecifier DisarmSound = new SoundPathSpecifier("/Audio/Misc/notice2.ogg");
 
         [DataField("armMusic")]
+        [AllowStereo]
         public SoundSpecifier ArmMusic = new SoundCollectionSpecifier("NukeMusic");
 
         // These datafields here are duplicates of those in explosive component. But I'm hesitant to use explosive
