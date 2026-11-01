@@ -282,6 +282,7 @@
         - id: BookHowToCookForFortySpaceman
         - id: BookLeafLoversSecret
         - id: BookEngineersHandbook
+        - id: BookLogisticsManual
         - id: BookScientistsGuidebook
         - id: BookSecurity
         - id: BookHowToKeepStationClean
