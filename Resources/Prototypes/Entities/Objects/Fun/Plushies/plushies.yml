@@ -320,7 +320,7 @@
 
 - type: entity
   parent: BasePlushieSmall
-  id: PlushieArachind
+  id: PlushieArachnid
   name: arachnid plushie
   description: An adorable stuffed toy that resembles an arachnid. It feels silky..
   components:
