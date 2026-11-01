@@ -32,14 +32,15 @@
         </PanelContainer>
         <!-- Footer -->
         <BoxContainer Orientation="Vertical">
-            <controls:Separator StyleClasses="LowDivider"/>
+            <controls:Separator StyleClasses="LowDivider" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
                 <Label Text="{Loc 'bounty-console-flavor-left'}" StyleClasses="WindowFooterText" />
                 <Label Text="{Loc 'bounty-console-flavor-right'}" StyleClasses="WindowFooterText"
-                       HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
+                       HorizontalAlignment="Right" HorizontalExpand="True" Margin="0 0 5 0" />
                 <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
-                             VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+                             VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19" />
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>
+

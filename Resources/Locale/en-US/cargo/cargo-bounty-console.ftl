@@ -11,6 +11,28 @@ bounty-console-manifest-entry =
     }
 bounty-console-manifest-reward = Reward: ${$reward}
 bounty-console-description-label = [color=gray]{$description}[/color]
+bounty-console-claim-button-text = Claim
+bounty-console-claimed-by-none = None
+bounty-console-claimed-by-unknown = Unknown
+bounty-console-claimed-by-label = Claimed by: {$claimers}
+bounty-console-status-label = Status: {$status ->
+        [OnShuttle] [color=limegreen]On Shuttle[/color]
+        [Waiting] Waiting
+        [Undelivered] [color=orange]Undelivered[/color]
+        *[other] {$status}
+    }
+bounty-console-status = {$status ->
+        [OnShuttle] On Shuttle
+        [Waiting] Waiting
+        [Undelivered] Undelivered
+        *[other] {$status}
+    }
+bounty-console-status-tooltip = {$status ->
+    [OnShuttle] This bounty is on the shuttle, ready to be delivered to the trade station.
+    [Waiting] This bounty is waiting to be fulfilled.
+    [Undelivered] This bounty has not yet been sent out for fulfilment.
+    *[other] {$status}
+    }
 bounty-console-id-label = ID#{$id}
 
 bounty-console-flavor-left = Bounties sourced from local unscrupulous dealers.
