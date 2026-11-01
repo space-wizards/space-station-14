@@ -68,20 +68,43 @@ namespace Content.Shared.Localizations
 
         private ILocValue FormatNaturalPercent(LocArgs args)
         {
-            var number = ((LocValueNumber) args.Args[0]).Value * 100;
-            var maxDecimals = (int)Math.Floor(((LocValueNumber) args.Args[1]).Value);
-            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(Culture)).Clone();
-            formatter.NumberDecimalDigits = maxDecimals;
-            return new LocValueString(string.Format(formatter, "{0:N}", number).TrimEnd('0').TrimEnd(char.Parse(formatter.NumberDecimalSeparator)) + "%");
+            var number = ((LocValueNumber)args.Args[0]).Value * 100;
+            var maxDecimals = (int)Math.Floor(((LocValueNumber)args.Args[1]).Value);
+            return new LocValueString(FormatNumberWithMaxDecimals(number, maxDecimals) + "%");
         }
 
         private ILocValue FormatNaturalFixed(LocArgs args)
         {
-            var number = ((LocValueNumber) args.Args[0]).Value;
-            var maxDecimals = (int)Math.Floor(((LocValueNumber) args.Args[1]).Value);
-            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(Culture)).Clone();
-            formatter.NumberDecimalDigits = maxDecimals;
-            return new LocValueString(string.Format(formatter, "{0:N}", number).TrimEnd('0').TrimEnd(char.Parse(formatter.NumberDecimalSeparator)));
+            var number = ((LocValueNumber)args.Args[0]).Value;
+            var maxDecimals = (int)Math.Floor(((LocValueNumber)args.Args[1]).Value);
+            return new LocValueString(FormatNumberWithMaxDecimals(number, maxDecimals));
+        }
+
+        private static string FormatNumberWithMaxDecimals(double number, int maxDecimals)
+        {
+            var formatter = NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(Culture));
+            switch (maxDecimals)
+            {
+                // Most common cases inlined for efficiency reasons.
+                // Note: with ".#" etc., the decimal separator is automatically removed
+                // if there are no decimals, no need to trim.
+                case 0:
+                    return string.Format(formatter, "{0:#,0}", number);
+                case 1:
+                    return string.Format(formatter, "{0:#,0.#}", number);
+                case 2:
+                    return string.Format(formatter, "{0:#,0.##}", number);
+                case 3:
+                    return string.Format(formatter, "{0:#,0.###}", number);
+                case 4:
+                    return string.Format(formatter, "{0:#,0.####}", number);
+                default:
+                    formatter = (NumberFormatInfo)formatter.Clone();
+                    formatter.NumberDecimalDigits = maxDecimals;
+                    // FIXME: This trimming is extremely inelegant and assumes '0' is a digit
+                    // in the current locale.
+                    return string.Format(formatter, "{0:N}", number).TrimEnd('0').TrimEnd(char.Parse(formatter.NumberDecimalSeparator));
+            }
         }
 
         private static readonly Regex PluralEsRule = new("^.*(s|sh|ch|x|z)$");
