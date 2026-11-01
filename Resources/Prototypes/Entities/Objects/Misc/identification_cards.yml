@@ -1249,9 +1249,9 @@
     layers:
     - state: centcom
     - state: stripe_top
-      color: &color-centcomm-top "#134975"
+      color: *color-centcomm-top
     - state: stripe_bottom
-      color: &color-centcomm-bottom "#0d304d"
+      color: *color-centcomm-bottom
     - sprite: *icon-rsi
       offset: *icon-offset
       state: CentcommLawyer
