@@ -1,0 +1,29 @@
+- type: roleLoadout
+  id: JobCaptain
+  groups:
+  - CaptainHead
+  - CaptainBackpack
+  - CaptainJumpsuit
+  - CaptainOuterClothing
+  - CaptainNeck
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  #- CaptainJobTrinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobHeadOfPersonnel
+  groups:
+  - GroupTankHarness
+  - HoPHead
+  - CommonEyewear
+  - HoPBackpack
+  - HoPJumpsuit
+  - HoPOuterClothing
+  - HoPNeck
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  #- HoPJobTrinkets
+  - GroupSpeciesBreathTool
