@@ -197,6 +197,21 @@ namespace Content.Shared.Damage
             return newDamage;
         }
 
+        /// <inheritdoc cref="GetPositive(DamageSpecifier)"/>
+        public static DamageSpecifier GetPositive(DamageSpecifier damageSpec, ICollection<ProtoId<DamageTypePrototype>> filter)
+        {
+            DamageSpecifier newDamage = new();
+            newDamage.DamageDict.EnsureCapacity(filter.Count);
+
+            foreach (var (key, value) in damageSpec.DamageDict)
+            {
+                if (value > 0 && filter.Contains(key))
+                    newDamage.DamageDict[key] = value;
+            }
+
+            return newDamage;
+        }
+
         /// <summary>
         /// Returns a new DamageSpecifier that only contains the entries with negative value.
         /// </summary>
@@ -207,6 +222,21 @@ namespace Content.Shared.Damage
             foreach (var (key, value) in damageSpec.DamageDict)
             {
                 if (value < 0)
+                    newDamage.DamageDict[key] = value;
+            }
+
+            return newDamage;
+        }
+
+        /// <inheritdoc cref="GetNegative(DamageSpecifier)"/>
+        public static DamageSpecifier GetNegative(DamageSpecifier damageSpec, ICollection<ProtoId<DamageTypePrototype>> filter)
+        {
+            DamageSpecifier newDamage = new();
+            newDamage.DamageDict.EnsureCapacity(filter.Count);
+
+            foreach (var (key, value) in damageSpec.DamageDict)
+            {
+                if (value < 0 && filter.Contains(key))
                     newDamage.DamageDict[key] = value;
             }
 
