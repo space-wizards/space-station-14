@@ -16,6 +16,7 @@ public sealed partial class SpaceHeaterSystem : SharedSpaceHeaterSystem
 {
     [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private PowerReceiverSystem _receiver = default!;
+
     [Dependency] private EntityQuery<GasThermoMachineComponent> _thermoQuery = default!;
 
     [SubscribeLocalEvent]
