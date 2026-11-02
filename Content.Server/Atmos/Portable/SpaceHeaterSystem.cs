@@ -19,12 +19,12 @@ public sealed partial class SpaceHeaterSystem : SharedSpaceHeaterSystem
     [Dependency] private EntityQuery<GasThermoMachineComponent> _thermoQuery = default!;
 
     [SubscribeLocalEvent]
-    private void OnDeviceUpdateded(Entity<SpaceHeaterComponent> ent, ref AtmosDeviceUpdateEvent args)
+    private void OnDeviceUpdated(Entity<SpaceHeaterComponent> ent, ref AtmosDeviceUpdateEvent args)
     {
         if (!_thermoQuery.TryComp(ent, out var thermoMachine))
             return;
 
-        UpdateAppearance(ent, thermoMachine);
+        UpdateAppearance((ent, thermoMachine));
         // If in automatic temperature mode, check if we need to adjust the heat exchange direction
         if (ent.Comp.Mode != SpaceHeaterMode.Auto || !_receiver.IsPowered(ent))
             return;

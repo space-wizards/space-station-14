@@ -1,9 +1,11 @@
+using Content.Shared.Atmos.Portable;
 using Content.Shared.Guidebook;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Portable.Components;
 
+[Access(typeof(SharedSpaceHeaterSystem))]
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class SpaceHeaterComponent : Component
 {

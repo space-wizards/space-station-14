@@ -113,23 +113,23 @@ public abstract partial class SharedSpaceHeaterSystem : EntitySystem
         UpdateUi(ent);
     }
 
-    protected void UpdateAppearance(EntityUid uid, GasThermoMachineComponent? thermoMachine = null)
+    protected void UpdateAppearance(Entity<GasThermoMachineComponent?> ent)
     {
-        if (!_receiver.IsPowered(uid) || !Resolve(uid, ref thermoMachine, false))
+        if (!_receiver.IsPowered(ent.Owner) || !_thermoQuery.Resolve(ent.Owner, ref ent.Comp, false))
         {
-            SetOff(uid);
+            SetOff(ent.Owner);
         }
-        else if (thermoMachine.LastEnergyDelta > 0)
+        else if (ent.Comp.LastEnergyDelta > 0)
         {
-            SetHeating(uid);
+            SetHeating(ent.Owner);
         }
-        else if (thermoMachine.LastEnergyDelta < 0)
+        else if (ent.Comp.LastEnergyDelta < 0)
         {
-            SetCooling(uid);
+            SetCooling(ent.Owner);
         }
         else
         {
-            SetStandBy(uid);
+            SetStandBy(ent.Owner);
         }
     }
 
