@@ -77,7 +77,11 @@ public sealed partial class GasCondenserSystem : EntitySystem
 
         var reagentsAddedFlag = false;
 
-        // work through gasses in boiling point reverse order until we run out of energy or volume.
+        // work through gasses in boiling point reverse order.
+        // treat it like we're cooling down the gas until we run out of cooling power or volume to hold liquid.
+        // as temperature drops, it stalls at each boiling point as energy instead goes toward reversing vaporization.
+        // the result is gasses with higher boiling points must fully condense before gasses with cooler boiling points
+        // can even start the process.
         List<Solution> condensedGasses = [];
         foreach (var (boilingPoint, gasIndices) in _boilingPointToGasIndices.Reverse())
         {
@@ -108,6 +112,7 @@ public sealed partial class GasCondenserSystem : EntitySystem
                 // vaporize back any reagents lost to fixed point imprecision
                 var difference = moles - amount.Float() / entity.Comp.MolesToReagentMultiplier;
                 inlet.Air.AdjustMoles(gasIndex, difference);
+                // we spent energy to condense those moles, so recover them in case its useful for the next gas being processed
                 availableEnergy += -difference * (vaporizationEnergy + heatCap * (inlet.Air.Temperature - boilingPoint));
             }
         }
