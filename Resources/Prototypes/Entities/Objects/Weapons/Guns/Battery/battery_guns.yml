@@ -219,6 +219,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
   - type: Item
+    size: Small
     shape:
     - 0,0,1,0
     - 0,1,0,1

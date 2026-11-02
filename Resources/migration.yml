@@ -1172,3 +1172,7 @@ hydroponicsSoil: HydroponicsSoil
 hydroponicsTray: HydroponicsTray
 trayScanner: TRayScanner
 voicesensor: VoiceSensor
+
+# 2026-10-17
+AirlockChapelStandardGlassLocked: AirlockChapelGlassLocked
+AirlockStandardGlass: AirlockGlass

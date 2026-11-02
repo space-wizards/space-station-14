@@ -105,7 +105,13 @@
       - !type:SpawnEntityInInventory
         slot: head
         entity: WaterDropletHat
-    - reagents: [Water, SpaceCleaner]
+    - reagents: [ Holywater ]
+      methods: [ Touch ]
+      effects:
+      - !type:SpawnEntityInInventory
+        slot: head
+        entity: HolywaterDropletHat
+    - reagents: [ Water, Holywater, SpaceCleaner ]
       methods: [Touch]
       effects:
       - !type:WashCreamPie

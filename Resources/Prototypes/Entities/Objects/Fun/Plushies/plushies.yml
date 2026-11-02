@@ -642,6 +642,12 @@
       - !type:AddReagentToSolution
         reagent: Water
         solution: food
+    - reagents: [ Holywater ]
+      methods: [ Touch ]
+      effects:
+      - !type:AddReagentToSolution
+        reagent: Holywater
+        solution: food
   - type: Fixtures
     fixtures:
       fix1:
