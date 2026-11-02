@@ -37,6 +37,7 @@ public abstract partial class SharedSpaceHeaterSystem : EntitySystem
         if (!args.Silent)
             _popup.PopupEntity(Loc.GetString("comp-space-heater-unanchored", ("device", Loc.GetString("comp-space-heater-device-name"))), ent, args.User);
 
+        //UpdateUi(ent);//TODO with this on there is ui bug on first time toggle
         args.Cancel();
     }
 
@@ -45,14 +46,17 @@ public abstract partial class SharedSpaceHeaterSystem : EntitySystem
     {
         if (!_receiver.IsPowered(ent.Owner))
             SetOff(ent);
+        UpdateUi(ent);
     }
 
     [SubscribeLocalEvent]
     private void OnToggle(Entity<SpaceHeaterComponent> ent, ref SpaceHeaterToggleMessage args)
     {
+        if (_receiver.IsPowerDisabled(ent.Owner) == args.IsPowerDisabled)
+            return; // This should not be needed but I am getting some kind of mispredict only on first toggle
+
         if (_receiver.TogglePower(ent, user: args.Actor))
             SetOff(ent);
-        UpdateUi(ent);
     }
 
     [SubscribeLocalEvent]

@@ -27,13 +27,18 @@ public sealed class SpaceHeaterBoundUserInterface : BoundUserInterface
 
         _window = this.CreateWindow<SpaceHeaterWindow>();
 
-        _window.ToggleStatusButton.OnToggled += _ => SendPredictedMessage(new SpaceHeaterToggleMessage());
+        _window.ToggleStatusButton.OnToggled += _ => ToggleStatus();
         _window.IncreaseTempRange.OnPressed += _ => SendPredictedMessage(new SpaceHeaterChangeTemperatureMessage(_window.TemperatureChangeDelta));
         _window.DecreaseTempRange.OnPressed += _ => SendPredictedMessage(new SpaceHeaterChangeTemperatureMessage(-_window.TemperatureChangeDelta));
         _window.ModeSelector.OnItemSelected += args => SendPredictedMessage(new SpaceHeaterChangeModeMessage((SpaceHeaterMode)args.Id));
         _window.PowerLevelSelector.OnItemSelected += args => SendPredictedMessage(new SpaceHeaterChangePowerLevelMessage((SpaceHeaterPowerLevel)args.Id));
 
         Update();
+    }
+    private void ToggleStatus()
+    {
+        var isPowerDisabled = EntMan.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var apcComp) && !apcComp.PowerDisabled;
+        SendPredictedMessage(new SpaceHeaterToggleMessage(isPowerDisabled));
     }
 
     public override void Update()

@@ -72,6 +72,12 @@ public enum SpaceHeaterUiKey
 [NetSerializable]
 public sealed class SpaceHeaterToggleMessage : BoundUserInterfaceMessage
 {
+    public bool IsPowerDisabled { get; }
+    public SpaceHeaterToggleMessage(bool isPowerDisabled)
+    {
+        IsPowerDisabled = isPowerDisabled;
+    }
+
 }
 
 [Serializable]
