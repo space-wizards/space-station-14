@@ -1,15 +1,19 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
+using Content.Shared.Item;
 using Content.Shared.Localizations;
 using Content.Shared.Roles;
 using Content.Shared.Verbs;
 using Robust.Shared.Configuration;
+using Robust.Shared.Containers;
+using Robust.Shared.Enums;
+using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Robust.Shared.Containers;
+using System.Numerics;
 
 namespace Content.Shared.Contraband;
 
@@ -21,7 +25,8 @@ public sealed partial class ContrabandSystem : EntitySystem
     [Dependency] private IConfigurationManager _configuration = default!;
     [Dependency] private SharedIdCardSystem _id = default!;
     [Dependency] private ExamineSystemShared _examine = default!;
-
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private GrammarSystem _grammar = default!;
     private bool _contrabandExamineEnabled;
     private bool _contrabandExamineOnlyInHudEnabled;
 
@@ -62,6 +67,19 @@ public sealed partial class ContrabandSystem : EntitySystem
             RaiseLocalEvent(args.User, ref ev);
             if (!ev.CanShowContraband)
                 return;
+        }
+
+        // Checks if the contraband is contained within something
+        _container.TryGetContainingContainer((ent, null, null), out var container);
+
+        // figure out their pronouns != null : use them ? use "You", and skip id check and use yours.
+        // figure out their id != null : "she can or she cannot" ?
+        var hasPronouns = false;
+        var hasId = false;
+        if (container is { })
+        {
+            hasPronouns = HasComp<GrammarComponent>(container.Owner);// may be false with animals, aghost...
+            hasId = _id.TryFindIdCard(container.Owner, out var id);
         }
 
         // two strings:
