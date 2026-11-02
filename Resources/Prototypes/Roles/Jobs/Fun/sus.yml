@@ -27,7 +27,7 @@
     outerClothing: ClothingOuterChameleon
     jumpsuit: ClothingUniformJumpsuitChameleon
     neck: ClothingNeckChameleon
-    back: ClothingBackpack
+    back: ClothingBackpackChameleon
     gloves: ClothingHandsChameleon
     shoes: ClothingShoesChameleon
     id: ChameleonAgentPDA # so they can fake job title / icon
