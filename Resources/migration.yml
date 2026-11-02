@@ -1176,3 +1176,17 @@ voicesensor: VoiceSensor
 # 2026-10-17
 AirlockChapelStandardGlassLocked: AirlockChapelGlassLocked
 AirlockStandardGlass: AirlockGlass
+
+# 2026-10-31
+PosterMapMetaRight: StationMap
+PosterMapBagel: StationMap
+PosterMapDelta: StationMap
+PosterMapMarathon: StationMap
+PosterMapMoose: StationMap
+PosterMapPacked: StationMap
+PosterMapPillar: StationMap
+PosterMapSaltern: StationMap
+PosterMapSplit: StationMap
+PosterMapLighthouse: StationMap
+PosterMapWaystation: StationMap
+PosterMapOrigin: StationMap
