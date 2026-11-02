@@ -1,5 +1,5 @@
-using Content.Shared.Atmos.Piping.Portable.Components;
 using Content.Shared.Atmos.Portable;
+using Content.Shared.Atmos.Portable.Components;
 
 namespace Content.Client.Atmos.EntitySystems;
 

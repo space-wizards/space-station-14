@@ -1,6 +1,5 @@
 using Content.Client.Power.Components;
-using Content.Client.Power.EntitySystems;
-using Content.Shared.Atmos.Piping.Portable.Components;
+using Content.Shared.Atmos.Portable.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -37,7 +36,7 @@ public sealed class SpaceHeaterBoundUserInterface : BoundUserInterface
     }
     private void ToggleStatus()
     {
-        var isPowerDisabled = EntMan.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var apcComp) && !apcComp.PowerDisabled;
+        var isPowerDisabled = EntMan.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var apcComp) && apcComp.PowerDisabled;
         SendPredictedMessage(new SpaceHeaterToggleMessage(isPowerDisabled));
     }
 
@@ -50,8 +49,8 @@ public sealed class SpaceHeaterBoundUserInterface : BoundUserInterface
             || !EntMan.TryGetComponent(Owner, out SpaceHeaterComponent? spaceHeaterComp))
             return;
 
-        var isPowered = EntMan.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var apcComp) && !apcComp.PowerDisabled;
-        _window.ToggleStatusButton.Pressed = isPowered;
+        var isPowerDisabled = EntMan.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var apcComp) && apcComp.PowerDisabled;
+        _window.ToggleStatusButton.Pressed = !isPowerDisabled;
         _window.ModeSelector.SelectId((int)spaceHeaterComp.Mode);
         _window.PowerLevelSelector.Select((int)spaceHeaterComp.PowerLevel);
 

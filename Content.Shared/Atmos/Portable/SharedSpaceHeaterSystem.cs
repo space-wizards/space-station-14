@@ -1,5 +1,6 @@
-using Content.Shared.Atmos.Piping.Portable.Components;
+using Content.Shared.Atmos.Portable.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.Atmos.Portable.Components;
 using Content.Shared.Atmos.Visuals;
 using Content.Shared.Popups;
 using Content.Shared.Power;
@@ -14,8 +15,9 @@ public abstract partial class SharedSpaceHeaterSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] protected SharedUserInterfaceSystem _ui = default!;
-    [Dependency] private EntityQuery<GasThermoMachineComponent> _thermoQuery = default!;
 
+    [Dependency] private EntityQuery<GasThermoMachineComponent> _thermoQuery = default!;
+    [Dependency] private EntityQuery<TransformComponent> _xformQuery = default!;
 
     [SubscribeLocalEvent]
     private void OnInit(Entity<SpaceHeaterComponent> ent, ref MapInitEvent args)
@@ -31,32 +33,28 @@ public abstract partial class SharedSpaceHeaterSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnUIActivationAttempt(Entity<SpaceHeaterComponent> ent, ref ActivatableUIOpenAttemptEvent args)
     {
-        if (Comp<TransformComponent>(ent).Anchored)
+        if (_xformQuery.TryComp(ent, out var xform) && xform.Anchored)
             return;
 
         if (!args.Silent)
             _popup.PopupEntity(Loc.GetString("comp-space-heater-unanchored", ("device", Loc.GetString("comp-space-heater-device-name"))), ent, args.User);
 
-        //UpdateUi(ent);//TODO with this on there is ui bug on first time toggle
         args.Cancel();
     }
 
     [SubscribeLocalEvent]
     private void OnPowerChanged(Entity<SpaceHeaterComponent> ent, ref PowerChangedEvent args)
     {
-        if (!_receiver.IsPowered(ent.Owner))
-            SetOff(ent);
         UpdateUi(ent);
     }
 
     [SubscribeLocalEvent]
     private void OnToggle(Entity<SpaceHeaterComponent> ent, ref SpaceHeaterToggleMessage args)
     {
-        if (_receiver.IsPowerDisabled(ent.Owner) == args.IsPowerDisabled)
-            return; // This should not be needed but I am getting some kind of mispredict only on first toggle
+        if (_receiver.IsPowerDisabled(ent.Owner) != args.IsPowerDisabled)
+            return; // Skip it if it's not synced yet
 
-        if (_receiver.TogglePower(ent, user: args.Actor))
-            SetOff(ent);
+        _receiver.TogglePower(ent, user: args.Actor);
     }
 
     [SubscribeLocalEvent]
@@ -74,6 +72,15 @@ public abstract partial class SharedSpaceHeaterSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
+    private void OnAnchorChanged(Entity<SpaceHeaterComponent> ent, ref AnchorStateChangedEvent args)
+    {
+        if (!args.Anchored)
+        {
+            SetOff(ent.Owner);
+        }
+    }
+
+    [SubscribeLocalEvent]
     private void OnModeChanged(Entity<SpaceHeaterComponent> ent, ref SpaceHeaterChangeModeMessage args)
     {
         if (!_thermoQuery.TryComp(ent, out var thermoMachine))
@@ -83,9 +90,15 @@ public abstract partial class SharedSpaceHeaterSystem : EntitySystem
         Dirty(ent);
 
         if (ent.Comp.Mode == SpaceHeaterMode.Heat)
+        {
             thermoMachine.Cp = ent.Comp.HeatingCp;
+            Dirty(ent.Owner, thermoMachine);
+        }
         else if (ent.Comp.Mode == SpaceHeaterMode.Cool)
+        {
             thermoMachine.Cp = ent.Comp.CoolingCp;
+            Dirty(ent.Owner, thermoMachine);
+        }
         if (_receiver.IsPowered(ent.Owner))
             SetStandBy(ent); // Set appearance to stand by until the server can figure out if it's actually running or not
         UpdateUi(ent);

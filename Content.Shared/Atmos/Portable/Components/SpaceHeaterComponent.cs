@@ -1,9 +1,8 @@
-using Content.Shared.Atmos.Portable;
 using Content.Shared.Guidebook;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Atmos.Piping.Portable.Components;
+namespace Content.Shared.Atmos.Portable.Components;
 
 [Access(typeof(SharedSpaceHeaterSystem))]
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
