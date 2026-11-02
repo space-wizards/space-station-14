@@ -142,7 +142,7 @@ public sealed partial class GasCondenserSystem : EntitySystem
             return [];
         }
 
-        if (gasIndices is null || !gasIndices.Any() || energy >= 0f || moleMax <= 0f)
+        if (gasIndices is null || !gasIndices.Any() || moleMax <= 0f)
         {
             return [];
         }
@@ -171,7 +171,7 @@ public sealed partial class GasCondenserSystem : EntitySystem
         var spaceToCondenseRatio = Math.Clamp(moleMax / moleTotal, 0f, 1f);
 
         // what fraction of our energy budget will condensing all the gas consume
-        var energyCondenseRatio = energyToCondenseAll > 0f ? 1f : Math.Clamp(energy / energyToCondenseAll, 0f, 1f);
+        var energyCondenseRatio = energyToCondenseAll >= 0f ? 1f : Math.Clamp(energy / energyToCondenseAll, 0f, 1f);
 
         // no condensing possible
         if (spaceToCondenseRatio == 0 || energyCondenseRatio == 0)
