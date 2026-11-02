@@ -35,7 +35,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: NT Evac "Spring"
+      name: NT Evac "spring"
     - type: DeviceNetwork
       transmitFrequencyId: ShuttleTimer
       deviceNetId: Wireless
