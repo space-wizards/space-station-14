@@ -2,6 +2,7 @@ using Content.Shared.Atmos.Piping.Portable.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Visuals;
 using Content.Shared.Popups;
+using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.UserInterface;
 
@@ -12,8 +13,8 @@ public abstract partial class SharedSpaceHeaterSystem : EntitySystem
     [Dependency] private SharedPowerReceiverSystem _receiver = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private EntityQuery<GasThermoMachineComponent> _thermoQuery = default!;
     [Dependency] protected SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private EntityQuery<GasThermoMachineComponent> _thermoQuery = default!;
 
 
     [SubscribeLocalEvent]
@@ -24,6 +25,7 @@ public abstract partial class SharedSpaceHeaterSystem : EntitySystem
 
         thermoMachine.Cp = ent.Comp.HeatingCp;
         thermoMachine.HeatCapacity = ent.Comp.PowerConsumption;
+        Dirty(ent.Owner, thermoMachine);
     }
 
     [SubscribeLocalEvent]
@@ -39,12 +41,16 @@ public abstract partial class SharedSpaceHeaterSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
+    private void OnPowerChanged(Entity<SpaceHeaterComponent> ent, ref PowerChangedEvent args)
+    {
+        if (!_receiver.IsPowered(ent.Owner))
+            SetOff(ent);
+    }
+
+    [SubscribeLocalEvent]
     private void OnToggle(Entity<SpaceHeaterComponent> ent, ref SpaceHeaterToggleMessage args)
     {
-        ent.Comp.Active = _receiver.TogglePower(ent, user: args.Actor);
-        Dirty(ent);
-
-        if (!ent.Comp.Active)
+        if (_receiver.TogglePower(ent, user: args.Actor))
             SetOff(ent);
         UpdateUi(ent);
     }
@@ -76,7 +82,7 @@ public abstract partial class SharedSpaceHeaterSystem : EntitySystem
             thermoMachine.Cp = ent.Comp.HeatingCp;
         else if (ent.Comp.Mode == SpaceHeaterMode.Cool)
             thermoMachine.Cp = ent.Comp.CoolingCp;
-        if (ent.Comp.Active)
+        if (_receiver.IsPowered(ent.Owner))
             SetStandBy(ent); // Set appearance to stand by until the server can figure out if it's actually running or not
         UpdateUi(ent);
     }

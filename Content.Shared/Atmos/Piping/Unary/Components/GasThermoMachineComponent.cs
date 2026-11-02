@@ -38,7 +38,7 @@ public sealed partial class GasThermoMachineComponent : Component
     ///     Coefficient of performance. Output power / input power.
     ///     Positive for heaters, negative for freezers.
     /// </summary>
-    [DataField("coefficientOfPerformance")]
+    [DataField("coefficientOfPerformance"), AutoNetworkedField]
     public float Cp = 0.9f; // output power / input power, positive is heat
 
     /// <summary>

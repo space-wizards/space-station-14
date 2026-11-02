@@ -1,3 +1,5 @@
+using Content.Client.Power.Components;
+using Content.Client.Power.EntitySystems;
 using Content.Shared.Atmos.Piping.Portable.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
@@ -11,6 +13,7 @@ namespace Content.Client.Atmos.UI;
 [UsedImplicitly]
 public sealed class SpaceHeaterBoundUserInterface : BoundUserInterface
 {
+
     [ViewVariables]
     private SpaceHeaterWindow? _window;
 
@@ -42,7 +45,8 @@ public sealed class SpaceHeaterBoundUserInterface : BoundUserInterface
             || !EntMan.TryGetComponent(Owner, out SpaceHeaterComponent? spaceHeaterComp))
             return;
 
-        _window.ToggleStatusButton.Pressed = spaceHeaterComp.Active;
+        var isPowered = EntMan.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var apcComp) && !apcComp.PowerDisabled;
+        _window.ToggleStatusButton.Pressed = isPowered;
         _window.ModeSelector.SelectId((int)spaceHeaterComp.Mode);
         _window.PowerLevelSelector.Select((int)spaceHeaterComp.PowerLevel);
 

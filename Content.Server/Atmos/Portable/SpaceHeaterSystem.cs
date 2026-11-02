@@ -1,4 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping.Portable.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
@@ -14,6 +15,7 @@ namespace Content.Server.Atmos.Portable;
 public sealed partial class SpaceHeaterSystem : SharedSpaceHeaterSystem
 {
     [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private PowerReceiverSystem _receiver = default!;
     [Dependency] private EntityQuery<GasThermoMachineComponent> _thermoQuery = default!;
 
     [SubscribeLocalEvent]
@@ -24,7 +26,7 @@ public sealed partial class SpaceHeaterSystem : SharedSpaceHeaterSystem
 
         UpdateAppearance(ent, thermoMachine);
         // If in automatic temperature mode, check if we need to adjust the heat exchange direction
-        if (ent.Comp.Mode != SpaceHeaterMode.Auto || !ent.Comp.Active)
+        if (ent.Comp.Mode != SpaceHeaterMode.Auto || !_receiver.IsPowered(ent))
             return;
 
         var environment = _atmosphereSystem.GetContainingMixture(ent.Owner, args.Grid, args.Map);
@@ -36,10 +38,12 @@ public sealed partial class SpaceHeaterSystem : SharedSpaceHeaterSystem
         if (environment.Temperature <= thermoMachine.TargetTemperature - tolerance)
         {
             thermoMachine.Cp = ent.Comp.HeatingCp;
+            Dirty(ent.Owner, thermoMachine);
         }
         else if (environment.Temperature >= thermoMachine.TargetTemperature + tolerance)
         {
             thermoMachine.Cp = ent.Comp.CoolingCp;
+            Dirty(ent.Owner, thermoMachine);
         }
     }
 }

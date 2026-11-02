@@ -8,12 +8,6 @@ namespace Content.Shared.Atmos.Piping.Portable.Components;
 public sealed partial class SpaceHeaterComponent : Component
 {
     /// <summary>
-    /// Is the Space Heater switched on or off?
-    /// </summary>
-    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public bool Active = false;
-
-    /// <summary>
     /// Current mode the space heater is in. Possible values : Auto, Heat and Cool
     /// </summary>
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
