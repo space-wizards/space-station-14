@@ -277,6 +277,8 @@
     solution: tank
   - type: ExaminableSolution
     solution: tank
+  - type: DrawableSolution
+    solution: tank
   - type: Damageable
     damageModifierSet: PlasticMod
   - type: Destructible
