@@ -5,17 +5,17 @@
 - type: startingGear
   id: SusGear # Not actual chameleon clothing, just looks like the defaults. Also used by SusChameleonOutfit.
   equipment:
-    head: &sus-head ClothingHeadHatBeret
-    eyes: &sus-eyes ClothingEyesGlassesSunglasses
-    ears: &sus-ears ClothingHeadsetGrey
-    mask: &sus-mask ClothingMaskGas
-    outerClothing: &sus-outerClothing ClothingOuterVest
-    jumpsuit: &sus-jumpsuit ClothingUniformJumpsuitColorBlack
-    neck: &sus-neck ClothingNeckScarfStripedRed
-    back: &sus-back ClothingBackpack
-    gloves: &sus-gloves ClothingHandsGlovesColorBlack
-    shoes: &sus-shoes ClothingShoesColorBlack
-    id: &sus-id PassengerPDA
+    head: ClothingHeadHatBeret
+    eyes: ClothingEyesGlassesSunglasses
+    ears: ClothingHeadsetGrey
+    mask: ClothingMaskGas
+    outerClothing: ClothingOuterVest
+    jumpsuit: ClothingUniformJumpsuitColorBlack
+    neck: ClothingNeckScarfStripedRed
+    back: ClothingBackpack
+    gloves: ClothingHandsGlovesColorBlack
+    shoes: ClothingShoesColorBlack
+    id: PassengerPDA
 
 - type: startingGear
   id: SusChameleonGear # Actual chameleon clothing.
