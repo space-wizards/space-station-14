@@ -100,8 +100,8 @@ namespace Content.IntegrationTests.Tests.Damageable
         [Test]
         public async Task TestDamageableComponents()
         {
-            EntityUid sDamageableEntity = default;
-            DamageableComponent sDamageableComponent = null;
+            var sDamageableEntity = await Spawn(TestDamageableEntityId);
+            var sDamageableComponent = SComp<DamageableComponent>(sDamageableEntity);
 
             DamageGroupPrototype group1 = default!;
             DamageGroupPrototype group2 = default!;
@@ -116,15 +116,8 @@ namespace Content.IntegrationTests.Tests.Damageable
 
             FixedPoint2 typeDamage;
 
-            var map = await Pair.CreateTestMap();
-
             await Server.WaitPost(() =>
             {
-                var coordinates = map.MapCoords;
-
-                sDamageableEntity = SEntMan.SpawnEntity(TestDamageableEntityId, coordinates);
-                sDamageableComponent = SEntMan.GetComponent<DamageableComponent>(sDamageableEntity);
-
                 group1 = SProtoMan.Index<DamageGroupPrototype>(TestGroup1);
                 group2 = SProtoMan.Index<DamageGroupPrototype>(TestGroup2);
                 group3 = SProtoMan.Index<DamageGroupPrototype>(TestGroup3);
