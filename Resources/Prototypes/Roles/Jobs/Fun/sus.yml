@@ -3,7 +3,7 @@
 
 # These startingGear prototypes are mostly for admeme/debug/mapping use
 - type: startingGear
-  id: SusGear # not actual chameleon clothing, just looks like the defaults
+  id: SusGear # Not actual chameleon clothing, just looks like the defaults. Also used by SusChameleonOutfit.
   equipment:
     head: &sus-head ClothingHeadHatBeret
     eyes: &sus-eyes ClothingEyesGlassesSunglasses
@@ -18,7 +18,7 @@
     id: &sus-id PassengerPDA
 
 - type: startingGear
-  id: SusChameleonGear # actual chameleon clothing
+  id: SusChameleonGear # Actual chameleon clothing.
   equipment:
     head: ClothingHeadHatChameleon
     eyes: ClothingEyesChameleon
@@ -38,15 +38,5 @@
   loadoutName: chameleon-outfit-sus-name
   name: job-name-sus
   icon: "JobIconSus"
-  equipment:
-    head: *sus-head
-    eyes: *sus-eyes
-    ears: *sus-ears
-    mask: *sus-mask
-    outerClothing: *sus-outerClothing
-    jumpsuit: *sus-jumpsuit
-    neck: *sus-neck
-    back: *sus-back
-    gloves: *sus-gloves
-    shoes: *sus-shoes
-    id: *sus-id
+  startingGear: SusGear
+  # doesn't need an equipment field because SusGear already contains all slots we have chameleon clothing for
