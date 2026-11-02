@@ -62,6 +62,7 @@ public class MapLoadBenchmark
         "TestTeg",
         "Tram2",
         "Snowball",
+        "Hike",
         "gear"
     };
 

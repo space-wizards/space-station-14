@@ -34,6 +34,7 @@ public sealed class StationPowerTests : GameTest
         "Snowball",
         "Sushi",
         "Tram2",
+        "Hike",
         "gear"
     ];
 
