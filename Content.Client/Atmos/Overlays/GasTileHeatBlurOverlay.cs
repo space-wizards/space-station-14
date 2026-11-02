@@ -5,7 +5,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.CCVar;
-using Content.Shared.RCD;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Configuration;
@@ -13,7 +12,6 @@ using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
-using System.Numerics;
 using Color = Robust.Shared.Maths.Color;
 using Texture = Robust.Client.Graphics.Texture;
 
@@ -35,7 +33,7 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
     [Dependency] private IClyde _clyde = default!;
     [Dependency] private IConfigurationManager _configManager = default!;
     [Dependency] private IResourceCache _resourceCache = default!;
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
+    [Dependency] private IEyeManager _eyeManager = default!;
 
     private readonly SharedMapSystem _maps;
     private readonly SharedTransformSystem _xformSys;
@@ -216,7 +214,6 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
 
         return true;
     }
-
 
     protected override void Draw(in OverlayDrawArgs args)
     {

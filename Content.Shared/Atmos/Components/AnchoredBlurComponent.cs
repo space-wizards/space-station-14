@@ -28,7 +28,7 @@ public sealed partial class AnchoredBlurComponent : Component
     public float Strength = 1f;
 
     /// <summary>
-    /// Strength of the heat blur distortion effect (0 to 1).
+    /// Target strength, some systems use it to get maximum target strength of shader when entity works at full strength
     /// </summary>
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public float TargetStrength = 1f;
