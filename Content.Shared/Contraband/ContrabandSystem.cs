@@ -51,6 +51,10 @@ public sealed partial class ContrabandSystem : EntitySystem
         if (!_contrabandExamineEnabled)
             return;
 
+        // CanAccess is not used here, because we want people to be able to examine legality in strip menu.
+        if (!args.CanInteract)
+            return;
+
         // Checking if contraband is only shown in the HUD
         if (_contrabandExamineOnlyInHudEnabled)
         {
@@ -59,10 +63,6 @@ public sealed partial class ContrabandSystem : EntitySystem
             if (!ev.CanShowContraband)
                 return;
         }
-
-        // CanAccess is not used here, because we want people to be able to examine legality in strip menu.
-        if (!args.CanInteract)
-            return;
 
         // two strings:
         // one, the actual informative 'this is restricted'
@@ -82,11 +82,11 @@ public sealed partial class ContrabandSystem : EntitySystem
 
         // if it is fully restricted, you're department-less, or your department isn't in the allowed list, you cannot carry it. Otherwise, you can.
         var carryingMessage = Loc.GetString("contraband-examine-text-in-the-clear");
-        var iconTexture = "/Textures/Interface/VerbIcons/unlock-green.svg.192dpi.png";
+        var iconTexture = "/Textures/Interface/VerbIcons/Contraband/unlock.color." + severity.ID + ".svg.192dpi.png";
         if (IsContraband((ent, component), args.User, out _))
         {
             carryingMessage = Loc.GetString("contraband-examine-text-avoid-carrying-around");
-            iconTexture = "/Textures/Interface/VerbIcons/lock-red.svg.192dpi.png";
+            iconTexture = "/Textures/Interface/VerbIcons/Contraband/locked.color." + severity.ID + ".svg.192dpi.png";
         }
         var examineMarkup = GetContrabandExamine(departmentExamineMessage, carryingMessage);
         _examine.AddHoverExamineVerb(args,
