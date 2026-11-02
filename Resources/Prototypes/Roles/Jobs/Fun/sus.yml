@@ -1,21 +1,24 @@
-# These startingGear prototypes are mostly for use with the "Set Outfit" debug verb
+# These prototypes should always be based on the "default" appearance of chameleon clothing (i.e, what it looks like when initially spawned),
+# hence why they're "sus" (since players who know how chameleon clothes work know what it looks like by default).
+
+# These startingGear prototypes are mostly for admeme/debug/mapping use
 - type: startingGear
-  id: SusGear
+  id: SusGear # not actual chameleon clothing, just looks like the defaults
   equipment:
-    head: ClothingHeadHatBeret
-    eyes: ClothingEyesGlassesSunglasses
-    ears: ClothingHeadsetGrey
-    mask: ClothingMaskGas
-    outerClothing: ClothingOuterVest
-    jumpsuit: ClothingUniformJumpsuitColorBlack
-    neck: ClothingNeckScarfStripedRed
-    back: ClothingBackpack
-    gloves: ClothingHandsGlovesColorBlack
-    shoes: ClothingShoesColorBlack
-    id: PassengerPDA
+    head: &sus-head ClothingHeadHatBeret
+    eyes: &sus-eyes ClothingEyesGlassesSunglasses
+    ears: &sus-ears ClothingHeadsetGrey
+    mask: &sus-mask ClothingMaskGas
+    outerClothing: &sus-outerClothing ClothingOuterVest
+    jumpsuit: &sus-jumpsuit ClothingUniformJumpsuitColorBlack
+    neck: &sus-neck ClothingNeckScarfStripedRed
+    back: &sus-back ClothingBackpack
+    gloves: &sus-gloves ClothingHandsGlovesColorBlack
+    shoes: &sus-shoes ClothingShoesColorBlack
+    id: &sus-id PassengerPDA
 
 - type: startingGear
-  id: SusChameleonGear
+  id: SusChameleonGear # actual chameleon clothing
   equipment:
     head: ClothingHeadHatChameleon
     eyes: ClothingEyesChameleon
@@ -36,14 +39,14 @@
   name: job-name-sus
   icon: "JobIconSus"
   equipment:
-    head: ClothingHeadHatBeret
-    eyes: ClothingEyesGlassesSunglasses
-    ears: ClothingHeadsetGrey
-    mask: ClothingMaskGas
-    outerClothing: ClothingOuterVest
-    jumpsuit: ClothingUniformJumpsuitColorBlack
-    neck: ClothingNeckScarfStripedRed
-    back: ClothingBackpack
-    gloves: ClothingHandsGlovesColorBlack
-    shoes: ClothingShoesColorBlack
-    id: PassengerPDA
+    head: *sus-head
+    eyes: *sus-eyes
+    ears: *sus-ears
+    mask: *sus-mask
+    outerClothing: *sus-outerClothing
+    jumpsuit: *sus-jumpsuit
+    neck: *sus-neck
+    back: *sus-back
+    gloves: *sus-gloves
+    shoes: *sus-shoes
+    id: *sus-id
