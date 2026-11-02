@@ -1,11 +1,9 @@
-using Robust.Shared.Serialization;
-
 namespace Content.Shared.Ghost.Roles;
 
-[Serializable, NetSerializable]
-public sealed class GhostRole
+public abstract class SharedGhostRoleSystem : EntitySystem
 {
-    public string Name { get; set; } = string.Empty;
-    public string Description { get; set; } = string.Empty;
-    public NetEntity Id;
+    /// <summary>
+    /// Marks all open ghost role UIs for an update.
+    /// </summary>
+    public virtual void UpdateAllEui() { }
 }

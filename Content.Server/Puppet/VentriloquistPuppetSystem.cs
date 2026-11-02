@@ -1,6 +1,6 @@
-using Content.Server.Ghost.Roles.Components;
 using Content.Server.Popups;
 using Content.Shared.CombatMode;
+using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Hands;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Puppet;

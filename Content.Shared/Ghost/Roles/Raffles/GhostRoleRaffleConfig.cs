@@ -1,23 +1,19 @@
-using Content.Shared.Ghost.Roles.Raffles;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
-namespace Content.Server.Ghost.Roles.Raffles;
+namespace Content.Shared.Ghost.Roles.Raffles;
 
 /// <summary>
 /// Raffle configuration.
 /// </summary>
+[Serializable, NetSerializable]
 [DataDefinition]
-public sealed partial class GhostRoleRaffleConfig
+public sealed partial class GhostRoleRaffleConfig(GhostRoleRaffleSettings settings)
 {
-    public GhostRoleRaffleConfig(GhostRoleRaffleSettings settings)
-    {
-        SettingsOverride = settings;
-    }
-
     /// <summary>
     /// Specifies the raffle settings to use.
     /// </summary>
-    [DataField("settings", required: true)]
+    [DataField(required: true)]
     public ProtoId<GhostRoleRaffleSettingsPrototype> Settings { get; set; } = "default";
 
     /// <summary>
@@ -25,11 +21,11 @@ public sealed partial class GhostRoleRaffleConfig
     /// Intended for allowing admins to set custom raffle settings for admeme ghost roles.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public GhostRoleRaffleSettings? SettingsOverride { get; set; }
+    public GhostRoleRaffleSettings? SettingsOverride { get; set; } = settings;
 
     /// <summary>
     /// Sets which <see cref="IGhostRoleRaffleDecider"/> is used.
     /// </summary>
-    [DataField("decider")]
+    [DataField]
     public ProtoId<GhostRoleRaffleDeciderPrototype> Decider { get; set; } = "default";
 }
