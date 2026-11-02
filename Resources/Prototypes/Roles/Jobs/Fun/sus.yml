@@ -1,8 +1,9 @@
-- type: chameleonOutfit
-  id: SusChameleonOutfit
-  loadoutName: chameleon-outfit-sus-name
-  name: job-name-passenger
-  icon: "JobIconSus"
+# These prototypes should always be based on the "default" appearance of chameleon clothing (i.e, what it looks like when initially spawned),
+# hence why they're "sus" (since players who know how chameleon clothes work know what it looks like by default).
+
+# These startingGear prototypes are mostly for admeme/debug/mapping use
+- type: startingGear
+  id: SusGear # Not actual chameleon clothing, just looks like the defaults. Also used by SusChameleonOutfit.
   equipment:
     head: ClothingHeadHatBeret
     eyes: ClothingEyesGlassesSunglasses
@@ -15,3 +16,27 @@
     gloves: ClothingHandsGlovesColorBlack
     shoes: ClothingShoesColorBlack
     id: PassengerPDA
+
+- type: startingGear
+  id: SusChameleonGear # Actual chameleon clothing.
+  equipment:
+    head: ClothingHeadHatChameleon
+    eyes: ClothingEyesChameleon
+    ears: ClothingHeadsetChameleon
+    mask: ClothingMaskGasChameleon
+    outerClothing: ClothingOuterChameleon
+    jumpsuit: ClothingUniformJumpsuitChameleon
+    neck: ClothingNeckChameleon
+    back: ClothingBackpackChameleon
+    gloves: ClothingHandsChameleon
+    shoes: ClothingShoesChameleon
+    id: ChameleonAgentPDA # so they can fake job title / icon
+    pocket1: ChameleonControllerImplanter # so they can actually easily use all this chameleon stuff
+
+- type: chameleonOutfit
+  id: SusChameleonOutfit
+  loadoutName: chameleon-outfit-sus-name
+  name: job-name-sus
+  icon: "JobIconSus"
+  startingGear: SusGear
+  # doesn't need an equipment field because SusGear already contains all slots we have chameleon clothing for
