@@ -1,0 +1,135 @@
+# Шагающее кресло на четырёх паучьих ногах (вайб — omnidroid из The Incredibles).
+# Водитель сидит снаружи (руки свободны — может стрелять), но с "мехскими" свойствами
+# через свой компонент WalkerSeat (копия штатного StrapVehicle, апстрим не трогаем):
+# посадка с задержкой, стащить водителя — долго, водитель получает меньше урона.
+# Ноги, следы, тряска и звук шагов — чисто клиентская косметика (Content.Client/_Stargazer/SpiderLegs).
+- type: entity
+  parent: [ SeatBase, StructureHealthMachineMassive ]
+  id: ChairSpiderWalker
+  name: walker chair
+  description: An office chair that traded its wheels for four long mechanical legs. Good luck pulling anyone off it.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/chairs.rsi # временное тело
+    state: office-dark
+    noRot: true
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        density: 360
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - TableLayer
+  - type: Damageable
+    damageModifierSet: SteelMod
+  - type: InputMover
+  - type: Vehicle
+    canAttack: true       # водитель может бить и стрелять
+    requiresHands: false
+    transferDamage: false # урон по креслу не переходит на водителя
+  # Своя копия StrapVehicle. Штатный StrapVehicle здесь НЕ используется.
+  - type: WalkerSeat
+    mountDelay: 2     # сколько секунд забираться
+    dismountDelay: 8  # сколько секунд нужно ДРУГИМ, чтобы стащить водителя (сам слезает сразу)
+    riderArmor:       # множители урона водителю, пока он сидит
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.7
+        Heat: 0.75
+  - type: MovementSpeedModifier
+    baseAcceleration: 4.5
+    baseFriction: 4.5
+    baseWalkSpeed: 4.5   # ×1.2
+    baseSprintSpeed: 6.3 # ×1.2
+  # Без тега FootstepSound: звук идёт от ударов стоп.
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+  # Держится ногами за станцию: пока до ближайшей кромки станции (пол или стена) не больше gripRange,
+  # ходит как при гравитации — даже без генератора и снаружи вдоль обшивки.
+  # Дальше хватка теряется и кресло дрейфует. Ноги из космоса цепляются за обшивку по той же мерке.
+  - type: SpiderGrip
+    gripRange: 2.6
+  - type: SpiderLegs
+    sprite: _Stargazer/Objects/Vehicles/spider_legs.rsi
+    segmentState: segment
+    jointState: joint
+    footState: foot
+    shadowState: shadow
+    footprintState: footprint
+    segments: 21
+    rootThickness: 0.32
+    footThickness: 0.12
+    footSize: 0.5
+    length: 1.99
+    # Форма ноги — вариант "E": плавная дуга, колено около середины.
+    # Нога в покое почти прямая: длина всего на ~4% больше расстояния до стопы.
+    controlA: 0.2
+    controlB: 0.65
+    controlAOffset: 0.7
+    controlBOffset: 0.9
+    # Шаг (подобран в симуляции, вариант 4).
+    maxReach: 2.8        # ≈ length * maxExtension
+    minReach: 0.68
+    stepThreshold: 1.02  # радиус мёртвой зоны: пока стопа в ней, нога не шагает
+    stepOvershoot: 0.6   # стопа ставится вперёд по ходу на 0.6 зоны → шаг ≈ 1.6 тайла
+    stepTime: 0.15
+    stepHeight: 0.55     # насколько стопа взлетает вверх по экрану
+    stepLift: 0.5
+    overstretchFactor: 1.0
+    turnSpeed: 10
+    # Препятствия: стопы не встают в стены, окна, закрытые двери и в космос,
+    # а прижимаются к их границе. По столам, стульям и машинам ходить можно.
+    # Если сам корпус висит над космосом — стопы цепляются за кромку станции в досягаемости,
+    # а если её нет — ноги полностью втягиваются.
+    avoidWalls: true
+    blockMask: HighImpassable
+    blockSpace: true
+    wallMargin: 0.22
+    # Втягивание: у стен и в коридорах стопы ставятся ближе, нога укорачивается и остаётся
+    # почти прямой, лишние сегменты уходят в корпус. Если всё равно задевает стену — втягивается ещё.
+    minLength: 0.7      # самая короткая нога, тайлов
+    tuckDistance: 0.3   # в космосе, если не за что зацепиться, стопа прячется вплотную к корпусу
+    maxExtension: 1.4   # нога выдвигается до 140%, когда стопа отстаёт (иначе задние ноги семенят)
+    retractSpeed: 7     # тайлов/с
+    extendSpeed: 4      # тайлов/с (медленнее — как поршень)
+    # Покой: ноги стоят idleDelay секунд, потом подтягиваются и чуть втягиваются.
+    idleDelay: 1.5
+    idleRetract: 0.85
+    idleTolerance: 0.15
+    # Удар стопы.
+    shakeStrength: 0.12
+    shakeRange: 7
+    # Следы-звёзды: живут 8 с, последние 5 с плавно тают.
+    footprintSize: 0.7
+    footprintLifetime: 8
+    footprintFadeTime: 5
+    # Ноги по диагоналям, под 45° к направлению хода. Локальные координаты: "вперёд" — это -Y,
+    # трансформ поворачивается по ходу движения.
+    # Изгиб: передние колени выгнуты вперёд, задние — назад.
+    # Походка диагоналями: группа 0 = передняя правая + задняя левая, группа 1 — наоборот.
+    legs:
+    - attach: 0.35, -0.35   # передняя правая
+      rest: 1.7, -1.7
+      bend: -1
+      group: 0
+    - attach: -0.35, -0.35  # передняя левая
+      rest: -1.7, -1.7
+      bend: 1
+      group: 1
+    - attach: 0.35, 0.35    # задняя правая
+      rest: 1.7, 1.7
+      bend: 1
+      group: 1
+    - attach: -0.35, 0.35   # задняя левая
+      rest: -1.7, 1.7
+      bend: -1
+      group: 0

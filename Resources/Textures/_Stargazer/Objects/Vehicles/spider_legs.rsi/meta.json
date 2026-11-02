@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Placeholder leg sprites made for Stargazer (walker chair)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "segment"
+    },
+    {
+      "name": "joint"
+    },
+    {
+      "name": "foot"
+    },
+    {
+      "name": "shadow"
+    },
+    {
+      "name": "footprint"
+    }
+  ]
+}
