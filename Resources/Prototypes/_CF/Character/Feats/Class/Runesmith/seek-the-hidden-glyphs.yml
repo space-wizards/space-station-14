@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFSeektheHiddenGlyphs
+  name: "Seek the Hidden Glyphs"
+  description: "+1 circumstance bonus to Perception. This feature will be implemented later."
+  class: Runesmith
+  level: 1
+  traits:
+    - "Runesmith"
+  pendingAction: true

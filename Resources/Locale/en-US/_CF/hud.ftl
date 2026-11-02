@@ -1,0 +1,16 @@
+cf-hud-actions = Actions
+cf-hud-spells = Spells
+cf-hud-actions-tooltip = Activities that cost one, two, or three actions. Drag one onto the bar.
+cf-hud-spells-tooltip = Spells and cantrips. Drag one onto the bar.
+cf-hud-action-pool = Actions { $current }/{ $max }. One returns every { $seconds }s. Next strike { $map } ({ $agile } agile).
+cf-action-not-enough = Not enough actions.
+cf-hud-ball-tooltip = Hit Points { $current }/{ $max }. Temporary Hit Points { $temp }. Armor Class { $ac }.
+cf-hud-ball-tooltip-off-guard = Hit Points { $current }/{ $max }. Temporary Hit Points { $temp }. Armor Class { $ac }, { $reduced } while off-guard.
+cf-hud-focus = Focus
+cf-hud-rank = Rank { $rank }
+cf-radial-back = Back
+cf-radial-vocal = Vocal
+cf-radial-actions = Actions
+cf-radial-free = Free actions
+cf-radial-cantrips = Cantrips
+cf-radial-rank = Rank { $rank }

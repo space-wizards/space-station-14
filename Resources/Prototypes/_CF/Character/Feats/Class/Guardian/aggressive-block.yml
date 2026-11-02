@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFAggressiveBlockGuardian
+  name: "Aggressive Block"
+  description: "Free action. This feature will be implemented later."
+  class: Guardian
+  level: 2
+  traits:
+    - "Fighter"
+    - "Guardian"
+  action: Free
+  pendingAction: true

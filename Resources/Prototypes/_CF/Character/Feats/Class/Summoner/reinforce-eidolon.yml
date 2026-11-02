@@ -1,0 +1,10 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFReinforceEidolon
+  name: "Reinforce Eidolon"
+  description: "This feature will be implemented later."
+  class: Summoner
+  level: 2
+  traits:
+    - "Summoner"

@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder War of Immortals
+- type: cfFeat
+  id: CFHurlattheHorizon
+  name: "Hurl at the Horizon"
+  description: "Changes an item. This feature will be implemented later."
+  class: Exemplar
+  level: 2
+  traits:
+    - "Exemplar"
+    - "Ikon"
+  pendingAction: true

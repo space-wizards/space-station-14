@@ -1,0 +1,41 @@
+<hud:CFGameHud
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:hud="clr-namespace:Content.Client.CF.Hud"
+    xmlns:inventory="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Controls"
+    xmlns:hands="clr-namespace:Content.Client.UserInterface.Systems.Hands.Controls"
+    xmlns:actions="clr-namespace:Content.Client.UserInterface.Systems.Actions.Widgets"
+    x:Class="Content.Client.CF.Hud.CFGameHud"
+    Orientation="Horizontal"
+    SeparationOverride="10"
+    HorizontalAlignment="Left"
+    VerticalAlignment="Bottom">
+    <BoxContainer Orientation="Horizontal" SeparationOverride="8" VerticalAlignment="Bottom">
+        <BoxContainer Orientation="Vertical" SeparationOverride="4">
+            <inventory:ItemSlotButtonContainer Name="SuitStorage" SlotGroup="CFSuitStorage" MaxColumns="1" />
+            <inventory:ItemSlotButtonContainer Name="Id" SlotGroup="CFId" MaxColumns="1" />
+        </BoxContainer>
+        <BoxContainer Orientation="Vertical" SeparationOverride="4">
+            <inventory:ItemSlotButtonContainer Name="Belt" SlotGroup="CFBelt" MaxColumns="1" />
+            <inventory:ItemSlotButtonContainer Name="Bag" SlotGroup="CFBag" MaxColumns="1" />
+        </BoxContainer>
+        <BoxContainer Orientation="Vertical" SeparationOverride="4">
+            <inventory:ItemSlotButtonContainer Name="Pockets" SlotGroup="CFPockets" MaxColumns="2" />
+            <hands:HandsContainer Name="Hands" Access="Public" ColumnLimit="2" />
+        </BoxContainer>
+        <hud:CFHealthBall Name="Ball" Access="Public" VerticalAlignment="Bottom" />
+    </BoxContainer>
+    <PanelContainer Name="DividerLeft" MinSize="2 120" />
+    <PanelContainer Name="ActionPanel" VerticalAlignment="Bottom">
+        <BoxContainer Orientation="Vertical" SeparationOverride="4" Align="Center" Margin="6">
+            <hud:CFActionPips Name="ActionPips" Access="Public" HorizontalAlignment="Center" />
+            <BoxContainer Orientation="Horizontal" SeparationOverride="6" HorizontalAlignment="Center">
+                <Button Name="ActionsFilter" ToggleMode="True" MinSize="88 26" Text="{Loc 'cf-hud-actions'}" ToolTip="{Loc 'cf-hud-actions-tooltip'}" />
+                <Button Name="SpellsFilter" ToggleMode="True" MinSize="88 26" Text="{Loc 'cf-hud-spells'}" ToolTip="{Loc 'cf-hud-spells-tooltip'}" />
+            </BoxContainer>
+            <actions:ActionsBar />
+        </BoxContainer>
+    </PanelContainer>
+    <PanelContainer Name="DividerRight" MinSize="2 120" />
+    <hud:CFSpellPips Name="Spells" Access="Public" />
+</hud:CFGameHud>

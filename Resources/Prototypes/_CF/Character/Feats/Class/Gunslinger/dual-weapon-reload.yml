@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Guns & Gears
+- type: cfFeat
+  id: CFDualWeaponReload
+  name: "Dual-Weapon Reload"
+  description: "Requires Gunslinger or Dual-Weapon Warrior Dedication."
+  class: Gunslinger
+  level: 1
+  traits:
+    - "Gunslinger"
+  prerequisites:
+    - "Gunslinger or Dual-Weapon Warrior Dedication"

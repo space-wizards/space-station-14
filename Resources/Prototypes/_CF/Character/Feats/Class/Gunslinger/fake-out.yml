@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Guns & Gears
+- type: cfFeat
+  id: CFFakeOut
+  name: "Fake Out"
+  description: "Reaction. This feature will be implemented later."
+  class: Gunslinger
+  level: 2
+  traits:
+    - "Gunslinger"
+    - "Visual"
+  action: Reaction
+  pendingAction: true

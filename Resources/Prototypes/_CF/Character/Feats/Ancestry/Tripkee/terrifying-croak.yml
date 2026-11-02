@@ -1,0 +1,14 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFTerrifyingCroak
+  name: "Terrifying Croak"
+  description: "Requires trained in Intimidation. Costs 1 action. TBA - action will be added"
+  ancestry: Tripkee
+  level: 1
+  traits:
+    - "Tripkee"
+  prerequisites:
+    - "trained in Intimidation"
+  action: Action
+  pendingAction: true

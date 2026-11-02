@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "license": "All rights reserved",
+  "copyright": "Created by Jaraten (discord/GitHub) resprited by Vojner(discord), up icon by TheShuEd (discord/GitHub)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "equipped-EYES",
+      "directions": 4
+    },
+    {
+      "name": "flipped-equipped-EYES",
+      "directions": 4
+    },
+    {
+      "name": "up"
+    }
+  ]
+}

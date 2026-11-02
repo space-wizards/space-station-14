@@ -1,0 +1,13 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFPackStalker
+  name: "Pack Stalker"
+  description: "Requires expert in Stealth. Also grants Terrain Stalker. TBA - action will be added"
+  ancestry: Kholo
+  level: 5
+  traits:
+    - "Kholo"
+  prerequisites:
+    - "expert in Stealth"
+  pendingAction: true

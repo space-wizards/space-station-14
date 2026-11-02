@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by TheShuEd (Github) & resprite by omsoyk",
+  "states": [
+    {
+      "name": "coin0"
+    },
+    {
+      "name": "coin1"
+    },
+    {
+      "name": "coin2"
+    },
+    {
+      "name": "coin3"
+    },
+    {
+      "name": "coin4"
+    },
+    {
+      "name": "coin5"
+    },
+    {
+      "name": "coin6"
+    },
+    {
+      "name": "coin7"
+    },
+    {
+      "name": "coin8"
+    },
+    {
+      "name": "coin9"
+    },
+    {
+      "name": "coin10"
+    }
+  ]
+}

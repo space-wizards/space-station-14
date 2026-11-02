@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by TheShuEd (Github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "eyes",
+      "directions": 4
+    },
+    {
+      "name": "goblin_eyes",
+      "directions": 4
+    },
+    {
+      "name": "silva_eyes",
+      "directions": 4
+    },
+    {
+      "name": "no_eyes"
+    }
+  ]
+}

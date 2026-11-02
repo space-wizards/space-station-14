@@ -1,0 +1,96 @@
+# Pathfinder longbow — 1d8 P, range 100 ft, deadly d10, volley 30 ft.
+# Uses stock SS14 bow/arrow pipeline; CFRangedWeapon replaces projectile damage with PF2e Strikes.
+
+- type: entity
+  parent: BaseBow
+  id: CFLongbow
+  name: longbow
+  description: A 5-foot elm longbow. 1d8 piercing, range 100 feet, deadly d10, volley 30 feet.
+  components:
+  - type: Sprite
+    layers:
+    - state: unwielded
+      map: [ base ]
+    - state: unwielded-arrow
+      map: [ arrow ]
+      visible: false
+  - type: Item
+    size: Large
+  - type: Appearance
+  - type: ItemMapper
+    spriteLayers:
+    - arrow
+    mapLayers:
+      arrow:
+        whitelist:
+          tags:
+          - Arrow
+  - type: GenericVisualizer
+    visuals:
+      enum.WieldableVisuals.Wielded:
+        arrow:
+          True: { state: wielded-arrow }
+          False: { state: unwielded-arrow }
+        base:
+          True: { state: wielded }
+          False: { state: unwielded }
+  - type: ItemSlots
+    slots:
+      projectiles:
+        name: Projectiles
+        startingItem: CFArrow
+        insertSound: /Audio/Weapons/Guns/Misc/arrow_nock.ogg
+        whitelist:
+          tags:
+          - Arrow
+  - type: CFRangedWeapon
+    damageDie: 8
+    damageDice: 1
+    damageType: piercing
+    proficiency: MartialWeapons
+    rangeIncrementFeet: 100
+    volleyFeet: 30
+    deadlyDie: 10
+    propulsive: false
+  - type: CFItemPrice
+    copper: 600 # 6 gp
+
+- type: entity
+  parent: ArrowRegular
+  id: CFArrow
+  name: arrow
+  description: A wooden arrow for a Pathfinder longbow.
+  components:
+  - type: Projectile
+    deleteOnCollide: false
+    onlyCollideWhenShot: true
+    # Stock damage zeroed — CFStrikeSystem resolves piercing from the bow.
+    damage:
+      types:
+        Piercing: 0
+
+- type: entity
+  parent: ClothingBeltQuiver
+  id: CFQuiverFilled
+  name: quiver
+  description: A quiver packed with arrows for a longbow.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: CFArrow
+        - id: CFArrow
+        - id: CFArrow
+        - id: CFArrow
+        - id: CFArrow
+        - id: CFArrow
+        - id: CFArrow
+        - id: CFArrow
+        - id: CFArrow
+        - id: CFArrow
+        - id: CFArrow
+        - id: CFArrow
+        - id: CFArrow
+        - id: CFArrow
+        - id: CFArrow

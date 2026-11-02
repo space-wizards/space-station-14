@@ -1,8 +1,0 @@
-- type: construction
-  hide: false
-  id: CEWoodenLadderItem
-  graph: CEWoodenLadderItem
-  startNode: start
-  targetNode: CEWoodenLadderItem
-  category: construction-category-structures
-  objectType: Item

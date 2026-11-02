@@ -1,0 +1,15 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFDistractingSpellstrike
+  name: "Distracting Spellstrike"
+  description: "Requires laughing shadow hybrid study and Spellstrike. Costs 2 actions. This feature will be implemented later."
+  class: Magus
+  level: 4
+  traits:
+    - "Magus"
+  prerequisites:
+    - "laughing shadow hybrid study"
+    - "Spellstrike"
+  action: Action
+  pendingAction: true

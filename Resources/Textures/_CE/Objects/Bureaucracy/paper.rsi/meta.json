@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by Max Gab, folders and passport by TheShuEd, stamps on paper by viator1748, inhands by D1nazewwr",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "paper"
+    },
+    {
+      "name": "paper_filled"
+    },
+    {
+      "name": "approved_on_paper"
+    },
+    {
+      "name": "bank_on_paper"
+    },
+    {
+      "name": "guildmaster_on_paper"
+    },
+    {
+      "name": "denied_on_paper"
+    },
+    {
+      "name": "red_on_paper"
+    },
+    {
+      "name": "paper_stamp-generic"
+    },
+    {
+      "name": "magic"
+    },
+    {
+      "name": "scrolls"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

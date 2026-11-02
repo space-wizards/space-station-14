@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFLieDetector
+  name: "Lie Detector"
+  description: "Requires empiricism or interrogation methodology. +1 circumstance bonus to Perception. +1 circumstance bonus to Deception, Diplomacy, Intimidation, and Performance. This feature will be implemented later."
+  class: Investigator
+  level: 4
+  traits:
+    - "Investigator"
+  prerequisites:
+    - "empiricism or interrogation methodology"
+  pendingAction: true

@@ -1,0 +1,34 @@
+- type: entity
+  parent: BaseSword
+  id: CFLongsword
+  name: longsword
+  description: A sturdy Pathfinder longsword. Use it to Strike foes (d8 slashing).
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/cutlass.rsi
+  - type: Item
+    size: Normal
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/cutlass.rsi
+    shape:
+    - 0,0,0,2
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1
+    damage:
+      types:
+        Slash: 1 # Placeholder — CFStrikeSystem replaces damage when both sides are CF combatants.
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: CFMeleeWeapon
+    damageDie: 8
+    damageDice: 1
+    damageType: slashing
+    proficiency: MartialWeapons
+  - type: CFTrait
+    traits:
+    - VersatileP
+  - type: DisarmMalus
+  - type: CFItemPrice
+    copper: 100 # 1 gp

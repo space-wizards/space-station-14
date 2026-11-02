@@ -1,0 +1,17 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Tian Xia Character Guide
+- type: cfFeat
+  id: CFPhantomVisage
+  name: "Phantom Visage"
+  description: "Requires dokkaebi goblin heritage. Costs 1 action. TBA - action will be added"
+  ancestry: Goblin
+  level: 1
+  traits:
+    - "Goblin"
+    - "Illusion"
+    - "Occult"
+    - "Visual"
+  prerequisites:
+    - "dokkaebi goblin heritage"
+  action: Action
+  pendingAction: true

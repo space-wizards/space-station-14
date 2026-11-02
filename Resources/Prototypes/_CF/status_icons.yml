@@ -1,0 +1,8 @@
+- type: statusIcon
+  id: CFFlankedIcon
+  priority: 4
+  locationPreference: Right
+  isShaded: false
+  icon:
+    sprite: /Textures/_CF/flanked.rsi
+    state: flanked

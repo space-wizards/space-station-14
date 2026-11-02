@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFMultifariousMuse
+  name: "Multifarious Muse"
+  description: "Grants an item. This feature will be implemented later."
+  class: Bard
+  level: 2
+  traits:
+    - "Bard"
+  pendingAction: true

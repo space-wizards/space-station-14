@@ -1,0 +1,16 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Rival Academies
+- type: cfFeat
+  id: CFTributaryCirculation
+  name: "Tributary Circulation"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Monk
+  level: 4
+  rarity: Uncommon
+  traits:
+    - "Concentrate"
+    - "Monk"
+    - "Occult"
+    - "Water"
+  action: Action
+  pendingAction: true

@@ -96,4 +96,16 @@ public sealed partial class TemperatureSystem : SharedTemperatureSystem
     {
         ChangeHeat(args.Target, ent.Comp.Heat, ent.Comp.IgnoreHeatResistance);// adjust the temperature
     }
+
+    /// <summary>
+    /// CarpFinder: a grill only heats the surface and waits for the interior to catch up.
+    /// The cook step reads the interior at the moment of the temperature event, so both are set first.
+    /// </summary>
+    public override void SetCookedTemperature(EntityUid uid, float temperature)
+    {
+        if (TryComp<InternalTemperatureComponent>(uid, out var internalTemp))
+            internalTemp.Temperature = temperature;
+
+        SetTemperature(uid, temperature);
+    }
 }

@@ -1,0 +1,32 @@
+# CarpFinder: remaster trait ids. Summaries are short mechanical notes, not source text.
+# category: Planar
+
+- type: cfTrait
+  id: Astral
+  name: Astral
+  category: Planar
+  summary: "This is from the Astral Plane, or it uses astral energy."
+
+- type: cfTrait
+  id: Ethereal
+  name: Ethereal
+  category: Planar
+  summary: "This is from the Ethereal Plane, or it reaches into it."
+
+- type: cfTrait
+  id: Shadow
+  name: Shadow
+  category: Planar
+  summary: "This is from the Shadow Plane, or it is made of shadow."
+
+- type: cfTrait
+  id: Dream
+  name: Dream
+  category: Planar
+  summary: "This is from a dream realm, or it affects dreams."
+
+- type: cfTrait
+  id: Extradimensional
+  name: Extradimensional
+  category: Planar
+  summary: "This reaches into or creates a space outside the ordinary world."

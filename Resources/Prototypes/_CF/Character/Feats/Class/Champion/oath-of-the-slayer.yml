@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Divine Mysteries
+- type: cfFeat
+  id: CFOathoftheSlayer
+  name: "Oath of the Slayer"
+  description: "Changes a modifier. This feature will be implemented later."
+  class: Champion
+  level: 2
+  traits:
+    - "Champion"
+    - "Oath"
+  pendingAction: true

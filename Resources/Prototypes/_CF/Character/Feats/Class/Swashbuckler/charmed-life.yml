@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFCharmedLife
+  name: "Charmed Life"
+  description: "Requires Charisma +2. +2 circumstance bonus to Saving Throw. Reaction. This feature will be implemented later."
+  class: Swashbuckler
+  level: 2
+  traits:
+    - "Swashbuckler"
+  prerequisites:
+    - "Charisma +2"
+  action: Reaction
+  pendingAction: true

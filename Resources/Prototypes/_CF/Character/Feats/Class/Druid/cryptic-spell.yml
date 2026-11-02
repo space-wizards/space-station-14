@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Dark Archive (Remastered)
+- type: cfFeat
+  id: CFCrypticSpell
+  name: "Cryptic Spell"
+  description: "Changes an item. Costs 1 action. This feature will be implemented later."
+  class: Druid
+  level: 4
+  traits:
+    - "Concentrate"
+    - "Druid"
+    - "Spellshape"
+  action: Action
+  pendingAction: true

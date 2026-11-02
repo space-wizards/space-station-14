@@ -1,12 +1,16 @@
 ﻿[game]
-# Straight in-game baby
-lobbyenabled = false
+# CarpFinder: lobby on so you can build/select a character before joining
+lobbyenabled = true
 # Dev map for faster loading & convenience
 map = "Dev"
+# CarpFinder: Sandbox (not Secret) — solo Dev has no antag pool
+defaultpreset = "Sandbox"
+fallbackpreset = "Sandbox"
 role_timers = false
 admin_job_tracking = true
 role_loadout_timers = false
-new_character_jobs = "Passenger, Captain"
+# CarpFinder: default new characters prefer a CF adventurer job (must exist on Dev station jobs)
+new_character_jobs = "CFAlpha"
 
 [events]
 enabled = false
@@ -44,7 +48,8 @@ see_own_notes = true
 new_player_threshold = 120
 
 [ic]
-random_characters = true
+# CarpFinder: must be false or spawn ignores your saved profile (RandomWithSpecies wipes CFBuild)
+random_characters = false
 random_species_weights = ""
 ssd_sleep_time = 3600
 

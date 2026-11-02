@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFNaturalSkill
+  name: "Natural Skill"
+  description: "Trained in a skill of your choice. That choice is not recorded yet."
+  ancestry: Human
+  level: 1
+  traits:
+    - "Human"

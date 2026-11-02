@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFDwarvenReinforcement
+  name: "Dwarven Reinforcement"
+  description: "Requires expert in Crafting."
+  ancestry: Dwarf
+  level: 5
+  traits:
+    - "Dwarf"
+  prerequisites:
+    - "expert in Crafting"

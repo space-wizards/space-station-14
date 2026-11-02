@@ -1,0 +1,16 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFNudgetheScales
+  name: "Nudge the Scales"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Oracle
+  level: 1
+  traits:
+    - "Cursebound"
+    - "Divine"
+    - "Healing"
+    - "Oracle"
+    - "Spirit"
+  action: Action
+  pendingAction: true

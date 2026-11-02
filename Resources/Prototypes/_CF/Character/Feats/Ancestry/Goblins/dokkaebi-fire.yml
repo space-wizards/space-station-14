@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Tian Xia Character Guide
+- type: cfFeat
+  id: CFDokkaebiFire
+  name: "Dokkaebi Fire"
+  description: "Requires dokkaebi goblin heritage. +1 status bonus to Ignition Inline Damage. Not applied in play yet. Changes an item. Not applied in play yet."
+  ancestry: Goblin
+  level: 1
+  traits:
+    - "Goblin"
+  prerequisites:
+    - "dokkaebi goblin heritage"

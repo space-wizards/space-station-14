@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Tian Xia Character Guide
+- type: cfFeat
+  id: CFDuck
+  name: "Duck!"
+  description: "Improves Reflex results. Not applied in play yet."
+  ancestry: Kobold
+  level: 5
+  traits:
+    - "Kobold"

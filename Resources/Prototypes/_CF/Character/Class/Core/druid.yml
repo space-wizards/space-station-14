@@ -1,0 +1,68 @@
+# CarpFinder: remaster class, levels 1-5.
+- type: cfClass
+  id: Druid
+  name: cf-class-druid
+  description: cf-class-description-druid
+  hitPoints: 8
+  keyAbility: Wisdom
+  hitPointsAbility: Constitution
+  classDC: cf-class-druid
+  proficiencies:
+    perception:
+      trained:
+        - Perception
+    savingThrows:
+      trained:
+        - Fortitude
+        - Reflex
+      expert:
+        - Will
+    skills:
+      trained:
+        - Nature
+    attacks:
+      trained:
+        - SimpleWeapons
+        - Unarmed
+    defenses:
+      trained:
+        - Unarmored
+        - MediumArmor
+        - LightArmor
+  additionalSkillTrainings: 2
+  spellcasting:
+    tradition: Primal
+    ability: Wisdom
+    cantrips: 5
+    slots:
+      - 2
+    prepared: true
+  features:
+    - level: 1
+      name: "Anathema (Druid)"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Druid Spellcasting"
+      description: "Level 1 cantrips and spell slots are on the spell sheet."
+    - level: 1
+      name: "Druidic Order"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Shield Block"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Voice of Nature"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Wildsong"
+      description: "This feature will be implemented later."
+    - level: 3
+      name: "Fortitude Expertise"
+      description: "This feature will be implemented later."
+    - level: 3
+      name: "Perception Expertise"
+      description: "This feature will be implemented later."
+    - level: 5
+      name: "Reflex Expertise"
+      description: "This feature will be implemented later."
+  # Class key-attribute boost is applied from keyAbility in code (PF2e).

@@ -1,0 +1,24 @@
+﻿- type: entity
+  parent: CFSpellProjectile
+  id: CFThunderstrike
+  name: Thunderstrike
+  description: A bolt of lightning. Reflex save, 1d12 electricity. It follows the creature.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: fireball
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 1
+  - type: CFSpell
+    spell: Thunderstrike
+    rank: 1
+    delivery: Projectile
+    rangeFeet: 120
+    defense: Reflex
+    basicSave: true
+    diceCount: 1
+    diceSize: 12
+    damageType: electricity
+    boltPrototype: CFSpellBoltElectric

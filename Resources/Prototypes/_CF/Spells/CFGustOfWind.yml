@@ -1,0 +1,26 @@
+﻿- type: entity
+  parent: CFSpellArea
+  id: CFGustOfWind
+  name: Gust of Wind
+  description: A 60-foot line of wind. Fortitude save, 2d6 bludgeoning, and a push on a failure.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 1
+  - type: CFSpell
+    spell: GustOfWind
+    rank: 1
+    delivery: Area
+    area: Line
+    areaFeet: 60
+    defense: Fortitude
+    basicSave: true
+    diceCount: 2
+    diceSize: 6
+    damageType: bludgeoning
+    rider: Push
+    pushFeet: 5

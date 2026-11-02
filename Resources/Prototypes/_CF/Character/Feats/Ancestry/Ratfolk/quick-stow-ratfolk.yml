@@ -1,0 +1,14 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFQuickStowRatfolk
+  name: "Quick Stow (Ratfolk)"
+  description: "Requires Cheek Pouches. Free action. TBA - action will be added"
+  ancestry: Ratfolk
+  level: 5
+  traits:
+    - "Ratfolk"
+  prerequisites:
+    - "Cheek Pouches"
+  action: Free
+  pendingAction: true

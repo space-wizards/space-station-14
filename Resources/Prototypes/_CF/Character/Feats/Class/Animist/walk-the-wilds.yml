@@ -1,0 +1,10 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder War of Immortals
+- type: cfFeat
+  id: CFWalktheWilds
+  name: "Walk the Wilds"
+  description: "This feature will be implemented later."
+  class: Animist
+  level: 4
+  traits:
+    - "Animist"

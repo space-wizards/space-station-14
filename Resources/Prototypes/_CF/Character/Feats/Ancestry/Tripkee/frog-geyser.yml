@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens High Seas
+- type: cfFeat
+  id: CFFrogGeyser
+  name: "Frog Geyser"
+  description: "Costs 2 actions. TBA - action will be added"
+  ancestry: Tripkee
+  level: 5
+  traits:
+    - "Tripkee"
+  action: Action
+  pendingAction: true

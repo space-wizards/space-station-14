@@ -1,7 +1,0 @@
-- type: alert
-  id: CEAirCaught
-  icons:
-  - sprite: /Textures/_CE/Interface/Alerts/flight.rsi
-    state: wing
-  name: ce-alerts-aircaught-name
-  description: ce-alerts-aircaught-desc

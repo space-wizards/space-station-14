@@ -1,0 +1,16 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFKoboldLore
+  name: "Kobold Lore"
+  description: "Lore: Kobold Lore. Trained in Stealth and Thievery."
+  ancestry: Kobold
+  level: 1
+  traits:
+    - "Kobold"
+  trainedSkills:
+    - Stealth
+    - Thievery
+    - Lore
+  lores:
+    - "Kobold Lore"

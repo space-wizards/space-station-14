@@ -21,7 +21,30 @@
   <ItemGroup>
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
+
+  <!--
+    CarpFinder character builder replaces the stock HumanoidProfileEditor UI.
+    Stock Lobby files stay unmodified for upstream merges; CF versions live in _CF.
+  -->
+  <ItemGroup>
+    <Compile Remove="Lobby\UI\HumanoidProfileEditor.xaml.cs" />
+    <Compile Remove="Lobby\UI\HumanoidProfileEditor.Appearance.cs" />
+    <Compile Remove="Lobby\UI\HumanoidProfileEditor.BasicInfo.cs" />
+    <Compile Remove="Lobby\UI\HumanoidProfileEditor.FlavorText.cs" />
+    <Compile Remove="Lobby\UI\HumanoidProfileEditor.Roles.cs" />
+    <Compile Remove="Lobby\UI\HumanoidProfileEditor.Traits.cs" />
+    <!-- CF Pathfinder character sheet overlays the stock Character window. -->
+    <Compile Remove="UserInterface\Systems\Character\CharacterUIController.cs" />
+    <Compile Remove="UserInterface\Systems\Character\Windows\CharacterWindow.xaml.cs" />
+  </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
+  <!-- Must run after XamlIL.targets, which Includes **\*.xaml as EmbeddedResource + AdditionalFiles. -->
+  <ItemGroup>
+    <EmbeddedResource Remove="Lobby\UI\HumanoidProfileEditor.xaml" />
+    <AdditionalFiles Remove="Lobby\UI\HumanoidProfileEditor.xaml" />
+    <EmbeddedResource Remove="UserInterface\Systems\Character\Windows\CharacterWindow.xaml" />
+    <AdditionalFiles Remove="UserInterface\Systems\Character\Windows\CharacterWindow.xaml" />
+  </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.EntitySystemSubscriptionsGenerator.targets" />
 </Project>

@@ -1,0 +1,10 @@
+<BoxContainer Name="WeaponsTabRoot" xmlns="https://spacestation14.io"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              x:Class="Content.Client.CF.Lobby.UI.CharacterBuilder.WeaponsTab"
+              Orientation="Vertical"
+              HorizontalExpand="True"
+              VerticalExpand="True">
+    <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+        <BoxContainer Name="WeaponsGroups" Orientation="Vertical" HorizontalExpand="True" Margin="8" />
+    </ScrollContainer>
+</BoxContainer>

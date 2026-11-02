@@ -1,0 +1,22 @@
+﻿- type: entity
+  parent: CFSpellInstant
+  id: CFMysticArmor
+  name: Mystic Armor
+  description: You gain a +1 item bonus to AC.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: shield
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 1
+  - type: CFSpell
+    spell: MysticArmor
+    rank: 1
+    delivery: Instant
+    defense: None
+    acBonus: 1
+    durationSeconds: 600
+    friendly: true
+    includeSelf: true

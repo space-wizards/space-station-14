@@ -1,6 +1,0 @@
-- type: secretRole
-  id: Recruit
-  name: ce-secret-role-name-recruit
-  description: ce-secret-role-description-recruit
-  icon: CESecretRoleIconRecruit
-  setPreference: false

@@ -1,9 +1,11 @@
+using Content.Client.Actions;
+using Content.Client.CF.Hud;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Systems.Actions;
 using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Input;
-using Content.Shared.Speech;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Client.Player;
@@ -11,7 +13,6 @@ using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Emotes;
 
@@ -23,17 +24,6 @@ public sealed partial class EmotesUIController : UIController, IOnStateChanged<G
 
     private MenuButton? EmotesButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.EmotesButton;
     private SimpleRadialMenu? _menu;
-
-    private static readonly Dictionary<EmoteCategory, (string Tooltip, SpriteSpecifier Sprite)> EmoteGroupingInfo =
-        new()
-        {
-            [EmoteCategory.General] = ("emote-menu-category-general",
-                new SpriteSpecifier.Rsi(new ResPath("/Textures/Clothing/Head/Soft/mimesoft.rsi"), "icon")),
-            [EmoteCategory.Hands] = ("emote-menu-category-hands",
-                new SpriteSpecifier.Rsi(new ResPath("/Textures/Clothing/Hands/Gloves/latex.rsi"), "icon")),
-            [EmoteCategory.Vocal] = ("emote-menu-category-vocal",
-                new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Emotes/vocal.png"))),
-        };
 
     public void OnStateEntered(GameplayState state)
     {
@@ -52,11 +42,17 @@ public sealed partial class EmotesUIController : UIController, IOnStateChanged<G
     {
         if (_menu == null)
         {
-            // setup window
-            var prototypes = _prototypeManager.EnumeratePrototypes<EmotePrototype>();
-            var models = ConvertToButtons(prototypes);
-
+            // CarpFinder: vocal chat stays. The other slices are actions, reactions, and spell ranks.
             _menu = new SimpleRadialMenu();
+            var models = CFRadialMenu.Build(
+                _menu,
+                _prototypeManager.EnumeratePrototypes<EmotePrototype>(),
+                _playerManager.LocalSession?.AttachedEntity,
+                EntitySystemManager.GetEntitySystem<EntityWhitelistSystem>(),
+                EntityManager,
+                EntitySystemManager.GetEntitySystem<ActionsSystem>(),
+                HandleRadialButtonClick,
+                action => UIManager.GetUIController<ActionUIController>().UseAction(action));
             _menu.SetButtons(models);
 
             _menu.Open();
@@ -130,60 +126,6 @@ public sealed partial class EmotesUIController : UIController, IOnStateChanged<G
 
         _menu.Dispose();
         _menu = null;
-    }
-
-    private IEnumerable<RadialMenuOptionBase> ConvertToButtons(IEnumerable<EmotePrototype> emotePrototypes)
-    {
-        var whitelistSystem = EntitySystemManager.GetEntitySystem<EntityWhitelistSystem>();
-        var player = _playerManager.LocalSession?.AttachedEntity;
-
-        Dictionary<EmoteCategory, List<RadialMenuOptionBase>> emotesByCategory = new();
-        foreach (var emote in emotePrototypes)
-        {
-            if (emote.Category == EmoteCategory.Invalid)
-                continue;
-
-            // only valid emotes that have ways to be triggered by chat and player have access / no restriction on
-            if (emote.Category == EmoteCategory.Invalid
-                || emote.ChatTriggers.Count == 0
-                || !(player.HasValue && whitelistSystem.IsWhitelistPassOrNull(emote.Whitelist, player.Value))
-                || whitelistSystem.IsWhitelistPass(emote.Blacklist, player.Value))
-                continue;
-
-            if (!emote.Available
-                && EntityManager.TryGetComponent<SpeechComponent>(player.Value, out var speech)
-                && !speech.AllowedEmotes.Contains(emote.ID))
-                continue;
-
-            if (!emotesByCategory.TryGetValue(emote.Category, out var list))
-            {
-                list = new List<RadialMenuOptionBase>();
-                emotesByCategory.Add(emote.Category, list);
-            }
-
-            var actionOption = new RadialMenuActionOption<EmotePrototype>(HandleRadialButtonClick, emote)
-            {
-                IconSpecifier = RadialMenuIconSpecifier.With(emote.Icon),
-                ToolTip = Loc.GetString(emote.Name)
-            };
-            list.Add(actionOption);
-        }
-
-        var models = new RadialMenuOptionBase[emotesByCategory.Count];
-        var i = 0;
-        foreach (var (key, list) in emotesByCategory)
-        {
-            var tuple = EmoteGroupingInfo[key];
-
-            models[i] = new RadialMenuNestedLayerOption(list)
-            {
-                IconSpecifier = RadialMenuIconSpecifier.With(tuple.Sprite),
-                ToolTip = Loc.GetString(tuple.Tooltip)
-            };
-            i++;
-        }
-
-        return models;
     }
 
     private void HandleRadialButtonClick(EmotePrototype prototype)

@@ -1,0 +1,11 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Tian Xia Character Guide
+- type: cfFeat
+  id: CFUnassumingHeroes
+  name: "Unassuming Heroes"
+  description: "Passive feat. Its special rule is not applied in play yet."
+  ancestry: Leshy
+  level: 5
+  rarity: Uncommon
+  traits:
+    - "Leshy"

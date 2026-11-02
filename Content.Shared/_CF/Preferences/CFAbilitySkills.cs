@@ -1,27 +1,27 @@
 namespace Content.Shared.CF.Preferences;
 
 /// <summary>
-///     the 15 ability Skills in a Character, Represents a character ability skill, such as Acrobatics or Arcana.
+/// The Pathfinder 2e skills (Perception is tracked separately as a proficiency).
+/// Lore stands in for every Lore subcategory.
+/// Prefer <c>cfAbilitySkill</c> prototype ids in data; this enum mirrors those ids.
 /// </summary>
-
 public enum CFAbilitySkill
 {
     Acrobatics,
-    AnimalHandling,
     Arcana,
     Athletics,
+    Crafting,
     Deception,
-    History,
-    Insight,
+    Diplomacy,
     Intimidation,
-    Investigation,
     Medicine,
     Nature,
-    Perception,
+    Occultism,
     Performance,
-    Persuasion,
     Religion,
-    SleightOfHand,
+    Society,
     Stealth,
-    Survival
+    Survival,
+    Thievery,
+    Lore,
 }

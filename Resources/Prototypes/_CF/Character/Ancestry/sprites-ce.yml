@@ -1,0 +1,2111 @@
+# CarpFinder: Crystall Edge bodies. Art stays in Resources/Textures/_CE, with meta.json beside each RSI.
+# Sprite species stay roundStart false so they are not their own ancestry.
+# Infernal and Skeleton stay as textures only. They are not Pathfinder ancestries.
+
+- type: species
+  id: CF-Human-Edge
+  name: cf-sprite-ce-human
+  roundStart: false
+  prototype: CFMobHumanEdge
+  dollPrototype: CFAppearanceHumanEdge
+  skinColoration: HumanToned
+
+- type: entity
+  abstract: true
+  id: CFInventoryHumanEdge
+  components:
+  - type: Inventory
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Human/displacement.rsi
+            state: female_shirt
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Human/displacement.rsi
+            state: female_cloak
+      neck:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Human/displacement.rsi
+            state: male_neck
+
+- type: entity
+  abstract: true
+  id: CFMarkingDisplacementHumanEdge
+  components:
+  - type: VisualOrganMarkings
+    markingsDisplacement:
+      Chest:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Human/displacement.rsi
+            state: female_shirt
+      Tail:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Human/displacement.rsi
+            state: female_shirt
+      Overlay:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Human/displacement.rsi
+            state: female_shirt
+      UndergarmentTop:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Human/displacement.rsi
+            state: female_shirt
+      UndergarmentBottom:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Human/displacement.rsi
+            state: female_shirt
+      Special:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Human/displacement.rsi
+            state: female_shirt
+      LArm:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Human/displacement.rsi
+            state: female_shirt
+      RArm:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Human/displacement.rsi
+            state: female_shirt
+      LHand:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Human/displacement.rsi
+            state: female_shirt
+      RHand:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Human/displacement.rsi
+            state: female_shirt
+      LLeg:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Human/displacement.rsi
+            state: female_shirt
+      RLeg:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Human/displacement.rsi
+            state: female_shirt
+      LFoot:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Human/displacement.rsi
+            state: female_shirt
+      RFoot:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Human/displacement.rsi
+            state: female_shirt
+
+- type: entity
+  parent:
+  - BaseSpeciesAppearance
+  - CFInventoryHumanEdge
+  id: CFAppearanceHumanEdge
+  categories: [HideSpawnMenu]
+  save: false
+  name: HumanEdge appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganCFHumanEdgeTorso
+      Head: OrganCFHumanEdgeHead
+      ArmLeft: OrganCFHumanEdgeArmLeft
+      ArmRight: OrganCFHumanEdgeArmRight
+      HandLeft: OrganCFHumanEdgeHandLeft
+      HandRight: OrganCFHumanEdgeHandRight
+      LegLeft: OrganCFHumanEdgeLegLeft
+      LegRight: OrganCFHumanEdgeLegRight
+      FootLeft: OrganCFHumanEdgeFootLeft
+      FootRight: OrganCFHumanEdgeFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: CF-Human-Edge
+
+- type: entity
+  parent:
+  - CFAppearanceHumanEdge
+  - BaseSpeciesMobOrganic
+  id: CFMobHumanEdge
+  name: HumanEdge
+  components:
+  - type: HumanoidProfile
+    species: CF-Human-Edge
+  - type: CF-Species
+    species: CF-Human-Edge
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: CFMarkingDisplacementHumanEdge
+  id: OrganCFHumanEdgeExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _CE/Mobs/Species/Human/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _CE/Mobs/Species/Human/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Human
+
+- type: entity
+  parent: [OrganBaseTorsoSexed, OrganBaseTorso, OrganCFHumanEdgeExternal]
+  id: OrganCFHumanEdgeTorso
+
+- type: entity
+  parent: [OrganBaseHeadSexed, OrganBaseHead, OrganCFHumanEdgeExternal]
+  id: OrganCFHumanEdgeHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.FacialHair
+
+- type: entity
+  parent: [OrganBaseArmLeft, OrganCFHumanEdgeExternal]
+  id: OrganCFHumanEdgeArmLeft
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: l_arm_m
+      Female: l_arm_f
+
+- type: entity
+  parent: [OrganBaseArmRight, OrganCFHumanEdgeExternal]
+  id: OrganCFHumanEdgeArmRight
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: r_arm_m
+      Female: r_arm_f
+
+- type: entity
+  parent: [OrganBaseHandLeft, OrganCFHumanEdgeExternal]
+  id: OrganCFHumanEdgeHandLeft
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: l_hand_m
+      Female: l_hand_f
+
+- type: entity
+  parent: [OrganBaseHandRight, OrganCFHumanEdgeExternal]
+  id: OrganCFHumanEdgeHandRight
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: r_hand_m
+      Female: r_hand_f
+
+- type: entity
+  parent: [OrganBaseLegLeft, OrganCFHumanEdgeExternal]
+  id: OrganCFHumanEdgeLegLeft
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: l_leg_m
+      Female: l_leg_f
+
+- type: entity
+  parent: [OrganBaseLegRight, OrganCFHumanEdgeExternal]
+  id: OrganCFHumanEdgeLegRight
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: r_leg_m
+      Female: r_leg_f
+
+- type: entity
+  parent: [OrganBaseFootLeft, OrganCFHumanEdgeExternal]
+  id: OrganCFHumanEdgeFootLeft
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: l_foot_m
+      Female: l_foot_f
+
+- type: entity
+  parent: [OrganBaseFootRight, OrganCFHumanEdgeExternal]
+  id: OrganCFHumanEdgeFootRight
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: r_foot_m
+      Female: r_foot_f
+
+- type: species
+  id: CF-Dwarf-Edge
+  name: cf-sprite-ce-dwarf
+  roundStart: false
+  prototype: CFMobDwarfEdge
+  dollPrototype: CFAppearanceDwarfEdge
+  skinColoration: HumanToned
+
+- type: entity
+  abstract: true
+  id: CFInventoryDwarfEdge
+  components:
+  - type: Inventory
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Dwarf/displacement.rsi
+            state: pants
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Dwarf/displacement.rsi
+            state: shoes
+
+- type: entity
+  abstract: true
+  id: CFMarkingDisplacementDwarfEdge
+  components:
+  - type: VisualOrganMarkings
+    markingsDisplacement:
+      Chest:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Dwarf/displacement.rsi
+            state: pants
+      Tail:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Dwarf/displacement.rsi
+            state: pants
+      Overlay:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Dwarf/displacement.rsi
+            state: pants
+      UndergarmentTop:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Dwarf/displacement.rsi
+            state: pants
+      UndergarmentBottom:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Dwarf/displacement.rsi
+            state: pants
+      Special:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Dwarf/displacement.rsi
+            state: pants
+      LArm:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Dwarf/displacement.rsi
+            state: pants
+      RArm:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Dwarf/displacement.rsi
+            state: pants
+      LHand:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Dwarf/displacement.rsi
+            state: pants
+      RHand:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Dwarf/displacement.rsi
+            state: pants
+      LLeg:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Dwarf/displacement.rsi
+            state: pants
+      RLeg:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Dwarf/displacement.rsi
+            state: pants
+      LFoot:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Dwarf/displacement.rsi
+            state: pants
+      RFoot:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Dwarf/displacement.rsi
+            state: pants
+
+- type: entity
+  parent:
+  - BaseSpeciesAppearance
+  - CFInventoryDwarfEdge
+  id: CFAppearanceDwarfEdge
+  categories: [HideSpawnMenu]
+  save: false
+  name: DwarfEdge appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganCFDwarfEdgeTorso
+      Head: OrganCFDwarfEdgeHead
+      ArmLeft: OrganCFDwarfEdgeArmLeft
+      ArmRight: OrganCFDwarfEdgeArmRight
+      HandLeft: OrganCFDwarfEdgeHandLeft
+      HandRight: OrganCFDwarfEdgeHandRight
+      LegLeft: OrganCFDwarfEdgeLegLeft
+      LegRight: OrganCFDwarfEdgeLegRight
+      FootLeft: OrganCFDwarfEdgeFootLeft
+      FootRight: OrganCFDwarfEdgeFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: CF-Dwarf-Edge
+
+- type: entity
+  parent:
+  - CFAppearanceDwarfEdge
+  - BaseSpeciesMobOrganic
+  id: CFMobDwarfEdge
+  name: DwarfEdge
+  components:
+  - type: HumanoidProfile
+    species: CF-Dwarf-Edge
+  - type: CF-Species
+    species: CF-Dwarf-Edge
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: CFMarkingDisplacementDwarfEdge
+  id: OrganCFDwarfEdgeExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _CE/Mobs/Species/Dwarf/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _CE/Mobs/Species/Dwarf/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Human
+
+- type: entity
+  parent: [OrganBaseTorsoSexed, OrganBaseTorso, OrganCFDwarfEdgeExternal]
+  id: OrganCFDwarfEdgeTorso
+
+- type: entity
+  parent: [OrganBaseHeadSexed, OrganBaseHead, OrganCFDwarfEdgeExternal]
+  id: OrganCFDwarfEdgeHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.FacialHair
+
+- type: entity
+  parent: [OrganBaseArmLeft, OrganCFDwarfEdgeExternal]
+  id: OrganCFDwarfEdgeArmLeft
+
+- type: entity
+  parent: [OrganBaseArmRight, OrganCFDwarfEdgeExternal]
+  id: OrganCFDwarfEdgeArmRight
+
+- type: entity
+  parent: [OrganBaseHandLeft, OrganCFDwarfEdgeExternal]
+  id: OrganCFDwarfEdgeHandLeft
+
+- type: entity
+  parent: [OrganBaseHandRight, OrganCFDwarfEdgeExternal]
+  id: OrganCFDwarfEdgeHandRight
+
+- type: entity
+  parent: [OrganBaseLegLeft, OrganCFDwarfEdgeExternal]
+  id: OrganCFDwarfEdgeLegLeft
+
+- type: entity
+  parent: [OrganBaseLegRight, OrganCFDwarfEdgeExternal]
+  id: OrganCFDwarfEdgeLegRight
+
+- type: entity
+  parent: [OrganBaseFootLeft, OrganCFDwarfEdgeExternal]
+  id: OrganCFDwarfEdgeFootLeft
+
+- type: entity
+  parent: [OrganBaseFootRight, OrganCFDwarfEdgeExternal]
+  id: OrganCFDwarfEdgeFootRight
+
+- type: species
+  id: CF-Elf-Edge
+  name: cf-sprite-ce-elf
+  roundStart: false
+  prototype: CFMobElfEdge
+  dollPrototype: CFAppearanceElfEdge
+  skinColoration: HumanToned
+
+- type: entity
+  abstract: true
+  id: CFInventoryElfEdge
+  components:
+  - type: Inventory
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Elf/displacement.rsi
+            state: male_shirt
+
+- type: entity
+  abstract: true
+  id: CFMarkingDisplacementElfEdge
+  components:
+  - type: VisualOrganMarkings
+    markingsDisplacement:
+      Chest:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Elf/displacement.rsi
+            state: male_shirt
+      Tail:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Elf/displacement.rsi
+            state: male_shirt
+      Overlay:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Elf/displacement.rsi
+            state: male_shirt
+      UndergarmentTop:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Elf/displacement.rsi
+            state: male_shirt
+      UndergarmentBottom:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Elf/displacement.rsi
+            state: male_shirt
+      Special:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Elf/displacement.rsi
+            state: male_shirt
+      LArm:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Elf/displacement.rsi
+            state: male_shirt
+      RArm:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Elf/displacement.rsi
+            state: male_shirt
+      LHand:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Elf/displacement.rsi
+            state: male_shirt
+      RHand:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Elf/displacement.rsi
+            state: male_shirt
+      LLeg:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Elf/displacement.rsi
+            state: male_shirt
+      RLeg:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Elf/displacement.rsi
+            state: male_shirt
+      LFoot:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Elf/displacement.rsi
+            state: male_shirt
+      RFoot:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Elf/displacement.rsi
+            state: male_shirt
+
+- type: entity
+  parent:
+  - BaseSpeciesAppearance
+  - CFInventoryElfEdge
+  id: CFAppearanceElfEdge
+  categories: [HideSpawnMenu]
+  save: false
+  name: ElfEdge appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganCFElfEdgeTorso
+      Head: OrganCFElfEdgeHead
+      ArmLeft: OrganCFElfEdgeArmLeft
+      ArmRight: OrganCFElfEdgeArmRight
+      HandLeft: OrganCFElfEdgeHandLeft
+      HandRight: OrganCFElfEdgeHandRight
+      LegLeft: OrganCFElfEdgeLegLeft
+      LegRight: OrganCFElfEdgeLegRight
+      FootLeft: OrganCFElfEdgeFootLeft
+      FootRight: OrganCFElfEdgeFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: CF-Elf-Edge
+
+- type: entity
+  parent:
+  - CFAppearanceElfEdge
+  - BaseSpeciesMobOrganic
+  id: CFMobElfEdge
+  name: ElfEdge
+  components:
+  - type: HumanoidProfile
+    species: CF-Elf-Edge
+  - type: CF-Species
+    species: CF-Elf-Edge
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: CFMarkingDisplacementElfEdge
+  id: OrganCFElfEdgeExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _CE/Mobs/Species/Elf/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _CE/Mobs/Species/Elf/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: CFCEElf
+
+- type: entity
+  parent: [OrganBaseTorsoSexed, OrganBaseTorso, OrganCFElfEdgeExternal]
+  id: OrganCFElfEdgeTorso
+
+- type: entity
+  parent: [OrganBaseHeadSexed, OrganBaseHead, OrganCFElfEdgeExternal]
+  id: OrganCFElfEdgeHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.FacialHair
+
+- type: entity
+  parent: [OrganBaseArmLeft, OrganCFElfEdgeExternal]
+  id: OrganCFElfEdgeArmLeft
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: l_arm_m
+      Female: l_arm_f
+
+- type: entity
+  parent: [OrganBaseArmRight, OrganCFElfEdgeExternal]
+  id: OrganCFElfEdgeArmRight
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: r_arm_m
+      Female: r_arm_f
+
+- type: entity
+  parent: [OrganBaseHandLeft, OrganCFElfEdgeExternal]
+  id: OrganCFElfEdgeHandLeft
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: l_hand_m
+      Female: l_hand_f
+
+- type: entity
+  parent: [OrganBaseHandRight, OrganCFElfEdgeExternal]
+  id: OrganCFElfEdgeHandRight
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: r_hand_m
+      Female: r_hand_f
+
+- type: entity
+  parent: [OrganBaseLegLeft, OrganCFElfEdgeExternal]
+  id: OrganCFElfEdgeLegLeft
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: l_leg_m
+      Female: l_leg_f
+
+- type: entity
+  parent: [OrganBaseLegRight, OrganCFElfEdgeExternal]
+  id: OrganCFElfEdgeLegRight
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: r_leg_m
+      Female: r_leg_f
+
+- type: entity
+  parent: [OrganBaseFootLeft, OrganCFElfEdgeExternal]
+  id: OrganCFElfEdgeFootLeft
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: l_foot_m
+      Female: l_foot_f
+
+- type: entity
+  parent: [OrganBaseFootRight, OrganCFElfEdgeExternal]
+  id: OrganCFElfEdgeFootRight
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: r_foot_m
+      Female: r_foot_f
+
+- type: species
+  id: CF-Goblin-Edge
+  name: cf-sprite-ce-goblin
+  roundStart: false
+  prototype: CFMobGoblinEdge
+  dollPrototype: CFAppearanceGoblinEdge
+  skinColoration: Hues
+  defaultSkinTone: "#74964d"
+
+- type: entity
+  abstract: true
+  id: CFInventoryGoblinEdge
+  components:
+  - type: Hands
+    leftHandDisplacement:
+      sizeMaps:
+        32:
+          sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+          state: hands
+    rightHandDisplacement:
+      sizeMaps:
+        32:
+          sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+          state: hands
+  - type: Inventory
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: shirt
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: cloak
+      gloves:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: gloves
+      head:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: head
+      eyes:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: eyes
+      mask:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: mask
+      neck:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: neck
+      belt:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: belt
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: shoes
+
+- type: entity
+  abstract: true
+  id: CFMarkingDisplacementGoblinEdge
+  components:
+  - type: VisualOrganMarkings
+    markingsDisplacement:
+      Head:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: head
+      Hair:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: hair
+      FacialHair:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: head
+      Snout:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: head
+      SnoutCover:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: head
+      HeadSide:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: head
+      HeadTop:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: head
+      Chest:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: shirt
+      Tail:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: shirt
+      Overlay:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: shirt
+      UndergarmentTop:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: shirt
+      UndergarmentBottom:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: shirt
+      Special:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: shirt
+      LArm:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: shirt
+      RArm:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: shirt
+      LHand:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: shirt
+      RHand:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: shirt
+      LLeg:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: shirt
+      RLeg:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: shirt
+      LFoot:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: shirt
+      RFoot:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Goblin/displacement.rsi
+            state: shirt
+
+- type: entity
+  parent:
+  - BaseSpeciesAppearance
+  - CFInventoryGoblinEdge
+  id: CFAppearanceGoblinEdge
+  categories: [HideSpawnMenu]
+  save: false
+  name: GoblinEdge appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganCFGoblinEdgeTorso
+      Head: OrganCFGoblinEdgeHead
+      ArmLeft: OrganCFGoblinEdgeArmLeft
+      ArmRight: OrganCFGoblinEdgeArmRight
+      HandLeft: OrganCFGoblinEdgeHandLeft
+      HandRight: OrganCFGoblinEdgeHandRight
+      LegLeft: OrganCFGoblinEdgeLegLeft
+      LegRight: OrganCFGoblinEdgeLegRight
+      FootLeft: OrganCFGoblinEdgeFootLeft
+      FootRight: OrganCFGoblinEdgeFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: CF-Goblin-Edge
+
+- type: entity
+  parent:
+  - CFAppearanceGoblinEdge
+  - BaseSpeciesMobOrganic
+  id: CFMobGoblinEdge
+  name: GoblinEdge
+  components:
+  - type: HumanoidProfile
+    species: CF-Goblin-Edge
+  - type: CF-Species
+    species: CF-Goblin-Edge
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: CFMarkingDisplacementGoblinEdge
+  id: OrganCFGoblinEdgeExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _CE/Mobs/Species/Goblin/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _CE/Mobs/Species/Goblin/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: CFCEGoblin
+
+- type: entity
+  parent: [OrganBaseTorsoSexed, OrganBaseTorso, OrganCFGoblinEdgeExternal]
+  id: OrganCFGoblinEdgeTorso
+
+- type: entity
+  parent: [OrganBaseHeadSexed, OrganBaseHead, OrganCFGoblinEdgeExternal]
+  id: OrganCFGoblinEdgeHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.FacialHair
+
+- type: entity
+  parent: [OrganBaseArmLeft, OrganCFGoblinEdgeExternal]
+  id: OrganCFGoblinEdgeArmLeft
+
+- type: entity
+  parent: [OrganBaseArmRight, OrganCFGoblinEdgeExternal]
+  id: OrganCFGoblinEdgeArmRight
+
+- type: entity
+  parent: [OrganBaseHandLeft, OrganCFGoblinEdgeExternal]
+  id: OrganCFGoblinEdgeHandLeft
+
+- type: entity
+  parent: [OrganBaseHandRight, OrganCFGoblinEdgeExternal]
+  id: OrganCFGoblinEdgeHandRight
+
+- type: entity
+  parent: [OrganBaseLegLeft, OrganCFGoblinEdgeExternal]
+  id: OrganCFGoblinEdgeLegLeft
+
+- type: entity
+  parent: [OrganBaseLegRight, OrganCFGoblinEdgeExternal]
+  id: OrganCFGoblinEdgeLegRight
+
+- type: entity
+  parent: [OrganBaseFootLeft, OrganCFGoblinEdgeExternal]
+  id: OrganCFGoblinEdgeFootLeft
+
+- type: entity
+  parent: [OrganBaseFootRight, OrganCFGoblinEdgeExternal]
+  id: OrganCFGoblinEdgeFootRight
+
+- type: species
+  id: CF-Catfolk-Carcat
+  name: cf-sprite-ce-carcat
+  roundStart: false
+  prototype: CFMobCarcat
+  dollPrototype: CFAppearanceCarcat
+  skinColoration: Hues
+  defaultSkinTone: "#4a382f"
+
+- type: entity
+  abstract: true
+  id: CFInventoryCarcat
+  components:
+  - type: Hands
+    leftHandDisplacement:
+      sizeMaps:
+        32:
+          sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+          state: hands_left
+    rightHandDisplacement:
+      sizeMaps:
+        32:
+          sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+          state: hands_right
+  - type: Inventory
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+            state: shirt
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+            state: cloak
+      gloves:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+            state: gloves
+      eyes:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+            state: eyes
+      mask:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+            state: mask
+
+- type: entity
+  abstract: true
+  id: CFMarkingDisplacementCarcat
+  components:
+  - type: VisualOrganMarkings
+    markingsDisplacement:
+      Hair:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+            state: hair
+      FacialHair:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+            state: hair
+      Chest:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+            state: shirt
+      Tail:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+            state: shirt
+      Overlay:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+            state: shirt
+      UndergarmentTop:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+            state: shirt
+      UndergarmentBottom:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+            state: shirt
+      Special:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+            state: shirt
+      LArm:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+            state: shirt
+      RArm:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+            state: shirt
+      LHand:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+            state: shirt
+      RHand:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+            state: shirt
+      LLeg:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+            state: shirt
+      RLeg:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+            state: shirt
+      LFoot:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+            state: shirt
+      RFoot:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carcat/displacement.rsi
+            state: shirt
+
+- type: entity
+  parent:
+  - BaseSpeciesAppearance
+  - CFInventoryCarcat
+  id: CFAppearanceCarcat
+  categories: [HideSpawnMenu]
+  save: false
+  name: Carcat appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganCFCarcatTorso
+      Head: OrganCFCarcatHead
+      ArmLeft: OrganCFCarcatArmLeft
+      ArmRight: OrganCFCarcatArmRight
+      HandLeft: OrganCFCarcatHandLeft
+      HandRight: OrganCFCarcatHandRight
+      LegLeft: OrganCFCarcatLegLeft
+      LegRight: OrganCFCarcatLegRight
+      FootLeft: OrganCFCarcatFootLeft
+      FootRight: OrganCFCarcatFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: CF-Catfolk-Carcat
+
+- type: entity
+  parent:
+  - CFAppearanceCarcat
+  - BaseSpeciesMobOrganic
+  id: CFMobCarcat
+  name: Carcat
+  components:
+  - type: HumanoidProfile
+    species: CF-Catfolk-Carcat
+  - type: CF-Species
+    species: CF-Catfolk-Carcat
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: CFMarkingDisplacementCarcat
+  id: OrganCFCarcatExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _CE/Mobs/Species/Carcat/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _CE/Mobs/Species/Carcat/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: CFCECarcat
+
+- type: entity
+  parent: [OrganBaseTorso, OrganCFCarcatExternal]
+  id: OrganCFCarcatTorso
+
+- type: entity
+  parent: [OrganBaseHead, OrganCFCarcatExternal]
+  id: OrganCFCarcatHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.FacialHair
+
+- type: entity
+  parent: [OrganBaseArmLeft, OrganCFCarcatExternal]
+  id: OrganCFCarcatArmLeft
+
+- type: entity
+  parent: [OrganBaseArmRight, OrganCFCarcatExternal]
+  id: OrganCFCarcatArmRight
+
+- type: entity
+  parent: [OrganBaseHandLeft, OrganCFCarcatExternal]
+  id: OrganCFCarcatHandLeft
+
+- type: entity
+  parent: [OrganBaseHandRight, OrganCFCarcatExternal]
+  id: OrganCFCarcatHandRight
+
+- type: entity
+  parent: [OrganBaseLegLeft, OrganCFCarcatExternal]
+  id: OrganCFCarcatLegLeft
+
+- type: entity
+  parent: [OrganBaseLegRight, OrganCFCarcatExternal]
+  id: OrganCFCarcatLegRight
+
+- type: entity
+  parent: [OrganBaseFootLeft, OrganCFCarcatExternal]
+  id: OrganCFCarcatFootLeft
+
+- type: entity
+  parent: [OrganBaseFootRight, OrganCFCarcatExternal]
+  id: OrganCFCarcatFootRight
+
+- type: species
+  id: CF-Tengu-Carrin
+  name: cf-sprite-ce-carrin
+  roundStart: false
+  prototype: CFMobCarrin
+  dollPrototype: CFAppearanceCarrin
+  skinColoration: Hues
+  defaultSkinTone: "#edd9cc"
+
+- type: species
+  id: CF-Strix-Carrin
+  name: cf-sprite-ce-carrin
+  roundStart: false
+  prototype: CFMobCarrin
+  dollPrototype: CFAppearanceCarrin
+  skinColoration: Hues
+  defaultSkinTone: "#edd9cc"
+
+- type: entity
+  abstract: true
+  id: CFInventoryCarrin
+  components:
+  - type: Hands
+    leftHandDisplacement:
+      sizeMaps:
+        32:
+          sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+          state: hand_l
+    rightHandDisplacement:
+      sizeMaps:
+        32:
+          sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+          state: hand_r
+  - type: Inventory
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+            state: shirt
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+            state: cloak
+      gloves:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+            state: gloves
+      eyes:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+            state: eyes
+      mask:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+            state: mask
+      belt:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+            state: belt
+
+- type: entity
+  abstract: true
+  id: CFMarkingDisplacementCarrin
+  components:
+  - type: VisualOrganMarkings
+    markingsDisplacement:
+      Chest:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+            state: shirt
+      Tail:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+            state: shirt
+      Overlay:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+            state: shirt
+      UndergarmentTop:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+            state: shirt
+      UndergarmentBottom:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+            state: shirt
+      Special:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+            state: shirt
+      LArm:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+            state: shirt
+      RArm:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+            state: shirt
+      LHand:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+            state: shirt
+      RHand:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+            state: shirt
+      LLeg:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+            state: shirt
+      RLeg:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+            state: shirt
+      LFoot:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+            state: shirt
+      RFoot:
+        sizeMaps:
+          32:
+            sprite: _CE/Mobs/Species/Carrin/displacement.rsi
+            state: shirt
+
+- type: entity
+  parent:
+  - BaseSpeciesAppearance
+  - CFInventoryCarrin
+  id: CFAppearanceCarrin
+  categories: [HideSpawnMenu]
+  save: false
+  name: Carrin appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganCFCarrinTorso
+      Head: OrganCFCarrinHead
+      ArmLeft: OrganCFCarrinArmLeft
+      ArmRight: OrganCFCarrinArmRight
+      HandLeft: OrganCFCarrinHandLeft
+      HandRight: OrganCFCarrinHandRight
+      LegLeft: OrganCFCarrinLegLeft
+      LegRight: OrganCFCarrinLegRight
+      FootLeft: OrganCFCarrinFootLeft
+      FootRight: OrganCFCarrinFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: CF-Tengu-Carrin
+
+- type: entity
+  parent:
+  - CFAppearanceCarrin
+  - BaseSpeciesMobOrganic
+  id: CFMobCarrin
+  name: Carrin
+  components:
+  - type: HumanoidProfile
+    species: CF-Tengu-Carrin
+  - type: CF-Species
+    species: CF-Tengu-Carrin
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: CFMarkingDisplacementCarrin
+  id: OrganCFCarrinExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _CE/Mobs/Species/Carrin/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _CE/Mobs/Species/Carrin/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: CFCECarrin
+
+- type: entity
+  parent: [OrganBaseTorso, OrganCFCarrinExternal]
+  id: OrganCFCarrinTorso
+
+- type: entity
+  parent: [OrganBaseHead, OrganCFCarrinExternal]
+  id: OrganCFCarrinHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.FacialHair
+
+- type: entity
+  parent: [OrganBaseArmLeft, OrganCFCarrinExternal]
+  id: OrganCFCarrinArmLeft
+
+- type: entity
+  parent: [OrganBaseArmRight, OrganCFCarrinExternal]
+  id: OrganCFCarrinArmRight
+
+- type: entity
+  parent: [OrganBaseHandLeft, OrganCFCarrinExternal]
+  id: OrganCFCarrinHandLeft
+
+- type: entity
+  parent: [OrganBaseHandRight, OrganCFCarrinExternal]
+  id: OrganCFCarrinHandRight
+
+- type: entity
+  parent: [OrganBaseLegLeft, OrganCFCarrinExternal]
+  id: OrganCFCarrinLegLeft
+
+- type: entity
+  parent: [OrganBaseLegRight, OrganCFCarrinExternal]
+  id: OrganCFCarrinLegRight
+
+- type: entity
+  parent: [OrganBaseFootLeft, OrganCFCarrinExternal]
+  id: OrganCFCarrinFootLeft
+
+- type: entity
+  parent: [OrganBaseFootRight, OrganCFCarrinExternal]
+  id: OrganCFCarrinFootRight
+
+- type: species
+  id: CF-Leshy-Silva
+  name: cf-sprite-ce-silva
+  roundStart: false
+  prototype: CFMobSilva
+  dollPrototype: CFAppearanceSilva
+  skinColoration: Hues
+  defaultSkinTone: "#6c741d"
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: CFAppearanceSilva
+  categories: [HideSpawnMenu]
+  save: false
+  name: Silva appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganCFSilvaTorso
+      Head: OrganCFSilvaHead
+      ArmLeft: OrganCFSilvaArmLeft
+      ArmRight: OrganCFSilvaArmRight
+      HandLeft: OrganCFSilvaHandLeft
+      HandRight: OrganCFSilvaHandRight
+      LegLeft: OrganCFSilvaLegLeft
+      LegRight: OrganCFSilvaLegRight
+      FootLeft: OrganCFSilvaFootLeft
+      FootRight: OrganCFSilvaFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: CF-Leshy-Silva
+
+- type: entity
+  parent:
+  - CFAppearanceSilva
+  - BaseSpeciesMobOrganic
+  id: CFMobSilva
+  name: Silva
+  components:
+  - type: HumanoidProfile
+    species: CF-Leshy-Silva
+  - type: CF-Species
+    species: CF-Leshy-Silva
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  id: OrganCFSilvaExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _CE/Mobs/Species/Silva/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _CE/Mobs/Species/Silva/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: CFCESilva
+
+- type: entity
+  parent: [OrganBaseTorsoSexed, OrganBaseTorso, OrganCFSilvaExternal]
+  id: OrganCFSilvaTorso
+
+- type: entity
+  parent: [OrganBaseHeadSexed, OrganBaseHead, OrganCFSilvaExternal]
+  id: OrganCFSilvaHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.FacialHair
+
+- type: entity
+  parent: [OrganBaseArmLeft, OrganCFSilvaExternal]
+  id: OrganCFSilvaArmLeft
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: l_arm_m
+      Female: l_arm_f
+
+- type: entity
+  parent: [OrganBaseArmRight, OrganCFSilvaExternal]
+  id: OrganCFSilvaArmRight
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: r_arm_m
+      Female: r_arm_f
+
+- type: entity
+  parent: [OrganBaseHandLeft, OrganCFSilvaExternal]
+  id: OrganCFSilvaHandLeft
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: l_hand_m
+      Female: l_hand_f
+
+- type: entity
+  parent: [OrganBaseHandRight, OrganCFSilvaExternal]
+  id: OrganCFSilvaHandRight
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: r_hand_m
+      Female: r_hand_f
+
+- type: entity
+  parent: [OrganBaseLegLeft, OrganCFSilvaExternal]
+  id: OrganCFSilvaLegLeft
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: l_leg_m
+      Female: l_leg_f
+
+- type: entity
+  parent: [OrganBaseLegRight, OrganCFSilvaExternal]
+  id: OrganCFSilvaLegRight
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: r_leg_m
+      Female: r_leg_f
+
+- type: entity
+  parent: [OrganBaseFootLeft, OrganCFSilvaExternal]
+  id: OrganCFSilvaFootLeft
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: l_foot_m
+      Female: l_foot_f
+
+- type: entity
+  parent: [OrganBaseFootRight, OrganCFSilvaExternal]
+  id: OrganCFSilvaFootRight
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: r_foot_m
+      Female: r_foot_f
+
+# The ancestor kobold sheet is one full-body state. The chest draws it. The other organs stay hidden.
+- type: species
+  id: CF-Kobold-Animal
+  name: cf-sprite-kobold
+  roundStart: false
+  prototype: CFMobKoboldAnimal
+  dollPrototype: CFAppearanceKoboldAnimal
+  skinColoration: Hues
+  defaultSkinTone: "#34a223"
+
+# Reptilian body, own species id so FindAncestry stays on Kobold.
+- type: species
+  id: CF-Kobold-Reptilian
+  name: cf-sprite-reptilian
+  roundStart: false
+  prototype: CFMobReptilian
+  dollPrototype: CFAppearanceReptilian
+  skinColoration: Hues
+  defaultSkinTone: "#34a223"
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: CFAppearanceKoboldAnimal
+  categories: [HideSpawnMenu]
+  save: false
+  name: KoboldAnimal appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganCFKoboldAnimalTorso
+      Head: OrganCFKoboldAnimalHead
+      ArmLeft: OrganCFKoboldAnimalArmLeft
+      ArmRight: OrganCFKoboldAnimalArmRight
+      HandLeft: OrganCFKoboldAnimalHandLeft
+      HandRight: OrganCFKoboldAnimalHandRight
+      LegLeft: OrganCFKoboldAnimalLegLeft
+      LegRight: OrganCFKoboldAnimalLegRight
+      FootLeft: OrganCFKoboldAnimalFootLeft
+      FootRight: OrganCFKoboldAnimalFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: CF-Kobold-Animal
+
+- type: entity
+  parent:
+  - CFAppearanceKoboldAnimal
+  - BaseSpeciesMobOrganic
+  id: CFMobKoboldAnimal
+  name: KoboldAnimal
+  components:
+  - type: HumanoidProfile
+    species: CF-Kobold-Animal
+  - type: CF-Species
+    species: CF-Kobold-Animal
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  id: OrganCFKoboldAnimalExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Animals/Ancestors/kobold.rsi
+    state: kobold
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Animals/Ancestors/kobold.rsi
+      state: kobold
+      visible: false
+  - type: VisualOrganMarkings
+    markingData:
+      group: None
+
+- type: entity
+  parent: [OrganBaseTorso, OrganCFKoboldAnimalExternal]
+  id: OrganCFKoboldAnimalTorso
+  components:
+  - type: Sprite
+    state: kobold
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Animals/Ancestors/kobold.rsi
+      state: kobold
+      visible: true
+
+- type: entity
+  parent: [OrganBaseHead, OrganCFKoboldAnimalExternal]
+  id: OrganCFKoboldAnimalHead
+
+- type: entity
+  parent: [OrganBaseArmLeft, OrganCFKoboldAnimalExternal]
+  id: OrganCFKoboldAnimalArmLeft
+
+- type: entity
+  parent: [OrganBaseArmRight, OrganCFKoboldAnimalExternal]
+  id: OrganCFKoboldAnimalArmRight
+
+- type: entity
+  parent: [OrganBaseHandLeft, OrganCFKoboldAnimalExternal]
+  id: OrganCFKoboldAnimalHandLeft
+
+- type: entity
+  parent: [OrganBaseHandRight, OrganCFKoboldAnimalExternal]
+  id: OrganCFKoboldAnimalHandRight
+
+- type: entity
+  parent: [OrganBaseLegLeft, OrganCFKoboldAnimalExternal]
+  id: OrganCFKoboldAnimalLegLeft
+
+- type: entity
+  parent: [OrganBaseLegRight, OrganCFKoboldAnimalExternal]
+  id: OrganCFKoboldAnimalLegRight
+
+- type: entity
+  parent: [OrganBaseFootLeft, OrganCFKoboldAnimalExternal]
+  id: OrganCFKoboldAnimalFootLeft
+
+- type: entity
+  parent: [OrganBaseFootRight, OrganCFKoboldAnimalExternal]
+  id: OrganCFKoboldAnimalFootRight
+
+
+# Crystall Edge renamed its Tiefling sheet to Infernal. One body, one species id per ancestry.
+# The picker shows it only while the Nephilim heritage is selected.
+- type: species
+  id: CF-Human-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Dwarf-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Goblin-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Elf-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Gnome-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Halfling-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Leshy-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Orc-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Catfolk-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Hobgoblin-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Kholo-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Kobold-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Lizardfolk-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Ratfolk-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Tengu-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Tripkee-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Azarketi-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Android-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Fetchling-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Fleshwarp-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Kitsune-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Sprite-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: species
+  id: CF-Strix-Infernal
+  name: cf-sprite-ce-infernal
+  roundStart: false
+  prototype: CFMobInfernal
+  dollPrototype: CFAppearanceInfernal
+  skinColoration: Hues
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: CFAppearanceInfernal
+  categories: [HideSpawnMenu]
+  save: false
+  name: Infernal appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganCFInfernalTorso
+      Head: OrganCFInfernalHead
+      ArmLeft: OrganCFInfernalArmLeft
+      ArmRight: OrganCFInfernalArmRight
+      HandLeft: OrganCFInfernalHandLeft
+      HandRight: OrganCFInfernalHandRight
+      LegLeft: OrganCFInfernalLegLeft
+      LegRight: OrganCFInfernalLegRight
+      FootLeft: OrganCFInfernalFootLeft
+      FootRight: OrganCFInfernalFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: CF-Human-Infernal
+
+- type: entity
+  parent:
+  - CFAppearanceInfernal
+  - BaseSpeciesMobOrganic
+  id: CFMobInfernal
+  name: Infernal
+  components:
+  - type: HumanoidProfile
+    species: CF-Human-Infernal
+  - type: CF-Species
+    species: CF-Human-Infernal
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  id: OrganCFInfernalExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _CE/Mobs/Species/Infernal/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _CE/Mobs/Species/Infernal/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: CFCEInfernal
+
+- type: entity
+  parent: [OrganBaseTorsoSexed, OrganBaseTorso, OrganCFInfernalExternal]
+  id: OrganCFInfernalTorso
+
+- type: entity
+  parent: [OrganBaseHeadSexed, OrganBaseHead, OrganCFInfernalExternal]
+  id: OrganCFInfernalHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.FacialHair
+
+- type: entity
+  parent: [OrganBaseArmLeft, OrganCFInfernalExternal]
+  id: OrganCFInfernalArmLeft
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: l_arm_m
+      Female: l_arm_f
+
+- type: entity
+  parent: [OrganBaseArmRight, OrganCFInfernalExternal]
+  id: OrganCFInfernalArmRight
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: r_arm_m
+      Female: r_arm_f
+
+- type: entity
+  parent: [OrganBaseHandLeft, OrganCFInfernalExternal]
+  id: OrganCFInfernalHandLeft
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: l_hand_m
+      Female: l_hand_f
+
+- type: entity
+  parent: [OrganBaseHandRight, OrganCFInfernalExternal]
+  id: OrganCFInfernalHandRight
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: r_hand_m
+      Female: r_hand_f
+
+- type: entity
+  parent: [OrganBaseLegLeft, OrganCFInfernalExternal]
+  id: OrganCFInfernalLegLeft
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: l_leg_m
+      Female: l_leg_f
+
+- type: entity
+  parent: [OrganBaseLegRight, OrganCFInfernalExternal]
+  id: OrganCFInfernalLegRight
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: r_leg_m
+      Female: r_leg_f
+
+- type: entity
+  parent: [OrganBaseFootLeft, OrganCFInfernalExternal]
+  id: OrganCFInfernalFootLeft
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: l_foot_m
+      Female: l_foot_f
+
+- type: entity
+  parent: [OrganBaseFootRight, OrganCFInfernalExternal]
+  id: OrganCFInfernalFootRight
+  components:
+  - type: VisualOrgan
+    sexStateOverrides:
+      Male: r_foot_m
+      Female: r_foot_f
+

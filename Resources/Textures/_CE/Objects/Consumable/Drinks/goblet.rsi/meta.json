@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by prazat911, Bottomless goblet by Afrokada, inhands by D1nazewwr",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "copper_goblet"
+    },
+    {
+      "name": "iron_goblet"
+    },
+    {
+      "name": "gold_goblet"
+    },
+    {
+      "name": "fill-1"
+    },
+    {
+      "name": "fill-2"
+    },
+    {
+      "name": "fill-3"
+    },
+    {
+      "name": "fill-4"
+    },
+    {
+      "name": "fill-5"
+    },
+    {
+      "name": "bottomless_goblet"
+    },
+    {
+      "name": "bottomless-fill-1",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "bottomless-fill-2",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bottomless_goblet-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "bottomless_goblet-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "copper_goblet-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "copper_goblet-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "gold_goblet-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "gold_goblet-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "iron_goblet-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "iron_goblet-inhand-right",
+      "directions": 4
+    }
+  ]
+}

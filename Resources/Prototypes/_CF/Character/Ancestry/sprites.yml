@@ -1,0 +1,1300 @@
+# CarpFinder: extra bodies for ancestries. Art stays in the fork folder it was copied from
+# (_Starlight, _Impstation), with meta.json beside each RSI. Sprite species stay
+# roundStart false so they do not show up as their own ancestry.
+
+- type: species
+  id: CF-Elf-Pointed
+  name: cf-sprite-elf
+  roundStart: false
+  prototype: CFMobElfPointed
+  dollPrototype: CFAppearanceElfPointed
+  skinColoration: HumanToned
+
+- type: species
+  id: CF-Goblin-Green
+  name: cf-sprite-goblin
+  roundStart: false
+  prototype: CFMobGoblinGreen
+  dollPrototype: CFAppearanceGoblinGreen
+  skinColoration: Hues
+  defaultSkinTone: "#74964d"
+
+- type: species
+  id: CF-Catfolk-Felionoid
+  name: cf-sprite-felionoid
+  roundStart: false
+  prototype: CFMobFelionoid
+  dollPrototype: CFAppearanceFelionoid
+  skinColoration: Hues
+
+- type: species
+  id: CF-Ratfolk-Rodentia
+  name: cf-sprite-rodentia
+  roundStart: false
+  prototype: CFMobRodentia
+  dollPrototype: CFAppearanceRodentia
+  skinColoration: Hues
+
+- type: species
+  id: CF-Fetchling-Shadekin
+  name: cf-sprite-shadekin
+  roundStart: false
+  prototype: CFMobShadekin
+  dollPrototype: CFAppearanceShadekin
+  skinColoration: Hues
+
+- type: species
+  id: CF-Tengu-Resomi
+  name: cf-sprite-resomi
+  roundStart: false
+  prototype: CFMobResomi
+  dollPrototype: CFAppearanceResomi
+  skinColoration: Hues
+
+- type: species
+  id: CF-Strix-Resomi
+  name: cf-sprite-resomi
+  roundStart: false
+  prototype: CFMobResomi
+  dollPrototype: CFAppearanceResomi
+  skinColoration: Hues
+
+- type: species
+  id: CF-Tengu-Avali
+  name: cf-sprite-avali
+  roundStart: false
+  prototype: CFMobAvali
+  dollPrototype: CFAppearanceAvali
+  skinColoration: Hues
+
+- type: species
+  id: CF-Strix-Avali
+  name: cf-sprite-avali
+  roundStart: false
+  prototype: CFMobAvali
+  dollPrototype: CFAppearanceAvali
+  skinColoration: Hues
+
+- type: species
+  id: CF-Tengu-Vox
+  name: cf-sprite-vox
+  roundStart: false
+  prototype: CFMobVox
+  dollPrototype: CFAppearanceVox
+  skinColoration: VoxFeathers
+  defaultSkinTone: "#6c741d"
+
+- type: species
+  id: CF-Strix-Vox
+  name: cf-sprite-vox
+  roundStart: false
+  prototype: CFMobVox
+  dollPrototype: CFAppearanceVox
+  skinColoration: VoxFeathers
+  defaultSkinTone: "#6c741d"
+
+- type: species
+  id: CF-Lizardfolk-Reptilian
+  name: cf-sprite-reptilian
+  roundStart: false
+  prototype: CFMobReptilian
+  dollPrototype: CFAppearanceReptilian
+  skinColoration: Hues
+  defaultSkinTone: "#34a223"
+
+- type: species
+  id: CF-Leshy-Diona
+  name: cf-sprite-diona
+  roundStart: false
+  prototype: CFMobDiona
+  dollPrototype: CFAppearanceDiona
+  skinColoration: Hues
+  defaultSkinTone: "#cdb369"
+
+- type: species
+  id: CF-Kitsune-Vulp
+  name: cf-sprite-vulp
+  roundStart: false
+  prototype: CFMobVulp
+  dollPrototype: CFAppearanceVulp
+  skinColoration: VulpkaninColors
+  defaultSkinTone: "#5a3f2d"
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: CFAppearanceElfPointed
+  categories: [HideSpawnMenu]
+  save: false
+  name: ElfPointed appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganCFElfPointedTorso
+      Head: OrganCFElfPointedHead
+      ArmLeft: OrganCFElfPointedArmLeft
+      ArmRight: OrganCFElfPointedArmRight
+      HandLeft: OrganCFElfPointedHandLeft
+      HandRight: OrganCFElfPointedHandRight
+      LegLeft: OrganCFElfPointedLegLeft
+      LegRight: OrganCFElfPointedLegRight
+      FootLeft: OrganCFElfPointedFootLeft
+      FootRight: OrganCFElfPointedFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: CF-Elf-Pointed
+
+- type: entity
+  parent:
+  - CFAppearanceElfPointed
+  - BaseSpeciesMobOrganic
+  id: CFMobElfPointed
+  name: ElfPointed
+  components:
+  - type: HumanoidProfile
+    species: CF-Elf-Pointed
+  - type: CF-Species
+    species: CF-Elf-Pointed
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  id: OrganCFElfPointedExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Elf/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _Starlight/Mobs/Species/Elf/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Human
+
+- type: entity
+  parent: [OrganBaseTorsoSexed, OrganBaseTorso, OrganCFElfPointedExternal]
+  id: OrganCFElfPointedTorso
+
+- type: entity
+  parent: [OrganBaseHeadSexed, OrganBaseHead, OrganCFElfPointedExternal]
+  id: OrganCFElfPointedHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.FacialHair
+
+- type: entity
+  parent: [OrganBaseArmLeft, OrganCFElfPointedExternal]
+  id: OrganCFElfPointedArmLeft
+
+- type: entity
+  parent: [OrganBaseArmRight, OrganCFElfPointedExternal]
+  id: OrganCFElfPointedArmRight
+
+- type: entity
+  parent: [OrganBaseHandLeft, OrganCFElfPointedExternal]
+  id: OrganCFElfPointedHandLeft
+
+- type: entity
+  parent: [OrganBaseHandRight, OrganCFElfPointedExternal]
+  id: OrganCFElfPointedHandRight
+
+- type: entity
+  parent: [OrganBaseLegLeft, OrganCFElfPointedExternal]
+  id: OrganCFElfPointedLegLeft
+
+- type: entity
+  parent: [OrganBaseLegRight, OrganCFElfPointedExternal]
+  id: OrganCFElfPointedLegRight
+
+- type: entity
+  parent: [OrganBaseFootLeft, OrganCFElfPointedExternal]
+  id: OrganCFElfPointedFootLeft
+
+- type: entity
+  parent: [OrganBaseFootRight, OrganCFElfPointedExternal]
+  id: OrganCFElfPointedFootRight
+
+- type: entity
+  parent:
+  - BaseSpeciesAppearance
+  - CFInventoryGoblin
+  id: CFAppearanceGoblinGreen
+  categories: [HideSpawnMenu]
+  save: false
+  name: GoblinGreen appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganCFGoblinGreenTorso
+      Head: OrganCFGoblinGreenHead
+      ArmLeft: OrganCFGoblinGreenArmLeft
+      ArmRight: OrganCFGoblinGreenArmRight
+      HandLeft: OrganCFGoblinGreenHandLeft
+      HandRight: OrganCFGoblinGreenHandRight
+      LegLeft: OrganCFGoblinGreenLegLeft
+      LegRight: OrganCFGoblinGreenLegRight
+      FootLeft: OrganCFGoblinGreenFootLeft
+      FootRight: OrganCFGoblinGreenFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: CF-Goblin-Green
+
+- type: entity
+  parent:
+  - CFAppearanceGoblinGreen
+  - BaseSpeciesMobOrganic
+  id: CFMobGoblinGreen
+  name: GoblinGreen
+  components:
+  - type: HumanoidProfile
+    species: CF-Goblin-Green
+  - type: CF-Species
+    species: CF-Goblin-Green
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: CFMarkingDisplacementGoblin
+  id: OrganCFGoblinGreenExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Human
+
+- type: entity
+  parent: [OrganBaseTorso, OrganCFGoblinGreenExternal]
+  id: OrganCFGoblinGreenTorso
+
+- type: entity
+  parent: [OrganBaseHead, OrganCFGoblinGreenExternal]
+  id: OrganCFGoblinGreenHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.FacialHair
+
+- type: entity
+  parent: [OrganBaseArmLeft, OrganCFGoblinGreenExternal]
+  id: OrganCFGoblinGreenArmLeft
+
+- type: entity
+  parent: [OrganBaseArmRight, OrganCFGoblinGreenExternal]
+  id: OrganCFGoblinGreenArmRight
+
+- type: entity
+  parent: [OrganBaseHandLeft, OrganCFGoblinGreenExternal]
+  id: OrganCFGoblinGreenHandLeft
+
+- type: entity
+  parent: [OrganBaseHandRight, OrganCFGoblinGreenExternal]
+  id: OrganCFGoblinGreenHandRight
+
+- type: entity
+  parent: [OrganBaseLegLeft, OrganCFGoblinGreenExternal]
+  id: OrganCFGoblinGreenLegLeft
+
+- type: entity
+  parent: [OrganBaseLegRight, OrganCFGoblinGreenExternal]
+  id: OrganCFGoblinGreenLegRight
+
+- type: entity
+  parent: [OrganBaseFootLeft, OrganCFGoblinGreenExternal]
+  id: OrganCFGoblinGreenFootLeft
+
+- type: entity
+  parent: [OrganBaseFootRight, OrganCFGoblinGreenExternal]
+  id: OrganCFGoblinGreenFootRight
+
+- type: entity
+  parent:
+  - BaseSpeciesAppearance
+  - CFInventoryFelionoid
+  id: CFAppearanceFelionoid
+  categories: [HideSpawnMenu]
+  save: false
+  name: Felionoid appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganCFFelionoidTorso
+      Head: OrganCFFelionoidHead
+      ArmLeft: OrganCFFelionoidArmLeft
+      ArmRight: OrganCFFelionoidArmRight
+      HandLeft: OrganCFFelionoidHandLeft
+      HandRight: OrganCFFelionoidHandRight
+      LegLeft: OrganCFFelionoidLegLeft
+      LegRight: OrganCFFelionoidLegRight
+      FootLeft: OrganCFFelionoidFootLeft
+      FootRight: OrganCFFelionoidFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: CF-Catfolk-Felionoid
+
+- type: entity
+  parent:
+  - CFAppearanceFelionoid
+  - BaseSpeciesMobOrganic
+  id: CFMobFelionoid
+  name: Felionoid
+  components:
+  - type: HumanoidProfile
+    species: CF-Catfolk-Felionoid
+  - type: CF-Species
+    species: CF-Catfolk-Felionoid
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: CFMarkingDisplacementFelionoid
+  id: OrganCFFelionoidExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: CFFelionoid
+
+- type: entity
+  parent: [OrganBaseTorso, OrganCFFelionoidExternal]
+  id: OrganCFFelionoidTorso
+
+- type: entity
+  parent: [OrganBaseHead, OrganCFFelionoidExternal]
+  id: OrganCFFelionoidHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.FacialHair
+
+- type: entity
+  parent: [OrganBaseArmLeft, OrganCFFelionoidExternal]
+  id: OrganCFFelionoidArmLeft
+
+- type: entity
+  parent: [OrganBaseArmRight, OrganCFFelionoidExternal]
+  id: OrganCFFelionoidArmRight
+
+- type: entity
+  parent: [OrganBaseHandLeft, OrganCFFelionoidExternal]
+  id: OrganCFFelionoidHandLeft
+
+- type: entity
+  parent: [OrganBaseHandRight, OrganCFFelionoidExternal]
+  id: OrganCFFelionoidHandRight
+
+- type: entity
+  parent: [OrganBaseLegLeft, OrganCFFelionoidExternal]
+  id: OrganCFFelionoidLegLeft
+
+- type: entity
+  parent: [OrganBaseLegRight, OrganCFFelionoidExternal]
+  id: OrganCFFelionoidLegRight
+
+- type: entity
+  parent: [OrganBaseFootLeft, OrganCFFelionoidExternal]
+  id: OrganCFFelionoidFootLeft
+
+- type: entity
+  parent: [OrganBaseFootRight, OrganCFFelionoidExternal]
+  id: OrganCFFelionoidFootRight
+
+- type: entity
+  parent:
+  - BaseSpeciesAppearance
+  - CFInventoryRodentia
+  id: CFAppearanceRodentia
+  categories: [HideSpawnMenu]
+  save: false
+  name: Rodentia appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganCFRodentiaTorso
+      Head: OrganCFRodentiaHead
+      ArmLeft: OrganCFRodentiaArmLeft
+      ArmRight: OrganCFRodentiaArmRight
+      HandLeft: OrganCFRodentiaHandLeft
+      HandRight: OrganCFRodentiaHandRight
+      LegLeft: OrganCFRodentiaLegLeft
+      LegRight: OrganCFRodentiaLegRight
+      FootLeft: OrganCFRodentiaFootLeft
+      FootRight: OrganCFRodentiaFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: CF-Ratfolk-Rodentia
+
+- type: entity
+  parent:
+  - CFAppearanceRodentia
+  - BaseSpeciesMobOrganic
+  id: CFMobRodentia
+  name: Rodentia
+  components:
+  - type: HumanoidProfile
+    species: CF-Ratfolk-Rodentia
+  - type: CF-Species
+    species: CF-Ratfolk-Rodentia
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: CFMarkingDisplacementRodentia
+  id: OrganCFRodentiaExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Rodentia/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _Starlight/Mobs/Species/Rodentia/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: CFRodentia
+
+- type: entity
+  parent: [OrganBaseTorsoSexed, OrganBaseTorso, OrganCFRodentiaExternal]
+  id: OrganCFRodentiaTorso
+
+- type: entity
+  parent: [OrganBaseHeadSexed, OrganBaseHead, OrganCFRodentiaExternal]
+  id: OrganCFRodentiaHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.FacialHair
+
+- type: entity
+  parent: [OrganBaseArmLeft, OrganCFRodentiaExternal]
+  id: OrganCFRodentiaArmLeft
+
+- type: entity
+  parent: [OrganBaseArmRight, OrganCFRodentiaExternal]
+  id: OrganCFRodentiaArmRight
+
+- type: entity
+  parent: [OrganBaseHandLeft, OrganCFRodentiaExternal]
+  id: OrganCFRodentiaHandLeft
+
+- type: entity
+  parent: [OrganBaseHandRight, OrganCFRodentiaExternal]
+  id: OrganCFRodentiaHandRight
+
+- type: entity
+  parent: [OrganBaseLegLeft, OrganCFRodentiaExternal]
+  id: OrganCFRodentiaLegLeft
+
+- type: entity
+  parent: [OrganBaseLegRight, OrganCFRodentiaExternal]
+  id: OrganCFRodentiaLegRight
+
+- type: entity
+  parent: [OrganBaseFootLeft, OrganCFRodentiaExternal]
+  id: OrganCFRodentiaFootLeft
+
+- type: entity
+  parent: [OrganBaseFootRight, OrganCFRodentiaExternal]
+  id: OrganCFRodentiaFootRight
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: CFAppearanceShadekin
+  categories: [HideSpawnMenu]
+  save: false
+  name: Shadekin appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganCFShadekinTorso
+      Head: OrganCFShadekinHead
+      ArmLeft: OrganCFShadekinArmLeft
+      ArmRight: OrganCFShadekinArmRight
+      HandLeft: OrganCFShadekinHandLeft
+      HandRight: OrganCFShadekinHandRight
+      LegLeft: OrganCFShadekinLegLeft
+      LegRight: OrganCFShadekinLegRight
+      FootLeft: OrganCFShadekinFootLeft
+      FootRight: OrganCFShadekinFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: CF-Fetchling-Shadekin
+
+- type: entity
+  parent:
+  - CFAppearanceShadekin
+  - BaseSpeciesMobOrganic
+  id: CFMobShadekin
+  name: Shadekin
+  components:
+  - type: HumanoidProfile
+    species: CF-Fetchling-Shadekin
+  - type: CF-Species
+    species: CF-Fetchling-Shadekin
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  id: OrganCFShadekinExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Shadekin/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _Starlight/Mobs/Species/Shadekin/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: CFShadekin
+
+- type: entity
+  parent: [OrganBaseTorsoSexed, OrganBaseTorso, OrganCFShadekinExternal]
+  id: OrganCFShadekinTorso
+
+- type: entity
+  parent: [OrganBaseHeadSexed, OrganBaseHead, OrganCFShadekinExternal]
+  id: OrganCFShadekinHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.FacialHair
+
+- type: entity
+  parent: [OrganBaseArmLeft, OrganCFShadekinExternal]
+  id: OrganCFShadekinArmLeft
+
+- type: entity
+  parent: [OrganBaseArmRight, OrganCFShadekinExternal]
+  id: OrganCFShadekinArmRight
+
+- type: entity
+  parent: [OrganBaseHandLeft, OrganCFShadekinExternal]
+  id: OrganCFShadekinHandLeft
+
+- type: entity
+  parent: [OrganBaseHandRight, OrganCFShadekinExternal]
+  id: OrganCFShadekinHandRight
+
+- type: entity
+  parent: [OrganBaseLegLeft, OrganCFShadekinExternal]
+  id: OrganCFShadekinLegLeft
+
+- type: entity
+  parent: [OrganBaseLegRight, OrganCFShadekinExternal]
+  id: OrganCFShadekinLegRight
+
+- type: entity
+  parent: [OrganBaseFootLeft, OrganCFShadekinExternal]
+  id: OrganCFShadekinFootLeft
+
+- type: entity
+  parent: [OrganBaseFootRight, OrganCFShadekinExternal]
+  id: OrganCFShadekinFootRight
+
+- type: entity
+  parent:
+  - BaseSpeciesAppearance
+  - CFInventoryResomi
+  id: CFAppearanceResomi
+  categories: [HideSpawnMenu]
+  save: false
+  name: Resomi appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganCFResomiTorso
+      Head: OrganCFResomiHead
+      ArmLeft: OrganCFResomiArmLeft
+      ArmRight: OrganCFResomiArmRight
+      HandLeft: OrganCFResomiHandLeft
+      HandRight: OrganCFResomiHandRight
+      LegLeft: OrganCFResomiLegLeft
+      LegRight: OrganCFResomiLegRight
+      FootLeft: OrganCFResomiFootLeft
+      FootRight: OrganCFResomiFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: CF-Tengu-Resomi
+
+- type: entity
+  parent:
+  - CFAppearanceResomi
+  - BaseSpeciesMobOrganic
+  id: CFMobResomi
+  name: Resomi
+  components:
+  - type: HumanoidProfile
+    species: CF-Tengu-Resomi
+  - type: CF-Species
+    species: CF-Tengu-Resomi
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: CFMarkingDisplacementResomi
+  id: OrganCFResomiExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Resomi/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _Starlight/Mobs/Species/Resomi/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: CFResomi
+
+- type: entity
+  parent: [OrganBaseTorsoSexed, OrganBaseTorso, OrganCFResomiExternal]
+  id: OrganCFResomiTorso
+
+- type: entity
+  parent: [OrganBaseHeadSexed, OrganBaseHead, OrganCFResomiExternal]
+  id: OrganCFResomiHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.FacialHair
+
+- type: entity
+  parent: [OrganBaseArmLeft, OrganCFResomiExternal]
+  id: OrganCFResomiArmLeft
+
+- type: entity
+  parent: [OrganBaseArmRight, OrganCFResomiExternal]
+  id: OrganCFResomiArmRight
+
+- type: entity
+  parent: [OrganBaseHandLeft, OrganCFResomiExternal]
+  id: OrganCFResomiHandLeft
+
+- type: entity
+  parent: [OrganBaseHandRight, OrganCFResomiExternal]
+  id: OrganCFResomiHandRight
+
+- type: entity
+  parent: [OrganBaseLegLeft, OrganCFResomiExternal]
+  id: OrganCFResomiLegLeft
+
+- type: entity
+  parent: [OrganBaseLegRight, OrganCFResomiExternal]
+  id: OrganCFResomiLegRight
+
+- type: entity
+  parent: [OrganBaseFootLeft, OrganCFResomiExternal]
+  id: OrganCFResomiFootLeft
+
+- type: entity
+  parent: [OrganBaseFootRight, OrganCFResomiExternal]
+  id: OrganCFResomiFootRight
+
+- type: entity
+  parent:
+  - BaseSpeciesAppearance
+  - CFInventoryAvali
+  id: CFAppearanceAvali
+  categories: [HideSpawnMenu]
+  save: false
+  name: Avali appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganCFAvaliTorso
+      Head: OrganCFAvaliHead
+      ArmLeft: OrganCFAvaliArmLeft
+      ArmRight: OrganCFAvaliArmRight
+      HandLeft: OrganCFAvaliHandLeft
+      HandRight: OrganCFAvaliHandRight
+      LegLeft: OrganCFAvaliLegLeft
+      LegRight: OrganCFAvaliLegRight
+      FootLeft: OrganCFAvaliFootLeft
+      FootRight: OrganCFAvaliFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: CF-Tengu-Avali
+
+- type: entity
+  parent:
+  - CFAppearanceAvali
+  - BaseSpeciesMobOrganic
+  id: CFMobAvali
+  name: Avali
+  components:
+  - type: HumanoidProfile
+    species: CF-Tengu-Avali
+  - type: CF-Species
+    species: CF-Tengu-Avali
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: CFMarkingDisplacementAvali
+  id: OrganCFAvaliExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: CFAvali
+
+- type: entity
+  parent: [OrganBaseTorsoSexed, OrganBaseTorso, OrganCFAvaliExternal]
+  id: OrganCFAvaliTorso
+
+- type: entity
+  parent: [OrganBaseHeadSexed, OrganBaseHead, OrganCFAvaliExternal]
+  id: OrganCFAvaliHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.FacialHair
+
+- type: entity
+  parent: [OrganBaseArmLeft, OrganCFAvaliExternal]
+  id: OrganCFAvaliArmLeft
+
+- type: entity
+  parent: [OrganBaseArmRight, OrganCFAvaliExternal]
+  id: OrganCFAvaliArmRight
+
+- type: entity
+  parent: [OrganBaseHandLeft, OrganCFAvaliExternal]
+  id: OrganCFAvaliHandLeft
+
+- type: entity
+  parent: [OrganBaseHandRight, OrganCFAvaliExternal]
+  id: OrganCFAvaliHandRight
+
+- type: entity
+  parent: [OrganBaseLegLeft, OrganCFAvaliExternal]
+  id: OrganCFAvaliLegLeft
+
+- type: entity
+  parent: [OrganBaseLegRight, OrganCFAvaliExternal]
+  id: OrganCFAvaliLegRight
+
+- type: entity
+  parent: [OrganBaseFootLeft, OrganCFAvaliExternal]
+  id: OrganCFAvaliFootLeft
+
+- type: entity
+  parent: [OrganBaseFootRight, OrganCFAvaliExternal]
+  id: OrganCFAvaliFootRight
+
+- type: entity
+  parent:
+  - BaseSpeciesAppearance
+  - CFInventoryVox
+  id: CFAppearanceVox
+  categories: [HideSpawnMenu]
+  save: false
+  name: Vox appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganCFVoxTorso
+      Head: OrganCFVoxHead
+      ArmLeft: OrganCFVoxArmLeft
+      ArmRight: OrganCFVoxArmRight
+      HandLeft: OrganCFVoxHandLeft
+      HandRight: OrganCFVoxHandRight
+      LegLeft: OrganCFVoxLegLeft
+      LegRight: OrganCFVoxLegRight
+      FootLeft: OrganCFVoxFootLeft
+      FootRight: OrganCFVoxFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: CF-Tengu-Vox
+
+- type: entity
+  parent:
+  - CFAppearanceVox
+  - BaseSpeciesMobOrganic
+  id: CFMobVox
+  name: Vox
+  components:
+  - type: HumanoidProfile
+    species: CF-Tengu-Vox
+  - type: CF-Species
+    species: CF-Tengu-Vox
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  id: OrganCFVoxExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Vox/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Vox/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Vox
+
+- type: entity
+  parent: [OrganBaseTorso, OrganCFVoxExternal]
+  id: OrganCFVoxTorso
+
+- type: entity
+  parent: [OrganBaseHead, OrganCFVoxExternal]
+  id: OrganCFVoxHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.FacialHair
+    markingsDisplacement:
+      Hair:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: hair
+
+- type: entity
+  parent: [OrganBaseArmLeft, OrganCFVoxExternal]
+  id: OrganCFVoxArmLeft
+
+- type: entity
+  parent: [OrganBaseArmRight, OrganCFVoxExternal]
+  id: OrganCFVoxArmRight
+
+- type: entity
+  parent: [OrganBaseHandLeft, OrganCFVoxExternal]
+  id: OrganCFVoxHandLeft
+
+- type: entity
+  parent: [OrganBaseHandRight, OrganCFVoxExternal]
+  id: OrganCFVoxHandRight
+
+- type: entity
+  parent: [OrganBaseLegLeft, OrganCFVoxExternal]
+  id: OrganCFVoxLegLeft
+
+- type: entity
+  parent: [OrganBaseLegRight, OrganCFVoxExternal]
+  id: OrganCFVoxLegRight
+
+- type: entity
+  parent: [OrganBaseFootLeft, OrganCFVoxExternal]
+  id: OrganCFVoxFootLeft
+
+- type: entity
+  parent: [OrganBaseFootRight, OrganCFVoxExternal]
+  id: OrganCFVoxFootRight
+
+- type: entity
+  parent:
+  - BaseSpeciesAppearance
+  - CFInventoryReptilian
+  id: CFAppearanceReptilian
+  categories: [HideSpawnMenu]
+  save: false
+  name: Reptilian appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganCFReptilianTorso
+      Head: OrganCFReptilianHead
+      ArmLeft: OrganCFReptilianArmLeft
+      ArmRight: OrganCFReptilianArmRight
+      HandLeft: OrganCFReptilianHandLeft
+      HandRight: OrganCFReptilianHandRight
+      LegLeft: OrganCFReptilianLegLeft
+      LegRight: OrganCFReptilianLegRight
+      FootLeft: OrganCFReptilianFootLeft
+      FootRight: OrganCFReptilianFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: CF-Lizardfolk-Reptilian
+
+- type: entity
+  parent:
+  - CFAppearanceReptilian
+  - BaseSpeciesMobOrganic
+  id: CFMobReptilian
+  name: Reptilian
+  components:
+  - type: HumanoidProfile
+    species: CF-Lizardfolk-Reptilian
+  - type: CF-Species
+    species: CF-Lizardfolk-Reptilian
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  id: OrganCFReptilianExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Reptilian/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Reptilian/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Reptilian
+
+- type: entity
+  parent: [OrganBaseTorsoSexed, OrganBaseTorso, OrganCFReptilianExternal]
+  id: OrganCFReptilianTorso
+
+- type: entity
+  parent: [OrganBaseHeadSexed, OrganBaseHead, OrganCFReptilianExternal]
+  id: OrganCFReptilianHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.FacialHair
+
+- type: entity
+  parent: [OrganBaseArmLeft, OrganCFReptilianExternal]
+  id: OrganCFReptilianArmLeft
+
+- type: entity
+  parent: [OrganBaseArmRight, OrganCFReptilianExternal]
+  id: OrganCFReptilianArmRight
+
+- type: entity
+  parent: [OrganBaseHandLeft, OrganCFReptilianExternal]
+  id: OrganCFReptilianHandLeft
+
+- type: entity
+  parent: [OrganBaseHandRight, OrganCFReptilianExternal]
+  id: OrganCFReptilianHandRight
+
+- type: entity
+  parent: [OrganBaseLegLeft, OrganCFReptilianExternal]
+  id: OrganCFReptilianLegLeft
+
+- type: entity
+  parent: [OrganBaseLegRight, OrganCFReptilianExternal]
+  id: OrganCFReptilianLegRight
+
+- type: entity
+  parent: [OrganBaseFootLeft, OrganCFReptilianExternal]
+  id: OrganCFReptilianFootLeft
+
+- type: entity
+  parent: [OrganBaseFootRight, OrganCFReptilianExternal]
+  id: OrganCFReptilianFootRight
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: CFAppearanceDiona
+  categories: [HideSpawnMenu]
+  save: false
+  name: Diona appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganCFDionaTorso
+      Head: OrganCFDionaHead
+      ArmLeft: OrganCFDionaArmLeft
+      ArmRight: OrganCFDionaArmRight
+      HandLeft: OrganCFDionaHandLeft
+      HandRight: OrganCFDionaHandRight
+      LegLeft: OrganCFDionaLegLeft
+      LegRight: OrganCFDionaLegRight
+      FootLeft: OrganCFDionaFootLeft
+      FootRight: OrganCFDionaFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: CF-Leshy-Diona
+
+- type: entity
+  parent:
+  - CFAppearanceDiona
+  - BaseSpeciesMobOrganic
+  id: CFMobDiona
+  name: Diona
+  components:
+  - type: HumanoidProfile
+    species: CF-Leshy-Diona
+  - type: CF-Species
+    species: CF-Leshy-Diona
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  id: OrganCFDionaExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Diona/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Diona/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Diona
+
+- type: entity
+  parent: [OrganBaseTorso, OrganCFDionaExternal]
+  id: OrganCFDionaTorso
+
+- type: entity
+  parent: [OrganBaseHead, OrganCFDionaExternal]
+  id: OrganCFDionaHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.FacialHair
+
+- type: entity
+  parent: [OrganBaseArmLeft, OrganCFDionaExternal]
+  id: OrganCFDionaArmLeft
+
+- type: entity
+  parent: [OrganBaseArmRight, OrganCFDionaExternal]
+  id: OrganCFDionaArmRight
+
+- type: entity
+  parent: [OrganBaseHandLeft, OrganCFDionaExternal]
+  id: OrganCFDionaHandLeft
+
+- type: entity
+  parent: [OrganBaseHandRight, OrganCFDionaExternal]
+  id: OrganCFDionaHandRight
+
+- type: entity
+  parent: [OrganBaseLegLeft, OrganCFDionaExternal]
+  id: OrganCFDionaLegLeft
+
+- type: entity
+  parent: [OrganBaseLegRight, OrganCFDionaExternal]
+  id: OrganCFDionaLegRight
+
+- type: entity
+  parent: [OrganBaseFootLeft, OrganCFDionaExternal]
+  id: OrganCFDionaFootLeft
+
+- type: entity
+  parent: [OrganBaseFootRight, OrganCFDionaExternal]
+  id: OrganCFDionaFootRight
+
+- type: entity
+  parent:
+  - BaseSpeciesAppearance
+  - CFInventoryVulp
+  id: CFAppearanceVulp
+  categories: [HideSpawnMenu]
+  save: false
+  name: Vulp appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganCFVulpTorso
+      Head: OrganCFVulpHead
+      ArmLeft: OrganCFVulpArmLeft
+      ArmRight: OrganCFVulpArmRight
+      HandLeft: OrganCFVulpHandLeft
+      HandRight: OrganCFVulpHandRight
+      LegLeft: OrganCFVulpLegLeft
+      LegRight: OrganCFVulpLegRight
+      FootLeft: OrganCFVulpFootLeft
+      FootRight: OrganCFVulpFootRight
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: CF-Kitsune-Vulp
+
+- type: entity
+  parent:
+  - CFAppearanceVulp
+  - BaseSpeciesMobOrganic
+  id: CFMobVulp
+  name: Vulp
+  components:
+  - type: HumanoidProfile
+    species: CF-Kitsune-Vulp
+  - type: CF-Species
+    species: CF-Kitsune-Vulp
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  id: OrganCFVulpExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Vulpkanin/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Vulpkanin/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Vulpkanin
+
+- type: entity
+  parent: [OrganBaseTorsoSexed, OrganBaseTorso, OrganCFVulpExternal]
+  id: OrganCFVulpTorso
+
+- type: entity
+  parent: [OrganBaseHead, OrganCFVulpExternal]
+  id: OrganCFVulpHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.FacialHair
+    markingsDisplacement:
+      Hair:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            state: hair
+
+- type: entity
+  parent: [OrganBaseArmLeft, OrganCFVulpExternal]
+  id: OrganCFVulpArmLeft
+
+- type: entity
+  parent: [OrganBaseArmRight, OrganCFVulpExternal]
+  id: OrganCFVulpArmRight
+
+- type: entity
+  parent: [OrganBaseHandLeft, OrganCFVulpExternal]
+  id: OrganCFVulpHandLeft
+
+- type: entity
+  parent: [OrganBaseHandRight, OrganCFVulpExternal]
+  id: OrganCFVulpHandRight
+
+- type: entity
+  parent: [OrganBaseLegLeft, OrganCFVulpExternal]
+  id: OrganCFVulpLegLeft
+
+- type: entity
+  parent: [OrganBaseLegRight, OrganCFVulpExternal]
+  id: OrganCFVulpLegRight
+
+- type: entity
+  parent: [OrganBaseFootLeft, OrganCFVulpExternal]
+  id: OrganCFVulpFootLeft
+
+- type: entity
+  parent: [OrganBaseFootRight, OrganCFVulpExternal]
+  id: OrganCFVulpFootRight
+
+

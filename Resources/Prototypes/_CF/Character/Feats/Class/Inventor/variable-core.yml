@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Guns & Gears
+- type: cfFeat
+  id: CFVariableCore
+  name: "Variable Core"
+  description: "This feature will be implemented later."
+  class: Inventor
+  level: 1
+  traits:
+    - "Inventor"
+    - "Modification"

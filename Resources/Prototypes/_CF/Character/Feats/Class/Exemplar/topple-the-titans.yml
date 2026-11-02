@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder #217: Death Sails a Wine-Dark Sea
+- type: cfFeat
+  id: CFToppleTheTitans
+  name: "Topple The Titans"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Exemplar
+  level: 4
+  rarity: Uncommon
+  traits:
+    - "Exemplar"
+  action: Action
+  pendingAction: true

@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by Max Gab, folders and passport by TheShuEd, stamps on paper by viator1748, inhands by D1nazewwr",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "folder_blue"
+    },
+    {
+      "name": "folder_red"
+    },
+    {
+      "name": "folder_green"
+    },
+    {
+      "name": "folder_purple"
+    },
+    {
+      "name": "folder_blue-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "folder_blue-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "folder_green-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "folder_green-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "folder_purple-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "folder_purple-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "folder_red-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "folder_red-inhand-right",
+      "directions": 4
+    }
+  ]
+}

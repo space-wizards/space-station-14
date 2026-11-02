@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by Dinazewwr (Github)",
+  "size": {
+    "x": 48,
+    "y": 48
+  },
+  "states": [
+    {
+      "name": "main",
+      "directions": 4
+    },
+    {
+      "name": "points",
+      "directions": 4
+    },
+    {
+      "name": "arrow",
+      "directions": 4
+    },
+    {
+      "name": "1_standart",
+      "directions": 4
+    },
+    {
+      "name": "1_titmouse",
+      "directions": 4
+    },
+    {
+      "name": "2_standart",
+      "directions": 4
+    },
+    {
+      "name": "2_titmouse",
+      "directions": 4
+    },
+    {
+      "name": "3_standart",
+      "directions": 4
+    }
+  ]
+}

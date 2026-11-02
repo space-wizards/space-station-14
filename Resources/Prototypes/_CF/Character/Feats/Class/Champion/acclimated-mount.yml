@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Battlecry!
+- type: cfFeat
+  id: CFAcclimatedMount
+  name: "Acclimated Mount"
+  description: "Requires Faithful Steed and trained in Survival."
+  class: Champion
+  level: 4
+  traits:
+    - "Champion"
+  prerequisites:
+    - "Faithful Steed"
+    - "trained in Survival"

@@ -1,0 +1,23 @@
+﻿- type: entity
+  parent: CFSpellProjectile
+  id: CFIgnition
+  name: Ignition
+  description: A jet of flame. Spell attack, 2d6 fire.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: fireball
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 0
+  - type: CFSpell
+    spell: Ignition
+    rank: 0
+    delivery: Projectile
+    rangeFeet: 30
+    defense: SpellAttack
+    diceCount: 2
+    diceSize: 6
+    damageType: fire
+    boltPrototype: CFSpellBoltFire

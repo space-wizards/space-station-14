@@ -1,0 +1,11 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFNimbleElf
+  name: "Nimble Elf"
+  description: "Speed +5 feet."
+  ancestry: Elf
+  level: 1
+  traits:
+    - "Elf"
+  speedBonus: 5

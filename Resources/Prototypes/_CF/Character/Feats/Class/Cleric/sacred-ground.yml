@@ -1,0 +1,16 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFSacredGround
+  name: "Sacred Ground"
+  description: "Requires harmful font or healing font. Changes an item. This feature will be implemented later."
+  class: Cleric
+  level: 4
+  traits:
+    - "Cleric"
+    - "Consecration"
+    - "Divine"
+    - "Exploration"
+  prerequisites:
+    - "harmful font or healing font"
+  pendingAction: true

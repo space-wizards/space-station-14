@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Tian Xia Character Guide
+- type: cfFeat
+  id: CFFisheye
+  name: "Fisheye"
+  description: "Requires kijimuna gnome heritage. +1 circumstance bonus to Saving Throw. Not applied in play yet. Improves Saving Throw results. Not applied in play yet."
+  ancestry: Gnome
+  level: 1
+  traits:
+    - "Gnome"
+  prerequisites:
+    - "kijimuna gnome heritage"

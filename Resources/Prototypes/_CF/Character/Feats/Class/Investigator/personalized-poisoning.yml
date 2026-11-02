@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens High Seas
+- type: cfFeat
+  id: CFPersonalizedPoisoning
+  name: "Personalized Poisoning"
+  description: "Requires alchemical sciences methodology."
+  class: Investigator
+  level: 2
+  rarity: Uncommon
+  traits:
+    - "Investigator"
+  prerequisites:
+    - "alchemical sciences methodology"

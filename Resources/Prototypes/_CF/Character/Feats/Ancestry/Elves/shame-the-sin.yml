@@ -1,0 +1,13 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder #210: Whispers in the Dirt
+- type: cfFeat
+  id: CFShametheSin
+  name: "Shame the Sin"
+  description: "Costs 1 action. TBA - action will be added"
+  ancestry: Elf
+  level: 5
+  rarity: Uncommon
+  traits:
+    - "Elf"
+  action: Action
+  pendingAction: true

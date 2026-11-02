@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Created by TheShuEd, modified by creamy",
+    "size": {
+        "x": 48,
+        "y": 48
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "equipped-CLOAK",
+            "directions": 4
+        },
+        {
+            "name": "equipped-CLOAK-carcat",
+            "directions": 4
+        }
+    ]
+}

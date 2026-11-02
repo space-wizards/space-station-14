@@ -1,0 +1,25 @@
+# Late-join / crew manifest departments for CF jobs.
+# (cfJobGroup is builder-only UI; StationJobs + department drive round join.)
+
+- type: department
+  id: CFAdventures
+  name: cf-department-adventures
+  description: cf-department-adventures-description
+  color: "#C4A35A"
+  weight: 50
+  roles:
+  - CFAlpha
+  - CFBeta
+  - CFCharlie
+  - CFDelta
+
+- type: department
+  id: CFNpc
+  name: cf-department-npc
+  description: cf-department-npc-description
+  color: "#7B8CDE"
+  weight: 40
+  roles:
+  - CFMerchant
+  - CFArcaneResearcher
+  - CFArcaneArtificer

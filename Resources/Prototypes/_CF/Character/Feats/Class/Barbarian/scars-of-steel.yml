@@ -1,0 +1,15 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFScarsofSteel
+  name: "Scars of Steel"
+  description: "Requires Fury Instinct. Has a resistance. Reaction. This feature will be implemented later."
+  class: Barbarian
+  level: 4
+  traits:
+    - "Barbarian"
+    - "Rage"
+  prerequisites:
+    - "Fury Instinct"
+  action: Reaction
+  pendingAction: true

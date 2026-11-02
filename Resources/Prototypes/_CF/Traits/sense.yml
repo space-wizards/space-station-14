@@ -1,0 +1,20 @@
+# CarpFinder: remaster trait ids. Summaries are short mechanical notes, not source text.
+# category: Sense
+
+- type: cfTrait
+  id: Auditory
+  name: Auditory
+  category: Sense
+  summary: "This effect uses that sense."
+
+- type: cfTrait
+  id: Olfactory
+  name: Olfactory
+  category: Sense
+  summary: "This effect uses that sense."
+
+- type: cfTrait
+  id: Visual
+  name: Visual
+  category: Sense
+  summary: "This effect uses that sense."

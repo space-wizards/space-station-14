@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFWritingOntheWall
+  name: "Writing On the Wall"
+  description: "Requires expert in Arcana, Nature, Occultism, or Religion."
+  class: Runesmith
+  level: 4
+  traits:
+    - "Runesmith"
+  prerequisites:
+    - "expert in Arcana, Nature, Occultism, or Religion"

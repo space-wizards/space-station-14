@@ -1,0 +1,16 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Guns & Gears
+- type: cfFeat
+  id: CFNoNoICreatedYou
+  name: "No! No! I Created You!"
+  description: "Requires construct companion. Reaction. This feature will be implemented later."
+  class: Inventor
+  level: 1
+  traits:
+    - "Auditory"
+    - "Concentrate"
+    - "Inventor"
+  prerequisites:
+    - "construct companion"
+  action: Reaction
+  pendingAction: true

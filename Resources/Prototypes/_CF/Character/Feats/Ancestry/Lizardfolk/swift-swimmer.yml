@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFSwiftSwimmer
+  name: "Swift Swimmer"
+  description: "Swim Speed 15 feet. Not applied in play yet. Swim Speed 25 feet. Not applied in play yet."
+  ancestry: Lizardfolk
+  level: 5
+  traits:
+    - "Lizardfolk"

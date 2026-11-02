@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by jaraten(Github/discord), inhands by D1nazewwr",
+  "states": [
+    {
+      "name": "bandage"
+    },
+    {
+      "name": "bandage_2"
+    },
+    {
+      "name": "bandage_3"
+    },
+    {
+      "name": "herbbandage"
+    },
+    {
+      "name": "herbbandage_2"
+    },
+    {
+      "name": "herbbandage_3"
+    },
+    {
+      "name": "bandage-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "bandage-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "herbbandage-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "herbbandage-inhand-right",
+      "directions": 4
+    }
+  ]
+}

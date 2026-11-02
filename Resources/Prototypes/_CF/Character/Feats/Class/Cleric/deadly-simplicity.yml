@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFDeadlySimplicity
+  name: "Deadly Simplicity"
+  description: "Requires deity with a simple or unarmed attack favored weapon and trained with your deity's favored weapon. Changes an item. This feature will be implemented later."
+  class: Cleric
+  level: 1
+  traits:
+    - "Cleric"
+  prerequisites:
+    - "deity with a simple or unarmed attack favored weapon"
+    - "trained with your deity's favored weapon"
+  pendingAction: true

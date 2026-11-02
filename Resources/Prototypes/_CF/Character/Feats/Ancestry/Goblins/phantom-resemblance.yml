@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Tian Xia Character Guide
+- type: cfFeat
+  id: CFPhantomResemblance
+  name: "Phantom Resemblance"
+  description: "Requires Phantom Visage."
+  ancestry: Goblin
+  level: 5
+  traits:
+    - "Goblin"
+  prerequisites:
+    - "Phantom Visage"

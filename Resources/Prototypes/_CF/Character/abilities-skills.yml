@@ -49,7 +49,7 @@
 - type: cfAbilitySkill
   id: Nature
   name: cf-ability-skill-nature
-  ability: Intelligence
+  ability: Wisdom
   order: 8
 
 - type: cfAbilitySkill
@@ -67,7 +67,7 @@
 - type: cfAbilitySkill
   id: Religion
   name: cf-ability-skill-religion
-  ability: Intelligence
+  ability: Wisdom
   order: 11
 
 - type: cfAbilitySkill
@@ -93,4 +93,10 @@
   name: cf-ability-skill-thievery
   ability: Dexterity
   order: 15
+
+- type: cfAbilitySkill
+  id: Lore
+  name: cf-ability-skill-lore
+  ability: Intelligence
+  order: 16
   

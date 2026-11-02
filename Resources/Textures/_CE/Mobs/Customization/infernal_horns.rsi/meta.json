@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "size": {
+    "x": 48,
+    "y": 48
+  },
+  "copyright": "Created by TheShuEd",
+  "license": "CC-BY-SA-4.0",
+  "states": [
+    {
+      "name": "horn1",
+      "directions": 4
+    },
+    {
+      "name": "horn1_gradient",
+      "directions": 4
+    },
+    {
+      "name": "horn2",
+      "directions": 4
+    },
+    {
+      "name": "horn3",
+      "directions": 4
+    },
+    {
+      "name": "horn3_broken",
+      "directions": 4
+    },
+    {
+      "name": "horn4",
+      "directions": 4
+    },
+    {
+      "name": "horn5",
+      "directions": 4
+    },
+    {
+      "name": "horn5_broken",
+      "directions": 4
+    },
+    {
+      "name": "horn6",
+      "directions": 4
+    },
+    {
+      "name": "horn6_gradient",
+      "directions": 4
+    },
+    {
+      "name": "horn7",
+      "directions": 4
+    },
+    {
+      "name": "horn7_gradient",
+      "directions": 4
+    },
+    {
+      "name": "horn8",
+      "directions": 4
+    },
+    {
+      "name": "horn9",
+      "directions": 4
+    },
+    {
+      "name": "horn10",
+      "directions": 4
+    },
+    {
+      "name": "horn10_gradient",
+      "directions": 4
+    }
+  ]
+}

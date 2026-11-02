@@ -1,0 +1,15 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Dark Archive (Remastered)
+- type: cfFeat
+  id: CFSacralLordOracle
+  name: "Sacral Lord"
+  description: "Requires trained in Occultism or Religion. +1 circumstance bonus to Skill Check. This feature will be implemented later."
+  class: Oracle
+  level: 4
+  rarity: Rare
+  traits:
+    - "Champion"
+    - "Oracle"
+  prerequisites:
+    - "trained in Occultism or Religion"
+  pendingAction: true

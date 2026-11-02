@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFWarpriestsArmor
+  name: "Warpriest's Armor"
+  description: "Requires warpriest doctrine."
+  class: Cleric
+  level: 2
+  traits:
+    - "Cleric"
+  prerequisites:
+    - "warpriest doctrine"

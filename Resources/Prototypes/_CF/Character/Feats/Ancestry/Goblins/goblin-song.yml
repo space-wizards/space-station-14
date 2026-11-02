@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFGoblinSong
+  name: "Goblin Song"
+  description: "Costs 1 action. TBA - action will be added"
+  ancestry: Goblin
+  level: 1
+  traits:
+    - "Goblin"
+  action: Action
+  pendingAction: true

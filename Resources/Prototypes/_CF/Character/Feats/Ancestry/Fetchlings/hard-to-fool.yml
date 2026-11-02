@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Cheliax, Infernal Inheritance
+- type: cfFeat
+  id: CFHardtoFool
+  name: "Hard to Fool"
+  description: "+1 circumstance bonus to Perception. Not applied in play yet. +1 circumstance bonus to Will. Not applied in play yet."
+  ancestry: Fetchling
+  level: 1
+  traits:
+    - "Fetchling"

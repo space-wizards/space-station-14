@@ -1,0 +1,20 @@
+<BoxContainer Name="SpellsTabRoot" xmlns="https://spacestation14.io"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              x:Class="Content.Client.CF.Lobby.UI.CharacterBuilder.SpellsTab"
+              Orientation="Vertical"
+              HorizontalExpand="True"
+              VerticalExpand="True">
+    <BoxContainer Name="SpellSummary" Orientation="Horizontal" HorizontalExpand="True" Margin="8 8 8 4" SeparationOverride="12">
+        <Label Name="DcLabel" VerticalAlignment="Center" />
+        <BoxContainer Name="FocusPips" Orientation="Horizontal" SeparationOverride="2" VerticalAlignment="Center" />
+        <Label Name="AbilityLabel" VerticalAlignment="Center" />
+        <Label Name="ProfLabel" VerticalAlignment="Center" />
+        <Label Name="ItemLabel" VerticalAlignment="Center" />
+        <Control HorizontalExpand="True" />
+        <Button Name="BonusSpellsButton" Text="{Loc 'cf-spell-bonus-spells'}" />
+        <Button Name="PrintButton" Text="{Loc 'cf-spell-print'}" />
+    </BoxContainer>
+    <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
+        <BoxContainer Name="SpellRanks" Orientation="Vertical" HorizontalExpand="True" Margin="8 0 8 8" SeparationOverride="12" />
+    </ScrollContainer>
+</BoxContainer>

@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Draconic Codex
+- type: cfFeat
+  id: CFKoboldMomentum
+  name: "Kobold Momentum"
+  description: "Requires Kobold Breath."
+  ancestry: Kobold
+  level: 5
+  traits:
+    - "Kobold"
+  prerequisites:
+    - "Kobold Breath"

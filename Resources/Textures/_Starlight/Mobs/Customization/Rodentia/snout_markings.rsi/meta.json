@@ -1,0 +1,47 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from Delta-V at commit https://github.com/DeltaV-Station/Delta-v/tree/f49142ca8d7ceac483094444c372e849309dc02b/, https://github.com/DeltaV-Station/Delta-v/tree/f49142ca8d7ceac483094444c372e849309dc02b/Resources/Textures/DeltaV/Mobs/Customization/Rodentia/snout_markings.rsi. Sprites created by portfiend. Modified by Zeyria",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "bat",
+            "directions": 4
+        },
+        {
+            "name": "bat_overlay",
+            "directions": 4
+        },
+        {
+            "name": "bat_nose",
+            "directions": 4
+        },
+        {
+            "name": "flat",
+            "directions": 4
+        },
+        {
+            "name": "flat_overlay",
+            "directions": 4
+        },
+        {
+            "name": "flat_nose",
+            "directions": 4
+        },
+        {
+            "name": "round",
+            "directions": 4
+        },
+        {
+            "name": "round_overlay",
+            "directions": 4
+        },
+        {
+            "name": "round_nose",
+            "directions": 4
+        }
+    ]
+}

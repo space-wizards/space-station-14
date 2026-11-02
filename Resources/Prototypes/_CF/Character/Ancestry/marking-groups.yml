@@ -1,0 +1,141 @@
+# CarpFinder: imported bodies keep human hair, and add the ears and tail that body was drawn with.
+# Human already limits hair and most other layers. Tail is raised above Human's zero.
+
+- type: markingsGroup
+  parent: Human
+  id: CFRodentia
+  limits:
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: true
+      default: [ RodentiaHeadTopEarMouse ]
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: true
+      default: [ RodentiaTailMouse ]
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: false
+
+- type: markingsGroup
+  parent: Human
+  id: CFFelionoid
+  limits:
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: true
+      default: [ FelionoidEars ]
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: true
+      default: [ FelionoidTail ]
+
+- type: markingsGroup
+  parent: Human
+  id: CFResomi
+  limits:
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: true
+      default: [ ResomiTailFeathered ]
+
+- type: markingsGroup
+  parent: Human
+  id: CFAvali
+  limits:
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: true
+      default: [ AvaliEarsBase ]
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: true
+      default: [ AvaliTailBase ]
+
+- type: markingsGroup
+  parent: Human
+  id: CFShadekin
+  limits:
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: true
+      default: [ EarsShadekin ]
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: true
+      default: [ TailShadekin ]
+
+- type: markingsGroup
+  parent: Human
+  id: CFCEElf
+  limits:
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: true
+      default: [ CEElfEars ]
+
+- type: markingsGroup
+  parent: Human
+  id: CFCEGoblin
+  limits:
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: true
+      default: [ CEGoblinEars ]
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: false
+
+- type: markingsGroup
+  parent: Human
+  id: CFCECarcat
+  limits:
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: true
+      default: [ CECarcatEars ]
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: true
+      default: [ CECarcatTail ]
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: false
+
+- type: markingsGroup
+  parent: Human
+  id: CFCECarrin
+  limits:
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: true
+      default: [ CECarrinBeak ]
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: true
+      default: [ CECarrinTail1 ]
+    enum.HumanoidVisualLayers.Overlay:
+      limit: 1
+      required: true
+      default: [ CECarrinWings1 ]
+
+- type: markingsGroup
+  parent: Human
+  id: CFCESilva
+  limits:
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: false
+
+- type: markingsGroup
+  parent: Human
+  id: CFCEInfernal
+  limits:
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: true
+      default: [ CEInfernalHorns ]
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: true
+      default: [ CEInfernalTail ]

@@ -1,0 +1,105 @@
+# Pathfinder adventurer loadouts. The builder shop buys these; nothing is selected for free.
+
+- type: loadout
+  id: CFLoadoutLongsword
+  inhand:
+  - CFLongsword
+
+- type: loadout
+  id: CFLoadoutLongbow
+  equipment:
+    belt: CFQuiverFilled
+  inhand:
+  - CFLongbow
+
+- type: loadout
+  id: CFLoadoutLeatherArmor
+  equipment:
+    outerClothing: CFLeatherArmor
+
+- type: loadout
+  id: CFLoadoutHealingPotion
+  inhand:
+  - CFHealingPotionMinor
+
+- type: loadoutGroup
+  id: CFWeaponsMelee
+  name: cf-loadout-group-weapons
+  minLimit: 0
+  maxLimit: 0
+  defaultSelected: 0
+  editorTab: Weapons
+  loadouts:
+  - CFLoadoutLongsword
+  - CFLoadoutLongbow
+
+- type: loadoutGroup
+  id: CFDefenseArmor
+  name: cf-loadout-group-defense-armor
+  minLimit: 0
+  maxLimit: 0
+  defaultSelected: 0
+  editorTab: Defense
+  loadouts:
+  - CFLoadoutLeatherArmor
+
+- type: loadoutGroup
+  id: CFGearBasics
+  name: cf-loadout-group-gear-basics
+  minLimit: 0
+  maxLimit: 0
+  defaultSelected: 0
+  editorTab: Gear
+  loadouts:
+  - CFLoadoutHealingPotion
+
+# roleLoadout ids must be Job<JobId> (see LoadoutSystem.GetJobPrototype).
+- type: roleLoadout
+  id: JobCFAlpha
+  groups:
+  - CFWeaponsMelee
+  - CFDefenseArmor
+  - CFGearBasics
+
+- type: roleLoadout
+  id: JobCFBeta
+  groups:
+  - CFWeaponsMelee
+  - CFDefenseArmor
+  - CFGearBasics
+
+- type: roleLoadout
+  id: JobCFCharlie
+  groups:
+  - CFWeaponsMelee
+  - CFDefenseArmor
+  - CFGearBasics
+
+- type: roleLoadout
+  id: JobCFDelta
+  groups:
+  - CFWeaponsMelee
+  - CFDefenseArmor
+  - CFGearBasics
+
+- type: roleLoadout
+  id: JobCFMerchant
+  groups:
+  - CFWeaponsMelee
+  - CFDefenseArmor
+  - CFGearBasics
+
+- type: roleLoadout
+  id: JobCFArcaneResearcher
+  groups:
+  - CFWeaponsMelee
+  - CFDefenseArmor
+  - CFGearBasics
+
+- type: roleLoadout
+  id: JobCFArcaneArtificer
+  groups:
+  - CFWeaponsMelee
+  - CFDefenseArmor
+  - CFGearBasics
+

@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFChannelSmite
+  name: "Channel Smite"
+  description: "Costs 2 actions. This feature will be implemented later."
+  class: Cleric
+  level: 4
+  traits:
+    - "Cleric"
+    - "Divine"
+  action: Action
+  pendingAction: true

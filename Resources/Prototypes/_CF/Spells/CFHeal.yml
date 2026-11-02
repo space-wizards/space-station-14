@@ -1,0 +1,26 @@
+﻿- type: entity
+  parent: CFSpellTarget
+  id: CFHeal
+  name: Heal
+  description: Restores 1d8+8 Hit Points.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 1
+  - type: CFSpell
+    spell: Heal
+    rank: 1
+    delivery: Target
+    rangeFeet: 30
+    defense: None
+    healDice: 1
+    healDie: 8
+    healFlat: 8
+    friendly: true
+    includeSelf: true
+  - type: EntityTargetAction
+    canTargetSelf: true

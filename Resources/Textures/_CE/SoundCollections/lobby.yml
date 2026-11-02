@@ -1,7 +1,0 @@
-- type: soundCollection
-  id: CELobbyMusic
-  files:
-    - /Audio/Lobby/absconditus.ogg
-    - /Audio/_CE/Lobby/eldermourne.ogg
-    - /Audio/_CE/Lobby/blood_fog.ogg
-    - /Audio/_CE/Lobby/deep_dive.ogg

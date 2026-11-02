@@ -1,0 +1,13 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFAllysShelter
+  name: "Ally's Shelter"
+  description: "Reaction. TBA - action will be added"
+  ancestry: Kobold
+  level: 5
+  traits:
+    - "Fortune"
+    - "Kobold"
+  action: Reaction
+  pendingAction: true

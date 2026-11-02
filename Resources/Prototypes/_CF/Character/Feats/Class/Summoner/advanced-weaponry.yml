@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFAdvancedWeaponry
+  name: "Advanced Weaponry"
+  description: "This feature will be implemented later."
+  class: Summoner
+  level: 1
+  traits:
+    - "Evolution"
+    - "Summoner"

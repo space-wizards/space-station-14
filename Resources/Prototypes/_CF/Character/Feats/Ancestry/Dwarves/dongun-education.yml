@@ -1,0 +1,11 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Guns & Gears
+- type: cfFeat
+  id: CFDongunEducation
+  name: "Dongun Education"
+  description: "Passive feat. Its special rule is not applied in play yet."
+  ancestry: Dwarf
+  level: 1
+  rarity: Uncommon
+  traits:
+    - "Dwarf"

@@ -1,0 +1,307 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "See per-state attribution",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ears",
+      "directions": 4,
+      "copyright": "Darkrell",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "ears_round",
+      "directions": 4,
+      "copyright": "DocMoth",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "tail_behind",
+      "directions": 4,
+      "copyright": "Darkrell",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "tail",
+      "directions": 4,
+      "copyright": "Darkrell",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "tail_wagging",
+      "directions": 4,
+      "copyright": "Darkrell",
+      "license": "CC-BY-SA-3.0",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "pawmittens_armsL",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "pawmittens_armsR",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "pawmittens_footR",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "pawmittens_footL",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "pawmittens_handsL",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "pawmittens_handsR",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "pawmittens_legsL",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "pawmittens_legsR",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "Tabby_LegR",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "Tabby_armL",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "Tabby_armR",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "Tabby_chest",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "Tabby_head",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "Tabby_LegL",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "Tiger_stripes_face",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "bellymark",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "calico2_ArmL",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "calico2_ArmR",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "calico2_chest",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "calico2_legL",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "calico1_chest",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "calico1_head",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "calico1_legL",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "calico2_head",
+      "directions": 4,
+      "copyright": "depressedtimbit",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "bright_belly",
+      "directions": 4,
+      "copyright": "DocMoth",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "body_stripes",
+      "directions": 4,
+      "copyright": "DocMoth",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "head_snout",
+      "directions": 4,
+      "copyright": "DocMoth",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "head_stripes",
+      "directions": 4,
+      "copyright": "DocMoth",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "l_arm_stripes",
+      "directions": 4,
+      "copyright": "DocMoth",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "r_arm_stripes",
+      "directions": 4,
+      "copyright": "DocMoth",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "tail_base_wagging",
+      "directions": 4,
+      "copyright": "DocMoth",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "tail_tip_wagging",
+      "directions": 4,
+      "copyright": "DocMoth",
+      "license": "CC-BY-SA-3.0"
+    }
+  ]
+}

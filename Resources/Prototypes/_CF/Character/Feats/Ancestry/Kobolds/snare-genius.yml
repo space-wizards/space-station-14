@@ -1,0 +1,13 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFSnareGenius
+  name: "Snare Genius"
+  description: "Requires expert in Crafting and Snare Crafting."
+  ancestry: Kobold
+  level: 5
+  traits:
+    - "Kobold"
+  prerequisites:
+    - "expert in Crafting"
+    - "Snare Crafting"

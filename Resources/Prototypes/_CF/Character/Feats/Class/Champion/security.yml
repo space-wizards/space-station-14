@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFSecurity
+  name: "Security"
+  description: "Requires shields of the spirit. Changes an item. This feature will be implemented later."
+  class: Champion
+  level: 4
+  traits:
+    - "Champion"
+  prerequisites:
+    - "shields of the spirit"
+  pendingAction: true

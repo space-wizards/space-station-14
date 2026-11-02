@@ -1,0 +1,21 @@
+﻿- type: entity
+  parent: CFSpellTarget
+  id: CFLaughingFit
+  name: Laughing Fit
+  description: On a failed Will save the target falls prone.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 2
+  - type: CFSpell
+    spell: LaughingFit
+    rank: 2
+    delivery: Target
+    rangeFeet: 30
+    defense: Will
+    basicSave: false
+    rider: Prone

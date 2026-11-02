@@ -24,9 +24,16 @@
       components:
         - type: StationNameSetup
           mapNameTemplate: "Dev"
+        # CarpFinder: CF adventurer jobs (unlimited round-start + midround)
         - type: StationJobs
           availableJobs:
-            Captain: [ -1, -1 ]
+            CFAlpha: [ -1, -1 ]
+            CFBeta: [ -1, -1 ]
+            CFCharlie: [ -1, -1 ]
+            CFDelta: [ -1, -1 ]
+            CFMerchant: [ -1, -1 ]
+            CFArcaneResearcher: [ -1, -1 ]
+            CFArcaneArtificer: [ -1, -1 ]
 
 - type: gameMap
   id: TestTeg

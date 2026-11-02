@@ -1,4 +1,0 @@
-# Allows bypassing the soft player-cap queue; wired into ConnectionManager.ShouldDeny.
-- type: sponsorFeature
-  id: PriorityJoin
-  minPriority: 1

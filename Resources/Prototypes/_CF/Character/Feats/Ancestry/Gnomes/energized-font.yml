@@ -1,0 +1,15 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFEnergizedFont
+  name: "Energized Font"
+  description: "Requires focus pool and at least one innate spell from a gnome heritage or ancestry feat that shares a tradition with at least one of your focus spells. Costs 1 action. TBA - action will be added"
+  ancestry: Gnome
+  level: 5
+  traits:
+    - "Gnome"
+  prerequisites:
+    - "focus pool"
+    - "at least one innate spell from a gnome heritage or ancestry feat that shares a tradition with at least one of your focus spells"
+  action: Action
+  pendingAction: true

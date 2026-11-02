@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFPlummetingRoll
+  name: "Plummeting Roll"
+  description: "Requires trained in Acrobatics. Also grants Cat Fall. Grants Plummeting Roll. This feature will be implemented later."
+  class: Swashbuckler
+  level: 1
+  traits:
+    - "Swashbuckler"
+  prerequisites:
+    - "trained in Acrobatics"
+  pendingAction: true

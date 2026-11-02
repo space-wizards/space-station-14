@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Battlecry!
+- type: cfFeat
+  id: CFHamperingStance
+  name: "Hampering Stance"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Guardian
+  level: 2
+  traits:
+    - "Aura"
+    - "Guardian"
+    - "Stance"
+  action: Action
+  pendingAction: true

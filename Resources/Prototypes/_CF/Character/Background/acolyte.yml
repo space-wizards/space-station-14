@@ -1,12 +1,11 @@
 - type: cfBackground
-  id: Acolyte
-  name: cf-background-acolyte
-  description: cf-background-description-acolyte
-  skillBoosts:
-    - Religion
-    - Diplomacy
+  id: cf-background-acolyte
+  name: Acolyte
+  description: >-
+    You spent your early years in the service of a deity or philosophy. You're trained in the Religion and Diplomacy skills.
   trainedSkills:
     - Religion
+    - Diplomacy
   abilityBoosts:
     - Wisdom
-    - Charisma  
+    - Charisma

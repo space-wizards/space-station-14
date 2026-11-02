@@ -1,0 +1,9 @@
+<controls:CFShopWindow xmlns="https://spacestation14.io"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:controls="clr-namespace:Content.Client.CF.Character"
+                       x:Class="Content.Client.CF.Character.CFShopWindow"
+                       Title="{Loc 'cf-shop-title'}"
+                       MinWidth="980"
+                       MinHeight="680">
+    <controls:CFShopView Name="Shop" Access="Public"/>
+</controls:CFShopWindow>

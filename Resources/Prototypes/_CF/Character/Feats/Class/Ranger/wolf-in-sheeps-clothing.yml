@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Dark Archive (Remastered)
+- type: cfFeat
+  id: CFWolfinSheepsClothing
+  name: "Wolf in Sheep's Clothing"
+  description: "Requires Trained in Deception."
+  class: Ranger
+  level: 4
+  traits:
+    - "Ranger"
+  prerequisites:
+    - "Trained in Deception"

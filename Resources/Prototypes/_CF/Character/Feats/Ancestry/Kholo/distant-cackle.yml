@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFDistantCackle
+  name: "Distant Cackle"
+  description: "Requires witch kholo heritage. Changes an item. Not applied in play yet."
+  ancestry: Kholo
+  level: 5
+  traits:
+    - "Kholo"
+  prerequisites:
+    - "witch kholo heritage"

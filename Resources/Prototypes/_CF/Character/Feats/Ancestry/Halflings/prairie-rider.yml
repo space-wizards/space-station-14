@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFPrairieRider
+  name: "Prairie Rider"
+  description: "Trained in Nature. +1 circumstance bonus to Nature. Not applied in play yet."
+  ancestry: Halfling
+  level: 1
+  traits:
+    - "Halfling"
+  trainedSkills:
+    - Nature

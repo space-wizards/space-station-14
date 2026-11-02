@@ -1,0 +1,26 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              x:Class="Content.Client.CF.Character.CFSpellsTab"
+              Orientation="Vertical"
+              HorizontalExpand="True"
+              VerticalExpand="True"
+              Margin="8"
+              SeparationOverride="8">
+    <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+        <Button Name="KnownButton" Text="{Loc 'cf-sheet-spells-known'}" ToggleMode="True" Pressed="True" HorizontalExpand="True"/>
+        <Button Name="RitualsButton" Text="{Loc 'cf-sheet-spells-rituals'}" ToggleMode="True" HorizontalExpand="True"/>
+        <Button Name="ActivationsButton" Text="{Loc 'cf-sheet-spells-activations'}" ToggleMode="True" HorizontalExpand="True"/>
+    </BoxContainer>
+    <PanelContainer StyleClasses="BackgroundDark">
+        <BoxContainer Orientation="Horizontal" Margin="8" SeparationOverride="16">
+            <Label Name="DcLabel" FontColorOverride="#E6C15A" VerticalAlignment="Center"/>
+            <Label Name="TraditionLabel" VerticalAlignment="Center"/>
+            <Label Name="ProficiencyLabel" VerticalAlignment="Center"/>
+            <Control HorizontalExpand="True"/>
+            <Button Name="PrepareButton" Text="{Loc 'cf-sheet-spells-prepare'}" Visible="False"/>
+        </BoxContainer>
+    </PanelContainer>
+    <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
+        <BoxContainer Name="RankRows" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="8"/>
+    </ScrollContainer>
+</BoxContainer>

@@ -1,0 +1,230 @@
+# CarpFinder: remaster trait ids. Summaries are short mechanical notes, not source text.
+# category: Equipment
+
+- type: cfTrait
+  id: Invested
+  name: Invested
+  category: Equipment
+  summary: "You must invest this item during your daily preparations to gain its benefit."
+
+- type: cfTrait
+  id: Consumable
+  name: Consumable
+  category: Equipment
+  summary: "This item is used up when you activate it."
+
+- type: cfTrait
+  id: Bomb
+  name: Bomb
+  category: Equipment
+  summary: "An alchemical bomb. It is thrown and deals splash damage."
+
+- type: cfTrait
+  id: Elixir
+  name: Elixir
+  category: Equipment
+  summary: "A drink that grants a benefit for a while."
+
+- type: cfTrait
+  id: Potion
+  name: Potion
+  category: Equipment
+  summary: "A magical drink, usually a one-use spell."
+
+- type: cfTrait
+  id: Scroll
+  name: Scroll
+  category: Equipment
+  summary: "A one-use casting of a spell written on paper."
+
+- type: cfTrait
+  id: Talisman
+  name: Talisman
+  category: Equipment
+  summary: "A one-use charm affixed to a weapon, armor, or other item."
+
+- type: cfTrait
+  id: Wand
+  name: Wand
+  category: Equipment
+  summary: "A spell stored in a wand. Using it casts that spell."
+
+- type: cfTrait
+  id: Staff
+  name: Staff
+  category: Equipment
+  summary: "A staff that holds several spells."
+
+- type: cfTrait
+  id: Grimoire
+  name: Grimoire
+  category: Equipment
+  summary: "A spellbook or similar book of spells."
+
+- type: cfTrait
+  id: Tattoo
+  name: Tattoo
+  category: Equipment
+  summary: "An item inked onto the body."
+
+- type: cfTrait
+  id: Gadget
+  name: Gadget
+  category: Equipment
+  summary: "A technological or clockwork device."
+
+- type: cfTrait
+  id: Oil
+  name: Oil
+  category: Equipment
+  summary: "A liquid applied to a weapon or object."
+
+- type: cfTrait
+  id: Mutagen
+  name: Mutagen
+  category: Equipment
+  summary: "An alchemical drink that changes the body and usually has a drawback."
+
+- type: cfTrait
+  id: Fulu
+  name: Fulu
+  category: Equipment
+  summary: "A paper talisman that is affixed and then triggered."
+
+- type: cfTrait
+  id: Spellgun
+  name: Spellgun
+  category: Equipment
+  summary: "A one-use magical firearm that casts a spell."
+
+- type: cfTrait
+  id: Spellheart
+  name: Spellheart
+  category: Equipment
+  summary: "An affixed item that grants a cantrip and a spell."
+
+- type: cfTrait
+  id: Catalyst
+  name: Catalyst
+  category: Equipment
+  summary: "An item consumed to change a spell as it is cast."
+
+- type: cfTrait
+  id: Infused
+  name: Infused
+  category: Equipment
+  summary: "An alchemist made this with their infused reagents. It expires."
+
+- type: cfTrait
+  id: Precious
+  name: Precious
+  category: Equipment
+  summary: "This item is made from a precious material."
+
+- type: cfTrait
+  id: Barding
+  name: Barding
+  category: Equipment
+  summary: "Armor made for an animal companion or mount."
+
+- type: cfTrait
+  id: Graft
+  name: Graft
+  category: Equipment
+  summary: "An item implanted in the body."
+
+- type: cfTrait
+  id: Portable
+  name: Portable
+  category: Equipment
+  summary: "This structure can be carried and set up."
+
+- type: cfTrait
+  id: Mounted
+  name: Mounted
+  category: Equipment
+  summary: "This is used while mounted."
+
+- type: cfTrait
+  id: Adjustment
+  name: Adjustment
+  category: Equipment
+  summary: "An adjustment that modifies another item."
+
+- type: cfTrait
+  id: Adjusted
+  name: Adjusted
+  category: Equipment
+  summary: "This item has been changed by an adjustment."
+
+- type: cfTrait
+  id: Focused
+  name: Focused
+  category: Equipment
+  summary: "A focused item. You can benefit from only a limited number."
+
+- type: cfTrait
+  id: Contract
+  name: Contract
+  category: Equipment
+  summary: "A written magical agreement."
+
+- type: cfTrait
+  id: Censer
+  name: Censer
+  category: Equipment
+  summary: "A vessel for burning incense or a similar reagent."
+
+- type: cfTrait
+  id: Figurehead
+  name: Figurehead
+  category: Equipment
+  summary: "A ship's figurehead item."
+
+- type: cfTrait
+  id: Saggorak
+  name: Saggorak
+  category: Equipment
+  summary: "A saggorak firearm or item from that tradition."
+
+- type: cfTrait
+  id: BottledBreath
+  name: Bottled Breath
+  category: Equipment
+  summary: "A consumable that holds a breath of air or another gas."
+
+- type: cfTrait
+  id: Expandable
+  name: Expandable
+  category: Equipment
+  summary: "This consumable can be stretched into a larger form."
+
+- type: cfTrait
+  id: Processed
+  name: Processed
+  category: Equipment
+  summary: "An alchemical food or similar processed consumable."
+
+- type: cfTrait
+  id: Lozenge
+  name: Lozenge
+  category: Equipment
+  summary: "A consumable held in the mouth."
+
+- type: cfTrait
+  id: Tea
+  name: Tea
+  category: Equipment
+  summary: "A drink prepared as tea."
+
+- type: cfTrait
+  id: Missive
+  name: Missive
+  category: Equipment
+  summary: "A written message item."
+
+- type: cfTrait
+  id: Coagulant
+  name: Coagulant
+  category: Equipment
+  summary: "An alchemical item that stops bleeding."

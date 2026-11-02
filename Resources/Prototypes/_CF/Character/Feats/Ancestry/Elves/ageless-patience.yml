@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFAgelessPatience
+  name: "Ageless Patience"
+  description: "+2 circumstance bonus to Perception and Skill Check. Not applied in play yet. Improves Skill Check results. Not applied in play yet. Improves Perception results. Not applied in play yet."
+  ancestry: Elf
+  level: 5
+  traits:
+    - "Elf"

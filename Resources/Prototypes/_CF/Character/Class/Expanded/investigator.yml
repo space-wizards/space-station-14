@@ -1,0 +1,55 @@
+# CarpFinder: remaster class, levels 1-5.
+- type: cfClass
+  id: Investigator
+  name: cf-class-investigator
+  description: cf-class-description-investigator
+  hitPoints: 8
+  keyAbility: Intelligence
+  hitPointsAbility: Constitution
+  classDC: cf-class-investigator
+  proficiencies:
+    perception:
+      expert:
+        - Perception
+    savingThrows:
+      trained:
+        - Fortitude
+      expert:
+        - Reflex
+        - Will
+    skills:
+      trained:
+        - Society
+    attacks:
+      trained:
+        - MartialWeapons
+        - SimpleWeapons
+        - Unarmed
+    defenses:
+      trained:
+        - Unarmored
+        - LightArmor
+  additionalSkillTrainings: 4
+  features:
+    - level: 1
+      name: "Devise a Stratagem"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Methodology"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "On the Case"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Strategic Strike"
+      description: "This feature will be implemented later."
+    - level: 3
+      name: "Keen Recollection"
+      description: "This feature will be implemented later."
+    - level: 3
+      name: "Skillful Lessons"
+      description: "This feature will be implemented later."
+    - level: 5
+      name: "Weapon Expertise"
+      description: "This feature will be implemented later."
+  # Class key-attribute boost is applied from keyAbility in code (PF2e).

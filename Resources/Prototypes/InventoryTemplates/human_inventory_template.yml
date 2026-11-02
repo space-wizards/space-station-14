@@ -64,7 +64,7 @@
       slotTexture: pocket
       fullTextureName: template_small
       slotFlags: POCKET
-      slotGroup: MainHotbar
+      slotGroup: CFPockets # CarpFinder: pockets sit beside the health bottles.
       stripTime: 3
       uiWindowPos: 0,3
       strippingWindowPos: 0,4
@@ -75,7 +75,7 @@
       slotTexture: pocket
       fullTextureName: template_small
       slotFlags: POCKET
-      slotGroup: MainHotbar
+      slotGroup: CFPockets # CarpFinder: pockets sit beside the health bottles.
       stripTime: 3
       uiWindowPos: 2,3
       strippingWindowPos: 1,4
@@ -85,7 +85,7 @@
     - name: suitstorage
       slotTexture: suit_storage
       slotFlags:   SUITSTORAGE
-      slotGroup: MainHotbar
+      slotGroup: CFSuitStorage # CarpFinder: suit storage on the action HUD.
       stripTime: 3
       uiWindowPos: 2,0
       strippingWindowPos: 2,5
@@ -97,7 +97,7 @@
       slotTexture: id
       fullTextureName: template_small
       slotFlags: IDCARD
-      slotGroup: SecondHotbar
+      slotGroup: CFId # CarpFinder: ID and PDA on the action HUD.
       stripTime: 6
       uiWindowPos: 2,1
       strippingWindowPos: 2,4
@@ -107,7 +107,7 @@
       slotTexture: belt
       fullTextureName: template_small
       slotFlags: BELT
-      slotGroup: SecondHotbar
+      slotGroup: CFBelt # CarpFinder: belt column on the action HUD.
       stripTime: 6
       uiWindowPos: 3,1
       strippingWindowPos: 1,5
@@ -116,7 +116,7 @@
       slotTexture: back
       fullTextureName: template_small
       slotFlags: BACK
-      slotGroup: SecondHotbar
+      slotGroup: CFBag # CarpFinder: bag column on the action HUD.
       stripTime: 6
       uiWindowPos: 3,0
       strippingWindowPos: 0,5

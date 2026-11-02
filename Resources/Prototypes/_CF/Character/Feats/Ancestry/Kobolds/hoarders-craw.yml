@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Draconic Codex
+- type: cfFeat
+  id: CFHoardersCraw
+  name: "Hoarder's Craw"
+  description: "Requires dragonscaled kobold heritage."
+  ancestry: Kobold
+  level: 1
+  traits:
+    - "Kobold"
+  prerequisites:
+    - "dragonscaled kobold heritage"

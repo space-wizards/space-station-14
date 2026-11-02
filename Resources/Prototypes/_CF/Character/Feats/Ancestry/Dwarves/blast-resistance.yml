@@ -1,0 +1,11 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Guns & Gears
+- type: cfFeat
+  id: CFBlastResistance
+  name: "Blast Resistance"
+  description: "Improves Saving Throw results. Not applied in play yet. Resistance 3 to Fire and Sonic. Not applied in play yet."
+  ancestry: Dwarf
+  level: 5
+  rarity: Uncommon
+  traits:
+    - "Dwarf"

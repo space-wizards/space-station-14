@@ -1,6 +1,10 @@
 - type: organCategory
   id: Torso
 
+# CarpFinder: pelvis slot for bodies whose art splits the torso.
+- type: organCategory
+  id: Groin
+
 - type: organCategory
   id: Head
 

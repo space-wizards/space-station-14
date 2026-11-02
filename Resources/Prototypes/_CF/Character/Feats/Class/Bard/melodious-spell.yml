@@ -1,0 +1,15 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFMelodiousSpell
+  name: "Melodious Spell"
+  description: "Changes an item. Costs 1 action. This feature will be implemented later."
+  class: Bard
+  level: 4
+  traits:
+    - "Bard"
+    - "Concentrate"
+    - "Manipulate"
+    - "Spellshape"
+  action: Action
+  pendingAction: true

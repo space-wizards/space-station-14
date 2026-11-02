@@ -1,0 +1,17 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFSnowdriftSpell
+  name: "Snowdrift Spell"
+  description: "Requires storm order. Changes an item. Costs 1 action. This feature will be implemented later."
+  class: Druid
+  level: 4
+  traits:
+    - "Cold"
+    - "Druid"
+    - "Manipulate"
+    - "Spellshape"
+  prerequisites:
+    - "storm order"
+  action: Action
+  pendingAction: true

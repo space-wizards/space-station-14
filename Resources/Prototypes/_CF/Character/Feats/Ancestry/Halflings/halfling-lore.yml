@@ -1,0 +1,16 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFHalflingLore
+  name: "Halfling Lore"
+  description: "Lore: Halfling Lore. Trained in Acrobatics and Stealth."
+  ancestry: Halfling
+  level: 1
+  traits:
+    - "Halfling"
+  trainedSkills:
+    - Acrobatics
+    - Stealth
+    - Lore
+  lores:
+    - "Halfling Lore"

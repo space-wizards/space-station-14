@@ -1,9 +1,0 @@
-- type: secretDepartment
-  id: Coven
-  name: ce-secret-department-coven-name
-  description: ce-secret-department-coven-description
-  color: "#7a4fb5"
-  weight: 3
-  membersRecognizeEachOther: true
-  roles:
-  - Seer

@@ -1,0 +1,15 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFStumblingStance
+  name: "Stumbling Stance"
+  description: "Requires trained in Deception. Costs 1 action. This feature will be implemented later."
+  class: Monk
+  level: 1
+  traits:
+    - "Monk"
+    - "Stance"
+  prerequisites:
+    - "trained in Deception"
+  action: Action
+  pendingAction: true

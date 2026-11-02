@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by .kreks (Discord) ",
+  "states": [
+    {
+      "name": "vial"
+    },
+    {
+      "name": "label"
+    },
+    {
+      "name": "liq-1"
+    },
+    {
+      "name": "liq-2"
+    },
+    {
+      "name": "liq-3"
+    },
+    {
+      "name": "liq-4"
+    },
+    {
+      "name": "liq-5"
+    },
+    {
+      "name": "reinforcement"
+    },
+    {
+      "name": "reinforcement_back"
+    }
+  ]
+}

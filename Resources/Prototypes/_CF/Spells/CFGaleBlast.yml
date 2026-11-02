@@ -1,0 +1,26 @@
+﻿- type: entity
+  parent: CFSpellArea
+  id: CFGaleBlast
+  name: Gale Blast
+  description: Wind in a 5-foot emanation. Fortitude save, 1d6 bludgeoning, and a push on a failure.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 0
+  - type: CFSpell
+    spell: GaleBlast
+    rank: 0
+    delivery: Area
+    area: Emanation
+    areaFeet: 5
+    defense: Fortitude
+    basicSave: true
+    diceCount: 1
+    diceSize: 6
+    damageType: bludgeoning
+    rider: Push
+    pushFeet: 5

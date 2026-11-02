@@ -1,32 +1,30 @@
 - type: species
   id: CF-Goblin
-  name: cf-species-name-goblin
+  name: Goblin
   roundStart: true
   prototype: CFMobGoblin
   dollPrototype: CFAppearanceGoblin
   skinColoration: VoxFeathers
   defaultSkinTone: "#74964d"
-  defaultSoundBySex: [CEUnisexGoblin, CEUniexGoblin, CEUnisexGoblin]
-  voices: [CEUnisexGoblin]
-  maleFirstNames: CE_Names_Goblin_Male_First
-  femaleFirstNames: CE_Names_Goblin_Female_First
-  naming: first
-  minAGE: 18
+  naming: First
+  minAge: 18
   maxAge: 70
   youngAge: 25
   oldAge: 55
 
 - type: entity
-  parent: CEAppearanceGoblin
+  parent: AppearanceHuman
   id: CFAppearanceGoblin
   categories: [HideSpawnMenu]
   save: false
   components:
   - type: HumanoidProfile
-  species: CF-Goblin
+    species: CF-Goblin
 
 - type: entity
-  parent: CFMobGoblin
+  parent:
+  - CFAppearanceGoblin
+  - BaseSpeciesMobOrganic
   id: CFMobGoblin
   name: goblin
   components:
@@ -36,8 +34,7 @@
     species: CF-Goblin
   - type: CFAtmosphereImmunity
   - type: NightVision
-  enabbled: true
-  prioritized: true
-  lightingColor: '#9BB6FF30'
-  noiseAmount: 0
-
+    enabled: true
+    prioritized: true
+    lightingColor: "#9BB6FF30"
+    noiseAmount: 0

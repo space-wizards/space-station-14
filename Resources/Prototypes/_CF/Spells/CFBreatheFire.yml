@@ -1,0 +1,24 @@
+﻿- type: entity
+  parent: CFSpellArea
+  id: CFBreatheFire
+  name: Breathe Fire
+  description: A 15-foot cone of fire. Reflex save, 2d6 fire.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: fireball
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 1
+  - type: CFSpell
+    spell: BreatheFire
+    rank: 1
+    delivery: Area
+    area: Cone
+    areaFeet: 15
+    defense: Reflex
+    basicSave: true
+    diceCount: 2
+    diceSize: 6
+    damageType: fire

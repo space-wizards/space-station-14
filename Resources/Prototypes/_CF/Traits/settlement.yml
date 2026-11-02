@@ -1,0 +1,26 @@
+# CarpFinder: remaster trait ids. Summaries are short mechanical notes, not source text.
+# Kingdom traits are not included. These are only the settlement sizes.
+
+- type: cfTrait
+  id: Village
+  name: Village
+  category: Settlement
+  summary: "A settlement of village size."
+
+- type: cfTrait
+  id: Town
+  name: Town
+  category: Settlement
+  summary: "A settlement of town size."
+
+- type: cfTrait
+  id: City
+  name: City
+  category: Settlement
+  summary: "A settlement of city size."
+
+- type: cfTrait
+  id: Metropolis
+  name: Metropolis
+  category: Settlement
+  summary: "A settlement of metropolis size."

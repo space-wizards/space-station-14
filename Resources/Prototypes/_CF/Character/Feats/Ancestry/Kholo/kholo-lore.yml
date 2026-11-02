@@ -1,0 +1,16 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFKholoLore
+  name: "Kholo Lore"
+  description: "Lore: Kholo Lore. Trained in Stealth and Survival."
+  ancestry: Kholo
+  level: 1
+  traits:
+    - "Kholo"
+  trainedSkills:
+    - Stealth
+    - Survival
+    - Lore
+  lores:
+    - "Kholo Lore"

@@ -1,0 +1,50 @@
+# CarpFinder: remaster trait ids. Summaries are short mechanical notes, not source text.
+# category: Affliction
+
+- type: cfTrait
+  id: Curse
+  name: Curse
+  category: Affliction
+  summary: "An affliction that is a curse."
+
+- type: cfTrait
+  id: Disease
+  name: Disease
+  category: Affliction
+  summary: "An affliction that is a disease."
+
+- type: cfTrait
+  id: Drug
+  name: Drug
+  category: Affliction
+  summary: "A drug. It is an affliction with a staged track."
+
+- type: cfTrait
+  id: Virulent
+  name: Virulent
+  category: Affliction
+  summary: "The stage of this affliction goes up by 2 on a critical failure."
+
+- type: cfTrait
+  id: Contact
+  name: Contact
+  category: Affliction
+  summary: "This affliction is delivered by touching the creature."
+
+- type: cfTrait
+  id: Ingested
+  name: Ingested
+  category: Affliction
+  summary: "This affliction is delivered when the creature swallows it."
+
+- type: cfTrait
+  id: Inhaled
+  name: Inhaled
+  category: Affliction
+  summary: "This affliction is delivered when the creature breathes it in."
+
+- type: cfTrait
+  id: Injury
+  name: Injury
+  category: Affliction
+  summary: "This affliction is delivered by a damaging hit."

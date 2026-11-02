@@ -1,0 +1,16 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFCallWizardlyTools
+  name: "Call Wizardly Tools"
+  description: "Requires arcane bond. Costs 1 action. This feature will be implemented later."
+  class: Wizard
+  level: 4
+  traits:
+    - "Concentrate"
+    - "Teleportation"
+    - "Wizard"
+  prerequisites:
+    - "arcane bond"
+  action: Action
+  pendingAction: true

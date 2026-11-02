@@ -51,6 +51,13 @@ public sealed partial class LoadoutGroupPrototype : IPrototype, IInheritingProto
     [DataField]
     public bool Hidden;
 
+    /// <summary>
+    /// Which character-builder tab shows this group.
+    /// Weapons, Defense, Gear, or Spells. Untagged groups stay on Gear.
+    /// </summary>
+    [DataField]
+    public string EditorTab = LoadoutEditorTabs.Gear;
+
     [AlwaysPushInheritance]
     [DataField(required: true)]
     public List<ProtoId<LoadoutPrototype>> Loadouts = new();

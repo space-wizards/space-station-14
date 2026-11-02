@@ -1,0 +1,116 @@
+# CarpFinder: remaster trait ids. Summaries are short mechanical notes, not source text.
+# category: Feat
+
+- type: cfTrait
+  id: Archetype
+  name: Archetype
+  category: Feat
+  summary: "An archetype feat. You need the dedication before the other feats in that archetype."
+
+- type: cfTrait
+  id: Dedication
+  name: Dedication
+  category: Feat
+  summary: "The first feat of an archetype."
+
+- type: cfTrait
+  id: General
+  name: General
+  category: Feat
+  summary: "A general feat. Any class can take it when a general feat is offered."
+
+- type: cfTrait
+  id: Skill
+  name: Skill
+  category: Feat
+  summary: "A skill feat."
+
+- type: cfTrait
+  id: Multiclass
+  name: Multiclass
+  category: Feat
+  summary: "A multiclass archetype feat."
+
+- type: cfTrait
+  id: Lineage
+  name: Lineage
+  category: Feat
+  summary: "A heritage or ancestry feat that changes lineage."
+
+- type: cfTrait
+  id: Flourish
+  name: Flourish
+  category: Feat
+  summary: "A flourish action. You can use only one flourish on your turn."
+
+- type: cfTrait
+  id: Press
+  name: Press
+  category: Feat
+  summary: "A press action. You can use it only after you have already attacked this turn."
+
+- type: cfTrait
+  id: Stance
+  name: Stance
+  category: Feat
+  summary: "A stance. Entering it is an action, and it lasts until you leave it."
+
+- type: cfTrait
+  id: Downtime
+  name: Downtime
+  category: Feat
+  summary: "This is used during downtime, not in an encounter."
+
+- type: cfTrait
+  id: Exploration
+  name: Exploration
+  category: Feat
+  summary: "This is used during exploration."
+
+- type: cfTrait
+  id: Secret
+  name: Secret
+  category: Feat
+  summary: "The player does not roll this check. The GM rolls it in private."
+
+- type: cfTrait
+  id: Social
+  name: Social
+  category: Feat
+  summary: "This is used in a social encounter."
+
+- type: cfTrait
+  id: Aftermath
+  name: Aftermath
+  category: Feat
+  summary: "An archetype feat that follows a dedication's story."
+
+- type: cfTrait
+  id: Deviant
+  name: Deviant
+  category: Feat
+  summary: "A deviant feat. It has an unstable backlash."
+
+- type: cfTrait
+  id: Destiny
+  name: Destiny
+  category: Feat
+  summary: "A destiny feat from a mythic or campaign destiny."
+
+- type: cfTrait
+  id: Reckless
+  name: Reckless
+  category: Feat
+  summary: "A reckless action. It usually trades your defense for a stronger attack."
+
+- type: cfTrait
+  id: Mindshift
+  name: Mindshift
+  category: Feat
+  summary: "A feat that changes how a psychic or similar mind works."
+
+- type: cfTrait
+  id: Calling
+  name: Calling
+  category: Feat
+  summary: "A calling, such as a background or campaign vocation."

@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFOrcFerocity
+  name: "Orc Ferocity"
+  description: "Reaction. TBA - action will be added"
+  ancestry: Orc
+  level: 1
+  traits:
+    - "Orc"
+  action: Reaction
+  pendingAction: true

@@ -18,6 +18,9 @@ public partial class ActionButtonContainer : GridContainer
     public event Action<GUIBoundKeyEventArgs, ActionButton>? ActionUnpressed;
     public event Action<ActionButton>? ActionFocusExited;
 
+    // CarpFinder: keep empty hotbar keys so the action grid can show both rows.
+    public int MinimumButtons { get; set; }
+
     public ActionButtonContainer()
     {
         IoCManager.InjectDependencies(this);
@@ -32,8 +35,10 @@ public partial class ActionButtonContainer : GridContainer
     {
         var uniqueCount = Math.Min(system.GetClientActions().Count(), actionTypes.Length + 1);
         var keys = ContentKeyFunctions.GetHotbarBoundKeys();
+        // CarpFinder: a fixed bar still draws its empty keys.
+        var count = Math.Min(keys.Length, Math.Max(uniqueCount, MinimumButtons));
 
-        for (var i = 0; i < uniqueCount; i++)
+        for (var i = 0; i < count; i++)
         {
             if (i >= ChildCount)
             {
@@ -45,7 +50,7 @@ public partial class ActionButtonContainer : GridContainer
             ((ActionButton) GetChild(i)).UpdateData(action, system);
         }
 
-        for (var i = ChildCount - 1; i >= uniqueCount; i--)
+        for (var i = ChildCount - 1; i >= count; i--)
         {
             RemoveChild(GetChild(i));
         }
@@ -59,12 +64,18 @@ public partial class ActionButtonContainer : GridContainer
 
             button.KeyBind = boundKey;
             if (_input.TryGetKeyBinding(boundKey, out var binding))
-            {
-                button.Label.Text = binding.GetKeyString();
-            }
+                button.Label.Text = FormatKeyLabel(index, binding);
 
             return button;
         }
+    }
+
+    /// <summary>
+    /// Text drawn on a slot. The action grid drops the modifier from the second row.
+    /// </summary>
+    protected virtual string FormatKeyLabel(int index, IKeyBinding binding)
+    {
+        return binding.GetKeyString();
     }
 
     public void ClearActionData()

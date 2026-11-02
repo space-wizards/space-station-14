@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFHaughtyObstinacy
+  name: "Haughty Obstinacy"
+  description: "Improves Will results. Not applied in play yet."
+  ancestry: Human
+  level: 1
+  traits:
+    - "Human"

@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFMagussAnalysis
+  name: "Magus's Analysis"
+  description: "Requires Spellstrike. +1 circumstance bonus to Skill Check. Costs 1 action. This feature will be implemented later."
+  class: Magus
+  level: 1
+  traits:
+    - "Magus"
+  prerequisites:
+    - "Spellstrike"
+  action: Action
+  pendingAction: true

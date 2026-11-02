@@ -1,0 +1,23 @@
+﻿- type: entity
+  parent: CFSpellArea
+  id: CFBless
+  name: Bless
+  description: You and nearby allies gain a +1 status bonus to attack rolls.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 1
+  - type: CFSpell
+    spell: Bless
+    rank: 1
+    delivery: Area
+    area: Emanation
+    areaFeet: 5
+    defense: None
+    attackBonus: 1
+    friendly: true
+    includeSelf: true

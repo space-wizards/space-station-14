@@ -1,6 +1,6 @@
 namespace Content.Shared.StatusIcon;
 
-public abstract class SharedStatusIconSystem : EntitySystem
+public abstract partial class SharedStatusIconSystem : EntitySystem // CarpFinder: partial for flanked status icon
 {
     // If you are trying to add logic for status icons here, you're probably in the wrong place.
     // Status icons are gathered and rendered entirely clientside.

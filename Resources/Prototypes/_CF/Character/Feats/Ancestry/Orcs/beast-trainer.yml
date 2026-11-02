@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFBeastTrainer
+  name: "Beast Trainer"
+  description: "Trained in Nature. Grants an item. Not added in play yet."
+  ancestry: Orc
+  level: 1
+  traits:
+    - "Orc"
+  trainedSkills:
+    - Nature

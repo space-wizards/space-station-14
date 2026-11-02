@@ -1,0 +1,112 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              x:Class="Content.Client.CF.Character.CFShopView"
+              Orientation="Vertical"
+              HorizontalExpand="True"
+              VerticalExpand="True"
+              Margin="8"
+              SeparationOverride="8">
+
+    <BoxContainer Orientation="Horizontal" VerticalExpand="True" SeparationOverride="10">
+
+        <!-- Filters -->
+        <PanelContainer StyleClasses="BackgroundDark" MinWidth="260" VerticalExpand="True">
+            <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+                <BoxContainer Orientation="Vertical" Margin="8" SeparationOverride="8">
+
+                    <LineEdit Name="SearchInput" PlaceHolder="{Loc 'cf-shop-search'}" HorizontalExpand="True"/>
+
+                    <BoxContainer Orientation="Horizontal" SeparationOverride="4">
+                        <Label Text="{Loc 'cf-shop-order-by'}" VerticalAlignment="Center"/>
+                        <OptionButton Name="SortDropdown" HorizontalExpand="True"/>
+                        <Button Name="SortToggle" MinWidth="64"/>
+                    </BoxContainer>
+
+                    <Button Name="ClearFilters" Text="{Loc 'cf-shop-clear-filters'}" HorizontalExpand="True"/>
+
+                    <PanelContainer StyleClasses="BackgroundDark">
+                        <BoxContainer Orientation="Vertical" Margin="4" SeparationOverride="4">
+                            <Label Text="{Loc 'cf-shop-traits'}" FontColorOverride="#E6C15A"/>
+                            <LineEdit Name="TraitInput" PlaceHolder="{Loc 'cf-shop-trait-select'}" HorizontalExpand="True"/>
+                            <BoxContainer Name="TraitChips" Orientation="Vertical" SeparationOverride="2"/>
+                            <BoxContainer Orientation="Horizontal" SeparationOverride="4">
+                                <Button Name="TraitAll" Text="{Loc 'cf-shop-trait-all'}" ToggleMode="True" Pressed="True" HorizontalExpand="True"/>
+                                <Button Name="TraitAny" Text="{Loc 'cf-shop-trait-any'}" ToggleMode="True" HorizontalExpand="True"/>
+                            </BoxContainer>
+                        </BoxContainer>
+                    </PanelContainer>
+
+                    <Collapsible BodyVisible="True" HorizontalExpand="True">
+                        <CollapsibleHeading Title="{Loc 'cf-shop-inventory'}"/>
+                        <CollapsibleBody>
+                            <BoxContainer Orientation="Vertical" SeparationOverride="2">
+                                <CheckBox Name="ChkAmmunition" Text="{Loc 'cf-shop-cat-ammunition'}"/>
+                                <CheckBox Name="ChkArmor" Text="{Loc 'cf-shop-cat-armor'}"/>
+                                <CheckBox Name="ChkConsumable" Text="{Loc 'cf-shop-cat-consumable'}"/>
+                                <CheckBox Name="ChkContainer" Text="{Loc 'cf-shop-cat-container'}"/>
+                                <CheckBox Name="ChkEquipment" Text="{Loc 'cf-shop-cat-equipment'}"/>
+                                <CheckBox Name="ChkKit" Text="{Loc 'cf-shop-cat-kit'}"/>
+                                <CheckBox Name="ChkShield" Text="{Loc 'cf-shop-cat-shield'}"/>
+                                <CheckBox Name="ChkTreasure" Text="{Loc 'cf-shop-cat-treasure'}"/>
+                                <CheckBox Name="ChkWeapon" Text="{Loc 'cf-shop-cat-weapon'}"/>
+                            </BoxContainer>
+                        </CollapsibleBody>
+                    </Collapsible>
+
+                    <Collapsible HorizontalExpand="True">
+                        <CollapsibleHeading Title="{Loc 'cf-shop-rarities'}"/>
+                        <CollapsibleBody>
+                            <BoxContainer Orientation="Vertical" SeparationOverride="2">
+                                <CheckBox Name="ChkCommon" Text="{Loc 'cf-shop-rarity-common'}"/>
+                                <CheckBox Name="ChkUncommon" Text="{Loc 'cf-shop-rarity-uncommon'}"/>
+                                <CheckBox Name="ChkRare" Text="{Loc 'cf-shop-rarity-rare'}"/>
+                            </BoxContainer>
+                        </CollapsibleBody>
+                    </Collapsible>
+
+                    <Collapsible HorizontalExpand="True">
+                        <CollapsibleHeading Title="{Loc 'cf-shop-armor-filters'}"/>
+                        <CollapsibleBody>
+                            <BoxContainer Orientation="Vertical" SeparationOverride="2">
+                                <CheckBox Name="ChkLight" Text="{Loc 'cf-shop-armor-light'}"/>
+                                <CheckBox Name="ChkMedium" Text="{Loc 'cf-shop-armor-medium'}"/>
+                                <CheckBox Name="ChkHeavy" Text="{Loc 'cf-shop-armor-heavy'}"/>
+                                <CheckBox Name="ChkBulwark" Text="{Loc 'cf-shop-armor-bulwark'}"/>
+                                <CheckBox Name="ChkFlexible" Text="{Loc 'cf-shop-armor-flexible'}"/>
+                                <CheckBox Name="ChkNoisy" Text="{Loc 'cf-shop-armor-noisy'}"/>
+                                <CheckBox Name="ChkComfort" Text="{Loc 'cf-shop-armor-comfort'}"/>
+                            </BoxContainer>
+                        </CollapsibleBody>
+                    </Collapsible>
+
+                </BoxContainer>
+            </ScrollContainer>
+        </PanelContainer>
+
+        <!-- Item table -->
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" SeparationOverride="4">
+            <PanelContainer StyleClasses="BackgroundDark" HorizontalExpand="True" RectClipContent="True">
+                <BoxContainer Orientation="Horizontal" Margin="4" SeparationOverride="8" HorizontalExpand="True">
+                    <Label Text="{Loc 'cf-shop-col-icon'}" SetWidth="40" MinWidth="40" MaxWidth="40" HorizontalExpand="False" Align="Center" ClipText="True"/>
+                    <Label Text="{Loc 'cf-shop-col-name'}" MinWidth="120" HorizontalExpand="True" ClipText="True"/>
+                    <Label Text="{Loc 'cf-shop-col-description'}" HorizontalExpand="True" ClipText="True" SizeFlagsStretchRatio="2"/>
+                    <Label Text="{Loc 'cf-shop-col-cost'}" SetWidth="80" MinWidth="80" MaxWidth="80" HorizontalExpand="False" Align="Right" ClipText="True"/>
+                    <Label Text="{Loc 'cf-shop-col-qty'}" SetWidth="60" MinWidth="60" MaxWidth="60" HorizontalExpand="False" Align="Center" ClipText="True"/>
+                    <Label Text="{Loc 'cf-shop-col-buy'}" SetWidth="70" MinWidth="70" MaxWidth="70" HorizontalExpand="False" Align="Center" ClipText="True"/>
+                </BoxContainer>
+            </PanelContainer>
+
+            <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
+                <BoxContainer Name="ItemRows" Orientation="Vertical" SeparationOverride="2" HorizontalExpand="True"/>
+            </ScrollContainer>
+        </BoxContainer>
+    </BoxContainer>
+
+    <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" SeparationOverride="6">
+        <Label Name="PurseLabel" FontColorOverride="#E6C15A" HorizontalAlignment="Center"/>
+        <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" SeparationOverride="12">
+            <Button Name="AcceptButton" Text="{Loc 'cf-shop-accept'}" MinSize="110 32"/>
+            <Button Name="CancelButton" Text="{Loc 'cf-shop-cancel'}" MinSize="110 32"/>
+        </BoxContainer>
+    </BoxContainer>
+</BoxContainer>

@@ -1,0 +1,23 @@
+﻿- type: entity
+  parent: CFSpellProjectile
+  id: CFVitalityLash
+  name: Vitality Lash
+  description: A lash of vitality. Spell attack, 1d6 vitality.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 0
+  - type: CFSpell
+    spell: VitalityLash
+    rank: 0
+    delivery: Projectile
+    rangeFeet: 30
+    defense: SpellAttack
+    diceCount: 1
+    diceSize: 6
+    damageType: vitality
+    boltPrototype: CFSpellBoltVitality

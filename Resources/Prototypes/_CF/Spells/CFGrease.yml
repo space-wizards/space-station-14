@@ -1,0 +1,23 @@
+﻿- type: entity
+  parent: CFSpellArea
+  id: CFGrease
+  name: Grease
+  description: A slick 10-foot patch. A failed Reflex save knocks the creature prone.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 1
+  - type: CFSpell
+    spell: Grease
+    rank: 1
+    delivery: Area
+    area: Square
+    areaFeet: 10
+    rangeFeet: 30
+    defense: Reflex
+    basicSave: false
+    rider: Prone

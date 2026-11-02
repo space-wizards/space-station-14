@@ -1,0 +1,14 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Tian Xia Character Guide
+- type: cfFeat
+  id: CFChildlikePlant
+  name: "Childlike Plant"
+  description: "Requires chrysanthemum leshy heritage or peachchild leshy heritage. Trained in Deception. +4 circumstance bonus to Deception. Not applied in play yet."
+  ancestry: Leshy
+  level: 1
+  traits:
+    - "Leshy"
+  prerequisites:
+    - "chrysanthemum leshy heritage or peachchild leshy heritage"
+  trainedSkills:
+    - Deception

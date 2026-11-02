@@ -1,9 +1,0 @@
-- type: entity
-  parent: CEKeyIronBlank
-  id: CEKeyUniversal
-  name: omni key
-  suffix: Admeme Only, Do Not Map
-  categories: [ ForkFiltered, DoNotMap ]
-  components:
-  - type: CEKey
-  - type: CEKeyUniversal

@@ -1,0 +1,15 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFGliderForm
+  name: "Glider Form"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Summoner
+  level: 1
+  traits:
+    - "Eidolon"
+    - "Evolution"
+    - "Move"
+    - "Summoner"
+  action: Action
+  pendingAction: true

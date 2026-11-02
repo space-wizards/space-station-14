@@ -1,0 +1,15 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFRitualResearcher
+  name: "Ritual Researcher"
+  description: "Requires enigma muse and expert in Occultism. +2 circumstance bonus to Skill Check. This feature will be implemented later."
+  class: Bard
+  level: 4
+  rarity: Uncommon
+  traits:
+    - "Bard"
+  prerequisites:
+    - "enigma muse"
+    - "expert in Occultism"
+  pendingAction: true

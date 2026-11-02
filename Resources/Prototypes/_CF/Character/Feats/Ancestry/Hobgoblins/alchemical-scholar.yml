@@ -1,0 +1,11 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFAlchemicalScholar
+  name: "Alchemical Scholar"
+  description: "Also grants Alchemical Crafting. TBA - action will be added"
+  ancestry: Hobgoblin
+  level: 1
+  traits:
+    - "Hobgoblin"
+  pendingAction: true

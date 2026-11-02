@@ -1,0 +1,15 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFUndeadCreator
+  name: "Undead Creator"
+  description: "Requires You aren't holy. Grants Create Undead. This feature will be implemented later."
+  class: Necromancer
+  level: 2
+  rarity: Uncommon
+  traits:
+    - "Necromancer"
+    - "Unholy"
+  prerequisites:
+    - "You aren't holy"
+  pendingAction: true

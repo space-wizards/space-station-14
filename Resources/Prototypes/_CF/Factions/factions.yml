@@ -1,0 +1,51 @@
+# Adventure companies are a party with their own members and opposition to the other companies.
+# Neutral creatures do not hunt each other or the companies. Attacks against neutrals are still allowed.
+
+- type: cfFaction
+  id: Alpha
+  name: cf-faction-alpha
+  jobs:
+  - CFAlpha
+  opposition:
+  - Beta
+  - Charlie
+  - Delta
+
+- type: cfFaction
+  id: Beta
+  name: cf-faction-beta
+  jobs:
+  - CFBeta
+  opposition:
+  - Alpha
+  - Charlie
+  - Delta
+
+- type: cfFaction
+  id: Charlie
+  name: cf-faction-charlie
+  jobs:
+  - CFCharlie
+  opposition:
+  - Alpha
+  - Beta
+  - Delta
+
+- type: cfFaction
+  id: Delta
+  name: cf-faction-delta
+  jobs:
+  - CFDelta
+  opposition:
+  - Alpha
+  - Beta
+  - Charlie
+
+- type: cfFaction
+  id: Neutral
+  name: cf-faction-neutral
+  same: Neutral
+  jobs:
+  - CFMerchant
+  - CFArcaneResearcher
+  - CFArcaneArtificer

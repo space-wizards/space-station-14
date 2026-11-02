@@ -1,0 +1,38 @@
+{
+    "version": 1,
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Created by TheShuEd (Github)",
+    "states": [
+      {
+        "name": "smol_pipe"
+      },
+      {
+        "name": "smol_pipe_2"
+      },
+      {
+        "name": "smol_pipe_3"
+      },
+      {
+        "name": "pipe"
+      },
+      {
+        "name": "pipe_2"
+      },
+      {
+        "name": "pipe_3"
+      },
+      {
+        "name": "valve"
+      },
+      {
+        "name": "valve_2"
+      },
+      {
+        "name": "valve_3"
+      }
+    ]
+  }

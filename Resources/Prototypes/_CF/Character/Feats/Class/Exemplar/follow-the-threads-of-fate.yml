@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder #217: Death Sails a Wine-Dark Sea
+- type: cfFeat
+  id: CFFollowtheThreadsofFate
+  name: "Follow the Threads of Fate"
+  description: "Grants Unravel The Future. Changes an item. This feature will be implemented later."
+  class: Exemplar
+  level: 4
+  rarity: Uncommon
+  traits:
+    - "Exemplar"
+    - "Fortune"
+    - "Ikon"
+  pendingAction: true

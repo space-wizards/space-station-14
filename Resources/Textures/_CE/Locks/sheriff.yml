@@ -1,9 +1,0 @@
-- type: lockType
-  id: SheriffHall
-  complexity: 3
-  name: ce-lock-shape-sheriff-hall
-
-- type: lockType
-  id: SheriffStaff
-  complexity: 5
-  name: ce-lock-shape-sheriff-staff

@@ -1,0 +1,1460 @@
+# CarpFinder: Crystall Edge markings. Art stays in Resources/Textures/_CE.
+# These sprites are drawn for that body, so they are not run through the human displacement map.
+# Carrin wings use Overlay. This body does not draw the Special layer.
+
+- type: marking
+  id: CECarcatEars
+  bodyPart: HeadTop
+  forcedColoring: true
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_ears.rsi
+      state: 1
+
+- type: marking
+  id: CECarcatEars2
+  bodyPart: HeadTop
+  forcedColoring: true
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_ears.rsi
+      state: 2
+
+- type: marking
+  id: CECarcatEars3
+  bodyPart: HeadTop
+  forcedColoring: true
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_ears.rsi
+      state: 3
+
+- type: marking
+  id: CECarcatEars4
+  bodyPart: HeadTop
+  forcedColoring: true
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_ears.rsi
+      state: 4
+
+- type: marking
+  id: CECarcatEars5
+  bodyPart: HeadTop
+  forcedColoring: true
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_ears.rsi
+      state: 5
+
+
+- type: marking
+  id: CECarcatNose
+  bodyPart: Snout
+  forcedColoring: true
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_nose.rsi
+      state: 1
+
+- type: marking
+  id: CECarcatNose2
+  bodyPart: Snout
+  forcedColoring: true
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_nose.rsi
+      state: 2
+
+- type: marking
+  id: CECarcatNose3
+  bodyPart: Snout
+  forcedColoring: true
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_nose.rsi
+      state: 3
+
+- type: marking
+  id: CECarcatNose4
+  bodyPart: Snout
+  forcedColoring: true
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_nose.rsi
+      state: 4
+
+- type: marking
+  id: CECarcatNose5
+  bodyPart: Snout
+  forcedColoring: true
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_nose.rsi
+      state: 5
+
+- type: marking
+  id: CECarcatNose6
+  bodyPart: Snout
+  forcedColoring: true
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_nose.rsi
+      state: 6
+
+
+
+- type: marking
+  id: CECarcatScarCheekLeft
+  bodyPart: Head
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_scars.rsi
+      state: scar_cheek_left
+
+- type: marking
+  id: CECarcatScarCheekRight
+  bodyPart: Head
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_scars.rsi
+      state: scar_cheek_right
+
+- type: marking
+  id: CECarcatScarChestLeft
+  bodyPart: Chest
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_scars.rsi
+      state: scar_chest_left
+
+- type: marking
+  id: CECarcatScarChestRight
+  bodyPart: Chest
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_scars.rsi
+      state: scar_chest_right
+
+- type: marking
+  id: CECarcatScarCutLeft
+  bodyPart: Head
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_scars.rsi
+      state: scar_cut_left
+
+- type: marking
+  id: CECarcatScarCutRight
+  bodyPart: Head
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_scars.rsi
+      state: scar_cut_right
+
+- type: marking
+  id: CECarcatScarEyeLeft
+  bodyPart: Head
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_scars.rsi
+      state: scar_eye_left
+
+- type: marking
+  id: CECarcatScarEyeRight
+  bodyPart: Head
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_scars.rsi
+      state: scar_eye_right
+
+- type: marking
+  id: CECarcatScarEyebrowLeft
+  bodyPart: Head
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_scars.rsi
+      state: scar_eyebrow_left
+
+- type: marking
+  id: CECarcatScarEyebrowRight
+  bodyPart: Head
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_scars.rsi
+      state: scar_eyebrow_right
+
+- type: marking
+  id: CECarcatScarHalfFaceLeft
+  bodyPart: Head
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_scars.rsi
+      state: scar_half_face_left
+
+- type: marking
+  id: CECarcatScarHalfFaceRight
+  bodyPart: Head
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_scars.rsi
+      state: scar_half_face_right
+
+- type: marking
+  id: CECarcatScarNearRibLeft
+  bodyPart: Chest
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_scars.rsi
+      state: scar_near_rib_left
+
+- type: marking
+  id: CECarcatScarNearRibRight
+  bodyPart: Chest
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_scars.rsi
+      state: scar_near_rib_right
+
+- type: marking
+  id: CECarcatScarNose
+  bodyPart: Head
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_scars.rsi
+      state: scar_nose
+
+
+
+- type: marking
+  id: CECarcatHeadStripes
+  bodyPart: Head
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_wool/head.rsi
+      state: stripes
+
+- type: marking
+  id: CECarcatTorsoStripes
+  bodyPart: Chest
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_wool/torso.rsi
+      state: stripes
+
+- type: marking
+  id: CECarcatArmLeftStripes
+  bodyPart: LArm
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_wool/left_hand.rsi
+      state: stripes
+
+- type: marking
+  id: CECarcatArmRightStripes
+  bodyPart: RArm
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_wool/right_hand.rsi
+      state: stripes
+
+- type: marking
+  id: CECarcatLegLeftStripes
+  bodyPart: LLeg
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_wool/left_leg.rsi
+      state: stripes
+
+- type: marking
+  id: CECarcatLegRightStripes
+  bodyPart: RLeg
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_wool/right_leg.rsi
+      state: stripes
+
+
+- type: marking
+  id: CECarcatTail
+  bodyPart: Tail
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  forcedColoring: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_tail.rsi
+      state: tail
+
+- type: marking
+  id: CECarcatTailFluffy
+  bodyPart: Tail
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  forcedColoring: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_tail.rsi
+      state: tail_fluffy
+    - sprite: _CE/Mobs/Customization/carcat_tail.rsi
+      state: tail_fluffy_end
+
+# Animation
+
+- type: marking
+  id: CECarcatTailAnimated
+  bodyPart: Tail
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  forcedColoring: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_tail.rsi
+      state: tail_wagging
+
+- type: marking
+  id: CECarcatTailFluffyAnimated
+  bodyPart: Tail
+  groupWhitelist: [CFCECarcat]
+  canBeDisplaced: false
+  forcedColoring: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carcat_tail.rsi
+      state: tail_fluffy_wagging
+    - sprite: _CE/Mobs/Customization/carcat_tail.rsi
+      state: tail_fluffy_wagging_end
+
+
+- type: marking
+  id: CECarrinBeak
+  bodyPart: Snout
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_beak.rsi
+      state: 1
+
+- type: marking
+  id: CECarrinBeak2
+  bodyPart: Snout
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_beak.rsi
+      state: 2
+
+- type: marking
+  id: CECarrinBeak3
+  bodyPart: Snout
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_beak.rsi
+      state: 3
+
+- type: marking
+  id: CECarrinBeak4
+  bodyPart: Snout
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_beak.rsi
+      state: 4
+
+- type: marking
+  id: CECarrinBeak5
+  bodyPart: Snout
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_beak.rsi
+      state: 5
+
+- type: marking
+  id: CECarrinBeak6
+  bodyPart: Snout
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_beak.rsi
+      state: 6
+
+- type: marking
+  id: CECarrinBeak7
+  bodyPart: Snout
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_beak.rsi
+      state: 7
+
+- type: marking
+  id: CECarrinBeak8
+  bodyPart: Snout
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_beak.rsi
+      state: 8
+
+- type: marking
+  id: CECarrinBeak9
+  bodyPart: Snout
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_beak.rsi
+      state: 9
+
+- type: marking
+  id: CECarrinBeak10
+  bodyPart: Snout
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_beak.rsi
+      state: 10
+
+- type: marking
+  id: CECarrinBeak11
+  bodyPart: Snout
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_beak.rsi
+      state: 11
+
+- type: marking
+  id: CECarrinBeak12
+  bodyPart: Snout
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_beak.rsi
+      state: 12
+
+- type: marking
+  id: CECarrinBeak13
+  bodyPart: Snout
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_beak.rsi
+      state: 13
+
+- type: marking
+  id: CECarrinBeak14
+  bodyPart: Snout
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_beak.rsi
+      state: 14
+
+- type: marking
+  id: CECarrinBeak15
+  bodyPart: Snout
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_beak.rsi
+      state: 15
+
+- type: marking
+  id: CECarrinBeak16
+  bodyPart: Snout
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_beak.rsi
+      state: 16
+
+
+- type: marking
+  id: CECarrinBeard1
+  bodyPart: FacialHair
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_facial_hair.rsi
+      state: 1
+
+- type: marking
+  id: CECarrinBeard2
+  bodyPart: FacialHair
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/carrin_facial_hair.rsi
+    state: 2
+
+
+- type: marking
+  id: CECarrinHair
+  bodyPart: Hair
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_hair.rsi
+      state: 1
+
+- type: marking
+  id: CECarrinHair2
+  bodyPart: Hair
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_hair.rsi
+      state: 2
+
+- type: marking
+  id: CECarrinHair3
+  bodyPart: Hair
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_hair.rsi
+      state: 3
+
+- type: marking
+  id: CECarrinHair4
+  bodyPart: Hair
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_hair.rsi
+      state: 4
+
+- type: marking
+  id: CECarrinHair5
+  bodyPart: Hair
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_hair.rsi
+      state: 5
+
+- type: marking
+  id: CECarrinHair6
+  bodyPart: Hair
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_hair.rsi
+      state: 6
+
+- type: marking
+  id: CECarrinHair7
+  bodyPart: Hair
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/carrin_hair.rsi
+    state: 7
+
+- type: marking
+  id: CECarrinHair8
+  bodyPart: Hair
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/carrin_hair.rsi
+    state: 8
+
+- type: marking
+  id: CECarrinHair9
+  bodyPart: Hair
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/carrin_hair.rsi
+    state: 9
+
+
+- type: marking
+  id: CECarrinHeadArrows
+  bodyPart: Head
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_head_markings.rsi
+      state: arrows
+
+- type: marking
+  id: CECarrinHeadCheeks
+  bodyPart: Head
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_head_markings.rsi
+      state: cheeks
+
+- type: marking
+  id: CECarrinHeadCheeks2
+  bodyPart: Head
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_head_markings.rsi
+      state: cheeks2
+
+- type: marking
+  id: CECarrinHeadDuckStrip
+  bodyPart: Head
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_head_markings.rsi
+      state: duck_strip
+
+- type: marking
+  id: CECarrinHeadFullHead
+  bodyPart: Head
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_head_markings.rsi
+      state: full_head
+
+- type: marking
+  id: CECarrinHeadGlasses
+  bodyPart: Head
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_head_markings.rsi
+      state: glasses
+
+
+- type: marking
+  id: CECarrinTail1
+  bodyPart: Tail
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/carrin_tail.rsi
+    state: 1_primary
+  - sprite: _CE/Mobs/Customization/carrin_tail.rsi
+    state: 1_secondary
+
+- type: marking
+  id: CECarrinTail2
+  bodyPart: Tail
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/carrin_tail.rsi
+    state: 2_primary
+  - sprite: _CE/Mobs/Customization/carrin_tail.rsi
+    state: 2_secondary
+
+- type: marking
+  id: CECarrinTail3
+  bodyPart: Tail
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/carrin_tail.rsi
+    state: 3
+
+- type: marking
+  id: CECarrinTail4
+  bodyPart: Tail
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/carrin_tail.rsi
+    state: 4
+
+- type: marking
+  id: CECarrinTail5
+  bodyPart: Tail
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/carrin_tail.rsi
+    state: 5
+
+
+- type: marking
+  id: CECarrinTorsoMain
+  bodyPart: Chest
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_torso_markings.rsi
+      state: main
+
+- type: marking
+  id: CECarrinTorsoPoints
+  bodyPart: Chest
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_torso_markings.rsi
+      state: points
+
+- type: marking
+  id: CECarrinTorsoArrow
+  bodyPart: Chest
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_torso_markings.rsi
+      state: arrow
+
+- type: marking
+  id: CECarrinTorsoStandart
+  bodyPart: Chest
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_torso_markings.rsi
+      state: 1_standart
+    - sprite: _CE/Mobs/Customization/carrin_torso_markings.rsi
+      state: 2_standart
+    - sprite: _CE/Mobs/Customization/carrin_torso_markings.rsi
+      state: 3_standart
+
+- type: marking
+  id: CECarrinTorsoTitmouse
+  bodyPart: Chest
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/carrin_torso_markings.rsi
+      state: 1_titmouse
+    - sprite: _CE/Mobs/Customization/carrin_torso_markings.rsi
+      state: 2_titmouse
+
+
+- type: marking
+  id: CECarrinWings1
+  bodyPart: Overlay
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/carrin_wings.rsi
+    state: 1_primary
+  - sprite: _CE/Mobs/Customization/carrin_wings.rsi
+    state: 1_secondary
+
+- type: marking
+  id: CECarrinWings2
+  bodyPart: Overlay
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/carrin_wings.rsi
+    state: 2_primary
+  - sprite: _CE/Mobs/Customization/carrin_wings.rsi
+    state: 2_secondary
+
+- type: marking
+  id: CECarrinWings3
+  bodyPart: Overlay
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/carrin_wings.rsi
+    state: 3_primary
+  - sprite: _CE/Mobs/Customization/carrin_wings.rsi
+    state: 3_secondary
+
+- type: marking
+  id: CECarrinWings4
+  bodyPart: Overlay
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/carrin_wings.rsi
+    state: 4_primary
+  - sprite: _CE/Mobs/Customization/carrin_wings.rsi
+    state: 4_secondary
+
+- type: marking
+  id: CECarrinWings5
+  bodyPart: Overlay
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/carrin_wings.rsi
+    state: 5_primary
+  - sprite: _CE/Mobs/Customization/carrin_wings.rsi
+    state: 5_secondary
+
+- type: marking
+  id: CECarrinWings6
+  bodyPart: Overlay
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/carrin_wings.rsi
+    state: 6_primary
+  - sprite: _CE/Mobs/Customization/carrin_wings.rsi
+    state: 6_secondary
+
+- type: marking
+  id: CECarrinWings7
+  bodyPart: Overlay
+  groupWhitelist: [CFCECarrin]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/carrin_wings.rsi
+    state: 7
+
+
+- type: marking
+  id: CEElfEars
+  bodyPart: HeadTop
+  forcedColoring: true
+  groupWhitelist: [CFCEElf]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/elf_ears.rsi
+      state: ears1
+
+- type: marking
+  id: CEElfEars2
+  bodyPart: HeadTop
+  forcedColoring: true
+  groupWhitelist: [CFCEElf]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/elf_ears.rsi
+      state: ears2
+
+- type: marking
+  id: CEElfEars3
+  bodyPart: HeadTop
+  forcedColoring: true
+  groupWhitelist: [CFCEElf]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/elf_ears.rsi
+      state: ears3
+
+- type: marking
+  id: CEElfEars3Broken
+  bodyPart: HeadTop
+  forcedColoring: true
+  groupWhitelist: [CFCEElf]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/elf_ears.rsi
+      state: ears3_broken
+
+- type: marking
+  id: CEElfEars4
+  bodyPart: HeadTop
+  forcedColoring: true
+  groupWhitelist: [CFCEElf]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/elf_ears.rsi
+    state: ears4
+
+
+- type: marking
+  id: CEGoblinEars
+  bodyPart: HeadTop
+  forcedColoring: true
+  groupWhitelist: [CFCEGoblin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/goblin_ears.rsi
+      state: ears1
+
+- type: marking
+  id: CEGoblinEars2
+  bodyPart: HeadTop
+  forcedColoring: true
+  groupWhitelist: [CFCEGoblin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/goblin_ears.rsi
+      state: ears2
+
+- type: marking
+  id: CEGoblinEars3
+  bodyPart: HeadTop
+  forcedColoring: true
+  groupWhitelist: [CFCEGoblin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/goblin_ears.rsi
+      state: ears3
+
+
+
+- type: marking
+  id: CEGoblinNose
+  bodyPart: Snout
+  forcedColoring: true
+  groupWhitelist: [CFCEGoblin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/goblin_nose.rsi
+      state: nose1
+
+- type: marking
+  id: CEGoblinNose2
+  bodyPart: Snout
+  forcedColoring: true
+  groupWhitelist: [CFCEGoblin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/goblin_nose.rsi
+      state: nose2
+
+- type: marking
+  id: CEGoblinNose3
+  bodyPart: Snout
+  forcedColoring: true
+  groupWhitelist: [CFCEGoblin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/goblin_nose.rsi
+      state: nose3
+
+
+
+- type: marking
+  id: CEGoblinScarCheekLeft
+  bodyPart: Head
+  groupWhitelist: [CFCEGoblin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/goblin_scars.rsi
+      state: scar_cheek_left
+
+- type: marking
+  id: CEGoblinScarCheekRight
+  bodyPart: Head
+  groupWhitelist: [CFCEGoblin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/goblin_scars.rsi
+      state: scar_cheek_right
+
+- type: marking
+  id: CEGoblinScarChestLeft
+  bodyPart: Chest
+  groupWhitelist: [CFCEGoblin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/goblin_scars.rsi
+      state: scar_chest_left
+
+- type: marking
+  id: CEGoblinScarChestRight
+  bodyPart: Chest
+  groupWhitelist: [CFCEGoblin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/goblin_scars.rsi
+      state: scar_chest_right
+
+- type: marking
+  id: CEGoblinScarCutLeft
+  bodyPart: Head
+  groupWhitelist: [CFCEGoblin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/goblin_scars.rsi
+      state: scar_cut_left
+
+- type: marking
+  id: CEGoblinScarCutRight
+  bodyPart: Head
+  groupWhitelist: [CFCEGoblin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/goblin_scars.rsi
+      state: scar_cut_right
+
+- type: marking
+  id: CEGoblinScarEyeLeft
+  bodyPart: Head
+  groupWhitelist: [CFCEGoblin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/goblin_scars.rsi
+      state: scar_eye_left
+
+- type: marking
+  id: CEGoblinScarEyeRight
+  bodyPart: Head
+  groupWhitelist: [CFCEGoblin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/goblin_scars.rsi
+      state: scar_eye_right
+
+- type: marking
+  id: CEGoblinScarEyebrowLeft
+  bodyPart: Head
+  groupWhitelist: [CFCEGoblin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/goblin_scars.rsi
+      state: scar_eyebrow_left
+
+- type: marking
+  id: CEGoblinScarEyebrowRight
+  bodyPart: Head
+  groupWhitelist: [CFCEGoblin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/goblin_scars.rsi
+      state: scar_eyebrow_right
+
+- type: marking
+  id: CEGoblinScarHalfFaceLeft
+  bodyPart: Head
+  groupWhitelist: [CFCEGoblin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/goblin_scars.rsi
+      state: scar_half_face_left
+
+- type: marking
+  id: CEGoblinScarHalfFaceRight
+  bodyPart: Head
+  groupWhitelist: [CFCEGoblin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/goblin_scars.rsi
+      state: scar_half_face_right
+
+- type: marking
+  id: CEGoblinScarNearRibLeft
+  bodyPart: Chest
+  groupWhitelist: [CFCEGoblin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/goblin_scars.rsi
+      state: scar_near_rib_left
+
+- type: marking
+  id: CEGoblinScarNearRibRight
+  bodyPart: Chest
+  groupWhitelist: [CFCEGoblin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/goblin_scars.rsi
+      state: scar_near_rib_right
+
+- type: marking
+  id: CEGoblinScarNose
+  bodyPart: Head
+  groupWhitelist: [CFCEGoblin]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _CE/Mobs/Customization/goblin_scars.rsi
+      state: scar_nose
+
+
+
+- type: marking
+  id: CESilvaBodyBark1
+  bodyPart: Tail
+  groupWhitelist: [CFCESilva]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#543825"
+  sprites:
+  - sprite: _CE/Mobs/Customization/silva_body_bark.rsi
+    state: bark1
+
+- type: marking
+  id: CESilvaBodyBark2
+  bodyPart: Tail
+  groupWhitelist: [CFCESilva]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#543825"
+  sprites:
+  - sprite: _CE/Mobs/Customization/silva_body_bark.rsi
+    state: bark2
+
+- type: marking
+  id: CESilvaBodyBark3
+  bodyPart: Tail
+  groupWhitelist: [CFCESilva]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#543825"
+  sprites:
+  - sprite: _CE/Mobs/Customization/silva_body_bark.rsi
+    state: bark3
+
+- type: marking
+  id: CESilvaBodyBark4
+  bodyPart: Tail
+  groupWhitelist: [CFCESilva]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#d977c2" #Pink flowers!
+  sprites:
+  - sprite: _CE/Mobs/Customization/silva_body_bark.rsi
+    state: bark4
+
+- type: marking
+  id: CESilvaBodyBark5
+  bodyPart: Tail
+  groupWhitelist: [CFCESilva]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#543825"
+  sprites:
+  - sprite: _CE/Mobs/Customization/silva_body_bark.rsi
+    state: bark5
+
+- type: marking
+  id: CESilvaBodyBark6
+  bodyPart: Tail
+  groupWhitelist: [CFCESilva]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#d977c2" #Pink flowers!
+  sprites:
+  - sprite: _CE/Mobs/Customization/silva_body_bark.rsi
+    state: bark6
+
+
+
+- type: marking
+  id: CESilvaHeadBark1
+  bodyPart: HeadTop
+  groupWhitelist: [CFCESilva]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#543825"
+  sprites:
+  - sprite: _CE/Mobs/Customization/silva_head_bark.rsi
+    state: bark1
+
+- type: marking
+  id: CESilvaHeadBark2
+  bodyPart: HeadTop
+  groupWhitelist: [CFCESilva]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#543825"
+  sprites:
+  - sprite: _CE/Mobs/Customization/silva_head_bark.rsi
+    state: bark2
+
+- type: marking
+  id: CESilvaHeadBark3
+  bodyPart: HeadTop
+  groupWhitelist: [CFCESilva]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#543825"
+  sprites:
+  - sprite: _CE/Mobs/Customization/silva_head_bark.rsi
+    state: bark3
+
+- type: marking
+  id: CESilvaHeadBark4
+  bodyPart: HeadTop
+  groupWhitelist: [CFCESilva]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#543825"
+  sprites:
+  - sprite: _CE/Mobs/Customization/silva_head_bark.rsi
+    state: bark4
+
+- type: marking
+  id: CESilvaHeadBark5
+  bodyPart: HeadTop
+  groupWhitelist: [CFCESilva]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#543825"
+  sprites:
+  - sprite: _CE/Mobs/Customization/silva_head_bark.rsi
+    state: bark5
+
+- type: marking
+  id: CESilvaHeadBark6
+  bodyPart: HeadTop
+  groupWhitelist: [CFCESilva]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#d977c2" #Pink flowers!
+  sprites:
+  - sprite: _CE/Mobs/Customization/silva_head_bark.rsi
+    state: bark6
+
+- type: marking
+  id: CESilvaHeadBark7
+  bodyPart: HeadTop
+  groupWhitelist: [CFCESilva]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#d977c2" #Pink flowers!
+  sprites:
+  - sprite: _CE/Mobs/Customization/silva_head_bark.rsi
+    state: bark7
+
+- type: marking
+  id: CESilvaHeadBark8
+  bodyPart: HeadTop
+  groupWhitelist: [CFCESilva]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#543825"
+  sprites:
+  - sprite: _CE/Mobs/Customization/silva_head_bark.rsi
+    state: bark8
+
+- type: marking
+  id: CESilvaHeadBark9
+  bodyPart: HeadTop
+  groupWhitelist: [CFCESilva]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#543825"
+  sprites:
+  - sprite: _CE/Mobs/Customization/silva_head_bark.rsi
+    state: bark9
+
+# Infernal horns and tail. Crystall Edge renamed these from the tiefling markings.
+- type: marking
+  id: CEInfernalHorns
+  bodyPart: HeadTop
+  groupWhitelist: [CFCEInfernal]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/infernal_horns.rsi
+    state: horn1
+  - sprite: _CE/Mobs/Customization/infernal_horns.rsi
+    state: horn1_gradient
+
+- type: marking
+  id: CEInfernalHorns2
+  bodyPart: HeadTop
+  groupWhitelist: [CFCEInfernal]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/infernal_horns.rsi
+    state: horn2
+
+- type: marking
+  id: CEInfernalHorns3
+  bodyPart: HeadTop
+  groupWhitelist: [CFCEInfernal]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/infernal_horns.rsi
+    state: horn3
+
+- type: marking
+  id: CEInfernalHorns3Broken
+  bodyPart: HeadTop
+  groupWhitelist: [CFCEInfernal]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/infernal_horns.rsi
+    state: horn3_broken
+
+- type: marking
+  id: CEInfernalHorns4
+  bodyPart: HeadTop
+  groupWhitelist: [CFCEInfernal]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/infernal_horns.rsi
+    state: horn4
+
+- type: marking
+  id: CEInfernalHorns5
+  bodyPart: HeadTop
+  groupWhitelist: [CFCEInfernal]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/infernal_horns.rsi
+    state: horn5
+
+- type: marking
+  id: CEInfernalHorns5Broken
+  bodyPart: HeadTop
+  groupWhitelist: [CFCEInfernal]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/infernal_horns.rsi
+    state: horn5_broken
+
+- type: marking
+  id: CEInfernalHorns6
+  bodyPart: HeadTop
+  groupWhitelist: [CFCEInfernal]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/infernal_horns.rsi
+    state: horn6
+  - sprite: _CE/Mobs/Customization/infernal_horns.rsi
+    state: horn6_gradient
+
+- type: marking
+  id: CEInfernalHorns7
+  bodyPart: HeadTop
+  groupWhitelist: [CFCEInfernal]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/infernal_horns.rsi
+    state: horn7
+  - sprite: _CE/Mobs/Customization/infernal_horns.rsi
+    state: horn7_gradient
+
+- type: marking
+  id: CEInfernalHorns8
+  bodyPart: HeadTop
+  groupWhitelist: [CFCEInfernal]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/infernal_horns.rsi
+    state: horn8
+
+- type: marking
+  id: CEInfernalHorns9
+  bodyPart: HeadTop
+  groupWhitelist: [CFCEInfernal]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/infernal_horns.rsi
+    state: horn9
+
+- type: marking
+  id: CEInfernalHorns10
+  bodyPart: HeadTop
+  groupWhitelist: [CFCEInfernal]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _CE/Mobs/Customization/infernal_horns.rsi
+    state: horn10
+  - sprite: _CE/Mobs/Customization/infernal_horns.rsi
+    state: horn10_gradient
+
+- type: marking
+  id: CEInfernalTail
+  bodyPart: Tail
+  groupWhitelist: [CFCEInfernal]
+  canBeDisplaced: false
+  forcedColoring: true
+  sprites:
+    - sprite: _CE/Mobs/Customization/infernal_tails.rsi
+      state: tail
+
+- type: marking
+  id: CEInfernalTailSpades
+  bodyPart: Tail
+  groupWhitelist: [CFCEInfernal]
+  canBeDisplaced: false
+  forcedColoring: true
+  sprites:
+    - sprite: _CE/Mobs/Customization/infernal_tails.rsi
+      state: tail_spades
+
+
+
+
+# Animation
+
+- type: marking
+  id: CEInfernalTailAnimated
+  bodyPart: Tail
+  groupWhitelist: [CFCEInfernal]
+  canBeDisplaced: false
+  forcedColoring: true
+  sprites:
+    - sprite: _CE/Mobs/Customization/infernal_tails.rsi
+      state: tail_waggin
+
+- type: marking
+  id: CEInfernalTailSpadesAnimated
+  bodyPart: Tail
+  groupWhitelist: [CFCEInfernal]
+  canBeDisplaced: false
+  forcedColoring: true
+  sprites:
+    - sprite: _CE/Mobs/Customization/infernal_tails.rsi
+      state: tail_spades_waggin

@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Created by PhantornRU (Github) and resprite by omsoyk (Github/Discord)",
+    "states": [
+      {
+        "name": "thin_leather"
+      },
+      {
+        "name": "leather"
+      },
+      {
+        "name": "rugged_leather"
+      },
+      {
+        "name": "strap"
+      },
+      {
+        "name": "rugged_strap"
+      }
+    ]
+  }

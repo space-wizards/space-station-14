@@ -1,0 +1,947 @@
+# Mechanical notes for the spell picker. Not source-book text.
+- type: cfSpell
+  id: ElectricArc
+  name: Electric Arc
+  rank: 0
+  traditions: [Arcane, Primal]
+  traits: [Concentrate, Electricity, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 30 feet
+  targets: 1 or 2 creatures
+  defense: Reflex
+  summary: Each target takes electricity damage equal to 1d4 plus your spellcasting modifier.
+  criticalSuccess: The creature is unaffected.
+  success: Half damage.
+  failure: Full damage.
+  criticalFailure: Double damage.
+  heightened: Damage increases by 1d4 at 3rd rank and every 2 ranks after.
+
+- type: cfSpell
+  id: Ignition
+  name: Ignition
+  rank: 0
+  traditions: [Arcane, Primal]
+  traits: [Attack, Concentrate, Fire, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 30 feet
+  targets: 1 creature
+  defense: Spell attack
+  summary: A jet of flame deals 2d6 fire damage on a hit, or a touch version deals 1d6 persistent fire.
+  success: Full fire damage.
+  failure: No damage.
+  heightened: The ranged damage increases by 1d6 at 3rd rank and every 2 ranks after.
+
+- type: cfSpell
+  id: Shield
+  name: Shield
+  rank: 0
+  traditions: [Arcane, Divine, Occult, Primal]
+  traits: [Cantrip, Concentrate, Manipulate]
+  actionCost: One
+  components: Somatic
+  duration: Until the start of your next turn
+  summary: You gain a +1 circumstance bonus to AC. You can use the shield to block one hit, then the spell ends.
+
+- type: cfSpell
+  id: Light
+  name: Light
+  rank: 0
+  traditions: [Arcane, Divine, Occult, Primal]
+  traits: [Concentrate, Light, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 120 feet
+  targets: 1 object
+  duration: Until your next daily preparations
+  summary: The object sheds bright light in a 20-foot radius.
+
+- type: cfSpell
+  id: TelekineticProjectile
+  name: Telekinetic Projectile
+  rank: 0
+  traditions: [Arcane, Occult]
+  traits: [Attack, Cantrip, Concentrate, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 30 feet
+  targets: 1 creature
+  defense: Spell attack
+  summary: You hurl an unattended object. On a hit it deals 1d6 bludgeoning, piercing, or slashing damage, plus your spellcasting modifier.
+  heightened: Damage increases by 1d6 at 3rd rank and every 2 ranks after.
+
+- type: cfSpell
+  id: Daze
+  name: Daze
+  rank: 0
+  traditions: [Arcane, Divine, Occult]
+  traits: [Cantrip, Concentrate, Manipulate, Mental, Nonlethal]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 60 feet
+  targets: 1 creature
+  defense: Will
+  summary: Mental damage equal to your spellcasting modifier, or double that on a critical failure. A damaged target cannot use reactions.
+  criticalSuccess: The creature is unaffected.
+  success: Half damage.
+  failure: Full damage and the target cannot take reactions until the start of your next turn.
+  criticalFailure: Double damage, and the target cannot take reactions until the start of your next turn.
+
+- type: cfSpell
+  id: Guidance
+  name: Guidance
+  rank: 0
+  traditions: [Divine, Occult, Primal]
+  traits: [Cantrip, Concentrate]
+  actionCost: One
+  components: Verbal
+  range: 30 feet
+  targets: 1 creature
+  duration: Until the start of your next turn
+  summary: The target gains a +1 status bonus to one attack, Perception, save, or skill check it makes before the spell ends.
+
+- type: cfSpell
+  id: VitalityLash
+  name: Vitality Lash
+  rank: 0
+  traditions: [Divine, Primal]
+  traits: [Attack, Cantrip, Concentrate, Manipulate, Vitality]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 30 feet
+  targets: 1 creature
+  defense: Spell attack
+  summary: A lash of vitality deals 1d6 vitality damage, plus 1d6 persistent vitality on a critical hit. It is especially effective against undead.
+  heightened: Damage increases by 1d6 at 3rd rank and every 2 ranks after.
+
+- type: cfSpell
+  id: VoidWarp
+  name: Void Warp
+  rank: 0
+  traditions: [Arcane, Divine, Occult]
+  traits: [Cantrip, Concentrate, Manipulate, Void]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 30 feet
+  targets: 1 creature
+  defense: Fortitude
+  summary: The target takes 2d4 void damage and is enfeebled 1 on a failure.
+  criticalSuccess: The creature is unaffected.
+  success: Half damage.
+  failure: Full damage and enfeebled 1.
+  criticalFailure: Double damage, enfeebled 1, and the enfeebled condition lasts longer.
+  heightened: Damage increases by 1d4 at 3rd rank and every 2 ranks after.
+
+- type: cfSpell
+  id: DetectMagic
+  name: Detect Magic
+  rank: 0
+  traditions: [Arcane, Divine, Occult, Primal]
+  traits: [Cantrip, Concentrate, Detection, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  area: 30-foot emanation
+  duration: 1 minute
+  summary: You sense whether magic is present. The strongest nearby effect stands out.
+
+- type: cfSpell
+  id: ReadAura
+  name: Read Aura
+  rank: 0
+  traditions: [Arcane, Divine, Occult, Primal]
+  traits: [Cantrip, Concentrate, Detection, Manipulate]
+  actionCost: One
+  components: Somatic
+  range: 30 feet
+  targets: 1 object
+  duration: 1 minute
+  summary: You learn whether the object is magical and the school and tradition of the strongest aura.
+
+- type: cfSpell
+  id: Prestidigitation
+  name: Prestidigitation
+  rank: 0
+  traditions: [Arcane, Occult, Primal]
+  traits: [Cantrip, Concentrate, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 10 feet
+  duration: Sustained, up to 1 hour for some tricks
+  summary: A minor trick such as cleaning, soiling, chilling, warming, or a harmless sensory effect.
+
+- type: cfSpell
+  id: Figment
+  name: Figment
+  rank: 0
+  traditions: [Arcane, Occult, Primal]
+  traits: [Cantrip, Concentrate, Illusion, Manipulate, Subtle]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 30 feet
+  duration: Sustained
+  summary: You create a simple illusory image or sound no larger than a 10-foot cube. It cannot imitate a specific creature's voice or likeness.
+
+- type: cfSpell
+  id: Sigil
+  name: Sigil
+  rank: 0
+  traditions: [Arcane, Divine, Occult, Primal]
+  traits: [Cantrip, Concentrate, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: Touch
+  targets: 1 surface or object
+  duration: 1 week or until dismissed
+  summary: You leave a magical mark of about 1 square inch. It can be hidden.
+
+- type: cfSpell
+  id: ForbiddingWard
+  name: Forbidding Ward
+  rank: 0
+  traditions: [Divine, Occult]
+  traits: [Cantrip, Concentrate, Manipulate]
+  actionCost: One
+  components: Somatic
+  range: 30 feet
+  targets: 1 ally and 1 enemy
+  duration: Sustained up to 1 minute
+  summary: The ally gains a +1 status bonus to AC and saves against the chosen enemy.
+
+- type: cfSpell
+  id: TangleVine
+  name: Tangle Vine
+  rank: 0
+  traditions: [Primal]
+  traits: [Attack, Cantrip, Concentrate, Manipulate, Plant, Wood]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 30 feet
+  targets: 1 creature
+  defense: Spell attack
+  summary: A vine grabs the target. On a hit the target takes 2d4 bludgeoning damage and is grabbed until it escapes.
+  heightened: Damage increases by 1d4 at 3rd rank and every 2 ranks after.
+
+- type: cfSpell
+  id: GaleBlast
+  name: Gale Blast
+  rank: 0
+  traditions: [Arcane, Primal]
+  traits: [Air, Cantrip, Concentrate, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  area: 5-foot emanation
+  defense: Fortitude
+  summary: A burst of wind deals 1d6 bludgeoning damage and can push creatures away.
+  criticalSuccess: The creature is unaffected.
+  success: Half damage.
+  failure: Full damage and the creature is pushed 5 feet.
+  criticalFailure: Double damage and the creature is pushed 10 feet.
+  heightened: Damage increases by 1d6 at 3rd rank and every 2 ranks after.
+
+- type: cfSpell
+  id: Frostbite
+  name: Frostbite
+  rank: 0
+  traditions: [Arcane, Primal]
+  traits: [Cantrip, Cold, Concentrate, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 60 feet
+  targets: 1 creature
+  defense: Fortitude
+  summary: The target takes 1d4 cold damage plus your spellcasting modifier, and is also slowed on a critical failure.
+  criticalSuccess: The creature is unaffected.
+  success: Half damage.
+  failure: Full damage.
+  criticalFailure: Double damage and slowed 1 for 1 round.
+  heightened: Damage increases by 1d4 at 3rd rank and every 2 ranks after.
+
+- type: cfSpell
+  id: AcidSplash
+  name: Acid Splash
+  rank: 0
+  traditions: [Arcane, Primal]
+  traits: [Acid, Attack, Cantrip, Concentrate, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 30 feet
+  targets: 1 creature
+  defense: Spell attack
+  summary: A glob of acid deals 1d6 acid damage, plus 1 persistent acid damage, and splashes nearby creatures on a hit.
+  heightened: Initial damage increases by 1d6 at 3rd rank and every 2 ranks after.
+
+- type: cfSpell
+  id: Stabilize
+  name: Stabilize
+  rank: 0
+  traditions: [Divine, Primal]
+  traits: [Cantrip, Concentrate, Healing, Manipulate, Vitality]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 30 feet
+  targets: 1 dying creature
+  summary: The target loses the dying condition, remains unconscious at 0 Hit Points, and does not gain wounded from this stabilization.
+
+- type: cfSpell
+  id: KnowTheWay
+  name: Know the Way
+  rank: 0
+  traditions: [Divine, Occult, Primal]
+  traits: [Cantrip, Concentrate, Detection, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  summary: You learn which direction is north.
+
+- type: cfSpell
+  id: NeedleDarts
+  name: Needle Darts
+  rank: 0
+  traditions: [Arcane, Primal]
+  traits: [Attack, Cantrip, Concentrate, Manipulate, Metal]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 60 feet
+  targets: 1 creature
+  defense: Spell attack
+  summary: A spell attack deals 3d4 piercing. A critical hit also deals 1 persistent bleed.
+  criticalSuccess: Double damage and 1 persistent bleed.
+  success: Full damage.
+  heightened: Each rank above the cantrip adds 1d4 and increases the critical bleed by 1.
+
+- type: cfSpell
+  id: PhaseBolt
+  name: Phase Bolt
+  rank: 0
+  traditions: [Arcane, Occult]
+  traits: [Attack, Cantrip, Concentrate, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 60 feet
+  targets: 1 creature
+  defense: Spell attack
+  summary: A spell attack deals 3d4 piercing at 60 feet. Circumstance bonuses to AC are reduced by 2 against this attack.
+  criticalSuccess: Double damage.
+  success: Full damage.
+  heightened: Damage increases by 1d4 per rank.
+
+- type: cfSpell
+  id: Fear
+  name: Fear
+  rank: 1
+  traditions: [Arcane, Divine, Occult]
+  traits: [Concentrate, Emotion, Fear, Manipulate, Mental]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 30 feet
+  targets: 1 creature
+  defense: Will
+  duration: 1 minute or varies
+  summary: You frighten one creature. A critical failure also makes it fleeing for 1 round.
+  criticalSuccess: The creature is unaffected.
+  success: Frightened 1.
+  failure: Frightened 2.
+  criticalFailure: Frightened 3 and fleeing 1 round.
+  heightened: At 3rd rank you can affect up to five creatures.
+
+- type: cfSpell
+  id: Heal
+  name: Heal
+  rank: 1
+  traditions: [Divine, Primal]
+  traits: [Concentrate, Healing, Manipulate, Vitality]
+  actionCost: Variable
+  components: Somatic, or somatic and verbal
+  range: Varies
+  area: 30-foot emanation with 3 actions
+  targets: 1 creature with 1 or 2 actions
+  summary: One action restores 1d8 Hit Points by touch. Two actions restore 1d8+8 at a range of 30 feet. Three actions restore 1d8 to each living creature in a 30-foot emanation and harm undead.
+  defense: Fortitude, for undead in the 3-action burst
+  criticalSuccess: An undead creature takes half damage.
+  success: An undead creature takes half damage.
+  failure: An undead creature takes full damage.
+  criticalFailure: An undead creature takes double damage.
+  heightened: Healing and damage increase by 1d8, and the two-action flat bonus increases by 8, for each rank above 1st.
+
+- type: cfSpell
+  id: Harm
+  name: Harm
+  rank: 1
+  traditions: [Divine]
+  traits: [Concentrate, Manipulate, Void]
+  actionCost: Variable
+  components: Somatic, or somatic and verbal
+  range: Varies
+  area: 30-foot emanation with 3 actions
+  targets: 1 creature with 1 or 2 actions
+  defense: Fortitude
+  summary: Void damage that heals undead. One action is a touch for 1d8. Two actions deal 1d8+8 at 30 feet. Three actions hit every living creature in a 30-foot emanation.
+  criticalSuccess: Half damage.
+  success: Half damage.
+  failure: Full damage.
+  criticalFailure: Double damage.
+  heightened: Damage increases by 1d8, and the two-action flat bonus by 8, for each rank above 1st.
+
+- type: cfSpell
+  id: Bless
+  name: Bless
+  rank: 1
+  traditions: [Divine, Occult]
+  traits: [Concentrate, Manipulate, Mental]
+  actionCost: Two
+  components: Somatic, verbal
+  area: 5-foot emanation
+  duration: 1 minute
+  summary: You and allies in the aura gain a +1 status bonus to attack rolls. The aura can be sustained and grows when you spend extra actions.
+
+- type: cfSpell
+  id: Bane
+  name: Bane
+  rank: 1
+  traditions: [Divine, Occult]
+  traits: [Concentrate, Manipulate, Mental]
+  actionCost: Two
+  components: Somatic, verbal
+  area: 5-foot emanation
+  duration: 1 minute
+  defense: Will
+  summary: Enemies in the aura take a -1 status penalty to attack rolls when they fail a Will save on entering.
+  criticalSuccess: The creature is unaffected.
+  success: The creature is unaffected.
+  failure: -1 status penalty to attack rolls while it remains in the aura.
+  criticalFailure: -1 status penalty to attack rolls while it remains in the aura.
+
+- type: cfSpell
+  id: Command
+  name: Command
+  rank: 1
+  traditions: [Arcane, Divine, Occult]
+  traits: [Auditory, Concentrate, Linguistic, Mental]
+  actionCost: One
+  components: Verbal
+  range: 30 feet
+  targets: 1 creature
+  defense: Will
+  duration: Until the end of the target's next turn
+  summary: You give a one-word order such as approach, drop, or flee. On a failure the target uses its next actions to obey.
+  criticalSuccess: The creature is unaffected.
+  success: The creature is unaffected.
+  failure: The creature must spend its first action obeying.
+  criticalFailure: The creature must spend its turn obeying.
+
+- type: cfSpell
+  id: Sleep
+  name: Sleep
+  rank: 1
+  traditions: [Arcane, Occult]
+  traits: [Concentrate, Incapacitation, Manipulate, Mental, Sleep]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 30 feet
+  targets: 1 creature
+  defense: Will
+  duration: Varies
+  summary: The target becomes unconscious. It can attempt a new save when it takes damage or when another creature uses an action to wake it.
+  criticalSuccess: The creature is unaffected.
+  success: The creature is unaffected.
+  failure: Unconscious for 1 minute, or until it wakes.
+  criticalFailure: Unconscious for 1 hour, or until it wakes.
+  heightened: At 4th rank you can target up to 10 creatures.
+
+- type: cfSpell
+  id: Grease
+  name: Grease
+  rank: 1
+  traditions: [Arcane, Primal]
+  traits: [Concentrate, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 30 feet
+  area: 4 contiguous squares
+  defense: Reflex
+  duration: 1 minute
+  summary: The squares are slick. A creature that fails its save while moving through them falls prone.
+  criticalSuccess: The creature is unaffected.
+  success: The creature is unaffected.
+  failure: The creature falls prone.
+  criticalFailure: The creature falls prone and takes a small amount of bludgeoning damage.
+
+- type: cfSpell
+  id: MysticArmor
+  name: Mystic Armor
+  rank: 1
+  traditions: [Arcane, Divine, Occult, Primal]
+  traits: [Concentrate, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  duration: Until your next daily preparations
+  summary: Your unarmored body gains a +1 item bonus to AC.
+  heightened: The item bonus increases at higher ranks.
+
+- type: cfSpell
+  id: SureStrike
+  name: Sure Strike
+  rank: 1
+  traditions: [Arcane, Occult]
+  traits: [Concentrate, Fortune]
+  actionCost: One
+  components: Verbal
+  duration: Until the end of your turn
+  summary: Your next attack roll this turn is rolled twice and you use the better result.
+
+- type: cfSpell
+  id: ForceBarrage
+  name: Force Barrage
+  rank: 1
+  traditions: [Arcane, Occult]
+  traits: [Concentrate, Force, Manipulate]
+  actionCost: Variable
+  components: Somatic, verbal
+  range: 120 feet
+  targets: 1 creature per bolt
+  summary: Each action you spend fires one bolt that hits automatically and deals 1d4+1 force damage.
+  heightened: You fire one extra bolt for every 2 ranks above 1st.
+
+- type: cfSpell
+  id: HydraulicPush
+  name: Hydraulic Push
+  rank: 1
+  traditions: [Arcane, Primal]
+  traits: [Attack, Concentrate, Manipulate, Water]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 60 feet
+  targets: 1 creature
+  defense: Spell attack
+  summary: A blast of water deals 3d6 bludgeoning damage on a hit and pushes the target 5 feet, or 10 feet on a critical hit.
+  heightened: Damage increases by 1d6 for each rank above 1st.
+
+- type: cfSpell
+  id: BreatheFire
+  name: Breathe Fire
+  rank: 1
+  traditions: [Arcane, Primal]
+  traits: [Concentrate, Fire, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  area: 15-foot cone
+  defense: Reflex
+  summary: Creatures in the cone take 2d6 fire damage.
+  criticalSuccess: No damage.
+  success: Half damage.
+  failure: Full damage.
+  criticalFailure: Double damage.
+  heightened: Damage increases by 1d6 for each rank above 1st.
+
+- type: cfSpell
+  id: Soothe
+  name: Soothe
+  rank: 1
+  traditions: [Occult]
+  traits: [Concentrate, Emotion, Healing, Manipulate, Mental]
+  actionCost: Variable
+  components: Somatic, verbal
+  range: 30 feet
+  targets: 1 willing creature
+  summary: One action restores 1d6+4 Hit Points. Two actions restore 1d10+8. Three actions restore 2d10+16. The target also reduces a small amount of frightened.
+  heightened: Healing increases at each rank above 1st.
+
+- type: cfSpell
+  id: PhantomPain
+  name: Phantom Pain
+  rank: 1
+  traditions: [Occult]
+  traits: [Concentrate, Illusion, Manipulate, Mental, Nonlethal]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 30 feet
+  targets: 1 creature
+  defense: Will
+  duration: 1 minute
+  summary: The target takes 2d4 mental damage and is sickened 1. It can attempt a new save at the end of each of its turns.
+  criticalSuccess: The creature is unaffected.
+  success: Half damage.
+  failure: Full damage and sickened 1.
+  criticalFailure: Double damage and sickened 2.
+  heightened: Damage increases by 1d4 for each rank above 1st.
+
+- type: cfSpell
+  id: Sanctuary
+  name: Sanctuary
+  rank: 1
+  traditions: [Divine, Occult]
+  traits: [Concentrate, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: Touch
+  targets: 1 creature
+  defense: Will
+  duration: 1 minute
+  summary: A creature that tries to harm the target must succeed at a Will save or waste the action. The spell ends if the target uses a hostile action.
+  criticalSuccess: The attacker is unaffected.
+  success: The attacker is unaffected.
+  failure: The hostile action is lost.
+  criticalFailure: The hostile action is lost and the attacker cannot target the warded creature again.
+
+- type: cfSpell
+  id: Thunderstrike
+  name: Thunderstrike
+  rank: 1
+  traditions: [Arcane, Primal]
+  traits: [Concentrate, Electricity, Manipulate, Sonic]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 120 feet
+  targets: 1 creature
+  defense: Reflex
+  summary: The target takes 1d12 electricity damage and 1d4 sonic damage.
+  criticalSuccess: No damage.
+  success: Half damage.
+  failure: Full damage.
+  criticalFailure: Double damage and deafened for 1 minute.
+  heightened: Electricity damage increases by 1d12, and sonic by 1d4, for each rank above 1st.
+
+- type: cfSpell
+  id: GustOfWind
+  name: Gust of Wind
+  rank: 1
+  traditions: [Arcane, Primal]
+  traits: [Air, Concentrate, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  area: 60-foot line
+  defense: Fortitude
+  summary: Creatures in the line take 2d6 bludgeoning damage and may be pushed away from you.
+  criticalSuccess: The creature is unaffected.
+  success: Half damage.
+  failure: Full damage and pushed 10 feet.
+  criticalFailure: Double damage and pushed 20 feet.
+  heightened: Damage increases by 1d6 for each rank above 1st.
+
+- type: cfSpell
+  id: RunicWeapon
+  name: Runic Weapon
+  rank: 1
+  traditions: [Arcane, Divine, Occult, Primal]
+  traits: [Concentrate, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: Touch
+  targets: 1 weapon
+  duration: 1 minute
+  summary: The weapon gains a +1 status bonus to attack rolls and an extra die of weapon damage.
+  heightened: The bonus and extra damage increase at higher ranks.
+
+- type: cfSpell
+  id: Charm
+  name: Charm
+  rank: 1
+  traditions: [Arcane, Occult, Primal]
+  traits: [Concentrate, Emotion, Incapacitation, Manipulate, Mental]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 30 feet
+  targets: 1 creature
+  defense: Will
+  duration: 1 hour
+  summary: The target's attitude toward you improves. It knows you used magic when the spell ends.
+  criticalSuccess: The creature is unaffected and knows you tried to charm it.
+  success: The creature is unaffected and knows you tried to charm it.
+  failure: Attitude improves by one step.
+  criticalFailure: Attitude improves by two steps.
+
+- type: cfSpell
+  id: Invisibility
+  name: Invisibility
+  rank: 2
+  traditions: [Arcane, Occult]
+  traits: [Concentrate, Illusion, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: Touch
+  targets: 1 creature
+  duration: 10 minutes
+  summary: The target becomes invisible. A hostile action ends the spell.
+  heightened: At 4th rank the spell does not end when the target uses a hostile action.
+
+- type: cfSpell
+  id: Darkvision
+  name: Darkvision
+  rank: 2
+  traditions: [Arcane, Divine, Occult, Primal]
+  traits: [Concentrate, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: Touch
+  targets: 1 creature
+  duration: 1 hour
+  summary: The target can see in darkness, though the scene is in black and white.
+
+- type: cfSpell
+  id: ResistEnergy
+  name: Resist Energy
+  rank: 2
+  traditions: [Arcane, Divine, Occult, Primal]
+  traits: [Concentrate, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: Touch
+  targets: 1 creature
+  duration: 10 minutes
+  summary: The target gains resistance 5 to one energy type you choose.
+  heightened: The resistance increases by 5 for every 2 ranks above 2nd.
+
+- type: cfSpell
+  id: Enlarge
+  name: Enlarge
+  rank: 2
+  traditions: [Arcane, Primal]
+  traits: [Concentrate, Manipulate, Polymorph]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 30 feet
+  targets: 1 willing creature
+  duration: 5 minutes
+  summary: The target grows one size. Its reach increases and its melee strikes deal extra damage.
+  heightened: At 4th rank the target can grow two sizes.
+
+- type: cfSpell
+  id: LaughingFit
+  name: Laughing Fit
+  rank: 2
+  traditions: [Arcane, Occult]
+  traits: [Concentrate, Emotion, Incapacitation, Manipulate, Mental]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 30 feet
+  targets: 1 creature
+  defense: Will
+  duration: Sustained
+  summary: The target falls prone and cannot act while it is overcome with laughter. It attempts a new save each time you sustain the spell.
+  criticalSuccess: The creature is unaffected.
+  success: The creature is unaffected.
+  failure: The creature falls prone and loses actions while laughing.
+  criticalFailure: The creature falls prone and loses its whole turn while laughing.
+
+- type: cfSpell
+  id: Blur
+  name: Blur
+  rank: 2
+  traditions: [Arcane, Occult]
+  traits: [Concentrate, Illusion, Manipulate, Visual]
+  actionCost: Two
+  components: Somatic, verbal
+  duration: 1 minute
+  summary: You are concealed. Attacks against you must succeed at a DC 5 flat check or they miss.
+
+- type: cfSpell
+  id: Restoration
+  name: Restoration
+  rank: 2
+  traditions: [Divine, Occult, Primal]
+  traits: [Concentrate, Healing, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: Touch
+  targets: 1 creature
+  summary: You reduce one clumsy, enfeebled, or stupefied condition by 2, or end one drained condition of a low value.
+  heightened: Higher ranks can remove stronger or additional conditions.
+
+- type: cfSpell
+  id: FloatingFlame
+  name: Floating Flame
+  rank: 2
+  traditions: [Arcane, Primal]
+  traits: [Concentrate, Fire, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 30 feet
+  area: 5-foot burst
+  defense: Reflex
+  duration: Sustained up to 1 minute
+  summary: A 5-foot burst of fire deals 3d6 fire damage. You can move it when you sustain the spell.
+  criticalSuccess: No damage.
+  success: Half damage.
+  failure: Full damage.
+  criticalFailure: Double damage.
+  heightened: Damage increases by 1d6 for each rank above 2nd.
+
+- type: cfSpell
+  id: SuddenBolt
+  name: Sudden Bolt
+  rank: 2
+  traditions: [Arcane, Primal]
+  traits: [Concentrate, Electricity, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 60 feet
+  targets: 1 creature
+  defense: Reflex
+  summary: A bolt of lightning deals 4d12 electricity damage.
+  criticalSuccess: No damage.
+  success: Half damage.
+  failure: Full damage.
+  criticalFailure: Double damage.
+  heightened: Damage increases by 1d12 for each rank above 2nd.
+
+- type: cfSpell
+  id: DispelMagic
+  name: Dispel Magic
+  rank: 2
+  traditions: [Arcane, Divine, Occult, Primal]
+  traits: [Concentrate, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 120 feet
+  targets: 1 spell effect or unattended magic item
+  summary: You attempt to counteract one spell or magic item. Your counteract rank equals the rank of the slot you used.
+
+- type: cfSpell
+  id: Calm
+  name: Calm
+  rank: 2
+  traditions: [Divine, Occult]
+  traits: [Concentrate, Emotion, Incapacitation, Manipulate, Mental]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 120 feet
+  area: 10-foot burst
+  defense: Will
+  duration: Sustained up to 1 minute
+  summary: Creatures in the burst stop fighting unless they are attacked or succeed at the save.
+  criticalSuccess: The creature is unaffected.
+  success: The creature is unaffected.
+  failure: The creature cannot use hostile actions.
+  criticalFailure: The creature cannot use hostile actions and the effect is harder to break.
+
+- type: cfSpell
+  id: AnimalForm
+  name: Animal Form
+  rank: 2
+  traditions: [Primal]
+  traits: [Concentrate, Manipulate, Polymorph]
+  actionCost: Two
+  components: Somatic, verbal
+  duration: 1 minute
+  summary: You transform into a chosen animal of a limited level. You gain its attacks, movement, and senses.
+  heightened: Higher ranks allow stronger animals.
+
+- type: cfSpell
+  id: Fireball
+  name: Fireball
+  rank: 3
+  traditions: [Arcane, Primal]
+  traits: [Concentrate, Fire, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 500 feet
+  area: 20-foot burst
+  defense: Reflex
+  summary: Creatures in the burst take 6d6 fire damage.
+  criticalSuccess: No damage.
+  success: Half damage.
+  failure: Full damage.
+  criticalFailure: Double damage.
+  heightened: Damage increases by 2d6 for each rank above 3rd.
+
+- type: cfSpell
+  id: LightningBolt
+  name: Lightning Bolt
+  rank: 3
+  traditions: [Arcane, Primal]
+  traits: [Concentrate, Electricity, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  area: 120-foot line
+  defense: Reflex
+  summary: Creatures in the line take 4d12 electricity damage.
+  criticalSuccess: No damage.
+  success: Half damage.
+  failure: Full damage.
+  criticalFailure: Double damage.
+  heightened: Damage increases by 1d12 for each rank above 3rd.
+
+- type: cfSpell
+  id: Haste
+  name: Haste
+  rank: 3
+  traditions: [Arcane, Occult, Primal]
+  traits: [Concentrate, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 30 feet
+  targets: 1 creature
+  duration: 1 minute
+  summary: The target is quickened and can use the extra action only to Strike or Stride.
+  heightened: At 7th rank you can target up to 6 creatures.
+
+- type: cfSpell
+  id: Slow
+  name: Slow
+  rank: 3
+  traditions: [Arcane, Occult, Primal]
+  traits: [Concentrate, Incapacitation, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 30 feet
+  targets: 1 creature
+  defense: Fortitude
+  duration: 1 minute
+  summary: The target is slowed and loses actions each turn.
+  criticalSuccess: The creature is unaffected.
+  success: Slowed 1 for 1 round.
+  failure: Slowed 1 for 1 minute.
+  criticalFailure: Slowed 2 for 1 minute.
+  heightened: At 6th rank you can target up to 10 creatures.
+
+- type: cfSpell
+  id: Blindness
+  name: Blindness
+  rank: 3
+  traditions: [Arcane, Divine, Occult]
+  traits: [Concentrate, Incapacitation, Manipulate]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 30 feet
+  targets: 1 creature
+  defense: Fortitude
+  duration: Varies
+  summary: The target is blinded.
+  criticalSuccess: The creature is unaffected.
+  success: Dazzled for 1 round.
+  failure: Blinded for 1 minute.
+  criticalFailure: Blinded permanently.
+  heightened: At 5th rank a successful save still leaves the target dazzled for longer.
+
+- type: cfSpell
+  id: Heroism
+  name: Heroism
+  rank: 3
+  traditions: [Divine, Occult]
+  traits: [Concentrate, Manipulate, Mental]
+  actionCost: Two
+  components: Somatic, verbal
+  range: Touch
+  targets: 1 creature
+  duration: 10 minutes
+  summary: The target gains a +1 status bonus to attack rolls, Perception, saves, and skill checks.
+  heightened: The status bonus increases at 6th and 9th rank.
+
+- type: cfSpell
+  id: Paralyze
+  name: Paralyze
+  rank: 3
+  traditions: [Arcane, Divine, Occult]
+  traits: [Concentrate, Incapacitation, Manipulate, Mental]
+  actionCost: Two
+  components: Somatic, verbal
+  range: 30 feet
+  targets: 1 creature
+  defense: Will
+  duration: Varies
+  summary: The target is paralyzed and cannot act.
+  criticalSuccess: The creature is unaffected.
+  success: The creature is unaffected.
+  failure: Paralyzed for 1 round.
+  criticalFailure: Paralyzed for 4 rounds, with a new save at the end of each of its turns.
+  heightened: At 7th rank you can target up to 10 creatures.

@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFLoudSinger
+  name: "Loud Singer"
+  description: "Requires Goblin Song."
+  ancestry: Goblin
+  level: 5
+  traits:
+    - "Goblin"
+  prerequisites:
+    - "Goblin Song"

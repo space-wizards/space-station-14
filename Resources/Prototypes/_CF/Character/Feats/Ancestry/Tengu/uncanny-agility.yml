@@ -1,0 +1,11 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFUncannyAgility
+  name: "Uncanny Agility"
+  description: "Also grants Steady Balance. TBA - action will be added"
+  ancestry: Tengu
+  level: 1
+  traits:
+    - "Tengu"
+  pendingAction: true

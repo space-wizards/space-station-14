@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFViciousSwing
+  name: "Vicious Swing"
+  description: "Costs 2 actions. This feature will be implemented later."
+  class: Fighter
+  level: 1
+  traits:
+    - "Fighter"
+    - "Flourish"
+  action: Action
+  pendingAction: true

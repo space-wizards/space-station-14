@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "copyright": "Created by deenke",
+    "license": "CC-BY-SA-4.0",
+    "states": [
+        {
+            "name": "table_sign"
+        },
+	{
+            "name": "ru_open_sign"
+        },
+	{
+            "name": "en_open_sign"
+        },
+	{
+            "name": "ru_close_sign"
+        },
+	{
+            "name": "en_close_sign"
+        }
+    ]
+}

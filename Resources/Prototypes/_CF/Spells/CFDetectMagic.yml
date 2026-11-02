@@ -1,0 +1,20 @@
+﻿- type: entity
+  parent: CFSpellInstant
+  id: CFDetectMagic
+  name: Detect Magic
+  description: You sense whether magic is nearby.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 0
+  - type: CFSpell
+    spell: DetectMagic
+    rank: 0
+    delivery: Instant
+    defense: None
+    friendly: true
+    includeSelf: true

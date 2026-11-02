@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFOverwhelmingHarm
+  name: "Overwhelming Harm"
+  description: "Requires Mastery of Life and Death. Changes an item. This feature will be implemented later."
+  class: Necromancer
+  level: 4
+  traits:
+    - "Necromancer"
+  prerequisites:
+    - "Mastery of Life and Death"
+  pendingAction: true

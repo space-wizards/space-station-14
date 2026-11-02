@@ -1,0 +1,16 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFDwarvenLore
+  name: "Dwarven Lore"
+  description: "Lore: Dwarf Lore. Trained in Crafting and Religion."
+  ancestry: Dwarf
+  level: 1
+  traits:
+    - "Dwarf"
+  trainedSkills:
+    - Crafting
+    - Religion
+    - Lore
+  lores:
+    - "Dwarf Lore"

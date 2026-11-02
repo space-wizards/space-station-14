@@ -1,7 +1,7 @@
 - type: species
   id: SlimePerson
   name: species-name-slime
-  roundStart: true
+  roundStart: false # CarpFinder: no Pathfinder ancestry stats
   prototype: MobSlimePerson
   defaultSkinTone: "#b8b8b8"
   dollPrototype: AppearanceSlimePerson

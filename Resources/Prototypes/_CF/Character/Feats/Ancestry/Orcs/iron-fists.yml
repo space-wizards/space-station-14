@@ -1,0 +1,11 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFIronFists
+  name: "Iron Fists"
+  description: "Unarmed attack (Unarmed). Changes an item. Not applied in play yet. TBA - action will be added"
+  ancestry: Orc
+  level: 1
+  traits:
+    - "Orc"
+  pendingAction: true

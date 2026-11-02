@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by omsoyk (github/discord)",
+  "size": {
+    "x": 48,
+    "y": 48
+  },
+  "states": [
+    {
+      "name": "1_primary",
+      "directions": 4
+    },
+    {
+      "name": "1_secondary",
+      "directions": 4
+    },
+    {
+      "name": "2_primary",
+      "directions": 4
+    },
+    {
+      "name": "2_secondary",
+      "directions": 4
+    },
+    {
+      "name": "3",
+      "directions": 4
+    },
+    {
+      "name": "4",
+      "directions": 4
+    },
+    {
+      "name": "5",
+      "directions": 4
+    }
+  ]
+}

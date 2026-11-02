@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFArcaneFists
+  name: "Arcane Fists"
+  description: "Unarmed attack (Unarmed). Changes an item. This feature will be implemented later."
+  class: Magus
+  level: 1
+  traits:
+    - "Magus"
+  pendingAction: true

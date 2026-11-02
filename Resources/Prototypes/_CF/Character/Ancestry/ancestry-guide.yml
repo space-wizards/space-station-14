@@ -1,0 +1,212 @@
+# Lost Omens Ancestry Guide peoples that are not already in Player Core or Player Core 2.
+# Humanoid sprite. Stats live on cfAncestry.
+
+- type: species
+  id: CF-Azarketi
+  name: cf-ancestry-azarketi
+  roundStart: true
+  prototype: CFMobAzarketi
+  dollPrototype: CFAppearanceAzarketi
+  skinColoration: HumanToned
+
+- type: species
+  id: CF-Android
+  name: cf-ancestry-android
+  roundStart: true
+  prototype: CFMobAndroid
+  dollPrototype: CFAppearanceAndroid
+  skinColoration: HumanToned
+
+- type: species
+  id: CF-Fetchling
+  name: cf-ancestry-fetchling
+  roundStart: true
+  prototype: CFMobFetchling
+  dollPrototype: CFAppearanceFetchling
+  skinColoration: HumanToned
+
+- type: species
+  id: CF-Fleshwarp
+  name: cf-ancestry-fleshwarp
+  roundStart: true
+  prototype: CFMobFleshwarp
+  dollPrototype: CFAppearanceFleshwarp
+  skinColoration: HumanToned
+
+- type: species
+  id: CF-Kitsune
+  name: cf-ancestry-kitsune
+  roundStart: true
+  prototype: CFMobKitsune
+  dollPrototype: CFAppearanceKitsune
+  skinColoration: HumanToned
+
+- type: species
+  id: CF-Sprite
+  name: cf-ancestry-sprite
+  roundStart: true
+  prototype: CFMobSprite
+  dollPrototype: CFAppearanceSprite
+  skinColoration: HumanToned
+
+- type: species
+  id: CF-Strix
+  name: cf-ancestry-strix
+  roundStart: true
+  prototype: CFMobStrix
+  dollPrototype: CFAppearanceStrix
+  skinColoration: HumanToned
+
+- type: entity
+  parent: AppearanceHuman
+  id: CFAppearanceAzarketi
+  categories: [HideSpawnMenu]
+  save: false
+  components:
+  - type: HumanoidProfile
+    species: CF-Azarketi
+
+- type: entity
+  parent:
+  - CFAppearanceAzarketi
+  - BaseSpeciesMobOrganic
+  id: CFMobAzarketi
+  name: azarketi
+  components:
+  - type: HumanoidProfile
+    species: CF-Azarketi
+  - type: CF-Species
+    species: CF-Azarketi
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: AppearanceHuman
+  id: CFAppearanceAndroid
+  categories: [HideSpawnMenu]
+  save: false
+  components:
+  - type: HumanoidProfile
+    species: CF-Android
+
+- type: entity
+  parent:
+  - CFAppearanceAndroid
+  - BaseSpeciesMobOrganic
+  id: CFMobAndroid
+  name: android
+  components:
+  - type: HumanoidProfile
+    species: CF-Android
+  - type: CF-Species
+    species: CF-Android
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: AppearanceHuman
+  id: CFAppearanceFetchling
+  categories: [HideSpawnMenu]
+  save: false
+  components:
+  - type: HumanoidProfile
+    species: CF-Fetchling
+
+- type: entity
+  parent:
+  - CFAppearanceFetchling
+  - BaseSpeciesMobOrganic
+  id: CFMobFetchling
+  name: fetchling
+  components:
+  - type: HumanoidProfile
+    species: CF-Fetchling
+  - type: CF-Species
+    species: CF-Fetchling
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: AppearanceHuman
+  id: CFAppearanceFleshwarp
+  categories: [HideSpawnMenu]
+  save: false
+  components:
+  - type: HumanoidProfile
+    species: CF-Fleshwarp
+
+- type: entity
+  parent:
+  - CFAppearanceFleshwarp
+  - BaseSpeciesMobOrganic
+  id: CFMobFleshwarp
+  name: fleshwarp
+  components:
+  - type: HumanoidProfile
+    species: CF-Fleshwarp
+  - type: CF-Species
+    species: CF-Fleshwarp
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: AppearanceHuman
+  id: CFAppearanceKitsune
+  categories: [HideSpawnMenu]
+  save: false
+  components:
+  - type: HumanoidProfile
+    species: CF-Kitsune
+
+- type: entity
+  parent:
+  - CFAppearanceKitsune
+  - BaseSpeciesMobOrganic
+  id: CFMobKitsune
+  name: kitsune
+  components:
+  - type: HumanoidProfile
+    species: CF-Kitsune
+  - type: CF-Species
+    species: CF-Kitsune
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: AppearanceHuman
+  id: CFAppearanceSprite
+  categories: [HideSpawnMenu]
+  save: false
+  components:
+  - type: HumanoidProfile
+    species: CF-Sprite
+
+- type: entity
+  parent:
+  - CFAppearanceSprite
+  - BaseSpeciesMobOrganic
+  id: CFMobSprite
+  name: sprite
+  components:
+  - type: HumanoidProfile
+    species: CF-Sprite
+  - type: CF-Species
+    species: CF-Sprite
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: AppearanceHuman
+  id: CFAppearanceStrix
+  categories: [HideSpawnMenu]
+  save: false
+  components:
+  - type: HumanoidProfile
+    species: CF-Strix
+
+- type: entity
+  parent:
+  - CFAppearanceStrix
+  - BaseSpeciesMobOrganic
+  id: CFMobStrix
+  name: strix
+  components:
+  - type: HumanoidProfile
+    species: CF-Strix
+  - type: CF-Species
+    species: CF-Strix
+  - type: CFAtmosphereImmunity

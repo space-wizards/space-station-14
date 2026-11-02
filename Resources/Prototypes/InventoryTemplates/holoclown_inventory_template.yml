@@ -5,7 +5,7 @@
       slotTexture: pocket
       fullTextureName: template_small
       slotFlags: POCKET
-      slotGroup: MainHotbar
+      slotGroup: CFPockets # CarpFinder: pockets on the action HUD.
       stripTime: 3
       uiWindowPos: 0,3
       strippingWindowPos: 0,4
@@ -15,7 +15,7 @@
       slotTexture: pocket
       fullTextureName: template_small
       slotFlags: POCKET
-      slotGroup: MainHotbar
+      slotGroup: CFPockets # CarpFinder: pockets on the action HUD.
       stripTime: 3
       uiWindowPos: 2,3
       strippingWindowPos: 1,4

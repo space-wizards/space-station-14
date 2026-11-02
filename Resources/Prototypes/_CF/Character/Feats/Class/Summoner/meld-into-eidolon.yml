@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFMeldintoEidolon
+  name: "Meld into Eidolon"
+  description: "Costs 3 actions. This feature will be implemented later."
+  class: Summoner
+  level: 1
+  traits:
+    - "Summoner"
+  action: Action
+  pendingAction: true

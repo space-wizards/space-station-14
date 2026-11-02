@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by TheShuEd (Github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "load": {
+      "srgb": false
+  },
+  "states": [
+    {
+      "name": "belt",
+      "directions": 4
+    },
+    {
+      "name": "cloak",
+      "directions": 4
+    },
+    {
+      "name": "eyes",
+      "directions": 4
+    },
+    {
+      "name": "gloves",
+      "directions": 4
+    },
+    {
+      "name": "hair",
+      "directions": 4
+    },
+    {
+      "name": "hands",
+      "directions": 4
+    },
+    {
+      "name": "head",
+      "directions": 4
+    },
+    {
+      "name": "mask",
+      "directions": 4
+    },
+    {
+      "name": "neck",
+      "directions": 4
+    },
+    {
+      "name": "pants",
+      "directions": 4
+    },
+    {
+      "name": "shirt",
+      "directions": 4
+    },
+    {
+      "name": "shoes",
+      "directions": 4
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFEliminateRedHerrings
+  name: "Eliminate Red Herrings"
+  description: "Improves Skill Check results. This feature will be implemented later."
+  class: Investigator
+  level: 1
+  traits:
+    - "Investigator"
+  pendingAction: true

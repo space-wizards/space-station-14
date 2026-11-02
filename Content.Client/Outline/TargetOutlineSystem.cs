@@ -56,12 +56,19 @@ public sealed partial class TargetOutlineSystem : EntitySystem
     public CancellableEntityEventArgs? ValidationEvent = null;
 
     /// <summary>
-    ///     Maximum range for a target to be valid.
+    ///     Maximum range for a target to be valid. Farther targets that are still drawn use the red outline.
     /// </summary>
-    /// <remarks>
-    ///     If a target is further than this distance, they will still be highlighted in a different color.
-    /// </remarks>
     public float? Range = null;
+
+    /// <summary>
+    /// CarpFinder: nothing past this distance is outlined. Checked before the line-of-sight raycast.
+    /// </summary>
+    public float? HighlightLimit = null;
+
+    /// <summary>
+    /// CarpFinder: a target behind a wall is not outlined.
+    /// </summary>
+    public bool SkipWithoutLineOfSight;
 
     /// <summary>
     ///     Whether to check if the player is unobstructed to the target;
@@ -94,13 +101,25 @@ public sealed partial class TargetOutlineSystem : EntitySystem
             return;
 
         _enabled = false;
+        HighlightLimit = null;
+        SkipWithoutLineOfSight = false;
         RemoveHighlights();
     }
 
-    public void Enable(float? range, bool checkObstructions, Func<EntityUid, bool>? predicate, EntityWhitelist? whitelist, EntityWhitelist? blacklist, CancellableEntityEventArgs? validationEvent)
+    public void Enable(
+        float? range,
+        bool checkObstructions,
+        Func<EntityUid, bool>? predicate,
+        EntityWhitelist? whitelist,
+        EntityWhitelist? blacklist,
+        CancellableEntityEventArgs? validationEvent,
+        float? highlightLimit = null,
+        bool skipWithoutLineOfSight = false)
     {
         Range = range;
         CheckObstruction = checkObstructions;
+        HighlightLimit = highlightLimit;
+        SkipWithoutLineOfSight = skipWithoutLineOfSight;
         Predicate = predicate;
         Whitelist = whitelist;
         Blacklist = blacklist;
@@ -157,17 +176,25 @@ public sealed partial class TargetOutlineSystem : EntitySystem
             if (!valid)
                 continue;
 
-            // Range check
-            if (CheckObstruction && Range is not null)
-                valid = _interactionSystem.InRangeUnobstructed(player, entity, Range.Value);
-            else if (Range is not null)
-            {
-                var origin = _transformSystem.GetWorldPosition(player);
-                var target = _transformSystem.GetWorldPosition(entity);
-                valid = (origin - target).LengthSquared() <= Range * Range;
-            }
+            var origin = _transformSystem.GetWorldPosition(player);
+            var target = _transformSystem.GetWorldPosition(entity);
+            var distanceSq = (origin - target).LengthSquared();
 
-            // highlight depending on whether its in or out of range
+            // CarpFinder: past 90 feet there is nothing to draw, so skip the raycast.
+            if (HighlightLimit is { } limit && distanceSq > limit * limit)
+                continue;
+
+            // CarpFinder: a wall already hides the creature. Do not outline it.
+            if (SkipWithoutLineOfSight
+                && !_interactionSystem.InRangeUnobstructed(player, entity, HighlightLimit ?? 18f))
+                continue;
+
+            // In range is green. Still visible, but past the action's range, is red.
+            if (Range is { } max && max > 0)
+                valid = distanceSq <= max * max;
+            else if (CheckObstruction && Range is not null)
+                valid = _interactionSystem.InRangeUnobstructed(player, entity, Range.Value);
+
             _sprite.SetPostShader(sprite, new SpriteComponent.PostShaderArgs(ContentPostShaderIds.TargetOutline, valid ? _shaderTargetValid! : _shaderTargetInvalid!)
             {
                 After = ContentPostShaderIds.AfterBaseEffects,

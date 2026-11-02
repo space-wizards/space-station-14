@@ -1,0 +1,96 @@
+# Shared parents for CarpFinder remaster spells. Each spell file overrides CFSpell.
+
+- type: entity
+  abstract: true
+  parent: BaseAction
+  id: CFSpellInstant
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 0.6
+    itemIconStyle: BigAction
+    # The spell component is on the action. Without this, the cast is raised on the caster and never handled.
+    raiseOnAction: true
+  - type: InstantAction
+    event: !type:CFSpellCastInstantEvent
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+
+- type: entity
+  abstract: true
+  parent: BaseAction
+  id: CFSpellTarget
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 0.6
+    itemIconStyle: BigAction
+    raiseOnAction: true
+  - type: TargetAction
+    range: -1
+    checkCanAccess: false
+    targetingIndicator: true
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - MobState
+    event: !type:CFSpellCastTargetEvent
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+
+- type: entity
+  abstract: true
+  parent: BaseAction
+  id: CFSpellObject
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 0.6
+    itemIconStyle: BigAction
+    raiseOnAction: true
+  - type: TargetAction
+    range: 2
+    checkCanAccess: false
+    targetingIndicator: true
+  - type: EntityTargetAction
+    canTargetSelf: false
+    event: !type:CFSpellCastTargetEvent
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+
+- type: entity
+  abstract: true
+  parent: CFSpellTarget
+  id: CFSpellProjectile
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: CFSpell
+    delivery: Projectile
+
+- type: entity
+  abstract: true
+  parent: BaseAction
+  id: CFSpellArea
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 0.6
+    itemIconStyle: BigAction
+    raiseOnAction: true
+  - type: TargetAction
+    range: -1
+    checkCanAccess: false
+    targetingIndicator: true
+  - type: WorldTargetAction
+    event: !type:CFSpellCastAreaEvent
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default

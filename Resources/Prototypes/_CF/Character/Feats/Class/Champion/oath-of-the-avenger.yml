@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Divine Mysteries
+- type: cfFeat
+  id: CFOathoftheAvenger
+  name: "Oath of the Avenger"
+  description: "Requires lay on hands. Changes an item. This feature will be implemented later."
+  class: Champion
+  level: 2
+  traits:
+    - "Champion"
+    - "Oath"
+  prerequisites:
+    - "lay on hands"
+  pendingAction: true

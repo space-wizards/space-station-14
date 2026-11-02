@@ -1,0 +1,44 @@
+# CarpFinder: remaster trait ids. Summaries are short mechanical notes, not source text.
+# category: Energy
+
+- type: cfTrait
+  id: Acid
+  name: Acid
+  category: Energy
+  summary: "A damage type."
+
+- type: cfTrait
+  id: Cold
+  name: Cold
+  category: Energy
+  summary: "A damage type."
+
+- type: cfTrait
+  id: Electricity
+  name: Electricity
+  category: Energy
+  summary: "A damage type."
+
+- type: cfTrait
+  id: Force
+  name: Force
+  category: Energy
+  summary: "A damage type."
+
+- type: cfTrait
+  id: Sonic
+  name: Sonic
+  category: Energy
+  summary: "A damage type."
+
+- type: cfTrait
+  id: Vitality
+  name: Vitality
+  category: Energy
+  summary: "A damage type."
+
+- type: cfTrait
+  id: Void
+  name: Void
+  category: Energy
+  summary: "A damage type."

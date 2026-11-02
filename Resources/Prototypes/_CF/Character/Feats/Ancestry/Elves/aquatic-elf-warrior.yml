@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens High Seas
+- type: cfFeat
+  id: CFAquaticElfWarrior
+  name: "Aquatic Elf Warrior"
+  description: "Ancestry weapons count as a simpler group for proficiency. Not applied in combat yet."
+  ancestry: Elf
+  level: 1
+  traits:
+    - "Elf"

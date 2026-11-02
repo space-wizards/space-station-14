@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Cheliax, Infernal Inheritance
+- type: cfFeat
+  id: CFCleverShadow
+  name: "Clever Shadow"
+  description: "Passive feat. Its special rule is not applied in play yet."
+  ancestry: Fetchling
+  level: 5
+  traits:
+    - "Fetchling"
+    - "Occult"
+    - "Shadow"

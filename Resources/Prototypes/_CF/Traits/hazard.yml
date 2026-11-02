@@ -1,0 +1,44 @@
+# CarpFinder: remaster trait ids. Summaries are short mechanical notes, not source text.
+# category: Hazard
+
+- type: cfTrait
+  id: Environmental
+  name: Environmental
+  category: Hazard
+  summary: "A hazard that is part of the place, such as weather or a natural pit."
+
+- type: cfTrait
+  id: Haunt
+  name: Haunt
+  category: Hazard
+  summary: "A hazard made of spiritual residue."
+
+- type: cfTrait
+  id: Mechanical
+  name: Mechanical
+  category: Hazard
+  summary: "A hazard built from moving parts."
+
+- type: cfTrait
+  id: Trap
+  name: Trap
+  category: Hazard
+  summary: "A hazard built to catch or hurt a creature that triggers it."
+
+- type: cfTrait
+  id: Snare
+  name: Snare
+  category: Hazard
+  summary: "A small trap a character can build and set."
+
+- type: cfTrait
+  id: Steam
+  name: Steam
+  category: Hazard
+  summary: "This uses pressurized steam."
+
+- type: cfTrait
+  id: Technological
+  name: Technological
+  category: Hazard
+  summary: "This uses advanced technology rather than clockwork or magic."

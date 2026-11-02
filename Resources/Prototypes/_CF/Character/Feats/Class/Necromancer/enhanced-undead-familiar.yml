@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFEnhancedUndeadFamiliar
+  name: "Enhanced Undead Familiar"
+  description: "Requires Undead Familiar."
+  class: Necromancer
+  level: 2
+  traits:
+    - "Necromancer"
+  prerequisites:
+    - "Undead Familiar"

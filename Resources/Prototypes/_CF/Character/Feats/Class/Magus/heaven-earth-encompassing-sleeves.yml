@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Tian Xia Character Guide
+- type: cfFeat
+  id: CFHeavenEarthEncompassingSleeves
+  name: "Heaven-Earth Encompassing Sleeves"
+  description: "Requires unfurling brocade hybrid study."
+  class: Magus
+  level: 4
+  traits:
+    - "Arcane"
+    - "Extradimensional"
+    - "Magus"
+  prerequisites:
+    - "unfurling brocade hybrid study"

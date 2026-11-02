@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFKnownWeaknesses
+  name: "Known Weaknesses"
+  description: "Changes an item. This feature will be implemented later."
+  class: Investigator
+  level: 1
+  traits:
+    - "Investigator"
+  pendingAction: true

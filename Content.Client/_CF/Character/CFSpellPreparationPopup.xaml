@@ -1,0 +1,15 @@
+<controls:CFSpellPreparationPopup xmlns="https://spacestation14.io"
+                                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                   xmlns:controls="clr-namespace:Content.Client.CF.Character"
+                                   x:Class="Content.Client.CF.Character.CFSpellPreparationPopup"
+                                   Title="{Loc 'cf-sheet-spell-prep-title'}"
+                                   MinWidth="550"
+                                   MinHeight="600">
+    <BoxContainer Orientation="Vertical" Margin="8" SeparationOverride="8" HorizontalExpand="True" VerticalExpand="True">
+        <LineEdit Name="SearchInput" PlaceHolder="{Loc 'cf-sheet-spell-prep-search'}" HorizontalExpand="True"/>
+        <Label Text="{Loc 'cf-sheet-spell-prep-hint'}" FontColorOverride="#E6C15A"/>
+        <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
+            <BoxContainer Name="SpellRows" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="4"/>
+        </ScrollContainer>
+    </BoxContainer>
+</controls:CFSpellPreparationPopup>

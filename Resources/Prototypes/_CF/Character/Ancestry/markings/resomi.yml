@@ -1,0 +1,1311 @@
+# CarpFinder: species markings. Art stays in the fork texture folder. These sprites are drawn for that body, so they are not run through the human displacement map.
+
+# Head Markings
+- type: marking
+  id: ResomiFluffHead
+  bodyPart: Head
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: fluff_head
+
+- type: marking
+  id: ResomiFluffHeadUp
+  bodyPart: Head
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: fluff_head_up
+
+- type: marking
+  id: ResomiForehead
+  bodyPart: Head
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: forehead
+
+- type: marking
+  id: ResomiHeadWar
+  bodyPart: Head
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: head_war
+
+- type: marking
+  id: ResomiHeadStripes
+  bodyPart: Head
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: head_stripes
+
+- type: marking
+  id: ResomiHeadCoat
+  bodyPart: Head
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: head_coat
+
+# Ear Markings
+- type: marking
+  id: ResomiEars
+  bodyPart: HeadSide
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: resomi_ears
+
+- type: marking
+  id: ResomiUpperEars
+  bodyPart: HeadSide
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: upper_ear
+
+- type: marking
+  id: ResomiUpperEarsShort
+  bodyPart: HeadSide
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: resomi_ears_short
+
+- type: marking
+  id: ResomiUpperEarsAlternate
+  bodyPart: HeadSide
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: upper_ear_alternate
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: upper_ear_alternate_earring
+
+- type: marking
+  id: ResomiLowerEars
+  bodyPart: HeadSide
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: lower_ear
+
+- type: marking
+  id: ResomiHeadFluff
+  bodyPart: HeadSide
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: head_fluff
+
+- type: marking
+  id: ResomiHeadFluffShort
+  bodyPart: HeadSide
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: head_fluff_short
+
+# Head Jewellery
+- type: marking
+  id: ResomiHeadJewelleryOneRight
+  bodyPart: HeadTop
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: resomi_earring_1_1
+
+- type: marking
+  id: ResomiHeadJewelleryOneLeft
+  bodyPart: HeadTop
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: resomi_earring_1_2
+
+- type: marking
+  id: ResomiHeadJewelleryTwoRight
+  bodyPart: HeadTop
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: resomi_earring_2_1
+
+- type: marking
+  id: ResomiHeadJewelleryTwoLeft
+  bodyPart: HeadTop
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: resomi_earring_2_2
+
+- type: marking
+  id: ResomiHeadJewelleryThreeRight
+  bodyPart: HeadTop
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: resomi_earring_3_1
+
+- type: marking
+  id: ResomiHeadJewelleryThreeLeft
+  bodyPart: HeadTop
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: resomi_earring_3_2
+
+- type: marking
+  id: ResomiHeadJewelleryFourRight
+  bodyPart: HeadTop
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: resomi_earring_4_1
+
+- type: marking
+  id: ResomiHeadJewelleryFourLeft
+  bodyPart: HeadTop
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_head_markings.rsi
+    state: resomi_earring_4_2
+
+# Chest Markings
+- type: marking
+  id: ResomiFluff
+  bodyPart: Chest
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_markings.rsi
+    state: fluff
+
+- type: marking
+  id: ResomiFluffGroin
+  bodyPart: Chest
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_markings.rsi
+    state: fluff_groin
+
+- type: marking
+  id: ResomiGroinStripes
+  bodyPart: Chest
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_markings.rsi
+    state: groin_stripes
+
+- type: marking
+  id: ResomiBodyCoat
+  bodyPart: Chest
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_markings.rsi
+    state: body_coat
+
+- type: marking
+  id: ResomiBodyStripes
+  bodyPart: Chest
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_markings.rsi
+    state: body_stripes
+
+- type: marking
+  id: ResomiBodyRings
+  bodyPart: Chest
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_markings.rsi
+    state: body_rings
+
+- type: marking
+  id: ResomiBodyLines
+  bodyPart: Chest
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_markings.rsi
+    state: body_lines
+
+- type: marking
+  id: ResomiBelly
+  bodyPart: Chest
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_markings.rsi
+    state: belly
+
+- type: marking
+  id: ResomiBackPatch
+  bodyPart: Chest
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_markings.rsi
+    state: back_patch
+
+- type: marking
+  id: ResomiBackPatchFull
+  bodyPart: Chest
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_markings.rsi
+    state: back_patch_full
+
+# Arm Markings
+- type: marking
+  id: ResomiLArmFeathersComplex
+  bodyPart: LHand
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_arm_markings.rsi
+    state: l_hand_feathers_primary
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_arm_markings.rsi
+    state: l_hand_feathers_secondary
+
+- type: marking
+  id: ResomiRArmFeathersComplex
+  bodyPart: RHand
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_arm_markings.rsi
+    state: r_hand_feathers_primary
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_arm_markings.rsi
+    state: r_hand_feathers_secondary
+
+- type: marking
+  id: ResomiRArmFade
+  bodyPart: RHand
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_arm_markings.rsi
+    state: r_arm_fade
+
+- type: marking
+  id: ResomiLArmFade
+  bodyPart: LHand
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_arm_markings.rsi
+    state: l_arm_fade
+
+- type: marking
+  id: ResomiLArmFeathers
+  bodyPart: LHand
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_arm_markings.rsi
+    state: l_hand_feathers
+
+- type: marking
+  id: ResomiRArmFeathers
+  bodyPart: RHand
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_arm_markings.rsi
+    state: r_hand_feathers
+
+- type: marking
+  id: ResomiRShoulderFade
+  bodyPart: RArm
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_arm_markings.rsi
+    state: r_shoulder_fade
+
+- type: marking
+  id: ResomiLShoulderFade
+  bodyPart: LArm
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_arm_markings.rsi
+    state: l_shoulder_fade
+
+- type: marking
+  id: ResomiRArmCoat
+  bodyPart: RArm
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_arm_markings.rsi
+    state: r_arm_coat
+
+- type: marking
+  id: ResomiLArmCoat
+  bodyPart: LArm
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_arm_markings.rsi
+    state: l_arm_coat
+
+# Leg Markings
+- type: marking
+  id: ResomiLLegFeathers
+  bodyPart: LFoot
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_leg_markings.rsi
+    state: l_foot_feathers
+
+- type: marking
+  id: ResomiRLegFeathers
+  bodyPart: RFoot
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_leg_markings.rsi
+    state: r_foot_feathers
+
+- type: marking
+  id: ResomiRFootFade
+  bodyPart: RFoot
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_leg_markings.rsi
+    state: r_foot_fade
+
+- type: marking
+  id: ResomiLFootFade
+  bodyPart: RFoot
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_leg_markings.rsi
+    state: l_foot_fade
+
+- type: marking
+  id: ResomiLLegFeathersComplex
+  bodyPart: LFoot
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_leg_markings.rsi
+    state: l_foot_feathers_primary
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_leg_markings.rsi
+    state: l_foot_feathers_secondary
+
+- type: marking
+  id: ResomiRLegFeathersComplex
+  bodyPart: RFoot
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_leg_markings.rsi
+    state: r_foot_feathers_primary
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_leg_markings.rsi
+    state: r_foot_feathers_secondary
+
+- type: marking
+  id: ResomiRLegFade
+  bodyPart: RLeg
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_leg_markings.rsi
+    state: r_leg_fade
+
+- type: marking
+  id: ResomiLLegFade
+  bodyPart: LLeg
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_leg_markings.rsi
+    state: l_leg_fade
+
+- type: marking
+  id: ResomiRLegStripes
+  bodyPart: RLeg
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_leg_markings.rsi
+    state: r_leg_stripes
+
+- type: marking
+  id: ResomiLLegStripes
+  bodyPart: LLeg
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_leg_markings.rsi
+    state: l_leg_stripes
+
+- type: marking
+  id: ResomiRLegCoat
+  bodyPart: RLeg
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_leg_markings.rsi
+    state: r_leg_coat
+
+- type: marking
+  id: ResomiLLegCoat
+  bodyPart: LLeg
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_leg_markings.rsi
+    state: l_leg_coat
+
+- type: marking
+  id: HairResomiBackstrafe
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiBackstrafe
+
+- type: marking
+  id: HairResomiBurstShort
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiBurstShort
+
+- type: marking
+  id: HairResomiDefault
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiDefault
+
+- type: marking
+  id: HairResomiDroopy
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiDroopy
+
+- type: marking
+  id: HairResomiEars
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiEars
+
+- type: marking
+  id: HairResomiFluffymohawk
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiFluffymohawk
+
+- type: marking
+  id: HairResomiHedge
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiHedge
+
+- type: marking
+  id: HairResomiLongway
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiLongway
+
+- type: marking
+  id: HairResomiMane
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiMane
+
+- type: marking
+  id: HairResomiManeBeardless
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiManeBeardless
+
+- type: marking
+  id: HairResomiMohawk
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiMohawk
+
+- type: marking
+  id: HairResomiMushroom
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiMushroom
+
+- type: marking
+  id: HairResomiNotree
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiNotree
+
+- type: marking
+  id: HairResomiSpiky
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiSpiky
+
+- type: marking
+  id: HairResomiPointy
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiPointy
+
+- type: marking
+  id: HairResomiTwies
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiTwies
+
+- type: marking
+  id: HairResomiUpright
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiUpright
+
+- type: marking
+  id: HairResomiLong
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiLong
+
+- type: marking
+  id: HairResomiColonel
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiColonel
+
+- type: marking
+  id: HairResomiWedge
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiWedge
+
+- type: marking
+  id: HairResomiSamurai
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiSamurai
+
+- type: marking
+  id: HairResomiCube
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiCube
+
+- type: marking
+  id: HairResomiAerodynamic
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiAerodynamic
+
+- type: marking
+  id: HairResomiBun
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiBun
+
+- type: marking
+  id: HairResomiCowlick
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiCowlick
+
+- type: marking
+  id: HairResomiCrest
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiCrest
+
+- type: marking
+  id: HairResomiCrowned
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiCrowned
+
+- type: marking
+  id: HairResomiMohawkAlt
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiMohawk_Alt
+
+- type: marking
+  id: HairResomiPeel
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiPeel
+
+- type: marking
+  id: HairResomiPonytail
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiPonytail
+
+- type: marking
+  id: HairResomiSleek
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiSleek
+
+- type: marking
+  id: HairResomiSoap
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiSoap
+
+- type: marking
+  id: HairResomiSpikyAlt
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiSpiky_Alt
+
+- type: marking
+  id: HairResomiSweptup
+  bodyPart: Hair
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_hair.rsi
+      state: ResomiSweptup
+
+# Tail Markings
+- type: marking
+  id: ResomiTailFeathered # This is the default tail for Resomi that comes with feathers.
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_feathers
+
+- type: marking
+  id: ResomiTail
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail
+
+- type: marking
+  id: ResomiTailComplex
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_top
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_middle
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_bottom
+
+- type: marking
+  id: ResomiTailDamaged
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_damaged
+
+- type: marking
+  id: ResomiTailDamagedFeathered
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_damaged
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_feathers_damaged
+
+- type: marking
+  id: ResomiTailStubby
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_stubby
+
+- type: marking
+  id: ResomiTailStubbyFeathered
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_stubby
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_feathers_stubby
+
+# Resomi Tail Feathers
+- type: marking
+  id: ResomiTailFeathers # Same as default tail but you can change the colors.
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_feathers
+
+- type: marking
+  id: ResomiTailFeathersComplex
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_feathers_right_upper
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_feathers_right_lower
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_feathers_left_upper
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_feathers_left_lower
+
+- type: marking
+  id: ResomiTailFeathersShort
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_feathers_short
+
+- type: marking
+  id: ResomiTailFeathersFledgling
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_feathers_fledgling
+
+- type: marking
+  id: ResomiTailFeathersLarge
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_feathers_large
+
+- type: marking
+  id: ResomiTailFeathersStubby
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_feathers_stubby
+
+- type: marking
+  id: ResomiTailFeathersDamaged
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_feathers_damaged
+
+# Additional Tail Markings
+- type: marking
+  id: ResomiTailStripes
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_stripes
+
+- type: marking
+  id: ResomiTailSpots
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_spots
+
+- type: marking
+  id: ResomiTailProstheticWood
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    layers:
+      tail_prosthetic_wood:
+        type: !type:SimpleColoring
+          color: white
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_prosthetic_wood
+
+- type: marking
+  id: ResomiTailProstheticHighTech
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    layers:
+      tail_prosthetic_hightech:
+        type: !type:SimpleColoring
+          color: white
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_prosthetic_hightech
+
+- type: marking
+  id: ResomiTailProstheticUnbranded
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    layers:
+      tail_prosthetic_unbranded:
+        type: !type:SimpleColoring
+          color: white
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_prosthetic_unbranded
+
+- type: marking
+  id: ResomiTailBand
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    layers:
+      tail_band:
+        type: !type:SimpleColoring
+          color: white
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_band
+
+- type: marking
+  id: ResomiTailBandMulticolored
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    layers:
+      tail_band_multicolored_1:
+        type: !type:SimpleColoring
+          color: white
+      tail_band_multicolored_2:
+        type: !type:SimpleColoring
+          color: white
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_band_multicolored_1
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_band_multicolored_2
+
+- type: marking
+  id: ResomiTailBandLarge
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    layers:
+      tail_band_large:
+        type: !type:SimpleColoring
+          color: white
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_band_large
+
+- type: marking
+  id: ResomiTailBandSplit
+  bodyPart: Tail
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    layers:
+      tail_band_split_1:
+        type: !type:SimpleColoring
+          color: white
+      tail_band_split_2:
+        type: !type:SimpleColoring
+          color: white
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_band_split_1
+  - sprite: _Starlight/Mobs/Customization/Resomi/resomi_tail_markings.rsi
+    state: tail_band_split_2
+
+# Head
+- type: marking
+  id: ResomiGauzeBlindfold
+  bodyPart: Eyes
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_gauze.rsi
+      state: gauze_blindfold_resomi
+
+- type: marking
+  id: ResomiGauzeHead
+  bodyPart: Head
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_gauze.rsi
+      state: gauze_head_resomi
+
+
+
+# Eyes
+- type: marking
+  id: ResomiLeftEyePad
+  bodyPart: Eyes
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_gauze.rsi
+      state: gauze_lefteye_1_resomi
+
+- type: marking
+  id: ResomiLeftEyePatch
+  bodyPart: Eyes
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_gauze.rsi
+      state: gauze_lefteye_2_resomi
+
+- type: marking
+  id: ResomiRightEyePad
+  bodyPart: Eyes
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_gauze.rsi
+      state: gauze_righteye_1_resomi
+
+- type: marking
+  id: ResomiRightEyePatch
+  bodyPart: Eyes
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_gauze.rsi
+      state: gauze_righteye_2_resomi
+
+
+
+# Chest
+- type: marking
+  id: ResomiGauzeStomach
+  bodyPart: Chest
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_gauze.rsi
+      state: gauze_abdomen_resomi
+
+- type: marking
+  id: ResomiGauzeShoulderRight
+  bodyPart: Chest
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_gauze.rsi
+      state: gauze_shoulder_r_resomi
+
+- type: marking
+  id: ResomiGauzeShoulderLeft
+  bodyPart: Chest
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_gauze.rsi
+      state: gauze_shoulder_l_resomi
+
+
+
+# Arms
+- type: marking
+  id: ResomiGauzeLeftArm
+  bodyPart: LArm
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_gauze.rsi
+      state: gauze_leftarm_resomi
+
+- type: marking
+  id: ResomiGauzeRightArm
+  bodyPart: RArm
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_gauze.rsi
+      state: gauze_rightarm_resomi
+
+
+
+# Hands
+- type: marking
+  id: ResomiGauzeBoxerwrapRight
+  bodyPart: RHand
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_gauze.rsi
+      state: gauze_boxerwrap_r_resomi
+
+- type: marking
+  id: ResomiGauzeBoxerwrapLeft
+  bodyPart: LHand
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_gauze.rsi
+      state: gauze_boxerwrap_l_resomi
+
+
+
+# Legs
+- type: marking
+  id: ResomiGauzeLegRight
+  bodyPart: RLeg
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_gauze.rsi
+      state: gauze_upperleg_r_resomi
+
+- type: marking
+  id: ResomiGauzeLegLeft
+  bodyPart: LLeg
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_gauze.rsi
+      state: gauze_upperleg_l_resomi
+
+
+
+# Feet
+- type: marking
+  id: ResomiGauzeFootRight
+  bodyPart: RFoot
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_gauze.rsi
+      state: gauze_lowerleg_r_resomi
+
+- type: marking
+  id: ResomiGauzeFootLeft
+  bodyPart: LFoot
+  groupWhitelist: [CFResomi]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_gauze.rsi
+      state: gauze_lowerleg_l_resomi

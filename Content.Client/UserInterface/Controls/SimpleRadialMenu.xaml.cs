@@ -159,12 +159,27 @@ public sealed partial class SimpleRadialMenu : RadialMenu
         if (imageControl != null)
             button.AddChild(imageControl);
 
+        // CarpFinder: slice titles, including spell ranks and the Back slice.
+        if (!string.IsNullOrEmpty(model.Text))
+        {
+            button.AddChild(new Label
+            {
+                Text = model.Text,
+                HorizontalAlignment = HAlignment.Center,
+                VerticalAlignment = VAlignment.Center,
+                FontColorOverride = Color.White,
+                MouseFilter = MouseFilterMode.Ignore,
+                ClipText = false,
+            });
+        }
+
         if (model is RadialMenuActionOptionBase actionOption)
         {
             button.OnPressed += _ =>
             {
                 actionOption.OnPressed?.Invoke();
-                if (!haveNested)
+                // CarpFinder: Back stays on the wheel. Other slices close it.
+                if (!haveNested && actionOption.CloseOnPressed)
                     Close();
             };
         }
@@ -366,6 +381,11 @@ public abstract class RadialMenuOptionBase
     /// Specifier that describes icon to be used for radial menu button.
     /// </summary>
     public RadialMenuIconSpecifier? IconSpecifier { get; set; }
+
+    /// <summary>
+    /// Drawn in the middle of the slice.
+    /// </summary>
+    public string? Text { get; init; }
 }
 
 /// <summary> Base type for model of radial menu button with some action on button pressed. </summary>
@@ -374,6 +394,11 @@ public abstract class RadialMenuActionOptionBase(Action onPressed) : RadialMenuO
 {
     /// <summary> Action to be executed on button press. </summary>
     public Action OnPressed { get; } = onPressed;
+
+    /// <summary>
+    /// When false, the menu stays open after the press. Used by the Back slice.
+    /// </summary>
+    public bool CloseOnPressed { get; init; } = true;
 }
 
 /// <summary> Strong-typed model for radial menu button with action, stores provided data to be used upon button press. </summary>

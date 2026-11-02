@@ -1,0 +1,152 @@
+# CarpFinder: remaster trait ids. Summaries are short mechanical notes, not source text.
+# category: Class
+
+- type: cfTrait
+  id: Alchemist
+  name: Alchemist
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Animist
+  name: Animist
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Barbarian
+  name: Barbarian
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Bard
+  name: Bard
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Champion
+  name: Champion
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Cleric
+  name: Cleric
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Druid
+  name: Druid
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Exemplar
+  name: Exemplar
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Fighter
+  name: Fighter
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Gunslinger
+  name: Gunslinger
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Inventor
+  name: Inventor
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Investigator
+  name: Investigator
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Kineticist
+  name: Kineticist
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Magus
+  name: Magus
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Monk
+  name: Monk
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Oracle
+  name: Oracle
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Psychic
+  name: Psychic
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Ranger
+  name: Ranger
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Rogue
+  name: Rogue
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Sorcerer
+  name: Sorcerer
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Summoner
+  name: Summoner
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Swashbuckler
+  name: Swashbuckler
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Thaumaturge
+  name: Thaumaturge
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Witch
+  name: Witch
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."
+
+- type: cfTrait
+  id: Wizard
+  name: Wizard
+  category: Class
+  summary: "A class trait. Feats and features of that class carry it."

@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Draconic Codex
+- type: cfFeat
+  id: CFTiptheScales
+  name: "Tip the Scales"
+  description: "Passive feat. Its special rule is not applied in play yet."
+  ancestry: Kobold
+  level: 5
+  traits:
+    - "Kobold"

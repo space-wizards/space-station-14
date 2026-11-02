@@ -1,0 +1,4 @@
+- type: flavor
+  id: cfMagical
+  flavorType: Complex
+  description: cf-flavor-magical

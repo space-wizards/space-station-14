@@ -1,0 +1,86 @@
+# CarpFinder: remaster trait ids. Summaries are short mechanical notes, not source text.
+# category: Shield
+
+- type: cfTrait
+  id: Foldaway
+  name: Foldaway
+  category: Shield
+  summary: "This shield can be collapsed so it is easier to carry."
+
+- type: cfTrait
+  id: Harnessed
+  name: Harnessed
+  category: Shield
+  summary: "This shield is strapped so you can use it while your hands are full."
+
+- type: cfTrait
+  id: Hefty2
+  name: Hefty 2
+  category: Shield
+  summary: "This shield is heavy. Raising it has a Speed penalty listed with the trait."
+
+- type: cfTrait
+  id: DeflectingBludgeoning
+  name: Deflecting (bludgeoning)
+  category: Shield
+  summary: "This shield's Shield Block works especially well against bludgeoning damage."
+
+- type: cfTrait
+  id: DeflectingPiercing
+  name: Deflecting (piercing)
+  category: Shield
+  summary: "This shield's Shield Block works especially well against piercing damage."
+
+- type: cfTrait
+  id: DeflectingSlashing
+  name: Deflecting (slashing)
+  category: Shield
+  summary: "This shield's Shield Block works especially well against slashing damage."
+
+- type: cfTrait
+  id: DeflectingPhysicalRanged
+  name: Deflecting (physical ranged)
+  category: Shield
+  summary: "This shield's Shield Block works especially well against physical ranged attacks."
+
+- type: cfTrait
+  id: Integrated1d6B
+  name: Integrated 1d6 B
+  category: Shield
+  summary: "This shield has a built-in bludgeoning weapon that deals 1d6."
+
+- type: cfTrait
+  id: Integrated1d6P
+  name: Integrated 1d6 P
+  category: Shield
+  summary: "This shield has a built-in piercing weapon that deals 1d6."
+
+- type: cfTrait
+  id: Integrated1d6S
+  name: Integrated 1d6 S
+  category: Shield
+  summary: "This shield has a built-in slashing weapon that deals 1d6."
+
+- type: cfTrait
+  id: Integrated1d6SVersatileP
+  name: Integrated 1d6 S, versatile P
+  category: Shield
+  summary: "This shield's built-in weapon deals 1d6 slashing and is versatile piercing."
+
+- type: cfTrait
+  id: LaunchingDart
+  name: Launching
+  category: Shield
+  summary: "This shield can launch a dart or similar projectile."
+
+- type: cfTrait
+  id: ShieldThrow20
+  name: Shield Throw 20
+  category: Shield
+  summary: "You can throw this shield. Its range increment is 20 feet."
+
+- type: cfTrait
+  id: ShieldThrow30
+  name: Shield Throw 30
+  category: Shield
+  summary: "You can throw this shield. Its range increment is 30 feet."

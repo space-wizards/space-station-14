@@ -1,0 +1,14 @@
+# CarpFinder: remaster trait ids. Summaries are short mechanical notes, not source text.
+# category: Poison
+
+- type: cfTrait
+  id: Poison
+  name: Poison
+  category: Poison
+  summary: "This is a poison, or it deals poison damage."
+
+- type: cfTrait
+  id: Venomous
+  name: Venomous
+  category: Poison
+  summary: "This natural attack can apply a poison listed with it."

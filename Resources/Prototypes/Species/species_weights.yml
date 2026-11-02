@@ -1,12 +1,27 @@
-#default species weights used for randomly selected species
+# CarpFinder: random species stay on Pathfinder ancestries.
 - type: weightedRandomSpecies
   id: SpeciesWeights
   weights:
     Human: 5
-    Reptilian: 4
-    SlimePerson: 4
-    Moth: 4
-    Dwarf: 2
-    Diona: 2
-    Vox: 1
-    Vulpkanin: 4
+    Dwarf: 3
+    CF-Goblin: 3
+    CF-Elf: 3
+    CF-Gnome: 3
+    CF-Halfling: 3
+    CF-Leshy: 2
+    CF-Orc: 3
+    CF-Catfolk: 2
+    CF-Hobgoblin: 2
+    CF-Kholo: 2
+    CF-Kobold: 2
+    CF-Lizardfolk: 2
+    CF-Ratfolk: 2
+    CF-Tengu: 2
+    CF-Tripkee: 2
+    CF-Azarketi: 2
+    CF-Fetchling: 2
+    CF-Kitsune: 2
+    CF-Android: 1
+    CF-Fleshwarp: 1
+    CF-Sprite: 1
+    CF-Strix: 1

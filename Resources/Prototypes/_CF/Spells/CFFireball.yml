@@ -1,0 +1,25 @@
+﻿- type: entity
+  parent: CFSpellArea
+  id: CFFireball
+  name: Fireball
+  description: A 20-foot burst within 500 feet. Reflex save, 6d6 fire.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: fireball
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 3
+  - type: CFSpell
+    spell: Fireball
+    rank: 3
+    delivery: Area
+    area: Burst
+    areaFeet: 20
+    rangeFeet: 500
+    defense: Reflex
+    basicSave: true
+    diceCount: 6
+    diceSize: 6
+    damageType: fire

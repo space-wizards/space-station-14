@@ -1,0 +1,23 @@
+﻿- type: entity
+  parent: CFSpellTarget
+  id: CFSigil
+  name: Sigil
+  description: You leave a small magical mark.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 0
+  - type: CFSpell
+    spell: Sigil
+    rank: 0
+    delivery: Target
+    rangeFeet: 5
+    defense: None
+    friendly: true
+    includeSelf: true
+  - type: EntityTargetAction
+    canTargetSelf: true

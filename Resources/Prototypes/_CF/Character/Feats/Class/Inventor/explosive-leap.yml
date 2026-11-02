@@ -1,0 +1,15 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Guns & Gears
+- type: cfFeat
+  id: CFExplosiveLeap
+  name: "Explosive Leap"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Inventor
+  level: 1
+  traits:
+    - "Fire"
+    - "Inventor"
+    - "Move"
+    - "Unstable"
+  action: Action
+  pendingAction: true

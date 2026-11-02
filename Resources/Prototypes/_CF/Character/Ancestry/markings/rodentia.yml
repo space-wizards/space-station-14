@@ -1,0 +1,523 @@
+# CarpFinder: species markings. Art stays in the fork texture folder. These sprites are drawn for that body, so they are not run through the human displacement map.
+
+# HEAD
+
+## EARS
+
+- type: marking
+  id: RodentiaHeadTopEarMouse # Default ear marking.
+  bodyPart: HeadTop
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  coloring:
+    layers:
+      mouse:
+        type: !type:TattooColoring
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/ear_markings.rsi
+      state: mouse
+    - sprite: _Starlight/Mobs/Customization/Rodentia/ear_markings.rsi
+      state: mouse_overlay
+
+- type: marking
+  id: RodentiaHeadTopEarBat
+  bodyPart: HeadTop
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/ear_markings.rsi
+      state: bat
+
+- type: marking
+  id: RodentiaHeadTopEarBatLarge
+  bodyPart: HeadTop
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/ear_markings.rsi
+      state: bat_large
+
+- type: marking
+  id: RodentiaHeadTopEarHamster
+  bodyPart: HeadTop
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/ear_markings.rsi
+      state: hamster
+    - sprite: _Starlight/Mobs/Customization/Rodentia/ear_markings.rsi
+      state: hamster_overlay
+
+- type: marking
+  id: RodentiaHeadTopEarLong
+  bodyPart: HeadTop
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/ear_markings.rsi
+      state: long
+    - sprite: _Starlight/Mobs/Customization/Rodentia/ear_markings.rsi
+      state: long_overlay
+
+- type: marking
+  id: RodentiaHeadTopEarMouseLarge
+  bodyPart: HeadTop
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/ear_markings.rsi
+      state: mouse_large
+    - sprite: _Starlight/Mobs/Customization/Rodentia/ear_markings.rsi
+      state: mouse_large_overlay
+
+- type: marking
+  id: RodentiaHeadTopEarNone
+  bodyPart: HeadTop
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  forcedColoring: true
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/ear_markings.rsi
+      state: none
+
+- type: marking
+  id: RodentiaHeadTopEarPointy
+  bodyPart: HeadTop
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/ear_markings.rsi
+      state: pointy
+
+- type: marking
+  id: RodentiaHeadTopEarSmall
+  bodyPart: HeadTop
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/ear_markings.rsi
+      state: small
+
+## SNOUTS
+
+- type: marking
+  id: RodentiaSnoutBat
+  bodyPart: Snout
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/snout_markings.rsi
+      state: bat
+    - sprite: _Starlight/Mobs/Customization/Rodentia/snout_markings.rsi
+      state: bat_nose
+
+- type: marking
+  id: RodentiaSnoutBatCounter
+  bodyPart: Snout
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/snout_markings.rsi
+      state: bat
+    - sprite: _Starlight/Mobs/Customization/Rodentia/snout_markings.rsi
+      state: bat_nose
+    - sprite: _Starlight/Mobs/Customization/Rodentia/snout_markings.rsi
+      state: bat_overlay
+
+- type: marking
+  id: RodentiaSnoutFlat
+  bodyPart: Snout
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/snout_markings.rsi
+      state: flat
+    - sprite: _Starlight/Mobs/Customization/Rodentia/snout_markings.rsi
+      state: flat_nose
+
+- type: marking
+  id: RodentiaSnoutFlatCounter
+  bodyPart: Snout
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/snout_markings.rsi
+      state: flat
+    - sprite: _Starlight/Mobs/Customization/Rodentia/snout_markings.rsi
+      state: flat_nose
+    - sprite: _Starlight/Mobs/Customization/Rodentia/snout_markings.rsi
+      state: flat_overlay
+
+- type: marking
+  id: RodentiaSnoutRound
+  bodyPart: Snout
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/snout_markings.rsi
+      state: round
+    - sprite: _Starlight/Mobs/Customization/Rodentia/snout_markings.rsi
+      state: round_nose
+
+- type: marking
+  id: RodentiaSnoutRoundCounter
+  bodyPart: Snout
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/snout_markings.rsi
+      state: round
+    - sprite: _Starlight/Mobs/Customization/Rodentia/snout_markings.rsi
+      state: round_nose
+    - sprite: _Starlight/Mobs/Customization/Rodentia/snout_markings.rsi
+      state: round_overlay
+
+## CHEEKS
+
+- type: marking
+  id: RodentiaCheeksRound
+  bodyPart: HeadSide
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/cheek_markings.rsi
+      state: cheeks
+
+- type: marking
+  id: RodentiaCheeksRoundCounter
+  bodyPart: HeadSide
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/cheek_markings.rsi
+      state: cheeks
+    - sprite: _Starlight/Mobs/Customization/Rodentia/cheek_markings.rsi
+      state: cheeks_overlay
+
+- type: marking
+  id: RodentiaCheeksFluff
+  bodyPart: HeadSide
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/cheek_markings.rsi
+      state: fluff
+
+- type: marking
+  id: RodentiaCheeksFluffCounter
+  bodyPart: HeadSide
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/cheek_markings.rsi
+      state: fluff
+    - sprite: _Starlight/Mobs/Customization/Rodentia/cheek_markings.rsi
+      state: fluff_overlay
+
+- type: marking
+  id: RodentiaCheeksFluffAlt
+  bodyPart: HeadSide
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/cheek_markings.rsi
+      state: fluff_alt
+
+- type: marking
+  id: RodentiaCheeksFluffAltCounter
+  bodyPart: HeadSide
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/cheek_markings.rsi
+      state: fluff_alt
+    - sprite: _Starlight/Mobs/Customization/Rodentia/cheek_markings.rsi
+      state: fluff_alt_overlay
+
+- type: marking
+  id: RodentiaCheeksWhiskers
+  bodyPart: HeadTop
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/cheek_markings.rsi
+      state: whiskers
+
+# BODY
+
+## TAIL
+
+- type: marking
+  id: RodentiaTailMouse # Default tail marking.
+  bodyPart: Tail
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  coloring:
+    layers:
+      mouse:
+        type: !type:TattooColoring
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/tail_markings.rsi
+      state: mouse
+
+- type: marking
+  id: RodentiaTailBeaver
+  bodyPart: Tail
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/tail_markings.rsi
+      state: beaver
+
+- type: marking
+  id: RodentiaTailHamster
+  bodyPart: Tail
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/tail_markings.rsi
+      state: hamster
+
+- type: marking
+  id: RodentiaTailLong
+  bodyPart: Tail
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/tail_markings.rsi
+      state: long
+
+- type: marking
+  id: RodentiaTailLongCounter
+  bodyPart: Tail
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/tail_markings.rsi
+      state: long
+    - sprite: _Starlight/Mobs/Customization/Rodentia/tail_markings.rsi
+      state: long_overlay
+
+- type: marking
+  id: RodentiaTailLongCounterTip
+  bodyPart: Tail
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/tail_markings.rsi
+      state: long
+    - sprite: _Starlight/Mobs/Customization/Rodentia/tail_markings.rsi
+      state: long_overlay
+    - sprite: _Starlight/Mobs/Customization/Rodentia/tail_markings.rsi
+      state: long_tip
+
+- type: marking
+  id: RodentiaTailShort
+  bodyPart: Tail
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/tail_markings.rsi
+      state: short
+
+- type: marking
+  id: RodentiaTailSquirrel
+  bodyPart: Tail
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/tail_markings.rsi
+      state: squirrel
+
+- type: marking
+  id: RodentiaTailSquirrelBicolor
+  bodyPart: Tail
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/tail_markings.rsi
+      state: squirrel
+    - sprite: _Starlight/Mobs/Customization/Rodentia/tail_markings.rsi
+      state: squirrel_overlay
+
+## PATTERNS
+
+- type: marking
+  id: RodentiaChestCountershade
+  bodyPart: Chest
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sexRestriction: Male
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/body_markings.rsi
+      state: countershade
+
+- type: marking
+  id: RodentiaChestCountershadeF
+  bodyPart: Chest
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sexRestriction: Female
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/body_markings.rsi
+      state: countershade_f
+
+- type: marking
+  id: RodentiaLegLeftCountershade
+  bodyPart: LLeg
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/body_markings.rsi
+      state: countershade_lleg
+
+- type: marking
+  id: RodentiaLegRightCountershade
+  bodyPart: RLeg
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/body_markings.rsi
+      state: countershade_rleg
+
+- type: marking
+  id: RodentiaChestFawn
+  bodyPart: Chest
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/body_markings.rsi
+      state: fawn
+
+- type: marking
+  id: RodentiaChestHooded
+  bodyPart: Chest
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sexRestriction: Male
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/body_markings.rsi
+      state: hooded
+
+- type: marking
+  id: RodentiaChestHoodedF
+  bodyPart: Chest
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sexRestriction: Female
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/body_markings.rsi
+      state: hooded_f
+
+### HEAD PATTERNS
+
+- type: marking
+  id: RodentiaHeadBlaze
+  bodyPart: Head
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/head_markings.rsi
+      state: blaze
+
+- type: marking
+  id: RodentiaHeadRound
+  bodyPart: Head
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Rodentia/head_markings.rsi
+      state: round
+
+# BASE BODY PARTS
+
+## HEAD
+
+- type: marking
+  id: RodentiaHeadBasic
+  bodyPart: Head
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Species/Rodentia/parts.rsi
+      state: head_m
+
+## ARMS
+
+- type: marking
+  id: RodentiaArmLeftBasic
+  bodyPart: LArm
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Species/Rodentia/parts.rsi
+      state: l_arm
+
+- type: marking
+  id: RodentiaArmRightBasic
+  bodyPart: RArm
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Species/Rodentia/parts.rsi
+      state: r_arm
+
+## LEGS
+
+- type: marking
+  id: RodentiaLegLeftBasic
+  bodyPart: LLeg
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Species/Rodentia/parts.rsi
+      state: l_leg
+
+- type: marking
+  id: RodentiaLegRightBasic
+  bodyPart: RLeg
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Species/Rodentia/parts.rsi
+      state: r_leg
+
+## HANDS
+
+- type: marking
+  id: RodentiaHandLeftBasic
+  bodyPart: LHand
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Species/Rodentia/parts.rsi
+      state: l_hand
+
+- type: marking
+  id: RodentiaHandRightBasic
+  bodyPart: RHand
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Species/Rodentia/parts.rsi
+      state: r_hand
+
+## FEET
+
+- type: marking
+  id: RodentiaFootLeftBasic
+  bodyPart: LFoot
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Species/Rodentia/parts.rsi
+      state: l_foot
+
+- type: marking
+  id: RodentiaFootRightBasic
+  bodyPart: RFoot
+  groupWhitelist: [CFRodentia]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Species/Rodentia/parts.rsi
+      state: r_foot

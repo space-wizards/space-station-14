@@ -1,0 +1,10 @@
+<BoxContainer Name="GearTabRoot" xmlns="https://spacestation14.io"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              x:Class="Content.Client.CF.Lobby.UI.CharacterBuilder.GearTab"
+              Orientation="Vertical"
+              HorizontalExpand="True"
+              VerticalExpand="True">
+    <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+        <BoxContainer Name="GearGroups" Orientation="Vertical" HorizontalExpand="True" Margin="8" />
+    </ScrollContainer>
+</BoxContainer>

@@ -1,0 +1,16 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder War of Immortals
+- type: cfFeat
+  id: CFChanneledProtection
+  name: "Channeled Protection"
+  description: "Requires Channeler's Stance. Costs 1 action. This feature will be implemented later."
+  class: Animist
+  level: 4
+  traits:
+    - "Animist"
+    - "Apparition"
+    - "Aura"
+  prerequisites:
+    - "Channeler's Stance"
+  action: Action
+  pendingAction: true

@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Battlecry!
+- type: cfFeat
+  id: CFShoulderCheck
+  name: "Shoulder Check"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Guardian
+  level: 1
+  traits:
+    - "Guardian"
+  action: Action
+  pendingAction: true

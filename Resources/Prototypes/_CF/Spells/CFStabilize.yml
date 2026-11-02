@@ -1,0 +1,23 @@
+﻿- type: entity
+  parent: CFSpellTarget
+  id: CFStabilize
+  name: Stabilize
+  description: A dying creature loses the dying condition and stays unconscious at 0 Hit Points.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 0
+  - type: CFSpell
+    spell: Stabilize
+    rank: 0
+    delivery: Target
+    rangeFeet: 30
+    defense: None
+    rider: Stabilize
+    friendly: true
+  - type: EntityTargetAction
+    canTargetSelf: true

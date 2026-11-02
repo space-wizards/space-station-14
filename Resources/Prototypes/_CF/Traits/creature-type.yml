@@ -1,0 +1,146 @@
+# CarpFinder: remaster trait ids. Summaries are short mechanical notes, not source text.
+# category: CreatureType
+
+- type: cfTrait
+  id: Aberration
+  name: Aberration
+  category: CreatureType
+  summary: "A broad creature type."
+
+- type: cfTrait
+  id: Animal
+  name: Animal
+  category: CreatureType
+  summary: "A broad creature type."
+
+- type: cfTrait
+  id: Beast
+  name: Beast
+  category: CreatureType
+  summary: "A broad creature type."
+
+- type: cfTrait
+  id: Celestial
+  name: Celestial
+  category: CreatureType
+  summary: "A broad creature type."
+
+- type: cfTrait
+  id: Construct
+  name: Construct
+  category: CreatureType
+  summary: "A broad creature type."
+
+- type: cfTrait
+  id: Dragon
+  name: Dragon
+  category: CreatureType
+  summary: "A broad creature type."
+
+- type: cfTrait
+  id: Elemental
+  name: Elemental
+  category: CreatureType
+  summary: "A broad creature type."
+
+- type: cfTrait
+  id: Fey
+  name: Fey
+  category: CreatureType
+  summary: "A broad creature type."
+
+- type: cfTrait
+  id: Fiend
+  name: Fiend
+  category: CreatureType
+  summary: "A broad creature type."
+
+- type: cfTrait
+  id: Fungus
+  name: Fungus
+  category: CreatureType
+  summary: "A broad creature type."
+
+- type: cfTrait
+  id: Giant
+  name: Giant
+  category: CreatureType
+  summary: "A broad creature type."
+
+- type: cfTrait
+  id: Humanoid
+  name: Humanoid
+  category: CreatureType
+  summary: "A broad creature type."
+
+- type: cfTrait
+  id: Monitor
+  name: Monitor
+  category: CreatureType
+  summary: "A broad creature type."
+
+- type: cfTrait
+  id: Ooze
+  name: Ooze
+  category: CreatureType
+  summary: "A broad creature type."
+
+- type: cfTrait
+  id: Plant
+  name: Plant
+  category: CreatureType
+  summary: "A broad creature type."
+
+- type: cfTrait
+  id: Undead
+  name: Undead
+  category: CreatureType
+  summary: "A broad creature type."
+
+- type: cfTrait
+  id: Spirit
+  name: Spirit
+  category: CreatureType
+  summary: "A broad creature type."
+
+- type: cfTrait
+  id: Amphibious
+  name: Amphibious
+  category: CreatureType
+  summary: "This creature can breathe water and air."
+
+- type: cfTrait
+  id: Aquatic
+  name: Aquatic
+  category: CreatureType
+  summary: "This creature breathes water and usually cannot breathe air."
+
+- type: cfTrait
+  id: Incorporeal
+  name: Incorporeal
+  category: CreatureType
+  summary: "This creature has no solid body. Many physical attacks struggle to harm it."
+
+- type: cfTrait
+  id: Mindless
+  name: Mindless
+  category: CreatureType
+  summary: "This creature has no mind. Mental effects that need a mind do not work."
+
+- type: cfTrait
+  id: Swarm
+  name: Swarm
+  category: CreatureType
+  summary: "This creature is many tiny creatures acting as one."
+
+- type: cfTrait
+  id: Troop
+  name: Troop
+  category: CreatureType
+  summary: "This creature is a formation of many combatants."
+
+- type: cfTrait
+  id: Minion
+  name: Minion
+  category: CreatureType
+  summary: "This creature is a minion. It cannot act on its own and uses only two actions when commanded."

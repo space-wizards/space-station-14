@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFLinkedFocus
+  name: "Linked Focus"
+  description: "Requires arcane bond and curriculum spells."
+  class: Wizard
+  level: 4
+  traits:
+    - "Wizard"
+  prerequisites:
+    - "arcane bond"
+    - "curriculum spells"

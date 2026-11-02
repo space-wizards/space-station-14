@@ -1,0 +1,21 @@
+﻿- type: entity
+  parent: CFSpellTarget
+  id: CFParalyze
+  name: Paralyze
+  description: On a failed Will save the target is paralyzed.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 3
+  - type: CFSpell
+    spell: Paralyze
+    rank: 3
+    delivery: Target
+    rangeFeet: 30
+    defense: Will
+    basicSave: false
+    rider: Paralyze

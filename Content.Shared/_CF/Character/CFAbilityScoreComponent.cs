@@ -3,21 +3,29 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.CF.Character;
 
+/// <summary>
+/// Pathfinder 2e attribute modifiers (not D&amp;D ability scores). Default is +0.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class CFAbilityScoreComponent : Component
 {
-    [DataField("abilityScores")]
-    public Dictionary<CFAbility, int> AbilityScores = new()
+    [DataField("abilityModifiers")]
+    [AutoNetworkedField]
+    public Dictionary<CFAbility, int> AbilityModifiers = new()
     {
-        { CFAbility.Strength, 10 },
-        { CFAbility.Dexterity, 10 },
-        { CFAbility.Constitution, 10 },
-        { CFAbility.Intelligence, 10 },
-        { CFAbility.Wisdom, 10 },
-        { CFAbility.Charisma, 10 }
+        { CFAbility.Strength, 0 },
+        { CFAbility.Dexterity, 0 },
+        { CFAbility.Constitution, 0 },
+        { CFAbility.Intelligence, 0 },
+        { CFAbility.Wisdom, 0 },
+        { CFAbility.Charisma, 0 },
     };
-    public int GetAbilityScore(CFAbility ability)
+
+    public int GetModifier(CFAbility ability)
     {
-        return AbilityScores.TryGetValue(ability, out var score) ? score : 10;
+        return AbilityModifiers.TryGetValue(ability, out var modifier) ? modifier : 0;
     }
+
+    /// <summary>Legacy name — returns the PF2e modifier.</summary>
+    public int GetAbilityScore(CFAbility ability) => GetModifier(ability);
 }

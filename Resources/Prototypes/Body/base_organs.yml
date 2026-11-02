@@ -549,6 +549,51 @@
       Male: torso_m
       Female: torso_f
 
+# CarpFinder: chest state used when the RSI splits the torso into chest_m and groin_m.
+- type: entity
+  id: OrganBaseChestSexed
+  abstract: true
+  components:
+  - type: Sprite
+    state: chest_m
+  - type: VisualOrgan
+    data:
+      state: chest_m
+    sexStateOverrides:
+      Male: chest_m
+      Female: chest_f
+
+# CarpFinder: groin layer. Drawn behind the chest.
+- type: entity
+  parent:
+  - OrganBase
+  - OrganBaseChildExternal
+  id: OrganBaseGroin
+  name: groin
+  abstract: true
+  components:
+  - type: Organ
+    category: Groin
+  - type: Sprite
+    state: groin_m
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.Groin
+    data:
+      state: groin_m
+
+- type: entity
+  id: OrganBaseGroinSexed
+  abstract: true
+  components:
+  - type: Sprite
+    state: groin_m
+  - type: VisualOrgan
+    data:
+      state: groin_m
+    sexStateOverrides:
+      Male: groin_m
+      Female: groin_f
+
 - type: entity
   abstract: true
   id: OrganBaseParent

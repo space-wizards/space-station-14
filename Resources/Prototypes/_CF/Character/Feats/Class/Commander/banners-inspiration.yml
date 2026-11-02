@@ -1,0 +1,17 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Battlecry!
+- type: cfFeat
+  id: CFBannersInspiration
+  name: "Banner's Inspiration"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Commander
+  level: 4
+  traits:
+    - "Brandish"
+    - "Commander"
+    - "Emotion"
+    - "Flourish"
+    - "Mental"
+    - "Visual"
+  action: Action
+  pendingAction: true

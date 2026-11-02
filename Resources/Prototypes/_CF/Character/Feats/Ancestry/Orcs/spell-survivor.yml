@@ -1,0 +1,11 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder #207: The Resurrection Flood
+- type: cfFeat
+  id: CFSpellSurvivor
+  name: "Spell Survivor"
+  description: "Passive feat. Its special rule is not applied in play yet."
+  ancestry: Orc
+  level: 5
+  rarity: Uncommon
+  traits:
+    - "Orc"

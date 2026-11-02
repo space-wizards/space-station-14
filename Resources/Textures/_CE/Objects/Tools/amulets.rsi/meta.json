@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by TheShuEd (discord/github), inhands by D1nazewwr",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "safe_faling"
+    },
+    {
+      "name": "unshaded"
+    },
+    {
+      "name": "focus"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "unshaded-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "unshaded-inhand-right",
+      "directions": 4
+    }
+  ]
+}

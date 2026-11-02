@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Dark Archive (Remastered)
+- type: cfFeat
+  id: CFHauntIngenuity
+  name: "Haunt Ingenuity"
+  description: "This feature will be implemented later."
+  class: Thaumaturge
+  level: 1
+  traits:
+    - "Detection"
+    - "Divine"
+    - "Thaumaturge"

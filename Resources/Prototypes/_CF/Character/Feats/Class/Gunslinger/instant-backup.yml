@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Guns & Gears
+- type: cfFeat
+  id: CFInstantBackup
+  name: "Instant Backup"
+  description: "Reaction. This feature will be implemented later."
+  class: Gunslinger
+  level: 4
+  traits:
+    - "Gunslinger"
+  action: Reaction
+  pendingAction: true

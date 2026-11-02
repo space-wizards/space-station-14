@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by TheShuEd (Github)",
+  "size": {
+    "x": 48,
+    "y": 48
+  },
+  "load": {
+      "srgb": false
+  },
+  "states": [
+    {
+      "name": "female_neck",
+      "directions": 4
+    },
+    {
+      "name": "male_neck",
+      "directions": 4
+    }
+  ]
+}

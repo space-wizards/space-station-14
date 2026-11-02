@@ -1,9 +1,0 @@
-- type: foodType
-  id: Meal
-  iconHolder: CEPlateWooden
-  burntRecipe: BurntMeal
-
-- type: foodType
-  id: Soup
-  iconHolder: CEBowlWooden
-  burntRecipe: BurntSoup

@@ -1,0 +1,26 @@
+# CarpFinder: remaster trait ids. Summaries are short mechanical notes, not source text.
+# category: Tradition
+
+- type: cfTrait
+  id: Arcane
+  name: Arcane
+  category: Tradition
+  summary: "One of the four spell traditions."
+
+- type: cfTrait
+  id: Divine
+  name: Divine
+  category: Tradition
+  summary: "One of the four spell traditions."
+
+- type: cfTrait
+  id: Occult
+  name: Occult
+  category: Tradition
+  summary: "One of the four spell traditions."
+
+- type: cfTrait
+  id: Primal
+  name: Primal
+  category: Tradition
+  summary: "One of the four spell traditions."

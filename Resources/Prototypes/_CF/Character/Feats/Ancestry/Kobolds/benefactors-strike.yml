@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Draconic Codex
+- type: cfFeat
+  id: CFBenefactorsStrike
+  name: "Benefactor's Strike"
+  description: "Requires dragonscaled kobold heritage. Grants Draconic Benefactor. Not added in play yet. +1 bonus to Unarmed Damage. Not applied in play yet."
+  ancestry: Kobold
+  level: 5
+  traits:
+    - "Kobold"
+  prerequisites:
+    - "dragonscaled kobold heritage"

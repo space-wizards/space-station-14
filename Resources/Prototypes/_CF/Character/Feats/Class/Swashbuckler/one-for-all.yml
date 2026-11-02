@@ -1,0 +1,19 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFOneforAll
+  name: "One for All"
+  description: "Requires trained in Diplomacy. Costs 1 action. This feature will be implemented later."
+  class: Swashbuckler
+  level: 1
+  traits:
+    - "Auditory"
+    - "Concentrate"
+    - "Emotion"
+    - "Linguistic"
+    - "Mental"
+    - "Swashbuckler"
+  prerequisites:
+    - "trained in Diplomacy"
+  action: Action
+  pendingAction: true

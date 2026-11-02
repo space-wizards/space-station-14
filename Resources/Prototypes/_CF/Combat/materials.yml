@@ -1,0 +1,80 @@
+# Pathfinder object materials (mid-range values from the hardness table).
+
+- type: cfMaterial
+  id: Cloth
+  name: cf-material-cloth
+  hardness: 1
+  hitPoints: 2
+  brokenThreshold: 1
+  damageModifierSets:
+  - Cardboard
+  - Cloth
+  damageContainers: []
+
+- type: cfMaterial
+  id: ThinGlass
+  name: cf-material-thin-glass
+  hardness: 2
+  hitPoints: 10
+  brokenThreshold: 5
+  damageModifierSets:
+  - Glass
+  - GlassMod
+  - GlassReinforcedMod
+  - GlassPlasmaMod
+  - GlassReinforcedPlasmaMod
+  - WindowMod
+
+- type: cfMaterial
+  id: Wood
+  name: cf-material-wood
+  hardness: 5
+  hitPoints: 18
+  brokenThreshold: 9
+  damageModifierSets:
+  - Wood
+  - WoodMod
+  - Wooden
+  damageContainers:
+  - Inorganic
+
+- type: cfMaterial
+  id: Stone
+  name: cf-material-stone
+  hardness: 7
+  hitPoints: 28
+  brokenThreshold: 14
+  damageModifierSets:
+  - RockMod
+  - Rock
+  - Stone
+
+- type: cfMaterial
+  id: IronSteel
+  name: cf-material-iron-steel
+  hardness: 9
+  hitPoints: 36
+  brokenThreshold: 18
+  damageModifierSets:
+  - SteelMod
+  - SteelStaticMod
+  - Metallic
+  - Metal
+  damageContainers:
+  - Silicon
+  - Shield
+
+- type: cfMaterial
+  id: StructureMetal
+  name: cf-material-structure
+  hardness: 16
+  hitPoints: 64
+  brokenThreshold: 32
+  damageModifierSets:
+  - PlasteelMod
+  - PlasteelStaticMod
+  - PlastitaniumMod
+  - StructuralMetallic
+  - StructuralMetallicStrong
+  damageContainers:
+  - StructuralInorganic

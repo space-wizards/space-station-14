@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Client.Actions;
+using Content.Client.CF.Spells;
 using Content.Client.Construction;
 using Content.Client.Gameplay;
 using Content.Client.Hands;
@@ -13,6 +14,7 @@ using Content.Client.UserInterface.Systems.Actions.Windows;
 using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
+using Content.Shared.CF.Spells;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
@@ -187,8 +189,12 @@ public sealed partial class ActionUIController : UIController, IOnStateChanged<G
             return false;
         }
 
-        // stop targeting when needed
-        if (ev.FoundTarget ? !target.Repeat : target.DeselectOnMiss)
+        // A stored volley stays aimed until each bolt has been clicked. Other actions stop after one use.
+        var volleyOpen = ev.FoundTarget
+            && EntityManager.TryGetComponent(actionId, out CFSpellComponent? volley)
+            && volley.MaxBolts > 1
+            && volley.VolleyLeft > 0;
+        if (!volleyOpen && (ev.FoundTarget ? !target.Repeat : target.DeselectOnMiss))
             StopTargeting();
 
         return true;
@@ -239,6 +245,31 @@ public sealed partial class ActionUIController : UIController, IOnStateChanged<G
         }
 
         // TODO: probably should have a clientside event raised for flexibility
+        // CarpFinder: the radial wheel uses the same activation as a hotbar click.
+        UseAction(action);
+    }
+
+    public void UseAction(Entity<ActionComponent> action)
+    {
+        // Already aiming this spell: the second press cancels, it does not ask for a bolt count again.
+        if (SelectingTargetFor == action.Owner)
+        {
+            ActivateAction(action);
+            return;
+        }
+
+        // CarpFinder: Prestidigitation asks which trick, then Force Barrage asks how many bolts.
+        if (EntityManager.System<CFSpellTrickMenuSystem>().TryOffer(action, () => ActivateAction(action)))
+            return;
+
+        if (EntityManager.System<CFSpellBoltMenuSystem>().TryOffer(action, () => ActivateAction(action)))
+            return;
+
+        ActivateAction(action);
+    }
+
+    private void ActivateAction(Entity<ActionComponent> action)
+    {
         if (EntityManager.TryGetComponent<TargetActionComponent>(action, out var target))
             ToggleTargeting((action, action, target));
         else
@@ -580,19 +611,8 @@ public sealed partial class ActionUIController : UIController, IOnStateChanged<G
         if (button.Action is not {} action)
             return;
 
-        // TODO: make this an event
-        if (!EntityManager.TryGetComponent<TargetActionComponent>(action, out var target))
-        {
-            _actionsSystem?.TriggerAction(action);
-            return;
-        }
-
-        // for target actions, we go into "select target" mode, we don't
-        // message the server until we actually pick our target.
-
-        // if we're clicking the same thing we're already targeting for, then we simply cancel
-        // targeting
-        ToggleTargeting((action, action.Comp, target));
+        // CarpFinder: a hotbar click uses the same choice menu as the radial wheel.
+        UseAction(action);
     }
 
     private bool OnMenuBeginDrag()
@@ -858,9 +878,14 @@ public sealed partial class ActionUIController : UIController, IOnStateChanged<G
             predicate = e => e != attachedEnt;
 
         float? range = target.CheckCanAccess || target.Range > 0 ? target.Range : null;
+        if (EntityManager.TryGetComponent(uid, out CFSpellComponent? spell) && spell.RangeFeet > 0)
+            range = spell.RangeFeet / CFSpellGrid.FeetPerTile;
+
+        // 90 feet. Farther creatures, and anything behind a wall, are not outlined.
+        var highlightLimit = 90f / CFSpellGrid.FeetPerTile;
 
         _interactionOutline?.SetEnabled(false);
-        _targetOutline?.Enable(range, target.CheckCanAccess, predicate, entity.Whitelist, entity.Blacklist, null);
+        _targetOutline?.Enable(range, target.CheckCanAccess, predicate, entity.Whitelist, entity.Blacklist, null, highlightLimit, true);
     }
 
     /// <summary>

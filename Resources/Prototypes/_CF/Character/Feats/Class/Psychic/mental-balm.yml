@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Dark Archive (Remastered)
+- type: cfFeat
+  id: CFMentalBalm
+  name: "Mental Balm"
+  description: "Changes an item. This feature will be implemented later."
+  class: Psychic
+  level: 2
+  traits:
+    - "Amp"
+    - "Emotion"
+    - "Mental"
+    - "Psychic"
+  pendingAction: true

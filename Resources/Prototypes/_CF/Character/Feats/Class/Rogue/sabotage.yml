@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFSabotage
+  name: "Sabotage"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Rogue
+  level: 4
+  traits:
+    - "Incapacitation"
+    - "Rogue"
+  action: Action
+  pendingAction: true

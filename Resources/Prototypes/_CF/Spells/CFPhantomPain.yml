@@ -1,0 +1,23 @@
+﻿- type: entity
+  parent: CFSpellTarget
+  id: CFPhantomPain
+  name: Phantom Pain
+  description: The target takes 2d4 mental damage. Will save.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 1
+  - type: CFSpell
+    spell: PhantomPain
+    rank: 1
+    delivery: Target
+    rangeFeet: 30
+    defense: Will
+    basicSave: true
+    diceCount: 2
+    diceSize: 4
+    damageType: mental

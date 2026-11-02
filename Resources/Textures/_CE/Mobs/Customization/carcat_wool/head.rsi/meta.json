@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by dinazewwr (Discord)",
+  "size": {
+    "x": 48,
+    "y": 48
+  },
+  "states": [
+    {
+      "name": "stripes",
+      "directions": 4
+    }
+  ]
+}

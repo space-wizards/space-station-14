@@ -1,0 +1,39 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from Delta-V at commit https://github.com/DeltaV-Station/Delta-v/tree/f49142ca8d7ceac483094444c372e849309dc02b/, https://github.com/DeltaV-Station/Delta-v/tree/f49142ca8d7ceac483094444c372e849309dc02b/Resources/Textures/DeltaV/Mobs/Customization/Rodentia/cheek_markings.rsi. Sprites created by portfiend. Modified by Zeyria",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "cheeks",
+            "directions": 4
+        },
+        {
+            "name": "cheeks_overlay",
+            "directions": 4
+        },
+        {
+            "name": "fluff",
+            "directions": 4
+        },
+        {
+            "name": "fluff_overlay",
+            "directions": 4
+        },
+        {
+            "name": "fluff_alt",
+            "directions": 4
+        },
+        {
+            "name": "fluff_alt_overlay",
+            "directions": 4
+        },
+        {
+            "name": "whiskers",
+            "directions": 4
+        }
+    ]
+}

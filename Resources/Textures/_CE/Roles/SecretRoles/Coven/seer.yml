@@ -1,7 +1,0 @@
-- type: secretRole
-  id: Seer
-  name: ce-secret-role-name-seer
-  description: ce-secret-role-description-seer
-  icon: CESecretRoleIconSeer
-  skills:
-  - SoulGaze

@@ -36,5 +36,7 @@ namespace Content.Shared.Humanoid
         Ensnare,
         Fire,
 
+        // CarpFinder: pelvis, drawn under the chest. Used when a body sprite splits the torso into chest and groin.
+        Groin,
     }
 }

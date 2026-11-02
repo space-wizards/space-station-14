@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Battlecry!
+- type: cfFeat
+  id: CFShieldedRecovery
+  name: "Shielded Recovery"
+  description: "Requires Officer's Medical Training."
+  class: Commander
+  level: 4
+  traits:
+    - "Commander"
+  prerequisites:
+    - "Officer's Medical Training"

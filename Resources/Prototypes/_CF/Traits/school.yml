@@ -1,0 +1,44 @@
+# CarpFinder: the remaster removed spell schools. New spells do not use these.
+# Illusion stays a live trait in common.yml, so it is not repeated here.
+
+- type: cfTrait
+  id: Abjuration
+  name: Abjuration
+  category: School
+  summary: "A pre-remaster spell school. New spells do not use this."
+
+- type: cfTrait
+  id: Conjuration
+  name: Conjuration
+  category: School
+  summary: "A pre-remaster spell school. New spells do not use this."
+
+- type: cfTrait
+  id: Divination
+  name: Divination
+  category: School
+  summary: "A pre-remaster spell school. New spells do not use this."
+
+- type: cfTrait
+  id: Enchantment
+  name: Enchantment
+  category: School
+  summary: "A pre-remaster spell school. New spells do not use this."
+
+- type: cfTrait
+  id: Evocation
+  name: Evocation
+  category: School
+  summary: "A pre-remaster spell school. New spells do not use this."
+
+- type: cfTrait
+  id: Necromancy
+  name: Necromancy
+  category: School
+  summary: "A pre-remaster spell school. New spells do not use this."
+
+- type: cfTrait
+  id: Transmutation
+  name: Transmutation
+  category: School
+  summary: "A pre-remaster spell school. New spells do not use this."

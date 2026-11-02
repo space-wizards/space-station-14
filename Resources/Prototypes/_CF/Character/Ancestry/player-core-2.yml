@@ -1,0 +1,241 @@
+# Player Core 2 uncommon ancestries. Humanoid sprite. Stats live on cfAncestry.
+
+- type: species
+  id: CF-Catfolk
+  name: cf-ancestry-catfolk
+  roundStart: true
+  prototype: CFMobCatfolk
+  dollPrototype: CFAppearanceCatfolk
+  skinColoration: HumanToned
+
+- type: species
+  id: CF-Hobgoblin
+  name: cf-ancestry-hobgoblin
+  roundStart: true
+  prototype: CFMobHobgoblin
+  dollPrototype: CFAppearanceHobgoblin
+  skinColoration: HumanToned
+
+- type: species
+  id: CF-Kholo
+  name: cf-ancestry-kholo
+  roundStart: true
+  prototype: CFMobKholo
+  dollPrototype: CFAppearanceKholo
+  skinColoration: HumanToned
+
+- type: species
+  id: CF-Kobold
+  name: cf-ancestry-kobold
+  roundStart: true
+  prototype: CFMobKobold
+  dollPrototype: CFAppearanceKobold
+  skinColoration: HumanToned
+
+- type: species
+  id: CF-Lizardfolk
+  name: cf-ancestry-lizardfolk
+  roundStart: true
+  prototype: CFMobLizardfolk
+  dollPrototype: CFAppearanceLizardfolk
+  skinColoration: HumanToned
+
+- type: species
+  id: CF-Ratfolk
+  name: cf-ancestry-ratfolk
+  roundStart: true
+  prototype: CFMobRatfolk
+  dollPrototype: CFAppearanceRatfolk
+  skinColoration: HumanToned
+
+- type: species
+  id: CF-Tengu
+  name: cf-ancestry-tengu
+  roundStart: true
+  prototype: CFMobTengu
+  dollPrototype: CFAppearanceTengu
+  skinColoration: HumanToned
+
+- type: species
+  id: CF-Tripkee
+  name: cf-ancestry-tripkee
+  roundStart: true
+  prototype: CFMobTripkee
+  dollPrototype: CFAppearanceTripkee
+  skinColoration: HumanToned
+
+- type: entity
+  parent: AppearanceHuman
+  id: CFAppearanceCatfolk
+  categories: [HideSpawnMenu]
+  save: false
+  components:
+  - type: HumanoidProfile
+    species: CF-Catfolk
+
+- type: entity
+  parent:
+  - CFAppearanceCatfolk
+  - BaseSpeciesMobOrganic
+  id: CFMobCatfolk
+  name: catfolk
+  components:
+  - type: HumanoidProfile
+    species: CF-Catfolk
+  - type: CF-Species
+    species: CF-Catfolk
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: AppearanceHuman
+  id: CFAppearanceHobgoblin
+  categories: [HideSpawnMenu]
+  save: false
+  components:
+  - type: HumanoidProfile
+    species: CF-Hobgoblin
+
+- type: entity
+  parent:
+  - CFAppearanceHobgoblin
+  - BaseSpeciesMobOrganic
+  id: CFMobHobgoblin
+  name: hobgoblin
+  components:
+  - type: HumanoidProfile
+    species: CF-Hobgoblin
+  - type: CF-Species
+    species: CF-Hobgoblin
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: AppearanceHuman
+  id: CFAppearanceKholo
+  categories: [HideSpawnMenu]
+  save: false
+  components:
+  - type: HumanoidProfile
+    species: CF-Kholo
+
+- type: entity
+  parent:
+  - CFAppearanceKholo
+  - BaseSpeciesMobOrganic
+  id: CFMobKholo
+  name: kholo
+  components:
+  - type: HumanoidProfile
+    species: CF-Kholo
+  - type: CF-Species
+    species: CF-Kholo
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: AppearanceHuman
+  id: CFAppearanceKobold
+  categories: [HideSpawnMenu]
+  save: false
+  components:
+  - type: HumanoidProfile
+    species: CF-Kobold
+
+- type: entity
+  parent:
+  - CFAppearanceKobold
+  - BaseSpeciesMobOrganic
+  id: CFMobKobold
+  name: kobold
+  components:
+  - type: HumanoidProfile
+    species: CF-Kobold
+  - type: CF-Species
+    species: CF-Kobold
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: AppearanceHuman
+  id: CFAppearanceLizardfolk
+  categories: [HideSpawnMenu]
+  save: false
+  components:
+  - type: HumanoidProfile
+    species: CF-Lizardfolk
+
+- type: entity
+  parent:
+  - CFAppearanceLizardfolk
+  - BaseSpeciesMobOrganic
+  id: CFMobLizardfolk
+  name: lizardfolk
+  components:
+  - type: HumanoidProfile
+    species: CF-Lizardfolk
+  - type: CF-Species
+    species: CF-Lizardfolk
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: AppearanceHuman
+  id: CFAppearanceRatfolk
+  categories: [HideSpawnMenu]
+  save: false
+  components:
+  - type: HumanoidProfile
+    species: CF-Ratfolk
+
+- type: entity
+  parent:
+  - CFAppearanceRatfolk
+  - BaseSpeciesMobOrganic
+  id: CFMobRatfolk
+  name: ratfolk
+  components:
+  - type: HumanoidProfile
+    species: CF-Ratfolk
+  - type: CF-Species
+    species: CF-Ratfolk
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: AppearanceHuman
+  id: CFAppearanceTengu
+  categories: [HideSpawnMenu]
+  save: false
+  components:
+  - type: HumanoidProfile
+    species: CF-Tengu
+
+- type: entity
+  parent:
+  - CFAppearanceTengu
+  - BaseSpeciesMobOrganic
+  id: CFMobTengu
+  name: tengu
+  components:
+  - type: HumanoidProfile
+    species: CF-Tengu
+  - type: CF-Species
+    species: CF-Tengu
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: AppearanceHuman
+  id: CFAppearanceTripkee
+  categories: [HideSpawnMenu]
+  save: false
+  components:
+  - type: HumanoidProfile
+    species: CF-Tripkee
+
+- type: entity
+  parent:
+  - CFAppearanceTripkee
+  - BaseSpeciesMobOrganic
+  id: CFMobTripkee
+  name: tripkee
+  components:
+  - type: HumanoidProfile
+    species: CF-Tripkee
+  - type: CF-Species
+    species: CF-Tripkee
+  - type: CFAtmosphereImmunity

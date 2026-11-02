@@ -1,0 +1,554 @@
+# CarpFinder: remaster trait ids. Summaries are short mechanical notes, not source text.
+# category: Monster
+
+- type: cfTrait
+  id: Aeon
+  name: Aeon
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Aesir
+  name: Aesir
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Agathion
+  name: Agathion
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Angel
+  name: Angel
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Anugobu
+  name: Anugobu
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Archon
+  name: Archon
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Asura
+  name: Asura
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Azata
+  name: Azata
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Blight
+  name: Blight
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Boggard
+  name: Boggard
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Caligni
+  name: Caligni
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: CharauKa
+  name: Charau-ka
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Couatl
+  name: Couatl
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Daemon
+  name: Daemon
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Darvakka
+  name: Darvakka
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Demon
+  name: Demon
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Dero
+  name: Dero
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Devil
+  name: Devil
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Dinosaur
+  name: Dinosaur
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Div
+  name: Div
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Drow
+  name: Drow
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Duergar
+  name: Duergar
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Experiment
+  name: Experiment
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Formian
+  name: Formian
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Genie
+  name: Genie
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Ghost
+  name: Ghost
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Ghoul
+  name: Ghoul
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Ghul
+  name: Ghul
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Golem
+  name: Golem
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Graveknight
+  name: Graveknight
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Gremlin
+  name: Gremlin
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Grioth
+  name: Grioth
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Hag
+  name: Hag
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Hantu
+  name: Hantu
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Herald
+  name: Herald
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Hryngar
+  name: Hryngar
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Ikeshti
+  name: Ikeshti
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Inevitable
+  name: Inevitable
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Kami
+  name: Kami
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Kaiju
+  name: Kaiju
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Kovintus
+  name: Kovintus
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Lilu
+  name: Lilu
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Locathah
+  name: Locathah
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Morlock
+  name: Morlock
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Mortic
+  name: Mortic
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Mummy
+  name: Mummy
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Munavri
+  name: Munavri
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Mutant
+  name: Mutant
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Nindoru
+  name: Nindoru
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Nymph
+  name: Nymph
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Oni
+  name: Oni
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Paaridar
+  name: Paaridar
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Palinthanos
+  name: Palinthanos
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Petitioner
+  name: Petitioner
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Phantom
+  name: Phantom
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Protean
+  name: Protean
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Psychopomp
+  name: Psychopomp
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Qlippoth
+  name: Qlippoth
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Rakshasa
+  name: Rakshasa
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Sahkil
+  name: Sahkil
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: SeaDevil
+  name: Sea Devil
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Sedacthy
+  name: Sedacthy
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Serpentfolk
+  name: Serpentfolk
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Seugathi
+  name: Seugathi
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Shabti
+  name: Shabti
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Shade
+  name: Shade
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Shobhad
+  name: Shobhad
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Siktempora
+  name: Siktempora
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Skelm
+  name: Skelm
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Skulk
+  name: Skulk
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Soulbound
+  name: Soulbound
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Sporeborn
+  name: Sporeborn
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Spriggan
+  name: Spriggan
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Stheno
+  name: Stheno
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Tane
+  name: Tane
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Tanggal
+  name: Tanggal
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Titan
+  name: Titan
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Troll
+  name: Troll
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Urdefhan
+  name: Urdefhan
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Vampire
+  name: Vampire
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Velstrac
+  name: Velstrac
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Werecreature
+  name: Werecreature
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Wight
+  name: Wight
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: WildHunt
+  name: Wild Hunt
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Wraith
+  name: Wraith
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Wraithvine
+  name: Wraithvine
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Wyrwood
+  name: Wyrwood
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Xulgath
+  name: Xulgath
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Zombie
+  name: Zombie
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Eidolon
+  name: Eidolon
+  category: Monster
+  summary: "A creature family."
+
+- type: cfTrait
+  id: Time
+  name: Time
+  category: Monster
+  summary: "This creature is tied to time."
+
+- type: cfTrait
+  id: Summoned
+  name: Summoned
+  category: Monster
+  summary: "This creature was called by a spell and disappears when the spell ends."

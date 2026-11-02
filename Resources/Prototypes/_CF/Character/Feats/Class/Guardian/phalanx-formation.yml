@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Battlecry!
+- type: cfFeat
+  id: CFPhalanxFormation
+  name: "Phalanx Formation"
+  description: "Requires Guardian or Knight Vigilant Dedication."
+  class: Guardian
+  level: 2
+  traits:
+    - "Guardian"
+  prerequisites:
+    - "Guardian or Knight Vigilant Dedication"

@@ -1,0 +1,62 @@
+# CarpFinder: remaster trait ids. Summaries are short mechanical notes, not source text.
+# category: Mechanic
+
+- type: cfTrait
+  id: Concentrate
+  name: Concentrate
+  category: Mechanic
+  summary: "This action takes concentration. You usually cannot use another concentrate action on the same turn."
+
+- type: cfTrait
+  id: Manipulate
+  name: Manipulate
+  category: Mechanic
+  summary: "This action uses your hands."
+
+- type: cfTrait
+  id: Move
+  name: Move
+  category: Mechanic
+  summary: "This action has the move trait. You cannot use it while restrained in the usual way."
+
+- type: cfTrait
+  id: Attack
+  name: Attack
+  category: Mechanic
+  summary: "This counts as an attack for the multiple attack penalty."
+
+- type: cfTrait
+  id: Fortune
+  name: Fortune
+  category: Mechanic
+  summary: "This is a fortune effect. You cannot use another fortune effect on the same roll."
+
+- type: cfTrait
+  id: Misfortune
+  name: Misfortune
+  category: Mechanic
+  summary: "This is a misfortune effect. You cannot use another misfortune effect on the same roll."
+
+- type: cfTrait
+  id: Incapacitation
+  name: Incapacitation
+  category: Mechanic
+  summary: "Creatures above the spell rank treat a failed save as a success, and a critical failure as a failure."
+
+- type: cfTrait
+  id: Subtle
+  name: Subtle
+  category: Mechanic
+  summary: "This spell has no obvious visual sign."
+
+- type: cfTrait
+  id: Splash
+  name: Splash
+  category: Mechanic
+  summary: "A failed attack or a hit still splashes nearby creatures for the listed splash damage."
+
+- type: cfTrait
+  id: Spellshape
+  name: Spellshape
+  category: Mechanic
+  summary: "A spellshape action changes a spell as you cast it. You can use only one spellshape on a spell."

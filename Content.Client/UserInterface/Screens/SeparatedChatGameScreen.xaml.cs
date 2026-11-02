@@ -31,13 +31,28 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
         ScreenContainer.OnSplitResizeFinished += () =>
             OnChatResized?.Invoke(new Vector2(ScreenContainer.SplitFraction, 0));
 
-        ViewportContainer.OnResized += ResizeActionContainer;
+        ViewportContainer.OnResized += PlaceHud;
+        Hotbar.OnResized += PlaceHud;
+        Hud.OnResized += PlaceHud;
+        PlaceHud();
     }
 
-    private void ResizeActionContainer()
+    private float _placedHud = -1f;
+
+    private void PlaceHud()
     {
-        float indent = 20;
-        Actions.ActionsContainer.MaxGridWidth = ViewportContainer.Size.X - indent;
+        Hud.SetViewportWidth(ViewportContainer.Size.X);
+        var hudHeight = Hud.DesiredSize.Y;
+        if (hudHeight < 64f)
+            hudHeight = 160f;
+        if (Math.Abs(_placedHud - hudHeight) < 1f)
+            return;
+
+        _placedHud = hudHeight;
+        var lift = (int) MathF.Ceiling(hudHeight);
+        SetAnchorAndMarginPreset(Hud, LayoutPreset.BottomLeft, margin: 5);
+        SetMarginLeft(Hud, 78);
+        SetAnchorAndMarginPreset(Hotbar, LayoutPreset.BottomWide, margin: 5 + lift);
     }
 
     public override ChatBox ChatBox => GetWidget<ChatBox>()!;

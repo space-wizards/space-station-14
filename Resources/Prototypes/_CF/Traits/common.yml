@@ -1,0 +1,194 @@
+# CarpFinder: remaster trait ids. Summaries are short mechanical notes, not source text.
+# category: Common
+
+- type: cfTrait
+  id: Aura
+  name: Aura
+  category: Common
+  summary: "This effect fills an area around the creature and usually lasts while they stay there."
+
+- type: cfTrait
+  id: Cantrip
+  name: Cantrip
+  category: Common
+  summary: "A rank 0 spell. Casting it does not spend a spell slot."
+
+- type: cfTrait
+  id: Healing
+  name: Healing
+  category: Common
+  summary: "This restores Hit Points or removes a harmful condition."
+
+- type: cfTrait
+  id: Mental
+  name: Mental
+  category: Common
+  summary: "This affects the mind."
+
+- type: cfTrait
+  id: Emotion
+  name: Emotion
+  category: Common
+  summary: "This stirs an emotion. A creature can be affected by only one emotion effect at a time."
+
+- type: cfTrait
+  id: Fear
+  name: Fear
+  category: Common
+  summary: "This frightens the target. The frightened condition is the usual result."
+
+- type: cfTrait
+  id: Death
+  name: Death
+  category: Common
+  summary: "This can kill outright, or it cares about death."
+
+- type: cfTrait
+  id: Darkness
+  name: Darkness
+  category: Common
+  summary: "This creates darkness or is blocked by it."
+
+- type: cfTrait
+  id: Light
+  name: Light
+  category: Common
+  summary: "This creates light."
+
+- type: cfTrait
+  id: Detection
+  name: Detection
+  category: Common
+  summary: "This finds something, such as magic or a creature type."
+
+- type: cfTrait
+  id: Linguistic
+  name: Linguistic
+  category: Common
+  summary: "The target has to understand your language."
+
+- type: cfTrait
+  id: Magical
+  name: Magical
+  category: Common
+  summary: "This is a magical effect."
+
+- type: cfTrait
+  id: Nonlethal
+  name: Nonlethal
+  category: Common
+  summary: "Damage from this does not kill. It knocks the target out at 0 Hit Points."
+
+- type: cfTrait
+  id: Morph
+  name: Morph
+  category: Common
+  summary: "This changes the body slightly. It does not change creature type."
+
+- type: cfTrait
+  id: Polymorph
+  name: Polymorph
+  category: Common
+  summary: "This replaces the body with another form. A creature can be under only one polymorph at a time."
+
+- type: cfTrait
+  id: Possession
+  name: Possession
+  category: Common
+  summary: "This lets one creature take over another's body."
+
+- type: cfTrait
+  id: Prediction
+  name: Prediction
+  category: Common
+  summary: "This foretells an outcome."
+
+- type: cfTrait
+  id: Scrying
+  name: Scrying
+  category: Common
+  summary: "This lets you observe a distant place or creature."
+
+- type: cfTrait
+  id: Sleep
+  name: Sleep
+  category: Common
+  summary: "This puts the target to sleep."
+
+- type: cfTrait
+  id: Summon
+  name: Summon
+  category: Common
+  summary: "This calls a creature."
+
+- type: cfTrait
+  id: Teleportation
+  name: Teleportation
+  category: Common
+  summary: "This moves a creature or object from one place to another without crossing the space between."
+
+- type: cfTrait
+  id: Illusion
+  name: Illusion
+  category: Common
+  summary: "This creates a false sensation."
+
+- type: cfTrait
+  id: Mythic
+  name: Mythic
+  category: Common
+  summary: "This uses the mythic rules."
+
+- type: cfTrait
+  id: Structure
+  name: Structure
+  category: Common
+  summary: "This is a building or a fixed object, not a creature."
+
+- type: cfTrait
+  id: Alchemical
+  name: Alchemical
+  category: Common
+  summary: "This is an alchemical item or effect."
+
+- type: cfTrait
+  id: Clockwork
+  name: Clockwork
+  category: Common
+  summary: "This is built from clockwork."
+
+- type: cfTrait
+  id: Companion
+  name: Companion
+  category: Common
+  summary: "This is an animal companion or a similar companion item."
+
+- type: cfTrait
+  id: Artifact
+  name: Artifact
+  category: Common
+  summary: "An item of artifact rarity and power."
+
+- type: cfTrait
+  id: Relic
+  name: Relic
+  category: Common
+  summary: "A relic item that grows with a relic gift."
+
+- type: cfTrait
+  id: Apex
+  name: Apex
+  category: Common
+  summary: "An apex item. A creature can benefit from only one apex item."
+
+- type: cfTrait
+  id: Cursed
+  name: Cursed
+  category: Common
+  summary: "A cursed item. It is hard to put down or identify."
+
+- type: cfTrait
+  id: Intelligent
+  name: Intelligent
+  category: Common
+  summary: "An item with its own mind."

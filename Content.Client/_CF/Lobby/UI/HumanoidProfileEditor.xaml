@@ -1,0 +1,199 @@
+<BoxContainer Name="CharacterBuilder" xmlns="https://spacestation14.io"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:humanoid="clr-namespace:Content.Client.Humanoid"
+              xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+              xmlns:profile="clr-namespace:Content.Client.Lobby.UI.ProfileEditorControls"
+              xmlns:builder="clr-namespace:Content.Client.CF.Lobby.UI.CharacterBuilder"
+              x:Class="Content.Client.Lobby.UI.HumanoidProfileEditor"
+              Orientation="Vertical"
+              HorizontalExpand="True">
+    <BoxContainer Name="CharacterBuilderHeader" Orientation="Horizontal" SeparationOverride="10" Margin="10 10 10 0" HorizontalExpand="True">
+        <PanelContainer StyleClasses="PanelDeep" HorizontalExpand="True">
+            <BoxContainer Name="CharacterBuilderStats" Orientation="Vertical" Margin="8" SeparationOverride="8" HorizontalExpand="True">
+                <BoxContainer Name="CharacterBuilderNameRow" Orientation="Horizontal" HorizontalExpand="True">
+                    <Label Text="{Loc 'humanoid-profile-editor-name-label'}" />
+                    <LineEdit Name="NameEdit" MinSize="270 0" HorizontalExpand="True" VerticalAlignment="Center" Margin="5 0 0 0" />
+                </BoxContainer>
+                <RichTextLabel Name="WarningLabel" HorizontalExpand="False" MaxWidth="640" HorizontalAlignment="Left" />
+                <BoxContainer Name="CharacterBuilderAttributes" Orientation="Horizontal" SeparationOverride="12">
+                    <Label Name="SizeLabel" />
+                    <Label Name="SpeedLabel" />
+                    <Label Name="StrLabel" />
+                    <Label Name="DexLabel" />
+                    <Label Name="ConLabel" />
+                    <Label Name="IntLabel" />
+                    <Label Name="WisLabel" />
+                    <Label Name="ChaLabel" />
+                </BoxContainer>
+                <BoxContainer Name="CharacterBuilderCombat" Orientation="Horizontal" SeparationOverride="12">
+                    <PanelContainer Name="CharacterBuilderAc" StyleClasses="PanelDark" MinSize="48 48">
+                        <BoxContainer Name="CharacterBuilderAcInner" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Text="{Loc 'cf-character-builder-ac'}" HorizontalAlignment="Center" />
+                            <Label Name="AcValue" Text="10" HorizontalAlignment="Center" />
+                        </BoxContainer>
+                    </PanelContainer>
+                    <BoxContainer Name="CharacterBuilderHp" Orientation="Vertical" VerticalAlignment="Center">
+                        <Label Name="HpSummary" />
+                        <Label Name="ShieldSummary" Text="{Loc 'cf-character-builder-no-shield'}" FontColorOverride="#a9a9a9" />
+                    </BoxContainer>
+                    <BoxContainer Name="CharacterBuilderSaves" Orientation="Vertical" VerticalAlignment="Center">
+                        <Label Name="FortitudeLabel" />
+                        <Label Name="ReflexLabel" />
+                        <Label Name="WillLabel" />
+                    </BoxContainer>
+                </BoxContainer>
+            </BoxContainer>
+        </PanelContainer>
+        <PanelContainer Name="SpriteViewer" StyleClasses="PanelDeep" MinWidth="150">
+            <BoxContainer Name="CharacterBuilderSprite" Orientation="Vertical" HorizontalAlignment="Center" Margin="4" SeparationOverride="4">
+                <profile:ProfilePreviewSpriteView Name="SpriteView" Scale="3 3" HorizontalAlignment="Center" />
+                <BoxContainer Name="CharacterBuilderSpriteRotate" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Name="SpriteRotateLeft" Text="◀" StyleClasses="OpenRight" />
+                    <controls:Separator StyleClasses="LowDivider" Margin="2 0 3 0" Orientation="Vertical" MinHeight="5"/>
+                    <Button Name="SpriteRotateRight" Text="▶" StyleClasses="OpenLeft" />
+                </BoxContainer>
+            </BoxContainer>
+
+        </PanelContainer>
+        <PanelContainer Name="ProfileHighlight" StyleClasses="PanelDeep" MinWidth="150">
+            <BoxContainer Name="CharacterSave" Orientation="Vertical" HorizontalAlignment="Center" Margin="4" SeparationOverride="4">
+                <BoxContainer Name="CharacterBuilderActions" Orientation="Vertical" HorizontalExpand="True">
+                    <Button Name="SaveButton" Text="{Loc 'humanoid-profile-editor-save-button'}"/>
+                    <Button Name="ResetButton" Disabled="True" Text="{Loc 'humanoid-profile-editor-reset-button'}"/>
+                    <Button Name="ImportButton" Text="{Loc 'humanoid-profile-editor-import-button'}"/>
+                    <Button Name="ExportButton" Text="{Loc 'humanoid-profile-editor-export-button'}"/>
+                    <Button Name="ExportImageButton" Text="{Loc 'humanoid-profile-editor-export-image-button'}"/>
+                    <Button Name="OpenImagesButton" Text="{Loc 'humanoid-profile-editor-open-image-button'}"/>
+                </BoxContainer>
+            </BoxContainer>
+        </PanelContainer>
+
+    </BoxContainer>
+    <BoxContainer Name="CharacterBuilderBody" Orientation="Horizontal" VerticalExpand="True" SeparationOverride="10" Margin="10">
+        <PanelContainer Name="CharacterBuilderSummaryPanel" StyleClasses="PanelDeep" MinWidth="280" VerticalExpand="True">
+            <BoxContainer Name="CharacterBuilderSummary" Orientation="Vertical" Margin="8" VerticalExpand="True" SeparationOverride="6">
+                <Label Name="ABCJ" Text="ABCJ" HorizontalAlignment="Center" FontColorOverride="#E6C15A"/>
+                <PanelContainer Name="ABC" StyleClasses="PanelDeep" HorizontalExpand="True">
+                    <BoxContainer Name="CharacterBuilderChoices" Orientation="Vertical"  SeparationOverride="4" HorizontalExpand="True" >
+                        <Button Name="AncestryButton" ToggleMode="True" HorizontalExpand="True" />
+                        <Button Name="BackgroundButton" ToggleMode="True" HorizontalExpand="True" />
+                        <Button Name="ClassButton" ToggleMode="True" HorizontalExpand="True" />
+                        <Button Name="JobButton" ToggleMode="True" HorizontalExpand="True" />
+                    </BoxContainer>
+                </PanelContainer>
+                <Label Name="LevelsHeading" Text="{Loc 'cf-character-builder-levels'}" HorizontalAlignment="Center" FontColorOverride="#E6C15A" />
+                <ScrollContainer Name="LevelsScroll" VerticalExpand="True" HScrollEnabled="False">
+                    <BoxContainer Name="CharacterBuilderLevels" Orientation="Vertical" SeparationOverride="8">
+                        <PanelContainer StyleClasses="PanelDark">
+                            <BoxContainer Name="Level1" Orientation="Vertical" Margin="8" SeparationOverride="6">
+                                <Label Name="Level1Heading" Text="{Loc 'cf-character-builder-level-1'}" FontColorOverride="#E8A060" />
+                                <GridContainer Name="Level1Actions" Columns="3" HSeparationOverride="4" VSeparationOverride="4">
+                                    <Button Name="SetAbilitiesButton" Text="{Loc 'cf-character-builder-set-abilities'}" />
+                                    <Button Name="SkillTrainingButton" Text="{Loc 'cf-character-builder-skill-training'}" />
+                                    <Button Name="ClassSkillButton" Text="{Loc 'cf-character-builder-class-skill'}" />
+                                </GridContainer>
+                                <Button Name="HeritageSlot" ToggleMode="True" Text="{Loc 'cf-character-builder-heritage-slot'}" HorizontalExpand="True" />
+                                <Button Name="SpriteSlot" ToggleMode="True" Text="{Loc 'cf-character-builder-sprite-slot'}" HorizontalExpand="True" />
+                                <Button Name="AncestryFeatSlot" ToggleMode="True" Text="{Loc 'cf-character-builder-ancestry-feat-slot'}" HorizontalExpand="True" />
+                                <Button Name="ClassFeatSlot" ToggleMode="True" Text="{Loc 'cf-character-builder-class-feat-slot'}" HorizontalExpand="True" />
+                            </BoxContainer>
+                        </PanelContainer>
+                        <PanelContainer StyleClasses="PanelDark">
+                            <BoxContainer Name="Level2" Orientation="Vertical" Margin="8" SeparationOverride="4">
+                                <Button Name="Level2Toggle" Text="{Loc 'cf-character-builder-level-2'}" ToggleMode="True" Pressed="True" HorizontalExpand="True" />
+                                <BoxContainer Name="Level2Body" Orientation="Vertical">
+                                    <Button Name="Level2FeatSlot" ToggleMode="True" Text="{Loc 'cf-character-builder-class-feat-level-2-slot'}" HorizontalExpand="True" />
+                                </BoxContainer>
+                            </BoxContainer>
+                        </PanelContainer>
+                        <PanelContainer StyleClasses="PanelDark">
+                            <BoxContainer Name="Level3" Orientation="Vertical" Margin="8" SeparationOverride="4">
+                                <Button Name="Level3Toggle" Text="{Loc 'cf-character-builder-level-3'}" ToggleMode="True" Pressed="True" HorizontalExpand="True" />
+                                <BoxContainer Name="Level3Body" Orientation="Vertical">
+                                    <Button Name="Level3SkillIncreaseSlot" Text="{Loc 'cf-character-builder-skill-increase'}" HorizontalExpand="True" />
+                                </BoxContainer>
+                            </BoxContainer>
+                        </PanelContainer>
+                    </BoxContainer>
+                </ScrollContainer>
+            </BoxContainer>
+        </PanelContainer>
+        <BoxContainer Name="BuilderContent" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+            <BoxContainer Name="EditorPane" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+                <TabContainer Name="TabContainer" VerticalExpand="True">
+                    <BoxContainer Name="DetailsTabPage" Orientation="Vertical">
+                        <ScrollContainer VerticalExpand="True">
+                            <BoxContainer Name="DetailsContent" Orientation="Vertical">
+                                <BoxContainer Name="DetailsSkin" Margin="10" HorizontalExpand="True" Orientation="Vertical">
+                                    <Label Text="{Loc 'humanoid-profile-editor-skin-color-label'}" />
+                                    <Slider HorizontalExpand="True" Name="Skin" MinValue="0" MaxValue="100" Value="20" />
+                                    <BoxContainer Name="RgbSkinColorContainer" Visible="False" Orientation="Vertical" HorizontalExpand="True"></BoxContainer>
+                                </BoxContainer>
+                                <BoxContainer Name="DetailsEyes" Margin="10" Orientation="Vertical">
+                                    <Label Text="{Loc 'humanoid-profile-editor-eyes-label'}" />
+                                    <humanoid:EyeColorPicker Name="EyeColorPicker" />
+                                </BoxContainer>
+                                <BoxContainer Name="DetailsMarkings" Margin="10" Orientation="Vertical" MinHeight="400" VerticalExpand="True">
+                                    <humanoid:MarkingPicker Name="Markings" HorizontalExpand="True" VerticalExpand="True" MinHeight="400" />
+                                </BoxContainer>
+                                <BoxContainer Name="DetailsIdentity" Margin="10" Orientation="Vertical" HorizontalExpand="True">
+                                    <BoxContainer Name="DetailsAge" HorizontalExpand="True">
+                                        <Label Text="{Loc 'humanoid-profile-editor-age-label'}" />
+                                        <Control HorizontalExpand="True"/>
+                                        <LineEdit Name="AgeEdit" MinSize="40 0" HorizontalAlignment="Right" />
+                                    </BoxContainer>
+                                    <BoxContainer Name="DetailsSex" HorizontalExpand="True">
+                                        <Label Text="{Loc 'humanoid-profile-editor-sex-label'}" />
+                                        <Control HorizontalExpand="True"/>
+                                        <OptionButton Name="SexButton" HorizontalAlignment="Right" />
+                                    </BoxContainer>
+                                    <BoxContainer Name="DetailsVoice" HorizontalExpand="True">
+                                        <Label Text="{Loc 'humanoid-profile-editor-voice-label'}" />
+                                        <Control HorizontalExpand="True" />
+                                        <OptionButton Name="VoiceButton" HorizontalAlignment="Right" />
+                                    </BoxContainer>
+                                    <BoxContainer Name="DetailsPronouns" HorizontalExpand="True">
+                                        <Label Text="{Loc 'humanoid-profile-editor-pronouns-label'}" />
+                                        <Control HorizontalExpand="True"/>
+                                        <OptionButton Name="PronounsButton" HorizontalAlignment="Right" />
+                                    </BoxContainer>
+                                    <BoxContainer Name="DetailsClothing" HorizontalExpand="True">
+                                        <Label Text="{Loc 'humanoid-profile-editor-clothing'}" />
+                                        <Control HorizontalExpand="True"/>
+                                        <Button Name="ShowClothes" Pressed="True" ToggleMode="True" Text="{Loc 'humanoid-profile-editor-clothing-show'}" HorizontalAlignment="Right" />
+                                    </BoxContainer>
+                                    <BoxContainer Name="DetailsSpawnPriority" HorizontalExpand="True">
+                                        <Label Text="{Loc 'humanoid-profile-editor-spawn-priority-label'}" />
+                                        <Control HorizontalExpand="True"/>
+                                        <OptionButton Name="SpawnPriorityButton" HorizontalAlignment="Right" />
+                                    </BoxContainer>
+                                </BoxContainer>
+                            </BoxContainer>
+                        </ScrollContainer>
+                    </BoxContainer>
+                    <builder:BuilderShopTab Name="ShopTab" />
+                    <builder:WeaponsTab Name="WeaponsTab" />
+                    <builder:DefenseTab Name="DefenseTab" />
+                    <builder:GearTab Name="GearTab" />
+                    <builder:SpellsTab Name="SpellsTab" />
+                </TabContainer>
+            </BoxContainer>
+            <builder:Pf2eSelectionView Name="SelectionView" Visible="False" HorizontalExpand="True" VerticalExpand="True" />
+            <builder:BoostAssignmentView Name="BoostView" Visible="False" HorizontalExpand="True" VerticalExpand="True" />
+            <builder:SkillAssignmentView Name="SkillView" Visible="False" HorizontalExpand="True" VerticalExpand="True" />
+            <BoxContainer Name="JobPane" Visible="False" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" SeparationOverride="6">
+                <BoxContainer Name="JobHeader" Orientation="Horizontal" HorizontalExpand="True">
+                    <Label Name="JobTitle" Text="{Loc 'cf-character-builder-title-job'}" StyleClasses="LabelHeading" HorizontalExpand="True" VerticalAlignment="Center" />
+                    <Button Name="JobCloseButton" Text="{Loc 'cf-character-builder-close'}" MinWidth="36" />
+                </BoxContainer>
+                <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
+                    <BoxContainer Name="JobList" Orientation="Vertical" HorizontalExpand="True" Margin="4" />
+                </ScrollContainer>
+                <BoxContainer Name="JobFooter" Orientation="Horizontal" HorizontalAlignment="Right" SeparationOverride="6">
+                    <Button Name="JobAcceptButton" Text="{Loc 'cf-character-builder-accept'}" />
+                    <Button Name="JobCancelButton" Text="{Loc 'cf-character-builder-cancel'}" />
+                </BoxContainer>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</BoxContainer>

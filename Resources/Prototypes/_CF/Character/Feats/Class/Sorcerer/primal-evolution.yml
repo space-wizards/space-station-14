@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFPrimalEvolution
+  name: "Primal Evolution"
+  description: "Requires bloodline that grants primal spells."
+  class: Sorcerer
+  level: 4
+  traits:
+    - "Primal"
+    - "Sorcerer"
+  prerequisites:
+    - "bloodline that grants primal spells"

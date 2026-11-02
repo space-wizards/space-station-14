@@ -1,0 +1,16 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFOrcLore
+  name: "Orc Lore"
+  description: "Lore: Orc Lore. Trained in Athletics and Survival."
+  ancestry: Orc
+  level: 1
+  traits:
+    - "Orc"
+  trainedSkills:
+    - Athletics
+    - Survival
+    - Lore
+  lores:
+    - "Orc Lore"

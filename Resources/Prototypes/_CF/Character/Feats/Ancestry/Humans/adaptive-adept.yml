@@ -1,0 +1,13 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFAdaptiveAdept
+  name: "Adaptive Adept"
+  description: "Requires Adapted Cantrip and can cast 3rd rank spells."
+  ancestry: Human
+  level: 5
+  traits:
+    - "Human"
+  prerequisites:
+    - "Adapted Cantrip"
+    - "can cast 3rd rank spells"

@@ -1,0 +1,59 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Arm feather markings from Starlight modified by Huaqas (GitHub). Arm_fade, shoulder markings created by Huaqas (GitHub). Arm coat markings taken from Polaris commit 4e9c367322a5a07604d120c0972adbc61fba9a25, with edits by Huaqas (GitHub).",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "l_hand_feathers",
+            "directions": 4
+        },
+        {
+            "name": "r_hand_feathers",
+            "directions": 4
+        },
+        {
+            "name": "l_arm_fade",
+            "directions": 4
+        },
+        {
+            "name": "r_arm_fade",
+            "directions": 4
+        },
+        {
+            "name": "l_hand_feathers_primary",
+            "directions": 4
+        },
+        {
+            "name": "l_hand_feathers_secondary",
+            "directions": 4
+        },
+        {
+            "name": "r_hand_feathers_primary",
+            "directions": 4
+        },
+        {
+            "name": "r_hand_feathers_secondary",
+            "directions": 4
+        },
+        {
+            "name": "l_shoulder_fade",
+            "directions": 4
+        },
+        {
+            "name": "r_shoulder_fade",
+            "directions": 4
+        },
+        {
+            "name": "l_arm_coat",
+            "directions": 4
+        },
+        {
+            "name": "r_arm_coat",
+            "directions": 4
+        }
+    ]
+}

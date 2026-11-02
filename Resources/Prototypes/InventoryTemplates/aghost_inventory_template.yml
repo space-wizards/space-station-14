@@ -4,7 +4,7 @@
     - name: back
       slotTexture: back
       slotFlags: BACK
-      slotGroup: SecondHotbar
+      slotGroup: CFBag # CarpFinder: bag on the action HUD.
       stripTime: 6
       uiWindowPos: 2,1
       strippingWindowPos: 2,4
@@ -13,7 +13,7 @@
       slotTexture: id
       fullTextureName: template_small
       slotFlags: IDCARD
-      slotGroup: SecondHotbar
+      slotGroup: CFId # CarpFinder: ID and PDA on the action HUD.
       stripTime: 6
       uiWindowPos: 2,2
       strippingWindowPos: 2,3

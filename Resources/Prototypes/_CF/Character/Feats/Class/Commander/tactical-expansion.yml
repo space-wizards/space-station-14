@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Battlecry!
+- type: cfFeat
+  id: CFTacticalExpansion
+  name: "Tactical Expansion"
+  description: "Grants an item. This feature will be implemented later."
+  class: Commander
+  level: 2
+  traits:
+    - "Commander"
+  pendingAction: true

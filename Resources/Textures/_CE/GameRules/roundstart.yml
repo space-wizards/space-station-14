@@ -1,6 +1,0 @@
-- type: entity
-  parent: CEBaseGameRule
-  id: CEGameRuleMurkConsuming
-  components:
-  - type: CEMurkConsumingRule
-    crackDelay: 60s

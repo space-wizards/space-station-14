@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFReachoftheDead
+  name: "Reach of the Dead"
+  description: "Changes an item. Free action. This feature will be implemented later."
+  class: Necromancer
+  level: 1
+  traits:
+    - "Concentrate"
+    - "Necromancer"
+    - "Spellshape"
+  action: Free
+  pendingAction: true

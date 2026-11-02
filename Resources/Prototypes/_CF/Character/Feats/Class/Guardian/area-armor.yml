@@ -1,0 +1,10 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Battlecry!
+- type: cfFeat
+  id: CFAreaArmor
+  name: "Area Armor"
+  description: "This feature will be implemented later."
+  class: Guardian
+  level: 4
+  traits:
+    - "Guardian"

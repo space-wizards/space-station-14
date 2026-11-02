@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFInvertHarm
+  name: "Invert Harm"
+  description: "Requires Mastery of Life and Death."
+  class: Necromancer
+  level: 2
+  traits:
+    - "Necromancer"
+  prerequisites:
+    - "Mastery of Life and Death"

@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by omsoyk (github/discord)",
+  "size": {
+    "x": 48,
+    "y": 48
+  },
+  "states": [
+    {
+      "name": "1_primary",
+      "directions": 4
+    },
+    {
+      "name": "1_secondary",
+      "directions": 4
+    },
+    {
+      "name": "2_primary",
+      "directions": 4
+    },
+    {
+      "name": "2_secondary",
+      "directions": 4
+    },
+    {
+      "name": "3_primary",
+      "directions": 4
+    },
+    {
+      "name": "3_secondary",
+      "directions": 4
+    },
+    {
+      "name": "4_primary",
+      "directions": 4
+    },
+    {
+      "name": "4_secondary",
+      "directions": 4
+    },
+    {
+      "name": "5_primary",
+      "directions": 4
+    },
+    {
+      "name": "5_secondary",
+      "directions": 4
+    },
+    {
+      "name": "6_primary",
+      "directions": 4
+    },
+    {
+      "name": "6_secondary",
+      "directions": 4
+    },
+    {
+      "name": "7",
+      "directions": 4
+    }
+  ]
+}

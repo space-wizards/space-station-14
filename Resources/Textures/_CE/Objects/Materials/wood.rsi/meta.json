@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by TheShuEd (Github), modified by vladimir.s",
+  "states": [
+    {
+      "name": "log"
+    },
+    {
+      "name": "log_2"
+    },
+    {
+      "name": "log_3"
+    },
+    {
+      "name": "planks"
+    },
+    {
+      "name": "planks_2"
+    },
+    {
+      "name": "planks_3"
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Created by prazat911, carrot_salad, carrot_patties trash by TheShuEd, green_salad by Aeoli, baked_apples by Dinazzewr, beef_rice, beef_rice_greens, green_omelette, corn_pepper_meat, fish_cakes, fish_potato_tomato, garlic_bread, omurice-like, pork_roulade, potato_wedges_chicken, stir-fry, stuffed_bell_pepper by iowaku (Discord)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "bread_plate"
+        },
+        {
+            "name": "baked_apples"
+        },
+        {
+            "name": "beef_rice"
+        },
+        {
+            "name": "beef_rice_greens"
+        },
+        {
+            "name": "cheese_bread"
+        },
+        {
+            "name": "green_omelette"
+        },
+        {
+            "name": "corn_pepper_meat"
+        },
+        {
+            "name": "fish_cakes"
+        },
+        {
+            "name": "fish_potato_tomato"
+        },
+        {
+            "name": "garlic_bread"
+        },
+        {
+            "name": "green_salad"
+        },
+        {
+            "name": "green_salad_meat"
+        },
+        {
+            "name": "mashed_potato"
+        },
+        {
+            "name": "mashed_potato_meat"
+        },
+        {
+            "name": "mashed_potato_salad"
+        },
+        {
+            "name": "meat_plate"
+        },
+        {
+            "name": "monster_egg"
+        },
+        {
+            "name": "omurice-like"
+        },
+        {
+            "name": "pig_cheese"
+        },
+        {
+            "name": "pork_roulade"
+        },
+        {
+            "name": "potato_wedges_chicken"
+        },
+        {
+            "name": "stuffed_potato"
+        },
+        {
+            "name": "stir_fry"
+        },
+        {
+            "name": "stuffed_bell_pepper"
+        },
+        {
+            "name": "trash"
+        },
+        {
+            "name": "zellasian_breakfast"
+        },
+        {
+            "name": "scrambled_eggs"
+        },
+        {
+            "name": "carrot_salad"
+        },
+        {
+            "name": "carrot_patties"
+        }
+    ]
+}

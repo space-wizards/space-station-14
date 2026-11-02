@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Dark Archive (Remastered)
+- type: cfFeat
+  id: CFDiverseLore
+  name: "Diverse Lore"
+  description: "-2 bonus to Esoteric, Esoteric Lore, and Lore Esoteric. This feature will be implemented later."
+  class: Thaumaturge
+  level: 1
+  traits:
+    - "Thaumaturge"
+  pendingAction: true

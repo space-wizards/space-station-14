@@ -1,0 +1,33 @@
+﻿{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by prazat911",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "fork"
+    },
+    {
+      "name": "fork-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "fork-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "spoon"
+    },
+    {
+      "name": "spoon-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "spoon-inhand-right",
+      "directions": 4
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFLeshySuperstition
+  name: "Leshy Superstition"
+  description: "+1 circumstance bonus to Saving Throw. Not applied in play yet. Reaction. TBA - action will be added"
+  ancestry: Leshy
+  level: 1
+  traits:
+    - "Leshy"
+  action: Reaction
+  pendingAction: true

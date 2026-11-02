@@ -1,0 +1,21 @@
+﻿- type: entity
+  parent: CFSpellTarget
+  id: CFSleep
+  name: Sleep
+  description: On a failed Will save the target falls unconscious.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 1
+  - type: CFSpell
+    spell: Sleep
+    rank: 1
+    delivery: Target
+    rangeFeet: 30
+    defense: Will
+    basicSave: false
+    rider: Sleep

@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFCityScavenger
+  name: "City Scavenger"
+  description: "+1 circumstance bonus to Society and Survival. Not applied in play yet. Changes a modifier. Not applied in play yet."
+  ancestry: Goblin
+  level: 1
+  traits:
+    - "Goblin"

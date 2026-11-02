@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFMatureAnimalCompanionDruid
+  name: "Mature Animal Companion (Druid)"
+  description: "Requires Animal Companion."
+  class: Druid
+  level: 4
+  traits:
+    - "Druid"
+  prerequisites:
+    - "Animal Companion"

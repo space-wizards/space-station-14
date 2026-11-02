@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by Frogoo (discord)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "human"
+    },
+    {
+      "name": "dwarf"
+    },
+    {
+      "name": "elf"
+    },
+    {
+      "name": "goblin"
+    },
+    {
+      "name": "infernal"
+    },
+    {
+      "name": "silva"
+    },
+    {
+      "name": "flem"
+    },
+    {
+      "name": "carcat"
+    },
+    {
+      "name": "frog"
+    },
+    {
+      "name": "skeleton"
+    },
+    {
+      "name": "lumi"
+    },
+    {
+      "name": "agaric"
+    },
+    {
+      "name": "carrin"
+    }
+  ]
+}

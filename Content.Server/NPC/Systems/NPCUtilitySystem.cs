@@ -7,6 +7,7 @@ using Content.Server.NPC.Queries.Curves;
 using Content.Server.NPC.Queries.Queries;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Atmos.Components;
+using Content.Shared.CF.Factions;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
@@ -49,6 +50,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
     [Dependency] private IngestionSystem _ingestion = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private NpcFactionSystem _npcFaction = default!;
+    [Dependency] private CFFactionSystem _cfFactions = default!;
     [Dependency] private PuddleSystem _puddle = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedSolutionContainerSystem _solutions = default!;
@@ -491,6 +493,9 @@ public sealed partial class NPCUtilitySystem : EntitySystem
                 {
                     entities.Add(ent);
                 }
+
+                // CarpFinder: Party and Neutral are not hostile targets; Opposition is.
+                _cfFactions.ApplyHostileQuery(owner, vision, entities);
                 break;
             }
             default:

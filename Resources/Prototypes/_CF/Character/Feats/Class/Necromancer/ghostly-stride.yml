@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFGhostlyStride
+  name: "Ghostly Stride"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Necromancer
+  level: 4
+  traits:
+    - "Necromancer"
+    - "Occult"
+    - "Spirit"
+  action: Action
+  pendingAction: true

@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFBurnIt
+  name: "Burn It!"
+  description: "+1 status bonus to Damage. Not applied in play yet."
+  ancestry: Goblin
+  level: 1
+  traits:
+    - "Goblin"

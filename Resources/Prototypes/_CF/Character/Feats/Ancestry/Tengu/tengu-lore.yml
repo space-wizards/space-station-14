@@ -1,0 +1,16 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFTenguLore
+  name: "Tengu Lore"
+  description: "Lore: Tengu Lore. Trained in Society and Survival."
+  ancestry: Tengu
+  level: 1
+  traits:
+    - "Tengu"
+  trainedSkills:
+    - Society
+    - Survival
+    - Lore
+  lores:
+    - "Tengu Lore"

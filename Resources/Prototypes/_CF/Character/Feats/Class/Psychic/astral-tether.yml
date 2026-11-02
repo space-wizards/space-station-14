@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Dark Archive (Remastered)
+- type: cfFeat
+  id: CFAstralTether
+  name: "Astral Tether"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Psychic
+  level: 4
+  traits:
+    - "Occult"
+    - "Psychic"
+  action: Action
+  pendingAction: true

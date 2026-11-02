@@ -26,14 +26,29 @@ public sealed partial class DefaultGameScreen : InGameScreen
         Chat.OnResized += ChatOnResized;
         Chat.OnChatResizeFinish += ChatOnResizeFinish;
 
-        MainViewport.OnResized += ResizeActionContainer;
-        Inventory.OnResized += ResizeActionContainer;
+        MainViewport.OnResized += PlaceHud;
+        Inventory.OnResized += PlaceHud;
+        Hotbar.OnResized += PlaceHud;
+        Hud.OnResized += PlaceHud;
+        PlaceHud();
     }
 
-    private void ResizeActionContainer()
+    private float _placedHud = -1f;
+
+    private void PlaceHud()
     {
-        float indent = Inventory.Size.Y + TopBar.Size.Y + 40;
-        Actions.ActionsContainer.MaxGridHeight = MainViewport.Size.Y - indent;
+        Hud.SetViewportWidth(MainViewport.Size.X);
+        var hudHeight = Hud.DesiredSize.Y;
+        if (hudHeight < 64f)
+            hudHeight = 160f;
+        if (Math.Abs(_placedHud - hudHeight) < 1f)
+            return;
+
+        _placedHud = hudHeight;
+        var lift = (int) MathF.Ceiling(hudHeight);
+        SetAnchorAndMarginPreset(Hud, LayoutPreset.BottomLeft, margin: 5);
+        SetMarginLeft(Hud, 78);
+        SetAnchorAndMarginPreset(Hotbar, LayoutPreset.BottomWide, margin: 5 + lift);
     }
 
     private void ChatOnResizeFinish(Vector2 _)

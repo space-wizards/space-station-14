@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Tian Xia Character Guide
+- type: cfFeat
+  id: CFVulpineScamper
+  name: "Vulpine Scamper"
+  description: "Requires fox alternate form."
+  ancestry: Kitsune
+  level: 5
+  traits:
+    - "Kitsune"
+  prerequisites:
+    - "fox alternate form"

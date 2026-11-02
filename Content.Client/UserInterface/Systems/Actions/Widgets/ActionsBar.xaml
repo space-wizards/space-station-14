@@ -3,17 +3,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Actions.Widgets"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Actions.Controls"
+    xmlns:hud="clr-namespace:Content.Client.CF.Hud"
     VerticalExpand="False"
     Orientation="Horizontal"
     HorizontalExpand="False"
 >
     <BoxContainer Orientation="Vertical">
-        <controls:ActionButtonContainer
+        <!-- CarpFinder: two rows of ten. The second row label is only the key. -->
+        <hud:CFActionGrid
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            MaxSize="64 9999"
             Name="ActionsContainer"
-            Access="Public"
-            Rows="1"/>
+            Access="Public" />
     </BoxContainer>
 </widgets:ActionsBar>

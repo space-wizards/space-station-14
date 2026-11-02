@@ -1,0 +1,67 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "foot feather markings taken from https://github.com/space-wizards/space-station-14/pull/30202/commits/bb8c5aeaf13a3ab150900f5f180dbcd209bb1c5a modified by Huaqas (GitHub). Fade markings created by Huaqas (GitHub). Leg stripe and coat markings taken from Polaris commit 4e9c367322a5a07604d120c0972adbc61fba9a25, with edits by Huaqas (GitHub).",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "l_foot_feathers_primary",
+            "directions": 4
+        },
+        {
+        "name": "l_foot_feathers_secondary",
+        "directions": 4
+        },
+        {
+            "name": "r_foot_feathers_primary",
+            "directions": 4
+        },
+        {
+            "name": "r_foot_feathers_secondary",
+            "directions": 4
+        },
+        {
+            "name": "l_foot_feathers",
+            "directions": 4
+        },
+        {
+            "name": "r_foot_feathers",
+            "directions": 4
+        },
+        {
+            "name": "l_foot_fade",
+            "directions": 4
+        },
+        {
+            "name": "r_foot_fade",
+            "directions": 4
+        },
+        {
+            "name": "l_leg_fade",
+            "directions": 4
+        },
+        {
+            "name": "r_leg_fade",
+            "directions": 4
+        },
+        {
+            "name": "l_leg_stripes",
+            "directions": 4
+        },
+        {
+            "name": "r_leg_stripes",
+            "directions": 4
+        },
+        {
+            "name": "l_leg_coat",
+            "directions": 4
+        },
+        {
+            "name": "r_leg_coat",
+            "directions": 4
+        }
+      ]
+  }

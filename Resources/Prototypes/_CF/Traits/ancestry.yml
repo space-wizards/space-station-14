@@ -1,0 +1,416 @@
+# CarpFinder: remaster trait ids. Summaries are short mechanical notes, not source text.
+# category: Ancestry
+
+- type: cfTrait
+  id: Aiuvarin
+  name: Aiuvarin
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Anadi
+  name: Anadi
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Android
+  name: Android
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Aphorite
+  name: Aphorite
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Ardande
+  name: Ardande
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Athamaru
+  name: Athamaru
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Automaton
+  name: Automaton
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: AwakenedAnimal
+  name: Awakened Animal
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Azarketi
+  name: Azarketi
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Beastkin
+  name: Beastkin
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Bugbear
+  name: Bugbear
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Catfolk
+  name: Catfolk
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Centaur
+  name: Centaur
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Changeling
+  name: Changeling
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Conrasu
+  name: Conrasu
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Dhampir
+  name: Dhampir
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Dragonblood
+  name: Dragonblood
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Dromaar
+  name: Dromaar
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Duskwalker
+  name: Duskwalker
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Dwarf
+  name: Dwarf
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Elf
+  name: Elf
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Fetchling
+  name: Fetchling
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Fleshwarp
+  name: Fleshwarp
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Ganzi
+  name: Ganzi
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Geniekin
+  name: Geniekin
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Ghoran
+  name: Ghoran
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Gnoll
+  name: Gnoll
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Gnome
+  name: Gnome
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Goblin
+  name: Goblin
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Goloma
+  name: Goloma
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Grippli
+  name: Grippli
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Halfling
+  name: Halfling
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Hobgoblin
+  name: Hobgoblin
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Human
+  name: Human
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Hungerseed
+  name: Hungerseed
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Kashrishi
+  name: Kashrishi
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Kitsune
+  name: Kitsune
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Kobold
+  name: Kobold
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Leshy
+  name: Leshy
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Lizardfolk
+  name: Lizardfolk
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Merfolk
+  name: Merfolk
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Minotaur
+  name: Minotaur
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Nagaji
+  name: Nagaji
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Naari
+  name: Naari
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Nephilim
+  name: Nephilim
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Orc
+  name: Orc
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Oread
+  name: Oread
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Poppet
+  name: Poppet
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Ratfolk
+  name: Ratfolk
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Reflection
+  name: Reflection
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Samsaran
+  name: Samsaran
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Sarangay
+  name: Sarangay
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Shisk
+  name: Shisk
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Shoony
+  name: Shoony
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Skeleton
+  name: Skeleton
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Sprite
+  name: Sprite
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Strix
+  name: Strix
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Suli
+  name: Suli
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Surki
+  name: Surki
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Sylph
+  name: Sylph
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Tanuki
+  name: Tanuki
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Talos
+  name: Talos
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Tengu
+  name: Tengu
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Undine
+  name: Undine
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Vanara
+  name: Vanara
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Vishkanya
+  name: Vishkanya
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Wayang
+  name: Wayang
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Yaksha
+  name: Yaksha
+  category: Ancestry
+  summary: "An ancestry or heritage trait."
+
+- type: cfTrait
+  id: Yaoguai
+  name: Yaoguai
+  category: Ancestry
+  summary: "An ancestry or heritage trait."

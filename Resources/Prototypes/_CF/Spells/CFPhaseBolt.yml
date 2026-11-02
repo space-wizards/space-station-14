@@ -1,0 +1,24 @@
+﻿- type: entity
+  parent: CFSpellProjectile
+  id: CFPhaseBolt
+  name: Phase Bolt
+  description: Spell attack for 3d4 piercing at 60 feet. Circumstance bonuses to AC are reduced by 2. The bolt follows its target.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: magicmissile
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 0
+  - type: CFSpell
+    spell: PhaseBolt
+    rank: 0
+    delivery: Projectile
+    rangeFeet: 60
+    defense: SpellAttack
+    diceCount: 3
+    diceSize: 4
+    damageType: piercing
+    targetAcPenalty: 2
+    boltPrototype: CFSpellBoltForce

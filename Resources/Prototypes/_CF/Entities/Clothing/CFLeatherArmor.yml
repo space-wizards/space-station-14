@@ -1,0 +1,12 @@
+- type: entity
+  parent: ClothingOuterCoatBomber
+  id: CFLeatherArmor
+  name: leather armor
+  description: Soft leather armor. +1 item bonus to AC (Dex cap +3).
+  components:
+  - type: CFArmor
+    itemBonus: 1
+    dexCap: 3
+    proficiency: LightArmor
+  - type: CFItemPrice
+    copper: 200 # 2 gp

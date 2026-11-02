@@ -1,0 +1,7 @@
+Font Awesome Free 6 solid (fa-solid-900.ttf)
+https://fontawesome.com
+https://github.com/FortAwesome/Font-Awesome/tree/6.7.2/webfonts
+
+Copyright (c) Fonticons, Inc.
+The font file is licensed under the SIL Open Font License, Version 1.1.
+https://scripts.sil.org/OFL

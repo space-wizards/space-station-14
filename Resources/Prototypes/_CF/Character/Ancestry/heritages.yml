@@ -1,0 +1,917 @@
+# CarpFinder: Pathfinder heritages. Empty ancestries means versatile.
+# Aasimar, tiefling, and aphorite are the Nephilim heritage.
+
+- type: cfHeritage
+  id: AncientBloodedDwarf
+  name: cf-heritage-ancient-blooded-dwarf
+  description: cf-heritage-ancient-blooded-dwarf-desc
+  ancestries: [Dwarf]
+
+- type: cfHeritage
+  id: DeathWardenDwarf
+  name: cf-heritage-death-warden-dwarf
+  description: cf-heritage-death-warden-dwarf-desc
+  ancestries: [Dwarf]
+
+- type: cfHeritage
+  id: ForgeDwarf
+  name: cf-heritage-forge-dwarf
+  description: cf-heritage-forge-dwarf-desc
+  ancestries: [Dwarf]
+
+- type: cfHeritage
+  id: RockDwarf
+  name: cf-heritage-rock-dwarf
+  description: cf-heritage-rock-dwarf-desc
+  ancestries: [Dwarf]
+
+- type: cfHeritage
+  id: StrongBloodedDwarf
+  name: cf-heritage-strong-blooded-dwarf
+  description: cf-heritage-strong-blooded-dwarf-desc
+  ancestries: [Dwarf]
+
+- type: cfHeritage
+  id: AncientElf
+  name: cf-heritage-ancient-elf
+  description: cf-heritage-ancient-elf-desc
+  ancestries: [Elf]
+
+- type: cfHeritage
+  id: ArcticElf
+  name: cf-heritage-arctic-elf
+  description: cf-heritage-arctic-elf-desc
+  ancestries: [Elf]
+
+- type: cfHeritage
+  id: CavernElf
+  name: cf-heritage-cavern-elf
+  description: cf-heritage-cavern-elf-desc
+  ancestries: [Elf]
+  darkvision: true
+
+- type: cfHeritage
+  id: SeerElf
+  name: cf-heritage-seer-elf
+  description: cf-heritage-seer-elf-desc
+  ancestries: [Elf]
+
+- type: cfHeritage
+  id: WhisperElf
+  name: cf-heritage-whisper-elf
+  description: cf-heritage-whisper-elf-desc
+  ancestries: [Elf]
+
+- type: cfHeritage
+  id: WoodlandElf
+  name: cf-heritage-woodland-elf
+  description: cf-heritage-woodland-elf-desc
+  ancestries: [Elf]
+
+- type: cfHeritage
+  id: ChameleonGnome
+  name: cf-heritage-chameleon-gnome
+  description: cf-heritage-chameleon-gnome-desc
+  ancestries: [Gnome]
+
+- type: cfHeritage
+  id: FeyTouchedGnome
+  name: cf-heritage-fey-touched-gnome
+  description: cf-heritage-fey-touched-gnome-desc
+  ancestries: [Gnome]
+
+- type: cfHeritage
+  id: SensateGnome
+  name: cf-heritage-sensate-gnome
+  description: cf-heritage-sensate-gnome-desc
+  ancestries: [Gnome]
+
+- type: cfHeritage
+  id: UmbralGnome
+  name: cf-heritage-umbral-gnome
+  description: cf-heritage-umbral-gnome-desc
+  ancestries: [Gnome]
+  darkvision: true
+
+- type: cfHeritage
+  id: WellspringGnome
+  name: cf-heritage-wellspring-gnome
+  description: cf-heritage-wellspring-gnome-desc
+  ancestries: [Gnome]
+
+- type: cfHeritage
+  id: CharhideGoblin
+  name: cf-heritage-charhide-goblin
+  description: cf-heritage-charhide-goblin-desc
+  ancestries: [Goblin]
+
+- type: cfHeritage
+  id: IrongutGoblin
+  name: cf-heritage-irongut-goblin
+  description: cf-heritage-irongut-goblin-desc
+  ancestries: [Goblin]
+
+- type: cfHeritage
+  id: RazortoothGoblin
+  name: cf-heritage-razortooth-goblin
+  description: cf-heritage-razortooth-goblin-desc
+  ancestries: [Goblin]
+
+- type: cfHeritage
+  id: SnowGoblin
+  name: cf-heritage-snow-goblin
+  description: cf-heritage-snow-goblin-desc
+  ancestries: [Goblin]
+
+- type: cfHeritage
+  id: UnbreakableGoblin
+  name: cf-heritage-unbreakable-goblin
+  description: cf-heritage-unbreakable-goblin-desc
+  ancestries: [Goblin]
+  hitPoints: 10
+
+- type: cfHeritage
+  id: GutsyHalfling
+  name: cf-heritage-gutsy-halfling
+  description: cf-heritage-gutsy-halfling-desc
+  ancestries: [Halfling]
+
+- type: cfHeritage
+  id: HillockHalfling
+  name: cf-heritage-hillock-halfling
+  description: cf-heritage-hillock-halfling-desc
+  ancestries: [Halfling]
+
+- type: cfHeritage
+  id: JinxedHalfling
+  name: cf-heritage-jinxed-halfling
+  description: cf-heritage-jinxed-halfling-desc
+  rarity: Uncommon
+  ancestries: [Halfling]
+
+- type: cfHeritage
+  id: NomadicHalfling
+  name: cf-heritage-nomadic-halfling
+  description: cf-heritage-nomadic-halfling-desc
+  ancestries: [Halfling]
+
+- type: cfHeritage
+  id: TwilightHalfling
+  name: cf-heritage-twilight-halfling
+  description: cf-heritage-twilight-halfling-desc
+  ancestries: [Halfling]
+
+- type: cfHeritage
+  id: WildwoodHalfling
+  name: cf-heritage-wildwood-halfling
+  description: cf-heritage-wildwood-halfling-desc
+  ancestries: [Halfling]
+
+- type: cfHeritage
+  id: SkilledHuman
+  name: cf-heritage-skilled-human
+  description: cf-heritage-skilled-human-desc
+  ancestries: [Human]
+
+- type: cfHeritage
+  id: VersatileHuman
+  name: cf-heritage-versatile-human
+  description: cf-heritage-versatile-human-desc
+  ancestries: [Human]
+
+- type: cfHeritage
+  id: CactusLeshy
+  name: cf-heritage-cactus-leshy
+  description: cf-heritage-cactus-leshy-desc
+  ancestries: [Leshy]
+
+- type: cfHeritage
+  id: FruitLeshy
+  name: cf-heritage-fruit-leshy
+  description: cf-heritage-fruit-leshy-desc
+  ancestries: [Leshy]
+
+- type: cfHeritage
+  id: FungusLeshy
+  name: cf-heritage-fungus-leshy
+  description: cf-heritage-fungus-leshy-desc
+  ancestries: [Leshy]
+  darkvision: true
+
+- type: cfHeritage
+  id: GourdLeshy
+  name: cf-heritage-gourd-leshy
+  description: cf-heritage-gourd-leshy-desc
+  ancestries: [Leshy]
+
+- type: cfHeritage
+  id: LeafLeshy
+  name: cf-heritage-leaf-leshy
+  description: cf-heritage-leaf-leshy-desc
+  ancestries: [Leshy]
+
+- type: cfHeritage
+  id: LotusLeshy
+  name: cf-heritage-lotus-leshy
+  description: cf-heritage-lotus-leshy-desc
+  ancestries: [Leshy]
+
+- type: cfHeritage
+  id: RootLeshy
+  name: cf-heritage-root-leshy
+  description: cf-heritage-root-leshy-desc
+  ancestries: [Leshy]
+  hitPoints: 10
+
+- type: cfHeritage
+  id: SeaweedLeshy
+  name: cf-heritage-seaweed-leshy
+  description: cf-heritage-seaweed-leshy-desc
+  ancestries: [Leshy]
+  speed: 20
+
+- type: cfHeritage
+  id: BadlandsOrc
+  name: cf-heritage-badlands-orc
+  description: cf-heritage-badlands-orc-desc
+  ancestries: [Orc]
+
+- type: cfHeritage
+  id: BattleReadyOrc
+  name: cf-heritage-battle-ready-orc
+  description: cf-heritage-battle-ready-orc-desc
+  ancestries: [Orc]
+
+- type: cfHeritage
+  id: DeepOrc
+  name: cf-heritage-deep-orc
+  description: cf-heritage-deep-orc-desc
+  ancestries: [Orc]
+
+- type: cfHeritage
+  id: GraveOrc
+  name: cf-heritage-grave-orc
+  description: cf-heritage-grave-orc-desc
+  ancestries: [Orc]
+
+- type: cfHeritage
+  id: HoldScarredOrc
+  name: cf-heritage-hold-scarred-orc
+  description: cf-heritage-hold-scarred-orc-desc
+  ancestries: [Orc]
+  hitPoints: 12
+
+- type: cfHeritage
+  id: RainfallOrc
+  name: cf-heritage-rainfall-orc
+  description: cf-heritage-rainfall-orc-desc
+  ancestries: [Orc]
+
+- type: cfHeritage
+  id: WinterOrc
+  name: cf-heritage-winter-orc
+  description: cf-heritage-winter-orc-desc
+  ancestries: [Orc]
+
+- type: cfHeritage
+  id: ClawedCatfolk
+  name: cf-heritage-clawed-catfolk
+  description: cf-heritage-clawed-catfolk-desc
+  ancestries: [Catfolk]
+
+- type: cfHeritage
+  id: HuntingCatfolk
+  name: cf-heritage-hunting-catfolk
+  description: cf-heritage-hunting-catfolk-desc
+  ancestries: [Catfolk]
+
+- type: cfHeritage
+  id: JungleCatfolk
+  name: cf-heritage-jungle-catfolk
+  description: cf-heritage-jungle-catfolk-desc
+  ancestries: [Catfolk]
+
+- type: cfHeritage
+  id: LiminalCatfolk
+  name: cf-heritage-liminal-catfolk
+  description: cf-heritage-liminal-catfolk-desc
+  ancestries: [Catfolk]
+
+- type: cfHeritage
+  id: NineLivesCatfolk
+  name: cf-heritage-nine-lives-catfolk
+  description: cf-heritage-nine-lives-catfolk-desc
+  ancestries: [Catfolk]
+
+- type: cfHeritage
+  id: SharpEaredCatfolk
+  name: cf-heritage-sharp-eared-catfolk
+  description: cf-heritage-sharp-eared-catfolk-desc
+  ancestries: [Catfolk]
+
+- type: cfHeritage
+  id: WinterCatfolk
+  name: cf-heritage-winter-catfolk
+  description: cf-heritage-winter-catfolk-desc
+  ancestries: [Catfolk]
+
+- type: cfHeritage
+  id: ElfbaneHobgoblin
+  name: cf-heritage-elfbane-hobgoblin
+  description: cf-heritage-elfbane-hobgoblin-desc
+  ancestries: [Hobgoblin]
+
+- type: cfHeritage
+  id: RuntbossHobgoblin
+  name: cf-heritage-runtboss-hobgoblin
+  description: cf-heritage-runtboss-hobgoblin-desc
+  ancestries: [Hobgoblin]
+
+- type: cfHeritage
+  id: ShortshanksHobgoblin
+  name: cf-heritage-shortshanks-hobgoblin
+  description: cf-heritage-shortshanks-hobgoblin-desc
+  ancestries: [Hobgoblin]
+
+- type: cfHeritage
+  id: SmokeworkerHobgoblin
+  name: cf-heritage-smokeworker-hobgoblin
+  description: cf-heritage-smokeworker-hobgoblin-desc
+  ancestries: [Hobgoblin]
+
+- type: cfHeritage
+  id: WarmarchHobgoblin
+  name: cf-heritage-warmarch-hobgoblin
+  description: cf-heritage-warmarch-hobgoblin-desc
+  ancestries: [Hobgoblin]
+
+- type: cfHeritage
+  id: WarrenbredHobgoblin
+  name: cf-heritage-warrenbred-hobgoblin
+  description: cf-heritage-warrenbred-hobgoblin-desc
+  ancestries: [Hobgoblin]
+
+- type: cfHeritage
+  id: AntKholo
+  name: cf-heritage-ant-kholo
+  description: cf-heritage-ant-kholo-desc
+  ancestries: [Kholo]
+  size: Small
+
+- type: cfHeritage
+  id: CaveKholo
+  name: cf-heritage-cave-kholo
+  description: cf-heritage-cave-kholo-desc
+  ancestries: [Kholo]
+  darkvision: true
+
+- type: cfHeritage
+  id: DogKholo
+  name: cf-heritage-dog-kholo
+  description: cf-heritage-dog-kholo-desc
+  ancestries: [Kholo]
+
+- type: cfHeritage
+  id: GreatKholo
+  name: cf-heritage-great-kholo
+  description: cf-heritage-great-kholo-desc
+  ancestries: [Kholo]
+  hitPoints: 10
+
+- type: cfHeritage
+  id: SweetbreathKholo
+  name: cf-heritage-sweetbreath-kholo
+  description: cf-heritage-sweetbreath-kholo-desc
+  ancestries: [Kholo]
+
+- type: cfHeritage
+  id: WinterKholo
+  name: cf-heritage-winter-kholo
+  description: cf-heritage-winter-kholo-desc
+  ancestries: [Kholo]
+
+- type: cfHeritage
+  id: WitchKholo
+  name: cf-heritage-witch-kholo
+  description: cf-heritage-witch-kholo-desc
+  ancestries: [Kholo]
+
+- type: cfHeritage
+  id: CavernstalkerKobold
+  name: cf-heritage-cavernstalker-kobold
+  description: cf-heritage-cavernstalker-kobold-desc
+  ancestries: [Kobold]
+
+- type: cfHeritage
+  id: DragonscaledKobold
+  name: cf-heritage-dragonscaled-kobold
+  description: cf-heritage-dragonscaled-kobold-desc
+  ancestries: [Kobold]
+  hitPoints: 10
+
+- type: cfHeritage
+  id: ElementheartKobold
+  name: cf-heritage-elementheart-kobold
+  description: cf-heritage-elementheart-kobold-desc
+  ancestries: [Kobold]
+
+- type: cfHeritage
+  id: SpellhornKobold
+  name: cf-heritage-spellhorn-kobold
+  description: cf-heritage-spellhorn-kobold-desc
+  ancestries: [Kobold]
+
+- type: cfHeritage
+  id: StrongjawKobold
+  name: cf-heritage-strongjaw-kobold
+  description: cf-heritage-strongjaw-kobold-desc
+  ancestries: [Kobold]
+
+- type: cfHeritage
+  id: TunnelfloodKobold
+  name: cf-heritage-tunnelflood-kobold
+  description: cf-heritage-tunnelflood-kobold-desc
+  ancestries: [Kobold]
+
+- type: cfHeritage
+  id: VenomtailKobold
+  name: cf-heritage-venomtail-kobold
+  description: cf-heritage-venomtail-kobold-desc
+  ancestries: [Kobold]
+
+- type: cfHeritage
+  id: CliffscaleLizardfolk
+  name: cf-heritage-cliffscale-lizardfolk
+  description: cf-heritage-cliffscale-lizardfolk-desc
+  ancestries: [Lizardfolk]
+
+- type: cfHeritage
+  id: CloudleaperLizardfolk
+  name: cf-heritage-cloudleaper-lizardfolk
+  description: cf-heritage-cloudleaper-lizardfolk-desc
+  ancestries: [Lizardfolk]
+
+- type: cfHeritage
+  id: FrilledLizardfolk
+  name: cf-heritage-frilled-lizardfolk
+  description: cf-heritage-frilled-lizardfolk-desc
+  ancestries: [Lizardfolk]
+
+- type: cfHeritage
+  id: SandstriderLizardfolk
+  name: cf-heritage-sandstrider-lizardfolk
+  description: cf-heritage-sandstrider-lizardfolk-desc
+  ancestries: [Lizardfolk]
+
+- type: cfHeritage
+  id: UnseenLizardfolk
+  name: cf-heritage-unseen-lizardfolk
+  description: cf-heritage-unseen-lizardfolk-desc
+  ancestries: [Lizardfolk]
+
+- type: cfHeritage
+  id: WetlanderLizardfolk
+  name: cf-heritage-wetlander-lizardfolk
+  description: cf-heritage-wetlander-lizardfolk-desc
+  ancestries: [Lizardfolk]
+
+- type: cfHeritage
+  id: WoodstalkerLizardfolk
+  name: cf-heritage-woodstalker-lizardfolk
+  description: cf-heritage-woodstalker-lizardfolk-desc
+  ancestries: [Lizardfolk]
+
+- type: cfHeritage
+  id: DeepRat
+  name: cf-heritage-deep-rat
+  description: cf-heritage-deep-rat-desc
+  ancestries: [Ratfolk]
+  darkvision: true
+
+- type: cfHeritage
+  id: DesertRat
+  name: cf-heritage-desert-rat
+  description: cf-heritage-desert-rat-desc
+  ancestries: [Ratfolk]
+
+- type: cfHeritage
+  id: LongsnoutRat
+  name: cf-heritage-longsnout-rat
+  description: cf-heritage-longsnout-rat-desc
+  ancestries: [Ratfolk]
+
+- type: cfHeritage
+  id: SewerRat
+  name: cf-heritage-sewer-rat
+  description: cf-heritage-sewer-rat-desc
+  ancestries: [Ratfolk]
+
+- type: cfHeritage
+  id: ShadowRat
+  name: cf-heritage-shadow-rat
+  description: cf-heritage-shadow-rat-desc
+  ancestries: [Ratfolk]
+
+- type: cfHeritage
+  id: SnowRat
+  name: cf-heritage-snow-rat
+  description: cf-heritage-snow-rat-desc
+  ancestries: [Ratfolk]
+
+- type: cfHeritage
+  id: TunnelRat
+  name: cf-heritage-tunnel-rat
+  description: cf-heritage-tunnel-rat-desc
+  ancestries: [Ratfolk]
+
+- type: cfHeritage
+  id: DogtoothTengu
+  name: cf-heritage-dogtooth-tengu
+  description: cf-heritage-dogtooth-tengu-desc
+  ancestries: [Tengu]
+
+- type: cfHeritage
+  id: JinxedTengu
+  name: cf-heritage-jinxed-tengu
+  description: cf-heritage-jinxed-tengu-desc
+  ancestries: [Tengu]
+
+- type: cfHeritage
+  id: MountainkeeperTengu
+  name: cf-heritage-mountainkeeper-tengu
+  description: cf-heritage-mountainkeeper-tengu-desc
+  ancestries: [Tengu]
+
+- type: cfHeritage
+  id: SkybornTengu
+  name: cf-heritage-skyborn-tengu
+  description: cf-heritage-skyborn-tengu-desc
+  ancestries: [Tengu]
+
+- type: cfHeritage
+  id: StormtossedTengu
+  name: cf-heritage-stormtossed-tengu
+  description: cf-heritage-stormtossed-tengu-desc
+  ancestries: [Tengu]
+
+- type: cfHeritage
+  id: TalonedTengu
+  name: cf-heritage-taloned-tengu
+  description: cf-heritage-taloned-tengu-desc
+  ancestries: [Tengu]
+
+- type: cfHeritage
+  id: WavediverTengu
+  name: cf-heritage-wavediver-tengu
+  description: cf-heritage-wavediver-tengu-desc
+  ancestries: [Tengu]
+
+- type: cfHeritage
+  id: PoisonhideTripkee
+  name: cf-heritage-poisonhide-tripkee
+  description: cf-heritage-poisonhide-tripkee-desc
+  ancestries: [Tripkee]
+
+- type: cfHeritage
+  id: RiversideTripkee
+  name: cf-heritage-riverside-tripkee
+  description: cf-heritage-riverside-tripkee-desc
+  ancestries: [Tripkee]
+
+- type: cfHeritage
+  id: SnaptongueTripkee
+  name: cf-heritage-snaptongue-tripkee
+  description: cf-heritage-snaptongue-tripkee-desc
+  ancestries: [Tripkee]
+
+- type: cfHeritage
+  id: StickytoeTripkee
+  name: cf-heritage-stickytoe-tripkee
+  description: cf-heritage-stickytoe-tripkee-desc
+  ancestries: [Tripkee]
+
+- type: cfHeritage
+  id: ThickskinTripkee
+  name: cf-heritage-thickskin-tripkee
+  description: cf-heritage-thickskin-tripkee-desc
+  ancestries: [Tripkee]
+  hitPoints: 8
+
+- type: cfHeritage
+  id: WindwebTripkee
+  name: cf-heritage-windweb-tripkee
+  description: cf-heritage-windweb-tripkee-desc
+  ancestries: [Tripkee]
+
+- type: cfHeritage
+  id: AncientScaleAzarketi
+  name: cf-heritage-ancient-scale-azarketi
+  description: cf-heritage-ancient-scale-azarketi-desc
+  ancestries: [Azarketi]
+
+- type: cfHeritage
+  id: BenthicAzarketi
+  name: cf-heritage-benthic-azarketi
+  description: cf-heritage-benthic-azarketi-desc
+  ancestries: [Azarketi]
+  darkvision: true
+
+- type: cfHeritage
+  id: InuredAzarketi
+  name: cf-heritage-inured-azarketi
+  description: cf-heritage-inured-azarketi-desc
+  ancestries: [Azarketi]
+
+- type: cfHeritage
+  id: MistbreathAzarketi
+  name: cf-heritage-mistbreath-azarketi
+  description: cf-heritage-mistbreath-azarketi-desc
+  ancestries: [Azarketi]
+
+- type: cfHeritage
+  id: MurkeyedAzarketi
+  name: cf-heritage-murkeyed-azarketi
+  description: cf-heritage-murkeyed-azarketi-desc
+  ancestries: [Azarketi]
+
+- type: cfHeritage
+  id: RiverAzarketi
+  name: cf-heritage-river-azarketi
+  description: cf-heritage-river-azarketi-desc
+  ancestries: [Azarketi]
+
+- type: cfHeritage
+  id: SpinedAzarketi
+  name: cf-heritage-spined-azarketi
+  description: cf-heritage-spined-azarketi-desc
+  ancestries: [Azarketi]
+
+- type: cfHeritage
+  id: TactileAzarketi
+  name: cf-heritage-tactile-azarketi
+  description: cf-heritage-tactile-azarketi-desc
+  ancestries: [Azarketi]
+
+- type: cfHeritage
+  id: ArtisanAndroid
+  name: cf-heritage-artisan-android
+  description: cf-heritage-artisan-android-desc
+  ancestries: [Android]
+
+- type: cfHeritage
+  id: ImpersonatorAndroid
+  name: cf-heritage-impersonator-android
+  description: cf-heritage-impersonator-android-desc
+  ancestries: [Android]
+
+- type: cfHeritage
+  id: LaborerAndroid
+  name: cf-heritage-laborer-android
+  description: cf-heritage-laborer-android-desc
+  ancestries: [Android]
+
+- type: cfHeritage
+  id: PolyglotAndroid
+  name: cf-heritage-polyglot-android
+  description: cf-heritage-polyglot-android-desc
+  ancestries: [Android]
+
+- type: cfHeritage
+  id: WarriorAndroid
+  name: cf-heritage-warrior-android
+  description: cf-heritage-warrior-android-desc
+  ancestries: [Android]
+
+- type: cfHeritage
+  id: BrightFetchling
+  name: cf-heritage-bright-fetchling
+  description: cf-heritage-bright-fetchling-desc
+  ancestries: [Fetchling]
+
+- type: cfHeritage
+  id: DeepFetchling
+  name: cf-heritage-deep-fetchling
+  description: cf-heritage-deep-fetchling-desc
+  ancestries: [Fetchling]
+
+- type: cfHeritage
+  id: LiminalFetchling
+  name: cf-heritage-liminal-fetchling
+  description: cf-heritage-liminal-fetchling-desc
+  ancestries: [Fetchling]
+
+- type: cfHeritage
+  id: ResoluteFetchling
+  name: cf-heritage-resolute-fetchling
+  description: cf-heritage-resolute-fetchling-desc
+  ancestries: [Fetchling]
+
+- type: cfHeritage
+  id: WispFetchling
+  name: cf-heritage-wisp-fetchling
+  description: cf-heritage-wisp-fetchling-desc
+  ancestries: [Fetchling]
+
+- type: cfHeritage
+  id: CreatedFleshwarp
+  name: cf-heritage-created-fleshwarp
+  description: cf-heritage-created-fleshwarp-desc
+  ancestries: [Fleshwarp]
+
+- type: cfHeritage
+  id: MutatedFleshwarp
+  name: cf-heritage-mutated-fleshwarp
+  description: cf-heritage-mutated-fleshwarp-desc
+  ancestries: [Fleshwarp]
+
+- type: cfHeritage
+  id: ShapewroughtFleshwarp
+  name: cf-heritage-shapewrought-fleshwarp
+  description: cf-heritage-shapewrought-fleshwarp-desc
+  ancestries: [Fleshwarp]
+
+- type: cfHeritage
+  id: TechnologicalFleshwarp
+  name: cf-heritage-technological-fleshwarp
+  description: cf-heritage-technological-fleshwarp-desc
+  ancestries: [Fleshwarp]
+
+- type: cfHeritage
+  id: CelestialEnvoyKitsune
+  name: cf-heritage-celestial-envoy-kitsune
+  description: cf-heritage-celestial-envoy-kitsune-desc
+  ancestries: [Kitsune]
+
+- type: cfHeritage
+  id: DarkFieldsKitsune
+  name: cf-heritage-dark-fields-kitsune
+  description: cf-heritage-dark-fields-kitsune-desc
+  ancestries: [Kitsune]
+
+- type: cfHeritage
+  id: EarthlyWildsKitsune
+  name: cf-heritage-earthly-wilds-kitsune
+  description: cf-heritage-earthly-wilds-kitsune-desc
+  ancestries: [Kitsune]
+
+- type: cfHeritage
+  id: EmptySkyKitsune
+  name: cf-heritage-empty-sky-kitsune
+  description: cf-heritage-empty-sky-kitsune-desc
+  ancestries: [Kitsune]
+
+- type: cfHeritage
+  id: FrozenWindKitsune
+  name: cf-heritage-frozen-wind-kitsune
+  description: cf-heritage-frozen-wind-kitsune-desc
+  ancestries: [Kitsune]
+
+- type: cfHeritage
+  id: Draxie
+  name: cf-heritage-draxie
+  description: cf-heritage-draxie-desc
+  ancestries: [Sprite]
+
+- type: cfHeritage
+  id: Grig
+  name: cf-heritage-grig
+  description: cf-heritage-grig-desc
+  ancestries: [Sprite]
+
+- type: cfHeritage
+  id: LuminousSprite
+  name: cf-heritage-luminous-sprite
+  description: cf-heritage-luminous-sprite-desc
+  ancestries: [Sprite]
+
+- type: cfHeritage
+  id: Melixie
+  name: cf-heritage-melixie
+  description: cf-heritage-melixie-desc
+  ancestries: [Sprite]
+
+- type: cfHeritage
+  id: Nyktera
+  name: cf-heritage-nyktera
+  description: cf-heritage-nyktera-desc
+  ancestries: [Sprite]
+  darkvision: true
+
+- type: cfHeritage
+  id: Pixie
+  name: cf-heritage-pixie
+  description: cf-heritage-pixie-desc
+  ancestries: [Sprite]
+  size: Small
+
+- type: cfHeritage
+  id: NightgliderStrix
+  name: cf-heritage-nightglider-strix
+  description: cf-heritage-nightglider-strix-desc
+  ancestries: [Strix]
+
+- type: cfHeritage
+  id: PredatorStrix
+  name: cf-heritage-predator-strix
+  description: cf-heritage-predator-strix-desc
+  ancestries: [Strix]
+
+- type: cfHeritage
+  id: ScavengerStrix
+  name: cf-heritage-scavenger-strix
+  description: cf-heritage-scavenger-strix-desc
+  ancestries: [Strix]
+
+- type: cfHeritage
+  id: ShorelineStrix
+  name: cf-heritage-shoreline-strix
+  description: cf-heritage-shoreline-strix-desc
+  ancestries: [Strix]
+
+- type: cfHeritage
+  id: SongbirdStrix
+  name: cf-heritage-songbird-strix
+  description: cf-heritage-songbird-strix-desc
+  ancestries: [Strix]
+
+- type: cfHeritage
+  id: Changeling
+  name: cf-heritage-changeling
+  description: cf-heritage-changeling-desc
+  rarity: Uncommon
+  upgradeVision: true
+
+- type: cfHeritage
+  id: Nephilim
+  name: cf-heritage-nephilim
+  description: cf-heritage-nephilim-desc
+  rarity: Uncommon
+  upgradeVision: true
+
+- type: cfHeritage
+  id: Aiuvarin
+  name: cf-heritage-aiuvarin
+  description: cf-heritage-aiuvarin-desc
+  rarity: Uncommon
+
+- type: cfHeritage
+  id: Dromaar
+  name: cf-heritage-dromaar
+  description: cf-heritage-dromaar-desc
+  rarity: Uncommon
+
+- type: cfHeritage
+  id: Dhampir
+  name: cf-heritage-dhampir
+  description: cf-heritage-dhampir-desc
+  rarity: Uncommon
+  upgradeVision: true
+
+- type: cfHeritage
+  id: Dragonblood
+  name: cf-heritage-dragonblood
+  description: cf-heritage-dragonblood-desc
+  rarity: Uncommon
+
+- type: cfHeritage
+  id: Duskwalker
+  name: cf-heritage-duskwalker
+  description: cf-heritage-duskwalker-desc
+  rarity: Uncommon
+  upgradeVision: true
+
+- type: cfHeritage
+  id: Ifrit
+  name: cf-heritage-ifrit
+  description: cf-heritage-ifrit-desc
+  rarity: Uncommon
+
+- type: cfHeritage
+  id: Oread
+  name: cf-heritage-oread
+  description: cf-heritage-oread-desc
+  rarity: Uncommon
+
+- type: cfHeritage
+  id: Suli
+  name: cf-heritage-suli
+  description: cf-heritage-suli-desc
+  rarity: Uncommon
+
+- type: cfHeritage
+  id: Sylph
+  name: cf-heritage-sylph
+  description: cf-heritage-sylph-desc
+  rarity: Uncommon
+
+- type: cfHeritage
+  id: Undine
+  name: cf-heritage-undine
+  description: cf-heritage-undine-desc
+  rarity: Uncommon
+
+- type: cfHeritage
+  id: Beastkin
+  name: cf-heritage-beastkin
+  description: cf-heritage-beastkin-desc
+  rarity: Rare

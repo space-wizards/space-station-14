@@ -1,0 +1,17 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Draconic Codex
+- type: cfFeat
+  id: CFDragonscaledLore
+  name: "Dragonscaled Lore"
+  description: "Requires dragonscaled kobold heritage. Lore: Dragon Lore. Trained in Intimidation. Trained in a skill of your choice. That choice is not recorded yet."
+  ancestry: Kobold
+  level: 1
+  traits:
+    - "Kobold"
+  prerequisites:
+    - "dragonscaled kobold heritage"
+  trainedSkills:
+    - Lore
+    - Intimidation
+  lores:
+    - "Dragon Lore"

@@ -1,0 +1,18 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder War of Immortals
+- type: cfFeat
+  id: CFVowofMortalDefiance
+  name: "Vow of Mortal Defiance"
+  description: "Requires You are not sanctified with the holy or unholy trait. Costs 1 action. This feature will be implemented later."
+  class: Exemplar
+  level: 1
+  traits:
+    - "Auditory"
+    - "Concentrate"
+    - "Exemplar"
+    - "Linguistic"
+    - "Mental"
+  prerequisites:
+    - "You are not sanctified with the holy or unholy trait"
+  action: Action
+  pendingAction: true

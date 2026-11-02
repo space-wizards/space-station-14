@@ -1,0 +1,68 @@
+# CarpFinder: remaster trait ids. Summaries are short mechanical notes, not source text.
+# category: Armor
+
+- type: cfTrait
+  id: Bulwark
+  name: Bulwark
+  category: Armor
+  summary: "You can use this armor's bonus instead of your Dexterity on Reflex saves against damaging effects."
+
+- type: cfTrait
+  id: Comfort
+  name: Comfort
+  category: Armor
+  summary: "This armor does not make you fatigued when you sleep in it."
+
+- type: cfTrait
+  id: Flexible
+  name: Flexible
+  category: Armor
+  summary: "This armor is less restrictive. Its check penalty and Strength entry are easier."
+
+- type: cfTrait
+  id: Noisy
+  name: Noisy
+  category: Armor
+  summary: "This armor imposes a penalty on Stealth checks."
+
+- type: cfTrait
+  id: Ponderous
+  name: Ponderous
+  category: Armor
+  summary: "This heavy armor slows you the first time you Stride after standing up."
+
+- type: cfTrait
+  id: Hindering
+  name: Hindering
+  category: Armor
+  summary: "This armor makes some movement and skill checks harder."
+
+- type: cfTrait
+  id: Aquadynamic
+  name: Aquadynamic
+  category: Armor
+  summary: "This armor does not slow you in water the way other armor does."
+
+- type: cfTrait
+  id: Laminar
+  name: Laminar
+  category: Armor
+  summary: "This armor is built in layers that can be donned in pieces."
+
+- type: cfTrait
+  id: EntrenchMelee
+  name: Entrench Melee
+  category: Armor
+  summary: "While you are set, melee attacks against you take a penalty."
+
+- type: cfTrait
+  id: EntrenchRanged
+  name: Entrench Ranged
+  category: Armor
+  summary: "While you are set, ranged attacks against you take a penalty."
+
+- type: cfTrait
+  id: Inscribed
+  name: Inscribed
+  category: Armor
+  summary: "This armor or shield has a surface that can hold a written spell or formula."

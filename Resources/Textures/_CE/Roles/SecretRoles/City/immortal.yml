@@ -1,7 +1,0 @@
-- type: secretRole
-  id: Immortal
-  name: ce-secret-role-name-immortal
-  description: ce-secret-role-description-immortal
-  icon: CESecretRoleIconImmortal
-  skills:
-  - MysticVitality

@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "See per-state attribution",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "colonel_s",
+      "directions": 4,
+      "copyright": "Darkrell",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "fu_s",
+      "directions": 4,
+      "copyright": "Darkrell",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "neck_s",
+      "directions": 4,
+      "copyright": "Darkrell",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "beard_s",
+      "directions": 4,
+      "copyright": "Darkrell",
+      "license": "CC-BY-SA-3.0"
+    },
+    {
+      "name": "mane_s",
+      "directions": 4,
+      "copyright": "Darkrell",
+      "license": "CC-BY-SA-3.0"
+    }
+  ]
+}

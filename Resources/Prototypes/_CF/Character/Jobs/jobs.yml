@@ -1,0 +1,95 @@
+- type: playTimeTracker
+  id: JobCFAlpha
+
+- type: playTimeTracker
+  id: JobCFBeta
+
+- type: playTimeTracker
+  id: JobCFCharlie
+
+- type: playTimeTracker
+  id: JobCFDelta
+
+- type: playTimeTracker
+  id: JobCFMerchant
+
+- type: playTimeTracker
+  id: JobCFArcaneResearcher
+
+- type: playTimeTracker
+  id: JobCFArcaneArtificer
+
+- type: job
+  id: CFAlpha
+  name: cf-job-alpha
+  description: cf-job-alpha-desc
+  playTimeTracker: JobCFAlpha
+  icon: JobIconPassenger
+  supervisors: job-supervisors-nobody
+
+- type: job
+  id: CFBeta
+  name: cf-job-beta
+  description: cf-job-beta-desc
+  playTimeTracker: JobCFBeta
+  icon: JobIconPassenger
+  supervisors: job-supervisors-nobody
+
+- type: job
+  id: CFCharlie
+  name: cf-job-charlie
+  description: cf-job-charlie-desc
+  playTimeTracker: JobCFCharlie
+  icon: JobIconPassenger
+  supervisors: job-supervisors-nobody
+
+- type: job
+  id: CFDelta
+  name: cf-job-delta
+  description: cf-job-delta-desc
+  playTimeTracker: JobCFDelta
+  icon: JobIconPassenger
+  supervisors: job-supervisors-nobody
+
+- type: job
+  id: CFMerchant
+  name: cf-job-merchant
+  description: cf-job-merchant-desc
+  playTimeTracker: JobCFMerchant
+  icon: JobIconPassenger
+  supervisors: job-supervisors-nobody
+
+- type: job
+  id: CFArcaneResearcher
+  name: cf-job-arcane-researcher
+  description: cf-job-arcane-researcher-desc
+  playTimeTracker: JobCFArcaneResearcher
+  icon: JobIconPassenger
+  supervisors: job-supervisors-nobody
+
+- type: job
+  id: CFArcaneArtificer
+  name: cf-job-arcane-artificer
+  description: cf-job-arcane-artificer-desc
+  playTimeTracker: JobCFArcaneArtificer
+  icon: JobIconPassenger
+  supervisors: job-supervisors-nobody
+
+- type: cfJobGroup
+  id: CFAdventures
+  name: cf-department-adventures
+  weight: 20
+  roles:
+  - CFAlpha
+  - CFBeta
+  - CFCharlie
+  - CFDelta
+
+- type: cfJobGroup
+  id: CFNpc
+  name: cf-department-npc
+  weight: 10
+  roles:
+  - CFMerchant
+  - CFArcaneResearcher
+  - CFArcaneArtificer

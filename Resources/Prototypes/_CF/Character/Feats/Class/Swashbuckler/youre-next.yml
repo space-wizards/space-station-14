@@ -1,0 +1,18 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFYoureNextSwashbuckler
+  name: "You're Next"
+  description: "Requires trained in Intimidation. +2 circumstance bonus to Intimidation. Changes an item. Reaction. This feature will be implemented later."
+  class: Swashbuckler
+  level: 1
+  traits:
+    - "Emotion"
+    - "Fear"
+    - "Mental"
+    - "Rogue"
+    - "Swashbuckler"
+  prerequisites:
+    - "trained in Intimidation"
+  action: Reaction
+  pendingAction: true

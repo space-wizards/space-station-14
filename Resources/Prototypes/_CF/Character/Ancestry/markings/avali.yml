@@ -1,0 +1,745 @@
+# CarpFinder: species markings. Art stays in the fork texture folder. These sprites are drawn for that body, so they are not run through the human displacement map.
+
+# Base Markings
+
+- type: marking
+  id: AvaliEarsBase
+  bodyPart: HeadSide
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  followSkinColor: true
+  forcedColoring: true
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi
+    state: ears_avalibase_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi
+    state: ears_avalibase_secondary
+
+- type: marking
+  id: AvaliTailBase
+  bodyPart: Tail
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  followSkinColor: true
+  forcedColoring: true
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi
+    state: tail_avalibase
+
+# Stripe one
+
+- type: marking
+  id: AvaliEarsStripeOne
+  bodyPart: HeadSide
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi
+    state: ears_avalibase_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi
+    state: ears_top_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi
+    state: ears_top_secondary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi
+    state: ears_avalibase_secondary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi
+    state: ears_bottom_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi
+    state: ears_bottom_secondary
+
+- type: marking
+  id: AvaliHeadStripeOne
+  bodyPart: Head
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi
+    state: head_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi
+    state: head_secondary
+
+- type: marking
+  id: AvaliTorsoStripeOne
+  bodyPart: Chest
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi
+    state: torso_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi
+    state: torso_secondary
+
+- type: marking
+  id: AvaliLArmStripeOne
+  bodyPart: LArm
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi
+    state: larm_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi
+    state: larm_secondary
+
+- type: marking
+  id: AvaliRArmStripeOne
+  bodyPart: RArm
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi
+    state: rarm_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi
+    state: rarm_secondary
+
+- type: marking
+  id: AvaliLHandStripeOne
+  bodyPart: LHand
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi
+    state: lhand_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi
+    state: lhand_secondary
+
+- type: marking
+  id: AvaliRHandStripeOne
+  bodyPart: RHand
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi
+    state: rhand_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi
+    state: rhand_secondary
+
+- type: marking
+  id: AvaliLLegStripeOne
+  bodyPart: LLeg
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi
+    state: lleg
+
+- type: marking
+  id: AvaliRLegStripeOne
+  bodyPart: RLeg
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi
+    state: rleg
+
+- type: marking
+  id: AvaliTailStripeOne
+  bodyPart: Tail
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi
+    state: tail_avalibase
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi
+    state: tail_avali_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi
+    state: tail_avali_secondary
+
+# Trim one
+
+- type: marking
+  id: AvaliEarsTrimOne
+  bodyPart: HeadSide
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi
+    state: ears_avalibase_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: ears_top_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: ears_top_secondary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi
+    state: ears_avalibase_secondary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: ears_bottom_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: ears_bottom_secondary
+
+- type: marking
+  id: AvaliHeadTrimOne
+  bodyPart: Head
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: head_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: head_secondary
+
+- type: marking
+  id: AvaliTorsoTrimOne
+  bodyPart: Chest
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: torso_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: torso_secondary
+
+- type: marking
+  id: AvaliLArmTrimOne
+  bodyPart: LArm
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: larm_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: larm_secondary
+
+- type: marking
+  id: AvaliRArmTrimOne
+  bodyPart: RArm
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: rarm_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: rarm_secondary
+
+- type: marking
+  id: AvaliRHandTrimOne
+  bodyPart: RHand
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: rhand_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: rhand_secondary
+
+- type: marking
+  id: AvaliLHandTrimOne
+  bodyPart: LHand
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: lhand_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: lhand_secondary
+
+- type: marking
+  id: AvaliLLegTrimOne
+  bodyPart: LLeg
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: lleg_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: lleg_secondary
+
+- type: marking
+  id: AvaliRLegTrimOne
+  bodyPart: RLeg
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: rleg_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: rleg_secondary
+
+- type: marking
+  id: AvaliTailTrimOne
+  bodyPart: Tail
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi
+    state: tail_avalibase
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: tail_avali_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi
+    state: tail_avali_secondary
+
+# Trim two
+
+- type: marking
+  id: AvaliEarsTrimTwo
+  bodyPart: HeadSide
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi
+    state: ears_avalibase_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi
+    state: ears_top_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi
+    state: ears_top_secondary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi
+    state: ears_avalibase_secondary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi
+    state: ears_bottom_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi
+    state: ears_bottom_secondary
+
+- type: marking
+  id: AvaliHeadTrimTwo
+  bodyPart: Head
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi
+    state: head_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi
+    state: head_secondary
+
+- type: marking
+  id: AvaliTorsoTrimTwo
+  bodyPart: Chest
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi
+    state: torso_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi
+    state: torso_secondary
+
+- type: marking
+  id: AvaliLArmTrimTwo
+  bodyPart: LArm
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi
+    state: larm_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi
+    state: larm_secondary
+
+- type: marking
+  id: AvaliRArmTrimTwo
+  bodyPart: RArm
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi
+    state: rarm_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi
+    state: rarm_secondary
+
+- type: marking
+  id: AvaliLHandTrimTwo
+  bodyPart: LHand
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi
+    state: lhand_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi
+    state: lhand_secondary
+
+- type: marking
+  id: AvaliRHandTrimTwo
+  bodyPart: RHand
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi
+    state: rhand_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi
+    state: rhand_secondary
+
+- type: marking
+  id: AvaliTailTrimTwo
+  bodyPart: Tail
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi
+    state: tail_avalibase
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi
+    state: tail_avali_primary
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi
+    state: tail_avali_secondary
+
+#Avali Earrings - HeadTop is used to hide the earrings when helmet is up. Can be changed to HeadSide when avali hardsuit sprites are finished. Alternitives are having the earrings clip, adding a value to say if the ears are visible, or removing ears when hardsuit is up
+
+- type: marking
+  id: AvaliEarringOne
+  bodyPart: HeadTop
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_earring1_1
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_earring1_2
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_earring1_3
+
+- type: marking
+  id: AvaliEarringTwo
+  bodyPart: HeadTop
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_earring2_1
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_earring2_2
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_earring2_3
+
+- type: marking
+  id: AvaliEarringThree
+  bodyPart: HeadTop
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_earring3_1
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_earring3_2
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_earring3_3
+
+- type: marking
+  id: AvaliEarringFour
+  bodyPart: HeadTop
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_earring4_1
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_earring4_2
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_earring4_3
+
+- type: marking
+  id: AvaliEarringCombined
+  bodyPart: HeadTop
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_earring_combined_1
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_earring_combined_2
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_earring_combined_3
+
+- type: marking
+  id: AvaliEarring
+  bodyPart: HeadSide
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_earring_combined_1
+
+#Avali Tailbands
+
+- type: marking
+  id: AvaliTailbandCombined
+  bodyPart: Tail
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_tailband_combined_1
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_tailband_combined_2
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_tailband_combined_3
+
+- type: marking
+  id: AvaliTailbandOne
+  bodyPart: Tail
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_tailband1_1
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_tailband1_2
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_tailband1_3
+
+- type: marking
+  id: AvaliTailbandTwo
+  bodyPart: Tail
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_tailband2_1
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_tailband2_2
+
+- type: marking
+  id: AvaliTailbandThree
+  bodyPart: Tail
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_tailband3_1
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_tailband3_2
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_jewelry.rsi
+    state: avali_tailband3_3
+
+#Multicolored Wings with Tips
+
+- type: marking
+  id: AvaliMultiwingLeftHand
+  bodyPart: LHand
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_hand_multiwing1
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_hand_multiwing2
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_hand_multiwing3
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_hand_multiwing4
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_hand_isolated
+
+- type: marking
+  id: AvaliMultiwingTipsLeftHand
+  bodyPart: LHand
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_hand_multiwing1
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_hand_multiwing2
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_hand_multiwing3
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_hand_multiwing4
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_hand_wingtips
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_hand_isolated
+
+#Multicolored Wings
+
+- type: marking
+  id: AvaliMultiwingRightHand
+  bodyPart: RHand
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_hand_multiwing1
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_hand_multiwing2
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_hand_multiwing3
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_hand_multiwing4
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_hand_isolated
+
+- type: marking
+  id: AvaliMultiwingTipsRightHand
+  bodyPart: RHand
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_hand_multiwing1
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_hand_multiwing2
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_hand_multiwing3
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_hand_multiwing4
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_hand_wingtips
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_hand_isolated
+
+#Bicolored Wings
+
+- type: marking
+  id: AvaliBicoloredRightHand
+  bodyPart: RHand
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_hand_back
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_hand_front
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_hand_isolated
+
+- type: marking
+  id: AvaliBicoloredLeftHand
+  bodyPart: LHand
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_hand_back
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_hand_front
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_hand_isolated
+
+#Bicolored Wings with Tips
+
+- type: marking
+  id: AvaliBicoloredTipsRightHand
+  bodyPart: RHand
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_hand_back
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_hand_front
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_hand_isolated
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_hand_wingtips
+
+- type: marking
+  id: AvaliBicoloredTipsLeftHand
+  bodyPart: LHand
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_hand_back
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_hand_front
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_hand_isolated
+  - sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_hand_wingtips
+
+#Additional Tail Tips
+
+- type: marking
+  id: AvaliPointedTailtip
+  bodyPart: Tail
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi
+    state: tail_avalibase
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi
+    state: tail_pointedtailtip
+
+- type: marking
+  id: AvaliChevronTailtip
+  bodyPart: Tail
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi
+    state: tail_avalibase
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi
+    state: tail_chevrontailtip
+
+- type: marking
+  id: AvaliHairBigPonytail
+  bodyPart: HeadTop
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi
+      state: avali_crest_bigponytail_primary
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi
+      state: avali_crest_bigponytail_secondary
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi
+      state: avali_crest_bigponytail_tertiary
+
+- type: marking
+  id: AvaliHairCockatiel
+  bodyPart: HeadTop
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi
+      state: avali_crest_cockatiel_primary
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi
+      state: avali_crest_cockatiel_secondary
+
+- type: marking
+  id: AvaliHairCockatoo
+  bodyPart: HeadTop
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi
+      state: avali_crest_cockatoo_primary
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi
+      state: avali_crest_cockatoo_secondary
+
+- type: marking
+  id: AvaliHairDuelFeather
+  bodyPart: HeadTop
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi
+      state: avali_crest_dualfeather_primary
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi
+      state: avali_crest_dualfeather_secondary
+
+- type: marking
+  id: AvaliHairHooked
+  bodyPart: HeadTop
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi
+      state: avali_crest_hooked_primary
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi
+      state: avali_crest_hooked_secondary
+
+- type: marking
+  id: AvaliHairJay
+  bodyPart: HeadTop
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi
+      state: avali_crest_jay_primary
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi
+      state: avali_crest_jay_secondary
+
+- type: marking
+  id: AvaliHairLongFeather
+  bodyPart: HeadTop
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi
+      state: avali_crest_longfeather_primary
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi
+      state: avali_crest_longfeather_secondary
+
+- type: marking
+  id: AvaliHairPunk
+  bodyPart: HeadTop
+  groupWhitelist: [CFAvali]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi
+      state: avali_crest_punk_primary
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi
+      state: avali_crest_punk_secondary

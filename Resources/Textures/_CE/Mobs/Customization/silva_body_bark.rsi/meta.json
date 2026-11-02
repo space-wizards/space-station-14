@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "size": {
+    "x": 48,
+    "y": 48
+  },
+  "copyright": "Created by TheShuEd",
+  "license": "CC-BY-SA-4.0",
+  "states": [
+    {
+      "name": "bark1",
+      "directions": 4
+    },
+    {
+      "name": "bark2",
+      "directions": 4
+    },
+    {
+      "name": "bark3",
+      "directions": 4
+    },
+    {
+      "name": "bark4",
+      "directions": 4
+    },
+    {
+      "name": "bark5",
+      "directions": 4
+    },
+    {
+      "name": "bark6",
+      "directions": 4
+    }
+  ]
+}

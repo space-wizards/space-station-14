@@ -1,0 +1,3612 @@
+# Pathfinder backgrounds other than Acrobat and Acolyte (those two files stay as-is).
+# The attribute list is the restricted boost. The builder always adds one free boost.
+# A Lore subcategory uses the Lore skill. Skill feats are named here and are not granted.
+- type: cfBackground
+  id: cf-background-academic-scion
+  name: "Academic Scion"
+  description: "Trained in Arcana. Lore: Academia Lore. Skill feat: Arcane Sense."
+  rarity: Uncommon
+  trainedSkills:
+    - Arcana
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-academy-dropout
+  name: "Academy Dropout"
+  description: "Trained in Arcana. Lore: Academia Lore. Skill feat: Dubious Knowledge."
+  trainedSkills:
+    - Arcana
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-acupuncturist
+  name: "Acupuncturist"
+  description: "Trained in Medicine. Lore: Acupuncture Lore. Skill feat: Battle Medicine."
+  rarity: Uncommon
+  trainedSkills:
+    - Medicine
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-aiudara-seeker
+  name: "Aiudara Seeker"
+  description: "Trained in Arcana. Lore: Portal Lore. Skill feat: Quick Identification."
+  rarity: Rare
+  trainedSkills:
+    - Arcana
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-alkenstar-outlaw
+  name: "Alkenstar Outlaw"
+  description: "Trained in Thievery. Lore: Underworld Lore. Skill feat: Subtle Theft."
+  rarity: Uncommon
+  trainedSkills:
+    - Thievery
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-alkenstar-sojourner
+  name: "Alkenstar Sojourner"
+  description: "Trained in Society. Lore: Engineering Lore. Skill feat: Streetwise."
+  rarity: Uncommon
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-alkenstar-tinker
+  name: "Alkenstar Tinker"
+  description: "Trained in Crafting. Lore: Engineering Lore. Skill feat: Alchemical Crafting."
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-alloysmith
+  name: "Alloysmith"
+  description: "Trained in Crafting. Lore: Plane of Metal Lore."
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Strength
+
+- type: cfBackground
+  id: cf-background-almas-clerk
+  name: "Almas Clerk"
+  description: "Trained in Society. Lore: Legal Lore. Skill feat: Glean Contents."
+  rarity: Uncommon
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-amnesiac
+  name: "Amnesiac"
+  description: "Trained in a skill of your choice. Grants three free attribute boosts; the builder applies two."
+  rarity: Rare
+  trainedSkills:
+    - Society
+  abilityBoosts:
+    - Strength
+    - Dexterity
+    - Constitution
+    - Intelligence
+    - Wisdom
+    - Charisma
+
+- type: cfBackground
+  id: cf-background-animal-whisperer
+  name: "Animal Whisperer"
+  description: "Trained in Nature. Skill feat: Train Animal."
+  trainedSkills:
+    - Nature
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-anti-magical
+  name: "Anti-Magical"
+  description: "Lore: Non-Magical Lore."
+  rarity: Rare
+  trainedSkills:
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-anti-tech-activist
+  name: "Anti-Tech Activist"
+  description: "Trained in Intimidation. Lore: Guild. Skill feat: Group Coercion."
+  trainedSkills:
+    - Intimidation
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-archaeologist
+  name: "Archaeologist"
+  description: "Trained in Society. Lore: Architecture Lore. Skill feat: Additional Lore."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-artisan
+  name: "Artisan"
+  description: "Trained in Crafting. Lore: Guild Lore. Skill feat: Specialty Crafting."
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Strength
+
+- type: cfBackground
+  id: cf-background-artist
+  name: "Artist"
+  description: "Trained in Crafting. Lore: Art Lore. Skill feat: Specialty Crafting."
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-aspiring-free-captain
+  name: "Aspiring Free-Captain"
+  description: "Trained in Intimidation. Lore: Sailing Lore. Skill feat: Group Coercion."
+  trainedSkills:
+    - Intimidation
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-aspiring-river-monarch
+  name: "Aspiring River Monarch"
+  description: "Trained in Society. Lore: Politics Lore. Skill feat: Courtly Graces."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-astrologer
+  name: "Astrologer"
+  description: "Trained in Occultism. Lore: Astrology Lore. Skill feat: Oddity Identification."
+  trainedSkills:
+    - Occultism
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-astrological-augur
+  name: "Astrological Augur"
+  description: "Lore: Astrology Lore."
+  rarity: Rare
+  trainedSkills:
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-atteran-rancher
+  name: "Atteran Rancher"
+  description: "Trained in Nature. Lore: Animal Lore. Skill feat: Train Animal."
+  trainedSkills:
+    - Nature
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Strength
+
+- type: cfBackground
+  id: cf-background-awful-scab
+  name: "Awful Scab"
+  description: "Trained in Medicine. Lore: Fleshforged Lore."
+  rarity: Rare
+  trainedSkills:
+    - Medicine
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-bachuan-revolutionary
+  name: "Bachuan Revolutionary"
+  description: "Trained in Society. Lore: Law Lore. Skill feat: Sign Language."
+  rarity: Uncommon
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Strength
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-back-alley-doctor
+  name: "Back-Alley Doctor"
+  description: "Trained in Medicine. Lore: Underworld Lore. Skill feat: Risky Surgery."
+  trainedSkills:
+    - Medicine
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-bandit
+  name: "Bandit"
+  description: "Trained in Intimidation. Lore: Terrain Lore. Skill feat: Group Coercion."
+  trainedSkills:
+    - Intimidation
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-banished-celestial
+  name: "Banished Celestial"
+  description: "Trained in a skill of your choice. Two free attribute boosts."
+  rarity: Rare
+  trainedSkills:
+    - Society
+  abilityBoosts:
+    - Strength
+    - Dexterity
+    - Constitution
+    - Intelligence
+    - Wisdom
+    - Charisma
+
+- type: cfBackground
+  id: cf-background-barber
+  name: "Barber"
+  description: "Trained in Medicine. Lore: Surgery Lore. Skill feat: Risky Surgery."
+  trainedSkills:
+    - Medicine
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-barkeep
+  name: "Barkeep"
+  description: "Trained in Diplomacy. Lore: Alcohol Lore. Skill feat: Hobnobber."
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-barrister
+  name: "Barrister"
+  description: "Trained in Diplomacy. Lore: Legal Lore. Skill feat: Group Impression."
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-beast-blessed
+  name: "Beast Blessed"
+  description: "Trained in Survival."
+  rarity: Rare
+  trainedSkills:
+    - Survival
+  abilityBoosts:
+    - Dexterity
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-bekyar-restorer
+  name: "Bekyar Restorer"
+  description: "Trained in Diplomacy. Lore: Abyss Lore. Skill feat: Group Impression."
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-belkzen-slayer
+  name: "Belkzen Slayer"
+  description: "Trained in Intimidation. Lore: Orc Lore. Skill feat: Intimidating Glare."
+  trainedSkills:
+    - Intimidation
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Strength
+
+- type: cfBackground
+  id: cf-background-bellflower-agent
+  name: "Bellflower Agent"
+  description: "Trained in Stealth. Lore: Underworld Lore. Skill feat: Experienced Smuggler."
+  trainedSkills:
+    - Stealth
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-black-market-smuggler
+  name: "Black Market Smuggler"
+  description: "Trained in Stealth. Lore: Underworld Lore. Skill feat: Experienced Smuggler."
+  trainedSkills:
+    - Stealth
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-blessed
+  name: "Blessed"
+  description: "Lore: Deity or GM Choice Lore."
+  rarity: Rare
+  trainedSkills:
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-bonuwat-wavetouched
+  name: "Bonuwat Wavetouched"
+  description: "Trained in Athletics. Lore: Ocean Lore. Skill feat: Underwater Marauder."
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Strength
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-bookkeeper
+  name: "Bookkeeper"
+  description: "Trained in Society. Lore: Accounting Lore. Skill feat: Eye For Numbers."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-bounty-hunter
+  name: "Bounty Hunter"
+  description: "Trained in Survival. Lore: Legal Lore. Skill feat: Experienced Tracker."
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Strength
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-bright-lion
+  name: "Bright Lion"
+  description: "Trained in Deception. Lore: Mzali Lore. Skill feat: Lie To Me."
+  trainedSkills:
+    - Deception
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Strength
+
+- type: cfBackground
+  id: cf-background-cannoneer
+  name: "Cannoneer"
+  description: "Trained in Athletics. Lore: Warfare Lore. Skill feat: Hefty Hauler."
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Strength
+
+- type: cfBackground
+  id: cf-background-charlatan
+  name: "Charlatan"
+  description: "Trained in Deception. Lore: Underworld Lore. Skill feat: Charming Liar."
+  trainedSkills:
+    - Deception
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-chelish-rebel
+  name: "Chelish Rebel"
+  description: "Trained in Society. Lore: Kintargo Lore. Skill feat: Streetwise."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-child-of-the-puddles
+  name: "Child of the Puddles"
+  description: "Trained in Acrobatics. Lore: Absalom Lore. Skill feat: Steady Balance."
+  trainedSkills:
+    - Acrobatics
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-child-of-the-twin-village
+  name: "Child of the Twin Village"
+  description: "Trained in Diplomacy. Lore: Dreamlands Lore."
+  rarity: Rare
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-child-of-westcrown
+  name: "Child of Westcrown"
+  description: "Trained in Diplomacy. Lore: Westcrown Lore. Skill feat: Group Impression."
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Strength
+
+- type: cfBackground
+  id: cf-background-chosen-one
+  name: "Chosen One"
+  description: "Lore: Fortune-Telling Lore."
+  rarity: Rare
+  trainedSkills:
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Strength
+
+- type: cfBackground
+  id: cf-background-circuit-judge
+  name: "Circuit Judge"
+  description: "Trained in Deception. Lore: Legal Lore. Skill feat: Lie To Me."
+  rarity: Uncommon
+  trainedSkills:
+    - Deception
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-clockfighter
+  name: "Clockfighter"
+  description: "Trained in Crafting. Lore: Gladitorial. Skill feat: Experienced Professional."
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-clockwork-researcher
+  name: "Clockwork Researcher"
+  description: "Trained in Society. Lore: Engineering. Skill feat: Crafter's Appraisal."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-codebreaker
+  name: "Codebreaker"
+  description: "Trained in Society. Lore: Cryptography. Skill feat: Glean Contents."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-concordance-researcher
+  name: "Concordance Researcher"
+  description: "Concordance Researcher."
+  rarity: Uncommon
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-concordance-scout
+  name: "Concordance Scout"
+  description: "Trained in Diplomacy. Skill feat: Hobnobber."
+  rarity: Uncommon
+  trainedSkills:
+    - Diplomacy
+  abilityBoosts:
+    - Charisma
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-convocation-scout
+  name: "Convocation Scout"
+  description: "Trained in Diplomacy. Lore: Politics Lore. Skill feat: Group Impression."
+  rarity: Uncommon
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-cook
+  name: "Cook"
+  description: "Trained in Survival. Lore: Cooking Lore. Skill feat: Seasoned."
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-courier
+  name: "Courier"
+  description: "Trained in Society. Lore: City Lore. Skill feat: Glean Contents."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-criminal
+  name: "Criminal"
+  description: "Trained in Stealth. Lore: Underworld Lore. Skill feat: Experienced Smuggler."
+  trainedSkills:
+    - Stealth
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-crystal-healer
+  name: "Crystal Healer"
+  description: "Trained in Nature. Lore: Plane of Earth Lore. Skill feat: Natural Medicine."
+  trainedSkills:
+    - Nature
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-cultist
+  name: "Cultist"
+  description: "Trained in Occultism. Lore: Deity or Cult Lore. Skill feat: Schooled In Secrets."
+  trainedSkills:
+    - Occultism
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-curandero
+  name: "Curandero"
+  description: "Trained in Medicine. Lore: Herbalism. Skill feat: Inoculation."
+  trainedSkills:
+    - Medicine
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-cursed
+  name: "Cursed"
+  description: "Trained in Occultism. Lore: Curse Lore."
+  rarity: Rare
+  trainedSkills:
+    - Occultism
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-cursed-family
+  name: "Cursed Family"
+  description: "Trained in Occultism. Lore: Curse Lore. Skill feat: Oddity Identification."
+  trainedSkills:
+    - Occultism
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-dauntless
+  name: "Dauntless"
+  description: "Trained in Diplomacy."
+  rarity: Rare
+  trainedSkills:
+    - Diplomacy
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-deckhand
+  name: "Deckhand"
+  description: "Trained in Acrobatics. Lore: Sailing Lore. Skill feat: Cat Fall."
+  trainedSkills:
+    - Acrobatics
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Strength
+
+- type: cfBackground
+  id: cf-background-deep-sea-diver
+  name: "Deep-Sea Diver"
+  description: "Trained in Athletics. Lore: Plane of Water Lore. Skill feat: Underwater Marauder."
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Strength
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-demon-slayer
+  name: "Demon Slayer"
+  description: "Trained in Religion. Lore: Demon Lore. Skill feat: Recognize Spell."
+  trainedSkills:
+    - Religion
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Strength
+
+- type: cfBackground
+  id: cf-background-dendrologist
+  name: "Dendrologist"
+  description: "Trained in Survival. Lore: Plane of Wood Lore. Skill feat: Terrain Expertise."
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-deputy
+  name: "Deputy"
+  description: "Trained in Survival. Lore: Hunting Lore. Skill feat: Experienced Tracker."
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-desert-tracker
+  name: "Desert Tracker"
+  description: "Trained in Survival. Lore: Desert Lore. Skill feat: Experienced Tracker."
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-detective
+  name: "Detective"
+  description: "Trained in Society. Lore: Underworld Lore. Skill feat: Streetwise."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-diobel-pearl-diver
+  name: "Diobel Pearl Diver"
+  description: "Trained in Athletics. Lore: Ocean Lore. Skill feat: Underwater Marauder."
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-discarded-duplicate
+  name: "Discarded Duplicate"
+  description: "Grants three free attribute boosts; the builder applies two."
+  rarity: Rare
+  abilityBoosts:
+    - Strength
+    - Dexterity
+    - Constitution
+    - Intelligence
+    - Wisdom
+    - Charisma
+
+- type: cfBackground
+  id: cf-background-disciple-of-the-gear
+  name: "Disciple of the Gear"
+  description: "Trained in Crafting. Skill feat: Quick Repair."
+  trainedSkills:
+    - Crafting
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-doomcaller
+  name: "Doomcaller"
+  description: "Trained in Occultism. Lore: Star lore."
+  rarity: Rare
+  trainedSkills:
+    - Occultism
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-dreamer-of-the-verdant-moon
+  name: "Dreamer of the Verdant Moon"
+  description: "Trained in Survival. Lore: Zevgavizeb Lore. Skill feat: Ravening's Desperation."
+  rarity: Uncommon
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Strength
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-driver
+  name: "Driver"
+  description: "Trained in Acrobatics. Skill feat: Assurance."
+  trainedSkills:
+    - Acrobatics
+  abilityBoosts:
+    - Dexterity
+    - Strength
+
+- type: cfBackground
+  id: cf-background-droskari-disciple
+  name: "Droskari Disciple"
+  description: "Lore: Droskar Lore. Skill feat: Skill Training."
+  trainedSkills:
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-eagle-hunter
+  name: "Eagle Hunter"
+  description: "Trained in Nature. Lore: Hunting Lore. Skill feat: Train Animal."
+  rarity: Rare
+  trainedSkills:
+    - Nature
+    - Lore
+  abilityBoosts:
+    - Strength
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-early-explorer
+  name: "Early Explorer"
+  description: "Trained in Survival. Lore: Pathfinder Lore. Skill feat: Forager."
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Strength
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-eclipseborn
+  name: "Eclipseborn"
+  description: "Lore: GM Lore."
+  rarity: Rare
+  trainedSkills:
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-eidolon-contact
+  name: "Eidolon Contact"
+  description: "Trained in your choice of Arcana, Nature, Occultism, Religion. Lore: Eidolon Type Lore. Skill feat: Dubious Knowledge."
+  trainedSkills:
+    - Arcana
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-elementally-infused
+  name: "Elementally Infused"
+  description: "Elementally Infused."
+  rarity: Rare
+  abilityBoosts:
+    - Charisma
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-emissary
+  name: "Emissary"
+  description: "Trained in Society. Lore: City Lore. Skill feat: Multilingual."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-empty-whispers
+  name: "Empty Whispers"
+  description: "Trained in Occultism. Lore: Planar Rift."
+  rarity: Rare
+  trainedSkills:
+    - Occultism
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-energy-scarred
+  name: "Energy Scarred"
+  description: "Lore: Lore associated with the chosen energy."
+  rarity: Rare
+  trainedSkills:
+    - Lore
+  abilityBoosts:
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-entertainer
+  name: "Entertainer"
+  description: "Trained in Performance. Lore: Theatre Lore. Skill feat: Fascinating Performance."
+  trainedSkills:
+    - Performance
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-faction-opportunist
+  name: "Faction Opportunist"
+  description: "Trained in Diplomacy. Lore: Guild Lore, Heraldry Lore, or Mercantile Lore. Skill feat: Hobnobber."
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-false-medium
+  name: "False Medium"
+  description: "Trained in Occultism. Lore: Fortune-Telling Lore. Skill feat: Deceptive Worship."
+  trainedSkills:
+    - Occultism
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-farmhand
+  name: "Farmhand"
+  description: "Trained in Athletics. Lore: Farming Lore."
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-farmsteader
+  name: "Farmsteader"
+  description: "Trained in Survival. Lore: Farming Lore. Skill feat: Forager."
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-fated-rival
+  name: "Fated Rival"
+  description: "Two free attribute boosts."
+  rarity: Rare
+  abilityBoosts:
+    - Strength
+    - Dexterity
+    - Constitution
+    - Intelligence
+    - Wisdom
+    - Charisma
+
+- type: cfBackground
+  id: cf-background-favored
+  name: "Favored"
+  description: "Trained in your choice of Diplomacy, Performance, Society."
+  rarity: Rare
+  trainedSkills:
+    - Diplomacy
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-feral-child
+  name: "Feral Child"
+  description: "Trained in Nature and Survival. Skill feat: Forager."
+  rarity: Rare
+  trainedSkills:
+    - Nature
+    - Survival
+  abilityBoosts:
+    - Constitution
+    - Dexterity
+    - Strength
+
+- type: cfBackground
+  id: cf-background-feybound
+  name: "Feybound"
+  description: "Lore: Fey Lore."
+  rarity: Rare
+  trainedSkills:
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-field-medic
+  name: "Field Medic"
+  description: "Trained in Medicine. Lore: Warfare Lore. Skill feat: Battle Medicine."
+  trainedSkills:
+    - Medicine
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-fightbreaker
+  name: "Fightbreaker"
+  description: "Trained in Diplomacy. Lore: City Lore. Skill feat: Group Impression."
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-finadar-leshy
+  name: "Finadar Leshy"
+  description: "Trained in Intimidation. Lore: Abyssal Lore. Skill feat: Intimidating Glare."
+  trainedSkills:
+    - Intimidation
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-final-blade-survivor
+  name: "Final Blade Survivor"
+  description: "Trained in Deception. Lore: Revolution Lore. Skill feat: Charming Liar."
+  trainedSkills:
+    - Deception
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-firebrand-follower
+  name: "Firebrand Follower"
+  description: "Trained in your choice of Athletics, Performance. Lore: Firebrand Lore."
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Strength
+
+- type: cfBackground
+  id: cf-background-fire-warden
+  name: "Fire Warden"
+  description: "Trained in Athletics. Lore: Plane of Fire Lore. Skill feat: Breath Control."
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Strength
+
+- type: cfBackground
+  id: cf-background-fireworks-performer
+  name: "Fireworks Performer"
+  description: "Trained in Performance. Lore: Fireworks Lore. Skill feat: Fascinating Performance."
+  trainedSkills:
+    - Performance
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-former-aspis-agent
+  name: "Former Aspis Agent"
+  description: "Trained in Intimidation. Lore: Aspis Consortium Lore. Skill feat: Group Coercion."
+  trainedSkills:
+    - Intimidation
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-fortune-teller
+  name: "Fortune Teller"
+  description: "Trained in Occultism. Lore: Fortune-Telling Lore. Skill feat: Oddity Identification."
+  trainedSkills:
+    - Occultism
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-freed-slave-of-absalom
+  name: "Freed Slave of Absalom"
+  description: "Trained in Society. Lore: Absalom Lore. Skill feat: Streetwise."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-free-spirit
+  name: "Free Spirit"
+  description: "Trained in Survival. Lore: Settlement or Terrain. Skill feat: Forager."
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-friendly-darkmoon-kobold
+  name: "Friendly Darkmoon Kobold"
+  description: "Trained in Diplomacy. Lore: Kobold. Skill feat: Group Impression."
+  rarity: Rare
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-friend-of-greensteeples
+  name: "Friend of Greensteeples"
+  description: "Trained in your choice of Deception, Society. Lore: Lore about a narrow category of creatures. Skill feat: Assurance."
+  rarity: Uncommon
+  trainedSkills:
+    - Deception
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-gambler
+  name: "Gambler"
+  description: "Trained in Deception. Lore: Games Lore. Skill feat: Lie To Me."
+  trainedSkills:
+    - Deception
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-geb-crusader
+  name: "Geb Crusader"
+  description: "Trained in Religion. Lore: Undead Lore. Skill feat: Student of the Canon."
+  trainedSkills:
+    - Religion
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-genie-blessed
+  name: "Genie-Blessed"
+  description: "Trained in Diplomacy. Lore: Genie Lore."
+  rarity: Rare
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Charisma
+
+- type: cfBackground
+  id: cf-background-ghostwriter
+  name: "Ghostwriter"
+  description: "Trained in Society. Lore: Scribing Lore. Skill feat: Experienced Professional."
+  rarity: Uncommon
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-gladiator
+  name: "Gladiator"
+  description: "Trained in Performance. Lore: Gladatorial Lore. Skill feat: Impressive Performance."
+  trainedSkills:
+    - Performance
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Strength
+
+- type: cfBackground
+  id: cf-background-glorianas-fixer
+  name: "Gloriana's Fixer"
+  description: "Trained in Thievery. Lore: Underworld Lore. Skill feat: Subtle Theft."
+  rarity: Uncommon
+  trainedSkills:
+    - Thievery
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-goblinblood-orphan
+  name: "Goblinblood Orphan"
+  description: "Trained in Survival. Lore: Goblin Lore."
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-gold-falls-regular
+  name: "Gold Falls Regular"
+  description: "Trained in Performance. Lore: Cooking Lore or Volcano Lore. Skill feat: Impressive Performance."
+  rarity: Uncommon
+  trainedSkills:
+    - Performance
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-goldhand-arms-dealer
+  name: "Goldhand Arms Dealer"
+  description: "Trained in Diplomacy. Lore: Mercantile Lore. Skill feat: Group Impression."
+  rarity: Uncommon
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-gossip
+  name: "Gossip"
+  description: "Trained in Diplomacy. Skill feat: Hobnobber."
+  trainedSkills:
+    - Diplomacy
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-grand-council-bureaucrat
+  name: "Grand Council Bureaucrat"
+  description: "Trained in Diplomacy. Lore: Government Lore. Skill feat: Group Impression."
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-grave-robber
+  name: "Grave Robber"
+  description: "Trained in Stealth. Lore: Underworld. Skill feat: Experienced Smuggler."
+  trainedSkills:
+    - Stealth
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Strength
+
+- type: cfBackground
+  id: cf-background-guard
+  name: "Guard"
+  description: "Trained in Intimidation. Lore: Legal or Warfare Lore. Skill feat: Quick Coercion."
+  trainedSkills:
+    - Intimidation
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Strength
+
+- type: cfBackground
+  id: cf-background-guest-of-sedeq-lodge
+  name: "Guest of Sedeq Lodge"
+  description: "Trained in your choice of Arcana, Religion. Lore: Choice of Genie Lore or Sarenrae Lore. Skill feat: Recognize Spell."
+  rarity: Uncommon
+  trainedSkills:
+    - Arcana
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-gunsmith
+  name: "Gunsmith"
+  description: "Trained in Crafting. Lore: Engineering Lore. Skill feat: Quick Repair."
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-harrow-chosen
+  name: "Harrow-Chosen"
+  description: "Two free attribute boosts."
+  rarity: Rare
+  abilityBoosts:
+    - Strength
+    - Dexterity
+    - Constitution
+    - Intelligence
+    - Wisdom
+    - Charisma
+
+- type: cfBackground
+  id: cf-background-harrow-led
+  name: "Harrow-Led"
+  description: "Trained in your choice of Occultism, Performance, Society. Lore: Harrow Lore. Skill feat: Dubious Knowledge. Two free attribute boosts."
+  trainedSkills:
+    - Occultism
+    - Lore
+  abilityBoosts:
+    - Strength
+    - Dexterity
+    - Constitution
+    - Intelligence
+    - Wisdom
+    - Charisma
+
+- type: cfBackground
+  id: cf-background-haunted
+  name: "Haunted"
+  description: "Trained in Occultism."
+  rarity: Rare
+  trainedSkills:
+    - Occultism
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-haunted-citizen
+  name: "Haunted Citizen"
+  description: "Trained in Diplomacy. Skill feat: No Cause For Alarm."
+  trainedSkills:
+    - Diplomacy
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-herbalist
+  name: "Herbalist"
+  description: "Trained in Nature. Lore: Herbalism Lore. Skill feat: Natural Medicine."
+  trainedSkills:
+    - Nature
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-hermean-expatriate
+  name: "Hermean Expatriate"
+  description: "Trained in Society. Lore: Dragon Lore. Skill feat: Skill Training."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-hermean-heritor
+  name: "Hermean Heritor"
+  description: "Trained in Society. Lore: Legal Lore. Skill feat: Multilingual, Assurance."
+  rarity: Rare
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-hermit
+  name: "Hermit"
+  description: "Trained in your choice of Nature, Occultism. Lore: Location Lore. Skill feat: Dubious Knowledge."
+  trainedSkills:
+    - Nature
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-highborn-snoop
+  name: "Highborn Snoop"
+  description: "Trained in Society. Lore: Guild Lore. Skill feat: Courtly Graces."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-hired-killer
+  name: "Hired Killer"
+  description: "Trained in Stealth. Lore: Underworld Lore. Skill feat: Terrain Stalker."
+  trainedSkills:
+    - Stealth
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Strength
+
+- type: cfBackground
+  id: cf-background-hookclaw-digger
+  name: "Hookclaw Digger"
+  description: "Trained in Crafting. Lore: Mining Lore, Engineering Lore. Skill feat: Improvise Tool."
+  rarity: Rare
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Strength
+
+- type: cfBackground
+  id: cf-background-hounded-thief
+  name: "Hounded Thief"
+  description: "Trained in Thievery. Lore: Underworld. Skill feat: Pickpocket."
+  trainedSkills:
+    - Thievery
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-hunter
+  name: "Hunter"
+  description: "Trained in Survival. Lore: Tanning Lore. Skill feat: Survey Wildlife."
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-inlander
+  name: "Inlander"
+  description: "Trained in Survival. Lore: Terrain Lore. Skill feat: Survey Wildlife."
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-insurgent
+  name: "Insurgent"
+  description: "Trained in Deception. Lore: Warfare Lore. Skill feat: Lengthy Diversion."
+  trainedSkills:
+    - Deception
+    - Lore
+  abilityBoosts:
+    - Strength
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-iolite-trainee-hobgoblin
+  name: "Iolite Trainee Hobgoblin"
+  description: "Trained in Society. Lore: Warfare Lore. Skill feat: Sign Language."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-issian-partisan
+  name: "Issian Partisan"
+  description: "Trained in Deception. Lore: Underworld Lore. Skill feat: Charming Liar."
+  trainedSkills:
+    - Deception
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-jeweler
+  name: "Jeweler"
+  description: "Trained in Crafting. Lore: Gem Lore. Skill feat: Crafter's Appraisal."
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-junk-collector
+  name: "Junk Collector"
+  description: "Trained in Crafting. Skill feat: Crafter's Appraisal."
+  trainedSkills:
+    - Crafting
+  abilityBoosts:
+    - Dexterity
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-junker
+  name: "Junker"
+  description: "Trained in Athletics. Skill feat: Hefty Hauler."
+  trainedSkills:
+    - Athletics
+  abilityBoosts:
+    - Strength
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-kaiju-stalker
+  name: "Kaiju Stalker"
+  description: "Trained in Athletics. Lore: Kaiju Lore."
+  rarity: Rare
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Strength
+
+- type: cfBackground
+  id: cf-background-kalistrade-follower
+  name: "Kalistrade Follower"
+  description: "Trained in Diplomacy. Lore: Kalistrade Lore. Skill feat: Bargain Hunter."
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-kyonin-emissary
+  name: "Kyonin Emissary"
+  description: "Trained in Society. Lore: Politics Lore. Skill feat: Multilingual."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-laborer
+  name: "Laborer"
+  description: "Trained in Athletics. Lore: Labor Lore. Skill feat: Hefty Hauler."
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Strength
+
+- type: cfBackground
+  id: cf-background-lastwall-survivor
+  name: "Lastwall Survivor"
+  description: "Trained in Medicine. Lore: Undead Lore. Skill feat: Battle Medicine."
+  trainedSkills:
+    - Medicine
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-legacy-of-the-hammer
+  name: "Legacy of the Hammer"
+  description: "Trained in Thievery. Lore: Engineering Lore. Skill feat: Concealing Legerdemain."
+  rarity: Uncommon
+  trainedSkills:
+    - Thievery
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-legendary-parents
+  name: "Legendary Parents"
+  description: "Trained in Intimidation. Lore: Genealogy Lore. Skill feat: Group Coercion."
+  rarity: Rare
+  trainedSkills:
+    - Intimidation
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-lesser-scion
+  name: "Lesser Scion"
+  description: "Trained in Diplomacy. Lore: Heraldry Lore. Skill feat: Hobnobber."
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-library-dweller
+  name: "Library Dweller"
+  description: "Trained in Occultism. Lore: Library Lore. Skill feat: Additional Lore."
+  rarity: Uncommon
+  trainedSkills:
+    - Occultism
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-lost-and-alone
+  name: "Lost and Alone"
+  description: "Trained in Intimidation. Lore: Warfare Lore. Skill feat: Intimidating Glare."
+  trainedSkills:
+    - Intimidation
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Strength
+
+- type: cfBackground
+  id: cf-background-lumber-consortium-laborer
+  name: "Lumber Consortium Laborer"
+  description: "Trained in Athletics. Lore: Forest Lore."
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Strength
+
+- type: cfBackground
+  id: cf-background-magaambya-academic
+  name: "Magaambya Academic"
+  description: "Trained in your choice of Arcana, Nature. Lore: Academia Lore. Skill feat: Recognize Spell."
+  trainedSkills:
+    - Arcana
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-magical-experiment
+  name: "Magical Experiment"
+  description: "Trained in Occultism. Lore: Academia Lore."
+  rarity: Rare
+  trainedSkills:
+    - Occultism
+    - Lore
+  abilityBoosts:
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-magical-merchant
+  name: "Magical Merchant"
+  description: "Trained in Crafting. Lore: Mercantile Lore. Skill feat: Crafter's Appraisal."
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-magical-misfit
+  name: "Magical Misfit"
+  description: "Trained in Arcana. Lore: Underworld Lore. Skill feat: Trick Magic Item."
+  trainedSkills:
+    - Arcana
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-mammoth-speaker
+  name: "Mammoth Speaker"
+  description: "Trained in Nature. Lore: Animal Lore. Skill feat: Train Animal."
+  trainedSkills:
+    - Nature
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-mana-wastes-refugee
+  name: "Mana Wastes Refugee"
+  description: "Trained in Arcana. Lore: Wilderness Lore. Skill feat: Trick Magic Item."
+  trainedSkills:
+    - Arcana
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-mantis-scion
+  name: "Mantis Scion"
+  description: "Trained in Stealth. Lore: Assassin Lore."
+  trainedSkills:
+    - Stealth
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-martial-disciple
+  name: "Martial Disciple"
+  description: "Trained in your choice of Acrobatics, Athletics. Lore: Warfare Lore."
+  trainedSkills:
+    - Acrobatics
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Strength
+
+- type: cfBackground
+  id: cf-background-mechanic
+  name: "Mechanic"
+  description: "Trained in Crafting. Lore: Engineering. Skill feat: Quick Repair."
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Strength
+
+- type: cfBackground
+  id: cf-background-mechanical-symbiosis
+  name: "Mechanical Symbiosis"
+  description: "Trained in Arcana."
+  rarity: Rare
+  trainedSkills:
+    - Arcana
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-medicinal-clocksmith
+  name: "Medicinal Clocksmith"
+  description: "Trained in Medicine. Lore: Engineering. Skill feat: Risky Surgery."
+  trainedSkills:
+    - Medicine
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-menagerie-dung-sweeper
+  name: "Menagerie Dung Sweeper"
+  description: "Trained in Nature. Lore: Animal Lore. Skill feat: Train Animal."
+  trainedSkills:
+    - Nature
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-merabite-prodigy
+  name: "Merabite Prodigy"
+  description: "Trained in Crafting. Lore: Alchemical Lore."
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-merchant
+  name: "Merchant"
+  description: "Trained in Diplomacy. Lore: Mercantile Lore. Skill feat: Bargain Hunter."
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-miner
+  name: "Miner"
+  description: "Trained in Survival. Lore: Mining Lore. Skill feat: Terrain Expertise."
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Strength
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-missionary
+  name: "Missionary"
+  description: "Trained in Diplomacy. Lore: Scribing Lore. Skill feat: Group Impression."
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-molthuni-mercenary
+  name: "Molthuni Mercenary"
+  description: "Trained in Athletics. Lore: Mercenary Lore. Skill feat: Experienced Professional."
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Strength
+
+- type: cfBackground
+  id: cf-background-mortuarium-survivor
+  name: "Mortuarium Survivor"
+  description: "Trained in Arcana. Lore: Necromancy Lore."
+  rarity: Rare
+  trainedSkills:
+    - Arcana
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-musical-prodigy
+  name: "Musical Prodigy"
+  description: "Trained in Performance. Lore: Music Lore. Skill feat: Virtuosic Performer."
+  trainedSkills:
+    - Performance
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-mystic-tutor
+  name: "Mystic Tutor"
+  description: "Trained in your choice of Arcana, Occultism. Lore: Academia Lore. Skill feat: Recognize Spell."
+  rarity: Rare
+  trainedSkills:
+    - Arcana
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-necromancers-apprentice
+  name: "Necromancer's Apprentice"
+  description: "Trained in Arcana. Lore: Necromancy. Skill feat: Quick Identification."
+  trainedSkills:
+    - Arcana
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-nexian-mystic
+  name: "Nexian Mystic"
+  description: "Trained in Arcana. Lore: Planar Lore (except Material Plane). Skill feat: Arcane Sense."
+  trainedSkills:
+    - Arcana
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-night-watch
+  name: "Night Watch"
+  description: "Trained in Intimidation. Skill feat: Quick Coercion."
+  trainedSkills:
+    - Intimidation
+  abilityBoosts:
+    - Charisma
+    - Strength
+
+- type: cfBackground
+  id: cf-background-nirmathi-guerrilla
+  name: "Nirmathi Guerrilla"
+  description: "Trained in Stealth. Lore: Forest Lore. Skill feat: Terrain Stalker."
+  trainedSkills:
+    - Stealth
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-noble
+  name: "Noble"
+  description: "Trained in Society. Lore: Genealogy or Heraldry Lore. Skill feat: Courtly Graces."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-nocturnal-navigator
+  name: "Nocturnal Navigator"
+  description: "Trained in Survival."
+  rarity: Rare
+  trainedSkills:
+    - Survival
+  abilityBoosts:
+    - Dexterity
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-nomad
+  name: "Nomad"
+  description: "Trained in Survival. Lore: Terrain Lore."
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-occult-librarian
+  name: "Occult Librarian"
+  description: "Trained in Occultism. Lore: Academia Lore. Skill feat: Schooled In Secrets."
+  trainedSkills:
+    - Occultism
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-ocean-diver
+  name: "Ocean Diver"
+  description: "Trained in Athletics. Lore: Ocean Lore. Skill feat: Underwater Marauder."
+  rarity: Uncommon
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-oenopion-ooze-tender
+  name: "Oenopion-Ooze Tender"
+  description: "Trained in Crafting. Lore: Ooze Lore. Skill feat: Dubious Knowledge."
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-once-bitten
+  name: "Once Bitten"
+  description: "Trained in Medicine. Lore: Undead. Skill feat: Battle Medicine."
+  trainedSkills:
+    - Medicine
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-onyx-trader
+  name: "Onyx Trader"
+  description: "Trained in Society. Lore: Mercantile Lore. Skill feat: Multilingual."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-osirionologist
+  name: "Osirionologist"
+  description: "Trained in Occultism. Lore: Ancient Osirion Lore. Skill feat: Oddity Identification."
+  trainedSkills:
+    - Occultism
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-osprey-barnraiser
+  name: "Osprey Barnraiser"
+  description: "Trained in Nature. Lore: Architecture Lore. Skill feat: Natural Medicine."
+  rarity: Rare
+  trainedSkills:
+    - Nature
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Strength
+
+- type: cfBackground
+  id: cf-background-osprey-fisher
+  name: "Osprey Fisher"
+  description: "Trained in Crafting. Lore: Sailing Lore. Skill feat: Quick Repair."
+  rarity: Rare
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Strength
+
+- type: cfBackground
+  id: cf-background-osprey-scion
+  name: "Osprey Scion"
+  description: "Trained in Diplomacy. Lore: Xin-Edasseril Lore. Skill feat: Hobnobber."
+  rarity: Rare
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-osprey-scout
+  name: "Osprey Scout"
+  description: "Trained in Survival. Lore: Scouting Lore. Skill feat: Experienced Tracker."
+  rarity: Rare
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-osprey-scribe
+  name: "Osprey Scribe"
+  description: "Trained in Society. Lore: Demon Lore. Skill feat: Streetwise."
+  rarity: Rare
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-osprey-spellcaster
+  name: "Osprey Spellcaster"
+  description: "Trained in your choice of Arcana, Nature, Occultism, Religion. Skill feat: Quick Identification."
+  rarity: Rare
+  trainedSkills:
+    - Arcana
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-osprey-warrior
+  name: "Osprey Warrior"
+  description: "Trained in Athletics. Lore: Gorum Lore. Skill feat: Hefty Hauler."
+  rarity: Rare
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Strength
+
+- type: cfBackground
+  id: cf-background-otherworldly-mission
+  name: "Otherworldly Mission"
+  description: "Trained in Religion."
+  rarity: Rare
+  trainedSkills:
+    - Religion
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-outrider
+  name: "Outrider"
+  description: "Trained in Nature. Lore: Plains Lore. Skill feat: Express Rider."
+  trainedSkills:
+    - Nature
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-ozem-experience
+  name: "Ozem Experience"
+  description: "Trained in Society. Lore: Warfare. Skill feat: Courtly Graces."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Strength
+
+- type: cfBackground
+  id: cf-background-party-scholar
+  name: "Party Scholar"
+  description: "Trained in Deception. Lore: Alcohol Lore. Skill feat: Charming Liar."
+  rarity: Uncommon
+  trainedSkills:
+    - Deception
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-pathfinder-hopeful
+  name: "Pathfinder Hopeful"
+  description: "Trained in Society. Lore: Pathfinder Society Lore. Skill feat: Additional Lore."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-pathfinder-recruiter
+  name: "Pathfinder Recruiter"
+  description: "Trained in Diplomacy. Lore: City Lore. Skill feat: Group Impression."
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-perfection-seeker
+  name: "Perfection Seeker"
+  description: "Trained in Acrobatics. Lore: Warfare Lore. Skill feat: Cat Fall."
+  trainedSkills:
+    - Acrobatics
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-pilgrim
+  name: "Pilgrim"
+  description: "Trained in Religion. Lore: Deity Lore. Skill feat: Pilgrim's Token."
+  trainedSkills:
+    - Religion
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-pillar
+  name: "Pillar"
+  description: "Trained in your choice of Medicine, Society, Survival. Lore: Labor. Skill feat: Additional Lore."
+  trainedSkills:
+    - Medicine
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-planar-migrant
+  name: "Planar Migrant"
+  description: "Trained in Athletics. Skill feat: Hefty Hauler, Prescient Planner."
+  rarity: Rare
+  trainedSkills:
+    - Athletics
+  abilityBoosts:
+    - Constitution
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-plant-whisperer
+  name: "Plant Whisperer"
+  description: "Trained in Nature. Lore: Plant Lore. Skill feat: Natural Medicine."
+  trainedSkills:
+    - Nature
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-press-ganged-g-g
+  name: "Press-Ganged (G&G)"
+  description: "Trained in Athletics. Lore: Labor Lore. Skill feat: Armor Assist."
+  rarity: Uncommon
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Strength
+
+- type: cfBackground
+  id: cf-background-press-ganged-lowg
+  name: "Press-Ganged (LOWG)"
+  description: "Trained in Society. Lore: Sailing Lore. Skill feat: Experienced Professional."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Strength
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-printer
+  name: "Printer"
+  description: "Trained in Society. Lore: Scribing. Skill feat: Multilingual."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-prisoner
+  name: "Prisoner"
+  description: "Trained in Stealth. Lore: Underworld Lore. Skill feat: Experienced Smuggler."
+  trainedSkills:
+    - Stealth
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Strength
+
+- type: cfBackground
+  id: cf-background-professional-letter-writer
+  name: "Professional Letter Writer"
+  description: "Lore: Scribing Lore."
+  rarity: Rare
+  trainedSkills:
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-purveyor-of-the-bizarre
+  name: "Purveyor of the Bizarre"
+  description: "Trained in Arcana. Lore: Mercantile Lore. Skill feat: Quick Identification."
+  trainedSkills:
+    - Arcana
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-pyre-tender
+  name: "Pyre Tender"
+  description: "Trained in Crafting. Lore: Funeral. Skill feat: Alchemical Crafting."
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-quick
+  name: "Quick"
+  description: "Trained in Deception. Lore: Undead Lore. Skill feat: Charming Liar."
+  trainedSkills:
+    - Deception
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-quick-refugee
+  name: "Quick Refugee"
+  description: "Trained in Stealth. Lore: Undead Lore."
+  rarity: Rare
+  trainedSkills:
+    - Stealth
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-raised-by-belief
+  name: "Raised by Belief"
+  description: "Skill feat: Assurance. Two free attribute boosts."
+  abilityBoosts:
+    - Strength
+    - Dexterity
+    - Constitution
+    - Intelligence
+    - Wisdom
+    - Charisma
+
+- type: cfBackground
+  id: cf-background-razmiran-faithful
+  name: "Razmiran Faithful"
+  description: "Trained in Intimidation. Lore: Razmir Lore. Skill feat: Group Coercion."
+  trainedSkills:
+    - Intimidation
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Strength
+
+- type: cfBackground
+  id: cf-background-reborn-soul
+  name: "Reborn Soul"
+  description: "Reborn Soul."
+  rarity: Rare
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-reclaimed
+  name: "Reclaimed"
+  description: "Trained in Intimidation. Lore: Crimson Reclaimers. Skill feat: Group Coercion."
+  trainedSkills:
+    - Intimidation
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-reclaimer-investigator
+  name: "Reclaimer Investigator"
+  description: "Trained in Occultism. Lore: Crimson Reclaimers. Skill feat: Oddity Identification."
+  trainedSkills:
+    - Occultism
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-refugee-fall-of-plaguestone
+  name: "Refugee (Fall of Plaguestone)"
+  description: "Trained in Survival. Lore: Hunting Lore. Skill feat: Forager."
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-refugee-pc2
+  name: "Refugee (PC2)"
+  description: "Trained in Society. Lore: City Lore. Skill feat: Streetwise."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-relentless-dedication
+  name: "Relentless Dedication"
+  description: "Lore: Warfare. Skill feat: Canny Acumen."
+  rarity: Rare
+  trainedSkills:
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Strength
+
+- type: cfBackground
+  id: cf-background-remittance-agent
+  name: "Remittance Agent"
+  description: "Trained in Society. Skill feat: Experienced Professional."
+  trainedSkills:
+    - Society
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-respected-mentor
+  name: "Respected Mentor"
+  description: "Trained in Performance. Lore: Academia Lore. Skill feat: Fascinating Performance."
+  rarity: Uncommon
+  trainedSkills:
+    - Performance
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-returned
+  name: "Returned"
+  description: "Lore: **Boneyard Lore (with Additional Lore perks). Skill feat: Diehard, Additional Lore."
+  rarity: Rare
+  trainedSkills:
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-revenant
+  name: "Revenant"
+  description: "Trained in Religion. Lore: Boneyard Lore."
+  rarity: Rare
+  trainedSkills:
+    - Religion
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-rivethun-adherent
+  name: "Rivethun Adherent"
+  description: "Trained in Occultism. Lore: Spirit Lore. Skill feat: Recognize Spell."
+  trainedSkills:
+    - Occultism
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-root-worker
+  name: "Root Worker"
+  description: "Trained in Occultism. Lore: Herbalism Lore. Skill feat: Root Magic."
+  trainedSkills:
+    - Occultism
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-rostland-partisan
+  name: "Rostland Partisan"
+  description: "Trained in Diplomacy. Lore: Politics Lore. Skill feat: Group Impression."
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-royalty
+  name: "Royalty"
+  description: "Trained in Society. Skill feat: Courtly Graces."
+  rarity: Rare
+  trainedSkills:
+    - Society
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-ruby-phoenix-enthusiast
+  name: "Ruby Phoenix Enthusiast"
+  description: "Trained in Athletics. Lore: Gladatorial Lore. Skill feat: Combat Climber."
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Strength
+
+- type: cfBackground
+  id: cf-background-runaway-noble
+  name: "Runaway Noble"
+  description: "Trained in Diplomacy. Skill feat: Bon Mot."
+  rarity: Uncommon
+  trainedSkills:
+    - Diplomacy
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-runner
+  name: "Runner"
+  description: "Trained in Athletics. Lore: City. Skill feat: Quick Jump."
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Strength
+
+- type: cfBackground
+  id: cf-background-saboteur
+  name: "Saboteur"
+  description: "Trained in Thievery. Lore: Engineering. Skill feat: Concealing Legerdemain."
+  trainedSkills:
+    - Thievery
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Strength
+
+- type: cfBackground
+  id: cf-background-sailor
+  name: "Sailor"
+  description: "Trained in Athletics. Lore: Sailing Lore. Skill feat: Underwater Marauder."
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Strength
+
+- type: cfBackground
+  id: cf-background-saloon-entertainer
+  name: "Saloon Entertainer"
+  description: "Trained in Performance. Skill feat: Virtuosic Performer."
+  trainedSkills:
+    - Performance
+  abilityBoosts:
+    - Charisma
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-sandswept-survivor
+  name: "Sandswept Survivor"
+  description: "Trained in Survival. Lore: Lore about a specific type of undead. Skill feat: Terrain Expertise."
+  rarity: Uncommon
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-sarkorian-reclaimer
+  name: "Sarkorian Reclaimer"
+  description: "Trained in Medicine. Lore: Abyssal Lore. Skill feat: Battle Medicine."
+  trainedSkills:
+    - Medicine
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-sarkorian-survivor
+  name: "Sarkorian Survivor"
+  description: "Trained in Survival. Lore: Sarkorian History Lore. Skill feat: Forager."
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Strength
+
+- type: cfBackground
+  id: cf-background-saved-by-clockwork
+  name: "Saved by Clockwork"
+  description: "Trained in Crafting."
+  rarity: Rare
+  trainedSkills:
+    - Crafting
+  abilityBoosts:
+    - Intelligence
+    - Strength
+
+- type: cfBackground
+  id: cf-background-savior-of-air
+  name: "Savior of Air"
+  description: "Trained in Acrobatics. Lore: Elemental Lords Lore or Elemental Plane Lore. Skill feat: Cat Fall."
+  trainedSkills:
+    - Acrobatics
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-scavenger
+  name: "Scavenger"
+  description: "Trained in Survival. Lore: City Lore. Skill feat: Forager."
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-scholar
+  name: "Scholar"
+  description: "Trained in your choice of Arcana, Nature, Occultism, Religion. Lore: Academia Lore."
+  trainedSkills:
+    - Arcana
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-scholar-of-the-ancients
+  name: "Scholar of the Ancients"
+  description: "Trained in Arcana. Lore: Azlant Lore. Skill feat: Quick Identification."
+  trainedSkills:
+    - Arcana
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-scholar-of-the-sky-key
+  name: "Scholar of the Sky Key"
+  description: "Trained in Crafting. Lore: Engineering Lore. Skill feat: Quick Repair."
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-school-medic
+  name: "School Medic"
+  description: "Trained in Medicine. Lore: Academia Lore. Skill feat: Battle Medicine."
+  rarity: Uncommon
+  trainedSkills:
+    - Medicine
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-scion-of-slayers
+  name: "Scion of Slayers"
+  description: "Trained in Athletics. Lore: Undead."
+  rarity: Rare
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Strength
+
+- type: cfBackground
+  id: cf-background-scout
+  name: "Scout"
+  description: "Trained in Survival. Lore: Terrain Lore. Skill feat: Forager."
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-secular-medic
+  name: "Secular Medic"
+  description: "Trained in Medicine. Lore: Anatomy Lore. Skill feat: Battle Medicine."
+  trainedSkills:
+    - Medicine
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-seer-of-the-dead
+  name: "Seer of the Dead"
+  description: "Trained in Religion. Lore: Undead Lore."
+  rarity: Rare
+  trainedSkills:
+    - Religion
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-senghor-sailor
+  name: "Senghor Sailor"
+  description: "Trained in Crafting. Lore: Sailing Lore. Skill feat: Quick Repair."
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-sentinel-reflectance
+  name: "Sentinel Reflectance"
+  description: "Trained in Diplomacy. Lore: Shining Sentinels. Skill feat: No Cause For Alarm."
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Strength
+
+- type: cfBackground
+  id: cf-background-servant
+  name: "Servant"
+  description: "Trained in Society. Lore: Labor Lore. Skill feat: Read Lips."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-sewer-dragon
+  name: "Sewer Dragon"
+  description: "Trained in Crafting. Lore: Kobold Lore. Skill feat: Snare Crafting."
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-shadow-haunted
+  name: "Shadow Haunted"
+  description: "Trained in Intimidation. Lore: Shadow Plane Lore. Skill feat: Quick Coercion."
+  trainedSkills:
+    - Intimidation
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-shadow-lodge-defector
+  name: "Shadow Lodge Defector"
+  description: "Trained in Deception. Lore: Underworld Lore. Skill feat: Lie To Me."
+  trainedSkills:
+    - Deception
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-shadow-war-survivor
+  name: "Shadow War Survivor"
+  description: "Trained in Society. Lore: Absalom Lore. Skill feat: Streetwise."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-sheriff
+  name: "Sheriff"
+  description: "Trained in Intimidation. Lore: Hunting Lore. Skill feat: Group Coercion."
+  rarity: Uncommon
+  trainedSkills:
+    - Intimidation
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-shoanti-name-bearer
+  name: "Shoanti Name-Bearer"
+  description: "Trained in Athletics. Lore: Quah Lore. Skill feat: Combat Climber."
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Strength
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-shory-seeker
+  name: "Shory Seeker"
+  description: "Trained in Crafting. Lore: Shory Lore. Skill feat: Specialty Crafting."
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-sign-bound
+  name: "Sign Bound"
+  description: "Lore: Astrology. Two free attribute boosts."
+  rarity: Rare
+  trainedSkills:
+    - Lore
+  abilityBoosts:
+    - Strength
+    - Dexterity
+    - Constitution
+    - Intelligence
+    - Wisdom
+    - Charisma
+
+- type: cfBackground
+  id: cf-background-silk-farmer
+  name: "Silk Farmer"
+  description: "Trained in Crafting. Lore: Sericulture Lore. Skill feat: Specialty Crafting."
+  rarity: Uncommon
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-sky-rider
+  name: "Sky Rider"
+  description: "Trained in Acrobatics. Lore: Plane of Air Lore. Skill feat: Cat Fall."
+  trainedSkills:
+    - Acrobatics
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-sodden-scavenger
+  name: "Sodden Scavenger"
+  description: "Trained in Survival. Lore: Swamp Lore. Skill feat: Forager."
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-song-of-the-deep
+  name: "Song of the Deep"
+  description: "Trained in Athletics. Lore: Ocean Lore."
+  rarity: Rare
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Constitution
+    - Strength
+
+- type: cfBackground
+  id: cf-background-spell-seeker
+  name: "Spell Seeker"
+  description: "Trained in your choice of Arcana, Occultism. Lore: Library Lore. Skill feat: Recognize Spell."
+  trainedSkills:
+    - Arcana
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-spotter
+  name: "Spotter"
+  description: "Trained in Stealth. Lore: Scouting Lore. Skill feat: Terrain Stalker."
+  trainedSkills:
+    - Stealth
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-squire
+  name: "Squire"
+  description: "Trained in Athletics. Lore: Heraldry Lore or Warfare Lore. Skill feat: Armor Assist."
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Strength
+
+- type: cfBackground
+  id: cf-background-star-athlete
+  name: "Star Athlete"
+  description: "Trained in Athletics. Lore: Games Lore."
+  rarity: Uncommon
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Strength
+
+- type: cfBackground
+  id: cf-background-starless-one
+  name: "Starless One"
+  description: "Trained in Occultism. Lore: Astrology Lore."
+  rarity: Rare
+  trainedSkills:
+    - Occultism
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-storm-survivor
+  name: "Storm Survivor"
+  description: "Trained in Survival. Lore: Weather Lore. Skill feat: Forager."
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Strength
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-streetfood-vendor
+  name: "Streetfood Vendor"
+  description: "Lore: Cooking Lore. Skill feat: Seasoned."
+  trainedSkills:
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Strength
+
+- type: cfBackground
+  id: cf-background-street-preacher
+  name: "Street Preacher"
+  description: "Trained in Religion. Lore: Deity Lore. Skill feat: Dubious Knowledge."
+  trainedSkills:
+    - Religion
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-street-urchin
+  name: "Street Urchin"
+  description: "Trained in Thievery. Lore: City Lore. Skill feat: Pickpocket."
+  trainedSkills:
+    - Thievery
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-student-of-magic
+  name: "Student of Magic"
+  description: "Trained in your choice of Arcana, Nature, Occultism, Religion. Lore: Academia Lore. Skill feat: Recognize Spell."
+  trainedSkills:
+    - Arcana
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-sun-dancer
+  name: "Sun Dancer"
+  description: "Trained in Performance. Skill feat: Fascinating Performance."
+  rarity: Rare
+  trainedSkills:
+    - Performance
+  abilityBoosts:
+    - Charisma
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-surge-investigator
+  name: "Surge Investigator"
+  description: "Trained in your choice of Nature, Occultism. Lore: Magical Terrain Lore. Skill feat: Terrain Expertise."
+  rarity: Rare
+  trainedSkills:
+    - Nature
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-taldan-schemer
+  name: "Taldan Schemer"
+  description: "Trained in Diplomacy. Lore: Politics Lore. Skill feat: Hobnobber."
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-tall-tale
+  name: "Tall Tale"
+  description: "Trained in Performance. Skill feat: Impressive Performance."
+  rarity: Rare
+  trainedSkills:
+    - Performance
+  abilityBoosts:
+    - Charisma
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-tapestry-refugee
+  name: "Tapestry Refugee"
+  description: "Trained in your choice of Medicine, Stealth. Lore: Terrain Lore."
+  trainedSkills:
+    - Medicine
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-tax-collector
+  name: "Tax Collector"
+  description: "Trained in Intimidation. Lore: City Lore. Skill feat: Quick Coercion."
+  trainedSkills:
+    - Intimidation
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Strength
+
+- type: cfBackground
+  id: cf-background-teacher
+  name: "Teacher"
+  description: "Trained in your choice of Performance, Society. Lore: Academia Lore. Skill feat: Experienced Professional."
+  trainedSkills:
+    - Performance
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-teamster
+  name: "Teamster"
+  description: "Trained in Nature. Lore: Mercantile Lore. Skill feat: Train Animal."
+  trainedSkills:
+    - Nature
+    - Lore
+  abilityBoosts:
+    - Strength
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-tech-reliant
+  name: "Tech-Reliant"
+  description: "Trained in Crafting and Medicine. Skill feat: Battle Medicine."
+  rarity: Rare
+  trainedSkills:
+    - Crafting
+    - Medicine
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-thassilonian-delver
+  name: "Thassilonian Delver"
+  description: "Trained in Arcana. Lore: Thassilonian History Lore. Skill feat: Arcane Sense."
+  trainedSkills:
+    - Arcana
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-thassilonian-traveler
+  name: "Thassilonian Traveler"
+  description: "Trained in Arcana. Lore: Thassilon Lore. Skill feat: Dubious Knowledge."
+  trainedSkills:
+    - Arcana
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-thrill-seeker
+  name: "Thrill-Seeker"
+  description: "Trained in Athletics. Lore: Engineering Lore. Skill feat: Combat Climber."
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Strength
+
+- type: cfBackground
+  id: cf-background-thrune-loyalist
+  name: "Thrune Loyalist"
+  description: "Trained in Religion. Lore: Hell Lore. Skill feat: Student of the Canon."
+  trainedSkills:
+    - Religion
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-thuvian-unifier
+  name: "Thuvian Unifier"
+  description: "Trained in Intimidation. Lore: Politics Lore. Skill feat: Quick Coercion."
+  trainedSkills:
+    - Intimidation
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Strength
+
+- type: cfBackground
+  id: cf-background-tide-watcher
+  name: "Tide Watcher"
+  description: "Trained in Nature. Lore: Ocean Lore."
+  rarity: Rare
+  trainedSkills:
+    - Nature
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-tiffin-box-deliverer
+  name: "Tiffin Box Deliverer"
+  description: "Trained in Society. Lore: Labor Lore. Skill feat: Streetwise."
+  rarity: Uncommon
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-time-traveler
+  name: "Time Traveler"
+  description: "Lore: Three Different Lore."
+  rarity: Rare
+  trainedSkills:
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-tinker
+  name: "Tinker"
+  description: "Trained in Crafting. Lore: Engineering Lore. Skill feat: Specialty Crafting."
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-tomb-born
+  name: "Tomb Born"
+  description: "Lore: Undead."
+  rarity: Rare
+  trainedSkills:
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-touched-by-dahak
+  name: "Touched by Dahak"
+  description: "Trained in Athletics. Lore: Dragon Lore. Skill feat: Titan Wrestler."
+  rarity: Rare
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Strength
+
+- type: cfBackground
+  id: cf-background-toymaker
+  name: "Toymaker"
+  description: "Trained in Crafting. Lore: Mercantile."
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-trade-consortium-underling
+  name: "Trade Consortium Underling"
+  description: "Trained in Society. Lore: Business Lore. Skill feat: Experienced Professional."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-trailblazer
+  name: "Trailblazer"
+  description: "Trained in Survival. Lore: Cartography Lore. Skill feat: Terrain Expertise."
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-translator
+  name: "Translator"
+  description: "Trained in Society. Lore: Scribing Lore. Skill feat: Multilingual."
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-traveling-gourmand
+  name: "Traveling Gourmand"
+  description: "Trained in Survival. Lore: Cooking Lore. Skill feat: Forager."
+  rarity: Uncommon
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-tyrant-witness
+  name: "Tyrant Witness"
+  description: "Lore: Undead."
+  rarity: Rare
+  trainedSkills:
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-ulfen-raider
+  name: "Ulfen Raider"
+  description: "Trained in Intimidation. Lore: Sailing Lore. Skill feat: Intimidating Glare."
+  trainedSkills:
+    - Intimidation
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Strength
+
+- type: cfBackground
+  id: cf-background-undersea-enthusiast
+  name: "Undersea Enthusiast"
+  description: "Trained in Athletics. Lore: Ocean Lore. Skill feat: Underwater Marauder."
+  trainedSkills:
+    - Athletics
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Strength
+
+- type: cfBackground
+  id: cf-background-undertaker
+  name: "Undertaker"
+  description: "Trained in Medicine. Skill feat: Forensic Acumen."
+  trainedSkills:
+    - Medicine
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-union-representative
+  name: "Union Representative"
+  description: "Trained in Diplomacy. Lore: Legal Lore. Skill feat: Contract Negotiator."
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-unremarkable
+  name: "Unremarkable"
+  description: "Trained in Deception. Lore: Acting Lore. Skill feat: Lengthy Diversion."
+  trainedSkills:
+    - Deception
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-ustalavic-academic
+  name: "Ustalavic Academic"
+  description: "Trained in Crafting. Lore: Academia Lore. Skill feat: Skill Training."
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-varisian-wanderer
+  name: "Varisian Wanderer"
+  description: "Trained in Performance. Lore: Circus Lore. Skill feat: Fascinating Performance."
+  trainedSkills:
+    - Performance
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-vidrian-reformer
+  name: "Vidrian Reformer"
+  description: "Trained in Diplomacy. Lore: Politics Lore. Skill feat: Hobnobber."
+  trainedSkills:
+    - Diplomacy
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Dexterity
+
+- type: cfBackground
+  id: cf-background-wandering-preacher
+  name: "Wandering Preacher"
+  description: "Trained in Religion. Skill feat: Pilgrim's Token."
+  trainedSkills:
+    - Religion
+  abilityBoosts:
+    - Constitution
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-ward
+  name: "Ward"
+  description: "Trained in Performance. Lore: Genealogy Lore. Skill feat: Fascinating Performance."
+  trainedSkills:
+    - Performance
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-warded-by-kami
+  name: "Warded by Kami"
+  description: "Trained in Occultism. Lore: Spirit Lore."
+  rarity: Rare
+  trainedSkills:
+    - Occultism
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-warrior
+  name: "Warrior"
+  description: "Trained in Intimidation. Lore: Warfare Lore. Skill feat: Intimidating Glare."
+  trainedSkills:
+    - Intimidation
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Strength
+
+- type: cfBackground
+  id: cf-background-waste-walker
+  name: "Waste Walker"
+  description: "Trained in Survival. Lore: Mana Wastes Lore. Skill feat: Forager."
+  trainedSkills:
+    - Survival
+    - Lore
+  abilityBoosts:
+    - Strength
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-weaver
+  name: "Weaver"
+  description: "Trained in Crafting. Skill feat: Specialty Crafting."
+  trainedSkills:
+    - Crafting
+  abilityBoosts:
+    - Dexterity
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-whispering-way-scion
+  name: "Whispering Way Scion"
+  description: "Trained in Religion. Lore: Undead Lore. Skill feat: Student of the Canon."
+  trainedSkills:
+    - Religion
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-wildwood-local
+  name: "Wildwood Local"
+  description: "Trained in Nature. Lore: Forest Lore. Skill feat: Natural Medicine."
+  trainedSkills:
+    - Nature
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-willing-host
+  name: "Willing Host"
+  description: "Lore: Spirit."
+  rarity: Rare
+  trainedSkills:
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Wisdom
+
+- type: cfBackground
+  id: cf-background-winters-child
+  name: "Winter's Child"
+  description: "Trained in Arcana. Lore: Weather Lore. Skill feat: Arcane Sense."
+  trainedSkills:
+    - Arcana
+    - Lore
+  abilityBoosts:
+    - Charisma
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-wished-alive
+  name: "Wished Alive"
+  description: "Trained in Diplomacy."
+  rarity: Rare
+  trainedSkills:
+    - Diplomacy
+  abilityBoosts:
+    - Charisma
+    - Constitution
+
+- type: cfBackground
+  id: cf-background-witch-wary
+  name: "Witch Wary"
+  description: "Trained in Occultism. Lore: Curse Lore. Skill feat: Oddity Identification."
+  trainedSkills:
+    - Occultism
+    - Lore
+  abilityBoosts:
+    - Dexterity
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-wonder-taster
+  name: "Wonder Taster"
+  description: "Trained in Crafting. Lore: Alchemical Lore. Skill feat: Alchemical Crafting."
+  trainedSkills:
+    - Crafting
+    - Lore
+  abilityBoosts:
+    - Constitution
+    - Intelligence
+
+- type: cfBackground
+  id: cf-background-working-student
+  name: "Working Student"
+  description: "Trained in Society. Lore: Labor Lore. Skill feat: Streetwise."
+  rarity: Uncommon
+  trainedSkills:
+    - Society
+    - Lore
+  abilityBoosts:
+    - Intelligence
+    - Strength
+
+- type: cfBackground
+  id: cf-background-zodiac-bound
+  name: "Zodiac Bound"
+  description: "Lore: Astrology Lore. Two free attribute boosts."
+  rarity: Rare
+  trainedSkills:
+    - Lore
+  abilityBoosts:
+    - Strength
+    - Dexterity
+    - Constitution
+    - Intelligence
+    - Wisdom
+    - Charisma

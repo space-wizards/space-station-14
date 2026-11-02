@@ -1,0 +1,14 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Cheliax, Infernal Inheritance
+- type: cfFeat
+  id: CFStrixVengeance
+  name: "Strix Vengeance"
+  description: "Reaction. TBA - action will be added"
+  ancestry: Strix
+  level: 5
+  traits:
+    - "Emotion"
+    - "Mental"
+    - "Strix"
+  action: Reaction
+  pendingAction: true

@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFWarrenNavigator
+  name: "Warren Navigator"
+  description: "Trained in Survival. Improves All results. Not applied in play yet."
+  ancestry: Ratfolk
+  level: 1
+  traits:
+    - "Ratfolk"
+  trainedSkills:
+    - Survival

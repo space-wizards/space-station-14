@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Battlecry!
+- type: cfFeat
+  id: CFEnergyInterceptor
+  name: "Energy Interceptor"
+  description: "Requires Intercept Attack. Changes an item. This feature will be implemented later."
+  class: Guardian
+  level: 4
+  traits:
+    - "Guardian"
+  prerequisites:
+    - "Intercept Attack"
+  pendingAction: true

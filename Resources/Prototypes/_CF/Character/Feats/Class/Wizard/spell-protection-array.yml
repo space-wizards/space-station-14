@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFSpellProtectionArray
+  name: "Spell Protection Array"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Wizard
+  level: 4
+  traits:
+    - "Arcane"
+    - "Manipulate"
+    - "Wizard"
+  action: Action
+  pendingAction: true

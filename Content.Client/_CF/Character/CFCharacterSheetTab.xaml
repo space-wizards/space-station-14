@@ -1,0 +1,181 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:sheet="clr-namespace:Content.Client.CF.Character"
+              x:Class="Content.Client.CF.Character.CFCharacterSheetTab"
+              Orientation="Vertical"
+              HorizontalExpand="True"
+              VerticalExpand="True"
+              Margin="8"
+              SeparationOverride="10">
+
+    <!-- Header -->
+    <PanelContainer StyleClasses="BackgroundDark" Margin="2">
+        <GridContainer Columns="2" HorizontalExpand="True" Margin="8">
+            <BoxContainer Orientation="Vertical" Margin="0 0 12 0">
+                <Label Text="{Loc 'cf-sheet-title'}" StyleClasses="LabelHeading" FontColorOverride="#E6C15A"/>
+                <BoxContainer Orientation="Horizontal" Margin="0 6 0 0">
+                    <Label Text="{Loc 'cf-sheet-name'}" MinWidth="56" StyleClasses="LabelSubText"/>
+                    <Label Name="NameLabel" HorizontalExpand="True"/>
+                </BoxContainer>
+            </BoxContainer>
+            <GridContainer Columns="2" HorizontalExpand="True">
+                <Label Text="{Loc 'cf-sheet-ancestry'}" StyleClasses="LabelSubText"/>
+                <Label Name="AncestryLabel"/>
+                <Label Text="{Loc 'cf-sheet-background'}" StyleClasses="LabelSubText"/>
+                <Label Name="BackgroundLabel"/>
+                <Label Text="{Loc 'cf-sheet-class'}" StyleClasses="LabelSubText"/>
+                <Label Name="ClassLabel"/>
+            </GridContainer>
+        </GridContainer>
+    </PanelContainer>
+
+    <!-- Abilities + Defenses -->
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" SeparationOverride="10">
+
+        <!-- Ability Scores -->
+        <PanelContainer StyleClasses="BackgroundDark" MinWidth="250">
+            <BoxContainer Orientation="Vertical" Margin="8" SeparationOverride="4">
+                <Label Text="{Loc 'cf-sheet-abilities'}" HorizontalAlignment="Center" FontColorOverride="#E6C15A"/>
+
+                <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                    <sheet:CFDiceLabel Name="StrDiceLabel"/>
+                    <Label Name="StrNameLabel" Text="{Loc 'cf-ability-strength'}" MinWidth="100" FontColorOverride="#FFFFFF"/>
+                    <Label Name="StrScoreLabel" Text="10" MinWidth="28" Align="Center"/>
+                    <Label Name="StrModLabel" Text="+0" MinWidth="40" Align="Center" FontColorOverride="#FFFFFF"/>
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                    <sheet:CFDiceLabel Name="DexDiceLabel"/>
+                    <Label Name="DexNameLabel" Text="{Loc 'cf-ability-dexterity'}" MinWidth="100" FontColorOverride="#FFFFFF"/>
+                    <Label Name="DexScoreLabel" Text="10" MinWidth="28" Align="Center"/>
+                    <Label Name="DexModLabel" Text="+0" MinWidth="40" Align="Center" FontColorOverride="#FFFFFF"/>
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                    <sheet:CFDiceLabel Name="ConDiceLabel"/>
+                    <Label Name="ConNameLabel" Text="{Loc 'cf-ability-constitution'}" MinWidth="100" FontColorOverride="#FFFFFF"/>
+                    <Label Name="ConScoreLabel" Text="10" MinWidth="28" Align="Center"/>
+                    <Label Name="ConModLabel" Text="+0" MinWidth="40" Align="Center" FontColorOverride="#FFFFFF"/>
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                    <sheet:CFDiceLabel Name="IntDiceLabel"/>
+                    <Label Name="IntNameLabel" Text="{Loc 'cf-ability-intelligence'}" MinWidth="100" FontColorOverride="#FFFFFF"/>
+                    <Label Name="IntScoreLabel" Text="10" MinWidth="28" Align="Center"/>
+                    <Label Name="IntModLabel" Text="+0" MinWidth="40" Align="Center" FontColorOverride="#FFFFFF"/>
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                    <sheet:CFDiceLabel Name="WisDiceLabel"/>
+                    <Label Name="WisNameLabel" Text="{Loc 'cf-ability-wisdom'}" MinWidth="100" FontColorOverride="#FFFFFF"/>
+                    <Label Name="WisScoreLabel" Text="10" MinWidth="28" Align="Center"/>
+                    <Label Name="WisModLabel" Text="+0" MinWidth="40" Align="Center" FontColorOverride="#FFFFFF"/>
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                    <sheet:CFDiceLabel Name="ChaDiceLabel"/>
+                    <Label Name="ChaNameLabel" Text="{Loc 'cf-ability-charisma'}" MinWidth="100" FontColorOverride="#FFFFFF"/>
+                    <Label Name="ChaScoreLabel" Text="10" MinWidth="28" Align="Center"/>
+                    <Label Name="ChaModLabel" Text="+0" MinWidth="40" Align="Center" FontColorOverride="#FFFFFF"/>
+                </BoxContainer>
+            </BoxContainer>
+        </PanelContainer>
+
+        <!-- Defenses / HP / Saves -->
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="8">
+
+            <PanelContainer StyleClasses="BackgroundDark">
+                <BoxContainer Orientation="Horizontal" Margin="6" SeparationOverride="10">
+                    <Label Text="{Loc 'cf-sheet-proficiency'}" StyleClasses="LabelSubText"/>
+                    <Label Text="{Loc 'cf-sheet-proficiency-legend'}" StyleClasses="LabelSubText"/>
+                    <Label Text="{Loc 'cf-sheet-speed'}" Margin="8 0 0 0" StyleClasses="LabelSubText"/>
+                    <Label Name="SpeedLabel" Text="25 ft"/>
+                </BoxContainer>
+            </PanelContainer>
+
+            <GridContainer Columns="2" HorizontalExpand="True">
+                <PanelContainer StyleClasses="BackgroundDark" Margin="2">
+                    <BoxContainer Orientation="Vertical" Margin="6" HorizontalAlignment="Center">
+                        <Label Text="{Loc 'cf-sheet-ac'}" HorizontalAlignment="Center" StyleClasses="LabelSubText"/>
+                        <Label Name="ArmorClassLabel" Text="10" HorizontalAlignment="Center" StyleClasses="LabelHeading"/>
+                        <Label Text="{Loc 'cf-sheet-ac-formula'}" HorizontalAlignment="Center" StyleClasses="LabelSubText"/>
+                    </BoxContainer>
+                </PanelContainer>
+                <PanelContainer StyleClasses="BackgroundDark" Margin="2">
+                    <BoxContainer Orientation="Vertical" Margin="6" HorizontalAlignment="Center">
+                        <Label Text="{Loc 'cf-sheet-hp'}" HorizontalAlignment="Center" StyleClasses="LabelSubText"/>
+                        <BoxContainer Orientation="Horizontal" SeparationOverride="4" HorizontalAlignment="Center">
+                            <Label Name="CurrentHpLabel" Text="0" StyleClasses="LabelHeading"/>
+                            <Label Text="/" StyleClasses="LabelHeading"/>
+                            <Label Name="MaxHpLabel" Text="0" StyleClasses="LabelHeading"/>
+                        </BoxContainer>
+                        <Label Name="TempHpLabel" Text="{Loc 'cf-sheet-temp-hp-zero'}" StyleClasses="LabelSubText" HorizontalAlignment="Center"/>
+                    </BoxContainer>
+                </PanelContainer>
+            </GridContainer>
+
+            <PanelContainer StyleClasses="BackgroundDark">
+                <BoxContainer Orientation="Horizontal" Margin="6" SeparationOverride="16">
+                    <BoxContainer Orientation="Horizontal" SeparationOverride="4">
+                        <Label Text="{Loc 'cf-sheet-dying'}" StyleClasses="LabelSubText"/>
+                        <Label Name="DyingLabel" Text="0"/>
+                    </BoxContainer>
+                    <BoxContainer Orientation="Horizontal" SeparationOverride="4">
+                        <Label Text="{Loc 'cf-sheet-wounded'}" StyleClasses="LabelSubText"/>
+                        <Label Name="WoundedLabel" Text="0"/>
+                    </BoxContainer>
+                    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" SeparationOverride="4">
+                        <Label Text="{Loc 'cf-sheet-ailments'}" StyleClasses="LabelSubText"/>
+                        <Label Name="AilmentsLabel" Text="—" HorizontalExpand="True"/>
+                    </BoxContainer>
+                </BoxContainer>
+            </PanelContainer>
+
+            <PanelContainer StyleClasses="BackgroundDark">
+                <BoxContainer Orientation="Vertical" Margin="6" SeparationOverride="4">
+                    <Label Text="{Loc 'cf-sheet-saves'}" HorizontalAlignment="Center" FontColorOverride="#E6C15A"/>
+                    <GridContainer Columns="3" HorizontalExpand="True">
+                        <BoxContainer Orientation="Vertical" HorizontalAlignment="Center">
+                            <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" SeparationOverride="4">
+                                <sheet:CFDiceLabel Name="FortDiceLabel"/>
+                                <Label Name="FortNameLabel" Text="{Loc 'cf-sheet-fortitude'}" FontColorOverride="#FFFFFF"/>
+                            </BoxContainer>
+                            <Label Name="FortRankLabel" Text="U" HorizontalAlignment="Center" StyleClasses="LabelSubText"/>
+                            <Label Name="FortModLabel" Text="+0" HorizontalAlignment="Center" StyleClasses="LabelHeading"/>
+                        </BoxContainer>
+                        <BoxContainer Orientation="Vertical" HorizontalAlignment="Center">
+                            <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" SeparationOverride="4">
+                                <sheet:CFDiceLabel Name="RefDiceLabel"/>
+                                <Label Name="RefNameLabel" Text="{Loc 'cf-sheet-reflex'}" FontColorOverride="#FFFFFF"/>
+                            </BoxContainer>
+                            <Label Name="RefRankLabel" Text="U" HorizontalAlignment="Center" StyleClasses="LabelSubText"/>
+                            <Label Name="RefModLabel" Text="+0" HorizontalAlignment="Center" StyleClasses="LabelHeading"/>
+                        </BoxContainer>
+                        <BoxContainer Orientation="Vertical" HorizontalAlignment="Center">
+                            <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" SeparationOverride="4">
+                                <sheet:CFDiceLabel Name="WillDiceLabel"/>
+                                <Label Name="WillNameLabel" Text="{Loc 'cf-sheet-will'}" FontColorOverride="#FFFFFF"/>
+                            </BoxContainer>
+                            <Label Name="WillRankLabel" Text="U" HorizontalAlignment="Center" StyleClasses="LabelSubText"/>
+                            <Label Name="WillModLabel" Text="+0" HorizontalAlignment="Center" StyleClasses="LabelHeading"/>
+                        </BoxContainer>
+                    </GridContainer>
+                </BoxContainer>
+            </PanelContainer>
+
+            <PanelContainer StyleClasses="BackgroundDark">
+                <BoxContainer Orientation="Vertical" Margin="6">
+                    <Label Text="{Loc 'cf-sheet-traits'}" StyleClasses="LabelSubText"/>
+                    <Label Name="TraitsLabel" Text="—"/>
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+    </BoxContainer>
+
+    <!-- Skills -->
+    <PanelContainer StyleClasses="BackgroundDark" VerticalExpand="True">
+        <BoxContainer Orientation="Vertical" Margin="8" SeparationOverride="6" VerticalExpand="True">
+            <Label Text="{Loc 'cf-sheet-skills'}" HorizontalAlignment="Center" FontColorOverride="#E6C15A"/>
+            <GridContainer Columns="3" HorizontalExpand="True" VerticalExpand="True">
+                <BoxContainer Name="SkillColumn1" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="2"/>
+                <BoxContainer Name="SkillColumn2" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="2"/>
+                <BoxContainer Name="SkillColumn3" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="2"/>
+            </GridContainer>
+        </BoxContainer>
+    </PanelContainer>
+</BoxContainer>

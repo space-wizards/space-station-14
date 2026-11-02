@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFCombatAssessmentFighter
+  name: "Combat Assessment"
+  description: "+2 circumstance bonus to Skill Check. Costs 1 action. This feature will be implemented later."
+  class: Fighter
+  level: 1
+  traits:
+    - "Commander"
+    - "Fighter"
+  action: Action
+  pendingAction: true

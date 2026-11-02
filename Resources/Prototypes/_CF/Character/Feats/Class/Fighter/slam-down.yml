@@ -1,0 +1,15 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFSlamDown
+  name: "Slam Down"
+  description: "Requires trained in Athletics. Costs 2 actions. This feature will be implemented later."
+  class: Fighter
+  level: 4
+  traits:
+    - "Fighter"
+    - "Flourish"
+  prerequisites:
+    - "trained in Athletics"
+  action: Action
+  pendingAction: true

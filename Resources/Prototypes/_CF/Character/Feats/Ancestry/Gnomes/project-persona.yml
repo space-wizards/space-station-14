@@ -1,0 +1,16 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFProjectPersona
+  name: "Project Persona"
+  description: "Costs 1 action. TBA - action will be added"
+  ancestry: Gnome
+  level: 5
+  traits:
+    - "Concentrate"
+    - "Gnome"
+    - "Illusion"
+    - "Primal"
+    - "Visual"
+  action: Action
+  pendingAction: true

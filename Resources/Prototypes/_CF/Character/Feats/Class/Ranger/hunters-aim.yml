@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFHuntersAim
+  name: "Hunter's Aim"
+  description: "+2 circumstance bonus to Ranged Strike Attack Roll. Costs 2 actions. This feature will be implemented later."
+  class: Ranger
+  level: 2
+  traits:
+    - "Concentrate"
+    - "Ranger"
+  action: Action
+  pendingAction: true

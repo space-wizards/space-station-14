@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFRapidResponse
+  name: "Rapid Response"
+  description: "+10 circumstance bonus to Speed. Reaction. This feature will be implemented later."
+  class: Cleric
+  level: 2
+  traits:
+    - "Cleric"
+  action: Reaction
+  pendingAction: true

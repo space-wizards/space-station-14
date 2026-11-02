@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Created by iowaku",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "base1"
+      },
+      {
+        "name": "base2"
+      },
+      {
+        "name": "base3"
+      },
+      {
+        "name": "slice1"
+      },
+      {
+        "name": "seeds"
+      }
+    ]
+}

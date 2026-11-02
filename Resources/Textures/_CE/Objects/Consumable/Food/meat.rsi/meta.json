@@ -1,0 +1,179 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "sheepmeat and sheepmeat_cooked By omsoyk, sheepmeat_slice and sheepmeat_slice_cooked, frog_leg_cooked by TheShuEd, cutlet and cutlet_cooked and meat_slice by Artista.rar, frog_leg, human_meat, dino_meat, fish_meat, rabbit_meat, pig_meat, mole_meat by Max Gab, rabbit_meat_cooked, pig_meat_cooked, human_meat_cooked, dino_meat_cooked by prazat911 (Discord) and resprite sheepmeat, sheepmeat_cooked, sheepmeat_slice, sheepmeat_slice_cooked, cutlet, cutlet_cooked, meat_slice by prazat911 (Discord)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "cutlet"
+        },
+        {
+            "name": "cutlet_cooked"
+        },
+        {
+            "name": "meat_slice"
+        },
+        {
+            "name": "sheepmeat"
+        },
+        {
+            "name": "sheepmeat_cooked"
+        },
+        {
+            "name": "sheepmeat_slice"
+        },
+        {
+            "name": "sheepmeat_slice2"
+        },
+        {
+            "name": "sheepmeat_slice3"
+        },
+        {
+            "name": "sheepmeat_slice_cooked"
+        },
+        {
+            "name": "sheepmeat_slice2_cooked"
+        },
+        {
+            "name": "sheepmeat_slice3_cooked"
+        },
+        {
+            "name": "frog_leg"
+        },
+        {
+            "name": "frog_leg_cooked"
+        },
+        {
+            "name": "human_meat1"
+        },
+        {
+            "name": "human_meat2"
+        },
+        {
+            "name": "human_meat1_cooked"
+        },
+        {
+            "name": "human_meat2_cooked"
+        },
+        {
+            "name": "dino_meat1"
+        },
+        {
+            "name": "dino_meat2"
+        },
+        {
+            "name": "dino_meat1_cooked"
+        },
+        {
+            "name": "dino_meat2_cooked"
+        },
+        {
+            "name": "fish_meat1"
+        },
+        {
+            "name": "fish_meat2"
+        },
+        {
+            "name": "fish_meat3"
+        },
+        {
+            "name": "rabbit_meat1"
+        },
+        {
+            "name": "rabbit_meat2"
+        },
+        {
+            "name": "rabbit_meat1_cooked"
+        },
+        {
+            "name": "rabbit_meat2_cooked"
+        },
+        {
+            "name": "pig_meat1"
+        },
+        {
+            "name": "pig_meat2"
+        },
+        {
+            "name": "pig_meat3"
+        },
+        {
+            "name": "pig_meat4"
+        },
+        {
+            "name": "pig_meat5"
+        },
+        {
+            "name": "pig_meat6"
+        },
+        {
+            "name": "pig_meat1_cooked"
+        },
+        {
+            "name": "pig_meat2_cooked"
+        },
+        {
+            "name": "pig_meat3_cooked"
+        },
+        {
+            "name": "pig_meat4_cooked"
+        },
+        {
+            "name": "pig_meat5_cooked"
+        },
+        {
+            "name": "pig_meat6_cooked"
+        },
+        {
+            "name": "mole_meat1"
+        },
+        {
+            "name": "mole_meat2"
+        },
+        {
+            "name": "mole_meat3"
+        },
+        {
+            "name": "mole_meat4"
+        },
+        {
+            "name": "mole_meat5"
+        },
+        {
+            "name": "mole_meat6"
+        },
+        {
+            "name": "different_meat_slice"
+        },
+        {
+            "name": "different_meat_leg"
+        },
+        {
+            "name": "flem_head"
+        },
+        {
+            "name": "flem_head_cooked"
+        },
+        {
+            "name": "flem_torso"
+        },
+        {
+            "name": "flem_torso_cut"
+        },
+        {
+            "name": "flem_torso_cut_cooked"
+        },
+        {
+            "name": "flem_torso_cooked"
+        },
+        {
+            "name": "flem_leg"
+        },
+        {
+            "name": "flem_leg_cooked"
+        }
+    ]
+}

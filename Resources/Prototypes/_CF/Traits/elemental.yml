@@ -1,0 +1,38 @@
+# CarpFinder: remaster trait ids. Summaries are short mechanical notes, not source text.
+# category: Elemental
+
+- type: cfTrait
+  id: Air
+  name: Air
+  category: Elemental
+  summary: "An elemental trait. Effects that care about this element use this id."
+
+- type: cfTrait
+  id: Earth
+  name: Earth
+  category: Elemental
+  summary: "An elemental trait. Effects that care about this element use this id."
+
+- type: cfTrait
+  id: Fire
+  name: Fire
+  category: Elemental
+  summary: "An elemental trait. Effects that care about this element use this id."
+
+- type: cfTrait
+  id: Metal
+  name: Metal
+  category: Elemental
+  summary: "An elemental trait. Effects that care about this element use this id."
+
+- type: cfTrait
+  id: Water
+  name: Water
+  category: Elemental
+  summary: "An elemental trait. Effects that care about this element use this id."
+
+- type: cfTrait
+  id: Wood
+  name: Wood
+  category: Elemental
+  summary: "An elemental trait. Effects that care about this element use this id."

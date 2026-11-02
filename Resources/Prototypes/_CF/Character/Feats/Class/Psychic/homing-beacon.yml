@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Dark Archive (Remastered)
+- type: cfFeat
+  id: CFHomingBeacon
+  name: "Homing Beacon"
+  description: "Changes an item. This feature will be implemented later."
+  class: Psychic
+  level: 4
+  traits:
+    - "Amp"
+    - "Psychic"
+  pendingAction: true

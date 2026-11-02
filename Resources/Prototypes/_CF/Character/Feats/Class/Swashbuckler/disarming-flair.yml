@@ -1,0 +1,11 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFDisarmingFlair
+  name: "Disarming Flair"
+  description: "Changes an item. This feature will be implemented later."
+  class: Swashbuckler
+  level: 1
+  traits:
+    - "Swashbuckler"
+  pendingAction: true

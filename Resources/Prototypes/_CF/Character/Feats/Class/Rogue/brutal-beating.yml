@@ -1,0 +1,15 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFBrutalBeating
+  name: "Brutal Beating"
+  description: "Requires ruffian racket."
+  class: Rogue
+  level: 2
+  traits:
+    - "Emotion"
+    - "Fear"
+    - "Mental"
+    - "Rogue"
+  prerequisites:
+    - "ruffian racket"

@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder War of Immortals
+- type: cfFeat
+  id: CFTwinStars
+  name: "Twin Stars"
+  description: "Changes an item. This feature will be implemented later."
+  class: Exemplar
+  level: 1
+  traits:
+    - "Exemplar"
+    - "Ikon"
+  pendingAction: true

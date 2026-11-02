@@ -1,0 +1,13 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:sheet="clr-namespace:Content.Client.CF.Character"
+              x:Class="Content.Client.CF.Character.CFSheetSkillRow"
+              Orientation="Horizontal"
+              HorizontalExpand="True"
+              SeparationOverride="4"
+              Margin="0 1">
+    <sheet:CFDiceLabel Name="DiceIcon"/>
+    <Label Name="SkillName" HorizontalExpand="True" ClipText="True" FontColorOverride="#FFFFFF"/>
+    <Label Name="RankLabel" MinWidth="18" Align="Center" StyleClasses="LabelSubText"/>
+    <Label Name="ModifierLabel" MinWidth="36" Align="Right"/>
+</BoxContainer>

@@ -1,0 +1,14 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens High Seas
+- type: cfFeat
+  id: CFBounceBoost
+  name: "Bounce Boost"
+  description: "Requires trained in Athletics. Reaction. TBA - action will be added"
+  ancestry: Tripkee
+  level: 1
+  traits:
+    - "Tripkee"
+  prerequisites:
+    - "trained in Athletics"
+  action: Reaction
+  pendingAction: true

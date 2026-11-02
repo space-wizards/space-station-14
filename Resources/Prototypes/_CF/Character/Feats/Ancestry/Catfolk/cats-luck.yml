@@ -1,0 +1,13 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFCatsLuck
+  name: "Cat's Luck"
+  description: "Free action. TBA - action will be added"
+  ancestry: Catfolk
+  level: 1
+  traits:
+    - "Catfolk"
+    - "Fortune"
+  action: Free
+  pendingAction: true

@@ -1,0 +1,23 @@
+﻿- type: entity
+  parent: CFSpellProjectile
+  id: CFNeedleDarts
+  name: Needle Darts
+  description: Spell attack for 3d4 piercing. The darts follow the creature you aim at.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: magicmissile
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 0
+  - type: CFSpell
+    spell: NeedleDarts
+    rank: 0
+    delivery: Projectile
+    rangeFeet: 60
+    defense: SpellAttack
+    diceCount: 3
+    diceSize: 4
+    damageType: piercing
+    boltPrototype: CFSpellBoltForce

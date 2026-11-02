@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Hqlle (Github), recolored by TheShuEd, inhands by D1nazewwr",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "wallet-0"
+    },
+    {
+      "name": "wallet-1"
+    },
+    {
+      "name": "wallet-2"
+    },
+    {
+      "name": "wallet-3"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

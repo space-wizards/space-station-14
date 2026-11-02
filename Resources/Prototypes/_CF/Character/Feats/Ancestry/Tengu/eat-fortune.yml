@@ -1,0 +1,14 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFEatFortune
+  name: "Eat Fortune"
+  description: "Reaction. TBA - action will be added"
+  ancestry: Tengu
+  level: 5
+  traits:
+    - "Concentrate"
+    - "Divine"
+    - "Tengu"
+  action: Reaction
+  pendingAction: true

@@ -1,0 +1,50 @@
+# CarpFinder: remaster class, levels 1-5.
+- type: cfClass
+  id: Barbarian
+  name: cf-class-barbarian
+  description: cf-class-description-barbarian
+  hitPoints: 12
+  keyAbility: Strength
+  hitPointsAbility: Constitution
+  classDC: cf-class-barbarian
+  proficiencies:
+    perception:
+      expert:
+        - Perception
+    savingThrows:
+      trained:
+        - Reflex
+      expert:
+        - Fortitude
+        - Will
+    skills:
+      trained:
+        - Athletics
+    attacks:
+      trained:
+        - MartialWeapons
+        - SimpleWeapons
+        - Unarmed
+    defenses:
+      trained:
+        - Unarmored
+        - MediumArmor
+        - LightArmor
+  additionalSkillTrainings: 3
+  features:
+    - level: 1
+      name: "Instinct"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Quick-Tempered"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Rage"
+      description: "This feature will be implemented later."
+    - level: 3
+      name: "Furious Footfalls"
+      description: "This feature will be implemented later."
+    - level: 5
+      name: "Brutality"
+      description: "This feature will be implemented later."
+  # Class key-attribute boost is applied from keyAbility in code (PF2e).

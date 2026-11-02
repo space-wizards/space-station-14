@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFRazzleDazzle
+  name: "Razzle-Dazzle"
+  description: "Free action. TBA - action will be added"
+  ancestry: Gnome
+  level: 1
+  traits:
+    - "Gnome"
+  action: Free
+  pendingAction: true

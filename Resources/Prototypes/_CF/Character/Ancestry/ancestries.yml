@@ -1,0 +1,780 @@
+- type: cfAncestry
+  id: Human
+  name: cf-ancestry-human
+  description: cf-ancestry-human-description
+  species: Human
+  sprites:
+  - species: CF-Human-Edge
+    name: cf-sprite-ce-human
+    description: cf-sprite-ce-human-desc
+    parts: _CE/Mobs/Species/Human/parts.rsi
+  - species: CF-Human-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Common
+  hitPoints: 8
+  size: Medium
+  speed: 25
+  abilityBoosts:
+  - Free
+  - Free
+  languages:
+  - cf-language-common
+  traits:
+  - cf-trait-human
+  - cf-trait-humanoid
+
+- type: cfAncestry
+  id: Dwarf
+  name: cf-ancestry-dwarf
+  description: cf-ancestry-dwarf-description
+  species: Dwarf
+  sprites:
+  - species: CF-Dwarf-Edge
+    name: cf-sprite-ce-dwarf
+    description: cf-sprite-ce-dwarf-desc
+    parts: _CE/Mobs/Species/Dwarf/parts.rsi
+  - species: CF-Dwarf-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Common
+  hitPoints: 10
+  size: Medium
+  speed: 20
+  abilityBoosts:
+  - Constitution
+  - Wisdom
+  - Free
+  abilityFlaws:
+  - Charisma
+  languages:
+  - cf-language-common
+  - cf-language-dwarven
+  darkvision: true
+  traits:
+  - cf-trait-dwarf
+  - cf-trait-humanoid
+  - cf-trait-darkvision
+
+- type: cfAncestry
+  id: Goblin
+  name: cf-ancestry-goblin
+  description: cf-ancestry-goblin-description
+  species: CF-Goblin
+  sprites:
+  - species: CF-Goblin-Green
+    name: cf-sprite-goblin
+    description: cf-sprite-goblin-desc
+    parts: _Impstation/Mobs/Species/Goblin/parts.rsi
+  - species: CF-Goblin-Edge
+    name: cf-sprite-ce-goblin
+    description: cf-sprite-ce-goblin-desc
+    parts: _CE/Mobs/Species/Goblin/parts.rsi
+  - species: CF-Goblin-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Common
+  hitPoints: 6
+  size: Small
+  speed: 25
+  abilityBoosts:
+  - Charisma
+  - Dexterity
+  - Free
+  abilityFlaws:
+  - Wisdom
+  languages:
+  - cf-language-common
+  - cf-language-goblin
+  darkvision: true
+  traits:
+  - cf-trait-goblin
+  - cf-trait-humanoid
+  - cf-trait-darkvision
+
+- type: cfAncestry
+  id: Elf
+  name: cf-ancestry-elf
+  description: cf-ancestry-elf-description
+  species: CF-Elf
+  sprites:
+  - species: CF-Elf-Pointed
+    name: cf-sprite-elf
+    description: cf-sprite-elf-desc
+    parts: _Starlight/Mobs/Species/Elf/parts.rsi
+  - species: CF-Elf-Edge
+    name: cf-sprite-ce-elf
+    description: cf-sprite-ce-elf-desc
+    parts: _CE/Mobs/Species/Elf/parts.rsi
+  - species: CF-Elf-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Common
+  hitPoints: 6
+  size: Medium
+  speed: 30
+  abilityBoosts:
+  - Dexterity
+  - Intelligence
+  - Free
+  abilityFlaws:
+  - Constitution
+  languages:
+  - cf-language-common
+  - cf-language-elven
+  traits:
+  - cf-trait-elf
+  - cf-trait-humanoid
+  - cf-trait-low-light-vision
+
+- type: cfAncestry
+  id: Gnome
+  name: cf-ancestry-gnome
+  description: cf-ancestry-gnome-description
+  species: CF-Gnome
+  sprites:
+  - species: CF-Gnome-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Common
+  hitPoints: 8
+  size: Small
+  speed: 25
+  abilityBoosts:
+  - Constitution
+  - Charisma
+  - Free
+  abilityFlaws:
+  - Strength
+  languages:
+  - cf-language-common
+  - cf-language-fey
+  - cf-language-gnomish
+  traits:
+  - cf-trait-gnome
+  - cf-trait-humanoid
+  - cf-trait-low-light-vision
+
+- type: cfAncestry
+  id: Halfling
+  name: cf-ancestry-halfling
+  description: cf-ancestry-halfling-description
+  species: CF-Halfling
+  sprites:
+  - species: CF-Halfling-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Common
+  hitPoints: 6
+  size: Small
+  speed: 25
+  abilityBoosts:
+  - Dexterity
+  - Wisdom
+  - Free
+  abilityFlaws:
+  - Strength
+  languages:
+  - cf-language-common
+  - cf-language-halfling
+  traits:
+  - cf-trait-halfling
+  - cf-trait-humanoid
+  - cf-trait-keen-eyes
+
+- type: cfAncestry
+  id: Leshy
+  name: cf-ancestry-leshy
+  description: cf-ancestry-leshy-description
+  species: CF-Leshy
+  sprites:
+  - species: CF-Leshy-Diona
+    name: cf-sprite-diona
+    description: cf-sprite-diona-desc
+    parts: Mobs/Species/Diona/parts.rsi
+  - species: CF-Leshy-Silva
+    name: cf-sprite-ce-silva
+    description: cf-sprite-ce-silva-desc
+    parts: _CE/Mobs/Species/Silva/parts.rsi
+  - species: CF-Leshy-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Common
+  hitPoints: 8
+  size: Small
+  speed: 25
+  abilityBoosts:
+  - Constitution
+  - Wisdom
+  - Free
+  abilityFlaws:
+  - Intelligence
+  languages:
+  - cf-language-common
+  - cf-language-fey
+  traits:
+  - cf-trait-leshy
+  - cf-trait-plant
+  - cf-trait-low-light-vision
+
+- type: cfAncestry
+  id: Orc
+  name: cf-ancestry-orc
+  description: cf-ancestry-orc-description
+  species: CF-Orc
+  sprites:
+  - species: CF-Orc-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Common
+  hitPoints: 10
+  size: Medium
+  speed: 25
+  abilityBoosts:
+  - Free
+  - Free
+  darkvision: true
+  languages:
+  - cf-language-common
+  - cf-language-orcish
+  traits:
+  - cf-trait-orc
+  - cf-trait-humanoid
+  - cf-trait-darkvision
+
+- type: cfAncestry
+  id: Catfolk
+  name: cf-ancestry-catfolk
+  description: cf-ancestry-catfolk-description
+  species: CF-Catfolk
+  sprites:
+  - species: CF-Catfolk-Felionoid
+    name: cf-sprite-felionoid
+    description: cf-sprite-felionoid-desc
+    parts: _Starlight/Mobs/Species/Felionoid/parts.rsi
+  - species: CF-Catfolk-Tajaran
+    name: cf-sprite-tajaran
+    description: cf-sprite-tajaran-desc
+    parts: _Goobstation/Mobs/Species/Tajaran/parts.rsi
+  - species: CF-Catfolk-Carcat
+    name: cf-sprite-ce-carcat
+    description: cf-sprite-ce-carcat-desc
+    parts: _CE/Mobs/Species/Carcat/parts.rsi
+  - species: CF-Catfolk-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Uncommon
+  hitPoints: 8
+  size: Medium
+  speed: 25
+  abilityBoosts:
+  - Dexterity
+  - Charisma
+  - Free
+  abilityFlaws:
+  - Wisdom
+  languages:
+  - cf-language-amurrun
+  - cf-language-common
+  traits:
+  - cf-trait-catfolk
+  - cf-trait-humanoid
+  - cf-trait-low-light-vision
+  - cf-trait-land-on-your-feet
+
+- type: cfAncestry
+  id: Hobgoblin
+  name: cf-ancestry-hobgoblin
+  description: cf-ancestry-hobgoblin-description
+  species: CF-Hobgoblin
+  sprites:
+  - species: CF-Hobgoblin-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Uncommon
+  hitPoints: 8
+  size: Medium
+  speed: 25
+  abilityBoosts:
+  - Constitution
+  - Intelligence
+  - Free
+  abilityFlaws:
+  - Wisdom
+  darkvision: true
+  languages:
+  - cf-language-common
+  - cf-language-goblin
+  traits:
+  - cf-trait-hobgoblin
+  - cf-trait-humanoid
+  - cf-trait-darkvision
+
+- type: cfAncestry
+  id: Kholo
+  name: cf-ancestry-kholo
+  description: cf-ancestry-kholo-description
+  species: CF-Kholo
+  sprites:
+  - species: CF-Kholo-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Uncommon
+  hitPoints: 8
+  size: Medium
+  speed: 25
+  abilityBoosts:
+  - Strength
+  - Intelligence
+  - Free
+  abilityFlaws:
+  - Wisdom
+  languages:
+  - cf-language-common
+  - cf-language-kholo
+  traits:
+  - cf-trait-kholo
+  - cf-trait-humanoid
+  - cf-trait-low-light-vision
+  - cf-trait-bite
+
+- type: cfAncestry
+  id: Kobold
+  name: cf-ancestry-kobold
+  description: cf-ancestry-kobold-description
+  species: CF-Kobold
+  sprites:
+  - species: CF-Kobold-Animal
+    name: cf-sprite-kobold
+    description: cf-sprite-kobold-desc
+    parts: Mobs/Animals/Ancestors/kobold.rsi
+  - species: CF-Kobold-Reptilian
+    name: cf-sprite-reptilian
+    description: cf-sprite-reptilian-desc
+    parts: Mobs/Species/Reptilian/parts.rsi
+  - species: CF-Kobold-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Uncommon
+  hitPoints: 6
+  size: Small
+  speed: 25
+  abilityBoosts:
+  - Dexterity
+  - Charisma
+  - Free
+  abilityFlaws:
+  - Constitution
+  darkvision: true
+  languages:
+  - cf-language-common
+  - cf-language-sakvroth
+  traits:
+  - cf-trait-kobold
+  - cf-trait-humanoid
+  - cf-trait-darkvision
+
+- type: cfAncestry
+  id: Lizardfolk
+  name: cf-ancestry-lizardfolk
+  description: cf-ancestry-lizardfolk-description
+  species: CF-Lizardfolk
+  sprites:
+  - species: CF-Lizardfolk-Reptilian
+    name: cf-sprite-reptilian
+    description: cf-sprite-reptilian-desc
+    parts: Mobs/Species/Reptilian/parts.rsi
+  - species: CF-Lizardfolk-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Uncommon
+  hitPoints: 8
+  size: Medium
+  speed: 25
+  abilityBoosts:
+  - Strength
+  - Wisdom
+  - Free
+  abilityFlaws:
+  - Intelligence
+  languages:
+  - cf-language-common
+  - cf-language-iruxi
+  traits:
+  - cf-trait-lizardfolk
+  - cf-trait-humanoid
+  - cf-trait-claws
+  - cf-trait-hold-breath
+
+- type: cfAncestry
+  id: Ratfolk
+  name: cf-ancestry-ratfolk
+  description: cf-ancestry-ratfolk-description
+  species: CF-Ratfolk
+  sprites:
+  - species: CF-Ratfolk-Rodentia
+    name: cf-sprite-rodentia
+    description: cf-sprite-rodentia-desc
+    parts: _Starlight/Mobs/Species/Rodentia/parts.rsi
+  - species: CF-Ratfolk-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Uncommon
+  hitPoints: 6
+  size: Small
+  speed: 25
+  abilityBoosts:
+  - Dexterity
+  - Intelligence
+  - Free
+  abilityFlaws:
+  - Strength
+  languages:
+  - cf-language-common
+  - cf-language-ysoki
+  traits:
+  - cf-trait-ratfolk
+  - cf-trait-humanoid
+  - cf-trait-low-light-vision
+  - cf-trait-sharp-teeth
+
+- type: cfAncestry
+  id: Tengu
+  name: cf-ancestry-tengu
+  description: cf-ancestry-tengu-description
+  species: CF-Tengu
+  sprites:
+  - species: CF-Tengu-Resomi
+    name: cf-sprite-resomi
+    description: cf-sprite-resomi-desc
+    parts: _Starlight/Mobs/Species/Resomi/parts.rsi
+  - species: CF-Tengu-Avali
+    name: cf-sprite-avali
+    description: cf-sprite-avali-desc
+    parts: _Starlight/Mobs/Species/Avali/parts.rsi
+  - species: CF-Tengu-Vox
+    name: cf-sprite-vox
+    description: cf-sprite-vox-desc
+    parts: Mobs/Species/Vox/parts.rsi
+  - species: CF-Tengu-Harpy
+    name: cf-sprite-harpy
+    description: cf-sprite-harpy-desc
+    parts: _DV/Mobs/Species/Harpy/parts.rsi
+  - species: CF-Tengu-Carrin
+    name: cf-sprite-ce-carrin
+    description: cf-sprite-ce-carrin-desc
+    parts: _CE/Mobs/Species/Carrin/parts.rsi
+  - species: CF-Tengu-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Uncommon
+  hitPoints: 6
+  size: Medium
+  speed: 25
+  abilityBoosts:
+  - Dexterity
+  - Free
+  languages:
+  - cf-language-common
+  - cf-language-tengu
+  traits:
+  - cf-trait-tengu
+  - cf-trait-humanoid
+  - cf-trait-low-light-vision
+  - cf-trait-sharp-beak
+
+- type: cfAncestry
+  id: Tripkee
+  name: cf-ancestry-tripkee
+  description: cf-ancestry-tripkee-description
+  species: CF-Tripkee
+  sprites:
+  - species: CF-Tripkee-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Uncommon
+  hitPoints: 6
+  size: Small
+  speed: 25
+  abilityBoosts:
+  - Dexterity
+  - Wisdom
+  - Free
+  abilityFlaws:
+  - Strength
+  languages:
+  - cf-language-common
+  - cf-language-tripkee
+  traits:
+  - cf-trait-tripkee
+  - cf-trait-humanoid
+  - cf-trait-low-light-vision
+  - cf-trait-natural-climber
+
+- type: cfAncestry
+  id: Azarketi
+  name: cf-ancestry-azarketi
+  description: cf-ancestry-azarketi-description
+  species: CF-Azarketi
+  sprites:
+  - species: CF-Azarketi-Feroxi
+    name: cf-sprite-feroxi
+    description: cf-sprite-feroxi-desc
+    parts: _DV/Mobs/Species/Feroxi/parts.rsi
+  - species: CF-Azarketi-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Uncommon
+  hitPoints: 8
+  size: Medium
+  speed: 20
+  abilityBoosts:
+  - Constitution
+  - Charisma
+  - Free
+  abilityFlaws:
+  - Wisdom
+  languages:
+  - cf-language-common
+  - cf-language-alghollthu
+  traits:
+  - cf-trait-azarketi
+  - cf-trait-humanoid
+  - cf-trait-amphibious
+  - cf-trait-low-light-vision
+  - cf-trait-hydration
+  - cf-trait-swim
+
+- type: cfAncestry
+  id: Android
+  name: cf-ancestry-android
+  description: cf-ancestry-android-description
+  species: CF-Android
+  sprites:
+  - species: CF-Android-IPC
+    name: cf-sprite-ipc
+    description: cf-sprite-ipc-desc
+    parts: _EinsteinEngines/Mobs/Species/IPC/parts.rsi
+  - species: CF-Android-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Rare
+  hitPoints: 8
+  size: Medium
+  speed: 25
+  abilityBoosts:
+  - Dexterity
+  - Intelligence
+  - Free
+  abilityFlaws:
+  - Charisma
+  languages:
+  - cf-language-common
+  - cf-language-androffan
+  traits:
+  - cf-trait-android
+  - cf-trait-humanoid
+  - cf-trait-low-light-vision
+  - cf-trait-constructed
+  - cf-trait-emotionally-unaware
+
+- type: cfAncestry
+  id: Fetchling
+  name: cf-ancestry-fetchling
+  description: cf-ancestry-fetchling-description
+  species: CF-Fetchling
+  sprites:
+  - species: CF-Fetchling-Shadekin
+    name: cf-sprite-shadekin
+    description: cf-sprite-shadekin-desc
+    parts: _Starlight/Mobs/Species/Shadekin/parts.rsi
+  - species: CF-Fetchling-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Uncommon
+  hitPoints: 8
+  size: Medium
+  speed: 25
+  abilityBoosts:
+  - Dexterity
+  - Free
+  darkvision: true
+  languages:
+  - cf-language-common
+  - cf-language-shadowtongue
+  traits:
+  - cf-trait-fetchling
+  - cf-trait-humanoid
+  - cf-trait-darkvision
+
+- type: cfAncestry
+  id: Fleshwarp
+  name: cf-ancestry-fleshwarp
+  description: cf-ancestry-fleshwarp-description
+  species: CF-Fleshwarp
+  sprites:
+  - species: CF-Fleshwarp-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Rare
+  hitPoints: 10
+  size: Medium
+  speed: 25
+  abilityBoosts:
+  - Constitution
+  - Free
+  languages:
+  - cf-language-common
+  traits:
+  - cf-trait-fleshwarp
+  - cf-trait-aberration
+  - cf-trait-humanoid
+  - cf-trait-low-light-vision
+  - cf-trait-unusual-anatomy
+
+- type: cfAncestry
+  id: Kitsune
+  name: cf-ancestry-kitsune
+  description: cf-ancestry-kitsune-description
+  species: CF-Kitsune
+  sprites:
+  - species: CF-Kitsune-Vulp
+    name: cf-sprite-vulp
+    description: cf-sprite-vulp-desc
+    parts: Mobs/Species/Vulpkanin/parts.rsi
+  - species: CF-Kitsune-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Uncommon
+  hitPoints: 8
+  size: Medium
+  speed: 25
+  abilityBoosts:
+  - Charisma
+  - Free
+  languages:
+  - cf-language-common
+  traits:
+  - cf-trait-kitsune
+  - cf-trait-humanoid
+  - cf-trait-low-light-vision
+  - cf-trait-change-shape
+
+- type: cfAncestry
+  id: Sprite
+  name: cf-ancestry-sprite
+  description: cf-ancestry-sprite-description
+  species: CF-Sprite
+  sprites:
+  - species: CF-Sprite-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Rare
+  hitPoints: 6
+  size: Tiny
+  speed: 20
+  abilityBoosts:
+  - Dexterity
+  - Intelligence
+  - Free
+  abilityFlaws:
+  - Strength
+  languages:
+  - cf-language-common
+  - cf-language-fey
+  traits:
+  - cf-trait-sprite
+  - cf-trait-fey
+  - cf-trait-low-light-vision
+  - cf-trait-magical-strikes
+
+- type: cfAncestry
+  id: Strix
+  name: cf-ancestry-strix
+  description: cf-ancestry-strix-description
+  species: CF-Strix
+  sprites:
+  - species: CF-Strix-Resomi
+    name: cf-sprite-resomi
+    description: cf-sprite-resomi-desc
+    parts: _Starlight/Mobs/Species/Resomi/parts.rsi
+  - species: CF-Strix-Avali
+    name: cf-sprite-avali
+    description: cf-sprite-avali-desc
+    parts: _Starlight/Mobs/Species/Avali/parts.rsi
+  - species: CF-Strix-Vox
+    name: cf-sprite-vox
+    description: cf-sprite-vox-desc
+    parts: Mobs/Species/Vox/parts.rsi
+  - species: CF-Strix-Harpy
+    name: cf-sprite-harpy
+    description: cf-sprite-harpy-desc
+    parts: _DV/Mobs/Species/Harpy/parts.rsi
+  - species: CF-Strix-Carrin
+    name: cf-sprite-ce-carrin
+    description: cf-sprite-ce-carrin-desc
+    parts: _CE/Mobs/Species/Carrin/parts.rsi
+  - species: CF-Strix-Infernal
+    name: cf-sprite-ce-infernal
+    description: cf-sprite-ce-infernal-desc
+    parts: _CE/Mobs/Species/Infernal/parts.rsi
+    heritage: Nephilim
+  rarity: Rare
+  hitPoints: 8
+  size: Medium
+  speed: 25
+  abilityBoosts:
+  - Dexterity
+  - Free
+  languages:
+  - cf-language-common
+  - cf-language-strix
+  traits:
+  - cf-trait-strix
+  - cf-trait-humanoid
+  - cf-trait-low-light-vision
+  - cf-trait-wings

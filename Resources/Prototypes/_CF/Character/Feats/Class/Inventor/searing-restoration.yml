@@ -1,0 +1,16 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Guns & Gears
+- type: cfFeat
+  id: CFSearingRestoration
+  name: "Searing Restoration"
+  description: "Costs 1 action. This feature will be implemented later."
+  class: Inventor
+  level: 2
+  traits:
+    - "Fire"
+    - "Healing"
+    - "Inventor"
+    - "Manipulate"
+    - "Unstable"
+  action: Action
+  pendingAction: true

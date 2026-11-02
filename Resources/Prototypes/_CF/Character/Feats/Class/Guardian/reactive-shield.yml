@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFReactiveShieldGuardian
+  name: "Reactive Shield"
+  description: "Reaction. This feature will be implemented later."
+  class: Guardian
+  level: 1
+  traits:
+    - "Fighter"
+    - "Guardian"
+  action: Reaction
+  pendingAction: true

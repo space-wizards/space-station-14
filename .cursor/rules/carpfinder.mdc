@@ -1,0 +1,26 @@
+---
+description: CarpFinder (CF) fork conventions — always follow .agents/.CURSOR docs
+alwaysApply: true
+---
+
+# CarpFinder agent rules
+
+Before editing this repo, read and follow:
+
+- `.agents/.CURSOR/CURSOR.md` — build/test, CF `_CF` layout, prototypes, ECS, Pathfinder 2e
+- `.agents/.CURSOR/ss14.md` — SS14/Robust structure notes
+- `.agents/.CURSOR/ss14rules.md` — warnings and errors to avoid (RA0051, damage totals, UI dispose, event subscriptions)
+- `.agents/.CURSOR/lobby-overlay.md` — when touching lobby / HumanoidProfileEditor / client XAML under `_CF`
+- `.agents/.CURSOR/hot-reload.md` — XAML/prototype reload; lobby editor is cached so restart client after XAML edits
+
+## Hard requirements
+
+- Put new CF code under `Content.*/_CF/` (and `Resources/**/_CF/`). Namespace is `Content.*.CF.*` (underscore only in the folder name).
+- Prefix CF types with `CF`. Prefer not editing upstream files; if unavoidable, wrap with `// CarpFinder:` markers (never on `using` lines).
+- XAML files under `_CF/` **must** set `x:Class` to the real C# type (path-inferred `Content.Client._CF…` is wrong).
+- Do not leave accidental diffs in stock `Content.Client/Lobby/**`; use the csproj overlay pattern in `lobby-overlay.md`.
+- Scope Grep/search to `Content.*` or `Resources/...` — full-repo grep times out.
+- Never build Shared alone; close running client/server if DLLs are locked (`MSB3027`).
+- Pathfinder rules: https://2e.aonprd.com/
+
+When you learn durable SS14/CF structure, update the docs in `.agents/.CURSOR/`.

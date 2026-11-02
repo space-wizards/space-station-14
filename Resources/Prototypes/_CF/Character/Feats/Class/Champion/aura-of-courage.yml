@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFAuraofCourage
+  name: "Aura of Courage"
+  description: "Requires champion's aura and holy."
+  class: Champion
+  level: 4
+  traits:
+    - "Champion"
+  prerequisites:
+    - "champion's aura"
+    - "holy"

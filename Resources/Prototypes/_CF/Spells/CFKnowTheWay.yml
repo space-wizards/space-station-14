@@ -1,0 +1,20 @@
+﻿- type: entity
+  parent: CFSpellInstant
+  id: CFKnowTheWay
+  name: Know the Way
+  description: You learn which direction is north.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 0
+  - type: CFSpell
+    spell: KnowTheWay
+    rank: 0
+    delivery: Instant
+    defense: None
+    friendly: true
+    includeSelf: true

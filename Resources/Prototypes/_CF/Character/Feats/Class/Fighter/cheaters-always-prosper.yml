@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens High Seas
+- type: cfFeat
+  id: CFCheatersAlwaysProsper
+  name: "Cheaters Always Prosper"
+  description: "Requires Dirty Trick."
+  class: Fighter
+  level: 4
+  traits:
+    - "Fighter"
+  prerequisites:
+    - "Dirty Trick"

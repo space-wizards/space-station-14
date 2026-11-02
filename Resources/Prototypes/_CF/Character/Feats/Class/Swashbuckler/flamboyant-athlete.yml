@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFFlamboyantAthlete
+  name: "Flamboyant Athlete"
+  description: "Requires expert in Athletics. This feature will be implemented later."
+  class: Swashbuckler
+  level: 4
+  traits:
+    - "Swashbuckler"
+  prerequisites:
+    - "expert in Athletics"
+  pendingAction: true

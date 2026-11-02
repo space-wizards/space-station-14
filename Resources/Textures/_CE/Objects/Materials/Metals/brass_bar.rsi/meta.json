@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by TheShuEd (Github)",
+  "states": [
+    {
+      "name": "bar"
+    },
+    {
+      "name": "bar_2"
+    },
+    {
+      "name": "bar_3"
+    },
+    {
+      "name": "rod"
+    },
+    {
+      "name": "rod_2"
+    },
+    {
+      "name": "rod_3"
+    },
+    {
+      "name": "sheet"
+    },
+    {
+      "name": "sheet_2"
+    },
+    {
+      "name": "sheet_3"
+    }
+  ]
+}

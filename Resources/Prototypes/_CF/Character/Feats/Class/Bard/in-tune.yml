@@ -1,0 +1,16 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFInTune
+  name: "In Tune"
+  description: "Requires maestro muse. Changes an item. Costs 1 action. This feature will be implemented later."
+  class: Bard
+  level: 4
+  traits:
+    - "Bard"
+    - "Concentrate"
+    - "Spellshape"
+  prerequisites:
+    - "maestro muse"
+  action: Action
+  pendingAction: true

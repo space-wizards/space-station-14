@@ -1,0 +1,99 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "ear markings, fluff_head and fluff_head_up taken from Baystation12 commit a41ce0bd9323bc5fcf8feb57b84f08857a89052f. forehead, resomi_ears_short marking created by Huaqas (GitHub). head_war, head_coat and head_stripes taken from Polaris commit 4e9c367322a5a07604d120c0972adbc61fba9a25. Earring markings created by AegisShieldDev (GitHub).",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+        "states": [
+            {
+                "name": "resomi_ears",
+                "directions": 4
+            },
+            {
+                "name": "resomi_ears_short",
+                "directions": 4
+            },
+            {
+                "name": "upper_ear",
+                "directions": 4
+            },
+            {
+                "name": "lower_ear",
+                "directions": 4
+            },
+            {
+                "name": "upper_ear_alternate",
+                "directions": 4
+            },
+            {
+                "name": "head_fluff",
+                "directions": 4
+            },
+            {
+                "name": "head_fluff_short",
+                "directions": 4
+            },
+            {
+                "name": "upper_ear_alternate_earring",
+                "directions": 4
+            },
+            {
+                "name": "forehead",
+                "directions": 4
+            },
+            {
+                "name": "fluff_head",
+                "directions": 4
+            },
+            {
+                "name": "fluff_head_up",
+                "directions": 4
+            },
+            {
+                "name": "head_stripes",
+                "directions": 4
+            },
+            {
+                "name": "head_war",
+                "directions": 4
+            },
+            {
+                "name": "head_coat",
+                "directions": 4
+            },
+            {
+                "name": "resomi_earring_1_1",
+                "directions": 4
+            },
+            {
+                "name": "resomi_earring_1_2",
+                "directions": 4
+            },
+            {
+                "name": "resomi_earring_2_1",
+                "directions": 4
+            },
+            {
+                "name": "resomi_earring_2_2",
+                "directions": 4
+            },
+            {
+                "name": "resomi_earring_3_1",
+                "directions": 4
+            },
+            {
+                "name": "resomi_earring_3_2",
+                "directions": 4
+            },
+            {
+                "name": "resomi_earring_4_1",
+                "directions": 4
+            },
+            {
+                "name": "resomi_earring_4_2",
+                "directions": 4
+            }
+      ]
+  }

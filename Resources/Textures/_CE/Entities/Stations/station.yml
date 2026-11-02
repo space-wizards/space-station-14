@@ -1,7 +1,0 @@
-- type: entity
-  id: CEStandardImperialFloatingIsland
-  categories: [ HideSpawnMenu ]
-  parent:
-    - BaseStation
-    - BaseStationJobsSpawning
-    - BaseStationRecords

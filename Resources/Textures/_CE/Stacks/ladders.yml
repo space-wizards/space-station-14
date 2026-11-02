@@ -1,6 +1,0 @@
-- type: stack
-  id: CEWoodenLadder
-  name: ce-stack-wooden-ladder
-  spawn: CEWoodenLadderItem
-  icon: { sprite: _CE/Objects/Materials/ladder.rsi, state: wooden2 }
-  maxCount: 10

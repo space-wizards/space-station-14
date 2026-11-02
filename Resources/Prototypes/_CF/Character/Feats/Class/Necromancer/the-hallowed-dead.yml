@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFTheHallowedDead
+  name: "The Hallowed Dead"
+  description: "Requires You aren't unholy."
+  class: Necromancer
+  level: 1
+  traits:
+    - "Holy"
+    - "Necromancer"
+  prerequisites:
+    - "You aren't unholy"

@@ -1,0 +1,13 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Tian Xia Character Guide
+- type: cfFeat
+  id: CFSpiritCoffin
+  name: "Spirit Coffin"
+  description: "Requires bakuwa lizardfolk heritage or Tian Xia origin."
+  ancestry: Lizardfolk
+  level: 1
+  rarity: Uncommon
+  traits:
+    - "Lizardfolk"
+  prerequisites:
+    - "bakuwa lizardfolk heritage or Tian Xia origin"

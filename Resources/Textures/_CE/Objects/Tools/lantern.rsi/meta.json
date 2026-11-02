@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by jaraten (Github/discord)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "equipped-BELT2",
+      "directions": 4
+    },
+    {
+      "name": "light_icon"
+    },
+    {
+      "name": "light_inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "light_inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "light_equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "light_equipped-BELT2",
+      "directions": 4
+    }
+  ]
+}

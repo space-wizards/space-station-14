@@ -1,0 +1,19 @@
+# Pathfinder 2e item traits as SS14 Tags (CF-prefixed — Tag is an upstream prototype kind).
+
+- type: Tag
+  id: CFAlchemical # PF2e Alchemical trait — crafted via alchemy.
+
+- type: Tag
+  id: CFConsumable # PF2e Consumable — destroyed after activation.
+
+- type: Tag
+  id: CFHealing # PF2e Healing — restores Hit Points or removes ailments.
+
+- type: Tag
+  id: CFMagical # PF2e Magical — imbued with magical energies.
+
+- type: Tag
+  id: CFPotion # PF2e Potion — consumable magical liquid, activated by drinking.
+
+- type: Tag
+  id: CFVitality # PF2e Vitality — life energy; heals living, harms undead.

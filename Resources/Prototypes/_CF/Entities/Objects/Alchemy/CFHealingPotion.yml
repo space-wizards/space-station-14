@@ -1,0 +1,54 @@
+# Healing Potion (Minor) — Item 1, 4 gp, restores 1d8 HP.
+# https://2e.aonprd.com/Equipment.aspx?ID=2943
+# Traits: Consumable, Healing, Magical, Potion, Vitality
+
+- type: entity
+  parent: BaseItem
+  id: CFHealingPotionMinor
+  name: healing potion (minor)
+  description: A vial of ruby-red liquid. Drink to restore 1d8 Hit Points.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/vial.rsi
+    layers:
+    - state: vial
+    - state: fill-6
+      color: "#c41e3a"
+  - type: Item
+    size: Tiny
+    sprite: Objects/Specific/Chemistry/vial.rsi
+  - type: Tag
+    tags:
+    - CFConsumable
+    - CFHealing
+    - CFMagical
+    - CFPotion
+    - CFVitality
+  - type: CFTrait
+    traits:
+    - Consumable
+    - Healing
+    - Magical
+    - Potion
+    - Vitality
+  - type: CFAlchemicalItem
+    itemLevel: 1
+    priceGp: 4
+    consumable: true
+    bulk: L
+    # Same drink UX as Space Cola / Edible Drink (progress bar + slurp).
+    delay: 1
+    forceFeedDelay: 3
+    useSound:
+      path: /Audio/Items/drink.ogg
+      params:
+        volume: -2
+        variation: 0.25
+  - type: CFHealConsumable
+    healDice: 1
+    healDie: 8
+    healBonus: 0
+  - type: StaticPrice
+    price: 40
+  - type: CFItemPrice
+    copper: 400 # 4 gp

@@ -46,7 +46,7 @@
     - name: suitstorage
       slotTexture: suit_storage
       slotFlags:   SUITSTORAGE
-      slotGroup: MainHotbar
+      slotGroup: CFSuitStorage # CarpFinder: suit storage on the action HUD.
       stripTime: 3
       uiWindowPos: 2,0
       strippingWindowPos: 1,3

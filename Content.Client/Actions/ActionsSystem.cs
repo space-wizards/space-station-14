@@ -1,7 +1,9 @@
 using System.IO;
 using System.Linq;
+using Content.Client.CF.Spells;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
+using Content.Shared.CF.Spells;
 using Content.Shared.Mapping;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
@@ -9,6 +11,8 @@ using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -32,6 +36,8 @@ namespace Content.Client.Actions
         [Dependency] private MetaDataSystem _metaData = default!;
         [Dependency] private ISerializationManager _serialization = default!;
         [Dependency] private SpriteSystem _sprite = default!;
+        // CarpFinder: spell clicks use the outlined creature when the cursor hits the floor.
+        [Dependency] private CFSpellTargetingSystem _spellTargeting = default!;
 
         public event Action<EntityUid>? OnActionAdded;
         public event Action<EntityUid>? OnActionRemoved;
@@ -218,6 +224,7 @@ namespace Content.Client.Actions
             else
             {
                 var request = new RequestPerformActionEvent(GetNetEntity(action));
+                StampSpell(request, action);
                 RaisePredictiveEvent(request);
             }
         }
@@ -353,7 +360,11 @@ namespace Content.Client.Actions
                 PerformAction((user, user.Comp), (uid, action));
             }
             else
-                RaisePredictiveEvent(new RequestPerformActionEvent(GetNetEntity(uid), GetNetEntity(targetEnt), GetNetCoordinates(coords)));
+            {
+                var request = new RequestPerformActionEvent(GetNetEntity(uid), GetNetEntity(targetEnt), GetNetCoordinates(coords));
+                StampSpell(request, uid);
+                RaisePredictiveEvent(request);
+            }
 
             args.FoundTarget = true;
         }
@@ -365,8 +376,13 @@ namespace Content.Client.Actions
 
             args.Handled = true;
 
-            if (args.Input.EntityUid is not { Valid: true } entity)
+            if (args.Input.EntityUid is not { Valid: true } entity || IsTrickFloor(ent.Owner, entity))
+            {
+                // CarpFinder: the outline can show a creature the click did not hit.
+                // A trick aimed at the floor looks for the puddle or object on that tile.
+                _spellTargeting.TryUseOutlinedCreature(ent, ref args);
                 return;
+            }
 
             // let world target component handle it
             var (uid, comp) = ent;
@@ -380,7 +396,11 @@ namespace Content.Client.Actions
             var user = args.User;
 
             if (!ValidateEntityTarget(user, entity, ent))
+            {
+                // CarpFinder: a worn item or the floor was clicked beside the outlined creature.
+                _spellTargeting.TryUseOutlinedCreature(ent, ref args);
                 return;
+            }
 
             if (action.ClientExclusive)
             {
@@ -390,10 +410,31 @@ namespace Content.Client.Actions
             }
             else
             {
-                RaisePredictiveEvent(new RequestPerformActionEvent(GetNetEntity(uid), GetNetEntity(entity)));
+                var request = new RequestPerformActionEvent(GetNetEntity(uid), GetNetEntity(entity));
+                StampSpell(request, uid);
+                RaisePredictiveEvent(request);
             }
 
             args.FoundTarget = true;
+        }
+
+        // CarpFinder: a click on the map itself is the floor, not the puddle or item sitting on it.
+        private bool IsTrickFloor(EntityUid action, EntityUid entity)
+        {
+            if (!TryComp(action, out CFSpellComponent? spell) || spell.ChosenTrick == 0)
+                return false;
+
+            return HasComp<MapGridComponent>(entity) || HasComp<MapComponent>(entity);
+        }
+
+        // CarpFinder: a multi-bolt spell puts the chosen count on the perform request.
+        // A trick spell puts Food, Lift, Make, or Tidy on it as well.
+        private void StampSpell(RequestPerformActionEvent request, EntityUid action)
+        {
+            if (!TryComp(action, out CFSpellComponent? spell))
+                return;
+
+            spell.WriteVolley(request);
         }
 
         public record struct SlotAssignment(byte Hotbar, byte Slot, EntityUid ActionId);

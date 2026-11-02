@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFMartialExperience
+  name: "Martial Experience"
+  description: "Passive feat. Its special rule is not applied in play yet."
+  ancestry: Elf
+  level: 5
+  traits:
+    - "Elf"

@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFCompanionsCry
+  name: "Companion's Cry"
+  description: "Requires an animal companion."
+  class: Ranger
+  level: 4
+  traits:
+    - "Ranger"
+  prerequisites:
+    - "an animal companion"

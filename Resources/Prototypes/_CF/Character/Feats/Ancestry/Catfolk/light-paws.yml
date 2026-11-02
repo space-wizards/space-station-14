@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFLightPaws
+  name: "Light Paws"
+  description: "Costs 2 actions. TBA - action will be added"
+  ancestry: Catfolk
+  level: 5
+  traits:
+    - "Catfolk"
+  action: Action
+  pendingAction: true

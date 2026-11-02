@@ -1,9 +1,0 @@
-- type: flavor
-  id: CEPungent
-  flavorType: Base
-  description: flavor-base-ce-pungent
-
-- type: flavor
-  id: CECucumber
-  flavorType: Complex
-  description: flavor-complex-ce-cucumber

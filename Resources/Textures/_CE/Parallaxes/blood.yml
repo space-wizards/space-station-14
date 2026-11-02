@@ -1,8 +1,0 @@
-- type: parallax
-  id: CEBlood
-  layers:
-    - texture:
-        !type:ImageParallaxTextureSource
-        path: "/Textures/_CE/Parallaxes/BloodBG.png"
-      slowness: 0.998046875
-      scale: "1, 1"

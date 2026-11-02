@@ -1,0 +1,14 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFThousandVisions
+  name: "Thousand Visions"
+  description: "Free action. This feature will be implemented later."
+  class: Oracle
+  level: 4
+  traits:
+    - "Cursebound"
+    - "Oracle"
+    - "Prediction"
+  action: Free
+  pendingAction: true

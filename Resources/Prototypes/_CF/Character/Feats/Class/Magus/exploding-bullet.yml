@@ -1,0 +1,15 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFExplodingBullet
+  name: "Exploding Bullet"
+  description: "Requires volatile spark hybrid study. Costs 1 action. This feature will be implemented later."
+  class: Magus
+  level: 4
+  traits:
+    - "Arcane"
+    - "Magus"
+  prerequisites:
+    - "volatile spark hybrid study"
+  action: Action
+  pendingAction: true

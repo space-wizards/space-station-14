@@ -1,0 +1,23 @@
+﻿- type: entity
+  parent: CFSpellProjectile
+  id: CFTelekineticProjectile
+  name: Telekinetic Projectile
+  description: You hurl an object. Spell attack, 1d6 plus your spellcasting modifier.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 0
+  - type: CFSpell
+    spell: TelekineticProjectile
+    rank: 0
+    delivery: Projectile
+    rangeFeet: 30
+    defense: SpellAttack
+    diceCount: 1
+    diceSize: 6
+    addSpellModifier: true
+    damageType: bludgeoning

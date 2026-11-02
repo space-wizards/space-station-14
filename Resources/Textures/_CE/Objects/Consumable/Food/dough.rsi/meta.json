@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "bun_cooked bun_cooked_slice_bottom bun_cooked_slice_top dough_medium dough_medium_flat Created by Artista.rar, bread_cooked by perzonaz (discord) & resprited by omsoyk dough_large created by TheShuEd",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "bread_cooked"
+        },
+        {
+            "name": "bread_slice"
+        },
+        {
+            "name": "bun_cooked"
+        },
+        {
+            "name": "bun_cooked_slice_bottom"
+        },
+        {
+            "name": "bun_cooked_slice_top"
+        },
+        {
+            "name": "dough_large"
+        },
+        {
+            "name": "dough_medium"
+        },
+        {
+            "name": "dough_medium_flat"
+        }
+    ]
+}

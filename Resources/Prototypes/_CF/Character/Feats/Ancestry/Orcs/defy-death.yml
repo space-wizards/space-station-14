@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFDefyDeath
+  name: "Defy Death"
+  description: "Requires Orc Ferocity."
+  ancestry: Orc
+  level: 5
+  traits:
+    - "Orc"
+  prerequisites:
+    - "Orc Ferocity"

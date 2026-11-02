@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFFlyingBlade
+  name: "Flying Blade"
+  description: "Requires precise strike."
+  class: Swashbuckler
+  level: 1
+  traits:
+    - "Swashbuckler"
+  prerequisites:
+    - "precise strike"

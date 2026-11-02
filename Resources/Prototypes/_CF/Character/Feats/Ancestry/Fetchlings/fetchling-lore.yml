@@ -1,0 +1,13 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Cheliax, Infernal Inheritance
+- type: cfFeat
+  id: CFFetchlingLore
+  name: "Fetchling Lore"
+  description: "Trained in Occultism and Stealth."
+  ancestry: Fetchling
+  level: 1
+  traits:
+    - "Fetchling"
+  trainedSkills:
+    - Occultism
+    - Stealth

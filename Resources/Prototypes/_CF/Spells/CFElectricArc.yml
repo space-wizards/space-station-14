@@ -1,0 +1,24 @@
+﻿- type: entity
+  parent: CFSpellTarget
+  id: CFElectricArc
+  name: Electric Arc
+  description: One creature takes 1d4 electricity plus your spellcasting modifier. A Reflex save applies.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 0
+  - type: CFSpell
+    spell: ElectricArc
+    rank: 0
+    delivery: Target
+    rangeFeet: 30
+    defense: Reflex
+    basicSave: true
+    diceCount: 1
+    diceSize: 4
+    addSpellModifier: true
+    damageType: electricity

@@ -1,0 +1,22 @@
+﻿- type: entity
+  parent: CFSpellProjectile
+  id: CFTangleVine
+  name: Tangle Vine
+  description: A vine. Spell attack, 2d4 bludgeoning.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 0
+  - type: CFSpell
+    spell: TangleVine
+    rank: 0
+    delivery: Projectile
+    rangeFeet: 30
+    defense: SpellAttack
+    diceCount: 2
+    diceSize: 4
+    damageType: bludgeoning

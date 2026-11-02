@@ -1,0 +1,71 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Created by prazat911, trash by TheShuEd, chicken, corn cucumber, fish, kharcho, porridge and variants by iowaku (Discord)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "cheese"
+        },
+        {
+            "name": "flyagaric"
+        },
+        {
+            "name": "flylumish"
+        },
+        {
+            "name": "lumish"
+        },
+        {
+            "name": "meat"
+        },
+        {
+            "name": "meat_salad"
+        },
+        {
+            "name": "meat2"
+        },
+        {
+            "name": "mole"
+        },
+        {
+            "name": "pumpkin"
+        },
+        {
+            "name": "trash"
+        },
+        {
+            "name": "veg_stew"
+        },
+        {
+            "name": "chicken"
+        },
+        {
+            "name": "corn"
+        },
+        {
+            "name": "cucumber"
+        },
+        {
+            "name": "fish"
+        },
+        {
+            "name": "kharcho"
+        },
+        {
+            "name": "porridge"
+        },
+        {
+            "name": "porridge_apple"
+        },
+        {
+            "name": "porridge_meat"
+        },
+        {
+            "name": "porridge_pumpkin"
+        }
+    ]
+}

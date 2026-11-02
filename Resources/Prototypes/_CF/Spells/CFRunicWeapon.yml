@@ -1,0 +1,24 @@
+﻿- type: entity
+  parent: CFSpellTarget
+  id: CFRunicWeapon
+  name: Runic Weapon
+  description: A weapon you touch grants a +1 status bonus to attack rolls.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 1
+  - type: CFSpell
+    spell: RunicWeapon
+    rank: 1
+    delivery: Target
+    rangeFeet: 5
+    defense: None
+    attackBonus: 1
+    friendly: true
+    includeSelf: true
+  - type: EntityTargetAction
+    canTargetSelf: true

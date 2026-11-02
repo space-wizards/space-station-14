@@ -1,0 +1,17 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFConcealSpellAnimist
+  name: "Conceal Spell"
+  description: "Changes an item. Costs 1 action. This feature will be implemented later."
+  class: Animist
+  level: 2
+  traits:
+    - "Animist"
+    - "Concentrate"
+    - "Necromancer"
+    - "Spellshape"
+    - "Witch"
+    - "Wizard"
+  action: Action
+  pendingAction: true

@@ -1,0 +1,22 @@
+﻿- type: entity
+  parent: CFSpellObject
+  id: CFPrestidigitation
+  name: Prestidigitation
+  description: A minor trick. Food cooks and flavours a bite, Lift draws an object, Make conjures a trinket, and Tidy clears a puddle.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 0
+  - type: CFSpell
+    spell: Prestidigitation
+    rank: 0
+    delivery: Target
+    defense: None
+    friendly: true
+    includeSelf: true
+    rangeFeet: 10
+    trickMenu: true

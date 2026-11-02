@@ -1,0 +1,14 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFTripkeeGlide
+  name: "Tripkee Glide"
+  description: "Requires windweb tripkee. Costs 1 action. TBA - action will be added"
+  ancestry: Tripkee
+  level: 5
+  traits:
+    - "Tripkee"
+  prerequisites:
+    - "windweb tripkee"
+  action: Action
+  pendingAction: true

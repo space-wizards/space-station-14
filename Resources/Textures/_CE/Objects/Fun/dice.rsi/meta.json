@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Made by Vojner(discord:vojner) for CrystallEdge",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+	  "name":"d6_1"
+    },
+    {
+	  "name":"d6_2"
+    },
+    {
+	  "name":"d6_3"
+    },
+    {
+	  "name":"d6_4"
+    },
+    {
+	  "name":"d6_5"
+    },
+    {
+	  "name":"d6_6"
+    },
+    {
+	  "name":"d20_1"
+    },
+    {
+	  "name":"d20_2"
+    },
+    {
+	  "name":"d20_3"
+    },
+    {
+	  "name":"d20_4"
+    },
+    {
+	  "name":"d20_5"
+    },
+    {
+	  "name":"d20_6"
+    },
+    {
+	  "name":"d20_7"
+    },
+    {
+	  "name":"d20_8"
+    },
+    {
+	  "name":"d20_9"
+    },
+    {
+	  "name":"d20_10"
+    },
+    {
+	  "name":"d20_11"
+    },
+    {
+	  "name":"d20_12"
+    },
+    {
+	  "name":"d20_13"
+    },
+    {
+	  "name":"d20_14"
+    },
+    {
+	  "name":"d20_15"
+    },
+    {
+	  "name":"d20_16"
+    },
+    {
+	  "name":"d20_17"
+    },
+    {
+	  "name":"d20_18"
+    },
+    {
+	  "name":"d20_19"
+    },
+    {
+	  "name":"d20_20"
+    }
+  ]
+}

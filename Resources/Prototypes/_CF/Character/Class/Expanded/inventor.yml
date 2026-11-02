@@ -1,0 +1,60 @@
+# CarpFinder: remaster class, levels 1-5.
+- type: cfClass
+  id: Inventor
+  name: cf-class-inventor
+  description: cf-class-description-inventor
+  hitPoints: 8
+  keyAbility: Intelligence
+  hitPointsAbility: Constitution
+  classDC: cf-class-inventor
+  proficiencies:
+    perception:
+      trained:
+        - Perception
+    savingThrows:
+      trained:
+        - Reflex
+      expert:
+        - Fortitude
+        - Will
+    skills:
+      trained:
+        - Crafting
+    attacks:
+      trained:
+        - MartialWeapons
+        - SimpleWeapons
+        - Unarmed
+    defenses:
+      trained:
+        - Unarmored
+        - MediumArmor
+        - LightArmor
+  additionalSkillTrainings: 3
+  rarity: Uncommon
+  features:
+    - level: 1
+      name: "Explode"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Innovation"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Overdrive"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Peerless Inventor"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Shield Block"
+      description: "This feature will be implemented later."
+    - level: 3
+      name: "Expert Overdrive"
+      description: "This feature will be implemented later."
+    - level: 3
+      name: "Reconfigure"
+      description: "This feature will be implemented later."
+    - level: 5
+      name: "Inventor Weapon Expertise"
+      description: "This feature will be implemented later."
+  # Class key-attribute boost is applied from keyAbility in code (PF2e).

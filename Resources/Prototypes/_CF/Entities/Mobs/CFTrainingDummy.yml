@@ -1,0 +1,58 @@
+# Training dummy for Pathfinder Strikes. Spawn with `spawn CFTrainingDummy`.
+- type: entity
+  parent: [ SimpleSpaceMobBase, MobCombat, BaseMobDestructible ]
+  id: CFTrainingDummy
+  name: training dummy
+  description: A sturdy practice foe. Hit it with a CF longsword to test Pathfinder Strikes.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+      sprite: Mobs/Aliens/Carps/space.rsi
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 80
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      200: Dead
+  - type: CFAbilityScore
+    abilityModifiers:
+      Strength: 2
+      Dexterity: 1
+      Constitution: 2
+      Intelligence: -1
+      Wisdom: 0
+      Charisma: -1
+  - type: CFCombatant
+    level: 1
+    armorClass: 15
+    maxHp: 20
+    currentHp: 20
+  - type: StatusIcon
+    bounds: -0.5,-0.5,0.5,0.5
+  - type: CFFaction
+    faction: Neutral
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: HTN
+    rootTask:
+      task: IdleCompound
+  - type: MeleeWeapon
+    hidden: true
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Blunt: 0

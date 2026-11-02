@@ -1,0 +1,50 @@
+# CarpFinder: remaster class, levels 1-5.
+- type: cfClass
+  id: Ranger
+  name: cf-class-ranger
+  description: cf-class-description-ranger
+  hitPoints: 10
+  keyAbility: Dexterity
+  hitPointsAbility: Constitution
+  classDC: cf-class-ranger
+  proficiencies:
+    perception:
+      expert:
+        - Perception
+    savingThrows:
+      trained:
+        - Will
+      expert:
+        - Fortitude
+        - Reflex
+    skills:
+      trained:
+        - Survival
+    attacks:
+      trained:
+        - MartialWeapons
+        - SimpleWeapons
+        - Unarmed
+    defenses:
+      trained:
+        - Unarmored
+        - MediumArmor
+        - LightArmor
+  additionalSkillTrainings: 4
+  features:
+    - level: 1
+      name: "Hunt Prey"
+      description: "This feature will be implemented later."
+    - level: 1
+      name: "Hunter's Edge"
+      description: "This feature will be implemented later."
+    - level: 3
+      name: "Will Expertise"
+      description: "This feature will be implemented later."
+    - level: 5
+      name: "Ranger Weapon Expertise"
+      description: "This feature will be implemented later."
+    - level: 5
+      name: "Trackless Journey"
+      description: "This feature will be implemented later."
+  # Class key-attribute boost is applied from keyAbility in code (PF2e).

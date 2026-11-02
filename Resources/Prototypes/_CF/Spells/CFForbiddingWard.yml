@@ -1,0 +1,24 @@
+﻿- type: entity
+  parent: CFSpellTarget
+  id: CFForbiddingWard
+  name: Forbidding Ward
+  description: An ally gains a +1 status bonus to AC.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: shield
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 0
+  - type: CFSpell
+    spell: ForbiddingWard
+    rank: 0
+    delivery: Target
+    rangeFeet: 30
+    defense: None
+    acBonus: 1
+    friendly: true
+    includeSelf: true
+  - type: EntityTargetAction
+    canTargetSelf: true

@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFSpellbookProdigy
+  name: "Spellbook Prodigy"
+  description: "Requires trained in Arcana. Also grants Magical Shorthand. Improves Skill Check results. This feature will be implemented later."
+  class: Wizard
+  level: 1
+  traits:
+    - "Wizard"
+  prerequisites:
+    - "trained in Arcana"
+  pendingAction: true

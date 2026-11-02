@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFPowerfulShove
+  name: "Powerful Shove"
+  description: "Requires Aggressive Block or Brutish Shove."
+  class: Fighter
+  level: 4
+  traits:
+    - "Fighter"
+  prerequisites:
+    - "Aggressive Block or Brutish Shove"

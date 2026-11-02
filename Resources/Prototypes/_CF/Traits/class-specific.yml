@@ -1,0 +1,176 @@
+# CarpFinder: remaster trait ids. Summaries are short mechanical notes, not source text.
+# category: ClassSpecific
+
+- type: cfTrait
+  id: Additive
+  name: Additive
+  category: ClassSpecific
+  summary: "An alchemist additive that changes an alchemical item."
+
+- type: cfTrait
+  id: Additive0
+  name: Additive 0
+  category: ClassSpecific
+  summary: "An alchemist additive in the lowest level band."
+
+- type: cfTrait
+  id: Additive1
+  name: Additive 1
+  category: ClassSpecific
+  summary: "An alchemist additive in the first level band."
+
+- type: cfTrait
+  id: Additive2
+  name: Additive 2
+  category: ClassSpecific
+  summary: "An alchemist additive in the second level band."
+
+- type: cfTrait
+  id: Additive3
+  name: Additive 3
+  category: ClassSpecific
+  summary: "An alchemist additive in the third level band."
+
+- type: cfTrait
+  id: Amp
+  name: Amp
+  category: ClassSpecific
+  summary: "A psychic amp. It spends a focus point to heighten a psi cantrip."
+
+- type: cfTrait
+  id: Apparition
+  name: Apparition
+  category: ClassSpecific
+  summary: "An animist apparition spell or feat."
+
+- type: cfTrait
+  id: Bravado
+  name: Bravado
+  category: ClassSpecific
+  summary: "A swashbuckler bravado action."
+
+- type: cfTrait
+  id: Coda
+  name: Coda
+  category: ClassSpecific
+  summary: "A bard coda. It follows a composition."
+
+- type: cfTrait
+  id: Composition
+  name: Composition
+  category: ClassSpecific
+  summary: "A bard composition spell. It usually lasts only a short time."
+
+- type: cfTrait
+  id: Cursebound
+  name: Cursebound
+  category: ClassSpecific
+  summary: "An oracle ability tied to their curse."
+
+- type: cfTrait
+  id: Esoterica
+  name: Esoterica
+  category: ClassSpecific
+  summary: "A thaumaturge implement or esoterica action."
+
+- type: cfTrait
+  id: Evolution
+  name: Evolution
+  category: ClassSpecific
+  summary: "A summoner eidolon evolution."
+
+- type: cfTrait
+  id: Finisher
+  name: Finisher
+  category: ClassSpecific
+  summary: "A swashbuckler finisher. Using it spends your panache."
+
+- type: cfTrait
+  id: Hex
+  name: Hex
+  category: ClassSpecific
+  summary: "A witch hex spell."
+
+- type: cfTrait
+  id: Ikon
+  name: Ikon
+  category: ClassSpecific
+  summary: "An exemplar ikon."
+
+- type: cfTrait
+  id: Impulse
+  name: Impulse
+  category: ClassSpecific
+  summary: "A kineticist impulse."
+
+- type: cfTrait
+  id: Infusion
+  name: Infusion
+  category: ClassSpecific
+  summary: "An alchemist infusion feat or field."
+
+- type: cfTrait
+  id: Litany
+  name: Litany
+  category: ClassSpecific
+  summary: "A champion litany spell."
+
+- type: cfTrait
+  id: Oath
+  name: Oath
+  category: ClassSpecific
+  summary: "A champion oath."
+
+- type: cfTrait
+  id: Overflow
+  name: Overflow
+  category: ClassSpecific
+  summary: "A kineticist impulse that empties the kinetic aura."
+
+- type: cfTrait
+  id: Psyche
+  name: Psyche
+  category: ClassSpecific
+  summary: "A psychic action that strains the psyche."
+
+- type: cfTrait
+  id: Rage
+  name: Rage
+  category: ClassSpecific
+  summary: "A barbarian action you use while raging."
+
+- type: cfTrait
+  id: Revelation
+  name: Revelation
+  category: ClassSpecific
+  summary: "An oracle revelation spell."
+
+- type: cfTrait
+  id: Spellshot
+  name: Spellshot
+  category: ClassSpecific
+  summary: "A gunslinger spellshot deed or feat."
+
+- type: cfTrait
+  id: Tandem
+  name: Tandem
+  category: ClassSpecific
+  summary: "A summoner action that you and your eidolon both take."
+
+- type: cfTrait
+  id: Transcendence
+  name: Transcendence
+  category: ClassSpecific
+  summary: "An exemplar transcendence action."
+
+- type: cfTrait
+  id: Unstable
+  name: Unstable
+  category: ClassSpecific
+  summary: "An inventor action that can overload the innovation."
+
+- type: cfTrait
+  id: Wandering
+  name: Wandering
+  category: ClassSpecific
+  summary: "An animist option for a wandering apparition."

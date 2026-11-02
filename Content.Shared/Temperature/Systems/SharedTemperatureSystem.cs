@@ -196,6 +196,15 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
     }
 
     /// <summary>
+    /// CarpFinder: sets surface temperature immediately so a cook step can see it.
+    /// The server also sets the interior, which is the temperature a grill's construction step reads.
+    /// </summary>
+    public virtual void SetCookedTemperature(EntityUid uid, float temperature)
+    {
+        SetTemperature(uid, temperature);
+    }
+
+    /// <summary>
     /// Protected because you should not be calling this. Sets heat to a new value.
     /// </summary>
     protected void SetTemperature(Entity<TemperatureComponent?> entity, float temp)

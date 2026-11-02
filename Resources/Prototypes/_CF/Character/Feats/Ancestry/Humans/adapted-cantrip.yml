@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFAdaptedCantrip
+  name: "Adapted Cantrip"
+  description: "Requires spellcasting class feature."
+  ancestry: Human
+  level: 1
+  traits:
+    - "Human"
+  prerequisites:
+    - "spellcasting class feature"

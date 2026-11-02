@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by TheShuEd (Github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "handle"
+    },
+    {
+      "name": "crayon"
+    },
+    {
+      "name": "handle-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "handle-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "crayon-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "crayon-inhand-right",
+      "directions": 4
+    }
+  ]
+}

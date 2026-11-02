@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Battlecry!
+- type: cfFeat
+  id: CFPunishingShove
+  name: "Punishing Shove"
+  description: "Requires trained in Athletics."
+  class: Guardian
+  level: 1
+  traits:
+    - "Guardian"
+  prerequisites:
+    - "trained in Athletics"

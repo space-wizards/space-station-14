@@ -1,0 +1,18 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Howl of the Wild
+- type: cfFeat
+  id: CFBestialSnarling
+  name: "Bestial Snarling"
+  description: "Requires zoophonia muse. Costs 1 action. This feature will be implemented later."
+  class: Bard
+  level: 2
+  traits:
+    - "Auditory"
+    - "Bard"
+    - "Emotion"
+    - "Fear"
+    - "Mental"
+  prerequisites:
+    - "zoophonia muse"
+  action: Action
+  pendingAction: true

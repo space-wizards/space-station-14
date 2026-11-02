@@ -1,0 +1,164 @@
+# Player Core ancestries that are not already a stock species.
+# Each one uses the humanoid doll. Pathfinder stats live on cfAncestry.
+
+- type: species
+  id: CF-Elf
+  name: cf-ancestry-elf
+  roundStart: true
+  prototype: CFMobElf
+  dollPrototype: CFAppearanceElf
+  skinColoration: HumanToned
+  minAge: 18
+  youngAge: 100
+  oldAge: 350
+  maxAge: 600
+
+- type: species
+  id: CF-Gnome
+  name: cf-ancestry-gnome
+  roundStart: true
+  prototype: CFMobGnome
+  dollPrototype: CFAppearanceGnome
+  skinColoration: HumanToned
+  minAge: 18
+  youngAge: 40
+  oldAge: 200
+  maxAge: 400
+
+- type: species
+  id: CF-Halfling
+  name: cf-ancestry-halfling
+  roundStart: true
+  prototype: CFMobHalfling
+  dollPrototype: CFAppearanceHalfling
+  skinColoration: HumanToned
+
+- type: species
+  id: CF-Leshy
+  name: cf-ancestry-leshy
+  roundStart: true
+  prototype: CFMobLeshy
+  dollPrototype: CFAppearanceLeshy
+  skinColoration: HumanToned
+
+- type: species
+  id: CF-Orc
+  name: cf-ancestry-orc
+  roundStart: true
+  prototype: CFMobOrc
+  dollPrototype: CFAppearanceOrc
+  skinColoration: HumanToned
+  minAge: 16
+  youngAge: 20
+  oldAge: 45
+  maxAge: 70
+
+- type: entity
+  parent: AppearanceHuman
+  id: CFAppearanceElf
+  categories: [HideSpawnMenu]
+  save: false
+  components:
+  - type: HumanoidProfile
+    species: CF-Elf
+
+- type: entity
+  parent:
+  - CFAppearanceElf
+  - BaseSpeciesMobOrganic
+  id: CFMobElf
+  name: elf
+  components:
+  - type: HumanoidProfile
+    species: CF-Elf
+  - type: CF-Species
+    species: CF-Elf
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: AppearanceHuman
+  id: CFAppearanceGnome
+  categories: [HideSpawnMenu]
+  save: false
+  components:
+  - type: HumanoidProfile
+    species: CF-Gnome
+
+- type: entity
+  parent:
+  - CFAppearanceGnome
+  - BaseSpeciesMobOrganic
+  id: CFMobGnome
+  name: gnome
+  components:
+  - type: HumanoidProfile
+    species: CF-Gnome
+  - type: CF-Species
+    species: CF-Gnome
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: AppearanceHuman
+  id: CFAppearanceHalfling
+  categories: [HideSpawnMenu]
+  save: false
+  components:
+  - type: HumanoidProfile
+    species: CF-Halfling
+
+- type: entity
+  parent:
+  - CFAppearanceHalfling
+  - BaseSpeciesMobOrganic
+  id: CFMobHalfling
+  name: halfling
+  components:
+  - type: HumanoidProfile
+    species: CF-Halfling
+  - type: CF-Species
+    species: CF-Halfling
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: AppearanceHuman
+  id: CFAppearanceLeshy
+  categories: [HideSpawnMenu]
+  save: false
+  components:
+  - type: HumanoidProfile
+    species: CF-Leshy
+
+- type: entity
+  parent:
+  - CFAppearanceLeshy
+  - BaseSpeciesMobOrganic
+  id: CFMobLeshy
+  name: leshy
+  components:
+  - type: HumanoidProfile
+    species: CF-Leshy
+  - type: CF-Species
+    species: CF-Leshy
+  - type: CFAtmosphereImmunity
+
+- type: entity
+  parent: AppearanceHuman
+  id: CFAppearanceOrc
+  categories: [HideSpawnMenu]
+  save: false
+  components:
+  - type: HumanoidProfile
+    species: CF-Orc
+
+- type: entity
+  parent:
+  - CFAppearanceOrc
+  - BaseSpeciesMobOrganic
+  id: CFMobOrc
+  name: orc
+  components:
+  - type: HumanoidProfile
+    species: CF-Orc
+  - type: CF-Species
+    species: CF-Orc
+  - type: CFAtmosphereImmunity

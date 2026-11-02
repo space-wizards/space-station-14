@@ -1,0 +1,13 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFRatfolkRoll
+  name: "Ratfolk Roll"
+  description: "Costs 2 actions. TBA - action will be added"
+  ancestry: Ratfolk
+  level: 5
+  traits:
+    - "Move"
+    - "Ratfolk"
+  action: Action
+  pendingAction: true

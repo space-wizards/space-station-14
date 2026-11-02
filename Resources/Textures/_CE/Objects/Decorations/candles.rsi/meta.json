@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by vladimir.s, blood variants recolored by TheShuEd", 
+  "size": {
+    "x": 20,
+    "y": 20
+  },
+  "states": [
+    {
+      "name": "small1"
+    },
+    {
+      "name": "small2"
+    },
+    {
+      "name": "small3"
+    },
+    {
+      "name": "blood1"
+    },
+    {
+      "name": "blood2"
+    },
+    {
+      "name": "blood3"
+    },
+    {
+      "name": "small_fire",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "blood_fire",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    }
+  ]
+}

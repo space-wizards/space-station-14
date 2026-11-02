@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Tian Xia Character Guide
+- type: cfFeat
+  id: CFCrocodilesTwin
+  name: "Crocodile's Twin"
+  description: "Requires bakuwa lizardfolk heritage or makari lizardfolk heritage."
+  ancestry: Lizardfolk
+  level: 1
+  traits:
+    - "Lizardfolk"
+  prerequisites:
+    - "bakuwa lizardfolk heritage or makari lizardfolk heritage"

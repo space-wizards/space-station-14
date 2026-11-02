@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Base1-4, light-base1-4 created by Dinazewwr, light-base1-4 modified by oldschool_otaku",
+    "states": [
+        {
+            "name": "base1"
+        },
+        {
+            "name": "base2"
+        },
+        {
+            "name": "base3"
+        },
+        {
+            "name": "base4"
+        },
+        {
+            "name": "light-base1"
+        },
+        {
+            "name": "light-base2"
+        },
+        {
+            "name": "light-base3"
+        },
+        {
+            "name": "light-base4"
+        }
+    ]
+}

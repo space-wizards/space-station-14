@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprites by Github AegisShieldDev / Discord aegis_shield (230542392300666881)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "avali_earring1_1",
+      "directions": 4
+    },
+    {
+      "name": "avali_earring1_2",
+      "directions": 4
+    },
+    {
+      "name": "avali_earring1_3",
+      "directions": 4
+    },
+    {
+      "name": "avali_earring2_1",
+      "directions": 4
+    },
+    {
+      "name": "avali_earring2_2",
+      "directions": 4
+    },
+    {
+      "name": "avali_earring2_3",
+      "directions": 4
+    },
+    {
+      "name": "avali_earring3_1",
+      "directions": 4
+    },
+    {
+      "name": "avali_earring3_2",
+      "directions": 4
+    },
+    {
+      "name": "avali_earring3_3",
+      "directions": 4
+    },
+    {
+      "name": "avali_earring4_1",
+      "directions": 4
+    },
+    {
+      "name": "avali_earring4_2",
+      "directions": 4
+    },
+    {
+      "name": "avali_earring4_3",
+      "directions": 4
+    },
+    {
+      "name": "avali_tailband1_1",
+      "directions": 4
+    },
+    {
+      "name": "avali_tailband1_2",
+      "directions": 4
+    },
+    {
+      "name": "avali_tailband1_3",
+      "directions": 4
+    },
+    {
+      "name": "avali_tailband2_1",
+      "directions": 4
+    },
+    {
+      "name": "avali_tailband2_2",
+      "directions": 4
+    },
+    {
+      "name": "avali_tailband3_1",
+      "directions": 4
+    },
+    {
+      "name": "avali_tailband3_2",
+      "directions": 4
+    },
+    {
+      "name": "avali_tailband3_3",
+      "directions": 4
+    },
+    {
+      "name": "avali_tailband_combined_1",
+      "directions": 4
+    },
+    {
+      "name": "avali_tailband_combined_2",
+      "directions": 4
+    },
+    {
+      "name": "avali_tailband_combined_3",
+      "directions": 4
+    },
+    {
+      "name": "avali_earring_combined_1",
+      "directions": 4
+    },
+    {
+      "name": "avali_earring_combined_2",
+      "directions": 4
+    },
+    {
+      "name": "avali_earring_combined_3",
+      "directions": 4
+    }
+  ]
+}

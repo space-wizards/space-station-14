@@ -1,0 +1,572 @@
+# CarpFinder: remaster trait ids. Summaries are short mechanical notes, not source text.
+# category: Weapon
+
+- type: cfTrait
+  id: Agile
+  name: Agile
+  category: Weapon
+  summary: "The multiple attack penalty with this weapon is one step smaller, to a floor of 0."
+
+- type: cfTrait
+  id: Finesse
+  name: Finesse
+  category: Weapon
+  summary: "You can use Dexterity instead of Strength on the attack roll with this melee weapon."
+
+- type: cfTrait
+  id: Forceful
+  name: Forceful
+  category: Weapon
+  summary: "The second hit with this weapon on your turn adds one damage die, and later hits add two."
+
+- type: cfTrait
+  id: Sweep
+  name: Sweep
+  category: Weapon
+  summary: "You gain a circumstance bonus to the attack if you already attacked a different creature with this weapon this turn."
+
+- type: cfTrait
+  id: Backswing
+  name: Backswing
+  category: Weapon
+  summary: "After you miss with this weapon, your next attack with it this turn ignores the multiple attack penalty."
+
+- type: cfTrait
+  id: Propulsive
+  name: Propulsive
+  category: Weapon
+  summary: "On a ranged Strike, add half your Strength modifier to damage. A negative modifier applies in full."
+
+- type: cfTrait
+  id: Reach
+  name: Reach
+  category: Weapon
+  summary: "This melee weapon can Strike a creature 10 feet away."
+
+- type: cfTrait
+  id: Thrown
+  name: Thrown
+  category: Weapon
+  summary: "You can throw this weapon."
+
+- type: cfTrait
+  id: Thrown10
+  name: Thrown 10 ft
+  category: Weapon
+  summary: "You can throw this weapon. Its range increment is 10 feet."
+
+- type: cfTrait
+  id: Thrown15
+  name: Thrown 15 ft
+  category: Weapon
+  summary: "You can throw this weapon. Its range increment is 15 feet."
+
+- type: cfTrait
+  id: Thrown20
+  name: Thrown 20 ft
+  category: Weapon
+  summary: "You can throw this weapon. Its range increment is 20 feet."
+
+- type: cfTrait
+  id: Thrown30
+  name: Thrown 30 ft
+  category: Weapon
+  summary: "You can throw this weapon. Its range increment is 30 feet."
+
+- type: cfTrait
+  id: Thrown40
+  name: Thrown 40 ft
+  category: Weapon
+  summary: "You can throw this weapon. Its range increment is 40 feet."
+
+- type: cfTrait
+  id: Thrown50
+  name: Thrown 50 ft
+  category: Weapon
+  summary: "You can throw this weapon. Its range increment is 50 feet."
+
+- type: cfTrait
+  id: Thrown60
+  name: Thrown 60 ft
+  category: Weapon
+  summary: "You can throw this weapon. Its range increment is 60 feet."
+
+- type: cfTrait
+  id: Thrown80
+  name: Thrown 80 ft
+  category: Weapon
+  summary: "You can throw this weapon. Its range increment is 80 feet."
+
+- type: cfTrait
+  id: Thrown100
+  name: Thrown 100 ft
+  category: Weapon
+  summary: "You can throw this weapon. Its range increment is 100 feet."
+
+- type: cfTrait
+  id: Thrown200
+  name: Thrown 200 ft
+  category: Weapon
+  summary: "You can throw this weapon. Its range increment is 200 feet."
+
+- type: cfTrait
+  id: Volley20
+  name: Volley 20 ft
+  category: Weapon
+  summary: "Strikes against targets closer than 20 feet take a penalty."
+
+- type: cfTrait
+  id: Volley30
+  name: Volley 30 ft
+  category: Weapon
+  summary: "Strikes against targets closer than 30 feet take a penalty."
+
+- type: cfTrait
+  id: Volley50
+  name: Volley 50 ft
+  category: Weapon
+  summary: "Strikes against targets closer than 50 feet take a penalty."
+
+- type: cfTrait
+  id: Volley60
+  name: Volley 60 ft
+  category: Weapon
+  summary: "Strikes against targets closer than 60 feet take a penalty."
+
+- type: cfTrait
+  id: DeadlyD4
+  name: Deadly d4
+  category: Weapon
+  summary: "On a critical hit, add one extra damage die of this size."
+
+- type: cfTrait
+  id: DeadlyD6
+  name: Deadly d6
+  category: Weapon
+  summary: "On a critical hit, add one extra damage die of this size."
+
+- type: cfTrait
+  id: DeadlyD8
+  name: Deadly d8
+  category: Weapon
+  summary: "On a critical hit, add one extra damage die of this size."
+
+- type: cfTrait
+  id: DeadlyD10
+  name: Deadly d10
+  category: Weapon
+  summary: "On a critical hit, add one extra damage die of this size."
+
+- type: cfTrait
+  id: DeadlyD12
+  name: Deadly d12
+  category: Weapon
+  summary: "On a critical hit, add one extra damage die of this size."
+
+- type: cfTrait
+  id: FatalD8
+  name: Fatal d8
+  category: Weapon
+  summary: "On a critical hit, the weapon die becomes this size and you add one extra die of that size."
+
+- type: cfTrait
+  id: FatalD10
+  name: Fatal d10
+  category: Weapon
+  summary: "On a critical hit, the weapon die becomes this size and you add one extra die of that size."
+
+- type: cfTrait
+  id: FatalD12
+  name: Fatal d12
+  category: Weapon
+  summary: "On a critical hit, the weapon die becomes this size and you add one extra die of that size."
+
+- type: cfTrait
+  id: FatalAimD10
+  name: Fatal Aim d10
+  category: Weapon
+  summary: "On a critical hit with a ranged Strike that is not against an adjacent creature, the die becomes a d10 and you add one extra d10."
+
+- type: cfTrait
+  id: FatalAimD12
+  name: Fatal Aim d12
+  category: Weapon
+  summary: "On a critical hit with a ranged Strike that is not against an adjacent creature, the die becomes a d12 and you add one extra d12."
+
+- type: cfTrait
+  id: TwoHandD6
+  name: Two-Hand d6
+  category: Weapon
+  summary: "This weapon uses this damage die while you wield it in two hands."
+
+- type: cfTrait
+  id: TwoHandD8
+  name: Two-Hand d8
+  category: Weapon
+  summary: "This weapon uses this damage die while you wield it in two hands."
+
+- type: cfTrait
+  id: TwoHandD10
+  name: Two-Hand d10
+  category: Weapon
+  summary: "This weapon uses this damage die while you wield it in two hands."
+
+- type: cfTrait
+  id: TwoHandD12
+  name: Two-Hand d12
+  category: Weapon
+  summary: "This weapon uses this damage die while you wield it in two hands."
+
+- type: cfTrait
+  id: VersatileB
+  name: Versatile B
+  category: Weapon
+  summary: "You can deal bludgeoning damage with this weapon instead of its usual type."
+
+- type: cfTrait
+  id: VersatileP
+  name: Versatile P
+  category: Weapon
+  summary: "You can deal piercing damage with this weapon instead of its usual type."
+
+- type: cfTrait
+  id: VersatileS
+  name: Versatile S
+  category: Weapon
+  summary: "You can deal slashing damage with this weapon instead of its usual type."
+
+- type: cfTrait
+  id: VersatileAcid
+  name: Versatile acid
+  category: Weapon
+  summary: "You can deal acid damage with this weapon instead of its usual type."
+
+- type: cfTrait
+  id: VersatileCold
+  name: Versatile cold
+  category: Weapon
+  summary: "You can deal cold damage with this weapon instead of its usual type."
+
+- type: cfTrait
+  id: VersatileElectricity
+  name: Versatile electricity
+  category: Weapon
+  summary: "You can deal electricity damage with this weapon instead of its usual type."
+
+- type: cfTrait
+  id: VersatileFire
+  name: Versatile fire
+  category: Weapon
+  summary: "You can deal fire damage with this weapon instead of its usual type."
+
+- type: cfTrait
+  id: VersatileForce
+  name: Versatile force
+  category: Weapon
+  summary: "You can deal force damage with this weapon instead of its usual type."
+
+- type: cfTrait
+  id: VersatileSonic
+  name: Versatile sonic
+  category: Weapon
+  summary: "You can deal sonic damage with this weapon instead of its usual type."
+
+- type: cfTrait
+  id: VersatilePoison
+  name: Versatile poison
+  category: Weapon
+  summary: "You can deal poison damage with this weapon instead of its usual type."
+
+- type: cfTrait
+  id: VersatileSpirit
+  name: Versatile spirit
+  category: Weapon
+  summary: "You can deal spirit damage with this weapon instead of its usual type."
+
+- type: cfTrait
+  id: VersatileVitality
+  name: Versatile vitality
+  category: Weapon
+  summary: "You can deal vitality damage with this weapon instead of its usual type."
+
+- type: cfTrait
+  id: VersatileVoid
+  name: Versatile void
+  category: Weapon
+  summary: "You can deal void damage with this weapon instead of its usual type."
+
+- type: cfTrait
+  id: VersatileMental
+  name: Versatile mental
+  category: Weapon
+  summary: "You can deal mental damage with this weapon instead of its usual type."
+
+- type: cfTrait
+  id: JoustingD4
+  name: Jousting d4
+  category: Weapon
+  summary: "While you are mounted, this weapon deals damage with this die."
+
+- type: cfTrait
+  id: JoustingD6
+  name: Jousting d6
+  category: Weapon
+  summary: "While you are mounted, this weapon deals damage with this die."
+
+- type: cfTrait
+  id: JoustingD8
+  name: Jousting d8
+  category: Weapon
+  summary: "While you are mounted, this weapon deals damage with this die."
+
+- type: cfTrait
+  id: JoustingD10
+  name: Jousting d10
+  category: Weapon
+  summary: "While you are mounted, this weapon deals damage with this die."
+
+- type: cfTrait
+  id: Scatter5
+  name: Scatter 5 ft
+  category: Weapon
+  summary: "This weapon hits a cone of 5 feet. Targets use a Reflex save."
+
+- type: cfTrait
+  id: Scatter10
+  name: Scatter 10 ft
+  category: Weapon
+  summary: "This weapon hits a cone of 10 feet. Targets use a Reflex save."
+
+- type: cfTrait
+  id: Scatter15
+  name: Scatter 15 ft
+  category: Weapon
+  summary: "This weapon hits a cone of 15 feet. Targets use a Reflex save."
+
+- type: cfTrait
+  id: Scatter20
+  name: Scatter 20 ft
+  category: Weapon
+  summary: "This weapon hits a cone of 20 feet. Targets use a Reflex save."
+
+- type: cfTrait
+  id: Brace
+  name: Brace
+  category: Weapon
+  summary: "A readied Strike as a creature enters your reach deals an extra damage die."
+
+- type: cfTrait
+  id: Disarm
+  name: Disarm
+  category: Weapon
+  summary: "You can use this weapon to Disarm."
+
+- type: cfTrait
+  id: Grapple
+  name: Grapple
+  category: Weapon
+  summary: "You can use this weapon to Grapple."
+
+- type: cfTrait
+  id: Trip
+  name: Trip
+  category: Weapon
+  summary: "You can use this weapon to Trip."
+
+- type: cfTrait
+  id: Shove
+  name: Shove
+  category: Weapon
+  summary: "You can use this weapon to Shove."
+
+- type: cfTrait
+  id: Parry
+  name: Parry
+  category: Weapon
+  summary: "You can use an action to gain a circumstance bonus to AC until your next turn."
+
+- type: cfTrait
+  id: FreeHand
+  name: Free-Hand
+  category: Weapon
+  summary: "You can hold this weapon in a hand that is also holding something else, or it leaves a hand free."
+
+- type: cfTrait
+  id: Unarmed
+  name: Unarmed
+  category: Weapon
+  summary: "This is an unarmed attack. It does not count as a held weapon."
+
+- type: cfTrait
+  id: Twin
+  name: Twin
+  category: Weapon
+  summary: "These weapons are a pair. Wielding both grants their twin benefit."
+
+- type: cfTrait
+  id: Modular
+  name: Modular
+  category: Weapon
+  summary: "You can spend time to change this weapon's damage type."
+
+- type: cfTrait
+  id: Kickback
+  name: Kickback
+  category: Weapon
+  summary: "A successful ranged Strike with this weapon deals extra damage when you meet its Strength requirement."
+
+- type: cfTrait
+  id: Concussive
+  name: Concussive
+  category: Weapon
+  summary: "A critical hit with this firearm can push the target or leave it off-guard."
+
+- type: cfTrait
+  id: Concealable
+  name: Concealable
+  category: Weapon
+  summary: "This firearm is easy to hide."
+
+- type: cfTrait
+  id: DoubleBarrel
+  name: Double Barrel
+  category: Weapon
+  summary: "This firearm has two barrels and can fire both."
+
+- type: cfTrait
+  id: Repeating
+  name: Repeating
+  category: Weapon
+  summary: "This firearm has a magazine. Reloading a fresh magazine takes the listed action."
+
+- type: cfTrait
+  id: Capacity2
+  name: Capacity 2
+  category: Weapon
+  summary: "This firearm holds 2 rounds. You can swap to the next round as a free action."
+
+- type: cfTrait
+  id: Capacity3
+  name: Capacity 3
+  category: Weapon
+  summary: "This firearm holds 3 rounds. You can swap to the next round as a free action."
+
+- type: cfTrait
+  id: Capacity4
+  name: Capacity 4
+  category: Weapon
+  summary: "This firearm holds 4 rounds. You can swap to the next round as a free action."
+
+- type: cfTrait
+  id: Capacity5
+  name: Capacity 5
+  category: Weapon
+  summary: "This firearm holds 5 rounds. You can swap to the next round as a free action."
+
+- type: cfTrait
+  id: Razing
+  name: Razing
+  category: Weapon
+  summary: "Damage from this weapon ignores an amount of Hardness."
+
+- type: cfTrait
+  id: Tethered
+  name: Tethered
+  category: Weapon
+  summary: "This thrown weapon is tied to you and can be pulled back."
+
+- type: cfTrait
+  id: Vehicular
+  name: Vehicular
+  category: Weapon
+  summary: "This weapon is mounted on a vehicle."
+
+- type: cfTrait
+  id: Combination
+  name: Combination
+  category: Weapon
+  summary: "This is two weapons joined together. You can switch which end you use."
+
+- type: cfTrait
+  id: Climbing
+  name: Climbing
+  category: Weapon
+  summary: "You can use this weapon to make climbing easier."
+
+- type: cfTrait
+  id: Cobbled
+  name: Cobbled
+  category: Weapon
+  summary: "This weapon was improvised from scrap and has a drawback."
+
+- type: cfTrait
+  id: Attached
+  name: Attached
+  category: Weapon
+  summary: "This weapon is attached to armor or another item."
+
+- type: cfTrait
+  id: AttachedToShield
+  name: Attached to Shield
+  category: Weapon
+  summary: "This weapon is attached to a shield."
+
+- type: cfTrait
+  id: AttachedToCrossbowOrFirearm
+  name: Attached to Crossbow or Firearm
+  category: Weapon
+  summary: "This weapon is attached to a crossbow or firearm."
+
+- type: cfTrait
+  id: Backstabber
+  name: Backstabber
+  category: Weapon
+  summary: "This weapon deals extra precision damage when the target is off-guard."
+
+- type: cfTrait
+  id: Brutal
+  name: Brutal
+  category: Weapon
+  summary: "A creature you grab with this weapon takes extra damage if it tries to break free."
+
+- type: cfTrait
+  id: Hampering
+  name: Hampering
+  category: Weapon
+  summary: "A hit with this weapon can slow the target's movement."
+
+- type: cfTrait
+  id: Injection
+  name: Injection
+  category: Weapon
+  summary: "This weapon can deliver a poison or other injury affliction."
+
+- type: cfTrait
+  id: RangedTrip
+  name: Ranged Trip
+  category: Weapon
+  summary: "You can Trip a creature at range with this weapon."
+
+- type: cfTrait
+  id: Recovery
+  name: Recovery
+  category: Weapon
+  summary: "After you throw this weapon, it returns to your hand."
+
+- type: cfTrait
+  id: Training
+  name: Training
+  category: Weapon
+  summary: "This weapon is a practice weapon and deals less harm."
+
+- type: cfTrait
+  id: CriticalFusion
+  name: Critical Fusion
+  category: Weapon
+  summary: "On a critical hit, this combination weapon also applies its other side."
+
+- type: cfTrait
+  id: Tearing
+  name: Tearing
+  category: Weapon
+  summary: "On a hit, this weapon leaves the target bleeding."

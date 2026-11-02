@@ -1,0 +1,74 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Created by Artista.rar. Aged and blue wheel - by PhantomRU",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "cheese_part"
+        },
+        {
+            "name": "cheese_part2"
+        },
+        {
+            "name": "cheese_part3"
+        },
+        {
+            "name": "cheese_slice"
+        },
+        {
+            "name": "cheese_slice2"
+        },
+        {
+            "name": "cheese_slice3"
+        },
+        {
+            "name": "cheese_wheel"
+        },
+        {
+            "name": "blue_cheese_wheel"
+        },
+        {
+            "name": "aged_cheese_wheel"
+        },
+        {
+            "name": "blue_cheese_part"
+        },
+        {
+            "name": "blue_cheese_part2"
+        },
+        {
+            "name": "blue_cheese_part3"
+        },
+        {
+            "name": "blue_cheese_slice"
+        },
+        {
+            "name": "blue_cheese_slice2"
+        },
+        {
+            "name": "blue_cheese_slice3"
+        },
+        {
+            "name": "aged_cheese_part"
+        },
+        {
+            "name": "aged_cheese_part2"
+        },
+        {
+            "name": "aged_cheese_part3"
+        },
+        {
+            "name": "aged_cheese_slice"
+        },
+        {
+            "name": "aged_cheese_slice2"
+        },
+        {
+            "name": "aged_cheese_slice3"
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFLeftHandBlood
+  name: "Left-Hand Blood"
+  description: "Costs 1 action. TBA - action will be added"
+  ancestry: Kholo
+  level: 5
+  traits:
+    - "Kholo"
+  action: Action
+  pendingAction: true

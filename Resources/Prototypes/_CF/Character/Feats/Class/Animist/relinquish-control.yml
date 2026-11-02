@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder War of Immortals
+- type: cfFeat
+  id: CFRelinquishControl
+  name: "Relinquish Control"
+  description: "Free action. This feature will be implemented later."
+  class: Animist
+  level: 1
+  traits:
+    - "Animist"
+    - "Apparition"
+  action: Free
+  pendingAction: true

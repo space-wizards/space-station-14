@@ -1,0 +1,39 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from Delta-V at commit https://github.com/DeltaV-Station/Delta-v/tree/f49142ca8d7ceac483094444c372e849309dc02b/, https://github.com/DeltaV-Station/Delta-v/tree/f49142ca8d7ceac483094444c372e849309dc02b/Resources/Textures/DeltaV/Mobs/Customization/Rodentia/body_markings.rsi. Sprites created by portfiend. Modified by Zeyria",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "countershade",
+            "directions": 4
+        },
+        {
+            "name": "countershade_f",
+            "directions": 4
+        },
+        {
+            "name": "countershade_lleg",
+            "directions": 4
+        },
+        {
+            "name": "countershade_rleg",
+            "directions": 4
+        },
+        {
+            "name": "fawn",
+            "directions": 4
+        },
+        {
+            "name": "hooded",
+            "directions": 4
+        },
+        {
+            "name": "hooded_f",
+            "directions": 4
+        }
+    ]
+}

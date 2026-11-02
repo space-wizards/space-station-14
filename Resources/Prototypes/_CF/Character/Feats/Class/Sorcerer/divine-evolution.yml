@@ -1,0 +1,13 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFDivineEvolution
+  name: "Divine Evolution"
+  description: "Requires bloodline that grants divine spells."
+  class: Sorcerer
+  level: 4
+  traits:
+    - "Divine"
+    - "Sorcerer"
+  prerequisites:
+    - "bloodline that grants divine spells"

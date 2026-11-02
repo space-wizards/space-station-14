@@ -1,0 +1,97 @@
+# Homing spell bolts. Stock projectile damage is 0; the spell system applies the remaster effect on arrival.
+
+- type: entity
+  parent: BaseBullet
+  id: CFSpellBolt
+  categories: [ HideSpawnMenu ]
+  name: spell bolt
+  description: A bolt of magic that follows the creature it was aimed at.
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 0
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: spell
+      shader: unshaded
+  - type: TimedDespawn
+    lifetime: 8
+
+- type: entity
+  parent: CFSpellBolt
+  id: CFSpellBoltFire
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: fireball
+      shader: unshaded
+
+- type: entity
+  parent: CFSpellBolt
+  id: CFSpellBoltIce
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: ice
+      shader: unshaded
+
+- type: entity
+  parent: CFSpellBolt
+  id: CFSpellBoltElectric
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: magicm_yellow
+      shader: unshaded
+
+- type: entity
+  parent: CFSpellBolt
+  id: CFSpellBoltAcid
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: magicm_green
+      shader: unshaded
+
+- type: entity
+  parent: CFSpellBolt
+  id: CFSpellBoltForce
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: magicm
+      shader: unshaded
+
+- type: entity
+  parent: CFSpellBolt
+  id: CFSpellBoltVoid
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: magicm_red
+      shader: unshaded
+
+- type: entity
+  parent: CFSpellBolt
+  id: CFSpellBoltVitality
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: magicm_cyan
+      shader: unshaded

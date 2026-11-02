@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Howl of the Wild
+- type: cfFeat
+  id: CFZoophonicCommunication
+  name: "Zoophonic Communication"
+  description: "Requires zoophonia muse."
+  class: Bard
+  level: 1
+  traits:
+    - "Bard"
+  prerequisites:
+    - "zoophonia muse"

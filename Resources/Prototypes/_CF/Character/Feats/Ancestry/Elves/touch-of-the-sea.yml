@@ -1,0 +1,10 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens High Seas
+- type: cfFeat
+  id: CFTouchoftheSea
+  name: "Touch of the Sea"
+  description: "Passive feat. Its special rule is not applied in play yet."
+  ancestry: Elf
+  level: 1
+  traits:
+    - "Elf"

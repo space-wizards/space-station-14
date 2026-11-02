@@ -1,0 +1,31 @@
+<windows:CharacterWindow
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cc="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:windows="clr-namespace:Content.Client.UserInterface.Systems.Character.Windows"
+    xmlns:cf="clr-namespace:Content.Client.CF.Character"
+    x:Class="Content.Client.UserInterface.Systems.Character.Windows.CharacterWindow"
+    Title="{Loc 'character-info-title'}"
+    MinWidth="980"
+    MinHeight="720">
+    <TabContainer Name="Tabs" Access="Public" HorizontalExpand="True" VerticalExpand="True">
+        <cf:CFCharacterSheetTab Name="SheetTab" Access="Public"/>
+        <cf:CFSpellsTab Name="SpellsTab" Access="Public"/>
+        <ScrollContainer>
+            <BoxContainer Orientation="Vertical" Margin="8">
+                <Label Name="RoleType" VerticalAlignment="Top" Margin="0 6 0 10" HorizontalAlignment="Center" StyleClasses="LabelHeading" Access="Public"/>
+                <BoxContainer Orientation="Horizontal">
+                    <SpriteView OverrideDirection="South" Scale="2 2" Name="SpriteView" Access="Public" SetSize="64 64"/>
+                    <BoxContainer Orientation="Vertical" VerticalAlignment="Top">
+                        <Label Name="NameLabel" Access="Public"/>
+                        <Label Name="SubText" VerticalAlignment="Top" StyleClasses="LabelSubText" Access="Public"/>
+                    </BoxContainer>
+                </BoxContainer>
+                <Label Name="ObjectivesLabel" Access="Public" Text="{Loc 'character-info-objectives-label'}" HorizontalAlignment="Center"/>
+                <BoxContainer Orientation="Vertical" Name="Objectives" Access="Public"/>
+                <cc:Placeholder Name="RolePlaceholder" Access="Public" PlaceholderText="{Loc 'character-info-roles-antagonist-text'}"/>
+            </BoxContainer>
+        </ScrollContainer>
+        <cf:CFShopView Name="ShopTab" Access="Public"/>
+    </TabContainer>
+</windows:CharacterWindow>

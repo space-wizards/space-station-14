@@ -1,0 +1,15 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Tian Xia Character Guide
+- type: cfFeat
+  id: CFGloriousGamtu
+  name: "Glorious Gamtu"
+  description: "Requires dokkaebi goblin heritage. Costs 1 action. TBA - action will be added"
+  ancestry: Goblin
+  level: 5
+  traits:
+    - "Goblin"
+    - "Occult"
+  prerequisites:
+    - "dokkaebi goblin heritage"
+  action: Action
+  pendingAction: true

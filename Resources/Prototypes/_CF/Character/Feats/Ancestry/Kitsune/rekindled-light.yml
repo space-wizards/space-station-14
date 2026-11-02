@@ -1,0 +1,16 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Tian Xia Character Guide
+- type: cfFeat
+  id: CFRekindledLight
+  name: "Rekindled Light"
+  description: "Requires Star Orb. Reaction. TBA - action will be added"
+  ancestry: Kitsune
+  level: 5
+  traits:
+    - "Healing"
+    - "Kitsune"
+    - "Vitality"
+  prerequisites:
+    - "Star Orb"
+  action: Reaction
+  pendingAction: true

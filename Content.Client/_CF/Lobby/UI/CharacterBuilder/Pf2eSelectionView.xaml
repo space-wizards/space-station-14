@@ -1,0 +1,44 @@
+<BoxContainer Name="Pf2eSelection" xmlns="https://spacestation14.io"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              x:Class="Content.Client.CF.Lobby.UI.CharacterBuilder.Pf2eSelectionView"
+              Orientation="Vertical"
+              HorizontalExpand="True"
+              VerticalExpand="True"
+              SeparationOverride="6">
+    <BoxContainer Name="Pf2eSelectionHeader" Orientation="Horizontal" HorizontalExpand="True">
+        <Label Name="TitleLabel" StyleClasses="LabelHeading" HorizontalExpand="True" VerticalAlignment="Center" />
+        <Button Name="CloseButton" Text="{Loc 'cf-character-builder-close'}" MinWidth="36" />
+    </BoxContainer>
+    <BoxContainer Name="FilterBar" Orientation="Horizontal" HorizontalExpand="True" SeparationOverride="4">
+        <Button Name="TabCommon" Text="{Loc 'cf-character-builder-filter-common'}" ToggleMode="True" HorizontalExpand="True" />
+        <Button Name="TabUncommon" Text="{Loc 'cf-character-builder-filter-uncommon'}" ToggleMode="True" HorizontalExpand="True" />
+        <Button Name="TabRare" Text="{Loc 'cf-character-builder-filter-rare'}" ToggleMode="True" HorizontalExpand="True" />
+        <Button Name="TabAll" Text="{Loc 'cf-character-builder-filter-all-ancestries'}" ToggleMode="True" HorizontalExpand="True" />
+    </BoxContainer>
+    <BoxContainer Name="Pf2eSelectionBody" Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" SeparationOverride="8">
+        <PanelContainer StyleClasses="PanelDark" MinWidth="200" VerticalExpand="True">
+            <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
+                <BoxContainer Name="OptionList" Orientation="Vertical" HorizontalExpand="True" Margin="4" />
+            </ScrollContainer>
+        </PanelContainer>
+        <ScrollContainer HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="2" HScrollEnabled="False">
+            <BoxContainer Name="Pf2eSelectionDetails" Orientation="Vertical" Margin="12 8" HorizontalExpand="True">
+                <Label Name="NameLabel" StyleClasses="LabelHeading" />
+                <Label Name="TraitsLabel" Margin="0 6 0 0" />
+                <RichTextLabel Name="DescriptionLabel" Margin="0 8 0 8" />
+                <Label Name="HpLabel" />
+                <Label Name="SizeLabel" />
+                <Label Name="SpeedLabel" />
+                <Label Name="BoostsLabel" />
+                <Label Name="FlawsLabel" />
+                <Label Name="LanguagesLabel" />
+                <RichTextLabel Name="RulesLabel" Margin="0 8 0 0" />
+            </BoxContainer>
+        </ScrollContainer>
+    </BoxContainer>
+    <BoxContainer Name="Pf2eSelectionFooter" Orientation="Horizontal" HorizontalAlignment="Right" SeparationOverride="6">
+        <Button Name="AcceptButton" Text="{Loc 'cf-character-builder-accept'}" />
+        <Button Name="CancelButton" Text="{Loc 'cf-character-builder-cancel'}" />
+        <Button Name="PrdButton" Text="{Loc 'cf-character-builder-prd'}" />
+    </BoxContainer>
+</BoxContainer>

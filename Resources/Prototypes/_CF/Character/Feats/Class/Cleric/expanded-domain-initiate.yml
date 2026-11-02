@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Divine Mysteries
+- type: cfFeat
+  id: CFExpandedDomainInitiate
+  name: "Expanded Domain Initiate"
+  description: "Requires Domain Initiate."
+  class: Cleric
+  level: 4
+  traits:
+    - "Cleric"
+  prerequisites:
+    - "Domain Initiate"

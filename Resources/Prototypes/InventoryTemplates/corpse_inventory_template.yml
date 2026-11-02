@@ -57,7 +57,7 @@
       slotTexture: pocket
       fullTextureName: template_small
       slotFlags: POCKET
-      slotGroup: MainHotbar
+      slotGroup: CFPockets # CarpFinder: pockets on the action HUD.
       stripTime: 3
       uiWindowPos: 0,3
       strippingWindowPos: 0,4
@@ -68,7 +68,7 @@
       slotTexture: pocket
       fullTextureName: template_small
       slotFlags: POCKET
-      slotGroup: MainHotbar
+      slotGroup: CFPockets # CarpFinder: pockets on the action HUD.
       stripTime: 3
       uiWindowPos: 2,3
       strippingWindowPos: 1,4
@@ -78,7 +78,7 @@
     - name: suitstorage
       slotTexture: suit_storage
       slotFlags:   SUITSTORAGE
-      slotGroup: MainHotbar
+      slotGroup: CFSuitStorage # CarpFinder: suit storage on the action HUD.
       stripTime: 3
       uiWindowPos: 2,0
       strippingWindowPos: 2,5
@@ -90,7 +90,7 @@
       slotTexture: belt
       fullTextureName: template_small
       slotFlags: BELT
-      slotGroup: SecondHotbar
+      slotGroup: CFBelt # CarpFinder: belt on the action HUD.
       stripTime: 6
       uiWindowPos: 3,1
       strippingWindowPos: 1,5

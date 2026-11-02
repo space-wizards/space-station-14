@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core 2
+- type: cfFeat
+  id: CFStandStill
+  name: "Stand Still"
+  description: "Reaction. This feature will be implemented later."
+  class: Monk
+  level: 4
+  traits:
+    - "Monk"
+  action: Reaction
+  pendingAction: true

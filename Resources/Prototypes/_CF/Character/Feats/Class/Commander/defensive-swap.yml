@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Battlecry!
+- type: cfFeat
+  id: CFDefensiveSwap
+  name: "Defensive Swap"
+  description: "Reaction. This feature will be implemented later."
+  class: Commander
+  level: 2
+  traits:
+    - "Commander"
+  action: Reaction
+  pendingAction: true

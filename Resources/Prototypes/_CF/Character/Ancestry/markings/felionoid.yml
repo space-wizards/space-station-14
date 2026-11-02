@@ -1,0 +1,476 @@
+# CarpFinder: species markings. Art stays in the fork texture folder. These sprites are drawn for that body, so they are not run through the human displacement map.
+
+- type: marking
+  id: FelionoidArmPawMittensL
+  bodyPart: LArm
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state:  pawmittens_armsL
+
+- type: marking
+  id: FelionoidArmPawMittensR
+  bodyPart: RArm
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state:  pawmittens_armsR
+
+- type: marking
+  id: FelionoidArmTabbyL
+  bodyPart: LArm
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state:  Tabby_armL
+
+- type: marking
+  id: FelionoidArmTabbyR
+  bodyPart: RArm
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state:  Tabby_armR
+
+- type: marking
+  id: FelionoidArmCalicoR
+  bodyPart: RArm
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: calico2_ArmR
+
+- type: marking
+  id: FelionoidArmCalicoL
+  bodyPart: LArm
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: calico2_ArmL
+
+- type: marking
+  id: FelionoidArmStripesR
+  bodyPart: RArm
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: r_arm_stripes
+
+- type: marking
+  id: FelionoidArmStripesL
+  bodyPart: LArm
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: l_arm_stripes
+
+- type: marking
+  id: FelionoidChestBelly
+  bodyPart: Chest
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: bellymark
+
+- type: marking
+  id: FelionoidChestBrightBelly
+  bodyPart: Chest
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: bright_belly
+
+- type: marking
+  id: FelionoidChestStripes
+  bodyPart: Chest
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: body_stripes
+
+- type: marking
+  id: FelionoidChestTabby
+  bodyPart: Chest
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: Tabby_chest
+
+- type: marking
+  id: FelionoidChestCalico
+  bodyPart: Chest
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: calico1_chest
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: calico2_chest
+
+- type: marking
+  id: FelionoidEars
+  bodyPart: HeadTop
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: ears
+
+- type: marking
+  id: FelionoidEarsRound
+  bodyPart: HeadTop
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: ears_round
+
+- type: marking
+  id: FelionoidFacialHairBeard
+  bodyPart: FacialHair
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/facial_hair.rsi
+      state: beard_s
+
+- type: marking
+  id: FelionoidFacialHairColonel
+  bodyPart: FacialHair
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/facial_hair.rsi
+      state: colonel_s
+
+- type: marking
+  id: FelionoidFacialHairFu
+  bodyPart: FacialHair
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/facial_hair.rsi
+      state: fu_s
+
+- type: marking
+  id: FelionoidFacialHairMane
+  bodyPart: FacialHair
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/facial_hair.rsi
+      state: mane_s
+
+- type: marking
+  id: FelionoidFacialHairNeck
+  bodyPart: FacialHair
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/facial_hair.rsi
+      state: neck_s
+
+- type: marking
+  id: FelionoidFootPawMittensR
+  bodyPart: RFoot
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state:  pawmittens_footR
+
+- type: marking
+  id: FelionoidFootPawMittensL
+  bodyPart: LFoot
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state:  pawmittens_footL
+
+- type: marking
+  id: FelionoidHairCrestedQuills
+  bodyPart: Hair
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/hair.rsi
+      state: crestedquills_s
+
+- type: marking
+  id: FelionoidHairFlowing
+  bodyPart: Hair
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/hair.rsi
+      state: flowing_s
+
+- type: marking
+  id: FelionoidHairHawk
+  bodyPart: Hair
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/hair.rsi
+      state: hawk_s
+
+- type: marking
+  id: FelionoidHairKeelQuills
+  bodyPart: Hair
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/hair.rsi
+      state: keelquills_s
+
+- type: marking
+  id: FelionoidHairKeetQuills
+  bodyPart: Hair
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/hair.rsi
+      state: keetquills_s
+
+- type: marking
+  id: FelionoidHairKingly
+  bodyPart: Hair
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/hair.rsi
+      state: kingly_s
+
+- type: marking
+  id: FelionoidHairMange
+  bodyPart: Hair
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/hair.rsi
+      state: mange_s
+
+- type: marking
+  id: FelionoidHairNights
+  bodyPart: Hair
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/hair.rsi
+      state: nights_s
+
+- type: marking
+  id: FelionoidHandPawMittensR
+  bodyPart: RHand
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state:  pawmittens_handsR
+
+- type: marking
+  id: FelionoidHandPawMittensL
+  bodyPart: LHand
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state:  pawmittens_handsL
+
+- type: marking
+  id: FelionoidHeadTiger
+  bodyPart: Head
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: Tiger_stripes_face
+
+- type: marking
+  id: FelionoidHeadTabby
+  bodyPart: Head
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: Tabby_head
+
+- type: marking
+  id: FelionoidHeadCalico
+  bodyPart: Head
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: calico1_head
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: calico2_head
+
+- type: marking
+  id: FelionoidHeadStripes
+  bodyPart: Head
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: head_stripes
+
+- type: marking
+  id: FelionoidLegPawMittensL
+  bodyPart: LLeg
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state:  pawmittens_legsL
+
+- type: marking
+  id: FelionoidLegPawMittensR
+  bodyPart: RLeg
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state:  pawmittens_legsR
+
+- type: marking
+  id: FelionoidLegTabbyL
+  bodyPart: LLeg
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state:  Tabby_LegL
+
+- type: marking
+  id: FelionoidLegTabbyR
+  bodyPart: RLeg
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state:  Tabby_LegR
+
+- type: marking
+  id: FelionoidLegCalicoL
+  bodyPart: LLeg
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: calico1_legL
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: calico2_legL
+
+- type: marking
+  id: FelionoidSnout
+  bodyPart: Snout
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: head_snout
+
+# Static
+- type: marking
+  id: FelionoidTail
+  bodyPart: Tail
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  waggingId: FelionoidTailAnimated
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: tail_behind
+
+# Animated
+- type: marking
+  id: FelionoidTailAnimated
+  bodyPart: Tail
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  staticId: FelionoidTail
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+      state: tail_wagging
+
+# This don't work - I have no idea why. Get commented out nerd
+# Tail is not rendering correctly/at all, seems to be confusing the layers?
+#- type: marking
+#  id: FelionoidTailTipAnimated
+#  bodyPart: Tail
+#  markingCategory: Tail
+#  speciesRestriction: [Felionoid, NeoFelionoid]
+#  sprites:
+#    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+#      state: tail_base_wagging
+#    - sprite: _Starlight/Mobs/Customization/Felionoid/parts.rsi
+#      state: tail_tip_wagging
+
+- type: marking
+  id: TattooFelionoidHeartLeftArm
+  bodyPart: LArm
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Felionoid/tattoos.rsi
+    state: heart_l_arm
+
+- type: marking
+  id: TattooFelionoidHeartRightArm
+  bodyPart: RArm
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Felionoid/tattoos.rsi
+    state: heart_r_arm
+
+- type: marking
+  id: TattooFelionoidHiveChest
+  bodyPart: Chest
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Felionoid/tattoos.rsi
+    state: hive_s
+
+- type: marking
+  id: TattooFelionoidNightlingChest
+  bodyPart: Chest
+  groupWhitelist: [CFFelionoid]
+  canBeDisplaced: false
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Felionoid/tattoos.rsi
+    state: nightling_s

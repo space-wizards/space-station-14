@@ -1,0 +1,13 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder #210: Whispers in the Dirt
+- type: cfFeat
+  id: CFPoliticalAcumen
+  name: "Political Acumen"
+  description: "Requires trained in Perception. +2 circumstance bonus to Perception. Not applied in play yet."
+  ancestry: Elf
+  level: 1
+  rarity: Uncommon
+  traits:
+    - "Elf"
+  prerequisites:
+    - "trained in Perception"

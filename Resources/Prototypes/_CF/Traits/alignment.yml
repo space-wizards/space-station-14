@@ -1,0 +1,20 @@
+# CarpFinder: the remaster removed good, evil, lawful, and chaotic.
+# Holy, unholy, and sanctified are the traits that replaced them.
+
+- type: cfTrait
+  id: Holy
+  name: Holy
+  category: Alignment
+  summary: "This counts as holy."
+
+- type: cfTrait
+  id: Unholy
+  name: Unholy
+  category: Alignment
+  summary: "This counts as unholy."
+
+- type: cfTrait
+  id: Sanctified
+  name: Sanctified
+  category: Alignment
+  summary: "This can be made holy or unholy when it is sanctified."

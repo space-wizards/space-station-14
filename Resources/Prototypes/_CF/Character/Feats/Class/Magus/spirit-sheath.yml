@@ -1,0 +1,12 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Impossible Magic
+- type: cfFeat
+  id: CFSpiritSheath
+  name: "Spirit Sheath"
+  description: "This feature will be implemented later."
+  class: Magus
+  level: 2
+  traits:
+    - "Arcane"
+    - "Extradimensional"
+    - "Magus"

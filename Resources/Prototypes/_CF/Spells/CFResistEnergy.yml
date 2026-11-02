@@ -1,0 +1,23 @@
+﻿- type: entity
+  parent: CFSpellTarget
+  id: CFResistEnergy
+  name: Resist Energy
+  description: The target resists one energy type.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: CFRadialSlot
+    group: Spell
+    spellRank: 2
+  - type: CFSpell
+    spell: ResistEnergy
+    rank: 2
+    delivery: Target
+    rangeFeet: 5
+    defense: None
+    friendly: true
+    includeSelf: true
+  - type: EntityTargetAction
+    canTargetSelf: true

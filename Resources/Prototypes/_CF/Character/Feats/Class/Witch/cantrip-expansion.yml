@@ -1,0 +1,17 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Player Core
+- type: cfFeat
+  id: CFCantripExpansionWitch
+  name: "Cantrip Expansion"
+  description: "This feature will be implemented later."
+  class: Witch
+  level: 2
+  traits:
+    - "Bard"
+    - "Cleric"
+    - "Magus"
+    - "Oracle"
+    - "Psychic"
+    - "Sorcerer"
+    - "Witch"
+    - "Wizard"

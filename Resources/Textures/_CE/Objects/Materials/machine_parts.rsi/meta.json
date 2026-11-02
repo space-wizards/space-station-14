@@ -1,0 +1,38 @@
+{
+    "version": 1,
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Created by TheShuEd (Github)",
+    "states": [
+      {
+        "name": "energy_line"
+      },
+      {
+        "name": "energy_line_2"
+      },
+      {
+        "name": "energy_line_3"
+      },
+      {
+        "name": "coal_diffuser"
+      },
+      {
+        "name": "coal_diffuser_2"
+      },
+      {
+        "name": "coal_diffuser_3"
+      },
+      {
+        "name": "dimensional_matrix"
+      },
+      {
+        "name": "dimensional_matrix_2"
+      },
+      {
+        "name": "dimensional_matrix_3"
+      }
+    ]
+  }

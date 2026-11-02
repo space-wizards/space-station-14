@@ -1,0 +1,13 @@
+# CarpFinder: ancestry feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Tian Xia Character Guide
+- type: cfFeat
+  id: CFSevenChangesPerformance
+  name: "Seven Changes Performance"
+  description: "Requires trained in Performance. Also grants Quick Disguise. TBA - action will be added"
+  ancestry: Kitsune
+  level: 1
+  traits:
+    - "Kitsune"
+  prerequisites:
+    - "trained in Performance"
+  pendingAction: true

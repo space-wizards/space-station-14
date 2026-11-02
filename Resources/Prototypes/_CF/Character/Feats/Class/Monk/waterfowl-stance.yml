@@ -1,0 +1,17 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Lost Omens Rival Academies
+- type: cfFeat
+  id: CFWaterfowlStance
+  name: "Waterfowl Stance"
+  description: "Requires Monastic Weaponry. Costs 1 action. This feature will be implemented later."
+  class: Monk
+  level: 2
+  rarity: Uncommon
+  traits:
+    - "Monk"
+    - "Stance"
+    - "Water"
+  prerequisites:
+    - "Monastic Weaponry"
+  action: Action
+  pendingAction: true

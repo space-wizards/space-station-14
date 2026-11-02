@@ -1,0 +1,15 @@
+# CarpFinder: class feat through level 5. Short mechanical note, not source text.
+# source: Pathfinder Howl of the Wild
+- type: cfFeat
+  id: CFCreatureComfortsDruid
+  name: "Creature Comforts"
+  description: "Requires animal instinct or untamed order. Reaction. This feature will be implemented later."
+  class: Druid
+  level: 4
+  traits:
+    - "Barbarian"
+    - "Druid"
+  prerequisites:
+    - "animal instinct or untamed order"
+  action: Reaction
+  pendingAction: true
