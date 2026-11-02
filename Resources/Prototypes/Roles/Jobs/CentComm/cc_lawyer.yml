@@ -20,7 +20,7 @@
   id: CentcommLawyerGear
   equipment:
     eyes: ClothingEyesGlassesSunglasses
-    ears: ClothingHeadsetCentCom
+    ears: ClothingHeadsetCentComLawyer
     back: ClothingBackpackSatchelLeather
     jumpsuit: ClothingUniformJumpsuitCentcommLawyer
     neck: ClothingNeckLawyerbadge
