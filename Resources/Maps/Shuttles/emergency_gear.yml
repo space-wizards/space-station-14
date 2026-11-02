@@ -35,7 +35,12 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: grid
+      name: NT Evac "Spring"
+    - type: DeviceNetwork
+      transmitFrequencyId: ShuttleTimer
+      deviceNetId: Wireless
+      deviceLists: [ ]
+      configurators: [ ]
     - type: Transform
       parent: invalid
       rot: 0.03490658503988659 rad
