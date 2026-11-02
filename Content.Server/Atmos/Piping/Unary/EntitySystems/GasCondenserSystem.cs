@@ -64,7 +64,7 @@ public sealed partial class GasCondenserSystem : EntitySystem
             return;
         }
 
-        if (solution.AvailableVolume == 0 || inlet.Air.TotalMoles == 0)
+        if (solution is null || solution.AvailableVolume == 0 || inlet.Air.TotalMoles == 0)
         {
             return;
         }
@@ -77,43 +77,53 @@ public sealed partial class GasCondenserSystem : EntitySystem
 
         var reagentsAddedFlag = false;
 
+        List<Solution> condensedGasses = [];
+        HashSet<int> spontaneousGasses = [];
+
+
         // work through gasses in boiling point reverse order.
         // treat it like we're cooling down the gas until we run out of cooling power or volume to hold liquid.
         // as temperature drops, it stalls at each boiling point as energy instead goes toward reversing vaporization.
         // the result is gasses with higher boiling points must fully condense before gasses with cooler boiling points
-        // can even start the process.
-        List<Solution> condensedGasses = [];
+        // can even start the process. however, some gasses may be able to fully condense at the current temperature if
+        // the energy required to warm up to boiling is less than the energy required to vaporize. in that case, those
+        // gasses skip the queue and condense first. we still do them in order though since volume may fill up
+
+        // check for ability to spontaneously condense gasses and assume they'll turn first as they need no additional help
+        foreach (var gasIndex in _boilingPointToGasIndices.Where(g => g.Key >= inlet.Air.Temperature).SelectMany(g => g.Value))
+        {
+            // setting available energy to 0 effectively checks both if it happens spontaneously at this temperature
+            // as well as how much additional energy the condenser should have access to as a result
+            var absorbedIfNoEnergy = 0f;
+            // foreach effectively combines a check to see if any returned with deconstructing the return value
+            foreach (var (_, moles) in CalculateCondensation(inlet.Air, [gasIndex], ref absorbedIfNoEnergy, ref availableSpace))
+            {
+                // take the energy into our available total and condense the gas
+                availableEnergy += absorbedIfNoEnergy;
+                spontaneousGasses.Add(gasIndex);
+                var condensedGas = PerformCondensation(inlet.Air, gasIndex, moles, entity.Comp.MolesToReagentMultiplier, solution, ref availableEnergy);
+                if (condensedGas is not null)
+                {
+                    condensedGasses.Add(condensedGas);
+                    reagentsAddedFlag = true;
+                }
+            }
+        }
+
         foreach (var (boilingPoint, gasIndices) in _boilingPointToGasIndices.Reverse())
         {
             if (availableEnergy >= 0f || availableSpace <= 0f)
             {
                 break;
             }
-            foreach (var (gasIndex, moles) in CalculateCondensation(inlet.Air, gasIndices, ref availableEnergy, ref availableSpace))
+            foreach (var (gasIndex, moles) in CalculateCondensation(inlet.Air, gasIndices.Except(spontaneousGasses), ref availableEnergy, ref availableSpace))
             {
-                if (moles <= 0)
+                var condensedGas = PerformCondensation(inlet.Air, gasIndex, moles, entity.Comp.MolesToReagentMultiplier, solution, ref availableEnergy);
+                if (condensedGas is not null)
                 {
-                    continue;
-                }
-                var (_, vaporizationEnergy, heatCap, reagentId) = _gasCondensationData[gasIndex];
-                if (reagentId is null)
-                {
-                    continue;
-                }
-
-                inlet.Air.AdjustMoles(gasIndex, -moles);
-                var amount = FixedPoint2.Min(FixedPoint2.New(moles * entity.Comp.MolesToReagentMultiplier), solution.AvailableVolume);
-                if (amount > 0)
-                {
-                    condensedGasses.Add(new(reagentId, amount) { Temperature = boilingPoint });
-                    solution.AddReagent(reagentId, amount);
+                    condensedGasses.Add(condensedGas);
                     reagentsAddedFlag = true;
                 }
-                // vaporize back any reagents lost to fixed point imprecision
-                var difference = moles - amount.Float() / entity.Comp.MolesToReagentMultiplier;
-                inlet.Air.AdjustMoles(gasIndex, difference);
-                // we spent energy to condense those moles, so recover them in case its useful for the next gas being processed
-                availableEnergy += -difference * (vaporizationEnergy + heatCap * (inlet.Air.Temperature - boilingPoint));
             }
         }
 
@@ -127,14 +137,47 @@ public sealed partial class GasCondenserSystem : EntitySystem
     }
 
     /// <summary>
+    /// Helper to perform condensation once the appropriate amount has been calculated by <see cref="CalculateCondensation"/>.
+    /// </summary>
+    /// <param name="mix">the gas mix to pull from</param>
+    /// <param name="index">the index of the gas to condense</param>
+    /// <param name="moles">the number of moles to condense</param>
+    /// <param name="reagentRatio">units of reagent to make per mole of gas</param>
+    /// <param name="condenserTank">the solution to condense into</param>
+    /// <param name="availableEnergy">energy total in case of refunds</param>
+    /// <returns>a solution containing only the one newly condensed gas</returns>
+    private Solution? PerformCondensation(GasMixture mix, int index, float moles, float reagentRatio, Solution condenserTank, ref float availableEnergy)
+    {
+        var (boilingPoint, vaporizationEnergy, heatCap, reagentId) = _gasCondensationData[index];
+        Solution? justThisGas = null;
+        if (reagentId is null || moles <= 0)
+        {
+            return justThisGas;
+        }
+        mix.AdjustMoles(index, -moles);
+        var amount = FixedPoint2.Min(FixedPoint2.New(moles * reagentRatio), condenserTank.AvailableVolume);
+        if (amount > 0)
+        {
+            justThisGas = new(reagentId, amount) { Temperature = boilingPoint };
+            condenserTank.AddReagent(reagentId, amount);
+        }
+        // vaporize back any reagents lost to fixed point imprecision
+        var difference = moles - amount.Float() / reagentRatio;
+        mix.AdjustMoles(index, difference);
+        // we spent energy to condense those moles, so recover the scraps in case its useful
+        availableEnergy += -difference * (vaporizationEnergy + heatCap * (mix.Temperature - boilingPoint));
+        return justThisGas;
+    }
+
+    /// <summary>
     /// Calculates how much of select gasses to condense given an amount of cooling energy.
     /// </summary>
-    /// <param name="inletMixture">the mixture of gasses being condensed</param>
+    /// <param name="mixture">the mixture of gasses to be condensed</param>
     /// <param name="gasIndices">which gasses to consider condensing</param>
-    /// <param name="energy">available energy. should be negative as this process requires cooling</param>
+    /// <param name="energy">available energy. usually should be negative as this process requires cooling</param>
     /// <param name="moleMax">maximum moles to condense</param>
     /// <returns>unordered pairs of gas index and how many moles of that gas were condensed</returns>
-    public IEnumerable<(int gasIndex, float moles)> CalculateCondensation(in GasMixture inletMixture, in IEnumerable<int>? gasIndices, ref float energy, ref float moleMax)
+    public IEnumerable<(int gasIndex, float moles)> CalculateCondensation(in GasMixture mixture, in IEnumerable<int>? gasIndices, ref float energy, ref float moleMax)
     {
         // collect gas condensing data if we haven't already
         if (!_gasDataCollected && !CollectCondensingData())
@@ -142,6 +185,7 @@ public sealed partial class GasCondenserSystem : EntitySystem
             return [];
         }
 
+        // positive energy is not an automatic failure since spontaneous condensation may still occur
         if (gasIndices is null || !gasIndices.Any() || moleMax <= 0f)
         {
             return [];
@@ -151,7 +195,7 @@ public sealed partial class GasCondenserSystem : EntitySystem
         var energyToCondenseAll = 0f;
         foreach (var gasIndex in gasIndices)
         {
-            var moles = inletMixture[gasIndex];
+            var moles = mixture[gasIndex];
             if (moles <= 0f)
             {
                 continue;
@@ -160,7 +204,7 @@ public sealed partial class GasCondenserSystem : EntitySystem
 
             condensedGasses.Add((gasIndex, moles));
             // opposite of the energy required to vaporize then adjust to the mixture's temp.
-            energyToCondenseAll += -moles * (vaporizationEnergy + heatCap * (inletMixture.Temperature - boilingPoint));
+            energyToCondenseAll += -moles * (vaporizationEnergy + heatCap * (mixture.Temperature - boilingPoint));
         }
         // what fraction of the available container will condensing all the gas consume
         var moleTotal = condensedGasses.Sum(g => g.moles);
