@@ -10,13 +10,13 @@ namespace Content.Shared.Atmos.Components;
 public sealed partial class AnchoredBlurComponent : Component
 {
     /// <summary>
-    /// Size of the heat blur distortion area in meters.
+    /// Size of the heat blur distortion area in tiles.
     /// </summary>
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public Vector2 Size = new(0.5f, 0.5f);
 
     /// <summary>
-    /// Size of the heat blur distortion area in meters.
+    /// Offset of the heat blur area's center in tiles from the entity's position.
     /// </summary>
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public Vector2 Offset = new(0f, 0f);

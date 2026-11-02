@@ -177,7 +177,7 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
                 var blurQuery = _entManager.EntityQueryEnumerator<AnchoredBlurComponent, TransformComponent>();
                 while (blurQuery.MoveNext(out _, out var blur, out var xform))
                 {
-                    if (xform.MapID != mapId)
+                    if (xform.MapID != mapId || blur.Strength <= 0)
                         continue;
 
                     var (worldPos, worldRot) = _xformSys.GetWorldPositionRotation(xform);

@@ -13,6 +13,7 @@ public sealed partial class SolutionHeaterSystem : EntitySystem
     [Dependency] private PowerReceiverSystem _powerReceiver = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private EntityQuery<AnchoredBlurComponent> _blurQuery = default!;
 
     private void TurnOn(EntityUid uid)
     {
@@ -88,7 +89,7 @@ public sealed partial class SolutionHeaterSystem : EntitySystem
 
     private void ToggleBlurSetting(EntityUid uid, bool toggle)
     {
-        if (!TryComp<AnchoredBlurComponent>(uid, out var blur))
+        if (!_blurQuery.TryComp(uid, out var blur))
             return;
 
         if (toggle)
