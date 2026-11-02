@@ -566,8 +566,8 @@
 ## Central Command
 
 - type: entity
-  name: CentComm official
   id: RandomHumanoidSpawnerCentcomOfficial
+  name: CentComm official
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
@@ -576,8 +576,9 @@
       settings: CentcomOfficial
 
 - type: randomHumanoidSettings
-  id: CentcomOfficial
   parent: EventHumanoidCentcomm
+  id: CentcomOfficial
+  randomizeName: true # so that they have "regular" names as per their species
   components:
     - type: GhostRole
       name: ghost-role-information-centcom-official-name

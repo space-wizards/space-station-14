@@ -6,7 +6,7 @@
   setPreference: false
   startingGear: CentcommGear
   icon: "JobIconNanotrasen"
-  supervisors: job-supervisors-hos
+  supervisors: job-supervisors-centcom
   accessGroups:
   - AllAccess
   access:
@@ -18,23 +18,22 @@
 - type: startingGear
   id: CentcommGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitCentcomOfficial
-    shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHatCentcom
     eyes: ClothingEyesGlassesCommand
-    gloves: ClothingHandsGlovesColorBlack
-    outerClothing: ClothingOuterArmorCentcommCarapace
-    id: CentcomPDA
     ears: ClothingHeadsetAltCentCom
+    back: ClothingBackpackCentComm
     belt: WeaponPistolN1984
+    jumpsuit: ClothingUniformJumpsuitCentcomOfficial
+    outerClothing: ClothingOuterArmorCentcommCarapace
+    gloves: ClothingHandsGlovesCombat
+    shoes: ClothingShoesBootsJackFilled
+    id: CentcomPDA
     pocket1: BoxFolderCentComClipboardThreePapers
-    pocket2: PenCentcom
-
 
 - type: chameleonOutfit
   id: CentralCommandOfficialOutfit
   job: CentralCommandOfficial
   hasMindShield: true
   equipment:
-    neck: ClothingNeckScarfStripedCentcom
     mask: ClothingMaskGasCentcom
+    neck: ClothingNeckScarfStripedCentcom
