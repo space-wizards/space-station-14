@@ -102,11 +102,24 @@ namespace Content.Shared.Damage
         /// </summary>
         public DamageSpecifier(DamageGroupPrototype group, FixedPoint2 value)
         {
+            ConstructFromCollection(group.DamageTypes, value);
+        }
+
+        /// <summary>
+        /// Constructor that evenly distributes damage <paramref name="value"/> between a collection of <see cref="DamageTypePrototype"/>s.
+        /// </summary>
+        public DamageSpecifier(ICollection<ProtoId<DamageTypePrototype>> types, FixedPoint2 value)
+        {
+            ConstructFromCollection(types, value);
+        }
+
+        private void ConstructFromCollection(ICollection<ProtoId<DamageTypePrototype>> types, FixedPoint2 value)
+        {
             // Simply distribute evenly (except for rounding).
             // We do this by reducing remaining the # of types and damage every loop.
-            var remainingTypes = group.DamageTypes.Count;
+            var remainingTypes = types.Count;
             var remainingDamage = value;
-            foreach (var damageType in group.DamageTypes)
+            foreach (var damageType in types)
             {
                 var damage = remainingDamage / FixedPoint2.New(remainingTypes);
                 DamageDict.Add(damageType, damage);
@@ -114,6 +127,7 @@ namespace Content.Shared.Damage
                 remainingTypes -= 1;
             }
         }
+
         #endregion constructors
 
         /// <summary>
