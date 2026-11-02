@@ -224,6 +224,7 @@
   color: "#77b58e"
   boilingPoint: -33.0
   meltingPoint: -77.7
+  vaporizationEnergy: 23370
   plantMetabolism:
   - !type:PlantAdjustNutrition
     amount: 1
