@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -10,6 +9,8 @@ using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
+using Robust.Shared.Timing;
+using System.Linq;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -18,11 +19,13 @@ namespace Content.Shared.Storage.EntitySystems;
 /// </summary>
 public sealed partial class BinSystem : EntitySystem
 {
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private INetManager _net = default!;
     [Dependency] private ISharedAdminLogManager _admin = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -56,7 +59,7 @@ public sealed partial class BinSystem : EntitySystem
         var xform = Transform(uid);
         foreach (var id in component.InitialContents)
         {
-            var ent = Spawn(id, xform.Coordinates);
+            var ent = SpawnAttachedTo(id, xform.Coordinates);
             if (!TryInsertIntoBin(uid, ent, component))
             {
                 Log.Error($"Entity {ToPrettyString(ent)} was unable to be initialized into bin {ToPrettyString(uid)}");
@@ -67,7 +70,7 @@ public sealed partial class BinSystem : EntitySystem
 
     private void OnEntInserted(Entity<BinComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        if (args.Container.ID != ent.Comp.ContainerId)
+        if (args.Container.ID != ent.Comp.ContainerId || _timing.ApplyingState)
             return;
 
         ent.Comp.Items.Add(args.Entity);
@@ -75,7 +78,7 @@ public sealed partial class BinSystem : EntitySystem
 
     private void OnEntRemoved(Entity<BinComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        if (args.Container.ID != ent.Comp.ContainerId)
+        if (args.Container.ID != ent.Comp.ContainerId || _timing.ApplyingState)
             return;
 
         ent.Comp.Items.Remove(args.Entity);
@@ -145,7 +148,9 @@ public sealed partial class BinSystem : EntitySystem
         if (_whitelistSystem.IsWhitelistFail(component.Whitelist, toInsert))
             return false;
 
-        _container.Insert(toInsert, component.ItemContainer);
+        if (!_container.Insert(toInsert, component.ItemContainer))
+            return false;
+
         Dirty(uid, component);
         return true;
     }
@@ -171,7 +176,6 @@ public sealed partial class BinSystem : EntitySystem
         if (!_container.Remove(toRemove.Value, component.ItemContainer))
             return false;
 
-        component.Items.Remove(toRemove.Value);
         Dirty(uid, component);
         return true;
     }
