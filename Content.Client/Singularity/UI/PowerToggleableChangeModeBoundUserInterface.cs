@@ -1,8 +1,8 @@
 using Content.Client.UserInterface.Controls;
 using Content.Client.Weapons.Ranged.UI;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Weapons.Ranged.Components;
-using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 

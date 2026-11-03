@@ -35,6 +35,7 @@
       shader: unshaded
       visible: false
       map: ["enum.LockVisualLayers.Lock"]
+  - type: Emitter
   - type: PowerState
     idlePowerDraw: 5
     workingPowerDraw: 600
