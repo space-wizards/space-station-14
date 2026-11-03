@@ -33,7 +33,7 @@ public sealed partial class PowerToggleableChangeModeBoundUserInterface(EntityUi
         {
             option = new RadialMenuActionOption<int>(_ => HandleSendToggle(), 0)
             {
-                ToolTip = Loc.GetString("emitter-turn-off"),
+                ToolTip = Loc.GetString("power-state-turn-off"),
                 IconSpecifier = RadialMenuIconSpecifier.With(TogglePowerTexture),
                 BackgroundColor = SelectedModeBackgroundColor,
                 HoverBackgroundColor = SelectedModeHoverBackgroundColor,
@@ -43,7 +43,7 @@ public sealed partial class PowerToggleableChangeModeBoundUserInterface(EntityUi
         {
             option = new RadialMenuActionOption<int>(_ => HandleSendToggle(), 0)
             {
-                ToolTip = Loc.GetString("emitter-turn-on"),
+                ToolTip = Loc.GetString("power-state-turn-on"),
                 IconSpecifier = RadialMenuIconSpecifier.With(TogglePowerTexture),
             };
         }
