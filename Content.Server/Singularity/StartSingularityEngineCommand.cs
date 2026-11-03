@@ -4,7 +4,6 @@ using Content.Server.ParticleAccelerator.Components;
 using Content.Server.ParticleAccelerator.EntitySystems;
 using Content.Server.Singularity.Components;
 using Content.Server.Singularity.EntitySystems;
-using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Machines.Components;
 using Content.Shared.Singularity.Components;
@@ -17,7 +16,7 @@ namespace Content.Server.Singularity
     [AdminCommand(AdminFlags.Admin)]
     public sealed partial class StartSingularityEngineCommand : LocalizedEntityCommands
     {
-        [Dependency] private SharedNetworkPoweredAmmoProviderSystem _ammoProvider = default!;
+        [Dependency] private NetworkPoweredAmmoProviderSystem _ammoProvider = default!;
         [Dependency] private MultipartMachineSystem _multipartSystem = default!;
         [Dependency] private ParticleAcceleratorSystem  _paSystem = default!;
         [Dependency] private RadiationCollectorSystem _radCollectorSystem = default!;

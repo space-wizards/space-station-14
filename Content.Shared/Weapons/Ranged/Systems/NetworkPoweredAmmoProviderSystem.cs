@@ -9,6 +9,7 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -113,6 +114,19 @@ public abstract partial class NetworkPoweredAmmoProviderSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
+    private void OnToggleActive(Entity<NetworkPoweredAmmoProviderComponent> ent, ref NetworkPoweredAmmoProviderToggleActiveMessage message)
+    {
+        if (TryComp(ent, out LockComponent? lockComp) && lockComp.Locked)
+        {
+            Popup.PopupEntity(Loc.GetString("comp-emitter-access-locked",
+                ("target", ent.Owner)), ent, message.Actor);
+            return;
+        }
+
+        ToggleActive(ent, message.Actor);
+    }
+
     /// <summary>
     /// Turns device ON, enabling drawing ammo by constantly using power.
     /// </summary>
@@ -139,3 +153,6 @@ public abstract partial class NetworkPoweredAmmoProviderSystem : EntitySystem
         // no-op
     }
 }
+
+[Serializable, NetSerializable]
+public sealed class NetworkPoweredAmmoProviderToggleActiveMessage : BoundUserInterfaceMessage;
