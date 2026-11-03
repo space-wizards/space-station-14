@@ -173,7 +173,7 @@ public abstract partial class SharedStationTeleporterSystem : EntitySystem
             {
                 if (_link.GetLink(ent.Comp.LastLink.Value, out _))
                     ent.Comp.LastLink = null;
-                else if (!_power.IsPowered(ent.Comp.LastLink.Value))
+                else if (_power.IsPowered(ent.Comp.LastLink.Value))
                     _link.TryLink(ent, ent.Comp.LastLink.Value);
             }
         }
