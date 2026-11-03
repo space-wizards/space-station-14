@@ -11,7 +11,6 @@ using Content.Shared.Item;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Timing;
 using Content.Shared.UserInterface;
 using Content.Shared.Timing.Components;
 using Content.Shared.Timing.Systems;
