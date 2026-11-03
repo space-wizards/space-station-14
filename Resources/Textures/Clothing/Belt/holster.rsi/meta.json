@@ -14,25 +14,13 @@
       "name": "icon_knife"
     },
     {
-      "name": "icon_magazine_pistol"
+      "name": "icon_magazine_sidearm"
     },
     {
       "name": "icon_sidearm"
     },
     {
-      "name": "icon_speedloader_revolver"
-    },
-    {
-      "name": "icon_powercell"
-    },
-    {
       "name": "icon_grenade"
-    },
-    {
-      "name": "icon_pack"
-    },
-    {
-      "name": "icon_radio"
     },
     {
       "name": "icon_stunbaton"
@@ -41,10 +29,10 @@
       "name": "icon_truncheon"
     },
     {
-      "name": "icon_scanner"
+      "name": "icon_electronics"
     },
     {
-      "name": "icon_flask"
+      "name": "icon_misc"
     },
     {
       "name": "equipped-BELT",

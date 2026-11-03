@@ -184,17 +184,11 @@
         whitelist:
           tags:
           - CombatKnife
-      icon_magazine_pistol:
+      icon_magazine_sidearm:
         whitelist:
           tags:
           - MagazinePistolAll
-      icon_speedloader_revolver:
-        whitelist:
-          tags:
           - SpeedLoaderAll
-      icon_powercell:
-        whitelist:
-          tags:
           - PowerCell
           - PowerCellSmall
       icon_sidearm:
@@ -206,14 +200,6 @@
         whitelist:
           tags:
           - HandGrenade
-      icon_pack:
-        whitelist:
-          tags:
-          - CigPack
-      icon_radio:
-        whitelist:
-          tags:
-          - Radio
       icon_stunbaton:
         whitelist:
           tags:
@@ -222,14 +208,16 @@
         whitelist:
           tags:
           - Truncheon
-      icon_scanner:
+      icon_electronics:
         whitelist:
           tags:
           - Scanner
-      icon_flask:
+          - Radio
+      icon_misc:
         whitelist:
           tags:
           - Flask
+          - CigPack
 
 - type: entity
   parent: [ClothingBeltBase, ClothingSlotBase, BaseSyndicateContraband]
@@ -323,10 +311,13 @@
         whitelist:
           tags:
           - CombatKnife
-      icon_magazine_pistol:
+      icon_magazine_sidearm:
         whitelist:
           tags:
           - MagazinePistolAll
+          - SpeedLoaderAll
+          - PowerCell
+          - PowerCellSmall
       icon_magazine_pistol_submachine:
         whitelist:
           tags:
@@ -335,15 +326,6 @@
         whitelist:
           tags:
           - MagazinePistolSubMachineGunTopMounted
-      icon_speedloader_revolver:
-        whitelist:
-          tags:
-          - SpeedLoaderAll
-      icon_powercell:
-        whitelist:
-          tags:
-          - PowerCell
-          - PowerCellSmall
       icon_magazine_rifle:
         whitelist:
           tags:
@@ -356,14 +338,6 @@
         whitelist:
           tags:
           - HandGrenade
-      icon_pack:
-        whitelist:
-          tags:
-          - CigPack
-      icon_radio:
-        whitelist:
-          tags:
-          - Radio
       icon_stunbaton:
         whitelist:
           tags:
@@ -372,14 +346,16 @@
         whitelist:
           tags:
           - Truncheon
-      icon_scanner:
+      icon_electronics:
         whitelist:
           tags:
           - Scanner
-      icon_flask:
+          - Radio
+      icon_misc:
         whitelist:
           tags:
           - Flask
+          - CigPack
       icon_sidearm:
         whitelist:
           tags:
