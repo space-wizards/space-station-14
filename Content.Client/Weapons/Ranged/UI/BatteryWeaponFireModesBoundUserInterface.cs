@@ -17,8 +17,8 @@ public partial class BatteryWeaponFireModesBoundUserInterface(EntityUid owner, E
 
     private SimpleRadialMenu? _menu;
 
-    protected static readonly Color SelectedModeBackgroundColor = StyleNano.ButtonColorGoodDefault.WithAlpha(128);
-    protected static readonly Color SelectedModeHoverBackgroundColor = StyleNano.ButtonColorGoodHovered.WithAlpha(128);
+    protected static readonly Color SelectedModeBackgroundColor = new Color(2,3,4).WithAlpha(128);
+    protected static readonly Color SelectedModeHoverBackgroundColor = new Color(3,5,6).WithAlpha(128);
 
     /// <inheritdoc />
     protected override void Open()

@@ -1,7 +1,9 @@
 using Content.Client.UserInterface.Controls;
 using Content.Client.Weapons.Ranged.UI;
+using Content.Shared.Power.Components;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Singularity.UI;
@@ -17,7 +19,7 @@ public sealed partial class PowerToggleableChangeModeBoundUserInterface(EntityUi
     protected override List<RadialMenuOptionBase> CreateButtons(BatteryWeaponFireModesComponent fireModes)
     {
         var options = base.CreateButtons(fireModes);
-        if (!EntMan.TryGetComponent(Owner, out NetworkPoweredAmmoProviderComponent? emitter))
+        if (!EntMan.TryGetComponent(Owner, out PowerStateComponent? emitter))
             return options;
 
         if (options.Count == 1)
@@ -27,7 +29,7 @@ public sealed partial class PowerToggleableChangeModeBoundUserInterface(EntityUi
         }
 
         RadialMenuActionOption<int> option;
-        if (emitter.IsOn)
+        if (emitter.IsTurnedOn)
         {
             option = new RadialMenuActionOption<int>(_ => HandleSendToggle(), 0)
             {
@@ -55,4 +57,10 @@ public sealed partial class PowerToggleableChangeModeBoundUserInterface(EntityUi
         var msg = new NetworkPoweredAmmoProviderToggleActiveMessage();
         SendPredictedMessage(msg);
     }
+}
+
+[Serializable, NetSerializable]
+public enum PowerToggleAndModesUiKey
+{
+    Key
 }
