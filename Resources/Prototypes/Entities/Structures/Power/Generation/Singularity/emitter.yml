@@ -37,7 +37,10 @@
       map: ["enum.LockVisualLayers.Lock"]
   - type: Emitter
     alertRadio: true
-  - type: NetworkPoweredAmmoProvider
+  - type: PowerState
+    idlePowerDraw: 5
+    workingPowerDraw: 600
+    ensureApc: false
   - type: NotifyOnNonFunctioning
     locDestroyed: emitter-destroyed-broadcast
     locUnlocked: emitter-unlocked-broadcast
@@ -46,13 +49,6 @@
     locTurnedOff: emitter-turn-off-broadcast
     radioChannel: Engineering
     requirePowered: true
-  - type: BatteryWeaponFireModes
-    fireModes:
-    - proto: EmitterBolt
-      modeIcon:
-        sprite: Structures/Power/Generation/Singularity/emitter.rsi
-        state: projectile
-      fireCost: 600
   - type: Gun
     showExamineText: false
     burstCooldown: 1.4
