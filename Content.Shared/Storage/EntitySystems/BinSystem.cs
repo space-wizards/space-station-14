@@ -26,7 +26,6 @@ public sealed partial class BinSystem : EntitySystem
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
-
     /// <inheritdoc/>
     public override void Initialize()
     {
