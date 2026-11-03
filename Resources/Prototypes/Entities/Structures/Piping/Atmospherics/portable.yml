@@ -153,6 +153,7 @@
   - type: GuideHelp
     guides:
     - Thermomachines
+  - type: PowerSwitch
 
 - type: entity
   parent: SpaceHeater

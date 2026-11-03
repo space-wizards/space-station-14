@@ -44,6 +44,8 @@ public abstract partial class SharedSpaceHeaterSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnPowerChanged(Entity<SpaceHeaterComponent> ent, ref PowerChangedEvent args)
     {
+        if (!_receiver.IsPowered(ent.Owner))
+            SetOff(ent);
         UpdateUi(ent);
     }
 
@@ -68,15 +70,6 @@ public abstract partial class SharedSpaceHeaterSystem : EntitySystem
 
         Dirty(ent, thermoMachine);
         UpdateUi(ent);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnAnchorChanged(Entity<SpaceHeaterComponent> ent, ref AnchorStateChangedEvent args)
-    {
-        if (!args.Anchored)
-        {
-            SetOff(ent.Owner);
-        }
     }
 
     [SubscribeLocalEvent]
