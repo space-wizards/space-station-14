@@ -1,8 +1,5 @@
 ### EmitterComponent
 
-# Shows when attempting to turn the emitter on or off without proper access
-comp-emitter-access-locked = The {$target} is access locked!
-
 # Shows when turning the emitter on/off
 # Shows if the user attempts to activate the emitter while it's un-anchored.
 
