@@ -76,11 +76,9 @@ public sealed partial class RoofDebugOverlay : Overlay
         Color res;
 
         if (data.HasRoof)
-            res = Color.Red;
+            res = Color.Yellow.WithAlpha(0.15f);
         else
-            res = Color.White;
-
-        res = res.WithAlpha(0.10f);
+            res = Color.SkyBlue.WithAlpha(0.10f);
 
         handle.DrawRect(Box2.FromDimensions(new Vector2(tile.X, tile.Y), new Vector2(1, 1)), res);
     }

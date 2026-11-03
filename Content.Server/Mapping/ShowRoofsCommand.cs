@@ -14,7 +14,7 @@ public sealed partial class ShowRoofs : IConsoleCommand
 
     public string Command => "showroofs";
     public string Description => "Toggles seeing the roof debug overlay.";
-    public string Help => $"Usage: {Command}\nRed tiles have a roof, white tile are roofless.";
+    public string Help => $"Usage: {Command}\nYellow tiles have a roof, while blue tile are roofless.";
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
