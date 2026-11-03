@@ -1,4 +1,4 @@
-﻿using Content.Shared.Hands;
+using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
@@ -132,7 +132,7 @@ public sealed partial class ActivatableUISystem
     [SubscribeLocalEvent]
     private void OnBoundInterfaceOpenAttempt(Entity<ActivatableUIComponent> ent, ref BoundUserInterfaceMessageAttempt args)
     {
-        if (args.Message is not OpenBoundInterfaceMessage || ent.Comp.Key.Equals(args.UiKey))
+        if (args.Message is not OpenBoundInterfaceMessage || !ent.Comp.Key.Equals(args.UiKey))
             return;
 
         if (!RaiseCanOpenEventChecks(args.Actor, ent.Owner))
