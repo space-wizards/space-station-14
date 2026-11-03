@@ -54,7 +54,7 @@ public sealed partial class PowerToggleableChangeModeBoundUserInterface(EntityUi
 
     private void HandleSendToggle()
     {
-        var msg = new NetworkPoweredAmmoProviderToggleActiveMessage();
+        var msg = new PowerStateToggleActiveMessage();
         SendPredictedMessage(msg);
     }
 }

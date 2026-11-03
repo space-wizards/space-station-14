@@ -1,5 +1,9 @@
+using Content.Shared.Lock;
+using Content.Shared.Popups;
 using Content.Shared.Power.Components;
+using Content.Shared.Weapons.Ranged.Components;
 using JetBrains.Annotations;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power.EntitySystems;
 
@@ -11,8 +15,23 @@ public abstract partial class PowerStateSystem : EntitySystem
 {
     [Dependency] private SharedPowerReceiverSystem _powerReceiverSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     [Dependency] private EntityQuery<PowerStateComponent> _powerStateQuery;
+
+
+    [SubscribeLocalEvent]
+    private void OnToggleActive(Entity<PowerStateComponent> ent, ref PowerStateToggleActiveMessage message)
+    {
+        if (TryComp(ent, out LockComponent? lockComp) && lockComp.Locked)
+        {
+            _popup.PopupEntity(Loc.GetString("comp-emitter-access-locked",
+                ("target", ent.Owner)), ent, message.Actor);
+            return;
+        }
+
+        SetWorkingState(ent.AsNullable(), !ent.Comp.IsTurnedOn);
+    }
 
     /// <summary>
     /// Sets the working state of the entity, adjusting its power draw accordingly.
@@ -154,3 +173,9 @@ public record struct TurnedOnStateChanged(bool IsTurnedOn);
 /// </summary>
 [ByRefEvent]
 public record struct OperatingStateChanged(bool IsOperating);
+
+/// <summary>
+/// 
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class PowerStateToggleActiveMessage : BoundUserInterfaceMessage;
