@@ -1,10 +1,10 @@
-using System.Linq;
 using Content.Shared.EntityTable;
 using Content.Shared.NameIdentifier;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
-using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Linq;
+using Content.Shared.EntityTable.EntitySelectors;
 
 namespace Content.Shared.Xenoarchaeology.Artifact;
 
@@ -81,33 +81,33 @@ public abstract partial class SharedXenoArtifactSystem
     /// <summary>
     /// Creates artifact node entity, attaching trigger and marking depth level for future use.
     /// </summary>
-    public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, ProtoId<XenoArchTriggerPrototype> trigger, int depth = 0)
+    public Entity<XenoArtifactNodeComponent>? CreateNode(
+        Entity<XenoArtifactComponent> ent,
+        EntProtoId triggerProtoId,
+        EntityTableSelector effects,
+        int depth = 0
+    )
     {
-        var triggerProto = ProtoMan.Index(trigger);
-        return CreateNode(ent, triggerProto, depth);
+        var effect = _entityTable.GetFirstOrNull(effects);
+        if (effect == null)
+            return null;
+
+        var trigger = ProtoMan.Index(triggerProtoId);
+        return CreateNode(ent, effect.Value, trigger, depth);
     }
 
     /// <summary>
     /// Creates artifact node entity, attaching trigger and marking depth level for future use.
     /// </summary>
-    public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, XenoArchTriggerPrototype trigger, int depth = 0)
-    {
-        var entProtoId = _entityTable.GetSpawns(ent.Comp.EffectsTable)
-                                     .First();
-        return CreateNode(ent, entProtoId, trigger, depth);
-    }
-
-    /// <summary>
-    /// Creates artifact node entity, attaching trigger and marking depth level for future use.
-    /// </summary>
-    public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, EntProtoId effect, XenoArchTriggerPrototype trigger, int depth = 0)
+    public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, EntProtoId effect, EntityPrototype trigger, int depth = 0)
     {
         AddNode((ent, ent), effect, out var nodeEnt, dirty: false);
         DebugTools.Assert(nodeEnt.HasValue, "Failed to create node on artifact.");
 
         var nodeComponent = nodeEnt.Value.Comp;
         nodeComponent.Depth = depth;
-        nodeComponent.TriggerTip = trigger.Tip;
+        nodeComponent.TriggerTip = trigger.Name;
+
         EntityManager.AddComponents(nodeEnt.Value, trigger.Components);
 
         Dirty(nodeEnt.Value);
@@ -324,7 +324,7 @@ public abstract partial class SharedXenoArtifactSystem
     /// <summary>
     /// Gets two-dimensional array (as lists inside enumeration) that contains artifact nodes, grouped by segment.
     /// </summary>
-    public IEnumerable<List<Entity<XenoArtifactNodeComponent>>> GetSegmentsFromNodes(Entity<XenoArtifactComponent> ent, List<Entity<XenoArtifactNodeComponent>> nodes)
+    public List<List<Entity<XenoArtifactNodeComponent>>> GetSegmentsFromNodes(Entity<XenoArtifactComponent> ent, IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> nodes)
     {
         var outSegments = new List<List<Entity<XenoArtifactNodeComponent>>>();
         foreach (var node in nodes)
@@ -332,10 +332,8 @@ public abstract partial class SharedXenoArtifactSystem
             var segment = new List<Entity<XenoArtifactNodeComponent>>();
             GetSegmentNodesRecursive(ent, node, segment, outSegments);
 
-            if (segment.Count == 0)
-                continue;
-
-            outSegments.Add(segment);
+            if (segment.Count != 0)
+                outSegments.Add(segment);
         }
 
         return outSegments;

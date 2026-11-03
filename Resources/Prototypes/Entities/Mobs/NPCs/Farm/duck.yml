@@ -1,0 +1,143 @@
+# Note that the mallard duck is actually a male drake mallard, with the brown duck being the female variant of the same species, however ss14 lacks sex specific textures
+# The white duck is more akin to a pekin or call duck.
+
+- type: entity
+  parent: [ SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible, BaseExaminableHunger ]
+  id: MobDuckMallard
+  name: mallard duck #Quack
+  description: An adorable mallard duck, it's fluffy and soft!
+  components:
+  - type: Sprite
+    sprite: Mobs/Animals/Farm/duck.rsi
+    drawdepth: Mobs
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: duck-0
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.35
+        density: 5 #They actually are pretty light, I looked it up
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - Duck
+    - VimPilot
+  - type: Reproductive
+    breedChance: 0.05
+    birthPopup: reproductive-laid-egg-popup
+    makeOffspringInfant: false
+    minHungerThreshold: Peckish
+    partnerWhitelist:
+      tags:
+      - Duck
+    offspring:
+    - id: FoodEggDuckFertilized
+      maxAmount: 3
+  - type: ReproductivePartner
+  - type: Appearance
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: duck-0
+      Critical:
+        Base: dead-0
+      Dead:
+        Base: dead-0
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatDuck
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-bird
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/duck_quack_happy.ogg
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 100
+  - type: EntityProducerAction
+    insufficientSatiationPopup: action-popup-lay-egg-too-hungry
+    userPopup: action-popup-lay-egg-user
+    othersPopup: action-popup-lay-egg-others
+  - type: SatiationProduction
+    delay: 60
+    delayMax: 120
+    satiationUsage: 60
+    minimumSatiation: 60
+    automaticForPlayers: false
+  - type: EntityProducer
+    table:
+      id: FoodEgg
+  - type: ActionGrant
+    actions:
+    - ActionAnimalLayEgg
+  - type: ReplacementAccent
+    accent: duck
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-organic
+  - type: NpcFactionMember
+    factions:
+    - Passive
+
+- type: entity
+  parent: MobDuckMallard
+  id: MobDuckWhite
+  name: white duck #Quack
+  description: An adorable white duck, it's fluffy and soft!
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: duck-1
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: duck-1
+      Critical:
+        Base: dead-1
+      Dead:
+        Base: dead-1
+
+- type: entity
+  parent: MobDuckMallard
+  id: MobDuckBrown
+  name: brown duck #Quack
+  description: An adorable brown duck, it's fluffy and soft!
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: duck-2
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: duck-2
+      Critical:
+        Base: dead-2
+      Dead:
+        Base: dead-2
+
+- type: entity
+  parent: FoodEgg
+  id: FoodEggDuckFertilized
+  suffix: Fertilized, Duck
+  components:
+  - type: TimedSpawner
+    prototypes:
+    - MobDuckMallard
+    - MobDuckWhite
+    - MobDuckBrown
+    intervalSeconds: 20
+    allowContainerPlacement: true
+  - type: TimedDespawn # Delete the egg after the duck spawns.
+    lifetime: 21

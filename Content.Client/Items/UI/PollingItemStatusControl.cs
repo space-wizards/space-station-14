@@ -1,4 +1,4 @@
-﻿using Robust.Client.UserInterface;
+using Robust.Client.UserInterface;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Items.UI;

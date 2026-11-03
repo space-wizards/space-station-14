@@ -1,4 +1,7 @@
+using Content.Shared.Database;
 using Content.Shared.DeviceLinking;
+using Content.Shared.Power.Components;
+using Content.Shared.Singularity.EntitySystems;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -6,20 +9,19 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Weapons.Ranged.Components;
 
 /// <summary>
-/// System for making power network an ammo provider.
+/// Component for making ammo out of powered network. Requires and works with <see cref="PowerStateComponent"/>
+/// to drain more power while it is ON and shooting.
+/// Power consumption is stable and does not spike at moment of projectile creation.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedNetworkPoweredAmmoProviderSystem), typeof(BatteryWeaponFireModesSystem))]
+[Access(typeof(NetworkPoweredAmmoProviderSystem), typeof(BatteryWeaponFireModesSystem), typeof(SharedEmitterSystem))]
 public sealed partial class NetworkPoweredAmmoProviderComponent : AmmoProviderComponent
 {
     /// <summary>
-    /// Whether the emitter is switched to emitting or now.
+    /// The projectile or hitscan entity to spawn when firing.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool IsOn;
-
-    // Whether the power switch is on AND the machine has enough power (so is actively firing)
-    [ViewVariables] public bool IsPowered;
+    [DataField(required: true), AutoNetworkedField]
+    public EntProtoId Prototype;
 
     /// <summary>
     /// Signal port that turns on the emitter.
@@ -38,4 +40,11 @@ public sealed partial class NetworkPoweredAmmoProviderComponent : AmmoProviderCo
     /// </summary>
     [DataField]
     public ProtoId<SinkPortPrototype> TogglePort = "Toggle";
+
+    /// <summary>
+    /// Log type for event of toggling device On or Off.
+    /// Will not add admin event if set to null.
+    /// </summary>
+    [DataField]
+    public LogType? AdminLogToggleLevel;
 }

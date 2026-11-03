@@ -30,7 +30,7 @@
     - state: beam
       shader: unshaded
       visible: false
-      map: ["enum.EmitterVisualLayers.Lights"]
+      map: ["enum.PowerStateDeviceVisualLayers.Lights"]
     - state: locked
       shader: unshaded
       visible: false
@@ -62,6 +62,9 @@
       - Burst
     soundGunshot:
       path: /Audio/Weapons/emitter.ogg
+  - type: NetworkPoweredAmmoProvider
+    adminLogToggleLevel: FieldGeneration
+    prototype: EmitterBolt
   - type: AutoShootGun
   - type: PowerConsumer
     voltage: Medium
@@ -72,8 +75,14 @@
       input:
         !type:CableDeviceNode
         nodeGroupID: MVPower
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    usesApcPower: false
+    mediumVoltageNode: input
   - type: Damageable
-    damageModifierSet: PlasteelMod
+    damageModifierSet: PlasteelStaticMod
   - type: ActiveRadio
     channels:
     - Engineering
@@ -110,7 +119,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 200
   - type: DeviceLinkSink
     ports:

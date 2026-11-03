@@ -55,6 +55,9 @@ public sealed partial class MultiHandedItemSystem : EntitySystem
         if (args.BlockingEntity != ent.Owner || _timing.ApplyingState)
             return;
 
-        _hands.TryDrop(args.User, ent.Owner);
+        // If the virtual item was dropped independently, drop the real item as well. If the real item cannot be
+        // dropped (for example, because it is glued), restore the virtual item to keep the item multi-handed.
+        if (!_hands.TryDrop(args.User, ent.Owner) && _hands.IsHolding(args.User, ent.Owner))
+            _virtualItem.TrySpawnVirtualItemInHand(ent.Owner, args.User);
     }
 }

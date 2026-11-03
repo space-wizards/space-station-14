@@ -76,6 +76,10 @@
     drawFov: false
   - type: Input
     context: "ghost"
+  - type: Speech
+  - type: Emoting
+  - type: TypingIndicator
+    proto: defaultUnshaded
   - type: Examiner
     skipChecks: true
   - type: Ghost

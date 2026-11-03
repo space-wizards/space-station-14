@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: ClothingHeadset
   id: ClothingHeadsetAlt
@@ -87,7 +87,8 @@
   - type: Clothing
     sprite: Clothing/Ears/Headsets/medical.rsi
   - type: StealTarget
-    stealGroup: ClothingHeadsetAltMedical
+    stealGroup:
+    - ClothingHeadsetAltMedical
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseCommandContraband]

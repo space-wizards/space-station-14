@@ -4,6 +4,7 @@ using Content.Server.ParticleAccelerator.Components;
 using Content.Server.ParticleAccelerator.EntitySystems;
 using Content.Server.Singularity.Components;
 using Content.Server.Singularity.EntitySystems;
+using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Machines.Components;
 using Content.Shared.Singularity.Components;

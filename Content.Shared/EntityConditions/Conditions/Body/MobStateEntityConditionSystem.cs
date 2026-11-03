@@ -1,4 +1,4 @@
-﻿using Content.Shared.Mobs;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.Prototypes;
 

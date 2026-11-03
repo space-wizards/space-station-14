@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 
 namespace Content.Shared.Chat.V2.Moderation;
 

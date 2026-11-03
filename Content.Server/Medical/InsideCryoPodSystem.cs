@@ -1,4 +1,4 @@
-﻿using Content.Server.Body.Systems;
+using Content.Server.Body.Systems;
 using Content.Server.Medical.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Medical.Cryogenics;

@@ -1,4 +1,4 @@
-- type: securityIcon
+- type: statusIcon
   id: SecurityIcon
   abstract: true
   priority: 3
@@ -6,56 +6,56 @@
   locationPreference: Right
   isShaded: true
 
-- type: securityIcon
+- type: statusIcon
   parent: SecurityIcon
   id: SecurityIconDischarged
   icon:
     sprite: /Textures/Interface/Misc/security_icons.rsi
     state: hud_discharged
 
-- type: securityIcon
+- type: statusIcon
   parent: SecurityIcon
   id: SecurityIconIncarcerated
   icon:
     sprite: /Textures/Interface/Misc/security_icons.rsi
     state: hud_incarcerated
 
-- type: securityIcon
+- type: statusIcon
   parent: SecurityIcon
   id: SecurityIconParoled
   icon:
     sprite: /Textures/Interface/Misc/security_icons.rsi
     state: hud_paroled
 
-- type: securityIcon
+- type: statusIcon
   parent: SecurityIcon
   id: SecurityIconSuspected
   icon:
     sprite: /Textures/Interface/Misc/security_icons.rsi
     state: hud_suspected
-  
-- type: securityIcon
+
+- type: statusIcon
   parent: SecurityIcon
   id: SecurityIconHostile
   icon:
     sprite: /Textures/Interface/Misc/security_icons.rsi
     state: hud_hostile
 
-- type: securityIcon
+- type: statusIcon
   parent: SecurityIcon
   id: SecurityIconEliminated
   icon:
     sprite: /Textures/Interface/Misc/security_icons.rsi
     state: hud_eliminated
 
-- type: securityIcon
+- type: statusIcon
   parent: SecurityIcon
   id: SecurityIconWanted
   icon:
     sprite: /Textures/Interface/Misc/security_icons.rsi
     state: hud_wanted
 
-- type: securityIcon
+- type: statusIcon
   id: MindShieldIcon
   priority: 2
   locationPreference: Right
@@ -65,7 +65,7 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: MindShield
 
-- type: securityIcon
+- type: statusIcon
   id: CrewBorderIcon
   priority: 2
   offset: -4
@@ -77,7 +77,7 @@
     sprite: /Textures/Interface/Misc/job_icons_borders.rsi
     state: CrewBorder
 
-- type: securityIcon
+- type: statusIcon
   id: CrewUncertainBorderIcon
   priority: 2
   offset: -4

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Rejuvenate;
+using Content.Shared.Rejuvenate;
 
 namespace Content.Shared.Administration.Systems;
 

@@ -1,40 +1,19 @@
+using Content.Shared.DeviceLinking;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Singularity.Components;
 
 [RegisterComponent, NetworkedComponent]
 public sealed partial class EmitterComponent : Component
 {
-    /// <summary>
-    /// The visual state that is set when the emitter is turned on
-    /// </summary>
+
     [DataField]
-    public string? OnState = "beam";
+    public List<EntProtoId> SelectableTypes = new();
 
     /// <summary>
-    /// The visual state that is set when the emitter doesn't have enough power.
+    /// Map of signal ports to entity prototype IDs of the entity that will be fired.
     /// </summary>
     [DataField]
-    public string? UnderpoweredState = "underpowered";
-}
-
-[NetSerializable, Serializable]
-public enum EmitterVisuals : byte
-{
-    VisualState
-}
-
-[Serializable, NetSerializable]
-public enum EmitterVisualLayers : byte
-{
-    Lights
-}
-
-[NetSerializable, Serializable]
-public enum EmitterVisualState
-{
-    On,
-    Underpowered,
-    Off
+    public Dictionary<ProtoId<SinkPortPrototype>, EntProtoId> SetTypePorts = new();
 }

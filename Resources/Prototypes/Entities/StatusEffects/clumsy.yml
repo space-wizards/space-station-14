@@ -134,4 +134,12 @@
     clumsyChance: *ChanceDrunk
     clumsySound: *SoundGlug
 
+# gruhhhhh (Zombies don't know how to hold things in their hands.)
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectClumsyZombie
+  components:
+    - type: ClumsyGrabStatusEffect
+      clumsyChance: *Chance100
+
 #endregion

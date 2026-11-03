@@ -75,6 +75,5 @@ public sealed partial class DrowsinessOverlay : Overlay
         _drowsinessShader.SetParameter("Strength", _visualScale * Intensity);
         handle.UseShader(_drowsinessShader);
         handle.DrawRect(args.WorldBounds, Color.White);
-        handle.UseShader(null);
     }
 }

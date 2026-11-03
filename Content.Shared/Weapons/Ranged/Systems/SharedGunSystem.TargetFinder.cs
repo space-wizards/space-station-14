@@ -1,5 +1,6 @@
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Weapons.Hitscan.Events;
 using Content.Shared.Weapons.Ranged.Components;
 
@@ -7,7 +8,7 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 
 public partial class SharedGunSystem
 {
-    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
 
     [SubscribeLocalEvent]
     public void OnHitscanHit(Entity<TargetFinderHitscanComponent> entity, ref HitscanRaycastFiredEvent args)
@@ -47,7 +48,7 @@ public partial class SharedGunSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnPortDisconnected(Entity<TargetFinderComponent> ent, ref PortDisconnectedEvent args)
+    private void OnPortDisconnected(Entity<TargetFinderComponent> ent, ref SourcePortDisconnectedEvent args)
     {
         if (args.Port != ent.Comp.LinkingPort || ent.Comp.TargetAssigner == null)
             return;

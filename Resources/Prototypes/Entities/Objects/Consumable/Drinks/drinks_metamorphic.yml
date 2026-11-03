@@ -1957,21 +1957,6 @@
 
 - type: entity
   parent: DrinkGlass
-  id: DrinkWaterJug
-  name: water jug
-  description: Stay hydrated.
-  components:
-  - type: Solution
-    solution:
-        reagents:
-        - ReagentId: Water
-          Quantity: 30
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/water.rsi
-    state: icon
-
-- type: entity
-  parent: DrinkGlass
   id: DrinkWatermelonJuice
   suffix: watermelon juice
   components:

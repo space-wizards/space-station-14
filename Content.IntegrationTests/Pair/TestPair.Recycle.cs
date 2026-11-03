@@ -35,7 +35,7 @@ public sealed partial class TestPair
     protected override async Task Recycle(PairSettings next, TextWriter testOut)
     {
         // Move to pre-round lobby. Required to toggle dummy ticker on and off
-        var gameTicker = Server.System<GameTicker>();
+        var gameTicker = Server.System<ServerGameTicker>();
         if (gameTicker.RunLevel != GameRunLevel.PreRoundLobby)
         {
             await testOut.WriteLineAsync($"Recycling: {Watch.Elapsed.TotalMilliseconds} ms: Restarting round.");
@@ -68,7 +68,7 @@ public sealed partial class TestPair
         Assert.That(cfg.GetCVar(CCVars.GameLobbyEnabled), Is.EqualTo(settings.InLobby));
         Assert.That(cfg.GetCVar(CCVars.GameDummyTicker), Is.EqualTo(settings.DummyTicker));
 
-        var ticker = Server.System<GameTicker>();
+        var ticker = Server.System<ServerGameTicker>();
         Assert.That(ticker.DummyTicker, Is.EqualTo(settings.DummyTicker));
 
         var expectPreRound = settings.InLobby | settings.DummyTicker;

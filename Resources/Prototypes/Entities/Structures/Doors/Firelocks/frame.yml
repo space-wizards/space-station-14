@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: [ BaseStructureDynamic, StructureHealthDoorWeak ]
   id: FirelockFrame
   name: firelock frame
@@ -18,7 +18,7 @@
     delay: 6
     fx: EffectRCDDeconstruct6
   - type: Damageable
-    damageModifierSet: PlasteelMod
+    damageModifierSet: PlasteelStaticMod
   - type: Destructible
     thresholds:
     - trigger:
