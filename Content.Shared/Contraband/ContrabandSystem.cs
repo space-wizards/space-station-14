@@ -69,17 +69,21 @@ public sealed partial class ContrabandSystem : EntitySystem
                 return;
         }
 
-        // Checks if the contraband is contained within something
-        _container.TryGetContainingContainer((ent, null, null), out var container);
-
-        // figure out their pronouns != null : use them ? use "You", and skip id check and use yours.
-        // figure out their id != null : "she can or she cannot" ?
-        var hasPronouns = false;
-        var hasId = false;
-        if (container is { })
+        // Checks if the contraband is contained within a container. if NOT, do you.
+        if (!_container.TryGetContainingContainer((ent, null, null), out var ctnr))
         {
-            hasPronouns = HasComp<GrammarComponent>(container.Owner);// may be false with animals, aghost...
-            hasId = _id.TryFindIdCard(container.Owner, out var id);
+            /*ContrabandTextYou(component, args.User)*/
+        }
+
+        if (ctnr is { })
+        {
+            if (args.User == ctnr.Owner)
+            { /*ContrabandTextYou(component, args.User)*/ }//TODO: if you are examining your own item, do you.
+
+            if (!TryComp<GrammarComponent>(ctnr.Owner, out var grammar) && !_id.TryFindIdCard(ctnr.Owner, out var id))
+            { /*ContrabandTextYou(component, args.User)*/ }//TODO: holder has neither pronouns nor id, do you.
+
+            //ResolveContrabandText(component, id, grammar)
         }
 
         // two strings:
