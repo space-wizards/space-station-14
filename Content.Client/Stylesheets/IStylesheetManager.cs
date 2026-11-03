@@ -13,13 +13,6 @@ public interface IStylesheetManager
     ///
     Stylesheet SheetSystem { get; }
 
-
-    [Obsolete("Update to use SheetNanotrasen instead")]
-    Stylesheet SheetNano { get; }
-
-    [Obsolete("Update to use SheetSystem instead")]
-    Stylesheet SheetSpace { get; }
-
     /// get a stylesheet by name
     public bool TryGetStylesheet(string name, [MaybeNullWhen(false)]  out Stylesheet stylesheet);
 

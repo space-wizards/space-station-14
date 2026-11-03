@@ -1177,5 +1177,8 @@ voicesensor: VoiceSensor
 AirlockChapelStandardGlassLocked: AirlockChapelGlassLocked
 AirlockStandardGlass: AirlockGlass
 
-# 2026-11-01
+# 2026-10-30
+PlushieArachind: PlushieArachnid
+
+# 2026-11-03
 ClothingUniformJumpsuitCentcomAgent: ClothingUniformJumpsuitCentcommLawyer
