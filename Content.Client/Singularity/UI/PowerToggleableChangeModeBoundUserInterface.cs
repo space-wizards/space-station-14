@@ -58,9 +58,3 @@ public sealed partial class PowerToggleableChangeModeBoundUserInterface(EntityUi
         SendPredictedMessage(msg);
     }
 }
-
-[Serializable, NetSerializable]
-public enum PowerToggleAndModesUiKey
-{
-    Key
-}
