@@ -27,7 +27,7 @@ namespace Content.Server.Singularity
         {
             if (args.Length != 0)
             {
-                shell.WriteLine(Loc.GetString($"shell-need-exactly-zero-arguments"));
+                shell.WriteLine(Loc.GetString("shell-need-exactly-zero-arguments"));
                 return;
             }
 
