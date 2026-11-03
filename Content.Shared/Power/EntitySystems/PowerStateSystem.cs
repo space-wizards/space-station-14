@@ -181,7 +181,6 @@ public record struct OperatingStateChanged(bool IsOperating);
 [Serializable, NetSerializable]
 public sealed class PowerStateToggleActiveMessage : BoundUserInterfaceMessage;
 
-
 [Serializable, NetSerializable]
 public enum PowerToggleAndModesUiKey
 {

@@ -1,4 +1,3 @@
-using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Client.UserInterface;

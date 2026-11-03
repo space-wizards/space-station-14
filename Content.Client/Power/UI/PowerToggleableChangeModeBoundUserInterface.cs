@@ -3,10 +3,9 @@ using Content.Client.Weapons.Ranged.UI;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Weapons.Ranged.Components;
-using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Singularity.UI;
+namespace Content.Client.Power.UI;
 
 /// <summary>
 /// BUI for simple radial that helps to interact with emitter settings.
