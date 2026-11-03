@@ -1,7 +1,6 @@
 using Content.Shared.Lock;
 using Content.Shared.Popups;
 using Content.Shared.Power.Components;
-using Content.Shared.Weapons.Ranged.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Serialization;
 
@@ -175,7 +174,7 @@ public record struct TurnedOnStateChanged(bool IsTurnedOn);
 public record struct OperatingStateChanged(bool IsOperating);
 
 /// <summary>
-/// 
+/// Signal from user UI to toggle device ON/OFF from.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class PowerStateToggleActiveMessage : BoundUserInterfaceMessage;
