@@ -76,7 +76,7 @@ public sealed partial class RoofDebugOverlay : Overlay
         Color res;
 
         if (data.HasRoof)
-            res = Color.Yellow.WithAlpha(0.15f);
+            res = Color.Red.WithAlpha(0.15f);
         else
             res = Color.SkyBlue.WithAlpha(0.10f);
 
