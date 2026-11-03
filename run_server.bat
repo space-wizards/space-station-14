@@ -1,0 +1,1 @@
+dotnet run --project Content.Server -c Release --no-build -- --config-file "C:\Users\Administrator\Desktop\Repos\Space-Station-Universe\server_config.toml"

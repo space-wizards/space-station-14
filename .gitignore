@@ -319,3 +319,4 @@ error.glsl
 
 # C# Dev Kit cache file
 *.lscache
+server_config.toml
