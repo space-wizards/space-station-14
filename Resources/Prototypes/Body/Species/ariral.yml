@@ -12,6 +12,7 @@
     enum.HumanoidVisualLayers.Hair:
       limit: 1
       required: false
+      onlyGroupWhitelisted: false # allow regular hairstyles; parent None whitelists only
     enum.HumanoidVisualLayers.FacialHair:
       limit: 0
       required: false
