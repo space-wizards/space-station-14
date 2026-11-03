@@ -26,6 +26,7 @@ public sealed partial class ContrabandSystem : EntitySystem
     [Dependency] private SharedIdCardSystem _id = default!;
     [Dependency] private ExamineSystemShared _examine = default!;
     [Dependency] private SharedContainerSystem _container = default!;
+
     private bool _contrabandExamineEnabled;
     private bool _contrabandExamineOnlyInHudEnabled;
 
@@ -83,10 +84,8 @@ public sealed partial class ContrabandSystem : EntitySystem
             departmentExamineMessage = Loc.GetString(severity.ExamineText, ("type", ContrabandItemType.Item), ("color", severity.Color.ToHex()));
         }
 
-        // if it is fully restricted, you're department-less, or your department isn't in the allowed list, you cannot carry it. Otherwise, you can.
-        //var iconTexture = IsContraband((ent, component), args.User, out _) ? "/Textures/Interface/VerbIcons/Contraband/locked.color." + severity.ID + ".svg.192dpi.png" : "/Textures/Interface/VerbIcons/Contraband/unlock.color." + severity.ID + ".svg.192dpi.png";
-
         // then, the 'you can/shouldn't carry this around' based on the ID the user is wearing
+        // if it is fully restricted, you're department-less, or your department isn't in the allowed list, you cannot carry it. Otherwise, you 
         (string carryingMessage, string iconTexture) = GetLegalityContent((ent, component), args.User, severity.ID);
 
         var examineMarkup = GetContrabandExamine(departmentExamineMessage, carryingMessage);
