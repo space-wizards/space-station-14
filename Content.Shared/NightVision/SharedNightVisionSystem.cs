@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Overlays;
@@ -13,6 +14,7 @@ namespace Content.Shared.NightVision;
 public abstract partial class SharedNightVisionSystem : EntitySystem
 {
     [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private BlurryVisionSystem _blurriness = default!;
 
     [SubscribeLocalEvent]
     private void OnStartup(Entity<NightVisionComponent> ent, ref MapInitEvent args)
@@ -22,6 +24,19 @@ public abstract partial class SharedNightVisionSystem : EntitySystem
 
         RefreshOverlay(ent);
         _actions.AddAction(ent, ref ent.Comp.ActionEntity, ent.Comp.Action);
+        _blurriness.UpdateBlurMagnitude(ent.Owner);
+    }
+
+    /// <summary>
+    /// Adds blur to the entity itself while its own night vision is enabled.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnGetBlur(Entity<NightVisionComponent> ent, GetBlurEvent args)
+    {
+        if (ent.Comp.RelayOverlay || !ent.Comp.Enabled)
+            return;
+
+        args.Blur += ent.Comp.BlurWhenEnabled;
     }
 
     [SubscribeLocalEvent]
@@ -106,6 +121,7 @@ public abstract partial class SharedNightVisionSystem : EntitySystem
         ent.Comp.Enabled = enabled;
         Dirty(ent);
         RefreshOverlay(viewer ?? ent);
+        _blurriness.UpdateBlurMagnitude(ent.Owner);
     }
 
     protected virtual void RefreshOverlay(EntityUid entity) { }

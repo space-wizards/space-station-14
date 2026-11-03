@@ -73,6 +73,13 @@ public sealed partial class NightVisionComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float NoiseMultiplier;
+
+    /// <summary>
+    /// Amount of blurry vision (like nearsightedness) applied to the entity with this component
+    /// while the night vision is enabled. 0 disables the effect.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float BlurWhenEnabled;
 }
 
 public sealed partial class ToggleNightVisionEvent : InstantActionEvent;

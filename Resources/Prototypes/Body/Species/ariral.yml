@@ -167,9 +167,12 @@
     emoteSounds: MaleAriral
   - type: Wagging
   - type: NightVision
+    enabled: false # off by default, toggled with an action
+    action: ActionToggleNightVision
     prioritized: false
     relayOverlay: false
     lightingColor: '#B0E0FF30' # innate night vision, a bit stronger than MobNightVision
+    blurWhenEnabled: 2 # nearsighted-style blur while night vision is on
 
 - type: entity
   parent: OrganBaseOrganic
