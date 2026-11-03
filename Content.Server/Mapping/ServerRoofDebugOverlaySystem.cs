@@ -13,6 +13,9 @@ using Robust.Shared.Player;
 namespace Content.Server.Mapping;
 
 // woe, copy pasted code from the atmos debug overlay upon ye
+/// <summary>
+/// Manages the data of the client's <see cref="RoofDebugOverlay"/>
+/// </summary>
 public sealed partial class ServerRoofDebugOverlaySystem : RoofDebugOverlaySystem
 {
     [Dependency] private IPlayerManager _playerManager = default!;
@@ -43,16 +46,25 @@ public sealed partial class ServerRoofDebugOverlaySystem : RoofDebugOverlaySyste
         _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
     }
 
+    /// <summary>
+    /// Enables the overlay for this observer
+    /// </summary>
     public bool AddObserver(ICommonSession observer)
     {
         return _playerObservers.Add(observer);
     }
 
+    /// <summary>
+    /// Wether this observer currently has the overlay
+    /// </summary>
     public bool HasObserver(ICommonSession observer)
     {
         return _playerObservers.Contains(observer);
     }
 
+    /// <summary>
+    /// Disables the overlay for this observer
+    /// </summary>
     public bool RemoveObserver(ICommonSession observer)
     {
         if (!_playerObservers.Remove(observer))
@@ -96,14 +108,14 @@ public sealed partial class ServerRoofDebugOverlaySystem : RoofDebugOverlaySyste
         {
             return;
         }
-        // This is the timer from GasTileOverlaySystem
+        // This is the timer from RoofDebugOverlaySystem
         AccumulatedFrameTime -= _updateCooldown;
         // Now we'll go through each player, then through each chunk in range of that player checking if the player is still in range
-        // If they are, check if they need the new data to send (i.e. if there's an overlay for the gas).
+        // If they are, check if they need the new data to send
         // Afterwards we reset all the chunk data for the next time we tick.
         foreach (var session in _playerObservers)
         {
-            if (session.AttachedEntity is not {Valid: true} entity)
+            if (session.AttachedEntity is not { Valid: true } entity)
                 continue;
             var transform = Transform(entity);
             var pos = _transform.GetWorldPosition(transform);
@@ -116,7 +128,9 @@ public sealed partial class ServerRoofDebugOverlaySystem : RoofDebugOverlaySyste
                 var uid = grid.Owner;
                 if (!Exists(uid))
                     continue;
-                TryComp(uid, out RoofComponent? roof);
+                if (!TryComp(uid, out RoofComponent? roof))
+                    continue;
+
                 var entityTile = _mapSystem.GetTileRef(grid, grid, transform.Coordinates).GridIndices;
                 var baseTile = new Vector2i(entityTile.X - LocalViewRange / 2, entityTile.Y - LocalViewRange / 2);
                 var debugOverlayContent = new RoofDebugOverlayData?[LocalViewRange * LocalViewRange];
@@ -127,14 +141,14 @@ public sealed partial class ServerRoofDebugOverlaySystem : RoofDebugOverlaySyste
                     for (var x = 0; x < LocalViewRange; x++)
                     {
                         var vector = new Vector2i(baseTile.X + x, baseTile.Y + y);
-                        if (roof != null)
-                        {
-                            var roofed = _roof.IsRooved((grid.Owner, grid.Comp, roof), vector, false);
-                            var roofedEnt = _roof.IsRoovedEntity((grid.Owner, grid.Comp, roof), vector);
-                            debugOverlayContent[index++] = new RoofDebugOverlayData(vector, roofed, roofedEnt, isInnate);
-                        }
-                        else
-                            debugOverlayContent[index++] = new RoofDebugOverlayData(vector, false, false, isInnate);
+                        if (!_mapSystem.TryGetTile(grid, vector, out var tile))
+                            continue;
+
+                        if (tile.IsEmpty)
+                            continue;
+
+                        var roofed = _roof.IsRooved((grid.Owner, grid.Comp, roof), vector, false);
+                        debugOverlayContent[index++] = new RoofDebugOverlayData(vector, roofed, isInnate);
                     }
                 }
                 var msg = new RoofDebugOverlayMessage(GetNetEntity(grid), baseTile, debugOverlayContent);

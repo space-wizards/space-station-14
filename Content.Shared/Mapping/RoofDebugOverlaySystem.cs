@@ -8,16 +8,20 @@ public abstract class RoofDebugOverlaySystem : EntitySystem
     public const int LocalViewRange = 16;
     protected float AccumulatedFrameTime;
 
+    /// <summary>
+    /// Contains data for one tile for the overlay.
+    /// </summary>
+    /// <param name="Indices">The tile's indices on its grid</param>
+    /// <param name="HasRoof">If the tile has a roof.</param>
+    /// <param name="Innate">If the tile's grid has an implicit roof</param>
     [Serializable, NetSerializable]
     public readonly record struct RoofDebugOverlayData(
         Vector2 Indices,
         bool HasRoof,
-        bool HasEntity,
         bool Innate);
 
     /// <summary>
-    ///     Invalid tiles for the roof overlay.
-    ///     No point re-sending every tile if only a subset might have been updated.
+    ///     Updates the client's roof overlay data for the provided grid.
     /// </summary>
     [Serializable, NetSerializable]
     public sealed class RoofDebugOverlayMessage : EntityEventArgs

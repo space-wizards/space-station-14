@@ -11,7 +11,9 @@ using static Content.Shared.Mapping.RoofDebugOverlaySystem;
 
 namespace Content.Client.Mapping;
 
-
+/// <summary>
+/// Displays which tiles have roofs and which tile dont. Doesn't show anything on tiles with implicit roofing (see <see cref="ImplicitRoofComponent"/> ).
+/// </summary>
 public sealed partial class RoofDebugOverlay : Overlay
 {
     [Dependency] private IEntityManager _entManager = default!;
@@ -67,18 +69,16 @@ public sealed partial class RoofDebugOverlay : Overlay
 
     private void Draw(RoofDebugOverlayData data, DrawingHandleWorld handle)
     {
+        if (data.Innate)
+            return;
+
         var tile = data.Indices;
-
-        if (data.HasEntity)
-            handle.DrawRect(Box2.FromDimensions(new Vector2(tile.X + 0.1f, tile.Y + 0.1f), new Vector2(0.8f, 0.8f)), Color.Cyan.WithAlpha(0.10f));
-
         Color res;
+
         if (data.HasRoof)
-            res = Color.Yellow;
-        else if (data.Innate)
             res = Color.Red;
         else
-            return;
+            res = Color.White;
 
         res = res.WithAlpha(0.10f);
 

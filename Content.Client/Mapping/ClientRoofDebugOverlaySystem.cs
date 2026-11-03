@@ -4,6 +4,9 @@ using Robust.Client.Graphics;
 
 namespace Content.Client.Mapping;
 
+/// <summary>
+/// Handles <see cref="RoofDebugOverlay"/>.
+/// </summary>
 public sealed partial class ClientRoofDebugOverlaySystem : RoofDebugOverlaySystem
 {
     [Dependency] private IOverlayManager _overlayManager = default!;
@@ -53,6 +56,9 @@ public sealed partial class ClientRoofDebugOverlaySystem : RoofDebugOverlaySyste
         TileData.Clear();
     }
 
+    /// <summary>
+    /// Wether the data received from the server contains the provided grid
+    /// </summary>
     public bool HasData(EntityUid gridId)
     {
         return TileData.ContainsKey(gridId);

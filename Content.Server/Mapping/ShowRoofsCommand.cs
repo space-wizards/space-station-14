@@ -4,6 +4,9 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Mapping;
 
+/// <summary>
+/// Toggles the presence of the client's <see cref="RoofDebugOverlay"/>
+/// </summary>
 [AdminCommand(AdminFlags.Debug)]
 public sealed partial class ShowRoofs : IConsoleCommand
 {
@@ -11,7 +14,7 @@ public sealed partial class ShowRoofs : IConsoleCommand
 
     public string Command => "showroofs";
     public string Description => "Toggles seeing the roof debug overlay.";
-    public string Help => $"Usage: {Command}";
+    public string Help => $"Usage: {Command}\nRed tiles have a roof, white tile are roofless.";
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
