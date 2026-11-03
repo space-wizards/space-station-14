@@ -10,6 +10,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
@@ -68,7 +69,7 @@ public sealed partial class ContrabandSystem : EntitySystem
         }
 
         // two strings:
-        // one, the actual informative 'this is restricted' //TODO: beat this with hammers
+        // one, the actual informative 'this is restricted' 
         var severity = ProtoMan.Index(component.Severity);
         string departmentExamineMessage;
         if (severity.ShowDepartmentsAndJobs)
@@ -83,10 +84,10 @@ public sealed partial class ContrabandSystem : EntitySystem
         }
 
         // if it is fully restricted, you're department-less, or your department isn't in the allowed list, you cannot carry it. Otherwise, you can.
-        var iconTexture = IsContraband((ent, component), args.User, out _) ? "/Textures/Interface/VerbIcons/Contraband/locked.color." + severity.ID + ".svg.192dpi.png" : "/Textures/Interface/VerbIcons/Contraband/unlock.color." + severity.ID + ".svg.192dpi.png";
+        //var iconTexture = IsContraband((ent, component), args.User, out _) ? "/Textures/Interface/VerbIcons/Contraband/locked.color." + severity.ID + ".svg.192dpi.png" : "/Textures/Interface/VerbIcons/Contraband/unlock.color." + severity.ID + ".svg.192dpi.png";
 
         // then, the 'you can/shouldn't carry this around' based on the ID the user is wearing
-        var carryingMessage = GetLegalityMessage((ent, component), args.User);
+        (string carryingMessage, string iconTexture) = GetLegalityContent((ent, component), args.User, severity.ID);
 
         var examineMarkup = GetContrabandExamine(departmentExamineMessage, carryingMessage);
 
@@ -97,13 +98,13 @@ public sealed partial class ContrabandSystem : EntitySystem
             iconTexture);
     }
 
-    private string GetLegalityMessage(Entity<ContrabandComponent> item, EntityUid examiner)
+    private (string, string) GetLegalityContent(Entity<ContrabandComponent> item, EntityUid examiner, string severity)
     {
 
         // Checks if the contraband is contained within a container. if NOT, do you.
         if (!_container.TryGetContainingContainer((item.Owner, null, null), out var ctnr))
         {
-            return ResolveLegalityText(item, examiner, true);
+            return (ResolveLegalityText(item, examiner, true), ResolveIconPath(item, examiner, severity));
         }
 
         if (ctnr is { })
@@ -111,18 +112,18 @@ public sealed partial class ContrabandSystem : EntitySystem
             // if you are examining your own item, do you.
             if (examiner == ctnr.Owner)
             {
-                return ResolveLegalityText(item, examiner, true);
+                return (ResolveLegalityText(item, examiner, true), ResolveIconPath(item, examiner, severity));
             }
 
             // holder has neither pronouns nor id, do you.
             if (!HasComp<GrammarComponent>(ctnr.Owner) && !_id.TryFindIdCard(ctnr.Owner, out _))
             {
-                return ResolveLegalityText(item, examiner, true);
+                return (ResolveLegalityText(item, examiner, true), ResolveIconPath(item, examiner, severity));
             }
 
-            return ResolveLegalityText(item, ctnr.Owner, false);
+            return (ResolveLegalityText(item, ctnr.Owner, false), ResolveIconPath(item, ctnr.Owner, severity));
         }
-        return ResolveLegalityText(item, examiner, true); //if something fucked up, default to you.
+        return (ResolveLegalityText(item, examiner, true), ResolveIconPath(item, examiner, severity)); //if something fucked up, default to you.
     }
 
     private string ResolveLegalityText(Entity<ContrabandComponent> item, EntityUid idOwner, bool you)
@@ -130,6 +131,10 @@ public sealed partial class ContrabandSystem : EntitySystem
         return Loc.GetString(IsContraband((item.Owner, item.Comp), idOwner, out _) ? "contraband-examine-text-avoid-carrying-around" : "contraband-examine-text-in-the-clear", ("you", you ? "true" : "false"), ("gender", Identity.Entity(idOwner, _entity)));
     }
 
+    private string ResolveIconPath(Entity<ContrabandComponent> item, EntityUid? idOwner, string severity)
+    {
+        return IsContraband((item.Owner, item.Comp), idOwner, out _) ? "/Textures/Interface/VerbIcons/Contraband/locked.color." + severity + ".svg.192dpi.png" : "/Textures/Interface/VerbIcons/Contraband/unlock.color." + severity + ".svg.192dpi.png";
+    }
 
     /// <summary>
     /// Create an examine message from the given inputs!
