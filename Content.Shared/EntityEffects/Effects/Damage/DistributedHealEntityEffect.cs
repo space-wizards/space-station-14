@@ -1,4 +1,3 @@
-using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
@@ -9,9 +8,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityEffects.Effects.Damage;
 
 /// <summary>
-/// Evenly heal the damage in a set of types. Total adjustment is modified by scale.
+/// Heals damage proportionally between a set of types. Total adjustment is modified by scale.
 /// </summary>
-/// <seealso cref="DamageableSystem.HealEvenly(Entity{DamageableComponent?}, FixedPoint2, ICollection{ProtoId{DamageTypePrototype}}?, EntityUid?)"/>
+/// <seealso cref="DamageableSystem.HealDistributed(Entity{DamageableComponent?}, FixedPoint2, ICollection{ProtoId{DamageTypePrototype}}?, EntityUid?)"/>
 public sealed partial class DistributedHealEntityEffectSystem : EntityEffectSystem<DamageableComponent, DistributedHeal>
 {
     [Dependency] private DamageableSystem _damageable = default!;
@@ -26,35 +25,42 @@ public sealed partial class DistributedHealEntityEffectSystem : EntityEffectSyst
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-/// <seealso cref="DamageableSystem.HealEvenly(Entity{DamageableComponent?}, FixedPoint2, ICollection{ProtoId{DamageTypePrototype}}?, EntityUid?)"/>
+/// <seealso cref="DamageableSystem.HealDistributed(Entity{DamageableComponent?}, FixedPoint2, ICollection{ProtoId{DamageTypePrototype}}?, EntityUid?)"/>
 public sealed partial class DistributedHeal : EntityEffectBase<DistributedHeal>
 {
-    /// <summary>
-    /// Damage types to heal.
-    /// </summary>
-    [DataField(required: true)]
-    public HashSet<ProtoId<DamageTypePrototype>> Types;
-
     /// <summary>
     /// How much damage to heal. Value must be positive.
     /// </summary>
     [DataField(required: true)]
     public FixedPoint2 Heal;
 
+    /// <summary>
+    /// Damage types to heal. If null, all damage is healed.
+    /// </summary>
+    [DataField]
+    public HashSet<ProtoId<DamageTypePrototype>>? Types;
+
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
         if (Heal <= 0)
             return Loc.GetString("generic-invalid");
 
-        var stringTypes = new List<string>();
-        foreach (var type in Types)
+        var stringTypes = "";
+        if (Types != null)
         {
-            stringTypes.Add(prototype.Index(type).LocalizedName);
+            var typeList = new List<string>();
+            foreach (var type in Types)
+            {
+                typeList.Add(prototype.Index(type).LocalizedName);
+            }
+
+            stringTypes = ContentLocalizationManager.FormatList(typeList);
         }
 
         return Loc.GetString("entity-effect-guidebook-distributed-heal",
             ("chance", Probability),
-            ("amount", MathF.Abs(Heal.Float())),
-            ("types", ContentLocalizationManager.FormatList(stringTypes)));
+            ("amount", Heal.Float()),
+            ("typeCount", Types?.Count ?? 0),
+            ("types", stringTypes));
     }
 }

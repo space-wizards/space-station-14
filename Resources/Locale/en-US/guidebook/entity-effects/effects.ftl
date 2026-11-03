@@ -106,15 +106,23 @@ entity-effect-guidebook-even-health-change =
 
 entity-effect-guidebook-even-heal =
     { $chance ->
-        [1] Evenly heals
-        *[other] evenly heal
-    } [color=green]{NATURALFIXED($amount, 2)}[/color] damage between { $types }
+    [1] Heals
+    *[other] heal
+    } [color=green]{NATURALFIXED($amount, 2)}[/color] { $typeCount ->
+    [0] evenly between all damage types
+    [1] { $types }
+    *[other] evenly between { $types }
+    }
 
 entity-effect-guidebook-distributed-heal =
     { $chance ->
         [1] Heals
         *[other] heal
-    } [color=green]{NATURALFIXED($amount, 2)}[/color] damage proportionally between { $types }
+    } [color=green]{NATURALFIXED($amount, 2)}[/color] { $typeCount ->
+        [0] proportionally between all damage types
+        [1] { $types }
+        *[other] proportionally between { $types }
+    }
 
 entity-effect-guidebook-status-effect-old =
     { $type ->
