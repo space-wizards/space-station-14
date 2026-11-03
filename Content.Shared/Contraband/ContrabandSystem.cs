@@ -1,19 +1,17 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
-using Content.Shared.Item;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Localizations;
 using Content.Shared.Roles;
 using Content.Shared.Verbs;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
-using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Numerics;
 
 namespace Content.Shared.Contraband;
 
@@ -23,10 +21,10 @@ namespace Content.Shared.Contraband;
 public sealed partial class ContrabandSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _configuration = default!;
+    [Dependency] private IEntityManager _entity = default!;
     [Dependency] private SharedIdCardSystem _id = default!;
     [Dependency] private ExamineSystemShared _examine = default!;
     [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private GrammarSystem _grammar = default!;
     private bool _contrabandExamineEnabled;
     private bool _contrabandExamineOnlyInHudEnabled;
 
@@ -60,7 +58,7 @@ public sealed partial class ContrabandSystem : EntitySystem
         if (!args.CanInteract)
             return;
 
-        // Checking if contraband is only shown in the HUD
+        // if contraband is only supposed to be shown in the HUD, make sure we can see it.
         if (_contrabandExamineOnlyInHudEnabled)
         {
             var ev = new GetContrabandDetailsEvent();
@@ -69,28 +67,10 @@ public sealed partial class ContrabandSystem : EntitySystem
                 return;
         }
 
-        // Checks if the contraband is contained within a container. if NOT, do you.
-        if (!_container.TryGetContainingContainer((ent, null, null), out var ctnr))
-        {
-            /*ContrabandTextYou(component, args.User)*/
-        }
-
-        if (ctnr is { })
-        {
-            if (args.User == ctnr.Owner)
-            { /*ContrabandTextYou(component, args.User)*/ }//TODO: if you are examining your own item, do you.
-
-            if (!TryComp<GrammarComponent>(ctnr.Owner, out var grammar) && !_id.TryFindIdCard(ctnr.Owner, out var id))
-            { /*ContrabandTextYou(component, args.User)*/ }//TODO: holder has neither pronouns nor id, do you.
-
-            //ResolveContrabandText(component, id, grammar)
-        }
-
         // two strings:
-        // one, the actual informative 'this is restricted'
-        // then, the 'you can/shouldn't carry this around' based on the ID the user is wearing
+        // one, the actual informative 'this is restricted' //TODO: beat this with hammers
         var severity = ProtoMan.Index(component.Severity);
-        String departmentExamineMessage;
+        string departmentExamineMessage;
         if (severity.ShowDepartmentsAndJobs)
         {
             // department restricted text
@@ -103,20 +83,53 @@ public sealed partial class ContrabandSystem : EntitySystem
         }
 
         // if it is fully restricted, you're department-less, or your department isn't in the allowed list, you cannot carry it. Otherwise, you can.
-        var carryingMessage = Loc.GetString("contraband-examine-text-in-the-clear");
-        var iconTexture = "/Textures/Interface/VerbIcons/Contraband/unlock.color." + severity.ID + ".svg.192dpi.png";
-        if (IsContraband((ent, component), args.User, out _))
-        {
-            carryingMessage = Loc.GetString("contraband-examine-text-avoid-carrying-around");
-            iconTexture = "/Textures/Interface/VerbIcons/Contraband/locked.color." + severity.ID + ".svg.192dpi.png";
-        }
+        var iconTexture = IsContraband((ent, component), args.User, out _) ? "/Textures/Interface/VerbIcons/Contraband/locked.color." + severity.ID + ".svg.192dpi.png" : "/Textures/Interface/VerbIcons/Contraband/unlock.color." + severity.ID + ".svg.192dpi.png";
+
+        // then, the 'you can/shouldn't carry this around' based on the ID the user is wearing
+        var carryingMessage = GetLegalityMessage((ent, component), args.User);
+
         var examineMarkup = GetContrabandExamine(departmentExamineMessage, carryingMessage);
+
         _examine.AddHoverExamineVerb(args,
             component,
             Loc.GetString("contraband-examinable-verb-text"),
             examineMarkup.ToMarkup(),
             iconTexture);
     }
+
+    private string GetLegalityMessage(Entity<ContrabandComponent> item, EntityUid examiner)
+    {
+
+        // Checks if the contraband is contained within a container. if NOT, do you.
+        if (!_container.TryGetContainingContainer((item.Owner, null, null), out var ctnr))
+        {
+            return ResolveLegalityText(item, examiner, true);
+        }
+
+        if (ctnr is { })
+        {
+            // if you are examining your own item, do you.
+            if (examiner == ctnr.Owner)
+            {
+                return ResolveLegalityText(item, examiner, true);
+            }
+
+            // holder has neither pronouns nor id, do you.
+            if (!HasComp<GrammarComponent>(ctnr.Owner) && !_id.TryFindIdCard(ctnr.Owner, out _))
+            {
+                return ResolveLegalityText(item, examiner, true);
+            }
+
+            return ResolveLegalityText(item, ctnr.Owner, false);
+        }
+        return ResolveLegalityText(item, examiner, true); //if something fucked up, default to you.
+    }
+
+    private string ResolveLegalityText(Entity<ContrabandComponent> item, EntityUid idOwner, bool you)
+    {
+        return Loc.GetString(IsContraband((item.Owner, item.Comp), idOwner, out _) ? "contraband-examine-text-avoid-carrying-around" : "contraband-examine-text-in-the-clear", ("you", you ? "true" : "false"), ("gender", Identity.Entity(idOwner, _entity)));
+    }
+
 
     /// <summary>
     /// Create an examine message from the given inputs!
