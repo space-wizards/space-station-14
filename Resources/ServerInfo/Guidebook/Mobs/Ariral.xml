@@ -1,0 +1,24 @@
+<Document>
+  # Ariral
+
+  <Box>
+    <GuideEntityEmbed Entity="MobAriral" Caption=""/>
+  </Box>
+
+  ## General Information
+
+  Ariral are a species from Voices of the Void with an unusual appearance that mixes features of other races.
+  They have [color=lightgreen]natural night vision[/color] and [color=lightgreen]poisonous blood[/color].
+
+  Their digestive system can handle raw meat and blood without ill effects.
+
+  ## Racial Traits
+
+  - [color=lightgreen]20% less Blunt damage[/color] and [color=lightgreen]20% less Slash damage[/color].
+  - [color=lightgreen]10% less Piercing damage[/color] and [color=lightgreen]20% less Poison damage[/color].
+  - [color=palevioletred]25% more Cold damage[/color] and [color=palevioletred]25% more Heat damage[/color].
+  - [color=palevioletred]Smaller blood supply[/color], and bleeding takes longer to stop.
+  - [color=palevioletred]Tire out faster[/color] than other humanoids.
+  - [color=palevioletred]Poorer cold resistance[/color]: being chilled slows them down.
+
+</Document>

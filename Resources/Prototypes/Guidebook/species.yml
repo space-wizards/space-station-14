@@ -12,6 +12,7 @@
   - SlimePerson
   - Vox
   - Vulpkanin
+  - Ariral
 
 - type: guideEntry
   id: Arachnid
@@ -57,3 +58,8 @@
   id: Vulpkanin
   name: species-name-vulpkanin
   text: "/ServerInfo/Guidebook/Mobs/Vulpkanin.xml"
+
+- type: guideEntry
+  id: Ariral
+  name: species-name-ariral
+  text: "/ServerInfo/Guidebook/Mobs/Ariral.xml"

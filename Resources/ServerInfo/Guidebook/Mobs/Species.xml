@@ -15,6 +15,7 @@
     <GuideEntityEmbed Entity="AppearanceSlimePerson" Caption="Slime Person"/>
     <GuideEntityEmbed Entity="AppearanceVox" Caption="Vox"/>
     <GuideEntityEmbed Entity="AppearanceVulpkanin" Caption="Vulpkanin"/>
+    <GuideEntityEmbed Entity="AppearanceAriral" Caption="Ariral"/>
   </Box>
 
 </Document>

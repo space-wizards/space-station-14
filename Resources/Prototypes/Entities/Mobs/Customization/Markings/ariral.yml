@@ -1,0 +1,207 @@
+# Ariral markings
+
+# Ears
+- type: marking
+  id: AriralEars
+  bodyPart: HeadSide
+  groupWhitelist: [ Ariral ]
+  forcedColoring: true
+  sprites:
+  - sprite: Mobs/Customization/ariral_ears.rsi
+    state: default
+
+- type: marking
+  id: AriralLongEars
+  bodyPart: HeadSide
+  groupWhitelist: [ Ariral ]
+  forcedColoring: true
+  sprites:
+  - sprite: Mobs/Customization/ariral_ears.rsi
+    state: long
+
+# Whiskers
+- type: marking
+  id: AriralWhiskers
+  bodyPart: Snout
+  groupWhitelist: [ Ariral ]
+  forcedColoring: true
+  sprites:
+  - sprite: Mobs/Customization/ariral_snout.rsi
+    state: default
+    coloring:
+      type: !type:SimpleColoring
+        color: '#FFFFFF'
+
+- type: marking
+  id: AriralShortWhiskers
+  bodyPart: Snout
+  groupWhitelist: [ Ariral ]
+  forcedColoring: true
+  sprites:
+  - sprite: Mobs/Customization/ariral_snout.rsi
+    state: short
+    coloring:
+      type: !type:SimpleColoring
+        color: '#FFFFFF'
+
+# Coat patterns
+- type: marking
+  id: AriralStripes
+  bodyPart: Special
+  groupWhitelist: [ Ariral ]
+  sexRestriction: [ Male ]
+  sprites:
+  - sprite: Mobs/Customization/ariral_special.rsi
+    state: stripes
+
+- type: marking
+  id: AriralStripesF
+  bodyPart: Special
+  groupWhitelist: [ Ariral ]
+  sexRestriction: [ Female ]
+  sprites:
+  - sprite: Mobs/Customization/ariral_special.rsi
+    state: stripes_f
+
+- type: marking
+  id: AriralSpots
+  bodyPart: Special
+  groupWhitelist: [ Ariral ]
+  sprites:
+  - sprite: Mobs/Customization/ariral_special.rsi
+    state: spots
+
+# Chest
+- type: marking
+  id: AriralBreastSmall
+  bodyPart: Chest
+  groupWhitelist: [ Ariral ]
+  sexRestriction: [ Female ]
+  forcedColoring: true
+  sprites:
+  - sprite: Mobs/Customization/ariral_breasts.rsi
+    state: small
+
+- type: marking
+  id: AriralBreastMedium
+  bodyPart: Chest
+  groupWhitelist: [ Ariral ]
+  sexRestriction: [ Female ]
+  forcedColoring: true
+  sprites:
+  - sprite: Mobs/Customization/ariral_breasts.rsi
+    state: medium
+
+# Not Chest, so the sprite is drawn over the arms
+- type: marking
+  id: AriralBreastBig
+  bodyPart: Special
+  groupWhitelist: [ Ariral ]
+  sexRestriction: [ Female ]
+  forcedColoring: true
+  sprites:
+  - sprite: Mobs/Customization/ariral_breasts.rsi
+    state: big
+
+# Tails
+- type: marking
+  id: AriralDefaultTail
+  bodyPart: Tail
+  groupWhitelist: [ Ariral ]
+  sprites:
+  - sprite: Mobs/Customization/ariral_tails42x32.rsi
+    state: tail
+  - sprite: Mobs/Customization/ariral_tails42x32.rsi
+    state: up
+    coloring:
+      type: !type:CategoryColoring
+        category: Hair
+
+- type: marking
+  id: AriralBaldTail
+  bodyPart: Tail
+  groupWhitelist: [ Ariral ]
+  sprites:
+  - sprite: Mobs/Customization/ariral_tails42x32.rsi
+    state: tail
+
+- type: marking
+  id: AriralAltTail
+  bodyPart: Tail
+  groupWhitelist: [ Ariral ]
+  sprites:
+  - sprite: Mobs/Customization/ariral_tails32x32.rsi
+    state: tail
+
+- type: marking
+  id: AriralAltTailLong
+  bodyPart: Tail
+  groupWhitelist: [ Ariral ]
+  sprites:
+  - sprite: Mobs/Customization/ariral_tails32x32.rsi
+    state: tail
+  - sprite: Mobs/Customization/ariral_tails32x32.rsi
+    state: long
+    coloring:
+      type: !type:CategoryColoring
+        category: Hair
+
+- type: marking
+  id: AriralAltTailUp
+  bodyPart: Tail
+  groupWhitelist: [ Ariral ]
+  sprites:
+  - sprite: Mobs/Customization/ariral_tails32x32.rsi
+    state: tail
+  - sprite: Mobs/Customization/ariral_tails32x32.rsi
+    state: up
+    coloring:
+      type: !type:CategoryColoring
+        category: Hair
+
+# Animated
+- type: marking
+  id: AriralDefaultTailAnimated
+  bodyPart: Tail
+  groupWhitelist: []
+  sprites:
+  - sprite: Mobs/Customization/ariral_tails42x32.rsi
+    state: tail_wagging
+  - sprite: Mobs/Customization/ariral_tails42x32.rsi
+    state: up_wagging
+
+- type: marking
+  id: AriralBaldTailAnimated
+  bodyPart: Tail
+  groupWhitelist: []
+  sprites:
+  - sprite: Mobs/Customization/ariral_tails42x32.rsi
+    state: tail_wagging
+
+- type: marking
+  id: AriralAltTailAnimated
+  bodyPart: Tail
+  groupWhitelist: []
+  sprites:
+  - sprite: Mobs/Customization/ariral_tails32x32.rsi
+    state: tail_wagging
+
+- type: marking
+  id: AriralAltTailLongAnimated
+  bodyPart: Tail
+  groupWhitelist: []
+  sprites:
+  - sprite: Mobs/Customization/ariral_tails32x32.rsi
+    state: tail_wagging
+  - sprite: Mobs/Customization/ariral_tails32x32.rsi
+    state: long_wagging
+
+- type: marking
+  id: AriralAltTailUpAnimated
+  bodyPart: Tail
+  groupWhitelist: []
+  sprites:
+  - sprite: Mobs/Customization/ariral_tails32x32.rsi
+    state: tail_wagging
+  - sprite: Mobs/Customization/ariral_tails32x32.rsi
+    state: up_wagging

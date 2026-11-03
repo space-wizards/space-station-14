@@ -48,3 +48,7 @@
 - type: metabolizerType
   id: Changeling
   name: metabolizer-type-changeling
+
+- type: metabolizerType
+  id: Ariral
+  name: metabolizer-type-ariral

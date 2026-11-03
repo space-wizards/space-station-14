@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by melissandravov",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+      {
+          "name": "spots",
+          "directions": 4
+      },
+      {
+          "name": "stripes",
+          "directions": 4
+      },
+      {
+          "name": "stripes_f",
+          "directions": 4
+      }
+    ]
+}

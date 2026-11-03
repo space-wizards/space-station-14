@@ -16,6 +16,9 @@ reagent-desc-hemocyanin-blood = Contains copper as opposed to iron which gives i
 reagent-name-ammonia-blood = anaerobic blood
 reagent-desc-ammonia-blood = Nothing else in the entire galaxy smells quite so appalling.
 
+reagent-name-ariral-blood = orange-red blood
+reagent-desc-ariral-blood = A thick liquid with a very pungent smell and a harsh taste.
+
 reagent-name-sulfur-blood = sulfuric blood
 reagent-desc-sulfur-blood = Feels almost acidic.
 

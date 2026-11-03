@@ -67,6 +67,13 @@
       value: [ 0.2, 0.9 ]
   squashEyeHairColors: true
 
+- type: skinColoration
+  id: AriralPale
+  strategy: !type:ClampedHsvColoration
+    hue: [0, 0]
+    saturation: [0, 0.08]
+    value: [0.85, 1]
+
 - type: marking
   abstract: true
   id: VulpBaseMarking

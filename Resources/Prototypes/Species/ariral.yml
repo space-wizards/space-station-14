@@ -1,0 +1,18 @@
+- type: species
+  id: Ariral
+  name: species-name-ariral
+  roundStart: true
+  prototype: MobAriral
+  dollPrototype: AppearanceAriral
+  skinColoration: AriralPale
+  defaultSkinTone: "#ffffff"
+  maleFirstNames: names_ariral_first
+  femaleFirstNames: names_ariral_first
+  lastNames: names_ariral_last
+  defaultSoundsBySex:
+  - MaleAriral
+  - FemaleAriral
+  - MaleAriral
+  voices:
+  - MaleAriral
+  - FemaleAriral

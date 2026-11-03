@@ -1,0 +1,304 @@
+- type: markingsGroup
+  parent: None
+  id: Ariral
+  limits:
+    enum.HumanoidVisualLayers.Special:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.HeadSide:
+      limit: 1
+      required: true
+      default: [ AriralEars ]
+    enum.HumanoidVisualLayers.Hair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 0
+      required: false
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: true
+      default: [ AriralWhiskers ]
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: true
+      default: [ AriralDefaultTail ]
+    enum.HumanoidVisualLayers.Chest:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: false
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: AppearanceAriral
+  categories: [ HideSpawnMenu ]
+  name: ariral appearance
+  components:
+  - type: Inventory
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Ariral/displacement.rsi
+            state: jumpsuit
+      shoes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Ariral/displacement.rsi
+            state: shoes
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Ariral/displacement.rsi
+            state: outerclothing
+
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Ariral/displacement.rsi
+            state: jumpsuit
+      shoes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Ariral/displacement.rsi
+            state: shoes
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Ariral/displacement.rsi
+            state: outerclothing
+  - type: InitialBody
+    organs:
+      Torso: OrganAriralTorso
+      Head: OrganAriralHead
+      ArmLeft: OrganAriralArmLeft
+      ArmRight: OrganAriralArmRight
+      HandLeft: OrganAriralHandLeft
+      HandRight: OrganAriralHandRight
+      LegLeft: OrganAriralLegLeft
+      LegRight: OrganAriralLegRight
+      FootLeft: OrganAriralFootLeft
+      FootRight: OrganAriralFootRight
+      Brain: OrganAriralBrain
+      Eyes: OrganAriralEyes
+      Tongue: OrganAriralTongue
+      Appendix: OrganAriralAppendix
+      Ears: OrganAriralEars
+      Lungs: OrganAriralLungs
+      Heart: OrganAriralHeart
+      Stomach: OrganAriralStomach
+      Liver: OrganAriralLiver
+      Kidneys: OrganAriralKidneys
+  - type: HumanoidProfile
+    species: Ariral
+
+- type: entity
+  parent:
+  - AppearanceAriral
+  - BaseSpeciesMobOrganic
+  id: MobAriral
+  name: Urist McAriral
+  components:
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 4
+    damageRecovery:
+      types:
+        Asphyxiation: -3.0
+  - type: Stamina
+    baseCritThreshold: 80
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Weapons/pierce.ogg
+    angle: 30
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Piercing: 6
+  - type: Damageable
+    damageModifierSet: Ariral
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: AriralBlood
+        Quantity: 400
+    bloodlossDamage:
+      types:
+        Bloodloss: 1.5
+    bloodlossHealDamage:
+      types:
+        Bloodloss: -1
+    bleedReductionAmount: 0.2
+  - type: Temperature
+    specificHeat: 3000
+  - type: TemperatureDamage
+    heatDamageThreshold: 325
+    coldDamageThreshold: 260
+    coldDamage:
+      types:
+        Cold: 0.1
+    heatDamage:
+      types:
+        Heat: 1.5
+  - type: TemperatureSpeed
+    thresholds:
+      280: 0.9
+      270: 0.7
+      260: 0.5
+      240: 0.3
+  - type: Speech
+    speechSounds: Ariral
+  - type: Vocal
+    emoteSounds: MaleAriral
+  - type: Wagging
+  - type: NightVision
+    prioritized: false
+    relayOverlay: false
+    lightingColor: '#B0E0FF30' # innate night vision, a bit stronger than MobNightVision
+
+- type: entity
+  parent: OrganBaseOrganic
+  id: OrganAriral
+  abstract: true
+  suffix: Ariral
+
+- type: entity
+  id: OrganAriralMetabolizer
+  abstract: true
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Ariral ]
+
+- type: entity
+  parent: OrganAriral
+  id: OrganAriralInternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+
+- type: entity
+  id: OrganAriralVisual
+  abstract: true
+  components:
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Species/Ariral/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Ariral
+
+- type: entity
+  parent: [ OrganAriral, OrganAriralVisual ]
+  id: OrganAriralExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Ariral/parts.rsi
+
+- type: entity
+  parent: [ OrganBaseTorsoSexed, OrganBaseTorso, OrganAriralExternal ]
+  id: OrganAriralTorso
+
+- type: entity
+  parent: [ OrganBaseHeadSexed, OrganBaseHead, OrganAriralExternal ]
+  id: OrganAriralHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Snout
+    - enum.HumanoidVisualLayers.Hair
+
+- type: entity
+  parent: [ OrganBaseArmLeft, OrganAriralExternal ]
+  id: OrganAriralArmLeft
+
+- type: entity
+  parent: [ OrganBaseArmRight, OrganAriralExternal ]
+  id: OrganAriralArmRight
+
+- type: entity
+  parent: [ OrganBaseHandLeft, OrganAriralExternal ]
+  id: OrganAriralHandLeft
+
+- type: entity
+  parent: [ OrganBaseHandRight, OrganAriralExternal ]
+  id: OrganAriralHandRight
+
+- type: entity
+  parent: [ OrganBaseLegLeft, OrganAriralExternal ]
+  id: OrganAriralLegLeft
+
+- type: entity
+  parent: [ OrganBaseLegRight, OrganAriralExternal ]
+  id: OrganAriralLegRight
+
+- type: entity
+  parent: [ OrganBaseFootLeft, OrganAriralExternal ]
+  id: OrganAriralFootLeft
+
+- type: entity
+  parent: [ OrganBaseFootRight, OrganAriralExternal ]
+  id: OrganAriralFootRight
+
+- type: entity
+  parent: [ OrganBaseBrain, OrganAriralInternal ]
+  id: OrganAriralBrain
+
+- type: entity
+  parent: [ OrganAriralVisual, OrganBaseEyes, OrganAriralInternal ]
+  id: OrganAriralEyes
+  components:
+  - type: VisualOrgan
+    data:
+      sprite: Mobs/Customization/eyes.rsi
+      state: eyes
+  - type: EyeBlinking
+    eyelidsSprite: /Textures/Mobs/Species/Human/parts.rsi
+  - type: Appearance
+
+- type: entity
+  parent: [ OrganBaseTongue, OrganAriralInternal ]
+  id: OrganAriralTongue
+
+- type: entity
+  parent: [ OrganBaseAppendix, OrganAriralInternal ]
+  id: OrganAriralAppendix
+
+- type: entity
+  parent: [ OrganBaseEars, OrganAriralInternal ]
+  id: OrganAriralEars
+
+- type: entity
+  parent: [ OrganBaseLungs, OrganAriralInternal, OrganHumanMetabolizer ]
+  id: OrganAriralLungs
+
+- type: entity
+  parent: [ OrganBaseHeart, OrganAriralInternal, OrganAriralMetabolizer ]
+  id: OrganAriralHeart
+
+- type: entity
+  parent: [ OrganBaseStomach, OrganAriralInternal, OrganAriralMetabolizer ]
+  id: OrganAriralStomach
+
+- type: entity
+  parent: [ OrganBaseLiver, OrganAriralInternal ]
+  id: OrganAriralLiver
+
+- type: entity
+  parent: [ OrganBaseKidneys, OrganAriralInternal ]
+  id: OrganAriralKidneys

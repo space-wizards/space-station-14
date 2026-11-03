@@ -489,7 +489,7 @@
       - !type:PopupMessage
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Animal, Vox, Arachnid ]
+          type: [ Animal, Vox, Arachnid, Ariral ]
           inverted: true
         type: Local
         visualType: MediumCaution
@@ -499,12 +499,12 @@
         probability: 0.1
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Animal, Vox, Plant, Arachnid ]
+          type: [ Animal, Vox, Plant, Arachnid, Ariral ]
           inverted: true
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Animal, Vox, Plant, Arachnid ]
+          type: [ Animal, Vox, Plant, Arachnid, Ariral ]
           inverted: true
         damage:
           types:

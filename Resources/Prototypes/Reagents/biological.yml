@@ -184,6 +184,17 @@
 
 - type: reagent
   parent: Blood
+  id: AriralBlood
+  name: reagent-name-ariral-blood
+  group: Biological
+  desc: reagent-desc-ariral-blood
+  flavor: horrible
+  color: "#ff4d2a"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-ferrous
+
+- type: reagent
+  parent: Blood
   id: SulfurBlood
   name: reagent-name-sulfur-blood
   group: Biological

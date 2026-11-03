@@ -213,3 +213,12 @@
     path: /Audio/Animals/wawa_question.ogg
   exclaimSound:
     path: /Audio/Animals/wawa_exclaim.ogg
+
+- type: speechSounds
+  id: Ariral
+  saySound:
+    path: /Audio/Voice/Ariral/Speech/ariral_say.ogg
+  askSound:
+    path: /Audio/Voice/Ariral/Speech/ariral_ask.ogg
+  exclaimSound:
+    path: /Audio/Voice/Ariral/Speech/ariral_exclaim.ogg
