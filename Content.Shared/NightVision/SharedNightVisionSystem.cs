@@ -31,12 +31,12 @@ public abstract partial class SharedNightVisionSystem : EntitySystem
     /// Adds blur to the entity itself while its own night vision is enabled.
     /// </summary>
     [SubscribeLocalEvent]
-    private void OnGetBlur(Entity<NightVisionComponent> ent, GetBlurEvent args)
+    private void OnGetBlur(EntityUid uid, NightVisionComponent comp, GetBlurEvent args)
     {
-        if (ent.Comp.RelayOverlay || !ent.Comp.Enabled)
+        if (comp.RelayOverlay || !comp.Enabled)
             return;
 
-        args.Blur += ent.Comp.BlurWhenEnabled;
+        args.Blur += comp.BlurWhenEnabled;
     }
 
     [SubscribeLocalEvent]
