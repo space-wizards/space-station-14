@@ -5,8 +5,3 @@ tech-disk-examine-more = There are more images printed, but they're too small to
 tech-disk-examine-desc = [color=lightGray]A disk for the R&D server containing a [bold]Tier {$tier} {$branch}[/bold] branch research technology.[/color]
 tech-disk-examine-desc-unknown = [color=lightGray]A disk for the R&D server containing research technology.[/color]
 tech-disk-name-format = {$baseName} ({$technology})
-
-tech-disk-ui-name = technology disk terminal
-tech-disk-ui-total-label = There are {$amount} points on the selected server
-tech-disk-ui-cost-label = Each disk costs {$amount} points to print
-tech-disk-ui-print-button = Print Disk

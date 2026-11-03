@@ -45,7 +45,6 @@ research-technology-basic-robotics = Basic Robotics
 research-technology-basic-anomalous-research = Basic Anomalous Research
 research-technology-basic-xenoarcheology = Basic XenoArcheology
 research-technology-telesci = TeleSci
-research-technology-alternative-research = Alternative Research
 research-technology-magnets-tech = Localized Magnetism
 research-technology-advanced-parts = Advanced Parts
 research-technology-anomaly-harnessing = Anomaly Core Harnessing
@@ -79,3 +78,11 @@ research-technology-clowning-utilities = Clowning Utilities
 research-technology-quantum-fiber-weaving = Quantum Fiber Weaving
 research-technology-bluespace-chemistry = Bluespace Chemistry
 research-technology-packaged-lights = Efficient Lamp Production
+
+research-technology-discipline-expansion-1 = Research Expansion I
+research-technology-discipline-expansion-2 = Research Expansion II
+research-technology-discipline-expansion-3 = Research Expansion III
+research-technology-discipline-expansion-unlock = Allows one additional Tier 3 research discipline.
+
+research-technology-grant = Research Grant
+research-technology-grant-unlock = Adds 1000 spesos to science's account.

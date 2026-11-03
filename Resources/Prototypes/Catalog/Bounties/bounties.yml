@@ -383,18 +383,6 @@
       - Syringe
 
 - type: cargoBounty
-  id: BountyTechDisk
-  reward: 25000
-  description: bounty-description-tech-disk
-  idPrefix: SS13-
-  entries:
-  - name: bounty-item-tech-disk
-    amount: 5
-    whitelist:
-      components:
-      - TechnologyDisk
-
-- type: cargoBounty
   id: BountyToolbox
   reward: 8000
   description: bounty-description-toolbox

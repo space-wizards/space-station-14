@@ -143,13 +143,6 @@
     state: crypt_gray
 
 - type: stealTargetGroup
-  id: TechnologyDisk
-  name: steal-target-groups-technology-disks
-  sprite:
-    sprite: Objects/Misc/module.rsi
-    state: datadisk_base
-
-- type: stealTargetGroup
   id: Mail
   name: steal-target-groups-mail
   sprite:

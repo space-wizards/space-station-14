@@ -4,7 +4,8 @@ using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.UserInterface;
-
+using Content.Shared.Research.Components;
+using Content.Shared.Research.Events;
 namespace Content.Server.Cargo.Systems;
 
 public sealed partial class CargoSystem
@@ -18,6 +19,7 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleToggleLimitMessage>(OnToggleLimit);
         SubscribeLocalEvent<FundingAllocationConsoleComponent, SetFundingAllocationBuiMessage>(OnSetFundingAllocation);
         SubscribeLocalEvent<FundingAllocationConsoleComponent, BeforeActivatableUIOpenEvent>(OnFundAllocationBuiOpen);
+        SubscribeLocalEvent<TechnologyDatabaseComponent, ResearchCargoGrantEvent>(OnResearchCargoGrant);
 
         _cfg.OnValueChanged(CCVars.AllowPrimaryAccountAllocation, enabled => { _allowPrimaryAccountAllocation = enabled; }, true);
         _cfg.OnValueChanged(CCVars.AllowPrimaryCutAdjustment, enabled => { _allowPrimaryCutAdjustment = enabled; }, true);
@@ -161,5 +163,17 @@ public sealed partial class CargoSystem
     {
         if (_station.GetOwningStation(ent) is { } station)
             _uiSystem.SetUiState(ent.Owner, FundingAllocationConsoleUiKey.Key, new FundingAllocationConsoleBuiState(GetNetEntity(station)));
+    }
+
+    private void OnResearchCargoGrant(
+    EntityUid uid,
+    TechnologyDatabaseComponent component,
+    ResearchCargoGrantEvent args)
+    {
+        if (_station.GetOwningStation(uid) is not { } station ||
+            !_bankQuery.TryComp(station, out var bank))
+            return;
+
+        TryAdjustBankAccount((station, bank), "Science", args.Amount);
     }
 }
