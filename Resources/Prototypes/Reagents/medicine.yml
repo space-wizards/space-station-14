@@ -146,9 +146,12 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:EvenHealthChange
-        damage:
-          Brute: -1.5
+      - !type:EvenHeal
+        heal: 1.5
+        types:
+        - Blunt
+        - Slash
+        - Piercing
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
@@ -190,17 +193,37 @@
       effects:
       - !type:AdjustTemperature
         amount: 60000 # Heats you up as it metabolizes necessitating constant cooling.
-      - !type:EvenHealthChange
-        conditions:
+        # todo scale with temp like SS13
+      - !type:EvenHeal
+        conditions: &ConditionTemperatureMax273
         - !type:TemperatureCondition
           # taken from tg, must be below freezing.
           max: 273.15
-        damage:
-        # todo scale with temp like SS13
-          Airloss: -3
-          Brute: -2
-          Burn: -2
-          Toxin: -2
+        heal: 2
+        types:
+        - Blunt
+        - Slash
+        - Piercing
+      - !type:EvenHeal
+        conditions: *ConditionTemperatureMax273
+        heal: 2
+        types:
+        - Heat
+        - Cold
+        - Shock
+        - Caustic
+      - !type:EvenHeal
+        conditions: *ConditionTemperatureMax273
+        heal: 2
+        types:
+        - Poison
+        - Radiation
+      - !type:EvenHeal
+        conditions: *ConditionTemperatureMax273
+        heal: 3
+        types:
+        - Asphyxiation
+        - Bloodloss
 
 - type: reagent
   id: Doxarubixadone
@@ -333,7 +356,7 @@
         reagent: Histamine
         amount: -5
       - !type:HealthChange
-        conditions:
+        conditions: &ConditionMobStateCriticalReagentEpiMax20
           # they gotta be in crit first
         - !type:MobStateCondition
           mobstate: Critical
@@ -344,17 +367,21 @@
           types:
             Asphyxiation: -3
             Poison: -0.5
-      - !type:EvenHealthChange
-        conditions:
-          # they gotta be in crit first
-        - !type:MobStateCondition
-          mobstate: Critical
-        - !type:ReagentCondition
-          reagent: Epinephrine
-          max: 20
-        damage:
-          Brute: -0.5
-          Burn: -0.5
+      - !type:EvenHeal
+        conditions: *ConditionMobStateCriticalReagentEpiMax20
+        heal: 0.5
+        types:
+        - Blunt
+        - Slash
+        - Piercing
+      - !type:EvenHeal
+        conditions: *ConditionMobStateCriticalReagentEpiMax20
+        heal: 0.5
+        types:
+        - Heat
+        - Cold
+        - Shock
+        - Caustic
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
@@ -636,10 +663,17 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:EvenHealthChange
-        damage:
-          Brute: -1.75
-          Airloss: -1
+      - !type:EvenHeal
+        heal: 1.75
+        types:
+        - Blunt
+        - Slash
+        - Piercing
+      - !type:EvenHeal
+        heal: 1
+        types:
+        - Asphyxiation
+        - Bloodloss
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
@@ -836,21 +870,29 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:EvenHealthChange
-        conditions:
+      - !type:EvenHeal
+        conditions: &ConditionMobStateAlive
         - !type:MobStateCondition # no healing in crit so that dedicated single damage type meds can still have a niche.
           mobstate: Alive
-        damage:
-          Brute: -1
-          Burn: -1
+        heal: 1
+        types:
+        - Blunt
+        - Slash
+        - Piercing
+      - !type:EvenHeal
+        conditions: *ConditionMobStateAlive
+        heal: 1
+        types:
+        - Heat
+        - Cold
+        - Shock
+        - Caustic
       - !type:ModifyStatusEffect
         effectProto: StatusEffectFrail # Reduced combat viability
         time: 5
         type: Update # Only weak while the reagent is metabolising
       - !type:HealthChange
-        conditions:
-        - !type:MobStateCondition
-          mobstate: Alive
+        conditions: *ConditionMobStateAlive
         damage:
           types:
             Poison: -0.5 # Same as what it was before the second coming of offmed
@@ -885,12 +927,8 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:EvenHealthChange
-        damage:
-          Burn: -2
-          Toxin: -2
-          Airloss: -2
-          Brute: -2
+      - !type:EvenHeal
+        heal: 3
 
 - type: reagent
   id: ApotheosoticEnzymes
@@ -969,14 +1007,16 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:EvenHealthChange
+      - !type:EvenHeal
         conditions:
         - !type:ReagentCondition
           reagent: Ultravasculine
           min: 0
           max: 20
-        damage:
-          Toxin: -6
+        heal: 6
+        types:
+        - Poison
+        - Radiation
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
@@ -986,13 +1026,15 @@
         damage:
           types:
             Blunt: 1.5
-      - !type:EvenHealthChange
+      - !type:EvenHeal
         conditions:
         - !type:ReagentCondition
           reagent: Ultravasculine
           min: 20
-        damage:
-          Toxin: -2
+        heal: 2
+        types:
+        - Poison
+        - Radiation
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
@@ -1404,13 +1446,21 @@
       effects:
       - !type:AdjustTemperature
         amount: 60000 # Heats you up as it metabolizes necessitating constant cooling.
-      - !type:EvenHealthChange
-        conditions:
-        - !type:TemperatureCondition
-          max: 273.15
-        damage:
-          Brute: -3
-          Burn: -3
+      - !type:EvenHeal
+        conditions: *ConditionTemperatureMax273
+        heal: 3
+        types:
+        - Blunt
+        - Slash
+        - Piercing
+      - !type:EvenHeal
+        conditions: *ConditionTemperatureMax273
+        heal: 3
+        types:
+        - Heat
+        - Cold
+        - Shock
+        - Caustic
 
 - type: reagent
   id: Aloxadone
@@ -1426,12 +1476,14 @@
       effects:
       - !type:AdjustTemperature
         amount: 80000
-      - !type:EvenHealthChange
-        conditions:
-        - !type:TemperatureCondition
-          max: 273.15
-        damage:
-          Burn: -6
+      - !type:EvenHeal
+        conditions: *ConditionTemperatureMax273
+        heal: 6
+        types:
+        - Heat
+        - Cold
+        - Shock
+        - Caustic
 
 - type: reagent
   id : Mannitol # currently this is just a way to create psicodine
