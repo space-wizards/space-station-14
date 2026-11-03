@@ -23,14 +23,14 @@ public sealed partial class PowerToggleableChangeModeBoundUserInterface(EntityUi
 
         if (options.Count == 1)
         {
-            HandleSendToggle();
+            HandleSendToggle(!emitter.IsTurnedOn);
             return []; // returning empty will auto-close
         }
 
         RadialMenuActionOption<int> option;
         if (emitter.IsTurnedOn)
         {
-            option = new RadialMenuActionOption<int>(_ => HandleSendToggle(), 0)
+            option = new RadialMenuActionOption<int>(_ => HandleSendToggle(false), 0)
             {
                 ToolTip = Loc.GetString("power-state-turn-off"),
                 IconSpecifier = RadialMenuIconSpecifier.With(TogglePowerTexture),
@@ -40,7 +40,7 @@ public sealed partial class PowerToggleableChangeModeBoundUserInterface(EntityUi
         }
         else
         {
-            option = new RadialMenuActionOption<int>(_ => HandleSendToggle(), 0)
+            option = new RadialMenuActionOption<int>(_ => HandleSendToggle(true), 0)
             {
                 ToolTip = Loc.GetString("power-state-turn-on"),
                 IconSpecifier = RadialMenuIconSpecifier.With(TogglePowerTexture),
@@ -51,9 +51,9 @@ public sealed partial class PowerToggleableChangeModeBoundUserInterface(EntityUi
         return options;
     }
 
-    private void HandleSendToggle()
+    private void HandleSendToggle(bool targetState)
     {
-        var msg = new PowerStateToggleActiveMessage();
+        var msg = new PowerStateSetIsTurnedOnMessage(targetState);
         SendPredictedMessage(msg);
     }
 }

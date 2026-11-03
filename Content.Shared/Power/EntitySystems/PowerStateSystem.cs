@@ -20,9 +20,9 @@ public abstract partial class PowerStateSystem : EntitySystem
 
     /// <summary> Toggles <see cref="PowerStateComponent.IsTurnedOn"/> if lock does not prevent it. </summary>
     [SubscribeLocalEvent]
-    private void OnToggleActive(Entity<PowerStateComponent> ent, ref PowerStateToggleActiveMessage message)
+    private void OnToggleActive(Entity<PowerStateComponent> ent, ref PowerStateSetIsTurnedOnMessage message)
     {
-        SetWorkingState(ent.AsNullable(), !ent.Comp.IsTurnedOn, message.Actor);
+        SetWorkingState(ent.AsNullable(), message.IsTurnedOn, message.Actor);
     }
 
     /// <summary>
@@ -88,6 +88,21 @@ public abstract partial class PowerStateSystem : EntitySystem
             return false;
 
         return ent.Comp.IsTurnedOn;
+    }
+
+    /// <summary>
+    /// Sets power drain for 'working' state.
+    /// </summary>
+    public void SetWorkingPowerDraw(Entity<PowerStateComponent> ent, float workingPowerDrain)
+    {
+        ent.Comp.WorkingPowerDraw = workingPowerDrain;
+        Dirty(ent);
+
+        if (!ent.Comp.IsTurnedOn)
+            return;
+
+        var hasPower = SetPowerLoadGetHasPower(ent, true);
+        SetIsPoweredState(ent, hasPower);
     }
 
     /// <summary>
@@ -179,7 +194,10 @@ public record struct OperatingStateChanged(bool IsOperating);
 /// Signal from user UI to toggle device ON/OFF from.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class PowerStateToggleActiveMessage : BoundUserInterfaceMessage;
+public sealed class PowerStateSetIsTurnedOnMessage(bool isTurnedOn) : BoundUserInterfaceMessage
+{
+    public readonly bool IsTurnedOn = isTurnedOn;
+}
 
 [Serializable, NetSerializable]
 public enum PowerToggleAndModesUiKey

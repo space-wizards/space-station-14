@@ -2,6 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
+using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Weapons.Ranged.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -14,6 +16,7 @@ public sealed partial class BatteryWeaponFireModesSystem : EntitySystem
     [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private SharedGunSystem _gun = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private PowerStateSystem _powerState = default!;
 
     /// <summary> Applies request for setting fire mode. </summary>
     [SubscribeLocalEvent]
@@ -220,6 +223,17 @@ public sealed partial class BatteryWeaponFireModesSystem : EntitySystem
             Dirty(uid, batteryAmmoProviderComponent);
 
             _gun.UpdateShots((uid, batteryAmmoProviderComponent));
+        }
+
+        if (TryComp(uid, out NetworkPoweredAmmoProviderComponent? networkAmmoProviderComponent))
+        {
+            networkAmmoProviderComponent.Prototype = fireMode.Prototype;
+            Dirty(uid, networkAmmoProviderComponent);
+        }
+
+        if (TryComp(uid, out PowerStateComponent? powerStateComponent))
+        {
+            _powerState.SetWorkingPowerDraw((uid, powerStateComponent), fireMode.FireCost);
         }
     }
 }
