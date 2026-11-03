@@ -1,3 +1,4 @@
+using Content.Client.Stylesheets.Palette;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Client.UserInterface;
@@ -16,8 +17,8 @@ public partial class BatteryWeaponFireModesBoundUserInterface(EntityUid owner, E
 
     private SimpleRadialMenu? _menu;
 
-    protected static readonly Color SelectedModeBackgroundColor = new Color(2,3,4).WithAlpha(128);
-    protected static readonly Color SelectedModeHoverBackgroundColor = new Color(3,5,6).WithAlpha(128);
+    protected static readonly Color SelectedModeBackgroundColor = Palettes.Green.Element.WithAlpha(128);
+    protected static readonly Color SelectedModeHoverBackgroundColor = Palettes.Green.HoveredElement.WithAlpha(128);
 
     /// <inheritdoc />
     protected override void Open()
