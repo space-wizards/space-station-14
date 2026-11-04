@@ -34,6 +34,9 @@ public sealed partial class GuidePlantEmbed : PanelContainer, IDocumentTag, ISea
     [Dependency] private IEntitySystemManager _systems = default!;
     [Dependency] private ILogManager _logManager = default!;
     private readonly ISawmill _sawmill;
+    //Needed because if the width richprototypelinks is too small it crashes the client
+    private const float MinimumTextWidth = 50;
+
     public IPrototype? RepresentedPrototype { get; private set; }
 
     public GuidePlantEmbed()
@@ -189,7 +192,7 @@ public sealed partial class GuidePlantEmbed : PanelContainer, IDocumentTag, ISea
     {
         var box = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical, HorizontalExpand = true };
         box.AddChild(new GuideEntityEmbed(product.ID, false, false) { Scale = new Vector2(2) });
-        var name = new RichTextLabel { HorizontalAlignment = HAlignment.Center };
+        var name = new RichTextLabel { HorizontalAlignment = HAlignment.Center, MinWidth = MinimumTextWidth };
         name.SetMessage(FormattedMessage.FromUnformatted(product.Name));
         box.AddChild(name);
         return box;
@@ -210,7 +213,12 @@ public sealed partial class GuidePlantEmbed : PanelContainer, IDocumentTag, ISea
             var textColor = 0.2126f * color.R + 0.7152f * color.G + 0.0722f * color.B > 0.5
                 ? Color.Black
                 : Color.White;
-            var label = new RichTextLabel { Margin = new Thickness(4, 2), HorizontalAlignment = HAlignment.Center };
+            var label = new RichTextLabel
+            {
+                Margin = new Thickness(4, 2),
+                HorizontalAlignment = HAlignment.Center,
+                MinWidth = MinimumTextWidth,
+            };
             var message = new FormattedMessage();
             message.PushColor(textColor);
             message.AddText(reagent.LocalizedName);
@@ -245,7 +253,12 @@ public sealed partial class GuidePlantEmbed : PanelContainer, IDocumentTag, ISea
             var icon = CreatePlantSprite(plant);
             icon.Scale = Vector2.One;
             icon.Margin = new Thickness(0);
-            var link = new GuidebookRichPrototypeLink { LinkedPrototype = plant, VerticalAlignment = VAlignment.Center };
+            var link = new GuidebookRichPrototypeLink
+            {
+                LinkedPrototype = plant,
+                VerticalAlignment = VAlignment.Center,
+                MinWidth = MinimumTextWidth,
+            };
             link.SetMessage(FormattedMessage.FromUnformatted(Loc.GetString(data.Name)));
             container.AddChild(new BoxContainer
             {
