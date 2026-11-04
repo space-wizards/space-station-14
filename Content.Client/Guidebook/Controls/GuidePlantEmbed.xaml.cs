@@ -5,6 +5,7 @@ using Content.Client.Botany;
 using Content.Client.Guidebook.Richtext;
 using Content.Client.Message;
 using Content.Client.UserInterface.ControlExtensions;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Botany.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -20,7 +21,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-
 namespace Content.Client.Guidebook.Controls;
 
 /// <summary>
@@ -99,10 +99,19 @@ public sealed partial class GuidePlantEmbed : PanelContainer, IDocumentTag, ISea
             }
         }
         AddGrowthStage(plant, "harvest", Loc.GetString("guidebook-plant-grown"));
-
+        ProductsContainer.AddChild(new Separator
+        {
+            StyleClasses = { "LowDivider" },
+            Margin = new Thickness(0, 5, 0, 5),
+        });
         foreach (var product in data.ProductPrototypes)
         {
             ProductsContainer.AddChild(CreateProductRow(plant, product));
+            ProductsContainer.AddChild(new Separator
+            {
+                StyleClasses = { "LowDivider" },
+                Margin = new Thickness(0, 5, 0, 5),
+            });
         }
 
         AddMutations(MutatesFromContainer,
