@@ -34,3 +34,10 @@ public enum TegCirculatorSpeed
     SpeedSlow,
     SpeedFast
 }
+
+[Serializable, NetSerializable]
+public enum TegParts : byte
+{
+    CirculatorA,
+    CirculatorB,
+}

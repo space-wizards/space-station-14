@@ -48,9 +48,6 @@
         output:
           !type:CableDeviceNode
           nodeGroupID: HVPower
-        teg:
-          !type:TegNodeGenerator
-          nodeGroupID: Teg
     - type: PowerMonitoringDevice
       group: Generator
       loadNode: output
@@ -80,6 +77,19 @@
       # due to how power output is handled.
       supplyRampRate: 100000000
       supplyRampTolerance: 10000000000
+
+    - type: MultipartMachine
+      parts:
+        enum.TegParts.CirculatorA:
+          component: TegCirculator
+          offset: 0, 1
+          rotation: 90
+          ghostProto: TegCirculator
+        enum.TegParts.CirculatorB:
+          component: TegCirculator
+          offset: 0, -1
+          rotation: -90
+          ghostProto: TegCirculator
 
     - type: Appearance
     - type: ApcPowerReceiver
@@ -177,13 +187,11 @@
           nodeGroupID: Pipe
           pipeDirection: South
           volume: 100
-        circulator:
-          !type:TegNodeCirculator
-          nodeGroupID: Teg
 
     - type: AtmosUnsafeUnanchor
     - type: PipeRestrictOverlap
     - type: TegCirculator
+    - type: MultipartMachinePart
     - type: StealTarget
       stealGroup:
       - Teg

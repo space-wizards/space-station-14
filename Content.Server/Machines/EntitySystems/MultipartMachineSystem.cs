@@ -199,6 +199,13 @@ public sealed partial class MultipartMachineSystem : SharedMultipartMachineSyste
             Rescan(ent);
     }
 
+    [SubscribeLocalEvent]
+    private void OnPartShutdown(Entity<MultipartMachinePartComponent> ent, ref ComponentShutdown args)
+    {
+        if (TryComp(ent.Comp.Master, out MultipartMachineComponent? comp))
+            Rescan((ent.Comp.Master.Value, comp));
+    }
+
     /// <summary>
     /// Handles when a main machine entity has been anchored or unanchored by a user.
     /// Rescanning is then required in order to check whether parts are still in the right places,
