@@ -146,6 +146,7 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
 
         var entity = _entityManager.Spawn(_prototype, MapCoordinates.Nullspace);
         View.SetEntity(entity);
+        _tagSystem.AddTag(entity, GuidebookSystem.GuideEmbedTag);
     }
     protected override void ExitedTree()
     {
