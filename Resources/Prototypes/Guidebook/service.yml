@@ -8,7 +8,7 @@
   - Botany
   - Chef
   - Janitorial
-  
+
 - type: guideEntry
   id: Bartender
   name: guide-entry-bartender
@@ -19,6 +19,14 @@
   id: Botany
   name: guide-entry-botany
   text: "/ServerInfo/Guidebook/Service/Botany.xml"
+  children:
+  - Plants
+
+- type: guideEntry
+  id: Plants
+  name: guide-entry-plants
+  text: "/ServerInfo/Guidebook/Service/Plants.xml"
+  filterEnabled: True
 
 - type: guideEntry
   id: Chef
