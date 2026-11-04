@@ -151,9 +151,17 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
         EntryContainer.Visible = false;
         SearchContainer.Visible = false;
         ReturnContainer.Visible = false;
-        EntryContainer.RemoveAllChildren();
+        ClearEntry();
 
         Selected = null;
+    }
+
+    private void ClearEntry()
+    {
+        foreach (var embed in EntryContainer.GetControlOfType<GuideEntityEmbed>())
+            embed.ReleaseEntity();
+
+        EntryContainer.RemoveAllChildren();
     }
 
     private void ShowGuide(GuideEntry entry)
@@ -163,7 +171,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
         Placeholder.Visible = false;
         EntryContainer.Visible = true;
         SearchBar.Text = "";
-        EntryContainer.RemoveAllChildren();
+        ClearEntry();
         using var file = _resourceManager.ContentFileReadText(entry.Text);
 
         SearchContainer.Visible = entry.FilterEnabled;

@@ -131,8 +131,13 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
     {
         base.Dispose(disposing);
 
-        if (Sprite is not null)
-            _entityManager.DeleteEntity(Sprite);
+        ReleaseEntity();
+    }
+
+    public void ReleaseEntity()
+    {
+        _entityManager.DeleteEntity(View.Entity?.Owner);
+        View.SetEntity(null);
     }
 
     public bool TryParseTag(Dictionary<string, string> args, [NotNullWhen(true)] out Control? control)
