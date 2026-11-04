@@ -15,7 +15,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Guidebook.Controls;
@@ -31,7 +30,6 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
     [Dependency] private IEntitySystemManager _systemManager = default!;
     [Dependency] private ILogManager _logManager = default!;
     [Dependency] private IUserInterfaceManager _ui = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     private readonly TagSystem _tagSystem;
     private readonly ExamineSystem _examineSystem;
@@ -67,8 +65,12 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
     {
         Interactive = interactive;
         _prototype = proto;
+
+        var entity = _entityManager.Spawn(_prototype, MapCoordinates.Nullspace);
+        View.SetEntity(entity);
+
         if (caption)
-            Caption.Text = _prototypeManager.Index<EntityPrototype>(proto).Name;
+            Caption.Text = _entityManager.GetComponent<MetaDataComponent>(entity).EntityName;
     }
 
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)
@@ -163,6 +165,7 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
         }
 
         _prototype = proto;
+
 
         var ent = View.Entity is { } viewEntity ? viewEntity.Owner : _entityManager.SpawnEntity(proto, MapCoordinates.Nullspace);
 
