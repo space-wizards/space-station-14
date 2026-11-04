@@ -17,11 +17,11 @@
                       SeparationOverride="8"/>
         <BoxContainer Name="MutationsContainer" Margin="10 0 10 0">
             <BoxContainer Name="MutatesFromSection" Orientation="Vertical" HorizontalExpand="True">
-                <Label Text="{Loc 'guidebook-plant-mutates-from'}"/>
+                <Label Text="{Loc 'guidebook-plant-mutates-from'}" HorizontalAlignment="Center"/>
                 <BoxContainer Name="MutatesFromContainer" Orientation="Vertical"/>
             </BoxContainer>
             <BoxContainer Name="MutatesToSection" Orientation="Vertical" HorizontalExpand="True">
-                <Label Text="{Loc 'guidebook-plant-mutates-to'}"/>
+                <Label Text="{Loc 'guidebook-plant-mutates-to'}" HorizontalAlignment="Center"/>
                 <BoxContainer Name="MutatesToContainer" Orientation="Vertical"/>
             </BoxContainer>
         </BoxContainer>

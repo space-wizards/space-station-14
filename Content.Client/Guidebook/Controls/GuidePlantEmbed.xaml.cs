@@ -263,6 +263,7 @@ public sealed partial class GuidePlantEmbed : PanelContainer, IDocumentTag, ISea
             container.AddChild(new BoxContainer
             {
                 SeparationOverride = 4,
+                HorizontalAlignment = HAlignment.Center,
                 Children = { icon, link },
             });
         }
