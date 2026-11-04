@@ -1,0 +1,4 @@
+- type: guideEntry
+  id: Civilian
+  name: guide-entry-civilian
+  text: "/ServerInfo/Guidebook/Civilian.xml"

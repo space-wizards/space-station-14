@@ -13,14 +13,13 @@ namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 public sealed partial class PlantChangeTraitsEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantChangeTraits>
 {
     [Dependency] private PlantHolderSystem _plantHolder = default!;
-    [Dependency] private IComponentFactory _componentFactory = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantChangeTraits> args)
     {
         if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        var traitType = _componentFactory.GetComponent(args.Effect.Trait);
+        var traitType = Factory.GetComponent(args.Effect.Trait);
         if (traitType is not PlantTraitsComponent)
         {
             Log.Error(

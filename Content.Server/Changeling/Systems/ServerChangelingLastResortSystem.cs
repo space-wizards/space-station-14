@@ -64,7 +64,7 @@ public sealed partial class ServerChangelingLastResortSystem : ChangelingLastRes
     /// </summary>
     private bool CanTakeOver(EntityUid user, EntityUid target, bool showPopups = true)
     {
-        if (!HasComp<HumanoidProfileComponent>(target))
+        if (!HasComp<HumanoidProfileComponent>(target) || HasComp<ChangelingHorrorComponent>(target))
             return false;
 
         if (HasComp<ChangelingIdentityComponent>(target) || HasComp<ZombieComponent>(target))

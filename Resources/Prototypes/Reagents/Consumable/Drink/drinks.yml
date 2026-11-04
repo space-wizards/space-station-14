@@ -435,9 +435,9 @@
   metamorphicChangeColor: false
 
 - type: reagent
+  parent: BaseDrink
   id: Water
   name: reagent-name-water
-  parent: BaseDrink
   desc: reagent-desc-water
   evaporationSpeed: 0.3
   absorbent: true

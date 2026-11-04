@@ -1,8 +1,8 @@
 using Content.Shared.Audio;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
-using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Payloads;
 using Content.Shared.DoAfter;
@@ -37,7 +37,7 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
     [Dependency] private SharedPowerReceiverSystem _receiver = default!;
     [Dependency] private SharedPointLightSystem _pointLight = default!;
     [Dependency] private SharedStorageSystem _storage = default!;
-    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
 
     private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
     public const string LightBulbContainer = "light_bulb";

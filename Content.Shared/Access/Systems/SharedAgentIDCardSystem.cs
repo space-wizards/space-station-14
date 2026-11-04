@@ -1,8 +1,5 @@
 using Content.Shared.Access.Components;
-using Content.Shared.Interaction;
 using Content.Shared.Inventory;
-using Content.Shared.Lock;
-using Content.Shared.Popups;
 using Content.Shared.Roles.Jobs;
 using Content.Shared.StatusIcon;
 using Content.Shared.VoiceMask;
@@ -12,40 +9,13 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Access.Systems;
 
 /// <summary>
-/// Handles things related to the agent ID, such as copying access and the UI.
+/// Handles the UI of the agent ID, as well as automatically updating from voice masks, implants, etc.
 /// </summary>
 public abstract partial class SharedAgentIdCardSystem : EntitySystem
 {
-    [Dependency] private LockSystem _lock = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedIdCardSystem _card = default!;
     [Dependency] private SharedJobSystem _job = default!;
     [Dependency] private SharedJobStatusSystem _jobStatus = default!;
-
-    /// <summary>
-    /// Steals access from interacted ids.
-    /// </summary>
-    [SubscribeLocalEvent]
-    private void OnAfterInteract(Entity<AgentIDCardComponent> ent, ref AfterInteractEvent args)
-    {
-        if (args.Target == null || !args.CanReach || _lock.IsLocked(ent.Owner) ||
-            !TryComp<AccessComponent>(args.Target, out var targetAccess) || !HasComp<IdCardComponent>(args.Target))
-            return;
-
-        // Am I an id?
-        if (!TryComp<AccessComponent>(ent, out var access) || !HasComp<IdCardComponent>(ent))
-            return;
-
-        var beforeLength = access.Tags.Count;
-        access.Tags.UnionWith(targetAccess.Tags);
-        var addedLength = access.Tags.Count - beforeLength;
-
-        _popup.PopupEntity(Loc.GetString("agent-id-new", ("number", addedLength), ("card", args.Target)),
-            args.Target.Value,
-            args.User);
-        if (addedLength > 0)
-            Dirty(ent, access);
-    }
 
     [SubscribeLocalEvent]
     private void OnVoiceMaskNameChanged(Entity<AgentIDCardComponent> ent,

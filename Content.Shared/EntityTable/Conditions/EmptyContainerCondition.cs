@@ -12,7 +12,7 @@ public sealed partial class EmptyContainerCondition : EntityTableCondition
     /// <summary>
     /// Key for <see cref="EntityTableContext"/> to store container that should be checked by this condition.
     /// </summary>
-    public const string ContainerContextKey = "Container";
+    public static readonly EntityTableContextKey<BaseContainer> ContainerContextKey = new("Container");
 
     /// <inheritdoc/>>
     protected override bool EvaluateImplementation(
@@ -22,7 +22,7 @@ public sealed partial class EmptyContainerCondition : EntityTableCondition
         EntityTableContext ctx
     )
     {
-        if (!ctx.TryGetData<BaseContainer>(ContainerContextKey, out var container))
+        if (!ctx.TryGetData(ContainerContextKey, out var container))
             return false;
 
         return container.Count == 0;

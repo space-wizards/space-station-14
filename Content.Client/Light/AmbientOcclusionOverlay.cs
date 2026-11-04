@@ -127,9 +127,6 @@ public sealed partial class AmbientOcclusionOverlay : Overlay
 
         worldHandle.UseShader(_proto.Index(StencilEqualDrawShader).Instance());
         worldHandle.DrawTextureRect(res.AOTarget!.Texture, worldBounds, color);
-
-        args.WorldHandle.SetTransform(Matrix3x2.Identity);
-        args.WorldHandle.UseShader(null);
     }
 
     private void OnColorChanged(string value)

@@ -51,8 +51,9 @@
       path: /Audio/Weapons/bladeslice.ogg
   - type: Tag
     tags:
-    - Trash
+    - Cookware
     - Skewer
+    - Trash
   - type: Edible
     trash:
     - FoodKebabSkewer
