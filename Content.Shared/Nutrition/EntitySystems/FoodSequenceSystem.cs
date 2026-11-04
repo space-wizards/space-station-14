@@ -141,9 +141,7 @@ public sealed partial class FoodSequenceSystem : SharedFoodSequenceSystem
 
         var offset = elementIndexed.Offset;
         if (elementIndexed.UseRandomOffset)
-            offset += new Vector2(
-                _random.NextFloat(start.Comp.MinLayerOffset.X, start.Comp.MaxLayerOffset.X),
-                _random.NextFloat(start.Comp.MinLayerOffset.Y, start.Comp.MaxLayerOffset.Y));
+            offset += _random.NextVector2Box(start.Comp.MinLayerOffset.X, start.Comp.MinLayerOffset.Y, start.Comp.MaxLayerOffset.X, start.Comp.MaxLayerOffset.Y)
 
         var layer = new FoodSequenceVisualLayer(elementIndexed,
             _random.Pick(elementIndexed.Sprites),
