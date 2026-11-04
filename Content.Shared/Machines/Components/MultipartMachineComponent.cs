@@ -26,7 +26,7 @@ public sealed partial class MultipartMachineComponent : Component
     /// Optional parts are not taken into account.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool IsAssembled = false;
+    public bool IsAssembled;
 
     /// <summary>
     /// Flag for whether the client side system is allowed to show
@@ -58,14 +58,14 @@ public sealed partial class MachinePart
     /// considered "assembled", or is considered an optional extra.
     /// </summary>
     [DataField]
-    public bool Optional = false;
+    public bool Optional;
 
     /// <summary>
     /// ID of prototype, used to show sprite and description of part, when user examines the machine and there
     /// is no matched entity. Can reference dummy entities to give more detailed descriptions.
     /// </summary>
     [DataField]
-    public EntProtoId? GhostProto = null;
+    public EntProtoId? GhostProto;
 
     /// <summary>
     /// Expected rotation for this machine to have.
@@ -78,14 +78,14 @@ public sealed partial class MachinePart
     /// locally.
     /// Use the Entity attribute if you wish to get which entity is actually bound to this part.
     /// </summary>
-    public NetEntity? NetEntity = null;
+    public NetEntity? NetEntity;
 
     /// <summary>
     /// Entity associated with this part.
     /// Not null when an entity is successfully matched to the part and null otherwise.
     /// </summary>
     [DataField, NonSerialized]
-    public EntityUid? Entity = null;
+    public EntityUid? Entity;
 
     /// <summary>
     /// Expected graph for this part to use as part of its construction.
@@ -100,4 +100,10 @@ public sealed partial class MachinePart
     /// </summary>
     [DataField]
     public string? ExpectedNode;
+
+    /// <summary>
+    /// Transparency of the machine part's ghost.
+    /// </summary>
+    [DataField, NonSerialized]
+    public float GhostTransparency = 0.6f;
 }

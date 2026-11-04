@@ -64,7 +64,7 @@ public sealed partial class MultipartMachineSystem : SharedMultipartMachineSyste
                 continue;
 
             _sprite.CopySprite((protoEnt, protoSprite), (ghostEnt, ghostSprite));
-            _sprite.SetColor((ghostEnt, ghostSprite), protoSprite.Color.WithAlpha(0.7f));
+            _sprite.SetColor((ghostEnt, ghostSprite), protoSprite.Color.WithAlpha(part.GhostTransparency));
 
             _metaData.SetEntityName(ghostEnt, entProto.Name);
             _metaData.SetEntityDescription(ghostEnt, entProto.Description);
