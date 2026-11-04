@@ -1,9 +1,9 @@
+using Content.Shared.Construction.Prototypes;
 using Content.Shared.Machines.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Machines.Components;
 
@@ -91,7 +91,7 @@ public sealed partial class MachinePart
     /// Expected graph for this part to use as part of its construction.
     /// </summary>
     [DataField]
-    public EntProtoId Graph;
+    public ProtoId<ConstructionGraphPrototype>? Graph;
 
     /// <summary>
     /// Expected node for this part to be in, on the graph.
@@ -99,5 +99,5 @@ public sealed partial class MachinePart
     /// assembled or disassembled.
     /// </summary>
     [DataField]
-    public string ExpectedNode;
+    public string? ExpectedNode;
 }
