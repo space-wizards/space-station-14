@@ -5,13 +5,18 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 11/04/2026 06:22:09
-  entityCount: 23929
+  entityCount: 23924
 maps:
 - 5350
 grids:
 - 30
 orphans: []
 nullspace:
+- 3189
+- 3708
+- 7440
+- 9401
+- 9405
 - 11790
 - 11791
 - 11792
@@ -66,11 +71,6 @@ nullspace:
 - 23922
 - 23923
 - 23924
-- 23925
-- 23926
-- 23927
-- 23928
-- 23929
 tilemap:
   0: Space
   43: FloorArcadeBlue
@@ -2930,6 +2930,11 @@ entities:
       chunkHistory: {}
     - type: ChunkContainer
       chunkEntities:
+      - 3189
+      - 3708
+      - 7440
+      - 9401
+      - 9405
       - 11790
       - 11791
       - 11792
@@ -2984,11 +2989,6 @@ entities:
       - 23922
       - 23923
       - 23924
-      - 23925
-      - 23926
-      - 23927
-      - 23928
-      - 23929
     - type: GridSplitNode
   - uid: 5350
     components:
@@ -13637,19 +13637,6 @@ entities:
       parent: 30
       rot: 1.5707963267948966 rad
       pos: -36.5,56.5
-- proto: ButtonFrameJanitor
-  entities:
-  - uid: 9401
-    components:
-    - type: Transform
-      parent: 30
-      rot: -1.5707963267948966 rad
-      pos: 22.5,-5.5
-  - uid: 9405
-    components:
-    - type: Transform
-      parent: 30
-      pos: 18.5,17.5
 - proto: ButtonFrameWhite
   entities:
   - uid: 348
@@ -124258,14 +124245,6 @@ entities:
       parent: 30
       rot: 1.5707963267948966 rad
       pos: -44.5,61.5
-  - uid: 3189
-    components:
-    - type: MetaData
-      name: Janitorial Service Light
-    - type: Transform
-      parent: 30
-      rot: -1.5707963267948966 rad
-      pos: 22.5,-5.5
   - uid: 3204
     components:
     - type: Transform
@@ -124291,11 +124270,6 @@ entities:
         7992:
         - - Pressed
           - Toggle
-  - uid: 3708
-    components:
-    - type: Transform
-      parent: 30
-      pos: 18.5,17.5
   - uid: 4731
     components:
     - type: Transform
@@ -124359,16 +124333,6 @@ entities:
         6991:
         - - Pressed
           - Toggle
-  - uid: 7440
-    components:
-    - type: MetaData
-      name: Janitorial Service Light
-    - type: Transform
-      parent: 30
-      rot: 1.5707963267948966 rad
-      pos: -16.5,-4.5
-    - type: SignalSwitch
-      state: True
   - uid: 7673
     components:
     - type: Transform
