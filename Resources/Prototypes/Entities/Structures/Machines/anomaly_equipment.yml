@@ -166,17 +166,6 @@
   - type: LockedWiresPanel
   - type: AccessReader
     access: [[ "Research" ]]
-  - type: Emitter
-    onState: firing
-    underpoweredState: underpowered
-    setTypePorts:
-      SetParticleDelta: AnomalousParticleDelta
-      SetParticleEpsilon: AnomalousParticleEpsilon
-      SetParticleZeta: AnomalousParticleZeta
-      SetParticleSigma: AnomalousParticleSigma
-    fireBurstSize: 1
-    fireBurstDelayMin: 2
-    fireBurstDelayMax: 6
   - type: ActivatableUI
     singleUser: true
     key: enum.PowerToggleAndModesUiKey.Key
