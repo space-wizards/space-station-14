@@ -35,7 +35,7 @@ public sealed partial class BinSystem : EntitySystem
         SubscribeLocalEvent<BinComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
         SubscribeLocalEvent<BinComponent, InteractHandEvent>(OnInteractHand, before: new[] { typeof(SharedItemSystem) });
         SubscribeLocalEvent<BinComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
-        SubscribeLocalEvent<BinComponent, GetVerbsEvent<AlternativeVerb>>(OnAltInteractHand);
+        SubscribeLocalEvent<BinComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerb);
         SubscribeLocalEvent<BinComponent, ExaminedEvent>(OnExamined);
     }
 
@@ -101,9 +101,9 @@ public sealed partial class BinSystem : EntitySystem
     /// <summary>
     /// Alt interact acts the same as interacting with your hands normally, but allows fallback interaction if the item
     /// has priority. E.g. a water cup on a water cooler fills itself on a normal click,
-    /// but you can use alternative interactions to restock the cup bin
+    /// but you can use alternative interactions to restock the cup bin.
     /// </summary>
-    private void OnAltInteractHand(EntityUid uid, BinComponent component, GetVerbsEvent<AlternativeVerb> args)
+    private void OnGetAlternativeVerb(EntityUid uid, BinComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
         if (args.Using == null)
             return;
