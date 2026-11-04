@@ -94,6 +94,7 @@
     - type: Appearance
     - type: ApcPowerReceiver
       powerLoad: 1000
+      powerDisabled: true
 
     - type: LitOnPowered
     - type: PointLight
