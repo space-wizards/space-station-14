@@ -24,4 +24,18 @@ Entries:
   id: 3
   time: '2026-01-06T04:38:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42264
+- author: SlamBamActionMan
+  changes:
+  - message: Silicon Rule 8 update - For crewsimov silicon (but not for any other lawsets), crew membership can and must be determined by the new crew indicators. A pulsing green border around the job icon means crew. (Entry added to changelog on 2026-10-24)
+    type: Tweak
+  id: 4
+  time: '2026-01-29T08:13:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37038
+- author: crazybrain23
+  changes:
+  - message: Core Rule 13 update - Any jobs with custom name support are now included in the loosened name restrictions, not just clowns and mimes. (Entry added to changelog on 2026-10-24 )
+    type: Tweak
+  id: 5
+  time: '2026-03-30T01:37:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43217
 Order: 1

@@ -285,7 +285,7 @@
       state: creampie_ai
   - type: Reactive
     reactions:
-    - reagents: [Water, SpaceCleaner]
+    - reagents: [ Water, Holywater, SpaceCleaner ]
       methods: [Touch]
       effects:
       - !type:WashCreamPie
