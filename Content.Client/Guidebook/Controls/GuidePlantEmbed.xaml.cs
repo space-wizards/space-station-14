@@ -185,11 +185,11 @@ public sealed partial class GuidePlantEmbed : PanelContainer, IDocumentTag, ISea
         return row;
     }
 
-    private Control CreateProduct(EntityPrototype product, bool centerText = false)
+    private Control CreateProduct(EntityPrototype product)
     {
         var box = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical, HorizontalExpand = true };
         box.AddChild(new GuideEntityEmbed(product.ID, false, false) { Scale = new Vector2(2) });
-        var name = new RichTextLabel { HorizontalAlignment = centerText ? HAlignment.Center : HAlignment.Stretch };
+        var name = new RichTextLabel { HorizontalAlignment = HAlignment.Center };
         name.SetMessage(FormattedMessage.FromUnformatted(product.Name));
         box.AddChild(name);
         return box;
@@ -230,7 +230,7 @@ public sealed partial class GuidePlantEmbed : PanelContainer, IDocumentTag, ISea
         var box = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical, HorizontalExpand = true };
         foreach (var id in results)
         {
-            box.AddChild(CreateProduct(_prototype.Index(id), centerText: true));
+            box.AddChild(CreateProduct(_prototype.Index(id)));
         }
         return box;
     }
