@@ -15,6 +15,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Guidebook.Controls;
@@ -30,6 +31,7 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
     [Dependency] private IEntitySystemManager _systemManager = default!;
     [Dependency] private ILogManager _logManager = default!;
     [Dependency] private IUserInterfaceManager _ui = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     private readonly TagSystem _tagSystem;
     private readonly ExamineSystem _examineSystem;
@@ -38,6 +40,7 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
     private readonly ISawmill _sawmill;
 
     public bool Interactive;
+    private string _prototype = default!;
 
     public Entity<SpriteComponent>? Sprite => View.Entity == null || View.Sprite == null
         ? null
@@ -63,12 +66,9 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
     public GuideEntityEmbed(string proto, bool caption, bool interactive) : this()
     {
         Interactive = interactive;
-
-        var ent = _entityManager.SpawnEntity(proto, MapCoordinates.Nullspace);
-        View.SetEntity(ent);
-
+        _prototype = proto;
         if (caption)
-            Caption.Text = _entityManager.GetComponent<MetaDataComponent>(ent).EntityName;
+            Caption.Text = _prototypeManager.Index<EntityPrototype>(proto).Name;
     }
 
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)
@@ -131,11 +131,24 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
     {
         base.Dispose(disposing);
 
-        ReleaseEntity();
+        if (Sprite is not null)
+            _entityManager.DeleteEntity(Sprite);
     }
 
-    public void ReleaseEntity()
+    protected override void EnteredTree()
     {
+        base.EnteredTree();
+
+        if (View.Entity != null)
+            return;
+
+        var entity = _entityManager.Spawn(_prototype, MapCoordinates.Nullspace);
+        View.SetEntity(entity);
+    }
+    protected override void ExitedTree()
+    {
+        base.ExitedTree();
+
         _entityManager.DeleteEntity(View.Entity?.Owner);
         View.SetEntity(null);
     }
@@ -149,7 +162,9 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
             return false;
         }
 
-        var ent = _entityManager.SpawnEntity(proto, MapCoordinates.Nullspace);
+        _prototype = proto;
+
+        var ent = View.Entity is { } viewEntity ? viewEntity.Owner : _entityManager.SpawnEntity(proto, MapCoordinates.Nullspace);
 
         _tagSystem.AddTag(ent, GuidebookSystem.GuideEmbedTag);
         View.SetEntity(ent);
