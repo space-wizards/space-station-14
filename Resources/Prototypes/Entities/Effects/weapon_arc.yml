@@ -48,6 +48,7 @@
       animation: Slash
 
 
+
 - type: entity
   id: WeaponArcBite
   parent: WeaponArcStatic
@@ -127,3 +128,4 @@
       state: smash
     - type: TimedDespawn
       lifetime: 0.299
+
