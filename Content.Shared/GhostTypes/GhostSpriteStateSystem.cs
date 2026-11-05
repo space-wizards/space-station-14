@@ -1,7 +1,5 @@
 using System.Linq;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Damage.Systems;
-using Content.Shared.FixedPoint;
 using Content.Shared.Ghost.Components;
 using Content.Shared.Mind;
 using Content.Shared.Random.Helpers;
@@ -12,7 +10,6 @@ namespace Content.Shared.GhostTypes;
 
 public sealed partial class GhostSpriteStateSystem : EntitySystem
 {
-    [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private IGameTiming _timing = default!;
 
@@ -27,25 +24,13 @@ public sealed partial class GhostSpriteStateSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(ent, out var appearance) || !HasComp<MindComponent>(mind))
             return;
 
-        var damageTypes = new Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2>();
-        ProtoId<SpecialCauseOfDeathPrototype>? specialCase = null;
-
-        if (!TryComp<LastBodyDamageComponent>(mind, out var storedDamage))
-          return;
-
-        if (storedDamage.DamagePerGroup != null && storedDamage.Damage != null)
-        {
-            damageTypes = _damageable.GetDamages(storedDamage.DamagePerGroup, storedDamage.Damage);
-        }
-        specialCase = storedDamage.SpecialCauseOfDeath;
-
-        Dirty(mind, storedDamage);
-
-        var damageTypesSorted = damageTypes.OrderByDescending(x => x.Value).ToDictionary();
-        if (damageTypesSorted.Count == 0)
+        if (!TryComp<LastBodyDamageComponent>(mind, out var storedDamage)
+            || storedDamage.Damage.DamageDict.Count == 0)
             return;
 
-        var highestType = damageTypesSorted.First().Key; // We only need 1 of the values
+        // We only need the highest value
+        var highestType = storedDamage.Damage.DamageDict.OrderByDescending(x => x.Value).First().Key;
+        var specialCase = storedDamage.SpecialCauseOfDeath;
 
         var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
 
@@ -58,7 +43,7 @@ public sealed partial class GhostSpriteStateSystem : EntitySystem
         }
         else if (ent.Comp.DamageMap.TryGetValue(highestType, out var spriteAmount))
         {
-                spriteState = highestType + rand.Next(spriteAmount);
+            spriteState = highestType + rand.Next(spriteAmount);
         }
 
         if (spriteState != null)
