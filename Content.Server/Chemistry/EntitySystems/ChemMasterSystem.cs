@@ -212,7 +212,9 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             // Ensure the number is valid.
-            if (message.Number == 0 || !_storageSystem.HasSpace((container, storage)))
+            if (message.Number == 0
+                || !_storageSystem.HasSpace((container, storage))
+                || storage.Grid.GetArea() < message.Number)
                 return;
 
             // Ensure the amount is valid.
