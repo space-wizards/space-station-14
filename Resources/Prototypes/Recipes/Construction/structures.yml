@@ -572,16 +572,14 @@
   description: recipes-secret-door-desc
   graph: SecretDoor
   targetNode: solidSecretDoor
-  placementMode: SnapgridCenter
 
 - type: construction
   parent: BaseStructureFullTileDirectional
-  id: SolidSecretReinforcedDoor
+  id: ReinforcedSecretDoor
   name: recipes-secret-reinforced-door-name
   description: recipes-secret-reinforced-door-desc
   graph: SecretReinforcedDoor
-  targetNode: solidSecretReinforcedDoor
-  placementMode: SnapgridCenter
+  targetNode: reinforcedSecretDoor
 
 - type: construction
   parent: BaseStructureFullTileDirectional
