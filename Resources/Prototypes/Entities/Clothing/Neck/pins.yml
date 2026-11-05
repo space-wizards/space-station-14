@@ -11,6 +11,10 @@
     sprite: Clothing/Neck/Misc/pins.rsi
   - type: Clothing
     sprite: Clothing/Neck/Misc/pins.rsi
+    tags:
+    - ClothMade #idk man its on the parent
+    - MonkeyWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -29,6 +33,7 @@
   - type: Tag
     tags:
     - ClothMade #idk man its on the parent
+    - MonkeyWearable
     - WhitelistChameleon
     - GenderPin
 

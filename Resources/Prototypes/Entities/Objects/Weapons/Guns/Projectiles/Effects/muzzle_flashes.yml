@@ -1,0 +1,46 @@
+- type: entity
+  id: MuzzleFlashEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: BelowMobs
+    layers:
+    - shader: unshaded
+      map: [ "enum.EffectLayers.Unshaded" ]
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_bullet
+  - type: TimedDespawn
+    lifetime: 0.4
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: AnimationPlayer
+  - type: EffectVisuals
+
+- type: entity
+  parent: MuzzleFlashEffect
+  id: MuzzleFlashEffectOmnilaser
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: BelowMobs
+    offset: 0.15, 0
+    layers:
+    - shader: unshaded
+      map: [ "enum.EffectLayers.Unshaded" ]
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+      state: omnilaser_flash
+
+- type: entity
+  parent: MuzzleFlashEffect
+  id: MuzzleFlashEffectHeavyLaser
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: BelowMobs
+    offset: 0.15, 0
+    layers:
+    - shader: unshaded
+      map: [ "enum.EffectLayers.Unshaded" ]
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+      state: heavylaser_flash

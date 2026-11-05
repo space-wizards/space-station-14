@@ -162,7 +162,7 @@ namespace Content.Server.Entry
             _discordChatLink.Initialize();
             _euiManager.Initialize();
             _gameMap.Initialize();
-            _entSys.GetEntitySystem<GameTicker>().PostInitialize();
+            _entSys.GetEntitySystem<ServerGameTicker>().PostInitialize();
             _ban.Initialize();
             _connection.PostInit();
             _multiServerKick.Initialize();

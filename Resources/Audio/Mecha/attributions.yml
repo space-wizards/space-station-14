@@ -5,8 +5,8 @@
 - files: ["sound_mecha_hydraulic.ogg"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "Taken from TG station."
-  source: "https://github.com/tgstation/tgstation/commit/45123dd06cb6dc7c56e8004c528230682ea559b2"
+  source: "https://github.com/tgstation/tgstation/commit/5cfc65fe3e4dcd196d6a90372e49a377ee3cb83b"
 - files: ["sound_mecha_powerloader_step.ogg"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "Taken from TG station."
-  source: "https://github.com/tgstation/tgstation/commit/45123dd06cb6dc7c56e8004c528230682ea559b2"
+  source: "https://github.com/tgstation/tgstation/commit/5cfc65fe3e4dcd196d6a90372e49a377ee3cb83b"

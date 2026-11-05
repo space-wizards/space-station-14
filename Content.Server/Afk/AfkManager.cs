@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration.Managers;
+using Content.Server.Administration.Managers;
 using Content.Shared.CCVar;
 using JetBrains.Annotations;
 using Robust.Server.Player;

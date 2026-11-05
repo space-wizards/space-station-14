@@ -1,4 +1,4 @@
-﻿using Content.Shared.Eui;
+using Content.Shared.Eui;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 

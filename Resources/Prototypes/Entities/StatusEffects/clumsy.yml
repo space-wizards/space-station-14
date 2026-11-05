@@ -118,4 +118,28 @@
   - type: ClumsyVaultStatusEffect
     clumsySound: *SoundCatMeow
 
+# Wahey!
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectClumsyDrunk
+  components:
+  - type: ClumsyCatchStatusEffect
+    clumsyChance: &ChanceDrunk 0.25 # Ideally scaled by how drunk they are.
+    clumsySound: &SoundGlug
+      path: /Audio/Effects/Fluids/glug.ogg
+  - type: ClumsyInjectorStatusEffect
+    clumsyChance: *ChanceDrunk
+    clumsySound: *SoundGlug
+  - type: ClumsyVaultStatusEffect
+    clumsyChance: *ChanceDrunk
+    clumsySound: *SoundGlug
+
+# gruhhhhh (Zombies don't know how to hold things in their hands.)
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectClumsyZombie
+  components:
+    - type: ClumsyGrabStatusEffect
+      clumsyChance: *Chance100
+
 #endregion

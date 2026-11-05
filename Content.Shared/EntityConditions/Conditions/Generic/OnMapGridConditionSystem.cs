@@ -5,7 +5,7 @@ namespace Content.Shared.EntityConditions.Conditions.Generic;
 /// <summary>
 /// Returns true if griduid and mapuid match (AKA on 'planet').
 /// </summary>
-public sealed class OnMapGridConditionSystem : EntityConditionSystem<TransformComponent, OnMapGridCondition>
+public sealed partial class OnMapGridConditionSystem : EntityConditionSystem<TransformComponent, OnMapGridCondition>
 {
     protected override void Condition(Entity<TransformComponent> entity, ref EntityConditionEvent<OnMapGridCondition> args)
     {

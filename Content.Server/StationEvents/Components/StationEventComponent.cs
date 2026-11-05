@@ -5,6 +5,7 @@ namespace Content.Server.StationEvents.Components;
 
 /// <summary>
 ///     Defines basic data for a station event
+///     // TODO: Cut this component into pieces, much of it already exists in GameRuleComponent, and we don't need activation conditions in the same component as Announcements
 /// </summary>
 [RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class StationEventComponent : Component

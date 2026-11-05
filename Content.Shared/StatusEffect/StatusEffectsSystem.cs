@@ -136,7 +136,7 @@ namespace Content.Shared.StatusEffect
                 // If they already have the comp, we just won't bother updating anything.
                 if (!HasComp(uid, Factory.GetRegistration(component).Type))
                 {
-                    var newComponent = (Component) Factory.GetComponent(component);
+                    var newComponent = (Component)Factory.GetComponent(component);
                     AddComp(uid, newComponent);
                     status.ActiveEffects[key].RelevantComponent = component;
                 }

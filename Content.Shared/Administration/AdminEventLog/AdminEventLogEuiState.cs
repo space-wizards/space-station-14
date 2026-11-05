@@ -1,4 +1,4 @@
-﻿using Content.Shared.Eui;
+using Content.Shared.Eui;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 

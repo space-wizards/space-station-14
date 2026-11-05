@@ -1,4 +1,4 @@
-﻿using Content.Client.UserInterface.Controls.FancyTree;
+using Content.Client.UserInterface.Controls.FancyTree;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

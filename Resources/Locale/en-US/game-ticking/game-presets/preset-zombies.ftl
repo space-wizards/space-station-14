@@ -1,4 +1,4 @@
-﻿zombie-title = Zombies
+zombie-title = Zombies
 zombie-description = The undead have been unleashed on the station! Work with the crew to survive the outbreak and secure the station.
 
 zombieteors-title = Zombieteors

@@ -1,14 +1,37 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.EntityTable.EntitySelectors;
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.EntityTable;
 
 public sealed partial class EntityTableSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;
+
+    /// <summary>
+    /// Iterates once through Entities that EntitySelector in EntityTableProto provides and picks first one.
+    /// </summary>
+    public EntProtoId? GetFirstOrNull(
+        EntityTablePrototype entTableProto,
+        IRobustRandom? rand = null,
+        EntityTableContext? ctx = null
+    )
+    {
+        return GetSpawns(entTableProto, rand, ctx).FirstOrNull();
+    }
+
+    /// <summary>
+    /// Iterates once through Entities that EntitySelector provides and picks first one.
+    /// </summary>
+    public EntProtoId? GetFirstOrNull(
+        EntityTableSelector? entTableProto,
+        IRobustRandom? rand = null,
+        EntityTableContext? ctx = null
+    )
+    {
+        return GetSpawns(entTableProto, rand, ctx).FirstOrNull();
+    }
 
     /// <summary>
     /// Compiles a random list of entity prototypes using constraints.
@@ -73,41 +96,5 @@ public sealed partial class EntityTableSystem : EntitySystem
 
         ctx ??= new EntityTableContext();
         return table.AverageSpawns(EntityManager, ProtoMan, ctx);
-    }
-}
-
-/// <summary>
-/// Context used by selectors and conditions to evaluate in generic gamestate information.
-/// </summary>
-public sealed class EntityTableContext
-{
-    private readonly Dictionary<string, object> _data = new();
-
-    public EntityTableContext()
-    {
-
-    }
-
-    public EntityTableContext(Dictionary<string, object> data)
-    {
-        _data = data;
-    }
-
-    /// <summary>
-    /// Retrieves an arbitrary piece of data from the context based on a provided key.
-    /// </summary>
-    /// <param name="key">A string key that corresponds to the value we are searching for. </param>
-    /// <param name="value">The value we are trying to extract from the context object</param>
-    /// <typeparam name="T">The type of <see cref="value"/> that we are trying to retrieve</typeparam>
-    /// <returns>If <see cref="key"/> has a corresponding value of type <see cref="T"/></returns>
-    [PublicAPI]
-    public bool TryGetData<T>([ForbidLiteral] string key, [NotNullWhen(true)] out T? value)
-    {
-        value = default;
-        if (!_data.TryGetValue(key, out var valueData) || valueData is not T castValueData)
-            return false;
-
-        value = castValueData;
-        return true;
     }
 }

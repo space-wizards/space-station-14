@@ -1,4 +1,4 @@
-﻿using Content.Shared.FeedbackSystem;
+using Content.Shared.FeedbackSystem;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.FeedbackPopup;
@@ -34,9 +34,8 @@ public sealed class ClientFeedbackManager : SharedFeedbackManager
         if (prototypes == null)
             return;
 
-        var count = _displayedPopups.Count;
         _displayedPopups.UnionWith(prototypes);
-        InvokeDisplayedPopupsChanged(_displayedPopups.Count > count);
+        InvokeDisplayedPopupsChanged(false);
     }
 
     /// <inheritdoc />

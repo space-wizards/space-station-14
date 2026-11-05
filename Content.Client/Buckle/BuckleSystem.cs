@@ -44,9 +44,14 @@ internal sealed partial class BuckleSystem : SharedBuckleSystem
         if (!_spriteQuery.TryComp(ent, out SpriteComponent? strapSprite))
             return;
 
-        var angle = _xformSystem.GetWorldRotation(ent) + _eye.CurrentEye.Rotation; // Get true screen position, or close enough
+        var newDir = (args.NewRotation + _eye.CurrentEye.Rotation).GetCardinalDir();
+        var oldDir = (args.OldRotation + _eye.CurrentEye.Rotation).GetCardinalDir();
 
-        var isNorth = angle.GetCardinalDir() == Direction.North;
+        if (newDir == oldDir)
+            return;
+
+        var isNorth = newDir == Direction.North;
+
         foreach (var buckledEntity in ent.Comp.BuckledEntities)
         {
             if (!TryComp<BuckleComponent>(buckledEntity, out var buckle))
@@ -128,7 +133,7 @@ internal sealed partial class BuckleSystem : SharedBuckleSystem
         if (!TryComp<RotationVisualsComponent>(ent, out var rotVisuals))
             return;
 
-        if (!Appearance.TryGetData<bool>(ent, BuckleVisuals.Buckled, out var buckled, args.Component) ||
+        if (!args.TryGetData<bool>(BuckleVisuals.Buckled, out var buckled) ||
             !buckled ||
             args.Sprite == null)
         {

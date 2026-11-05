@@ -22,6 +22,7 @@
   - type: Item
     size: Small
     sprite: Objects/Tools/welder.rsi
+  - type: ItemToggleExaminableStatus
   - type: ItemToggle
     predictable: false
     soundActivate:

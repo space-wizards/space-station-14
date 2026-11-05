@@ -20,10 +20,6 @@
     bodyType: Static
   - type: Transform
     anchored: true
-  - type: Damageable
-    damageModifierSet: Wood
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: RCDDeconstructable
     cost: 2
     delay: 2
@@ -34,14 +30,16 @@
 
 - type: entity
   abstract: true
-  parent: BaseFenceWood
+  parent: [ BaseFenceWood, StructureHealthBarrier ]
   id: BaseFenceWoodHigh
   components:
+  - type: Damageable
+    damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 125
+        damage: 80
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -51,12 +49,10 @@
           MaterialWoodPlank:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   abstract: true
-  parent: BaseFenceWood
+  parent: [ BaseFenceWood, StructureHealthBarrierWeak ]
   id: BaseFenceWoodSmall
   name: small wooden fence
   description: Wooden piece of small fence. The best protection for the fencing of a private territory!
@@ -65,7 +61,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 75
+        damage: 30
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -75,8 +71,6 @@
           MaterialWoodPlank:
             min: 0
             max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Climbable
     delay: 2.5
   - type: RequireProjectileTarget

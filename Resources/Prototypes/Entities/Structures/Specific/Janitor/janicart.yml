@@ -1,6 +1,6 @@
 # Mop Bucket
 - type: entity
-  parent: [SolutionGinormous, SolutionTank, BaseStructureDynamic, StructureWheeled]
+  parent: [SolutionGinormous, SolutionTank, BaseStructureDynamic, StructureWheeled, StructureHealthContainerWeak]
   id: MopBucket
   name: mop bucket
   description: Holds water and the tears of the janitor.
@@ -92,16 +92,23 @@
     guides:
     - Janitorial
   - type: Damageable
-  - type: Injurable
-    damageContainer: Inorganic
+    damageModifierSet: PlasticMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 70
+        damage: 60
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -3
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlastic1:
+            min: 0
+            max: 2
   - type: DnaSubstanceTrace
   - type: Fixtures
     fixtures:
@@ -144,7 +151,7 @@
 
 # Janicart
 - type: entity
-  parent: [SolutionGinormous, SolutionTank, BaseStructureDynamic, StructureWheeled]
+  parent: [SolutionGinormous, SolutionTank, BaseStructureDynamic, StructureWheeled, StructureHealthContainer]
   id: JanitorialTrolley
   name: janitorial trolley
   description: This is the alpha and omega of sanitation.
@@ -235,6 +242,13 @@
           - TrashBag
           - TrashBagHolding
         priority: 3 # Higher than drinking priority
+  - type: ActivatableUI
+    key: enum.ItemSlotRadialUiKey.Key
+    requireEmptyHand: true
+    requireActiveHand: true
+    verbText: open-radial-menu-text
+  - type: ActivatableUIRequiresFilledItemSlot
+    compactSimilarItemsInRadialMenu: false
   - type: Fixtures
     fixtures:
       fix1:
@@ -262,21 +276,24 @@
   - type: ExaminableSolution
     solution: tank
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: Inorganic
+    damageModifierSet: PlasticMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 100
       behaviors:
       - !type:EmptyAllContainersBehaviour
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
+          params:
+            volume: -3
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlastic1:
+            min: 0
+            max: 2
   - type: ItemMapper
     mapLayers:
       cart_plunger:
@@ -344,6 +361,8 @@
     interfaces:
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
+      enum.ItemSlotRadialUiKey.Key:
+        type: RadialItemSlotMenuBoundUserInterface
   - type: Edible
     edible: Drink
     solution: tank

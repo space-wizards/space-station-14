@@ -4,6 +4,12 @@
   idleState: default3
 
 - type: typingIndicator
+  id: defaultUnshaded
+  typingState: default0
+  idleState: default3
+  shader: unshaded
+
+- type: typingIndicator
   id: robot
   typingState: robot0
   idleState: robot3

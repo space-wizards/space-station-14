@@ -1,6 +1,6 @@
-using JetBrains.Annotations;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
+using JetBrains.Annotations;
 
 namespace Content.Shared.Botany.Systems;
 
@@ -19,10 +19,10 @@ public abstract partial class SharedPlantAtmosphericSystem : EntitySystem
         if (!_botany.TryGetPlantComponent<PlantAtmosphericComponent>(args.PollenData, args.PollenProtoId, out var pollenData))
             return;
 
-        _mutation.CrossFloat(ent, ref ent.Comp.LowHeatTolerance, pollenData.LowHeatTolerance);
-        _mutation.CrossFloat(ent, ref ent.Comp.HighHeatTolerance, pollenData.HighHeatTolerance);
-        _mutation.CrossFloat(ent, ref ent.Comp.LowPressureTolerance, pollenData.LowPressureTolerance);
-        _mutation.CrossFloat(ent, ref ent.Comp.HighPressureTolerance, pollenData.HighPressureTolerance);
+        _mutation.CrossFloat(ref ent.Comp.LowHeatTolerance, pollenData.LowHeatTolerance);
+        _mutation.CrossFloat(ref ent.Comp.HighHeatTolerance, pollenData.HighHeatTolerance);
+        _mutation.CrossFloat(ref ent.Comp.LowPressureTolerance, pollenData.LowPressureTolerance);
+        _mutation.CrossFloat(ref ent.Comp.HighPressureTolerance, pollenData.HighPressureTolerance);
         Dirty(ent);
     }
 

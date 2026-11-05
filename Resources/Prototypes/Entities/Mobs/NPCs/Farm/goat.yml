@@ -1,0 +1,124 @@
+- type: entity
+  parent: [ BaseMobRuminant, SimpleMobBase, BaseSlicingRefinableButchering, BaseMobDestructible, BaseExaminableHunger ]
+  id: MobGoat
+  name: goat
+  description: Her spine consists of long sharp segments, no wonder she is so grumpy.
+  components:
+  - type: Sprite
+    sprite: Mobs/Animals/Farm/goat.rsi
+    drawdepth: Mobs
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.35
+        density: 150
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Tag
+    tags: # let moths eat wool directly
+    - ClothMade
+    - DoorBumpOpener
+    - Goat
+  - type: Reproductive
+    minHungerThreshold: Peckish
+    partnerWhitelist:
+      tags:
+      - Goat
+    offspring:
+    - id: MobGoat
+  - type: ReproductivePartner
+  - type: Appearance
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: SolutionManager
+    solutions:
+    - SolutionUdderGoat
+    - SolutionWool
+  - type: HarvestableSolution
+    solutionName: udder
+    verbText: udder-system-verb-milk
+    emptyMessage: udder-system-dry
+    successMessage: udder-system-success
+  - type: Edible
+    destroyOnEmpty: false
+    solution: wool
+    requiresSpecialDigestion: true
+    requireDead: false
+  - type: FlavorProfile
+    flavors:
+    - fiber
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeat
+      amount: 4
+  - type: Grammar
+    attributes:
+      gender: female # Milk-producing animals are female.
+  - type: Speech
+    speechSounds: Goat
+    speechVerb: Goat
+  - type: Vocal
+    emoteSounds: Goat
+  - type: BleatingAccent
+  - type: InteractionPopup
+    successChance: 0.2
+    interactSuccessString: petting-success-goat
+    interactFailureString: petting-failure-goat
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/goat_bah.ogg
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: NPCRetaliation
+    attackMemoryLength: 5
+  - type: FactionException
+  - type: HTN
+    rootTask:
+      task: RuminantHostileCompound
+
+- type: entity
+  parent: SolutionUdder
+  id: SolutionUdderGoat
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: MilkGoat
+        Quantity: 30
+  - type: SatiationProduction
+    delay: 20
+  - type: SolutionProducer
+    generated:
+      reagents:
+      - ReagentId: MilkGoat
+        Quantity: 25
+
+- type: entity
+  parent: SolutionLarge
+  id: SolutionWool
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    id: wool
+  - type: SatiationProduction
+    producer: Parent
+    minimumSatiationThreshold: Peckish
+  - type: SolutionProducer
+    generated:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 25

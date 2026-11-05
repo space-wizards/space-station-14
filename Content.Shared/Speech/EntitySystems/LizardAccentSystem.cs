@@ -1,9 +1,9 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 using Content.Shared.Speech.Components;
 
 namespace Content.Shared.Speech.EntitySystems;
 
-public sealed class LizardAccentSystem : RelayAccentSystem<LizardAccentComponent>
+public sealed partial class LizardAccentSystem : RelayAccentSystem<LizardAccentComponent>
 {
     private static readonly Regex RegexLowerS = new("s+");
     private static readonly Regex RegexUpperS = new("S+");

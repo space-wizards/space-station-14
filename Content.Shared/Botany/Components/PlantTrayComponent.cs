@@ -62,13 +62,13 @@ public sealed partial class PlantTrayComponent : Component
     /// Chance per tick for weeds to grow around this tray.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float WeedGrowthChance = 0.05f;
+    public float WeedGrowthChance = 0.01f;
 
     /// <summary>
     /// Amount of weed growth per successful weed tray tick.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float WeedGrowthAmount = 0.1f;
+    public float WeedGrowthAmount = 0.5f;
 
     /// <summary>
     /// Multiplier for weed growth rate.

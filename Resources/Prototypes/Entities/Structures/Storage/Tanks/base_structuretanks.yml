@@ -30,15 +30,13 @@
 
 - type: entity
   abstract: true
-  parent: StorageTankIndestructible
+  parent: [ StorageTankIndestructible, StructureHealthContainerFlimsy ]
   id: StorageTank
   name: storage tank
   description: A liquids storage tank.
   components:
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: Inorganic
+    damageModifierSet: PlasticMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -57,15 +55,13 @@
         solution: tank
     - trigger:
         !type:DamageTrigger
-        damage: 10
+        damage: 20
       behaviors:
       - !type:SpillBehavior
         solution: tank
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
 
 # For highcap tanks
 - type: entity

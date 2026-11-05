@@ -109,7 +109,7 @@ public sealed class HumanoidProfileTests : GameTest
             Assert.That(proto.Sexes.Contains(humanoidComponent.Sex), Is.True, $"Character has sex not found in the species prototype! Current: {humanoidComponent.Sex}");
             Assert.That(humanoidComponent.Species, Is.EqualTo(species), $"Species does not match! Expected: {species} Current: {humanoidComponent.Species}");
             var strategy = Server.ProtoMan.Index(proto.SkinColoration).Strategy;
-            Assert.That(strategy.VerifySkinColor(profile.Appearance.SkinColor, out var reason), Is.True, $"Failed to verify the skin color ({profile.Appearance.SkinColor}) from strategy {strategy}. Reason: {reason}");
+            Assert.That(strategy.VerifyClampedSkinColor(profile.Appearance.SkinColor, out var reason), Is.True, $"Failed to verify the skin color ({profile.Appearance.SkinColor}) from strategy {strategy}. Reason: {reason}");
 
             AssertValidProfile((body, humanoidComponent), profile);
         });
@@ -145,8 +145,9 @@ public sealed class HumanoidProfileTests : GameTest
             foreach (var marking in markingOrgan.AppliedMarkings)
             {
                 var markingProto = Server.ProtoMan.Index(marking.MarkingId);
+                var markingColorCount = markingProto.GetColorCount();
 
-                Assert.That(markingProto.Sprites.Count, Is.EqualTo(marking.MarkingColors.Count), $"Organ {uid} has invald amount of marking sprites! Expected: {marking.MarkingColors.Count} Current: {markingProto.Sprites.Count}");
+                Assert.That(markingColorCount, Is.EqualTo(marking.MarkingColors.Count), $"Organ {uid} has invald amount of marking sprites! Expected: {marking.MarkingColors.Count} Current: {markingColorCount}");
                 Assert.That(_markingManager.CanBeApplied(data.Group, profile.Sex, markingProto), Is.True, $"Marking {markingProto.ID} cannot be applied to group {data.Group.Id} with sex {profile.Sex}");
                 Assert.That(data.Layers.Contains(markingProto.BodyPart), Is.True, $"Organ {uid} marking visual layers do not contain an entry for {markingProto.BodyPart}");
                 if (!markingProto.ForcedColoring && groupProto.Appearances.GetValueOrDefault(markingProto.BodyPart)?.MatchSkin != true)

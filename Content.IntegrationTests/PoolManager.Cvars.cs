@@ -12,6 +12,7 @@ public static partial class PoolManager
     {
         // @formatter:off
         (CCVars.DatabaseSynchronous.Name,     "true"),
+        (CCVars.DatabaseSnapshot.Name,        "true"),
         (CCVars.DatabaseSqliteDelay.Name,     "0"),
         (CCVars.HolidaysEnabled.Name,         "false"),
         (CCVars.GameMap.Name,                 TestMap),

@@ -1,4 +1,4 @@
-﻿using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Controls;

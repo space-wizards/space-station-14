@@ -1,7 +1,7 @@
 using Content.Shared.Botany.Components;
+using Content.Shared.Botany.Events;
 using Content.Shared.Botany.Items.Components;
 using Content.Shared.Botany.Systems;
-using Content.Shared.Botany.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -16,6 +16,8 @@ public sealed partial class BotanySwabSystem : EntitySystem
     [Dependency] private PlantMutationSystem _mutation = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+
+    [Dependency] private EntityQuery<PlantComponent> _plantQuery;
 
     /// <summary>
     /// This handles swab examination text
@@ -39,7 +41,7 @@ public sealed partial class BotanySwabSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<BotanySwabComponent> ent, ref AfterInteractEvent args)
     {
-        if (args.Target == null || !args.CanReach || !HasComp<PlantComponent>(args.Target))
+        if (args.Target == null || !args.CanReach || !_plantQuery.HasComp(args.Target))
             return;
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, ent.Comp.SwabDelay, new BotanySwabDoAfterEvent(), ent.Owner, target: args.Target, used: ent.Owner)
@@ -56,7 +58,7 @@ public sealed partial class BotanySwabSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnDoAfter(Entity<BotanySwabComponent> ent, ref BotanySwabDoAfterEvent args)
     {
-        if (args.Cancelled || args.Handled || !HasComp<PlantComponent>(args.Args.Target))
+        if (args.Cancelled || args.Handled || !_plantQuery.HasComp(args.Args.Target))
             return;
 
         var targetPlant = args.Args.Target.Value;

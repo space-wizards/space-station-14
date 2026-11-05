@@ -22,13 +22,14 @@ public sealed partial class BotanySampleTakerSystem : EntitySystem
     [Dependency] private PlantSystem _plant = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
-    [Dependency] private EntityQuery<PlantDataComponent> _dataQuery = default!;
+    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery;
+    [Dependency] private EntityQuery<PlantDataComponent> _dataQuery;
+    [Dependency] private EntityQuery<PlantComponent> _plantQuery;
 
     [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<BotanySampleTakerComponent> ent, ref AfterInteractEvent args)
     {
-        if (args.Target == null || args.Handled || !args.CanReach || !HasComp<PlantComponent>(args.Target))
+        if (args.Target == null || args.Handled || !args.CanReach || !_plantQuery.HasComp(args.Target))
             return;
 
         var ev = new PlantSampleAttemptEvent(ent, args.User);
@@ -53,9 +54,9 @@ public sealed partial class BotanySampleTakerSystem : EntitySystem
             return;
         }
 
-        // Prevent early sampling.
+        // Prevent early sampling, unless the plant is fully grown.
         var growthStage = _plant.GetGrowthStageValue(ent.AsNullable());
-        if (growthStage <= args.Sample.Comp.MinSampleStage)
+        if (growthStage < ent.Comp.GrowthStages && growthStage <= args.Sample.Comp.MinSampleStage)
         {
             _popup.PopupCursor(Loc.GetString("plant-sample-component-early-sample-popup"), args.User);
             return;

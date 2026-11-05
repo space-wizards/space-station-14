@@ -1,14 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.GameTicking;
-using Content.Server.GameTicking.Rules;
-using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Paper;
+using System.Linq;
 using Content.Server.Traitor.Components;
+using Content.Shared.Codewords;
+using Content.Shared.Paper;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using System.Linq;
-using Content.Server.Codewords;
-using Content.Shared.Paper;
 
 namespace Content.Server.Traitor.Systems;
 

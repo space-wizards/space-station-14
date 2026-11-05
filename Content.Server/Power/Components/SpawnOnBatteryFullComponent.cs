@@ -1,4 +1,4 @@
-﻿using Content.Shared.EntityTable.EntitySelectors;
+using Content.Shared.EntityTable.EntitySelectors;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Power.Components;

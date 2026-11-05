@@ -3,7 +3,6 @@ using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
-using Content.Shared.Prototypes;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
@@ -35,13 +34,13 @@ public sealed class LatheTest : GameTest
             var latheProtos = protoMan.EnumeratePrototypes<EntityPrototype>()
                 .Where(p => !p.Abstract)
                 .Where(p => !pair.IsTestPrototype(p))
-                .Where(p => p.HasComponent<LatheComponent>());
+                .Where(p => p.HasComp<LatheComponent>(compFactory));
 
             // Find every EntityPrototype that can be inserted into a MaterialStorage
             var materialEntityProtos = protoMan.EnumeratePrototypes<EntityPrototype>()
                 .Where(p => !p.Abstract)
                 .Where(p => !pair.IsTestPrototype(p))
-                .Where(p => p.HasComponent<PhysicalCompositionComponent>());
+                .Where(p => p.HasComp<PhysicalCompositionComponent>(compFactory));
 
             // Spawn all of the above material EntityPrototypes - we need actual entities to do whitelist checks
             var materialEntities = new List<EntityUid>(materialEntityProtos.Count());

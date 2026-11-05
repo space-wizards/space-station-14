@@ -29,10 +29,10 @@ public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototyp
     public bool Abstract { get; private set; }
 
     /// <summary>
-    /// The base rate at which this satiation decreases per second.
+    /// The base rate at which this satiation changes per second.
     /// </summary>
     [DataField(required: true)]
-    public float BaseDecayRate;
+    public float BaseChangeRate;
 
     /// <summary>
     /// The highest value this satiation can have. Increases beyond this value are clamped to this value.
@@ -71,11 +71,11 @@ public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototyp
     public int StartingValueMaximum => GetValueOrNull(_startingValueMaximum) ?? MaximumValue;
 
     /// <summary>
-    /// Modifiers to <see cref="BaseDecayRate"/> based on the current threshold.
+    /// Modifiers to <see cref="BaseChangeRate"/> based on the current threshold.
     /// </summary>
-    /// <seealso cref="Satiation.ActualDecayRate"/>
+    /// <seealso cref="Satiation.ActualChangeRate"/>
     [DataField(customTypeSerializer: typeof(DictionarySerializer<SatiationValue, float>))]
-    public Dictionary<SatiationValue, float> DecayModifiers = [];
+    public Dictionary<SatiationValue, float> ChangeModifiers = [];
 
     #region Alerts
 
@@ -94,8 +94,8 @@ public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototyp
     /// <summary>
     /// Icons to show to accompany <see cref="Alerts"/> when in the corresponding threshold.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(DictionarySerializer<SatiationValue, ProtoId<SatiationIconPrototype>?>))]
-    public Dictionary<SatiationValue, ProtoId<SatiationIconPrototype>?> Icons = [];
+    [DataField(customTypeSerializer: typeof(DictionarySerializer<SatiationValue, ProtoId<StatusIconPrototype>?>))]
+    public Dictionary<SatiationValue, ProtoId<StatusIconPrototype>?> Icons = [];
 
     #endregion
 

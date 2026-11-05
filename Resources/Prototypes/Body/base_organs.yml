@@ -99,6 +99,9 @@
       - SnoutCover
       - HeadSide
       - HeadTop
+  - type: Tag
+    tags:
+    - Head
 
 - type: entity
   parent:
@@ -339,6 +342,7 @@
     markingData:
       layers:
       - Eyes
+      - OverEyes
 
 - type: entity
   parent:

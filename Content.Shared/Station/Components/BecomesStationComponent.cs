@@ -7,7 +7,7 @@ namespace Content.Shared.Station.Components;
 ///     Added to grids saved in maps to designate that they are the 'main station' grid.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedGameTicker))]
+[Access(typeof(GameTicker))]
 public sealed partial class BecomesStationComponent : Component
 {
     /// <summary>

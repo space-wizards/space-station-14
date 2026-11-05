@@ -1,4 +1,4 @@
-﻿- type: localizedDataset
+- type: localizedDataset
   id: News
   values:
     prefix: news-dataset-

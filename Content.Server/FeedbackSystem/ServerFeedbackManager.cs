@@ -1,4 +1,4 @@
-﻿using Content.Shared.FeedbackSystem;
+using Content.Shared.FeedbackSystem;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 

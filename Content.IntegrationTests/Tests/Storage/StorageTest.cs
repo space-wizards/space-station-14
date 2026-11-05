@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
+using Content.Server.Item;
 using Content.Shared.Containers;
 using Content.Shared.Item;
-using Content.Shared.Prototypes;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
@@ -15,6 +16,9 @@ namespace Content.IntegrationTests.Tests.Storage;
 
 public sealed class StorageTest : GameTest
 {
+    [SidedDependency(Side.Server)] private ItemSystem _sItem = default!;
+    [SidedDependency(Side.Server)] private SharedStorageSystem _sStorage = default!;
+
     /// <summary>
     /// Can an item store more than itself weighs.
     /// In an ideal world this test wouldn't need to exist because sizes would be recursive.
@@ -49,6 +53,7 @@ public sealed class StorageTest : GameTest
     }
 
     [Test]
+    [Obsolete("StorageFillComponent is obsolete.")]
     public async Task TestStorageFillPrototypes()
     {
         var pair = Pair;
@@ -77,6 +82,7 @@ public sealed class StorageTest : GameTest
     }
 
     [Test]
+    [Obsolete("StorageFillComponent is obsolete.")]
     public async Task TestSufficientSpaceForFill()
     {
         var pair = Pair;
@@ -96,7 +102,7 @@ public sealed class StorageTest : GameTest
         {
             foreach (var (proto, fill) in pair.GetPrototypesWithComponent<StorageFillComponent>())
             {
-                if (proto.HasComponent<EntityStorageComponent>(compFact))
+                if (proto.HasComp<EntityStorageComponent>(compFact))
                     continue;
 
                 StorageComponent? storage = null;
@@ -163,6 +169,7 @@ public sealed class StorageTest : GameTest
     }
 
     [Test]
+    [Obsolete("StorageFillComponent is obsolete.")]
     public async Task TestSufficientSpaceForEntityStorageFill()
     {
         var pair = Pair;
@@ -177,7 +184,7 @@ public sealed class StorageTest : GameTest
 
         foreach (var (proto, fill) in pair.GetPrototypesWithComponent<StorageFillComponent>())
         {
-            if (proto.HasComponent<StorageComponent>(compFact))
+            if (proto.HasComp<StorageComponent>(compFact))
                 continue;
 
             await server.WaitAssertion(() =>
@@ -217,6 +224,7 @@ public sealed class StorageTest : GameTest
         return 0;
     }
 
+    [Obsolete("StorageFillComponent is obsolete.")]
     private int GetFillSize(StorageFillComponent fill, bool getCount, IPrototypeManager protoMan, IComponentFactory compFact, SharedItemSystem itemSystem)
     {
         var totalSize = 0;
@@ -245,16 +253,50 @@ public sealed class StorageTest : GameTest
 
         Assert.Multiple(() =>
         {
-            foreach (var (proto, fill) in pair.GetPrototypesWithComponent<EntityTableContainerFillComponent>())
+#pragma warning disable CS0618 // StorageFillComponent is obsolete, but this test is still needed while it exists.
+            foreach (var (proto, fill) in pair.GetPrototypesWithComponent<StorageFillComponent>())
             {
-                Assert.That(!proto.HasComp<StorageFillComponent>(compFact), $"Prototype {proto.ID} has both {nameof(EntityTableContainerFillComponent)} and {nameof(StorageFillComponent)}.");
-                Assert.That(!proto.HasComp<ContainerFillComponent>(compFact), $"Prototype {proto.ID} has both {nameof(EntityTableContainerFillComponent)} and {nameof(ContainerFillComponent)}.");
+                Assert.That(!proto.HasComp<EntityTableContainerFillComponent>(compFact), $"Prototype {proto.ID} has both {nameof(StorageFillComponent)} and {nameof(EntityTableContainerFillComponent)}.");
+                Assert.That(!proto.HasComp<ContainerFillComponent>(compFact), $"Prototype {proto.ID} has both {nameof(StorageFillComponent)} and {nameof(ContainerFillComponent)}.");
             }
+#pragma warning restore CS0618
 
             foreach (var (proto, fill) in pair.GetPrototypesWithComponent<ContainerFillComponent>())
             {
-                Assert.That(!proto.HasComp<StorageFillComponent>(compFact), $"Prototype {proto.ID} has both {nameof(ContainerFillComponent)} and {nameof(StorageFillComponent)}.");
+                Assert.That(!proto.HasComp<EntityTableContainerFillComponent>(compFact), $"Prototype {proto.ID} has both {nameof(ContainerFillComponent)} and {nameof(EntityTableContainerFillComponent)}.");
             }
         });
+    }
+
+    [Test]
+    [Description("Tests that entities with no specified max size start with sane values.")]
+    [RunOnSide(Side.Server)]
+    public async Task ValidDefaultStorageSizeTest()
+    {
+        var uid = SSpawn(null);
+        var storage = SEntMan.AddComponent<StorageComponent>(uid);
+        Assume.That(storage.MaxItemSize, Is.Null);
+
+        var allSizes = SProtoMan.EnumeratePrototypes<ItemSizePrototype>().ToList();
+        allSizes.Sort();
+
+        using (Assert.EnterMultipleScope())
+        {
+            var defaultSize = _sStorage.GetMaxItemSize((uid, storage));
+            Assert.That(defaultSize, Is.Not.Null, "MaxItemSize for a default storage entity without ItemComponent was null.");
+            Assert.That(SProtoMan.HasIndex<ItemSizePrototype>(defaultSize), Is.True, "MaxItemSize for a default storage entity without ItemComponent returned an invalid prototype.");
+
+            var item = SEntMan.AddComponent<ItemComponent>(uid);
+
+            // Assign each size, check the max item size of the entity vs. the previous one.
+            ProtoId<ItemSizePrototype>? lastSize = null;
+            foreach (var size in allSizes)
+            {
+                _sItem.SetSize(uid, size, item);
+                var oldSize = lastSize ?? size;
+                Assert.That(_sStorage.GetMaxItemSize((uid, storage)).ID, Is.EqualTo(oldSize), $"Unexpected size returned from GetMaxItemSize for size \"{size.ID}\"");
+                lastSize = size;
+            }
+        }
     }
 }

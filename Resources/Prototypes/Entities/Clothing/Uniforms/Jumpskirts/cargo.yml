@@ -1,0 +1,43 @@
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCargo
+  name: cargo tech jumpskirt
+  description: A sturdy jumpskirt, issued to members of the Cargo department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirts/Cargo/cargotech.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirts/Cargo/cargotech.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtQM
+  name: quartermaster's jumpskirt
+  description: 'What can brown do for you?'
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirts/Cargo/qm.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirts/Cargo/qm.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtQMTurtleneck
+  name: quartermaster's turtleneck
+  description: A sharp turtleneck made for the hardy work environment of supply.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirts/Cargo/qmturtleskirt.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirts/Cargo/qmturtleskirt.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtQMFormalDress
+  name: quartermaster's formal dress
+  description: Inspired by the quartermasters of militaries past, the perfect outfit for supplying a formal occasion.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirts/Cargo/qmformaldress.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirts/Cargo/qmformaldress.rsi

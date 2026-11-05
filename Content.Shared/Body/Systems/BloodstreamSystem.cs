@@ -433,6 +433,9 @@ public sealed partial class BloodstreamSystem : EntitySystem
             || amount == 0)
             return false;
 
+        if (!ent.Comp.BloodIncreaseEnabled && amount > 0)
+            return false;
+
         // TODO: Either make this percentage based regeneration and pre-pass the percentage.
         // TODO: Solution regulation API that doesn't result in very minor FixedPoint2 errors (Currently gingerbreadman only regenerates 0.99u instead of 1.00u)
         referenceFactor = Math.Clamp(referenceFactor, 0f, ent.Comp.MaxVolumeModifier);
@@ -591,7 +594,12 @@ public sealed partial class BloodstreamSystem : EntitySystem
             currentVolume += bloodSolution.RemoveReagent(reagent.Reagent, quantity: bloodSolution.Volume, ignoreReagentData: true);
         }
 
-        ent.Comp.BloodReferenceSolution = reagents.Clone();
+        // Scale the solution to the volume of the blood.
+        var newReagentsSolution = reagents.Clone();
+        newReagentsSolution.ScaleTo(ent.Comp.BloodReferenceSolution.MaxVolume);
+
+        // Set the scaled solution as the new blood reference.
+        ent.Comp.BloodReferenceSolution = newReagentsSolution;
         DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BloodReferenceSolution));
 
         if (currentVolume == FixedPoint2.Zero)
@@ -600,6 +608,34 @@ public sealed partial class BloodstreamSystem : EntitySystem
         var solution = ent.Comp.BloodReferenceSolution.Clone();
         solution.ScaleSolution(currentVolume / solution.Volume);
         _solutionContainer.AddSolution(ent.Comp.BloodSolution.Value, solution);
+    }
+
+    /// <summary>
+    /// Change how much blood is recovered in a bloodstream.
+    /// </summary>
+    public void ChangeBloodRefreshAmount(Entity<BloodstreamComponent?> ent, FixedPoint2 amount)
+    {
+        if(!Resolve(ent, ref ent.Comp, logMissing: false))
+        {
+            return;
+        }
+        if(amount < 0f)
+        {
+            amount = 0f;
+        }
+        ent.Comp.BloodRefreshAmount = amount;
+        DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BloodRefreshAmount));
+    }
+
+    /// <summary>
+    /// Change whether or not blood can be increased in a bloodstream.
+    /// </summary>
+    public void ChangeBloodIncreaseEnabled(Entity<BloodstreamComponent?> ent, bool status = true)
+    {
+        if (!Resolve(ent, ref ent.Comp, logMissing: false))
+            return;
+        ent.Comp.BloodIncreaseEnabled = status;
+        DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BloodIncreaseEnabled));
     }
 
     /// <summary>

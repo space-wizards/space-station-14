@@ -1,15 +1,14 @@
 using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.DeviceLinking.UI;
 
 [UsedImplicitly]
-public sealed class RandomGateBoundUserInterface : BoundUserInterface
+public sealed class RandomGateBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     private RandomGateSetupWindow? _window;
-
-    public RandomGateBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey) { }
 
     protected override void Open()
     {
@@ -26,12 +25,13 @@ public sealed class RandomGateBoundUserInterface : BoundUserInterface
         SendPredictedMessage(new RandomGateProbabilityChangedMessage(probability));
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    public override void Update()
     {
-        base.UpdateState(state);
-        if (state is not RandomGateBoundUserInterfaceState castState || _window == null)
+        base.Update();
+
+        if (_window == null || !EntMan.TryGetComponent(Owner, out RandomGateComponent? randomGate))
             return;
 
-        _window.SetProbability(castState.SuccessProbability * 100);
+        _window.SetProbability(randomGate.SuccessProbability * 100);
     }
 }

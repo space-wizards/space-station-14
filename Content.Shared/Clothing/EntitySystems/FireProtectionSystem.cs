@@ -8,7 +8,7 @@ namespace Content.Shared.Clothing.EntitySystems;
 /// <summary>
 /// Handles reducing fire damage when wearing clothing with <see cref="FireProtectionComponent"/>.
 /// </summary>
-public sealed class FireProtectionSystem : EntitySystem
+public sealed partial class FireProtectionSystem : EntitySystem
 {
     public override void Initialize()
     {
