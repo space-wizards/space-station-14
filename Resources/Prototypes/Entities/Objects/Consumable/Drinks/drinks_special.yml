@@ -218,6 +218,15 @@
   id: DrinkShakeBase
   description: ''
   components:
+  - type: Solution
+    solution:
+      maxVol: 30
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+    maxTransferAmount: 10
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    inHandsFillBaseName: null
   - type: ExaminableSolution
     solution: drink
   - type: FitsInDispenser
