@@ -23,7 +23,7 @@
   ## Search and Seizure
   A personnel search is the inspection and seizure of a crewmember's possessions. If any contraband is found during a search, the officer should confiscate the restricted items. Non-restricted items may be seized by Security if they were used to facilitate a crime. After the search is conducted, all legal items are to be returned to the person. A crewmate may legally decline any search conducted without probable cause or a warrant while the alert level is green. Random searches without probable cause or a warrant are permitted at any other alert level.
 
-  A departmental search is the sweep of an entire area or department for contraband. It is recommended that the officers be extremely thorough, checking all lockers, crates, and doors. Departmental searches can only be done with the permission of a member of Command with authority over the relevant department (usually the department head or the Captain).
+  A departmental search is the sweep of an entire area or department for contraband. It is recommended that the officers be extremely thorough, checking all lockers, crates, and doors. Departmental searches can only be done with the permission of a member of Command with authority over the relevant department.
 
   ## Sentencing
   From a server rules perspective, security officers are only responsible for ensuring that they place sentences over 15 minutes only where Space Law would allow Permanent Confinement. Informing the Warden is highly recommended, even for timed sentences. As long as those requirements are met, security officers not giving inappropriate sentence lengths is considered an in-character issue rather than a rule issue.
@@ -63,7 +63,7 @@
   ## Normal Punishments
   - [color=#a4885c]Warning:[/color] Resolving the issue at hand, then warning the criminal not to attempt the crime again. Most commonly issued for minor or moderate crimes. If the criminal continues to commit the same crime after being warned, a harsher sentence may be advisable.
   - [color=#a4885c]Confinement:[/color] Temporarily confining a criminal to the brig for an amount of time determined by the severity of their crimes.
-  - [color=#a4885c]Demotion:[/color] Confiscating all departmental equipment the criminal has on their person, and revoking departmental access from their ID. This requires the approval of a member of Command with authority over the relevant department (usually the department head or the Captain). Demotions should only be issued if the criminal poses a threat to their department, or if their access to departmental equipment could be abused for illegal purposes.
+  - [color=#a4885c]Demotion:[/color] Confiscating all departmental equipment the criminal has on their person, and revoking departmental access from their ID. This requires the approval of a member of Command with authority over the relevant department. Demotions should only be issued if the criminal poses a threat to their department, or if their access to departmental equipment could be abused for illegal purposes.
 
   ## Major Punishments
   - [color=#a4885c]Permanent Confinement:[/color] Confining a criminal to the brig for the entire remaining duration of the shift. A criminal is eligible for permanent confinement if the total duration of their sentence would exceed 15 minutes. Any permanent prisoners are required to be transported, in cuffs, to Central Command at the end of the shift. As normal, a permanent prisoner cannot be deprived of anything covered by the section "Treatment of Prisoners".
