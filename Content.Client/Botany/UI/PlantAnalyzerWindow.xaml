@@ -212,6 +212,20 @@
                     </BoxContainer>
                 </PanelContainer>
 
+                <!-- Heritable traits -->
+                <PanelContainer StyleClasses="BackgroundPanelDark"
+                                HorizontalExpand="True">
+                    <BoxContainer Orientation="Vertical"
+                                  Margin="0 8">
+                        <Label Text="{Loc 'botany-ui-section-heritable-traits'}"
+                               StyleClasses="LabelKeyText"
+                               Name="HeritableTraitsHeading"
+                               Margin="0 0 0 2" />
+                        <BoxContainer Name="HeritableTraits"
+                                      Orientation="Vertical" />
+                    </BoxContainer>
+                </PanelContainer>
+
                 <!-- Mutations -->
                 <PanelContainer StyleClasses="BackgroundPanelDark"
                                 HorizontalExpand="True"

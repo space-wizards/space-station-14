@@ -23,6 +23,7 @@ namespace Content.Client.Botany.UI;
 public sealed partial class PlantAnalyzerWindow : FancyWindow
 {
     [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
     private readonly BotanySystem _botanySystem;
     private readonly PlantSystem _plantSystem;
 
@@ -54,7 +55,31 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         UpdateConditions(plantEntity, state.PlantProtoId, plant);
         UpdateGases(plantEntity, state.PlantProtoId);
         UpdateChemicals(plantEntity, state.PlantProtoId, plant);
+        UpdateHeritableTraits(plant);
         UpdateMutations(state.Mutations);
+    }
+
+    private void UpdateHeritableTraits(PlantComponent plant)
+    {
+        var lines = new List<string>();
+        foreach (var traitId in plant.Traits)
+        {
+            if (!_prototypeManager.TryIndex(traitId, out var trait))
+                continue;
+
+            var line = trait.Description is { } description
+                ? Loc.GetString("botany-ui-heritable-trait-described",
+                    ("name", Loc.GetString(trait.Name)),
+                    ("description", Loc.GetString(description)))
+                : Loc.GetString("botany-ui-heritable-trait", ("name", Loc.GetString(trait.Name)));
+
+            if (trait.PollinationProtected)
+                line = Loc.GetString("botany-ui-heritable-trait-protected", ("trait", line));
+
+            lines.Add(line);
+        }
+
+        UpdateTextList(HeritableTraits, lines, "botany-ui-heritable-traits-none");
     }
 
     private void UpdatePlantStatus(EntityUid? plantEntity, EntProtoId? prototypeId, PlantComponent plant)
