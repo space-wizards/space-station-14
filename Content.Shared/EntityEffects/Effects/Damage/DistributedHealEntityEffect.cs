@@ -43,7 +43,7 @@ public sealed partial class DistributedHeal : EntityEffectBase<DistributedHeal>
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
         if (Heal <= 0)
-            return Loc.GetString("generic-invalid");
+            return Loc.GetString("generic-invalid"); // Make it super obvious to use a positive value
 
         var stringTypes = "";
         if (Types != null)
@@ -58,9 +58,9 @@ public sealed partial class DistributedHeal : EntityEffectBase<DistributedHeal>
         }
 
         return Loc.GetString("entity-effect-guidebook-distributed-heal",
-            ("chance", Probability),
-            ("amount", Heal.Float()),
-            ("typeCount", Types?.Count ?? 0),
-            ("types", stringTypes));
+                            ("chance", Probability),
+                            ("amount", Heal.Float()),
+                            ("typeCount", Types?.Count ?? 0),
+                            ("types", stringTypes));
     }
 }

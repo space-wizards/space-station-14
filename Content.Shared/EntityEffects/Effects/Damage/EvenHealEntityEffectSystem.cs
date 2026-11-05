@@ -24,6 +24,8 @@ public sealed partial class EvenHealEntityEffectSystem : EntityEffectSystem<Dama
     }
 }
 
+/// <inheritdoc cref="EntityEffect"/>
+/// <seealso cref="DamageableSystem.HealEvenly(Entity{DamageableComponent?}, FixedPoint2, ICollection{ProtoId{DamageTypePrototype}}?, EntityUid?)"/>
 public sealed partial class EvenHeal : EntityEffectBase<EvenHeal>
 {
     /// <summary>
@@ -56,9 +58,9 @@ public sealed partial class EvenHeal : EntityEffectBase<EvenHeal>
         }
 
         return Loc.GetString("entity-effect-guidebook-even-heal",
-            ("chance", Probability),
-            ("amount", Heal.Float()),
-            ("typeCount", Types?.Count ?? 0),
-            ("types", stringTypes));
+                            ("chance", Probability),
+                            ("amount", Heal.Float()),
+                            ("typeCount", Types?.Count ?? 0),
+                            ("types", stringTypes));
     }
 }

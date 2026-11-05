@@ -158,7 +158,6 @@
     - StunImmune
     - FootstepSound
 
-
 - type: entity
   parent: OrganBaseOrganic
   id: OrganHorror

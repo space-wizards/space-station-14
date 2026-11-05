@@ -39,9 +39,14 @@
         - Blunt
         - Slash
         - Piercing
+      - !type:EvenHeal
+        probability: 0.5
+        heal: 0.5
+        types:
         - Heat
         - Cold
         - Shock
+        - Caustic
       # Helps you stop bleeding to an extent.
       - !type:ModifyBleed
         amount: -0.25

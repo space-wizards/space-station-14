@@ -928,7 +928,28 @@
     Bloodstream:
       effects:
       - !type:EvenHeal
-        heal: 3
+        heal: 2
+        types:
+        - Blunt
+        - Slash
+        - Piercing
+      - !type:EvenHeal
+        heal: 2
+        types:
+        - Heat
+        - Cold
+        - Shock
+        - Caustic
+      - !type:EvenHeal
+        heal: 2
+        types:
+        - Poison
+        - Radiation
+      - !type:EvenHeal
+        heal: 2
+        types:
+        - Airloss
+        - Bloodloss
 
 - type: reagent
   id: ApotheosoticEnzymes
