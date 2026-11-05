@@ -541,6 +541,7 @@
     blacklist:
       components:
       - RandomHumanoidAppearance # Hungry... For... Salvage corpses... grrrr...
+      - Rotting # The entire point of this ability is to give lings a reason to not rot corpses. We don't wanna make it usable on rotten corpses.
     event: !type:EntityEffectActionEvent
   - type: EntityEffectAction
     effects:
