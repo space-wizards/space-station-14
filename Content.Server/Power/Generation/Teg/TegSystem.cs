@@ -1,11 +1,10 @@
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.Audio;
-using Content.Server.Machines.EntitySystems;
-using Content.Shared.DeviceNetwork.Systems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.Audio;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Examine;
 using Content.Shared.Machines.Components;
@@ -16,7 +15,6 @@ using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Power.Generation.Teg;
 using Content.Shared.Rounding;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Power.Generation.Teg;
 
@@ -58,11 +56,11 @@ public sealed partial class TegSystem : EntitySystem
     /// </summary>
     private const string NodeNameOutlet = "outlet";
 
-    [Dependency] private AmbientSoundSystem _ambientSound = default!;
-    [Dependency] private AppearanceSystem _appearance = default!;
-    [Dependency] private AtmosphereSystem _atmosphere = default!;
+    [Dependency] private SharedAmbientSoundSystem _ambientSound = default!;
+    [Dependency] private SharedAtmosphereSystem _atmosphere = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
-    [Dependency] private PointLightSystem _pointLight = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedPointLightSystem _pointLight = default!;
     [Dependency] private SharedPowerReceiverSystem _receiver = default!;
     [Dependency] private SharedMultipartMachineSystem _multipart = default!;
 
@@ -192,7 +190,7 @@ public sealed partial class TegSystem : EntitySystem
         UpdateAppearance(uid, component, powerReceiver);
     }
 
-    [SubscribeLocalEvent(before: [typeof(MultipartMachineSystem)])]
+    [SubscribeLocalEvent(before: [typeof(SharedMultipartMachineSystem)])]
     private void OnTegStartup(Entity<TegGeneratorComponent> ent, ref ComponentStartup args)
     {
         _receiver.SetPowerDisabled(ent.Owner, true);
