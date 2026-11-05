@@ -948,7 +948,7 @@
       - !type:EvenHeal
         heal: 2
         types:
-        - Airloss
+        - Asphyxiation
         - Bloodloss
 
 - type: reagent
@@ -962,16 +962,36 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:EvenHealthChange
-        conditions:
+      - !type:EvenHeal
+        conditions: &ConditionReagentOmnizineMax0
         - !type:ReagentCondition
           reagent: Omnizine
           max: 0
-        damage:
-          Burn: -2
-          Toxin: -2
-          Airloss: -2
-          Brute: -2
+        heal: 2
+        types:
+        - Blunt
+        - Slash
+        - Piercing
+      - !type:EvenHeal
+        conditions: *ConditionReagentOmnizineMax0
+        heal: 2
+        types:
+        - Heat
+        - Cold
+        - Shock
+        - Caustic
+      - !type:EvenHeal
+        conditions: *ConditionReagentOmnizineMax0
+        heal: 2
+        types:
+        - Poison
+        - Radiation
+      - !type:EvenHeal
+        conditions: *ConditionReagentOmnizineMax0
+        heal: 2
+        types:
+        - Asphyxiation
+        - Bloodloss
       - !type:HealthChange
         damage:
           types:
@@ -997,16 +1017,36 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:EvenHealthChange
-        conditions:
+      - !type:EvenHeal
+        conditions: &ConditionReagentApothMax5
         - !type:ReagentCondition
           reagent: ApotheosoticExtract
           max: 5
-        damage:
-          Burn: -1
-          Toxin: -1
-          Airloss: -1
-          Brute: -1
+        heal: 1
+        types:
+        - Blunt
+        - Slash
+        - Piercing
+      - !type:EvenHeal
+        conditions: *ConditionReagentApothMax5
+        heal: 1
+        types:
+        - Heat
+        - Cold
+        - Shock
+        - Caustic
+      - !type:EvenHeal
+        conditions: *ConditionReagentApothMax5
+        heal: 1
+        types:
+        - Poison
+        - Radiation
+      - !type:EvenHeal
+        conditions: *ConditionReagentApothMax5
+        heal: 1
+        types:
+        - Asphyxiation
+        - Bloodloss
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
