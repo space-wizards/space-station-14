@@ -56,9 +56,9 @@ public sealed partial class TegSystem : EntitySystem
     /// </summary>
     private const string NodeNameOutlet = "outlet";
 
+    [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private SharedAmbientSoundSystem _ambientSound = default!;
     [Dependency] private SharedAtmosphereSystem _atmosphere = default!;
-    [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedPointLightSystem _pointLight = default!;
     [Dependency] private SharedPowerReceiverSystem _receiver = default!;
@@ -203,14 +203,22 @@ public sealed partial class TegSystem : EntitySystem
         _receiver.SetPowerDisabled(ent.Owner, !args.IsAssembled, powerReceiver);
         UpdateAppearance(ent.Owner, ent.Comp, powerReceiver);
 
-        foreach (var circ in args.PartsAdded.Values)
+        if (!_multipartQuery.TryComp(ent.Owner, out var multipart))
+            return;
+
+        // Updates added & already existing parts
+        foreach (var part in multipart.Parts.Values)
         {
-            UpdateCirculatorAppearance(circ, args.IsAssembled);
+            if (part.Entity == null)
+                continue;
+
+            UpdateCirculatorAppearance(part.Entity.Value, args.IsAssembled);
         }
 
-        foreach (var circ in args.PartsRemoved.Values)
+        // Updates removed parts
+        foreach (var part in args.PartsRemoved.Values)
         {
-            UpdateCirculatorAppearance(circ, false);
+            UpdateCirculatorAppearance(part, args.IsAssembled);
         }
     }
 
