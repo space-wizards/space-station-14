@@ -642,7 +642,7 @@
   desc: reagent-desc-shakeblue
   physicalDesc: reagent-physical-desc-creamy
   flavor: creamy
-  color: "#DFD7AF"
+  color: "#74A1E8"
   metabolisms:
     Digestion:
       effects:
@@ -657,7 +657,7 @@
   desc: reagent-desc-shakemeat
   physicalDesc: reagent-physical-desc-gloopy
   flavor: meaty
-  color: "#DFD7AF"
+  color: "#E88274"
   metabolisms:
     Digestion:
       effects:
@@ -672,7 +672,7 @@
   desc: reagent-desc-shakerobo
   physicalDesc: reagent-physical-desc-electric
   flavor: metallic
-  color: "#DFD7AF"
+  color: "#5B445C"
   metabolisms:
     Digestion:
       effects:
