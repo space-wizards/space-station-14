@@ -35,66 +35,66 @@ public sealed class DamageableTest : GameTest
     private const string Prototypes = $@"
 # Define some damage groups
 - type: damageType
-id: {TestDamage1}
-name: damage-type-blunt
+  id: {TestDamage1}
+  name: damage-type-blunt
 
 - type: damageType
-id: {TestDamage2a}
-name: damage-type-blunt
+  id: {TestDamage2a}
+  name: damage-type-blunt
 
 - type: damageType
-id: {TestDamage2b}
-name: damage-type-blunt
+  id: {TestDamage2b}
+  name: damage-type-blunt
 
 - type: damageType
-id: {TestDamage3a}
-name: damage-type-blunt
+  id: {TestDamage3a}
+  name: damage-type-blunt
 
 - type: damageType
-id: {TestDamage3b}
-name: damage-type-blunt
+  id: {TestDamage3b}
+  name: damage-type-blunt
 
 - type: damageType
-id: {TestDamage3c}
-name: damage-type-blunt
+  id: {TestDamage3c}
+  name: damage-type-blunt
 
 # Define damage Groups with 1,2,3 damage types
 - type: damageGroup
-id: {TestGroup1}
-name: damage-group-brute
-damageTypes:
-- {TestDamage1}
+  id: {TestGroup1}
+  name: damage-group-brute
+  damageTypes:
+  - {TestDamage1}
 
 - type: damageGroup
-id: {TestGroup2}
-name: damage-group-brute
-damageTypes:
-- {TestDamage2a}
-- {TestDamage2b}
+  id: {TestGroup2}
+  name: damage-group-brute
+  damageTypes:
+  - {TestDamage2a}
+  - {TestDamage2b}
 
 - type: damageGroup
-id: {TestGroup3}
-name: damage-group-brute
-damageTypes:
-- {TestDamage3a}
-- {TestDamage3b}
-- {TestDamage3c}
+  id: {TestGroup3}
+  name: damage-group-brute
+  damageTypes:
+  - {TestDamage3a}
+  - {TestDamage3b}
+  - {TestDamage3c}
 
 # This container should not support TestDamage1 or TestDamage2b
 - type: damageContainer
-id: testDamageContainer
-supportedGroups:
-- {TestGroup3}
-supportedTypes:
-- {TestDamage2a}
+  id: testDamageContainer
+  supportedGroups:
+  - {TestGroup3}
+  supportedTypes:
+  - {TestDamage2a}
 
 - type: entity
-id: {TestDamageableEntityId}
-name: {TestDamageableEntityId}
-components:
-- type: Damageable
-- type: Injurable
-damageContainer: testDamageContainer
+  id: {TestDamageableEntityId}
+  name: {TestDamageableEntityId}
+  components:
+  - type: Damageable
+  - type: Injurable
+  damageContainer: testDamageContainer
 ";
 
     [Test]
