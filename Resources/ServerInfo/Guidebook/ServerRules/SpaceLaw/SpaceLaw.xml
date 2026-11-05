@@ -2,7 +2,7 @@
   # Space Law
   On Space Station 14, stations operate under abbreviated Space Law. All members of the station's crew, including any visitors to the station, are expected to follow Space Law.
 
-  Foreign invaders (such as changelings, ninjas, and nuclear operatives) are not protected under Space Law. Antagonist crew members (such as initial infected, revolutionaries, and syndicate agents) are not considered foreign invaders, so they are usually protected by Space Law.
+  Foreign invaders (such as changelings, ninjas, and nuclear operatives) are not protected under Space Law. Antagonist crew members (such as revolutionaries and Syndicate agents) are not considered foreign invaders, so they are usually protected by Space Law.
 
   Space Law is not the server rules, but some rules reference Space Law and require it to be followed by certain people or to some degree.
 
@@ -11,21 +11,12 @@
 
   Members of Command with authority over a department are permitted to hire, reassign, and fire employees within that department. Crew members who refuse to comply with a lawful job change can potentially qualify for certain criminal charges; for instance, a crew member who refuses to turn in equipment not permitted to their new position can potentially be charged with theft, and a crew member who refuses to leave areas their new position does not have access to can potentially be charged with trespass.
 
-  ## Treatment of Prisoners
-  Prisoners still have certain rights that must be upheld by law enforcement:
-  - Prisoners must be granted adequate medical care.
-  - Prisoners must be allowed access to basic communications equipment (headsets or radios) so long as they are not abused.
-  - Prisoners must be granted clothing, food, water, shelter, and safety. If the brig is no longer safe, confinement must be established in another location.
-  - Prisoners must be given access to legal counsel during an interrogation if requested and available.
-  - Prisoners must be given their shift-mandated PDA after confinement has finished, unless there is solid proof of PDA tampering. In case of tampering, the PDA is to be secured and replaced with a new unit.
-  - Prisoners must be granted freedom of movement, and should not be restrained with handcuffs or other devices after incarceration unless there is an undue risk to life and limb. Similarly, any prisoners held for Permanent Confinement should be kept in the communal brig rather than in a solitary cell, unless they pose a risk to life and limb.
-
   ## Contraband
   Contraband is a broad category of items that are illegal to possess or use without proper authorization. While there are no charges associated with carrying contraband, it is still prohibited. There are three general tiers of contraband, and they are governed by the following regulations:
 
   - Minor Contraband: Any contraband which is restricted to a department other than Command or Security is minor contraband unless otherwise specified. The Captain or Head of Security may authorize individual use of minor contraband, and other department heads may authorize its use restricted to their assigned department.
   - Major Contraband: Any contraband which is restricted to the Command or Security department is major unless otherwise specified. The Head of Security may authorize the use of contraband that is particularly restricted to Security; the Captain may authorize the use of any major contraband.
-  - Highly Illegal Contraband: Highly illegal contraband includes Syndicate contraband and magical contraband. Without explicit authorization from Central Command, highly illegal contraband may only be used in the event of dire, immediate emergencies, and only to prevent death or gross bodily harm. Once the emergency is dealt with, the contraband should be stored in a secure location.
+  - Highly Illegal Contraband: Includes contraband associated with a hostile faction (such as Syndicate contraband or magical contraband). Without explicit authorization from Central Command, highly illegal contraband may only be used in the event of dire, immediate emergencies, and only to prevent death or gross bodily harm. Once the emergency is dealt with, the contraband should be stored in a secure location.
 
   Security is obligated to seize contraband through routine searches or when processing criminals in the brig, but may prioritize other duties over confiscation if they see fit. With regards to contraband usage, Security is expected to follow the same regulations as everyone else. Confiscated contraband should be transferred to the Security department for secure storage or permanently disposed of. Collaborating with Cargo to sell confiscated contraband is highly encouraged, as it generally fetches a high value.
 
@@ -33,22 +24,6 @@
   A personnel search is the inspection and seizure of a crewmember's possessions. If any contraband is found during a search, the officer should confiscate the restricted items. Non-restricted items may be seized by Security if they were used to facilitate a crime. After the search is conducted, all legal items are to be returned to the person. A crewmate may legally decline any search conducted without probable cause or a warrant while the alert level is green. Random searches without probable cause or a warrant are permitted at any other alert level.
 
   A departmental search is the sweep of an entire area or department for contraband. It is recommended that the officers be extremely thorough, checking all lockers, crates, and doors. Departmental searches can only be done with the permission of a member of Command with authority over the relevant department (usually the department head or the Captain).
-
-  ## Implantation
-  Any prisoner in custody can be subjected to implantation or implant extraction procedures, so long as it's within reason. The process of adding or removing an implant should not prolong the detainee's sentence; you cannot hold them longer to perform the procedure unless stated otherwise. A former inmate may be requested to undergo implantation/extraction at a later time; if the circumstances during their confinement warrant it, they must comply. The following have been listed out with special circumstances; anything not in this list can still be applied, given the proper legal context. A prisoner can still receive implantation/extraction procedures without meeting the circumstances if they give their clear consent.
-
-  [color=#a4885c]Tracking Implants:[/color] Trackers can be applied to any suspect that has been convicted of a violent crime (the red crimes with a V suffix).
-
-  [color=#a4885c]Mind Shields:[/color] Mind Shields can be administered to any suspect charged with a crime if there is reasonable and articulable suspicion to believe they committed the crime while under mind control. If there is undeniable proof of ongoing mind control on the station, such as a successful deconversion, all the following statements apply:
-
-  - Crew can be required to be shielded and may be forcibly implanted if they refuse.
-  - If a suspect refuses to cooperate or the implant fails to function, they can be charged with Refusal of Mental Shielding.
-  - Unlike standard implantation, you may indefinitely extend the duration of a prisoner's sentence until you finish issuing Mind Shields, so long as active attempts are made to procure implants and complete the implantation procedure.
-
-  Usage of contraband implanters is a detainable offense, but it's not reasonable to detain someone solely for having an unidentified implant inside them.
-
-  ## Implant Removal
-  Any prisoner in custody can be subjected to implant extraction for a specific implant if there is reasonable suspicion that they have it implanted. Detainees may not be forced or coerced into performing implant extraction on themselves against their will.
 
   ## Sentencing
   From a server rules perspective, security officers are only responsible for ensuring that they place sentences over 15 minutes only where Space Law would allow Permanent Confinement. Informing the Warden is highly recommended, even for timed sentences. As long as those requirements are met, security officers not giving inappropriate sentence lengths is considered an in-character issue rather than a rule issue.
@@ -94,6 +69,31 @@
   - [color=#a4885c]Permanent Confinement:[/color] Confining a criminal to the brig for the entire remaining duration of the shift. A criminal is eligible for permanent confinement if the total duration of their sentence would exceed 15 minutes. Any permanent prisoners are required to be transported, in cuffs, to Central Command at the end of the shift. As normal, a permanent prisoner cannot be deprived of anything covered by the section "Treatment of Prisoners".
   - [color=#a4885c]Execution:[/color] A humane way of dealing with extremely unruly criminals. Within reason, a criminal who has been given a sentence of execution may pick how they wish to be killed, such as by firing squad, lethal injection, high voltage electrocution, or exile. Another alternate method of "execution" is placing the criminal's brain into a man-machine interface. Each individual sentence of execution requires the direct, non-delegated approval of the Captain, the acting Captain, or (if the Head of Security is the acting Captain) a majority of department heads; this approval must take place after the criminal has been convicted.
   - [color=#a4885c]DNR:[/color] A DNR (do not resuscitate) order is an alternative to execution that may be issued under certain conditions. The criminal must be dead before the order is placed, and available Security and/or Medical resources (including personnel) must be in use for other purposes, such as a mass-casualty scenario. The criminal must be eligible for execution, and the DNR order must be authorized following the same procedure as an execution.
+
+  ## Treatment of Prisoners
+  Prisoners still have certain rights that must be upheld by law enforcement:
+  - Prisoners must be granted adequate medical care.
+  - Prisoners must be allowed access to basic communications equipment (headsets or radios) so long as they are not abused.
+  - Prisoners must be granted clothing, food, water, shelter, and safety. If the brig is no longer safe, confinement must be established in another location.
+  - Prisoners must be given access to legal counsel during an interrogation if requested and available.
+  - Prisoners must be given their shift-mandated PDA after confinement has finished, unless there is solid proof of PDA tampering. In case of tampering, the PDA is to be secured and replaced with a new unit.
+  - Prisoners must be granted freedom of movement, and should not be restrained with handcuffs or other devices after incarceration unless there is an undue risk to life and limb. Similarly, any prisoners held for Permanent Confinement should be kept in the communal brig rather than in a solitary cell, unless they pose a risk to life and limb.
+
+  ## Implantation
+  Any prisoner in custody can be subjected to implantation or implant extraction procedures, so long as it's within reason. The process of adding or removing an implant should not prolong the detainee's sentence; you cannot hold them longer to perform the procedure unless stated otherwise. A former inmate may be requested to undergo implantation/extraction at a later time; if the circumstances during their confinement warrant it, they must comply. The following have been listed out with special circumstances; anything not in this list can still be applied, given the proper legal context. A prisoner can still receive implantation/extraction procedures without meeting the circumstances if they give their clear consent.
+
+  [color=#a4885c]Tracking Implants:[/color] Trackers can be applied to any suspect that has been convicted of a violent crime (the red crimes with a V suffix).
+
+  [color=#a4885c]Mind Shields:[/color] Mind Shields can be administered to any suspect charged with a crime if there is reasonable and articulable suspicion to believe they committed the crime while under mind control. If there is undeniable proof of ongoing mind control on the station, such as a successful deconversion, all the following statements apply:
+
+  - Crew can be required to be shielded and may be forcibly implanted if they refuse.
+  - If a suspect refuses to cooperate or the implant fails to function, they can be charged with Refusal of Mental Shielding.
+  - Unlike standard implantation, you may indefinitely extend the duration of a prisoner's sentence until you finish issuing Mind Shields, so long as active attempts are made to procure implants and complete the implantation procedure.
+
+  Usage of contraband implanters is a detainable offense, but it's not reasonable to detain someone solely for having an unidentified implant inside them.
+
+  ## Implant Removal
+  Any prisoner in custody can be subjected to implant extraction for a specific implant if there is reasonable suspicion that they have it implanted. Detainees may not be forced or coerced into performing implant extraction on themselves against their will.
 
   ## Crime Listing
   - [textlink="Crime Listing" link="SpaceLawCrimeList"]
