@@ -213,9 +213,12 @@ namespace Content.Server.Chemistry.EntitySystems
 
             // Ensure the number is valid.
             if (message.Number == 0
-                || !_storageSystem.HasSpace((container, storage))
-                || storage.Grid.GetArea() < message.Number)
+                || (storage.Grid.GetArea()
+                    - _storageSystem.GetCumulativeItemAreas((container, storage))
+                    < message.Number))
+            {
                 return;
+            }
 
             // Ensure the amount is valid.
             if (message.Dosage == 0 || message.Dosage > chemMaster.Comp.PillDosageLimit)
