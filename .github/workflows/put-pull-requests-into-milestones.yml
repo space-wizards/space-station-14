@@ -1,0 +1,79 @@
+name: Assign release PRs to milestone
+
+on:
+  workflow_dispatch:
+    inputs:
+      start_sha:
+        description: "Start SHA (exclusive)"
+        required: true
+        type: string
+      end_sha:
+        description: "End SHA (inclusive)"
+        required: true
+        type: string
+      milestone:
+        description: "Milestone title"
+        required: true
+        type: string
+      dry_run:
+        description: "Only show what would be assigned"
+        required: true
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  pull-requests: read
+  issues: write
+
+jobs:
+  assign:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Assign PRs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          START_SHA: ${{ inputs.start_sha }}
+          END_SHA: ${{ inputs.end_sha }}
+          MILESTONE: ${{ inputs.milestone }}
+          DRY_RUN: ${{ inputs.dry_run }}
+          REPO: space-wizards/space-station-14
+        run: |
+          set -euo pipefail
+
+          # Find the milestone.
+          MILESTONE_ID=$(gh api --paginate "repos/$REPO/milestones?state=all&per_page=100" \
+            --jq ".[] | select(.title == \"$MILESTONE\") | .number" | head -n 1)
+
+          if [[ -z "$MILESTONE_ID" ]]; then
+            echo "Milestone not found: $MILESTONE"
+            exit 1
+          fi
+
+          echo "Using milestone: $MILESTONE (#$MILESTONE_ID)"
+
+          # Collect unique PR numbers from commit subjects.
+          mapfile -t PR_NUMBERS < <(
+            git log --format='%s' "$START_SHA..$END_SHA" |
+            grep -oE '\(#[0-9]+\)$' |
+            grep -oE '[0-9]+' |
+            sort -nu || true
+          )
+
+          echo "Found ${#PR_NUMBERS[@]} PR references."
+
+          for PR in "${PR_NUMBERS[@]}"; do
+            DATA=$(gh api "repos/$REPO/pulls/$PR")
+
+            if [[ "$DRY_RUN" == "true" ]]; then
+              echo "[DRY RUN] Would assign #$PR"
+            else
+              gh api --method PATCH "repos/$REPO/issues/$PR" \
+                -F milestone="$MILESTONE_ID" >/dev/null
+              echo "Assigned #$PR"
+            fi
+          done
