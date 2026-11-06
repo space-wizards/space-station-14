@@ -18,4 +18,10 @@ public readonly record struct SignalReceivedEvent<T>(
     ProtoId<SinkPortPrototype> Port,
     T Data,
     EntityUid? Trigger = null)
-    where T : ISignalNetworkPayload;
+    where T : ISignalNetworkPayload
+{
+    public static implicit operator SignalReceivedEvent(SignalReceivedEvent<T> start)
+    {
+        return new SignalReceivedEvent(start.Port, start.Trigger);
+    }
+}

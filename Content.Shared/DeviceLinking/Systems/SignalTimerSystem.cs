@@ -1,6 +1,7 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Payloads;
 using Content.Shared.MachineLinking;
 using Content.Shared.TextScreen;
 using Content.Shared.UserInterface;
@@ -120,6 +121,13 @@ public sealed partial class SignalTimerSystem : EntitySystem
     {
         if (args.Port == ent.Comp.Trigger)
             StartTimer(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnLogicSignalReceived(Entity<SignalTimerComponent> ent, ref SignalReceivedEvent<LogicStatePayload> args)
+    {
+        SignalReceivedEvent ev = args;
+        OnSignalReceived(ent, ref ev);
     }
 
     #region Public API
