@@ -22,7 +22,7 @@ public sealed partial class FlatpackSystem : SharedFlatpackSystem
     private void OnAppearanceChange(Entity<FlatpackComponent> ent, ref AppearanceChangeEvent args)
     {
         var (_, comp) = ent;
-        if (!_appearance.TryGetData<string>(ent, FlatpackVisuals.Machine, out var machineBoardId) || args.Sprite == null)
+        if (args.Sprite == null || !args.TryGetData<string>(FlatpackVisuals.Machine, out var machineBoardId))
             return;
 
         if (!ProtoMan.TryIndex<EntityPrototype>(machineBoardId, out var machineBoardPrototype))

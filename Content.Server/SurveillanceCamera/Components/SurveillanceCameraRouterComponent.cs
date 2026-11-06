@@ -21,13 +21,13 @@ public sealed partial class SurveillanceCameraRouterComponent : Component
     /// is added or removed from active routing.
     /// </summary>
     [ViewVariables]
-    public HashSet<string> MonitorRoutes { get; } = new();
+    public HashSet<DeviceAddress> MonitorRoutes { get; } = new();
 
     /// <summary>
     /// The frequency that talks to this router's subnet.
     /// </summary>
     [ViewVariables]
-    public uint SubnetFrequency;
+    public DeviceFrequency SubnetFrequency;
 
     [DataField("subnetFrequency")]
     public ProtoId<DeviceFrequencyPrototype>? SubnetFrequencyId { get; set; }

@@ -119,7 +119,8 @@
         Caustic: 0.5
   - type: GroupExamine
   - type: StealTarget
-    stealGroup: ClothingOuterHardsuitVoidParamed
+    stealGroup:
+    - ClothingOuterHardsuitVoidParamed
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetVoidParamed
   - type: ItemToggleExaminableStatus

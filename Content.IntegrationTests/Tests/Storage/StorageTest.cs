@@ -6,7 +6,6 @@ using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Item;
 using Content.Shared.Containers;
 using Content.Shared.Item;
-using Content.Shared.Prototypes;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
@@ -54,6 +53,7 @@ public sealed class StorageTest : GameTest
     }
 
     [Test]
+    [Obsolete("StorageFillComponent is obsolete.")]
     public async Task TestStorageFillPrototypes()
     {
         var pair = Pair;
@@ -82,6 +82,7 @@ public sealed class StorageTest : GameTest
     }
 
     [Test]
+    [Obsolete("StorageFillComponent is obsolete.")]
     public async Task TestSufficientSpaceForFill()
     {
         var pair = Pair;
@@ -101,7 +102,7 @@ public sealed class StorageTest : GameTest
         {
             foreach (var (proto, fill) in pair.GetPrototypesWithComponent<StorageFillComponent>())
             {
-                if (proto.HasComponent<EntityStorageComponent>(compFact))
+                if (proto.HasComp<EntityStorageComponent>(compFact))
                     continue;
 
                 StorageComponent? storage = null;
@@ -168,6 +169,7 @@ public sealed class StorageTest : GameTest
     }
 
     [Test]
+    [Obsolete("StorageFillComponent is obsolete.")]
     public async Task TestSufficientSpaceForEntityStorageFill()
     {
         var pair = Pair;
@@ -182,7 +184,7 @@ public sealed class StorageTest : GameTest
 
         foreach (var (proto, fill) in pair.GetPrototypesWithComponent<StorageFillComponent>())
         {
-            if (proto.HasComponent<StorageComponent>(compFact))
+            if (proto.HasComp<StorageComponent>(compFact))
                 continue;
 
             await server.WaitAssertion(() =>
@@ -222,6 +224,7 @@ public sealed class StorageTest : GameTest
         return 0;
     }
 
+    [Obsolete("StorageFillComponent is obsolete.")]
     private int GetFillSize(StorageFillComponent fill, bool getCount, IPrototypeManager protoMan, IComponentFactory compFact, SharedItemSystem itemSystem)
     {
         var totalSize = 0;
@@ -250,15 +253,17 @@ public sealed class StorageTest : GameTest
 
         Assert.Multiple(() =>
         {
-            foreach (var (proto, fill) in pair.GetPrototypesWithComponent<EntityTableContainerFillComponent>())
+#pragma warning disable CS0618 // StorageFillComponent is obsolete, but this test is still needed while it exists.
+            foreach (var (proto, fill) in pair.GetPrototypesWithComponent<StorageFillComponent>())
             {
-                Assert.That(!proto.HasComp<StorageFillComponent>(compFact), $"Prototype {proto.ID} has both {nameof(EntityTableContainerFillComponent)} and {nameof(StorageFillComponent)}.");
-                Assert.That(!proto.HasComp<ContainerFillComponent>(compFact), $"Prototype {proto.ID} has both {nameof(EntityTableContainerFillComponent)} and {nameof(ContainerFillComponent)}.");
+                Assert.That(!proto.HasComp<EntityTableContainerFillComponent>(compFact), $"Prototype {proto.ID} has both {nameof(StorageFillComponent)} and {nameof(EntityTableContainerFillComponent)}.");
+                Assert.That(!proto.HasComp<ContainerFillComponent>(compFact), $"Prototype {proto.ID} has both {nameof(StorageFillComponent)} and {nameof(ContainerFillComponent)}.");
             }
+#pragma warning restore CS0618
 
             foreach (var (proto, fill) in pair.GetPrototypesWithComponent<ContainerFillComponent>())
             {
-                Assert.That(!proto.HasComp<StorageFillComponent>(compFact), $"Prototype {proto.ID} has both {nameof(ContainerFillComponent)} and {nameof(StorageFillComponent)}.");
+                Assert.That(!proto.HasComp<EntityTableContainerFillComponent>(compFact), $"Prototype {proto.ID} has both {nameof(ContainerFillComponent)} and {nameof(EntityTableContainerFillComponent)}.");
             }
         });
     }

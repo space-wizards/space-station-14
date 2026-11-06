@@ -18,7 +18,7 @@ public abstract partial class SharedDestructibleSystem : EntitySystem
         var eventArgs = new DestructionEventArgs();
         RaiseLocalEvent(owner, eventArgs);
 
-        PredictedQueueDel(owner);
+        QueueDel(owner);
         return true;
     }
 

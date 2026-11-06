@@ -26,7 +26,7 @@ public sealed partial class BluespaceArtifactRule : StationEventSystem<Bluespace
     {
         base.Started(ent, ref args);
 
-        var amountToSpawn = 1;
+        var amountToSpawn = ent.Comp1.AmountToSpawn.Next(RobustRandom);
         for (var i = 0; i < amountToSpawn; i++)
         {
             if (!Station.TryFindRandomTile(out _, out _, out _, out var coords))

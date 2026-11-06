@@ -1,5 +1,6 @@
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Power.Components;
+using Content.Server.Power.Events;
 using Content.Server.Power.Nodes;
 using Content.Server.Power.NodeGroups;
 using Content.Server.StationEvents.Components;

@@ -68,7 +68,8 @@
     tags:
     - HighRiskItem
   - type: StealTarget
-    stealGroup: Hypospray
+    stealGroup:
+    - Hypospray
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: hypo_fill

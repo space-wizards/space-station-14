@@ -10,6 +10,7 @@
   - MothroachCube
   - MouseCube
   - CockroachCube
+  - SlimeCube
 
 - type: latheRecipePack
   id: HostileCubesStatic

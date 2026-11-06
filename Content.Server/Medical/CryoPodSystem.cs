@@ -8,6 +8,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Medical.Cryogenics;
+using Content.Shared.Medical.HealthAnalyzer;
 
 namespace Content.Server.Medical;
 
@@ -56,7 +57,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         var gasMix = _gasAnalyzerSystem.GenerateGasMixEntry("Cryo pod", air.Air);
         var (beakerCapacity, beaker) = GetBeakerInfo(entity);
         var injecting = GetInjectingReagents(entity);
-        var health = _healthAnalyzerSystem.GetHealthAnalyzerUiState(patient);
+        var health = _healthAnalyzerSystem.GetHealthAnalyzerUiState(patient, true);
         health.ScanMode = true;
         var hasDamage = patient is null ? false : _damageable.GetTotalDamage(patient.Value) > 0;
 
