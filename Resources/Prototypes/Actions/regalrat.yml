@@ -43,6 +43,7 @@
       map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: Action
+    startDelay: true
     useDelay: 1
     priority: 5
   - type: InstantAction
@@ -64,6 +65,8 @@
       map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: Action
+    startDelay: true
+    toggled: true
     useDelay: 1
     priority: 6
   - type: InstantAction
@@ -85,6 +88,7 @@
       map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: Action
+    startDelay: true
     useDelay: 1
     priority: 7
   - type: InstantAction
@@ -106,9 +110,9 @@
       map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: Action
+    startDelay: true
     useDelay: 1
     priority: 8
   - type: InstantAction
-    event:
-      !type:RatKingOrderActionEvent
+    event: !type:RatKingOrderActionEvent
       type: Loose
