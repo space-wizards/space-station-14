@@ -1,9 +1,8 @@
 using Content.Server.Chemistry.Components;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Placeable;
 using Content.Shared.Power;
 
@@ -14,21 +13,13 @@ public sealed partial class SolutionHeaterSystem : EntitySystem
     [Dependency] private PowerReceiverSystem _powerReceiver = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
-
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<SolutionHeaterComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<SolutionHeaterComponent, ItemPlacedEvent>(OnItemPlaced);
-        SubscribeLocalEvent<SolutionHeaterComponent, ItemRemovedEvent>(OnItemRemoved);
-    }
+    [Dependency] private EntityQuery<AnchoredBlurComponent> _blurQuery = default!;
 
     private void TurnOn(EntityUid uid)
     {
         _appearance.SetData(uid, SolutionHeaterVisuals.IsOn, true);
         EnsureComp<ActiveSolutionHeaterComponent>(uid);
+        ToggleBlurSetting(uid, true);
     }
 
     public bool TryTurnOn(EntityUid uid, ItemPlacerComponent? placer = null)
@@ -47,8 +38,10 @@ public sealed partial class SolutionHeaterSystem : EntitySystem
     {
         _appearance.SetData(uid, SolutionHeaterVisuals.IsOn, false);
         RemComp<ActiveSolutionHeaterComponent>(uid);
+        ToggleBlurSetting(uid, false);
     }
 
+    [SubscribeLocalEvent]
     private void OnPowerChanged(Entity<SolutionHeaterComponent> entity, ref PowerChangedEvent args)
     {
         var placer = Comp<ItemPlacerComponent>(entity);
@@ -62,11 +55,13 @@ public sealed partial class SolutionHeaterSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnItemPlaced(Entity<SolutionHeaterComponent> entity, ref ItemPlacedEvent args)
     {
         TryTurnOn(entity);
     }
 
+    [SubscribeLocalEvent]
     private void OnItemRemoved(Entity<SolutionHeaterComponent> entity, ref ItemRemovedEvent args)
     {
         var placer = Comp<ItemPlacerComponent>(entity);
@@ -90,5 +85,18 @@ public sealed partial class SolutionHeaterSystem : EntitySystem
                 }
             }
         }
+    }
+
+    private void ToggleBlurSetting(EntityUid uid, bool toggle)
+    {
+        if (!_blurQuery.TryComp(uid, out var blur))
+            return;
+
+        if (toggle)
+            blur.Strength = blur.TargetStrength;
+        else
+            blur.Strength = 0.0f;
+
+        Dirty(uid, blur);
     }
 }
