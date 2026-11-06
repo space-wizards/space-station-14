@@ -20,6 +20,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Robust.Shared.Player;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -31,6 +32,7 @@ namespace Content.Server.Chemistry.EntitySystems
     [UsedImplicitly]
     public sealed partial class ChemMasterSystem : EntitySystem
     {
+        [Dependency] private ActorSystem _actor = default!;
         [Dependency] private PopupSystem _popupSystem = default!;
         [Dependency] private AudioSystem _audioSystem = default!;
         [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
@@ -227,13 +229,13 @@ namespace Content.Server.Chemistry.EntitySystems
 
             if (!WithdrawFromSource(chemMaster, needed, user, out var withdrawal))
                 return;
-            _labelSystem.Label(container, message.Label);
+            _labelSystem.Label(container, message.Label, labelApplier: _actor.GetSession(user));
 
             for (var i = 0; i < message.Number; i++)
             {
                 var item = Spawn(PillPrototypeId, Transform(container).Coordinates);
                 _storageSystem.Insert(container, item, out _, user: user, storage);
-                _labelSystem.Label(item, message.Label);
+                _labelSystem.Label(item, message.Label, labelApplier: _actor.GetSession(user));
 
                 _solutionContainerSystem.EnsureSolution(item, SharedChemMaster.PillSolutionName, out var itemSolution);
                 itemSolution.Comp.Solution.MaxVolume = message.Dosage;
@@ -273,7 +275,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!WithdrawFromSource(chemMaster, message.Dosage, user, out var withdrawal))
                 return;
 
-            _labelSystem.Label(container, message.Label);
+            _labelSystem.Label(container, message.Label, labelApplier: _actor.GetSession(user));
             _solutionContainerSystem.TryAddSolution(soln.Value, withdrawal);
 
             // Log bottle creation by a user
