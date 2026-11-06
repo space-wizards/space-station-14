@@ -27,6 +27,23 @@
 
 - type: entity
   parent: BasePDACartridge
+  id: PdaMessengerCartridge
+  name: messenger cartridge
+  description: A program for messaging other PDAs.
+  components:
+  - type: Sprite
+    state: cart-y
+  - type: UIFragment
+    ui: !type:PdaMessengerUi
+  - type: Cartridge
+    programName: pda-messenger-program-name
+    icon:
+      sprite: Interface/Misc/program_icons.rsi
+      state: messenger
+  - type: PdaMessengerCartridge
+
+- type: entity
+  parent: BasePDACartridge
   id: NanoTaskCartridge
   name: NanoTask cartridge
   description: A program that allows you to keep a list of tasks to do.
