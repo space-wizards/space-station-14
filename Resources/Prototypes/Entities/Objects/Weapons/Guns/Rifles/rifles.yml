@@ -6,6 +6,9 @@
   abstract: true
   components:
   - type: Sprite
+  - type: Tag
+    tags:
+    - Rifle
   - type: Item
     size: Huge
     shape:
