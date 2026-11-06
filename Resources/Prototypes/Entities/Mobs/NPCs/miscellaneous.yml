@@ -102,23 +102,18 @@
     - reagents: [ Water, Holywater ]
       methods: [ Touch ]
       effects:
-      - !type:EvenHealthChange
-        damage:
-          Brute: -0.15
+      - !type:EvenHeal
+        heal: 0.15
     - reagents: [ Blood ]
       methods: [ Touch ]
       effects:
-      - !type:EvenHealthChange
-        damage:
-          Brute: -0.25
-          Burn: -0.25
+      - !type:EvenHeal
+        heal: 0.25
     - reagents: [ RobustHarvest ]
       methods: [ Touch ]
       effects:
-      - !type:EvenHealthChange
-        damage:
-          Brute: -1
-          Burn: -1
+      - !type:EvenHeal
+        heal: 1
     - reagents: [ WeedKiller, PlantBGone ]
       methods: [ Touch ]
       effects:

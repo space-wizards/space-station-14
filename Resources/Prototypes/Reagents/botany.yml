@@ -269,26 +269,35 @@
         - !type:ReagentCondition
           reagent: Ammonia
           min: 0.25
-      - !type:EvenHealthChange
-        conditions:
+      - !type:EvenHeal
+        conditions: &ConditionMetabolizerRat
         - !type:MetabolizerTypeCondition
           type: [ Rat ]
         - !type:ReagentCondition
           reagent: Ammonia
           min: 1
-        ignoreResistances: true
-        damage:
-          Brute: -2.5
-          Burn: -2.5
-          Airloss: -5
+        heal: 2.5
+        types:
+        - Blunt
+        - Slash
+        - Piercing
+      - !type:EvenHeal
+        conditions: *ConditionMetabolizerRat
+        heal: 2.5
+        types:
+        - Heat
+        - Cold
+        - Shock
+        - Caustic
+      - !type:EvenHeal
+        conditions: *ConditionMetabolizerRat
+        heal: 5
+        types:
+        - Asphyxiation
+        - Bloodloss
       - !type:ModifyBloodLevel
         amount: 1
-        conditions:
-        - !type:MetabolizerTypeCondition
-          type: [ Rat ]
-        - !type:ReagentCondition
-          reagent: Ammonia
-          min: 1
+        conditions: *ConditionMetabolizerRat
       - !type:Oxygenate # ammonia displaces nitrogen in vox blood
         conditions:
         - !type:MetabolizerTypeCondition

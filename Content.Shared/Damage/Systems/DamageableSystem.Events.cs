@@ -1,5 +1,4 @@
 using Content.Shared.CCVar;
-using Content.Shared.Cloning.Events;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
@@ -16,14 +15,6 @@ public sealed partial class DamageableSystem
     public override void Initialize()
     {
         RebuildContainerCache();
-
-        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
-        SubscribeLocalEvent<DamageableComponent, ComponentInit>(DamageableInit);
-        SubscribeLocalEvent<DamageableComponent, OnIrradiatedEvent>(OnIrradiated);
-        SubscribeLocalEvent<DamageableComponent, RejuvenateEvent>(OnRejuvenate);
-        SubscribeLocalEvent<DamageableComponent, ComponentHandleState>(DamageableHandleState);
-        SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
-        SubscribeLocalEvent<InjurableComponent, DamageDealtEvent>(OnDamageDealt);
 
         // Damage modifier CVars are updated and stored here to be queried in other systems.
         // Note that certain modifiers requires reloading the guidebook.
@@ -122,6 +113,7 @@ public sealed partial class DamageableSystem
         );
     }
 
+    [SubscribeLocalEvent]
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs ev)
     {
         if (!ev.WasModified<DamageContainerPrototype>() && !ev.WasModified<DamageGroupPrototype>())
@@ -158,12 +150,14 @@ public sealed partial class DamageableSystem
     /// <summary>
     ///     Initialize a damageable component
     /// </summary>
+    [SubscribeLocalEvent]
     private void DamageableInit(Entity<DamageableComponent> ent, ref ComponentInit _)
     {
         ent.Comp.Damage.GetDamagePerGroup(ProtoMan, ent.Comp.DamagePerGroup);
         ent.Comp.TotalDamage = ent.Comp.Damage.GetTotal();
     }
 
+    [SubscribeLocalEvent]
     private void OnIrradiated(Entity<DamageableComponent> ent, ref OnIrradiatedEvent args)
     {
         var damageValue = FixedPoint2.New(args.TotalRads);
@@ -178,6 +172,7 @@ public sealed partial class DamageableSystem
         ChangeDamage(ent.Owner, damage, interruptsDoAfters: false, origin: args.Origin);
     }
 
+    [SubscribeLocalEvent]
     private void OnRejuvenate(Entity<DamageableComponent> ent, ref RejuvenateEvent args)
     {
         // Do this so that the state changes when we set the damage
@@ -186,6 +181,7 @@ public sealed partial class DamageableSystem
         _mobThreshold.SetAllowRevives(ent, false);
     }
 
+    [SubscribeLocalEvent]
     private void DamageableGetState(Entity<DamageableComponent> ent, ref ComponentGetState args)
     {
         args.State = new DamageableComponentState(
@@ -195,6 +191,7 @@ public sealed partial class DamageableSystem
         );
     }
 
+    [SubscribeLocalEvent]
     private void DamageableHandleState(Entity<DamageableComponent> ent, ref ComponentHandleState args)
     {
         if (args.Current is not DamageableComponentState state)
@@ -216,6 +213,7 @@ public sealed partial class DamageableSystem
         OnEntityDamageChanged(ent, delta);
     }
 
+    [SubscribeLocalEvent]
     private void OnDamageDealt(Entity<InjurableComponent> ent, ref DamageDealtEvent args)
     {
         if (!_damageableQuery.TryGetComponent(ent, out var damageable))
