@@ -17,7 +17,7 @@ public sealed partial class BypassLockSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private LockSystem _lock = default!;
     [Dependency] private SharedToolSystem _tool = default!;
-    [Dependency] private SharedWiresSystem _wires = default!;
+    [Dependency] private WiresSystem _wires = default!;
 
     public override void Initialize()
     {
@@ -75,7 +75,7 @@ public sealed partial class BypassLockSystem : EntitySystem
 
         if (TryComp<WiresPanelComponent>(target, out var wiresPanel) &&
             TryComp<BypassLockComponent>(target, out var bypassLock) && bypassLock.OpenWiresPanel)
-            _wires.TogglePanel(target, wiresPanel, true, args.User);
+            _wires.TogglePanel((target, wiresPanel), true, args.User);
 
     }
 
