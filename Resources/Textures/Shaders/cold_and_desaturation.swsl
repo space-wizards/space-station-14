@@ -60,7 +60,7 @@ void fragment()
 
         highp vec2 ice_direction = time_warp * 2.0 - 1.0;
 
-        highp vec2 ice_world_offset = ice_direction * (frost_mask * 2.5) / 32.0 * cold_intensity;
+        highp vec2 ice_world_offset = ice_direction * (frost_mask * 2.5) / 32.0 * cold_intensity * intensity * 2.0;
         // Make it independent of client zoom.
         highp vec2 ice_offset =  station_offset_to_uv(ice_world_offset);
 
@@ -78,11 +78,11 @@ void fragment()
         // 1 iteration = 1 snowflake.
         for (int i = 0; i < 3; i++)
         {
-            highp float snow = snow_flake(station_position + zRandom(vec2(i)), 0.08, 0.008);
+            highp float snow = snow_flake(station_position + zRandom(vec2(i)), 0.08, 0.008) * 2.0 * intensity;
             screen_pixel.rgb = mix(screen_pixel.rgb, cold_tint, cold_intensity * snow * 0.5 * sqrt(dot(screen_pixel.rgb, vec3(0.299, 0.587, 0.114))));
         }
 
-        screen_pixel.rgb += ice_deformation + 0.5 * ice_tint * cold_tint;
+        screen_pixel.rgb += ice_deformation + ice_tint * cold_tint * intensity;
     }
 
     COLOR = screen_pixel;
