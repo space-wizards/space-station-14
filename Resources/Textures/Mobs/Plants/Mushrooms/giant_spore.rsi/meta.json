@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "license": "CC-BY-4.0",
+    "copyright": "Thinbug (github) :3",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        }
+    ]
+}
