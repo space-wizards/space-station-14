@@ -507,6 +507,9 @@
       shader: unshaded
       map: ["base"]
   - type: CameraActiveOnCollideCollider
+  - type: NavMapWarp
+    sounds:
+      collection: StaticShort
 
 # The holographic representation of the AI that is projected from a holopad.
 - type: entity
