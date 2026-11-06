@@ -18,7 +18,7 @@ highp vec2 station_offset_to_uv(highp vec2 station_offset)
 
 highp float snow_flake(highp vec2 station_position, highp float speed, highp float size)
 {
-    highp vec2 snow_position = station_position + vec2(TIME * speed, TIME * speed * 0.65);
+    highp vec2 snow_position = station_position + vec2(0, TIME * speed * 0.65);
     highp vec2 snow_cell = floor(snow_position);
     highp vec2 snow_local = fract(snow_position) - 0.5;
     highp vec2 snow_offset = zRandom(snow_cell).xy * 0.35;
