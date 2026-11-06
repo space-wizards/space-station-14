@@ -6,7 +6,7 @@
   setPreference: false
   startingGear: CentcommGear
   icon: "JobIconNanotrasen"
-  supervisors: job-supervisors-centcom
+  supervisors: job-supervisors-nanotrasen
   accessGroups:
   - AllAccess
   access:
