@@ -22,8 +22,11 @@
   - !type:OverallPlaytimeRequirement
     time: 5h
   - !type:RoleTimeRequirement
+    role: JobChiefMedicalOfficer
+    time: 1h
+  - !type:RoleTimeRequirement
     role: JobChemist
-    time: 3h
+    time: 2h
   guides: [ NuclearOperatives ]
   tags:
   - OffStation
