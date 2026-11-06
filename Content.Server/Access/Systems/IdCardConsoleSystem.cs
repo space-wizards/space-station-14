@@ -52,7 +52,7 @@ public sealed partial class IdCardConsoleSystem : SharedIdCardConsoleSystem
         SubscribeLocalEvent<IdCardConsoleComponent, ComponentStartup>(UpdateUserInterface);
         SubscribeLocalEvent<IdCardConsoleComponent, EntInsertedIntoContainerMessage>(UpdateUserInterface);
         SubscribeLocalEvent<IdCardConsoleComponent, EntRemovedFromContainerMessage>(UpdateUserInterface);
-        SubscribeLocalEvent<IdCardConsoleComponent, DamageChangedEvent>(OnDamageChanged);
+        SubscribeLocalEvent<IdCardConsoleComponent, DamageDealtEvent>(OnDamageDealt);
 
         // Intercept the event before anyone can do anything with it!
         SubscribeLocalEvent<IdCardConsoleComponent, MachineDeconstructedEvent>(OnMachineDeconstructed,
@@ -264,8 +264,11 @@ public sealed partial class IdCardConsoleSystem : SharedIdCardConsoleSystem
         TryDropAndThrowIds(entity.AsNullable());
     }
 
-    private void OnDamageChanged(Entity<IdCardConsoleComponent> entity, ref DamageChangedEvent args)
+    private void OnDamageDealt(Entity<IdCardConsoleComponent> entity, ref DamageDealtEvent args)
     {
+        if (!args.AnyPositive)
+            return;
+
         if (TryDropAndThrowIds(entity.AsNullable()))
             _chat.TrySendInGameICMessage(entity, Loc.GetString("id-card-console-damaged"), InGameICChatType.Speak, true);
     }
