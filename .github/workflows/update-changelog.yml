@@ -1,0 +1,66 @@
+name: Update Changelog
+
+# Run this before Publish. Commits the generated changelog to the stable branch.
+# Requires github-actions to be on the bypass list of the stable branch ruleset.
+
+concurrency:
+  group: update-changelog
+  cancel-in-progress: false
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: read
+  actions: read
+
+jobs:
+  update-changelog:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref_name == 'stable' }}
+
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        fetch-depth: 0
+        filter: blob:none
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: 10.0.x
+
+    - name: Install dependencies
+      run: sudo apt-get install -y python3-requests
+
+    - name: Get last publish SHA
+      id: last-publish
+      run: Tools/actions_get_last_publish_sha.py
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PUBLISH_WORKFLOW: publish.yml
+
+    - name: Update changelog
+      run: |
+        dotnet tool install --global SpaceWizards.ChangelogTool --version 1.0.8
+        ss14-changelog update -d Resources/Changelog -s ${LAST_PUBLISH_SHA}
+      env:
+        REPO: ${{ github.repository }}
+        BRANCH: stable
+        CHANGELOG_REPO_PATH: Resources/Changelog
+        EXTRA_CATEGORIES: Admin,Maps,Rules
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        LAST_PUBLISH_SHA: ${{ steps.last-publish.outputs.last_publish_sha }}
+
+    - name: Commit and push changelog
+      run: |
+        if [ -n "$(git status --porcelain Resources/Changelog)" ]; then
+          git config user.name "Space-Wizards-Bot"
+          git config user.email "bot@spacestation14.com"
+          git add Resources/Changelog
+          git commit -m "Update changelog"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+        else
+          echo "Changelog already up to date."
+        fi
