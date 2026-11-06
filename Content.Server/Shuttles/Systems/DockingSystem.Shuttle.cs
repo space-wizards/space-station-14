@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Shuttles.Components;
+using Content.Shared.Shuttles.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -133,8 +134,11 @@ public sealed partial class DockingSystem
     {
         var gridDocks = GetDocks(targetGrid);
         var shuttleDocks = GetDocks(shuttleUid);
+        var bulldoze = false;
+        if (TryComp<ShuttleComponent>(shuttleUid, out var comp))
+            bulldoze = comp.Bulldoze;
 
-        var configs = GetDockingConfigs(shuttleUid, targetGrid, shuttleDocks, gridDocks);
+        var configs = GetDockingConfigs(shuttleUid, targetGrid, shuttleDocks, gridDocks, bulldoze);
 
         foreach (var config in configs)
         {
@@ -159,7 +163,8 @@ public sealed partial class DockingSystem
         EntityUid shuttleUid,
         EntityUid targetGrid,
         List<Entity<DockingComponent>> shuttleDocks,
-        List<Entity<DockingComponent>> gridDocks)
+        List<Entity<DockingComponent>> gridDocks,
+        bool bulldoze = false)
     {
         var validDockConfigs = new List<DockingConfig>();
 
@@ -208,11 +213,14 @@ public sealed partial class DockingSystem
                     var dockedBounds = new Box2Rotated(shuttleAABB.Translated(spawnPosition.Position), targetWorldAngle, spawnPosition.Position);
 
                     // Check if there's no intersecting grids (AKA oh god it's docking at cargo).
-                    grids.Clear();
-                    _mapSystem.FindGridsIntersecting(targetGridXform.MapID, dockedBounds, ref grids, includeMap: false);
-                    if (grids.Any(o => o.Owner != targetGrid && o.Owner != targetGridXform.MapUid))
+                    if (!bulldoze)
                     {
-                        continue;
+                        grids.Clear();
+                        _mapSystem.FindGridsIntersecting(targetGridXform.MapID, dockedBounds, ref grids, includeMap: false);
+                        if (grids.Any(o => o.Owner != targetGrid && o.Owner != targetGridXform.MapUid))
+                        {
+                            continue;
+                        }
                     }
 
                     // Alright well the spawn is valid now to check how many we can connect
@@ -287,7 +295,12 @@ public sealed partial class DockingSystem
         List<Entity<DockingComponent>> gridDocks,
         string? priorityTag = null)
     {
-        var validDockConfigs = GetDockingConfigs(shuttleUid, targetGrid, shuttleDocks, gridDocks);
+        var bulldoze = false;
+
+        if (TryComp<ShuttleComponent>(shuttleUid, out var comp))
+            bulldoze = comp.Bulldoze;
+
+        var validDockConfigs = GetDockingConfigs(shuttleUid, targetGrid, shuttleDocks, gridDocks, bulldoze);
 
         if (validDockConfigs.Count <= 0)
             return null;
