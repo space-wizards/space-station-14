@@ -587,6 +587,10 @@
       raffle:
         settings: default
       job: CentralCommandOfficial
+    - type: RandomMetadata
+      nameSegments:
+      - NamesOfficial
+      nameFormat: name-format-official
     - type: Loadout
       prototypes: [ CentcommGear ]
       roleLoadout: [ RoleSurvivalStandard ]
