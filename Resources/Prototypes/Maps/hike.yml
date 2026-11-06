@@ -51,3 +51,4 @@
             Mime: [ 0, 1 ]
             #silicon 1
             Borg: [ 0, 1 ]
+            StationAi: [ 0, 1 ] # no need to force an ai role as it is generally not very fun for low pop to be an ai
