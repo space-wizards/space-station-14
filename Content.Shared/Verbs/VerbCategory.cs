@@ -73,6 +73,9 @@ namespace Content.Shared.Verbs
         public static readonly VerbCategory Split =
             new("verb-categories-split", null);
 
+        public static readonly VerbCategory TakeCard =
+            new("verb-categories-take-card", null);
+
         public static readonly VerbCategory InstrumentStyle =
             new("verb-categories-instrument-style", null);
 
