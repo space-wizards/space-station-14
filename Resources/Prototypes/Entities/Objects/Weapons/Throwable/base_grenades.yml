@@ -45,7 +45,7 @@
     thresholds:
     - trigger: # Start fuse
         !type:DamageTrigger
-        damage: 10
+        damage: 100
       behaviors:
       - !type:TimerStartBehavior
   - type: GenericVisualizer
