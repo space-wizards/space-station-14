@@ -39,7 +39,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
             if (environment.Pressure > MaxUnanchorPressure)
             {
-                args.FailMessage = Loc.GetString("comp-atmos-unsafe-unanchor-pressure-too-high");
+                args.FailMessage = Loc.GetString("comp-atmos-unsafe-unanchor-pressure-too-high", ("device", uid));
                 args.Cancel();
                 return;
             }
