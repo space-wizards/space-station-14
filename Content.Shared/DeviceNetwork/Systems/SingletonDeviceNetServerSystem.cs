@@ -55,7 +55,7 @@ public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
 
             last = (uid, server, device);
 
-            if (!server.Active || device.Address == 0)
+            if (!server.Active || device.Address == DeviceAddress.Invalid)
                 continue;
 
             address = device.Address;

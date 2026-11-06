@@ -42,7 +42,8 @@
   - type: ExtensionCableReceiver
   - type: Screen
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: ShuttleTimer
 
 - type: entity
@@ -52,5 +53,6 @@
   description: Displays time of arrivals shuttle ETA.
   components:
   - type: DeviceNetwork
-    deviceNetId: Private
+    deviceNets:
+    - Private
     receiveFrequencyId: ArrivalsShuttleTimer

@@ -229,7 +229,8 @@
       - EntityStorage
   - type: MailingUnit
   - type: DeviceNetwork
-    deviceNetId: Wired
+    deviceNets:
+    - Wired
     receiveFrequencyId: MailingUnit
     transmitFrequencyId: MailingUnit
   - type: WiredNetwork

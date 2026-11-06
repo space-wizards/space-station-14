@@ -61,7 +61,8 @@
   - type: CrewMonitoringConsole
   - type: GeneralStationRecordConsole
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: CrewMonitor
     transmitFrequencyId: ShuttleTimer
   - type: RadarConsole

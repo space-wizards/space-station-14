@@ -137,7 +137,8 @@
   - type: DeviceList
     isAllowList: true
   - type: DeviceNetwork
-    deviceNetId: Wired
+    deviceNets:
+    - Wired
     receiveFrequencyId: Turret
     transmitFrequencyId: TurretControl
     sendBroadcastAttemptEvent: true

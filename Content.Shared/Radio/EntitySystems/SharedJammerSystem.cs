@@ -26,7 +26,7 @@ public sealed partial class JammerSystem : EntitySystem
             EnsureComp<ActiveRadioJammerComponent>(entity);
             EnsureComp<DeviceNetworkJammerComponent>(entity, out var jammingComp);
             _jammer.SetRange((entity, jammingComp), GetCurrentRange(entity));
-            _jammer.AddJammableNetwork((entity, jammingComp), (int) DeviceNetIdDefaults.Wireless);
+            _jammer.AddJammableNetworks((entity, jammingComp), jammingComp.JammableNetworks);
 
             // Add excluded frequencies using the system method
             foreach (var freq in entity.Comp.FrequenciesExcluded)

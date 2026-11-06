@@ -1,0 +1,35 @@
+# Private and Wireless device networks are neccessary for the code to work properly!
+
+# A General network without any restrictions. This is a default value for all devices.
+- type: deviceNetwork
+  id: Private
+  name: device-net-id-private
+  managerId: DeviceNetworkBase
+
+# A network that functions over a map.
+# Devices have to be on a specified distance from the source to receive packets.
+- type: deviceNetwork
+  id: Wireless
+  name: device-net-id-wireless
+  managerId: DeviceNetworkWireless
+
+# A network that functions over a grid.
+# One must imagine NodeGroups predicted...
+- type: deviceNetwork
+  id: Wired
+  name: device-net-id-wired
+  managerId: DeviceNetworkWired
+
+# A special network used by APC network switches.
+- type: deviceNetwork
+  id: Apc
+  name: device-net-id-apc
+  managerId: DeviceNetworkWired
+
+# A special network used by all atmos devices.
+- type: deviceNetwork
+  id: AtmosDevices
+  name: device-net-id-atmos-devices
+  managerId: DeviceNetworkWireless
+
+# TODO: add more networks for separate features

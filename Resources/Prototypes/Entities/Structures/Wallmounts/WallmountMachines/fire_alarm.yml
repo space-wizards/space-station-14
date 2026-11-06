@@ -11,7 +11,8 @@
     usesApcPower: true
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
-    deviceNetId: AtmosDevices
+    deviceNets:
+    - AtmosDevices
     receiveFrequencyId: AtmosMonitor
     transmitFrequencyId: AtmosMonitor
     prefix: device-address-prefix-fire-alarm

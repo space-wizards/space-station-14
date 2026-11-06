@@ -1,0 +1,23 @@
+- type: entity
+  id: DeviceNetworkBase
+  save: false
+  name: Private device network
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: DeviceNetworkManager
+
+- type: entity
+  parent: DeviceNetworkBase
+  id: DeviceNetworkWireless
+  name: Wireless device network
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: WirelessNetworkManager
+
+- type: entity
+  parent: DeviceNetworkBase
+  id: DeviceNetworkWired
+  name: Wired device network
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: WiredNetworkManager
