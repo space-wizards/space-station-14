@@ -37,4 +37,10 @@ public sealed partial class GasCondenserComponent : Component
     /// </remarks>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float MolesToReagentMultiplier = 0.2137f;
+
+    /// <summary>
+    ///     Coefficient of performance. Output power / input power.
+    /// </summary>
+    [DataField("coefficientOfPerformance")]
+    public float Cp = -3.9f;
 }
