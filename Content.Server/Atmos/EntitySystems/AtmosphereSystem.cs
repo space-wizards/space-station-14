@@ -105,11 +105,18 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         var delay = TimeSpan.FromSeconds(ExposedUpdateDelay);
 
         var query = EntityQueryEnumerator<AtmosExposedComponent, TransformComponent>();
+        var entitiesToUpdate = new List<(EntityUid Uid, AtmosExposedComponent exposed, TransformComponent transform)>();
+
         while (query.MoveNext(out var uid, out var exposed, out var transform))
         {
             if (exposed.LastExposure + delay > _gameTiming.CurTime)
                 continue;
 
+            entitiesToUpdate.Add((uid, exposed, transform));
+        }
+
+        foreach (var (uid, exposed, transform) in entitiesToUpdate.ToList())
+        {
             var air = GetContainingMixture((uid, transform));
 
             if (air == null)
