@@ -1,0 +1,75 @@
+- type: entity
+  id: JetpackEffectBlue
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: SmallMobs
+    noRot: true
+    layers:
+    - shader: unshaded
+      map: [ "enum.EffectLayers.Unshaded" ]
+      sprite: Effects/jetpack.rsi
+      state: blue_sparkles
+  - type: TimedDespawn
+    lifetime: 2
+  - type: EffectVisuals
+  - type: AnimationPlayer
+  - type: Tag
+    tags:
+      - HideContextMenu
+
+- type: entity
+  id: JetpackEffectGreen
+  parent: JetpackEffectBlue
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: SmallMobs
+    noRot: true
+    layers:
+    - shader: unshaded
+      map: [ "enum.EffectLayers.Unshaded" ]
+      sprite: Effects/jetpack.rsi
+      state: green_sparkles
+
+- type: entity
+  id: JetpackEffectOrange
+  parent: JetpackEffectBlue
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: SmallMobs
+    noRot: true
+    layers:
+    - shader: unshaded
+      map: [ "enum.EffectLayers.Unshaded" ]
+      sprite: Effects/jetpack.rsi
+      state: orange_sparkles
+
+- type: entity
+  id: JetpackEffectPurple
+  parent: JetpackEffectBlue
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: SmallMobs
+    noRot: true
+    layers:
+    - shader: unshaded
+      map: [ "enum.EffectLayers.Unshaded" ]
+      sprite: Effects/jetpack.rsi
+      state: purple_sparkles
+
+- type: entity
+  id: JetpackEffectRed
+  parent: JetpackEffectBlue
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: SmallMobs
+    noRot: true
+    layers:
+    - shader: unshaded
+      map: [ "enum.EffectLayers.Unshaded" ]
+      sprite: Effects/jetpack.rsi
+      state: red_sparkles
