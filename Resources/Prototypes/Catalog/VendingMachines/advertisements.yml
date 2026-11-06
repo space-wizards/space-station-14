@@ -279,3 +279,9 @@
   values:
     prefix: advertisement-pride-
     count: 4
+
+- type: localizedDataset
+  id: MothVendAds
+  values:
+    prefix: advertisement-mothvend-
+    count: 8
