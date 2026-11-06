@@ -61,6 +61,9 @@
           collection: MetalBreak
           params:
             volume: -8
+  - type: Tag
+    tags:
+    - SolarFlareDeviceLinkSourceTarget
 
 - type: entity
   parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
@@ -102,6 +105,9 @@
     - trigger: *DamageMachineFlimsy
       behaviors:
       - *SoundMetalBreak
+  - type: Tag
+    tags:
+      - SolarFlareDeviceLinkSourceTarget
 
 - type: entity
   parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
