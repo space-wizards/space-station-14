@@ -59,6 +59,7 @@ public sealed partial class TriggerSystem : EntitySystem
         InitializeTimer();
         InitializeSpawn();
         InitializeVoice();
+        InitializeVoiceCommands();
     }
 
     /// <summary>
