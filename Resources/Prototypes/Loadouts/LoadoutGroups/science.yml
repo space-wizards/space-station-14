@@ -1,0 +1,130 @@
+# Generic departmental
+
+- type: loadoutGroup
+  parent: BaseBackpack
+  id: ScienceBackpack
+  loadouts:
+  - ScientistBackpack
+  - ScientistSatchel
+  - ScientistDuffel
+
+- type: loadoutGroup
+  parent: BaseGloves
+  id: ScienceGloves
+  loadouts:
+  - LatexGloves
+  - PurpleGloves
+  - RobohandsGloves
+
+# Research Director
+
+- type: loadoutGroup
+  parent: BaseHead
+  id: ResearchDirectorHead
+  loadouts:
+  - ResearchDirectorBeret
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: ResearchDirectorJumpsuit
+  loadouts:
+  - ResearchDirectorJumpsuit
+  - ResearchDirectorJumpskirt
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: ResearchDirectorOuterClothing
+  loadouts:
+  - ResearchDirectorLabCoat
+  - ResearchDirectorWintercoat
+
+- type: loadoutGroup
+  parent: BaseNeck
+  id: ResearchDirectorNeck
+  loadouts:
+  - ResearchDirectorMantle
+  - ResearchDirectorCloak
+
+- type: loadoutGroup
+  parent: BaseShoes
+  id: ResearchDirectorShoes
+  loadouts:
+  - BrownShoes
+  - ScienceWinterBoots
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: ResearchDirectorJobTrinkets
+#  loadouts: []
+
+# Research Assistant
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: ResearchAssistantJumpsuit
+  loadouts:
+  - WhiteJumpsuit
+  - WhiteJumpskirt
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: ResearchAssistantJobTrinkets
+#  loadouts: []
+
+# Scientist
+
+- type: loadoutGroup
+  parent: BaseHead
+  id: ScientistHead
+  loadouts:
+  - RoboticistCap
+  - SkullBandana
+  - ScientificBeret
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: ScientistJumpsuit
+  loadouts:
+  - ScientistJumpsuit
+  - ScientistJumpskirt
+  - RoboticistJumpsuit
+  - RoboticistJumpskirt
+  - SeniorResearcherJumpsuit
+  - SeniorResearcherJumpskirt
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: ScientistOuterClothing
+  loadouts:
+  - RegularLabCoat
+  - ScienceLabCoat
+  - ScienceWintercoat
+  - RoboticistLabCoat
+  - RoboticistWintercoat
+  - SeniorResearcherLabCoat
+
+- type: loadoutGroup
+  parent: BaseNeck
+  id: ScientistNeck
+  loadouts:
+  - ScientistTie
+
+- type: loadoutGroup
+  parent: BaseShoes
+  id: ScientistShoes
+  loadouts:
+  - WhiteShoes
+  - BlackShoes
+  - ScienceWinterBoots
+
+- type: loadoutGroup
+  parent: BasePDA
+  id: ScientistPDA
+  loadouts:
+  - ScientistPDA
+  - SeniorResearcherPDA
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: ScientistJobTrinkets
+#  loadouts: []

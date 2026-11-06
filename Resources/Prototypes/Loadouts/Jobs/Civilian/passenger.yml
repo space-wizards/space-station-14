@@ -20,7 +20,7 @@
 
 # Face
 - type: loadout
-  id: PassengerFace
+  id: PassengerMask
   effects:
   - !type:GroupLoadoutEffect
     proto: GreyTider

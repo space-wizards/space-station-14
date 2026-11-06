@@ -1,0 +1,43 @@
+- type: roleLoadout
+  id: JobPsychologist
+  groups:
+  - GroupTankHarness
+  - CommonEyewear
+  - MedicalBackpack
+  - PsychologistJumpsuit
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  #- PsychologistJobTrinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobReporter
+  groups:
+  - GroupTankHarness
+  - ReporterHead
+  - CommonEyewear
+  - CommonBackpack
+  - ReporterJumpsuit
+  - ReporterOuterClothing
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  #- ReporterJobTrinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobTramDriver
+  groups:
+  - GroupTankHarness
+  - TramDriverHead
+  - CommonEyewear
+  - CommonBackpack
+  - TramDriverJumpsuit
+  - TramDriverOuterClothing
+  - TramDriverGloves
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  #- TramDriverJobTrinkets
+  - GroupSpeciesBreathTool

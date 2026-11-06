@@ -1,0 +1,49 @@
+- type: roleLoadout
+  id: JobResearchDirector
+  groups:
+  - GroupTankHarness
+  - ResearchDirectorHead
+  - CommonEyewear
+  - ScienceBackpack
+  - ResearchDirectorJumpsuit
+  - ResearchDirectorOuterClothing
+  - ResearchDirectorNeck
+  - ScienceGloves
+  - ResearchDirectorShoes
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  #- ResearchDirectorJobTrinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobScientist
+  groups:
+  - GroupTankHarness
+  - ScientistHead
+  - CommonEyewear
+  - ScienceBackpack
+  - ScientistJumpsuit
+  - ScientistOuterClothing
+  - ScientistNeck
+  - ScienceGloves
+  - ScientistShoes
+  - ScientistPDA
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  #- ScientistJobTrinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobResearchAssistant
+  groups:
+  - GroupTankHarness
+  - CommonEyewear
+  - ScienceBackpack
+  - ResearchAssistantJumpsuit
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  #- ResearchAssistantJobTrinkets
+  - GroupSpeciesBreathTool

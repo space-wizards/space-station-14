@@ -1,0 +1,68 @@
+# "Common" loadout groups are shared by multiple jobs in multiple departments.
+
+- type: loadoutGroup
+  parent: BaseEyewear
+  id: CommonEyewear
+  loadouts:
+  - Glasses
+  - GlassesJamjar
+  - GlassesJensen
+
+- type: loadoutGroup
+  parent: BaseBackpack
+  id: CommonBackpack
+  loadouts:
+  - CommonBackpack
+  - CommonSatchel
+  - CommonDuffel
+
+- type: loadoutGroup
+  parent: BaseAssistiveItems
+  id: CommonAssistiveItems
+  loadouts:
+  - OffsetCane
+  - OffsetCaneWood
+  - OffsetCaneClown
+  - OffsetCaneMime
+  - OffsetCaneNT
+  - Cane
+
+- type: loadoutGroup
+  parent: BaseTrinkets
+  id: CommonTrinkets
+  loadouts:
+  - FlowerWreath
+  - Hairflower
+  - Headphones
+  - PlushieLizard
+  - PlushieSpaceLizard
+  - ThreeCandles
+  - Lighter
+  - CigPackGreen
+  - CigPackRed
+  - CigPackBlue
+  - CigPackBlack
+  - CigarCase
+  - CigarGold
+  - BoxFolderBaseThreePapers
+  - BoxFolderPlasticClipboardThreePapers
+  - BoxFolderClipboardThreePapers
+  - ClothingNeckLGBTPin
+  - ClothingNeckAllyPin
+  - ClothingNeckAromanticPin
+  - ClothingNeckAsexualPin
+  - ClothingNeckAroacePin
+  - ClothingNeckBisexualPin
+  - ClothingNeckGayPin
+  - ClothingNeckIntersexPin
+  - ClothingNeckLesbianPin
+  - ClothingNeckNonBinaryPin
+  - ClothingNeckPansexualPin
+  - ClothingNeckPluralPin
+  - ClothingNeckOmnisexualPin
+  - ClothingNeckGenderqueerPin
+  - ClothingNeckGenderfluidPin
+  - ClothingNeckTransPin
+  - ClothingNeckAutismPin
+  - ClothingNeckGoldAutismPin
+  - TowelColorWhite
