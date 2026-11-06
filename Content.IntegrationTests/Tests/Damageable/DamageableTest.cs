@@ -94,7 +94,7 @@ public sealed class DamageableTest : GameTest
   components:
   - type: Damageable
   - type: Injurable
-  damageContainer: testDamageContainer
+    damageContainer: testDamageContainer
 ";
 
     [Test]
