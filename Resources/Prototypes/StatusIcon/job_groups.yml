@@ -143,6 +143,7 @@
     state: Nanotrasen
   icons:
   - JobIconNanotrasen
+  - JobIconCentcommLawyer
 
 - type: jobIconGroup
   id: TaskForceIconGroup

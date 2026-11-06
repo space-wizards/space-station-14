@@ -187,6 +187,9 @@ ghost-role-information-ert-medical-description = Assist with medical efforts to 
 ghost-role-information-cburn-agent-name = CBURN Agent
 ghost-role-information-cburn-agent-description = A highly trained CentComm agent, capable of dealing with various threats.
 
+ghost-role-information-centcom-lawyer-name = CentComm Lawyer
+ghost-role-information-centcom-lawyer-description = A member of CentComm's legal team, kept on retainer. Practice law on Central Command's behalf.
+
 ghost-role-information-centcom-official-name = CentComm Official
 ghost-role-information-centcom-official-description = Perform CentComm related duties such as inspect the station, jotting down performance reviews for heads of staff, and managing the fax machine.
 

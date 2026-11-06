@@ -57,6 +57,7 @@ job-description-station-ai = Remotely interface with the station's cameras, airl
 
 # Central Command
 job-description-centcommoff = Act as liaison to the newest state-of-the-art space station in Nanotrasen's fleet.
+job-description-centcommlawyer = Practice law on Central Command's behalf.
 
 # Task Force
 job-description-cburn = Cleanse the station of all biological contaminants.

@@ -1194,16 +1194,16 @@
 - type: startingGear
   id: VisitorLawyerCentcom
   equipment:
-    jumpsuit: ClothingUniformJumpsuitCentcomAgent
+    jumpsuit: ClothingUniformJumpsuitCentcommLawyer
     shoes: ClothingShoesLeather
-    gloves: ClothingHandsGlovesLeather
+    gloves: ClothingHandsGlovesColorBrown
     head: BladedFlatcapBrown
     neck: ClothingNeckLawyerbadge
-    id: VisitorLawyerPDA
+    id: VisitorCentcomLawyerPDA
     back: ClothingBackpackSatchelLeather
     belt: ClothingBeltStorageWaistbag
     eyes: ClothingEyesGlassesSunglasses
-    ears: ClothingHeadsetCentCom
+    ears: ClothingHeadsetCentComLawyer
     pocket1: RubberStampLawyer
     pocket2: LuxuryPen
   inhand:
