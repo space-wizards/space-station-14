@@ -11,22 +11,14 @@ public abstract partial class SharedGasThermoMachineSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedPowerReceiverSystem _receiver = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<GasThermoMachineComponent, ExaminedEvent>(OnExamined);
-
-        SubscribeLocalEvent<GasThermoMachineComponent, GasThermomachineToggleMessage>(OnToggleMessage);
-        SubscribeLocalEvent<GasThermoMachineComponent, GasThermomachineChangeTemperatureMessage>(OnChangeTemperature);
-    }
-
-    private void OnExamined(EntityUid uid, GasThermoMachineComponent thermoMachine, ExaminedEvent args)
+    [SubscribeLocalEvent]
+    private void OnExamined(Entity<GasThermoMachineComponent> ent, ref ExaminedEvent args)
     {
         if (Loc.TryGetString("gas-thermomachine-system-examined",
                 out var str,
-                ("machineName", Name(uid)),
-                ("tempColor", !IsHeater(thermoMachine) ? "deepskyblue" : "red"),
-                ("temp", Math.Round(thermoMachine.TargetTemperature, 2))
+                ("machineName", Name(ent.Owner)),
+                ("tempColor", !IsHeater(ent.Comp) ? "deepskyblue" : "red"),
+                ("temp", Math.Round(ent.Comp.TargetTemperature, 2))
             ))
         {
             args.PushMarkup(str);
@@ -38,24 +30,29 @@ public abstract partial class SharedGasThermoMachineSystem : EntitySystem
         return comp.Cp >= 0;
     }
 
-    private void OnToggleMessage(EntityUid uid, GasThermoMachineComponent thermoMachine, GasThermomachineToggleMessage args)
+    [SubscribeLocalEvent]
+    private void OnToggleMessage(Entity<GasThermoMachineComponent> ent, ref GasThermomachineToggleMessage args)
     {
-        var powerState = _receiver.TogglePower(uid, user: args.Actor);
-        _adminLogger.Add(LogType.AtmosPowerChanged, $"{ToPrettyString(args.Actor)} turned {(powerState ? "On" : "Off")} {ToPrettyString(uid)}");
-        DirtyUI(uid, thermoMachine);
+        var powerState = _receiver.TogglePower(ent.Owner, user: args.Actor);
+        _adminLogger.Add(LogType.AtmosPowerChanged, $"{ToPrettyString(args.Actor)} turned {(powerState ? "On" : "Off")} {ToPrettyString(ent)}");
+        DirtyUI(ent);
     }
 
-    private void OnChangeTemperature(EntityUid uid, GasThermoMachineComponent thermoMachine, GasThermomachineChangeTemperatureMessage args)
+    [SubscribeLocalEvent]
+    private void OnChangeTemperature(Entity<GasThermoMachineComponent> ent, ref GasThermomachineChangeTemperatureMessage args)
     {
+        var thermoMachine = ent.Comp;
         if (IsHeater(thermoMachine))
             thermoMachine.TargetTemperature = MathF.Min(args.Temperature, thermoMachine.MaxTemperature);
         else
             thermoMachine.TargetTemperature = MathF.Max(args.Temperature, thermoMachine.MinTemperature);
         thermoMachine.TargetTemperature = MathF.Max(thermoMachine.TargetTemperature, Atmospherics.TCMB);
-        _adminLogger.Add(LogType.AtmosTemperatureChanged, $"{ToPrettyString(args.Actor)} set temperature on {ToPrettyString(uid)} to {thermoMachine.TargetTemperature}");
-        Dirty(uid, thermoMachine);
-        DirtyUI(uid, thermoMachine);
+        _adminLogger.Add(LogType.AtmosTemperatureChanged, $"{ToPrettyString(args.Actor)} set temperature on {ToPrettyString(ent.Owner)} to {thermoMachine.TargetTemperature}");
+        Dirty(ent);
+        DirtyUI(ent);
     }
 
-    protected virtual void DirtyUI(EntityUid uid, GasThermoMachineComponent? thermoMachine, UserInterfaceComponent? ui=null) {}
+    protected virtual void DirtyUI(Entity<GasThermoMachineComponent> ent, UserInterfaceComponent? ui = null)
+    {
+    }
 }
