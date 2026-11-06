@@ -35,6 +35,13 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             if (_atmosphere.GetContainingMixture(uid, true) is not {} environment)
                 return;
 
+            if (environment.Pressure > 10_000f)
+            {
+                args.FailMessage = Loc.GetString("comp-atmos-unsafe-unanchor-pressure-too-high");
+                args.Cancel();
+                return;
+            }
+
             foreach (var node in nodes.Nodes.Values)
             {
                 if (node is not PipeNode pipe)
