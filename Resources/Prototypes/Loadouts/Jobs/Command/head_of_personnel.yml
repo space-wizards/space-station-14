@@ -1,23 +1,3 @@
-# For mantles
-- type: loadoutEffectGroup
-  id: MasterHoP
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobHeadOfPersonnel
-      time: 20h
-
-# Professional HoP Time
-- type: loadoutEffectGroup
-  id: ProfessionalHoP
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobHeadOfPersonnel
-      time: 15h # special reward for HoP mains
-
 # Jumpsuit
 - type: loadout
   id: HoPJumpsuit
@@ -47,7 +27,7 @@
     neck: ClothingNeckMantleHOP
   effects:
   - !type:GroupLoadoutEffect
-    proto: MasterHoP
+    proto: HeadOfPersonnelSenior
 
 - type: startingGear
   id: HoPMantle
@@ -59,7 +39,7 @@
   id: HoPBackpackIan
   effects:
   - !type:GroupLoadoutEffect
-    proto: ProfessionalHoP
+    proto: HeadOfPersonnelCapstone
   equipment:
     back: ClothingBackpackIan
 

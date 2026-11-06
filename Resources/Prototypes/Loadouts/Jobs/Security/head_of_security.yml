@@ -1,13 +1,3 @@
-# For mantles
-- type: loadoutEffectGroup
-  id: MasterHoS
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobHeadOfSecurity
-      time: 20h
-
 # Jumpsuit
 - type: loadout
   id: HeadofSecurityJumpsuit
@@ -68,7 +58,7 @@
     neck: ClothingNeckMantleHOS
   effects:
   - !type:GroupLoadoutEffect
-    proto: MasterHoS
+    proto: HeadOfSecuritySenior
 
 - type: startingGear
   id: HeadofSecurityMantle
