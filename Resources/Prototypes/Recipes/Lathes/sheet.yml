@@ -1,3 +1,10 @@
+- type: latheRecipe #yes it's not sheet but it's atleast have some logic to be here
+  id: Coal
+  result: Coal1
+  completetime: 0
+  materials:
+    Wood: 200
+
 - type: latheRecipe
   id: SheetSteel
   result: SheetSteel1
