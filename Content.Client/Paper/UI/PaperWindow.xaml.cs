@@ -265,7 +265,7 @@ namespace Content.Client.Paper.UI
                 // don't want to lose any text they already input.
                 Input.TextRope = Rope.Leaf.Empty;
                 Input.CursorPosition = new TextEdit.CursorPos();
-                Input.InsertAtCursor(state.Text);
+                Input.InsertAtCursor(msg.ToString());
             }
 
             for (var i = 0; i <= state.StampedBy.Count * 3 + 1; i++)
