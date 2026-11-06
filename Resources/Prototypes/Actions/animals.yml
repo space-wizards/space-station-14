@@ -1,0 +1,29 @@
+- type: entity
+  parent: BaseMentalAction
+  id: ActionPossumStasis
+  name: "[color=red]Play Dead[/color]"
+  description: Fake your death out of fear.
+  components:
+  - type: Sprite
+    sprite: Mobs/Animals/possum_old.rsi
+    layers:
+    - state: "possum_dead_old"
+      map: [ "enum.ActionVisuals.Icon" ]
+    - state: "possum_old"
+      map: [ "enum.ActionVisuals.IconToggled" ]
+      visible: false
+  - type: Action
+    raiseOnAction: true
+    useDelay: 2
+    checkCanInteract: false # You can heal even if you are killed
+    checkConsciousness: false
+  - type: RegenerativeStasisAction
+    minStasisCooldown: 10
+    maxStasisCooldown: 20
+    activeName: possum-stasis-active-name
+    activeDescription: possum-stasis-active-desc
+    enterStasisPopup: possum-stasis-enter
+    exitStasisPopup: possum-stasis-exit
+    exitStasisPopupOthers: possum-stasis-exit-others
+  - type: InstantAction
+    event: !type:ChangelingStasisActionEvent
