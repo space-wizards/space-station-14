@@ -151,6 +151,8 @@
     walkModifier: 0.7
     sprintModifier: 0.7
   - type: DamageExaminable
+  - type: ThrowVelocityModifier
+    velocityMultiplier: 0.6
 
 - type: entity
   id: SyndicateMicrowave
