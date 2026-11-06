@@ -15,7 +15,7 @@ public sealed partial class EventWebhook : IPostInjectInit
         _sawmill = Logger.GetSawmill(SawmillDiscordName);
     }
 
-    public void TrySendMessage(string adminUsername, int roundId, string eventDescription, string? webhookUrl = null)
+    public void TrySendMessage(string adminUsername, int roundId, string eventDescription, LocId? categoryTitle, string? webhookUrl = null)
     {
         if (string.IsNullOrEmpty(webhookUrl))
             return;
@@ -32,7 +32,9 @@ public sealed partial class EventWebhook : IPostInjectInit
                     Title = adminUsername,
                     // Gotta remove the alpha channel so discord doesn't freak out
                     Color = Color.DarkViolet.ToArgb() & 0x00FFFFFF, //#9400D3
-                    Description = eventDescription,
+                    Description = categoryTitle == null
+                        ? eventDescription
+                        : Loc.GetString("event-log-webhook-text-with-category", ("category", Loc.GetString(categoryTitle)), ("text", eventDescription)),
                     Footer = new WebhookEmbedFooter()
                     {
                         Text = Loc.GetString(
