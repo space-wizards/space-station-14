@@ -87,14 +87,14 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
             && device.ReceiveFrequencyId != null
             && _protoMan.TryIndex(device.ReceiveFrequencyId, out var receive))
         {
-            device.ReceiveFrequency = receive.Frequency;
+            device.ReceiveFrequency = new DeviceFrequency(receive.Frequency);
         }
 
         if (device.TransmitFrequency == null
             && device.TransmitFrequencyId != null
             && _protoMan.TryIndex(device.TransmitFrequencyId, out var xmit))
         {
-            device.TransmitFrequency = xmit.Frequency;
+            device.TransmitFrequency = new DeviceFrequency(xmit.Frequency);
         }
 
         DirtyFields(ent.AsNullable(),
