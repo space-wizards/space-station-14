@@ -1,79 +1,43 @@
-name: Assign release PRs to milestone
+name: Assign merged PRs to release milestone
 
 on:
-  workflow_dispatch:
-    inputs:
-      start_sha:
-        description: "Start SHA (exclusive)"
-        required: true
-        type: string
-      end_sha:
-        description: "End SHA (inclusive)"
-        required: true
-        type: string
-      milestone:
-        description: "Milestone title"
-        required: true
-        type: string
-      dry_run:
-        description: "Only show what would be assigned"
-        required: true
-        type: boolean
-        default: true
+  pull_request_target:
+    types: [ closed ]
 
 permissions:
-  contents: read
-  pull-requests: read
   issues: write
+  pull-requests: write
 
 jobs:
   assign:
+    name: Assign PR to latest release milestone
     runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master' }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Assign PRs
+      - name: Assign PR to latest open YYYY.MM milestone
         env:
           GH_TOKEN: ${{ github.token }}
-          START_SHA: ${{ inputs.start_sha }}
-          END_SHA: ${{ inputs.end_sha }}
-          MILESTONE: ${{ inputs.milestone }}
-          DRY_RUN: ${{ inputs.dry_run }}
-          REPO: space-wizards/space-station-14
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          CURRENT_MILESTONE: ${{ github.event.pull_request.milestone.number }}
         run: |
           set -euo pipefail
 
-          # Find the milestone.
-          MILESTONE_ID=$(gh api --paginate "repos/$REPO/milestones?state=all&per_page=100" \
-            --jq ".[] | select(.title == \"$MILESTONE\") | .number" | head -n 1)
+          # Release milestone names should contain date in format YYYY.MM (e.g. 2026.11).
+          MILESTONES=$(gh api --paginate "repos/${REPO}/milestones?state=open&per_page=100" \
+            --jq '.[] | select(.title | test("^[0-9]{4}[.][0-9]{2}$")) | "\(.title)\t\(.number)"' \
+            | sort -r)
 
-          if [[ -z "$MILESTONE_ID" ]]; then
-            echo "Milestone not found: $MILESTONE"
-            exit 1
+          LATEST_MILESTONE="${MILESTONES%%$'\n'*}"
+
+          if [[ -z "${LATEST_MILESTONE}" ]]; then
+            echo "::warning::No open milestone named YYYY.MM found in ${REPO}, PR #${PR_NUMBER} was not assigned to a milestone."
+            exit 0
           fi
 
-          echo "Using milestone: $MILESTONE (#$MILESTONE_ID)"
+          MILESTONE_NUMBER="${LATEST_MILESTONE##*$'\t'}"
 
-          # Collect unique PR numbers from commit subjects.
-          mapfile -t PR_NUMBERS < <(
-            git log --format='%s' "$START_SHA..$END_SHA" |
-            grep -oE '\(#[0-9]+\)$' |
-            grep -oE '[0-9]+' |
-            sort -nu || true
-          )
+          gh api --method PATCH "repos/${REPO}/issues/${PR_NUMBER}" \
+            -F milestone="${MILESTONE_NUMBER}" >/dev/null
 
-          echo "Found ${#PR_NUMBERS[@]} PR references."
-
-          for PR in "${PR_NUMBERS[@]}"; do
-            DATA=$(gh api "repos/$REPO/pulls/$PR")
-
-            if [[ "$DRY_RUN" == "true" ]]; then
-              echo "[DRY RUN] Would assign #$PR"
-            else
-              gh api --method PATCH "repos/$REPO/issues/$PR" \
-                -F milestone="$MILESTONE_ID" >/dev/null
-              echo "Assigned #$PR"
-            fi
-          done
+          echo "Done."
