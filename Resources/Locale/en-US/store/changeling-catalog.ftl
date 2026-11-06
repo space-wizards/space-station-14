@@ -47,3 +47,6 @@ changeling-catalog-horror-form-desc = Turns you into a nigh-unstoppable juggerna
 
 changeling-catalog-fleshtomb-name = Fleshtomb
 changeling-catalog-fleshtomb-desc = Preserve a corpse in a fleshy prison, slowly harvesting their genetic code for your own use. It slowly generates DNA, but is very fragile and must be preserved in proper atmosphere to not fall apart.
+
+changeling-catalog-transformation-sting-name = Transformation Sting
+changeling-catalog-transformation-sting-desc = Learn to temporarily transform victims into one of your stored identities.
