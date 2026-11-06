@@ -2,7 +2,7 @@
   id: FigurinesHoP
   values:
     prefix: figurines-hop-
-    count: 7
+    count: 9
 
 - type: localizedDataset
   id: FigurinesPassenger
@@ -56,25 +56,25 @@
   id: FigurinesHoS
   values:
     prefix: figurines-hos-
-    count: 5
+    count: 6
 
 - type: localizedDataset
   id: FigurinesWarden
   values:
     prefix: figurines-warden-
-    count: 6
+    count: 7
 
 - type: localizedDataset
   id: FigurinesDetective
   values:
     prefix: figurines-detective-
-    count: 5
+    count: 7
 
 - type: localizedDataset
   id: FigurinesSecurity
   values:
     prefix: figurines-security-
-    count: 10
+    count: 12
 
 - type: localizedDataset
   id: FigurinesLawyer
@@ -86,7 +86,7 @@
   id: FigurinesCargoTech
   values:
     prefix: figurines-cargotech-
-    count: 11
+    count: 12
 
 - type: localizedDataset
   id: FigurinesSalvage
@@ -104,13 +104,13 @@
   id: FigurinesCE
   values:
     prefix: figurines-ce-
-    count: 6
+    count: 7
 
 - type: localizedDataset
   id: FigurinesEngineer
   values:
     prefix: figurines-engineer-
-    count: 7
+    count: 6
 
 - type: localizedDataset
   id: FigurinesAtmosTech
@@ -128,7 +128,7 @@
   id: FigurinesScientist
   values:
     prefix: figurines-scientist-
-    count: 6
+    count: 7
 
 - type: localizedDataset
   id: FigurinesCMO
@@ -140,31 +140,31 @@
   id: FigurinesChemist
   values:
     prefix: figurines-chemist-
-    count: 8
+    count: 9
 
 - type: localizedDataset
   id: FigurinesParamedic
   values:
     prefix: figurines-paramedic-
-    count: 5
+    count: 7
 
 - type: localizedDataset
   id: FigurinesDoctor
   values:
     prefix: figurines-doctor-
-    count: 6
+    count: 9
 
 - type: localizedDataset
   id: FigurinesLibrarian
   values:
     prefix: figurines-librarian-
-    count: 14
+    count: 15
 
 - type: localizedDataset
   id: FigurinesChaplain
   values:
     prefix: figurines-chaplain-
-    count: 6
+    count: 9
 
 - type: localizedDataset
   id: FigurinesChef
@@ -206,7 +206,7 @@
   id: FigurinesNukieElite
   values:
     prefix: figurines-nukie-elite-
-    count: 6
+    count: 5
 
 - type: localizedDataset
   id: FigurinesNukieCommander
@@ -224,7 +224,7 @@
   id: FigurinesWizard
   values:
     prefix: figurines-wizard-
-    count: 8
+    count: 9
 
 - type: localizedDataset
   id: FigurinesSpaceDragon
