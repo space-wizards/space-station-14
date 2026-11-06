@@ -4,6 +4,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.CCVar;
+using Content.Shared.Station.Systems;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -15,7 +16,7 @@ using Color = Robust.Shared.Maths.Color;
 namespace Content.Client.Atmos.Overlays;
 
 /// <summary>
-/// Overlay responsible for rendering vacuum overlay.
+/// Desaturates areas based on pressure, and applies a cold effect to areas based on temperature.
 /// </summary>
 public sealed partial class GasTileVacuumOverlay : Overlay
 {
@@ -28,7 +29,6 @@ public sealed partial class GasTileVacuumOverlay : Overlay
     private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
     private static readonly ProtoId<ShaderPrototype> VacuumOverlayShader = "VacuumDesaturation";
     private static readonly Color EmptyColor = new(0, 0, 0, 0);
-    private static readonly Color MarkerColor = new(255f, 0, 0);
 
     [Dependency] private IEntityManager _entManager = default!;
     [Dependency] private IPrototypeManager _proto = default!;
@@ -37,6 +37,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
 
     private readonly SharedMapSystem _maps;
     private readonly SharedTransformSystem _xformSys;
+    private readonly StationSystem _station;
     private readonly ShaderInstance _unshader;
     private readonly ShaderInstance _shader;
 
@@ -46,6 +47,15 @@ public sealed partial class GasTileVacuumOverlay : Overlay
     // Overlay settings
     private float _intensity; // overlay intensity. 0.0f = turned off, 1.0f = full grayscale
 
+    /// <summary>
+    /// The temperature at which maximum cold effect is applied, decreasing linearly to 0 at 0°C.
+    /// </summary>
+    private const float MaxColdEffectTemperatureKelvin = 223f;
+    /// <summary>
+    /// kPa pressure threshold to start desaturating the area.
+    /// </summary>
+    private const float DesaturationStartPressureKPa = 40f;
+
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
     public GasTileVacuumOverlay()
@@ -54,10 +64,14 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         ZIndex = ContentZIndex;
         _maps = _entManager.System<SharedMapSystem>();
         _xformSys = _entManager.System<SharedTransformSystem>();
+        _station = _entManager.System<StationSystem>();
 
         _unshader = _proto.Index(UnshadedShader).Instance();
         _shader = _proto.Index(VacuumOverlayShader).InstanceUnique();
         _configManager.OnValueChanged(CCVars.VacuumOverlayIntensity, SetVacuumOverlayIntensity, invokeImmediately: true);
+
+        var coldTint = new Vector3(0.78f, 0.9f, 1.0f);
+        _shader.SetParameter("cold_tint", coldTint);
     }
 
     private void SetVacuumOverlayIntensity(float intensity)
@@ -95,10 +109,9 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         var worldHandle = args.WorldHandle;
         var worldToViewportLocal = args.Viewport.GetWorldToLocalMatrix();
 
-        // If there is no Vacuum after checking all visible tiles, we can bail early
-        var anyVacuum = false;
+        // If there is no affected tile after checking all visible tiles, we can bail early.
+        var anyDesaturation = false;
 
-        // We're rendering in the context of the vacuum target texture, which will encode data as to where vacuum effect will be
         args.WorldHandle.RenderInRenderTarget(res.VacuumTarget,
             () =>
             {
@@ -136,15 +149,28 @@ public sealed partial class GasTileVacuumOverlay : Overlay
                             if (!localBounds.Contains(tilePosition))
                                 continue;
 
-                            if (tileGas.ByteGasTemperature.Value != ThermalByte.StateVacuum)
+                            if (tileGas.ByteGasTemperature.Value == ThermalByte.AtmosImpossible)
                                 continue;
 
-                            // Encode the strength in the red channel
-                            // alpha set to 1 as tile is active
+                            var coldStrength = GetTemperatureEffectStrength(tileGas.ByteGasTemperature,
+                                MaxColdEffectTemperatureKelvin,
+                                false);
+                            var desaturationStrength =
+                                1f - MathHelper.Clamp01(tileGas.Pressure / DesaturationStartPressureKPa);
+
+                            // Diminish cold effect as pressure decreases.
+                            // A pressurized room with temperature problems will be visibly cold, but a spaced room will not.
+                            coldStrength *= 1f - desaturationStrength;
+
+                            if (coldStrength <= 0f && desaturationStrength <= 0f)
+                                continue;
+
+
+                            // Encode desaturation and cold in separate color channels.
                             worldHandle.DrawRect(Box2.CenteredAround(tilePosition + grid.Comp.TileSizeHalfVector,
                                     grid.Comp.TileSizeVector),
-                                MarkerColor);
-                            anyVacuum = true;
+                                new Color(desaturationStrength, coldStrength, 0f));
+                            anyDesaturation = true;
                         }
                     }
                 }
@@ -152,8 +178,7 @@ public sealed partial class GasTileVacuumOverlay : Overlay
             // This clears the buffer to all zero first...
             EmptyColor);
 
-        // no distortion, no need to render
-        if (!anyVacuum)
+        if (!anyDesaturation)
         {
             args.WorldHandle.UseShader(null);
             args.WorldHandle.SetTransform(Matrix3x2.Identity);
@@ -163,6 +188,24 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         return true;
     }
 
+    private static float GetTemperatureEffectStrength(ThermalByte temperature, float maxIntensityTemperature, bool worksInVacuum = true)
+    {
+        if (temperature.IsVacuum)
+            return worksInVacuum ? 1f : 0f;
+
+        if (!temperature.TryGetTemperature(out var kelvinTemperature))
+            return 0f;
+
+        if (kelvinTemperature <= maxIntensityTemperature)
+            return 1f;
+
+        var temperatureRange = Atmospherics.T0C - maxIntensityTemperature;
+        if (temperatureRange <= 0f)
+            return 0f;
+
+        return MathHelper.Clamp01((Atmospherics.T0C - kelvinTemperature) / temperatureRange);
+    }
+
     protected override void Draw(in OverlayDrawArgs args)
     {
         var res = _resources.GetForViewport(args.Viewport, static _ => new CachedResources());
@@ -170,7 +213,26 @@ public sealed partial class GasTileVacuumOverlay : Overlay
         if (ScreenTexture is null || res.VacuumTarget is null)
             return;
 
+        args.WorldBounds.GetCorners(out var worldBottomLeft, out var worldBottomRight, out _, out var worldTopLeft);
+
+        // Lock the effect relative to the station so it doesn't move relative to it when it moves.
+        var station = _station.GetStationInMap(args.MapId);
+        var stationGrid = station is { } stationUid
+            ? _station.GetLargestGrid(stationUid)
+            : null;
+        var worldToStation = Matrix3x2.Identity;
+        if (stationGrid is { } stationGridUid)
+        {
+            (_, _, _, worldToStation) = _xformSys.GetWorldPositionRotationMatrixWithInv(stationGridUid);
+        }
+
+        var stationBottomLeft = Vector2.Transform(worldBottomLeft, worldToStation);
+        var stationBottomRight = Vector2.Transform(worldBottomRight, worldToStation);
+        var stationTopLeft = Vector2.Transform(worldTopLeft, worldToStation);
         _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        _shader.SetParameter("station_bottom_left", stationBottomLeft);
+        _shader.SetParameter("station_bottom_right", stationBottomRight);
+        _shader.SetParameter("station_top_left", stationTopLeft);
 
         args.WorldHandle.UseShader(_shader);
         args.WorldHandle.DrawTextureRect(res.VacuumTarget.Texture, args.WorldBounds);

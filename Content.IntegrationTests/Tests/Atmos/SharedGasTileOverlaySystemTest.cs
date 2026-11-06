@@ -68,7 +68,7 @@ public sealed partial class SharedGasTileOverlayTest : AtmosTest
             var tile = chunk.TileData[tileIndex];
             tile.ByteGasTemperature.TryGetTemperature(out var actualTemp);
 
-            Assert.That(actualTemp, Is.EqualTo(expectedTemp).Within(0.01f), $"Tile at {indices} had wrong temperature!");
+            Assert.That(actualTemp, Is.EqualTo(expectedTemp).Within(ThermalByte.TempDegreeResolution), $"Tile at {indices} had wrong temperature!");
         });
     }
 
