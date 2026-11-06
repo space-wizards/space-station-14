@@ -83,6 +83,25 @@
       max: 13
 
 - type: entity
+  parent: ComplexXenoArtifactItem
+  id: DangerousXenoArtifactItem
+  description: A strange artifact from time unknown. Looks like a bad time. Fits in hand perfectly.
+  suffix: Hand-Sized
+  components:
+  - type: XenoArtifact
+    nodeCount:
+      min: 2
+      max: 4
+    effectsTable: !type:GroupSelector
+      children:
+      - !type:NestedSelector
+        tableId: XenoArtifactEffectsDangerousTable
+        weight: 40
+      - !type:NestedSelector
+        tableId: XenoArtifactEffectsHandheldOnlyTable
+        weight: 2
+
+- type: entity
   id: ArtifactFragment
   parent: BaseItem
   name: artifact fragment

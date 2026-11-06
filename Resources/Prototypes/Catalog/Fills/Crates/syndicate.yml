@@ -23,6 +23,45 @@
           tableId: SyndicateHardsuitExtrasEntityTable
 
 - type: entity
+  parent: CrateSyndicate
+  id: CrateArtifactBundle
+  name: Artifact bundle
+  suffix: Filled
+  description: Contains artifacts and the equipment to fulfill your mad science needs. take to an open area before opening.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: DangerousXenoArtifactItem
+          amount: 4
+        - id: MachineArtifactAnalyzer
+        - id: ComputerAnalysisConsole
+        - id: NodeScanner
+        - id: ClothingShoesBootsMagSyndie
+        - id: ToolboxSyndicateFilled
+        - id: PlasmaChemistryVial
+        - id: RadiumChemistryVial
+        - id: DrinkWaterBottleFull
+        - id: MouseCube
+          amount: 2
+        - id: NitrogenCanister
+        - id: AirCanister
+        - id: CarbonDioxideCanister
+        - id: FrezonCanister
+        - id: HolofanProjector
+        - id: WeaponLaserCarbinePractice
+        - id: FluteInstrument
+        - id: SpaceCash1000
+        - id: BaseBallBat
+        - id: SpearUranium
+        - id: BoxBeaker
+        - id: BoxSyringe
+        - id: HandheldArtifactContainer
+        - id: AnomalyScanner
+        - id: WeaponPistolCHIMPUpgraded
+
+- type: entity
   parent: [ CrateSyndicate, StorePresetUplink, BaseSyndicateContraband ]
   id: CrateSyndicateSuperSurplusBundle
   name: Syndicate super surplus crate
