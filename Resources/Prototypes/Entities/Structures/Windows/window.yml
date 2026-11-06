@@ -41,6 +41,7 @@
         - GlassLayer
   - type: ExaminableDamage
     messages: WindowMessages
+  - type: PressureDamageSound
   - type: Repairable
   - type: RCDDeconstructable
     cost: 6
@@ -218,6 +219,7 @@
   - type: Repairable
   - type: ExaminableDamage
     messages: WindowMessages
+  - type: PressureDamageSound
   - type: RCDDeconstructable
     cost: 4
     delay: 2

@@ -267,11 +267,28 @@ public sealed partial class AtmosphereSystem
     /// <param name="deltaPressure">The delta pressure being exerted on the entity.</param>
     private void PerformDamage(Entity<DeltaPressureComponent> ent, float pressure, float deltaPressure)
     {
+        if (ent.Comp.RequireAirBlocked &&
+            TryComp<AirtightComponent>(ent, out var airtight) &&
+            !airtight.AirBlocked)
+        {
+            SetIsTakingDamageState(ent, false);
+            return;
+        }
+
         var maxPressure = Math.Max(pressure - ent.Comp.MinPressure, deltaPressure - ent.Comp.MinPressureDelta);
         var maxPressureCapped = Math.Min(maxPressure, ent.Comp.MaxEffectivePressure);
         var appliedDamage = ScaleDamage(ent, ent.Comp.BaseDamage, maxPressureCapped);
 
         _damage.ChangeDamage(ent.Owner, appliedDamage, ignoreResistances: true, interruptsDoAfters: false);
+
+        if (!TerminatingOrDeleted(ent) &&
+            TryComp<PressureDamageSoundComponent>(ent, out var sound) &&
+            _gameTiming.CurTime >= sound.NextSoundTime)
+        {
+            sound.NextSoundTime = _gameTiming.CurTime + sound.Cooldown;
+            _audio.PlayPvs(sound.Sound, ent.Owner);
+        }
+
         SetIsTakingDamageState(ent, true);
     }
 

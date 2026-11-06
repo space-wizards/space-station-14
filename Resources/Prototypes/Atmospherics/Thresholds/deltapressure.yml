@@ -9,8 +9,9 @@
   - type: DeltaPressure
     minPressure: 150000
     minPressureDelta: 100000
+    maxEffectivePressure: 200000
     scalingType: Linear
-    scalingPower: 0.0001
+    scalingPower: 0.000013
 
 ## For quarter reinforced plasma windows
 - type: entity
@@ -20,7 +21,9 @@
   - type: DeltaPressure
     minPressure: 37500
     minPressureDelta: 25000
-    scalingType: Threshold
+    maxEffectivePressure: 100000
+    scalingType: Linear
+    scalingPower: 0.000035
 
 ## For plasma windows
 - type: entity
@@ -30,8 +33,9 @@
   - type: DeltaPressure
     minPressure: 75000
     minPressureDelta: 50000
+    maxEffectivePressure: 100000
     scalingType: Linear
-    scalingPower: 0.0005
+    scalingPower: 0.000018
 
 ## For quarter plasma windows
 - type: entity
@@ -41,7 +45,9 @@
   - type: DeltaPressure
     minPressure: 18750
     minPressureDelta: 12500
-    scalingType: Threshold
+    maxEffectivePressure: 50000
+    scalingType: Linear
+    scalingPower: 0.00003
 
 ## For reinforced glass windows
 - type: entity
@@ -51,7 +57,8 @@
   - type: DeltaPressure
     minPressure: 15000
     minPressureDelta: 10000
-    scalingType: Threshold
+    scalingType: Linear
+    scalingPower: 0.00013
 
 ## For quarter reinforced glass windows
 - type: entity
@@ -61,6 +68,8 @@
   - type: DeltaPressure
     minPressure: 3750
     minPressureDelta: 2500
+    scalingType: Linear
+    scalingPower: 0.00035
 
 ## For glass windows
 - type: entity
@@ -81,5 +90,6 @@
   - type: DeltaPressure
     minPressure: 250
     minPressureDelta: 187.5
-    scalingType: Threshold
+    scalingType: Linear
+    scalingPower: 0.002
 
