@@ -1,22 +1,31 @@
 - type: vendingMachineInventory
   id: PTechInventory
-  startingInventory:
-    PassengerPDA: 5
-    ClearPDA: 5
-    PassengerIDCard: 5
-    ClothingHeadsetGrey: 5
-    RubberStampApproved: 1
-    RubberStampDenied: 1
-    BoxFolderPlasticClipboardEmpty: 2
-    Paper: 10
-    Envelope: 10
-    HandLabeler: 2
-    EncryptionKeyCargo: 2
-    EncryptionKeyEngineering: 2
-    EncryptionKeyMedical: 2
-    EncryptionKeyScience: 2
-    EncryptionKeySecurity: 1
-    EncryptionKeyService: 3
-  contrabandInventory:
-    BalloonNT: 2
-    LuxuryPen: 1
+  categories:
+  - name: vending-machine-category-identification
+    icon: { entity: PassengerPDA }
+    startingInventory:
+      PassengerPDA: 5
+      ClearPDA: 5
+      PassengerIDCard: 5
+      ClothingHeadsetGrey: 5
+  - name: vending-machine-category-office-supplies
+    icon: { entity: Paper }
+    startingInventory:
+      RubberStampApproved: 1
+      RubberStampDenied: 1
+      BoxFolderPlasticClipboardEmpty: 2
+      Paper: 10
+      Envelope: 10
+      HandLabeler: 2
+    contrabandInventory:
+      BalloonNT: 2
+      LuxuryPen: 1
+  - name: vending-machine-category-encryption-keys
+    icon: { entity: EncryptionKeyCargo }
+    startingInventory:
+      EncryptionKeyCargo: 2
+      EncryptionKeyEngineering: 2
+      EncryptionKeyMedical: 2
+      EncryptionKeyScience: 2
+      EncryptionKeySecurity: 1
+      EncryptionKeyService: 3

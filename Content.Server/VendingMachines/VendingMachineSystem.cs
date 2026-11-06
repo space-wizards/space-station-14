@@ -158,7 +158,7 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
 
             if (ProtoMan.TryIndex(vendingInventory, out VendingMachineInventoryPrototype? inventoryPrototype))
             {
-                foreach (var (item, amount) in inventoryPrototype.StartingInventory)
+                foreach (var (item, amount) in inventoryPrototype.EnumerateInventory(InventoryType.Regular))
                 {
                     if (ProtoMan.TryIndex(item, out EntityPrototype? prototype))
                         total += _pricing.GetEstimatedPrice(prototype) * amount;
