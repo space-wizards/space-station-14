@@ -51,4 +51,10 @@ public sealed partial class RandomPlantMutation
     /// </summary>
     [DataField]
     public bool Persists = true;
+
+    /// <summary>
+    /// Persistent mutations in the same exclusive group cannot coexist on a plant.
+    /// </summary>
+    [DataField]
+    public string? ExclusiveGroup;
 }

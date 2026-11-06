@@ -2,6 +2,7 @@
   parent: [ BaseItem, BasePaperLabelable ] #TODO: Add sprites for different types of paper, replace BasePaperLabelable with BasePaperLabelableVisualized
   id: SeedBase
   abstract: true
+  categories: [Seeds]
   components:
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/seeds.rsi
