@@ -51,8 +51,7 @@ namespace Content.Shared.Administration
     }
 
     /// <summary>
-    ///     Sent by the server to notify all clients when the webhook url is sent.
-    ///     The webhook url itself is not and should not be sent.
+    ///     Sent by the server to notify all clients whether ahelp messages are relayed to Discord.
     /// </summary>
     [Serializable, NetSerializable]
     public sealed class BwoinkDiscordRelayUpdated : EntityEventArgs
