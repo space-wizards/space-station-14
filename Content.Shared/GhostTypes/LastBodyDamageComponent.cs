@@ -7,22 +7,16 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.GhostTypes;
 
 /// <summary>
-/// Added to the Mind of an entity by the StoreDamageTakenOnMindSystem, allowing storage of the damage values their body had.
+/// Added to the Mind of an entity by <see cref="StoreDamageTakenOnMindSystem"/>, allowing storage of the damage values their body had.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class LastBodyDamageComponent : Component
 {
     /// <summary>
-    /// Dictionary DamageGroupPrototype proto ids to how much damage was received from that damage type.
+    /// Damage taken from the last body to have <see cref="StoreDamageTakenOnMindComponent"/>.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Dictionary<ProtoId<DamageGroupPrototype>, FixedPoint2>? DamagePerGroup;
-
-    /// <summary>
-    /// Collection of possible damage types, stored by the StoreDamageTakenOnMind.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public DamageSpecifier? Damage;
+    public DamageSpecifier Damage = new();
 
     /// <summary>
     /// Special death cause that's saved after an event related to it is triggered
