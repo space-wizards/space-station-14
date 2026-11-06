@@ -1,4 +1,4 @@
-﻿using Content.Shared.DeviceConfigurator.Systems;
+using Content.Shared.DeviceConfigurator.Systems;
 using Content.Shared.DeviceNetwork.Components;
 using Robust.Shared.GameStates;
 

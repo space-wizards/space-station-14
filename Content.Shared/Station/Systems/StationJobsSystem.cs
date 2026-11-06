@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Station.Systems;
+namespace Content.Shared.Station.Systems;
 
 /// <summary>
 /// Handles the assignment and tracking of Station jobs and their associated role entities.

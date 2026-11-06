@@ -1,4 +1,4 @@
-﻿using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Actions.Components;
 using Content.Shared.Waypointer;
 using Content.Shared.Waypointer.Components;

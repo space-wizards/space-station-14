@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
