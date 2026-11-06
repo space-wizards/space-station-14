@@ -43,7 +43,28 @@ public sealed partial class StationLimitedNetworkSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnManagerInit(Entity<StationNetworkManagerComponent> ent, ref DeviceNetworkManagerInitializeEvent args)
     {
-        ent.Comp.StationUid = _station.GetOwningStation(args.Entity.Owner);
+        var station = _station.GetOwningStation(args.Entity.Owner);
+        ent.Comp.StationUid = station;
+        if (station != null)
+            EnsureComp<DeviceManagerRelatedComponent>(station.Value).Managers.Add(ent.Owner);
+        Dirty(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnManagerInit(Entity<StationNetworkManagerComponent> ent, ref DeviceManagerRelatedShutdownEvent args)
+    {
+        if (ent.Comp.StationUid == args.Related)
+            QueueDel(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnManagerShutdown(Entity<StationNetworkManagerComponent> ent, ref ComponentShutdown args)
+    {
+        if (TerminatingOrDeleted(ent.Comp.StationUid)
+            || !TryComp(ent.Comp.StationUid, out DeviceManagerRelatedComponent? related))
+            return;
+
+        related.Managers.Remove(ent.Owner);
     }
 
     [SubscribeLocalEvent]

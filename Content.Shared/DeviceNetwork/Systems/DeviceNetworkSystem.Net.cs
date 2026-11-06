@@ -44,7 +44,8 @@ public sealed partial class DeviceNetworkSystem
         var query = EntityQueryEnumerator<DeviceNetworkManagerComponent>();
         while (query.MoveNext(out var uid, out var manager))
         {
-            if (manager.DeviceNetId != netId)
+            if (manager.LifeStage >= ComponentLifeStage.Stopping
+                || manager.DeviceNetId != netId)
                 continue;
 
             var attemptEv = new DeviceAttemptConnectEvent(ent!, manager);
@@ -189,6 +190,10 @@ public sealed partial class DeviceNetworkSystem
             if (receiveAll.Count == 0)
                 network.Comp.ListeningDevices.Remove(freq);
         }
+
+        // The network must be disposed so that the entity count isn't inflated.
+        if (network.Comp.Devices.Count == 0)
+            QueueDel(network.Owner);
 
         return true;
     }

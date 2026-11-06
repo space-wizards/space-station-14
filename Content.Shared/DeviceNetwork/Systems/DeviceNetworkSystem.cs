@@ -36,14 +36,10 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
     /// </summary>
     private readonly Dictionary<int, EntityUid> _occupiedAddresses = new();
 
-    /// <summary>
-    /// Cache for storing selected devices and sending a packet to them.
-    /// </summary>
     private Device[] _deviceCache = [];
 
-    /// <summary>
-    /// Cache for network managers. Used by API methods.
-    /// </summary>
+    private EntityUid[] _entityCache = [];
+
     private readonly List<Entity<DeviceNetworkManagerComponent>> _managerCache = new();
 
     /// <summary>
@@ -136,6 +132,47 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
     private void OnManagerMapInit(Entity<DeviceNetworkManagerComponent> ent, ref MapInitEvent args)
     {
         _pvsOverride.AddGlobalOverride(ent.Owner);
+    }
+
+    /// <summary>
+    /// Reconnect all devices that are connected to a network manager that's shutting down.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnManagerShutdown(Entity<DeviceNetworkManagerComponent> ent, ref ComponentShutdown args)
+    {
+        Extensions.EnsureLength(ref _entityCache, ent.Comp.Devices.Count);
+
+        var i = 0;
+        foreach (var device in ent.Comp.Devices.Values)
+        {
+            if (TerminatingOrDeleted(device.Owner))
+                continue;
+
+            _entityCache[i] = device.Owner;
+            i++;
+        }
+
+        foreach (var uid in _entityCache.AsSpan(0, ent.Comp.Devices.Count))
+        {
+            ReconnectDevice(uid);
+        }
+    }
+
+    /// <summary>
+    /// Delete all <see cref="DeviceNetworkManagerComponent"/>s
+    /// that control an entity that's now being terminated.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnRelatedTermination(Entity<DeviceManagerRelatedComponent> ent, ref EntityTerminatingEvent args)
+    {
+        foreach (var manager in ent.Comp.Managers)
+        {
+            if (TerminatingOrDeleted(manager))
+                continue;
+
+            var ev = new DeviceManagerRelatedShutdownEvent(ent.Owner);
+            RaiseLocalEvent(manager, ref ev);
+        }
     }
 
     /// <summary>

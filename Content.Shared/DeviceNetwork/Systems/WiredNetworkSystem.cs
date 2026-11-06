@@ -29,7 +29,28 @@ public sealed partial class WiredNetworkSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnManagerInit(Entity<WiredNetworkManagerComponent> ent, ref DeviceNetworkManagerInitializeEvent args)
     {
-        ent.Comp.GridUid = Transform(args.Entity.Owner).GridUid;
+        var grid = Transform(args.Entity.Owner).GridUid;
+        ent.Comp.GridUid = grid;
+        if (grid != null)
+            EnsureComp<DeviceManagerRelatedComponent>(grid.Value).Managers.Add(ent.Owner);
+        Dirty(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnManagerInit(Entity<WiredNetworkManagerComponent> ent, ref DeviceManagerRelatedShutdownEvent args)
+    {
+        if (ent.Comp.GridUid == args.Related)
+            QueueDel(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnManagerShutdown(Entity<WiredNetworkManagerComponent> ent, ref ComponentShutdown args)
+    {
+        if (TerminatingOrDeleted(ent.Comp.GridUid)
+            || !TryComp(ent.Comp.GridUid, out DeviceManagerRelatedComponent? related))
+            return;
+
+        related.Managers.Remove(ent.Owner);
     }
 
     [SubscribeLocalEvent]

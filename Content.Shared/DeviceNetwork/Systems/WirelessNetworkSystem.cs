@@ -36,11 +36,32 @@ public sealed partial class WirelessNetworkSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnManagerInit(Entity<WirelessNetworkManagerComponent> ent, ref DeviceNetworkManagerInitializeEvent args)
     {
-        ent.Comp.MapUid = Transform(args.Entity.Owner).MapUid;
+        var map = Transform(args.Entity.Owner).MapUid;
+        ent.Comp.MapUid = map;
+        if (map != null)
+            EnsureComp<DeviceManagerRelatedComponent>(map.Value).Managers.Add(ent.Owner);
+        Dirty(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnManagerInit(Entity<WirelessNetworkManagerComponent> ent, ref DeviceManagerRelatedShutdownEvent args)
+    {
+        if (ent.Comp.MapUid == args.Related)
+            QueueDel(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnManagerShutdown(Entity<WirelessNetworkManagerComponent> ent, ref ComponentShutdown args)
+    {
+        if (TerminatingOrDeleted(ent.Comp.MapUid)
+            || !TryComp(ent.Comp.MapUid, out DeviceManagerRelatedComponent? related))
+            return;
+
+        related.Managers.Remove(ent.Owner);
     }
 
     /// <summary>
-    /// Checks whether a device is in range.
+    /// Checks whether a device is in range to receive a packet.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnBeforePacketSent(Entity<WirelessNetworkComponent> ent, ref BeforePacketSentEvent args)
