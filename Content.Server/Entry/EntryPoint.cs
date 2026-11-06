@@ -87,7 +87,11 @@ namespace Content.Server.Entry
                 cast.ServerBeforeIoC?.Invoke();
             }
 
+            Dependencies.BuildGraph();
+            Dependencies.InjectDependencies(this);
+
             Dependencies.Resolve<IRobustSerializer>().FloatFlags = SerializerFloatFlags.RemoveReadNan;
+            _dbManager.Init();
         }
 
         /// <inheritdoc />
@@ -120,10 +124,8 @@ namespace Content.Server.Entry
 
             _adminLog.Initialize();
             _connection.Initialize();
-            _dbManager.Init();
             _preferences.Init();
             _nodeFactory.Initialize();
-            _netResMan.Initialize();
             _ghostKick.Initialize();
             _serverInfo.Initialize();
             _serverApi.Initialize();
@@ -139,6 +141,8 @@ namespace Content.Server.Entry
         {
             base.PostInit();
 
+            _dbManager.BlockUntilInitialized();
+            _netResMan.Initialize();
             _chatSan.Initialize();
             _chat.Initialize();
             var dest = _cfg.GetCVar(CCVars.DestinationFile);
