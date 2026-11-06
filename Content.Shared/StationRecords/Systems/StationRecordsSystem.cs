@@ -2,6 +2,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Forensics.Components;
 using Content.Shared.GameTicking;
+using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
@@ -105,6 +106,7 @@ public sealed partial class StationRecordsSystem : EntitySystem
             profile.Age,
             profile.Species,
             profile.Gender,
+            profile.Sex,
             jobId,
             fingerprintComponent?.Fingerprint,
             dnaComponent?.DNA,
@@ -122,8 +124,10 @@ public sealed partial class StationRecordsSystem : EntitySystem
     /// <param name="station">The entity uid of the station.</param>
     /// <param name="idUid">The entity uid of an entity's ID card. Can be null.</param>
     /// <param name="name">Name of the character.</param>
+    /// <param name="age">Age of the character in years.</param>
     /// <param name="species">Species of the character.</param>
     /// <param name="gender">Gender of the character.</param>
+    /// <param name="sex">Sex of the character.</param>
     /// <param name="jobId">
     ///     The job to initially tie this record to. This must be a valid job loaded in, otherwise
     ///     this call will cause an exception. Ensure that a general record starts out with a job
@@ -144,6 +148,7 @@ public sealed partial class StationRecordsSystem : EntitySystem
         int age,
         string species,
         Gender gender,
+        Sex sex,
         string jobId,
         string? mobFingerprint,
         string? dna,
@@ -176,6 +181,7 @@ public sealed partial class StationRecordsSystem : EntitySystem
             JobPrototype = jobId,
             Species = species,
             Gender = gender,
+            Sex = sex,
             DisplayPriority = displayPriority,
             Fingerprint = mobFingerprint,
             DNA = dna

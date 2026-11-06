@@ -54,10 +54,13 @@ criminal-records-console-unknown-officer = <unknown>
 
 criminal-records-filter-placeholder = Input text and press "Enter"
 criminal-records-name-filter = Name
+criminal-records-age-filter = Age
 criminal-records-prints-filter = Fingerprints
 criminal-records-dna-filter = DNA
 criminal-records-job-filter = Job
 criminal-records-species-filter = Species
+criminal-records-gender-filter = Gender
+criminal-records-sex-filter = Sex
 
 ## Arrest auto history lines
 criminal-records-console-auto-history = ARRESTED: {$reason}
