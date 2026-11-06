@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ SimpleMobBase, MobCombat, StripableInventoryBase, BaseSlicingRefinableButchering, MobNightVision ]
+  parent: [ BaseMobRodent, SimpleMobBase, MobCombat, StripableInventoryBase, BaseSlicingRefinableButchering, MobNightVision ]
   id: MobHamster
   name: hamster
   description: A cute, fluffy, robust hamster.
@@ -61,6 +61,10 @@
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
+  - type: HTN
+    constantlyReplan: false
+    rootTask:
+      task: MouseCompound
   - type: Destructible
     thresholds:
     - trigger:
