@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using Content.Shared.Prototypes;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.GameStates;
@@ -32,7 +33,7 @@ namespace Content.Shared.Configurable
         /// Validate tags in <see cref="Config"/>.
         /// </summary>
         [DataField]
-        public Regex Validation = new("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
+        public ProtoId<RegexPrototype> Validation = "ConfigurationValidation";
 
         /// <summary>
         ///     Message data sent from client to server when the device configuration is updated.
