@@ -443,7 +443,6 @@ namespace Content.Server.NodeContainer.EntitySystems
                 NodeGroupID.AMEngine => Color.Purple,
                 NodeGroupID.Pipe => Color.Blue,
                 NodeGroupID.WireNet => Color.DarkMagenta,
-                NodeGroupID.Teg => Color.Red,
                 NodeGroupID.ExCable => Color.Pink,
                 _ => Color.White
             };
