@@ -1,0 +1,53 @@
+name: Assign merged PRs to release milestone
+
+on:
+  pull_request_target:
+    types: [ closed ]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  assign:
+    name: Assign PR to latest release milestone
+    runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master' }}
+    steps:
+      - name: Assign PR to latest open release milestone
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          export LC_ALL=C
+
+          # A release milestone carries the release date in its title, we search for pattern: `*2026-09`
+          MILESTONES=$(gh api --paginate "repos/${REPO}/milestones?state=open&per_page=100" \
+            --jq '.[] | "\(.title)\t\(.number)"' \
+            | awk -F'\t' '
+                match($1, /[0-9][0-9][0-9][0-9][.-][0-9][0-9]/) {
+                  month = substr($1, RSTART, 7)
+                  gsub(/-/, ".", month)
+                  hotfix = 0
+                  tail = substr($1, RSTART + 7)
+                  if (match(tail, /-v[0-9]+/))
+                    hotfix = substr(tail, RSTART + 2) + 0
+                  printf "%s-%04d\t%s\n", month, hotfix, $2
+                }' \
+            | sort -r)
+
+          LATEST_MILESTONE="${MILESTONES%%$'\n'*}"
+
+          if [[ -z "${LATEST_MILESTONE}" ]]; then
+            echo "::warning::No open release milestone (a title containing a YYYY.MM date) found in ${REPO}, PR #${PR_NUMBER} was not assigned to a milestone."
+            exit 0
+          fi
+
+          MILESTONE_NUMBER="${LATEST_MILESTONE##*$'\t'}"
+
+          gh api --method PATCH "repos/${REPO}/issues/${PR_NUMBER}" \
+            -F milestone="${MILESTONE_NUMBER}" >/dev/null
+
+          echo "Done."
