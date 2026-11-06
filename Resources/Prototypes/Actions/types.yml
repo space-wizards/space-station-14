@@ -82,7 +82,7 @@
     checkCanInteract: false
   - type: Sprite
     layers:
-    - texture: Interface/Actions/scream.png
+    - texture: Interface/Emotes/scream.png # same icon that the emote wheel uses
   - type: InstantAction
     event: !type:EmoteActionEvent
       emote: Scream
