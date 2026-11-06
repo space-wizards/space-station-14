@@ -1,0 +1,117 @@
+name: Staging cutoff
+
+# Merges master into stable, and rotates the release milestones
+
+on:
+  workflow_dispatch:
+    inputs:
+      new_milestone:
+        description: "Title of next release milestone to open (for all new PRs after cutoff), e.g. wizards-2026.12-v1"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: rotate-release-milestone
+  cancel-in-progress: false
+
+jobs:
+  rotate:
+    name: Do staging cutoff, rotate release milestones
+    runs-on: ubuntu-latest
+    env:
+      RELEASE_BRANCH: staging
+    steps:
+      - name: Checkout the release branch
+        uses: actions/checkout@v7
+        with:
+          ref: staging
+          fetch-depth: 0
+
+      - name: Cut and rotate
+        env:
+          # Pushes with the default token are attributed to `github-actions` and can be
+          # blocked by branch protection, so prefer the token the publish workflow uses.
+          GH_TOKEN: ${{ secrets.CL_ACCESS_TOKEN || github.token }}
+          REPO: ${{ github.repository }}
+          NEW_TITLE: ${{ inputs.new_milestone }}
+        run: |
+          set -euo pipefail
+          export LC_ALL=C
+
+          git config user.name "Space-Wizards-Bot"
+          git config user.email "bot@spacestation14.com"
+
+          # A release milestone carries its release date in the title in format of `*YYYY.MM*`,
+          OPEN=$(gh api --paginate "repos/${REPO}/milestones?state=open&per_page=100" \
+            --jq '.[] | "\(.title)\t\(.number)"' \
+            | awk -F'\t' 'match($1, /[0-9][0-9][0-9][0-9][.-][0-9][0-9]/)')
+
+          OPEN_COUNT=$(printf '%s' "${OPEN}" | grep -c . || true)
+          if [[ "${OPEN_COUNT}" -gt 1 ]]; then
+            echo "::error::Found ${OPEN_COUNT} open release milestones (with *YYYY.MM* pattern in name), expected at most one - close or rename the extra ones first:"
+            printf '%s\n' "${OPEN}"
+            exit 1
+          fi
+
+          CURRENT_TITLE=$(printf '%s\n' "${OPEN}" | head -n 1 | cut -f1)
+          CURRENT_NUMBER=$(printf '%s\n' "${OPEN}" | head -n 1 | cut -f2)
+
+          OLDEST=$(git rev-parse HEAD)
+          git fetch --no-tags origin "master:refs/remotes/origin/master"
+          NEWEST=$(git rev-parse origin/master)
+
+          if git merge-base --is-ancestor "${NEWEST}" "${OLDEST}"; then
+            echo "::error::Nothing to cut: master (${NEWEST}) is already part of '${RELEASE_BRANCH}', so this run would do nothing. Nothing was pushed and no milestone was touched; if the cut has been done by hand already, rotate the milestones by hand too: close '${CURRENT_TITLE:-<current release milestone>}' and open '${NEW_TITLE}'."
+            exit 1
+          fi
+
+          # A conflict aborts the merge and the job
+          git merge --no-ff -m "Merge master into ${RELEASE_BRANCH} for ${NEW_TITLE}" origin/master
+          git -c http.https://github.com/.extraheader= \
+            push "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git" \
+            "HEAD:refs/heads/${RELEASE_BRANCH}"
+          echo "Merged master into '${RELEASE_BRANCH}' and pushed."
+
+          # Open the new milestone
+          NEW_NUMBER=$(gh api --method POST "repos/${REPO}/milestones" \
+            -f title="${NEW_TITLE}" -f state=open --jq '.number')
+          echo "Created milestone '${NEW_TITLE}' (#${NEW_NUMBER})."
+
+          # Close the current milestone 
+          if [[ -n "${CURRENT_NUMBER}" ]]; then
+            gh api --method PATCH "repos/${REPO}/milestones/${CURRENT_NUMBER}" -f state=closed >/dev/null
+            echo "Closed milestone '${CURRENT_TITLE}' (#${CURRENT_NUMBER})."
+          else
+            echo "No open release milestone found, so nothing was closed."
+          fi
+
+          # Report the commit range and the PRs shipping in this release
+          if [[ -n "${GITHUB_STEP_SUMMARY:-}" ]]; then
+            PR_SUBJECTS=$(git log --first-parent --reverse --pretty=format:'%s' "${OLDEST}..${NEWEST}")
+            PR_COUNT=$(printf '%s\n' "${PR_SUBJECTS}" | grep -c . || true)
+
+            {
+              echo "<details><summary>Release Review Thread skeleton</summary>"
+              echo ""
+              echo '```'
+              echo "YYYY-MM-DD Release Review Thread"
+              echo "commit range: ${OLDEST} - ${NEWEST}"
+              echo "compare: https://github.com/${REPO}/compare/${OLDEST}...${NEWEST}"
+              echo "outline doc: <link to the Outline doc>"
+              echo '```'
+              echo ""
+              echo "</details>"
+              echo ""
+              echo "<details><summary>PRs merged into master in this range</summary>"
+              echo ""
+              echo '```'
+              printf '%s\n' "${PR_SUBJECTS}" | nl -ba -w 3 -s '. '
+              echo '```'
+              echo ""
+              echo "</details>"
+            } >> "${GITHUB_STEP_SUMMARY}"
+          fi
