@@ -88,6 +88,7 @@
   - type: Battery
     maxCharge: 2500000
     startingCharge: 0
+  - type: BatterySignalControl
   - type: PointLight
     radius: 1.5
     energy: 1
@@ -163,6 +164,7 @@
   - type: Battery
     maxCharge: 2000000
     startingCharge: 0
+  - type: BatterySignalControl
   - type: PowerMonitoringDevice
     sprite: Structures/Power/substation.rsi
     state: substation_wall_static
