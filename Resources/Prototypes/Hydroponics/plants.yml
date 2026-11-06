@@ -153,6 +153,7 @@
     productPrototypes: [ FoodBanana ]
     mutationPrototypes: [ MimanaPlants ]
   - type: Plant
+    traits: [ Slippery ]
     lifespan: 50
     maturation: 6
     production: 6
@@ -188,6 +189,7 @@
     packetPrototype: MimanaSeeds
     productPrototypes: [ FoodMimana ]
   - type: Plant
+    traits: [ Slippery ]
     lifespan: 50
     maturation: 6
     production: 6
@@ -677,6 +679,7 @@
     productPrototypes: [ FoodTomato ]
     mutationPrototypes: [ BlueTomatoPlants, BloodTomatoPlants ]
   - type: Plant
+    traits: [ Squash ]
     lifespan: 25
     maturation: 8
     production: 6
@@ -718,6 +721,7 @@
     packetPrototype: BlueTomatoSeeds
     productPrototypes: [ FoodBlueTomato ]
   - type: Plant
+    traits: [ Squash ]
     lifespan: 25
     maturation: 8
     production: 6
@@ -760,6 +764,7 @@
     productPrototypes: [ FoodBloodTomato ]
     mutationPrototypes: [ KillerTomatoPlants ]
   - type: Plant
+    traits: [ Squash ]
     lifespan: 60
     maturation: 8
     production: 6
@@ -1307,6 +1312,7 @@
     productPrototypes: [ Nettle ]
     mutationPrototypes: [ DeathNettlePlants ]
   - type: Plant
+    traits: [ NettleSting ]
     lifespan: 25
     maturation: 8
     production: 6
@@ -1340,6 +1346,7 @@
     plantLogImpact: High
     harvestLogImpact: High
   - type: Plant
+    traits: [ DeathNettleSting ]
     lifespan: 25
     maturation: 8
     production: 6
@@ -2063,6 +2070,7 @@
     productPrototypes: [ FoodWatermelon ]
     mutationPrototypes: [ HolymelonPlants ]
   - type: Plant
+    traits: [ Squash ]
     lifespan: 55
     maturation: 12
     production: 3
@@ -2096,6 +2104,7 @@
     packetPrototype: HolymelonSeeds
     productPrototypes: [ FoodHolymelon ]
   - type: Plant
+    traits: [ Squash ]
     lifespan: 55
     maturation: 12
     production: 3

@@ -1,4 +1,3 @@
-mutation-plant-sentient = It seems to be examining its surroundings.
 mutation-plant-slippery = It is slick to the touch.
 
 mutation-plant-description-kudzu = It is growing unusually [color=crimson]fast and thin[/color].

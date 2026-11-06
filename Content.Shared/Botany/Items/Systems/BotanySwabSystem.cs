@@ -74,7 +74,7 @@ public sealed partial class BotanySwabSystem : EntitySystem
         else
         {
             var pollenData = ent.Comp.PlantData.Value;
-            _mutation.CrossMutations(pollenData, ent.Comp.PlantProtoId, targetPlant);
+            _mutation.CrossTraits(pollenData, ent.Comp.PlantProtoId, targetPlant);
 
             // Notify growth systems to apply their per-component cross logic.
             var crossEv = new PlantCrossPollinateEvent(pollenData, ent.Comp.PlantProtoId);

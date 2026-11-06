@@ -5,6 +5,8 @@ namespace Content.Shared.Botany.Components;
 
 /// <summary>
 /// Data that specifies the odds and effects of possible random plant mutations.
+/// A mutation is a one-time roll; to give a plant a lasting, heritable change,
+/// use an effect that adds a <see cref="Traits.PlantTraitPrototype"/>.
 /// </summary>
 [Serializable, NetSerializable]
 [DataDefinition]
@@ -23,32 +25,8 @@ public sealed partial class RandomPlantMutation
     public string Name;
 
     /// <summary>
-    /// The text to display to players when examining something with this mutation.
-    /// </summary>
-    [DataField]
-    public LocId? Description;
-
-    /// <summary>
-    /// The actual EntityEffect to apply to the target
+    /// The EntityEffect applied to the plant when this mutation occurs.
     /// </summary>
     [DataField(required: true)]
     public EntityEffect Effect;
-
-    /// <summary>
-    /// This mutation will target the harvested produce
-    /// </summary>
-    [DataField]
-    public bool AppliesToProduce = true;
-
-    /// <summary>
-    /// This mutation will target the growing plant as soon as this mutation is applied.
-    /// </summary>
-    [DataField]
-    public bool AppliesToPlant = true;
-
-    /// <summary>
-    /// This mutation stays on the plant and its produce. If false while AppliesToPlant is true, the effect will run when triggered.
-    /// </summary>
-    [DataField]
-    public bool Persists = true;
 }

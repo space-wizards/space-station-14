@@ -49,6 +49,12 @@ botany-ui-gases-none = No gases detected.
 botany-ui-section-chemicals = Harvest chemicals
 botany-ui-chemicals-none = No harvest chemicals detected.
 
+botany-ui-section-heritable-traits = Heritable traits
+botany-ui-heritable-traits-none = No heritable traits detected.
+botany-ui-heritable-trait = [bold]{CAPITALIZE($name)}[/bold]
+botany-ui-heritable-trait-described = [bold]{CAPITALIZE($name)}[/bold]: {$description}
+botany-ui-heritable-trait-protected = {$trait} [color=gray](cannot be cross-pollinated)[/color]
+
 botany-ui-section-mutations = Mutations
 botany-ui-mutations-none = No persistent mutations detected.
 botany-ui-mutation = Level

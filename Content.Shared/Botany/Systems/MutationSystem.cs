@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Atmos;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
+using Content.Shared.Botany.Traits;
 using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
@@ -49,17 +50,58 @@ public sealed partial class PlantMutationSystem : EntitySystem
                 var odds = mutation.BaseOdds * severity - triggers;
                 triggers++;
                 if (Random(Math.Min(odds, 1.0f)))
-                {
-                    if (mutation.AppliesToPlant)
-                        _entityEffects.TryApplyEffect(ent, mutation.Effect);
-
-                    // Stat adjustments do not persist by being an attached effect, they just change the stat.
-                    if (mutation.Persists && ent.Comp.Mutations.All(m => m.Name != mutation.Name))
-                        ent.Comp.Mutations.Add(mutation);
-                }
+                    _entityEffects.TryApplyEffect(ent, mutation.Effect);
             }
         }
 
+        var ev = new PlantMutationsChangedEvent(ent.Owner);
+        RaiseLocalEvent(ref ev);
+    }
+
+    /// <summary>
+    /// Checks whether a plant has a trait.
+    /// </summary>
+    [PublicAPI]
+    public bool HasTrait(Entity<PlantComponent?> ent, ProtoId<PlantTraitPrototype> trait)
+    {
+        return Resolve(ent, ref ent.Comp, false) && ent.Comp.Traits.Contains(trait);
+    }
+
+    /// <summary>
+    /// Adds a trait to a plant, if it does not have it already.
+    /// </summary>
+    /// <returns>True if a trait was added.</returns>
+    [PublicAPI]
+    public bool AddTrait(Entity<PlantComponent?> ent, ProtoId<PlantTraitPrototype> trait)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        if (ent.Comp.Traits.Contains(trait))
+            return false;
+
+        ent.Comp.Traits.Add(trait);
+        TraitsChanged((ent.Owner, ent.Comp));
+        return true;
+    }
+
+    /// <summary>
+    /// Removes a trait from a plant.
+    /// </summary>
+    /// <returns>True if the trait was removed.</returns>
+    [PublicAPI]
+    public bool RemoveTrait(Entity<PlantComponent?> ent, ProtoId<PlantTraitPrototype> trait)
+    {
+        if (!Resolve(ent, ref ent.Comp, false) || !ent.Comp.Traits.Remove(trait))
+            return false;
+
+        TraitsChanged((ent.Owner, ent.Comp));
+        return true;
+    }
+
+    private void TraitsChanged(Entity<PlantComponent> ent)
+    {
+        DirtyField(ent.Owner, ent.Comp, nameof(PlantComponent.Traits));
         var ev = new PlantMutationsChangedEvent(ent.Owner);
         RaiseLocalEvent(ref ev);
     }
@@ -91,6 +133,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
 
         ChemicalsSpeciesChange(newPlantUid, newPlantProto);
         PlantSpeciesChange(newPlantUid, newPlantProto);
+        TraitsSpeciesChange(newPlantUid, MetaData(oldPlant.Owner).EntityPrototype?.ID, newPlantProto);
 
         if (_plant.TryGetTray(oldPlant.Owner, out var trayEnt))
             _plantTray.PlantingPlantInTray(trayEnt.AsNullable(), newPlantUid);
@@ -146,19 +189,71 @@ public sealed partial class PlantMutationSystem : EntitySystem
     }
 
     /// <summary>
-    /// Combines mutations from the pollen and target plants.
+    /// Swaps the default traits of the old species for the default traits of the new species.
+    /// Traits gained from mutations or cross-pollination are kept.
+    /// </summary>
+    private void TraitsSpeciesChange(EntityUid plantUid, EntProtoId? oldPlantProto, EntProtoId newPlantProto)
+    {
+        if (!_botany.TryGetPlantComponent<PlantComponent>(null, newPlantProto, out var newSpecies)
+            || !_plantQuery.TryComp(plantUid, out var plant))
+            return;
+
+        if (oldPlantProto != null
+            && _botany.TryGetPlantComponent<PlantComponent>(null, oldPlantProto, out var oldSpecies))
+        {
+            plant.Traits.RemoveAll(trait => oldSpecies.Traits.Contains(trait) && !newSpecies.Traits.Contains(trait));
+        }
+
+        foreach (var trait in newSpecies.Traits)
+        {
+            if (!plant.Traits.Contains(trait))
+                plant.Traits.Add(trait);
+        }
+
+        DirtyField(plantUid, plant, nameof(PlantComponent.Traits));
+    }
+
+    /// <summary>
+    /// Combines traits from the pollen and target plants.
+    /// Each trait of either plant has a 50% chance to end up on the target,
+    /// except <see cref="PlantTraitPrototype.PollinationProtected"/> traits, which the target always keeps
+    /// and the pollen never passes on.
     /// </summary>
     [PublicAPI]
-    public void CrossMutations(EntityUid pollenPlant, EntProtoId? pollenProtoId, EntityUid targetPlant)
+    public void CrossTraits(EntityUid pollenPlant, EntProtoId? pollenProtoId, EntityUid targetPlant)
     {
+        // Crossing is random, and random is not predicted yet. The server state syncs the result.
+        if (!_net.IsServer)
+            return;
+
         if (!_botany.TryGetPlantComponent<PlantComponent>(pollenPlant, pollenProtoId, out var pollenCore) ||
             !_plantQuery.TryComp(targetPlant, out var targetCore))
             return;
 
-        // LINQ Explanation
-        // For the list of mutation effects on both plants, use a 50% chance to pick each one.
-        // Union all of the chosen mutations into one list, and pick ones with a Distinct (unique) name.
-        targetCore.Mutations = targetCore.Mutations.Where(_ => Random(0.5f)).Union(pollenCore.Mutations.Where(_ => Random(0.5f))).DistinctBy(m => m.Name).ToList();
+        var originalTraits = targetCore.Traits;
+        var crossedTraits = new List<ProtoId<PlantTraitPrototype>>();
+
+        foreach (var trait in originalTraits)
+        {
+            if (IsPollinationProtected(trait) || Random(0.5f))
+                crossedTraits.Add(trait);
+        }
+
+        foreach (var trait in pollenCore.Traits)
+        {
+            if (IsPollinationProtected(trait) || crossedTraits.Contains(trait) || !Random(0.5f))
+                continue;
+
+            crossedTraits.Add(trait);
+        }
+
+        targetCore.Traits = crossedTraits;
+        TraitsChanged((targetPlant, targetCore));
+    }
+
+    private bool IsPollinationProtected(ProtoId<PlantTraitPrototype> trait)
+    {
+        return ProtoMan.TryIndex(trait, out var traitProto) && traitProto.PollinationProtected;
     }
 
     /// <summary>
