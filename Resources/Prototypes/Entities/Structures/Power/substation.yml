@@ -132,7 +132,7 @@
 
 # Compact Wall Substation Base
 - type: entity
-  parent: [ CoreSubstation, BaseWallmount, StructureHealthMachine ]
+  parent: [ CoreSubstation, BaseWallmountMetallic, StructureHealthMachine ]
   id: BaseSubstationWall
   categories: [ HideSpawnMenu ]
   name: wallmount substation
@@ -166,8 +166,6 @@
   - type: PowerMonitoringDevice
     sprite: Structures/Power/substation.rsi
     state: substation_wall_static
-  - type: Damageable
-    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -186,15 +184,6 @@
     maxIntensity: 50
     intensitySlope: 2
     totalIntensity: 100
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.35,-0.45,0.35,0.20"
-        density: 5
-        mask:
-        - FullTileMask
 
 # Substations in use
 
@@ -236,6 +225,7 @@
 
       # Construction Frame
 - type: entity
+  parent: BaseWallmountMetallic
   id: BaseSubstationWallFrame
   categories: [ HideSpawnMenu ]
   name: wallmount substation frame
@@ -243,14 +233,6 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
-    canCollide: false
-  - type: Fixtures
-  - type: Transform
-    anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Power/substation.rsi
@@ -259,4 +241,3 @@
   - type: Construction
     graph: WallmountSubstation
     node: frame
-  - type: WallMount
