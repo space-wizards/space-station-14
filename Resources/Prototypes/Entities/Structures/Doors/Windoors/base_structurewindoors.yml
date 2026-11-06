@@ -84,6 +84,16 @@
       DoorBoltStatus: false
   - type: ExaminableDamage
     messages: WindowMessages
+  - type: PressureDamageSound
+  - type: DeltaPressure
+    requireAirBlocked: true
+  - type: DamageVisuals
+    thresholds: [5, 10, 20]
+    damageDivisor: 3
+    trackAllDamage: true
+    hideWhenDoorOpen: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks_directional.rsi
   - type: RCDDeconstructable
     cost: 8
     delay: 8
