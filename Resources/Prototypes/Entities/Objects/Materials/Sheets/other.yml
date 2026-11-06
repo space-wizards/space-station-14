@@ -194,6 +194,15 @@
 
 - type: entity
   parent: SheetUranium
+  id: SheetUranium10
+  name: uranium
+  suffix: 10
+  components:
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: SheetUranium
   id: SheetUranium1
   name: uranium
   suffix: Single
