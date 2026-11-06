@@ -105,6 +105,7 @@ marking-LizardHornsKoboldEars = Lizard Ears (Kobold)
 marking-LizardHornsFloppyKoboldEars-horns_floppy_kobold_ears = Lizard Ears (Floppy Kobold)
 marking-LizardHornsFloppyKoboldEars = Lizard Ears (Floppy Kobold)
 
+
 marking-LizardChestUnderbelly-body_underbelly = Lizard Chest (Underbelly)
 marking-LizardChestUnderbelly = Lizard Chest (Underbelly)
 
@@ -123,3 +124,9 @@ marking-LizardSnoutVisageSharp-visage_sharp = Lizard Visage (Sharp)
 
 marking-LizardSnoutVisageRound = Lizard Visage (Round)
 marking-LizardSnoutVisageRound-visage_round = Lizard Visage (Round)
+
+marking-LizardHornsGoblinEars-horns_goblin_ears = Lizard Ears (Goblin)
+marking-LizardHornsGoblinEars = Lizard Ears (Goblin)
+
+marking-LizardVisageTribal = Lizard Visage (Tribal)
+marking-LizardVisageTribal-visage_tribal = Lizard Visage (Tribal)
