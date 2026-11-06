@@ -73,3 +73,15 @@
     Ethanol: 5
     Hydrogen: 3
     Sulfur: 2
+
+- type: reaction
+  id: FoamingAgent
+  requiredMixerCategories:
+  - Stir
+  reactants:
+    Lithium:
+      amount: 1
+    Hydrogen:
+      amount: 1
+  products:
+    FoamingAgent: 2
