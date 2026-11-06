@@ -218,6 +218,15 @@
   id: DrinkShakeBase
   description: ''
   components:
+  - type: Solution
+    solution:
+      maxVol: 30
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+    maxTransferAmount: 10
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    inHandsFillBaseName: null
   - type: ExaminableSolution
     solution: drink
   - type: FitsInDispenser
@@ -240,6 +249,11 @@
   id: DrinkShakeBlue
   name: blue milkshake
   components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: ShakeBlue
+        Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-blue.rsi
 
@@ -256,6 +270,11 @@
   id: DrinkShakeMeat
   name: meat shake
   components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: ShakeMeat
+        Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-meat.rsi
 
@@ -264,6 +283,11 @@
   id: DrinkShakeRobo
   name: robo shake
   components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: ShakeRobo
+        Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-robo.rsi
 
@@ -272,5 +296,10 @@
   id: DrinkShakeWhite
   name: white shake
   components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: ShakeWhite
+        Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-white.rsi

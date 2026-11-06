@@ -634,3 +634,63 @@
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+
+- type: reagent
+  id: ShakeBlue
+  name: reagent-name-shakeblue
+  group: Drinks
+  desc: reagent-desc-shakeblue
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: creamy
+  color: "#74A1E8"
+  metabolisms:
+    Digestion:
+      effects:
+      - !type:Satiate
+        satiationType: Thirst
+        factor: 1
+
+- type: reagent
+  id: ShakeMeat
+  name: reagent-name-shakemeat
+  group: Drinks
+  desc: reagent-desc-shakemeat
+  physicalDesc: reagent-physical-desc-gloopy
+  flavor: meaty
+  color: "#E88274"
+  metabolisms:
+    Digestion:
+      effects:
+      - !type:Satiate
+        satiationType: Hunger
+        factor: 1
+
+- type: reagent
+  id: ShakeRobo
+  name: reagent-name-shakerobo
+  group: Drinks
+  desc: reagent-desc-shakerobo
+  physicalDesc: reagent-physical-desc-electric
+  flavor: metallic
+  color: "#5B445C"
+  metabolisms:
+    Digestion:
+      effects:
+      - !type:Satiate
+        satiationType: Hunger
+        factor: 1
+
+- type: reagent
+  id: ShakeWhite
+  name: reagent-name-shakewhite
+  group: Drinks
+  desc: reagent-desc-shakewhite
+  physicalDesc: reagent-physical-desc-cold
+  flavor: cold
+  color: "#FFFFFF"
+  metabolisms:
+    Digestion:
+      effects:
+      - !type:Satiate
+        satiationType: Thirst
+        factor: 1
