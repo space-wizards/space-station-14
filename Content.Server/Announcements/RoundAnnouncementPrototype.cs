@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
@@ -12,7 +13,9 @@ public sealed partial class RoundAnnouncementPrototype : IPrototype
     [IdDataField]
     public string ID { get; private set; } = default!;
 
-    [DataField("sound")] public SoundSpecifier? Sound;
+    [DataField]
+    [AllowStereo]
+    public SoundSpecifier? Sound;
 
     [DataField("message")] public string? Message;
 }
