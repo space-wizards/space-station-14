@@ -1,0 +1,51 @@
+name: BOM Check
+
+on:
+  pull_request:
+    types: [ opened, reopened, synchronize, ready_for_review ]
+    paths:
+      - '**/*.cs'
+      - '**/*.ftl'
+      - '**/*.json'
+      - '**/*.yaml'
+      - '**/*.yml'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true  # We only care about latest.
+
+jobs:
+  build:
+    name: BOM Check
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        fetch-depth: 2
+        persist-credentials: true
+
+    - name: Get changed files
+      id: changed-files
+      uses: tj-actions/changed-files@v47.0.6
+      with:
+        write_output_files: true
+        files: |
+          **.cs
+          **.ftl
+          **.json
+          **.yaml
+          **.yml
+
+    - name: Check for BOMs
+      run: |
+        if cat .github/outputs/all_changed_files.txt | xargs grep -lP $'^\xEF\xBB\xBF'; then
+          echo "BOM detected!"
+          exit 1
+        fi
+
+    - name: Complain
+      if: failure()
+      run: |
+        echo "It looks like there are UTF-8 (BOM) encoded files in your commits. UTF-8 BOM encoded files are largely undesirable and can bring severe and hard-to-find problems with things like serialization. \nOne of the causes for this might be your Rider setup - you can fix it by going into `Settings > Editor > File Encodings`, and set the \"Create UTF-8 Files\" to \"With No BOM\" \nFollow the steps here https://youtrack.jetbrains.com/articles/SUPPORT-A-3222/Rider-doesnt-change-encoding-for-files " \n For this check to pass, please change files, listed in previous block, to use UTF-8 encoding instead.
+        exit 1
