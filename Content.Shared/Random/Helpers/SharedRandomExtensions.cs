@@ -199,6 +199,19 @@ namespace Content.Shared.Random.Helpers
             return hash;
         }
 
+        // the well-known public domain murmurhash32 finalization mix function by Austin Appleby
+        // source: https://github.com/aappleby/smhasher/blob/07bb4de10a63e8cc2e1724865454eba635742383/src/MurmurHash3.cpp#L68
+        private static int Fmix32(int seed)
+        {
+            uint h = (uint)seed;
+            h ^= h >> 16;
+            h *= 0x85ebca6b;
+            h ^= h >> 13;
+            h *= 0xc2b2ae35;
+            h ^= h >> 16;
+            return (int)h;
+        }
+
         // TODO: REPLACE ALL OF THIS WITH PREDICTED RANDOM WHEN ENGINE PR IS MERGED
         /// <summary>
         /// Creates an instance of IRobustRandom that will be the same for both the server and client.
@@ -216,7 +229,7 @@ namespace Content.Shared.Random.Helpers
         {
             var seed = HashCodeCombine((int)timing.CurTick.Value, netEnt.Id, netEnt2?.Id ?? 0);
             var random = new RobustRandom();
-            random.SetSeed(seed);
+            random.SetSeed(Fmix32(seed));
             return random;
         }
 
