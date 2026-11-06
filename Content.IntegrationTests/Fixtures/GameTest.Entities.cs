@@ -43,17 +43,17 @@ public abstract partial class GameTest
     /// <summary>
     ///     Returns a string representation of an entity for the server.
     /// </summary>
-    public string SToPrettyString(EntityUid uid)
+    public string? SToPrettyString(EntityUid? uid)
     {
-        return Pair.Server.EntMan.ToPrettyString(uid);
+        return SEntMan.ToPrettyString(uid);
     }
 
     /// <summary>
     ///     Returns a string representation of an entity for the client.
     /// </summary>
-    public string CToPrettyString(EntityUid uid)
+    public string? CToPrettyString(EntityUid? uid)
     {
-        return Pair.Client.EntMan.ToPrettyString(uid);
+        return CEntMan.ToPrettyString(uid);
     }
 
     /// <summary>
