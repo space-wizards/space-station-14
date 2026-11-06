@@ -40,6 +40,9 @@
   id: BasePhotograph
   name: photograph
   components:
+  - type: Photograph
+  - type: PaperLabelType
+    labelType: Photograph
   - type: Sprite
     sprite: Objects/Misc/photograph.rsi
 
