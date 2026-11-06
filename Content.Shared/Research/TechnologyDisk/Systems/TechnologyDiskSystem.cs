@@ -128,8 +128,21 @@ public sealed partial class TechnologyDiskSystem : EntitySystem
         if (args.Handled || !args.CanReach || args.Target is not { } target)
             return;
 
-        if (!HasComp<ResearchServerComponent>(target) || !TryComp<TechnologyDatabaseComponent>(target, out var database))
+        if (!TryInsertDisk(ent, target))
             return;
+
+        _popup.PopupEntity(Loc.GetString("tech-disk-inserted"), target, args.User);
+        args.Handled = true;
+    }
+
+    /// <summary>
+    /// Loads the disk's recipes into a research server and consumes the disk.
+    /// </summary>
+    public bool TryInsertDisk(Entity<TechnologyDiskComponent> ent, EntityUid target)
+    {
+        if (TerminatingOrDeleted(ent) || EntityManager.IsQueuedForDeletion(ent) ||
+            !HasComp<ResearchServerComponent>(target) || !TryComp<TechnologyDatabaseComponent>(target, out var database))
+            return false;
 
         if (ent.Comp.Recipes != null)
         {
@@ -138,9 +151,8 @@ public sealed partial class TechnologyDiskSystem : EntitySystem
                 _research.AddLatheRecipe(target, recipe, database);
             }
         }
-        _popup.PopupEntity(Loc.GetString("tech-disk-inserted"), target, args.User);
         QueueDel(ent.Owner);
-        args.Handled = true;
+        return true;
     }
 
     private void OnExamine(Entity<TechnologyDiskComponent> ent, ref ExaminedEvent args)

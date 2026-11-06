@@ -3,6 +3,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Hands
@@ -125,6 +126,12 @@ namespace Content.Shared.Hands
         /// Entity to be copied for the clientside animation.
         /// </summary>
         public readonly NetEntity ItemUid;
+
+        /// <summary>
+        /// Prototype to use if the item was deleted clientside.
+        /// </summary>
+        public readonly EntProtoId? ItemPrototype;
+
         public readonly NetCoordinates InitialPosition;
         public readonly NetCoordinates FinalPosition;
         public readonly Angle InitialAngle;
@@ -132,9 +139,11 @@ namespace Content.Shared.Hands
         public PickupAnimationEvent(NetEntity itemUid,
             NetCoordinates initialPosition,
             NetCoordinates finalPosition,
-            Angle initialAngle)
+            Angle initialAngle,
+            EntProtoId? itemPrototype = null)
         {
             ItemUid = itemUid;
+            ItemPrototype = itemPrototype;
             FinalPosition = finalPosition;
             InitialPosition = initialPosition;
             InitialAngle = initialAngle;

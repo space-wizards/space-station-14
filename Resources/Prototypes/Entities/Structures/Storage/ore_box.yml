@@ -25,6 +25,8 @@
   - type: Climbable
 
   # orebox-specific
+  - type: MagnetPickup
+    slotFlags: null
   - type: Sprite
     noRot: true
     sprite: /Textures/Structures/Storage/orebox.rsi

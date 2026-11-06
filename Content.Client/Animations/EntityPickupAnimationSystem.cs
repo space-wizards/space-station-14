@@ -3,6 +3,7 @@ using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Spawners;
 using static Robust.Client.Animations.AnimationTrackProperty;
 
@@ -32,32 +33,45 @@ public sealed partial class EntityPickupAnimationSystem : EntitySystem
 
     /// <summary>
     ///     Animates a clone of an entity moving from one point to another before
-    ///     being deleted.
+    ///     being deleted. Falls back to prototype if entity has been deleted.
     ///     Used when the player picks up an entity.
     /// </summary>
-    public void AnimateEntityPickup(EntityUid uid, EntityCoordinates initial, Vector2 final, Angle initialAngle)
+    public void AnimateEntityPickup(EntityUid uid, EntityCoordinates initial, Vector2 final, Angle initialAngle,
+        EntProtoId? itemPrototype = null)
     {
-        if (Deleted(uid) || !initial.IsValid(EntityManager))
+        if (!initial.IsValid(EntityManager))
             return;
 
-        var metadata = MetaData(uid);
+        SpriteComponent? sourceSprite;
+        string name;
+        if (Deleted(uid))
+        {
+            if (!ProtoMan.TryIndex(itemPrototype, out var prototype) || !prototype.TryComp(out sourceSprite, Factory))
+                return;
 
-        if (IsPaused(uid, metadata))
-            return;
+            name = prototype.Name;
+        }
+        else
+        {
+            var metadata = MetaData(uid);
+            if (IsPaused(uid, metadata))
+                return;
+
+            if (!TryComp(uid, out sourceSprite))
+            {
+                Log.Error("Entity ({0}) couldn't be animated for pickup since it doesn't have a {1}!", metadata.EntityName, nameof(SpriteComponent));
+                return;
+            }
+
+            name = metadata.EntityName;
+        }
 
         var animatableClone = Spawn("ClientsideClone", initial);
         EnsureComp<EntityPickupAnimationComponent>(animatableClone);
-        var val = metadata.EntityName;
-        _metaData.SetEntityName(animatableClone, val);
-
-        if (!TryComp(uid, out SpriteComponent? sprite0))
-        {
-            Log.Error("Entity ({0}) couldn't be animated for pickup since it doesn't have a {1}!", metadata.EntityName, nameof(SpriteComponent));
-            return;
-        }
+        _metaData.SetEntityName(animatableClone, name);
 
         var sprite = Comp<SpriteComponent>(animatableClone);
-        _sprite.CopySprite((uid, sprite0), (animatableClone, sprite));
+        _sprite.CopySprite((sourceSprite.Owner, sourceSprite), (animatableClone, sprite));
         _sprite.SetVisible((animatableClone, sprite), true);
 
         var animations = Comp<AnimationPlayerComponent>(animatableClone);
