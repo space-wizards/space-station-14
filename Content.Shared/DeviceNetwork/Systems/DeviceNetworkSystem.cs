@@ -109,6 +109,18 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
     }
 
     /// <summary>
+    /// Connects devices after they enter PVS on the client.
+    /// This is needed to synchronize the state of server and client versions of
+    /// <see cref="DeviceNetworkManagerComponent"/> without fully networking it.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnStartup(Entity<DeviceNetworkComponent> ent, ref ComponentStartup args)
+    {
+        if (_net.IsClient && ent.Comp.ConnectedNets.Count > 0)
+            ConnectDevice(ent.AsNullable());
+    }
+
+    /// <summary>
     /// Disconnects the device from all networks on its component shutdown.
     /// </summary>
     [SubscribeLocalEvent]

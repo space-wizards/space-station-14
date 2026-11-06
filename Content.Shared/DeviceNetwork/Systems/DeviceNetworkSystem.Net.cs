@@ -127,10 +127,6 @@ public sealed partial class DeviceNetworkSystem
     /// </summary>
     private bool AddToNetwork(Entity<DeviceNetworkComponent> ent, Entity<DeviceNetworkManagerComponent> network)
     {
-        // Checking for a key because on client the EntityUid may be wrong for the first tick if it was spawned predictively
-        if (_net.IsClient && ent.Comp.ConnectedNets.ContainsKey(network.Comp.DeviceNetId))
-            return true;
-
         if (ent.Comp.ConnectedNets.TryGetValue(network.Comp.DeviceNetId, out var netUid)
             && netUid != network.Owner)
         {

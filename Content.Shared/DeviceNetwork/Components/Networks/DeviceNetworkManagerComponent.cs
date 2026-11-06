@@ -4,11 +4,11 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.DeviceNetwork.Components.Networks;
 
 /// <summary>
-///     Data class for storing and retrieving information about devices connected to a device network.
+/// A component for singleton entities that control devices in some area.
 /// </summary>
 /// <remarks>
-///     This basically just makes <see cref="DeviceNetworkComponent"/> accessible via their addresses and frequencies on
-///     some network.
+/// The devices in this component aren't networked because
+/// they are reconstructed on the client when a device is loaded into PVS.
 /// </remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class DeviceNetworkManagerComponent : Component
