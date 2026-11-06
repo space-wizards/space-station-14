@@ -141,35 +141,36 @@ public sealed partial class TegSystem : EntitySystem
             // The maximum energy we can extract is (Ta - Tf)*cA, which is equal to (Tf - Tb)*cB
             var Wmax = MathF.Abs(airA.Temperature - Tf) * cA;
 
-            var N = component.ThermalEfficiency;
-
-            // Calculate Carnot efficiency
+            // Calculate Chambadal–Novikov efficiency
             var Thot = hotA ? airA.Temperature : airB.Temperature;
             var Tcold = hotA ? airB.Temperature : airA.Temperature;
-            var Nmax = 1 - Tcold / Thot;
-            N = MathF.Min(N, Nmax); // clamp by Carnot efficiency
+            var efficiency = 1 - MathF.Sqrt(Tcold / Thot);
+
+            // Further modify efficiency by the teg's thermal efficiency coefficient
+            efficiency *= component.ThermalEfficiency;
 
             // Reduce efficiency at low temperature differences to encourage burn chambers (instead
             // of just feeding the TEG room temperature gas from an infinite gas miner).
             var dT = Thot - Tcold;
-            N *= MathF.Tanh(dT/700); // https://www.wolframalpha.com/input?i=tanh(x/700)+from+0+to+1000
+            efficiency *= MathF.Tanh(dT/700); // https://www.wolframalpha.com/input?i=tanh(x/700)+from+0+to+1000
 
-            var transfer = Wmax * N;
-            electricalEnergy = transfer * component.PowerFactor;
-            var outTransfer = transfer * (1 - component.ThermalEfficiency);
+            // Split available energy between the electrical net & the cold pipe based on the engine's efficiency
+            var removedEnergy = Wmax;
+            electricalEnergy = Wmax * efficiency * component.PowerFactor;
+            var wastedEnergy = Wmax * (1 - efficiency);
 
             // Adjust thermal energy in transferred gas mixtures.
             if (hotA)
             {
                 // A -> B
-                airA.Temperature -= transfer / cA;
-                airB.Temperature += outTransfer / cB;
+                airA.Temperature -= removedEnergy / cA;
+                airB.Temperature += wastedEnergy / cB;
             }
             else
             {
                 // B -> A
-                airA.Temperature += outTransfer / cA;
-                airB.Temperature -= transfer / cB;
+                airA.Temperature += wastedEnergy / cA;
+                airB.Temperature -= removedEnergy / cB;
             }
         }
 
