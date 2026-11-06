@@ -1,0 +1,57 @@
+- type: entity
+  parent: BaseXenoArtifactTrigger
+  id: LootboxTriggerAccessCE  #description not needed as it shows access requirements
+  components:
+  - type: AccessReader
+    loggingDisabled: true
+  - type: XATAccess
+    deniedSound:
+      path: /Audio/Machines/airlock_deny.ogg
+    potentialAccess:
+    - ChiefEngineer
+    - Atmospherics
+    - Engineering
+
+- type: entity
+  parent: LootboxTriggerAccessCE
+  id: LootboxTriggerAccessHOS
+  components:
+  - type: XATAccess
+    potentialAccess:
+    - HeadOfSecurity
+    - Armory
+    - Lawyer
+    - Security
+
+- type: entity
+  parent: LootboxTriggerAccessCE
+  id: LootboxTriggerAccessRD
+  components:
+  - type: XATAccess
+    potentialAccess:  #can't "give out" cyborg access so would be impossible to open if there was no cyborg on the station
+    - ResearchDirector
+    - Research
+
+- type: entity
+  parent: LootboxTriggerAccessCE
+  id: LootboxTriggerAccessCMO
+  components:
+  - type: XATAccess
+    potentialAccess:
+    - ChiefMedicalOfficer
+    - Medical
+    - Chemistry
+
+- type: entity
+  parent: LootboxTriggerAccessCE
+  id: LootboxTriggerAccessHOP
+  components:
+  - type: XATAccess
+    potentialAccess:
+    - HeadOfPersonnel
+    - Hydroponics
+    - Kitchen
+    - Bar
+    - Theatre
+    - Service
+    - Chapel
