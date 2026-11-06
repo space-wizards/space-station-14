@@ -1,4 +1,6 @@
+using Content.Client.Items.Systems;
 using Content.Client.Weapons.Ranged.Components;
+using Content.Shared.Containers.ItemSlot;
 using Content.Shared.Rounding;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.GameObjects;
@@ -7,6 +9,7 @@ namespace Content.Client.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
+
     private void InitializeMagazineVisuals()
     {
         SubscribeLocalEvent<MagazineVisualsComponent, ComponentInit>(OnMagazineVisualsInit);
