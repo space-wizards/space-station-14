@@ -207,7 +207,17 @@
     - type: Sprite
       sprite: Clothing/Back/Backpacks/merc.rsi
 
-#ERT
+# CentComm
+- type: entity
+  parent: [ClothingBackpack, BaseCentcommContraband]
+  id: ClothingBackpackCentComm
+  name: CentComm backpack
+  description: A top-of-the-line backpack reserved for Central Command staff. It's not any bigger than a normal backpack, but it's a LOT more comfortable to wear.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/centcomm.rsi
+
+# Task Force
 - type: entity
   parent: [ ClothingBackpack, BaseTaskForceContraband ]
   id: ClothingBackpackERTLeader

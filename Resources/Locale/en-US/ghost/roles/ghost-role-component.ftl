@@ -188,7 +188,7 @@ ghost-role-information-cburn-agent-name = CBURN Agent
 ghost-role-information-cburn-agent-description = A highly trained CentComm agent, capable of dealing with various threats.
 
 ghost-role-information-centcom-official-name = CentComm Official
-ghost-role-information-centcom-official-description = Perform CentComm related duties such as inspect the station, jotting down performance reviews for heads of staff, and managing the fax machine.
+ghost-role-information-centcom-official-description = Perform official duties on behalf of Central Command, such as inspecting the station, holding performance reviews, and monitoring the fax machine.
 
 ghost-role-information-nukeop-rules = You are a [color={role-type-team-antagonist-color}][bold]{role-type-team-antagonist-name}[/bold][/color] with all other nuclear operatives. Covert syndicate agents are not guaranteed to help you.
 

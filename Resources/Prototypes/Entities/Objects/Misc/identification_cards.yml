@@ -1224,7 +1224,7 @@
 - type: entity
   parent: IDCardStandard
   id: CentcomIDCard
-  name: command officer ID card
+  name: CentComm official ID card
   components:
   - type: Sprite
     layers:
