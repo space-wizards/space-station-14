@@ -182,6 +182,9 @@ public sealed partial class ClientEyeBlinkingSystem : EyeBlinkingSystem
     /// </summary>
     private void ChangeEyeState(Entity<SpriteComponent?> ent, EyelidState state, bool eyeClosed)
     {
+        if (_statusEffects.HasEffectComp<UnblinkingStatusEffectComponent>(ent))
+            eyeClosed = false;
+
         var layer = state.LayerKey;
         if (!_sprite.LayerMapTryGet(ent, layer, out var layerIndex, logMissing: false))
             return;
@@ -369,6 +372,9 @@ public sealed partial class ClientEyeBlinkingSystem : EyeBlinkingSystem
 
             if (comp.NextBlinkingTime > curTime)
                 continue;
+
+            if (_statusEffects.HasEffectComp<UnblinkingStatusEffectComponent>(uid))
+                ResetBlink((uid, comp));
 
             Blink((uid, comp));
         }
