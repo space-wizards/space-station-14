@@ -219,7 +219,8 @@ public sealed partial class EncryptionKeySystem : EntitySystem
                 ("color", proto.Color),
                 ("key", key),
                 ("id", proto.LocalizedName),
-                ("freq", proto.Frequency)));
+                ("freq", proto.Frequency),
+                ("receiveOnly", !proto.AllowHeadsetSend)));
         }
 
         if (defaultChannel != null && ProtoMan.TryIndex(defaultChannel, out proto))

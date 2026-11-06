@@ -1,3 +1,4 @@
+using Content.Server.Popups;
 using Content.Shared.Chat;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Radio;
@@ -12,6 +13,7 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
 {
     [Dependency] private INetManager _netMan = default!;
     [Dependency] private RadioSystem _radio = default!;
+    [Dependency] private PopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -44,13 +46,21 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
 
     private void OnSpeak(EntityUid uid, WearingHeadsetComponent component, EntitySpokeEvent args)
     {
-        if (args.Channel != null
-            && TryComp(component.Headset, out EncryptionKeyHolderComponent? keys)
-            && keys.Channels.Contains(args.Channel.ID))
+        if (args.Channel is null
+            || !TryComp(component.Headset, out EncryptionKeyHolderComponent? keys)
+            || !keys.Channels.Contains(args.Channel.ID))
         {
-            _radio.SendRadioMessage(uid, args.Message, args.Channel, component.Headset);
-            args.Channel = null; // prevent duplicate messages from other listeners.
+            return;
         }
+
+        if (!args.Channel.AllowHeadsetSend)
+        {
+            _popup.PopupEntity(Loc.GetString("chat-manager-radio-channel-forbidden-for-headset"), uid, uid);
+            return;
+        }
+
+        _radio.SendRadioMessage(uid, args.Message, args.Channel, component.Headset);
+        args.Channel = null; // prevent duplicate messages from other listeners.
     }
 
     protected override void OnGotEquipped(EntityUid uid, HeadsetComponent component, GotEquippedEvent args)
