@@ -1,5 +1,6 @@
 job-supervisors-centcom = Central Command
 job-supervisors-captain = the Captain
+job-supervisors-cargo = Cargo Technicians, Salvage Specialists, and the Quartermaster
 job-supervisors-hop = the Head of Personnel
 job-supervisors-hos = the Head of Security
 job-supervisors-ce = the Chief Engineer
