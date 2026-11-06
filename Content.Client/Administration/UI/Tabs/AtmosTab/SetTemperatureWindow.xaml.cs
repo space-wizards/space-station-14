@@ -21,6 +21,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
 
         protected override void EnteredTree()
         {
+            base.EnteredTree();
             var entManager = IoCManager.Resolve<IEntityManager>();
             var playerManager = IoCManager.Resolve<IPlayerManager>();
 

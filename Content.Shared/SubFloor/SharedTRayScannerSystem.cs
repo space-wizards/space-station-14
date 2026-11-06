@@ -1,8 +1,8 @@
 using Content.Shared.Database;
 using Content.Shared.Eye;
 using Content.Shared.Hands;
-using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Timing.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
@@ -14,11 +14,11 @@ namespace Content.Shared.SubFloor;
 
 public abstract partial class SharedTRayScannerSystem : EntitySystem
 {
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedEyeSystem _eye = default!;
     [Dependency] private UseDelaySystem _delay = default!;
     [Dependency] private INetManager _netMan = default!;
+    [Dependency] private ItemToggleSystem _itemToggle = default!;
 
     public const float SubfloorRevealAlpha = 0.8f;
 
@@ -26,7 +26,6 @@ public abstract partial class SharedTRayScannerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TRayScannerComponent, ActivateInWorldEvent>(OnTrayScannerActivate);
         SubscribeLocalEvent<TRayScannerComponent, GetVerbsEvent<AlternativeVerb>>(OnAddSwitchModeVerb);
         SubscribeLocalEvent<TRayScannerComponent, GotEquippedHandEvent>(OnTrayHandEquipped);
         SubscribeLocalEvent<TRayScannerComponent, GotUnequippedHandEvent>(OnTrayHandUnequipped);
@@ -37,7 +36,7 @@ public abstract partial class SharedTRayScannerSystem : EntitySystem
 
     private void OnAddSwitchModeVerb(Entity<TRayScannerComponent> scanner, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !args.Using.HasValue || !scanner.Comp.Enabled)
+        if (!args.CanAccess || !args.CanInteract || !args.Using.HasValue || !_itemToggle.IsActivated(scanner.Owner))
             return;
 
         var user = args.User;
@@ -134,21 +133,5 @@ public abstract partial class SharedTRayScannerSystem : EntitySystem
     private void OnTrayEquipped(Entity<TRayScannerComponent> ent, ref GotEquippedEvent args)
     {
         OnEquip(args.EquipTarget);
-    }
-
-    private void OnTrayScannerActivate(Entity<TRayScannerComponent> ent, ref ActivateInWorldEvent args)
-    {
-        if (args.Handled || !args.Complex)
-            return;
-
-        ent.Comp.Enabled = !ent.Comp.Enabled;
-        Dirty(ent);
-
-        if (TryComp<AppearanceComponent>(ent, out var appearance))
-        {
-            _appearance.SetData(ent, TrayScannerVisual.Visual, ent.Comp.Enabled ? TrayScannerVisual.On : TrayScannerVisual.Off, appearance);
-        }
-
-        args.Handled = true;
     }
 }

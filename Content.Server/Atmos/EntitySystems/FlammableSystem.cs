@@ -71,6 +71,7 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<FlammableComponent, TileFireEvent>(OnTileFire);
             SubscribeLocalEvent<FlammableComponent, RejuvenateEvent>(OnRejuvenate);
             SubscribeLocalEvent<FlammableComponent, ResistFireAlertEvent>(OnResistFireAlert);
+            SubscribeLocalEvent<FlammableComponent, AttackedEvent>(OnAttacked);
             Subs.SubscribeWithRelay<FlammableComponent, ExtinguishEvent>(OnExtinguishEvent);
 
             SubscribeLocalEvent<IgniteOnCollideComponent, StartCollideEvent>(IgniteOnCollide);
@@ -153,14 +154,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (args.Handled)
                 return;
 
-            var isHotEvent = new IsHotEvent();
-            RaiseLocalEvent(args.Used, isHotEvent);
-
-            if (!isHotEvent.IsHot)
-                return;
-
-            Ignite(uid, args.Used, flammable, args.User);
-            args.Handled = true;
+            args.Handled = TryIgniteFromHotSource((uid, flammable), args.Used, args.User);
         }
 
         private void OnExtinguishActivateInWorld(EntityUid uid, ExtinguishOnInteractComponent component, ActivateInWorldEvent args)
@@ -261,6 +255,11 @@ namespace Content.Server.Atmos.EntitySystems
 
             Resist(ent, ent);
             args.Handled = true;
+        }
+
+        private void OnAttacked(Entity<FlammableComponent> ent, ref AttackedEvent args)
+        {
+            TryIgniteFromHotSource(ent, args.Used, args.User);
         }
 
         public void UpdateAppearance(EntityUid uid, FlammableComponent? flammable = null, AppearanceComponent? appearance = null)
@@ -400,6 +399,18 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
 
+        }
+
+        private bool TryIgniteFromHotSource(Entity<FlammableComponent> ent, EntityUid hotSource, EntityUid user)
+        {
+            var isHotEvent = new IsHotEvent();
+            RaiseLocalEvent(hotSource, isHotEvent);
+
+            if (!isHotEvent.IsHot)
+                return false;
+
+            Ignite(ent.Owner, hotSource, ent.Comp, user);
+            return true;
         }
 
         public void Resist(EntityUid uid,
