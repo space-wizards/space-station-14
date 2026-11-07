@@ -26,7 +26,7 @@ public sealed partial class IdBindSystem : EntitySystem
 
         var data = MetaData(ent);
 
-        _cardSystem.TryChangeFullName(cardId, data.EntityName, cardId);
+        _cardSystem.TryChangeFullName(cardId.Value, data.EntityName, cardId);
 
         if (!ent.Comp.BindPDAOwner)
         {

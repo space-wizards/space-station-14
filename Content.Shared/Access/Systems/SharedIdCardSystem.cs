@@ -1,4 +1,3 @@
-using System.Globalization;
 using Content.Shared.Access.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
@@ -12,6 +11,8 @@ using Content.Shared.StatusIcon;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 namespace Content.Shared.Access.Systems;
 
@@ -55,7 +56,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
             return;
 
         if (TryFindIdCard(ev.Uid, out var idCard))
-            TryChangeFullName(idCard, ev.NewName, idCard);
+            TryChangeFullName(idCard.Value, ev.NewName, idCard);
     }
 
     private void OnMapInit(EntityUid uid, IdCardComponent id, MapInitEvent args)
@@ -68,9 +69,9 @@ public abstract partial class SharedIdCardSystem : EntitySystem
         if (ev.Handled)
             return;
 
-        if (TryFindIdCard(ev.Target, out var idCard) && !(ev.RequestForAccessLogging && idCard.Comp.BypassLogging))
+        if (TryFindIdCard(ev.Target, out var idCard) && !(ev.RequestForAccessLogging && idCard.Value.Comp.BypassLogging))
         {
-            ev.Title = ExtractFullTitle(idCard);
+            ev.Title = ExtractFullTitle(idCard.Value);
             ev.Handled = true;
         }
     }
@@ -86,14 +87,12 @@ public abstract partial class SharedIdCardSystem : EntitySystem
     ///     Attempt to find an ID card on an entity. This will look in the entity itself, in the entity's hands, and
     ///     in the entity's inventory.
     /// </summary>
-    public bool TryFindIdCard(EntityUid uid, out Entity<IdCardComponent> idCard)
+    public bool TryFindIdCard(EntityUid uid, [NotNullWhen(true)] out Entity<IdCardComponent>? idCard)
     {
         // check held item?
         if (_hands.GetActiveItem(uid) is { } heldItem &&
             TryGetIdCard(heldItem, out idCard))
-        {
             return true;
-        }
 
         // check entity itself
         if (TryGetIdCard(uid, out idCard))
@@ -110,7 +109,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
     ///     Attempt to get an id card component from an entity, either by getting it directly from the entity, or by
     ///     getting the contained id from a <see cref="PdaComponent"/>.
     /// </summary>
-    public bool TryGetIdCard(EntityUid uid, out Entity<IdCardComponent> idCard)
+    public bool TryGetIdCard(EntityUid uid, [NotNullWhen(true)] out Entity<IdCardComponent>? idCard)
     {
         if (TryComp(uid, out IdCardComponent? idCardComp))
         {

@@ -637,6 +637,6 @@ public sealed partial class ServerNukeopsRuleSystem : NukeopsRuleSystem
 
         // Fallback to ID
         if (_idCard.TryFindIdCard(carrier, out var idCard))
-            job = idCard.Comp.LocalizedJobTitle ?? job;
+            job = idCard.Value.Comp.LocalizedJobTitle ?? job;
     }
 }
