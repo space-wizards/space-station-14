@@ -38,7 +38,7 @@
   copyright: "Taken from TGstation13"
   source: "https://github.com/tgstation/tgstation/blob/bce9afc2cf39c229f2799c6ad2124f4d69a2dbbf/icons/effects/parallax.dmi"
 
-- files: ["SnowballParallaxBG.png", "SnowballParallaxStars.png", "SnowballParallaxSun.png"]
+- files: ["SnowballParallaxBG.png", "SnowballParallaxStars.png", "SnowballParallaxSun.png", "ParallaxHikeCloudsHigh.png", "ParallaxHikeCloudsLow.png", "ParallaxHikeGround.png"]
   license: "CC-BY-3.0"
   copyright: "By ketufaispikinut"
   source: "https://github.com/ketufaispikinut"
