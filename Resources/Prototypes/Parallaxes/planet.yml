@@ -54,12 +54,12 @@
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/Parallaxes/ParallaxHikeCloudsLow.png"
-      scrolling: "0.02, -0.04"
+      scrolling: "0, -0.2"
       slowness: 0.965
       scale: 1,1
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/Parallaxes/ParallaxHikeCloudsHigh.png"
-      scrolling: "0.05, -0.1"
+      scrolling: "0, -0.4"
       slowness: 0.94
       scale: 1, 1
