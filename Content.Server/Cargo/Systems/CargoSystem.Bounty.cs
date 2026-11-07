@@ -94,9 +94,8 @@ public sealed partial class CargoSystem
         if (!TryRemoveBounty(station, args.BountyId, true, args.Actor))
             return;
 
-        FillBountyDatabase(station);
         db.NextSkipTime = Timing.CurTime + db.SkipDelay;
-        UpdateBountyConsoles();
+        FillBountyDatabase(station);
         _audio.PlayPvs(component.SkipSound, uid);
     }
 
