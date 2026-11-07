@@ -552,10 +552,11 @@ public sealed partial class CargoSystem
         return true;
     }
 
+    // Index is -1 when false
     public bool TryGetBountyIndexFromId(
         EntityUid uid,
         string id,
-        [NotNullWhen(true)] out int index,
+        out int index,
         StationCargoBountyDatabaseComponent? component = null
     )
     {
