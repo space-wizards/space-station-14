@@ -74,7 +74,7 @@ public sealed partial class PlantTrayVisualizerSystem : VisualizerSystem<PlantTr
                          || plantHolder.MissingGas;
 
                 health = _plantHolder.GetHealthThreshold(plantUid.Value);
-                harvest = plantHolder.ReadyForHarvest;
+                harvest = plantHolder.ReadyForHarvest && !plantHolder.Dead;
             }
         }
 

@@ -273,15 +273,29 @@ public sealed partial class CreditsWindow : DefaultWindow
 
         foreach (var entry in CreditsManager.GetLicenses(_resourceManager).OrderBy(p => p.Name))
         {
-            licensesContainer.AddChild(new Label
-                { StyleClasses = { StyleClass.LabelHeading }, Text = entry.Name });
+            AddLicense(entry.Name, entry.License);
+        }
 
-            // We split these line by line because otherwise
-            // the LGPL causes Clyde to go out of bounds in the rendering code.
-            foreach (var line in entry.License.Split("\n"))
-            {
-                licensesContainer.AddChild(new Label { Text = line, FontColorOverride = new Color(200, 200, 200) });
-            }
+        foreach (var path in _resourceManager.ContentFindFiles("/EngineLicenses/"))
+        {
+            AddLicense(path.ToString(), _resourceManager.ContentFileReadAllText(path));
+        }
+
+        foreach (var path in _resourceManager.ContentFindFiles("/Licenses/"))
+        {
+            AddLicense(path.ToString(), _resourceManager.ContentFileReadAllText(path));
+        }
+
+        void AddLicense(string name, string license)
+        {
+            licensesContainer.AddChild(new Label
+                { StyleClasses = { StyleClass.LabelHeading }, Text = name });
+
+            var label = new RichTextLabel();
+
+            label.SetMessage(license, null, new Color(200,200,200));
+
+            licensesContainer.AddChild(label);
         }
     }
 
