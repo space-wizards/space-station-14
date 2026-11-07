@@ -86,4 +86,10 @@ public sealed partial class ChangelingHorrorComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public List<EntityUid> StoredActions = new();
+
+    /// <summary>
+    /// Lower = faster.
+    /// </summary>
+    [DataField]
+    public float DevourSpeedMultiplier = 0.25f;
 }

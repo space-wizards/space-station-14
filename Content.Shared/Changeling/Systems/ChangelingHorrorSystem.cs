@@ -221,6 +221,41 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
     {
         args.IsSafe = false;
     }
+
+    [SubscribeLocalEvent]
+    public void OnTryDevourEvent(Entity<ChangelingHorrorComponent> ent, ref ChangelingTryDevourEvent args)
+    {
+        args.BreakOnDamage = false;
+        args.Multiplier *= ent.Comp.DevourSpeedMultiplier;
+    }
+
+    [SubscribeLocalEvent]
+    public void OnTryWindupEvent(Entity<ChangelingHorrorComponent> ent, ref ChangelingDevourTryWindupEvent args)
+    {
+        // its mouth is already bare
+        args.Multiplier = 0f;
+    }
+
+    [SubscribeLocalEvent]
+    public void OnEntityDevoured(Entity<ChangelingHorrorComponent> ent, ref ChangelingEntityDevouredEvent args)
+    {
+        // convert new dna to time
+        if (TryComp<StoreComponent>(ent.Owner, out var store))
+        {
+            if (store.Balance.ContainsKey(_currency))
+            {
+                var k = store.Balance[_currency];
+                // remove all DNA points from the store, since they are being converted into time
+                Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> dico = new() {
+                    {_currency, -k }
+                };
+                // note that we dont add a grace period here (set to 0d) because this is mid-transformation
+                _stores.TryAddCurrency(dico, ent.Owner, store);
+                ent.Comp.EndTime += DNAToTime(k, ent.Comp.SecondPerDNA.TotalSeconds, 0d);
+                Dirty(ent);
+            }
+        }
+    }
     #endregion
     #region helpers
     /// <summary>
