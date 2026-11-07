@@ -74,7 +74,7 @@
 - type: entity
   name: space bear
   id: MobBearSpace
-  parent: [MobSpaceBasic, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [MobSpaceBasic, BaseSlicingRefinableButchering, BaseMobDestructible]
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: Sprite
@@ -123,7 +123,7 @@
 - type: entity
   name: space kangaroo
   id: MobKangarooSpace
-  parent: [MobSpaceBasic, StripableInventoryBase, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [MobSpaceBasic, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible]
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: Sprite
@@ -184,7 +184,7 @@
 - type: entity
   name: space spider
   id: MobSpiderSpace
-  parent: [MobSpaceBasic, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [MobSpaceBasic, BaseSlicingRefinableButchering, BaseMobDestructible]
   description: It's so glowing, it looks dangerous.
   components:
   - type: Sprite
@@ -289,7 +289,7 @@
 - type: entity
   name: space cobra
   id: MobCobraSpace
-  parent: [MobSpaceBasic, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [MobSpaceBasic, BaseSlicingRefinableButchering, BaseMobDestructible]
   description: Long fangs and a glowing hood, and the alluring look begs to come closer.
   components:
     - type: Sprite
@@ -400,16 +400,15 @@
   description: A sheep... in space!
   components:
   - type: Sprite
+    sprite: Mobs/Animals/spacesheep.rsi
     drawdepth: Mobs
     layers:
     - state: space_sheep_bare
       map: [ "enum.DamageStateVisualLayers.Base" ]
       visible: true
-      sprite: Mobs/Animals/sheep.rsi
     - state: space_sheep_wool_glowmask
       map: [ "wooly" ]
       visible: true
-      sprite: Mobs/Animals/sheep.rsi
   - type: GenericVisualizer
     visuals:
       enum.ShearableVisuals.Shearable:
@@ -440,7 +439,7 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: space_sheep_harvested
+        Base: space_sheep_bare
       Critical:
         Base: space_sheep_dead
       Dead:

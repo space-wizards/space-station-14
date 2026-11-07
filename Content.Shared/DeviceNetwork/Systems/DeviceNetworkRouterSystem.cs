@@ -11,7 +11,7 @@ namespace Content.Shared.DeviceNetwork.Systems;
 /// </summary>
 public sealed partial class DeviceNetworkRouterSystem : EntitySystem
 {
-    [Dependency] private SharedDeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
 
     [Dependency] private EntityQuery<DeviceNetworkComponent> _query = default!;
 
@@ -23,12 +23,12 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
         base.Initialize();
 
         // Surveillance cameras
-        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraConnectPayload>>>((ent, ref args) => OnRoutePayload(ent, ref args));
-        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraConnectRequestPayload>>>((ent, ref args) => OnRoutePayload(ent, ref args));
-        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraHeartbeatRequestPayload>>>((ent, ref args) => OnRoutePayload(ent, ref args));
-        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraHeartbeatPayload>>>((ent, ref args) => OnRoutePayload(ent, ref args));
-        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraPingPayload>>>((ent, ref args) => OnRoutePayload(ent, ref args));
-        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraDataPayload>>>((ent, ref args) => OnRoutePayload(ent, ref args));
+        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraConnectPayload>>>(OnRoutePayload);
+        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraConnectRequestPayload>>>(OnRoutePayload);
+        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraHeartbeatRequestPayload>>>(OnRoutePayload);
+        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraHeartbeatPayload>>>(OnRoutePayload);
+        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraPingPayload>>>(OnRoutePayload);
+        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraDataPayload>>>(OnRoutePayload);
     }
 
     private void OnRoutePayload<T>(Entity<DeviceNetworkRouterComponent> ent, ref DeviceNetworkPacketEvent<T> args) where T : IRoutedNetworkPayload
@@ -71,10 +71,10 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
     public void SendPacketRouted<T>(
         Entity<DeviceNetworkComponent?> ent,
         ref T data,
-        string? routerAddress,
-        string? targetAddress,
-        uint? overrideFrequency = null,
-        uint? frequency = null,
+        DeviceAddress? routerAddress,
+        DeviceAddress? targetAddress,
+        DeviceFrequency? overrideFrequency = null,
+        DeviceFrequency? frequency = null,
         int? overrideNetwork = null,
         int? network = null)
         where T : IRoutableNetworkPayload

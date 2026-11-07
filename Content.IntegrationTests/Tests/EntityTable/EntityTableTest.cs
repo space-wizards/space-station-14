@@ -300,11 +300,11 @@ public sealed class EntityTableTest : GameTest
         // EntityTableTestEntSelectorWithCost reads cost 10 from the DynamicRuleCostComponent.
 
         // Budget 9 => not enough.
-        var poor = Run(Table("EntityTableTestEntSelectorWithCost"), ctx: new EntityTableContext(new() { ["Budget"] = 9f }));
+        var poor = Run(Table("EntityTableTestEntSelectorWithCost"), ctx: new EntityTableContext { { HasBudgetCondition.BudgetContextKey, 9f } });
         Assert.That(poor, Is.Empty);
 
         // Budget 10 => enough.
-        var rich = Run(Table("EntityTableTestEntSelectorWithCost"), ctx: new EntityTableContext(new() { ["Budget"] = 10f }));
+        var rich = Run(Table("EntityTableTestEntSelectorWithCost"), ctx: new EntityTableContext { { HasBudgetCondition.BudgetContextKey, 10f } });
         Assert.That(rich, Is.EquivalentTo(new[] { new EntProtoId(EntProtoWithCost) }));
     }
 
@@ -313,11 +313,11 @@ public sealed class EntityTableTest : GameTest
     public void RequireAllConditionSemantics()
     {
         // RequireAll = true, one fails => no spawns.
-        var requireAllResult = Run(Table("EntityTableTestEntRequireAll"), ctx: new EntityTableContext(new() { ["Budget"] = 50f }));
+        var requireAllResult = Run(Table("EntityTableTestEntRequireAll"), ctx: new EntityTableContext { { HasBudgetCondition.BudgetContextKey, 50f } });
         Assert.That(requireAllResult, Is.Empty);
 
         // RequireAll = false, one passes => spawns.
-        var requireAnyResult = Run(Table("EntityTableTestEntRequireAny"), ctx: new EntityTableContext(new() { ["Budget"] = 50f }));
+        var requireAnyResult = Run(Table("EntityTableTestEntRequireAny"), ctx: new EntityTableContext { { HasBudgetCondition.BudgetContextKey, 50f } });
         Assert.That(requireAnyResult, Is.EquivalentTo(new[] { new EntProtoId(EntProto1) }));
     }
 
@@ -328,7 +328,7 @@ public sealed class EntityTableTest : GameTest
         // RequireAll = false but every condition fails => no spawns.
         // Regression test: previously the OR-ing was seeded with `true`, so
         // RequireAll = false always passed regardless of the actual results.
-        var result = Run(Table("EntityTableTestEntRequireAnyAllFail"), ctx: new EntityTableContext(new() { ["Budget"] = 50f }));
+        var result = Run(Table("EntityTableTestEntRequireAnyAllFail"), ctx: new EntityTableContext { { HasBudgetCondition.BudgetContextKey, 50f } });
         Assert.That(result, Is.Empty);
     }
 
@@ -337,7 +337,7 @@ public sealed class EntityTableTest : GameTest
     public void DeepComposition_ComplexTree()
     {
         // Ent1's condition fails (Budget 50 < CostOverride 100), so Group only has Ent2.
-        var result = Run(Table("EntityTableTestDeepComposition"), SeededRand(1), new EntityTableContext(new() { ["Budget"] = 50f }));
+        var result = Run(Table("EntityTableTestDeepComposition"), SeededRand(1), new EntityTableContext { { HasBudgetCondition.BudgetContextKey, 50f } });
         Assert.That(result, Is.EqualTo(new[] { new EntProtoId(EntProto2), new EntProtoId(EntProto1) }));
     }
 
@@ -352,12 +352,12 @@ public sealed class EntityTableTest : GameTest
         // EntProto1 already recorded as spawned => blocked.
         var used = new HashSet<EntProtoId> { new(EntProto1) };
         var blocked = Run(Table("EntityTableTestNotRepeating"),
-            ctx: new EntityTableContext(new() { [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = used }));
+            ctx: new EntityTableContext { { ExcludeEntitiesFromContextCondition.EntitiesToExclude, used } });
         Assert.That(blocked, Is.Empty);
 
         // Tracking enabled, but EntProto1 has not been spawned yet => allowed.
         var allowed = Run(Table("EntityTableTestNotRepeating"),
-            ctx: new EntityTableContext(new() { [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = new HashSet<EntProtoId>() }));
+            ctx: new EntityTableContext { { ExcludeEntitiesFromContextCondition.EntitiesToExclude, new HashSet<EntProtoId>()} });
         Assert.That(allowed, Is.EquivalentTo([new EntProtoId(EntProto1)]));
     }
 
@@ -367,7 +367,7 @@ public sealed class EntityTableTest : GameTest
     {
         var used = new HashSet<EntProtoId> { new(EntProto1) };
         var result = Run(Table("EntityTableTestAllNotRepeating"),
-            ctx: new EntityTableContext(new() { [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = used }));
+            ctx: new EntityTableContext { { ExcludeEntitiesFromContextCondition.EntitiesToExclude, used } });
         Assert.That(result, Is.EqualTo(new[] { new EntProtoId(EntProto2) }));
     }
 
@@ -381,7 +381,7 @@ public sealed class EntityTableTest : GameTest
     {
         var used = new HashSet<EntProtoId> { new(EntProto1) };
         var result = Run(Table("EntityTableTestChainNotRepeating"), SeededRand(1),
-            new EntityTableContext(new() { [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = used }));
+            new EntityTableContext { { ExcludeEntitiesFromContextCondition.EntitiesToExclude, used } });
         Assert.That(result, Is.EqualTo(new[] { new EntProtoId(EntProto2) }));
     }
 
@@ -394,10 +394,10 @@ public sealed class EntityTableTest : GameTest
     [RunOnSide(Side.Server)]
     public void NestedSelector_CheckConditions_IncludesNestedTable()
     {
-        var poor = Run(Table("EntityTableTestChainTableWithCost"), ctx: new EntityTableContext(new() { ["Budget"] = 9f }));
+        var poor = Run(Table("EntityTableTestChainTableWithCost"), ctx: new EntityTableContext { { HasBudgetCondition.BudgetContextKey, 9f } });
         Assert.That(poor, Is.Empty);
 
-        var rich = Run(Table("EntityTableTestChainTableWithCost"), ctx: new EntityTableContext(new() { ["Budget"] = 10f }));
+        var rich = Run(Table("EntityTableTestChainTableWithCost"), ctx: new EntityTableContext { { HasBudgetCondition.BudgetContextKey, 10f } });
         Assert.That(rich, Is.EquivalentTo(new[] { new EntProtoId(EntProtoWithCost) }));
     }
 
@@ -409,7 +409,7 @@ public sealed class EntityTableTest : GameTest
     [RunOnSide(Side.Server)]
     public void GroupSelector_ExcludesNestedSelectorWithFailingConditions()
     {
-        var result = Run(Table("EntityTableTestGroupWithCostlyNested"), SeededRand(1), new EntityTableContext(new() { ["Budget"] = 9f }));
+        var result = Run(Table("EntityTableTestGroupWithCostlyNested"), SeededRand(1), new EntityTableContext { { HasBudgetCondition.BudgetContextKey, 9f } });
         Assert.That(result, Is.EqualTo(new[] { new EntProtoId(EntProto2) }));
     }
 
@@ -437,18 +437,18 @@ public sealed class EntityTableTest : GameTest
 
         // Without the injected condition, the UsedSpawns tracking alone has no effect.
         var unconstrained = Run(Table("EntityTableTestEntSelector"),
-            ctx: new EntityTableContext(new() { [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = used }));
+            ctx: new EntityTableContext { { ExcludeEntitiesFromContextCondition.EntitiesToExclude, used } });
         Assert.That(unconstrained, Is.EquivalentTo([new EntProtoId(EntProto1)]));
 
         // Injecting ExcludeEntitiesFromContextCondition gates the selector: EntProto1 is already used => blocked.
-        var ctx = new EntityTableContext(new() { [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = used });
+        var ctx = new EntityTableContext { { ExcludeEntitiesFromContextCondition.EntitiesToExclude, used } };
         ctx.SetData(EntityTableSelector.AdditionalConditionsKey,
             new List<EntityTableCondition> { new ExcludeEntitiesFromContextCondition() });
         var blocked = Run(Table("EntityTableTestEntSelector"), ctx: ctx);
         Assert.That(blocked, Is.Empty);
 
         // With the condition injected but EntProto1 not yet used, the spawn is allowed.
-        var fresh = new EntityTableContext(new() { [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = new HashSet<EntProtoId>() });
+        var fresh = new EntityTableContext { { ExcludeEntitiesFromContextCondition.EntitiesToExclude, new HashSet<EntProtoId>() } };
         fresh.SetData(EntityTableSelector.AdditionalConditionsKey,
             new List<EntityTableCondition> { new ExcludeEntitiesFromContextCondition() });
         var allowed = Run(Table("EntityTableTestEntSelector"), ctx: fresh);
@@ -460,11 +460,11 @@ public sealed class EntityTableTest : GameTest
     public void AdditionalConditions_RemainLocal()
     {
         var used = new HashSet<EntProtoId> { new(EntProto2) };
-        var ctx = new EntityTableContext(new() { [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = used });
+        var ctx = new EntityTableContext { { ExcludeEntitiesFromContextCondition.EntitiesToExclude, used } };
 
         var result = Run(Table("EntityTableTestLocalizedChildConditions"), ctx: ctx);
 
-        ctx.TryGetData<object>(EntityTableSelector.AdditionalConditionsKey, out var empty);
+        ctx.TryGetData(EntityTableSelector.AdditionalConditionsKey, out var empty);
         using (Assert.EnterMultipleScope())
         {
             Assert.That(empty, Is.Null);
@@ -482,7 +482,7 @@ public sealed class EntityTableTest : GameTest
 
         // An empty container succeeds.
         var container = _sContainer.MakeContainer<ContainerSlot>(SSpawn(EntProto1), "containerId");
-        var ctx = new EntityTableContext(new() { [EmptyContainerCondition.ContainerContextKey] = container });
+        var ctx = new EntityTableContext { {EmptyContainerCondition.ContainerContextKey, container } };
 
         result = Run(Table("EntityTableTestContainerCondition"), ctx: ctx);
         Assert.That(result, Is.EquivalentTo(new [] { EntProto1 }));

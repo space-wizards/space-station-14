@@ -11,9 +11,6 @@
             "name": "knuckleduster_off"
         },
         {
-            "name": "knuckleduster_nocell"
-        },
-        {
             "name": "knuckleduster_on",
             "delays": [
                 [

@@ -1,4 +1,4 @@
-using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power.Components;

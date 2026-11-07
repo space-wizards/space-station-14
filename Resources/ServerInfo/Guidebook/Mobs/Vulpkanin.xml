@@ -5,12 +5,23 @@
     <GuideEntityEmbed Entity="MobVulpkanin" Caption=""/>
   </Box>
 
-  Vulpkanin, due to their dense fur, [color=#1e90ff]prefer colder temperatures[/color] and [color=#ffa500]heat up faster.[/color]
-  Their agile (but clumsy) legs allow them to leap short distances, be careful not to bump into anything!
+  ## General Information
 
-  Their diet allows them to safely eat raw meat but they get poisoned by theobromine.
+  Vulpkanins' sharp claws make their unarmed attacks deal Slash damage.
 
-  Their weirdly shaped muzzle leads to difficulties drinking, making them sometimes spill small amounts of whatever they drank onto the ground.
+  Their animal-like digestive system can [color=lightgreen]digest raw meat and blood[/color] without ill effects.
+  They are [color=palevioletred]poisoned[/color] by allicin (found in garlic and onions) and theobromine (found in caffeinated beverages and chocolate).
 
-  They take [color=#1e90ff]15% less Cold damage[/color] but [color=#ffa500]15% more Heat damage.[/color].
+  The shape of their muzzle means they tend to spill some liquid when drinking.
+
+  They take [color=lightgreen]15% less Cold damage[/color], but [color=palevioletred]15% more Heat damage[/color].
+  Their dense fur makes them prefer a somewhat cooler temperature range than humans, and also makes them [color=palevioletred]extremely vulnerable to fire[/color].
+
+  ## Leaping
+
+  Vulpkanins' digitigrade legs allow them to [color=lightgreen]leap impressive distances[/color]. This is useful for jumping over ground-based hazards
+  (such as bottomless chasms), or as a quick burst of speed to escape a dangerous situation or chase someone down.
+
+  Be careful not to crash into anything mid-leap, or you'll [color=palevioletred]fall to the ground[/color] and drop what you're holding!
+
 </Document>

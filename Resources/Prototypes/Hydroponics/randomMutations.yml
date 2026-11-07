@@ -95,8 +95,8 @@
         targetComponent: PlantAtmospheric
         targetDataField: LowHeatTolerance
         applyRange:
-          min: 2
-          max: 25
+          min: 213
+          max: 313 # statistical "neutral" point at 263K (about -10C), -20C difference from default plants.
         up: !type:PlantAdjustLowHeatTolerance
           amount: 5
         down: !type:PlantAdjustLowHeatTolerance
@@ -108,8 +108,8 @@
         targetComponent: PlantAtmospheric
         targetDataField: HighHeatTolerance
         applyRange:
-          min: 2
-          max: 25
+          min: 273
+          max: 373 # statistical "neutral" point at 323K (about 50C), +20C differencefrom default plants.
         up: !type:PlantAdjustHighHeatTolerance
           amount: 5
         down: !type:PlantAdjustHighHeatTolerance

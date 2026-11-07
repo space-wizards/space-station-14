@@ -58,7 +58,7 @@ public sealed partial class ChangelogTab : Control
             else if (day == today.AddDays(-1))
                 dayNice = Loc.GetString("changelog-yesterday");
             else
-                dayNice = day.ToShortDateString();
+                dayNice = day.Date.ToString("yyyy-MM-dd");
 
             ChangelogBody.AddChild(new Label
             {

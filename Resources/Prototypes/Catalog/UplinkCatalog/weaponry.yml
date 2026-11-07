@@ -137,7 +137,7 @@
       - NukeOpsUplink
 
 - type: listing
-  id: uplinkRiggedBoxingGloves
+  id: UplinkRiggedBoxingGloves
   name: uplink-rigged-boxing-gloves-name
   description: uplink-rigged-boxing-gloves-desc
   icon: { sprite: Clothing/Hands/Gloves/Boxing/boxingblue.rsi, state: icon }

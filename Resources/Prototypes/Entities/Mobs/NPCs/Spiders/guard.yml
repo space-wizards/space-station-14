@@ -1,6 +1,6 @@
 # Guard Spider
 - type: entity
-  parent: MobSpiderAnimated
+  parent: MobSpiderBase
   id: MobGiantSpiderGuard
   name: guard spider
   description: A stockier spider that stands its ground and blocks escape routes with webs.

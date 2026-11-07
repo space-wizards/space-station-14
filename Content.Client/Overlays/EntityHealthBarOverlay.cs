@@ -128,8 +128,6 @@ public sealed class EntityHealthBarOverlay : Overlay
             pixelDarken = pixelDarken.Translated(position);
             handle.DrawRect(pixelDarken, Black.WithAlpha(128));
         }
-
-        handle.SetTransform(Matrix3x2.Identity);
     }
 
     /// <summary>

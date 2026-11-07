@@ -118,54 +118,9 @@ public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
         return true;
     }
 
-    /// <summary>
-    ///     Spawn an amount of a material in stack entities.
-    ///     Note the 'amount' is material dependent.
-    ///     1 biomass = 1 biomass in its stack,
-    ///     but 100 plasma = 1 sheet of plasma, etc.
-    /// </summary>
-    public List<EntityUid> SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates)
-    {
-        return SpawnMultipleFromMaterial(amount, material, coordinates, out _);
-    }
-
-    /// <summary>
-    ///     Spawn an amount of a material in stack entities.
-    ///     Note the 'amount' is material dependent.
-    ///     1 biomass = 1 biomass in its stack,
-    ///     but 100 plasma = 1 sheet of plasma, etc.
-    /// </summary>
-    public List<EntityUid> SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates, out int overflowMaterial)
-    {
-        overflowMaterial = 0;
-        if (!ProtoMan.TryIndex<MaterialPrototype>(material, out var stackType))
-        {
-            Log.Error("Failed to index material prototype " + material);
-            return new List<EntityUid>();
-        }
-
-        return SpawnMultipleFromMaterial(amount, stackType, coordinates, out overflowMaterial);
-    }
-
-    /// <summary>
-    ///     Spawn an amount of a material in stack entities.
-    ///     Note the 'amount' is material dependent.
-    ///     1 biomass = 1 biomass in its stack,
-    ///     but 100 plasma = 1 sheet of plasma, etc.
-    /// </summary>
+    /// <inheritdoc/>
     [PublicAPI]
-    public List<EntityUid> SpawnMultipleFromMaterial(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates)
-    {
-        return SpawnMultipleFromMaterial(amount, materialProto, coordinates, out _);
-    }
-
-    /// <summary>
-    ///     Spawn an amount of a material in stack entities.
-    ///     Note the 'amount' is material dependent.
-    ///     1 biomass = 1 biomass in its stack,
-    ///     but 100 plasma = 1 sheet of plasma, etc.
-    /// </summary>
-    public List<EntityUid> SpawnMultipleFromMaterial(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates, out int overflowMaterial)
+    public override List<EntityUid> SpawnMultipleFromMaterial(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates, out int overflowMaterial)
     {
         overflowMaterial = 0;
 

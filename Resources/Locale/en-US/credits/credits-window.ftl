@@ -13,6 +13,7 @@ credits-window-immortals-title = In Memoriam
 credits-window-special-thanks-section-title = Special Thanks
 credits-window-previous-page-button = Previous Page
 credits-window-next-page-button = Next Page
+credits-window-page-label = Page:
 
 credits-window-attributions-directory = [color=white]Directory:[/color] {$directory}
 credits-window-attributions-files = [color=white]Files:[/color] {$files}

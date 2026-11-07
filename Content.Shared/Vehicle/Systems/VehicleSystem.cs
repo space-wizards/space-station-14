@@ -39,12 +39,15 @@ public sealed partial class VehicleSystem : EntitySystem
     [Dependency] private SharedVirtualItemSystem _virtualItem = default!;
     [Dependency] private IGameTiming _timing = default!;
 
-    [Dependency] private EntityQuery<VehicleComponent> _vehicleQuery;
-    [Dependency] private EntityQuery<VehicleOperatorComponent> _operatorQuery;
     [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
-    [Dependency] private EntityQuery<InputMoverComponent> _inputMoverQuery;
     [Dependency] private EntityQuery<HandsComponent> _handsQuery;
+    [Dependency] private EntityQuery<InputMoverComponent> _inputMoverQuery;
+    [Dependency] private EntityQuery<InteractionRelayComponent> _interactionRelayQuery;
+    [Dependency] private EntityQuery<MovementRelayTargetComponent> _movementRelayQuery;
+    [Dependency] private EntityQuery<RelayInputMoverComponent> _relayInputMoverQuery;
+    [Dependency] private EntityQuery<VehicleComponent> _vehicleQuery;
     [Dependency] private EntityQuery<VehicleHandBlockerComponent> _handBlockerQuery;
+    [Dependency] private EntityQuery<VehicleOperatorComponent> _operatorQuery;
 
     /// <remarks>
     /// We subscribe to BeforeDamageChangedEvent so that we can access the damage value before the container is applied.
@@ -219,19 +222,19 @@ public sealed partial class VehicleSystem : EntitySystem
 
     private void ClearOperatorRelays(EntityUid operatorUid, EntityUid vehicleUid)
     {
-        if (TryComp<RelayInputMoverComponent>(operatorUid, out var relayMover) &&
+        if (_relayInputMoverQuery.TryComp(operatorUid, out var relayMover) &&
             relayMover.RelayEntity == vehicleUid)
         {
             RemCompDeferred<RelayInputMoverComponent>(operatorUid);
         }
 
-        if (TryComp<InteractionRelayComponent>(operatorUid, out var interactionRelay) &&
+        if (_interactionRelayQuery.TryComp(operatorUid, out var interactionRelay) &&
             interactionRelay.RelayEntity == vehicleUid)
         {
             RemCompDeferred<InteractionRelayComponent>(operatorUid);
         }
 
-        if (TryComp<MovementRelayTargetComponent>(vehicleUid, out var relayTarget) &&
+        if (_movementRelayQuery.TryComp(vehicleUid, out var relayTarget) &&
             relayTarget.Source == operatorUid)
         {
             RemCompDeferred<MovementRelayTargetComponent>(vehicleUid);

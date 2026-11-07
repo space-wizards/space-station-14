@@ -1,6 +1,6 @@
 # Hunter Spider
 - type: entity
-  parent: MobSpiderAnimated
+  parent: MobSpiderBase
   id: MobGiantSpiderHunter
   name: hunter spider
   description: An aggressive, fast-moving variety of giant spider.

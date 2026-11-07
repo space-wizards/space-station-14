@@ -1,4 +1,5 @@
 using Content.Shared.Botany.Components;
+using Content.Shared.Botany.Events;
 using Content.Shared.Botany.Items.Components;
 using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
@@ -85,6 +86,9 @@ public sealed partial class BotanySystem
             Dirty(entity, produce);
             ProduceGrown((entity, produce));
             _appearance.SetData(entity, ProduceVisuals.Potency, ent.Comp1.Potency);
+
+            var ev = new PlantProduceSpawnedEvent(entity);
+            RaiseLocalEvent(ent.Owner, ref ev);
         }
     }
 }
