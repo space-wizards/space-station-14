@@ -1,54 +1,86 @@
 using Content.Shared.EntityEffects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Botany.Components;
 
 /// <summary>
-/// Data that specifies the odds and effects of possible random plant mutations.
+/// A plant mutation prototype reference, its odds, and optional overrides.
+/// Resolve the effective settings when using the mutation so copied entries do not need initialization.
 /// </summary>
 [Serializable, NetSerializable]
 [DataDefinition]
 public sealed partial class RandomPlantMutation
 {
     /// <summary>
-    /// Odds of this mutation occurring with 1 point of mutation severity on a plant.
+    /// The prototype supplying defaults for fields not overridden by this entry.
     /// </summary>
+    [DataField(required: true)]
+    public ProtoId<RandomPlantMutationPrototype> Prototype;
+
     [DataField]
     public float BaseOdds;
 
     /// <summary>
-    /// The name of this mutation.
+    /// Overrides the prototype's default value for Name.
     /// </summary>
-    [DataField(required: true)]
-    public string Name;
+    [DataField("name")]
+    private string? _nameOverride;
 
     /// <summary>
-    /// The text to display to players when examining something with this mutation.
+    /// Overrides the prototype's default value for Description.
     /// </summary>
-    [DataField]
-    public LocId? Description;
+    [DataField("description")]
+    private LocId? _descriptionOverride;
 
     /// <summary>
-    /// The actual EntityEffect to apply to the target
+    /// Overrides the prototype's default value for Effect.
     /// </summary>
-    [DataField(required: true)]
-    public EntityEffect Effect;
+    [DataField("effect")]
+    private EntityEffect? _effectOverride;
 
     /// <summary>
-    /// This mutation will target the harvested produce
+    /// Overrides the prototype's default value for AppliesToPlant.
     /// </summary>
-    [DataField]
-    public bool AppliesToProduce = true;
+    [DataField("appliesToPlant")]
+    private bool? _appliesToPlantOverride;
 
     /// <summary>
-    /// This mutation will target the growing plant as soon as this mutation is applied.
+    /// Overrides the prototype's default value for AppliesToProduce.
     /// </summary>
-    [DataField]
-    public bool AppliesToPlant = true;
+    [DataField("appliesToProduce")]
+    private bool? _appliesToProduceOverride;
 
     /// <summary>
-    /// This mutation stays on the plant and its produce. If false while AppliesToPlant is true, the effect will run when triggered.
+    /// Overrides the prototype's default value for Persists.
     /// </summary>
-    [DataField]
-    public bool Persists = true;
+    [DataField("persists")]
+    private bool? _persistsOverride;
+
+    /// <summary>
+    /// Grabs the prototype's values, overriding them if overrides are defined.
+    /// </summary>
+    public ResolvedPlantMutation Resolve(IPrototypeManager prototypes)
+    {
+        var prototype = prototypes.Index(Prototype);
+
+        return new ResolvedPlantMutation(
+            _nameOverride ?? prototype.Name,
+            _descriptionOverride ?? prototype.Description,
+            _effectOverride ?? prototype.Effect,
+            _appliesToProduceOverride ?? prototype.AppliesToProduce,
+            _appliesToPlantOverride ?? prototype.AppliesToPlant,
+            _persistsOverride ?? prototype.Persists);
+    }
 }
+
+/// <summary>
+/// The plant mutation after overrides are applied
+/// </summary>
+public readonly record struct ResolvedPlantMutation(
+    string Name,
+    LocId? Description,
+    EntityEffect Effect,
+    bool AppliesToProduce,
+    bool AppliesToPlant,
+    bool Persists);

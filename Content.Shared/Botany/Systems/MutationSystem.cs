@@ -41,12 +41,13 @@ public sealed partial class PlantMutationSystem : EntitySystem
             return;
 
         var mutationTable = ProtoMan.Index(mutationTableId);
-        foreach (var mutation in mutationTable.Mutations)
+        foreach (var entry in mutationTable.Mutations)
         {
+            var mutation = entry.Resolve(ProtoMan);
             var triggers = 0;
-            while (mutation.BaseOdds * severity > triggers) // If the odds are greater than one, potentially trigger the mutation multiple times
+            while (entry.BaseOdds * severity > triggers) // If the odds are greater than one, potentially trigger the mutation multiple times
             {
-                var odds = mutation.BaseOdds * severity - triggers;
+                var odds = entry.BaseOdds * severity - triggers;
                 triggers++;
                 if (Random(Math.Min(odds, 1.0f)))
                 {
@@ -54,8 +55,8 @@ public sealed partial class PlantMutationSystem : EntitySystem
                         _entityEffects.TryApplyEffect(ent, mutation.Effect);
 
                     // Stat adjustments do not persist by being an attached effect, they just change the stat.
-                    if (mutation.Persists && ent.Comp.Mutations.All(m => m.Name != mutation.Name))
-                        ent.Comp.Mutations.Add(mutation);
+                    if (mutation.Persists && ent.Comp.Mutations.All(m => m.Resolve(ProtoMan).Name != mutation.Name))
+                        ent.Comp.Mutations.Add(entry);
                 }
             }
         }
@@ -158,7 +159,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
         // LINQ Explanation
         // For the list of mutation effects on both plants, use a 50% chance to pick each one.
         // Union all of the chosen mutations into one list, and pick ones with a Distinct (unique) name.
-        targetCore.Mutations = targetCore.Mutations.Where(_ => Random(0.5f)).Union(pollenCore.Mutations.Where(_ => Random(0.5f))).DistinctBy(m => m.Name).ToList();
+        targetCore.Mutations = targetCore.Mutations.Where(_ => Random(0.5f)).Union(pollenCore.Mutations.Where(_ => Random(0.5f))).DistinctBy(m => m.Resolve(ProtoMan).Name).ToList();
     }
 
     /// <summary>

@@ -23,8 +23,9 @@ public sealed partial class BotanySystem
 
         using (args.PushGroup(nameof(ProduceComponent)))
         {
-            foreach (var m in plant.Mutations)
+            foreach (var entry in plant.Mutations)
             {
+                var m = entry.Resolve(ProtoMan);
                 // Don't show mutations that have no effect on produce (sentience)
                 if (!m.AppliesToProduce)
                     continue;
@@ -41,8 +42,9 @@ public sealed partial class BotanySystem
             || !TryGetPlantComponent<PlantChemicalsComponent>(ent.Comp.PlantData, ent.Comp.PlantProtoId, out var chems))
             return;
 
-        foreach (var mutation in plant.Mutations)
+        foreach (var entry in plant.Mutations)
         {
+            var mutation = entry.Resolve(ProtoMan);
             if (mutation.AppliesToProduce)
                 _entityEffects.TryApplyEffect(ent.Owner, mutation.Effect);
         }
