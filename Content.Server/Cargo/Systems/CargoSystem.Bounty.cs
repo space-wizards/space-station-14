@@ -49,10 +49,6 @@ public sealed partial class CargoSystem
 
     private void OnBountyConsoleOpened(EntityUid uid, CargoBountyConsoleComponent component, BoundUIOpenedEvent args)
     {
-        if (_station.GetOwningStation(uid) is not { } station ||
-            !TryComp<StationCargoBountyDatabaseComponent>(station, out var bountyDb))
-            return;
-
         UpdateBountyConsoles();
     }
 
