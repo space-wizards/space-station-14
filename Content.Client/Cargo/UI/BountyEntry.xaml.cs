@@ -51,11 +51,9 @@ public sealed partial class BountyEntry : BoxContainer
         ClaimButton.OnPressed += _ => OnClaimButtonPressed?.Invoke();
 
 
-        var count = 0;
-        foreach (var status in statuses)
+        for (var i = 0; i < statuses.Count; i++)
         {
-            BountyStatusSelector.AddItem(Loc.GetString("bounty-console-status", ("status", status)), count);
-            count++;
+            BountyStatusSelector.AddItem(Loc.GetString("bounty-console-status", ("status", statuses[i])), i);
         }
 
         var bountyStatusIndex = statuses.IndexOf(bounty.Status);
