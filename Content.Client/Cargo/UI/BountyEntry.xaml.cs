@@ -19,7 +19,7 @@ public sealed partial class BountyEntry : BoxContainer
     public Action? OnLabelButtonPressed;
     public Action? OnSkipButtonPressed;
     public Action? OnClaimButtonPressed;
-    public Action? OnStatusOptionSelected;
+    public Action<int>? OnStatusOptionSelected;
 
     public TimeSpan EndTime;
     public TimeSpan UntilNextSkip;
@@ -62,6 +62,7 @@ public sealed partial class BountyEntry : BoxContainer
         var bountyStatus = statuses[bountyStatusIndex];
         BountyStatusSelector.Select(BountyStatusSelector.GetIdx(bountyStatusIndex));
         BountyStatusSelector.ToolTip = Loc.GetString("bounty-console-status-tooltip", ("status", bountyStatus));
+        BountyStatusSelector.OnItemSelected += args => OnStatusOptionSelected?.Invoke(args.Id);
 
         string claimers = bounty.ClaimedBy.Count() == 0
             ? Loc.GetString("bounty-console-claimed-by-none")

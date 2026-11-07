@@ -31,7 +31,6 @@
                                 HorizontalExpand="False"
                                 StyleClasses="OpenRight" />
                         <OptionButton Name="BountyStatusSelector"
-                                      Access="Public"
                                       StyleClasses="OpenBoth"
                                       HorizontalExpand="True" />
                     </BoxContainer>

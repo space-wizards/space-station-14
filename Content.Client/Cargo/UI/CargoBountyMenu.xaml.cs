@@ -31,7 +31,7 @@ public sealed partial class CargoBountyMenu : FancyWindow
             entry.OnLabelButtonPressed += () => OnLabelButtonPressed?.Invoke(b.Id);
             entry.OnSkipButtonPressed += () => OnSkipButtonPressed?.Invoke(b.Id);
             entry.OnClaimButtonPressed += () => OnClaimButtonPressed?.Invoke(b.Id);
-            entry.BountyStatusSelector.OnItemSelected += args => OnStatusOptionSelected?.Invoke(b.Id, args.Id);
+            entry.OnStatusOptionSelected += status => OnStatusOptionSelected?.Invoke(b.Id, status);
 
             BountyEntriesContainer.AddChild(entry);
         }
