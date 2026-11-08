@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using System.Linq;
 using System.Numerics;
 using Content.Shared.Actions;
 using Content.Shared.Alert;
@@ -6,9 +8,11 @@ using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
+using Content.Shared.Inventory;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -34,6 +38,8 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
     [Dependency] private SharedStoreSystem _stores = default!;
     [Dependency] private AlertsSystem _alerts = default!;
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     // constants
     /// <summary>
@@ -73,7 +79,7 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
     }
 
     /// <summary>
-    /// This function will only be executed when transforming to changeling horror to a "regular" person.
+    /// This function will only be executed when transforming from changeling horror to a "regular" person.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnBeforeTransform(Entity<ChangelingHorrorComponent> ent, ref BeforeChangelingTransformEvent args)
@@ -136,6 +142,74 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
         if (!HasComp<ChangelingHorrorComponent>(args.StoredIdentity))
             return;
 
+        // VERY CURSED CODE AREA: MOVING THE HORROR'S INVENTORY INTO LINGSPACE
+        // i have become death, destroyer of decent code
+        // we first drop items that are in slots that depend upon other slots
+        var itemsDeps = _inventory.GetHandOrInventoryEntities(ent.Owner).Where((k) =>
+        {
+            var s = _inventory.TryGetContainingSlot(k, out var slot);
+            return s;
+        }).Select((item) =>
+        {
+            var s = _inventory.TryGetContainingSlot(item, out var slotNullable);
+            var slot = slotNullable ?? throw new Exception("we literally checked if it was null 6 lines before");
+
+            // drop only if it depends on something
+            var success = slot.DependsOn != null ? _inventory.TryUnequip(ent.Owner, slot.Name, silent: true, force: true) : false;
+            return (item, slot.Name, success);
+
+        }).Where((tuple) =>
+        {
+            // todo: check if the entity was deleted, which can probably be the case for things such as hardsuit helmet etc
+            return tuple.success;
+        }).Select(
+                (tuple) => (tuple.item, tuple.Name)
+            ).ToList();
+
+        var items = _inventory.GetHandOrInventoryEntities(ent.Owner).Where((k) =>
+        {
+            var s = _inventory.TryGetContainingSlot(k, out var slot);
+            return s;
+        }).Select((item) =>
+        {
+            var s = _inventory.TryGetContainingSlot(item, out var slotNullable);
+            var slot = slotNullable ?? throw new Exception("we literally checked if it was null 6 lines before");
+            // drop: in theory it should have no depends on but lets make sure, just in case...
+            var success = slot.DependsOn == null ? _inventory.TryUnequip(ent.Owner, slot.Name, silent: true, force: true) : false;
+            return (item, slot.Name, success);
+
+        }).Where((tuple) =>
+        {
+            // todo: check if the entity was deleted, which can probably be the case for things such as hardsuit helmet etc
+            return tuple.success;
+        }).Select(
+                (tuple) => (tuple.item, tuple.Name)
+            ).ToList();
+
+        if (items != null)
+        {
+            // if they are after in the list their dependency should be present before them upon reequiping
+            if (itemsDeps != null)
+                items.AddRange(itemsDeps ?? throw new Exception("shouldnt be null"));
+
+            if (!_identitySystem.PausedMapId.HasValue)
+                return;
+
+            var mapCoords = new MapCoordinates(0, 0, _identitySystem.PausedMapId.Value);
+
+            // throw in nullspace
+            foreach (var item in items)
+            {
+                Log.Info(Name(item.item) + " was thrown in lingspace");
+                _transform.SetMapCoordinates(item.item, mapCoords);
+            }
+
+            AddComp(ent.Owner, new ChangelingHorrorItemsComponent()
+            {
+                LingSpaceItems = items
+            });
+        }
+
         // Turn actions on/off
         foreach (var action in _actions.GetActions(ent.Owner))
         {
@@ -152,6 +226,34 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
 
                 _actions.SetEnabled((action.Owner, action.Comp), false);
             }
+        }
+    }
+    /// <summary>
+    /// This function should only be executed when the changeling transforms back into normal urist mchandness. It gives the ling back their items
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnAfterTransformInventory(Entity<ChangelingHorrorItemsComponent> ent, ref AfterChangelingTransformEvent ev)
+    {
+        if (!HasComp<ChangelingHorrorComponent>(ev.PreviousIdentity))
+            return;
+
+        // some more cursed code for the inventory
+        foreach (var item in ent.Comp.LingSpaceItems)
+        {
+            _inventory.TryEquip(ent.Owner, item.item, item.slot, silent : true, force : true);
+        }
+        ent.Comp.LingSpaceItems.Clear();
+        RemCompDeferred<ChangelingHorrorItemsComponent>(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnItemsShutdown(Entity<ChangelingHorrorItemsComponent> ent, ref ComponentShutdown args)
+    {
+        // pull the items back from lingspace so that valuable things arent lost if the horror form is ashed, for instance
+        var coords = _transform.GetMapCoordinates(ent.Owner);
+        foreach (var item in ent.Comp.LingSpaceItems)
+        {
+            _transform.SetMapCoordinates(item.item, coords);
         }
     }
 
