@@ -68,6 +68,8 @@ entities:
     - type: Shuttle
       dampingModifier: 0.25
     - type: DeviceNetwork
+      deviceNets:
+      - Private
       transmitFrequencyId: ArrivalsShuttleTimer
       deviceLists: []
       configurators: []
