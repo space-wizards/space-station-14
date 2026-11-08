@@ -107,8 +107,7 @@ public sealed partial class ContrabandSystem : EntitySystem
         {
             return (ResolveAllowedText(illegal, idOwner, true), ResolveIconPath(illegal, severity));
         }
-
-        if (ctnr is { })
+        else
         {
             // if you are examining your own item, do you.
             if (idOwner == ctnr.Owner)
@@ -125,9 +124,9 @@ public sealed partial class ContrabandSystem : EntitySystem
             // if they (have pronouns or id) and are not you, do them.
             _id.TryFindIdCard(ctnr.Owner, out var theirId);
             illegal = IsContraband((item.Owner, item.Comp), theirId, out _);
+
             return (ResolveAllowedText(illegal, ctnr.Owner, false), ResolveIconPath(illegal, severity));
         }
-        return (ResolveAllowedText(illegal, idOwner, true), ResolveIconPath(illegal, severity)); //if something fucked up, default to you.
     }
 
     private string ResolveAllowedText(bool illegal, EntityUid idOwner, bool youText)
