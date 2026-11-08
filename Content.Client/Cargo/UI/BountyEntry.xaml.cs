@@ -57,6 +57,10 @@ public sealed partial class BountyEntry : BoxContainer
         }
 
         var bountyStatusIndex = statuses.IndexOf(bounty.Status);
+        // If invalid, resets to default
+        if (bountyStatusIndex == -1)
+            bountyStatusIndex = 0;
+
         var bountyStatus = statuses[bountyStatusIndex];
         BountyStatusSelector.Select(BountyStatusSelector.GetIdx(bountyStatusIndex));
         BountyStatusSelector.ToolTip = Loc.GetString("bounty-console-status-tooltip", ("status", bountyStatus));
