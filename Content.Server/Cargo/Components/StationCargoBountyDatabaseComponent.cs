@@ -97,5 +97,5 @@ public sealed partial class StationCargoBountyDatabaseComponent : Component
     /// The minimum time between status changes.
     /// </summary>
     [DataField]
-    public TimeSpan StatusUpdateDelay = TimeSpan.FromSeconds(1);
+    public TimeSpan StatusUpdateDelay = TimeSpan.FromSeconds(0.1);
 }
