@@ -7,4 +7,7 @@ namespace Content.Shared.DeviceNetwork.Events;
 /// Raised on a manager entity to determine if a specific entity is allowed to connect to this network.
 /// </summary>
 [ByRefEvent]
-public record struct DeviceAttemptConnectEvent(Entity<DeviceNetworkComponent> Entity, DeviceNetworkManagerComponent ManagerComp, bool Connected = false);
+public record struct DeviceAttemptConnectEvent(
+    Entity<DeviceNetworkComponent> Entity,
+    Entity<DeviceNetworkManagerComponent> Manager,
+    bool Connected = true);

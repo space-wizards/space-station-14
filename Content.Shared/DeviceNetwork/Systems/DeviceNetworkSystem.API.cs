@@ -544,6 +544,6 @@ public sealed partial class DeviceNetworkSystem
     public bool CheckNetworkIgnore<T>(DeviceAttemptConnectEvent args, EntityQuery<T> query) where T : IComponent, ILimitedDeviceComponent
     {
         return query.TryComp(args.Entity, out var comp)
-               && CheckNetworkIgnore<T>((args.Entity.Owner, comp, args.Entity.Comp), args.ManagerComp.DeviceNetId);
+               && CheckNetworkIgnore<T>((args.Entity.Owner, comp, args.Entity.Comp), args.Manager.Comp.DeviceNetId);
     }
 }

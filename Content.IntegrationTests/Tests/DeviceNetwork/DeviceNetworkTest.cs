@@ -21,7 +21,8 @@ public sealed class DeviceNetworkTest : GameTest
   id: DummyNetworkDevice
   components:
     - type: DeviceNetwork
-      deviceNets: []
+      deviceNets:
+      - Private
       transmitFrequency: 100
       receiveFrequency: 100
 
