@@ -248,11 +248,10 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnItemsShutdown(Entity<ChangelingHorrorItemsComponent> ent, ref ComponentRemove args)
     {
-        // pull the items back from lingspace so that valuable things arent lost if the horror form is ashed, for instance
-        var coords = _transform.GetMapCoordinates(ent.Owner);
+        // kill the items
         foreach (var item in ent.Comp.LingSpaceItems)
         {
-            _transform.SetMapCoordinates(item.item, coords);
+            Del(item.item);
         }
     }
 
