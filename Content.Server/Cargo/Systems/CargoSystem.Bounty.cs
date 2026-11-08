@@ -83,11 +83,7 @@ public sealed partial class CargoSystem
         if (TryComp<AccessReaderComponent>(uid, out var accessReaderComponent) &&
             !_accessReaderSystem.IsAllowed(mob, uid, accessReaderComponent))
         {
-            if (Timing.CurTime >= component.NextDenySoundTime)
-            {
-                component.NextDenySoundTime = Timing.CurTime + component.DenySoundDelay;
-                _audio.PlayPvs(component.DenySound, uid);
-            }
+            PlayDenySound((uid, component));
             return;
         }
 
@@ -141,10 +137,9 @@ public sealed partial class CargoSystem
         if (!TryGetBountyIndexFromId(station, args.BountyId, out var index, bountyDbComp))
             return;
 
-        var name = _identity.GetIdentityShortInfo(args.Actor, ent.Owner);
-        if (name == null)
+        if (_identity.GetIdentityShortInfo(args.Actor, ent.Owner) is not { } name)
         {
-            _audio.PlayPvs(ent.Comp.DenySound, args.Actor);
+            PlayDenySound(ent);
             return;
         }
 
@@ -610,5 +605,14 @@ public sealed partial class CargoSystem
         {
             bountyDatabase.CheckedBounties.Clear();
         }
+    }
+
+    private void PlayDenySound(Entity<CargoBountyConsoleComponent> ent)
+    {
+        if (_timing.CurTime < ent.Comp.NextDenySoundTime)
+            return;
+
+        ent.Comp.NextDenySoundTime = _timing.CurTime + ent.Comp.DenySoundDelay;
+        _audio.PlayPvs(_audio.ResolveSound(ent.Comp.DenySound), ent.Owner);
     }
 }
