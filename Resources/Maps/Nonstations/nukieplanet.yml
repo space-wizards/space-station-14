@@ -1,29 +1,29 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 289.0.0
+  engineVersion: 295.0.2
   forkId: ""
   forkVersion: ""
-  time: 09/05/2026 14:50:38
-  entityCount: 2549
+  time: 11/08/2026 11:58:54
+  entityCount: 3007
 maps:
 - 1295
 grids:
 - 104
 orphans: []
 nullspace:
-- 1759
-- 2257
-- 2291
-- 2327
-- 2463
-- 2464
-- 2525
-- 2527
-- 2528
-- 2529
-- 2530
-- 2531
+- 2982
+- 2983
+- 2984
+- 2985
+- 2986
+- 2987
+- 2988
+- 2989
+- 2990
+- 2991
+- 2992
+- 2993
 tilemap:
   0: Space
   14: FloorBar
@@ -56,7 +56,7 @@ entities:
       chunks:
         -1,-1:
           ind: -1,-1
-          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB7AAAAAAEAewAAAAAAAE8AAAAAAABPAAAAAAAATwAAAAAAAFkAAAAAAwBZAAAAAAQAfAAAAAAAAB0AAAAAAABuAAAAAAAAbgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAewAAAAACAHsAAAAAAgBPAAAAAAAATwAAAAAAAE8AAAAAAABZAAAAAAMAWQAAAAAEAHwAAAAAAAAdAAAAAAAAbgAAAAAAAE8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHsAAAAAAgB7AAAAAAIATwAAAAAAAE8AAAAAAABPAAAAAAAAWQAAAAADAFkAAAAAAgB8AAAAAAAAHQAAAAAAAG4AAAAAAABuAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB7AAAAAAIAewAAAAACAE8AAAAAAABPAAAAAAAATwAAAAAAAFkAAAAAAwBZAAAAAAMAfAAAAAAAAB0AAAAAAAAdAAAAAAAAHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAewAAAAACAHsAAAAAAQBPAAAAAAAATwAAAAAAAE8AAAAAAABZAAAAAAMAWQAAAAAFAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHsAAAAAAAB7AAAAAAIATwAAAAAAAE8AAAAAAABPAAAAAAAAWQAAAAACAFkAAAAAAwBZAAAAAAUAWQAAAAACAHwAAAAAAABZAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB7AAAAAAIAewAAAAABAE8AAAAAAABPAAAAAAAATwAAAAAAAFkAAAAABQBZAAAAAAUAWQAAAAAEAFkAAAAABAB8AAAAAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAewAAAAAAAHsAAAAAAgBPAAAAAAAATwAAAAAAAE8AAAAAAABZAAAAAAQAWQAAAAACAFkAAAAAAQBZAAAAAAEAfAAAAAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHsAAAAAAQB7AAAAAAIATwAAAAAAAE8AAAAAAABPAAAAAAAAWQAAAAABAFkAAAAAAgBZAAAAAAMAWQAAAAADAHwAAAAAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB7AAAAAAAAewAAAAACAE8AAAAAAABPAAAAAAAATwAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAewAAAAACAHsAAAAAAgBPAAAAAAAATwAAAAAAAE8AAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHsAAAAAAQB7AAAAAAEATwAAAAAAAE8AAAAAAABPAAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB7AAAAAAIAewAAAAABAE8AAAAAAABPAAAAAAAATwAAAAAAAFQAAAAAAABUAAAAAAAAVAAAAAAAAFQAAAAAAABUAAAAAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAewAAAAABAHsAAAAAAABPAAAAAAAATwAAAAAAAE8AAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHsAAAAAAQB7AAAAAAEATwAAAAAAAE8AAAAAAABPAAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB7AAAAAAIAewAAAAAAAE8AAAAAAABPAAAAAAAATwAAAAAAAFkAAAAAAABZAAAAAAEAWQAAAAAEAFkAAAAAAQB8AAAAAAAADgAAAAAAAA==
+          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB7AAAAAAEAewAAAAAAAE8AAAAAAABPAAAAAAAATwAAAAAAAFkAAAAAAwBZAAAAAAQAfAAAAAAAAB0AAAAAAABuAAAAAAAAbgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAewAAAAACAHsAAAAAAgBPAAAAAAAATwAAAAAAAE8AAAAAAABZAAAAAAMAWQAAAAAEAHwAAAAAAAAdAAAAAAAAbgAAAAAAAE8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHsAAAAAAgB7AAAAAAIATwAAAAAAAE8AAAAAAABPAAAAAAAAWQAAAAADAFkAAAAAAgB8AAAAAAAAHQAAAAAAAG4AAAAAAABuAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB7AAAAAAIAewAAAAACAE8AAAAAAABPAAAAAAAATwAAAAAAAFkAAAAAAwBZAAAAAAMAfAAAAAAAAB0AAAAAAAAdAAAAAAAAHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAewAAAAACAHsAAAAAAQBPAAAAAAAATwAAAAAAAE8AAAAAAABZAAAAAAMAWQAAAAAFAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB7AAAAAAAAewAAAAAAAHsAAAAAAABPAAAAAAAATwAAAAAAAE8AAAAAAABPAAAAAAAAWQAAAAACAFkAAAAAAwBZAAAAAAUAWQAAAAACAHwAAAAAAABZAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAewAAAAAAAHsAAAAAAAB7AAAAAAIATwAAAAAAAE8AAAAAAABPAAAAAAAATwAAAAAAAFkAAAAABQBZAAAAAAUAWQAAAAAEAFkAAAAABAB8AAAAAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHsAAAAAAAB7AAAAAAAAewAAAAAAAE8AAAAAAABPAAAAAAAATwAAAAAAAE8AAAAAAABZAAAAAAQAWQAAAAACAFkAAAAAAQBZAAAAAAEAfAAAAAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHsAAAAAAQB7AAAAAAIATwAAAAAAAE8AAAAAAABPAAAAAAAAWQAAAAABAFkAAAAAAgBZAAAAAAMAWQAAAAADAHwAAAAAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB7AAAAAAAAewAAAAACAE8AAAAAAABPAAAAAAAATwAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAewAAAAACAHsAAAAAAgBPAAAAAAAATwAAAAAAAE8AAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHsAAAAAAQB7AAAAAAEATwAAAAAAAE8AAAAAAABPAAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB7AAAAAAIAewAAAAABAE8AAAAAAABPAAAAAAAATwAAAAAAAFQAAAAAAABUAAAAAAAAVAAAAAAAAFQAAAAAAABUAAAAAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAewAAAAABAHsAAAAAAABPAAAAAAAATwAAAAAAAE8AAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHsAAAAAAQB7AAAAAAEATwAAAAAAAE8AAAAAAABPAAAAAAAAfAAAAAAAAHwAAAAAAAB8AAAAAAAAfAAAAAAAAHwAAAAAAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB7AAAAAAIAewAAAAAAAE8AAAAAAABPAAAAAAAATwAAAAAAAFkAAAAAAABZAAAAAAEAWQAAAAAEAFkAAAAAAQB8AAAAAAAADgAAAAAAAA==
           version: 7
         0,-1:
           ind: 0,-1
@@ -167,656 +167,390 @@ entities:
           moles:
             Oxygen: 21.824879
             Nitrogen: 82.10312
+          immutable: True
         - temperature: 248.15
           volume: 2500
           moles:
-            Oxygen: 21.213781
-            Nitrogen: 79.80423
-        - temperature: 248.15
+            Oxygen: 21.824879
+            Nitrogen: 82.10312
+        - temperature: 293.15
           volume: 2500
-          moles: {}
+          moles:
+            Oxygen: 21.824879
+            Nitrogen: 82.10312
         tiles:
-          -1,-2:
-            0: 65535
-          -1,-1:
-            0: 65503
-            1: 32
-          0,-1:
-            0: 65535
-          -2,-4:
-            0: 65535
-          -2,-3:
-            0: 65535
-          -2,-2:
-            0: 65535
-          -2,-1:
-            0: 65535
-          -1,-4:
-            0: 65535
-          -1,-3:
-            0: 65535
-          0,-4:
-            0: 65535
-          0,-3:
-            0: 65535
-          0,-2:
-            0: 65535
-          1,-4:
-            0: 57343
-            1: 8192
-          1,-3:
-            0: 65535
-          1,-2:
-            0: 65535
-          1,-1:
-            0: 65535
-          2,-4:
-            0: 62815
-            1: 2720
-          2,-3:
-            0: 65535
-          2,-2:
-            0: 32767
-            1: 32768
-          2,-1:
-            0: 65533
-            1: 2
-          3,-4:
-            0: 64991
-            1: 544
-          3,-3:
-            0: 65535
-          3,-2:
-            0: 57343
-            1: 8192
-          3,-1:
-            0: 65535
-          0,0:
-            0: 65535
-          0,1:
-            0: 65535
-          0,2:
-            0: 65535
-          0,3:
-            0: 65535
-          1,0:
-            0: 65535
-          1,1:
-            0: 65535
-          1,2:
-            0: 65535
-          1,3:
-            0: 65535
-          2,0:
-            0: 65535
-          2,1:
-            0: 65535
-          2,2:
-            0: 65535
-          2,3:
-            0: 65535
-          3,0:
-            0: 65535
-          3,1:
-            0: 65535
-          3,2:
-            0: 65535
-          3,3:
-            0: 65535
-          -2,0:
-            0: 65535
-          -2,1:
-            0: 65535
-          -2,2:
-            0: 65535
-          -2,3:
-            0: 65535
-          -1,0:
-            0: 65535
-          -1,1:
-            0: 65535
-          -1,2:
-            0: 65535
-          -1,3:
-            0: 65535
-          4,-4:
-            0: 65535
-          4,-3:
-            0: 65535
-          4,-2:
-            0: 65535
-          4,-1:
-            0: 65535
-          5,-4:
-            0: 65519
-            1: 16
-          5,-3:
-            0: 65535
-          5,-2:
-            0: 65535
-          5,-1:
-            0: 65535
-          6,-4:
-            0: 65519
-            1: 16
-          6,-3:
-            0: 65535
-          6,-2:
-            0: 65535
-          6,-1:
-            0: 65535
-          7,-4:
-            0: 65535
-          7,-3:
-            0: 65535
-          7,-2:
-            0: 65535
-          7,-1:
-            0: 65535
-          0,-6:
-            0: 65535
-          0,-5:
-            0: 65535
-          1,-6:
-            0: 65535
-          1,-5:
-            0: 62463
-            1: 3072
-          2,-6:
-            0: 65535
-          2,-5:
-            0: 65535
-          3,-6:
-            0: 65535
-          3,-5:
-            0: 65535
-          -2,-6:
-            0: 65535
-          -2,-5:
-            0: 65535
-          -1,-6:
-            0: 65535
-          -1,-5:
-            0: 65535
-          -2,4:
-            0: 65535
-          -1,4:
-            0: 65535
-          0,4:
-            0: 65535
-          1,4:
-            0: 65535
-          2,4:
-            0: 65535
-          3,4:
-            0: 65535
-          4,4:
-            0: 65535
-          4,0:
-            0: 65535
-          4,1:
-            0: 65535
-          4,2:
-            0: 65535
-          4,3:
-            0: 65535
-          5,0:
-            0: 65535
-          6,0:
-            0: 65535
-          7,0:
-            0: 65535
-          4,-6:
-            0: 65535
-          4,-5:
-            0: 65535
-          5,-6:
-            0: 65535
-          5,-5:
-            0: 65535
-          6,-6:
-            0: 65535
-          6,-5:
-            0: 65535
-          7,-6:
-            0: 65535
-          7,-5:
-            0: 65535
-          -4,-4:
-            0: 65535
-          -4,-3:
-            0: 4095
           -3,-4:
-            0: 65535
+            0: 26214
+            1: 34952
+          -3,-5:
+            0: 26215
+            1: 34952
           -3,-3:
-            0: 61439
+            0: 26214
+            1: 34952
           -3,-2:
-            0: 61166
+            0: 26214
+            1: 34952
           -3,-1:
-            0: 61166
-          -4,0:
-            0: 65520
-            2: 15
-          -4,1:
-            0: 65535
-          -4,2:
-            0: 65535
-          -4,3:
-            0: 65535
+            0: 26214
+            1: 34952
           -3,0:
-            0: 65534
-            2: 1
+            0: 30583
+            1: 34952
+          -2,-4:
+            1: 13107
+          -2,-3:
+            1: 13107
+          -2,-2:
+            1: 13107
+            2: 32768
+          -2,-1:
+            1: 62263
+            2: 136
+          -2,-5:
+            1: 13107
+          -2,0:
+            1: 65535
+          -1,-2:
+            2: 47240
+          -1,-1:
+            2: 35007
+            1: 12288
+          -1,-4:
+            2: 61166
+          -1,0:
+            1: 65395
+          -1,-5:
+            2: 57344
+            1: 204
+          -1,-3:
+            2: 32768
+          0,-4:
+            2: 48123
+          0,-3:
+            2: 61576
+          0,-2:
+            2: 65535
+          0,-1:
+            2: 65535
+          0,-5:
+            2: 47104
+            1: 17
+          0,0:
+            2: 2191
+            1: 45824
+          1,-4:
+            2: 65535
+          1,-3:
+            2: 62719
+          1,-2:
+            2: 65535
+          1,-1:
+            2: 65535
+          1,-5:
+            2: 65280
+          1,0:
+            2: 15
+            1: 60928
+          2,-3:
+            2: 29422
+          2,-2:
+            2: 57471
+          2,-1:
+            2: 65102
+          2,-5:
+            2: 65228
+          2,-4:
+            2: 61152
+          2,0:
+            2: 14
+            1: 65280
+          3,-4:
+            2: 65520
+          3,-3:
+            2: 61695
+          3,-2:
+            2: 58623
+          3,-1:
+            2: 16142
+          3,-5:
+            2: 30583
+          3,0:
+            2: 3
+            1: 13056
+          4,-4:
+            2: 4078
+          4,-2:
+            2: 28367
+          0,1:
+            1: 65535
+          -1,1:
+            1: 65535
+          0,2:
+            1: 65535
+          -1,2:
+            1: 63487
+          0,3:
+            1: 65535
+          -1,3:
+            1: 63479
+          0,4:
+            1: 65535
+          1,1:
+            1: 65535
+          1,2:
+            1: 65535
+          1,3:
+            1: 65535
+          1,4:
+            1: 65535
+          2,1:
+            1: 65535
+          2,2:
+            1: 65535
+          2,3:
+            1: 65535
+          2,4:
+            1: 8191
+          3,1:
+            1: 65535
+          3,2:
+            1: 65535
+          3,3:
+            1: 65535
+          3,4:
+            1: 61439
+          4,0:
+            1: 65152
+          4,1:
+            1: 65535
+          4,2:
+            1: 14335
+          4,3:
+            1: 14323
+          -4,0:
+            0: 65535
+          -5,0:
+            0: 65535
+          -4,1:
+            0: 15
+            2: 60992
+          -5,1:
+            0: 15
+          -4,2:
+            2: 119
           -3,1:
-            0: 65535
+            0: 7
+            1: 61416
           -3,2:
-            0: 65535
-          -3,3:
-            0: 65535
+            1: 8
+          -2,1:
+            1: 65535
+          -2,2:
+            1: 65535
+          -3,4:
+            1: 8
+          -2,3:
+            1: 61132
+          -2,4:
+            1: 52991
+          -1,4:
+            1: 16383
+          4,-3:
+            2: 52846
+          4,-1:
+            2: 14
+          4,-5:
+            2: 61166
+          5,-4:
+            2: 4095
+          5,-3:
+            2: 32719
+            1: 16
+          5,-2:
+            2: 57214
+          5,-1:
+            2: 15
+          5,-5:
+            2: 65535
+          5,0:
+            1: 65329
+          6,-4:
+            2: 4095
+          6,-3:
+            2: 4369
+          6,-2:
+            2: 4369
+          6,-1:
+            2: 1
+          6,-5:
+            2: 65535
+          7,-3:
+            1: 68
+          8,-1:
+            1: 272
           0,-7:
-            0: 65535
+            1: 65328
+          -1,-7:
+            1: 65520
+          0,-6:
+            1: 14335
+          -1,-6:
+            1: 61439
           1,-7:
-            0: 61441
-            2: 3840
+            1: 7936
+          1,-6:
+            1: 1
           2,-7:
-            0: 4096
-            2: 57600
+            1: 61696
+          2,-6:
+            2: 52416
           3,-7:
-            0: 32768
-            2: 28672
-          -4,-7:
-            0: 65535
+            1: 61440
+          3,-6:
+            2: 30576
+          4,-7:
+            1: 61440
+          4,-6:
+            1: 19
           -4,-6:
             0: 65535
-          -4,-5:
-            0: 65535
-          -3,-7:
-            0: 65535
-          -3,-6:
-            0: 65535
-          -3,-5:
-            0: 65535
-          -1,-7:
-            0: 65535
-          -4,4:
-            0: 65535
-          -4,5:
-            0: 65535
-          -3,4:
-            0: 65535
-          -3,5:
-            0: 65535
-          -2,5:
-            0: 65535
-          -2,6:
-            0: 65535
-          -1,5:
-            0: 65535
-          -1,6:
-            0: 13107
-          0,5:
-            0: 8191
-          1,5:
-            0: 4095
-          2,5:
-            0: 65535
-          3,5:
-            0: 65535
-          4,5:
-            0: 65535
-          5,4:
-            0: 65535
-          5,5:
-            0: 30719
-          6,4:
-            0: 4915
-          5,1:
-            0: 65535
-          5,2:
-            0: 65535
-          5,3:
-            0: 65535
-          6,1:
-            0: 65535
-          6,2:
-            0: 30719
-          6,3:
-            0: 13107
-          7,1:
-            0: 16383
-          7,2:
-            0: 51
-          4,-7:
-            0: 61440
-          5,-7:
-            0: 61440
-          6,-7:
-            0: 61440
-          7,-7:
-            0: 28672
-          -8,-4:
-            0: 12
-          -7,-4:
-            0: 32783
-          -6,-4:
-            0: 61679
-          -5,-4:
-            0: 65535
-          -5,-3:
-            0: 4095
-          -6,3:
-            0: 65534
-          -6,2:
-            0: 52428
-          -5,0:
-            0: 65520
-            2: 15
-          -5,1:
-            0: 65535
-          -5,2:
-            0: 65535
-          -5,3:
-            0: 65535
-          -7,7:
-            0: 52424
-          -7,5:
-            0: 34944
-          -7,6:
-            0: 34952
-          -6,4:
-            0: 61183
-          -6,5:
-            0: 65535
-          -6,6:
-            0: 65535
-          -6,7:
-            0: 65535
-          -5,4:
-            0: 65535
-          -5,5:
-            0: 65535
-          -8,-6:
-            0: 65535
-          -8,-5:
-            0: 57343
-          -7,-5:
-            0: 65535
-          -7,-6:
-            0: 65535
-          -6,-6:
-            0: 65535
-          -6,-5:
-            0: 65535
-          -6,-7:
-            0: 64704
-          -5,-7:
-            0: 65528
           -5,-6:
             0: 65535
+          -4,-5:
+            0: 15
           -5,-5:
-            0: 65535
-          8,0:
-            0: 17
-          8,-4:
-            0: 13107
-          8,-1:
-            0: 4369
-          8,-6:
-            0: 13072
-          8,-5:
-            0: 13107
-          -7,8:
-            0: 12
-          -6,8:
-            0: 3
-          -12,-6:
-            0: 65535
-          -12,-5:
-            0: 65535
-          -11,-6:
-            0: 65533
-          -11,-5:
-            0: 65535
-          -10,-6:
-            0: 65535
-          -10,-5:
-            0: 65535
-          -9,-6:
-            0: 65535
-          -9,-5:
-            0: 65535
-          -15,-4:
-            0: 65535
-          -15,-3:
-            0: 65535
-          -15,-2:
-            0: 65535
-          -15,-1:
-            0: 65535
-          -14,-4:
-            0: 65535
-          -14,-3:
-            0: 29495
-          -14,-2:
+            0: 15
+          -3,-6:
             0: 30583
-          -14,-1:
-            0: 13175
-          -13,-4:
-            0: 4607
-          -12,-4:
-            0: 255
-          -11,-4:
-            0: 255
-          -10,-4:
-            0: 255
-          -9,-4:
-            0: 119
-          -15,-5:
-            0: 65535
-          -14,-5:
-            0: 65535
-          -14,-6:
-            0: 65535
-          -13,-6:
-            0: 65535
-          -13,-5:
-            0: 65535
-          -15,0:
-            0: 65518
-          -15,1:
-            0: 65535
-          -15,2:
-            0: 65535
-          -15,3:
-            0: 65535
-          -14,0:
-            0: 13171
-          -14,1:
-            0: 13075
-          -14,2:
-            0: 13107
-          -14,3:
-            0: 29491
-          -15,4:
-            0: 65535
-          -15,5:
-            0: 65535
-          -15,6:
-            0: 35007
-          -14,4:
-            0: 65535
-          -14,5:
-            0: 65535
-          -14,6:
-            0: 16383
+            1: 34952
+          -3,-7:
+            1: 64512
           -2,-7:
-            0: 65535
+            1: 65504
+          -2,-6:
+            1: 13115
+          -4,5:
+            1: 30583
+          -5,5:
+            1: 34952
           -4,6:
-            0: 65535
+            1: 12544
+          -5,6:
+            1: 35840
           -4,7:
-            0: 4095
-          -3,6:
-            0: 65535
+            1: 4087
+          -5,7:
+            1: 27848
           -3,7:
-            0: 511
-          -2,7:
-            0: 255
+            1: 304
+          -2,5:
+            1: 76
+          -1,5:
+            1: 1
           -1,7:
-            0: 51
-          2,6:
-            0: 52428
+            1: 50
+          -1,6:
+            1: 8192
+          0,5:
+            1: 14
+          1,5:
+            1: 15
           2,7:
-            0: 52428
-          3,6:
-            0: 65535
-          3,7:
-            0: 65535
-          4,6:
-            0: 65535
-          4,7:
-            0: 65535
+            1: 52288
+          2,8:
+            1: 12
+          3,8:
+            1: 3
+          3,5:
+            1: 12
+          4,4:
+            1: 1015
+          5,5:
+            1: 12868
           5,6:
-            0: 13107
+            1: 8755
           5,7:
-            0: 4915
-          -7,-3:
-            0: 2184
-          -6,-3:
-            0: 4095
+            1: 4898
+          4,8:
+            1: 8
+          5,8:
+            1: 1
+          5,4:
+            1: 34816
+          6,4:
+            1: 802
+          6,3:
+            1: 8738
+          5,1:
+            1: 65299
+          5,2:
+            1: 9
+          6,0:
+            1: 63280
+          6,1:
+            1: 30702
+          6,2:
+            1: 17539
+          7,2:
+            1: 50
+          7,1:
+            1: 11912
+          7,0:
+            1: 34816
+          8,0:
+            1: 16
+          7,-7:
+            1: 28672
+          7,-6:
+            1: 20206
+          8,-6:
+            1: 16
+          -8,0:
+            0: 65535
+          -9,0:
+            0: 61166
+          -8,1:
+            0: 15
+          -9,1:
+            0: 14
           -7,0:
-            0: 65520
-            2: 15
+            0: 65535
           -7,1:
             0: 15
           -6,0:
-            0: 65520
-            2: 15
+            0: 65535
           -6,1:
             0: 15
-            2: 51328
-          -5,6:
+            1: 51328
+          -6,3:
+            1: 142
+          -6,2:
+            1: 50244
+          -5,2:
+            1: 4096
+          -5,3:
+            1: 51
+          -7,7:
+            1: 200
+          -7,6:
+            1: 34816
+          -8,-6:
             0: 65535
-          -5,7:
-            0: 32767
-          -8,-7:
-            0: 63744
-          -7,-7:
-            0: 65407
-          -12,-7:
-            0: 65519
-          -11,-7:
-            0: 4983
-          -10,-7:
-            0: 60622
-          -9,-7:
+          -9,-6:
             0: 65535
-          -16,-4:
-            0: 65535
-          -16,-3:
-            0: 65535
-          -16,-2:
-            0: 65535
-          -16,-1:
-            0: 65535
-          -16,-7:
-            0: 13107
-          -16,-6:
-            0: 65535
-          -16,-5:
-            0: 65535
-          -15,-6:
-            0: 65535
-          -15,-7:
-            0: 52360
-          -14,-7:
-            0: 65535
-          -13,-7:
-            0: 63251
-          -16,0:
-            0: 65535
-          -16,1:
-            0: 65535
-          -16,2:
-            0: 65535
-          -16,3:
-            0: 65535
-          -16,4:
-            0: 65535
-          -16,5:
-            0: 65535
-          -16,6:
-            0: 255
-          -18,0:
-            0: 65535
-          -18,3:
-            0: 61440
-          -18,1:
-            0: 34956
-          -17,0:
-            0: 65535
-          -17,1:
-            0: 65535
-          -17,2:
-            0: 65519
-          -17,3:
-            0: 65535
-          -18,4:
-            0: 52991
-          -18,5:
-            0: 65532
-          -18,6:
-            0: 3823
-          -17,4:
-            0: 65535
-          -17,5:
-            0: 65535
-          -17,6:
-            0: 4095
-          -18,-4:
-            0: 65535
-          -18,-3:
-            0: 52479
-          -18,-1:
-            0: 65484
-          -18,-2:
-            0: 52428
-          -17,-4:
-            0: 65535
-          -17,-3:
-            0: 65535
-          -17,-2:
-            0: 65535
-          -17,-1:
-            0: 65535
-          -18,-6:
-            0: 65484
-          -18,-5:
-            0: 65535
-          -18,-7:
-            0: 52224
-          -17,-7:
-            0: 65484
-          -17,-6:
-            0: 65535
-          -17,-5:
-            0: 65535
-          2,8:
-            0: 12
-          3,8:
+          -8,-5:
             0: 15
-          4,8:
+          -9,-5:
             0: 15
-          5,8:
-            0: 1
-          -8,0:
-            0: 65520
-            2: 15
-          -8,1:
+          -7,-6:
+            0: 65535
+          -7,-5:
             0: 15
-          -9,0:
-            0: 61152
-            2: 14
-          -9,1:
-            0: 14
+          -6,-6:
+            0: 65535
+          -6,-5:
+            0: 15
         chunkSize: 4
     - type: RadiationGridResistance
     - type: OccluderTree
@@ -888,18 +622,18 @@ entities:
     - type: GridSplitNode
     - type: ChunkContainer
       chunkEntities:
-      - 1759
-      - 2257
-      - 2291
-      - 2327
-      - 2463
-      - 2464
-      - 2525
-      - 2527
-      - 2528
-      - 2529
-      - 2530
-      - 2531
+      - 2982
+      - 2983
+      - 2984
+      - 2985
+      - 2986
+      - 2987
+      - 2988
+      - 2989
+      - 2990
+      - 2991
+      - 2992
+      - 2993
   - uid: 1295
     components:
     - type: MetaData
@@ -8825,16 +8559,6 @@ entities:
     - type: Transform
       parent: 104
       pos: -11.5,-21.5
-  - uid: 984
-    components:
-    - type: Transform
-      parent: 104
-      pos: -9.5,-9.5
-  - uid: 985
-    components:
-    - type: Transform
-      parent: 104
-      pos: -9.5,-10.5
   - uid: 986
     components:
     - type: Transform
@@ -9000,11 +8724,6 @@ entities:
     - type: Transform
       parent: 104
       pos: -9.5,-7.5
-  - uid: 1019
-    components:
-    - type: Transform
-      parent: 104
-      pos: -9.5,-8.5
   - uid: 1086
     components:
     - type: Transform
@@ -9283,6 +9002,21 @@ entities:
       parent: 104
       rot: 3.141592653589793 rad
       pos: -21.5,3.5
+  - uid: 2979
+    components:
+    - type: Transform
+      parent: 104
+      pos: -11.5,-8.5
+  - uid: 2980
+    components:
+    - type: Transform
+      parent: 104
+      pos: -11.5,-9.5
+  - uid: 2981
+    components:
+    - type: Transform
+      parent: 104
+      pos: -11.5,-10.5
 - proto: Chair
   entities:
   - uid: 487
@@ -9521,7 +9255,7 @@ entities:
       pos: 13.499366,-8.433407
 - proto: ChunkEntity
   entities:
-  - uid: 1759
+  - uid: 2982
     components:
     - type: ChunkEntity
       root: 104
@@ -9683,7 +9417,7 @@ entities:
             angle: 4.71238898038469 rad
           decals:
             18: 24,-10
-  - uid: 2257
+  - uid: 2983
     components:
     - type: ChunkEntity
       root: 104
@@ -9784,7 +9518,7 @@ entities:
             color: '#FFFFFFFF'
           decals:
             293: 24,-18
-  - uid: 2291
+  - uid: 2984
     components:
     - type: ChunkEntity
       root: 104
@@ -9870,7 +9604,7 @@ entities:
             color: '#AB0000FF'
           decals:
             371: 20.568506,2.9319348
-  - uid: 2327
+  - uid: 2985
     components:
     - type: ChunkEntity
       root: 104
@@ -10172,7 +9906,7 @@ entities:
             337: 5,-9
             338: 5,-8
             360: 5,-7
-  - uid: 2463
+  - uid: 2986
     components:
     - type: ChunkEntity
       root: 104
@@ -10273,7 +10007,7 @@ entities:
           decals:
             227: 10,-18
             228: 10,-17
-  - uid: 2464
+  - uid: 2987
     components:
     - type: ChunkEntity
       root: 104
@@ -10283,6 +10017,14 @@ entities:
       decals:
         version: 1
         nodes:
+        - node:
+            id: Arrows
+            color: '#FFFFFFFF'
+            angle: -1.5707963267948966 rad
+          decals:
+            2: -9,-9
+            3: -9,-10
+            4: -9,-11
         - node:
             id: BrickTileSteelBox
             color: '#52B4E996'
@@ -10336,10 +10078,33 @@ entities:
           decals:
             124: -5,-3
         - node:
+            id: WarnCornerNW
+            color: '#FFFFFFFF'
+          decals:
+            1: -10,-9
+        - node:
+            id: WarnCornerSW
+            color: '#FFFFFFFF'
+          decals:
+            6: -10,-11
+        - node:
             id: WarnCornerSmallNW
             color: '#FFFFFFFF'
           decals:
             0: -9,-1
+            8: -9,-12
+            10: -9,-9
+        - node:
+            id: WarnCornerSmallSW
+            color: '#FFFFFFFF'
+          decals:
+            7: -9,-11
+            9: -9,-8
+        - node:
+            id: WarnLineS
+            color: '#FFFFFFFF'
+          decals:
+            5: -10,-10
         - node:
             id: WoodTrimThinLineS
             color: '#FFFFFFFF'
@@ -10360,7 +10125,7 @@ entities:
             color: '#FFFFFFFF'
           decals:
             24: -3.9999733,-6.081314
-  - uid: 2525
+  - uid: 2988
     components:
     - type: ChunkEntity
       root: 104
@@ -10404,7 +10169,7 @@ entities:
             color: '#FFFFFFFF'
           decals:
             23: -3.3477993,-19.991972
-  - uid: 2527
+  - uid: 2989
     components:
     - type: ChunkEntity
       root: 104
@@ -10492,7 +10257,7 @@ entities:
           decals:
             46: -4.0458164,7.6303444
             66: -1.9470882,14.409473
-  - uid: 2528
+  - uid: 2990
     components:
     - type: ChunkEntity
       root: 104
@@ -10609,7 +10374,7 @@ entities:
             37: 9.0946245,2.0440664
             59: 0.45371246,11.270374
             60: 9.166802,10.222887
-  - uid: 2529
+  - uid: 2991
     components:
     - type: ChunkEntity
       root: 104
@@ -10645,7 +10410,7 @@ entities:
             color: '#FFFFFFFF'
           decals:
             43: -2.8895664,16.211998
-  - uid: 2530
+  - uid: 2992
     components:
     - type: ChunkEntity
       root: 104
@@ -10686,7 +10451,7 @@ entities:
             color: '#FFFFFFFF'
           decals:
             77: 6.122473,18.001226
-  - uid: 2531
+  - uid: 2993
     components:
     - type: ChunkEntity
       root: 104
@@ -10804,7 +10569,7 @@ entities:
       parent: 104
       rot: -1.5707963267948966 rad
       pos: 14.5,-8.5
-- proto: computerBodyScanner
+- proto: ComputerBodyScanner
   entities:
   - uid: 2436
     components:
@@ -10928,14 +10693,14 @@ entities:
     - type: Transform
       parent: 104
       pos: 7.5,-4.5
-- proto: filingCabinetDrawer
+- proto: FilingCabinetDrawer
   entities:
   - uid: 1140
     components:
     - type: Transform
       parent: 104
       pos: -12.5,7.5
-- proto: filingCabinetDrawerRandom
+- proto: FilingCabinetDrawerRandom
   entities:
   - uid: 108
     components:
@@ -11506,12 +11271,6 @@ entities:
       parent: 104
       rot: 3.141592653589793 rad
       pos: -23.5,0.5
-  - uid: 3999
-    components:
-    - type: Transform
-      parent: 104
-      rot: 3.141592653589793 rad
-      pos: -15.5,0.5
   - uid: 1668
     components:
     - type: Transform
@@ -11536,6 +11295,12 @@ entities:
       parent: 104
       rot: 3.141592653589793 rad
       pos: 27.5,4.5
+  - uid: 3999
+    components:
+    - type: Transform
+      parent: 104
+      rot: 3.141592653589793 rad
+      pos: -15.5,0.5
 - proto: LockerSyndicatePersonalFilled
   entities:
   - uid: 178
@@ -12436,6 +12201,12 @@ entities:
       pos: -2.5,-4.5
 - proto: Railing
   entities:
+  - uid: 221
+    components:
+    - type: Transform
+      parent: 104
+      rot: -1.5707963267948966 rad
+      pos: -10.5,-17.5
   - uid: 253
     components:
     - type: Transform
@@ -12452,7 +12223,7 @@ entities:
     - type: Transform
       parent: 104
       rot: -1.5707963267948966 rad
-      pos: -10.5,-2.5
+      pos: -10.5,-4.5
   - uid: 457
     components:
     - type: Transform
@@ -12464,7 +12235,7 @@ entities:
     - type: Transform
       parent: 104
       rot: -1.5707963267948966 rad
-      pos: -10.5,-4.5
+      pos: -10.5,-16.5
   - uid: 459
     components:
     - type: Transform
@@ -12506,6 +12277,18 @@ entities:
       parent: 104
       rot: -1.5707963267948966 rad
       pos: -34.5,1.5
+  - uid: 984
+    components:
+    - type: Transform
+      parent: 104
+      rot: -1.5707963267948966 rad
+      pos: -10.5,-15.5
+  - uid: 1019
+    components:
+    - type: Transform
+      parent: 104
+      rot: 3.141592653589793 rad
+      pos: -11.5,-8.5
   - uid: 1080
     components:
     - type: Transform
@@ -12697,14 +12480,13 @@ entities:
     components:
     - type: Transform
       parent: 104
-      rot: -1.5707963267948966 rad
-      pos: -10.5,-17.5
+      pos: -11.5,-10.5
   - uid: 1845
     components:
     - type: Transform
       parent: 104
       rot: -1.5707963267948966 rad
-      pos: -10.5,-16.5
+      pos: -10.5,-2.5
   - uid: 1846
     components:
     - type: Transform
@@ -12717,12 +12499,6 @@ entities:
       parent: 104
       rot: -1.5707963267948966 rad
       pos: -10.5,-13.5
-  - uid: 1852
-    components:
-    - type: Transform
-      parent: 104
-      rot: -1.5707963267948966 rad
-      pos: -10.5,-15.5
   - uid: 1857
     components:
     - type: Transform
@@ -12803,30 +12579,12 @@ entities:
     - type: Transform
       parent: 104
       pos: -32.5,0.5
-  - uid: 2083
-    components:
-    - type: Transform
-      parent: 104
-      rot: -1.5707963267948966 rad
-      pos: -10.5,-9.5
   - uid: 2089
     components:
     - type: Transform
       parent: 104
       rot: -1.5707963267948966 rad
       pos: -10.5,-12.5
-  - uid: 2097
-    components:
-    - type: Transform
-      parent: 104
-      rot: -1.5707963267948966 rad
-      pos: -10.5,-8.5
-  - uid: 2126
-    components:
-    - type: Transform
-      parent: 104
-      rot: -1.5707963267948966 rad
-      pos: -10.5,-10.5
   - uid: 2135
     components:
     - type: Transform
@@ -13045,12 +12803,23 @@ entities:
       pos: -35.5,-19.5
 - proto: RailingCornerSmall
   entities:
+  - uid: 985
+    components:
+    - type: Transform
+      parent: 104
+      pos: -10.5,-8.5
   - uid: 1285
     components:
     - type: Transform
       parent: 104
       rot: 1.5707963267948966 rad
       pos: -8.5,-23.5
+  - uid: 1759
+    components:
+    - type: Transform
+      parent: 104
+      rot: -1.5707963267948966 rad
+      pos: -12.5,-8.5
   - uid: 1761
     components:
     - type: Transform
@@ -13084,6 +12853,18 @@ entities:
     - type: Transform
       parent: 104
       pos: -10.5,-19.5
+  - uid: 2977
+    components:
+    - type: Transform
+      parent: 104
+      rot: 3.141592653589793 rad
+      pos: -12.5,-10.5
+  - uid: 2978
+    components:
+    - type: Transform
+      parent: 104
+      rot: 1.5707963267948966 rad
+      pos: -10.5,-10.5
 - proto: ReinforcedWindow
   entities:
   - uid: 1102
