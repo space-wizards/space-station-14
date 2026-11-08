@@ -134,12 +134,20 @@ public sealed partial class DeviceNetworkSystem
         if (ent.Comp.ConnectedNets.TryGetValue(network.Comp.DeviceNetId.Value, out var netUid)
             && netUid != network.Owner)
         {
-            Log.Error($"Device {ToPrettyString(ent)} tried to connect to the network " +
-                      $"{ToPrettyString(network.Owner)} while it was already connected to {ToPrettyString(netUid)}!");
-            return false;
-        }
+            if (!TerminatingOrDeleted(netUid))
+            {
+                Log.Error($"Device {ToPrettyString(ent)} tried to connect to the network " +
+                          $"{ToPrettyString(network.Owner)} while it was already connected to {ToPrettyString(netUid)}!");
+                return false;
+            }
 
-        ent.Comp.ConnectedNets.TryAdd(network.Comp.DeviceNetId.Value, network.Owner);
+            // This is rare, but a wrong shutdown may cause this to happen.
+            ent.Comp.ConnectedNets[network.Comp.DeviceNetId.Value] = network.Owner;
+        }
+        else
+        {
+            ent.Comp.ConnectedNets.TryAdd(network.Comp.DeviceNetId.Value, network.Owner);
+        }
 
         var deviceComp = ent.Comp;
         var device = new Device((ent.Owner, ent.Comp));

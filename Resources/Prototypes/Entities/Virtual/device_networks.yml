@@ -1,6 +1,5 @@
 - type: entity
   id: DeviceNetworkBase
-  save: false
   name: Private device network
   categories: [ HideSpawnMenu ]
   components:
