@@ -188,7 +188,8 @@ public sealed partial class DeviceNetworkSystem
         {
             // Dispose the network if it has no devices.
             // Not a big deal to keep it, but entity tests say otherwise.
-            Del(network.Owner);
+            if (!Terminating(network.Owner))
+                Del(network.Owner);
             return true;
         }
 
