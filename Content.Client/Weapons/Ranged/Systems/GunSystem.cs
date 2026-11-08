@@ -33,6 +33,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Numerics;
+using System.Security.Cryptography;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
@@ -135,14 +136,30 @@ public sealed partial class GunSystem : SharedGunSystem
         if (!entityPrototype.TryComp<HitscanBasicVisualsComponent>(out var vizComp, _entityManager.ComponentFactory))
             return;
 
-        var coords = GetCoordinates(ev.Coordinates);
-        ///////////////////////////////////////////////////////////
+        var fromCoordinates = GetCoordinates(ev.Coordinates);
+        var shotAngle = ev.Angle;
+        var distance = ev.Distance;
 
+        if (distance >= 1f)
+        {
+            if (vizComp.MuzzleFlash != null)
+            {
+                var coords = fromCoordinates.Offset(shotAngle.ToVec().Normalized() / 2);
+                SpawnHistscan(coords, shotAngle, vizComp.MuzzleFlash, 1f);
+            }
 
+            if (vizComp.TravelFlash != null)
+            {
+                var coords = fromCoordinates.Offset(shotAngle.ToVec() * (distance + 0.5f) / 2);
+                SpawnHistscan(coords, shotAngle, vizComp.TravelFlash, distance - 1.5f);
+            }
+        }
 
-
-        ////////////////////////////////////////////////////////////
-        SpawnHistscan(coords, ev.Angle, vizComp.TravelFlash, ev.Distance);
+        if (vizComp.ImpactFlash != null)
+        {
+            var coords = fromCoordinates.Offset(shotAngle.ToVec() * distance);
+            SpawnHistscan(coords, shotAngle.FlipPositive(), vizComp.ImpactFlash, 1f);
+        }
     }
 
     private void SpawnHistscan(EntityCoordinates coords, Angle angle, SpriteSpecifier? ss, float distance)
