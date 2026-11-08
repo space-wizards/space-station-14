@@ -1,3 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
@@ -10,9 +13,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Content.Shared.Contraband;
 
@@ -86,7 +86,7 @@ public sealed partial class ContrabandSystem : EntitySystem
 
         // then, the 'you can/shouldn't carry this around' based on the ID the user is wearing
         // if it is fully restricted, you're department-less, or your department isn't in the allowed list, you cannot carry it. Otherwise, you 
-        (string carryingMessage, string iconTexture) = GetLegalityContent((ent, component), args.User, severity.ID);
+        var (carryingMessage, iconTexture) = GetLegalityContent((ent, component), args.User, severity.ID);
 
         var examineMarkup = GetContrabandExamine(departmentExamineMessage, carryingMessage);
 
@@ -97,42 +97,43 @@ public sealed partial class ContrabandSystem : EntitySystem
             iconTexture);
     }
 
-    private (string, string) GetLegalityContent(Entity<ContrabandComponent> item, EntityUid examiner, string severity)
+    private (string, string) GetLegalityContent(Entity<ContrabandComponent> item, EntityUid idOwner, string severity)
     {
+        var illegal = IsContraband((item.Owner, item.Comp), idOwner, out _);
 
         // Checks if the contraband is contained within a container. if NOT, do you.
         if (!_container.TryGetContainingContainer((item.Owner, null, null), out var ctnr))
         {
-            return (ResolveLegalityText(item, examiner, true), ResolveIconPath(item, examiner, severity));
+            return (ResolveAllowedText(illegal, idOwner, true), ResolveIconPath(illegal, severity));
         }
 
         if (ctnr is { })
         {
             // if you are examining your own item, do you.
-            if (examiner == ctnr.Owner)
+            if (idOwner == ctnr.Owner)
             {
-                return (ResolveLegalityText(item, examiner, true), ResolveIconPath(item, examiner, severity));
+                return (ResolveAllowedText(illegal, idOwner, true), ResolveIconPath(illegal, severity));
             }
 
             // holder has neither pronouns nor id, do you.
             if (!HasComp<GrammarComponent>(ctnr.Owner) && !_id.TryFindIdCard(ctnr.Owner, out _))
             {
-                return (ResolveLegalityText(item, examiner, true), ResolveIconPath(item, examiner, severity));
+                return (ResolveAllowedText(illegal, idOwner, true), ResolveIconPath(illegal, severity));
             }
 
-            return (ResolveLegalityText(item, ctnr.Owner, false), ResolveIconPath(item, ctnr.Owner, severity));
+            return (ResolveAllowedText(illegal, ctnr.Owner, false), ResolveIconPath(illegal, severity));
         }
-        return (ResolveLegalityText(item, examiner, true), ResolveIconPath(item, examiner, severity)); //if something fucked up, default to you.
+        return (ResolveAllowedText(illegal, idOwner, true), ResolveIconPath(illegal, severity)); //if something fucked up, default to you.
     }
 
-    private string ResolveLegalityText(Entity<ContrabandComponent> item, EntityUid idOwner, bool you)
+    private string ResolveAllowedText(bool illegal, EntityUid idOwner, bool youText)
     {
-        return Loc.GetString(IsContraband((item.Owner, item.Comp), idOwner, out _) ? "contraband-examine-text-avoid-carrying-around" : "contraband-examine-text-in-the-clear", ("you", you ? "true" : "false"), ("gender", Identity.Entity(idOwner, _entity)));
+        return Loc.GetString(illegal ? "contraband-examine-text-avoid-carrying-around" : "contraband-examine-text-in-the-clear", ("you", youText ? "true" : "false"), ("gender", Identity.Entity(idOwner, _entity)));
     }
 
-    private string ResolveIconPath(Entity<ContrabandComponent> item, EntityUid? idOwner, string severity)
+    private string ResolveIconPath(bool illegal, string severity)
     {
-        return IsContraband((item.Owner, item.Comp), idOwner, out _) ? "/Textures/Interface/VerbIcons/Contraband/locked.color." + severity + ".svg.192dpi.png" : "/Textures/Interface/VerbIcons/Contraband/unlock.color." + severity + ".svg.192dpi.png";
+        return (illegal ? "/Textures/Interface/VerbIcons/Contraband/locked.color." : "/Textures/Interface/VerbIcons/Contraband/unlock.color.") + severity + ".svg.192dpi.png";
     }
 
     /// <summary>
@@ -195,19 +196,23 @@ public sealed partial class ContrabandSystem : EntitySystem
         if (player == null)
             return true;
 
-        List<ProtoId<DepartmentPrototype>> departments = new();
-        var jobId = "";
+        // if it is fully restricted, you're department-less, or your department isn't in the allowed list, you cannot carry it. Otherwise, you can.
         if (_id.TryFindIdCard(player.Value, out var id))
         {
-            departments = id.Comp.JobDepartments;
-            if (id.Comp.LocalizedJobTitle is not null)
-                jobId = id.Comp.LocalizedJobTitle;
-        }
 
-        var jobs = contraband.Comp.AllowedJobs.Select(p => ProtoMan.Index(p).LocalizedName).ToArray();
-        // if it is fully restricted, you're department-less, or your department isn't in the allowed list, you cannot carry it. Otherwise, you can.
-        if (departments.Intersect(contraband.Comp.AllowedDepartments).Any() || jobs.Contains(jobId))
-            return false;
+            if (id.Comp.LocalizedJobTitle is not null)
+            {
+                var jobId = id.Comp.LocalizedJobTitle;
+                var jobs = contraband.Comp.AllowedJobs.Select(p => ProtoMan.Index(p).LocalizedName).ToArray();
+
+                if (jobs.Contains(jobId))
+                    return false;
+            }
+
+            var departments = id.Comp.JobDepartments;
+            if (departments.Intersect(contraband.Comp.AllowedDepartments).Any())
+                return false;
+        }
 
         return true;
     }
