@@ -49,7 +49,7 @@ public sealed partial class CargoSystem
 
     private void OnBountyConsoleOpened(EntityUid uid, CargoBountyConsoleComponent component, BoundUIOpenedEvent args)
     {
-        UpdateBountyConsoles();
+        UpdateBountyConsole((uid, null));
     }
 
     private void OnPrintLabelMessage(EntityUid uid, CargoBountyConsoleComponent component, BountyPrintLabelMessage args)
@@ -589,13 +589,18 @@ public sealed partial class CargoSystem
         var query = EntityQueryEnumerator<CargoBountyConsoleComponent, UserInterfaceComponent>();
         while (query.MoveNext(out var uid, out _, out var ui))
         {
-            if (_station.GetOwningStation(uid) is not { } station ||
-                !TryComp<StationCargoBountyDatabaseComponent>(station, out var bountyDbComp))
-                continue;
-
-            var untilNextSkip = bountyDbComp.NextSkipTime - Timing.CurTime;
-            _uiSystem.SetUiState((uid, ui), CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(bountyDbComp.Bounties, bountyDbComp.Statuses, bountyDbComp.History, untilNextSkip));
+            UpdateBountyConsole((uid, ui));
         }
+    }
+
+    private void UpdateBountyConsole(Entity<UserInterfaceComponent?> ent)
+    {
+        if (_station.GetOwningStation(ent.Owner) is not { } station
+            || !TryComp<StationCargoBountyDatabaseComponent>(station, out var bountyDbComp))
+            return;
+
+        var untilNextSkip = bountyDbComp.NextSkipTime - Timing.CurTime;
+        _uiSystem.SetUiState(ent, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(bountyDbComp.Bounties, bountyDbComp.Statuses, bountyDbComp.History, untilNextSkip));
     }
 
     private void UpdateBounty()
