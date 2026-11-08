@@ -128,7 +128,10 @@ public sealed partial class DeviceNetworkSystem
     /// </summary>
     private bool AddToNetwork(Entity<DeviceNetworkComponent> ent, Entity<DeviceNetworkManagerComponent> network)
     {
-        if (ent.Comp.ConnectedNets.TryGetValue(network.Comp.DeviceNetId, out var netUid)
+        if (network.Comp.DeviceNetId == null)
+            return false;
+
+        if (ent.Comp.ConnectedNets.TryGetValue(network.Comp.DeviceNetId.Value, out var netUid)
             && netUid != network.Owner)
         {
             Log.Error($"Device {ToPrettyString(ent)} tried to connect to the network " +
@@ -136,7 +139,7 @@ public sealed partial class DeviceNetworkSystem
             return false;
         }
 
-        ent.Comp.ConnectedNets.TryAdd(network.Comp.DeviceNetId, network.Owner);
+        ent.Comp.ConnectedNets.TryAdd(network.Comp.DeviceNetId.Value, network.Owner);
 
         var deviceComp = ent.Comp;
         var device = new Device((ent.Owner, ent.Comp));
@@ -167,18 +170,25 @@ public sealed partial class DeviceNetworkSystem
     /// </summary>
     private bool RemoveFromNetwork(Entity<DeviceNetworkComponent?> ent, Entity<DeviceNetworkManagerComponent> network)
     {
+        if (network.Comp.DeviceNetId == null)
+            return false;
+
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp))
             return false;
 
         var deviceComp = ent.Comp;
         var device = new Device(ent!);
-        if (!network.Comp.Devices.Remove(deviceComp.Address))
-            return false;
 
-        // The network must be disposed so that the entity count isn't inflated.
+        if (!network.Comp.Devices.Remove(deviceComp.Address))
+            return false; // Not connected to this net
+
+        ent.Comp.ConnectedNets.Remove(network.Comp.DeviceNetId.Value);
+
         if (network.Comp.Devices.Count == 0)
         {
-            QueueDel(network.Owner);
+            // Dispose the network if it has no devices.
+            // Not a big deal to keep it, but entity tests say otherwise.
+            Del(network.Owner);
             return true;
         }
 

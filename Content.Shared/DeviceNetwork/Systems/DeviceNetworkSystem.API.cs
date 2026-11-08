@@ -532,10 +532,12 @@ public sealed partial class DeviceNetworkSystem
     /// <typeparam name="T">Component that implements <see cref="ILimitedDeviceComponent"/>.</typeparam>
     /// <returns>True if this network shouldn't be checked, false if the target network must be checked for blocking.</returns>
     [PublicAPI]
-    public bool CheckNetworkIgnore<T>(Entity<T, DeviceNetworkComponent?> ent, ProtoId<DeviceNetworkPrototype> netId)
+    public bool CheckNetworkIgnore<T>(Entity<T, DeviceNetworkComponent?> ent, ProtoId<DeviceNetworkPrototype>? netId)
         where T : IComponent, ILimitedDeviceComponent
     {
-        return !_deviceQuery.Resolve(ent.Owner, ref ent.Comp2, false) || ent.Comp1.IgnoreNets.Contains(netId);
+        return netId == null
+               || !_deviceQuery.Resolve(ent.Owner, ref ent.Comp2, false)
+               || ent.Comp1.IgnoreNets.Contains(netId.Value);
     }
 
     [PublicAPI]
