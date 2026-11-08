@@ -87,9 +87,6 @@ public sealed partial class PlantMutationSystem : EntitySystem
         if (!Resolve(oldPlant, ref oldPlant.Comp, false))
             return;
 
-        if (oldPlant.Comp.MutationPrototypes.Count == 0)
-            return;
-
         if (!_net.IsServer)
             return;
 
@@ -145,7 +142,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
     /// Copies information from the PlantComponent on a prototype over to a given plant.
     /// </summary>
     /// <remarks>
-    /// <see cref="PlantComponent.GrowthStages"/> must stay true for the given plant.
+    /// Growth stages and mutation overrides belong to the new species rather than the cloned plant state.
     /// TODO: better support excluding fields depending on clone context.
     /// </remarks>
     private void PlantSpeciesChange(EntityUid plantUid, EntProtoId plantProto)
@@ -155,6 +152,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
             return;
 
         plant.GrowthStages = newSpecies.GrowthStages;
+        plant.MutationOverrides = _serialization.CreateCopy(newSpecies.MutationOverrides, notNullableOverride: true);
         DirtyField(plantUid, plant, nameof(PlantComponent.GrowthStages));
     }
 
