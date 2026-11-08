@@ -18,8 +18,24 @@ public sealed partial class RandomPlantMutationListPrototype : IPrototype
     public bool IgnoreMutationMod;
 
     /// <summary>
-    /// List of RandomFills that can be picked from.
+    /// List of random mutations that can be picked from.
     /// </summary>
     [DataField(required: true)]
     public List<RandomPlantMutationEntry> Mutations = [];
+}
+
+/// <summary>
+/// A mutation table entry containing its odds and mutation overrides.
+/// </summary>
+[DataDefinition]
+public sealed partial class RandomPlantMutationEntry
+{
+    /// <summary>
+    /// Independent odds per point of mutation severity, rather than a relative selection weight.
+    /// </summary>
+    [DataField]
+    public float BaseOdds;
+
+    [DataField(required: true)]
+    public RandomPlantMutationOverride Mutation = default!;
 }
