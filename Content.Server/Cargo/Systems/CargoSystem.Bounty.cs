@@ -114,12 +114,15 @@ public sealed partial class CargoSystem
         if (!TryGetBountyIndexFromId(station, args.BountyId, out var index, bountyDbComp))
             return;
 
+        if (bountyDbComp.Statuses.Count == 0 || args.Status < 0 || bountyDbComp.Statuses.Count <= args.Status)
+            return;
+
         var bounty = bountyDbComp.Bounties[index];
-        if (bountyDbComp.Statuses.Count > 0)
-        {
-            var status = bountyDbComp.Statuses[args.Status];
-            bountyDbComp.Bounties[index] = bounty with { Status = status };
-        }
+        var status = bountyDbComp.Statuses[args.Status];
+        bountyDbComp.Bounties[index] = bounty with { Status = status };
+
+        bountyDbComp.NextStatusUpdateTime = Timing.CurTime + bountyDbComp.StatusUpdateDelay;
+
         UpdateBountyConsoles();
     }
 
