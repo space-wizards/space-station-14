@@ -31,6 +31,27 @@ public sealed partial class PlantMutationSystem : EntitySystem
     [Dependency] private EntityQuery<PlantComponent> _plantQuery;
 
     /// <summary>
+    /// Resolves mutation data from overrides, checks passed override (typically from mutation list) then the plant, and finally uses the original prototype for default values.
+    /// </summary>
+    [PublicAPI]
+    public static ResolvedPlantMutation ResolveMutation(
+        RandomPlantMutationOverride mutation,
+        PlantComponent plant,
+        IPrototypeManager prototypes)
+    {
+        var prototype = prototypes.Index(mutation.Prototype);
+        plant.MutationOverrides.TryGetValue(mutation.Prototype, out var plantOverride);
+
+        return new ResolvedPlantMutation(
+            plantOverride?.Name ?? mutation.Name ?? prototype.Name,
+            plantOverride?.Description ?? mutation.Description ?? prototype.Description,
+            plantOverride?.Effect ?? mutation.Effect ?? prototype.Effect,
+            plantOverride?.AppliesToProduce ?? mutation.AppliesToProduce ?? prototype.AppliesToProduce,
+            plantOverride?.AppliesToPlant ?? mutation.AppliesToPlant ?? prototype.AppliesToPlant,
+            plantOverride?.Persists ?? mutation.Persists ?? prototype.Persists);
+    }
+
+    /// <summary>
     /// For each mutation table, go through each mutation.
     /// For each random mutation, see if it occurs on this plant this check.
     /// </summary>
@@ -43,7 +64,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
         var mutationTable = ProtoMan.Index(mutationTableId);
         foreach (var entry in mutationTable.Mutations)
         {
-            var mutation = entry.Resolve(ProtoMan);
+            var mutation = ResolveMutation(entry.Mutation, ent.Comp, ProtoMan);
             var triggers = 0;
             while (entry.BaseOdds * severity > triggers) // If the odds are greater than one, potentially trigger the mutation multiple times
             {
@@ -55,8 +76,8 @@ public sealed partial class PlantMutationSystem : EntitySystem
                         _entityEffects.TryApplyEffect(ent, mutation.Effect);
 
                     // Stat adjustments do not persist by being an attached effect, they just change the stat.
-                    if (mutation.Persists && ent.Comp.Mutations.All(m => m.Resolve(ProtoMan).Name != mutation.Name))
-                        ent.Comp.Mutations.Add(entry);
+                    if (mutation.Persists && ent.Comp.Mutations.All(m => m.Name != mutation.Name))
+                        ent.Comp.Mutations.Add(mutation);
                 }
             }
         }
@@ -159,7 +180,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
         // LINQ Explanation
         // For the list of mutation effects on both plants, use a 50% chance to pick each one.
         // Union all of the chosen mutations into one list, and pick ones with a Distinct (unique) name.
-        targetCore.Mutations = targetCore.Mutations.Where(_ => Random(0.5f)).Union(pollenCore.Mutations.Where(_ => Random(0.5f))).DistinctBy(m => m.Resolve(ProtoMan).Name).ToList();
+        targetCore.Mutations = targetCore.Mutations.Where(_ => Random(0.5f)).Union(pollenCore.Mutations.Where(_ => Random(0.5f))).DistinctBy(m => m.Name).ToList();
     }
 
     /// <summary>

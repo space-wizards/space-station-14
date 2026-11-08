@@ -1,5 +1,6 @@
 using Content.Shared.Botany.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Botany.Components;
 
@@ -15,7 +16,13 @@ public sealed partial class PlantComponent : Component
     /// Server-only: mutations are applied as effects which are synced separately.
     /// </summary>
     [DataField]
-    public List<RandomPlantMutation> Mutations = [];
+    public List<ResolvedPlantMutation> Mutations = [];
+
+    /// <summary>
+    /// Plant-specific overrides used when resolving mutations, indexed by mutation prototype ID.
+    /// </summary>
+    [DataField]
+    public Dictionary<ProtoId<RandomPlantMutationPrototype>, RandomPlantMutationOverride> MutationOverrides = [];
 
     /// <summary>
     /// The plant's max health.
