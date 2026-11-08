@@ -200,7 +200,6 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
             // throw in nullspace
             foreach (var item in items)
             {
-                Log.Info(Name(item.item) + " was thrown in lingspace");
                 _transform.SetMapCoordinates(item.item, mapCoords);
             }
 
@@ -244,6 +243,17 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
         }
         ent.Comp.LingSpaceItems.Clear();
         RemCompDeferred<ChangelingHorrorItemsComponent>(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnItemsShutdown(Entity<ChangelingHorrorItemsComponent> ent, ref ComponentRemove args)
+    {
+        // pull the items back from lingspace so that valuable things arent lost if the horror form is ashed, for instance
+        var coords = _transform.GetMapCoordinates(ent.Owner);
+        foreach (var item in ent.Comp.LingSpaceItems)
+        {
+            _transform.SetMapCoordinates(item.item, coords);
+        }
     }
 
     /// <summary>
