@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.DeviceNetwork.Components;
 
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState(true, true), AutoGenerateComponentPause]
+[AutoGenerateComponentState(true, true)]
 [Access(typeof(DeviceNetworkSystem))]
 public sealed partial class DeviceNetworkComponent : Component
 {
@@ -94,13 +94,6 @@ public sealed partial class DeviceNetworkComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool SavableAddress = true;
-
-    /// <summary>
-    /// Time until which this device is jammed, meaning it cannot send any packets.
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoNetworkedField, AutoPausedField]
-    public TimeSpan? JammedTimeout;
 
     /// <summary>
     /// Whether this device is currently able to connect to device networks.

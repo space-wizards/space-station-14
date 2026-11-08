@@ -70,6 +70,14 @@ public sealed partial class WiredNetworkSystem : EntitySystem
             args.Cancelled = true;
     }
 
+    // Welcome to SS14 code comment museum.
+    // Below you can see an ancient relic from the past when the very foundations of SS14 were developed -
+    // this is a "to do" comment about remaking device packets that travel through wires.
+    // This didn't end up happening, and it's unlikely to happen any time in the future,
+    // since this change alone would require breaking mapping changes and refactoring other ancient systems.
+    // Let this comment be preserved for future generations of coders so that maybe one day
+    // someone brave enough will implement this idea.
+
     //TODO Device Network, Things to do in a future PR:
     //Abstract out the connection between the apcExtensionCable and the apcPowerReceiver
     //Traverse the power cables using path traversal

@@ -42,14 +42,12 @@ public sealed partial class DeviceNetworkSystem
         if (frequency == null)
             return false;
 
-        if (ent.Comp.JammedTimeout != null
-            && _timing.CurTime < ent.Comp.JammedTimeout.Value)
-            return false;
-
         if (network != null)
         {
-            // Unsupported network type
             if (!ent.Comp.DeviceNets.Contains(network.Value))
+                return false;
+
+            if (CheckJammedDevice(ent.Owner, network.Value))
                 return false;
 
             var packet = new DeviceNetworkPacketEvent<T>(network.Value,
@@ -64,6 +62,9 @@ public sealed partial class DeviceNetworkSystem
         {
             foreach (var net in ent.Comp.DeviceNets)
             {
+                if (CheckJammedDevice(ent.Owner, net))
+                    continue;
+
                 var packet = new DeviceNetworkPacketEvent<T>(net,
                     address,
                     frequency.Value,
@@ -73,7 +74,6 @@ public sealed partial class DeviceNetworkSystem
                 SendPacket(ref packet);
             }
         }
-
 
         return true;
     }
@@ -112,6 +112,9 @@ public sealed partial class DeviceNetworkSystem
 
         foreach (var net in networks)
         {
+            if (CheckJammedDevice(ent.Owner, net))
+                continue;
+
             var packet = new DeviceNetworkPacketEvent<T>(net, address, frequency.Value, ent.Comp.Address, ent!, data);
             SendPacket(ref packet);
         }
@@ -454,6 +457,71 @@ public sealed partial class DeviceNetworkSystem
 
         ent.Comp.Enabled = enabled;
         DirtyField(ent, nameof(DeviceNetworkComponent.Enabled));
+    }
+
+    /// <summary>
+    /// Jams the target device, making it unable to send or receive packets
+    /// until the specified <see cref="delay"/>.
+    /// If the device was already jammed,
+    /// </summary>
+    /// <param name="ent">The target device to jam.</param>
+    /// <param name="delay">In-game time when the jam effect should end.</param>
+    /// <param name="networkId">The target network to jam on the device.</param>
+    [PublicAPI]
+    public void JamDevice(Entity<DeviceNetworkComponent?> ent, TimeSpan delay, ProtoId<DeviceNetworkPrototype> networkId)
+    {
+        var jammed = EnsureComp<JammedDeviceComponent>(ent.Owner);
+        var endTime = _timing.CurTime + delay;
+        if (!jammed.JammedTimeouts.TryAdd(networkId, endTime)
+            && jammed.JammedTimeouts[networkId] < endTime)
+            jammed.JammedTimeouts[networkId] = _timing.CurTime + endTime;
+    }
+
+    /// <summary>
+    /// Jams the target device, making it unable to send or receive packets
+    /// until the specified <see cref="delay"/>.
+    /// If the device was already jammed,
+    /// </summary>
+    /// <param name="ent">The target device to jam.</param>
+    /// <param name="delay">In-game time when the jam effect should end.</param>
+    /// <param name="networkIds">The target networks to jam on the device.</param>
+    [PublicAPI]
+    public void JamDevice(Entity<DeviceNetworkComponent?> ent, TimeSpan delay, IReadOnlySet<ProtoId<DeviceNetworkPrototype>> networkIds)
+    {
+        var jammed = EnsureComp<JammedDeviceComponent>(ent.Owner);
+        var endTime = _timing.CurTime + delay;
+        foreach (var networkId in networkIds)
+        {
+            if (!jammed.JammedTimeouts.TryAdd(networkId, endTime)
+                && jammed.JammedTimeouts[networkId] < endTime)
+                jammed.JammedTimeouts[networkId] = endTime;
+        }
+    }
+
+    /// <summary>
+    /// Unjam the target device, allowing it to send and receive packets again.
+    /// </summary>
+    [PublicAPI]
+    public void UnjamDevice(Entity<JammedDeviceComponent?> ent)
+    {
+        if (!_jammedDeviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
+            return;
+
+        RemComp(ent.Owner, ent.Comp);
+    }
+
+    [PublicAPI]
+    public bool CheckJammedDevice(Entity<JammedDeviceComponent?> ent, ProtoId<DeviceNetworkPrototype> network)
+    {
+        if (!_jammedDeviceQuery.Resolve(ent.Owner, ref ent.Comp, false)
+            || !ent.Comp.JammedTimeouts.TryGetValue(network, out var timeout))
+            return false;
+
+        if (_timing.CurTime < timeout)
+            return true;
+
+        UnjamDevice(ent);
+        return false;
     }
 
     /// <summary>

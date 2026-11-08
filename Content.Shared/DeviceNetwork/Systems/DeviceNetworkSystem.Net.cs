@@ -131,8 +131,9 @@ public sealed partial class DeviceNetworkSystem
         if (ent.Comp.ConnectedNets.TryGetValue(network.Comp.DeviceNetId, out var netUid)
             && netUid != network.Owner)
         {
-            Log.Error($"Device {ToPrettyString(ent)} tried to connect to the network" +
+            Log.Error($"Device {ToPrettyString(ent)} tried to connect to the network " +
                       $"{ToPrettyString(network.Owner)} while it was already connected to {ToPrettyString(netUid)}!");
+            return false;
         }
 
         ent.Comp.ConnectedNets.TryAdd(network.Comp.DeviceNetId, network.Owner);
@@ -174,6 +175,13 @@ public sealed partial class DeviceNetworkSystem
         if (!network.Comp.Devices.Remove(deviceComp.Address))
             return false;
 
+        // The network must be disposed so that the entity count isn't inflated.
+        if (network.Comp.Devices.Count == 0)
+        {
+            QueueDel(network.Owner);
+            return true;
+        }
+
         if (deviceComp.ReceiveFrequency is not { } freq)
             return true;
 
@@ -190,10 +198,6 @@ public sealed partial class DeviceNetworkSystem
             if (receiveAll.Count == 0)
                 network.Comp.ListeningDevices.Remove(freq);
         }
-
-        // The network must be disposed so that the entity count isn't inflated.
-        if (network.Comp.Devices.Count == 0)
-            QueueDel(network.Owner);
 
         return true;
     }

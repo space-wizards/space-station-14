@@ -29,6 +29,7 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
 
     [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceQuery;
     [Dependency] private EntityQuery<DeviceNetworkManagerComponent> _deviceManagerQuery;
+    [Dependency] private EntityQuery<JammedDeviceComponent> _jammedDeviceQuery;
 
     /// <summary>
     /// A dictionary of occupied Device addresses and corresponding <see cref="EntityUid"/>.
@@ -55,10 +56,9 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
     /// Checks whether the device is jammed to cancel the packet.
     /// </summary>
     [SubscribeLocalEvent]
-    private void OnBeforePacketReceived(Entity<DeviceNetworkComponent> ent, ref BeforePacketSentEvent args)
+    private void OnBeforePacketReceived(Entity<JammedDeviceComponent> ent, ref BeforePacketSentEvent args)
     {
-        if (ent.Comp.JammedTimeout != null
-            && _timing.CurTime < ent.Comp.JammedTimeout.Value)
+        if (CheckJammedDevice(ent.Owner, args.NetId))
             args.Cancelled = true;
     }
 

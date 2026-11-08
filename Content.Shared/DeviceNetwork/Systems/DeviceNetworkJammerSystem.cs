@@ -1,38 +1,46 @@
 using Content.Shared.DeviceNetwork.Components;
-using Content.Shared.DeviceNetwork.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
 /// <inheritdoc/>
 public sealed partial class DeviceNetworkJammerSystem : EntitySystem
 {
-    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private DeviceNetworkSystem _device = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
-    // TODO consider other ways to suppress the packets in the next PR
-    // Maybe EntityLookup on a loop + temporarily disconnecting the targeted devices from their network will work faster?
-    [SubscribeLocalEvent]
-    private void BeforePacketSent(Entity<TransformComponent> xform, ref BeforePacketSentEvent ev)
+    private readonly HashSet<Entity<DeviceNetworkComponent>> _cache = new();
+
+    public override void Update(float frameTime)
     {
-        if (ev.Cancelled)
-            return;
+        base.Update(frameTime);
 
         var query = EntityQueryEnumerator<DeviceNetworkJammerComponent, TransformComponent>();
 
-        while (query.MoveNext(out var uid, out var jammerComp, out var jammerXform))
+        while (query.MoveNext(out var uid, out var jammerComp, out var xform))
         {
-            if (!GetJammableNetworks((uid, jammerComp)).Contains(ev.NetId))
+            if (jammerComp.NextUpdate > _timing.CurTime)
                 continue;
 
-            if (jammerComp.FrequenciesExcluded.Contains(ev.Frequency))
-                continue;
+            jammerComp.NextUpdate = _timing.CurTime + jammerComp.Delay;
 
-            if (_transform.InRange(jammerXform.Coordinates, ev.SenderTransform.Coordinates, jammerComp.Range)
-                || _transform.InRange(jammerXform.Coordinates, xform.Comp.Coordinates, jammerComp.Range))
+            _cache.Clear();
+            _lookup.GetEntitiesInRange(xform.Coordinates, jammerComp.Range, _cache);
+
+            var jamNetworks = GetJammableNetworks((uid, jammerComp));
+
+            foreach (var device in _cache)
             {
-                ev.Cancelled = true;
-                return;
+                if (device.Comp.TransmitFrequency != null
+                    && jammerComp.FrequenciesExcluded.Contains(device.Comp.TransmitFrequency.Value)
+                    || device.Comp.ReceiveFrequency != null
+                    && jammerComp.FrequenciesExcluded.Contains(device.Comp.ReceiveFrequency.Value))
+                    continue;
+
+                _device.JamDevice(device.AsNullable(), jammerComp.Delay, jamNetworks);
             }
         }
     }

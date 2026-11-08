@@ -62,7 +62,7 @@ public sealed partial class RadioJammerComponent : Component
     /// All device network types jammed by this jammer.
     /// </summary>
     [DataField]
-    public HashSet<ProtoId<DeviceNetworkPrototype>> JammedNetworks = ["Wireless"];
+    public HashSet<ProtoId<DeviceNetworkPrototype>> JammableNetworks = ["Wireless"];
 
     /// <summary>
     /// Index of the currently selected setting.
