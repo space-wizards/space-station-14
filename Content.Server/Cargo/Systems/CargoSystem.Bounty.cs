@@ -101,13 +101,14 @@ public sealed partial class CargoSystem
 
     private void OnSetBountyStatusMessage(Entity<CargoBountyConsoleComponent> ent, ref BountySetStatusMessage args)
     {
-        if (
-            _station.GetOwningStation(ent.Owner) is not { } station
-            || !TryComp<StationCargoBountyDatabaseComponent>(station, out var bountyDbComp)
-        )
+        if (args.Actor is not { Valid: true } actor)
             return;
 
-        if (Timing.CurTime < bountyDbComp.NextStatusUpdateTime || !args.Actor.Valid)
+        if (_station.GetOwningStation(ent.Owner) is not { } station
+            || !TryComp<StationCargoBountyDatabaseComponent>(station, out var bountyDbComp))
+            return;
+
+        if (Timing.CurTime < bountyDbComp.NextStatusUpdateTime)
             return;
 
         if (!TryGetBountyIndexFromId(station, args.BountyId, out var index, bountyDbComp))
@@ -131,7 +132,7 @@ public sealed partial class CargoSystem
             || !TryComp<StationCargoBountyDatabaseComponent>(station, out var bountyDbComp))
             return;
 
-        if (Timing.CurTime < bountyDbComp.NextClaimTime || !args.Actor.Valid)
+        if (Timing.CurTime < bountyDbComp.NextClaimTime)
             return;
 
         if (!TryGetBountyIndexFromId(station, args.BountyId, out var index, bountyDbComp))
@@ -565,10 +566,7 @@ public sealed partial class CargoSystem
             return false;
 
         index = component.Bounties.FindIndex(b => b.Id == id);
-        if (index < 0)
-            return false;
-
-        return true;
+        return index >= 0;
     }
 
     public bool TryGetBountyFromId(
@@ -595,9 +593,7 @@ public sealed partial class CargoSystem
         {
             if (_station.GetOwningStation(uid) is not { } station ||
                 !TryComp<StationCargoBountyDatabaseComponent>(station, out var db))
-            {
                 continue;
-            }
 
             var untilNextSkip = db.NextSkipTime - Timing.CurTime;
             _uiSystem.SetUiState((uid, ui), CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(db.Bounties, db.Statuses, db.History, untilNextSkip));
