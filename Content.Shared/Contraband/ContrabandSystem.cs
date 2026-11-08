@@ -99,7 +99,8 @@ public sealed partial class ContrabandSystem : EntitySystem
 
     private (string, string) GetLegalityContent(Entity<ContrabandComponent> item, EntityUid idOwner, string severity)
     {
-        var illegal = IsContraband((item.Owner, item.Comp), idOwner, out _);
+        _id.TryFindIdCard(idOwner, out var yourId);
+        var illegal = IsContraband((item.Owner, item.Comp), yourId, out _);
 
         // Checks if the contraband is contained within a container. if NOT, do you.
         if (!_container.TryGetContainingContainer((item.Owner, null, null), out var ctnr))
@@ -116,11 +117,14 @@ public sealed partial class ContrabandSystem : EntitySystem
             }
 
             // holder has neither pronouns nor id, do you.
-            if (!HasComp<GrammarComponent>(ctnr.Owner) && !_id.TryFindIdCard(ctnr.Owner, out _))
+            if (!HasComp<GrammarComponent>(ctnr.Owner) && !_id.TryFindIdCard(ctnr.Owner, out var _))
             {
                 return (ResolveAllowedText(illegal, idOwner, true), ResolveIconPath(illegal, severity));
             }
 
+            // if they (have pronouns or id) and are not you, do them.
+            _id.TryFindIdCard(ctnr.Owner, out var theirId);
+            illegal = IsContraband((item.Owner, item.Comp), theirId, out _);
             return (ResolveAllowedText(illegal, ctnr.Owner, false), ResolveIconPath(illegal, severity));
         }
         return (ResolveAllowedText(illegal, idOwner, true), ResolveIconPath(illegal, severity)); //if something fucked up, default to you.
@@ -184,7 +188,7 @@ public sealed partial class ContrabandSystem : EntitySystem
     /// <param name="player">The player that we are checking if they are allowed to have this contraband.</param>
     /// <param name="contraProtoId">The contraband ProtoId if the item is contraband.</param>
     /// <returns></returns>
-    public bool IsContraband(Entity<ContrabandComponent?> contraband, EntityUid? player, [NotNullWhen(true)] out ProtoId<ContrabandSeverityPrototype>? contraProtoId)
+    public bool IsContraband(Entity<ContrabandComponent?> contraband, Entity<IdCardComponent> id, [NotNullWhen(true)] out ProtoId<ContrabandSeverityPrototype>? contraProtoId)
     {
         contraProtoId = null;
 
@@ -193,11 +197,8 @@ public sealed partial class ContrabandSystem : EntitySystem
 
         contraProtoId = contraband.Comp.Severity;
 
-        if (player == null)
-            return true;
-
         // if it is fully restricted, you're department-less, or your department isn't in the allowed list, you cannot carry it. Otherwise, you can.
-        if (_id.TryFindIdCard(player.Value, out var id))
+        if (id.Owner.IsValid()) //TryGetId returns a broken entity instead of null rn. pr up 4 dat!
         {
 
             if (id.Comp.LocalizedJobTitle is not null)
@@ -223,7 +224,7 @@ public sealed partial class ContrabandSystem : EntitySystem
     /// <param name="contraband">The entity that we are checking for contraband.</param>
     /// <param name="player">The player that we are checking if they are allowed to have certain contraband.</param>
     /// <param name="contrabandList">All contraband prototypes present in storage.</param>
-    public bool ContainerHasContraband(Entity<ContainerManagerComponent?> contraband, EntityUid? player, out List<ProtoId<ContrabandSeverityPrototype>> contrabandList)
+    public bool ContainerHasContraband(Entity<ContainerManagerComponent?> contraband, EntityUid? player, Entity<IdCardComponent> id, out List<ProtoId<ContrabandSeverityPrototype>> contrabandList)
     {
         contrabandList = [];
 
@@ -234,10 +235,10 @@ public sealed partial class ContrabandSystem : EntitySystem
         {
             foreach (var ent in container.ContainedEntities)
             {
-                if (IsContraband(ent, player, out var itemContraId))
+                if (IsContraband(ent, id, out var itemContraId))
                     contrabandList.Add((ProtoId<ContrabandSeverityPrototype>)itemContraId);
 
-                ContainerHasContraband(ent, player, out var itemContraList);
+                ContainerHasContraband(ent, player, id, out var itemContraList);
 
                 contrabandList = contrabandList.Concat(itemContraList).ToList();
             }

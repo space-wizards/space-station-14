@@ -7,6 +7,7 @@ using Content.Client.Strip;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Hands.Controls;
 using Content.Client.Verbs.UI;
+using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Contraband;
@@ -50,6 +51,7 @@ namespace Content.Client.Inventory
         private readonly StrippableSystem _strippable;
         private readonly SharedEnsnareableSystem _snare;
         private readonly ContrabandSystem _contraband;
+        private readonly SharedIdCardSystem _id;
 
         // Is the BUI in admin view? If in admin view, has custom UI elements to help admins see things
         // (E.g contraband status icon, is the item chameleon etc...)
@@ -106,6 +108,7 @@ namespace Content.Client.Inventory
             _strippable = EntMan.System<StrippableSystem>();
             _contraband = EntMan.System<ContrabandSystem>();
             _snare = EntMan.System<SharedEnsnareableSystem>();
+            _id = EntMan.System<SharedIdCardSystem>();
 
             _virtualHiddenEntity = EntMan.SpawnEntity(HiddenPocketEntityId, MapCoordinates.Nullspace);
 
@@ -347,7 +350,8 @@ namespace Content.Client.Inventory
                 }
 
                 // if the item has contraband, add a blue dotted outline (under the main contraband overlay if there is one)
-                if (_contraband.ContainerHasContraband(entity.Value, Owner, out var contraList))
+                _id.TryFindIdCard(Owner, out var ownerId);
+                if (_contraband.ContainerHasContraband(entity.Value, Owner, ownerId, out var contraList))
                 {
                     // Get the color of the "most important" contraband using O(n) shenanigans
                     var hasContraColor = contraList
@@ -363,7 +367,7 @@ namespace Content.Client.Inventory
                 }
 
                 // overlay for items that are themselves contraband
-                if (_contraband.IsContraband(entity.Value, Owner, out var contraProtoId))
+                if (_contraband.IsContraband(entity.Value, ownerId, out var contraProtoId))
                 {
                     button.AddAdminOverlay(_contrabandTexturePath, _proto.Index(contraProtoId).Color);
                 }
