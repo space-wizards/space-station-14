@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Numerics;
 using Content.Client.Animations;
 using Content.Client.Clickable;
 using Content.Client.Items;
@@ -8,8 +6,10 @@ using Content.Shared.Camera;
 using Content.Shared.CCVar;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Physics;
+using Content.Shared.Pinpointer;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
@@ -31,6 +31,8 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Linq;
+using System.Numerics;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
@@ -53,6 +55,10 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private SpriteTreeSystem _spriteTree = default!;
 
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
+
+    [Dependency] private EntityQuery<HitscanBasicVisualsComponent> _visualsQuery = default!;
     public static readonly EntProtoId HitscanProto = "HitscanEffect";
     private GunTargetEntityComparer _comparer = default!;
 
@@ -120,34 +126,51 @@ public sealed partial class GunSystem : SharedGunSystem
         // E.g., if a grid rotates while part of the beam is parented to the grid, and part of it is parented to the map.
         // Ideally, there should only be one entity, with one sprite that has multiple layers
         // Or at the very least, have the other entities parented to the same entity to make sure they stick together.
-        foreach (var a in ev.Sprites)
+
+        var en = new EntProtoId(ev.ProtoIdString);
+
+        if (!_protoManager.TryIndex(en, out var entityPrototype))
+            return;
+
+        if (!entityPrototype.TryComp<HitscanBasicVisualsComponent>(out var vizComp, _entityManager.ComponentFactory))
+            return;
+
+        var coords = GetCoordinates(ev.Coordinates);
+        ///////////////////////////////////////////////////////////
+
+
+
+
+        ////////////////////////////////////////////////////////////
+        SpawnHistscan(coords, ev.Angle, vizComp.TravelFlash, ev.Distance);
+    }
+
+    private void SpawnHistscan(EntityCoordinates coords, Angle angle, SpriteSpecifier? ss, float distance)
+    {
+        if (ss is not SpriteSpecifier.Rsi rsi)
+            return;
+
+        if (!TryComp(coords.EntityId, out TransformComponent? relativeXform))
+            return;
+
+        var ent = SpawnAtPosition(HitscanProto, coords);
+        var sprite = Comp<SpriteComponent>(ent);
+
+        var xform = Transform(ent);
+        var targetWorldRot = angle + _xform.GetWorldRotation(relativeXform);
+        var delta = targetWorldRot - _xform.GetWorldRotation(xform);
+        _xform.SetLocalRotationNoLerp(ent, xform.LocalRotation + delta, xform);
+
+        sprite[EffectLayers.Unshaded].AutoAnimated = false;
+        _sprite.LayerSetSprite((ent, sprite), EffectLayers.Unshaded, rsi);
+        _sprite.LayerSetRsiState((ent, sprite), EffectLayers.Unshaded, rsi.RsiState);
+        _sprite.SetScale((ent, sprite), new Vector2(distance, 1f));
+        sprite[EffectLayers.Unshaded].Visible = true;
+
+        var anim = new Animation()
         {
-            if (a.Sprite is not SpriteSpecifier.Rsi rsi)
-                continue;
-
-            var coords = GetCoordinates(a.coordinates);
-
-            if (!TryComp(coords.EntityId, out TransformComponent? relativeXform))
-                continue;
-
-            var ent = Spawn(HitscanProto, coords);
-            var sprite = Comp<SpriteComponent>(ent);
-
-            var xform = Transform(ent);
-            var targetWorldRot = a.angle + _xform.GetWorldRotation(relativeXform);
-            var delta = targetWorldRot - _xform.GetWorldRotation(xform);
-            _xform.SetLocalRotationNoLerp(ent, xform.LocalRotation + delta, xform);
-
-            sprite[EffectLayers.Unshaded].AutoAnimated = false;
-            _sprite.LayerSetSprite((ent, sprite), EffectLayers.Unshaded, rsi);
-            _sprite.LayerSetRsiState((ent, sprite), EffectLayers.Unshaded, rsi.RsiState);
-            _sprite.SetScale((ent, sprite), new Vector2(a.Distance, 1f));
-            sprite[EffectLayers.Unshaded].Visible = true;
-
-            var anim = new Animation()
-            {
-                Length = TimeSpan.FromSeconds(0.48f),
-                AnimationTracks =
+            Length = TimeSpan.FromSeconds(0.48f),
+            AnimationTracks =
                 {
                     new AnimationTrackSpriteFlick()
                     {
@@ -158,10 +181,10 @@ public sealed partial class GunSystem : SharedGunSystem
                         }
                     }
                 }
-            };
+        };
 
-            _animPlayer.Play(ent, anim, "hitscan-effect");
-        }
+        _animPlayer.Play(ent, anim, "hitscan-effect");
+        return;
     }
 
     public override void Update(float frameTime)
