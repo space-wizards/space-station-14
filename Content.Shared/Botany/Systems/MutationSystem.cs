@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Atmos;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
@@ -45,10 +44,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
         return new ResolvedPlantMutation(
             plantOverride?.Name ?? mutation.Name ?? prototype.Name,
             plantOverride?.Description ?? mutation.Description ?? prototype.Description,
-            plantOverride?.Effect ?? mutation.Effect ?? prototype.Effect,
-            plantOverride?.AppliesToProduce ?? mutation.AppliesToProduce ?? prototype.AppliesToProduce,
-            plantOverride?.AppliesToPlant ?? mutation.AppliesToPlant ?? prototype.AppliesToPlant,
-            plantOverride?.Persists ?? mutation.Persists ?? prototype.Persists);
+            plantOverride?.Effect ?? mutation.Effect ?? prototype.Effect);
     }
 
     /// <summary>
@@ -72,12 +68,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
                 triggers++;
                 if (Random(Math.Min(odds, 1.0f)))
                 {
-                    if (mutation.AppliesToPlant)
-                        _entityEffects.TryApplyEffect(ent, mutation.Effect);
-
-                    // Stat adjustments do not persist by being an attached effect, they just change the stat.
-                    if (mutation.Persists && ent.Comp.Mutations.All(m => m.Name != mutation.Name))
-                        ent.Comp.Mutations.Add(mutation);
+                    _entityEffects.TryApplyEffect(ent, mutation.Effect);
                 }
             }
         }
@@ -165,22 +156,6 @@ public sealed partial class PlantMutationSystem : EntitySystem
 
         plant.GrowthStages = newSpecies.GrowthStages;
         DirtyField(plantUid, plant, nameof(PlantComponent.GrowthStages));
-    }
-
-    /// <summary>
-    /// Combines mutations from the pollen and target plants.
-    /// </summary>
-    [PublicAPI]
-    public void CrossMutations(EntityUid pollenPlant, EntProtoId? pollenProtoId, EntityUid targetPlant)
-    {
-        if (!_botany.TryGetPlantComponent<PlantComponent>(pollenPlant, pollenProtoId, out var pollenCore) ||
-            !_plantQuery.TryComp(targetPlant, out var targetCore))
-            return;
-
-        // LINQ Explanation
-        // For the list of mutation effects on both plants, use a 50% chance to pick each one.
-        // Union all of the chosen mutations into one list, and pick ones with a Distinct (unique) name.
-        targetCore.Mutations = targetCore.Mutations.Where(_ => Random(0.5f)).Union(pollenCore.Mutations.Where(_ => Random(0.5f))).DistinctBy(m => m.Name).ToList();
     }
 
     /// <summary>

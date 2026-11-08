@@ -34,22 +34,4 @@ public sealed partial class RandomPlantMutationOverride
     /// </summary>
     [DataField]
     public EntityEffect? Effect;
-
-    /// <summary>
-    /// Overrides the prototype's default value for AppliesToPlant.
-    /// </summary>
-    [DataField]
-    public bool? AppliesToPlant;
-
-    /// <summary>
-    /// Overrides the prototype's default value for AppliesToProduce.
-    /// </summary>
-    [DataField]
-    public bool? AppliesToProduce;
-
-    /// <summary>
-    /// Overrides the prototype's default value for Persists.
-    /// </summary>
-    [DataField]
-    public bool? Persists;
 }

@@ -30,7 +30,7 @@ public sealed partial class PlantChangeTraitsEntityEffectSystem : EntityEffectSy
         switch (args.Effect.Type)
         {
             case PlantChangeTraits.TraitModifyType.Add:
-                AddComp(entity.Owner, traitType);
+                AddComp(entity.Owner, traitType, overwrite: true);
                 break;
             case PlantChangeTraits.TraitModifyType.Remove:
                 RemCompDeferred(entity.Owner, traitType.GetType());

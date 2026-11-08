@@ -12,13 +12,6 @@ namespace Content.Shared.Botany.Components;
 public sealed partial class PlantComponent : Component
 {
     /// <summary>
-    /// The mutation effects that have been applied to this plant.
-    /// Server-only: mutations are applied as effects which are synced separately.
-    /// </summary>
-    [DataField]
-    public List<ResolvedPlantMutation> Mutations = [];
-
-    /// <summary>
     /// Plant-specific overrides used when resolving mutations, indexed by mutation prototype ID.
     /// </summary>
     [DataField]
