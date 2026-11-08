@@ -71,10 +71,10 @@ public sealed partial class CargoSystem
 
     private void OnSkipBountyMessage(EntityUid uid, CargoBountyConsoleComponent component, BountySkipMessage args)
     {
-        if (_station.GetOwningStation(uid) is not { } station || !TryComp<StationCargoBountyDatabaseComponent>(station, out var db))
+        if (_station.GetOwningStation(uid) is not { } station || !TryComp<StationCargoBountyDatabaseComponent>(station, out var bountyDbComp))
             return;
 
-        if (Timing.CurTime < db.NextSkipTime)
+        if (Timing.CurTime < bountyDbComp.NextSkipTime)
             return;
 
         if (args.Actor is not { Valid: true } mob)
@@ -90,7 +90,7 @@ public sealed partial class CargoSystem
         if (!TryRemoveBounty(station, args.BountyId, true, args.Actor))
             return;
 
-        db.NextSkipTime = Timing.CurTime + db.SkipDelay;
+        bountyDbComp.NextSkipTime = Timing.CurTime + bountyDbComp.SkipDelay;
         FillBountyDatabase(station);
         _audio.PlayPvs(component.SkipSound, uid);
     }
@@ -590,11 +590,11 @@ public sealed partial class CargoSystem
         while (query.MoveNext(out var uid, out _, out var ui))
         {
             if (_station.GetOwningStation(uid) is not { } station ||
-                !TryComp<StationCargoBountyDatabaseComponent>(station, out var db))
+                !TryComp<StationCargoBountyDatabaseComponent>(station, out var bountyDbComp))
                 continue;
 
-            var untilNextSkip = db.NextSkipTime - Timing.CurTime;
-            _uiSystem.SetUiState((uid, ui), CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(db.Bounties, db.Statuses, db.History, untilNextSkip));
+            var untilNextSkip = bountyDbComp.NextSkipTime - Timing.CurTime;
+            _uiSystem.SetUiState((uid, ui), CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(bountyDbComp.Bounties, bountyDbComp.Statuses, bountyDbComp.History, untilNextSkip));
         }
     }
 
