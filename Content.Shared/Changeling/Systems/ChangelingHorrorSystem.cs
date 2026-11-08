@@ -246,17 +246,6 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
         RemCompDeferred<ChangelingHorrorItemsComponent>(ent);
     }
 
-    [SubscribeLocalEvent]
-    private void OnItemsShutdown(Entity<ChangelingHorrorItemsComponent> ent, ref ComponentShutdown args)
-    {
-        // pull the items back from lingspace so that valuable things arent lost if the horror form is ashed, for instance
-        var coords = _transform.GetMapCoordinates(ent.Owner);
-        foreach (var item in ent.Comp.LingSpaceItems)
-        {
-            _transform.SetMapCoordinates(item.item, coords);
-        }
-    }
-
     /// <summary>
     /// This fonction should only be executed when the changeling transforms into its horror form
     /// </summary>
