@@ -143,24 +143,25 @@ public sealed partial class CargoSystem
             return;
         }
 
+        var netEnt = GetNetEntity(actor);
         var bounty = bountyDbComp.Bounties[index];
 
         // Click same claimant to unclaim, otherwise replace current claimant.
         SoundSpecifier? sound = null;
-        switch ((bounty.ClaimedBy.FindIndex(n => n == name), bounty.ClaimedBy.Count()))
+        switch ((bounty.CargoBountyClaimants.FindIndex(e => e.Key == netEnt), bounty.CargoBountyClaimants.Count()))
         {
             case (var idx, _) when idx >= 0:
                 sound = ent.Comp.ClaimRemoveSound;
-                bounty.ClaimedBy.RemoveAt(idx);
+                bounty.CargoBountyClaimants.RemoveAt(idx);
                 break;
             case (-1, var count) when count >= bountyDbComp.MaxClaimants:
                 sound = ent.Comp.ClaimAddRemoveSound;
-                bounty.ClaimedBy.RemoveAt(0);
-                bounty.ClaimedBy.Add(name);
+                bounty.CargoBountyClaimants.RemoveAt(0);
+                bounty.CargoBountyClaimants.Add(new(netEnt, name));
                 break;
             case (-1, _):
                 sound = ent.Comp.ClaimAddSound;
-                bounty.ClaimedBy.Add(name);
+                bounty.CargoBountyClaimants.Add(new(netEnt, name));
                 break;
         }
         bountyDbComp.NextClaimTime = Timing.CurTime + bountyDbComp.ClaimDelay;

@@ -66,9 +66,9 @@ public sealed partial class BountyEntry : BoxContainer
         BountyStatusSelector.ToolTip = Loc.GetString("bounty-console-status-tooltip", ("status", bountyStatus));
         BountyStatusSelector.OnItemSelected += args => OnStatusOptionSelected?.Invoke(args.Id);
 
-        string claimers = bounty.ClaimedBy.Count() == 0
+        string claimers = bounty.CargoBountyClaimants.Count() == 0
             ? Loc.GetString("bounty-console-claimed-by-none")
-            : string.Join(", ", bounty.ClaimedBy);
+            : string.Join(", ", bounty.CargoBountyClaimants.Select(e => e.Value));
         ClaimedByLabel.SetMarkup(Loc.GetString("bounty-console-claimed-by-label", ("claimers", claimers)));
         StatusLabel.SetMarkup(Loc.GetString("bounty-console-status-label", ("status", bountyStatus)));
     }

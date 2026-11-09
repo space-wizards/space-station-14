@@ -27,7 +27,7 @@ public readonly partial record struct CargoBountyData
     /// Character names of players who printed labels for this bounty.
     /// </summary>
     [DataField]
-    public List<string> ClaimedBy { get; init; } = new();
+    public List<KeyValuePair<NetEntity, string>> CargoBountyClaimants { get; init; } = new();
 
     /// <summary>
     /// Current status of the bounty on the bounty computer.
