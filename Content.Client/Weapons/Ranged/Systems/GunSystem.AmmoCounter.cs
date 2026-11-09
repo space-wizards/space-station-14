@@ -14,6 +14,7 @@ namespace Content.Client.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
+    [SubscribeLocalEvent]
     private void OnAmmoCounterCollect(Entity<AmmoCounterComponent> ent, ref ItemStatusCollectMessage args)
     {
         RefreshControl(ent);

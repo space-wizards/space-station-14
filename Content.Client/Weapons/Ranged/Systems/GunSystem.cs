@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Numerics;
 using Content.Client.Animations;
 using Content.Client.Clickable;
 using Content.Client.Items;
@@ -6,10 +8,8 @@ using Content.Shared.Camera;
 using Content.Shared.CCVar;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
-using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Physics;
-using Content.Shared.Pinpointer;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
@@ -31,8 +31,6 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using System.Linq;
-using System.Numerics;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
@@ -40,12 +38,15 @@ namespace Content.Client.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem : SharedGunSystem
 {
-    [Dependency] private IEyeManager _eyeManager = default!;
-    [Dependency] private IInputManager _inputManager = default!;
-    [Dependency] private InputSystem _inputSystem = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
     [Dependency] private IOverlayManager _overlayManager = default!;
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IEyeManager _eyeManager = default!;
+    [Dependency] private IInputManager _inputManager = default!;
+
+    [Dependency] private InputSystem _inputSystem = default!;
     [Dependency] private AnimationPlayerSystem _animPlayer = default!;
     [Dependency] private ClickableSystem _clickable = default!;
     [Dependency] private MobStateSystem _mobState = default!;
@@ -55,9 +56,6 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private SpriteTreeSystem _spriteTree = default!;
     [Dependency] private SharedPointLightSystem _pointLight = default!;
-
-    [Dependency] private IEntityManager _entityManager = default!;
-    [Dependency] private IPrototypeManager _protoManager = default!;
 
     public static readonly EntProtoId HitscanProto = "HitscanEffect";
     private GunTargetEntityComparer _comparer = default!;
@@ -96,15 +94,9 @@ public sealed partial class GunSystem : SharedGunSystem
     {
         base.Initialize();
         UpdatesOutsidePrediction = true;
-        SubscribeLocalEvent<AmmoCounterComponent, ItemStatusCollectMessage>(OnAmmoCounterCollect);
         SubscribeAllEvent<MuzzleFlashEvent>(OnMuzzleFlash);
-
-        InitializeMagazineVisuals();
-        InitializeSpentAmmo();
-
         _comparer = new GunTargetEntityComparer();
     }
-
 
     private void OnMuzzleFlash(MuzzleFlashEvent args)
     {
