@@ -285,6 +285,7 @@ public sealed class CargoTest : GameTest
                 var station = SetupStation("StandardNanotrasenStation", coordinates);
                 // Spawn ATS
                 var grid = SetupATS(new("/Maps/Shuttles/trading_outpost.yml"), Pair.TestMap!.MapId, station);
+                var pallets = _sCargo.GetCargoPallets(grid, BuySellType.Buy);
                 // Spawn cargo request console
                 var console = SetupConsole("ComputerCargoOrders", coordinates);
 
@@ -354,7 +355,7 @@ public sealed class CargoTest : GameTest
                     );
 
                     // Verify spawned entities on pallets
-                    var spawnedEntities = _sCargo.GetEntitiesOnCargoPallets(grid.Owner);
+                    var spawnedEntities = _sCargo.GetEntitiesOnCargoPallets(grid.Owner, pallets: pallets);
                     var count = 0;
                     var expectedProtos = new List<EntProtoId> { productProto.Product };
                     // Some products spawn inside containers e.g. silver inside parcel
