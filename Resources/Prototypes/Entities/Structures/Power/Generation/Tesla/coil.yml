@@ -8,8 +8,9 @@
     fixtures:
       fix1:
         shape:
-          !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
+          # Using a circle here makes it a lot easier to pull it all the way from Cargo
+          !type:PhysShapeCircle
+            radius: 0.45
         density: 190
         mask:
         - MachineMask
@@ -116,8 +117,9 @@
     fixtures:
       fix1:
         shape:
-          !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
+          # Using a circle here makes it a lot easier to pull it all the way from Cargo
+          !type:PhysShapeCircle
+            radius: 0.45
         density: 110
         mask:
         - MachineMask
