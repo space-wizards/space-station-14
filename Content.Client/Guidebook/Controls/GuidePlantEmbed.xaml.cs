@@ -162,7 +162,11 @@ public sealed partial class GuidePlantEmbed : PanelContainer, IDocumentTag, ISea
         var butcher = new List<EntProtoId>();
         if (product.TryComp<ToolRefinableComponent>(out var refinable, _factory) && refinable.QualityNeeded == "Slicing")
         {
-            butcher.AddRange(refinable.RefineResult.Select(result => result.PrototypeId!.Value));
+            foreach (var result in refinable.RefineResult)
+            {
+                if (result.PrototypeId is { } id)
+                    butcher.Add(id);
+            }
             if (product.TryComp<EdibleComponent>(out var edible, _factory))
                 butcher.AddRange(edible.Trash);
         }
