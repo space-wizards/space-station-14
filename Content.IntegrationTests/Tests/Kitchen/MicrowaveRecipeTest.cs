@@ -4,6 +4,7 @@ using Content.IntegrationTests.Utility;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Kitchen.EntitySystems;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.FixedPoint;
 using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
 using Robust.Shared.Containers;
@@ -152,6 +153,7 @@ public sealed class MicrowaveRecipeTest : GameTest
     [Description("Tests that a recipe with a reagent ingredient doesn't change mid-cook.")]
     public async Task ReagentDupeTest()
     {
+        // Needs a map for power and to be anchored
         var map = await Pair.CreateTestMap();
 
         var m = await SpawnAtPosition(MicrowavePrototype, map.GridCoords);
@@ -183,7 +185,7 @@ public sealed class MicrowaveRecipeTest : GameTest
         using (Assert.EnterMultipleScope())
         {
             Assert.That(SEntMan.EntityExists(solid), Is.False, "Recipe solid was not consumed.");
-            Assert.That(sol!.Volume.Int(), Is.Zero, "Reagent still remains in the solution.");
+            Assert.That(sol!.Volume, Is.EqualTo(FixedPoint2.Zero), "Reagent still remains in the solution.");
         }
     }
 }
