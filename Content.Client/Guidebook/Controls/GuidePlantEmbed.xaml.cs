@@ -44,7 +44,7 @@ public sealed partial class GuidePlantEmbed : PanelContainer, IDocumentTag, ISea
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
         MouseFilter = MouseFilterMode.Stop;
-        _sawmill = _logManager.GetSawmill("guidebook.reagent");
+        _sawmill = _logManager.GetSawmill("guidebook.plant");
     }
 
     public GuidePlantEmbed(EntityPrototype plant) : this()
