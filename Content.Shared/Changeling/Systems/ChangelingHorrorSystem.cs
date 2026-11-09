@@ -248,6 +248,10 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnItemsShutdown(Entity<ChangelingHorrorItemsComponent> ent, ref ComponentShutdown args)
     {
+        // this is to make tests work properly
+        if (ent.Comp.LingSpaceItems == null)
+            return;
+
         // kill the items
         foreach (var item in ent.Comp.LingSpaceItems)
         {
