@@ -147,8 +147,22 @@ public sealed partial class GunSystem : SharedGunSystem
 
             if (vizComp.TravelFlash != null)
             {
-                var coords = fromCoordinates.Offset(shotAngle.ToVec() * (distance + 0.5f) / 2);
-                SpawnHistscan(coords, shotAngle, vizComp.TravelFlash, distance - 1.5f, vizComp.LightColor);
+                var shotAngleVec = shotAngle.ToVec();
+                var muzzleFlashLength = vizComp.MuzzleFlash != null ? 1.0f : 0.0f;
+                var impactFlashLength = vizComp.ImpactFlash != null ? 0.5f : 0.0f;
+                var actualDistance = distance - muzzleFlashLength - impactFlashLength;
+                var segments = Math.Max(1, (int)MathF.Round(actualDistance));
+                var segmentLength = actualDistance / segments;
+
+                var startCoords = fromCoordinates.Offset(shotAngleVec * muzzleFlashLength);
+                startCoords = startCoords.Offset(shotAngleVec * segmentLength / 2);
+
+                for (var i = 0; i < segments; i++)
+                {
+                    var coords = startCoords;
+                    coords = coords.Offset(shotAngleVec * i * segmentLength);
+                    SpawnHistscan(coords, shotAngle, vizComp.TravelFlash, segmentLength, vizComp.LightColor);
+                }
             }
         }
 
