@@ -266,6 +266,7 @@ public sealed class DamageableTest : GameTest
     ];
 
     [Test, TestCaseSource(nameof(_evenHealCases))]
+    [Description("Runs several test cases for the even healing function.")]
     public async Task TestEvenHeal(DamageSpecifier damaged, DamageSpecifier healed, DamageSpecifier filterHealed)
     {
         var sDamageableEntity = await Spawn(TestDamageableEntityId);
@@ -320,6 +321,7 @@ public sealed class DamageableTest : GameTest
     ];
 
     [Test, TestCaseSource(nameof(_distributedHealCases))]
+    [Description("Runs several test cases for the distributed healing function.")]
     public async Task TestDistributedHeal(DamageSpecifier damaged, DamageSpecifier healed, DamageSpecifier filterHealed)
     {
         var sDamageableEntity = await Spawn(TestDamageableEntityId);

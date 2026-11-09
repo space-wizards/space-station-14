@@ -42,6 +42,7 @@ public sealed class DamageSpecifierTest
     }
 
     [Test]
+    [Description("Confirms the GetPositive() method returns only positive damage values.")]
     public void TestGetPositive()
     {
         DamageSpecifier input = new() { DamageDict = Output4 };
@@ -60,6 +61,7 @@ public sealed class DamageSpecifierTest
     }
 
     [Test]
+    [Description("Confirms the GetNegative() method returns only negative damage values.")]
     public void TestGetNegative()
     {
         DamageSpecifier input = new() { DamageDict = Output4 };
