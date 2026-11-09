@@ -648,7 +648,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Serializable, NetSerializable]
     public sealed class HitscanEvent : EntityEventArgs
     {
-        public string ProtoIdString = string.Empty;
+        public EntProtoId ProtoId;
         public NetCoordinates Coordinates;
         public Angle Angle;
         public float Distance;

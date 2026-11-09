@@ -2,8 +2,6 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Animations;
 using Content.Client.Clickable;
-using Content.Client.Items;
-using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Camera;
 using Content.Shared.CCVar;
 using Content.Shared.CombatMode;
@@ -38,7 +36,6 @@ namespace Content.Client.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem : SharedGunSystem
 {
-    [Dependency] private IEntityManager _entityManager = default!;
     [Dependency] private IPrototypeManager _protoManager = default!;
     [Dependency] private IOverlayManager _overlayManager = default!;
     [Dependency] private IPlayerManager _player = default!;
@@ -56,6 +53,8 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private SpriteTreeSystem _spriteTree = default!;
     [Dependency] private SharedPointLightSystem _pointLight = default!;
+
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
 
     public static readonly EntProtoId HitscanProto = "HitscanEffect";
     private GunTargetEntityComparer _comparer = default!;
@@ -117,12 +116,10 @@ public sealed partial class GunSystem : SharedGunSystem
         // Ideally, there should only be one entity, with one sprite that has multiple layers
         // Or at the very least, have the other entities parented to the same entity to make sure they stick together.
 
-        var en = new EntProtoId(ev.ProtoIdString);
-
-        if (!_protoManager.TryIndex(en, out var entityPrototype))
+        if (!_protoManager.TryIndex(ev.ProtoId, out var entityPrototype))
             return;
 
-        if (!entityPrototype.TryComp<HitscanBasicVisualsComponent>(out var vizComp, _entityManager.ComponentFactory))
+        if (!entityPrototype.TryComp<HitscanBasicVisualsComponent>(out var vizComp, Factory))
             return;
 
         var fromCoordinates = GetCoordinates(ev.Coordinates);
@@ -134,7 +131,7 @@ public sealed partial class GunSystem : SharedGunSystem
             if (vizComp.MuzzleFlash != null)
             {
                 var coords = fromCoordinates.Offset(shotAngle.ToVec().Normalized() / 2);
-                SpawnHistscan(coords, shotAngle, vizComp.MuzzleFlash, 1f, vizComp.LightColor);
+                SpawnHitscan(coords, shotAngle, vizComp.MuzzleFlash, 1f, vizComp.LightColor);
             }
 
             if (vizComp.TravelFlash != null)
@@ -153,7 +150,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 {
                     var coords = startCoords;
                     coords = coords.Offset(shotAngleVec * i * segmentLength);
-                    SpawnHistscan(coords, shotAngle, vizComp.TravelFlash, segmentLength, vizComp.LightColor);
+                    SpawnHitscan(coords, shotAngle, vizComp.TravelFlash, segmentLength, vizComp.LightColor);
                 }
             }
         }
@@ -161,11 +158,11 @@ public sealed partial class GunSystem : SharedGunSystem
         if (vizComp.ImpactFlash != null)
         {
             var coords = fromCoordinates.Offset(shotAngle.ToVec() * distance);
-            SpawnHistscan(coords, shotAngle.FlipPositive(), vizComp.ImpactFlash, 1f, vizComp.LightColor);
+            SpawnHitscan(coords, shotAngle.FlipPositive(), vizComp.ImpactFlash, 1f, vizComp.LightColor);
         }
     }
 
-    private void SpawnHistscan(EntityCoordinates coords, Angle angle, SpriteSpecifier? ss, float distance, Color? color)
+    private void SpawnHitscan(EntityCoordinates coords, Angle angle, SpriteSpecifier? ss, float distance, Color? color)
     {
         if (ss is not SpriteSpecifier.Rsi rsi)
             return;
@@ -174,7 +171,7 @@ public sealed partial class GunSystem : SharedGunSystem
             return;
 
         var ent = SpawnAtPosition(HitscanProto, coords);
-        var sprite = Comp<SpriteComponent>(ent);
+        var sprite = _spriteQuery.Comp(ent);
 
         var xform = Transform(ent);
         var targetWorldRot = angle + _xform.GetWorldRotation(relativeXform);
@@ -210,7 +207,6 @@ public sealed partial class GunSystem : SharedGunSystem
         }
 
         _animPlayer.Play(ent, anim, "hitscan-effect");
-        return;
     }
 
     public override void Update(float frameTime)

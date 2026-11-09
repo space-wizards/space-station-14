@@ -87,7 +87,7 @@ public sealed partial class HitscanBasicRaycastSystem : EntitySystem
     /// <param name="fromCoordinates">Location to start the effect.</param>
     /// <param name="distance">Distance of the hitscan shot.</param>
     /// <param name="shotAngle">Angle of the shot.</param>
-    /// <param name="hitscanUid">The hitscan entity itself.</param>
+    /// <param name="gun">Gun that shot the hitscan.</param>
     private void FireEffects(EntityCoordinates fromCoordinates, float distance, Angle shotAngle, EntityUid gun)
     {
         if (distance == 0 || !_batteryAmmoQuery.TryComp(gun, out var batteryAmmoComp))
@@ -116,7 +116,7 @@ public sealed partial class HitscanBasicRaycastSystem : EntitySystem
 
         RaiseNetworkEvent(new SharedGunSystem.HitscanEvent
         {
-            ProtoIdString = batteryAmmoComp.Prototype,
+            ProtoId = batteryAmmoComp.Prototype,
             Coordinates = netCoords,
             Angle = shotAngle,
             Distance = distance
