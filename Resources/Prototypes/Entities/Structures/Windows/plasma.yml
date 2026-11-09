@@ -25,10 +25,30 @@
             min: 1
             max: 2
   - type: IconSmooth
+    key: windows-plasma
     states:
-    - !type:CornerSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
-      base: pwindow
+    - !type:CardinalCornerSpriteSmoothing
+      mask: [ windows-plasma ]
+      altMask:
+      - windows
+      - windows-reinf
+      - windows-tinted
+      - windows-plasma-reinf
+      - windows-uranium
+      - windows-uranium-reinf
+      - windows-exo
+      - windows-shuttle
+      - windows-plastitanium
+      - windows-regal
+      - walls-exo
+      - walls-shuttle
+      - walls-plastitanium
+      - walls-material
+      - walls-marble
+      - walls
+      - grilles
+      - doors
+      base: window
   - type: Construction
     graph: Window
     node: plasmaWindow
@@ -137,7 +157,12 @@
   - type: IconSmooth
     states:
     - !type:DiagonalSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
+      mask:
+      - walls
+      - windows
+      - grilles
+      - marble
+      - doors
       base: state
   - type: Icon
     sprite: Structures/Windows/window-diagonal-plasma.rsi

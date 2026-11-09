@@ -33,15 +33,18 @@ public sealed partial class ReplayMainScreen : State
     [Dependency] private IClientRobustSerializer _serializer = default!;
     [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
     [Dependency] private ContentReplayPlaybackManager _replayMan = default!;
+    [Dependency] private ILogManager _logManager = default!;
 
     private ReplayMainMenuControl _mainMenuControl = default!;
     private SelectReplayWindow? _selectWindow;
     private ResPath _directory;
     private List<(string Name, ResPath Path)> _replays = new();
     private ResPath? _selected;
+    private ISawmill _sawmill = default!;
 
     protected override void Startup()
     {
+        _sawmill = _logManager.GetSawmill("replay_menu");
         _mainMenuControl = new(_resourceCache);
         _userInterfaceManager.StateRoot.AddChild(_mainMenuControl);
 
@@ -263,7 +266,7 @@ public sealed partial class ReplayMainScreen : State
         }
         catch (Exception ex)
         {
-            Logger.Error($"Failed to load replay info. Exception: {ex}");
+            _sawmill.Error($"Failed to load replay info. Exception: {ex}");
             SelectReplay(null);
             return;
         }

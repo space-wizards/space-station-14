@@ -318,7 +318,7 @@
   parent: [SolutionDrink, Clothing]
   id: WaterDropletHat
   name: water droplet
-  description: Makes 8-eyed friends 8 times more adorable!
+  description: Makes eight-eyed friends eight times more adorable!
   components:
   - type: Sprite
     sprite: Clothing/Head/Misc/waterdroplet.rsi
@@ -373,6 +373,21 @@
       - WhitelistChameleon
   - type: StaticPrice
     price: 1
+
+- type: entity
+  parent: WaterDropletHat
+  id: HolywaterDropletHat
+  name: holy water droplet
+  description: Makes eight-eyed friends eight times more divine!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - holy
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Holywater
+        Quantity: 2
 
 - type: entity
   parent: ClothingHeadBase

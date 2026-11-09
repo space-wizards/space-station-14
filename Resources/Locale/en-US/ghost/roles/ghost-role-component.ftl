@@ -220,7 +220,7 @@ ghost-role-information-space-ninja-name = Space Ninja
 ghost-role-information-space-ninja-description = Use stealth and deception to sabotage the station.
 
 ghost-role-information-paradox-clone-name = Paradox Clone
-ghost-role-information-paradox-clone-description = A freak space-time anomaly has teleported you into another reality! Now you have to find your counterpart and kill and replace them.
+ghost-role-information-paradox-clone-description = A freak space-time anomaly has thrown you into another reality! Kill and replace this reality's version of you.
 
 ghost-role-information-syndicate-reinforcement-name = Syndicate Agent
 ghost-role-information-syndicate-reinforcement-description = Someone needs reinforcements. You, the first person the syndicate could find, will help them.
@@ -348,7 +348,7 @@ ghost-role-information-xenoborg-name = Xenoborg
 ghost-role-information-xenoborg-desc = A strange cyborg made to replicate itself and take over the station by turning any sentient being into xenoborgs.
 
 ghost-role-information-wizard-name = Wizard
-ghost-role-information-wizard-desc = YER A WIZARD! Show the station what your magic is made of.
+ghost-role-information-wizard-desc = You're a member of the Space Wizards Federation, sent to make the station tremble before your arcane might.
 
 ghost-role-information-emotional-support-scurret-name = Emotional Support Scurret
 ghost-role-information-emotional-support-scurret-description = Support the crew, be adorable, say "wa" a lot.

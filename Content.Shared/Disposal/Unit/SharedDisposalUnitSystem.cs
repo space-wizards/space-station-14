@@ -55,7 +55,7 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SharedTransformSystem _xform = default!;
     [Dependency] private INetManager _net = default!;
-    [Dependency] private SharedPowerStateSystem _powerState = default!;
+    [Dependency] private PowerStateSystem _powerState = default!;
 
     public override void Initialize()
     {
