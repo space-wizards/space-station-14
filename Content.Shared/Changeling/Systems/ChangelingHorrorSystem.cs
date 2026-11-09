@@ -246,12 +246,12 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnItemsShutdown(Entity<ChangelingHorrorItemsComponent> ent, ref ComponentRemove args)
+    private void OnItemsShutdown(Entity<ChangelingHorrorItemsComponent> ent, ref ComponentShutdown args)
     {
         // kill the items
         foreach (var item in ent.Comp.LingSpaceItems)
         {
-            Del(item.item);
+            QueueDel(item.item);
         }
     }
 
