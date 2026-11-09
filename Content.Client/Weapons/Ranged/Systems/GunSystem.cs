@@ -33,7 +33,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Numerics;
-using System.Security.Cryptography;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
@@ -55,11 +54,11 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private SharedTransformSystem _xform = default!;
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private SpriteTreeSystem _spriteTree = default!;
+    [Dependency] private SharedPointLightSystem _pointLight = default!;
 
     [Dependency] private IEntityManager _entityManager = default!;
     [Dependency] private IPrototypeManager _protoManager = default!;
 
-    [Dependency] private EntityQuery<HitscanBasicVisualsComponent> _visualsQuery = default!;
     public static readonly EntProtoId HitscanProto = "HitscanEffect";
     private GunTargetEntityComparer _comparer = default!;
 
@@ -100,9 +99,6 @@ public sealed partial class GunSystem : SharedGunSystem
         SubscribeLocalEvent<AmmoCounterComponent, ItemStatusCollectMessage>(OnAmmoCounterCollect);
         SubscribeAllEvent<MuzzleFlashEvent>(OnMuzzleFlash);
 
-        // Plays animated effects on the client.
-        SubscribeNetworkEvent<HitscanEvent>(OnHitscan);
-
         InitializeMagazineVisuals();
         InitializeSpentAmmo();
 
@@ -117,6 +113,7 @@ public sealed partial class GunSystem : SharedGunSystem
         CreateEffect(gunUid, args, gunUid);
     }
 
+    [SubscribeNetworkEvent]
     private void OnHitscan(HitscanEvent ev)
     {
         // ALL I WANT IS AN ANIMATED EFFECT
@@ -145,24 +142,24 @@ public sealed partial class GunSystem : SharedGunSystem
             if (vizComp.MuzzleFlash != null)
             {
                 var coords = fromCoordinates.Offset(shotAngle.ToVec().Normalized() / 2);
-                SpawnHistscan(coords, shotAngle, vizComp.MuzzleFlash, 1f);
+                SpawnHistscan(coords, shotAngle, vizComp.MuzzleFlash, 1f, vizComp.LightColor);
             }
 
             if (vizComp.TravelFlash != null)
             {
                 var coords = fromCoordinates.Offset(shotAngle.ToVec() * (distance + 0.5f) / 2);
-                SpawnHistscan(coords, shotAngle, vizComp.TravelFlash, distance - 1.5f);
+                SpawnHistscan(coords, shotAngle, vizComp.TravelFlash, distance - 1.5f, vizComp.LightColor);
             }
         }
 
         if (vizComp.ImpactFlash != null)
         {
             var coords = fromCoordinates.Offset(shotAngle.ToVec() * distance);
-            SpawnHistscan(coords, shotAngle.FlipPositive(), vizComp.ImpactFlash, 1f);
+            SpawnHistscan(coords, shotAngle.FlipPositive(), vizComp.ImpactFlash, 1f, vizComp.LightColor);
         }
     }
 
-    private void SpawnHistscan(EntityCoordinates coords, Angle angle, SpriteSpecifier? ss, float distance)
+    private void SpawnHistscan(EntityCoordinates coords, Angle angle, SpriteSpecifier? ss, float distance, Color? color)
     {
         if (ss is not SpriteSpecifier.Rsi rsi)
             return;
@@ -199,6 +196,12 @@ public sealed partial class GunSystem : SharedGunSystem
                     }
                 }
         };
+
+        if (color != null)
+        {
+            var targetComp = EnsureComp<PointLightComponent>(ent);
+            _pointLight.SetColor(ent, color.Value, targetComp);
+        }
 
         _animPlayer.Play(ent, anim, "hitscan-effect");
         return;
