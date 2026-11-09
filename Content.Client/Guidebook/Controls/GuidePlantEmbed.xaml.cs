@@ -145,7 +145,7 @@ public sealed partial class GuidePlantEmbed : PanelContainer, IDocumentTag, ISea
         return embed;
     }
 
-    private GridContainer CreateProductRow(EntityPrototype plant, EntProtoId productId)
+    private BoxContainer CreateProductRow(EntityPrototype plant, EntProtoId productId)
     {
         var product = _prototype.Index(productId);
         IEnumerable<ProtoId<ReagentPrototype>> juice = [];
@@ -167,32 +167,33 @@ public sealed partial class GuidePlantEmbed : PanelContainer, IDocumentTag, ISea
                 butcher.AddRange(edible.Trash);
         }
 
-        var canJuice = juice.Any();
-        var canGrind = grind.Any();
-        var canButcher = butcher.Any();
-        var row = new GridContainer
+        var row = new BoxContainer
         {
-            Columns = 1 + (canJuice ? 1 : 0) + (canGrind ? 1 : 0) + (canButcher ? 1 : 0),
-            HSeparationOverride = 10,
-            VSeparationOverride = 8,
+            Orientation = BoxContainer.LayoutOrientation.Horizontal,
+            SeparationOverride = 10,
             HorizontalExpand = true,
         };
 
-        row.AddChild(new Label { Text = Loc.GetString("guidebook-plant-produce"), HorizontalAlignment = HAlignment.Center });
-        if (canButcher)
-            row.AddChild(new Label { Text = Loc.GetString("guidebook-plant-butchering"), HorizontalAlignment = HAlignment.Center });
-        if (canGrind)
-            row.AddChild(new Label { Text = Loc.GetString("guidebook-plant-grinding"), HorizontalAlignment = HAlignment.Center });
-        if (canJuice)
-            row.AddChild(new Label { Text = Loc.GetString("guidebook-plant-juicing"), HorizontalAlignment = HAlignment.Center });
+        void AddColumn(string heading, Control content)
+        {
+            var column = new BoxContainer
+            {
+                Orientation = BoxContainer.LayoutOrientation.Vertical,
+                SeparationOverride = 8,
+                HorizontalExpand = true,
+            };
+            column.AddChild(new Label { Text = Loc.GetString(heading), HorizontalAlignment = HAlignment.Center });
+            column.AddChild(content);
+            row.AddChild(column);
+        }
 
-        row.AddChild(CreateProduct(product));
-        if (canButcher)
-            row.AddChild(CreateButchering(butcher));
-        if (canGrind)
-            row.AddChild(CreateReagents(grind));
-        if (canJuice)
-            row.AddChild(CreateReagents(juice));
+        AddColumn("guidebook-plant-produce", CreateProduct(product));
+        if (butcher.Any())
+            AddColumn("guidebook-plant-butchering", CreateButchering(butcher));
+        if (grind.Any())
+            AddColumn("guidebook-plant-grinding", CreateReagents(grind));
+        if (juice.Any())
+            AddColumn("guidebook-plant-juicing", CreateReagents(juice));
 
         return row;
     }
