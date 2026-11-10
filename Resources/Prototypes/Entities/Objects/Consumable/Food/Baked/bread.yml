@@ -921,6 +921,17 @@
     refineResult:
     - id: FoodBreadSausageSlice
       amount: 5
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 400
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodBreadSausageSlice:
+            min: 3
+            max: 5
   - type: Solution
     solution:
       reagents:

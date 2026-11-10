@@ -1053,6 +1053,21 @@
   - type: FlavorProfile
     flavors:
     - sweet
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodCakeBirthdaySlice
+      amount: 5
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 400
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodCakeBirthdaySlice:
+            min: 3
+            max: 5
   - type: InjectableSolution
     solution: food
   - type: RefillableSolution
