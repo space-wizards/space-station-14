@@ -373,7 +373,14 @@ public sealed class CargoTest : GameTest
                     foreach (var entity in spawnedEntities)
                     {
                         // Get the prototype of the entity on the cargo pad
-                        var spawnedPrototype = (EntProtoId)SComp<MetaDataComponent>(entity).EntityPrototype;
+                        if (!STryComp<MetaDataComponent>(entity, out var meta))
+                        {
+                            SDeleteNow(entity);
+                            Assert.Fail($"[{proto}] {spawnedEntities.Count()} Missing metadata comp");
+                            continue;
+                        }
+
+                        var spawnedPrototype = (EntProtoId)meta.EntityPrototype;
 
                         // Receipt paper may spawn separately
                         if (spawnedPrototype == orderDatabase.PrinterOutput)
