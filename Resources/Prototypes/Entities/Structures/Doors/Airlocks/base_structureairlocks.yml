@@ -144,10 +144,9 @@
     priority: 1
   - type: Tag
     tags:
-    - Airlock
-    # This tag is used to navigate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
-    - DoorRemoteWhitelist
-    # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door
+    - Airlock # This tag is used to navigate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+    - DoorRemoteWhitelist # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door
+    - ForceNoFixRotations # Doors are now directional after Respiting, remove this if doors are not directional, use Align command to fix rotation of doors
   - type: BlockWeather
   - type: GuideHelp
     guides:

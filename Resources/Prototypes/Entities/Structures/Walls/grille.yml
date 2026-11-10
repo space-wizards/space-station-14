@@ -168,6 +168,9 @@
   - type: Construction
     graph: GrilleDiagonal
     node: grilleDiagonal
+  - type: Tag
+    tags:
+    - Diagonal
 
 ### Broken state
 - type: entity
