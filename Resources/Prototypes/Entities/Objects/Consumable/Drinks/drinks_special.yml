@@ -214,19 +214,13 @@
 
 - type: entity
   abstract: true
-  parent: [DrinkBaseMaterialGlass, DrinkBase]
+  parent: [DrinkBaseMaterialGlass, DrinkBase, SolutionTiny, DrinkVisualsFillOverlay]
   id: DrinkShakeBase
   description: ''
   components:
-  - type: Solution
-    solution:
-      maxVol: 30
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 10
-  - type: SolutionContainerVisuals
-    maxFillLevels: 3
-    inHandsFillBaseName: null
   - type: ExaminableSolution
     solution: drink
   - type: FitsInDispenser
@@ -254,6 +248,9 @@
       reagents:
       - ReagentId: ShakeBlue
         Quantity: 30
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    inHandsFillBaseName: null
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-blue.rsi
 
@@ -275,6 +272,9 @@
       reagents:
       - ReagentId: ShakeMeat
         Quantity: 30
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    inHandsFillBaseName: null
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-meat.rsi
 
@@ -288,6 +288,9 @@
       reagents:
       - ReagentId: ShakeRobo
         Quantity: 30
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    inHandsFillBaseName: null
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-robo.rsi
 
@@ -301,5 +304,8 @@
       reagents:
       - ReagentId: ShakeWhite
         Quantity: 30
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    inHandsFillBaseName: null
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-white.rsi
