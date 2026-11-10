@@ -107,7 +107,7 @@ reagent-name-shakemeat = shakemeat
 reagent-desc-shakemeat = A milkshake made of blended bits of a once-living thing
 
 reagent-name-shakerobo = shakerobo
-reagent-desc-shakerobo = A robot has been ground into a fine dust and drowned in milk, sugar, and cream
+reagent-desc-shakerobo = A robot has been ground into a fine dust and drowned in milk, sugar, and cream.
 
 reagent-name-shakewhite = shakewhite
 reagent-desc-shakewhite = This shake is white, not vanilla.
