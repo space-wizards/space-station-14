@@ -170,21 +170,21 @@
 
 - type: entity
   parent: WindoorSecurityLocked
-  id: WindoorSecurityLawyerLocked
-  suffix: Security-Lawyer, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsSecurityLawyer ]
-
-- type: entity
-  parent: WindoorSecurityLocked
   id: WindoorDetectiveLocked
   suffix: Detective, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsDetective ]
+
+- type: entity
+  parent: WindoorSecurityLocked
+  id: WindoorSecurityLawyerLocked
+  suffix: Security-Lawyer, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSecurityLawyer ]
 
 # Service
 - type: entity
