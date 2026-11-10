@@ -104,7 +104,7 @@ reagent-name-shakeblue = shakeblue
 reagent-desc-shakeblue = A milkshake only.... only it's blue....
 
 reagent-name-shakemeat = shakemeat
-reagent-desc-shakemeat = A milkshake made of blended bits of a once-living thing
+reagent-desc-shakemeat = A milkshake made of blended bits of a once-living thing.
 
 reagent-name-shakerobo = shakerobo
 reagent-desc-shakerobo = A robot has been ground into a fine dust and drowned in milk, sugar, and cream.
