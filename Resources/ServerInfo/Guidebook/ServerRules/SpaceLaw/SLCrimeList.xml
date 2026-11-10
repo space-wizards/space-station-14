@@ -1,6 +1,6 @@
 <Document>
   # Space Law: Crime Listing
-  Crime codes are colored by linked crime groups, which are classifications of crimes that are similar in nature. These classifications are useful for differentiating violent criminals from anti-authoritarian ones for example.
+  Crime codes are colored by linked crime groups, which are classifications of crimes that are similar in nature. These classifications are useful for differentiating violent criminals from anti-authoritarian ones, for example.
 
   ## Quick Crime Guide
   <Table Columns="6">
@@ -273,7 +273,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Petty theft covers the owning or possession of items that were not lawfully or consentually given to the holder.
+        Petty theft covers the possession of items that were not lawfully or consensually given to the holder.
         This may include departmental contraband if the contraband was not approved for the holder.
         Items covered by petty theft are usually easily replaceable, low-value, or low-danger.
       </Box>
@@ -336,7 +336,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        This doesn’t include legitimate and authorized animal testing and usually doesn't extend to vermin such as mice, animals normally used in the process of food production, or creatures
+        This doesn't include legitimate and authorized animal testing and usually doesn't extend to vermin such as mice, animals normally used in the process of food production, or creatures
         that could pose a threat to the station.
       </Box>
     </ColorBox>
@@ -425,7 +425,7 @@
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         The search or seizure must be legal, either through a valid warrant, evidence, or alert level.
-        The perpetrator must have made an active attempt to flee, resist restraint, or refuse to hand over contraband if applicable.
+        The perpetrator must have made an active attempt to flee, resist restraint, or, if applicable, refuse to hand over contraband.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -445,8 +445,8 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        The difference between theft and grand theft is based on how crucial the stolen item is, this mostly is
-        used for the theft of command staff items, things like door remotes, hardsuits, jetpacks, and unreplaceable
+        The difference between theft and grand theft is based on how crucial the stolen item is; this is mostly
+        used for the theft of command staff items, things like door remotes, hardsuits, jetpacks, and irreplaceable
         machine parts. Additionally, stealing anything from the armory is grand theft, including seized contraband.
       </Box>
     </ColorBox>
@@ -467,7 +467,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Includes destruction of job equipment, such as hydro trays, booze dispensers, and chemical dispensers. Step up from
+        Includes destruction of job equipment, such as hydro trays, booze dispensers, and chemical dispensers. It is a step up from
         vandalism but a step down from critical property destruction.
       </Box>
     </ColorBox>
@@ -488,7 +488,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        This covers places like telecomms, head offices, security zones, command areas, the vault, and the armory.
+        This covers places like telecommunications, head offices, security zones, command areas, the vault, and the armory.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -524,7 +524,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        A conscious, reckless disregard for the safety or  of others.
+        A conscious, reckless disregard for the safety or well-being of others.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -543,7 +543,7 @@
 
   ## Major Crimes
   - The maximum sentence for a major crime is 10 minutes.
-  - It is recommended not to use maximum sentences for those being compliant.
+  - It is recommended not to use maximum sentences for those who are compliant.
   <Table Columns="4">
     <ColorBox>
       <Box>
@@ -638,7 +638,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Leaders of a riot can be charged with all crimes that happen under their lead.
+        Leaders of a riot can be charged with all crimes that happen under their leadership.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -739,7 +739,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To incidentally kill a crewmember being without intent.
+        To incidentally kill a crewmember without intent.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -756,7 +756,7 @@
   </Table>
 
   ## Capital Crimes
-  - Capital crimes should usually lead to a death sentence or shift lasting detainment.
+  - Capital crimes should usually lead to a death sentence or shift-lasting detainment.
   <Table Columns="4">
     <ColorBox>
       <Box>
@@ -785,12 +785,12 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To break someone sentenced to Permanent Confinement out of a cell or custody with the intention of escaping.
+        To break someone sentenced to permanent confinement out of a cell or custody with the intention of escaping.
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Includes breaking out other people sentenced to Permanent Confinement.
+        Includes breaking out other people sentenced to permanent confinement.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -810,7 +810,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Summed up, extreme sabotage of station systems or setting off self-destruction systems. This includes any means causing the 
+        Summed up, extreme sabotage of station systems or setting off self-destruction systems. This includes any means that cause the 
         entire station to become uninhabitable, releasing an active singularity, station-wide atmospherics sabotage, and destruction of the station AI all fall into this category.
       </Box>
     </ColorBox>

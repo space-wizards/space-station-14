@@ -54,7 +54,7 @@ public sealed partial class SingularityComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public SoundSpecifier? AmbientSound = new SoundPathSpecifier(
         "/Audio/Effects/singularity_form.ogg",
-        AudioParams.Default.WithVolume(5).WithLoop(true).WithMaxDistance(20f)
+        AudioParams.Default.AddVolume(5).WithLoop(true).WithMaxDistance(20f)
     );
 
     /// <summary>

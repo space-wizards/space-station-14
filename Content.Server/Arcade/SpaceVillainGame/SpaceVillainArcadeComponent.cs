@@ -9,11 +9,11 @@ namespace Content.Server.Arcade.SpaceVillain;
 public sealed partial class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent
 {
     /// <summary>
-    /// Unused flag that can be hacked via wires.
-    /// Name suggests that it was intended to either make the health/mana values underflow while playing the game or turn the arcade machine into an infinite prize fountain.
+    /// Flag that can be hacked via wires.
+    /// If true, makes the game skip checking game end conditions, and sets Uncapped to both fighters when a new game is started.
     /// </summary>
     [ViewVariables]
-    public bool OverflowFlag;
+    public bool UncappedFlag;
 
     /// <summary>
     /// The current session of the SpaceVillain game for this arcade machine.

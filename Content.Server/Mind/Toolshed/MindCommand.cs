@@ -1,4 +1,4 @@
-﻿using Content.Shared.Mind;
+using Content.Shared.Mind;
 using Robust.Shared.Player;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Errors;

@@ -4,6 +4,9 @@
   antagonist: true
   objective: roles-antag-paradox-clone-objective
   setPreference: false
+  tags:
+  - OffStation
+  - Midround
 
 - type: antagSpecifier
   parent: RestrictedAntag

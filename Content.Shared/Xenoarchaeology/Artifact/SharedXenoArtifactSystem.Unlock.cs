@@ -65,7 +65,7 @@ public abstract partial class SharedXenoArtifactSystem
     /// </summary>
     public void FinishUnlockingState(Entity<XenoArtifactUnlockingComponent, XenoArtifactComponent> ent)
     {
-        string unlockAttemptResultMsg;
+        string? unlockAttemptResultMsg;
         XenoArtifactComponent artifactComponent = ent;
         XenoArtifactUnlockingComponent unlockingComponent = ent;
 
@@ -74,7 +74,7 @@ public abstract partial class SharedXenoArtifactSystem
         {
             SetNodeUnlocked((ent, artifactComponent), node.Value);
             ActivateNode((ent, ent), (node.Value, node.Value), null, null, Transform(ent).Coordinates, false);
-            unlockAttemptResultMsg = "artifact-unlock-state-end-success";
+            unlockAttemptResultMsg = artifactComponent.UnlockSuccessMsg;
 
             // as an experiment - unlocking node doesn't activate it, activation is left for player to decide.
             // var activated = ActivateNode((ent, artifactComponent), node.Value, null, null, Transform(ent).Coordinates, false);
@@ -83,13 +83,15 @@ public abstract partial class SharedXenoArtifactSystem
         }
         else
         {
-            unlockAttemptResultMsg = "artifact-unlock-state-end-failure";
+            unlockAttemptResultMsg = artifactComponent.UnlockFailureMsg;
             soundEffect = unlockingComponent.UnlockActivationFailedSound;
         }
 
         if (_net.IsServer)
         {
-            _popup.PopupEntity(Loc.GetString(unlockAttemptResultMsg), ent);
+            if (unlockAttemptResultMsg != null)
+                _popup.PopupEntity(Loc.GetString(unlockAttemptResultMsg), ent);
+
             _audio.PlayPvs(soundEffect, ent.Owner);
         }
 

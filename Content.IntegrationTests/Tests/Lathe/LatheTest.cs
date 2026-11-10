@@ -3,7 +3,6 @@ using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
-using Content.Shared.Prototypes;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
@@ -35,13 +34,13 @@ public sealed class LatheTest : GameTest
             var latheProtos = protoMan.EnumeratePrototypes<EntityPrototype>()
                 .Where(p => !p.Abstract)
                 .Where(p => !pair.IsTestPrototype(p))
-                .Where(p => p.HasComponent<LatheComponent>());
+                .Where(p => p.HasComp<LatheComponent>(compFactory));
 
             // Find every EntityPrototype that can be inserted into a MaterialStorage
             var materialEntityProtos = protoMan.EnumeratePrototypes<EntityPrototype>()
                 .Where(p => !p.Abstract)
                 .Where(p => !pair.IsTestPrototype(p))
-                .Where(p => p.HasComponent<PhysicalCompositionComponent>());
+                .Where(p => p.HasComp<PhysicalCompositionComponent>(compFactory));
 
             // Spawn all of the above material EntityPrototypes - we need actual entities to do whitelist checks
             var materialEntities = new List<EntityUid>(materialEntityProtos.Count());
@@ -55,10 +54,10 @@ public sealed class LatheTest : GameTest
                 // Check each lathe individually
                 foreach (var latheProto in latheProtos)
                 {
-                    if (!latheProto.TryGetComponent<LatheComponent>(out var latheComp, compFactory))
+                    if (!latheProto.TryComp<LatheComponent>(out var latheComp, compFactory))
                         continue;
 
-                    if (!latheProto.TryGetComponent<MaterialStorageComponent>(out var storageComp, compFactory))
+                    if (!latheProto.TryComp<MaterialStorageComponent>(out var storageComp, compFactory))
                         continue;
 
                     // Test which material-containing entities are accepted by this lathe
@@ -80,7 +79,7 @@ public sealed class LatheTest : GameTest
                     var recipes = new HashSet<ProtoId<LatheRecipePrototype>>();
                     latheSystem.AddRecipesFromPacks(recipes, latheComp.StaticPacks);
                     latheSystem.AddRecipesFromPacks(recipes, latheComp.DynamicPacks);
-                    if (latheProto.TryGetComponent<EmagLatheRecipesComponent>(out var emagRecipesComp, compFactory))
+                    if (latheProto.TryComp<EmagLatheRecipesComponent>(out var emagRecipesComp, compFactory))
                     {
                         latheSystem.AddRecipesFromPacks(recipes, emagRecipesComp.EmagStaticPacks);
                         latheSystem.AddRecipesFromPacks(recipes, emagRecipesComp.EmagDynamicPacks);

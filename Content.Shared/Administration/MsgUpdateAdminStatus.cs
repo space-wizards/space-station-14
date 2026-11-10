@@ -1,4 +1,4 @@
-﻿using Lidgren.Network;
+using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
@@ -15,6 +15,7 @@ namespace Content.Shared.Administration
         {
             var count = buffer.ReadVariableInt32();
 
+            buffer.AssertAtLeastSize(count * NetMessageExt.MinSizeOfString);
             AvailableCommands = new string[count];
 
             for (var i = 0; i < count; i++)

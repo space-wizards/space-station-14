@@ -41,7 +41,8 @@ public sealed class EdgeClobbering : InteractionTest
         var sTarget = SEntMan.GetEntity(Target!.Value);
 
         await InteractUsing(Screw, false);
-        SEntMan.EventBus.RaiseLocalEvent(sTarget, new OnTemperatureChangeEvent(0f, 0f, 0f));
+        var ev = new TemperatureChangedEvent(0f, 0f);
+        SEntMan.EventBus.RaiseLocalEvent(sTarget, ref ev);
         await AwaitDoAfters();
 
         Assert.That(SEntMan.GetComponent<ConstructionComponent>(sTarget).Node, Is.EqualTo("C"));

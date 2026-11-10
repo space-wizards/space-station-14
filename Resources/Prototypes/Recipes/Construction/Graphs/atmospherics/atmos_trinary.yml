@@ -1,0 +1,125 @@
+- type: constructionGraph
+  id: !type:CreateVariants
+    values: [ GasTrinary, GasTrinaryAlt1, GasTrinaryAlt2 ]
+  start: start
+  graph:
+  - node: start
+    edges:
+    # Filter
+    - to: filter
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: filterflipped
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    # Mixer
+    - to: mixer
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: mixerflipped
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: pneumaticvalve
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+  # Filter
+  - node: filter
+    entity: !type:CreateVariants
+      values: [ GasFilter, GasFilterAlt1, GasFilterAlt2 ]
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: filterflipped
+    entity: !type:CreateVariants
+      values: [ GasFilterFlipped, GasFilterFlippedAlt1, GasFilterFlippedAlt2 ]
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  # Mixer
+  - node: mixer
+    entity: !type:CreateVariants
+      values: [ GasMixer, GasMixerAlt1, GasMixerAlt2 ]
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: mixerflipped
+    entity: !type:CreateVariants
+      values: [ GasMixerFlipped, GasMixerFlippedAlt1, GasMixerFlippedAlt2 ]
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: pneumaticvalve
+    entity: !type:CreateVariants
+      values: [ PressureControlledValve, PressureControlledValveAlt1, PressureControlledValveAlt2 ]
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1

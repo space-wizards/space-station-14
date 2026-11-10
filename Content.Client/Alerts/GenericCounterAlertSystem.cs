@@ -21,8 +21,8 @@ public sealed partial class GenericCounterAlertSystem : EntitySystem
     private void OnUpdateAlertSprite(Entity<GenericCounterAlertComponent> ent, ref UpdateAlertSpriteEvent args)
     {
         var sprite = args.SpriteViewEnt.Comp;
-
-        var ev = new GetGenericAlertCounterAmountEvent(args.Alert);
+        
+        var ev = new GetGenericAlertCounterAmountEvent(args.Alert, args.SpriteViewEnt);
         RaiseLocalEvent(args.ViewerEnt, ref ev);
 
         if (!ev.Handled)

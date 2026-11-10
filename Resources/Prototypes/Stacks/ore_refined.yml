@@ -11,7 +11,7 @@
   parent: BaseSmallStack
   id: Bananium
   name: stack-bananium
-  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: bananium }
+  icon: { sprite: /Textures/Objects/Materials/bananium.rsi, state: bananium-1 }
   spawn: MaterialBananium1
 
 # Ingots

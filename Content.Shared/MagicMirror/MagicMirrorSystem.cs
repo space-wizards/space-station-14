@@ -68,7 +68,7 @@ public sealed partial class MagicMirrorSystem : EntitySystem
 
         if (ent.Comp.DoAfter.HasValue)
         {
-            _doAfter.Cancel(target, ent.Comp.DoAfter.Value);
+            _doAfter.Cancel(args.Actor, ent.Comp.DoAfter.Value);
             ent.Comp.DoAfter = null;
         }
 

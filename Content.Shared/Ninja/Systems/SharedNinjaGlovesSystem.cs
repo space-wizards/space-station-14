@@ -93,7 +93,7 @@ public abstract partial class SharedNinjaGlovesSystem : EntitySystem
             return;
 
         var message = Loc.GetString(args.Activated ? "ninja-gloves-on" : "ninja-gloves-off");
-        _popup.PopupClient(message, user, user);
+        _popup.PopupEntity(message, user, user);
 
         if (args.Activated && _ninja.NinjaQuery.TryComp(user, out var ninja))
             EnableGloves(ent, (user, ninja));

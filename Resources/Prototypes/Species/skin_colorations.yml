@@ -1,3 +1,11 @@
+# PARAMETER EXPLANATIONS:
+
+# realisticColors: If true, will randomly generate realistic hair and eye colors.
+#                  Will also crush randomly generated colors down to the skin's luminosity
+#                  so markings don't appear too bright on darker skin.
+# squashEyeHairColors: If true, will also squash hair and eye colors to the coloration strategy.
+#                      By default, only skin colors are affected!
+
 - type: skinColoration
   id: Hues
   strategy: !type:ClampedHsvColoration
@@ -8,6 +16,7 @@
   strategy: !type:ClampedHslColoration
     saturation: [0, 0.1]
     lightness: [0.85, 1]
+  squashEyeHairColors: true
 
 - type: skinColoration
   id: VoxFeathers
@@ -32,10 +41,11 @@
 - type: skinColoration
   id: HumanToned
   strategy: !type:HumanTonedSkinColoration {}
+  realisticColors: true
 
 - type: skinColoration
   id: VulpkaninColors
-  strategy: !type:HueNodeClampedHsvColoration
+  strategy: &VulpColorClamp !type:HueNodeClampedHsvColoration
     nodes:
     - hue: 0 # From red to orange slowly increase saturation. (0.75 -> 0.9)
       saturation: [ 0, 0.75 ]
@@ -55,3 +65,13 @@
     - hue: 1 # Red
       saturation: [ 0, 0.75 ]
       value: [ 0.2, 0.9 ]
+  squashEyeHairColors: true
+
+- type: marking
+  abstract: true
+  id: VulpBaseMarking
+
+- type: marking
+  abstract: true
+  id: VulpBaseMarkingClamped
+  strategy: *VulpColorClamp

@@ -3,7 +3,9 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Construction;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
+using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Gibbing;
 using Content.Shared.Interaction;
@@ -22,7 +24,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Tools.Systems;
 
-public sealed partial class ToolRefinablSystem : EntitySystem
+public sealed partial class ToolRefinableSystem : EntitySystem
 {
     [Dependency] private SharedToolSystem _toolSystem = default!;
     [Dependency] private GibbingSystem _gib = default!;
@@ -34,21 +36,39 @@ public sealed partial class ToolRefinablSystem : EntitySystem
     [Dependency] private SharedDestructibleSystem _destructible = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ToolRefinableComponent, GetVerbsEvent<InteractionVerb>>(AddVerb);
-        SubscribeLocalEvent<ToolRefinableComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<ToolRefinableComponent, ToolRefineDoAfterEvent>(OnDoAfter);
-    }
-
     #region Subscriptions
 
+    /// <summary>
+    ///  Adds an examine tooltip to a refinable entity if one is specified, hinting at what
+    ///  tool quality is needed to refine this entity.
+    /// </summary>
+    /// <param name="ent">The refinable entity.</param>
+    [SubscribeLocalEvent]
+    private void OnExamined(Entity<ToolRefinableComponent> ent, ref ExaminedEvent args)
+    {
+        if (ent.Comp.TooltipQualityHint == null
+            || !ProtoMan.Resolve(ent.Comp.QualityNeeded, out var quality))
+            return;
+
+        // Check to make sure we *can* refine the entity, first.
+        var attemptEvent = new AttemptToolRefineEvent();
+        RaiseLocalEvent(ent, ref attemptEvent);
+        if (attemptEvent.IsCancelled)
+            return;
+
+        // Add examine text.
+        var qualityName = Loc.GetString(quality.Name);
+        var hint = Loc.GetString(ent.Comp.TooltipQualityHint,
+            ("target", ent),
+            ("quality", qualityName));
+        args.PushMarkup(hint);
+    }
+
     /// <summary> Normal interactions. </summary>
+    [SubscribeLocalEvent]
     private void OnInteractUsing(Entity<ToolRefinableComponent> ent, ref InteractUsingEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !_toolSystem.HasQuality(args.Used, ent.Comp.QualityNeeded))
             return;
 
         var component = ent.Comp;
@@ -57,7 +77,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         RaiseLocalEvent(args.Target, ref attemptEvent);
         if (attemptEvent.IsCancelled)
         {
-            _popup.PopupPredicted(attemptEvent.BlockCause, args.User, args.User);
+            _popup.PopupEntity(attemptEvent.BlockCause, args.User, args.User);
             return;
         }
 
@@ -65,6 +85,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
     }
 
     /// <summary> Verb interactions. </summary>
+    [SubscribeLocalEvent(after: [typeof(ItemSlotsSystem)])]
     private void AddVerb(Entity<ToolRefinableComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
     {
         var used = args.Using;
@@ -87,14 +108,17 @@ public sealed partial class ToolRefinablSystem : EntitySystem
                 ? null
                 : Loc.GetString(ent.Comp.ToolMissingQualityTooltip, ("target", ent.Owner));
         }
-        // make an attempt to ensure refinement is not blocked.
-        var attemptEvent = new AttemptToolRefineEvent(tool);
-        RaiseLocalEvent(args.Target, ref attemptEvent);
-
-        if (attemptEvent.IsCancelled)
+        else
         {
-            verbDisabled = true;
-            verbMessage = attemptEvent.BlockCause;
+            // We have the necessary tool, make an attempt to ensure refinement is not blocked.
+            var attemptEvent = new AttemptToolRefineEvent(tool);
+            RaiseLocalEvent(args.Target, ref attemptEvent);
+
+            if (attemptEvent.IsCancelled)
+            {
+                verbDisabled = true;
+                verbMessage = attemptEvent.BlockCause;
+            }
         }
 
         verbMessage ??= component.VerbDefaultTooltip == null
@@ -117,6 +141,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
     }
 
     /// <summary> DoAfter for refining. </summary>
+    [SubscribeLocalEvent]
     private void OnDoAfter(Entity<ToolRefinableComponent> ent, ref ToolRefineDoAfterEvent args)
     {
         if (args.Cancelled || args.Used == null || !args.Target.HasValue)
@@ -129,7 +154,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         RaiseLocalEvent(args.Target.Value, ref getIsBlocked);
         if (getIsBlocked.IsCancelled)
         {
-            _popup.PopupPredicted(getIsBlocked.BlockCause, args.User, args.User);
+            _popup.PopupEntity(getIsBlocked.BlockCause, args.User, args.User);
             return;
         }
 
@@ -147,7 +172,8 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         {
             // TODO: Use RandomPredicted https://github.com/space-wizards/RobustToolbox/pull/5849
             var rndSeed = SharedRandomExtensions.HashCodeCombine((int)_gameTiming.CurTick.Value, args.User.Id, uid.Id);
-            var rng = new System.Random(rndSeed);
+            var rng = new RobustRandom();
+            rng.SetSeed(rndSeed);
             SpawnRefinement(component.RefineResult, uid, rng);
         }
 
@@ -158,18 +184,22 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         _destructible.DestroyEntity(uid);
     }
 
-    private void SpawnRefinement(List<EntitySpawnEntry> spawnList, EntityUid source, System.Random rng)
+    private void SpawnRefinement(List<EntitySpawnEntry> spawnList, EntityUid source, IRobustRandom rng)
     {
         var spawns = EntitySpawnCollection.GetSpawns(spawnList, rng);
         var spawned = new List<EntityUid>(spawns.Count);
+
+        if (_container.TryGetContainingContainer(source, out var container))
+            _container.Remove((source, null, null), container);
+
         foreach (var protoId in spawns)
         {
             var refineResultUid = PredictedSpawnNextToOrDrop(protoId, source);
             spawned.Add(refineResultUid);
 
-            if (!_container.IsEntityOrParentInContainer(refineResultUid))
+            if (container == null || !_container.Insert(refineResultUid, container))
             {
-                var randVect = rng.NextPolarVector2(2.0f, 2.5f);
+                var randVect = rng.NextVector2(2.0f, 2.5f);
                 _physics.SetLinearVelocity(refineResultUid, randVect);
             }
         }
@@ -177,19 +207,17 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         if (!TryComp<ToolRefinableSolutionComponent>(source, out var comp))
             return;
 
-        TryGetSourceSolutionForTransfer(source, comp.SolutionToSplit, out var solutionInfo);
+        if (!TryGetSourceSolutionForTransfer(source, comp.SolutionToSplit, out var solutionInfo))
+            return;
 
-        foreach (var spawnedUid in spawned)
+        var (sourceSoln, sourceSolution) = solutionInfo.Value;
+
+        for (var i = spawned.Count; i > 0; i--)
         {
-            // Fills refine result if original entity allows.
-            if (solutionInfo.HasValue && comp.SolutionToSet != null)
-            {
-                var (sourceSoln, sourceSolution) = solutionInfo.Value;
-                var refineResultVolume = sourceSolution.Volume / FixedPoint2.New(spawns.Count);
-
-                var lostSolution = _solutionContainer.SplitSolution(sourceSoln, refineResultVolume);
-                FillResult(spawnedUid, comp.SolutionToSet, lostSolution);
-            }
+            var spawnedUid = spawned[i - 1];
+            var refineResultVolume = sourceSolution.Volume / FixedPoint2.New(i);
+            var lostSolution = _solutionContainer.SplitSolution(sourceSoln, refineResultVolume);
+            FillResult(spawnedUid, comp.SolutionToSet, lostSolution);
         }
     }
 
@@ -213,7 +241,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
             ? null
             : Loc.GetString(component.PopupForOther, ("user", user), ("target", uid), ("tool", used));
 
-        _popup.PopupPredicted(slicingDoneMessageForUser, slicingDoneMessageForOthers, user, user, component.PopupType);
+        _popup.PopupEntity(slicingDoneMessageForUser, slicingDoneMessageForOthers, user, user, component.PopupType);
     }
 
     /// <summary>
@@ -279,7 +307,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
 /// </summary>
 [ByRefEvent]
 public record struct AttemptToolRefineEvent(
-    EntityUid Using,
+    EntityUid? Using = null,
     bool IsCancelled = false,
     string? BlockCause = null
 );

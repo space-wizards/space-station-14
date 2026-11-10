@@ -1,0 +1,84 @@
+- type: entity
+  parent: [ Clothing, BaseMinorContraband ]
+  id: FakeIDCard
+  name: makeshift ID card
+  description: A questionably fashioned fake ID card, capable of fooling security HUDs and access logs. Unfortunately, it can't store access information.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/id_cards.rsi
+    layers:
+    - state: makeshift
+  - type: Clothing
+    slots:
+    - idcard
+    sprite: Objects/Misc/id_cards.rsi
+  - type: Item
+    size: Small
+    heldPrefix: makeshift
+    storedRotation: -90
+  - type: IdCard
+    canMicrowave: false
+  - type: AgentIDCard
+    iconGroups:
+    - CommandIconGroup
+    - SecurityIconGroup
+    - CargoIconGroup
+    - EngineeringIconGroup
+    - MedicalIconGroup
+    - ScienceIconGroup
+    - ServiceIconGroup
+    - TheatreIconGroup
+    - CivilianIconGroup
+    - BlankIconGroup
+  - type: UIRequiresLock
+  - type: ActivatableUI
+    key: enum.AgentIDCardUiKey.Key
+    verbText: agent-id-open-ui-verb
+  - type: UserInterface
+    interfaces:
+      enum.AgentIDCardUiKey.Key:
+        type: AgentIDCardBoundUserInterface
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - WhitelistChameleon
+    - WhitelistChameleonIdCard
+  - type: Construction
+    graph: makeshiftID
+    node: makeshiftIDcomplete
+
+- type: entity
+  parent: BaseItem
+  id: FakeIDBase
+  name: makeshift ID basecard
+  description: A set of components placed on a board that needs soldering.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/id_cards.rsi
+    layers:
+    - state: makeshift_base
+  - type: Item
+    size: Small
+    heldPrefix: makeshift
+    storedRotation: -90
+  - type: Construction
+    graph: makeshiftID
+    node: makeshiftIDbasecard
+
+- type: entity
+  parent: BaseItem
+  id: FakeIDSoldered
+  name: soldered makeshift ID basecard
+  description: Now you just need to wire up those loose ends.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/id_cards.rsi
+    layers:
+    - state: makeshift_soldered
+  - type: Item
+    size: Small
+    heldPrefix: makeshift
+    storedRotation: -90
+  - type: Construction
+    graph: makeshiftID
+    node: makeshiftIDsoldered

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Storage.Components;
+using Content.Shared.Storage.Components;
 using Content.Shared.Storage.Events;
 
 namespace Content.Shared.Storage.EntitySystems;

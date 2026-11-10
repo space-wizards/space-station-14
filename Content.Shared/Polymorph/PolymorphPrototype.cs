@@ -154,6 +154,13 @@ public sealed partial record PolymorphConfiguration
     public SoundSpecifier? ExitPolymorphSound;
 
     /// <summary>
+    /// Whether or not the user should see a confirmation popup when attempting
+    /// to morph via an innate polymorph's action.
+    /// </summary>
+    [DataField]
+    public bool RevertConfirmationPopup = true;
+
+    /// <summary>
     ///     If not null, this popup will be displayed when being polymorphed into something.
     /// </summary>
     [DataField]

@@ -1,0 +1,9 @@
+<Button xmlns="https://spacestation14.io"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
+    TextAlign="Center"
+    ToggleMode="True"
+    HorizontalExpand="True">
+    <Button.StyleClasses>
+        <system:String>OpenBoth</system:String>
+    </Button.StyleClasses>
+</Button>

@@ -88,7 +88,7 @@ public abstract partial class SharedDeployableTurretControllerSystem : EntitySys
         if (_accessreader.IsAllowed(user, ent))
             return true;
 
-        _popup.PopupClient(Loc.GetString("turret-controls-access-denied"), ent, user);
+        _popup.PopupEntity(Loc.GetString("turret-controls-access-denied"), ent, user);
         _audio.PlayPredicted(ent.Comp.AccessDeniedSound, ent, user);
 
         return false;

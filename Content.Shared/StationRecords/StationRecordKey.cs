@@ -6,7 +6,8 @@ namespace Content.Shared.StationRecords;
 /// This refers to both the id and station. This is suitable for an access reader field etc,
 /// but when you already know the station just store the id itself.
 /// </summary>
-public readonly struct StationRecordKey : IEquatable<StationRecordKey>
+[DataRecord]
+public readonly partial struct StationRecordKey : IEquatable<StationRecordKey>
 {
     [DataField]
     public readonly uint Id;

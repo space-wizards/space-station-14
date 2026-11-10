@@ -28,9 +28,9 @@ namespace Content.Server.Destructible;
 public sealed partial class DestructibleSystem : SharedDestructibleSystem
 {
     [Dependency] public IAdminLogManager AdminLogger = default!;
-    [Dependency] public IPrototypeManager PrototypeManager = default!;
     [Dependency] public IRobustRandom Random = default!;
     public new IEntityManager EntityManager => base.EntityManager;
+    public IPrototypeManager PrototypeManager => ProtoMan;
 
     [Dependency] public AtmosphereSystem AtmosphereSystem = default!;
     [Dependency] public ConstructionSystem ConstructionSystem = default!;
@@ -134,9 +134,6 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     /// </summary>
     public bool Triggered(DamageThreshold threshold, Entity<Shared.Damage.Components.DamageableComponent> owner)
     {
-        if (threshold.Trigger == null)
-            return false;
-
         if (threshold.Triggered && threshold.TriggersOnce)
             return false;
 

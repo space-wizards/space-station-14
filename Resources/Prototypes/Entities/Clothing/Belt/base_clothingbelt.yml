@@ -30,6 +30,8 @@
     - 0,0,7,1
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,7,1
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

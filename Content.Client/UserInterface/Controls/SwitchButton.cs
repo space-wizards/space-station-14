@@ -146,14 +146,11 @@ namespace Content.Client.UserInterface.Controls
 
             if (relevantChangeMade)
             {
-                Label.RemoveStyleClass("dummy");
-                TrackFill.RemoveStyleClass("dummy");
-                TrackOutline.RemoveStyleClass("dummy");
-                ThumbFill.RemoveStyleClass("dummy");
-                ThumbOutline.RemoveStyleClass("dummy");
-                Symbol.RemoveStyleClass("dummy");
-                OffStateLabel.RemoveStyleClass("dummy");
-                OnStateLabel.RemoveStyleClass("dummy");
+                foreach (var c in Children)
+                {
+                    c.AddStyleClass("dummy");
+                    c.RemoveStyleClass("dummy");
+                }
             }
 
             // no base.DrawModeChanged() call - ContainerButton's pseudoclass handling
@@ -271,7 +268,7 @@ namespace Content.Client.UserInterface.Controls
         {
             var separation = ActualSeparation;
 
-            var actualMainLabelWidth = finalSize.X - separation - TrackOutline.DesiredSize.X;
+            var actualMainLabelWidth = Math.Max(0f, finalSize.X - separation - TrackOutline.DesiredSize.X);
             float iconPosition = 0;
             float stateLabelPosition = 0;
 
@@ -307,7 +304,7 @@ namespace Content.Client.UserInterface.Controls
             ThumbFill.Arrange(thumbTargetBox);
             ThumbOutline.Arrange(thumbTargetBox);
 
-            var stateLabelsTargetBox = new UIBox2(stateLabelPosition, 0, finalSize.X, finalSize.Y);
+            var stateLabelsTargetBox = new UIBox2(Math.Min(finalSize.X, stateLabelPosition), 0, finalSize.X, finalSize.Y);
             OffStateLabel?.Arrange(stateLabelsTargetBox);
             OnStateLabel?.Arrange(stateLabelsTargetBox);
 

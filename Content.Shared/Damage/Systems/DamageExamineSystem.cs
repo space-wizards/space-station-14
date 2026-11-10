@@ -12,7 +12,7 @@ namespace Content.Shared.Damage.Systems;
 public sealed partial class DamageExamineSystem : EntitySystem
 {
     [Dependency] private ExamineSystemShared _examine = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private SharedStaminaSystem _stamina = default!;
 
     public override void Initialize()
     {
@@ -38,9 +38,9 @@ public sealed partial class DamageExamineSystem : EntitySystem
         }
     }
 
-    public void AddDamageExamine(FormattedMessage message, DamageSpecifier damageSpecifier, string? type = null)
+    public void AddDamageExamine(FormattedMessage message, DamageSpecifier damageSpecifier, string? type = null, float? stamina = null)
     {
-        var markup = GetDamageExamine(damageSpecifier, type);
+        var markup = GetDamageExamine(damageSpecifier, type, stamina);
         if (!message.IsEmpty)
         {
             message.PushNewline();
@@ -51,7 +51,7 @@ public sealed partial class DamageExamineSystem : EntitySystem
     /// <summary>
     /// Retrieves the damage examine values.
     /// </summary>
-    private FormattedMessage GetDamageExamine(DamageSpecifier damageSpecifier, string? type = null)
+    private FormattedMessage GetDamageExamine(DamageSpecifier damageSpecifier, string? type = null, float? stamina = null)
     {
         var msg = new FormattedMessage();
 
@@ -61,7 +61,9 @@ public sealed partial class DamageExamineSystem : EntitySystem
         }
         else
         {
-            if (damageSpecifier.GetTotal() == FixedPoint2.Zero && !damageSpecifier.AnyPositive())
+            if (damageSpecifier.Empty &&
+                !damageSpecifier.AnyPositive() &&
+                stamina is null)
             {
                 msg.AddMarkupOrThrow(Loc.GetString("damage-none"));
                 return msg;
@@ -75,8 +77,14 @@ public sealed partial class DamageExamineSystem : EntitySystem
             if (damage.Value != FixedPoint2.Zero)
             {
                 msg.PushNewline();
-                msg.AddMarkupOrThrow(Loc.GetString("damage-value", ("type", _prototype.Index<DamageTypePrototype>(damage.Key).LocalizedName), ("amount", damage.Value)));
+                msg.AddMarkupOrThrow(Loc.GetString("damage-value", ("type", ProtoMan.Index<DamageTypePrototype>(damage.Key).LocalizedName), ("amount", damage.Value)));
             }
+        }
+
+        if (stamina is not null)
+        {
+            msg.PushNewline();
+            msg.AddMarkupOrThrow(Loc.GetString("damage-value-stamina", ("amount", stamina * _stamina.UniversalStaminaDamageModifier)));
         }
 
         return msg;

@@ -22,27 +22,25 @@
         - MachineMask
         layer:
         - MachineLayer
+
+- type: entity
+  abstract: true
+  parent: StructureHealthMachine
+  id: BaseMachineDestructible
+  components:
   - type: Damageable
-    damageModifierSet: StructuralMetallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
+    - trigger: !type:DamageTrigger
+        damage: 175
       behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        offset: 0
+        spawn:
+          MachineFrameDestroyed:
+            min: 1
+            max: 1
 
 - type: entity
   abstract: true
@@ -76,7 +74,37 @@
 
 - type: entity
   abstract: true
+  parent: StructureHealthMachine
+  id: BaseConstructibleMachineDestructible
+  components:
+  - type: Damageable
+    damageModifierSet: SteelMod
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 175
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+
+- type: entity
+  abstract: true
   parent: ConstructibleMachine
   id: SmallConstructibleMachine
   components:
     - type: RequireProjectileTarget
+
+- type: entity
+  abstract: true
+  parent: StructureHealthMachineWeak
+  id: BaseSmallConstructibleMachineDestructible
+  components:
+  - type: Damageable
+    damageModifierSet: SteelMod
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame

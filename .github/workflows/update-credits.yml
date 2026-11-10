@@ -11,16 +11,19 @@ jobs:
     # Hey there fork dev! If you like to include your own contributors in this then you can probably just change this to your own repo
     # Do this in dump_github_contributors.ps1 too into your own repo
     if: github.repository == 'space-wizards/space-station-14'
+    permissions:
+      contents: write
+      pull-requests: write
 
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v7
         with:
           ref: master
 
       - name: Get this week's Contributors
         shell: pwsh
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: Tools/dump_github_contributors.ps1 > Resources/Credits/GitHub.txt
 
       # TODO
@@ -45,10 +48,11 @@ jobs:
         run: echo "NOW=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v8
         with:
           commit-message: Update Credits
           title: Update Credits
           body: This is an automated Pull Request. This PR updates the github contributors in the credits section.
           author: PJBot <pieterjan.briers+bot@gmail.com>
+          add-paths: Resources/Credits/GitHub.txt
           branch: automated/credits-${{env.NOW}}

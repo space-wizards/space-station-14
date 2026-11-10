@@ -6,6 +6,7 @@ using Content.Server.DoAfter;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Events;
 using Content.Server.NPC.Pathfinding;
+using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.CombatMode;
@@ -54,6 +55,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     [Dependency] private IConfigurationManager _configManager = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private AccessReaderSystem _access = default!;
     [Dependency] private ClimbSystem _climb = default!;
     [Dependency] private DoAfterSystem _doAfter = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
@@ -89,8 +91,6 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     public static readonly Vector2[] Directions = new Vector2[InterestDirections];
 
     private readonly HashSet<ICommonSession> _subscribedSessions = new();
-
-    private object _obstacles = new();
 
     private int _activeSteeringCount;
 
@@ -373,7 +373,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         }
 
         // Avoid static objects like walls
-        CollisionAvoidance(uid, offsetRot, worldPos, agentRadius, layer, mask, xform, danger);
+        CollisionAvoidance(uid, steering, offsetRot, worldPos, agentRadius, layer, mask, xform, danger);
         DebugTools.Assert(!float.IsNaN(danger[0]));
 
         Separation(uid, offsetRot, worldPos, agentRadius, layer, mask, body, xform, danger);
