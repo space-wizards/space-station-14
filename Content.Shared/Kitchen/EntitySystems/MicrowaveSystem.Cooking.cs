@@ -11,7 +11,7 @@ public abstract partial class MicrowaveSystem
     /// </summary>
     /// <param name="ent">The microwave.</param>
     /// <param name="newCookTime">The time to set. <b>Must be divisible by 5.</b></param>
-    /// <param name="buttonIndex">The UI button to highlight.</param>
+    /// <param name="buttonIndex">The UI button to highlight.</param> TODO systems shouldn't be setting UI state like this
     /// <param name="user">Who changed the time.</param>
     public void SetCookTime(Entity<MicrowaveComponent?> ent, uint newCookTime, int buttonIndex = 0, EntityUid? user = null)
     {

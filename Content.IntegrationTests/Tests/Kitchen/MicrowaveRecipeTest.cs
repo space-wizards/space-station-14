@@ -178,14 +178,15 @@ public sealed class MicrowaveRecipeTest : GameTest
             Assume.That(SComp<ActiveMicrowaveComponent>(microwave.Owner).PortionedRecipe, Is.Not.Null, "Microwave failed to select a recipe.");
         });
 
-        await Server.WaitRunTicks(160);
+        await Pair.RunSeconds(5.1f); // Run for the recipe's cook duration, plus some grace for post-cook
+        Assume.That(_microwave.IsPowered(microwave.Owner, SEntMan), "Microwave became unpowered while cooking.");
         Assume.That(_microwave.IsActiveMicrowave(microwave.Owner), Is.False, "Microwave has not finished cooking.");
 
         Assume.That(_solution.TryGetSolution(reagent, SolutionName, out _, out var sol), Is.True, "Failed to get solution.");
         using (Assert.EnterMultipleScope())
         {
             Assert.That(SEntMan.EntityExists(solid), Is.False, "Recipe solid was not consumed.");
-            Assert.That(sol!.Volume, Is.EqualTo(FixedPoint2.Zero), "Reagent still remains in the solution.");
+            Assert.That(sol!.Volume, Is.EqualTo(FixedPoint2.Zero), "Reagent changed mid-cook or was not consumed.");
         }
     }
 }
