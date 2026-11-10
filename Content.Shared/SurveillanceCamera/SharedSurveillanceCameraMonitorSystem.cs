@@ -52,7 +52,7 @@ public sealed class SurveillanceCameraMonitorUiState(
 public sealed class SurveillanceCameraMonitorMapUpdateMessage(NetEntity map, Dictionary<NetEntity, CameraMarker> cameraMarkers) : BoundUserInterfaceMessage
 {
     /// <summary>
-    /// The grid entity the camera markers belong to.
+    /// The grid entity the camera markers belong to, or invalid when the monitor is off-grid.
     /// </summary>
     public NetEntity Map { get; } = map;
 
