@@ -2768,7 +2768,7 @@
   - type: BadFood
 
 - type: entity
-  parent: [SolutionNormal, FoodProduceBase] # Anomalously large
+  parent: [SolutionNormal, FoodProduceBase, BaseSlicingRefinable] # Anomalously large
   id: FoodAnomalyBerry
   name: anomaly berry
   description: A strange blue fruit. Something about it doesn't seem right.
@@ -2786,6 +2786,8 @@
   - type: Edible
     trash:
     - EffectAnomalyFloraBulb # Random loot
+  - type: ToolRefinable
+    refineResult: [] # Spawns trash on refine
   - type: Solution
     solution:
       reagents:
