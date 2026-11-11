@@ -65,7 +65,7 @@ public sealed partial class PlantChangeTraits : EntityEffectBase<PlantChangeTrai
     public enum TraitModifyType
     {
         /// <summary>
-        /// Adds the trait if it is not already present.
+        /// Adds or overwrites the trait if it is not already present.
         /// </summary>
         Add,
 

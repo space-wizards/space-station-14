@@ -30,7 +30,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
     [Dependency] private EntityQuery<PlantComponent> _plantQuery;
 
     /// <summary>
-    /// Resolves mutation data from overrides, checks passed override (typically from mutation list) then the plant, and finally uses the original prototype for default values.
+    /// Resolves mutation data from overrides, checks the plant override, then the passed override (from mutation list), and finally uses the original prototype for default values.
     /// </summary>
     [PublicAPI]
     public static ResolvedPlantMutation ResolveMutation(
