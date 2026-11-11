@@ -579,7 +579,6 @@
 - type: randomHumanoidSettings
   parent: EventHumanoidCentcomm
   id: CentcomOfficial
-  randomizeName: true # so that they have "regular" names as per their species
   components:
   - type: GhostRole
     name: ghost-role-information-centcom-official-name
