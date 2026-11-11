@@ -462,6 +462,11 @@ namespace Content.Server.NPC.Pathfinding
                 return;
             }
 
+            Cleanup();
+        }
+
+        private void Cleanup()
+        {
             foreach (var request in _pathRequests)
             {
                 request.Tcs.TrySetResult(PathResult.NoPath);
