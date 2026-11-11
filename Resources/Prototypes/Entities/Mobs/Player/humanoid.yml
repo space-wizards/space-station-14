@@ -592,7 +592,8 @@
 
 - type: entity
   id: RandomHumanoidSpawnerCentcomLawyer
-  name: CentComm lawyer
+  name: CentComm lawyer spawner
+  suffix: Ghost role
   components:
   - type: Sprite
     sprite: Markers/jobs.rsi
