@@ -1,10 +1,10 @@
-## Random humanoids
+## Base randomHumanoidSettings
 
 - type: randomHumanoidSettings
   id: EventHumanoid
   components:
   - type: RandomHumanoidAppearance
-    randomizeName: false
+  - type: GhostTakeoverAvailable # this means do NOT parent from EventHumanoid if the role is not intended to be a ghostrole!
   - type: IdBind
 
 - type: randomHumanoidSettings
@@ -51,7 +51,6 @@
     mindRoles:
     - MindRoleGhostRoleFamiliar
     job: DeathSquad
-  - type: GhostTakeoverAvailable
   - type: RandomMetadata
     nameSegments:
       - NamesMilitaryLast
@@ -84,7 +83,6 @@
     raffle:
       settings: short
     job: ERTLeader
-  - type: GhostTakeoverAvailable
   - type: RandomMetadata
     nameSegments:
     - NamesMilitaryLast
@@ -152,7 +150,6 @@
     raffle:
       settings: short
     job: ERTChaplain
-  - type: GhostTakeoverAvailable
   - type: RandomMetadata
     nameSegments:
     - NamesMilitaryLast
@@ -205,7 +202,6 @@
     raffle:
       settings: short
     job: ERTJanitor
-  - type: GhostTakeoverAvailable
   - type: RandomMetadata
     nameSegments:
     - NamesMilitaryLast
@@ -257,7 +253,6 @@
     raffle:
       settings: short
     job: ERTEngineer
-  - type: GhostTakeoverAvailable
   - type: RandomMetadata
     nameSegments:
     - NamesMilitaryLast
@@ -329,7 +324,6 @@
     raffle:
       settings: short
     job: ERTSecurity
-  - type: GhostTakeoverAvailable
   - type: RandomMetadata
     nameSegments:
     - NamesMilitaryLast
@@ -462,7 +456,6 @@
     raffle:
       settings: short
     job: ERTMedical
-  - type: GhostTakeoverAvailable
   - type: RandomMetadata
     nameSegments:
     - NamesMilitaryLast
@@ -534,7 +527,6 @@
     raffle:
       settings: short
     job: CBURN
-  - type: GhostTakeoverAvailable
   - type: RandomMetadata
     nameSegments:
     - NamesMilitaryLast
@@ -567,7 +559,6 @@
     raffle:
       settings: default
     job: CentralCommandOfficial
-  - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [ CentcommGear ]
     roleLoadout: [ RoleSurvivalStandard ]
@@ -585,10 +576,9 @@
     settings: SyndicateAgent
 
 - type: randomHumanoidSettings
-  parent: EventHumanoid
-  id: SyndicateAgent
+  id: SyndicateAgent # does NOT parent from EventHumanoid since this is not a ghostrole
   components:
-  # no GhostRole or GhostTakeoverAvailable components
+  - type: RandomHumanoidAppearance
   - type: RandomMetadata
     nameSegments:
     - NamesDeathCommandoFirst
@@ -609,10 +599,9 @@
     settings: NukeOp
 
 - type: randomHumanoidSettings
-  parent: EventHumanoid
-  id: NukeOp
+  id: NukeOp # does NOT parent from EventHumanoid since this is not a ghostrole
   components:
-  # no GhostRole or GhostTakeoverAvailable components
+  - type: RandomHumanoidAppearance
   - type: NukeOperative
 
 ## Cluwne
@@ -638,5 +627,4 @@
     rules: ghost-role-information-nonantagonist-rules
     raffle:
       settings: default
-  - type: GhostTakeoverAvailable
   - type: Cluwne # :o(
