@@ -20,6 +20,11 @@
       - id: Paper
       - id: PaperOffice
     - !type:GroupSelector
+      rolls: !type:RangeNumberSelector
+        range: 0, 2
+      children:
+      - id: Envelope
+    - !type:GroupSelector
       prob: .3
       rolls: !type:ConstantNumberSelector
         value: 2
