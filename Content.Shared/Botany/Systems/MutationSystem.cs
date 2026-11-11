@@ -64,11 +64,11 @@ public sealed partial class PlantMutationSystem : EntitySystem
             ResolvedPlantMutation? mutation = null;
             while (entry.BaseOdds * severity > triggers) // If the odds are greater than one, potentially trigger the mutation multiple times
             {
-                mutation ??= ResolveMutation(entry.Mutation, ent.Comp, ProtoMan);
                 var odds = entry.BaseOdds * severity - triggers;
                 triggers++;
                 if (Random(Math.Min(odds, 1.0f)))
                 {
+                    mutation ??= ResolveMutation(entry.Mutation, ent.Comp, ProtoMan);
                     _entityEffects.TryApplyEffect(ent, mutation.Value.Effect);
                 }
             }
