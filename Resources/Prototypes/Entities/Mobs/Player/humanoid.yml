@@ -567,33 +567,34 @@
 
 - type: entity
   id: RandomHumanoidSpawnerCentcomOfficial
-  name: CentComm official
+  name: CentComm official spawner
+  suffix: Ghost role
   components:
-    - type: Sprite
-      sprite: Markers/jobs.rsi
-      state: centcom
-    - type: RandomHumanoidSpawner
-      settings: CentcomOfficial
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    state: centcom
+  - type: RandomHumanoidSpawner
+    settings: CentcomOfficial
 
 - type: randomHumanoidSettings
   parent: EventHumanoidCentcomm
   id: CentcomOfficial
   randomizeName: true # so that they have "regular" names as per their species
   components:
-    - type: GhostRole
-      name: ghost-role-information-centcom-official-name
-      description: ghost-role-information-centcom-official-description
-      rules: ghost-role-information-nonantagonist-rules
-      raffle:
-        settings: default
-      job: CentralCommandOfficial
-    - type: RandomMetadata
-      nameSegments:
-      - NamesOfficial # TODO: replace this naming scheme with "Admiral [lastname]" (i.e, "real" last names used by the relevant species)
-      nameFormat: name-format-official
-    - type: Loadout
-      prototypes: [ CentcommGear ]
-      roleLoadout: [ RoleSurvivalStandard ]
+  - type: GhostRole
+    name: ghost-role-information-centcom-official-name
+    description: ghost-role-information-centcom-official-description
+    rules: ghost-role-information-nonantagonist-rules
+    raffle:
+      settings: default
+    job: CentralCommandOfficial
+  - type: RandomMetadata
+    nameSegments:
+    - NamesOfficial # TODO: replace this naming scheme with "Admiral [lastname]" (i.e, "real" last names used by the relevant species)
+    nameFormat: name-format-official
+  - type: Loadout
+    prototypes: [ CentcommGear ]
+    roleLoadout: [ RoleSurvivalStandard ]
 
 ## Syndicate
 
