@@ -589,7 +589,7 @@
     job: CentralCommandOfficial
   - type: RandomMetadata
     nameSegments:
-    - NamesOfficial # TODO: replace this naming scheme with "Admiral [lastname]" (i.e, "real" last names used by the relevant species)
+    - NamesOfficial
     nameFormat: name-format-official
   - type: Loadout
     prototypes: [ CentcommGear ]
