@@ -212,7 +212,7 @@
   parent: [ClothingBackpack, BaseCentcommContraband]
   id: ClothingBackpackCentComm
   name: CentComm backpack
-  description: A top-of-the-line backpack reserved for Central Command staff. It's not any bigger than a normal backpack, but it's a LOT more comfortable to wear.
+  description: A top-of-the-line backpack reserved for Central Command staff. It's not any bigger than a normal backpack, but it sits VERY comfortably on the shoulders.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/centcomm.rsi
