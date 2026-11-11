@@ -8,7 +8,7 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-ert-generic-shuttle-incoming #!!
-    weight: 0 #  Admin only.
+    weight: 1 #  Admin only.
   - type: LoadMapRule
     gridPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTMedSecLarge.yml
 
@@ -20,7 +20,7 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-ert-sec-shuttle-incoming #!!
-    weight: 0 #  Admin only.
+    weight: 1 #  Admin only.
   - type: LoadMapRule
     gridPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTSecMedium.yml
 
@@ -30,7 +30,7 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-ert-sec-shuttle-incoming #!!
-    weight: 0 #  Admin only.
+    weight: 1 #  Admin only.
   - type: LoadMapRule
     gridPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTSecSmall.yml
 
@@ -42,7 +42,7 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-ert-sec-shuttle-incoming #!!
-    weight: 0 #  Admin only.
+    weight: 1 #  Admin only.
   - type: LoadMapRule
     gridPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTMedMedium.yml
 
@@ -52,7 +52,7 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-ert-med-shuttle-incoming #!!
-    weight: 0 #  Admin only.
+    weight: 1 #  Admin only.
   - type: LoadMapRule
     gridPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTMedSmall.yml
 
@@ -64,7 +64,7 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-ert-engi-shuttle-incoming #!!
-    weight: 0 #  Admin only.
+    weight: 1 #  Admin only.
   - type: LoadMapRule
     gridPath:  /Maps/_Harmony/Shuttles/ShuttleEvent/ERTEngiJaniMedium.yml
 
@@ -74,7 +74,7 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-ert-engi-shuttle-incoming #!!
-    weight: 0 #  Admin only.
+    weight: 1 #  Admin only.
   - type: LoadMapRule
     gridPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTEngiSmall.yml
 
@@ -86,6 +86,6 @@
   components:
   - type: StationEvent
     startAnnouncement: null # Just a janitor.
-    weight: 0 #  Admin only.
+    weight: 1 #  Admin only.
   - type: LoadMapRule
     gridPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTJaniSmall.yml

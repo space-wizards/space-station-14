@@ -4,6 +4,6 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-erp-shuttle-incoming
-    weight: 0 #  Admin only.
+    weight: 1 #  Admin only.
   - type: LoadMapRule
     gridPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERPSmall.yml
