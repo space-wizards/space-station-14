@@ -37,6 +37,17 @@ public sealed partial class BotanyProduceSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
+    private void OnPlantAnalyzerAttempt(Entity<ProduceComponent> ent, ref PlantAnalyzerAttemptEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.PlantData = ent.Comp.PlantData;
+        args.PlantProtoId = ent.Comp.PlantProtoId;
+        args.Handled = true;
+    }
+
+    [SubscribeLocalEvent]
     private void OnCompostingProduceAttempt(Entity<PlantTrayComponent> ent, ref CompostingProduceAttemptEvent args)
     {
         if (args.Cancelled)
@@ -75,6 +86,6 @@ public sealed partial class BotanyProduceSystem : EntitySystem
             _plantTray.AdjustNutrient(ent.AsNullable(), nutrientBonus);
         }
 
-        PredictedQueueDel(args.Produce.Owner);
+        QueueDel(args.Produce.Owner);
     }
 }

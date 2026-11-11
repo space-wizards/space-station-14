@@ -20,7 +20,7 @@
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <Control MinSize="0 5" />
-            <Label Text="{Loc comp-gas-mixer-ui-mixer-node-primary}"/>
+            <Label Text="{Loc comp-gas-mixer-ui-mixer-node-back}"/>
             <Control MinSize="5 0" />
             <LineEdit Name="MixerNodeOneInput" MinSize="60 0" />
             <Label Text=" %"/>

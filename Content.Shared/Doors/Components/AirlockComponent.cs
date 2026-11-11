@@ -21,7 +21,7 @@ public sealed partial class AirlockComponent : Component
     public bool Safety = true;
 
     [DataField, AutoNetworkedField]
-    public bool EmergencyAccess = false;
+    public bool EmergencyAccess;
 
     /// <summary>
     /// Sound to play when the airlock emergency access is turned on.
@@ -47,14 +47,14 @@ public sealed partial class AirlockComponent : Component
     /// Whether the maintenance panel should be visible even if the airlock is opened.
     /// </summary>
     [DataField]
-    public bool OpenPanelVisible = false;
+    public bool OpenPanelVisible;
 
     /// <summary>
     /// Whether the airlock should stay open if the airlock was clicked.
     /// If the airlock was bumped into it will still auto close.
     /// </summary>
     [DataField]
-    public bool KeepOpenIfClicked = false;
+    public bool KeepOpenIfClicked;
 
     /// <summary>
     /// Whether the airlock should auto close. This value is reset every time the airlock closes.
@@ -90,7 +90,7 @@ public sealed partial class AirlockComponent : Component
     /// Whether the door lights should be visible.
     /// </summary>
     [DataField]
-    public bool OpenUnlitVisible = false;
+    public bool OpenUnlitVisible;
 
     /// <summary>
     /// Whether the door should display emergency access lights.
@@ -108,50 +108,50 @@ public sealed partial class AirlockComponent : Component
     /// The sprite state used to animate the airlock frame when the airlock opens.
     /// </summary>
     [DataField]
-    public string OpeningSpriteState = "opening_unlit";
+    public string? OpeningSpriteState = "opening_unlit";
 
     /// <summary>
     /// The sprite state used to animate the airlock panel when the airlock opens.
     /// </summary>
     [DataField]
-    public string OpeningPanelSpriteState = "panel_opening";
+    public string? OpeningPanelSpriteState = "panel_opening";
 
     /// <summary>
     /// The sprite state to use for the wire panel when the airlock is open. The
     /// first frame will be used for when the airlock is closed.
     /// </summary>
     [DataField]
-    public string OpenPanelSpriteState = "panel_open";
+    public string? OpenPanelSpriteState = "panel_open";
 
     /// <summary>
     /// The sprite state used to animate the airlock frame when the airlock closes.
     /// </summary>
     [DataField]
-    public string ClosingSpriteState = "closing_unlit";
+    public string? ClosingSpriteState = "closing_unlit";
 
     /// <summary>
     /// The sprite state used to animate the airlock panel when the airlock closes.
     /// </summary>
     [DataField]
-    public string ClosingPanelSpriteState = "panel_closing";
+    public string? ClosingPanelSpriteState = "panel_closing";
 
     /// <summary>
     /// The sprite state used for the open airlock lights.
     /// </summary>
     [DataField]
-    public string OpenSpriteState = "open_unlit";
+    public string? OpenSpriteState = "open_unlit";
 
     /// <summary>
     /// The sprite state used for the closed airlock lights.
     /// </summary>
     [DataField]
-    public string ClosedSpriteState = "closed_unlit";
+    public string? ClosedSpriteState = "closed_unlit";
 
     /// <summary>
     /// The sprite state used for the 'access denied' lights animation.
     /// </summary>
     [DataField]
-    public string DenySpriteState = "deny_unlit";
+    public string? DenySpriteState = "deny_unlit";
 
     /// <summary>
     /// How long the animation played when the airlock denies access is in seconds.

@@ -1,5 +1,4 @@
 using Content.Server.Cargo.Components;
-using Content.Server.DeviceLinking.Systems;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Stack;
@@ -9,6 +8,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Labels.Components;
 using Content.Shared.Mobs.Components;
@@ -54,14 +54,12 @@ public sealed partial class CargoSystem : SharedCargoSystem
     [Dependency] private EntityQuery<StationDataComponent> _stationQuery;
     [Dependency] private EntityQuery<TradeStationComponent> _tradeStationQuery;
 
-    private HashSet<EntityUid> _setEnts = new();
     private List<EntityUid> _listEnts = new();
-    private List<(EntityUid, CargoPalletComponent, TransformComponent)> _pads = new();
 
     public override void Initialize()
     {
         base.Initialize();
-        InitializeShuttle();
+        InitializeTradeStation();
         InitializeBounty();
         InitializeFunds();
     }

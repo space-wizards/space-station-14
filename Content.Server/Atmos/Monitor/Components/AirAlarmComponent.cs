@@ -1,8 +1,8 @@
-using Content.Server.DeviceLinking.Components;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
@@ -17,10 +17,10 @@ public sealed partial class AirAlarmComponent : Component
     // Remember to null this afterwards.
     [ViewVariables] public IAirAlarmModeUpdate? CurrentModeUpdater { get; set; }
 
-    public readonly HashSet<string> KnownDevices = new();
-    public readonly Dictionary<string, GasVentPumpData> VentData = new();
-    public readonly Dictionary<string, GasVentScrubberData> ScrubberData = new();
-    public readonly Dictionary<string, AtmosMonitorData> SensorData = new();
+    public readonly HashSet<LocDeviceAddress> KnownDevices = new();
+    public readonly Dictionary<LocDeviceAddress, GasVentPumpData> VentData = new();
+    public readonly Dictionary<LocDeviceAddress, GasVentScrubberData> ScrubberData = new();
+    public readonly Dictionary<LocDeviceAddress, AtmosMonitorData> SensorData = new();
 
     public bool CanSync = true;
 

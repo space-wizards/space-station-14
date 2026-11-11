@@ -115,8 +115,6 @@ namespace Content.Client.Decals.Overlays
                 else
                     handle.DrawTexture(cache.Texture, decal.Coordinates, angle, decal.Color);
             }
-
-            handle.SetTransform(Matrix3x2.Identity);
         }
 
         private static int CompareDecalIndex(DecalIndex x, DecalIndex y)

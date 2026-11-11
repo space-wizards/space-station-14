@@ -35,15 +35,9 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
         _window.SubnetRefresh += OnSubnetRefresh;
         _window.CameraSwitchTimer += OnCameraSwitchTimer;
         _window.CameraDisconnect += OnCameraDisconnect;
-
-        var xform = EntMan.GetComponent<TransformComponent>(Owner);
-        var gridUid = xform.GridUid;
-
-        if (gridUid is not null)
-            _window?.SetMap(gridUid.Value);
     }
 
-    private void OnCameraSelected(string address, ProtoId<DeviceFrequencyPrototype>? subnet)
+    private void OnCameraSelected(DeviceAddress address, ProtoId<DeviceFrequencyPrototype>? subnet)
     {
         SendMessage(new SurveillanceCameraMonitorSwitchMessage(address, subnet));
     }
@@ -112,6 +106,17 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
                 _window.UpdateState(eye.Eye, cast.Subnets, cast.ActiveAddress, cast.ActiveSubnet, cast.Cameras);
             }
         }
+    }
+
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    {
+        base.ReceiveMessage(message);
+
+        if (_window is null || message is not SurveillanceCameraMonitorMapUpdateMessage mapMessage)
+            return;
+
+        _window.SetMap(EntMan.GetEntity(mapMessage.Map));
+        _window.SetCameraMarkers(mapMessage.CameraMarkers);
     }
 
     protected override void Dispose(bool disposing)

@@ -12,17 +12,20 @@ public sealed partial class RandomOperator : HTNOperator
     /// <summary>
     /// Target blackboard key to set the value to. Doesn't need to exist beforehand.
     /// </summary>
-    [DataField("targetKey", required: true)] public string TargetKey = string.Empty;
+    [DataField("targetKey", required: true)]
+    public string TargetKey = string.Empty;
 
     /// <summary>
     ///  Minimum idle time.
     /// </summary>
-    [DataField("minKey", required: true)] public string MinKey = string.Empty;
+    [DataField("minKey", required: true)]
+    public string MinKey = string.Empty;
 
     /// <summary>
     ///  Maximum idle time.
     /// </summary>
-    [DataField("maxKey", required: true)] public string MaxKey = string.Empty;
+    [DataField("maxKey", required: true)]
+    public string MaxKey = string.Empty;
 
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
         CancellationToken cancelToken)

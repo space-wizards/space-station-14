@@ -32,6 +32,9 @@
     nameGeneration: food-sequence-taco-gen
     contentSeparator: ", "
   - type: Appearance
+  - type: Tag
+    tags:
+    - Taco
 
 # Old tacos
 

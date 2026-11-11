@@ -75,7 +75,7 @@ public sealed class IdentityRepresentation
         };
 
         // i.e. 'young assistant man' or 'old cargo technician person' or 'middle-aged captain'
-        return PresumedJob is null
+        return string.IsNullOrWhiteSpace(PresumedJob)
             ? $"{AgeString} {genderString}"
             : $"{AgeString} {PresumedJob} {genderString}";
     }

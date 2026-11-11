@@ -138,16 +138,28 @@ public sealed class EntityPainter
             coloredImage.Mutate(o => o.BackgroundColor(imageColor));
 
             var (imgX, imgY) = rsi?.Size ?? (EyeManager.PixelsPerMeter, EyeManager.PixelsPerMeter);
-            var offsetX = (int)(entity.Sprite.Offset.X + customOffset.X) * EyeManager.PixelsPerMeter;
-            var offsetY = (int)(entity.Sprite.Offset.Y + customOffset.X) * EyeManager.PixelsPerMeter;
+
+            var spriteOffset = entity.Sprite.Offset + ((SpriteComponent.Layer)layer).Offset;
+
+            if (!entity.Sprite.NoRotation)
+            {
+                spriteOffset = worldRotation.RotateVec(spriteOffset);
+            }
+
+            spriteOffset += customOffset;
+
+            var offsetX = (int)MathF.Round(spriteOffset.X * EyeManager.PixelsPerMeter);
+            var offsetY = (int)MathF.Round(spriteOffset.Y * EyeManager.PixelsPerMeter);
+
             image.Mutate(o => o
                 .DrawImage(coloredImage, PixelColorBlendingMode.Multiply, PixelAlphaCompositionMode.SrcAtop, 1)
                 .Resize(imgX, imgY)
                 .Flip(FlipMode.Vertical)
                 .Rotate(spriteRotation));
 
-            var pointX = (int)entity.X + offsetX - imgX / 2;
-            var pointY = (int)entity.Y + offsetY - imgY / 2;
+            var pointX = (int)entity.X + offsetX - image.Width / 2;
+            var pointY = (int)entity.Y + offsetY - image.Height / 2;
+
             canvas.Mutate(o => o.DrawImage(image, new Point(pointX, pointY), 1));
         }
     }

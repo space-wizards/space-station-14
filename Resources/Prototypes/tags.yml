@@ -980,7 +980,7 @@
   id: Mineshaft # PrefabDunGen whitelist on Mineshaft DungeonConfig.
 
 - type: Tag
-  id: ModularReceiver # ConstructionGraph: ImprovisedShotgunGraph
+  id: ModularReceiver # ConstructionGraph: ImprovisedShotgunGraph, MakeshiftLaserGraph
 
 - type: Tag
   id: MonkeyCube # Storage whitelist: ClothingBeltChef. CargoBounty: BountyMonkeyCube
@@ -1008,9 +1008,6 @@
 
 - type: Tag
   id: Mouse # CargoBounty: BountyMouse
-
-- type: Tag
-  id: Muffin #  StorageWhitelist: BorgModuleCooking
 
 - type: Tag
   id: Multitool # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering. ConstructionGraph: LogicGate
@@ -1184,6 +1181,9 @@
 - type: Tag
   id: PowerCellSmall # Storage whitelist: BaseWeaponPowerCell, PowerCellRecharger, ShuttleGunSvalinnMachineGun.
                      # ConstructionGraph: WallmountSubstation, makeshiftstunprod
+
+- type: Tag
+  id: GlassLens # ConstructionGraph: MakeshiftLaserGraph
 
 - type: Tag
   id: Powerdrill # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering
