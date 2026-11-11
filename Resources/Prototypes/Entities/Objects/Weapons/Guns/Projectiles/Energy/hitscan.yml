@@ -15,6 +15,8 @@
     tags:
       - HideContextMenu
   - type: AnimationPlayer
+  - type: PointLight
+    radius: 5.0
 
 - type: entity
   id: BasicHitscan
@@ -107,6 +109,7 @@
       sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
       state: impact_laser_makeshift
     lightColor: red
+    lightRadius: 2.5
 
 - type: entity
   parent: LaserHitscanBase

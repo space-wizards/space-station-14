@@ -55,6 +55,7 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private SharedPointLightSystem _pointLight = default!;
 
     [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
+    [Dependency] private EntityQuery<PointLightComponent> _lightQuery = default!;
 
     public static readonly EntProtoId HitscanProto = "HitscanEffect";
     private GunTargetEntityComparer _comparer = default!;
@@ -131,7 +132,7 @@ public sealed partial class GunSystem : SharedGunSystem
             if (vizComp.MuzzleFlash != null)
             {
                 var coords = fromCoordinates.Offset(shotAngle.ToVec().Normalized() / 2);
-                SpawnHitscan(coords, shotAngle, vizComp.MuzzleFlash, 1f, vizComp.LightColor);
+                SpawnHitscan(coords, shotAngle, vizComp.MuzzleFlash, 1f, vizComp.LightColor, vizComp.LightRadius);
             }
 
             if (vizComp.TravelFlash != null)
@@ -150,7 +151,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 {
                     var coords = startCoords;
                     coords = coords.Offset(shotAngleVec * i * segmentLength);
-                    SpawnHitscan(coords, shotAngle, vizComp.TravelFlash, segmentLength, vizComp.LightColor);
+                    SpawnHitscan(coords, shotAngle, vizComp.TravelFlash, segmentLength, vizComp.LightColor, vizComp.LightRadius);
                 }
             }
         }
@@ -158,11 +159,11 @@ public sealed partial class GunSystem : SharedGunSystem
         if (vizComp.ImpactFlash != null)
         {
             var coords = fromCoordinates.Offset(shotAngle.ToVec() * distance);
-            SpawnHitscan(coords, shotAngle.FlipPositive(), vizComp.ImpactFlash, 1f, vizComp.LightColor);
+            SpawnHitscan(coords, shotAngle.FlipPositive(), vizComp.ImpactFlash, 1f, vizComp.LightColor, vizComp.LightRadius);
         }
     }
 
-    private void SpawnHitscan(EntityCoordinates coords, Angle angle, SpriteSpecifier? ss, float distance, Color? color)
+    private void SpawnHitscan(EntityCoordinates coords, Angle angle, SpriteSpecifier? ss, float distance, Color? color, float? radius)
     {
         if (ss is not SpriteSpecifier.Rsi rsi)
             return;
@@ -200,10 +201,16 @@ public sealed partial class GunSystem : SharedGunSystem
                 }
         };
 
-        if (color != null)
+        if (_lightQuery.TryComp(ent, out var targetComp))
         {
-            var targetComp = EnsureComp<PointLightComponent>(ent);
-            _pointLight.SetColor(ent, color.Value, targetComp);
+            if (color == null)
+                RemComp<PointLightComponent>(ent);
+            else
+            {
+                _pointLight.SetColor(ent, color.Value, targetComp);
+                if (radius != null)
+                    _pointLight.SetRadius(ent, radius.Value, targetComp);
+            }
         }
 
         _animPlayer.Play(ent, anim, "hitscan-effect");
