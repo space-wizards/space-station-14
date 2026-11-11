@@ -547,7 +547,8 @@
 
 - type: entity
   id: RandomHumanoidSpawnerCentcomOfficial
-  name: CentComm official
+  name: CentComm official spawner
+  suffix: Ghost role
   components:
   - type: Sprite
     sprite: Markers/jobs.rsi
