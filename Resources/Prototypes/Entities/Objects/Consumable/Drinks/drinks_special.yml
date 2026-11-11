@@ -256,14 +256,6 @@
 
 - type: entity
   parent: DrinkShakeBase
-  id: DrinkShakeEmpty
-  name: shakeempty
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/shake-empty.rsi
-
-- type: entity
-  parent: DrinkShakeBase
   id: DrinkShakeMeat
   name: meat shake
   components:
