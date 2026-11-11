@@ -7,7 +7,7 @@
   startingGear: CentcommLawyerGear
   icon: "JobIconCentcommLawyer"
   supervisors: job-supervisors-centcom
-  access: # doesn't get AA or CentralCommand access since they're not supposed to have direct leadership over the station the way CC officials do
+  access: # same accesses as a normal Lawyer (rather than AA and CentralCommand), since they're not supposed to have direct authority over the station the way CC officials do
   - Service
   - Lawyer
   - Brig
