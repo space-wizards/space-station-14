@@ -176,7 +176,7 @@ public sealed partial class PlantCommand : ToolshedCommand
         if (!_mutationSystem.TryAddMutation((input, plant), mutation))
         {
             ctx.ReportError(new PlantCommandError(
-                $"Mutation '{mutation.Name}' is already present or conflicts with another mutation on entity {input}."));
+                $"Mutation '{mutation.Name}' is already present on entity {input}."));
             return null;
         }
 

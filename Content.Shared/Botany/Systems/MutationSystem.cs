@@ -58,8 +58,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
     }
 
     /// <summary>
-    /// Adds a specific mutation to a plant, applying its immediate plant effect and respecting duplicate and
-    /// mutually exclusive mutations.
+    /// Adds a specific mutation to a plant, applying its immediate plant effect and preventing duplicates.
     /// </summary>
     /// <returns>True if the mutation was applied.</returns>
     [PublicAPI]
@@ -78,24 +77,8 @@ public sealed partial class PlantMutationSystem : EntitySystem
             }
         }
 
-        if (HasConflictingMutation((ent, ent.Comp), mutation))
-            return false;
-
         ApplyMutation((ent, ent.Comp), mutation);
         return true;
-    }
-
-    private bool HasConflictingMutation(Entity<PlantComponent> ent, RandomPlantMutation mutation)
-    {
-        if (mutation.ExclusiveGroup == null)
-            return false;
-
-        foreach (var existingMutation in ent.Comp.Mutations)
-        {
-            if (existingMutation.ExclusiveGroup == mutation.ExclusiveGroup)
-                return true;
-        }
-        return false;
     }
 
     private void ApplyMutation(Entity<PlantComponent> ent, RandomPlantMutation mutation)
@@ -201,15 +184,8 @@ public sealed partial class PlantMutationSystem : EntitySystem
 
         // LINQ Explanation
         // For the list of mutation effects on both plants, use a 50% chance to pick each one.
-        // Union all of the chosen mutations into one list, keep unique names, then keep at most one mutation from
-        // each exclusive group.
-        var exclusiveGroups = new HashSet<string>();
-        targetCore.Mutations = targetCore.Mutations
-            .Where(_ => Random(0.5f))
-            .Union(pollenCore.Mutations.Where(_ => Random(0.5f)))
-            .DistinctBy(m => m.Name)
-            .Where(m => m.ExclusiveGroup == null || exclusiveGroups.Add(m.ExclusiveGroup))
-            .ToList();
+        // Union all of the chosen mutations into one list, and pick ones with a Distinct (unique) name.
+        targetCore.Mutations = targetCore.Mutations.Where(_ => Random(0.5f)).Union(pollenCore.Mutations.Where(_ => Random(0.5f))).DistinctBy(m => m.Name).ToList();
     }
 
     /// <summary>
