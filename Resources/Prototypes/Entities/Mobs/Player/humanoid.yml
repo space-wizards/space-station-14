@@ -4,6 +4,7 @@
   id: EventHumanoid
   components:
   - type: RandomHumanoidAppearance
+    randomizeName: false
   - type: GhostTakeoverAvailable # this means do NOT parent from EventHumanoid if the role is not intended to be a ghostrole!
   - type: IdBind
 
@@ -579,6 +580,7 @@
   id: SyndicateAgent # does NOT parent from EventHumanoid since this is not a ghostrole
   components:
   - type: RandomHumanoidAppearance
+    randomizeName: false
   - type: RandomMetadata
     nameSegments:
     - NamesDeathCommandoFirst
@@ -602,6 +604,7 @@
   id: NukeOp # does NOT parent from EventHumanoid since this is not a ghostrole
   components:
   - type: RandomHumanoidAppearance
+    randomizeName: false
   - type: NukeOperative
 
 ## Cluwne
