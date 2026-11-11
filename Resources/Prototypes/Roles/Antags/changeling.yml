@@ -77,7 +77,7 @@
 
 - type: entity
   name: strange meteor
-  description: This meteor looks more akin to a fossile than to an aggregate of minerals.
+  description: This meteor looks more akin to a fossil than to an aggregate of minerals.
   id: ChangelingMeteor
   parent:
   - BaseMeteor
