@@ -20,8 +20,7 @@
       - id: Paper
       - id: PaperOffice
     - !type:GroupSelector
-      rolls: !type:RangeNumberSelector
-        range: 0, 2
+      rolls: 0, 2
       children:
       - id: Envelope
     - !type:GroupSelector
