@@ -50,21 +50,7 @@ public abstract partial class MicrowaveSystem
     [SubscribeLocalEvent]
     private void OnSelectCookTime(Entity<MicrowaveComponent> ent, ref MicrowaveSelectCookTimeMessage args)
     {
-        if (IsActiveMicrowave(ent.AsNullable())
-            || !_power.IsPowered(ent.Owner))
-            return;
-
-        // some validation to prevent trollage
-        if (args.NewCookTime % 5 != 0 || args.NewCookTime > ent.Comp.MaxCookTime)
-            return;
-
-        ent.Comp.CurrentCookTimeButtonIndex = args.ButtonIndex;
-        ent.Comp.CurrentCookTimerTime = args.NewCookTime;
-        Dirty(ent);
-
-        var audioParams = ent.Comp.ClickSound.Params;
-        Audio.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, audioParams);
-        UpdateUI(ent.AsNullable());
+        SetCookTime(ent.AsNullable(), args.NewCookTime, args.ButtonIndex, args.Actor);
     }
 
     /// <summary>
