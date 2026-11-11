@@ -4,7 +4,7 @@
   id: EventHumanoid
   components:
   - type: RandomHumanoidAppearance
-    randomizeName: false
+    randomizeName: false # So that if there's an existing profile / base layer, it uses the name defined there instead of randomizing it.
   - type: GhostTakeoverAvailable # this means do NOT parent from EventHumanoid if the role is not intended to be a ghostrole!
   - type: IdBind
 
