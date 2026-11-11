@@ -54,7 +54,7 @@
     job: DeathSquad
   - type: RandomMetadata
     nameSegments:
-      - NamesMilitaryLast
+    - NamesMilitaryLast
     nameFormat: name-format-deathsquad
   - type: Loadout
     prototypes: [ DeathSquadGear ]
