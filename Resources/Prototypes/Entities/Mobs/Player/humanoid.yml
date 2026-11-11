@@ -604,7 +604,7 @@
 - type: randomHumanoidSettings
   parent: EventHumanoidCentcomm
   id: CentcomLawyer
-  randomizeName: true # so that they have "regular" names as per their species
+  randomizeName: true # So that they have "regular" names as per their species when spawned by an admin
   components:
   - type: GhostRole
     name: ghost-role-information-centcom-lawyer-name
