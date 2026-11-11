@@ -27,7 +27,7 @@ namespace Content.Server.Construction
             if (!ProtoMan.TryIndex(msg.ConstructionId, out ConstructionPrototype? prototype))
                 return;
 
-            if(GetGuide(prototype) is {} guide)
+            if (GetGuide(prototype) is { } guide)
                 RaiseNetworkEvent(new ResponseConstructionGuide(msg.ConstructionId, guide), args.SenderSession.Channel);
         }
 
@@ -46,10 +46,10 @@ namespace Content.Server.Construction
             if (component.DeconstructionNode == null)
                 return;
 
-            if (GetCurrentNode(uid, component) is not {} currentNode)
+            if (GetCurrentNode(uid, component) is not { } currentNode)
                 return;
 
-            if (graph.Path(currentNode.Name, component.DeconstructionNode) is not {} path || path.Length == 0)
+            if (graph.Path(currentNode.Name, component.DeconstructionNode) is not { } path || path.Length == 0)
                 return;
 
             Verb verb = new();
@@ -57,7 +57,7 @@ namespace Content.Server.Construction
             //TODO VERBS add more construction verbs? Until then, removing construction category
             verb.Text = Loc.GetString("deconstructible-verb-begin-deconstruct");
             verb.Icon = new SpriteSpecifier.Texture(
-                new ("/Textures/Interface/hammer_scaled.svg.192dpi.png"));
+                new("/Textures/Interface/hammer_scaled.svg.192dpi.png"));
 
             verb.Act = () =>
             {
@@ -80,7 +80,7 @@ namespace Content.Server.Construction
         {
             using (args.PushGroup(nameof(ConstructionComponent)))
             {
-                if (GetTargetNode(uid, component) is {} target)
+                if (GetTargetNode(uid, component) is { } target)
                 {
                     if (target.Name == component.DeconstructionNode)
                     {
@@ -88,13 +88,22 @@ namespace Content.Server.Construction
                     }
                     else
                     {
-                        args.PushMarkup(Loc.GetString(
-                            "construction-component-to-create-header",
-                            ("targetName", target.Name)) + "\n");
+                        // Try to get the name of the prototype on the node, if one exists.
+                        var targetProtoId = target.Entity.GetId(uid, args.Examiner, new(EntityManager));
+                        if (targetProtoId != null
+                            && ProtoMan.TryIndex(targetProtoId, out var targetPrototype))
+                        {
+                            args.PushMarkup(Loc.GetString("construction-component-to-create-prototype-header",
+                            ("targetName", targetPrototype.Name)) + "\n");
+                        }
+                        else
+                        {
+                            args.PushMarkup(Loc.GetString("construction-component-to-create-header") + "\n");
+                        }
                     }
                 }
 
-                if (component.EdgeIndex == null && GetTargetEdge(uid, component) is {} targetEdge)
+                if (component.EdgeIndex == null && GetTargetEdge(uid, component) is { } targetEdge)
                 {
                     var preventStepExamine = false;
 
@@ -108,7 +117,7 @@ namespace Content.Server.Construction
                     return;
                 }
 
-                if (GetCurrentEdge(uid, component) is {} edge)
+                if (GetCurrentEdge(uid, component) is { } edge)
                 {
                     var preventStepExamine = false;
 
@@ -148,12 +157,12 @@ namespace Content.Server.Construction
                 return null;
 
             // If either the start node or the target node are missing, do nothing.
-            if (GetNodeFromGraph(graph, construction.StartNode) is not {} startNode
-                || GetNodeFromGraph(graph, construction.TargetNode) is not {} targetNode)
+            if (GetNodeFromGraph(graph, construction.StartNode) is not { } startNode
+                || GetNodeFromGraph(graph, construction.TargetNode) is not { } targetNode)
                 return null;
 
             // If there's no path from start to target, do nothing.
-            if (graph.Path(construction.StartNode, construction.TargetNode) is not {} path
+            if (graph.Path(construction.StartNode, construction.TargetNode) is not { } path
                 || path.Length == 0)
                 return null;
 
@@ -196,7 +205,7 @@ namespace Content.Server.Construction
                     // Now actually list the construction conditions.
                     foreach (var condition in construction.Conditions)
                     {
-                        if (condition.GenerateGuideEntry() is not {} conditionEntry)
+                        if (condition.GenerateGuideEntry() is not { } conditionEntry)
                             continue;
 
                         conditionEntry.Padding += 4;
@@ -207,7 +216,7 @@ namespace Content.Server.Construction
                     node = path[index++];
 
                     // Add a bit of padding if there will be more steps after this.
-                    if(node != targetNode)
+                    if (node != targetNode)
                         entries.Add(new ConstructionGuideEntry());
 
                     continue;

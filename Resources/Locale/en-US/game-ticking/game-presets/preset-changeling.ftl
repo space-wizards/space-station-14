@@ -11,3 +11,9 @@ changeling-briefing =
 objective-issuer-changeling = [color=#FA2A55]The Hivemind[/color]
 
 changeling-round-end-agent-name = changeling
+
+space-changeling-role-greeting =
+    You are a changeling, a highly intelligent predator.
+    After drifting frozen in space for decades, you find yourself near a space station filled to the brim with juicy crew members.
+    You are hungry and will not make it long without sustenance...
+    Kill. Consume. Hide. Survive.

@@ -82,14 +82,14 @@ public abstract partial class SharedFirelockSystem : EntitySystem
     {
         if (ent.Comp.Temperature)
         {
-            _popupSystem.PopupClient(Loc.GetString("firelock-component-is-holding-fire-message"),
+            _popupSystem.PopupEntity(Loc.GetString("firelock-component-is-holding-fire-message"),
                 ent.Owner,
                 user,
                 PopupType.MediumCaution);
         }
         else if (ent.Comp.Pressure)
         {
-            _popupSystem.PopupClient(Loc.GetString("firelock-component-is-holding-pressure-message"),
+            _popupSystem.PopupEntity(Loc.GetString("firelock-component-is-holding-pressure-message"),
                 ent.Owner,
                 user,
                 PopupType.MediumCaution);
@@ -122,7 +122,6 @@ public abstract partial class SharedFirelockSystem : EntitySystem
 
         // only bother to check pressure on doors that are some variation of closed.
         if (door.State != DoorState.Closed
-            && door.State != DoorState.Welded
             && door.State != DoorState.Denying)
         {
             _appearance.SetData(uid, DoorVisuals.ClosedLights, false, appearance);

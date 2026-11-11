@@ -1,45 +1,41 @@
+# region Base
 - type: construction
+  abstract: true
+  id: BaseCloset
+  targetNode: done
+  category: construction-category-storage
+  canRotate: false
+# endregion
+
+# region Closets
+- type: construction
+  parent: BaseCloset
   id: ClosetSteel
   graph: ClosetSteel
-  startNode: start
-  targetNode: done
-  category: construction-category-storage
-  objectType: Structure
 
 - type: construction
+  parent: BaseCloset
   id: ClosetSteelSecure
   graph: ClosetSteelSecure
-  startNode: start
-  targetNode: done
-  category: construction-category-storage
-  objectType: Structure
 
 - type: construction
+  parent: BaseCloset
   id: ClosetFreezer
   name: construction-recipe-closet-freezer
   graph: ClosetFreezer
-  startNode: start
-  targetNode: done
-  category: construction-category-storage
-  objectType: Structure
 
 - type: construction
+  parent: BaseCloset
   id: GunSafe
   graph: GunSafe
-  startNode: start
-  targetNode: done
-  category: construction-category-storage
-  objectType: Structure
 
 - type: construction
+  parent: BaseCloset
   id: ClosetWall
   graph: ClosetWall
-  startNode: start
-  targetNode: done
-  category: construction-category-storage
-  objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
   canBuildInImpassable: true
   conditions:
-    - !type:WallmountCondition
+  - !type:WallmountCondition
+# endregion Closets

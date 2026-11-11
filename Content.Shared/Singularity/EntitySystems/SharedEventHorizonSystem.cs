@@ -3,10 +3,9 @@ using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
-
-using Content.Shared.Ghost;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Physics;
+using Content.Shared.Ghost.Components;
 
 namespace Content.Shared.Singularity.EntitySystems;
 

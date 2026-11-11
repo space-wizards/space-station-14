@@ -86,7 +86,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         base.Initialize();
 
         InitializeRelays();
-        InitializeContainerManager();
 
         SubscribeLocalEvent<SolutionComponent, ComponentGetState>(OnSolutionGetState);
         SubscribeLocalEvent<SolutionComponent, ComponentHandleState>(OnSolutionHandleState);
@@ -372,6 +371,26 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
     /// <summary>
+    /// Gets the combined quantity of all the given reagent prototypes across every solution of the entity.
+    /// </summary>
+    /// <param name="owner">The entity whose solutions are checked.</param>
+    /// <param name="reagents">The reagent prototypes to sum the quantities of.</param>
+    /// <returns>The combined quantity of the given reagents across the entity's solutions.</returns>
+    public FixedPoint2 GetTotalPrototypeQuantity(Entity<SolutionManagerComponent?> owner, ISet<ProtoId<ReagentPrototype>> reagents)
+    {
+        var reagentQuantity = FixedPoint2.New(0);
+        if (Exists(owner))
+        {
+            foreach (var (_, solution) in EnumerateSolutions(owner))
+            {
+                reagentQuantity += solution.Comp.Solution.GetTotalPrototypeQuantity(reagents);
+            }
+        }
+
+        return reagentQuantity;
+    }
+
+    /// <summary>
     /// Dirties a solution entity that has been modified and prompts updates to chemical reactions and overflow state.
     /// Should be invoked whenever a solution entity is modified.
     /// </summary>
@@ -436,20 +455,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         var splitSol = solution.SplitSolution(quantity / stackCount);
         solution.SplitSolution(quantity - splitSol.Volume);
-        UpdateChemicals(soln);
-        return splitSol;
-    }
-
-    /// <summary>
-    /// Splits a solution without the specified reagent(s).
-    /// </summary>
-    [Obsolete("Use SplitSolutionWithout with params ProtoId<ReagentPrototype>")]
-    public Solution SplitSolutionWithout(Entity<SolutionComponent> soln, FixedPoint2 quantity, params string[] reagents)
-    {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
-
-        var splitSol = solution.SplitSolutionWithout(quantity, reagents);
         UpdateChemicals(soln);
         return splitSol;
     }

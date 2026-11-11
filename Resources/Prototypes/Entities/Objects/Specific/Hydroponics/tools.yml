@@ -6,8 +6,7 @@
   components:
   - type: Tag
     tags:
-    - Hoe
-    - BotanyHoe
+    - BotanyTool
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hoe.rsi
     state: icon
@@ -25,6 +24,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
+  - type: BotanyHoe
 
 - type: entity
   name: plant clippers
@@ -34,7 +34,7 @@
   components:
   - type: Tag
     tags:
-    - PlantSampleTaker
+    - BotanyTool
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/clippers.rsi
     state: icon
@@ -49,6 +49,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
+  - type: BotanySampleTaker
   - type: Tool
     qualities:
     - Shearing
@@ -62,6 +63,9 @@
   - type: Tool
     qualities:
     - Slicing
+  - type: Tag
+    tags:
+    - BotanyTool
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/scythe.rsi
     state: icon
@@ -96,6 +100,7 @@
   - type: Tag
     tags:
     - BotanyHatchet
+    - BotanyTool
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
     state: icon
@@ -124,6 +129,7 @@
   - type: Tag
     tags:
     - BotanyShovel
+    - BotanyTool
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/spade.rsi
     state: icon

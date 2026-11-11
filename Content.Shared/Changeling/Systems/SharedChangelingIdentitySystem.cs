@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Cloning;
@@ -44,7 +44,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     {
         if (args.ObtainedIdentity)
         {
-            GrantIdentity(ent, args.Devoured);
+            GrantIdentity(ent.Owner, args.Devoured, true);
         }
 
         if (args.GrantedDna && TryGetDataFromOriginal(ent.AsNullable(), args.Devoured, out var data))
@@ -66,13 +66,10 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     private void OnMapInit(Entity<ChangelingIdentityComponent> ent, ref MapInitEvent args)
     {
         // Make a backup of our current identity so we can transform back.
-        GrantIdentity(ent, ent.Owner);
+        GrantIdentity(ent.Owner, ent.Owner);
 
         if (!TryGetDataFromOriginal(ent.AsNullable(), ent, out var data))
             return;
-
-        data.Starting = true;
-        data.GrantedDna = true; // I have no idea how you're supposed to ever get DNA from yourself, but just in case.
 
         ent.Comp.CurrentIdentity = data.Identity;
     }
@@ -196,12 +193,18 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     /// </summary>
     /// <param name="ent">The Changeling.</param>
     /// <param name="target">The target to clone.</param>
-    public EntityUid? GrantIdentity(Entity<ChangelingIdentityComponent> ent, EntityUid target)
+    /// <param name="devoured">Whether this identity was granted via devouring, aka granted DNA to the changeling.</param>
+    public EntityUid? GrantIdentity(Entity<ChangelingIdentityComponent?> ent, EntityUid target, bool devoured = false)
     {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return null;
+
         var clone = CloneToPausedMap(ent.Comp.IdentityCloningSettings, target);
 
         if (clone == null)
             return null;
+
+        var isNew = false;
 
         // We see if we already have a identity slot for this entity.
         // This can happen if we devoured them before, but then dropped their stored identity.
@@ -209,10 +212,23 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
         {
             newIdentity = new ChangelingIdentityData();
             ent.Comp.ConsumedIdentities.Add(newIdentity);
+            isNew = true; // Data didn't exist before so its not an update.
         }
 
         UpdateIdentityData(newIdentity, clone.Value, target);
-        AddDevouredReference(ent, target);
+        AddDevouredReference(ent!, target);
+
+        newIdentity.GrantedDna = devoured;
+
+        if (newIdentity.Original == ent)
+        {
+            // This is an identity of us, we don't wanna count it for objectives n stuff.
+            newIdentity.Starting = true;
+            newIdentity.GrantedDna = true;
+        }
+
+        var ev = new ChangelingGainedOrUpdatedIdentityEvent(ent, newIdentity, isNew);
+        RaiseLocalEvent(ent, ref ev, true); // Broadcast it to allow the mind tracker to update.
 
         HandlePvsOverride(ent, clone.Value);
         Dirty(ent);
@@ -232,6 +248,25 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns the amount of safe identities a changeling has - a "safe" identity is an identity that may be returned to at all times
+    /// </summary>
+    /// <returns></returns>
+    public int GetSafeIdentityCount(Entity<ChangelingIdentityComponent> ent)
+    {
+        return ent.Comp.ConsumedIdentities.Count((e) => e.Identity != null && IsSafe(e.Identity.Value));
+    }
+
+    /// <summary>
+    /// Returns true if the identity is "safe" (see <see cref="GetSafeIdentityCount"/>)
+    /// </summary>
+    public bool IsSafe(EntityUid ent)
+    {
+        var ev = new IsIdentitySafeEvent();
+        RaiseLocalEvent(ent, ref ev);
+        return ev.IsSafe;
+    }
+
+    /// <summary>
     /// Drop a stored identity from the changeling's storage.
     /// </summary>
     public void DropStoredIdentity(Entity<ChangelingIdentityComponent?> ent, EntityUid identity)
@@ -242,7 +277,10 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
         if (!HasComp<ChangelingStoredIdentityComponent>(identity))
             return; // Not a stored identity.
 
-        var toDrop = ent.Comp.ConsumedIdentities.Where(data => data.Identity == identity).ToList();
+        if (GetSafeIdentityCount((ent.Owner, ent.Comp)) <= 1)
+            return; // Cant be left with only the horror form
+
+        var toDrop = ent.Comp.ConsumedIdentities.Where(data => data.Identity == identity && !HasComp<ChangelingUnremovableIdentityComponent>(data.Identity)).ToList();
 
         foreach (var dropped in toDrop)
         {
@@ -255,7 +293,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
             dropped.Identity = null;
         }
 
-        PredictedQueueDel(identity);
+        QueueDel(identity);
 
         if (toDrop.Count > 0)
         {
@@ -316,7 +354,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        return ent.Comp.ConsumedIdentities.Count(data => data.Identity != null) < ent.Comp.MaxStoredDisguises;
+        return ent.Comp.ConsumedIdentities.Where(k => !HasComp<ChangelingUncountedIdentityComponent>(k.Identity)).Count(data => data.Identity != null) < ent.Comp.MaxStoredDisguises;
     }
 
     /// <summary>
@@ -435,4 +473,13 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
 
         return identityData != null;
     }
+}
+
+[ByRefEvent]
+public struct IsIdentitySafeEvent()
+{
+    /// <summary>
+    /// A safe identity is one that may be transformed into at all times - that is, an identity which has no transformation conditions.
+    /// </summary>
+    public bool IsSafe = true;
 }

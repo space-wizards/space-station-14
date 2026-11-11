@@ -187,7 +187,7 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
 
             var selfMessage = Loc.GetString(entity.Comp.SprayHolderMessageSelf, ("victim", victimName), ("drink", drinkName));
             var othersMessage = Loc.GetString(entity.Comp.SprayHolderMessageOthers, ("victim", victimName), ("drink", drinkName));
-            _popup.PopupPredicted(selfMessage, othersMessage, target.Value, target.Value);
+            _popup.PopupEntity(selfMessage, othersMessage, target.Value, target.Value);
         }
         else
         {

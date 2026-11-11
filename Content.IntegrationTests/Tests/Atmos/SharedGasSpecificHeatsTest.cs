@@ -1,11 +1,8 @@
-using Content.Client.Atmos.EntitySystems;
-using Content.IntegrationTests.Pair;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.UnitTesting;
 
 namespace Content.IntegrationTests.Tests.Atmos;
 
@@ -13,46 +10,17 @@ namespace Content.IntegrationTests.Tests.Atmos;
 /// Tests for asserting that various gas specific heat operations agree with each other and do not deviate
 /// across client and server.
 /// </summary>
-[TestOf(nameof(SharedAtmosphereSystem)), FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
-public sealed class SharedGasSpecificHeatsTest
+[TestOf(nameof(SharedAtmosphereSystem))]
+public sealed class SharedGasSpecificHeatsTest : AtmosTest
 {
-    private IConfigurationManager _sConfig;
-    private IConfigurationManager _cConfig;
-
-    private TestPair _pair = default!;
-
-    private RobustIntegrationTest.ServerIntegrationInstance Server => _pair.Server;
-    private RobustIntegrationTest.ClientIntegrationInstance Client => _pair.Client;
-
-    private IEntityManager _sEntMan = default!;
-    private Content.Server.Atmos.EntitySystems.AtmosphereSystem _sAtmos = default!;
-
-    private IEntityManager _cEntMan = default!;
-    private AtmosphereSystem _cAtmos = default!;
+    [SidedDependency(Side.Server)] private readonly IConfigurationManager _sConfig = default!;
+    [SidedDependency(Side.Client)] private readonly IConfigurationManager _cConfig = default!;
 
     [SetUp]
     public async Task SetUp()
     {
-        var poolSettings = new PoolSettings
-        {
-            Connected = true,
-        };
-        _pair = await PoolManager.GetServerClient(poolSettings, new NUnitTestContextWrap(TestContext.CurrentContext, TestContext.Out));
-
-        _sEntMan = Server.ResolveDependency<IEntityManager>();
-        _cEntMan = Client.ResolveDependency<IEntityManager>();
-
-        _sAtmos = _sEntMan.System<Content.Server.Atmos.EntitySystems.AtmosphereSystem>();
-        _cAtmos = _cEntMan.System<AtmosphereSystem>();
-
         // ensure that client and server atmos are fully inited otherwise arrays might not agree
-        await _pair.ReallyBeIdle(1);
-    }
-
-    [TearDown]
-    public async Task TearDown()
-    {
-        await _pair.CleanReturnAsync();
+        await Pair.ReallyBeIdle(1);
     }
 
     /// <summary>
@@ -65,12 +33,12 @@ public sealed class SharedGasSpecificHeatsTest
         var clientSpecificHeats = Array.Empty<float>();
         await Server.WaitPost(delegate
         {
-            serverSpecificHeats = _sAtmos.GasMolarHeatCapacities;
+            serverSpecificHeats = SAtmos.GasMolarHeatCapacities;
         });
 
         await Client.WaitPost(delegate
         {
-            clientSpecificHeats = _cAtmos.GasMolarHeatCapacities;
+            clientSpecificHeats = CAtmos.GasMolarHeatCapacities;
         });
 
         Assert.That(serverSpecificHeats,
@@ -105,8 +73,8 @@ public sealed class SharedGasSpecificHeatsTest
             mix.AdjustMoles(Gas.CarbonDioxide, co2);
             mix.AdjustMoles(Gas.Plasma, plasma);
 
-            serverScaled = _sAtmos.GetHeatCapacity(mix, applyScaling: true);
-            serverUnscaled = _sAtmos.GetHeatCapacity(mix, applyScaling: false);
+            serverScaled = SAtmos.GetHeatCapacity(mix, applyScaling: true);
+            serverUnscaled = SAtmos.GetHeatCapacity(mix, applyScaling: false);
         });
 
         await Client.WaitPost(delegate
@@ -117,8 +85,8 @@ public sealed class SharedGasSpecificHeatsTest
             mix.AdjustMoles(Gas.CarbonDioxide, co2);
             mix.AdjustMoles(Gas.Plasma, plasma);
 
-            clientScaled = _cAtmos.GetHeatCapacity(mix, applyScaling: true);
-            clientUnscaled = _cAtmos.GetHeatCapacity(mix, applyScaling: false);
+            clientScaled = CAtmos.GetHeatCapacity(mix, applyScaling: true);
+            clientUnscaled = CAtmos.GetHeatCapacity(mix, applyScaling: false);
         });
 
         // none of these should be exploding or nonzero.
@@ -164,10 +132,10 @@ public sealed class SharedGasSpecificHeatsTest
                 "Heat capacity calculated without scaling does not agree between client and server.");
 
             Assert.That(serverUnscaled,
-                Is.EqualTo(serverScaled * _sAtmos.HeatScale).Within(epsilon),
+                Is.EqualTo(serverScaled * SAtmos.HeatScale).Within(epsilon),
                 "Heat capacity calculated on server without scaling does not equal scaled value multiplied by HeatScale.");
             Assert.That(clientUnscaled,
-                Is.EqualTo(clientScaled * _cAtmos.HeatScale).Within(epsilon),
+                Is.EqualTo(clientScaled * CAtmos.HeatScale).Within(epsilon),
                 "Heat capacity calculated on client without scaling does not equal scaled value multiplied by HeatScale.");
         }
     }
@@ -183,9 +151,6 @@ public sealed class SharedGasSpecificHeatsTest
     {
         // ensure that replicated value changes by testing a new value
         const float newHeatScale = 13f;
-
-        _sConfig = Server.ResolveDependency<IConfigurationManager>();
-        _cConfig = Client.ResolveDependency<IConfigurationManager>();
 
         await Server.WaitPost(delegate
         {
@@ -204,13 +169,13 @@ public sealed class SharedGasSpecificHeatsTest
         await Server.WaitPost(delegate
         {
             serverCVar = _sConfig.GetCVar(CCVars.AtmosHeatScale);
-            serverHeatScale = _sAtmos.HeatScale;
+            serverHeatScale = SAtmos.HeatScale;
         });
 
         await Client.WaitPost(delegate
         {
             clientCVar = _cConfig.GetCVar(CCVars.AtmosHeatScale);
-            clientHeatScale = _cAtmos.HeatScale;
+            clientHeatScale = CAtmos.HeatScale;
         });
 
         const float epsilon = 1e-4f;
@@ -250,8 +215,8 @@ public sealed class SharedGasSpecificHeatsTest
             mix.AdjustMoles(Gas.Oxygen, 10f);
             mix.AdjustMoles(Gas.Nitrogen, 20f);
 
-            sScaled = _sAtmos.GetHeatCapacity(mix, applyScaling: true);
-            sUnscaled = _sAtmos.GetHeatCapacity(mix, applyScaling: false);
+            sScaled = SAtmos.GetHeatCapacity(mix, applyScaling: true);
+            sUnscaled = SAtmos.GetHeatCapacity(mix, applyScaling: false);
         });
 
         await Client.WaitPost(delegate
@@ -260,8 +225,8 @@ public sealed class SharedGasSpecificHeatsTest
             mix.AdjustMoles(Gas.Oxygen, 10f);
             mix.AdjustMoles(Gas.Nitrogen, 20f);
 
-            cScaled = _cAtmos.GetHeatCapacity(mix, applyScaling: true);
-            cUnscaled = _cAtmos.GetHeatCapacity(mix, applyScaling: false);
+            cScaled = CAtmos.GetHeatCapacity(mix, applyScaling: true);
+            cUnscaled = CAtmos.GetHeatCapacity(mix, applyScaling: false);
         });
 
         using (Assert.EnterMultipleScope())

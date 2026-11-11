@@ -1,4 +1,4 @@
-﻿- type: ionLaw
+- type: ionLaw
   id: OnStation
   lawString: ion-storm-law-on-station
   selectorWeightAdjust:

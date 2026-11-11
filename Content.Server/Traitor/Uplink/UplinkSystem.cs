@@ -143,7 +143,7 @@ public sealed partial class UplinkSystem : EntitySystem
         storeComp.AccountOwner = mind;
 
         storeComp.Balance.Clear();
-        _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { TelecrystalCurrencyPrototype, balance } },
+        _store.TryAddCurrency(new() { { TelecrystalCurrencyPrototype, balance } },
             store,
             storeComp);
 

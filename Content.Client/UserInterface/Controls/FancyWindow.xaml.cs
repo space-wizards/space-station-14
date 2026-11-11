@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Client.Guidebook;
 using Content.Client.Guidebook.Components;
 using Content.Client.Stylesheets;

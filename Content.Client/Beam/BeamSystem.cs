@@ -1,4 +1,4 @@
-﻿using Content.Shared.Beam;
+using Content.Shared.Beam;
 using Content.Shared.Beam.Components;
 using Robust.Client.GameObjects;
 

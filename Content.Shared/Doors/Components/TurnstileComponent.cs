@@ -28,34 +28,22 @@ public sealed partial class TurnstileComponent : Component
     public TimeSpan NextResistTime;
 
     /// <summary>
+    /// How much time has to pass before the Turnstile can initiate a new animation.
+    /// </summary>
+    [DataField]
+    public TimeSpan AnimationCooldown = TimeSpan.FromSeconds(0.75);
+
+    /// <summary>
     /// Maintained hashset of entities currently passing through the turnstile.
     /// </summary>
     [DataField, AutoNetworkedField]
     public HashSet<EntityUid> CollideExceptions = new();
 
     /// <summary>
-    /// default state of the turnstile sprite.
-    /// </summary>
-    [DataField]
-    public string DefaultState = "turnstile";
-
-    /// <summary>
-    /// animation state of the turnstile spinning.
-    /// </summary>
-    [DataField]
-    public string SpinState = "operate";
-
-    /// <summary>
-    /// animation state of the turnstile denying entry.
-    /// </summary>
-    [DataField]
-    public string DenyState = "deny";
-
-    /// <summary>
     /// Sound to play when the turnstile admits a mob through.
     /// </summary>
     [DataField]
-    public SoundSpecifier? TurnSound = new SoundPathSpecifier("/Audio/Items/ratchet.ogg", AudioParams.Default.WithVolume(-6));
+    public SoundSpecifier? TurnSound = new SoundPathSpecifier("/Audio/Effects/teleport_arrival.ogg", AudioParams.Default.WithVolume(-6));
 
     /// <summary>
     /// Sound to play when the turnstile denies entry
@@ -74,4 +62,12 @@ public sealed partial class TurnstileComponent : Component
 public enum TurnstileVisualLayers : byte
 {
     Base
+}
+
+[Serializable, NetSerializable]
+public enum TurnstileStates : byte
+{
+    Idle,
+    Deny,
+    Spin,
 }

@@ -12,7 +12,7 @@ namespace Content.Shared.Arcade
             /// </summary>
             HealthManager,
             /// <summary>
-            /// Blinks when Overflow flag is set
+            /// Blinks when the Uncapped flag is set.
             /// </summary>
             HealthLimiter
         }

@@ -31,7 +31,7 @@ namespace Content.Server.PowerSink
         [Dependency] private ChatSystem _chat = default!;
         [Dependency] private ExplosionSystem _explosionSystem = default!;
         [Dependency] private SharedAudioSystem _audio = default!;
-        [Dependency] private StationSystem _station = default!;
+        [Dependency] private ServerStationSystem _station = default!;
         [Dependency] private BatterySystem _battery = default!;
 
         public override void Initialize()
@@ -58,15 +58,13 @@ namespace Content.Server.PowerSink
         public override void Update(float frameTime)
         {
             var toRemove = new RemQueue<(EntityUid Entity, PowerSinkComponent Sink)>();
-            var query = EntityQueryEnumerator<PowerSinkComponent, PowerConsumerComponent, BatteryComponent, TransformComponent>();
+            var query = EntityQueryEnumerator<PowerSinkComponent, BatteryComponent, TransformComponent>();
 
             // Realistically it's gonna be like <5 per station.
-            while (query.MoveNext(out var entity, out var component, out var networkLoad, out var battery, out var transform))
+            while (query.MoveNext(out var entity, out var component, out var battery, out var transform))
             {
                 if (!transform.Anchored)
                     continue;
-
-                _battery.ChangeCharge((entity, battery), networkLoad.NetworkLoad.ReceivingPower * frameTime);
 
                 var currentBatteryThreshold = _battery.GetChargeLevel((entity, battery));
 

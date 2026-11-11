@@ -1,0 +1,9 @@
+- files: ["changeling_screech_strong.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Citadel Station 13 PR https://github.com/Citadel-Station-13/Citadel-Station-13/pull/8052, and made mono by ketufaispikinut"
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13/commit/1d2584f4764e9ff8d7764d8ceef718bd3dc3fed2"
+
+- files: ["changeling_screech_weak.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Citadel Station 13 PR https://github.com/Citadel-Station-13/Citadel-Station-13/pull/8052, and made mono by ketufaispikinut"
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13/commit/1d2584f4764e9ff8d7764d8ceef718bd3dc3fed2"

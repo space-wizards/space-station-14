@@ -38,7 +38,7 @@ public sealed class ReplayTests : GameTest
         server.CfgMan.SetCVar(CCVars.ReplayAutoRecordName, $"c/d/{autoRecName}");
 
         // Restart the round a few times
-        var ticker = server.System<GameTicker>();
+        var ticker = server.System<ServerGameTicker>();
         await server.WaitPost(() => ticker.RestartRound());
         await pair.RunTicksSync(25);
         Assert.That(recordMan.IsRecording, Is.True);

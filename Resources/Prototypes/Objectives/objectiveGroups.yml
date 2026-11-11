@@ -77,6 +77,7 @@
   weights:
     HeadCloakStealCollectionObjective: 1                #command
     HeadBedsheetStealCollectionObjective: 1
+    HeadHardsuitStealCollectionObjective: 1
     StampStealCollectionObjective: 1
     DoorRemoteStealCollectionObjective: 1
     OfficerHandgunsStealCollectionObjective: 1         #sec
@@ -145,8 +146,8 @@
 - type: weightedRandom
   id: ChangelingObjectiveGroupDevour
   weights:
-    ChangelingUniqueIdentityObjective: 1
-    # eventually: devour most
+    ChangelingDevouredCountObjective: 1
+    ChangelingMostDevouredObjective: 1
 
 - type: weightedRandom
   id: ChangelingObjectiveGroupEscapeDummy
@@ -157,8 +158,8 @@
   id: ChangelingObjectiveGroupEscape
   weights:
     ChangelingSurviveObjective: 0.5
-    ChangelingEscapeIdentityObjective: 1
-    # eventually: escape as a job/dept
+    ChangelingEscapeDepartmentObjective: 1.0
+    ChangelingEscapeIdentityObjective: 1.5
 
 - type: weightedRandom
   id: ChangelingObjectiveGroupKillDummy

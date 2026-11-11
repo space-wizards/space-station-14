@@ -13,6 +13,6 @@ public sealed partial class WeightedRandomFillSolutionPrototype : IPrototype
     /// <summary>
     ///     List of RandomFills that can be picked from.
     /// </summary>
-    [DataField("fills", required: true)]
+    [DataField(required: true)]
     public List<RandomFillSolution> Fills = new();
 }

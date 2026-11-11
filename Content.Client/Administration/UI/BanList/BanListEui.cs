@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Numerics;
 using Content.Client.Administration.UI.BanList.Bans;
 using Content.Client.Administration.UI.BanList.RoleBans;
@@ -71,7 +71,7 @@ public sealed partial class BanListEui : BaseEui
 
     private static string FormatDate(DateTimeOffset date)
     {
-        return date.ToString("MM/dd/yyyy h:mm tt");
+        return date.ToString("yyyy-MM-dd HH:mm");
     }
 
     public static void SetData<T>(IBanListLine<T> line, SharedBan ban) where T : SharedBan

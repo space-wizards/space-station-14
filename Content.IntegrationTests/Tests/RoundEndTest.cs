@@ -2,15 +2,16 @@ using Content.IntegrationTests.Fixtures;
 using Content.Server.GameTicking;
 using Content.Server.RoundEnd;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public sealed class RoundEndTest : GameTest
+    public sealed partial class RoundEndTest : GameTest
     {
-        private sealed class RoundEndTestSystem : EntitySystem
+        private sealed partial class RoundEndTestSystem : EntitySystem
         {
             public int RoundCount;
 
@@ -43,7 +44,7 @@ namespace Content.IntegrationTests.Tests
 
             var config = server.ResolveDependency<IConfigurationManager>();
             var sysManager = server.ResolveDependency<IEntitySystemManager>();
-            var ticker = sysManager.GetEntitySystem<GameTicker>();
+            var ticker = sysManager.GetEntitySystem<ServerGameTicker>();
             var roundEndSystem = sysManager.GetEntitySystem<RoundEndSystem>();
             var sys = server.System<RoundEndTestSystem>();
             sys.RoundCount = 0;

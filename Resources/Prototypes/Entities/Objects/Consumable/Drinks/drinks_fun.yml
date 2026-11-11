@@ -78,6 +78,18 @@
     sprite: Objects/Consumable/Drinks/jar_what.rsi
   - type: FitsInDispenser
     solution: drink
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+        transferForensics: true
 
 # Mopwata
 - type: weightedRandomFillSolution

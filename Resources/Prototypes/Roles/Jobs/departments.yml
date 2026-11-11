@@ -9,51 +9,33 @@
   - SalvageSpecialist
 
 - type: department
-  id: Civilian
-  name: department-Civilian
-  description: department-Civilian-description
-  color: "#9FED58"
-  weight: -10
-  roles:
-  - Bartender
-  - Botanist
-  - Chaplain
-  - Chef
-  - Clown
-  - HeadOfPersonnel
-  - Janitor
-  - Lawyer
-  - Librarian
-  - Mime
-  - Musician
-  - Passenger
-  - Reporter
-  - Visitor
-  - ServiceWorker
-
-- type: department
   id: CentralCommand
   name: department-CentralCommand
   description: department-CentralCommand-description
   color: "#0c344d"
+  weight: 120 # Highest weight of all NT departments; Central Command's authority is absolute
+  editorHidden: true
   roles:
   - CentralCommandOfficial
-  - CBURN
-  - ERTLeader
-  - ERTChaplain
-  - ERTJanitor
-  - ERTMedical
-  - ERTSecurity
-  - ERTEngineer
-  - DeathSquad
-  editorHidden: true
-  weight: 120
+
+- type: department
+  id: Civilian
+  name: department-Civilian
+  description: department-Civilian-description
+  color: "#7F7F7F"
+  weight: -10 # Lowest weight of all "regular" crew departments
+  ignoreForDepartmentFallback: true
+  roles:
+  - Passenger
+  - Visitor
 
 - type: department
   id: Command
   name: department-Command
   description: department-Command-description
   color: "#334E6D"
+  weight: 100 # Highest weight of all "regular" crew departments
+  primary: false
   roles:
   - Captain
   - ChiefEngineer
@@ -62,17 +44,6 @@
   - HeadOfSecurity
   - ResearchDirector
   - Quartermaster
-  - CentralCommandOfficial
-  - CBURN
-  - ERTLeader
-  - ERTChaplain
-  - ERTJanitor
-  - ERTMedical
-  - ERTSecurity
-  - ERTEngineer
-  - DeathSquad
-  primary: false
-  weight: 100
 
 - type: department
   id: Engineering
@@ -99,19 +70,6 @@
   - Paramedic
 
 - type: department
-  id: Security
-  name: department-Security
-  description: department-Security-description
-  color: "#DE3A3A"
-  weight: 20
-  roles:
-  - HeadOfSecurity
-  - SecurityCadet
-  - SecurityOfficer
-  - Detective
-  - Warden
-
-- type: department
   id: Science
   name: department-Science
   description: department-Science-description
@@ -122,21 +80,75 @@
   - ResearchAssistant
 
 - type: department
+  id: Security
+  name: department-Security
+  description: department-Security-description
+  color: "#DE3A3A"
+  weight: 20 # Raised priority compared to most other crew departments
+  roles:
+  - HeadOfSecurity
+  - SecurityCadet
+  - SecurityOfficer
+  - Detective
+  - Warden
+
+- type: department
+  id: Service
+  name: department-Service
+  description: department-Service-description
+  color: "#9FED58"
+  roles:
+  - Bartender
+  - Botanist
+  - Chaplain
+  - Chef
+  - Clown
+  - HeadOfPersonnel
+  - Janitor
+  - Lawyer
+  - Librarian
+  - Mime
+  - Musician
+  - Reporter
+  - ServiceWorker
+  - TramDriver
+
+- type: department
   id: Silicon
   name: department-Silicon
   description: department-Silicon-description
   color: "#D381C9"
+  weight: -20 # Displays after all regular crew departments, including Civilian, both because they're mechanically distinct and because they're subordinate to all crew by default
   roles:
   - Borg
   - StationAi
+
+- type: department
+  id: TaskForce
+  name: department-Task-Force
+  description: department-Task-Force-description
+  color: "#0c344d"
+  weight: 110 # Higher weight than Command, but below Central Command
+  editorHidden: true
+  roles:
+  - CBURN
+  - ERTLeader
+  - ERTChaplain
+  - ERTJanitor
+  - ERTMedical
+  - ERTSecurity
+  - ERTEngineer
+  - DeathSquad
 
 - type: department
   id: Specific
   name: department-Specific
   description: department-Specific-description
   color: "#9FED58"
-  weight: 10
+  weight: -100 # Displays after all other departments, since that makes them obviously distinct in the lobby's jobs list
+  ignoreForDepartmentFallback: true
   roles:
   - Reporter
   - Psychologist
+  - TramDriver
   primary: false

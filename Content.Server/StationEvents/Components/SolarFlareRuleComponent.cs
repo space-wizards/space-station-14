@@ -1,7 +1,8 @@
 using Content.Server.StationEvents.Events;
+using Content.Shared.Doors.Components;
+using Content.Shared.Light.Components;
 using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.StationEvents.Components;
 
@@ -20,8 +21,8 @@ public sealed partial class SolarFlareRuleComponent : Component
     /// <summary>
     ///     Channels that will be disabled for a duration of event
     /// </summary>
-    [DataField("affectedChannels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
-    public HashSet<string> AffectedChannels = new();
+    [DataField]
+    public HashSet<ProtoId<RadioChannelPrototype>> AffectedChannels = new();
 
     /// <summary>
     ///     List of extra channels that can be random disabled on top of the starting channels.
@@ -40,6 +41,18 @@ public sealed partial class SolarFlareRuleComponent : Component
     /// </remarks>
     [DataField("extraCount")]
     public uint ExtraCount;
+
+    /// <summary>
+    ///    The collection of lights that will be affected by the solar flare event.
+    /// </summary>
+    [DataField]
+    public HashSet<(EntityUid, PoweredLightComponent)> AffectedLights = [];
+
+    /// <summary>
+    ///     The collection of airlocks that will be affected by the solar flare event.
+    /// </summary>
+    [DataField]
+    public HashSet<(EntityUid, AirlockComponent)> AffectedAirlocks = [];
 
     /// <summary>
     ///     Chance light bulb breaks per second during event

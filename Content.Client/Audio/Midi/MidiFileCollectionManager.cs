@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Robust.Shared.ContentPack;
@@ -15,7 +15,7 @@ public sealed partial class MidiFileCollectionManager : IPostInjectInit
     /// <summary>
     /// Directory path to use inside UserData for storing MIDIs.
     /// </summary>
-    private static readonly ResPath UserMidiDirectory = new("/UserMidis/");
+    public static readonly ResPath UserMidiDirectory = new("/UserMidis/");
 
     private const string SawmillCategory = "midifilecollection";
 

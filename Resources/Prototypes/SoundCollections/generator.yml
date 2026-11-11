@@ -1,4 +1,4 @@
-﻿- type: soundCollection
+- type: soundCollection
   # Plays when you try to start a generator.
   # You know, lawnmower cord pull sound.
   id: GeneratorTug

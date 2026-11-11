@@ -95,4 +95,4 @@
     maxRange: 8
   - type: WarpPoint
     follow: true
-    location: Nar'Sie
+    location: location-nar-sie

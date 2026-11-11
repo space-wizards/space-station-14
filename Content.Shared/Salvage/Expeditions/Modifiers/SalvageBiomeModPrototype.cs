@@ -1,6 +1,5 @@
 using Content.Shared.Parallax.Biomes;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Salvage.Expeditions.Modifiers;
 
@@ -12,20 +11,21 @@ public sealed partial class SalvageBiomeModPrototype : IPrototype, ISalvageMod
 {
     [IdDataField] public string ID { get; private set; } = default!;
 
-    [DataField("desc")] public LocId Description { get; private set; } = string.Empty;
+    [DataField("desc", required: true)]
+    public LocId Description { get; private set; }
 
     /// <summary>
     /// Cost for difficulty modifiers.
     /// </summary>
-    [DataField("cost")]
+    [DataField]
     public float Cost { get; private set; } = 0f;
 
     /// <summary>
     /// Is weather allowed to apply to this biome.
     /// </summary>
-    [DataField("weather")]
+    [DataField]
     public bool Weather = true;
 
-    [DataField("biome", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<BiomeTemplatePrototype>))]
-    public string? BiomePrototype;
+    [DataField("biome", required: true)]
+    public ProtoId<BiomeTemplatePrototype>? BiomePrototype;
 }

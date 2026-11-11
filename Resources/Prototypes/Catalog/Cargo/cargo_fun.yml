@@ -192,11 +192,11 @@
   group: market
 
 - type: cargoProduct
-  id: BigDrumsInstrument
+  id: VirtualSingerOutfits
   icon:
-    sprite: Objects/Fun/Instruments/structureinstruments.rsi
-    state: drum
-  product: BigDrumsInstrument
-  cost: 1500
+    sprite: Clothing/Uniforms/Jumpskirts/Service/virtual_singer.rsi
+    state: icon
+  product: CrateVirtualSingerOutfits
+  cost: 25000
   category: cargoproduct-category-name-fun
   group: market

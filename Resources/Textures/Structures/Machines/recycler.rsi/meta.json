@@ -1,0 +1,87 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "recycler-o0/o0bld/o1/o1bld/o2/o2bld made by Marum (https://github.com/marianolarre/)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "recycler-o0",
+            "directions": 4
+        },
+        {
+            "name": "recycler-o0bld",
+            "directions": 4
+        },
+        {
+            "name": "recycler-o1",
+            "directions": 4,
+            "delays": [
+                [
+                    0.04,
+                    0.04,
+                    0.04,
+                    0.04
+                ],
+                [
+                    0.04,
+                    0.04,
+                    0.04,
+                    0.04
+                ],
+                [
+                    0.04,
+                    0.04,
+                    0.04,
+                    0.04
+                ],
+                [
+                    0.04,
+                    0.04,
+                    0.04,
+                    0.04
+                ]
+            ]
+        },
+        {
+            "name": "recycler-o1bld",
+            "directions": 4,
+            "delays": [
+                [
+                    0.04,
+                    0.04,
+                    0.04,
+                    0.04
+                ],
+                [
+                    0.04,
+                    0.04,
+                    0.04,
+                    0.04
+                ],
+                [
+                    0.04,
+                    0.04,
+                    0.04,
+                    0.04
+                ],
+                [
+                    0.04,
+                    0.04,
+                    0.04,
+                    0.04
+                ]
+            ]
+        },
+        {
+            "name": "recycler-o2",
+            "directions": 4
+        },
+        {
+            "name": "recycler-o2bld",
+            "directions": 4
+        }
+    ]
+}

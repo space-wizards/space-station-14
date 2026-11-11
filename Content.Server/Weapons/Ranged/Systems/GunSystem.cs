@@ -76,6 +76,12 @@ public sealed partial class GunSystem : SharedGunSystem
             ? TransformSystem.WithEntityId(fromCoordinates, gridUid)
             : new EntityCoordinates(_map.GetMapOrInvalid(fromMap.MapId), fromMap.Position);
 
+        if (!fromEnt.EntityId.Valid)
+        {
+            Log.Warning($"Tried to fire gun {ToPrettyString(gun)} at entity coordinates with an invalid EntityUid.");
+            return;
+        }
+
         // Update shot based on the recoil
         toMap = fromMap.Position + angle.ToVec() * mapDirection.Length();
         mapDirection = toMap - fromMap.Position;
@@ -247,8 +253,6 @@ public sealed partial class GunSystem : SharedGunSystem
         return angle;
     }
 
-    protected override void Popup(string message, EntityUid? uid, EntityUid? user) { }
-
     protected override void CreateEffect(EntityUid gunUid, MuzzleFlashEvent message, EntityUid? user = null)
     {
         var filter = Filter.Pvs(gunUid, entityManager: EntityManager);
@@ -275,12 +279,16 @@ public sealed partial class GunSystem : SharedGunSystem
 
             if (type != null && rangedSound.SoundTypes?.TryGetValue(type, out var damageSoundType) == true)
             {
-                Audio.PlayPvs(damageSoundType, otherEntity, AudioParams.Default.WithVariation(DamagePitchVariation));
+                var damageSoundTypeParams = damageSoundType?.Params ?? AudioParams.Default;
+                damageSoundTypeParams = damageSoundTypeParams.WithVariation(DamagePitchVariation);
+                Audio.PlayPvs(damageSoundType, otherEntity, damageSoundTypeParams);
                 playedSound = true;
             }
             else if (type != null && rangedSound.SoundGroups?.TryGetValue(type, out var damageSoundGroup) == true)
             {
-                Audio.PlayPvs(damageSoundGroup, otherEntity, AudioParams.Default.WithVariation(DamagePitchVariation));
+                var damageSoundGroupParams = damageSoundGroup?.Params ?? AudioParams.Default;
+                damageSoundGroupParams = damageSoundGroupParams.WithVariation(DamagePitchVariation);
+                Audio.PlayPvs(damageSoundGroup, otherEntity, damageSoundGroupParams);
                 playedSound = true;
             }
         }
