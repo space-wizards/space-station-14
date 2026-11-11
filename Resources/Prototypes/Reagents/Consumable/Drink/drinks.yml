@@ -638,6 +638,7 @@
 - type: reagent
   id: ShakeBlue
   name: reagent-name-shakeblue
+  parent: BaseDrink
   group: Drinks
   desc: reagent-desc-shakeblue
   physicalDesc: reagent-physical-desc-creamy
@@ -653,6 +654,7 @@
 - type: reagent
   id: ShakeMeat
   name: reagent-name-shakemeat
+  parent: BaseDrink
   group: Drinks
   desc: reagent-desc-shakemeat
   physicalDesc: reagent-physical-desc-gloopy
@@ -668,6 +670,7 @@
 - type: reagent
   id: ShakeRobo
   name: reagent-name-shakerobo
+  parent: BaseDrink
   group: Drinks
   desc: reagent-desc-shakerobo
   physicalDesc: reagent-physical-desc-electric
@@ -683,6 +686,7 @@
 - type: reagent
   id: ShakeWhite
   name: reagent-name-shakewhite
+  parent: BaseDrink
   group: Drinks
   desc: reagent-desc-shakewhite
   physicalDesc: reagent-physical-desc-cold

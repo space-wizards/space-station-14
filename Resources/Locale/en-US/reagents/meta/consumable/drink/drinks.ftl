@@ -101,7 +101,7 @@ reagent-name-orange-lime-soda = citrus bikeshed
 reagent-desc-orange-lime-soda = The soda should be orange! No, it should be lemon-lime!
 
 reagent-name-shakeblue = shakeblue
-reagent-desc-shakeblue = A milkshake only.... only it's blue....
+reagent-desc-shakeblue = A milkshake, but blue.
 
 reagent-name-shakemeat = shakemeat
 reagent-desc-shakemeat = A milkshake made of blended bits of a once-living thing.
