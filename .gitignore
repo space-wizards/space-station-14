@@ -319,3 +319,6 @@ error.glsl
 
 # C# Dev Kit cache file
 *.lscache
+
+# Persistent Space City local development databases and runtime files.
+/.space-city-local/
