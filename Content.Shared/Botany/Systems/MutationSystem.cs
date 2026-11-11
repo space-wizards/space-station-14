@@ -60,15 +60,16 @@ public sealed partial class PlantMutationSystem : EntitySystem
         var mutationTable = ProtoMan.Index(mutationTableId);
         foreach (var entry in mutationTable.Mutations)
         {
-            var mutation = ResolveMutation(entry.Mutation, ent.Comp, ProtoMan);
             var triggers = 0;
+            ResolvedPlantMutation? mutation = null;
             while (entry.BaseOdds * severity > triggers) // If the odds are greater than one, potentially trigger the mutation multiple times
             {
+                mutation ??= ResolveMutation(entry.Mutation, ent.Comp, ProtoMan);
                 var odds = entry.BaseOdds * severity - triggers;
                 triggers++;
                 if (Random(Math.Min(odds, 1.0f)))
                 {
-                    _entityEffects.TryApplyEffect(ent, mutation.Effect);
+                    _entityEffects.TryApplyEffect(ent, mutation.Value.Effect);
                 }
             }
         }
