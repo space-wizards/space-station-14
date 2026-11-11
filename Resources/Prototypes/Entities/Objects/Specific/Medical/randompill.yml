@@ -90,6 +90,7 @@
       reagents:
       - Lexorin
       - Lead
+      - Romerol
 
 - type: entity
   name: strange pill
