@@ -1,6 +1,5 @@
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
-using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Random.Helpers;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
@@ -54,7 +53,7 @@ public sealed partial class PlantGrowthSystem : EntitySystem
         if (holder.SkipAging > 0)
             _plantHolder.AdjustsSkipAging((plantUid, holder), -1);
         else if (random.Prob(0.8f))
-            _plantHolder.AdjustsAge((plantUid, holder), HasComp<PlantTraitKudzuComponent>(plantUid) ? 2 : 1);
+            _plantHolder.AdjustsAge((plantUid, holder), 1);
 
         if (plantComp.WaterConsumption > 0 && trayComp.WaterLevel > 0 && random.Prob(0.75f))
             _plantTray.AdjustWater((trayUid, trayComp), -MathF.Max(0f, plantComp.WaterConsumption * trayComp.TrayConsumptionMultiplier));

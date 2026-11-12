@@ -21,6 +21,9 @@ public sealed partial class PlantTraitKudzuSystem : EntitySystem
         if (!_trayQuery.TryComp(trayUid, out var trayComp))
             return;
 
+        if (!args.ForceUpdate)
+            _plantHolder.AdjustsAge(ent.Owner, 1);
+
         if (trayComp is { WaterLevel: > 10, NutritionLevel: > 5 })
             _plantTray.AdjustWeed(trayUid, ent.Comp.WeedGrowthAmount);
 
