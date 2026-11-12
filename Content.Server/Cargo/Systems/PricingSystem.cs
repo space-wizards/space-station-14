@@ -197,7 +197,7 @@ public sealed partial class PricingSystem : EntitySystem
     /// <returns>The price of the entity.</returns>
     /// <remarks>
     /// This fires off an event to calculate the price.
-    /// Calculating the price of an entity that somehow contains itself will likely hang.
+    /// Recursive price handlers are detected and broken by returning the entity's own price.
     /// </remarks>
     public double GetPrice(EntityUid uid, bool includeContents = true)
     {
@@ -207,22 +207,16 @@ public sealed partial class PricingSystem : EntitySystem
         if (prototypeId != null && !_pricingStack.Add(prototypeId))
             return GetOwnPrice(uid);
 
-        var price = 0.0;
-        try
-        {
-            var ev = new PriceCalculationEvent();
-            RaiseLocalEvent(uid, ref ev);
+        var ev = new PriceCalculationEvent();
+        RaiseLocalEvent(uid, ref ev);
 
-            if (ev.Handled)
-                return ev.Price;
+        if (prototypeId != null)
+            _pricingStack.Remove(prototypeId);
 
-            price = ev.Price + GetOwnPrice(uid);
-        }
-        finally
-        {
-            if (prototypeId != null)
-                _pricingStack.Remove(prototypeId);
-        }
+        if (ev.Handled)
+            return ev.Price;
+
+        var price = ev.Price + GetOwnPrice(uid);
 
         if (includeContents && TryComp<ContainerManagerComponent>(uid, out var containers))
         {
