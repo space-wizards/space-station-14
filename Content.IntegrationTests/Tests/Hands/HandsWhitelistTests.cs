@@ -49,83 +49,77 @@ public sealed partial class HandWhitelistTests : GameTest
 ";
 
     [Test]
-    public async Task HandWhitelistPickupTest()
+    [RunOnSide(Side.Server)]
+    public void HandWhitelistPickupTest()
     {
-        await Server.WaitIdleAsync();
-
         EntityUid user = default;
         EntityUid taggedItem = default;
         EntityUid regularItem = default;
 
-        await Server.WaitAssertion(() =>
+        user = SSpawn(TagEntityId);
+
+        // Create a whitelist that strictly requires our dummy tag
+        var whitelist = new EntityWhitelist
         {
-            user = SSpawn(TagEntityId);
+            Tags = new List<ProtoId<TagPrototype>> { DummyTagId }
+        };
 
-            // Create a whitelist that strictly requires our dummy tag
-            var whitelist = new EntityWhitelist
-            {
-                Tags = new List<ProtoId<TagPrototype>> { DummyTagId }
-            };
+        _handsSys.AddHand(user, RestrictedHandId, HandLocation.Right, whitelist: whitelist);
 
-            _handsSys.AddHand(user, RestrictedHandId, HandLocation.Right, whitelist: whitelist);
+        // Spawn item with and without the required tag
+        taggedItem = SSpawn(DummyTaggedItemId);
+        regularItem = SSpawn(DummyRegularItemId);
 
-            // Spawn item with and without the required tag
-            taggedItem = SSpawn(DummyTaggedItemId);
-            regularItem = SSpawn(DummyRegularItemId);
+        using (Assert.EnterMultipleScope())
+        {
+            // Attempt to pick up the item that lacks the required tag
+            var pickupDenied = _handsSys.TryPickup(user, regularItem);
+            Assert.That(pickupDenied, Is.False, "System allowed picking up a non-whitelisted item.");
 
-            using (Assert.EnterMultipleScope())
-            {
-                // Attempt to pick up the item that lacks the required tag
-                var pickupDenied = _handsSys.TryPickup(user, regularItem);
-                Assert.That(pickupDenied, Is.False, "System allowed picking up a non-whitelisted item.");
+            // Attempt to pick up the item that has the required tag
+            var pickupAllowed = _handsSys.TryPickup(user, taggedItem);
+            Assert.That(pickupAllowed, Is.True, "System blocked picking up a whitelisted item.");
 
-                // Attempt to pick up the item that has the required tag
-                var pickupAllowed = _handsSys.TryPickup(user, taggedItem);
-                Assert.That(pickupAllowed, Is.True, "System blocked picking up a whitelisted item.");
-
-                // Verify the state of the HandsComponent accurately reflects the successful pickup
-                Assert.That(_handsSys.IsHolding(user, taggedItem, out var holdingHand));
-                Assert.That(holdingHand, Is.EqualTo(RestrictedHandId));
-            }
-        });
+            // Verify the state of the HandsComponent accurately reflects the successful pickup
+            Assert.That(_handsSys.IsHolding(user, taggedItem, out var holdingHand));
+            Assert.That(holdingHand, Is.EqualTo(RestrictedHandId));
+        }
     }
 
     [Test]
-    public async Task HandBlacklistPickupTest()
+    [RunOnSide(Side.Server)]
+    public void HandBlacklistPickupTest()
     {
         EntityUid user = default;
         EntityUid taggedItem = default;
         EntityUid regularItem = default;
 
-        await Server.WaitAssertion(() =>
+        user = SSpawn(TagEntityId);
+
+        // Create a blacklist that strictly banns tag
+        var blacklist = new EntityWhitelist // whitelist of blacklisted items lol
         {
-            user = SSpawn(TagEntityId);
+            Tags = new List<ProtoId<TagPrototype>> { DummyTagId }
+        };
+        _handsSys.AddHand(user, RestrictedHandId, HandLocation.Right, blacklist: blacklist);
 
-            // Create a blacklist that strictly banns tag
-            var blacklist = new EntityWhitelist // whitelist of blacklisted items lol
-            {
-                Tags = new List<ProtoId<TagPrototype>> { DummyTagId }
-            };
-            _handsSys.AddHand(user, RestrictedHandId, HandLocation.Right, blacklist: blacklist);
+        // Spawn item with and without the tag
+        taggedItem = SSpawn(DummyTaggedItemId);
+        regularItem = SSpawn(DummyRegularItemId);
 
-            // Spawn item with and without the tag
-            taggedItem = SSpawn(DummyTaggedItemId);
-            regularItem = SSpawn(DummyRegularItemId);
+        using (Assert.EnterMultipleScope())
+        {
+            // Attempt to pick up the item that has the blacklisted tag
+            var pickupOfTagged = _handsSys.TryPickup(user, taggedItem);
+            Assert.That(pickupOfTagged, Is.False, "System allowed picking up a blacklisted item.");
 
-            using (Assert.EnterMultipleScope())
-            {
-                // Attempt to pick up the item that has the blacklisted tag
-                var pickupOfTagged = _handsSys.TryPickup(user, taggedItem);
-                Assert.That(pickupOfTagged, Is.False, "System allowed picking up a blacklisted item.");
+            // Attempt to pick up the item that lacks the blacklisted tag
+            var pickupRegular = _handsSys.TryPickup(user, regularItem);
+            Assert.That(pickupRegular, Is.True, "System blocked picking up a non-blacklisted item.");
 
-                // Attempt to pick up the item that lacks the blacklisted tag
-                var pickupRegular = _handsSys.TryPickup(user, regularItem);
-                Assert.That(pickupRegular, Is.True, "System blocked picking up a non-blacklisted item.");
-
-                // Verify the state of the HandsComponent accurately reflects the successful pickup
-                Assert.That(_handsSys.IsHolding(user, regularItem, out var holdingHand));
-                Assert.That(holdingHand, Is.EqualTo(RestrictedHandId));
-            }
-        });
+            // Verify the state of the HandsComponent accurately reflects the successful pickup
+            Assert.That(_handsSys.IsHolding(user, regularItem, out var holdingHand));
+            Assert.That(holdingHand, Is.EqualTo(RestrictedHandId));
+        }
     }
 }
