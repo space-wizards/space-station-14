@@ -16,8 +16,10 @@ namespace Content.IntegrationTests.Tests.Hands;
 public sealed partial class HandWhitelistTests : GameTest
 {
     [SidedDependency(Side.Server)] private readonly SharedHandsSystem _handsSys = default!;
+    public override PoolSettings PoolSettings => new() { Dirty = true };
 
-    private const string TagEntityId = "TestDummy";
+    private const string EntityWithHandWhitelist = "TestDummyWithWhitelist";
+    private const string EntityWithHandBlackList = "TestDummyWithBlacklist";
     private const string DummyTaggedItemId = "DummyTaggedItem";
     private const string DummyRegularItemId = "DummyRegularItem";
     private const string DummyTagId = "DummyTag";
@@ -27,9 +29,26 @@ public sealed partial class HandWhitelistTests : GameTest
     [TestPrototypes]
     private const string Prototypes = $@"
 - type: entity
-  id: {TagEntityId}
+  id: {EntityWithHandWhitelist}
   components:
   - type: Hands
+    startingHands:
+      {RestrictedHandId}:
+        location: Right
+        whitelist:
+          tags:
+          - {DummyTagId}
+
+- type: entity
+  id: {EntityWithHandBlackList}
+  components:
+  - type: Hands
+    startingHands:
+      {RestrictedHandId}:
+        location: Right
+        blacklist:
+          tags:
+          - {DummyTagId}
 
 - type: Tag
   id: {DummyTagId}
@@ -50,25 +69,13 @@ public sealed partial class HandWhitelistTests : GameTest
 
     [Test]
     [RunOnSide(Side.Server)]
-    public void HandWhitelistPickupTest()
+    public async Task HandWhitelistPickupTest()
     {
-        EntityUid user = default;
-        EntityUid taggedItem = default;
-        EntityUid regularItem = default;
-
-        user = SSpawn(TagEntityId);
-
-        // Create a whitelist that strictly requires our dummy tag
-        var whitelist = new EntityWhitelist
-        {
-            Tags = new List<ProtoId<TagPrototype>> { DummyTagId }
-        };
-
-        _handsSys.AddHand(user, RestrictedHandId, HandLocation.Right, whitelist: whitelist);
+        var user = SSpawn(EntityWithHandWhitelist);
 
         // Spawn item with and without the required tag
-        taggedItem = SSpawn(DummyTaggedItemId);
-        regularItem = SSpawn(DummyRegularItemId);
+        var taggedItem = SSpawn(DummyTaggedItemId);
+        var regularItem = SSpawn(DummyRegularItemId);
 
         using (Assert.EnterMultipleScope())
         {
@@ -88,24 +95,13 @@ public sealed partial class HandWhitelistTests : GameTest
 
     [Test]
     [RunOnSide(Side.Server)]
-    public void HandBlacklistPickupTest()
+    public async Task HandBlacklistPickupTest()
     {
-        EntityUid user = default;
-        EntityUid taggedItem = default;
-        EntityUid regularItem = default;
-
-        user = SSpawn(TagEntityId);
-
-        // Create a blacklist that strictly banns tag
-        var blacklist = new EntityWhitelist // whitelist of blacklisted items lol
-        {
-            Tags = new List<ProtoId<TagPrototype>> { DummyTagId }
-        };
-        _handsSys.AddHand(user, RestrictedHandId, HandLocation.Right, blacklist: blacklist);
+        var user = SSpawn(EntityWithHandBlackList);
 
         // Spawn item with and without the tag
-        taggedItem = SSpawn(DummyTaggedItemId);
-        regularItem = SSpawn(DummyRegularItemId);
+        var taggedItem = SSpawn(DummyTaggedItemId);
+        var regularItem = SSpawn(DummyRegularItemId);
 
         using (Assert.EnterMultipleScope())
         {
