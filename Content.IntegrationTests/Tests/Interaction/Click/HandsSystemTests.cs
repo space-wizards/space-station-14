@@ -1,5 +1,5 @@
-#nullable enable annotations
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Tag;
@@ -14,6 +14,8 @@ namespace Content.IntegrationTests.Tests.Interaction.Hands;
 [TestOf(typeof(SharedHandsSystem))]
 public sealed partial class HandWhitelistTests : GameTest
 {
+    [SidedDependency(Side.Server)] private readonly SharedHandsSystem _handsSys = default!;
+
     // Define our dummy entities and tags for testing
     [TestPrototypes]
     private const string Prototypes = @"
@@ -39,7 +41,6 @@ public sealed partial class HandWhitelistTests : GameTest
     {
         TestContext.Out.WriteLine("--> [TEST-DEBUG] Starting HandWhitelistPickupTest initialization.");
         var sysMan = Server.ResolveDependency<IEntitySystemManager>();
-        var handSys = sysMan.GetEntitySystem<SharedHandsSystem>();
 
         var map = await Pair.CreateTestMap();
         var coords = map.MapCoords;
@@ -61,22 +62,22 @@ public sealed partial class HandWhitelistTests : GameTest
                 Tags = new List<ProtoId<TagPrototype>> { "DummyTag" }
             };
 
-            handSys.AddHand(user, "restricted_hand", HandLocation.Right, whitelist: whitelist);
+            _handsSys.AddHand(user, "restricted_hand", HandLocation.Right, whitelist: whitelist);
 
             // Spawn item with and without the required tag
             taggedItem = SEntMan.SpawnEntity("DummyTaggedItem", coords);
             regularItem = SEntMan.SpawnEntity("DummyRegularItem", coords);
 
             // Attempt to pick up the item that lacks the required tag
-            var pickupDenied = handSys.TryPickup(user, regularItem);
+            var pickupDenied = _handsSys.TryPickup(user, regularItem);
             Assert.That(pickupDenied, Is.False, "System allowed picking up a non-whitelisted item.");
 
             // Attempt to pick up the item that has the required tag
-            var pickupAllowed = handSys.TryPickup(user, taggedItem);
+            var pickupAllowed = _handsSys.TryPickup(user, taggedItem);
             Assert.That(pickupAllowed, Is.True, "System blocked picking up a whitelisted item.");
 
             // Verify the state of the HandsComponent accurately reflects the successful pickup
-            Assert.That(handSys.IsHolding(user, taggedItem, out var holdingHand));
+            Assert.That(_handsSys.IsHolding(user, taggedItem, out var holdingHand));
             Assert.That(holdingHand, Is.EqualTo("restricted_hand"));
         });
     }
