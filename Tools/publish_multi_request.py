@@ -108,8 +108,7 @@ def get_engine_version() -> str:
 
 
 def get_source_info() -> dict[str, str | None]:
-    # Unknown values are sent as null rather than an empty string, so the CDN can tell
-    # "we don't know" apart from an intentionally empty value.
+    # Unknown values are sent as null rather than an empty string.
     return {
         "sourceUrl": os.environ.get("SOURCE_URL") or None,
         "sourceCommitId": os.environ.get("SOURCE_COMMIT_ID") or None,
