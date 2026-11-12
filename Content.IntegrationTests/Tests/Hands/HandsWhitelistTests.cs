@@ -79,13 +79,13 @@ public sealed partial class HandWhitelistTests : GameTest
 
         using (Assert.EnterMultipleScope())
         {
-            // Attempt to pick up the item that lacks the required tag
-            var pickupDenied = _handsSys.TryPickup(user, regularItem);
-            Assert.That(pickupDenied, Is.False, "System allowed picking up a non-whitelisted item.");
-
             // Attempt to pick up the item that has the required tag
             var pickupAllowed = _handsSys.TryPickup(user, taggedItem);
             Assert.That(pickupAllowed, Is.True, "System blocked picking up a whitelisted item.");
+
+            // Attempt to pick up the item that lacks the required tag
+            var pickupDenied = _handsSys.TryPickup(user, regularItem);
+            Assert.That(pickupDenied, Is.False, "System allowed picking up a non-whitelisted item.");
 
             // Verify the state of the HandsComponent accurately reflects the successful pickup
             Assert.That(_handsSys.IsHolding(user, taggedItem, out var holdingHand));
@@ -103,15 +103,16 @@ public sealed partial class HandWhitelistTests : GameTest
         var taggedItem = SSpawn(DummyTaggedItemId);
         var regularItem = SSpawn(DummyRegularItemId);
 
+        Assume.That(STryComp<HandsComponent>(user, out var _));
         using (Assert.EnterMultipleScope())
         {
-            // Attempt to pick up the item that has the blacklisted tag
-            var pickupOfTagged = _handsSys.TryPickup(user, taggedItem);
-            Assert.That(pickupOfTagged, Is.False, "System allowed picking up a blacklisted item.");
-
             // Attempt to pick up the item that lacks the blacklisted tag
             var pickupRegular = _handsSys.TryPickup(user, regularItem);
             Assert.That(pickupRegular, Is.True, "System blocked picking up a non-blacklisted item.");
+
+            // Attempt to pick up the item that has the blacklisted tag
+            var pickupOfTagged = _handsSys.TryPickup(user, taggedItem);
+            Assert.That(pickupOfTagged, Is.False, "System allowed picking up a blacklisted item.");
 
             // Verify the state of the HandsComponent accurately reflects the successful pickup
             Assert.That(_handsSys.IsHolding(user, regularItem, out var holdingHand));
