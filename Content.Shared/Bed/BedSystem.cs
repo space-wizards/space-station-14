@@ -70,7 +70,7 @@ public sealed partial class BedSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnStasisUnstrapped(Entity<StasisBedComponent> ent, ref UnstrappedEvent args)
     {
-        RemComp<StasisBedBuckledComponent>(ent);
+        RemComp<StasisBedBuckledComponent>(args.Buckle);
         _metabolizer.UpdateMetabolicMultiplier(args.Buckle);
     }
 
