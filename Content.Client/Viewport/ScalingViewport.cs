@@ -189,7 +189,7 @@ namespace Content.Client.Viewport
 
             ApplySharpnessShader(handle);
 
-            handle.DrawingHandleScreen.DrawTextureRect(_viewport.RenderTarget.Texture, drawBoxGlobal);
+            handle.DrawingHandleScreen.DrawTextureRect(_viewport.RenderTarget.Texture, drawBox);
 
             if (_sharpnessStrength > 0)
                 handle.DrawingHandleScreen.UseShader(null);
