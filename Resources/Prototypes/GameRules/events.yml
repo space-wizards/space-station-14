@@ -436,6 +436,7 @@
     onlyJamHeadsets: true
     affectedChannels:
     - Common
+    - Undercommon
     extraChannels:
     - Command
     - Engineering
