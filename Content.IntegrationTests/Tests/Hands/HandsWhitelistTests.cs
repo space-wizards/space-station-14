@@ -77,6 +77,7 @@ public sealed partial class HandWhitelistTests : GameTest
         var taggedItem = SSpawn(DummyTaggedItemId);
         var regularItem = SSpawn(DummyRegularItemId);
 
+        Assume.That(STryComp<HandsComponent>(user, out var _));
         using (Assert.EnterMultipleScope())
         {
             // Attempt to pick up the item that lacks the required tag
