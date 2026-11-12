@@ -1173,7 +1173,14 @@ hydroponicsTray: HydroponicsTray
 trayScanner: TRayScanner
 voicesensor: VoiceSensor
 
-# 2026-10-20
+# 2026-10-17
+AirlockChapelStandardGlassLocked: AirlockChapelGlassLocked
+AirlockStandardGlass: AirlockGlass
+
+# 2026-10-30
+PlushieArachind: PlushieArachnid
+
+# 2026-11-13
 ClothingHeadsetQM: ClothingHeadsetAltCargo
 ClothingHeadsetCE: ClothingHeadsetAltEngineering
 ClothingHeadsetCMO: ClothingHeadsetAltMedical
