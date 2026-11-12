@@ -8,7 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using System.Collections.Generic;
 
-namespace Content.IntegrationTests.Tests.Interaction.Hands;
+namespace Content.IntegrationTests.Tests.Hands;
 
 [TestFixture]
 [TestOf(typeof(SharedHandsSystem))]
