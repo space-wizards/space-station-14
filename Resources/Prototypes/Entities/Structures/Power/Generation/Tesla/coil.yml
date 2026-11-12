@@ -8,7 +8,6 @@
     fixtures:
       fix1:
         shape:
-          # Using a circle here makes it a lot easier to pull it all the way from Cargo
           !type:PhysShapeCircle
             radius: 0.45
         density: 190
@@ -117,7 +116,6 @@
     fixtures:
       fix1:
         shape:
-          # Using a circle here makes it a lot easier to pull it all the way from Cargo
           !type:PhysShapeCircle
             radius: 0.45
         density: 110
