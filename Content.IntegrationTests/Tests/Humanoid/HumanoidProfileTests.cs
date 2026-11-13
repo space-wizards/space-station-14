@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
@@ -17,6 +16,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Humanoid;
 
+[TestFixture]
 [TestOf(typeof(HumanoidProfileSystem))]
 public sealed class HumanoidProfileTests : GameTest
 {
@@ -34,7 +34,12 @@ public sealed class HumanoidProfileTests : GameTest
     [Test]
     public async Task EnsureValidLoading()
     {
-        await Server.WaitAssertion(() =>
+        var pair = Pair;
+        var server = pair.Server;
+
+        await server.WaitIdleAsync();
+
+        await server.WaitAssertion(() =>
         {
             LoadDependencies(out var body, out var humanoidComponent);
 
@@ -46,16 +51,13 @@ public sealed class HumanoidProfileTests : GameTest
                 .WithSpecies(SlimePerson)
                 .WithVoice(SlimeVoice));
 
-            var voiceComponent = SComp<VocalComponent>(body);
+            var voiceComponent = SEntMan.GetComponent<VocalComponent>(body);
 
-            using (Assert.EnterMultipleScope())
-            {
-                Assert.That(humanoidComponent.Age, Is.EqualTo(67));
-                Assert.That(humanoidComponent.Sex, Is.EqualTo(Sex.Female));
-                Assert.That(humanoidComponent.Gender, Is.EqualTo(Gender.Neuter));
-                Assert.That(humanoidComponent.Species, Is.EqualTo(SlimePerson));
-                Assert.That(humanoidComponent.Voice, Is.EqualTo(SlimeVoice));
-            }
+            Assert.That(humanoidComponent.Age, Is.EqualTo(67));
+            Assert.That(humanoidComponent.Sex, Is.EqualTo(Sex.Female));
+            Assert.That(humanoidComponent.Gender, Is.EqualTo(Gender.Neuter));
+            Assert.That(humanoidComponent.Species, Is.EqualTo(SlimePerson));
+            Assert.That(humanoidComponent.Voice, Is.EqualTo(SlimeVoice));
 
             var speciesProto = SProtoMan.Index(humanoidComponent.Species);
 
@@ -68,7 +70,12 @@ public sealed class HumanoidProfileTests : GameTest
     [Description("Tests that the game can generate a completely random profile with a completely random species and apply it to a blank body.")]
     public async Task EnsureValidRandom()
     {
-        await Server.WaitAssertion(() =>
+        var pair = Pair;
+        var server = pair.Server;
+
+        await server.WaitIdleAsync();
+
+        await server.WaitAssertion(() =>
         {
             LoadDependencies(out var body, out var humanoidComponent);
 
@@ -86,6 +93,8 @@ public sealed class HumanoidProfileTests : GameTest
     [Description("Tests that every species is able to randomly generate a valid appearance without issues.")]
     public async Task EnsureValidRandomSpecies(string species)
     {
+        await Server.WaitIdleAsync();
+
         await Server.WaitAssertion(() =>
         {
             LoadDependencies(out var body, out var humanoidComponent);
@@ -97,9 +106,9 @@ public sealed class HumanoidProfileTests : GameTest
 
             Assert.That(humanoidComponent.Age, Is.LessThanOrEqualTo(proto.MaxAge), $"Expected age is above the maximum age limit! Current: {humanoidComponent.Age} Max: {proto.MaxAge}");
             Assert.That(humanoidComponent.Age, Is.GreaterThanOrEqualTo(proto.MinAge), $"Expected age is below the minimum age limit! Current: {humanoidComponent.Age} Min: {proto.MinAge}");
-            Assert.That(proto.Sexes, Does.Contain(humanoidComponent.Sex), $"Character has sex not found in the species prototype! Current: {humanoidComponent.Sex}");
+            Assert.That(proto.Sexes.Contains(humanoidComponent.Sex), Is.True, $"Character has sex not found in the species prototype! Current: {humanoidComponent.Sex}");
             Assert.That(humanoidComponent.Species, Is.EqualTo(species), $"Species does not match! Expected: {species} Current: {humanoidComponent.Species}");
-            var strategy = SProtoMan.Index(proto.SkinColoration).Strategy;
+            var strategy = Server.ProtoMan.Index(proto.SkinColoration).Strategy;
             Assert.That(strategy.VerifyClampedSkinColor(profile.Appearance.SkinColor, out var reason), Is.True, $"Failed to verify the skin color ({profile.Appearance.SkinColor}) from strategy {strategy}. Reason: {reason}");
 
             AssertValidProfile((body, humanoidComponent), profile);
@@ -108,22 +117,19 @@ public sealed class HumanoidProfileTests : GameTest
 
     private void LoadDependencies(out EntityUid body, out HumanoidProfileComponent humanoidComponent)
     {
-        body = SSpawn(BaseSpecies);
-        humanoidComponent = SComp<HumanoidProfileComponent>(body);
+        body = SEntMan.Spawn(BaseSpecies);
+        humanoidComponent = SEntMan.GetComponent<HumanoidProfileComponent>(body);
     }
 
     private void AssertValidProfile(Entity<HumanoidProfileComponent> body, HumanoidCharacterProfile profile)
     {
         _bodySystem.TryGetOrgansWithComponent<VisualOrganComponent>(body.Owner, out var organs);
 
-        using (Assert.EnterMultipleScope())
+        foreach (var (uid, visualOrgan) in organs)
         {
-            foreach (var (uid, visualOrgan) in organs)
-            {
-                Assert.That(visualOrgan.Profile.Sex, Is.EqualTo(profile.Sex), $"Organ {uid} has invalid sex appearance! Expected: {profile.Sex} Current: {visualOrgan.Profile.Sex}");
-                Assert.That(visualOrgan.Profile.EyeColor, Is.EqualTo(profile.Appearance.EyeColor), $"Organ {uid} has invalid eye color! Expected: {profile.Appearance.EyeColor} Current: {visualOrgan.Profile.EyeColor}");
-                Assert.That(visualOrgan.Profile.SkinColor, Is.EqualTo(profile.Appearance.SkinColor), $"Organ {uid} has invalid skin color! Expected: {profile.Appearance.SkinColor} Current: {visualOrgan.Profile.SkinColor}");
-            }
+            Assert.That(visualOrgan.Profile.Sex, Is.EqualTo(profile.Sex), $"Organ {uid} has invalid sex appearance! Expected: {profile.Sex} Current: {visualOrgan.Profile.Sex}");
+            Assert.That(visualOrgan.Profile.EyeColor, Is.EqualTo(profile.Appearance.EyeColor), $"Organ {uid} has invalid eye color! Expected: {profile.Appearance.EyeColor} Current: {visualOrgan.Profile.EyeColor}");
+            Assert.That(visualOrgan.Profile.SkinColor, Is.EqualTo(profile.Appearance.SkinColor), $"Organ {uid} has invalid skin color! Expected: {profile.Appearance.SkinColor} Current: {visualOrgan.Profile.SkinColor}");
         }
 
         _bodySystem.TryGetOrgansWithComponent<VisualOrganMarkingsComponent>(body.Owner, out var markings);
@@ -132,7 +138,7 @@ public sealed class HumanoidProfileTests : GameTest
         {
             // Needed to avoid access restrictions
             var data = markingOrgan.MarkingData;
-            var groupProto = SProtoMan.Index(data.Group);
+            var groupProto = Server.ProtoMan.Index(data.Group);
             var counts = new Dictionary<HumanoidVisualLayers, int>();
             var freeMarkings = new List<Marking>();
 
@@ -143,7 +149,7 @@ public sealed class HumanoidProfileTests : GameTest
 
                 Assert.That(markingColorCount, Is.EqualTo(marking.MarkingColors.Count), $"Organ {uid} has invald amount of marking sprites! Expected: {marking.MarkingColors.Count} Current: {markingColorCount}");
                 Assert.That(_markingManager.CanBeApplied(data.Group, profile.Sex, markingProto), Is.True, $"Marking {markingProto.ID} cannot be applied to group {data.Group.Id} with sex {profile.Sex}");
-                Assert.That(data.Layers, Does.Contain(markingProto.BodyPart), $"Organ {uid} marking visual layers do not contain an entry for {markingProto.BodyPart}");
+                Assert.That(data.Layers.Contains(markingProto.BodyPart), Is.True, $"Organ {uid} marking visual layers do not contain an entry for {markingProto.BodyPart}");
                 if (!markingProto.ForcedColoring && groupProto.Appearances.GetValueOrDefault(markingProto.BodyPart)?.MatchSkin != true)
                     freeMarkings.Add(marking);
 
@@ -178,9 +184,11 @@ public sealed class HumanoidProfileTests : GameTest
     [Test]
     [TestOf(typeof(VocalComponent))]
     [TestCaseSource(nameof(_species))]
-    [Description($"Tests that a species has corresponding UI entries for their {nameof(VocalComponent)}, as well as sex mappings for their voice entry in {nameof(SpeciesPrototype)}")]
+    [Description("Tests that if a species has corresponding UI entries for their VocalComponent, as well as sex mappings for their voice entry in speciesPrototype")]
     public async Task EnsureValidVoices(string species)
     {
+        await Server.WaitIdleAsync();
+
         await Server.WaitAssertion(() =>
         {
             var proto = SProtoMan.Index<SpeciesPrototype>(species);
@@ -194,9 +202,9 @@ public sealed class HumanoidProfileTests : GameTest
 
             using (Assert.EnterMultipleScope())
             {
-                Assert.That(sexedProtos.IsSubsetOf(voiceProtos), $"Species with modified `{nameof(SpeciesPrototype.DefaultSoundsBySex)}` should have an entry added to the `voice` field in the `{nameof(SpeciesPrototype)}`");
-                Assert.That(voiceProtos.Union(sexedProtos).Any(), $"Species should have sex mappings for at least one voice set in {nameof(SpeciesPrototype)}");
-                Assert.That(proto.DefaultSoundsBySex, Has.Length.EqualTo(3), $"Species should declare a {nameof(SpeciesPrototype.DefaultSoundsBySex)} for every sex");
+                Assert.That(sexedProtos.IsSubsetOf(voiceProtos), "Species with modified `DefaultSoundsBySex` should have an entry added to the `voice` field in the `speciesPrototype`");
+                Assert.That(voiceProtos.Union(sexedProtos).Any(), "Species should have sex mappings for at least one voice set in speciesPrototype");
+                Assert.That(proto.DefaultSoundsBySex, Has.Length.EqualTo(3), "Species should declare a defaultSoundsBySex for every sex");
             }
         });
     }
