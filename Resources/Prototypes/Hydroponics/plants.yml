@@ -1945,6 +1945,12 @@
           speciesOptions:
           - prototype: FakeCapfruitPlants
           - prototype: RealCapfruitPlants
+            conditions:
+            - !type:PlantTrayCondition
+              conditions:
+              - !type:ReagentCondition
+                reagent: Vestine
+                max: 0
     lifespan: 65
     maturation: 25
     production: 25
