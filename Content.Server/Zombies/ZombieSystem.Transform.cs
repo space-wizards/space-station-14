@@ -342,13 +342,7 @@ public sealed partial class ZombieSystem
         }
 
         // forcibly empties hands (even if they contain something sticky/unremovable)
-        _hands.DropAll(target); // TODO refactor to force drop all if #45844 gets merged
-        // temp backup to get rid of unremovable items
-        foreach (var hand in _hands.EnumerateHands(target))
-        {
-            if (_containerSystem.TryGetContainer(target, hand, out var handContainer))
-                _containerSystem.EmptyContainer(handContainer, true);
-        }
+        _hands.DropAll(target, force:true);
 
         // the zombie is now clumsy. it will drop anything handed to it.
         _statusEffects.TrySetStatusEffectDuration(target, ClumsyZombieStatus);

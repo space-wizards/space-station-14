@@ -124,12 +124,13 @@ public abstract partial class SharedHandsSystem
         bool checkActionBlocker = true,
         bool animate = true,
         HandsComponent? handsComp = null,
-        ItemComponent? item = null)
+        ItemComponent? item = null,
+        bool forceDrop = false)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        if (!HandIsEmpty(ent, hand) && !TryDrop(ent, hand, checkActionBlocker: checkActionBlocker))
+        if (!HandIsEmpty(ent, hand) && !TryDrop(ent, hand, checkActionBlocker: checkActionBlocker, force: forceDrop))
             return false;
 
         return TryPickup(ent, entity, hand, checkActionBlocker, animate: animate, handsComp: handsComp, item: item);
