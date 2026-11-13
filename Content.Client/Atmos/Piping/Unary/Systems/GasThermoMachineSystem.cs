@@ -1,4 +1,5 @@
 using Content.Client.Atmos.UI;
+using Content.Shared.Atmos.Portable.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Piping.Unary.Systems;
 
@@ -8,20 +9,20 @@ public sealed partial class GasThermoMachineSystem : SharedGasThermoMachineSyste
 {
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<GasThermoMachineComponent, AfterAutoHandleStateEvent>(OnGasAfterState);
-    }
-
+    [SubscribeLocalEvent]
     private void OnGasAfterState(Entity<GasThermoMachineComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        DirtyUI(ent.Owner, ent.Comp);
+        DirtyUI(ent);
+
+        if (_ui.TryGetOpenUi(ent.Owner, SpaceHeaterUiKey.Key, out var spaceHeaterUi))  // Space Heater also utilizes GasThermoMachineComponent
+        {
+            spaceHeaterUi.Update();
+        }
     }
 
-    protected override void DirtyUI(EntityUid uid, GasThermoMachineComponent? thermoMachine, UserInterfaceComponent? ui = null)
+    protected override void DirtyUI(Entity<GasThermoMachineComponent> ent, UserInterfaceComponent? ui = null)
     {
-        if (_ui.TryGetOpenUi<GasThermomachineBoundUserInterface>(uid, ThermomachineUiKey.Key, out var bui))
+        if (_ui.TryGetOpenUi<GasThermomachineBoundUserInterface>(ent.Owner, ThermomachineUiKey.Key, out var bui))
         {
             bui.Update();
         }
