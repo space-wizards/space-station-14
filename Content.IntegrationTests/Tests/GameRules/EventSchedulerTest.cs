@@ -17,7 +17,7 @@ public sealed partial class EventSchedulerTest : GameTest
         Dirty = true,
         DummyTicker = false,
         Connected = true,
-        Map = PoolManager.TestStation
+        Map = PoolManager.TestStation,
     };
 
     [SidedDependency(Side.Server)] private EventManagerSystem _eventMan = default!;
