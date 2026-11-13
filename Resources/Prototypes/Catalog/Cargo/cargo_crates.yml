@@ -1,0 +1,173 @@
+- type: cargoCrate
+  id: CrateSteel
+  entity: CrateGenericSteel
+  containerId: entity_storage
+  maxItems: 30
+  cost: 50
+
+- type: cargoCrate
+  id: CratePlastic
+  entity: CratePlastic
+  containerId: entity_storage
+  maxItems: 30
+  cost: 50
+
+- type: cargoCrate
+  id: WrappedParcel
+  entity: WrappedParcel
+  containerId: contents
+  maxItems: 1
+  cost: 20
+
+- type: cargoCrate
+  id: CratePlasma
+  entity: CratePlasma
+  containerId: entity_storage
+  required: true
+  maxItems: 30
+  cost: 100
+
+- type: cargoCrate
+  id: CrateSecgear
+  entity: CrateSecgear
+  containerId: entity_storage
+  required: true
+  maxItems: 30
+  cost: 100
+
+- type: cargoCrate
+  id: CrateSecureScience
+  entity: CrateScienceSecure
+  containerId: entity_storage
+  required: true
+  maxItems: 30
+  cost: 100
+
+- type: cargoCrate
+  id: CrateFreezer
+  entity: CrateFreezer
+  containerId: entity_storage
+  required: true
+  maxItems: 30
+  cost: 80
+
+- type: cargoCrate
+  id: CrateHydroponics
+  entity: CrateHydroponics
+  containerId: entity_storage
+  maxItems: 30
+  cost: 50
+
+- type: cargoCrate
+  id: CrateMedical
+  entity: CrateMedical
+  containerId: entity_storage
+  maxItems: 30
+  cost: 50
+
+- type: cargoCrate
+  id: CrateRadiation
+  entity: CrateRadiation
+  containerId: entity_storage
+  maxItems: 30
+  cost: 80
+
+- type: cargoCrate
+  id: CrateInternals
+  entity: CrateInternals
+  containerId: entity_storage
+  maxItems: 30
+  cost: 50
+
+- type: cargoCrate
+  id: CrateElectrical
+  entity: CrateElectrical
+  containerId: entity_storage
+  maxItems: 30
+  cost: 50
+
+- type: cargoCrate
+  id: CrateEngineering
+  entity: CrateEngineering
+  containerId: entity_storage
+  maxItems: 30
+  cost: 60
+
+- type: cargoCrate
+  id: CrateScience
+  entity: CrateScience
+  containerId: entity_storage
+  maxItems: 30
+  cost: 60
+
+- type: cargoCrate
+  id: CrateEngineeringSecure
+  entity: CrateEngineeringSecure
+  containerId: entity_storage
+  required: true
+  maxItems: 30
+  cost: 100
+
+- type: cargoCrate
+  id: CrateMedicalSecure
+  entity: CrateMedicalSecure
+  containerId: entity_storage
+  required: true
+  maxItems: 30
+  cost: 100
+
+- type: cargoCrate
+  id: CrateChemistrySecure
+  entity: CrateChemistrySecure
+  containerId: entity_storage
+  required: true
+  maxItems: 30
+  cost: 100
+
+- type: cargoCrate
+  id: CrateScienceSecure
+  entity: CrateScienceSecure
+  containerId: entity_storage
+  required: true
+  maxItems: 30
+  cost: 100
+
+- type: cargoCrate
+  id: CrateHydroSecure
+  entity: CrateHydroSecure
+  containerId: entity_storage
+  required: true
+  maxItems: 30
+  cost: 100
+
+- type: cargoCrate
+  id: CrateWeaponSecure
+  entity: CrateWeaponSecure
+  containerId: entity_storage
+  required: true
+  maxItems: 30
+  cost: 100
+
+- type: cargoCrate
+  id: CrateCommandSecure
+  entity: CrateCommandSecure
+  containerId: entity_storage
+  required: true
+  maxItems: 30
+  cost: 100
+
+- type: cargoCrate
+  id: CrateLivestock
+  entity: CrateLivestock
+  containerId: entity_storage
+  required: true
+  maxItems: 30
+  cost: 100
+
+- type: cargoCrate
+  id: CratePirate
+  entity: CratePirate
+  containerId: entity_storage
+  required: true
+  maxItems: 30
+  cost: 500

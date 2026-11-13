@@ -54,9 +54,7 @@
     sprite: Objects/Devices/mousetrap.rsi
     state: mousetrap
   product: BoxMousetrap
-  container:
-    entity: WrappedParcel
-    containerId: contents
+  container: CrateSteel
   cost: 500
   category: cargoproduct-category-name-janitorial
   group: market
