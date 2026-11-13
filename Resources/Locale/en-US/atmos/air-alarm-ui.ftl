@@ -80,8 +80,10 @@ air-alarm-ui-vent-internal-bound-label = Internal bound
 
 air-alarm-ui-scrubber-pump-direction-label = Direction
 air-alarm-ui-scrubber-volume-rate-label = Rate (L)
+air-alarm-ui-scrubber-target-pressure-label = Target pressure (kPa)
 air-alarm-ui-scrubber-wide-net-label = WideNet
-air-alarm-ui-scrubber-select-all-gases-label = Select all
+air-alarm-ui-scrubber-select-all-gases-label = Filter all
+air-alarm-ui-scrubber-overflow-all-gases-label = Overflow all
 air-alarm-ui-scrubber-deselect-all-gases-label = Deselect all
 
 ### Thresholds

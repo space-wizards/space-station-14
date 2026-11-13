@@ -15,8 +15,10 @@ public sealed partial class GasVentScrubberData : BaseAtmosDeviceData
     }
 
     public HashSet<Gas> FilterGases { get; set; } = new(DefaultFilterGases);
+    public HashSet<Gas> OverflowGases { get; set; } = new();
     public ScrubberPumpDirection PumpDirection { get; set; } = ScrubberPumpDirection.Scrubbing;
     public float VolumeRate { get; set; } = 200f;
+    public float TargetPressure { get; set; } = Atmospherics.OneAtmosphere;
     public bool WideNet { get; set; } = false;
     public bool AirAlarmPanicWireCut { get; set; }
 
@@ -31,14 +33,22 @@ public sealed partial class GasVentScrubberData : BaseAtmosDeviceData
         Gas.Frezon
     };
 
+    public static HashSet<Gas> DefaultOverflowGases = new()
+    {
+        Gas.Oxygen,
+        Gas.Nitrogen
+    };
+
     // Presets for 'dumb' air alarm modes
 
     public static GasVentScrubberData FilterModePreset = new GasVentScrubberData
     {
         Enabled = true,
         FilterGases = new(GasVentScrubberData.DefaultFilterGases),
+        OverflowGases = [],
         PumpDirection = ScrubberPumpDirection.Scrubbing,
         VolumeRate = 200f,
+        TargetPressure = Atmospherics.OneAtmosphere,
         WideNet = false
     };
 
@@ -46,8 +56,10 @@ public sealed partial class GasVentScrubberData : BaseAtmosDeviceData
     {
         Enabled = true,
         FilterGases = new(GasVentScrubberData.DefaultFilterGases),
+        OverflowGases = new(GasVentScrubberData.DefaultOverflowGases),
         PumpDirection = ScrubberPumpDirection.Scrubbing,
         VolumeRate = 200f,
+        TargetPressure = Atmospherics.OneAtmosphere,
         WideNet = true
     };
 
@@ -55,9 +67,11 @@ public sealed partial class GasVentScrubberData : BaseAtmosDeviceData
     {
         Enabled = false,
         Dirty = true,
-        FilterGases = new(GasVentScrubberData.DefaultFilterGases),
+        FilterGases = [],
+        OverflowGases = [],
         PumpDirection = ScrubberPumpDirection.Scrubbing,
         VolumeRate = 200f,
+        TargetPressure = Atmospherics.OneAtmosphere,
         WideNet = false
     };
 
@@ -66,20 +80,11 @@ public sealed partial class GasVentScrubberData : BaseAtmosDeviceData
         Enabled = true,
         Dirty = true,
         FilterGases = new(GasVentScrubberData.DefaultFilterGases),
+        OverflowGases = new(GasVentScrubberData.DefaultOverflowGases),
         PumpDirection = ScrubberPumpDirection.Siphoning,
         VolumeRate = 200f,
+        TargetPressure = 0f,
         WideNet = true
-    };
-
-    public static GasVentScrubberData ReplaceModePreset = new GasVentScrubberData
-    {
-        Enabled = true,
-        IgnoreAlarms = true,
-        Dirty = true,
-        FilterGases = new(GasVentScrubberData.DefaultFilterGases),
-        PumpDirection = ScrubberPumpDirection.Siphoning,
-        VolumeRate = 200f,
-        WideNet = false
     };
 }
 
