@@ -42,8 +42,14 @@ public sealed partial class KudzuComponent : Component
     public float GrowthTickChance = 1f;
 
     /// <summary>
-    /// number of sprite variations for kudzu
+    /// Number of sprite variations for kudzu
     /// </summary>
     [DataField]
     public int SpriteVariants = 3;
+
+    /// <summary>
+    /// At which growth level kudzu should start blocking vision.
+    /// </summary>
+    [DataField]
+    public int? BlockVisionAtLevel = null;
 }
