@@ -10,6 +10,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Electrocution;
+using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
@@ -58,7 +59,6 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private TurfSystem _turf = default!;
 
     private static readonly ProtoId<StatusEffectPrototype> StatusKeyIn = "Electrocution";
-    private static readonly ProtoId<DamageTypePrototype> DamageType = "Shock";
     private static readonly ProtoId<TagPrototype> WindowTag = "Window";
 
     // Multiply and shift the log scale for shock damage.
@@ -289,7 +289,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
                     entity,
                     uid,
                     node,
-                    (int) (electrified.ShockDamage * MathF.Pow(RecursiveDamageMultiplier, depth) * damageScalar),
+                    (electrified.ShockDamage * MathF.Pow(RecursiveDamageMultiplier, depth) * damageScalar),
                     TimeSpan.FromSeconds(electrified.ShockTime * MathF.Pow(RecursiveTimeMultiplier, depth) * timeScalar),
                     true,
                     electrified.SiemensCoefficient);
@@ -319,7 +319,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
 
     /// <inheritdoc/>
     public override bool TryDoElectrocution(
-        EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
+        EntityUid uid, EntityUid? sourceUid, DamageSpecifier shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
         StatusEffectsComponent? statusEffects = null, bool ignoreInsulation = false)
     {
         if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient, ignoreInsulation)
@@ -334,7 +334,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         EntityUid uid,
         EntityUid sourceUid,
         Node node,
-        int shockDamage,
+        FixedPoint2 shockDamage,
         TimeSpan time,
         bool refresh,
         float siemensCoefficient = 1f,
@@ -396,18 +396,29 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         return true;
     }
 
+    private bool DoCommonElectrocution(EntityUid uid,
+        EntityUid? sourceUid,
+        FixedPoint2 shockDamage,
+        TimeSpan time,
+        bool refresh,
+        float siemensCoefficient = 1f,
+        StatusEffectsComponent? statusEffects = null)
+    {
+        return DoCommonElectrocution(uid, sourceUid, new DamageSpecifier(ProtoMan.Index(DamageType), shockDamage), time, refresh, siemensCoefficient, statusEffects);
+    }
+
     private bool DoCommonElectrocution(EntityUid uid, EntityUid? sourceUid,
-        int? shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
+        DamageSpecifier shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
         StatusEffectsComponent? statusEffects = null)
     {
         if (siemensCoefficient <= 0)
             return false;
 
-        if (shockDamage != null)
+        if (!shockDamage.AnyPositive())
         {
-            shockDamage = (int) (shockDamage * siemensCoefficient);
+            shockDamage *= siemensCoefficient;
 
-            if (shockDamage.Value <= 0)
+            if (!shockDamage.AnyPositive())
                 return false;
         }
 
@@ -431,14 +442,10 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
 
 
         // TODO: Sparks here.
-
-        if (shockDamage is { } dmg)
+        if (_damageable.TryChangeDamage(uid, shockDamage, out var damage, origin: sourceUid))
         {
-            if (_damageable.TryChangeDamage(uid, new DamageSpecifier(ProtoMan.Index(DamageType), dmg), out var damage, origin: sourceUid))
-            {
-                _adminLogger.Add(LogType.Electrocution,
-                    $"{ToPrettyString(uid):entity} received {damage:damage} powered electrocution damage{(sourceUid != null ? " from " + ToPrettyString(sourceUid.Value) : ""):source}");
-            }
+            _adminLogger.Add(LogType.Electrocution,
+                $"{ToPrettyString(uid):entity} received {damage:damage} powered electrocution damage{(sourceUid != null ? " from " + ToPrettyString(sourceUid.Value) : ""):source}");
         }
 
         _stuttering.DoStutter(uid, time * StutteringTimeMultiplier, refresh);
