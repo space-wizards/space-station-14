@@ -397,6 +397,42 @@ public partial class AtmosphereSystem
     }
 
     /// <summary>
+    /// Queues and sets tile radiation for a tritium fire on a grid tile.
+    /// </summary>
+    /// <param name="location">The tile atmosphere position where the fire occurs.</param>
+    /// <param name="burnedFuel">The total amount of tritium consumed.</param>
+    [PublicAPI]
+    public void QueueTritiumFireRadiation(TileAtmosphere location, float burnedFuel)
+    {
+        float radIntensity;
+        if (burnedFuel <= Atmospherics.TritiumFireRadThreshold)
+        {
+            radIntensity = burnedFuel * Atmospherics.TritiumFireRadMultiplier;
+        }
+        else
+        {
+            var excessFuel = burnedFuel - Atmospherics.TritiumFireRadThreshold;
+            radIntensity = (burnedFuel * Atmospherics.TritiumFireRadMultiplier) / (1f + Atmospherics.TritiumFireRadDropoff * excessFuel);
+        }
+
+        if (radIntensity < _rad.MinIntensity)
+            return;
+
+        var gridUid = location.GridIndex;
+        if (!gridUid.IsValid())
+            return;
+
+        _rad.SetTileRadiation(
+            gridUid,
+            location.GridIndices,
+            Atmospherics.TritiumFireSourceId,
+            radIntensity,
+            Atmospherics.TritiumFireSlope,
+            Atmospherics.TritiumFireHalfLife
+        );
+    }
+
+    /// <summary>
     /// Checks if a tile on a grid is air-blocked in the specified directions.
     /// This only checks for if the current tile, and only the current tile, is blocking
     /// air.
