@@ -25,6 +25,7 @@ public partial class ChatBox : UIWidget, IEntityLinkClickHandler
 
     private readonly ISawmill _sawmill;
     private readonly ChatUIController _controller;
+    private readonly List<ChatMessage> _displayedMessages = new();
 
     public bool Main { get; set; }
 
@@ -70,6 +71,7 @@ public partial class ChatBox : UIWidget, IEntityLinkClickHandler
         var color = msg.MessageColorOverride ?? msg.Channel.TextColor();
 
         AddLine(msg.WrappedMessage, color);
+        _displayedMessages.Add(msg);
     }
 
     private void OnHighlightsUpdated(string highlights)
@@ -85,6 +87,7 @@ public partial class ChatBox : UIWidget, IEntityLinkClickHandler
     public void Repopulate()
     {
         Contents.Clear();
+        _displayedMessages.Clear();
 
         foreach (var message in _controller.History)
         {
@@ -109,6 +112,7 @@ public partial class ChatBox : UIWidget, IEntityLinkClickHandler
     private void OnChannelFilter(ChatChannel channel, bool active)
     {
         Contents.Clear();
+        _displayedMessages.Clear();
 
         foreach (var message in _controller.History)
         {
@@ -133,6 +137,25 @@ public partial class ChatBox : UIWidget, IEntityLinkClickHandler
         formatted.AddMarkupOrThrow(message);
         formatted.Pop();
         Contents.AddMessage(formatted, tagsAllowed: null);
+    }
+
+    /// <summary>
+    /// Update an existing message.
+    /// </summary>
+    /// <param name="msg">The new overriding message.</param>
+    public void UpdateMessage(ChatMessage msg)
+    {
+        var index = _displayedMessages.IndexOf(msg);
+        if (index < 0)
+            return;
+
+        var color = msg.MessageColorOverride ?? msg.Channel.TextColor();
+        var formatted = new FormattedMessage(3);
+        formatted.PushColor(color);
+        formatted.AddMarkupOrThrow(msg.WrappedMessage);
+        formatted.Pop();
+
+        Contents.SetMessage(index, formatted, null, null);
     }
 
     public void Focus(ChatSelectChannel? channel = null)
