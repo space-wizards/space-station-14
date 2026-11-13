@@ -1,0 +1,33 @@
+<PanelContainer xmlns="https://spacestation14.io"
+                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                Margin="5">
+    <PanelContainer.PanelOverride>
+        <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#777777"/>
+    </PanelContainer.PanelOverride>
+    <BoxContainer Orientation="Vertical">
+        <PanelContainer HorizontalExpand="True">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#393c3f"/>
+            </PanelContainer.PanelOverride>
+            <Label Name="PlantName" HorizontalAlignment="Center"/>
+        </PanelContainer>
+        <BoxContainer Name="GrowthStagesContainer" Margin="10 10 10 0"
+                      HorizontalAlignment="Center" SeparationOverride="10"/>
+        <BoxContainer Name="ProductsContainer" Orientation="Vertical" Margin="10"
+                      SeparationOverride="8"/>
+        <BoxContainer Name="MutationsContainer" Margin="10 0 10 0" SeparationOverride="0">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <BoxContainer Name="MutatesFromSection" Orientation="Vertical">
+                    <Label Text="{Loc 'guidebook-plant-mutates-from'}" HorizontalAlignment="Center"/>
+                    <BoxContainer Name="MutatesFromContainer" Orientation="Vertical"/>
+                </BoxContainer>
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <BoxContainer Name="MutatesToSection" Orientation="Vertical">
+                    <Label Text="{Loc 'guidebook-plant-mutates-to'}" HorizontalAlignment="Center"/>
+                    <BoxContainer Name="MutatesToContainer" Orientation="Vertical"/>
+                </BoxContainer>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</PanelContainer>
