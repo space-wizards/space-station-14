@@ -1,16 +1,20 @@
 - type: edgeSpreader
   id: Kudzu
-  updatesPerSecond: 1
+  updatesPerInterval: 1
+  spreadInterval: 1
 
 - type: edgeSpreader
   id: Puddle
-  updatesPerSecond: 16
+  updatesPerInterval: 16
+  spreadInterval: 1
 
 - type: edgeSpreader
   id: Smoke
-  updatesPerSecond: 8
+  updatesPerInterval: 8
+  spreadInterval: 1
 
 - type: edgeSpreader
   id: MetalFoam
-  updatesPerSecond: 16
+  updatesPerInterval: 16
+  spreadInterval: 1
   preventSpreadOnSpaced: false
