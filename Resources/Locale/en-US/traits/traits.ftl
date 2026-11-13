@@ -68,3 +68,6 @@ trait-impaired-mobility-desc = You have difficulty moving without a mobility aid
 
 trait-blink-dyspraxia-name = Blink Dyspraxia
 trait-blink-dyspraxia-desc = Your eyelids lack coordination. Blinking requires conscious effort, and sometimes your eyes just refuse to sync up.
+
+trait-unblinking-name = Unblinking
+trait-unblinking-desc = Your eyelids don't function on their own, or don't exist. Some might find it disconcerting, but you're very good in staring contests.
