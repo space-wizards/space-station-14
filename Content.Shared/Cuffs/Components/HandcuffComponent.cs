@@ -1,3 +1,4 @@
+using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -9,40 +10,52 @@ namespace Content.Shared.Cuffs.Components;
 public sealed partial class HandcuffComponent : Component
 {
     /// <summary>
-    ///     The time it takes to cuff an entity.
+    /// The time it takes to cuff an entity.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float CuffTime = 3.5f;
 
     /// <summary>
-    ///     The time it takes to uncuff an entity.
+    /// The time it takes to uncuff an entity.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float UncuffTime = 3.5f;
 
     /// <summary>
-    ///     The time it takes for a cuffed entity to uncuff itself.
+    /// The time it takes for a cuffed entity to uncuff itself.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float BreakoutTime = 15f;
 
     /// <summary>
-    ///     If an entity being cuffed is stunned, this amount of time is subtracted from the time it takes to add/remove their cuffs.
+    /// If an entity being cuffed is stunned, this amount of time is subtracted from the time it takes to add/remove their cuffs.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float StunBonus = 2f;
 
     /// <summary>
-    ///     Will the cuffs break when removed?
+    /// Will the cuffs break when removed?
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool BreakOnRemove;
 
     /// <summary>
-    ///     Will the cuffs break when removed?
+    /// Will the cuffs break when removed?
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntProtoId? BrokenPrototype;
+
+    /// <summary>
+    /// If set, the cuffs will break if the cuffed entity takes total damage over the threshold.
+    /// </summary>
+    [DataField]
+    public FixedPoint2? BreakOnDamageThreshold;
+
+    /// <summary>
+    /// Tracks the damage the wearer have taken while wearing the cuffs so far.
+    /// </summary>
+    [DataField]
+    public FixedPoint2 DamageWhileWorn;
 
     /// <summary>
     /// Whether or not these cuffs are in the process of being removed.
@@ -60,13 +73,13 @@ public sealed partial class HandcuffComponent : Component
     public bool Used;
 
     /// <summary>
-    ///     The path of the RSI file used for the player cuffed overlay.
+    /// The path of the RSI file used for the player cuffed overlay.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string? CuffedRSI = "Objects/Misc/handcuffs.rsi";
 
     /// <summary>
-    ///     The iconstate used with the RSI file for the player cuffed overlay.
+    /// The iconstate used with the RSI file for the player cuffed overlay.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public string? BodyIconState = "body-overlay";
@@ -77,18 +90,33 @@ public sealed partial class HandcuffComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public Color Color = Color.White;
 
+    /// <summary>
+    /// Sound that plays when a cuffing action is started.
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier StartCuffSound = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_start.ogg");
 
+    /// <summary>
+    /// Sound that plays when a cuffing action is successful.
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier EndCuffSound = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_end.ogg");
 
+    /// <summary>
+    /// Sound that plays when a cuffed entity starts to break out on their own.
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier StartBreakoutSound = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_breakout_start.ogg");
 
+    /// <summary>
+    /// Sound that plays when another entity starts to uncuff the cuffed entity.
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier StartUncuffSound = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_takeoff_start.ogg");
 
+    /// <summary>
+    /// Sound that plays when uncuffing is successful.
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier EndUncuffSound = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_takeoff_end.ogg");
 }
