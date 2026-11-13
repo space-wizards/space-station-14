@@ -110,7 +110,6 @@
     messages: null
   - type: Tag
     tags:
-    - ForceFixRotations
     - Window
     - SmeltingImmune
 
@@ -205,8 +204,6 @@
     messages: null
   - type: Tag
     tags:
-    - ForceFixRotations
-    - Window
     - SmeltingImmune
 
 - type: entity
