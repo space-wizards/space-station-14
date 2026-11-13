@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DoAfter;
 using Robust.Shared.Map;
@@ -17,7 +18,7 @@ public partial record struct SuitSensorStatusPayload : INetworkPayload
 [DataDefinition, Serializable, NetSerializable]
 public partial struct SuitSensorStatus : IEquatable<SuitSensorStatus>
 {
-    public SuitSensorStatus(NetEntity ownerUid, NetEntity suitSensorUid, string name, string job, string jobIcon, List<string> jobDepartments)
+    public SuitSensorStatus(NetEntity ownerUid, NetEntity suitSensorUid, string name, string job, string jobIcon, List<string> jobDepartments, string? jobProto)
     {
         OwnerUid = ownerUid;
         SuitSensorUid = suitSensorUid;
@@ -25,6 +26,7 @@ public partial struct SuitSensorStatus : IEquatable<SuitSensorStatus>
         Job = job;
         JobIcon = jobIcon;
         JobDepartments = jobDepartments;
+        JobProto = jobProto;
     }
 
     public TimeSpan Timestamp;
@@ -34,6 +36,7 @@ public partial struct SuitSensorStatus : IEquatable<SuitSensorStatus>
     public string Job;
     public string JobIcon;
     public List<string> JobDepartments;
+    public string? JobProto;
     public bool IsAlive;
     public int? TotalDamage;
     public int? TotalDamageThreshold;
@@ -48,6 +51,8 @@ public partial struct SuitSensorStatus : IEquatable<SuitSensorStatus>
                && Name == other.Name
                && Job == other.Job
                && JobIcon == other.JobIcon
+               && JobProto == other.JobProto
+               && JobDepartments.SequenceEqual(other.JobDepartments)
                && IsAlive == other.IsAlive
                && TotalDamage == other.TotalDamage
                && TotalDamageThreshold == other.TotalDamageThreshold
@@ -68,6 +73,9 @@ public partial struct SuitSensorStatus : IEquatable<SuitSensorStatus>
         hashCode.Add(Name);
         hashCode.Add(Job);
         hashCode.Add(JobIcon);
+        hashCode.Add(JobProto);
+        foreach (var department in JobDepartments)
+            hashCode.Add(department);
         hashCode.Add(IsAlive);
         hashCode.Add(TotalDamage);
         hashCode.Add(TotalDamageThreshold);
