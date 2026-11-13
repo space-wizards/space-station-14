@@ -69,10 +69,10 @@ namespace Content.Server.Administration.Systems
         private readonly Dictionary<NetUserId, (TimeSpan Timestamp, bool Typing)> _typingUpdateTimestamps = new();
         private string _overrideClientName = string.Empty;
 
-        // Max message length is 2000, according to https://discord.com/developers/docs/resources/message#create-message-jsonform-params
+        // Max message length is 2000: https://discord.com/developers/docs/resources/message#create-message-jsonform-params
         private const ushort DiscordMessageMax = 2000;
 
-        // Max thread name length is 100, according to https://discord.com/developers/docs/resources/channel#start-thread-in-forum-or-media-channel-jsonform-params
+        // Max thread name length is 100: https://discord.com/developers/docs/resources/channel#start-thread-in-forum-or-media-channel-jsonform-params
         private const ushort ThreadNameMax = 100;
 
         // Maximum length a message can be before it is cut off
@@ -319,27 +319,29 @@ namespace Content.Server.Administration.Systems
                 return;
 
             // Discord messages are received on a separate thread.
-            _taskManager.RunOnMainThread(() => RelayFromDiscord(message));
+            _taskManager.RunOnMainThread(() => TryRelayFromDiscord(message.ChannelId, message.Author.Username, message.Content));
         }
 
         /// <summary>
-        ///     Relays a message sent in a Discord ahelp thread to the player it belongs to, and to all admins.
+        ///     Relays a message sent in a Discord ahelp thread of the current round to the player it belongs to,
+        ///     and to all admins.
         /// </summary>
-        private void RelayFromDiscord(Message message)
+        /// <returns>True if the channel is an ahelp thread of the current round and the message was relayed.</returns>
+        public bool TryRelayFromDiscord(ulong channelId, string author, string message)
         {
-            if (!_relayThreadOwners.TryGetValue(message.ChannelId, out var userId))
-                return;
+            if (!_relayThreadOwners.TryGetValue(channelId, out var userId))
+                return false;
 
-            var text = message.Content.Trim();
+            var text = message.Trim();
 
             // Messages with only attachments or stickers are not relayed.
             if (text == string.Empty)
-                return;
+                return false;
 
             _activeConversations[userId] = DateTime.Now;
 
             var escapedText = FormattedMessage.EscapeText(text);
-            var authorName = FormattedMessage.EscapeText(message.Author.Username);
+            var authorName = FormattedMessage.EscapeText(author);
 
             var admins = GetTargetAdmins();
             var adminMsg = new BwoinkTextMessage(
@@ -366,6 +368,8 @@ namespace Content.Server.Administration.Systems
                     Loc.GetString("bwoink-message-discord-wrap", ("senderName", playerName), ("message", escapedText)));
                 RaiseNetworkEvent(playerMsg, session.Channel);
             }
+
+            return true;
         }
 
         private async void ProcessQueue(NetUserId userId, Queue<DiscordRelayedData> messages)
