@@ -5,35 +5,18 @@ namespace Content.Shared.CCVar;
 public sealed partial class CCVars
 {
     /// <summary>
-    ///     The role that will get mentioned if a new SOS ahelp comes in.
+    ///     The role that will get mentioned in the ahelp thread if a new SOS ahelp comes in.
     /// </summary>
     public static readonly CVarDef<string> DiscordAhelpMention =
         CVarDef.Create("discord.on_call_ping", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
     /// <summary>
-    ///     URL of the discord webhook to relay unanswered ahelp messages.
+    ///     The ID of the Discord forum channel to relay ahelp messages to. A thread is created per player per round,
+    ///     and messages sent in that thread are relayed back to the player.
+    ///     This requires the Discord Integration to be enabled and configured.
     /// </summary>
-    public static readonly CVarDef<string> DiscordOnCallWebhook =
-        CVarDef.Create("discord.on_call_webhook", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
-
-    /// <summary>
-    ///     URL of the Discord webhook which will relay all ahelp messages.
-    /// </summary>
-    public static readonly CVarDef<string> DiscordAHelpWebhook =
-        CVarDef.Create("discord.ahelp_webhook", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
-
-    /// <summary>
-    ///     The server icon to use in the Discord ahelp embed footer.
-    ///     Valid values are specified at https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure.
-    /// </summary>
-    public static readonly CVarDef<string> DiscordAHelpFooterIcon =
-        CVarDef.Create("discord.ahelp_footer_icon", string.Empty, CVar.SERVERONLY);
-
-    /// <summary>
-    ///     The avatar to use for the webhook. Should be an URL.
-    /// </summary>
-    public static readonly CVarDef<string> DiscordAHelpAvatar =
-        CVarDef.Create("discord.ahelp_avatar", string.Empty, CVar.SERVERONLY);
+    public static readonly CVarDef<string> DiscordAHelpForumChannelId =
+        CVarDef.Create("discord.ahelp_forum_channel_id", string.Empty, CVar.SERVERONLY);
 
     /// <summary>
     ///     URL of the Discord webhook which will relay all custom votes. If left empty, disables the webhook.
