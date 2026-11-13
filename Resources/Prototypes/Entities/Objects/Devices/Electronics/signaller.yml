@@ -24,6 +24,7 @@
     tags:
     - Payload
     - RemoteSignaller
+    - SolarFlareDeviceLinkSourceTarget
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice

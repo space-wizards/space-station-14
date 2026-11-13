@@ -1,2 +1,2 @@
-station-event-solar-flare-start-announcement = A solar flare has been detected near the station. Some communication channels may not function.
-station-event-solar-flare-end-announcement = The solar flare ended. Communication channels no longer affected.
+station-event-solar-flare-start-announcement = A solar flare has been detected near the station. Some communication channels may become unavailable, and some machines and electronic devices may malfunction. Please take necessary precautions and temporarily disable critical devices.
+station-event-solar-flare-end-announcement = The solar flare ended. Communication channels and electronics are no longer affected.
