@@ -14,8 +14,12 @@ namespace Content.Client.UserInterface.Controls
         public const string StyleClassThumbFill = "thumbFill";
         public const string StyleClassThumbOutline = "thumbOutline";
         public const string StyleClassSymbol = "symbol";
+        public const string StyleClassMainLabel = "mainLabel";
+        public const string StyleClassOffStateLabel = "offStateLabel";
+        public const string StyleClassOnStateLabel = "onStateLabel";
 
         public const string StylePropertySeparation = "separation";
+        public const string StyleClassColorStateLabels = "colorStateLabels";
 
         private const int DefaultSeparation = 0;
 
@@ -79,19 +83,27 @@ namespace Content.Client.UserInterface.Controls
                 VerticalAlignment = VAlignment.Center,
             };
 
-            Label = new Label();
-            Label.Visible = false;
+            Label = new Label
+            {
+                StyleClasses = { StyleClassMainLabel },
+                Visible = false,
+                HorizontalExpand = true
+            };
 
-            OffStateLabel = new Label();
-            OffStateLabel.Text = Loc.GetString("toggle-switch-default-off-state-label");
-            OffStateLabel.ReservesSpace = true;
+            OffStateLabel = new Label
+            {
+                StyleClasses = { StyleClassOffStateLabel },
+                Text = Loc.GetString("toggle-switch-default-off-state-label"),
+                ReservesSpace = true,
+            };
 
-            OnStateLabel = new Label();
-            OnStateLabel.Text = Loc.GetString("toggle-switch-default-on-state-label");
-            OnStateLabel.ReservesSpace = true;
-            OnStateLabel.Visible = false;
-
-            Label.HorizontalExpand = true;
+            OnStateLabel = new Label
+            {
+                StyleClasses = { StyleClassOnStateLabel },
+                Text = Loc.GetString("toggle-switch-default-on-state-label"),
+                ReservesSpace = true,
+                Visible = false,
+            };
 
             AddChild(Label);
             AddChild(TrackFill);
