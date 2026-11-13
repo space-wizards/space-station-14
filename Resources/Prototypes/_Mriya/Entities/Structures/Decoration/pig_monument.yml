@@ -1,0 +1,26 @@
+- type: entity
+  parent: BaseStructure
+  id: PigMonument
+  name: pig monument
+  description: |-
+    This is the pig monument!
+    "To the eternal nourisher of the cosmic people"
+  components:
+  - type: Sprite
+    sprite: _Mriya/Structures/Decoration/pig_monument.rsi
+    state: icon
+    drawdepth: Mobs
+    noRot: true
+    offset: "0.0,0.5"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.55,-0.25,0.55,0.45"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
