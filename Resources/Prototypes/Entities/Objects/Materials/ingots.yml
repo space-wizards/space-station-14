@@ -46,6 +46,17 @@
 
 - type: entity
   parent: IngotGold
+  id: IngotGold10
+  name: gold bar
+  suffix: 10
+  components:
+  - type: Sprite
+    state: gold
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: IngotGold
   id: IngotGold1
   name: gold bar
   suffix: Single
@@ -83,6 +94,17 @@
       reagents:
       - ReagentId: Silver
         Quantity: 10
+
+- type: entity
+  parent: IngotSilver
+  id: IngotSilver10
+  name: silver bar
+  suffix: 10
+  components:
+  - type: Sprite
+    state: silver
+  - type: Stack
+    count: 10
 
 - type: entity
   parent: IngotSilver
