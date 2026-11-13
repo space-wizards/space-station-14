@@ -92,6 +92,17 @@
     sprite: Clothing/Ears/Headsets/centcom.rsi
 
 - type: entity
+  parent: ClothingHeadsetCentCom
+  id: ClothingHeadsetCentComLawyer # Common/Security keys instead of a master key
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCentCom
+      - EncryptionKeyCommon
+      - EncryptionKeySecurity
+
+- type: entity
   parent: [ClothingHeadset, BaseCommandContraband]
   id: ClothingHeadsetCommand
   name: command headset

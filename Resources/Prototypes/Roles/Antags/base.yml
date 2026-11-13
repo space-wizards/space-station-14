@@ -2,6 +2,7 @@
   abstract: true
   id: BaseAntagSpecifier
   jobBlacklist:
+  - CentralCommandLawyer
   - CentralCommandOfficial
   - DeathSquad
   - ERTLeader
