@@ -1,8 +1,6 @@
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
 using Content.Shared.Botany.Items.Components;
-using Content.Shared.EntityEffects;
-using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Random.Helpers;
 using JetBrains.Annotations;
@@ -13,39 +11,11 @@ namespace Content.Shared.Botany.Systems;
 
 public sealed partial class BotanySystem
 {
-    [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
-
-    [SubscribeLocalEvent]
-    private void OnProduceExamined(Entity<ProduceComponent> ent, ref ExaminedEvent args)
-    {
-        if (!TryGetPlantComponent<PlantComponent>(ent.Comp.PlantData, ent.Comp.PlantProtoId, out var plant))
-            return;
-
-        using (args.PushGroup(nameof(ProduceComponent)))
-        {
-            foreach (var m in plant.Mutations)
-            {
-                // Don't show mutations that have no effect on produce (sentience)
-                if (!m.AppliesToProduce)
-                    continue;
-
-                if (m.Description != null)
-                    args.PushMarkup(Loc.GetString(m.Description));
-            }
-        }
-    }
-
     private void ProduceGrown(Entity<ProduceComponent> ent)
     {
         if (!TryGetPlantComponent<PlantComponent>(ent.Comp.PlantData, ent.Comp.PlantProtoId, out var plant)
             || !TryGetPlantComponent<PlantChemicalsComponent>(ent.Comp.PlantData, ent.Comp.PlantProtoId, out var chems))
             return;
-
-        foreach (var mutation in plant.Mutations)
-        {
-            if (mutation.AppliesToProduce)
-                _entityEffects.TryApplyEffect(ent.Owner, mutation.Effect);
-        }
 
         _solutionContainer.EnsureSolution(ent.Owner, ent.Comp.TargetSolution, out var solution);
         solution.Comp.Solution.RemoveAllSolution();

@@ -202,6 +202,7 @@
   - PlantTraitScream
   - PlantTraitUnviable
   - PlantTraitSeedless
+  - PlantTraitSlippery
 
 # for plant lifecycle clones
 - type: cloningSettings

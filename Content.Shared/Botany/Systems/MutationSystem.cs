@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Atmos;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
@@ -31,6 +30,24 @@ public sealed partial class PlantMutationSystem : EntitySystem
     [Dependency] private EntityQuery<PlantComponent> _plantQuery;
 
     /// <summary>
+    /// Resolves mutation data from overrides, checks the plant override, then the passed override (from mutation list), and finally uses the original prototype for default values.
+    /// </summary>
+    [PublicAPI]
+    public static ResolvedPlantMutation ResolveMutation(
+        RandomPlantMutationOverride mutation,
+        PlantComponent plant,
+        IPrototypeManager prototypes)
+    {
+        var prototype = prototypes.Index(mutation.Prototype);
+        plant.MutationOverrides.TryGetValue(mutation.Prototype, out var plantOverride);
+
+        return new ResolvedPlantMutation(
+            plantOverride?.Name ?? mutation.Name ?? prototype.Name,
+            plantOverride?.Description ?? mutation.Description ?? prototype.Description,
+            plantOverride?.Effect ?? mutation.Effect ?? prototype.Effect);
+    }
+
+    /// <summary>
     /// For each mutation table, go through each mutation.
     /// For each random mutation, see if it occurs on this plant this check.
     /// </summary>
@@ -41,21 +58,18 @@ public sealed partial class PlantMutationSystem : EntitySystem
             return;
 
         var mutationTable = ProtoMan.Index(mutationTableId);
-        foreach (var mutation in mutationTable.Mutations)
+        foreach (var entry in mutationTable.Mutations)
         {
             var triggers = 0;
-            while (mutation.BaseOdds * severity > triggers) // If the odds are greater than one, potentially trigger the mutation multiple times
+            ResolvedPlantMutation? mutation = null;
+            while (entry.BaseOdds * severity > triggers) // If the odds are greater than one, potentially trigger the mutation multiple times
             {
-                var odds = mutation.BaseOdds * severity - triggers;
+                var odds = entry.BaseOdds * severity - triggers;
                 triggers++;
                 if (Random(Math.Min(odds, 1.0f)))
                 {
-                    if (mutation.AppliesToPlant)
-                        _entityEffects.TryApplyEffect(ent, mutation.Effect);
-
-                    // Stat adjustments do not persist by being an attached effect, they just change the stat.
-                    if (mutation.Persists && ent.Comp.Mutations.All(m => m.Name != mutation.Name))
-                        ent.Comp.Mutations.Add(mutation);
+                    mutation ??= ResolveMutation(entry.Mutation, ent.Comp, ProtoMan);
+                    _entityEffects.TryApplyEffect(ent, mutation.Value.Effect);
                 }
             }
         }
@@ -72,9 +86,6 @@ public sealed partial class PlantMutationSystem : EntitySystem
     public void SpeciesChange(Entity<PlantDataComponent?> oldPlant, EntProtoId newPlantProto)
     {
         if (!Resolve(oldPlant, ref oldPlant.Comp, false))
-            return;
-
-        if (oldPlant.Comp.MutationPrototypes.Count == 0)
             return;
 
         if (!_net.IsServer)
@@ -132,7 +143,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
     /// Copies information from the PlantComponent on a prototype over to a given plant.
     /// </summary>
     /// <remarks>
-    /// <see cref="PlantComponent.GrowthStages"/> must stay true for the given plant.
+    /// Growth stages and mutation overrides belong to the new species rather than the cloned plant state.
     /// TODO: better support excluding fields depending on clone context.
     /// </remarks>
     private void PlantSpeciesChange(EntityUid plantUid, EntProtoId plantProto)
@@ -142,23 +153,8 @@ public sealed partial class PlantMutationSystem : EntitySystem
             return;
 
         plant.GrowthStages = newSpecies.GrowthStages;
+        plant.MutationOverrides = _serialization.CreateCopy(newSpecies.MutationOverrides, notNullableOverride: true);
         DirtyField(plantUid, plant, nameof(PlantComponent.GrowthStages));
-    }
-
-    /// <summary>
-    /// Combines mutations from the pollen and target plants.
-    /// </summary>
-    [PublicAPI]
-    public void CrossMutations(EntityUid pollenPlant, EntProtoId? pollenProtoId, EntityUid targetPlant)
-    {
-        if (!_botany.TryGetPlantComponent<PlantComponent>(pollenPlant, pollenProtoId, out var pollenCore) ||
-            !_plantQuery.TryComp(targetPlant, out var targetCore))
-            return;
-
-        // LINQ Explanation
-        // For the list of mutation effects on both plants, use a 50% chance to pick each one.
-        // Union all of the chosen mutations into one list, and pick ones with a Distinct (unique) name.
-        targetCore.Mutations = targetCore.Mutations.Where(_ => Random(0.5f)).Union(pollenCore.Mutations.Where(_ => Random(0.5f))).DistinctBy(m => m.Name).ToList();
     }
 
     /// <summary>

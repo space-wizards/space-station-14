@@ -21,6 +21,12 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+  - type: Temperature
+    temperature: 293.15
+    specificHeat: 100
+    thermalConductivity: 150
+  - type: AtmosExposed
+    exposedArea: 1
   - type: Damageable
   - type: Injurable
     damageContainer: Biological
@@ -57,8 +63,13 @@
     name: seeds-wheat-name
     packetPrototype: WheatSeeds
     productPrototypes: [ WheatBushel ]
-    mutationPrototypes: [ MeatWheatPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: MeatWheatPlants
     lifespan: 25
     maturation: 6
     production: 3
@@ -151,8 +162,13 @@
     name: seeds-banana-name
     packetPrototype: BananaSeeds
     productPrototypes: [ FoodBanana ]
-    mutationPrototypes: [ MimanaPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: MimanaPlants
     lifespan: 50
     maturation: 6
     production: 6
@@ -258,8 +274,13 @@
     name: seeds-laughin-pea-name
     packetPrototype: LaughinPeaSeeds
     productPrototypes: [ FoodLaughinPeaPod ]
-    mutationPrototypes: [ WorldPeaPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: WorldPeaPlants
     lifespan: 25
     growthStages: 3
     maturation: 7
@@ -298,8 +319,15 @@
     name: seeds-lemon-name
     packetPrototype: LemonSeeds
     productPrototypes: [ FoodLemon ]
-    mutationPrototypes: [ LemoonPlants, LimePlants, OrangePlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: LemoonPlants
+          - prototype: LimePlants
+          - prototype: OrangePlants
     lifespan: 55
     maturation: 6
     production: 6
@@ -361,8 +389,14 @@
     name: seeds-lime-name
     packetPrototype: LimeSeeds
     productPrototypes: [ FoodLime ]
-    mutationPrototypes: [ OrangePlants, LemonPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: OrangePlants
+          - prototype: LemonPlants
     lifespan: 55
     maturation: 6
     production: 6
@@ -393,8 +427,15 @@
     name: seeds-orange-name
     packetPrototype: OrangeSeeds
     productPrototypes: [ FoodOrange ]
-    mutationPrototypes: [ ExtradimensionalOrangePlants, LemonPlants, LimePlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: ExtradimensionalOrangePlants
+          - prototype: LemonPlants
+          - prototype: LimePlants
     lifespan: 55
     maturation: 6
     production: 6
@@ -528,8 +569,13 @@
     name: seeds-sugarcane-name
     packetPrototype: SugarcaneSeeds
     productPrototypes: [ Sugarcane ]
-    mutationPrototypes: [ PapercanePlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: PapercanePlants
     lifespan: 60
     maturation: 6
     production: 6
@@ -619,8 +665,13 @@
     name: seeds-towercap-name
     packetPrototype: TowercapSeeds
     productPrototypes: [ Log ]
-    mutationPrototypes: [ SteelcapPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: SteelcapPlants
     lifespan: 80
     maturation: 15
     production: 3
@@ -675,8 +726,14 @@
     name: seeds-tomato-name
     packetPrototype: TomatoSeeds
     productPrototypes: [ FoodTomato ]
-    mutationPrototypes: [ BlueTomatoPlants, BloodTomatoPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: BlueTomatoPlants
+          - prototype: BloodTomatoPlants
     lifespan: 25
     maturation: 8
     production: 6
@@ -758,8 +815,13 @@
     name: seeds-bloodtomato-name
     packetPrototype: BloodTomatoSeeds
     productPrototypes: [ FoodBloodTomato ]
-    mutationPrototypes: [ KillerTomatoPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: KillerTomatoPlants
     lifespan: 60
     maturation: 8
     production: 6
@@ -837,8 +899,13 @@
     name: seeds-eggplant-name
     packetPrototype: EggplantSeeds
     productPrototypes: [ FoodEggplant ]
-    mutationPrototypes: [ EggyPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: EggyPlants
     lifespan: 25
     maturation: 6
     production: 6
@@ -937,8 +1004,13 @@
     name: seeds-apple-name
     packetPrototype: AppleSeeds
     productPrototypes: [ FoodApple ]
-    mutationPrototypes: [ GoldenApplePlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: GoldenApplePlants
     lifespan: 55
     maturation: 6
     production: 6
@@ -1041,8 +1113,14 @@
     name: seeds-onion-name
     packetPrototype: OnionSeeds
     productPrototypes: [ FoodOnion ]
-    mutationPrototypes: [ OnionRedPlants, BloonionPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: OnionRedPlants
+          - prototype: BloonionPlants
     lifespan: 25
     maturation: 10
     production: 7
@@ -1190,8 +1268,13 @@
     name: seeds-cannabis-name
     packetPrototype: CannabisSeeds
     productPrototypes: [ LeavesCannabis ]
-    mutationPrototypes: [ RainbowCannabisPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: RainbowCannabisPlants
     lifespan: 75
     maturation: 8
     production: 12
@@ -1305,8 +1388,13 @@
     name: seeds-nettle-name
     packetPrototype: NettleSeeds
     productPrototypes: [ Nettle ]
-    mutationPrototypes: [ DeathNettlePlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: DeathNettlePlants
     lifespan: 25
     maturation: 8
     production: 6
@@ -1375,8 +1463,13 @@
     name: seeds-chili-name
     packetPrototype: ChiliSeeds
     productPrototypes: [ FoodChiliPepper ]
-    mutationPrototypes: [ ChillyPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: ChillyPlants
     lifespan: 25
     maturation: 6
     production: 6
@@ -1452,8 +1545,13 @@
     name: seeds-poppy-name
     packetPrototype: PoppySeeds
     productPrototypes: [ FoodPoppy ]
-    mutationPrototypes: [ LilyPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: LilyPlants
     lifespan: 25
     maturation: 10
     production: 3
@@ -1485,8 +1583,13 @@
     name: seeds-lily-name
     packetPrototype: LilySeeds
     productPrototypes: [ FoodLily ]
-    mutationPrototypes: [ SpacemansTrumpetPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: SpacemansTrumpetPlants
     lifespan: 25
     maturation: 10
     production: 3
@@ -1518,8 +1621,13 @@
     name: seeds-aloe-name
     packetPrototype: AloeSeeds
     productPrototypes: [ FoodAloe ]
-    mutationPrototypes: [ AloeIgnisPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: AloeIgnisPlants
     lifespan: 25
     maturation: 10
     production: 3
@@ -1551,8 +1659,13 @@
     name: seeds-aloe-ignis-name
     packetPrototype: AloeIgnisSeeds
     productPrototypes: [ FoodAloeIgnis ]
-    mutationPrototypes: [ DragonTailPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: DragonTailPlants
     lifespan: 25
     maturation: 10
     production: 3
@@ -1644,8 +1757,13 @@
     name: seeds-ambrosiavulgaris-name
     packetPrototype: AmbrosiaVulgarisSeeds
     productPrototypes: [ FoodAmbrosiaVulgaris ]
-    mutationPrototypes: [ AmbrosiaDeusPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: AmbrosiaDeusPlants
     lifespan: 25
     maturation: 10
     production: 3
@@ -1721,8 +1839,13 @@
     name: seeds-galaxythistle-name
     packetPrototype: GalaxythistleSeeds
     productPrototypes: [ FoodGalaxythistle ]
-    mutationPrototypes: [ GlasstlePlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: GlasstlePlants
     lifespan: 25
     maturation: 10
     production: 3
@@ -1814,8 +1937,20 @@
     name: seeds-gatfruit-name
     packetPrototype: GatfruitSeeds
     productPrototypes: [ FoodGatfruit ]
-    mutationPrototypes: [ FakeCapfruitPlants, RealCapfruitPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: FakeCapfruitPlants
+          - prototype: RealCapfruitPlants
+            conditions:
+            - !type:PlantTrayCondition
+              conditions:
+              - !type:ReagentCondition
+                reagent: Vestine
+                max: 0
     lifespan: 65
     maturation: 25
     production: 25
@@ -1938,8 +2073,13 @@
     name: seeds-soybeans-name
     packetPrototype: SoybeanSeeds
     productPrototypes: [ FoodSoybeans ]
-    mutationPrototypes: [ KoibeanPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: KoibeanPlants
     lifespan: 25
     maturation: 6
     production: 6
@@ -2061,8 +2201,13 @@
     name: seeds-watermelon-name
     packetPrototype: WatermelonSeeds
     productPrototypes: [ FoodWatermelon ]
-    mutationPrototypes: [ HolymelonPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: HolymelonPlants
     lifespan: 55
     maturation: 12
     production: 3
@@ -2233,8 +2378,13 @@
     name: seeds-pea-name
     packetPrototype: PeaSeeds
     productPrototypes: [ FoodPeaPod ]
-    mutationPrototypes: [ LaughinPeaPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: LaughinPeaPlants
     lifespan: 25
     growthStages: 3
     maturation: 8
@@ -2306,8 +2456,13 @@
     name: seeds-pumpkin-name
     packetPrototype: PumpkinSeeds
     productPrototypes: [ FoodPumpkin ]
-    mutationPrototypes: [ BluePumpkinPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: BluePumpkinPlants
     lifespan: 55
     maturation: 10
     production: 4
@@ -2377,8 +2532,13 @@
     name: seeds-cotton-name
     packetPrototype: CottonSeeds
     productPrototypes: [ CottonBol ]
-    mutationPrototypes: [ PyrottonPlants ]
   - type: Plant
+    mutationOverrides:
+      ChangeSpecies:
+        prototype: ChangeSpecies
+        effect: !type:PlantMutateSpeciesChange
+          speciesOptions:
+          - prototype: PyrottonPlants
     lifespan: 25
     maturation: 8
     production: 3

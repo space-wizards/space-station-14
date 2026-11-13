@@ -13,7 +13,6 @@ namespace Content.Shared.Botany.Items.Systems;
 public sealed partial class BotanySwabSystem : EntitySystem
 {
     [Dependency] private BotanySystem _botany = default!;
-    [Dependency] private PlantMutationSystem _mutation = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
@@ -74,8 +73,6 @@ public sealed partial class BotanySwabSystem : EntitySystem
         else
         {
             var pollenData = ent.Comp.PlantData.Value;
-            _mutation.CrossMutations(pollenData, ent.Comp.PlantProtoId, targetPlant);
-
             // Notify growth systems to apply their per-component cross logic.
             var crossEv = new PlantCrossPollinateEvent(pollenData, ent.Comp.PlantProtoId);
             RaiseLocalEvent(targetPlant, ref crossEv);
