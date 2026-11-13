@@ -10,6 +10,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 
 namespace Content.Shared.Changeling.Systems;
 
@@ -23,6 +24,7 @@ public sealed partial class RegenerativeStasisSystem : EntitySystem
     [Dependency] private DamageableSystem _damage = default!;
     [Dependency] private BloodstreamSystem _bloodstream = default!;
     [Dependency] private SharedDeathgaspSystem _deathgasp = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
 
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<RegenerativeStasisActionComponent> ent, ref MapInitEvent args)
@@ -67,6 +69,12 @@ public sealed partial class RegenerativeStasisSystem : EntitySystem
     {
         if (args.Args.StartStasis)
             EnterStasis(ent.AsNullable(), args.Args.Target, args.Args.StasisDurationMultiplier);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnChangelingRegenerated(Entity<ContainerExpelRegeneratorsComponent> ent, ref ChangelingRegneratedEvent args)
+    {
+        _container.Remove(args.Regenerator, _container.GetContainer(ent.Owner, ent.Comp.Container));
     }
 
     /// <summary>
@@ -120,6 +128,12 @@ public sealed partial class RegenerativeStasisSystem : EntitySystem
 
         if (!ent.Comp.IsInStasis)
             return;
+
+        if (_container.TryGetContainingContainer(target, out var container))
+        {
+            var ev = new ChangelingRegneratedEvent(target);
+            RaiseLocalEvent(container.Owner, ref ev);
+        }
 
         // Heal all damage.
         _damage.ClearAllDamage(target);
@@ -176,3 +190,6 @@ public sealed partial class RegenerativeStasisSystem : EntitySystem
 /// Action event for entering/leaving the stasis.
 /// </summary>
 public sealed partial class ChangelingStasisActionEvent : InstantActionEvent;
+
+[ByRefEvent]
+public record struct ChangelingRegneratedEvent(EntityUid Regenerator);

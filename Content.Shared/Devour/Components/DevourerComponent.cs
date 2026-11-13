@@ -64,8 +64,8 @@ public sealed partial class DevourerComponent : Component
     /// <summary>
     /// The container to store the eaten entities in.
     /// </summary>
-    [ViewVariables]
-    public static string StomachContainerId = "stomach";
+    [DataField]
+    public string StomachContainerId = "stomach";
 
     /// <summary>
     /// Where the entities go when it devours them, empties when it is butchered.

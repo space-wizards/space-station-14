@@ -30,7 +30,7 @@ public sealed partial class DevourSystem : EntitySystem
     {
         //Devourer doesn't actually chew, since he sends targets right into his stomach.
         //I did it mom, I added ERP content into upstream. Legally!
-        ent.Comp.Stomach = _containerSystem.EnsureContainer<Container>(ent.Owner, DevourerComponent.StomachContainerId);
+        ent.Comp.Stomach = _containerSystem.EnsureContainer<Container>(ent.Owner, ent.Comp.StomachContainerId);
     }
 
     [SubscribeLocalEvent]

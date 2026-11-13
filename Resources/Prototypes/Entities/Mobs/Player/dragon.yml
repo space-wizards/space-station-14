@@ -158,6 +158,9 @@
     blacklist:
       components:
       - ChangelingIdentity # Changelings are getting eaten and soloing the dragon too frequently
+    stomachContainerId: stomach
+  - type: ContainerExpelRegenerators # Changelings are getting eaten and soloing the dragon too frequently
+    container: stomach
   - type: AntiRottingContainer
   - type: Tag
     tags:
