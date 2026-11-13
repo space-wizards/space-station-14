@@ -75,5 +75,17 @@ public sealed partial class ShuttleComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan? FTLCooldownOverride = null;
+
+    /// <summary>
+    /// If true, the shuttle wont damage other grids during collisions
+    /// </summary>
+    [DataField]
+    public bool Harmless = false;
+
+    /// <summary>
+    /// If true, the shuttle is immune to grid collisions
+    /// </summary>
+    [DataField]
+    public bool Invulnerable = false;
 }
 
