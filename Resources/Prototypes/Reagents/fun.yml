@@ -170,6 +170,12 @@
       - !type:Electrocute
         siemensCoefficient: 0.5
         probability: 0.5
+    Digestion:
+      metabolismRate: 2.0
+      effects:
+      - !type:Electrocute
+        siemensCoefficient: 0.5
+        probability: 0.5
 
 - type: reagent
   id: Razorium

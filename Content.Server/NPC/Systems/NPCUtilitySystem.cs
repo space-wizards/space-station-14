@@ -12,16 +12,19 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Fluids.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Maps;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Storage.Components;
+using Content.Shared.SubFloor;
 using Content.Shared.Stunnable;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Tools.Systems;
@@ -31,8 +34,11 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Whitelist;
 using Microsoft.Extensions.ObjectPool;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Server.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NPC.Systems;
@@ -59,8 +65,13 @@ public sealed partial class NPCUtilitySystem : EntitySystem
     [Dependency] private TurretTargetSettingsSystem _turretTargetSettings = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private SatiationSystem _satiation = default!;
+    [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedStealthSystem _stealth = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private EntityQuery<PuddleComponent> _puddleQuery = default!;
+    [Dependency] private SharedSubFloorHideSystem _subFloorHide = default!;
 
     private ObjectPool<HashSet<EntityUid>> _entPool =
         new DefaultObjectPool<HashSet<EntityUid>>(new SetPolicy<EntityUid>(), 256);
@@ -225,6 +236,17 @@ public sealed partial class NPCUtilitySystem : EntitySystem
             }
             case TargetAccessibleCon:
             {
+                var radius = blackboard.GetValueOrDefault<float>(blackboard.GetVisionRadiusKey(EntityManager), EntityManager);
+                if (!_interaction.InRangeAndAccessible(owner, targetUid, radius))
+                {
+                    return 0f;
+                }
+
+                if (_subFloorHide.IsHidden(targetUid))
+                {
+                    return 0f;
+                }
+
                 if (_container.TryGetContainingContainer(targetUid, out var container))
                 {
                     if (container.Owner == owner)
