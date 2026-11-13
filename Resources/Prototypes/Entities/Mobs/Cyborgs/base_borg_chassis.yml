@@ -17,6 +17,10 @@
       collection: MetalThud
   - type: CombatMode
   - type: NoSlip
+  - type: FootstepTrack
+    footprints:
+    - BloodBotprint1
+    - BloodBotprint2
   - type: StaticPrice
     price: 1250
   - type: Fixtures
