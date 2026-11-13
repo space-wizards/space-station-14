@@ -13,26 +13,26 @@
     ClothingHeadHatCardborg: 2
     ClothingOuterCardborg: 2
     ClothingHeadHatSombrero: 2
+    ClothingOuterPoncho: 2
     ClothingOuterPonchoClassic: 2
     ClothingHeadHatPwig: 2
     ClothingOuterRobesJudge: 2
-    ClothingOuterPoncho: 2
     ClothingHeadHatSantahat: 2
     ClothingOuterSanta: 2
     ClothingHeadHatSkub: 2
     ClothingOuterSkub: 2
     ClothingHeadHatBeretFrench: 2
-    ClothingOuterSuitChicken: 2
     ClothingHeadHatChickenhead: 2
+    ClothingOuterSuitChicken: 2
+    ClothingHeadHatRedRacoon: 2
+    ClothingOuterRedRacoon: 2
     ClothingOuterSuitMonkey: 2
     ClothingHeadHatPumpkin: 2
+    ClothingHeadHatCasa: 1
+    ClothingUniformJumpsuitKimono: 1
     ClothingHeadHatShrineMaidenWig: 2
     ClothingOuterSuitShrineMaiden: 2
     Gohei: 2
-    ClothingOuterSuitWitchRobes: 2
-    ClothingHeadHatWitch1: 2
-    ClothingHeadHatRedRacoon: 2
-    ClothingOuterRedRacoon: 2
     ClothingHeadPaperSack: 2
     ClothingHeadPaperSackSmile: 2
     ClothingEyesBlindfold: 1
@@ -44,9 +44,8 @@
     ClothingOuterClownPriest: 1
     ClothingMaskSadMime: 1
     ClothingMaskScaredMime: 1
-    ClothingUniformJumpsuitKimono: 1
-    ClothingHeadHatCasa: 1
-    FoodPoppy: 1
+    ClothingHeadHatHairflower: 2
+    ClothingHeadHatFlowerWreath: 2
     ClothingHeadHatGladiator: 1
     ClothingUniformJumpsuitGladiator: 1
     ClothingHeadHatCowboyBrown: 1
@@ -56,6 +55,8 @@
     ClothingShoesBootsCowboyBrown: 1
     ClothingShoesBootsCowboyBlack: 1
     ClothingShoesBootsCowboyWhite: 1
+    ClothingHeadHatWitch1: 2
+    ClothingOuterSuitWitchRobes: 2
     ClothingHeadHatWizardFake: 1
     ClothingOuterWizardFake: 1
   contrabandInventory:
