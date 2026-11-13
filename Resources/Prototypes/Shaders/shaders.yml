@@ -144,4 +144,4 @@
 - type: shader
   id: VacuumDesaturation
   kind: source
-  path: "/Textures/Shaders/vacuum_desaturation.swsl"
+  path: "/Textures/Shaders/cold_and_desaturation.swsl"
