@@ -20,6 +20,8 @@ namespace Content.Server.Atmos.Piping.EntitySystems
         [Dependency] private NodeGroupSystem _group = default!;
         [Dependency] private PopupSystem _popup = default!;
 
+        private const float MaxUnanchorPressure = 10_000f;
+
         public override void Initialize()
         {
             SubscribeLocalEvent<AtmosUnsafeUnanchorComponent, UserUnanchoredEvent>(OnUserUnanchored);
@@ -34,6 +36,13 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
             if (_atmosphere.GetContainingMixture(uid, true) is not {} environment)
                 return;
+
+            if (environment.Pressure > MaxUnanchorPressure)
+            {
+                args.FailMessage = Loc.GetString("comp-atmos-unsafe-unanchor-pressure-too-high", ("device", uid));
+                args.Cancel();
+                return;
+            }
 
             foreach (var node in nodes.Nodes.Values)
             {
