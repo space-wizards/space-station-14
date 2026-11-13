@@ -24,7 +24,7 @@
   - type: Temperature
     temperature: 293.15
     specificHeat: 100
-    thermalConductivity: 50
+    thermalConductivity: 150
   - type: AtmosExposed
     exposedArea: 1
   - type: Damageable
