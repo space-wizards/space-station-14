@@ -40,7 +40,7 @@ public sealed partial class SharedGasTileOverlayTest
             var localY = MathHelper.Mod(tileIndices.Y, SharedGasTileOverlaySystem.ChunkSize);
             int tileIndex = localX + localY * SharedGasTileOverlaySystem.ChunkSize;
 
-            var tile = chunk.TileData[tileIndex];
+            var tile = chunk.TileVisibleGasData[tileIndex];
 
             Assert.That(tile.Opacity.Count(b => b > 0), Is.EqualTo(1), $"Tile at {tileIndices} should have exactly one non-zero opacity value");
         });
