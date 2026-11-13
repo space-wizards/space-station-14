@@ -18,19 +18,19 @@ public sealed partial class EntityTableSystem : EntitySystem
         EntityTableContext? ctx = null
     )
     {
-        return GetSpawns(entTableProto, rand, ctx).FirstOrNull();
+        return GetSpawns(entTableProto.Table, rand, ctx).FirstOrNull();
     }
 
     /// <summary>
     /// Iterates once through Entities that EntitySelector provides and picks first one.
     /// </summary>
     public EntProtoId? GetFirstOrNull(
-        EntityTableSelector? entTableProto,
+        EntityTableSelector? table,
         IRobustRandom? rand = null,
         EntityTableContext? ctx = null
     )
     {
-        return GetSpawns(entTableProto, rand, ctx).FirstOrNull();
+        return GetSpawns(table, rand, ctx).FirstOrNull();
     }
 
     /// <summary>
