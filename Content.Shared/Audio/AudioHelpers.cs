@@ -1,11 +1,20 @@
 using Robust.Shared.Audio;
-using Robust.Shared.Prototypes;
+using Robust.Shared.ContentPack;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Audio
 {
     public static class AudioHelpers
     {
+        /// <summary>
+        /// Returns whether a path sound points to an existing content file.
+        /// </summary>
+        public static bool IsValidContentSound(SoundPathSpecifier? sound, IResourceManager resourceManager)
+        {
+            return sound is { Path.IsRooted: true }
+                && resourceManager.ContentFileExists(sound.Path);
+        }
+
         /// <summary>
         ///     Returns a random pitch.
         /// </summary>

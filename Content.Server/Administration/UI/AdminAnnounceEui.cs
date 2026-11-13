@@ -3,63 +3,116 @@ using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.EUI;
 using Content.Shared.Administration;
+using Content.Shared.Administration.AdminAnnounce;
+using Content.Shared.Audio;
+using Content.Shared.Chat;
+using Content.Shared.CCVar;
 using Content.Shared.Eui;
+using Robust.Shared.Audio;
+using Robust.Shared.Configuration;
+using Robust.Shared.ContentPack;
+using Robust.Shared.Player;
 
-namespace Content.Server.Administration.UI
+namespace Content.Server.Administration.UI;
+
+public sealed partial class AdminAnnounceEui : BaseEui
 {
-    public sealed partial class AdminAnnounceEui : BaseEui
+    [Dependency] private IAdminManager _adminManager = default!;
+    [Dependency] private IChatManager _chatManager = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IResourceManager _resourceManager = default!;
+
+    private readonly ChatSystem _chatSystem;
+    private readonly SharedMapSystem _mapSystem;
+
+    public AdminAnnounceEui()
     {
-        [Dependency] private IAdminManager _adminManager = default!;
-        [Dependency] private IChatManager _chatManager = default!;
-        private readonly ChatSystem _chatSystem;
+        IoCManager.InjectDependencies(this);
 
-        public AdminAnnounceEui()
+        var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+        _chatSystem = sysMan.GetEntitySystem<ChatSystem>();
+        _mapSystem = sysMan.GetEntitySystem<SharedMapSystem>();
+    }
+
+    public override void HandleMessage(EuiMessageBase msg)
+    {
+        base.HandleMessage(msg);
+
+        if (msg is not AdminAnnounceEuiMsg.DoAnnounce announce)
+            return;
+
+        if (!_adminManager.HasAdminFlag(Player, AdminFlags.Moderator))
         {
-            IoCManager.InjectDependencies(this);
-            _chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
+            Close();
+            return;
         }
 
-        public override void Opened()
+        var maxLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
+        var message = SharedChatSystem.SanitizeAnnouncement(announce.Announcement, maxLength);
+
+        if (string.IsNullOrWhiteSpace(message))
+            return;
+
+        switch (announce.AnnounceType)
         {
-            StateDirty();
+            case AdminAnnounceType.Server:
+                AnnounceServer(announce, message);
+                break;
+
+            case AdminAnnounceType.Station:
+                AnnounceStation(announce, message, maxLength);
+                break;
         }
 
-        public override EuiStateBase GetNewState()
+        if (announce.CloseAfter)
+            Close();
+    }
+
+    private void AnnounceServer(AdminAnnounceEuiMsg.DoAnnounce announce, string message)
+    {
+        _chatManager.DispatchServerAnnouncement(message, announce.Color, sender: Player);
+    }
+
+    private void AnnounceStation(
+        AdminAnnounceEuiMsg.DoAnnounce announce,
+        string message,
+        int maxLength)
+    {
+        var announcer = announce.Announcer.Trim();
+        var signature = SharedChatSystem.SanitizeAnnouncement(announce.Signature, maxLength);
+        var sound = ValidateSound(announce.Sound);
+
+        if (announce.MapId is not { } mapId)
         {
-            return new AdminAnnounceEuiState();
+            _chatSystem.DispatchGlobalAnnouncement(
+                message,
+                announcer,
+                playSound: sound != null,
+                announcementSound: sound,
+                colorOverride: announce.Color,
+                signature: signature,
+                actor: Player);
+            return;
         }
 
-        public override void HandleMessage(EuiMessageBase msg)
-        {
-            base.HandleMessage(msg);
+        if (!_mapSystem.MapExists(mapId))
+            return;
 
-            switch (msg)
-            {
-                case AdminAnnounceEuiMsg.DoAnnounce doAnnounce:
-                    if (!_adminManager.HasAdminFlag(Player, AdminFlags.Admin))
-                    {
-                        Close();
-                        break;
-                    }
+        _chatSystem.DispatchFilteredAnnouncement(
+            Filter.BroadcastMap(mapId),
+            message,
+            sender: announcer,
+            playSound: sound != null,
+            announcementSound: sound,
+            colorOverride: announce.Color,
+            signature: signature,
+            actor: Player);
+    }
 
-                    switch (doAnnounce.AnnounceType)
-                    {
-                        case AdminAnnounceType.Server:
-                            _chatManager.DispatchServerAnnouncement(doAnnounce.Announcement, sender: Player);
-                            break;
-                        // TODO: Per-station announcement support
-                        case AdminAnnounceType.Station:
-                            _chatSystem.DispatchGlobalAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer, colorOverride: Color.Gold);
-                            break;
-                    }
-
-                    StateDirty();
-
-                    if (doAnnounce.CloseAfter)
-                        Close();
-
-                    break;
-            }
-        }
+    private SoundPathSpecifier? ValidateSound(SoundPathSpecifier? sound)
+    {
+        return AudioHelpers.IsValidContentSound(sound, _resourceManager)
+            ? sound
+            : null;
     }
 }
