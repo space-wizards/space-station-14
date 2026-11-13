@@ -4,7 +4,6 @@
   name: screen
   description: Displays text or time.
   components:
-  - type: Rotatable
   - type: TextScreenTimerVisuals
     timerRow: 1
     showCentiseconds: false # Distracting when too common.
@@ -37,9 +36,6 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
-  - type: ApcPowerReceiver
-    powerLoad: 100
-  - type: ExtensionCableReceiver
   - type: Screen
   - type: DeviceNetwork
     deviceNetId: Wireless
