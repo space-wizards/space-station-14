@@ -31,7 +31,7 @@ public sealed partial class RandomPlantMutationListPrototype : IPrototype
 public sealed partial class RandomPlantMutationEntry
 {
     /// <summary>
-    /// Independent odds per point of mutation severity, rather than a relative selection weight.
+    /// Odds are rolled individually, this isn't a weight.
     /// </summary>
     [DataField]
     public float BaseOdds;
