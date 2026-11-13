@@ -1,6 +1,11 @@
+using System.Linq;
+using Content.Shared.Body;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Inventory;
+using Content.Shared.Item;
 using Content.Shared.Preferences;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Prototypes;
@@ -10,6 +15,9 @@ namespace Content.Shared.Humanoid;
 public sealed partial class HumanoidProfileSystem : EntitySystem
 {
     [Dependency] private GrammarSystem _grammar = default!;
+    [Dependency] private SharedVisualBodySystem _visualBody = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedItemSystem _item = default!;
 
     public override void Initialize()
     {
@@ -36,6 +44,51 @@ public sealed partial class HumanoidProfileSystem : EntitySystem
         if (TryComp<GrammarComponent>(ent, out var grammar))
         {
             _grammar.SetGender((ent, grammar), profile.Gender);
+        }
+    }
+
+    /// <summary>
+    /// Apply a new <see cref="EmoteSoundsPrototype"/> to an entity, updating any emote sounds.
+    /// </summary>
+    /// <param name="ent">The entity to be changed.</param>
+    /// <param name="voice">ID of the prototype.</param>
+    public void ApplyVoice(Entity<HumanoidProfileComponent?> ent, ProtoId<EmoteSoundsPrototype> voice)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        ent.Comp.Voice = voice;
+        Dirty(ent);
+
+        var voiceChanged = new VoiceChangedEvent(ent.Comp.Voice, voice);
+        RaiseLocalEvent(ent, ref voiceChanged);
+    }
+
+    /// <summary>
+    /// Apply a new <see cref="Sex"/> to an entity, updating visuals.
+    /// </summary>
+    /// <param name="ent">The entity to be changed.</param>
+    /// <param name="sex">The <see cref="Sex"/> to set the entity at.</param>
+    public void ApplySex(Entity<HumanoidProfileComponent?> ent, Sex sex)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        ent.Comp.Sex = sex;
+        Dirty(ent);
+
+        // Update visuals of clothing & body
+        var enumerator = _inventory.GetSlotEnumerator((ent, null));
+        while (enumerator.NextItem(out var item, out _))
+        {
+            _item.VisualsChanged(item);
+        }
+
+        if (_visualBody.TryGatherMarkingsData(ent.Owner, null, out var profiles, out _, out _))
+        {
+            var changedProfiles = profiles.ToDictionary(pair => pair.Key,
+                pair => pair.Value with { Sex = sex });
+            _visualBody.ApplyProfiles(ent, changedProfiles);
         }
     }
 
