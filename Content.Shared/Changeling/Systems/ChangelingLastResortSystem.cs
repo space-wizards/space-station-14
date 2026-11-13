@@ -52,3 +52,11 @@ public abstract partial class ChangelingLastResortSystem : EntitySystem
         _gibbing.Gib(args.Performer);
     }
 }
+
+/// <summary>
+/// Raised on a body after a headslug takes it over.
+/// </summary>
+/// <param name="StartStasis">Whether the body should instantly start regen stasis after being taken over.</param>
+/// <param name="StasisDurationMultiplier">Time multiplier for the regen stasis, if one is started.</param>
+[ByRefEvent]
+public record struct BodyTakenByHeadslugEvent(EntityUid Target, bool StartStasis = true, float StasisDurationMultiplier = 1f);

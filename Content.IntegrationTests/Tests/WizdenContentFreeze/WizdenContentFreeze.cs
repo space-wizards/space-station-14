@@ -34,7 +34,17 @@ public sealed class WizdenContentFreeze : GameTest
         Assert.That(recipesCount, Is.Not.GreaterThan(RecipesLimit),
             $"Do not add more new microwave recipes. Microwave recipes are frozen and need to be replaced with proper cooking mechanics. See https://github.com/space-wizards/space-station-14/issues/8524.");
 
-        Assert.That(recipesCount, Is.Not.LessThan(RecipesLimit),
-            $"You have removed microwave recipes.  Please update MicrowaveRecipesFreezeTest.RecipesLimit.");
+        var recipesCount = protoMan.Count<MicrowaveMealRecipePrototype>();
+        var recipesLimit = 219;
+
+        if (recipesCount > recipesLimit)
+        {
+            Assert.Fail($"PLEASE STOP ADDING NEW MICROWAVE RECIPES. MICROWAVE RECIPES ARE FROZEN AND NEED TO BE REPLACED WITH PROPER COOKING MECHANICS! See https://github.com/space-wizards/space-station-14/issues/8524. Keep it under {recipesLimit}. Current count: {recipesCount}");
+        }
+
+        if (recipesCount < recipesLimit)
+        {
+            Assert.Fail($"Oh, you deleted the microwave recipes? YOU ARE SO COOL! Please lower the number of recipes in MicrowaveRecipesFreezeTest from {recipesLimit} to {recipesCount} so that future contributors cannot add new recipes back.");
+        }
     }
 }

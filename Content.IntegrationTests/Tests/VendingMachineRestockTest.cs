@@ -136,7 +136,85 @@ public sealed class VendingMachineRestockTest : GameTest
                 || !proto.HasComp<VendingMachineRestockComponent>(SEntMan.ComponentFactory))
                 continue;
 
-            restockEntities.Add(proto.ID);
+            var prototypeManager = server.ResolveDependency<IPrototypeManager>();
+            var compFact = server.ResolveDependency<IComponentFactory>();
+            var entityTable = server.EntMan.System<EntityTableSystem>();
+
+            await server.WaitAssertion(() =>
+            {
+                // Collect all entity prototypes which are vending machine restocks.
+                var restockEntities = new HashSet<EntProtoId<VendingMachineRestockComponent>>();
+                foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
+                {
+                    if (proto.Abstract
+                        || pair.IsTestPrototype(proto)
+                        || !proto.HasComp<VendingMachineRestockComponent>(compFact))
+                        continue;
+
+                    restockEntities.Add(proto.ID);
+                }
+
+                // Collect all entity prototypes with `EntityTableContainerFill`s which contain those restock entities.
+                // Specifically, this is a mapping of entities-with-container-fill to their-contained-entities-which-are-restocks.
+                Dictionary<EntProtoId<EntityTableContainerFillComponent>,
+                    List<EntProtoId<VendingMachineRestockComponent>>> entitiesWhichSpawnRestocks = new();
+                foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
+                {
+                    if (!proto.TryComp<EntityTableContainerFillComponent>(out var fill, compFact))
+                        continue;
+
+                    var containers = fill.Containers;
+
+                    // We only care about the special known container.
+                    if (!containers.TryGetValue(SharedEntityStorageSystem.ContainerName, out var container))
+                        continue;
+
+                    var entitiesInProtoContainingRestock = new List<EntProtoId<VendingMachineRestockComponent>>();
+                    foreach (var (fillSpawnEntry, _) in entityTable.ListSpawns(container))
+                    {
+                        if (restockEntities.Contains(fillSpawnEntry.Id))
+                            entitiesInProtoContainingRestock.Add(fillSpawnEntry.Id);
+                    }
+
+                    if (entitiesInProtoContainingRestock.Count > 0)
+                        entitiesWhichSpawnRestocks.Add(proto.ID, entitiesInProtoContainingRestock);
+                }
+
+                // Remove all restock entities from our set which are either directly purchasable as a CargoProduct, or
+                // which are spawned by EntityTableContainerFill on a CargoProduct.
+                foreach (var proto in prototypeManager.EnumeratePrototypes<CargoProductPrototype>())
+                {
+                    // If the cargo product's product is the restock itself, just remove it.
+                    restockEntities.Remove(proto.Product.Id);
+
+                    // Check if the product is an entity which spawns a restock.
+                    if (entitiesWhichSpawnRestocks.TryGetValue(proto.Product.Id, out var restocksSpawnedByProduct))
+                    {
+                        foreach (var entry in restocksSpawnedByProduct)
+                        {
+                            restockEntities.Remove(entry);
+                        }
+
+                        entitiesWhichSpawnRestocks.Remove(proto.Product.Id);
+                    }
+                }
+                // Any entities left in restockEntities are restocks which can't be bought from Cargo.
+
+                Assert.Multiple(() =>
+                {
+                    const string restockCompName = nameof(VendingMachineRestockComponent);
+
+                    Assert.That(entitiesWhichSpawnRestocks,
+                        Has.Count.EqualTo(0),
+                        $"Some entities containing entities with {restockCompName} are unavailable for purchase: \n - {string.Join("\n - ", entitiesWhichSpawnRestocks.Keys)}");
+
+
+
+                    Assert.That(restockEntities,
+                        Has.Count.EqualTo(0),
+                        $"Some entities with {restockCompName} are unavailable for purchase: \n - {string.Join("\n - ", restockEntities)}");
+                });
+            });
         }
 
         // Collect all entity prototypes with `EntityTableContainerFill`s which contain those restock entities.

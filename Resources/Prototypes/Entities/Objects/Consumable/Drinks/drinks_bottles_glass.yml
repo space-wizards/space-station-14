@@ -330,9 +330,9 @@
     sprite: Objects/Consumable/Drinks/pwinebottle.rsi
   - type: Tag
     tags:
-    - Wine
     - DrinkBottle
     - Trash
+    - Wine
 
 - type: entity
   parent: DrinkBottlePoisonWine
@@ -347,8 +347,8 @@
         Quantity: 120
   - type: Tag
     tags:
-    - Wine
     - DrinkBottle
+    - Wine
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassBase]
@@ -382,7 +382,7 @@
     localizedLabel: reagent-name-tequila
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tequillabottle.rsi
-
+    
 - type: entity
   parent: DrinkBottleTequila
   id: DrinkTequilaBottleFull
@@ -472,9 +472,9 @@
     sprite: Objects/Consumable/Drinks/winebottle.rsi
   - type: Tag
     tags:
-    - Wine
     - DrinkBottle
     - Trash
+    - Wine
 
 - type: entity
   parent: DrinkBottleWine
@@ -488,8 +488,8 @@
         Quantity: 120
   - type: Tag
     tags:
-    - Wine
     - DrinkBottle
+    - Wine
 
 - type: entity
   name: nt cahors bottle
@@ -500,9 +500,9 @@
     sprite: Objects/Consumable/Drinks/ntcahors.rsi
   - type: Tag
     tags:
-    - Wine
     - DrinkBottle
     - Trash
+    - Wine
 
 - type: entity
   name: nt cahors bottle
@@ -517,8 +517,8 @@
         Quantity: 120
   - type: Tag
     tags:
-    - Wine
     - DrinkBottle
+    - Wine
 
 # Large bottles
 
@@ -565,7 +565,6 @@
     closeable: false # sprite is just a beer bottle, but this should be removed when there's a more appropriate sprite
   - type: Sealable
     examineTextUnsealed: "sealable-component-on-examine-is-unsealed-crown-cap" # tell the player why it can't close
-
 
 # Small glass bottles
 

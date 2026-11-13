@@ -6,6 +6,7 @@
   startingGear: BotanistGear
   icon: "JobIconBotanist"
   supervisors: job-supervisors-hop
+  guides: [ Botany ]
   access:
   - Service
   - Maintenance

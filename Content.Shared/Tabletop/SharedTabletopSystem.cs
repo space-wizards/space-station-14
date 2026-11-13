@@ -71,7 +71,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         // Find the entity, remove it from the session and set it's position to the tabletop.
         session.Entities.TryGetValue(entity, out var result);
         session.Entities.Remove(result);
-        PredictedQueueDel(result);
+        QueueDel(result);
     }
 
     private void OnInteractUsing(Entity<TabletopGameComponent> ent, ref InteractUsingEvent args)

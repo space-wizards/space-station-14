@@ -82,60 +82,73 @@
     - DeathAcidifierImplanter
 
 - type: startingGear
-  id: SyndicateOperativeClothing
+  id: SyndicateReinforcementClothing
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
-    back: ClothingBackpackSyndicate
+    back: ClothingBackpackDuffel
     shoes: ClothingShoesBootsSyndieFilled
     gloves: ClothingHandsGlovesColorBlack
+    ears: ClothingHeadsetSyndicateCovert
+    id: SyndiCovertPDA
+    pocket1: WeaponPistolViper
+  inhand:
+    - PaperWrittenSyndicateInstructions
 
 - type: startingGear
+  parent: SyndicateReinforcementClothing
   id: SyndicateReinforcementMedic
   equipment:
-    jumpsuit: ClothingUniformJumpsuitOperative
-    shoes: ClothingShoesColorRed
-    gloves: ClothingHandsGlovesLatex
     head: ClothingHeadHatSurgcapPurple
-    id: VisitorPDA
+    mask: ClothingMaskSterile
+    gloves: ClothingHandsGlovesLatex
     belt: ClothingBeltMedicalFilled
-    back: ClothingBackpackDuffelMedical
-    ears: ClothingHeadsetMedical
     eyes: ClothingEyesHudMedical
-    pocket1: HandheldHealthAnalyzer
     pocket2: PillCanisterBicaridine
   inhand:
     - MedkitCombatFilled
   storage:
     back:
-    - Defibrillator
+    - SyndicateFlippo
+    - EncryptionKeySyndie
+    - MagazinePistolHighCapacity
+    - EncryptionKeyMedical
+    - DefibrillatorSyndicate
     - CigPackSyndicate
     - UniformScrubsColorPurple
     - ChemistryBottleToxin
-    - WeaponPistolViper
     - Syringe
-    - Syringe
+    - HandheldHealthAnalyzer
+    - AdvancedJetInjector
 
 - type: startingGear
+  parent: SyndicateReinforcementClothing
   id: SyndicateReinforcementSpy
   equipment:
-    jumpsuit: ClothingUniformJumpsuitOperative
-    back: ClothingBackpack
-    shoes: ClothingShoesColorBlack
-    gloves: ClothingHandsGlovesColorBlack
-    pocket1: WeaponPistolViper
+    pocket1: WeaponPistolCobra
     pocket2: VoiceMaskImplanter
   inhand:
     - ClothingBackpackChameleonFillAgent
+  storage:
+    back:
+    - SyndicateFlippo
+    - EncryptionKeySyndie
+    - BodyBagFolded
+    - Syringe
+    - ChemistryBottleMuteToxin
+
 - type: startingGear
+  parent: SyndicateReinforcementClothing
   id: SyndicateReinforcementThief
-  parent: SyndicateOperativeClothing
   equipment:
-    pocket1: WeaponPistolViper
-    pocket2: MagazinePistolHighCapacity
+    eyes: ClothingEyesGlassesHiddenSecurity
+    outerClothing: ClothingOuterCoatJensenSyndie
+    pocket2: C4
   inhand:
     - ToolboxSyndicateFilled
   storage:
     back:
+    - SyndicateFlippo
+    - EncryptionKeySyndie
     - SyndicateJawsOfLife
     - CameraBug
 

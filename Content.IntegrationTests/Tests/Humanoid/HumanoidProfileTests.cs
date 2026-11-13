@@ -138,9 +138,10 @@ public sealed class HumanoidProfileTests : GameTest
 
             foreach (var marking in markingOrgan.AppliedMarkings)
             {
-                var markingProto = SProtoMan.Index(marking.MarkingId);
+                var markingProto = Server.ProtoMan.Index(marking.MarkingId);
+                var markingColorCount = markingProto.GetColorCount();
 
-                Assert.That(markingProto.Sprites, Has.Count.EqualTo(marking.MarkingColors.Count), $"Organ {uid} has invald amount of marking sprites! Expected: {marking.MarkingColors.Count} Current: {markingProto.Sprites.Count}");
+                Assert.That(markingColorCount, Is.EqualTo(marking.MarkingColors.Count), $"Organ {uid} has invald amount of marking sprites! Expected: {marking.MarkingColors.Count} Current: {markingColorCount}");
                 Assert.That(_markingManager.CanBeApplied(data.Group, profile.Sex, markingProto), Is.True, $"Marking {markingProto.ID} cannot be applied to group {data.Group.Id} with sex {profile.Sex}");
                 Assert.That(data.Layers, Does.Contain(markingProto.BodyPart), $"Organ {uid} marking visual layers do not contain an entry for {markingProto.BodyPart}");
                 if (!markingProto.ForcedColoring && groupProto.Appearances.GetValueOrDefault(markingProto.BodyPart)?.MatchSkin != true)

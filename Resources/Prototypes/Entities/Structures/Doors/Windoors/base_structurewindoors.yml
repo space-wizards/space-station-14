@@ -66,7 +66,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 200
   - type: DeviceLinkSink
     ports:
@@ -78,8 +78,10 @@
   - type: DeviceLinkSource
     ports:
     - DoorStatus
+    - DoorBoltStatus
     lastSignals:
       DoorStatus: false
+      DoorBoltStatus: false
   - type: ExaminableDamage
     messages: WindowMessages
   - type: RCDDeconstructable

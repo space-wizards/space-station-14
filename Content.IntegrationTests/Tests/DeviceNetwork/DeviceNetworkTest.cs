@@ -1,13 +1,11 @@
 #nullable enable
 using System.Numerics;
 using Content.IntegrationTests.Fixtures;
-using Content.IntegrationTests.Fixtures.Attributes;
-using Content.Server.DeviceNetwork.Components;
-using Content.Server.DeviceNetwork.Systems;
-using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
+using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Systems;
 
 namespace Content.IntegrationTests.Tests.DeviceNetwork;
 
@@ -39,7 +37,7 @@ public sealed class DeviceNetworkTest : GameTest
       deviceNetId: Wired
       transmitFrequency: 0
       receiveFrequency: 0
-    - type: WiredNetworkConnection
+    - type: WiredNetwork
     - type: ApcPowerReceiver
 
 - type: entity
@@ -50,7 +48,7 @@ public sealed class DeviceNetworkTest : GameTest
       transmitFrequency: 100
       receiveFrequency: 100
       deviceNetId: Wireless
-    - type: WirelessNetworkConnection
+    - type: WirelessNetwork
       range: 100
 ";
 
@@ -82,20 +80,21 @@ public sealed class DeviceNetworkTest : GameTest
                 Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
             }
 
-            device2 = SSpawn(DummyNetworkDevice);
-            networkComponent2 = SComp<DeviceNetworkComponent>(device2);
-            using (Assert.EnterMultipleScope())
-            {
-                Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
-                Assert.That(networkComponent2.Address, Is.Not.EqualTo(string.Empty));
+                Assert.That(entityManager.TryGetComponent(device1, out networkComponent1), Is.True);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
+                });
 
                 Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
             }
 
-            _sDeviceNetworkSystem.SendPacket(device1, networkComponent2.Address, ref payload, networkComponent2.ReceiveFrequency!.Value);
-            Assert.That(payload, Is.EqualTo(_sDeviceNetworkTestSystem.LastPayload));
-        });
-    }
+                Assert.That(entityManager.TryGetComponent(device2, out networkComponent2), Is.True);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent2.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
 
     [Test]
     public async Task WirelessNetworkDeviceSendAndReceive()
@@ -121,7 +120,16 @@ public sealed class DeviceNetworkTest : GameTest
                 Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
             }
 
-            device2 = SSpawnAtPosition(WirelessNetworkDeviceDummy, new EntityCoordinates(TestMap.Grid, new Vector2(0, 50)));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(entityManager.TryGetComponent(device1, out networkComponent1), Is.True);
+                    Assert.That(entityManager.TryGetComponent(device1, out wirelessNetworkComponent), Is.True);
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
+                });
 
             networkComponent2 = SComp<DeviceNetworkComponent>(device2);
             using (Assert.EnterMultipleScope())
@@ -129,8 +137,11 @@ public sealed class DeviceNetworkTest : GameTest
                 Assert.That(networkComponent2.ReceiveFrequency, Is.Not.Null);
                 Assert.That(networkComponent2.Address, Is.Not.EqualTo(string.Empty));
 
-                Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
-            }
+                Assert.That(entityManager.TryGetComponent(device2, out networkComponent2), Is.True);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(networkComponent2.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent2.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
 
             var payload = new TestPayload
             {
@@ -181,16 +192,27 @@ public sealed class DeviceNetworkTest : GameTest
                 Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
             }
 
-            device2 = SSpawnAtPosition(DummyWiredNetworkDevice, coordinates);
-            networkComponent2 = SComp<DeviceNetworkComponent>(device2);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(entityManager.TryGetComponent(device1, out networkComponent1), Is.True);
+                    Assert.That(entityManager.TryGetComponent(device1, out wiredNetworkComponent), Is.True);
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
+                });
 
             using (Assert.EnterMultipleScope())
             {
                 Assert.That(networkComponent2.ReceiveFrequency, Is.Not.Null);
                 Assert.That(networkComponent2.Address, Is.Not.EqualTo(string.Empty));
 
-                Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
-            }
+                Assert.That(entityManager.TryGetComponent(device2, out networkComponent2), Is.True);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(networkComponent2.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent2.Address, Is.Not.EqualTo(DeviceAddress.Invalid));
 
             var payload = new TestPayload
             {

@@ -8,48 +8,36 @@ namespace Content.Client.Disposal.Tagger
     /// Initializes a <see cref="DisposalTaggerWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public sealed class DisposalTaggerBoundUserInterface : BoundUserInterface
+    public sealed class DisposalTaggerBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
     {
         private DisposalTaggerWindow? _window;
 
-        private const int TagLimit = 30;
-
-        public DisposalTaggerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-        {
-        }
+        public const int TagLimit = 30;
 
         protected override void Open()
         {
             base.Open();
 
             _window = this.CreateWindow<DisposalTaggerWindow>();
+            _window.OnRouteChanged += NewRoute;
 
-            _window.Confirm.OnPressed += _ => AcceptButtonPressed(_window.TagInput.Text);
-            _window.TagInput.OnTextEntered += args => AcceptButtonPressed(args.Text);
-
-            if (EntMan.TryGetComponent<DisposalTaggerComponent>(Owner, out var tagger) &&
-                tagger.Tag != string.Empty)
-            {
-                _window.TagInput.Text = tagger.Tag;
-            }
+            Update();
         }
 
-        private void AcceptButtonPressed(string tag)
+        private void NewRoute(string route)
         {
-            SendMessage(new DisposalTaggerUiActionMessage(tag, TagLimit));
+            SendMessage(new DisposalTaggerUiActionMessage(route, TagLimit));
             Close();
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        public override void Update()
         {
-            base.UpdateState(state);
+            base.Update();
 
-            if (state is not DisposalTaggerUserInterfaceState cast)
-            {
+            if (_window == null || !EntMan.TryGetComponent<DisposalTaggerComponent>(Owner, out var tagger))
                 return;
-            }
 
-            _window?.UpdateState(cast);
+            _window.Populate(tagger.Tag, tagger.Editable);
         }
     }
 }

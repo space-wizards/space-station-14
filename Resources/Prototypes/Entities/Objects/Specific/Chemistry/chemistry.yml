@@ -327,8 +327,39 @@
       - state: beakerbluespace
   - type: SolutionContainerVisuals
     maxFillLevels: 0
+    inHandsMaxFillLevels: 0
   - type: Item
     size: Normal
+
+- type: entity
+  parent: [BluespaceBeaker, JugPunctTranex]
+  id: BluespaceBeakerPunctTranex
+  suffix: punct & tranex
+
+- type: entity
+  parent: [BluespaceBeaker, JugPyraDerma]
+  id: BluespaceBeakerPyraDerma
+  suffix: pyra & derma
+
+- type: entity
+  parent: [BluespaceBeaker, JugDexPlusSaline]
+  id: BluespaceBeakerDexPlusSaline
+  suffix: dex+ & saline
+
+- type: entity
+  parent: [BluespaceBeaker, JugTrico]
+  id: BluespaceBeakerTrico
+  suffix: tricordrazine
+
+- type: entity
+  parent: [BluespaceBeaker, JugBlood]
+  id: BluespaceBeakerBlood
+  suffix: blood
+
+- type: entity
+  parent: [BluespaceBeaker, JugWater]
+  id: BluespaceBeakerWater
+  suffix: water
 
 - type: entity
   name: dropper

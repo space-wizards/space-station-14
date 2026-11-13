@@ -1,3 +1,4 @@
+using Content.Shared.Examine;
 using Content.Shared.Station.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -33,6 +34,13 @@ public abstract partial class StationSystem
         {
             args.ToRemove &= ~MetaDataFlags.ExtraTransformEvents;
         }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnExamine(Entity<StationTrackerComponent> ent, ref ExaminedEvent args)
+    {
+        if (ent.Comp.Station != null && ent.Comp.Examinable)
+            args.PushMarkup(Loc.GetString("station-tracker-component-examine", ("stationName", Name(ent.Comp.Station.Value))));
     }
 
     /// <summary>

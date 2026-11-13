@@ -1327,4 +1327,168 @@ Entries:
   id: 173
   time: '2026-08-22T23:13:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/45568
+- author: SuperDicq
+  changes:
+  - message: Fixed a whole lot of minor issues on Sushi Station.
+    type: Tweak
+  id: 174
+  time: '2026-08-27T22:02:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45695
+- author: ProPeperos
+  changes:
+  - message: Box - sink in chem starts fully filled
+    type: Fix
+  id: 175
+  time: '2026-08-31T18:01:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45755
+- author: ProPeperos
+  changes:
+  - message: On Nukie Planet - removed the roof, now the map uses real natural light! And other small tweaks
+    type: Tweak
+  id: 176
+  time: '2026-09-06T01:17:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45867
+- author: Betterwithketchup, emisse
+  changes:
+  - message: Various wiring and air alarm bugs on tram are now fixed.
+    type: Fix
+  - message: Cargo telepad has been added to Tram Station
+    type: Add
+  - message: The entire traffic loop around the tram section is now continuous
+    type: Tweak
+  - message: Tram Evac (Made by qwerltaz) has been implemented and with fixes, such as a couple issues with not enough closets, removing the gates on it and some misc small fixes.
+    type: Tweak
+  id: 177
+  time: '2026-09-14T21:55:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46028
+- author: jckspjf
+  changes:
+  - message: Low quality backgrounds/parallax setting now properly works on Snowball.
+    type: Fix
+  id: 178
+  time: '2026-09-21T21:48:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45736
+- author: Hitlinemoss
+  changes:
+  - message: On Elkridge Depot, Exo, Oasis, Packed, Relic, Snowball Station, and Sushi Station, EVA Storage's non-maints airlocks now require Head of Personnel access, rather than External access. In the future, all EVA Storage rooms on all maps (including their maints airlocks) are also planned to be changed to Head of Personnel access.
+    type: Tweak
+  id: 179
+  time: '2026-09-22T14:43:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45219
+- author: Hitlinemoss
+  changes:
+  - message: On Elkridge, the EVA Storage room has received some layout tweaks.
+    type: Tweak
+  - message: On Elkridge, the airlock between EVA Storage and the HoP office now requires Head of Personnel access (was previously External access).
+    type: Fix
+  - message: On Elkridge, the airlock between Cargo and Salvage now requires Salvage access (was previously completely unlocked).
+    type: Fix
+  id: 180
+  time: '2026-09-23T03:26:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46126
+- author: Hitlinemoss
+  changes:
+  - message: On Packed, EVA Storage's maints airlock now requires Head of Personnel access (was previously Command access).
+    type: Fix
+  - message: On Packed, the airlock between Security and the genpop locker room now requires Brig access (was previously Security access).
+    type: Fix
+  id: 181
+  time: '2026-09-23T03:28:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46127
+- author: Hitlinemoss
+  changes:
+  - message: On Tram2, EVA Storage's airlocks now require Head of Personnel access (was previously Command access).
+    type: Fix
+  id: 182
+  time: '2026-09-23T03:29:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46128
+- author: Hitlinemoss
+  changes:
+  - message: On Exo, the EVA Storage room has received some layout tweaks, and now contains one fewer pair of magboots.
+    type: Tweak
+  id: 183
+  time: '2026-09-23T03:33:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46130
+- author: Hitlinemoss
+  changes:
+  - message: On Marathon, the EVA Storage room no longer has a blast door entrance.
+    type: Tweak
+  id: 184
+  time: '2026-09-23T03:42:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46132
+- author: Hitlinemoss
+  changes:
+  - message: On Plasma, EVA Storage's airlocks now require Head of Personnel access (was previously Command access).
+    type: Fix
+  id: 185
+  time: '2026-09-23T03:45:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46133
+- author: Hitlinemoss
+  changes:
+  - message: On Sushi Station, the EVA Storage room has received some layout tweaks, and now contains one fewer pair of magboots.
+    type: Tweak
+  - message: On Sushi Station, EVA Storage's maints airlock is now maints-airlock-colored.
+    type: Fix
+  - message: On Sushi Station, the gas tank dispenser in EVA Storage no longer dispenses plasma gas tanks.
+    type: Fix
+  id: 186
+  time: '2026-09-23T04:24:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46136
+- author: Hitlinemoss
+  changes:
+  - message: On Saltern, the EVA Storage room has received some layout tweaks, and now contains two fewer pairs of magboots.
+    type: Tweak
+  - message: On Saltern, EVA Storage's airlocks now require Head of Personnel access (was previously Command access).
+    type: Fix
+  - message: On Saltern, EVA Storage now contains a nitrogen canister instead of a duplicate oxygen canister.
+    type: Fix
+  id: 187
+  time: '2026-09-23T04:25:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46137
+- author: Hitlinemoss
+  changes:
+  - message: On Box, the EVA Storage room has received a significant overhaul.
+    type: Tweak
+  - message: On Box, EVA Storage's airlocks now require Head of Personnel access (was previously Command access).
+    type: Fix
+  id: 188
+  time: '2026-09-23T04:25:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46140
+- author: Hitlinemoss
+  changes:
+  - message: On Snowball, EVA Storage's maints airlock and windoors now require Head of Personnel access (maints airlock was previously Command access, windoors were previously External access)
+    type: Fix
+  id: 189
+  time: '2026-09-23T04:37:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46134
+- author: SlamBamActionman
+  changes:
+  - message: Station map configs now correctly utilize minimum job slots.
+    type: Fix
+  id: 190
+  time: '2026-09-23T08:11:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46075
+- author: SomeAspy
+  changes:
+  - message: On Box - added button in chem
+    type: Tweak
+  id: 191
+  time: '2026-10-11T20:52:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46398
+- author: SomeAspy
+  changes:
+  - message: On Box, Move mouse spawn out of a room that is impossible to leave.
+    type: Tweak
+  id: 192
+  time: '2026-10-18T15:14:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46472
+- author: SomeAspy
+  changes:
+  - message: On Elkridge, remove janitor buttons .
+    type: Remove
+  - message: On Elkridge, door buttons are now linked.
+    type: Fix
+  id: 193
+  time: '2026-10-18T15:20:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46429
 Order: 2

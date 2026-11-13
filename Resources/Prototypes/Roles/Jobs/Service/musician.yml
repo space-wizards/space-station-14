@@ -6,6 +6,7 @@
   startingGear: MusicianGear
   icon: "JobIconMusician"
   supervisors: job-supervisors-hire
+  guides: [ Service ] # TODO: should have a more specific guidebook page instead of using the department itself
   access:
   - Maintenance # TODO Remove maint access for all gimmick jobs once access work is completed
   - Theatre

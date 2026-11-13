@@ -34,7 +34,6 @@
     allowSmartEquip: true
     slots:
       charger_slot:
-        ejectOnInteract: true
         whitelist:
           components:
           - BatteryAmmoProvider

@@ -6,6 +6,7 @@ namespace Content.Shared.StatusEffect
     [RegisterComponent]
     [NetworkedComponent]
     [Access(typeof(StatusEffectsSystem))]
+    [Obsolete("Use StatusEffectContainerComponent and Content.Shared.StatusEffectNew.StatusEffectsSystem instead.")]
     public sealed partial class StatusEffectsComponent : Component
     {
         [ViewVariables]
@@ -19,7 +20,8 @@ namespace Content.Shared.StatusEffect
     }
 
     [RegisterComponent]
-    public sealed partial class ActiveStatusEffectsComponent : Component {}
+    [Obsolete("Use the new Content.Shared.StatusEffectNew.StatusEffectsSystem instead.")]
+    public sealed partial class ActiveStatusEffectsComponent : Component { }
 
     /// <summary>
     ///     Holds information about an active status effect.
@@ -47,7 +49,7 @@ namespace Content.Shared.StatusEffect
         [ViewVariables]
         public string? RelevantComponent;
 
-        public StatusEffectState((TimeSpan, TimeSpan) cooldown, bool refresh, string? relevantComponent=null)
+        public StatusEffectState((TimeSpan, TimeSpan) cooldown, bool refresh, string? relevantComponent = null)
         {
             Cooldown = cooldown;
             CooldownRefresh = refresh;

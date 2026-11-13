@@ -56,6 +56,8 @@ namespace Content.Server.Voting.Managers
             switch (voteType)
             {
                 case StandardVoteType.Restart:
+                    if (_gameTicker.RunLevel != GameRunLevel.InRound) // Cancels the vote if it's in the lobby
+                        return;
                     CreateRestartVote(initiator);
                     break;
                 case StandardVoteType.Preset:

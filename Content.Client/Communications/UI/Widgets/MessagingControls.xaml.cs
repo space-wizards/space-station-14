@@ -89,6 +89,7 @@ public sealed partial class MessagingControls : TabContainer
 
     protected override void ExitedTree()
     {
+        base.ExitedTree();
         if (_broadcastDisplayEntity.IsValid())
             _entMan.DeleteEntity(_broadcastDisplayEntity);
     }

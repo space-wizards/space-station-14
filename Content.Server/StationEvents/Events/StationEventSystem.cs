@@ -11,7 +11,7 @@ using Robust.Shared.Player;
 namespace Content.Server.StationEvents.Events;
 
 /// <summary>
-///     An abstract entity system inherited by all station events for their behavior.
+/// An abstract entity system inherited by all station events for their behavior.
 /// </summary>
 public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T : IComponent
 {
@@ -30,14 +30,14 @@ public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T 
     }
 
     /// <inheritdoc/>
-    protected override void Added(EntityUid uid, T component, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    protected override void Added(Entity<T, GameRuleComponent> ent, ref GameRuleAddedEvent args)
     {
-        base.Added(uid, component, gameRule, args);
+        base.Added(ent, ref args);
 
-        if (!TryComp<StationEventComponent>(uid, out var stationEvent))
+        if (!TryComp<StationEventComponent>(ent, out var stationEvent))
             return;
 
-        AdminLogManager.Add(LogType.EventAnnounced, $"Event added / announced: {ToPrettyString(uid)}");
+        AdminLogManager.Add(LogType.EventAnnounced, $"Event added / announced: {ToPrettyString(ent)}");
 
         // we don't want to send to players who aren't in game (i.e. in the lobby)
         Filter allPlayersInGame = Filter.Empty().AddWhere(GameTicker.UserHasJoinedGame);
@@ -49,14 +49,14 @@ public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T 
     }
 
     /// <inheritdoc/>
-    protected override void Started(EntityUid uid, T component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    protected override void Started(Entity<T, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
-        base.Started(uid, component, gameRule, args);
+        base.Started(ent, ref args);
 
-        if (!TryComp<StationEventComponent>(uid, out var stationEvent))
+        if (!TryComp<StationEventComponent>(ent, out var stationEvent))
             return;
 
-        AdminLogManager.Add(LogType.EventStarted, LogImpact.High, $"Event started: {ToPrettyString(uid)}");
+        AdminLogManager.Add(LogType.EventStarted, LogImpact.High, $"Event started: {ToPrettyString(ent)}");
 
         if (stationEvent.Duration != null)
         {

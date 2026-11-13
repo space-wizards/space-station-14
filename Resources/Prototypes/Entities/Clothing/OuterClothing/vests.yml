@@ -90,3 +90,7 @@
         shader: unshaded
       - state: equipped-OUTERCLOTHING-unshaded
         shader: shaded
+  - type: Armor
+    modifiers:
+      coefficients:
+        Piercing: 0.99 #1% pierce resist (funni)

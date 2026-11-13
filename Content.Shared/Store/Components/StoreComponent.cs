@@ -11,6 +11,7 @@ namespace Content.Shared.Store.Components;
 /// through the ui. The currency, listings, and categories are defined in yaml.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class StoreComponent : Component
 {
     [DataField]
@@ -28,13 +29,13 @@ public sealed partial class StoreComponent : Component
     /// The string represents the ID of te currency prototype, where the
     /// float is that amount.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Balance = new();
 
     /// <summary>
     /// The list of currencies that can be inserted into this store.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public HashSet<ProtoId<CurrencyPrototype>> CurrencyWhitelist = new();
 
     /// <summary>

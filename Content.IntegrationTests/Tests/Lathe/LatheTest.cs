@@ -35,10 +35,17 @@ public sealed class LatheTest : GameTest
         var acceptedMaterials = new HashSet<ProtoId<MaterialPrototype>>();
         foreach (var materialProtoId in MaterialEntityProtos)
         {
-            if (_sWhitelistSystem.IsWhitelistFail(storageComp!.Whitelist, materialProtoId))
-                continue;
+            // Find all the lathes
+            var latheProtos = protoMan.EnumeratePrototypes<EntityPrototype>()
+                .Where(p => !p.Abstract)
+                .Where(p => !pair.IsTestPrototype(p))
+                .Where(p => p.HasComp<LatheComponent>(compFactory));
 
-            Assert.That(SProtoMan.Index(materialProtoId).TryComp<PhysicalCompositionComponent>(out var compositionComponent, SEntMan.ComponentFactory));
+            // Find every EntityPrototype that can be inserted into a MaterialStorage
+            var materialEntityProtos = protoMan.EnumeratePrototypes<EntityPrototype>()
+                .Where(p => !p.Abstract)
+                .Where(p => !pair.IsTestPrototype(p))
+                .Where(p => p.HasComp<PhysicalCompositionComponent>(compFactory));
 
             // Mark the lathe as accepting each material in the entity
             foreach (var (material, _) in compositionComponent!.MaterialComposition)

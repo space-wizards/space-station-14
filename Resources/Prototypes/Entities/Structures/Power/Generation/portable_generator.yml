@@ -88,7 +88,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 200
 
 - type: entity

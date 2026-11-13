@@ -2,8 +2,8 @@
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Utility;
-using Content.Server.DeviceLinking.Systems;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Components;
+using Content.Shared.DeviceLinking.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -14,6 +14,8 @@ public sealed class DeviceLinkingTest : GameTest
 {
     private const string PortTesterProtoId = "DeviceLinkingSinkPortTester";
 
+    private const string PortOutputName = "Output";
+
     [TestPrototypes]
     private const string Prototypes = $@"
 - type: entity
@@ -21,7 +23,7 @@ public sealed class DeviceLinkingTest : GameTest
   components:
   - type: DeviceLinkSource
     ports:
-    - Output
+    - {PortOutputName}
 ";
 
     private static string[] _entitiesWithDeviceLinkSink = GameDataScrounger.EntitiesWithComponent("DeviceLinkSink");
@@ -66,11 +68,18 @@ public sealed class DeviceLinkingTest : GameTest
                     sourceComp,
                     sinkComp);
 
-                // Send a signal to the port
-                Assert.DoesNotThrow(() => { _sDeviceLinkSystem.InvokePort((sourceEnt, sourceComp), "Output"); },
-                    $"Exception thrown while triggering port {port.Id} of the sink device.");
+                    // Create a link from the tester's output to the target port on the sink
+                    deviceLinkSys.SaveLinks(null,
+                        (sourceEnt, sourceComp),
+                        (sinkEnt, sinkComp),
+                        [(PortOutputName, port.Id)]);
 
-                _sMapSystem.DeleteMap(mapId);
+                    // Send a signal to the port
+                    Assert.DoesNotThrow(() => { deviceLinkSys.InvokePort((sourceEnt, sourceComp), PortOutputName); },
+                        $"Exception thrown while triggering port {port.Id} of the sink device.");
+
+                    mapSys.DeleteMap(mapId);
+                }
             }
         }
     }
