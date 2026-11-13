@@ -140,6 +140,9 @@
   id: JobStationEngineer
 
 - type: playTimeTracker
+  id: JobSupplyAssistant
+
+- type: playTimeTracker
   id: JobTechnicalAssistant
 
 - type: playTimeTracker
