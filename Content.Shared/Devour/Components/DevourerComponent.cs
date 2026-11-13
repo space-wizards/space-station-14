@@ -86,6 +86,12 @@ public sealed partial class DevourerComponent : Component
     };
 
     /// <summary>
+    /// Entities which can't be devoured.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityWhitelist? Blacklist;
+
+    /// <summary>
     /// Determines what things end up in the dragon's stomach if they eat it.
     /// If it isn't in the whitelist, it's deleted.
     /// </summary>

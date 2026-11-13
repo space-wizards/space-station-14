@@ -155,6 +155,9 @@
       - MobState
       - Door
       - Wall
+    blacklist:
+      components:
+      - ChangelingIdentity # Changelings are getting eaten and soloing the dragon too frequently
   - type: AntiRottingContainer
   - type: Tag
     tags:
