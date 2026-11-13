@@ -21,6 +21,12 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+  - type: Temperature
+    temperature: 293.15
+    specificHeat: 100
+    thermalConductivity: 50
+  - type: AtmosExposed
+    exposedArea: 1
   - type: Damageable
   - type: Injurable
     damageContainer: Biological
