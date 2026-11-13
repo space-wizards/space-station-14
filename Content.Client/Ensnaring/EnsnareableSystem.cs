@@ -30,18 +30,18 @@ public sealed partial class EnsnareableSystem : SharedEnsnareableSystem
 
     private void OnAppearanceChange(EntityUid uid, EnsnareableComponent component, ref AppearanceChangeEvent args)
     {
+        if (component.Sprite == null)
+            return;
+
         if (args.Sprite == null || !_sprite.LayerMapTryGet((uid, args.Sprite), EnsnaredVisualLayers.Ensnared, out var layer, false))
             return;
 
-        if (_appearance.TryGetData<bool>(uid, EnsnareableVisuals.IsEnsnared, out var isEnsnared, args.Component))
-        {
-            if (component.Sprite != null)
-            {
-                _sprite.LayerSetRsi((uid, args.Sprite), layer, new ResPath(component.Sprite));
-                _sprite.LayerSetRsiState((uid, args.Sprite), layer, component.State);
-                _sprite.LayerSetVisible((uid, args.Sprite), layer, isEnsnared);
-            }
-        }
+        if (!args.TryGetData<bool>(EnsnareableVisuals.IsEnsnared, out var isEnsnared))
+            return;
+
+        _sprite.LayerSetRsi((uid, args.Sprite), layer, new ResPath(component.Sprite));
+        _sprite.LayerSetRsiState((uid, args.Sprite), layer, component.State);
+        _sprite.LayerSetVisible((uid, args.Sprite), layer, isEnsnared);
     }
 }
 

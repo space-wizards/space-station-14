@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
 using Content.Shared.Holiday;
 using Robust.Shared.Configuration;
 
@@ -87,7 +88,8 @@ namespace Content.Server.Holiday
 
         private void OnRunLevelChanged(GameRunLevelChangedEvent eventArgs)
         {
-            if (!_enabled) return;
+            if (!_enabled)
+                return;
 
             switch (eventArgs.New)
             {

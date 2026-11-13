@@ -12,7 +12,7 @@ namespace Content.Server.Administration.Commands
     public sealed partial class LoadGameMapCommand : LocalizedEntityCommands
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;
-        [Dependency] private GameTicker _gameTicker = default!;
+        [Dependency] private ServerGameTicker _gameTicker = default!;
         [Dependency] private SharedMapSystem _mapSystem = default!;
 
         public override string Command => "loadgamemap";

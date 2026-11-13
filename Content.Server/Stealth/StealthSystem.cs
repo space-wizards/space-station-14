@@ -1,4 +1,4 @@
-﻿using Content.Shared.Stealth;
+using Content.Shared.Stealth;
 
 namespace Content.Server.Stealth;
 

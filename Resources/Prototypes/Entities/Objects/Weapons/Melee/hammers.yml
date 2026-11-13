@@ -63,7 +63,7 @@
     damage:
       types:
         Blunt: 15
-        Structural: 40
+        Structural: 45
   - type: Item
     size: Ginormous
     shape:

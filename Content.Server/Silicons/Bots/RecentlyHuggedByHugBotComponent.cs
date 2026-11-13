@@ -1,4 +1,4 @@
-﻿using Content.Shared.Silicons.Bots;
+using Content.Shared.Silicons.Bots;
 
 namespace Content.Server.Silicons.Bots;
 

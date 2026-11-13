@@ -1,4 +1,4 @@
-﻿using System.Collections.Frozen;
+using System.Collections.Frozen;
 using System.Linq;
 using System.Text;
 using System.Text.Unicode;

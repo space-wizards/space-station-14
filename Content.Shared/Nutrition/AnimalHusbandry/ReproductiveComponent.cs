@@ -1,4 +1,4 @@
-﻿using Content.Shared.Nutrition.Prototypes;
+using Content.Shared.Nutrition.Prototypes;
 using Content.Shared.Storage;
 using Content.Shared.Whitelist;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;

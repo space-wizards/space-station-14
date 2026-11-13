@@ -1,3 +1,4 @@
+#nullable enable
 using System.Numerics;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Tests.Helpers;
@@ -8,6 +9,7 @@ using Content.Shared.Climbing.Components;
 using Content.Shared.Climbing.Events;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Clumsy;
+using Content.Shared.Hands;
 using Content.Shared.Medical;
 using Content.Shared.Mobs.Components;
 using Content.Shared.StatusEffectNew;
@@ -19,7 +21,6 @@ using static Content.IntegrationTests.Tests.Clumsy.ClumsyTestPrototypes;
 
 namespace Content.IntegrationTests.Tests.Clumsy;
 
-[TestFixture]
 [TestOf(typeof(ClumsyStatusEffectSystem))]
 public sealed class ClumsyStatusTest : InteractionTest
 {
@@ -28,6 +29,7 @@ public sealed class ClumsyStatusTest : InteractionTest
     private sealed class DefibListenerSystem : TestListenerSystem<SelfBeforeDefibrillatorZapsEvent>;
     private sealed class GunListenerSystem : TestListenerSystem<SelfBeforeGunShotEvent>;
     private sealed class InjectListenerSystem : TestListenerSystem<SelfBeforeInjectEvent>;
+    private sealed class BeforeEquipListenerSystem : TestListenerSystem<BeforeEquippingHandEvent>;
 
     [SidedDependency(Side.Server)] private readonly ClimbSystem _sClimbSystem = default!;
     [SidedDependency(Side.Server)] private readonly StatusEffectsSystem _sStatusSystem = default!;
@@ -52,7 +54,7 @@ public sealed class ClumsyStatusTest : InteractionTest
             _sThrowSystem.TryThrow(ball, Vector2.Zero); // Direction doesn't matter because it spawned on top of the player
         });
 
-        Assert.That(HandSys.ActiveHandIsEmpty((SPlayer,Hands)), Is.True, "Clumsy mob caught the ball.");
+        Assert.That(HandSys.ActiveHandIsEmpty((SPlayer, Hands)), Is.True, "Clumsy mob caught the ball.");
         foreach (var ev in GetEvents<CatchAttemptEvent>(SPlayer))
         {
             Assert.That(ev.Cancelled, Is.True, "Clumsy mob didn't cancel a catch event.");
@@ -162,6 +164,36 @@ public sealed class ClumsyStatusTest : InteractionTest
         foreach (var ev in GetEvents<SelfBeforeClimbEvent>(SPlayer))
         {
             Assert.That(ev.Cancelled, Is.True, "Clumsy mob didn't cancel climb event.");
+        }
+    }
+
+    [Test, Description("Test that a mob with the ClumsyGrab status will be unable to hold items in hands.")]
+    public async Task TestClumsyGrab()
+    {
+        await Server.WaitPost(() =>
+        {
+            SEntMan.EnsureComponent<TestListenerComponent>(SPlayer);
+            _sStatusSystem.TrySetStatusEffectDuration(SPlayer, ClumsyGrabProto);
+        });
+
+        Assume.That(_sStatusSystem.HasStatusEffect(SPlayer, ClumsyGrabProto), Is.True);
+        Assume.That(HandSys.ActiveHandIsEmpty(SPlayer), Is.True, "Clumsy mob was already holding something!");
+        var freeHands = HandSys.CountFreeHands(SPlayer); //"before" free hands
+
+        // can't use PlaceInHands, that method will fail an assertion under this status effect.
+        await Server.WaitPost(() =>
+        {
+            var location = SEntMan.EnsureComponent<TransformComponent>(SPlayer).Coordinates;
+            var item = SSpawnAtPosition(ItemProto, location);
+            HandSys.TryPickup(SPlayer, item, handsComp: Hands);
+        });
+
+        Assert.That(HandSys.ActiveHandIsEmpty(SPlayer), Is.True, "The clumsy mob has something in their active hand (they picked up the item!?)");
+        Assert.That(HandSys.CountFreeHands(SPlayer), Is.EqualTo(freeHands), "A hand became occupied ('before' and 'after' free hand count has changed)");
+
+        foreach (var ev in GetEvents<BeforeEquippingHandEvent>(SPlayer))
+        {
+            Assert.That(ev.Cancelled, Is.True, "Clumsy mob didn't cancel BeforeEquippingHandEvent.");
         }
     }
 }

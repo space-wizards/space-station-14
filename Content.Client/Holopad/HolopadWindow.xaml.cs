@@ -61,7 +61,7 @@ public sealed partial class HolopadWindow : FancyWindow
         RequestStationAiButton.OnPressed += args => { OnHolopadRequestStationAiMessage(); };
 
         // XML formatting
-        AnswerCallButton.AddStyleClass("ButtonAccept");
+        AnswerCallButton.AddStyleClass(StyleClass.Positive);
         EndCallButton.AddStyleClass(StyleClass.Negative);
         StartBroadcastButton.AddStyleClass(StyleClass.Negative);
 

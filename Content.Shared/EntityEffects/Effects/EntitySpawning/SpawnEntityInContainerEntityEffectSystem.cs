@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Containers;
+using Robust.Shared.Containers;
 using Robust.Shared.Network;
 
 namespace Content.Shared.EntityEffects.Effects.EntitySpawning;

@@ -1,4 +1,4 @@
-﻿using Lidgren.Network;
+using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
@@ -31,6 +31,7 @@ namespace Content.Shared.Voting
             WhenCanCallVote = TimeSpan.FromTicks(buffer.ReadInt64());
 
             var lenVotes = buffer.ReadByte();
+            buffer.AssertAtLeastSize(lenVotes * (sizeof(byte) + sizeof(long)));
             VotesUnavailable = new (StandardVoteType type, TimeSpan whenAvailable)[lenVotes];
             for (var i = 0; i < lenVotes; i++)
             {

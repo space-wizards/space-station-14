@@ -1,0 +1,15 @@
+- type: gameMap
+  id: TestMap
+  mapName: Test Station
+  mapPath: /Maps/test-map.yml
+  minPlayers: 0
+  stations:
+    TestMap:
+      stationProto: TestStation
+      components:
+        - type: StationEventEligible
+        - type: StationNameSetup
+          mapNameTemplate: Test Station
+        - type: StationJobs
+          availableJobs:
+            Passenger: [ -1, -1 ]

@@ -1,4 +1,4 @@
-﻿using Content.Shared.PowerCell.Components;
+using Content.Shared.PowerCell.Components;
 using Content.Shared.Silicons.Borgs.Components;
 using Robust.Shared.Player;
 

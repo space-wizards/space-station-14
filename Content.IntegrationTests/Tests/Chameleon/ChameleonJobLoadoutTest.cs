@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Clothing;
@@ -19,12 +20,12 @@ public sealed class ChameleonJobLoadoutTest : InteractionTest
     ];
 
     [Test]
-    public Task CheckAllJobs()
+    public void CheckAllJobs()
     {
         var alljobs = ProtoMan.EnumeratePrototypes<JobPrototype>();
 
         // Job -> number of references
-        Dictionary<ProtoId<JobPrototype>, int> validJobs = new();
+        Dictionary<ProtoId<JobPrototype>, int> validJobs = [];
 
         // Only add stuff that actually has clothing! We don't want stuff like AI or borgs.
         foreach (var job in alljobs)
@@ -45,16 +46,14 @@ public sealed class ChameleonJobLoadoutTest : InteractionTest
             validJobs[chameleon.Job.Value] += 1;
         }
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             foreach (var job in validJobs)
             {
                 Assert.That(job.Value, Is.Not.Zero,
                     $"{job.Key} has no chameleonOutfit prototype.");
             }
-        });
-
-        return Task.CompletedTask;
+        }
     }
 
     /// <summary>

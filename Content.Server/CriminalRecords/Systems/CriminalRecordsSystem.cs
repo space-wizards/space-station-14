@@ -22,9 +22,9 @@ namespace Content.Server.CriminalRecords.Systems;
 /// </summary>
 public sealed partial class CriminalRecordsSystem : SharedCriminalRecordsSystem
 {
-    [Dependency] private GameTicker _ticker = default!;
+    [Dependency] private ServerGameTicker _ticker = default!;
     [Dependency] private StationRecordsSystem _records = default!;
-    [Dependency] private StationSystem _station = default!;
+    [Dependency] private ServerStationSystem _station = default!;
     [Dependency] private CartridgeLoaderSystem _cartridge = default!;
 
     public override void Initialize()

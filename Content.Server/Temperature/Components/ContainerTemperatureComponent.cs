@@ -1,4 +1,4 @@
-﻿using Content.Shared.Temperature.Components;
+using Content.Shared.Temperature.Components;
 
 namespace Content.Server.Temperature.Components;
 

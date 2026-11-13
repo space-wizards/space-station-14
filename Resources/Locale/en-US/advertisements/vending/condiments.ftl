@@ -1,4 +1,4 @@
-﻿advertisement-condiment-1 = Tired of dry meat? Squirt some flavor-packed condiments on it!
+advertisement-condiment-1 = Tired of dry meat? Squirt some flavor-packed condiments on it!
 advertisement-condiment-2 = Child-safe utensils. Forks, spoons, and knives that won't cut a thing.
 advertisement-condiment-3 = Corn oil!
 advertisement-condiment-4 = Sweeten up your day with Astrotame! Eight out of ten doctors agree, it probably won't cause cancer.

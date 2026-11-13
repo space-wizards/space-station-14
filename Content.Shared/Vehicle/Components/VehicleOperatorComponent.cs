@@ -1,4 +1,4 @@
-﻿using Content.Shared.Vehicle.Systems;
+using Content.Shared.Vehicle.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Vehicle.Components;

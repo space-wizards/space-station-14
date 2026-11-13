@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
 

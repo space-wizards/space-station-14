@@ -45,6 +45,8 @@
     canChangeTransferAmount: true
   - type: SolutionItemStatus
     solution: drink
+  - type: FitsInDispenser
+    solution: drink
   - type: UserInterface
     interfaces:
       enum.TransferAmountUiKey.Key:

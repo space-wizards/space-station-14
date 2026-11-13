@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: HandTeleporter
   parent: [BaseItem, BaseGrandTheftContraband]
   name: hand teleporter
@@ -14,7 +14,8 @@
     - HighRiskItem
     - FitInTeleporterConsole
   - type: StealTarget
-    stealGroup: HandTeleporter
+    stealGroup:
+    - HandTeleporter
 
 - type: entity
   id: HandTeleporterAdmeme

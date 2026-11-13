@@ -17,8 +17,6 @@ namespace Content.Shared.Nutrition.Components;
 /// <see cref="SatiationTypePrototype"/>s.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
-// Nothing should modify the dictionary once it's deserialized. Perhaps satiations can be dynamically
-// added and removed in the future, but not today.
 [Access(typeof(SatiationSystem))]
 public sealed partial class SatiationComponent : Component
 {
@@ -87,7 +85,7 @@ public sealed partial class SatiationDictionary : IRobustCloneable<SatiationDict
 /// </summary>
 /// <remarks>TODO This is a hack. See the remark on <see cref="SatiationDictionary"/></remarks>
 [TypeSerializer]
-public sealed partial class SatiationDictionarySerializer : ITypeSerializer<SatiationDictionary, MappingDataNode>
+public sealed partial class SatiationDictionarySerializer : ITypeSerializer<SatiationDictionary, MappingDataNode>, ITypeCopyCreator<SatiationDictionary>
 {
     private static readonly DictionarySerializer<ProtoId<SatiationTypePrototype>, Satiation> Delegate = new();
 
@@ -98,6 +96,13 @@ public sealed partial class SatiationDictionarySerializer : ITypeSerializer<Sati
         IDependencyCollection dependencies,
         ISerializationContext? context = null
     ) => Delegate.Validate(serializationManager, node, dependencies, context);
+
+    public SatiationDictionary CreateCopy(ISerializationManager serializationManager,
+        SatiationDictionary source,
+        IDependencyCollection dependencies,
+        SerializationHookContext hookCtx,
+        ISerializationContext? context = null
+        ) => source.Clone();
 
     /// <inheritdoc/>
     public SatiationDictionary Read(

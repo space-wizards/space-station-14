@@ -288,8 +288,8 @@ public sealed class ActionButton : Control, IEntityControl
     public void UpdateBackground()
     {
         _controller ??= UserInterfaceManager.GetUIController<ActionUIController>();
-        if (Action != null ||
-            _controller.IsDragging && GetPositionInParent() == Parent?.ChildCount - 1)
+        if (Action != null
+            || _controller.IsDragging && (Parent == null || GetPositionInParent() == Parent?.ChildCount - 1))
         {
             Button.Texture = _slotBackground;
         }

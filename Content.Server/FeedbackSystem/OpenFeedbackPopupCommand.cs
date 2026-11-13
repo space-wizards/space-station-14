@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration;
+using Content.Shared.Administration;
 using Content.Shared.FeedbackSystem;
 using Robust.Shared.Toolshed;
 

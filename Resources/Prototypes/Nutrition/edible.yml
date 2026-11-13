@@ -1,4 +1,4 @@
-﻿# If you add a new prototype, you may want to consider adding it to IngestionSystem.API for other systems to use.
+# If you add a new prototype, you may want to consider adding it to IngestionSystem.API for other systems to use.
 # But only if other systems/components might want it.
 
 # Food

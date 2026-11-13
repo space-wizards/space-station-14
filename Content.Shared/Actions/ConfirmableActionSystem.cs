@@ -13,13 +13,9 @@ public sealed partial class ConfirmableActionSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
+    [Dependency] private EntityQuery<ActionComponent> _actionQuery = default!;
 
-        SubscribeLocalEvent<ConfirmableActionComponent, ActionAttemptEvent>(OnAttempt);
-    }
-
+    /// <inheritdoc/>
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -37,13 +33,23 @@ public sealed partial class ConfirmableActionSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnAttempt(Entity<ConfirmableActionComponent> ent, ref ActionAttemptEvent args)
     {
         if (args.Cancelled)
             return;
 
+        // Check if we should be confirming based on the action's toggle status.
+        if (_actionQuery.TryComp(ent, out var action))
+        {
+            if (action.Toggled && !ent.Comp.ConfirmWhenToggled)
+                return;
+            if (!action.Toggled && !ent.Comp.ConfirmWhenUntoggled)
+                return;
+        }
+
         // if not primed, prime it and cancel the action
-        if (ent.Comp.NextConfirm is not {} confirm)
+        if (ent.Comp.NextConfirm is not { } confirm)
         {
             Prime(ent, args.User);
             args.Cancelled = true;

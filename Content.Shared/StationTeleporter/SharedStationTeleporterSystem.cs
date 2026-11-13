@@ -7,7 +7,8 @@ using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.StationTeleporter.Components;
 using Content.Shared.Teleportation.Systems;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Components;
+using Content.Shared.Timing.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 
@@ -103,7 +104,7 @@ public abstract partial class SharedStationTeleporterSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (TryComp<UseDelayComponent>(args.Used, out var useDelayComp) && _useDelay.IsDelayed((args.Used, useDelayComp)))
+        if (_useDelay.IsDelayed(args.Used))
             return;
 
         _useDelay.TryResetDelay(args.Used);
@@ -167,11 +168,12 @@ public abstract partial class SharedStationTeleporterSystem : EntitySystem
         else
         {
             // We look for a portal from our “memory” and see if it's connected to anything. If not, we connect to it ourselves.
+            // Checks power on the remote portal to ensure it is a valid target.
             if (ent.Comp.LastLink is not null)
             {
                 if (_link.GetLink(ent.Comp.LastLink.Value, out _))
                     ent.Comp.LastLink = null;
-                else
+                else if (_power.IsPowered(ent.Comp.LastLink.Value))
                     _link.TryLink(ent, ent.Comp.LastLink.Value);
             }
         }

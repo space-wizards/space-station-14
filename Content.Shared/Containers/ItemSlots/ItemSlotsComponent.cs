@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -36,12 +37,30 @@ public sealed partial class ItemSlotsComponent : Component
     // In order to avoid #1 leading to duplicate slots when saving a map, the Slots dictionary is a read-only
     // datafield. This means that if your system/component dynamically changes the item slot (e.g., updating
     // whitelist or whatever), you should use #1.
+
+    /// <summary>
+    /// When trying to smart-equip this item, decide whether to allow smart-equip to work on the item slots within this entity.
+    /// </summary>
+    /// <remarks>
+    /// Defaults to false as so many ItemSlots entities do NOT want the smart-equip functionality.
+    /// False: Items that you more often want to equip than their contents (Guns, battery-powered tools)
+    /// True: Items that you want to equip their contents more often then themselves (Sabre sheathes, portable rechargers)
+    /// </remarks>
+    [DataField]
+    public bool AllowSmartEquip;
 }
 
+/// <summary>
+/// The component state for <see cref="ItemSlotsComponent"/>. Any new parameters must be added here and to the correct events in <see cref="ItemSlotsSystem"/>.
+/// </summary>
+/// <remarks>
+/// This can't be auto-generated due to the complexity of <paramref name="Slots"/>.
+/// </remarks>
 [Serializable, NetSerializable]
-public sealed class ItemSlotsComponentState(Dictionary<string, ItemSlot> slots) : ComponentState
+public sealed class ItemSlotsComponentState(Dictionary<string, ItemSlot> slots, bool allowSmartEquip) : ComponentState
 {
     public readonly Dictionary<string, ItemSlot> Slots = slots;
+    public readonly bool AllowSmartEquip = allowSmartEquip;
 }
 
 /// <summary>
@@ -208,7 +227,9 @@ public sealed partial class ItemSlot
     public string? ID => ContainerSlot?.ID;
 
     // Convenience properties
+    [MemberNotNullWhen(true, nameof(Item))]
     public bool HasItem => ContainerSlot?.ContainedEntity != null;
+
     public EntityUid? Item => ContainerSlot?.ContainedEntity;
 
     /// <summary>

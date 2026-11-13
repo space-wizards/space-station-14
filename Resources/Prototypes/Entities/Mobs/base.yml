@@ -113,9 +113,33 @@
   - type: GhostOnMove
     mustBeDead: true
 
+# Used for mobs that apply the popup and vomit from radiation
+- type: entity
+  abstract: true
+  id: BaseMobIrradiated
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Radiation
+        damage: 15
+      behaviors:
+      - !type:PopupBehavior
+        popup: mouth-taste-metal
+        popupType: LargeCaution
+        targetOnly: true
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Radiation
+        damage: 40
+      behaviors:
+      - !type:VomitBehavior
+
 # Used as a simple default for mob destruction
 - type: entity
   abstract: true
+  parent: BaseMobIrradiated
   id: BaseMobDestructible
   components:
   - type: Destructible
@@ -141,21 +165,6 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MeatLaserImpact
-    - trigger:
-        !type:DamageTypeTrigger
-        damageType: Radiation
-        damage: 15
-      behaviors:
-      - !type:PopupBehavior
-        popup: mouth-taste-metal
-        popupType: LargeCaution
-        targetOnly: true
-    - trigger:
-        !type:DamageTypeTrigger
-        damageType: Radiation
-        damage: 40
-      behaviors:
-      - !type:VomitBehavior
 
 # Used for mobs that can enter combat mode and can attack.
 - type: entity

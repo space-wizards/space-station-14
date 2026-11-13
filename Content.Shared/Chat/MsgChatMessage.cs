@@ -53,20 +53,6 @@ namespace Content.Shared.Chat
             AudioPath = audioPath;
             AudioVolume = audioVolume;
         }
-
-        public ChatMessage(ChatMessage copyFrom)
-        {
-            Channel = copyFrom.Channel;
-            Message = copyFrom.Message;
-            WrappedMessage = copyFrom.WrappedMessage;
-            SenderEntity = copyFrom.SenderEntity;
-            SenderKey = copyFrom.SenderKey;
-            HideChat = copyFrom.HideChat;
-            MessageColorOverride = copyFrom.MessageColorOverride;
-            AudioPath = copyFrom.AudioPath;
-            AudioVolume = copyFrom.AudioVolume;
-            Read = copyFrom.Read;
-        }
     }
 
     /// <summary>
@@ -82,6 +68,7 @@ namespace Content.Shared.Chat
         public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
         {
             var length = buffer.ReadVariableInt32();
+            buffer.AssertAtLeastSize(length);
             using var stream = new MemoryStream(length);
             buffer.ReadAlignedMemory(stream, length);
             serializer.DeserializeDirect(stream, out Message);

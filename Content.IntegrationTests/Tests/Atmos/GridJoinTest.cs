@@ -18,13 +18,12 @@ public sealed class GridJoinTest : AtmosTest
     [Test]
     public async Task TestGridJoinAtmosphere()
     {
-        await Pair.CreateTestMap();
+        await CreateTestMap();
 
         await Server.WaitAssertion(delegate
         {
             // Spawn an atmos device on the grid
             var canister = SSpawn(_canisterProtoId);
-            Debug.Assert(TestMap != null, nameof(TestMap) + " != null");
             _transformSystem.SetCoordinates(canister, TestMap.GridCoords);
             var deviceComp = SEntMan.GetComponent<AtmosDeviceComponent>(canister);
             var canisterEnt = (canister, deviceComp);

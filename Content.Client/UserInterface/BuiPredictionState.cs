@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Robust.Client.Timing;
 using Robust.Shared.Timing;
 

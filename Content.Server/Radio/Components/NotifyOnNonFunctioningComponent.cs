@@ -1,6 +1,7 @@
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Radio.Components;
 
@@ -10,7 +11,7 @@ namespace Content.Server.Radio.Components;
 /// Can be used for singularity containment field emitters
 /// or other crucial parts of infrastructure.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 [Access(typeof(NotifyOnNonFunctioningSystem))]
 public sealed partial class NotifyOnNonFunctioningComponent : Component
 {
@@ -57,6 +58,18 @@ public sealed partial class NotifyOnNonFunctioningComponent : Component
     /// </summary>
     [DataField]
     public LocId? LocUnanchored;
+
+    /// <summary>
+    /// The next time that this device can send a radio message.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan NextMessage;
+
+    /// <summary>
+    /// The minimum amount of time between sending consecutive messages.
+    /// </summary>
+    [DataField]
+    public TimeSpan NextMessageDelay = TimeSpan.FromSeconds(10);
 
     /// <summary>
     /// Marker, if power is required to send radio message.

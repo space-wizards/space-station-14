@@ -1,4 +1,4 @@
-﻿using Content.Shared.StationRecords.Systems;
+using Content.Shared.StationRecords.Systems;
 
 namespace Content.Server.StationRecords;
 
