@@ -50,6 +50,7 @@ deadmin_on_join = true
 new_player_threshold = 600
 alert.min_players_sharing_connection = 2
 allow_multi_server_play = false
+event_log.allow_none_category = false
 
 [atmos]
 max_explosion_range = 0
