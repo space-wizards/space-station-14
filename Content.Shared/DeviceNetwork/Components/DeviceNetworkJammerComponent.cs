@@ -1,5 +1,7 @@
 using Content.Shared.DeviceNetwork.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.DeviceNetwork.Components;
 
@@ -7,7 +9,7 @@ namespace Content.Shared.DeviceNetwork.Components;
 /// Allow entities to jam DeviceNetwork packets.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
-[Access(typeof(DeviceNetworkJammerSystem))]
+[AutoGenerateComponentPause, Access(typeof(DeviceNetworkJammerSystem))]
 public sealed partial class DeviceNetworkJammerComponent : Component
 {
     /// <summary>
@@ -21,11 +23,18 @@ public sealed partial class DeviceNetworkJammerComponent : Component
     /// Network ids are not guaranteed to be limited to DeviceNetIdDefaults.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public HashSet<int> JammableNetworks = [];
+    public HashSet<ProtoId<DeviceNetworkPrototype>> JammableNetworks = [];
 
     /// <summary>
     /// Device networks frequencies that wont be jammed.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public HashSet<DeviceFrequency> FrequenciesExcluded = [];
+
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField, AutoNetworkedField]
+    public TimeSpan NextUpdate = TimeSpan.Zero;
+
+    [DataField, AutoNetworkedField]
+    public TimeSpan Delay = TimeSpan.FromSeconds(3);
 }

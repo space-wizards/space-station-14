@@ -78,7 +78,8 @@
     alwaysRandomize: true
     layoutId: SurveillanceCamera
   - type: DeviceNetwork
-    deviceNetId: Wired
+    deviceNets:
+    - Wired
     transmitFrequencyId: SurveillanceCamera
     prefix: device-address-prefix-camera
   - type: DeviceNetworkRequiresPower

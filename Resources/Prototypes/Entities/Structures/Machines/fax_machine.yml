@@ -84,7 +84,8 @@
       Paper: !type:ContainerSlot
   - type: DeviceNetworkRequiresPower
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: Fax
     transmitFrequencyId: Fax
   - type: RequireProjectileTarget

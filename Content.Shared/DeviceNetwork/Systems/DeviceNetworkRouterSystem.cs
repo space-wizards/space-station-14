@@ -2,6 +2,7 @@ using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Payloads;
 using Content.Shared.SurveillanceCamera;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
@@ -13,7 +14,7 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
 {
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
 
-    [Dependency] private EntityQuery<DeviceNetworkComponent> _query = default!;
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _query;
 
     // TODO: make an engine PR to allow for auto-generated relay subscriptions
     // Should be doable by using reflection on marker interfaces and then adding them to the auto-generated subscriptions
@@ -40,7 +41,7 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
         args.Data.Reroute(ent.Owner,
             payload.TargetAddress,
             payload.OverrideFrequency ?? deviceComp.TransmitFrequency,
-            payload.OverrideNetwork ?? deviceComp.DeviceNetId,
+            payload.OverrideNetwork,
             _deviceNetworkSystem);
     }
 
@@ -65,7 +66,7 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
     /// </param>
     /// <param name="frequency">The frequency to send on to the router.</param>
     /// <param name="overrideFrequency">If specified, will use this frequency when re-routing the packet.</param>
-    /// <param name="network">The network to send on to the router.</param>
+    /// <param name="network">Network to send the packet to the router.</param>
     /// <param name="overrideNetwork">If specified, will use this network when re-routing the packet.</param>
     /// <returns>Returns true when the packet was successfully enqueued.</returns>
     public void SendPacketRouted<T>(
@@ -75,8 +76,8 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
         DeviceAddress? targetAddress,
         DeviceFrequency? overrideFrequency = null,
         DeviceFrequency? frequency = null,
-        int? overrideNetwork = null,
-        int? network = null)
+        ProtoId<DeviceNetworkPrototype>? overrideNetwork = null,
+        ProtoId<DeviceNetworkPrototype>? network = null)
         where T : IRoutableNetworkPayload
     {
         if (!_query.Resolve(ref ent) || ent.Comp == null)
@@ -88,10 +89,9 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
         {
             Payload = data,
             OverrideFrequency = overrideFrequency,
-            OverrideNetwork = overrideNetwork,
             TargetAddress = targetAddress,
         };
 
-        _deviceNetworkSystem.SendPacket(ent.Owner, routerAddress, ref payload, frequency, network);
+        _deviceNetworkSystem.SendPacket(ent.Owner, routerAddress, ref payload, frequency);
     }
 }

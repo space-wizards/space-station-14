@@ -7,7 +7,8 @@
   - type: CloningPod
   - type: DeviceList
   - type: DeviceNetwork
-    deviceNetId: Wired
+    deviceNets:
+    - Wired
     receiveFrequencyId: BasicDevice
   - type: DeviceLinkSink
     ports:

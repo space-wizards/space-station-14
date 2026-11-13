@@ -11,16 +11,6 @@ public readonly partial record struct DeviceAddress(int AddressId)
 {
     public static readonly DeviceAddress Invalid = new(0);
 
-    public static implicit operator int(DeviceAddress address)
-    {
-        return address.AddressId;
-    }
-
-    public static implicit operator DeviceAddress(int addressId)
-    {
-        return new DeviceAddress(addressId);
-    }
-
     public static implicit operator DeviceAddress(LocDeviceAddress address)
     {
         return address.AddressId;

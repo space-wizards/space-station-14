@@ -23,7 +23,8 @@
           True: { visible: true }
           False: { visible: false }
   - type: DeviceNetwork
-    deviceNetId: Wireless
+    deviceNets:
+    - Wireless
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
   - type: WirelessNetwork
