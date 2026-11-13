@@ -4,8 +4,14 @@
   priority: 0
   text: "/ServerInfo/Guidebook/NewPlayer/NewPlayer.xml"
   children:
+  - SettingIntroduction
   - Controls
   - CharacterCreation
+
+- type: guideEntry
+  id: SettingIntroduction
+  name: guide-entry-settingintroduction
+  text: "/ServerInfo/Guidebook/NewPlayer/SettingIntroduction.xml"
 
 - type: guideEntry
   id: Controls
