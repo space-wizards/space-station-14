@@ -58,15 +58,6 @@ public sealed partial class StoreDamageTakenOnMindSystem : EntitySystem
 
         EnsureComp<LastBodyDamageComponent>(mindContainer.Mind.Value, out var storedDamage);
 
-        var protoDict = new Dictionary<ProtoId<DamageGroupPrototype>, FixedPoint2>();
-        foreach (var stringDict in _damageable.GetDamagePerGroup((ent, damageable)))  // Translates the strings into ProtoId's before saving the Dictionary
-        {
-            if (!ProtoMan.TryIndex(stringDict.Key, out DamageGroupPrototype? proto))
-                continue;
-            protoDict.TryAdd(proto, stringDict.Value);
-        }
-
-        storedDamage.DamagePerGroup = protoDict;
         storedDamage.Damage = _damageable.GetAllDamage((ent, damageable));
         Dirty(mindContainer.Mind.Value, storedDamage);
     }
