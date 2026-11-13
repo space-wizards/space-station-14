@@ -17,6 +17,7 @@ using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
 using Content.Shared.Spawners.Components;
 using Content.Shared.Station.Components;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
@@ -32,6 +33,7 @@ namespace Content.Server.GameTicking
         [Dependency] private IAdminManager _adminManager = default!;
         [Dependency] private SharedJobSystem _jobs = default!;
         [Dependency] private AdminSystem _admin = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
 
         public static readonly EntProtoId ObserverPrototypeName = "MobObserver";
         public static readonly EntProtoId AdminObserverPrototypeName = "AdminObserver";
@@ -183,7 +185,7 @@ namespace Content.Server.GameTicking
             string speciesId;
             if (_randomizeCharacters)
             {
-                var weightId = Cfg.GetCVar(CCVars.ICRandomSpeciesWeights);
+                var weightId = _cfg.GetCVar(CCVars.ICRandomSpeciesWeights);
 
                 // If blank, choose a round start species.
                 if (string.IsNullOrEmpty(weightId))
@@ -254,6 +256,11 @@ namespace Content.Server.GameTicking
                 _chatManager.DispatchServerMessage(player,
                     Loc.GetString("game-ticker-player-no-jobs-available-when-joining"));
                 return;
+            }
+
+            if (_adminManager.IsAdmin(player) && _cfg.GetCVar(CCVars.AdminDeadminOnJoin))
+            {
+                _adminManager.DeAdmin(player);
             }
 
             DoSpawn(player, character, station, jobId, silent, out var mob, out var jobPrototype, out var jobName);
@@ -387,21 +394,25 @@ namespace Content.Server.GameTicking
         /// <summary>
         /// Causes the given player to join the current game as observer ghost. See also <see cref="SpawnObserver"/>
         /// </summary>
-        public void JoinAsObserver(ICommonSession player)
+        /// <param name="admin">
+        /// Whether to spawn an admin observer instead of a regular one.
+        /// Caller is responsible for verifying player admin status.
+        /// </param>
+        public void JoinAsObserver(ICommonSession player, bool admin = false)
         {
             // Can't spawn players with a dummy ticker!
             if (DummyTicker)
                 return;
 
             PlayerJoinGame(player);
-            SpawnObserver(player);
+            SpawnObserver(player, admin);
         }
 
         /// <summary>
         /// Spawns an observer ghost and attaches the given player to it. If the player does not yet have a mind, the
         /// player is given a new mind with the observer role. Otherwise, the current mind is transferred to the ghost.
         /// </summary>
-        public void SpawnObserver(ICommonSession player)
+        public void SpawnObserver(ICommonSession player, bool admin = false)
         {
             if (DummyTicker)
                 return;
@@ -417,13 +428,15 @@ namespace Content.Server.GameTicking
                 makeObserver = true;
             }
 
-            var ghost = _ghost.SpawnGhost(mind.Value);
+            var proto = admin ? AdminObserverPrototypeName : ObserverPrototypeName;
+            var ghost = _ghost.SpawnGhost(mind.Value, ghostProto: proto);
+
             if (makeObserver)
                 Role.MindAddRole(mind.Value, "MindRoleObserver");
 
             Admin.Add(LogType.LateJoin,
                 LogImpact.Low,
-                $"{player.Name} late joined the round as an Observer with {ToPrettyString(ghost):entity}.");
+                $"{player.Name} late joined the round as an {(admin ? "Admin Observer" : "Observer")} with {ToPrettyString(ghost):entity}.");
         }
 
         #region Spawn Points
