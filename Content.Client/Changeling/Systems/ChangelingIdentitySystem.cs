@@ -53,5 +53,10 @@ public sealed partial class ChangelingIdentitySystem : SharedChangelingIdentityS
         {
             bui.Update();
         }
+
+        if (_ui.TryGetOpenUi(uid, ChangelingTransformUiKey.StingKey, out var stingBui))
+        {
+            stingBui.Update();
+        }
     }
 }
