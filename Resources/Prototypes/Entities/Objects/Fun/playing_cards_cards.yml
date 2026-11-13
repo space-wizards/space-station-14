@@ -1,0 +1,198 @@
+- type: card
+  abstract: true
+  id: BaseCard
+  sprite: /Textures/Objects/Fun/PlayingCards/basiccards.rsi
+
+- type: card
+  abstract: true
+  parent: BaseCard
+  id: !type:CreateVariants
+    values:
+    - Clubs
+    - Diamonds
+    - Hearts
+    - Spades
+  color: !type:CreateVariants
+    values:
+    - "#004000" # the darkest system green is too light
+    - firebrick
+    - maroon
+    - midnightblue
+
+- type: card
+  abstract: true
+  parent: !type:CreateVariants
+    values:
+    - Clubs
+    - Diamonds
+    - Hearts
+    - Spades
+  id: !type:CreateVariants
+    values:
+    - ClubsIcon
+    - DiamondsIcon
+    - HeartsIcon
+    - SpadesIcon
+  layers:
+  - state: !type:CreateVariants
+      values:
+      - sc_ClubsDiamonds
+      - sc_ClubsDiamonds
+      - sc_Hearts
+      - sc_Spades
+
+# Clubs
+- type: card
+  parent: Clubs
+  id: ace_of_clubs
+  layers:
+  - state: sc_Ace_of_Clubs
+
+- type: card
+  parent: ClubsIcon
+  id: !type:CreateVariants
+    values:
+    - two_of_clubs
+    - three_of_clubs
+    - four_of_clubs
+    - five_of_clubs
+    - six_of_clubs
+    - seven_of_clubs
+    - eight_of_clubs
+    - nine_of_clubs
+    - ten_of_clubs
+    - jack_of_clubs
+    - queen_of_clubs
+    - king_of_clubs
+  layers:
+  - state: !type:CreateVariants
+      values:
+      - sc_2
+      - sc_3
+      - sc_4
+      - sc_5
+      - sc_6
+      - sc_7
+      - sc_8
+      - sc_9
+      - sc_10
+      - sc_Jack
+      - sc_Queen
+      - sc_King
+
+# Diamonds
+- type: card
+  parent: Diamonds
+  id: ace_of_diamonds
+  layers:
+  - state: sc_Ace_of_Diamonds
+
+- type: card
+  parent: DiamondsIcon
+  id: !type:CreateVariants
+    values:
+    - two_of_diamonds
+    - three_of_diamonds
+    - four_of_diamonds
+    - five_of_diamonds
+    - six_of_diamonds
+    - seven_of_diamonds
+    - eight_of_diamonds
+    - nine_of_diamonds
+    - ten_of_diamonds
+    - jack_of_diamonds
+    - queen_of_diamonds
+    - king_of_diamonds
+  layers:
+  - state: !type:CreateVariants
+      values:
+      - sc_2
+      - sc_3
+      - sc_4
+      - sc_5
+      - sc_6
+      - sc_7
+      - sc_8
+      - sc_9
+      - sc_10
+      - sc_Jack
+      - sc_Queen
+      - sc_King
+
+# Hearts
+- type: card
+  parent: Hearts
+  id: ace_of_hearts
+  layers:
+  - state: sc_Ace_of_Hearts
+
+- type: card
+  parent: HeartsIcon
+  id: !type:CreateVariants
+    values:
+    - two_of_hearts
+    - three_of_hearts
+    - four_of_hearts
+    - five_of_hearts
+    - six_of_hearts
+    - seven_of_hearts
+    - eight_of_hearts
+    - nine_of_hearts
+    - ten_of_hearts
+    - jack_of_hearts
+    - queen_of_hearts
+    - king_of_hearts
+  layers:
+  - state: !type:CreateVariants
+      values:
+      - sc_2
+      - sc_3
+      - sc_4
+      - sc_5
+      - sc_6
+      - sc_7
+      - sc_8
+      - sc_9
+      - sc_10
+      - sc_Jack
+      - sc_Queen
+      - sc_King
+
+# Spades
+- type: card
+  parent: Spades
+  id: ace_of_spades
+  layers:
+  - state: sc_Ace_of_Spades
+
+- type: card
+  parent: SpadesIcon
+  id: !type:CreateVariants
+    values:
+    - two_of_spades
+    - three_of_spades
+    - four_of_spades
+    - five_of_spades
+    - six_of_spades
+    - seven_of_spades
+    - eight_of_spades
+    - nine_of_spades
+    - ten_of_spades
+    - jack_of_spades
+    - queen_of_spades
+    - king_of_spades
+  layers:
+  - state: !type:CreateVariants
+      values:
+      - sc_2
+      - sc_3
+      - sc_4
+      - sc_5
+      - sc_6
+      - sc_7
+      - sc_8
+      - sc_9
+      - sc_10
+      - sc_Jack
+      - sc_Queen
+      - sc_King
