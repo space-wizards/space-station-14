@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.Atmos;
+using Content.Shared.Damage.Components;
 using Content.Shared.Physics;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
@@ -61,6 +62,12 @@ public sealed partial class EntityStorageComponent : Component, IGasMixtureHolde
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool IsCollidableWhenOpen;
+
+    /// <summary>
+    /// When true, the storage will toggle <see cref="RequireProjectileTargetComponent"/> to match the open status.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ToggleRequireProjectileTargetWhenOpen;
 
     /// <summary>
     /// If true, it opens the storage when the entity inside of it moves
