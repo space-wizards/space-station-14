@@ -1,9 +1,9 @@
+#nullable enable
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Engineering.Systems;
 
 namespace Content.IntegrationTests.Tests.Engineering;
 
-[TestFixture]
 [TestOf(typeof(InflatableSafeDisassemblySystem))]
 public sealed class InflatablesDeflateTest : InteractionTest
 {

@@ -1,19 +1,24 @@
+#nullable enable
 using Content.IntegrationTests.Tests.Interaction;
+using Content.Shared.Construction.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Construction.Interaction;
 
 public sealed class ComputerConstruction : InteractionTest
 {
-    private const string Computer = "Computer";
-    private const string ComputerId = "ComputerId";
-    private const string ComputerFrame = "ComputerFrame";
-    private const string IdBoard = "IDComputerCircuitboard";
+    private static readonly ProtoId<ConstructionPrototype> ComputerRecipe = "Computer";
+    private static readonly EntProtoId ComputerId = "ComputerId";
+    private static readonly EntProtoId ComputerFrame = "ComputerFrame";
+    private static readonly EntProtoId IdBoard = "IDComputerCircuitboard";
+    private static readonly EntProtoId CargoRequestComputerBoardId = "CargoRequestComputerCircuitboard";
+    private static readonly EntProtoId CargoOrdersComputerId = "ComputerCargoOrders";
 
     [Test]
     public async Task ConstructComputer()
     {
         // Place ghost
-        await StartConstruction(Computer);
+        await StartConstruction(ComputerRecipe);
 
         // Initial interaction (ghost turns into real entity)
         await InteractUsing(Steel, 5);
@@ -84,14 +89,14 @@ public sealed class ComputerConstruction : InteractionTest
 
         // Begin re-constructing with a new circuit board
         await Interact(
-            "CargoRequestComputerCircuitboard",
+            CargoRequestComputerBoardId,
             Screw,
             (Cable, 5),
             (Glass, 2),
             Screw);
 
         // Construction finished, target entity was replaced with a new one:
-        AssertPrototype("ComputerCargoOrders");
+        AssertPrototype(CargoOrdersComputerId);
     }
 }
 

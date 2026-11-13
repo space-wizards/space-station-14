@@ -1,3 +1,4 @@
+#nullable enable
 using System.Numerics;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Tests.Helpers;
@@ -20,7 +21,6 @@ using static Content.IntegrationTests.Tests.Clumsy.ClumsyTestPrototypes;
 
 namespace Content.IntegrationTests.Tests.Clumsy;
 
-[TestFixture]
 [TestOf(typeof(ClumsyStatusEffectSystem))]
 public sealed class ClumsyStatusTest : InteractionTest
 {
@@ -54,7 +54,7 @@ public sealed class ClumsyStatusTest : InteractionTest
             _sThrowSystem.TryThrow(ball, Vector2.Zero); // Direction doesn't matter because it spawned on top of the player
         });
 
-        Assert.That(HandSys.ActiveHandIsEmpty((SPlayer,Hands)), Is.True, "Clumsy mob caught the ball.");
+        Assert.That(HandSys.ActiveHandIsEmpty((SPlayer, Hands)), Is.True, "Clumsy mob caught the ball.");
         foreach (var ev in GetEvents<CatchAttemptEvent>(SPlayer))
         {
             Assert.That(ev.Cancelled, Is.True, "Clumsy mob didn't cancel a catch event.");
