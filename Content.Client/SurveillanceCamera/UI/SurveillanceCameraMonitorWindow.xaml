@@ -63,8 +63,8 @@
         <BoxContainer Orientation="Vertical" HorizontalExpand="True">
             <Label Name="CameraStatus"/>
             <Control VerticalExpand="True" Margin="5" Name="CameraViewBox">
-                <viewport:ScalingViewport Name="CameraView" MinSize="500 500" MouseFilter="Ignore"/>
-                <TextureRect MinSize="500 500" Name="CameraViewBackground" />
+                <viewport:ScalingViewport Name="CameraView" MouseFilter="Ignore"/>
+                <TextureRect Name="CameraViewBackground" />
             </Control>
         </BoxContainer>
     </BoxContainer>
