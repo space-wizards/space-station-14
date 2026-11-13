@@ -22,51 +22,42 @@ public sealed partial class KudzuSystem : EntitySystem
 
     private static readonly ProtoId<EdgeSpreaderPrototype> KudzuGroup = "Kudzu";
 
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<KudzuComponent, ComponentStartup>(SetupKudzu);
-        SubscribeLocalEvent<KudzuComponent, SpreadNeighborsEvent>(OnKudzuSpread);
-        SubscribeLocalEvent<KudzuComponent, DamageChangedEvent>(OnDamageChanged);
-    }
-
-    private void OnDamageChanged(EntityUid uid, KudzuComponent component, DamageChangedEvent args)
+    [SubscribeLocalEvent]
+    private void OnDamageChanged(Entity<KudzuComponent> ent, ref DamageChangedEvent args)
     {
         // Every time we take any damage, we reduce growth depending on all damage over the growth impact
         //   So the kudzu gets slower growing the more it is hurt.
-        var growthDamage = (int) (_damageable.GetTotalDamage((uid, args.Damageable)) / component.GrowthHealth);
+        var growthDamage = (int)(_damageable.GetTotalDamage((ent, args.Damageable)) / ent.Comp.GrowthHealth);
         if (growthDamage > 0)
         {
-            if (!EnsureComp<GrowingKudzuComponent>(uid, out _))
-                component.GrowthLevel = 3;
+            if (!EnsureComp<GrowingKudzuComponent>(ent, out _))
+                ent.Comp.GrowthLevel = 3;
 
-            component.GrowthLevel = Math.Max(1, component.GrowthLevel - growthDamage);
-            if (TryComp<AppearanceComponent>(uid, out var appearance))
-            {
-                _appearance.SetData(uid, KudzuVisuals.GrowthLevel, component.GrowthLevel, appearance);
-            }
+            ent.Comp.GrowthLevel = Math.Max(1, ent.Comp.GrowthLevel - growthDamage);
+            _appearance.SetData(ent, KudzuVisuals.GrowthLevel, ent.Comp.GrowthLevel);
         }
     }
 
-    private void OnKudzuSpread(EntityUid uid, KudzuComponent component, ref SpreadNeighborsEvent args)
+    [SubscribeLocalEvent]
+    private void OnKudzuSpread(Entity<KudzuComponent> ent, ref SpreadNeighborsEvent args)
     {
-        if (component.GrowthLevel < 3)
+        if (ent.Comp.GrowthLevel < 3)
             return;
 
         if (args.NeighborFreeTiles.Count == 0)
         {
-            RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
+            RemCompDeferred<ActiveEdgeSpreaderComponent>(ent);
             return;
         }
 
-        if (!_robustRandom.Prob(component.SpreadChance))
+        if (!_robustRandom.Prob(ent.Comp.SpreadChance))
             return;
 
-        var prototype = MetaData(uid).EntityPrototype?.ID;
+        var prototype = MetaData(ent).EntityPrototype?.ID;
 
         if (prototype == null)
         {
-            RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
+            RemCompDeferred<ActiveEdgeSpreaderComponent>(ent);
             return;
         }
 
@@ -82,15 +73,14 @@ public sealed partial class KudzuSystem : EntitySystem
         }
     }
 
-    private void SetupKudzu(EntityUid uid, KudzuComponent component, ComponentStartup args)
+    [SubscribeLocalEvent]
+    private void SetupKudzu(Entity<KudzuComponent> ent, ref ComponentStartup args)
     {
-        if (!TryComp<AppearanceComponent>(uid, out var appearance))
-        {
+        if (!_appearanceQuery.TryComp(ent, out var appearance))
             return;
-        }
 
-        _appearance.SetData(uid, KudzuVisuals.Variant, _robustRandom.Next(1, component.SpriteVariants), appearance);
-        _appearance.SetData(uid, KudzuVisuals.GrowthLevel, 1, appearance);
+        _appearance.SetData(ent, KudzuVisuals.Variant, _robustRandom.Next(1, ent.Comp.SpriteVariants), appearance);
+        _appearance.SetData(ent, KudzuVisuals.GrowthLevel, 1, appearance);
     }
 
     /// <inheritdoc/>
@@ -146,10 +136,7 @@ public sealed partial class KudzuSystem : EntitySystem
                 RemCompDeferred(uid, grow);
             }
 
-            if (_appearanceQuery.TryGetComponent(uid, out var appearance))
-            {
-                _appearance.SetData(uid, KudzuVisuals.GrowthLevel, kudzu.GrowthLevel, appearance);
-            }
+            _appearance.SetData(uid, KudzuVisuals.GrowthLevel, kudzu.GrowthLevel);
         }
     }
 }
