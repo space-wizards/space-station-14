@@ -91,7 +91,7 @@ public sealed partial class CloningSystem
     private void OnCloneItemLabel(Entity<LabelComponent> ent, ref CloningItemEvent args)
     {
         // copy the label
-        _label.Label(args.CloneUid, ent.Comp.CurrentLabel);
+        _label.Label(args.CloneUid, ent.Comp.CurrentLabel, labelApplier: ent.Comp.LabelApplier);
     }
 
     private void OnCloneItemPaper(Entity<PaperComponent> ent, ref CloningItemEvent args)
