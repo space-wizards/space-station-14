@@ -211,9 +211,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
         {
             proto = ProtoMan.Index<RadioChannelPrototype>(id);
 
-            var key = id == SharedChatSystem.CommonChannel
-                ? SharedChatSystem.RadioCommonPrefix.ToString()
-                : $"{SharedChatSystem.RadioChannelPrefix}{proto.KeyCode}";
+            SharedChatSystem.TryGetRadioChannelPrefix(proto, out var key);
 
             examineEvent.PushMarkup(Loc.GetString(channelFTLPattern,
                 ("color", proto.Color),
