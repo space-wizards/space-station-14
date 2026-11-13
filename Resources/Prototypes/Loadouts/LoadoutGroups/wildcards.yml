@@ -1,0 +1,72 @@
+# Psychologist
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: PsychologistJumpsuit
+  loadouts:
+  - PsychologistJumpsuit
+  - PsychologistJumpskirt
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: PsychologistJobTrinkets
+#  loadouts: []
+
+# Reporter
+
+- type: loadoutGroup
+  parent: BaseHead
+  id: ReporterHead
+  loadouts:
+  - ReporterPressFedora
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: ReporterJumpsuit
+  loadouts:
+  - ReporterJumpsuit
+  - JournalistJumpsuit
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: ReporterOuterClothing
+  loadouts:
+  - ReporterPressVest
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: ReporterJobTrinkets
+#  loadouts: []
+
+# Tram Driver
+
+- type: loadoutGroup
+  parent: BaseHead
+  id: TramDriverHead
+  loadouts:
+  - TramDriverHead
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: TramDriverJumpsuit
+  loadouts:
+  - TramDriverJumpsuit
+  - TramDriverJumpskirt
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: TramDriverOuterClothing
+  loadouts:
+  - TramDriverSuit
+
+- type: loadoutGroup
+  parent: BaseGloves
+  id: TramDriverGloves
+  loadouts:
+  - TramDriverGlovesWhite
+  - TramDriverGlovesBlack
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: TramDriverJobTrinkets
+#  loadouts: []

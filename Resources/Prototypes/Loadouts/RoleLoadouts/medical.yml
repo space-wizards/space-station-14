@@ -1,21 +1,35 @@
-## Role Loadouts
-
 - type: roleLoadout
   id: JobChiefMedicalOfficer
   groups:
   - GroupTankHarness
   - ChiefMedicalOfficerHead
+  - CommonEyewear
   - MedicalMask
-  - ChiefMedicalOfficerJumpsuit
   - MedicalBackpack
+  - ChiefMedicalOfficerJumpsuit
   - ChiefMedicalOfficerOuterClothing
   - ChiefMedicalOfficerNeck
   - ChiefMedicalOfficerShoes
-  - Glasses
-  - AssistiveItems
+  - CommonAssistiveItems
   - SurvivalMedical
-  - Trinkets
+  - CommonTrinkets
 #  - ChiefMedicalOfficerJobTrinkets
+  - GroupSpeciesBreathToolMedical
+
+- type: roleLoadout
+  id: JobChemist
+  groups:
+  - GroupTankHarness
+  - CommonEyewear
+  - MedicalMask
+  - ChemistBackpack
+  - ChemistJumpsuit
+  - ChemistOuterClothing
+  - MedicalShoes
+  - CommonAssistiveItems
+  - SurvivalMedical
+  - CommonTrinkets
+#  - ChemistJobTrinkets
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -23,16 +37,16 @@
   groups:
   - GroupTankHarness
   - MedicalDoctorHead
+  - CommonEyewear
   - MedicalMask
-  - MedicalDoctorJumpsuit
   - MedicalBackpack
+  - MedicalDoctorJumpsuit
   - MedicalDoctorOuterClothing
   - MedicalShoes
   - MedicalDoctorPDA
-  - Glasses
-  - AssistiveItems
+  - CommonAssistiveItems
   - SurvivalMedical
-  - Trinkets
+  - CommonTrinkets
 #  - MedicalDoctorJobTrinkets
   - GroupSpeciesBreathToolMedical
 
@@ -40,29 +54,13 @@
   id: JobMedicalIntern
   groups:
   - GroupTankHarness
-  - MedicalInternJumpsuit
+  - CommonEyewear
   - MedicalBackpack
-  - Glasses
-  - AssistiveItems
+  - MedicalInternJumpsuit
+  - CommonAssistiveItems
   - SurvivalMedical
-  - Trinkets
+  - CommonTrinkets
 #  - MedicalInternJobTrinkets
-  - GroupSpeciesBreathToolMedical
-
-- type: roleLoadout
-  id: JobChemist
-  groups:
-  - GroupTankHarness
-  - MedicalMask
-  - ChemistJumpsuit
-  - ChemistBackpack
-  - ChemistOuterClothing
-  - MedicalShoes
-  - Glasses
-  - AssistiveItems
-  - SurvivalMedical
-  - Trinkets
-#  - ChemistJobTrinkets
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -70,14 +68,14 @@
   groups:
   - GroupTankHarness
   - ParamedicHead
+  - CommonEyewear
   - MedicalMask
-  - ParamedicJumpsuit
   - MedicalBackpack
+  - ParamedicJumpsuit
   - ParamedicOuterClothing
   - ParamedicShoes
-  - Glasses
-  - AssistiveItems
+  - CommonAssistiveItems
   - SurvivalMedical
-  - Trinkets
+  - CommonTrinkets
 #  - ParamedicJobTrinkets
   - GroupSpeciesBreathToolMedical

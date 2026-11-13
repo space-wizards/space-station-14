@@ -1,0 +1,407 @@
+# Bartender
+
+- type: loadoutGroup
+  parent: BaseHead
+  id: BartenderHead
+  loadouts:
+  - BartenderHead
+  - BartenderBowler
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: BartenderJumpsuit
+  loadouts:
+  - BartenderJumpsuit
+  - BartenderJumpskirt
+  - BartenderJumpsuitPurple
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: BartenderOuterClothing
+  loadouts:
+  - BartenderVest
+  - BartenderApron
+  - BartenderWintercoat
+
+- type: loadoutGroup
+  parent: BaseJobTrinkets
+  id: BartenderJobTrinkets
+  loadouts:
+  - BartenderGoldenShaker
+
+# Botanist
+
+- type: loadoutGroup
+  parent: BaseHead
+  id: BotanistHead
+  loadouts:
+  - BotanistHead
+  - BotanistBandana
+
+- type: loadoutGroup
+  parent: BaseBackpack
+  id: BotanistBackpack
+  loadouts:
+  - BotanistBackpack
+  - BotanistSatchel
+  - BotanistDuffel
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: BotanistJumpsuit
+  loadouts:
+  - BotanistJumpsuit
+  - BotanistJumpskirt
+  - BotanistOveralls
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: BotanistOuterClothing
+  loadouts:
+  - BotanistApron
+  - BotanistWintercoat
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: BotanistJobTrinkets
+#  loadouts: []
+
+# Chaplain
+
+- type: loadoutGroup
+  parent: BaseHead
+  id: ChaplainHead
+  loadouts:
+  - ChaplainHead
+  - ChaplainNunHood
+  - ChaplainPlagueHat
+  - ChaplainWitchHat
+  - ChaplainWitchHatAlt
+
+- type: loadoutGroup
+  parent: BaseMask
+  id: ChaplainMask
+  loadouts:
+  - ChaplainMask
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: ChaplainJumpsuit
+  loadouts:
+  - ChaplainJumpsuit
+  - ChaplainJumpskirt
+  - ChaplainRobesLight
+  - ChaplainRobesDark
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: ChaplainOuterClothing
+  loadouts:
+  - ChaplainPlagueSuit
+  - ChaplainNunRobe
+  - ChaplainBlackHoodie
+  - ChaplainHoodie
+
+- type: loadoutGroup
+  parent: BaseNeck
+  id: ChaplainNeck
+  loadouts:
+  - ChaplainNeck
+
+- type: loadoutGroup
+  parent: BaseShoes
+  id: ChaplainShoes
+  loadouts:
+  - BlackShoes
+  - BlackSandals
+  - BrownSandals
+
+- type: loadoutGroup
+  id: ChaplainBible
+  name: loadout-group-chaplain-bible
+  loadouts:
+  - Bible
+  - BibleNanoTrasen
+  - BibleDruid
+  - BibleHonk
+  - BibleRatvar
+  - BibleNarsie
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: ChaplainJobTrinkets
+#  loadouts: []
+
+# Chef
+
+- type: loadoutGroup
+  parent: BaseHead
+  id: ChefHead
+  loadouts:
+  - ChefHead
+
+- type: loadoutGroup
+  parent: BaseMask
+  id: ChefMask
+  loadouts:
+  - ChefMask
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: ChefJumpsuit
+  loadouts:
+  - ChefJumpsuit
+  - ChefJumpskirt
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: ChefOuterClothing
+  loadouts:
+  - ChefApron
+  - ChefJacket
+  - ChefWintercoat
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: ChefJobTrinkets
+#  loadouts: []
+
+# Clown
+
+- type: loadoutGroup
+  parent: BaseHead
+  id: ClownHead
+  loadouts:
+  - JesterHat
+  - JesterAltHat
+  - ClownMitre
+
+- type: loadoutGroup
+  parent: BaseBackpack
+  id: ClownBackpack
+  loadouts:
+  - ClownBackpack
+  - ClownSatchel
+  - ClownDuffel
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: ClownJumpsuit
+  loadouts:
+  - ClownSuit
+  - ClownSkirt
+  - JesterSuit
+  - JesterAltSuit
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: ClownOuterClothing
+  loadouts:
+  - ClownRobes
+  - ClownWintercoat
+
+- type: loadoutGroup
+  parent: BaseShoes
+  id: ClownShoes
+  loadouts:
+  - ClownShoes
+  - JesterShoes
+
+- type: loadoutGroup
+  parent: BaseJobTrinkets
+  id: ClownJobTrinkets
+  loadouts:
+  - FlowerWaterClown
+
+# Janitor
+
+- type: loadoutGroup
+  parent: BaseHead
+  id: JanitorHead
+  loadouts:
+  - JanitorHead
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: JanitorJumpsuit
+  loadouts:
+  - JanitorJumpsuit
+  - JanitorJumpskirt
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: JanitorOuterClothing
+  loadouts:
+  - JanitorWintercoat
+
+- type: loadoutGroup
+  parent: BaseGloves
+  id: JanitorGloves
+  loadouts:
+  - JanitorRubberGloves
+  - OrangeGloves
+  - PurpleGloves
+
+- type: loadoutGroup
+  parent: BaseJobTrinkets
+  id: JanitorJobTrinkets
+  loadouts:
+  - JanitorGoldenPlunger
+
+# Lawyer
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: LawyerJumpsuit
+  loadouts:
+  - LawyerJumpsuit
+  - LawyerJumpskirt
+  - LawyerJumpsuitBlue
+  - LawyerJumpskirtBlue
+  - LawyerJumpsuitPurple
+  - LawyerJumpskirtPurple
+  - LawyerJumpsuitRed
+  - LawyerJumpskirtRed
+  - LawyerJumpsuitGood
+  - LawyerJumpskirtGood
+
+- type: loadoutGroup
+  parent: BaseNeck
+  id: LawyerNeck
+  loadouts:
+  - LawyerNeck
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: LawyerJobTrinkets
+#  loadouts: []
+
+# Librarian
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: LibrarianJumpsuit
+  loadouts:
+  - LibrarianJumpsuit
+  - LibrarianJumpskirt
+  - CuratorJumpsuit
+  - CuratorJumpskirt
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: LibrarianJobTrinkets
+#  loadouts: []
+
+# Mime
+
+- type: loadoutGroup
+  parent: BaseHead
+  id: MimeHead
+  loadouts:
+  - MimeHead
+  - MimeFrenchBeret
+  - MimeCap
+
+- type: loadoutGroup
+  parent: BaseMask
+  id: MimeMask
+  minLimit: 1
+  loadouts:
+  - MimeMask
+  - MimeMaskSad
+  - MimeMaskScared
+
+- type: loadoutGroup
+  parent: BaseBackpack
+  id: MimeBackpack
+  loadouts:
+  - MimeBackpack
+  - MimeSatchel
+  - MimeDuffel
+
+- type: loadoutGroup
+  parent: BaseBelt
+  id: MimeBelt
+  loadouts:
+  - MimeSuspendersRed
+  - MimeSuspendersBlack
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: MimeJumpsuit
+  loadouts:
+  - MimeJumpsuit
+  - MimeJumpskirt
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: MimeOuterClothing
+  loadouts:
+  - MimeWintercoat
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: MimeJobTrinkets
+#  loadouts: []
+
+# Musician
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: MusicianJumpsuit
+  loadouts:
+  - MusicianJumpsuit
+  - MusicianJumpskirt
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: MusicianOuterClothing
+  loadouts:
+  - MusicianWintercoat
+
+- type: loadoutGroup
+  id: MusicianInstruments
+  name: loadout-group-musician-instruments
+  minLimit: 0
+  maxLimit: 2
+  loadouts:
+  - Glockenspiel
+  - MusicBox
+  - Xylophone
+  - Microphone
+  - Synthesizer
+  - Kalimba
+  - Woodblock
+  - ElectricGuitar
+  - BassGuitar
+  - RockGuitar
+  - AcousticGuitar
+  - Banjo
+  - Violin
+  - Viola
+  - Cello
+  - Trumpet
+  - Trombone
+  - FrenchHorn
+  - Euphonium
+  - Saxophone
+  - Accordion
+  - Harmonica
+  - Clarinet
+  - Flute
+  - Recorder
+  - PanFlute
+  - Ocarina
+  - Bagpipe
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: MusicianJobTrinkets
+#  loadouts: []
+
+# Service Worker
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: ServiceWorkerJobTrinkets
+#  loadouts: []
