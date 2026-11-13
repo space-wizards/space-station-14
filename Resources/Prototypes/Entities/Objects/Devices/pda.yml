@@ -1085,7 +1085,7 @@
 
 - type: entity
   parent: ClearPDA
-  id: PrisonerPDA # This mostly just exists for the sake of the chameleon UI giving a clear PDA with a prisoner ID
+  id: PrisonerPDA # "real" prisoners generally lack a PDA entirely, so this mostly just exists so that PrisonerChameleonOutfit doesn't just leave the PDA as-is
   suffix: Prisoner
   components:
   - type: Pda
