@@ -356,7 +356,7 @@
 - type: entity
   parent: RandomHumanoidSpawnerERTSecurityEVA
   id: RandomHumanoidSpawnerERTSecurityArmedRifle
-  suffix: Task Force, EVA, Armed (Rifleman)
+  suffix: Task Force, EVA, Armed, Rifleman
   components:
   - type: RandomHumanoidSpawner
     settings: ERTSecurityArmedRifle
@@ -376,7 +376,7 @@
 - type: entity
   parent: RandomHumanoidSpawnerERTSecurityEVA
   id: RandomHumanoidSpawnerERTSecurityArmedGrenade
-  suffix: Task Force, EVA, Armed (Grenadier)
+  suffix: Task Force, EVA, Armed, Grenadier
   components:
   - type: RandomHumanoidSpawner
     settings: ERTSecurityArmedGrenade
@@ -396,7 +396,7 @@
 - type: entity
   parent: RandomHumanoidSpawnerERTSecurityEVA
   id: RandomHumanoidSpawnerERTSecurityArmedVanguard
-  suffix: Task Force, EVA, Armed (Vanguard)
+  suffix: Task Force, EVA, Armed, Vanguard
   components:
   - type: RandomHumanoidSpawner
     settings: ERTSecurityArmedVanguard
@@ -416,7 +416,7 @@
 - type: entity
   parent: RandomHumanoidSpawnerERTSecurityEVA
   id: RandomHumanoidSpawnerERTSecurityArmedShotgun
-  suffix: Task Force, EVA, Armed (Breacher)
+  suffix: Task Force, EVA, Armed, Breacher
   components:
   - type: RandomHumanoidSpawner
     settings: ERTSecurityArmedShotgun
