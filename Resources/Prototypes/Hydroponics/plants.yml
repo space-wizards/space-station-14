@@ -62,7 +62,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ MeatWheatPlants ]
+          speciesOptions:
+          - prototype: MeatWheatPlants
     lifespan: 25
     maturation: 6
     production: 3
@@ -160,7 +161,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ MimanaPlants ]
+          speciesOptions:
+          - prototype: MimanaPlants
     lifespan: 50
     maturation: 6
     production: 6
@@ -271,7 +273,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ WorldPeaPlants ]
+          speciesOptions:
+          - prototype: WorldPeaPlants
     lifespan: 25
     growthStages: 3
     maturation: 7
@@ -315,7 +318,10 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ LemoonPlants, LimePlants, OrangePlants ]
+          speciesOptions:
+          - prototype: LemoonPlants
+          - prototype: LimePlants
+          - prototype: OrangePlants
     lifespan: 55
     maturation: 6
     production: 6
@@ -382,7 +388,9 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ OrangePlants, LemonPlants ]
+          speciesOptions:
+          - prototype: OrangePlants
+          - prototype: LemonPlants
     lifespan: 55
     maturation: 6
     production: 6
@@ -418,7 +426,10 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ ExtradimensionalOrangePlants, LemonPlants, LimePlants ]
+          speciesOptions:
+          - prototype: ExtradimensionalOrangePlants
+          - prototype: LemonPlants
+          - prototype: LimePlants
     lifespan: 55
     maturation: 6
     production: 6
@@ -557,7 +568,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ PapercanePlants ]
+          speciesOptions:
+          - prototype: PapercanePlants
     lifespan: 60
     maturation: 6
     production: 6
@@ -652,7 +664,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ SteelcapPlants ]
+          speciesOptions:
+          - prototype: SteelcapPlants
     lifespan: 80
     maturation: 15
     production: 3
@@ -712,7 +725,9 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ BlueTomatoPlants, BloodTomatoPlants ]
+          speciesOptions:
+          - prototype: BlueTomatoPlants
+          - prototype: BloodTomatoPlants
     lifespan: 25
     maturation: 8
     production: 6
@@ -799,7 +814,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ KillerTomatoPlants ]
+          speciesOptions:
+          - prototype: KillerTomatoPlants
     lifespan: 60
     maturation: 8
     production: 6
@@ -882,7 +898,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ EggyPlants ]
+          speciesOptions:
+          - prototype: EggyPlants
     lifespan: 25
     maturation: 6
     production: 6
@@ -986,7 +1003,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ GoldenApplePlants ]
+          speciesOptions:
+          - prototype: GoldenApplePlants
     lifespan: 55
     maturation: 6
     production: 6
@@ -1094,7 +1112,9 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ OnionRedPlants, BloonionPlants ]
+          speciesOptions:
+          - prototype: OnionRedPlants
+          - prototype: BloonionPlants
     lifespan: 25
     maturation: 10
     production: 7
@@ -1247,7 +1267,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ RainbowCannabisPlants ]
+          speciesOptions:
+          - prototype: RainbowCannabisPlants
     lifespan: 75
     maturation: 8
     production: 12
@@ -1366,7 +1387,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ DeathNettlePlants ]
+          speciesOptions:
+          - prototype: DeathNettlePlants
     lifespan: 25
     maturation: 8
     production: 6
@@ -1440,7 +1462,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ ChillyPlants ]
+          speciesOptions:
+          - prototype: ChillyPlants
     lifespan: 25
     maturation: 6
     production: 6
@@ -1521,7 +1544,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ LilyPlants ]
+          speciesOptions:
+          - prototype: LilyPlants
     lifespan: 25
     maturation: 10
     production: 3
@@ -1558,7 +1582,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ SpacemansTrumpetPlants ]
+          speciesOptions:
+          - prototype: SpacemansTrumpetPlants
     lifespan: 25
     maturation: 10
     production: 3
@@ -1595,7 +1620,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ AloeIgnisPlants ]
+          speciesOptions:
+          - prototype: AloeIgnisPlants
     lifespan: 25
     maturation: 10
     production: 3
@@ -1632,7 +1658,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ DragonTailPlants ]
+          speciesOptions:
+          - prototype: DragonTailPlants
     lifespan: 25
     maturation: 10
     production: 3
@@ -1729,7 +1756,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ AmbrosiaDeusPlants ]
+          speciesOptions:
+          - prototype: AmbrosiaDeusPlants
     lifespan: 25
     maturation: 10
     production: 3
@@ -1810,7 +1838,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ GlasstlePlants ]
+          speciesOptions:
+          - prototype: GlasstlePlants
     lifespan: 25
     maturation: 10
     production: 3
@@ -1907,7 +1936,9 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ FakeCapfruitPlants, RealCapfruitPlants ]
+          speciesOptions:
+          - prototype: FakeCapfruitPlants
+          - prototype: RealCapfruitPlants
     lifespan: 65
     maturation: 25
     production: 25
@@ -2035,7 +2066,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ KoibeanPlants ]
+          speciesOptions:
+          - prototype: KoibeanPlants
     lifespan: 25
     maturation: 6
     production: 6
@@ -2162,7 +2194,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ HolymelonPlants ]
+          speciesOptions:
+          - prototype: HolymelonPlants
     lifespan: 55
     maturation: 12
     production: 3
@@ -2338,7 +2371,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ LaughinPeaPlants ]
+          speciesOptions:
+          - prototype: LaughinPeaPlants
     lifespan: 25
     growthStages: 3
     maturation: 8
@@ -2415,7 +2449,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ BluePumpkinPlants ]
+          speciesOptions:
+          - prototype: BluePumpkinPlants
     lifespan: 55
     maturation: 10
     production: 4
@@ -2490,7 +2525,8 @@
       ChangeSpecies:
         prototype: ChangeSpecies
         effect: !type:PlantMutateSpeciesChange
-          prototypes: [ PyrottonPlants ]
+          speciesOptions:
+          - prototype: PyrottonPlants
     lifespan: 25
     maturation: 8
     production: 3
