@@ -9,3 +9,9 @@
   values:
     prefix: advertisement-space-villain-
     count: 15
+
+- type: localizedDataset
+  id: MineGameAds
+  values:
+    prefix: advertisement-mine-game-
+    count: 10
