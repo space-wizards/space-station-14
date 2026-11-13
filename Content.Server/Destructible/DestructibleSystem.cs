@@ -202,6 +202,11 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
         {
             entity.Comp.Thresholds.Add(threshold);
         }
+
+        // The overkill threshold is generated on map init. After that, a new destruction threshold needs one too.
+        // This does nothing if the entity already has an overkill threshold.
+        if (MetaData(entity.Owner).EntityLifeStage >= EntityLifeStage.MapInitialized)
+            AddOverkillThreshold((entity.Owner, entity.Comp));
     }
 
     /// <summary>
