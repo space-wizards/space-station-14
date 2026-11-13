@@ -1490,6 +1490,9 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.HasKey("Id")
                         .HasName("PK_uploaded_resource_log");
 
+                    b.HasIndex("Date")
+                        .HasDatabaseName("IX_uploaded_resource_log_date");
+
                     b.ToTable("uploaded_resource_log", (string)null);
                 });
 
