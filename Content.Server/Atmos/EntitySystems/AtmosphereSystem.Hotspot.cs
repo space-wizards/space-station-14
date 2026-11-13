@@ -268,7 +268,8 @@ public sealed partial class AtmosphereSystem
         {
             var affected = tile.Air.RemoveVolume(tile.Hotspot.Volume);
             affected.Temperature = tile.Hotspot.Temperature;
-            React(affected, tile);
+            // TODO: This probably fucks up reaction values but idc atm. --princesscheeseballs
+            React(affected, tile, RealAtmosTime());
             tile.Hotspot.Temperature = affected.Temperature;
             // Scale the fire based on the type of reaction that occured.
             tile.Hotspot.Volume = affected.ReactionResults[(byte)GasReaction.Fire] * Atmospherics.FireGrowthRate;

@@ -213,8 +213,8 @@
     air:
       volume: 5
       moles:
-        Oxygen: 1.0 # If trit fire burn ratio is ever changed, this value will need to be adjusted.
-        Tritium: 0.5
+        Oxygen: 0.5 # If trit fire burn ratio is ever changed, this value will need to be adjusted.
+        Tritium: 1.0
       temperature: 373.149
 
 - type: entity
@@ -227,9 +227,9 @@
     air:
       volume: 0.66
       moles:
-        Oxygen: 0.1 # If trit fire burn ratio is ever changed, this value will need to be adjusted.
-        Tritium: 0.05
-        Plasma: 0.06 # High mass to slow flow rate
+        Oxygen: 0.04 # If trit fire burn ratio is ever changed, this value will need to be adjusted.
+        Tritium: 0.06
+        Plasma: 0.15 # High mass to slow flow rate
       temperature: 373.149
 
 - type: entity
@@ -242,8 +242,8 @@
     air:
       volume: 1.5
       moles:
-        Oxygen: 0.41027581
-        Tritium: 0.205137905
+        Oxygen: 0.205137905
+        Tritium: 0.41027581
       temperature: 373.149
 
 - type: entity
@@ -256,8 +256,8 @@
     air:
       volume: 2.5
       moles:
-        Oxygen:  0.68379301666
-        Tritium: 0.34189650833
+        Oxygen:  0.34189650833
+        Tritium: 0.68379301666
       temperature: 373.149
 
 - type: entity
@@ -271,29 +271,6 @@
     air:
       volume: 5
       moles:
-        Oxygen: 6
-        Tritium: 3
-      temperature: 373.149
-
-- type: entity
-  parent: AirTank
-  id: MaxCapBluespace
-  categories: [ Debug ]
-  name: max cap
-  suffix: Max Cap, Canister
-  components:
-  - type: Explosive
-    maxIntensity: 100
-    tileBreakScale: 0.2 # Keeps the can from spacing all the hot gas it has now vented :). If this proves to be too much it can be removed.
-  - type: GasTank
-    maxIntegrity: 15 # 5 times stronger than a gas tank
-    integrity: 15
-    maxReleasePressure: 1013.25
-    safetyPressure: 10132.5 # High enough that liquid tanks don't burst immediately, with an extra 33% wiggle room to work with
-    overpressure: 20265 # Purposefully high because cans react really fucking fast, may need to redo this value if reactions change!
-    air:
-      volume: 1500
-      moles:
-        Oxygen: 1400
-        Tritium: 700
+        Oxygen: 3
+        Tritium: 6
       temperature: 373.149

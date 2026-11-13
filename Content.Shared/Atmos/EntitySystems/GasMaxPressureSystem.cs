@@ -2,7 +2,6 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Destructible;
 using Content.Shared.Explosion.EntitySystems;
-using Content.Shared.Jittering;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
@@ -105,6 +104,10 @@ public abstract partial class GasMaxPressureSystem<T> : EntitySystem where T : I
             _destructible.DestroyEntity(entity);
 
             var totalIntensity = (float)Math.Sqrt(Atmos.GetOverPressure(entity.Comp.Air));
+            if (entity.Comp.RelativeExplosiveIntensity != null)
+            {
+                totalIntensity *= (float)entity.Comp.RelativeExplosiveIntensity;
+            }
             if (_maxExplosivePower > 0 && _maxExplosivePower < totalIntensity)
                 totalIntensity = _maxExplosivePower;
 

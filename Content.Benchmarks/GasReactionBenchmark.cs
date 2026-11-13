@@ -162,7 +162,7 @@ public class GasReactionBenchmark
             for (var i = 0; i < Iterations; i++)
             {
                 var mixture = CloneMixture(_plasmaFireMixture);
-                _plasmaFireReaction.React(mixture, _testTile, _atmosphereSystem, 1f);
+                _plasmaFireReaction.React(mixture, _testTile, _atmosphereSystem, 1f, 0.5f);
             }
         });
     }
@@ -175,7 +175,7 @@ public class GasReactionBenchmark
             for (var i = 0; i < Iterations; i++)
             {
                 var mixture = CloneMixture(_tritiumFireMixture);
-                _tritiumFireReaction.React(mixture, _testTile, _atmosphereSystem, 1f);
+                _tritiumFireReaction.React(mixture, _testTile, _atmosphereSystem, 1f, 0.5f);
             }
         });
     }
@@ -188,7 +188,7 @@ public class GasReactionBenchmark
             for (var i = 0; i < Iterations; i++)
             {
                 var mixture = CloneMixture(_frezonProductionMixture);
-                _frezonProductionReaction.React(mixture, _testTile, _atmosphereSystem, 1f);
+                _frezonProductionReaction.React(mixture, _testTile, _atmosphereSystem, 1f, 0.5f);
             }
         });
     }
@@ -201,7 +201,7 @@ public class GasReactionBenchmark
             for (var i = 0; i < Iterations; i++)
             {
                 var mixture = CloneMixture(_frezonCoolantMixture);
-                _frezonCoolantReaction.React(mixture, _testTile, _atmosphereSystem, 1f);
+                _frezonCoolantReaction.React(mixture, _testTile, _atmosphereSystem, 1f, 0.5f);
             }
         });
     }
@@ -214,7 +214,7 @@ public class GasReactionBenchmark
             for (var i = 0; i < Iterations; i++)
             {
                 var mixture = CloneMixture(_ammoniaOxygenMixture);
-                _ammoniaOxygenReaction.React(mixture, _testTile, _atmosphereSystem, 1f);
+                _ammoniaOxygenReaction.React(mixture, _testTile, _atmosphereSystem, 1f, 0.5f);
             }
         });
     }
@@ -227,7 +227,7 @@ public class GasReactionBenchmark
             for (var i = 0; i < Iterations; i++)
             {
                 var mixture = CloneMixture(_n2oDecompositionMixture);
-                _n2oDecompositionReaction.React(mixture, _testTile, _atmosphereSystem, 1f);
+                _n2oDecompositionReaction.React(mixture, _testTile, _atmosphereSystem, 1f, 0.5f);
             }
         });
     }
@@ -240,7 +240,7 @@ public class GasReactionBenchmark
             for (var i = 0; i < Iterations; i++)
             {
                 var mixture = CloneMixture(_waterVaporMixture);
-                _waterVaporReaction.React(mixture, _testTile, _atmosphereSystem, 1f);
+                _waterVaporReaction.React(mixture, _testTile, _atmosphereSystem, 1f, 0.5f);
             }
         });
     }
