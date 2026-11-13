@@ -14,6 +14,7 @@
     canAttack: true
   - type: StrapVehicle
   - type: Strap
+    unbuckleDoAfterTime: 2s
   - type: MovementSpeedModifier
     weightlessModifier: 0
     acceleration: 2
