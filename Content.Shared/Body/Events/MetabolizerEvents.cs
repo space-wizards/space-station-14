@@ -9,7 +9,15 @@ public record struct GetMetabolicMultiplierEvent()
     /// <summary>
     /// What the metabolism's update rate will be multiplied by.
     /// </summary>
-    public float Multiplier = 1f;
+    public float Multiplier { get; private set; } = 1f;
+
+    /// <summary>
+    /// Multiplies the tracked metabolic multiplier.
+    /// </summary>
+    /// <remarks>
+    /// This is used to ensure responders can't mistakenly do a different operation.
+    /// </remarks>
+    public void Multiply(float multiplier) => Multiplier *= multiplier;
 }
 
 /// <summary>
