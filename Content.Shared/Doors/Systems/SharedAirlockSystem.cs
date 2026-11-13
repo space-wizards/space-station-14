@@ -17,7 +17,7 @@ public abstract partial class SharedAirlockSystem : EntitySystem
     [Dependency] protected SharedAudioSystem Audio = default!;
     [Dependency] protected SharedDoorSystem DoorSystem = default!;
     [Dependency] protected SharedPopupSystem Popup = default!;
-    [Dependency] private SharedWiresSystem _wiresSystem = default!;
+    [Dependency] private WiresSystem _wiresSystem = default!;
 
     public override void Initialize()
     {
@@ -64,7 +64,7 @@ public abstract partial class SharedAirlockSystem : EntitySystem
         // Only show the maintenance panel if the airlock is closed
         if (TryComp<WiresPanelComponent>(ent, out var wiresPanel))
         {
-            _wiresSystem.ChangePanelVisibility(ent, wiresPanel, ent.Comp.OpenPanelVisible || args.State != DoorState.Open);
+            _wiresSystem.ChangePanelVisibility((ent.Owner, wiresPanel), ent.Comp.OpenPanelVisible || args.State != DoorState.Open);
         }
         // If the door is closed, we should look if the bolt was locked while closing
         UpdateAutoClose((ent, ent.Comp));
