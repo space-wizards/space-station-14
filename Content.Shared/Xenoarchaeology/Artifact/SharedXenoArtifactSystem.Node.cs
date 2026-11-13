@@ -1,10 +1,11 @@
 using Content.Shared.EntityTable;
+using Content.Shared.EntityTable.Conditions;
 using Content.Shared.NameIdentifier;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
-using Content.Shared.EntityTable.EntitySelectors;
 
 namespace Content.Shared.Xenoarchaeology.Artifact;
 
@@ -12,8 +13,8 @@ public abstract partial class SharedXenoArtifactSystem
 {
     [Dependency] private EntityTableSystem _entityTable =  default!;
 
-    [Dependency] private EntityQuery<XenoArtifactComponent> _xenoArtifactQuery = default!;
-    [Dependency] private EntityQuery<XenoArtifactNodeComponent> _nodeQuery = default!;
+    [Dependency] private EntityQuery<XenoArtifactComponent> _xenoArtifactQuery;
+    [Dependency] private EntityQuery<XenoArtifactNodeComponent> _nodeQuery;
 
     private void InitializeNode()
     {
@@ -81,25 +82,13 @@ public abstract partial class SharedXenoArtifactSystem
     /// <summary>
     /// Creates artifact node entity, attaching trigger and marking depth level for future use.
     /// </summary>
-    public Entity<XenoArtifactNodeComponent>? CreateNode(
+    public Entity<XenoArtifactNodeComponent> CreateNode(
         Entity<XenoArtifactComponent> ent,
-        EntProtoId triggerProtoId,
-        EntityTableSelector effects,
-        int depth = 0
+        EntProtoId effect,
+        EntityPrototype trigger,
+        int depth = 0,
+        bool dirty = true
     )
-    {
-        var effect = _entityTable.GetFirstOrNull(effects);
-        if (effect == null)
-            return null;
-
-        var trigger = ProtoMan.Index(triggerProtoId);
-        return CreateNode(ent, effect.Value, trigger, depth);
-    }
-
-    /// <summary>
-    /// Creates artifact node entity, attaching trigger and marking depth level for future use.
-    /// </summary>
-    public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, EntProtoId effect, EntityPrototype trigger, int depth = 0)
     {
         AddNode((ent, ent), effect, out var nodeEnt, dirty: false);
         DebugTools.Assert(nodeEnt.HasValue, "Failed to create node on artifact.");
@@ -110,8 +99,84 @@ public abstract partial class SharedXenoArtifactSystem
 
         EntityManager.AddComponents(nodeEnt.Value, trigger.Components);
 
-        Dirty(nodeEnt.Value);
+        if (dirty)
+            Dirty(nodeEnt.Value);
+
         return nodeEnt.Value;
+    }
+
+    /// <summary>
+    /// Creates artifact node entity. To do this, we first calculated sum of node intensity for
+    /// direct predecessors, then we account for current depth, after which we pick
+    /// trigger based on resulting intensity. If we are successful, then we add actual
+    /// intensity from trigger and pick effect. If we fail to find proper effect or
+    /// trigger - we return null, and consider further generation fruitless.
+    /// </summary>
+    protected Entity<XenoArtifactNodeComponent>? CreateNode(
+        Entity<XenoArtifactComponent> ent,
+        IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> directPredecessors,
+        TriggerPoolData triggerPool,
+        int depth = 0
+    )
+    {
+        // step 1 - accumulate predecessors intensity
+        float predecessorIntensitySum = 0;
+        if (directPredecessors.Count > 0)
+            predecessorIntensitySum = directPredecessors.Sum(x => x.Comp.ActualIntensity);
+
+        // step 2 - account for depth
+        var incrementForPotentialIntensity = ent.Comp.PerDepthAdditionalIntensityBase * depth;
+        var potentialIntensity = predecessorIntensitySum + incrementForPotentialIntensity;
+
+        var pr = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
+        // step 3 - pick trigger using intensity we accumulated
+        EntProtoId? triggerProtoId;
+        using (var _ = new EntityTableContext.TemporarilyAddToContext<float>(
+                        triggerPool.Context,
+                        HasArtifactIntensityInRangeCondition.IntensityContextKey,
+                        potentialIntensity
+                   )
+                )
+        {
+            triggerProtoId = _entityTable.GetFirstOrNull(ent.Comp.TriggersTable, pr, triggerPool.Context);
+        }
+
+        if (triggerProtoId == null)
+            return null;
+
+        var trigger = ProtoMan.Index(triggerProtoId.Value);
+        float actualIntensityFromTrigger = 0;
+        // TODO: invert condition and add warning + return null after all intensity are added to prototypes
+        if (trigger.Components.TryGetComponent<XenoArtifactTriggerIntensityRangeComponent>(Factory, out var triggerIntensity))
+        {
+            actualIntensityFromTrigger = triggerIntensity.ActualIntensity;
+        }
+
+        var actualIntensity = predecessorIntensitySum + actualIntensityFromTrigger;
+
+        // step 4 - pick effect based on effect ranges and actual node intensity.
+        var ctx = new EntityTableContext
+        {
+            { HasArtifactIntensityInRangeCondition.IntensityContextKey, actualIntensity }
+        };
+        var effect = _entityTable.GetFirstOrNull(ent.Comp.EffectsTable, pr, ctx);
+        if (effect == null)
+            return null;
+
+        // step 5 - prepare artifact and apply things related to budget, mark trigger as used
+        triggerPool.AddTriggerAsUsed(triggerProtoId.Value);
+
+        var nodeEnt = CreateNode(ent, effect.Value, trigger, depth, dirty: false);
+
+        nodeEnt.Comp.ActualIntensity = actualIntensity;
+
+        // TODO: apply actual 'placement in budget' - pick attribute distribution strategy and add modifiers
+        // TODO: Collect OnInitEffectModifiers that were applied by 'placement in budget'
+        // TODO: raise XenoArtifactCollectEffectModificationsOnInitEvent
+
+        Dirty(nodeEnt);
+
+        return nodeEnt;
     }
 
     /// <summary> Checks if all predecessor nodes are marked as 'unlocked'. </summary>
@@ -393,5 +458,45 @@ public abstract partial class SharedXenoArtifactSystem
 
         var predecessorNodes = GetPredecessorNodes((artifact, artifact), node);
         nodeComponent.ResearchValue = (int)(Math.Pow(1.25, Math.Pow(predecessorNodes.Count, 1.5f)) * nodeComponent.BasePointValue * durabilityMultiplier);
+    }
+
+    /// <summary>
+    /// Container that represents pool of XenoArtifact triggers.
+    /// </summary>
+    protected sealed class TriggerPoolData
+    {
+        private readonly HashSet<EntProtoId> _usedTriggers;
+
+        /// <summary>
+        /// Initializes pool with fixed size.
+        /// </summary>
+        public TriggerPoolData(int requestedSize)
+        {
+            _usedTriggers = new(requestedSize);
+            Context = new EntityTableContext
+            {
+                { ExcludeEntitiesFromContextCondition.EntitiesToExclude, _usedTriggers }
+            };
+        }
+
+        /// <summary>
+        /// Context to be used. Already pre-filled with entities to be excluded, from picks,
+        /// use <see cref="AddTriggerAsUsed"/> to add more entities.
+        /// </summary>
+        public readonly EntityTableContext Context;
+
+        /// <summary>
+        /// Marks trigger entity as already used, which excludes it from getting picked later.
+        /// Returns true if trigger was marked, false if it was already marked before call.
+        /// </summary>
+        public bool AddTriggerAsUsed(EntProtoId trigger)
+        {
+            return _usedTriggers.Add(trigger);
+        }
+
+        /// <summary>
+        /// List of already used trigger prototype ids.
+        /// </summary>
+        public IReadOnlyCollection<EntProtoId> UsedTriggers => _usedTriggers;
     }
 }
