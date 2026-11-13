@@ -164,10 +164,21 @@
   name: Maints interior marker
   components:
   - type: RoomFill
+    maxSize: 5, 5
     clearExisting: false
     roomWhitelist:
       tags:
       - Maints
+  - type: Sprite
+    layers:
+      - state: red
+      # max size
+      - sprite: Markers/Outlines/5x5.rsi
+        state: rect
+        color: red
+      - sprite: Markers/Outlines/5x5.rsi
+        state: label
+        color: red
 
 - type: entity
   parent: MaintsRoomMarker
@@ -176,5 +187,13 @@
   components:
   - type: RoomFill
     clearExisting: true
-
-
+  - type: Sprite
+    layers:
+      - state: blue
+      # max size
+      - sprite: Markers/Outlines/5x5.rsi
+        state: rect
+        color: red
+      - sprite: Markers/Outlines/5x5.rsi
+        state: label
+        color: red
