@@ -38,3 +38,6 @@
           Low: { visible: true, state: low }
           Medium: { visible: true, state: medium }
           High: { visible: true, state: high }
+  - type: AnchoredBlur    
+    offset: 0.4, 0
+    targetStrength: 0.5

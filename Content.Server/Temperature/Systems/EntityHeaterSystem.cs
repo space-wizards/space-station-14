@@ -13,13 +13,7 @@ public sealed partial class EntityHeaterSystem : SharedEntityHeaterSystem
 {
     [Dependency] private TemperatureSystem _temperature = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<EntityHeaterComponent, MapInitEvent>(OnMapInit);
-    }
-
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<EntityHeaterComponent> ent, ref MapInitEvent args)
     {
         // Set initial power level
