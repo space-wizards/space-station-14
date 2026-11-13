@@ -1,5 +1,6 @@
 using Robust.Shared.Enums;
 using Robust.Shared.Serialization;
+using Content.Shared.Humanoid;
 
 namespace Content.Shared.StationRecords;
 
@@ -46,9 +47,17 @@ public sealed partial record GeneralStationRecord : StationRecord
     /// <summary>
     ///     Gender identity tied to this station record.
     /// </summary>
-    /// <remarks>Sex should be placed in a medical record, not a general record.</remarks>
     [DataField]
     public Gender Gender = Gender.Epicene;
+
+    /// <summary>
+    ///     Sex of the person.
+    /// </summary>
+    /// <remarks>
+    ///     Unused by the general records, may be used by other records inheriting from the general ones.
+    /// </remarks>
+    [DataField]
+    public Sex Sex = Sex.Unsexed;
 
     /// <summary>
     ///     The priority to display this record at, taken from the station's job-weight profile.
