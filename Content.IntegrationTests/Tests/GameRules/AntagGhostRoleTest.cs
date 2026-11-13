@@ -23,14 +23,8 @@ public sealed partial class AntagGhostRoleTest : AntagTest
         Dirty = true,
         DummyTicker = false,
         Connected = true,
-        Map = PoolManager.TestMap
+        Map = "TestMap"
     };
-
-    public override async Task DoSetup()
-    {
-        await base.DoSetup();
-        await GameRuleTestWorld.Prepare(Pair);
-    }
 
     [SidedDependency(Side.Server)] private IRobustRandom _random = default!;
     [SidedDependency(Side.Server)] private GhostRoleSystem _ghostRole = default!;

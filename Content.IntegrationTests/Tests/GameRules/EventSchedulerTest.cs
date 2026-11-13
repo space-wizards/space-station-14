@@ -17,14 +17,8 @@ public sealed partial class EventSchedulerTest : GameTest
         Dirty = true,
         DummyTicker = false,
         Connected = true,
-        Map = PoolManager.TestMap
+        Map = "TestMap"
     };
-
-    public override async Task DoSetup()
-    {
-        await base.DoSetup();
-        await GameRuleTestWorld.Prepare(Pair);
-    }
 
     [SidedDependency(Side.Server)] private EventManagerSystem _eventMan = default!;
     [SidedDependency(Side.Server)] private GameTicker _gameTicker = default!;
