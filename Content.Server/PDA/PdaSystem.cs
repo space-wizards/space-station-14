@@ -85,7 +85,7 @@ namespace Content.Server.PDA
 
                 while (query.MoveNext(out var uid, out var comp))
                 {
-                    if (comp.ContainedId == idCard)
+                    if (comp.ContainedId == idCard.Value)
                     {
                         SetOwner(uid, comp, ev.Uid, ev.NewName);
                     }

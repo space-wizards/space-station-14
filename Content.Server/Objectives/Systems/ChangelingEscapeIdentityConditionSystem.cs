@@ -63,7 +63,7 @@ public sealed partial class ChangelingEscapeIdentityConditionSystem : EntitySyst
         if (!_idCard.TryFindIdCard(ownedEntity.Value, out var idCard))
             return 0.75f;
 
-        if (idCard.Comp.FullName != ent.Comp.TargetName)
+        if (idCard.Value.Comp.FullName != ent.Comp.TargetName)
             return 0.75f;
 
         return 1f;

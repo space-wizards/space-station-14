@@ -374,13 +374,13 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
 
         if (_idCardSystem.TryFindIdCard(sensor.User.Value, out var card))
         {
-            if (card.Comp.FullName != null)
-                userName = card.Comp.FullName;
-            if (card.Comp.LocalizedJobTitle != null)
-                userJob = card.Comp.LocalizedJobTitle;
-            userJobIcon = card.Comp.JobIcon;
+            if (card.Value.Comp.FullName != null)
+                userName = card.Value.Comp.FullName;
+            if (card.Value.Comp.LocalizedJobTitle != null)
+                userJob = card.Value.Comp.LocalizedJobTitle;
+            userJobIcon = card.Value.Comp.JobIcon;
 
-            foreach (var department in card.Comp.JobDepartments)
+            foreach (var department in card.Value.Comp.JobDepartments)
                 userJobDepartments.Add(Loc.GetString(ProtoMan.Index(department).Name));
         }
 
