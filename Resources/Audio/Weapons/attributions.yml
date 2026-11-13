@@ -97,3 +97,8 @@
   license: "CC0-1.0"
   copyright: "Taken from FilmOrbit on freesound.org"
   source: "https://freesound.org/s/554299/"
+
+- files: ["ebladeon.ogg, ebladeoff.ogg, eblade1.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Professionally produced by James Tubbritt (Sharp) and released on fxhome.com ~march 2004 accoding to file dates. Archive is available as far back as 2007."
+  source: "https://web.archive.org/web/20070806091646/http://fxhome.com/sounds/"
