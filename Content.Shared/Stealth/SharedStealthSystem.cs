@@ -27,7 +27,7 @@ public abstract partial class SharedStealthSystem : EntitySystem
         SubscribeLocalEvent<StealthComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
-    private void OnExamineAttempt(EntityUid uid, StealthComponent component, ExamineAttemptEvent args)
+    private void OnExamineAttempt(EntityUid uid, StealthComponent component, ref ExamineAttemptEvent args)
     {
         if (!component.Enabled || GetVisibility(uid, component) > component.ExamineThreshold)
             return;
@@ -43,7 +43,7 @@ public abstract partial class SharedStealthSystem : EntitySystem
         }
         while (source.IsValid());
 
-        args.Cancel();
+        args.Cancelled = true;
     }
 
     private void OnExamined(EntityUid uid, StealthComponent component, ExaminedEvent args)
