@@ -204,17 +204,26 @@
       # Main effects
       - !type:ModifyBleed
         amount: -1.5
-      - !type:EvenHealthChange
-        conditions:
+        # Doesn't heal poison because if you OD'd I'm not giving you a safety net
+      - !type:EvenHeal
+        conditions: &ConditionMobStateCritical
         - !type:MobStateCondition
           mobstate: Critical
-        damage: # Doesn't heal poison because if you OD'd I'm not giving you a safety net
-          Burn: -0.5
-          Brute: -0.5
+        heal: 0.5
+        types:
+        - Blunt
+        - Slash
+        - Piercing
+      - !type:EvenHeal
+        conditions: *ConditionMobStateCritical
+        heal: 0.5
+        types:
+        - Heat
+        - Cold
+        - Shock
+        - Caustic
       - !type:HealthChange
-        conditions:
-        - !type:MobStateCondition
-          mobstate: Critical
+        conditions: *ConditionMobStateCritical
         damage:
           types:
             Asphyxiation: -2

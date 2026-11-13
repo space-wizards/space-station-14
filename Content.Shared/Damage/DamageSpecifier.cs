@@ -102,11 +102,24 @@ namespace Content.Shared.Damage
         /// </summary>
         public DamageSpecifier(DamageGroupPrototype group, FixedPoint2 value)
         {
+            ConstructFromCollection(group.DamageTypes, value);
+        }
+
+        /// <summary>
+        /// Constructor that evenly distributes damage <paramref name="value"/> between a collection of <see cref="DamageTypePrototype"/>s.
+        /// </summary>
+        public DamageSpecifier(ICollection<ProtoId<DamageTypePrototype>> types, FixedPoint2 value)
+        {
+            ConstructFromCollection(types, value);
+        }
+
+        private void ConstructFromCollection(ICollection<ProtoId<DamageTypePrototype>> types, FixedPoint2 value)
+        {
             // Simply distribute evenly (except for rounding).
             // We do this by reducing remaining the # of types and damage every loop.
-            var remainingTypes = group.DamageTypes.Count;
+            var remainingTypes = types.Count;
             var remainingDamage = value;
-            foreach (var damageType in group.DamageTypes)
+            foreach (var damageType in types)
             {
                 var damage = remainingDamage / FixedPoint2.New(remainingTypes);
                 DamageDict.Add(damageType, damage);
@@ -114,6 +127,7 @@ namespace Content.Shared.Damage
                 remainingTypes -= 1;
             }
         }
+
         #endregion constructors
 
         /// <summary>
@@ -197,6 +211,21 @@ namespace Content.Shared.Damage
             return newDamage;
         }
 
+        /// <inheritdoc cref="GetPositive(DamageSpecifier)"/>
+        public static DamageSpecifier GetPositive(DamageSpecifier damageSpec, ICollection<ProtoId<DamageTypePrototype>> filter)
+        {
+            DamageSpecifier newDamage = new();
+            newDamage.DamageDict.EnsureCapacity(filter.Count);
+
+            foreach (var (key, value) in damageSpec.DamageDict)
+            {
+                if (value > 0 && filter.Contains(key))
+                    newDamage.DamageDict[key] = value;
+            }
+
+            return newDamage;
+        }
+
         /// <summary>
         /// Returns a new DamageSpecifier that only contains the entries with negative value.
         /// </summary>
@@ -207,6 +236,21 @@ namespace Content.Shared.Damage
             foreach (var (key, value) in damageSpec.DamageDict)
             {
                 if (value < 0)
+                    newDamage.DamageDict[key] = value;
+            }
+
+            return newDamage;
+        }
+
+        /// <inheritdoc cref="GetNegative(DamageSpecifier)"/>
+        public static DamageSpecifier GetNegative(DamageSpecifier damageSpec, ICollection<ProtoId<DamageTypePrototype>> filter)
+        {
+            DamageSpecifier newDamage = new();
+            newDamage.DamageDict.EnsureCapacity(filter.Count);
+
+            foreach (var (key, value) in damageSpec.DamageDict)
+            {
+                if (value < 0 && filter.Contains(key))
                     newDamage.DamageDict[key] = value;
             }
 

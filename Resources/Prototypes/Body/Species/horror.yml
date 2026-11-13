@@ -137,13 +137,8 @@
     emoteSounds: null # there should be a way to not make them scream but oh well
   - type: ChangelingHorror # marks them as a changeling horror
     spawnEffects:
-    - !type:EvenHealthChange # why not
-      damage:
-        Burn: -50
-        Toxin: -50
-        Airloss: -50
-        Brute: -50
-        Genetic: -50
+    - !type:DistributedHeal # why not
+      heal: 150
     - !type:ModifyBleed
         amount: -50 # bleeding is evil
     - !type:ModifyBloodLevel # reasonable blood restore
@@ -162,7 +157,6 @@
     - DoorBumpOpener
     - StunImmune
     - FootstepSound
-
 
 - type: entity
   parent: OrganBaseOrganic

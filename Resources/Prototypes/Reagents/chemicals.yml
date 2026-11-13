@@ -210,9 +210,12 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:EvenHealthChange
-        damage:
-          Brute: -4
+      - !type:EvenHeal
+        heal: 4
+        types:
+        - Blunt
+        - Slash
+        - Piercing
       - !type:ModifyStatusEffect
         effectProto: StatusEffectAdrenaline
         time: 120

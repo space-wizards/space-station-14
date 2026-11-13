@@ -41,6 +41,44 @@ public sealed class DamageSpecifierTest
         Assert.That(difference, Is.EqualTo(output5));
     }
 
+    [Test]
+    [Description("Confirms the GetPositive() method returns only positive damage values.")]
+    public void TestGetPositive()
+    {
+        DamageSpecifier input = new() { DamageDict = Output4 };
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(DamageSpecifier.GetPositive(input),
+                Is.EqualTo(new DamageSpecifier(["A"], 0.5f)));
+
+            Assert.That(DamageSpecifier.GetPositive(input, ["A"]),
+                Is.EqualTo(new DamageSpecifier(["A"], 0.5f)));
+
+            Assert.That(DamageSpecifier.GetPositive(input, ["D"]),
+                Is.EqualTo(new DamageSpecifier()));
+        }
+    }
+
+    [Test]
+    [Description("Confirms the GetNegative() method returns only negative damage values.")]
+    public void TestGetNegative()
+    {
+        DamageSpecifier input = new() { DamageDict = Output4 };
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(DamageSpecifier.GetNegative(input),
+                Is.EqualTo(new DamageSpecifier { DamageDict = new() {{"C", -2},{"D", -0.05f}} }));
+
+            Assert.That(DamageSpecifier.GetNegative(input, ["A"]),
+                Is.EqualTo(new DamageSpecifier()));
+
+            Assert.That(DamageSpecifier.GetNegative(input, ["D"]),
+                Is.EqualTo(new DamageSpecifier(["D"], -0.05f)));
+        }
+    }
+
     private static readonly Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2> Input1 = new()
     {
         { "A", 1.5f },

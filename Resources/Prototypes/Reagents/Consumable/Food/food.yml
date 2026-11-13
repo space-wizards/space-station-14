@@ -32,11 +32,21 @@
   metabolisms:
     Digestion: #This makes it not compete with medicines, a large bonus for something that can heal
       effects:
-      - !type:EvenHealthChange
+      - !type:EvenHeal
         probability: 0.5
-        damage:
-          Brute: -0.5
-          Burn: -0.5
+        heal: 0.5
+        types:
+        - Blunt
+        - Slash
+        - Piercing
+      - !type:EvenHeal
+        probability: 0.5
+        heal: 0.5
+        types:
+        - Heat
+        - Cold
+        - Shock
+        - Caustic
       # Helps you stop bleeding to an extent.
       - !type:ModifyBleed
         amount: -0.25
@@ -61,10 +71,13 @@
   metabolisms:
     Digestion:
       effects:
-      - !type:EvenHealthChange
+      - !type:EvenHeal
         probability: 0.5
-        damage:
-          Brute: -0.4
+        heal: 0.4
+        types:
+        - Blunt
+        - Slash
+        - Piercing
       - !type:ModifyBloodLevel
         amount: 1 # weaker than iron but pretty good all things considered
       - !type:Satiate
