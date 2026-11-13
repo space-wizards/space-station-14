@@ -10,18 +10,6 @@ public sealed partial class EntityTableSystem : EntitySystem
     [Dependency] private IRobustRandom _random = default!;
 
     /// <summary>
-    /// Iterates once through Entities that EntitySelector in EntityTableProto provides and picks first one.
-    /// </summary>
-    public EntProtoId? GetFirstOrNull(
-        EntityTablePrototype entTableProto,
-        IRobustRandom? rand = null,
-        EntityTableContext? ctx = null
-    )
-    {
-        return GetSpawns(entTableProto.Table, rand, ctx).FirstOrNull();
-    }
-
-    /// <summary>
     /// Iterates once through Entities that EntitySelector provides and picks first one.
     /// </summary>
     public EntProtoId? GetFirstOrNull(
