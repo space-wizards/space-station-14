@@ -2,6 +2,7 @@ using Content.Client.UserInterface.Systems.Actions.Widgets;
 using Content.Client.UserInterface.Systems.Alerts.Widgets;
 using Content.Client.UserInterface.Systems.Ghost.Widgets;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
+using Content.Client.UserInterface.Systems.Storage.Controls;
 
 namespace Content.Client.Replay.UI;
 
@@ -22,6 +23,7 @@ public sealed class ReplayGhostState : ReplaySpectateEntityState
         screen.ShowWidget<ActionsBar>(false);
         screen.ShowWidget<AlertsUI>(false);
         screen.ShowWidget<HotbarGui>(false);
+        screen.ShowWidget<StorageGui>(false);
     }
 
     protected override void Shutdown()
@@ -33,6 +35,7 @@ public sealed class ReplayGhostState : ReplaySpectateEntityState
             screen.ShowWidget<ActionsBar>(true);
             screen.ShowWidget<AlertsUI>(true);
             screen.ShowWidget<HotbarGui>(true);
+            screen.ShowWidget<StorageGui>(true);
         }
 
         base.Shutdown();
