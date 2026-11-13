@@ -1,4 +1,5 @@
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Payloads;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
 using Content.Shared.Weapons.Ranged.Components;
@@ -17,5 +18,12 @@ public sealed partial class EmitterSystem : SharedEmitterSystem
             ammoProvider.Prototype = boltType;
             Dirty(ent, ammoProvider);
         }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnLogicSignalReceived(Entity<EmitterComponent> ent, ref SignalReceivedEvent<LogicStatePayload> args)
+    {
+        SignalReceivedEvent ev = args;
+        OnSignalReceived(ent, ref ev);
     }
 }
