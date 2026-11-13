@@ -1,4 +1,4 @@
-﻿using Content.Server.Database;
+using Content.Server.Database;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Players.Whitelist;
 using Content.Shared.CCVar;

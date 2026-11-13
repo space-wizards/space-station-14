@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.RoundEnd;
+namespace Content.Shared.RoundEnd;
 
 public enum RoundEndBehavior : byte
 {

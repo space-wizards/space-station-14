@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Network;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 
 namespace Content.Shared.GameTicking;

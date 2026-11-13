@@ -1,4 +1,4 @@
-﻿using Content.Shared.CCVar;
+using Content.Shared.CCVar;
 using Content.Shared.NewPlayer;
 using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Configuration;
