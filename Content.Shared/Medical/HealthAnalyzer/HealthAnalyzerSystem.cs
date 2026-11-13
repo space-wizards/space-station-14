@@ -72,6 +72,10 @@ public abstract partial class HealthAnalyzerSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
+        // to not stop when swapping hands/putting into personal slots such as id for doctor id. as far as i can tell, these need to still be on your person. inserts into others' slots also count as dropping, so they cancel.
+        if (args.Container.GetType() == typeof(Robust.Shared.Containers.ContainerSlot))
+            return;
+
         StopAnalyzingEntity(analyzer);
     }
 
