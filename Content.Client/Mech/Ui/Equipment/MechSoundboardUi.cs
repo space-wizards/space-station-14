@@ -1,10 +1,12 @@
 using Content.Client.UserInterface.Fragments;
 using Content.Shared.Mech;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Mech.Ui.Equipment;
 
+/// <summary>
+/// A UI fragment for soundboard mech controls.
+/// </summary>
 public sealed partial class MechSoundboardUi : UIFragment
 {
     private MechSoundboardUiFragment? _fragment;
@@ -19,7 +21,7 @@ public sealed partial class MechSoundboardUi : UIFragment
         if (fragmentOwner == null)
             return;
 
-        _fragment = new MechSoundboardUiFragment();
+        _fragment = userInterface.CreateDisposableControl<MechSoundboardUiFragment>();
         _fragment.OnPlayAction += sound =>
         {
             // TODO: IDK dog
