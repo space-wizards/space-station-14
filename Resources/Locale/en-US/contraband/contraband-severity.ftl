@@ -46,8 +46,16 @@ contraband-examine-text-Magical =
         [reagent] [color={$color}]This reagent is highly illegal magical contraband![/color]
     }
 
-contraband-examine-text-avoid-carrying-around = [color=red][italic]You probably want to avoid visibly carrying this around without a good reason.[/italic][/color]
-contraband-examine-text-in-the-clear = [color=green][italic]You should be in the clear to visibly carry this around.[/italic][/color]
+contraband-examine-text-avoid-carrying-around =
+    { $you ->
+        *[true] [color=red][italic]You probably want to avoid visibly carrying this around without a good reason.[/italic][/color]
+        [false] [color=red][italic]{CAPITALIZE(SUBJECT($gender))} probably {CONJUGATE-BASIC($gender, "want", "wants")} to avoid visibly carrying this around without a good reason.[/italic][/color]
+    }
+contraband-examine-text-in-the-clear =
+    { $you ->
+        *[true] [color=green][italic]You should be in the clear to visibly carry this around.[/italic][/color]
+        [false] [color=green][italic]{CAPITALIZE(SUBJECT($gender))} should be in the clear to visibly carry this around.[/italic][/color]
+    }
 
 contraband-examinable-verb-text = Legality
 contraband-examinable-verb-message = Check legality of this item.
