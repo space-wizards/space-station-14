@@ -23,7 +23,7 @@ public sealed partial class AntagGhostRoleTest : AntagTest
         Dirty = true,
         DummyTicker = false,
         Connected = true,
-        Map = "TestMap"
+        Map = PoolManager.TestStation,
     };
 
     [SidedDependency(Side.Server)] private IRobustRandom _random = default!;
