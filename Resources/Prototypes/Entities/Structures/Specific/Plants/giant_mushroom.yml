@@ -1,0 +1,163 @@
+- type: entity
+  abstract: true
+  parent: BaseStructure
+  id: BaseGiantMushroom
+  components:
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs # Needs to be drawn above tables
+  - type: Transform
+    anchored: false
+  - type: Damageable
+  - type: Injurable
+    damageContainer: Biological
+  - type: AtmosDevice
+    requireAnchored: false
+  - type: GasMiner
+    maxExternalPressure: 200
+    spawnAmount: 0.25
+    spawnGas: Fungalin
+    showExamineText: false
+
+- type: entity
+  parent: BaseGiantMushroom
+  id: MomMushroom
+  name: mom mushroom
+  description: An enormous mushroom releasing spores into the air. How did this fit inside a vent?
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/GiantMushrooms/mom_mushroom.rsi
+    layers:
+    - state: base
+    - state: top
+      map: [ "random" ]
+      shader: unshaded
+  - type: RandomSprite
+    available:
+    - random:
+        top: Rainbow
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.5
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: TimedSpawner
+    prototypes:
+    - GiantSpore
+    intervalSeconds: 40
+    minimumEntitiesSpawned: 2
+    maximumEntitiesSpawned: 5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:SpawnGasBehavior
+        gasMixture:
+          volume: 1000
+          moles:
+            Fungalin: 50
+          temperature: 373.15
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: BaseGiantMushroom
+  id: GiantMushroom
+  name: giant mushroom
+  description: A giant mushroom, you really shouldn't be breathing close to it.
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/GiantMushrooms/medium_mushroom.rsi
+    layers:
+    - state: base
+    - state: top1
+      map: ["random"]
+      shader: unshaded
+  - type: RandomSprite
+    available:
+    - random:
+        top1: Rainbow
+        top2: Rainbow
+        top3: Rainbow
+        top4: Rainbow
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.3
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:SpawnGasBehavior
+        gasMixture:
+          volume: 1000
+          moles:
+            Fungalin: 25
+          temperature: 373.15
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: BaseGiantMushroom
+  id: LesserMushroom
+  name: lesser mushroom
+  description: A lesser giant mushroom, you really shouldn't be breathing close to it.
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/GiantMushrooms/small_mushroom.rsi
+    layers:
+    - state: base
+    - state: top1
+      map: ["random"]
+      shader: unshaded
+  - type: RandomSprite
+    available:
+    - random:
+        top1: Rainbow
+        top2: Rainbow
+        top3: Rainbow
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:SpawnGasBehavior
+        gasMixture:
+          volume: 1000
+          moles:
+            Fungalin: 15
+          temperature: 373.15
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
