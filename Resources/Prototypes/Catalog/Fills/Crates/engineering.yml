@@ -242,3 +242,14 @@
       entity_storage:
         id: AirGrenade
         amount: 3
+
+- type: entity
+  parent: CrateEngineeringSecure
+  id: CratePdaMessenger
+  name: PDA messenger crate
+  description: Contains a flatpack for a PDA messenger server. Requires Engineering access to open.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: PdaMessengerServerFlatpack

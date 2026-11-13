@@ -128,6 +128,11 @@
   frequency: 2202
 
 - type: deviceFrequency
+  id: PdaMessengerServer
+  name: device-frequency-prototype-name-pda-messenger-server
+  frequency: 2203
+
+- type: deviceFrequency
   id: Fax
   name: device-frequency-prototype-name-fax
   frequency: 2640
