@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -10,6 +9,8 @@ using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
+using Robust.Shared.Timing;
+using System.Linq;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -18,6 +19,7 @@ namespace Content.Shared.Storage.EntitySystems;
 /// </summary>
 public sealed partial class BinSystem : EntitySystem
 {
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private INetManager _net = default!;
     [Dependency] private ISharedAdminLogManager _admin = default!;
     [Dependency] private SharedContainerSystem _container = default!;
@@ -33,7 +35,7 @@ public sealed partial class BinSystem : EntitySystem
         SubscribeLocalEvent<BinComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
         SubscribeLocalEvent<BinComponent, InteractHandEvent>(OnInteractHand, before: new[] { typeof(SharedItemSystem) });
         SubscribeLocalEvent<BinComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
-        SubscribeLocalEvent<BinComponent, GetVerbsEvent<AlternativeVerb>>(OnAltInteractHand);
+        SubscribeLocalEvent<BinComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerb);
         SubscribeLocalEvent<BinComponent, ExaminedEvent>(OnExamined);
     }
 
@@ -56,7 +58,7 @@ public sealed partial class BinSystem : EntitySystem
         var xform = Transform(uid);
         foreach (var id in component.InitialContents)
         {
-            var ent = Spawn(id, xform.Coordinates);
+            var ent = SpawnAttachedTo(id, xform.Coordinates);
             if (!TryInsertIntoBin(uid, ent, component))
             {
                 Log.Error($"Entity {ToPrettyString(ent)} was unable to be initialized into bin {ToPrettyString(uid)}");
@@ -67,7 +69,7 @@ public sealed partial class BinSystem : EntitySystem
 
     private void OnEntInserted(Entity<BinComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        if (args.Container.ID != ent.Comp.ContainerId)
+        if (args.Container.ID != ent.Comp.ContainerId || _timing.ApplyingState)
             return;
 
         ent.Comp.Items.Add(args.Entity);
@@ -75,7 +77,7 @@ public sealed partial class BinSystem : EntitySystem
 
     private void OnEntRemoved(Entity<BinComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        if (args.Container.ID != ent.Comp.ContainerId)
+        if (args.Container.ID != ent.Comp.ContainerId || _timing.ApplyingState)
             return;
 
         ent.Comp.Items.Remove(args.Entity);
@@ -99,15 +101,24 @@ public sealed partial class BinSystem : EntitySystem
     /// <summary>
     /// Alt interact acts the same as interacting with your hands normally, but allows fallback interaction if the item
     /// has priority. E.g. a water cup on a water cooler fills itself on a normal click,
-    /// but you can use alternative interactions to restock the cup bin
+    /// but you can use alternative interactions to restock the cup bin.
     /// </summary>
-    private void OnAltInteractHand(EntityUid uid, BinComponent component, GetVerbsEvent<AlternativeVerb> args)
+    private void OnGetAlternativeVerb(EntityUid uid, BinComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (args.Using != null)
+        if (args.Using == null)
+            return;
+
+        var canReach = args.CanAccess && args.CanInteract;
+        AlternativeVerb verb = new()
         {
-            var canReach = args.CanAccess && args.CanInteract;
-            InsertIntoBin(args.User, args.Target, (EntityUid)args.Using, component, false, canReach);
-        }
+            Act = () =>
+            {
+                InsertIntoBin(args.User, args.Target, (EntityUid)args.Using, component, false, canReach);
+            },
+            Text = Loc.GetString("verb-categories-insert"),
+            Priority = 2
+        };
+        args.Verbs.Add(verb);
     }
 
     private void OnAfterInteractUsing(EntityUid uid, BinComponent component, AfterInteractUsingEvent args)
@@ -145,7 +156,9 @@ public sealed partial class BinSystem : EntitySystem
         if (_whitelistSystem.IsWhitelistFail(component.Whitelist, toInsert))
             return false;
 
-        _container.Insert(toInsert, component.ItemContainer);
+        if (!_container.Insert(toInsert, component.ItemContainer))
+            return false;
+
         Dirty(uid, component);
         return true;
     }
@@ -171,7 +184,6 @@ public sealed partial class BinSystem : EntitySystem
         if (!_container.Remove(toRemove.Value, component.ItemContainer))
             return false;
 
-        component.Items.Remove(toRemove.Value);
         Dirty(uid, component);
         return true;
     }
