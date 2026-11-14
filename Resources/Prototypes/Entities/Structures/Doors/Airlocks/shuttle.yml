@@ -60,6 +60,23 @@
       visible: false
   - type: Wires
     layoutId: Docking
+  - type: DeviceLinkSink
+    ports:
+    - Open
+    - Close
+    - Toggle
+    - AutoClose
+    - DoorBolt
+    - DockToggle
+  - type: DeviceLinkSource
+    ports:
+    - DoorStatus
+    - DoorBoltStatus
+    - DockStatus
+    lastSignals:
+      DoorStatus: false
+      DoorBoltStatus: false
+      DockStatus: false
   - type: Door
     closeTimeTwo: 0.4
     openTimeTwo: 0.4
