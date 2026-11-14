@@ -28,7 +28,8 @@ public sealed partial class GasVentScrubberData : BaseAtmosDeviceData
         Gas.WaterVapor,
         Gas.Ammonia,
         Gas.NitrousOxide,
-        Gas.Frezon
+        Gas.Frezon,
+        Gas.Fungalin,
     };
 
     // Presets for 'dumb' air alarm modes
