@@ -29,7 +29,7 @@ public sealed partial class LoadFarGridRule : StationEventSystem<LoadFarGridRule
 
         if (data.Grids.Count < 1)
         {
-            Log.Error($"{ToPrettyString(uid):rule} picked station {station} which had no grids!");
+            Sawmill.Warning($"{ToPrettyString(uid):rule} picked station {station} which had no grids!"); // Harmony change- warn instead of error
             ForceEndSelf(uid, rule);
             return;
         }
