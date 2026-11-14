@@ -485,47 +485,34 @@ namespace Content.Client.Cargo.UI
         }
         private void FillItems(List<CargoOrderItemData> basket, Control control)
         {
-            HashSet<ProtoId<CargoProductPrototype>> alreadyAdded = new();
-            var containers = _cargoSystem.PackBasketIntoContainers(ref basket);
-            foreach (var container in containers)
+            var containers = _cargoSystem.PackBasketIntoContainers(ref basket, true);
+
+            foreach (var group in containers.Where(c => !c.IsSingleProduct).GroupBy(c => c.Container))
             {
-                if (container.IsSingleProduct)
-                {
-                    var item = container.Products.First().Source;
-                    if (alreadyAdded.Contains(item.Product))
-                        continue;
-                    alreadyAdded.Add(item.Product);
-                    if (!_protoManager.Resolve(item.Product, out var prototype))
-                        continue;
-
-                    var subRow = new CargoOrderSubRow
-                    {
-                        Separator = { MinWidth = 0 },
-                        Icon = { Texture = _spriteSystem.Frame0(prototype.Icon) },
-                        ProductName = { Text = prototype.Name },
-                        Amount = { Text = $"x{item.Quantity}" },
-                        PointCost = { Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", (prototype.Cost * item.Quantity).ToString())) },
-                    };
-                    control.AddChild(subRow);
-                    continue;
-                }
-                if (!_protoManager.Resolve(container.Container, out var cratePrototype))
+                if (!_protoManager.Resolve(group.Key, out var cratePrototype))
                     continue;
 
-                var quantity = 1;
+                var crateCount = group.Count();
                 var crateSubRow = new CargoOrderSubRow
                 {
                     Separator = { MinWidth = 0 },
                     Icon = { Texture = _spriteSystem.Frame0(cratePrototype.Icon) },
                     ProductName = { Text = cratePrototype.Name },
-                    Amount = { Text = $"x{quantity}" },
-                    PointCost = { Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", (cratePrototype.Cost * quantity).ToString())) },
+                    Amount = { Text = $"x{crateCount}" },
+                    PointCost = { Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", (cratePrototype.Cost * crateCount).ToString())) },
                 };
                 control.AddChild(crateSubRow);
 
-                foreach (var item in container.Products)
+                var itemTotals = new Dictionary<ProtoId<CargoProductPrototype>, int>();
+                foreach (var item in group.SelectMany(c => c.Products))
                 {
-                    if (!_protoManager.Resolve(item.Source.Product, out var prototype))
+                    var product = item.Source.Product;
+                    itemTotals[product] = itemTotals.GetValueOrDefault(product) + item.Quantity;
+                }
+
+                foreach (var (product, quantity) in itemTotals)
+                {
+                    if (!_protoManager.Resolve(product, out var prototype))
                         continue;
 
                     var subRow = new CargoOrderSubRow
@@ -533,15 +520,34 @@ namespace Content.Client.Cargo.UI
                         Separator = { MinWidth = 10 },
                         Icon = { Texture = _spriteSystem.Frame0(prototype.Icon) },
                         ProductName = { Text = prototype.Name },
-                        Amount = { Text = $"x{item.Quantity}" },
-                        PointCost = { Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", (prototype.Cost * item.Quantity).ToString())) },
+                        Amount = { Text = $"x{quantity}" },
+                        PointCost = { Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", (prototype.Cost * quantity).ToString())) },
                     };
                     control.AddChild(subRow);
                 }
             }
 
-        }
+            HashSet<ProtoId<CargoProductPrototype>> alreadyAdded = new();
+            foreach (var container in containers.Where(c => c.IsSingleProduct))
+            {
+                var item = container.Products.First().Source;
+                if (!alreadyAdded.Add(item.Product))
+                    continue;
 
+                if (!_protoManager.Resolve(item.Product, out var prototype))
+                    continue;
+
+                var subRow = new CargoOrderSubRow
+                {
+                    Separator = { MinWidth = 0 },
+                    Icon = { Texture = _spriteSystem.Frame0(prototype.Icon) },
+                    ProductName = { Text = prototype.Name },
+                    Amount = { Text = $"x{item.Quantity}" },
+                    PointCost = { Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", (prototype.Cost * item.Quantity).ToString())) },
+                };
+                control.AddChild(subRow);
+            }
+        }
     }
 
 }

@@ -249,14 +249,14 @@ public abstract partial class SharedCargoSystem : EntitySystem
         cost += GetContainersCost(containers);
         return cost;
     }
-    public List<CargoOrderContainerData> PackBasketIntoContainers(ref List<CargoOrderItemData> basket)
+    public List<CargoOrderContainerData> PackBasketIntoContainers(ref List<CargoOrderItemData> basket, bool ignoreNumOrdered = false)
     {
         var containers = new List<CargoOrderContainerData>();
 
         for (int j = 0; j < basket.Count; j++)
         {
             var item = basket[j];
-            if (!ShouldOrderItem(item))
+            if (!item.ToBeOrdered || (!ignoreNumOrdered && item.NumOrdered >= item.Quantity))
                 continue;
 
             if (!ProtoMan.Resolve(item.Product, out var productProto))
@@ -264,7 +264,7 @@ public abstract partial class SharedCargoSystem : EntitySystem
 
             if (!item.WithContainer || productProto.Container == null)
             {
-                for (int i = 0; i < item.Quantity - item.NumOrdered; i++)
+                for (int i = 0; i < (ignoreNumOrdered ? item.Quantity : (item.Quantity - item.NumOrdered)); i++)
                 {
                     containers.Add(new CargoOrderContainerData(null, item));
                 }
@@ -274,7 +274,7 @@ public abstract partial class SharedCargoSystem : EntitySystem
             if (!ProtoMan.Resolve(productProto.Container, out var crate))
                 continue;
 
-            PackItemIntoCrates(ref item, crate, containers);
+            PackItemIntoCrates(ref item, crate, containers, ignoreNumOrdered);
             basket[j] = item;
         }
 
@@ -295,18 +295,14 @@ public abstract partial class SharedCargoSystem : EntitySystem
         return containers;
     }
 
-    private bool ShouldOrderItem(CargoOrderItemData item)
-    {
-        return item.ToBeOrdered && item.NumOrdered < item.Quantity;
-    }
-
     private void PackItemIntoCrates(
         ref CargoOrderItemData item,
         CargoCratePrototype crate,
-        List<CargoOrderContainerData> containers
+        List<CargoOrderContainerData> containers,
+        bool ignoreNumOrdered = false
     )
     {
-        var remaining = GetItemEntityCount(item) * (item.Quantity - item.NumOrdered);
+        var remaining = GetItemEntityCount(item) * (ignoreNumOrdered ? item.Quantity : (item.Quantity - item.NumOrdered));
 
         // Try to fit into an existing container with space
         foreach (var container in containers)
@@ -347,7 +343,7 @@ public abstract partial class SharedCargoSystem : EntitySystem
             return false;
 
         return container.Container != null
-            && container.Container == crate.Entity
+            && prototype.Entity == crate.Entity
             && GetContainerItemCount(container) <= prototype.MaxItems - item.Quantity * GetItemEntityCount(item)
             && prototype.Required == crate.Required;
     }
