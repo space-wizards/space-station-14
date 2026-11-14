@@ -2,8 +2,6 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Animations;
 using Content.Client.Clickable;
-using Content.Client.Items;
-using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Camera;
 using Content.Shared.CCVar;
 using Content.Shared.CombatMode;
@@ -38,12 +36,14 @@ namespace Content.Client.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem : SharedGunSystem
 {
-    [Dependency] private IEyeManager _eyeManager = default!;
-    [Dependency] private IInputManager _inputManager = default!;
-    [Dependency] private InputSystem _inputSystem = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
     [Dependency] private IOverlayManager _overlayManager = default!;
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IEyeManager _eyeManager = default!;
+    [Dependency] private IInputManager _inputManager = default!;
+
+    [Dependency] private InputSystem _inputSystem = default!;
     [Dependency] private AnimationPlayerSystem _animPlayer = default!;
     [Dependency] private ClickableSystem _clickable = default!;
     [Dependency] private MobStateSystem _mobState = default!;
@@ -52,6 +52,10 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private SharedTransformSystem _xform = default!;
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private SpriteTreeSystem _spriteTree = default!;
+    [Dependency] private SharedPointLightSystem _pointLight = default!;
+
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
+    [Dependency] private EntityQuery<PointLightComponent> _lightQuery = default!;
 
     public static readonly EntProtoId HitscanProto = "HitscanEffect";
     private GunTargetEntityComparer _comparer = default!;
@@ -90,18 +94,9 @@ public sealed partial class GunSystem : SharedGunSystem
     {
         base.Initialize();
         UpdatesOutsidePrediction = true;
-        SubscribeLocalEvent<AmmoCounterComponent, ItemStatusCollectMessage>(OnAmmoCounterCollect);
         SubscribeAllEvent<MuzzleFlashEvent>(OnMuzzleFlash);
-
-        // Plays animated effects on the client.
-        SubscribeNetworkEvent<HitscanEvent>(OnHitscan);
-
-        InitializeMagazineVisuals();
-        InitializeSpentAmmo();
-
         _comparer = new GunTargetEntityComparer();
     }
-
 
     private void OnMuzzleFlash(MuzzleFlashEvent args)
     {
@@ -110,6 +105,7 @@ public sealed partial class GunSystem : SharedGunSystem
         CreateEffect(gunUid, args, gunUid);
     }
 
+    [SubscribeNetworkEvent]
     private void OnHitscan(HitscanEvent ev)
     {
         // ALL I WANT IS AN ANIMATED EFFECT
@@ -120,34 +116,79 @@ public sealed partial class GunSystem : SharedGunSystem
         // E.g., if a grid rotates while part of the beam is parented to the grid, and part of it is parented to the map.
         // Ideally, there should only be one entity, with one sprite that has multiple layers
         // Or at the very least, have the other entities parented to the same entity to make sure they stick together.
-        foreach (var a in ev.Sprites)
+
+        if (!_protoManager.TryIndex(ev.ProtoId, out var entityPrototype))
+            return;
+
+        if (!entityPrototype.TryComp<HitscanBasicVisualsComponent>(out var vizComp, Factory))
+            return;
+
+        var fromCoordinates = GetCoordinates(ev.Coordinates);
+        var shotAngle = ev.Angle;
+        var distance = ev.Distance;
+
+        if (distance >= 1f)
         {
-            if (a.Sprite is not SpriteSpecifier.Rsi rsi)
-                continue;
-
-            var coords = GetCoordinates(a.coordinates);
-
-            if (!TryComp(coords.EntityId, out TransformComponent? relativeXform))
-                continue;
-
-            var ent = Spawn(HitscanProto, coords);
-            var sprite = Comp<SpriteComponent>(ent);
-
-            var xform = Transform(ent);
-            var targetWorldRot = a.angle + _xform.GetWorldRotation(relativeXform);
-            var delta = targetWorldRot - _xform.GetWorldRotation(xform);
-            _xform.SetLocalRotationNoLerp(ent, xform.LocalRotation + delta, xform);
-
-            sprite[EffectLayers.Unshaded].AutoAnimated = false;
-            _sprite.LayerSetSprite((ent, sprite), EffectLayers.Unshaded, rsi);
-            _sprite.LayerSetRsiState((ent, sprite), EffectLayers.Unshaded, rsi.RsiState);
-            _sprite.SetScale((ent, sprite), new Vector2(a.Distance, 1f));
-            sprite[EffectLayers.Unshaded].Visible = true;
-
-            var anim = new Animation()
+            if (vizComp.MuzzleFlash != null)
             {
-                Length = TimeSpan.FromSeconds(0.48f),
-                AnimationTracks =
+                var coords = fromCoordinates.Offset(shotAngle.ToVec().Normalized() / 2);
+                SpawnHitscan(coords, shotAngle, vizComp.MuzzleFlash, 1f, vizComp.LightColor, vizComp.LightRadius);
+            }
+
+            if (vizComp.TravelFlash != null)
+            {
+                var shotAngleVec = shotAngle.ToVec();
+                var muzzleFlashLength = vizComp.MuzzleFlash != null ? 1.0f : 0.0f;
+                var impactFlashLength = vizComp.ImpactFlash != null ? 0.5f : 0.0f;
+                var actualDistance = distance - muzzleFlashLength - impactFlashLength;
+                var segments = Math.Max(1, (int)MathF.Round(actualDistance));
+                var segmentLength = actualDistance / segments;
+
+                var startCoords = fromCoordinates.Offset(shotAngleVec * muzzleFlashLength);
+                startCoords = startCoords.Offset(shotAngleVec * segmentLength / 2);
+
+                for (var i = 0; i < segments; i++)
+                {
+                    var coords = startCoords;
+                    coords = coords.Offset(shotAngleVec * i * segmentLength);
+                    SpawnHitscan(coords, shotAngle, vizComp.TravelFlash, segmentLength, vizComp.LightColor, vizComp.LightRadius);
+                }
+            }
+        }
+
+        if (vizComp.ImpactFlash != null)
+        {
+            var coords = fromCoordinates.Offset(shotAngle.ToVec() * distance);
+            SpawnHitscan(coords, shotAngle.FlipPositive(), vizComp.ImpactFlash, 1f, vizComp.LightColor, vizComp.LightRadius);
+        }
+    }
+
+    private void SpawnHitscan(EntityCoordinates coords, Angle angle, SpriteSpecifier? ss, float distance, Color? color, float? radius)
+    {
+        if (ss is not SpriteSpecifier.Rsi rsi)
+            return;
+
+        if (!TryComp(coords.EntityId, out TransformComponent? relativeXform))
+            return;
+
+        var ent = SpawnAtPosition(HitscanProto, coords);
+        var sprite = _spriteQuery.Comp(ent);
+
+        var xform = Transform(ent);
+        var targetWorldRot = angle + _xform.GetWorldRotation(relativeXform);
+        var delta = targetWorldRot - _xform.GetWorldRotation(xform);
+        _xform.SetLocalRotationNoLerp(ent, xform.LocalRotation + delta, xform);
+
+        sprite[EffectLayers.Unshaded].AutoAnimated = false;
+        _sprite.LayerSetSprite((ent, sprite), EffectLayers.Unshaded, rsi);
+        _sprite.LayerSetRsiState((ent, sprite), EffectLayers.Unshaded, rsi.RsiState);
+        _sprite.SetScale((ent, sprite), new Vector2(distance, 1f));
+        sprite[EffectLayers.Unshaded].Visible = true;
+
+        var anim = new Animation()
+        {
+            Length = TimeSpan.FromSeconds(0.48f),
+            AnimationTracks =
                 {
                     new AnimationTrackSpriteFlick()
                     {
@@ -158,10 +199,21 @@ public sealed partial class GunSystem : SharedGunSystem
                         }
                     }
                 }
-            };
+        };
 
-            _animPlayer.Play(ent, anim, "hitscan-effect");
+        if (_lightQuery.TryComp(ent, out var targetComp))
+        {
+            if (color == null)
+                RemComp<PointLightComponent>(ent);
+            else
+            {
+                _pointLight.SetColor(ent, color.Value, targetComp);
+                if (radius != null)
+                    _pointLight.SetRadius(ent, radius.Value, targetComp);
+            }
         }
+
+        _animPlayer.Play(ent, anim, "hitscan-effect");
     }
 
     public override void Update(float frameTime)

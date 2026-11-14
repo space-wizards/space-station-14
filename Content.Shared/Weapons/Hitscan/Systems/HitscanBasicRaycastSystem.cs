@@ -1,9 +1,9 @@
-using System.Numerics;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Hitscan.Events;
+using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -11,6 +11,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using System.Numerics;
 
 namespace Content.Shared.Weapons.Hitscan.Systems;
 
@@ -21,15 +22,9 @@ public sealed partial class HitscanBasicRaycastSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _log = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
-    [Dependency] private EntityQuery<HitscanBasicVisualsComponent> _visualsQuery = default!;
+    [Dependency] private EntityQuery<BatteryAmmoProviderComponent> _batteryAmmoQuery = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<HitscanBasicRaycastComponent, HitscanTraceEvent>(OnHitscanFired);
-    }
-
+    [SubscribeLocalEvent]
     private void OnHitscanFired(Entity<HitscanBasicRaycastComponent> ent, ref HitscanTraceEvent args)
     {
         var shooter = args.Shooter ?? args.Gun;
@@ -51,7 +46,7 @@ public sealed partial class HitscanBasicRaycastSystem : EntitySystem
 
         // Do visuals without an event. They should always happen and putting it on the attempt event is weird!
         // If more stuff gets added here, it should probably be turned into an event.
-        FireEffects(args.FromCoordinates, distanceTried, args.ShotDirection.ToAngle(), ent.Owner);
+        FireEffects(args.FromCoordinates, distanceTried, args.ShotDirection.ToAngle(), args.Gun);
 
         // Admin logging
         if (result?.HitEntity != null)
@@ -92,13 +87,12 @@ public sealed partial class HitscanBasicRaycastSystem : EntitySystem
     /// <param name="fromCoordinates">Location to start the effect.</param>
     /// <param name="distance">Distance of the hitscan shot.</param>
     /// <param name="shotAngle">Angle of the shot.</param>
-    /// <param name="hitscanUid">The hitscan entity itself.</param>
-    private void FireEffects(EntityCoordinates fromCoordinates, float distance, Angle shotAngle, EntityUid hitscanUid)
+    /// <param name="gun">Gun that shot the hitscan.</param>
+    private void FireEffects(EntityCoordinates fromCoordinates, float distance, Angle shotAngle, EntityUid gun)
     {
-        if (distance == 0 || !_visualsQuery.TryComp(hitscanUid, out var vizComp))
+        if (distance == 0 || !_batteryAmmoQuery.TryComp(gun, out var batteryAmmoComp))
             return;
 
-        var sprites = new List<(NetCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float scale)>();
         var fromXform = Transform(fromCoordinates.EntityId);
 
         // We'll get the effects relative to the grid / map of the firer
@@ -117,39 +111,15 @@ public sealed partial class HitscanBasicRaycastSystem : EntitySystem
             shotAngle -= _transform.GetWorldRotation(fromXform);
         }
 
-        if (distance >= 1f)
+        var coords = fromCoordinates.Offset(shotAngle.ToVec().Normalized() / 2);
+        var netCoords = GetNetCoordinates(coords);
+
+        RaiseNetworkEvent(new SharedGunSystem.HitscanEvent
         {
-            if (vizComp.MuzzleFlash != null)
-            {
-                var coords = fromCoordinates.Offset(shotAngle.ToVec().Normalized() / 2);
-                var netCoords = GetNetCoordinates(coords);
-
-                sprites.Add((netCoords, shotAngle, vizComp.MuzzleFlash, 1f));
-            }
-
-            if (vizComp.TravelFlash != null)
-            {
-                var coords = fromCoordinates.Offset(shotAngle.ToVec() * (distance + 0.5f) / 2);
-                var netCoords = GetNetCoordinates(coords);
-
-                sprites.Add((netCoords, shotAngle, vizComp.TravelFlash, distance - 1.5f));
-            }
-        }
-
-        if (vizComp.ImpactFlash != null)
-        {
-            var coords = fromCoordinates.Offset(shotAngle.ToVec() * distance);
-            var netCoords = GetNetCoordinates(coords);
-
-            sprites.Add((netCoords, shotAngle.FlipPositive(), vizComp.ImpactFlash, 1f));
-        }
-
-        if (sprites.Count > 0)
-        {
-            RaiseNetworkEvent(new SharedGunSystem.HitscanEvent
-            {
-                Sprites = sprites,
-            }, Filter.Pvs(fromCoordinates, entityMan: EntityManager));
-        }
+            ProtoId = batteryAmmoComp.Prototype,
+            Coordinates = netCoords,
+            Angle = shotAngle,
+            Distance = distance
+        }, Filter.Pvs(fromCoordinates, entityMan: EntityManager));
     }
 }

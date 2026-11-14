@@ -26,4 +26,16 @@ public sealed partial class HitscanBasicVisualsComponent : Component
     /// </summary>
     [DataField]
     public SpriteSpecifier? ImpactFlash;
+
+    /// <summary>
+    /// Color of the light hitscan emits, leave null for no light.
+    /// </summary>
+    [DataField]
+    public Color? LightColor;
+
+    /// <summary>
+    /// Radius of the light hitscan emits, leave null for no light.
+    /// </summary>
+    [DataField]
+    public float? LightRadius;
 }
