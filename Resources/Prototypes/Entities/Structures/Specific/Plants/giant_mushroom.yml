@@ -39,8 +39,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.5
         density: 60
         mask:
@@ -56,8 +55,7 @@
     maximumEntitiesSpawned: 5
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 150
       behaviors:
       - !type:SpawnGasBehavior
@@ -92,8 +90,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.3
         density: 60
         mask:
@@ -103,8 +100,7 @@
         - LowImpassable
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 25
       behaviors:
       - !type:SpawnGasBehavior
@@ -138,8 +134,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.2
         density: 60
         mask:
@@ -149,8 +144,7 @@
         - LowImpassable
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 10
       behaviors:
       - !type:SpawnGasBehavior

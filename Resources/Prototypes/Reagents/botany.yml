@@ -295,7 +295,6 @@
           type: [ Vox ]
         factor: -4
 
-
 - type: reagent
   id: Diethylamine
   name: reagent-name-diethylamine
@@ -325,7 +324,6 @@
         damage:
           types:
             Caustic: 1
-
 
 - type: reagent
   id: Fungalin
@@ -410,4 +408,3 @@
           damage:
             types:
               Asphyxiation: 4
-              
