@@ -147,8 +147,6 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
         if (component.ReclaimMaterials)
             SpawnMaterialsFromComposition(uid, item, completion * component.Efficiency, xform: xform);
 
-        // var shouldDestroy = true; // Harmony BINGO TEST
-
         if (CanDamageAndGib(uid, item, component))
         {
             var didBloody = component.DamageOnEmag is not null && _damage.TryChangeDamage(item, component.DamageOnEmag); // It shouldn't ignore resistance
@@ -165,15 +163,12 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
 
             if (didBloody)
                 _appearance.SetData(uid, RecyclerVisuals.Bloody, true);
-
-            // shouldDestroy = false; // Harmony BINGO TEST
             return;
         }
 
         if (_destructible.CanDestroy(item) && component.ReclaimSolutions)
             SpawnChemicalsFromComposition(uid, item, completion, true, component, xform);
 
-        // if (shouldDestroy) // Harmony BINGO TEST
         _destructible.DestroyEntity(item);
     }
 
