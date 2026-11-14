@@ -343,7 +343,7 @@ namespace Content.Client.Cargo.UI
 
                     ContainerCost =
                     {
-                        Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", _cargoSystem.GetContainersCost(_cargoSystem.PackBasketIntoContainers(ref order.Basket)).ToString())),
+                        Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", _cargoSystem.GetContainersCost(_cargoSystem.PackBasketIntoContainers(ref order.Basket, true)).ToString())),
                     },
 
                     Buttons =
