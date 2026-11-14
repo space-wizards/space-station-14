@@ -14,7 +14,7 @@
   solids:
     FoodPoppy: 1
   stacks:
-    Brutepack: 10
+    Brutepack: 1
     Cloth: 1
   reagents:
     TranexamicAcid: 20
@@ -28,7 +28,7 @@
   solids:
     FoodAloe: 1
   stacks:
-    Ointment: 10
+    Ointment: 1
     Cloth: 1
   reagents:
     Sigynate: 20
