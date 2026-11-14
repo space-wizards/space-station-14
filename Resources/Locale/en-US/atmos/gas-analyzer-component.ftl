@@ -31,3 +31,6 @@ gas-entry-info = {$gasName}: {$gasAmount} mol
 gas-analyzer-window-text-inlet = Inlet
 gas-analyzer-window-text-outlet = Outlet
 gas-analyzer-window-text-filter = Filter
+gas-analyzer-window-text-side-outlet = Side Outlet
+gas-analyzer-window-text-front-outlet = Front Outlet
+gas-analyzer-window-text-filter-outlet = {$outlet} (Filter)
