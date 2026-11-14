@@ -74,8 +74,8 @@ They have no special abilities, but are identical in appearance, DNA, fingerprin
   - Slimes may [bold]deal extra cellular or poison damage[/bold], based upon their color. Water hurts them just as it would hurt a slime person.
   - Spiders have a venomous bite and can [bold]create webs[/bold] that are hard to move through, but are easily destroyed with a blade. They can also pry open doors, windoors, and airlocks.
 
-  <!-- Funky start -->
   # Mini Dragon
+  <!-- Funky start above-->
   <Box>
     <GuideEntityEmbed Entity="MobMiniDragon" Scale="2.4"/>
   </Box>
