@@ -21,7 +21,7 @@
     noMindState: robot_e_r
   - type: BorgTransponder
     sprite:
-      sprite: Mobs/Silicon/chassis.rsi
+      sprite: Mobs/Silicon/Chassis/robot.rsi
       state: robot
     name: cyborg
   - type: InteractionPopup
@@ -46,6 +46,19 @@
   parent: BorgChassisSelectable
   name: salvage cyborg
   components:
+  - type: Sprite
+    sprite: Mobs/Silicon/Chassis/miner.rsi
+    layers:
+    - state: miner
+      map: ["enum.BorgVisualLayers.Body", "movement"]
+    - state: miner_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: miner_l
+      shader: unshaded
+      map: ["light","enum.BorgVisualLayers.LightStatus"]
+      visible: false
   - type: BorgSwitchableType
     selectedBorgType: mining
 
@@ -54,6 +67,19 @@
   parent: BorgChassisSelectable
   name: engineer cyborg
   components:
+  - type: Sprite
+    sprite: Mobs/Silicon/Chassis/engineer.rsi
+    layers:
+    - state: engineer
+      map: ["enum.BorgVisualLayers.Body", "movement"]
+    - state: engineer_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: engineer_l
+      shader: unshaded
+      map: ["light","enum.BorgVisualLayers.LightStatus"]
+      visible: false
   - type: BorgSwitchableType
     selectedBorgType: engineering
 
@@ -62,6 +88,19 @@
   parent: BorgChassisSelectable
   name: janitor cyborg
   components:
+  - type: Sprite
+    sprite: Mobs/Silicon/Chassis/janitor.rsi
+    layers:
+    - state: janitor
+      map: ["enum.BorgVisualLayers.Body", "movement"]
+    - state: janitor_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: janitor_l
+      shader: unshaded
+      map: ["light","enum.BorgVisualLayers.LightStatus"]
+      visible: false
   - type: BorgSwitchableType
     selectedBorgType: janitor
 
@@ -70,6 +109,19 @@
   parent: BorgChassisSelectable
   name: medical cyborg
   components:
+  - type: Sprite
+    sprite: Mobs/Silicon/Chassis/medical.rsi
+    layers:
+    - state: medical
+      map: ["enum.BorgVisualLayers.Body", "movement"]
+    - state: medical_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: medical_l
+      shader: unshaded
+      map: ["light","enum.BorgVisualLayers.LightStatus"]
+      visible: false
   - type: BorgSwitchableType
     selectedBorgType: medical
 
@@ -78,6 +130,19 @@
   parent: BorgChassisSelectable
   name: service cyborg
   components:
+  - type: Sprite
+    sprite: Mobs/Silicon/Chassis/service.rsi
+    layers:
+    - state: service
+      map: ["enum.BorgVisualLayers.Body", "movement"]
+    - state: service_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: service_l
+      shader: unshaded
+      map: ["light","enum.BorgVisualLayers.LightStatus"]
+      visible: false
   - type: BorgSwitchableType
     selectedBorgType: service
 
@@ -88,6 +153,7 @@
   description: A lean, mean killing machine with access to a variety of deadly modules.
   components:
     - type: Sprite
+      sprite: Mobs/Silicon/Chassis/synd_sec.rsi
       layers:
         - state: synd_sec
         - state: synd_sec_e
@@ -120,6 +186,7 @@
   description: A combat medical cyborg. Has limited offensive potential, but makes more than up for it with its support capabilities.
   components:
     - type: Sprite
+      sprite: Mobs/Silicon/Chassis/synd_medical.rsi
       layers:
         - state: synd_medical
         - state: synd_medical_e
@@ -159,6 +226,7 @@
   description: A streamlined engineering cyborg, equipped with covert modules. Its chameleon projector lets it disguise itself as a Nanotrasen cyborg.
   components:
     - type: Sprite
+      sprite: Mobs/Silicon/Chassis/synd_engi.rsi
       layers:
         - state: synd_engi
         - state: synd_engi_e
@@ -227,6 +295,7 @@
   description: A man-machine hybrid that assists the engineering department. This one seems to have chunks of strange crystals pockmarking its surface.
   components:
   - type: Sprite
+    sprite: Mobs/Silicon/Chassis/engineer.rsi
     layers:
     - state: engineer_derelict
     - state: engineer_e_r
@@ -257,6 +326,7 @@
   description: A man-machine hybrid that assists the service department. It's a bigger mess than anything it can clean up.
   components:
   - type: Sprite
+    sprite: Mobs/Silicon/Chassis/janitor.rsi
     layers:
     - state: janitor_derelict
       map: ["movement"]
@@ -291,6 +361,7 @@
   description: A man-machine hybrid that assists the medical department. This one's needles don't look very sanitary.
   components:
   - type: Sprite
+    sprite: Mobs/Silicon/Chassis/medical.rsi
     layers:
     - state: medical_derelict
       map: ["movement"]
@@ -332,6 +403,7 @@
   description: A man-machine hybrid that assists the cargo department. This one has seen the wrong side of a gibtonite chunk.
   components:
   - type: Sprite
+    sprite: Mobs/Silicon/Chassis/miner.rsi
     layers:
     - state: miner_derelict
       map: ["movement"]
@@ -366,6 +438,7 @@
   description: A lean, mean killing machine with access to a variety of deadly modules. This one is more rust-orange than blood-red.
   components:
   - type: Sprite
+    sprite: Mobs/Silicon/Chassis/synd_sec.rsi
     layers:
     - state: synd_sec_derelict
     - state: synd_sec_e
