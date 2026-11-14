@@ -8,65 +8,92 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Radiation.Systems;
 
-// main algorithm that fire radiation rays to target
+// Main algorithm that fires radiation rays at targets.
 public partial class RadiationSystem
 {
+    private float[] _results = Array.Empty<float>();
+
     private void UpdateGridcast()
     {
-        // should we save debug information into rays?
-        // if there is no debug sessions connected - just ignore it
-        var debug = _debugSessions.Count > 0;
+        // Should we save debug information into rays?
+        // If no debug sessions are connected, ignore it.
+        var saveDebugInfo = _debugSessions.Count > 0;
 
-        var stopwatch = new Stopwatch();
-        stopwatch.Start();
+        var stopwatch = RStopwatch.StartNew();
 
-        BuildSnapshots();
+        BuildSnapshots(saveDebugInfo);
 
-        var sourcesCount = _sourceSnapshots.Length;
-        var receiversCount = _receiverSnapshots.Length;
-        if (sourcesCount == 0 || receiversCount == 0)
+        var sourcesCount = _sourceCount;
+        var receiversCount = _receiverCount;
+        if (receiversCount == 0)
         {
             UpdateGridcastDebugOverlay(
                 stopwatch.Elapsed.TotalMilliseconds,
                 sourcesCount,
                 receiversCount,
-                debug ? new List<DebugRadiationRay>() : null);
+                null);
 
             RaiseLocalEvent(new RadiationSystemUpdatedEvent());
             return;
         }
 
-        var results = new float[receiversCount];
+        if (_results.Length < receiversCount)
+            _results = new float[receiversCount];
 
-        if (debug)
+        Array.Clear(_results, 0, receiversCount);
+
+        if (sourcesCount == 0)
         {
-            var debugRays = new List<DebugRadiationRay>();
-            var nearbySources = new int[sourcesCount];
+            UpdateGridcastDebugOverlay(
+                stopwatch.Elapsed.TotalMilliseconds,
+                sourcesCount,
+                receiversCount,
+                null);
+
+            ApplyRadiation(_results);
+            RaiseLocalEvent(new RadiationSystemUpdatedEvent());
+            return;
+        }
+
+        List<DebugRadiationRay>[]? debugRays = null;
+        if (saveDebugInfo)
+        {
+            debugRays = new List<DebugRadiationRay>[receiversCount];
 
             for (var i = 0; i < receiversCount; i++)
-                results[i] = CalculateRadiation(_receiverSnapshots[i], nearbySources, true, debugRays);
-
-            UpdateGridcastDebugOverlay(stopwatch.Elapsed.TotalMilliseconds, sourcesCount, receiversCount, debugRays);
-            ApplyRadiation(results);
+                debugRays[i] = new List<DebugRadiationRay>();
         }
-        else
-        {
-            var job = new RadiationJob(this, _receiverSnapshots, results);
-            _parallel.ProcessNow(job, receiversCount);
 
-            UpdateGridcastDebugOverlay(stopwatch.Elapsed.TotalMilliseconds, sourcesCount, receiversCount, null);
-            ApplyRadiation(results);
-        }
+        var job = new RadiationJob(this, _receiverSnapshots, _results, debugRays);
+        _parallel.ProcessNow(job, receiversCount);
+
+        UpdateGridcastDebugOverlay(
+            stopwatch.Elapsed.TotalMilliseconds,
+            sourcesCount,
+            receiversCount,
+            debugRays is null ? null : CollectDebugRays(debugRays));
+
+        ApplyRadiation(_results);
 
         RaiseLocalEvent(new RadiationSystemUpdatedEvent());
     }
 
+    private static List<DebugRadiationRay> CollectDebugRays(List<DebugRadiationRay>[] debugRays)
+    {
+        var rays = new List<DebugRadiationRay>();
+
+        foreach (var receiverRays in debugRays)
+            rays.AddRange(receiverRays);
+
+        return rays;
+    }
+
     private void ApplyRadiation(float[] results)
     {
-        for (var i = 0; i < _receiverSnapshots.Length; i++)
+        for (var i = 0; i < _receiverCount; i++)
         {
-            var receiver = _receiverSnapshots[i];
-            var rads = MathF.Max(0f, results[i] - receiver.Resistance);
+            ref readonly var receiver = ref _receiverSnapshots[i];
+            var rads = GetAdjustedRadiationIntensity(receiver.Uid, results[i]);
 
             if (!TryComp<RadiationReceiverComponent>(receiver.Uid, out var receiverComp))
                 continue;
@@ -81,15 +108,15 @@ public partial class RadiationSystem
     private float CalculateRadiation(
         in ReceiverSnapshot receiver,
         int[] nearbySources,
-        bool saveVisitedTiles,
         List<DebugRadiationRay>? debugRays)
     {
+        var saveVisitedTiles = debugRays is not null;
         var rads = 0f;
         var nearbyCount = GetNearbySources(receiver.WorldPosition, nearbySources);
 
         for (var i = 0; i < nearbyCount; i++)
         {
-            var source = _sourceSnapshots[nearbySources[i]];
+            ref readonly var source = ref _sourceSnapshots[nearbySources[i]];
             if (source.MapId != receiver.MapId)
                 continue;
 
@@ -102,13 +129,12 @@ public partial class RadiationSystem
             if (radsAfterDist < MinIntensity)
                 continue;
 
-            if (Irradiate(source, receiver, radsAfterDist, saveVisitedTiles) is not { } ray)
-                continue;
+            var ray = Irradiate(source, receiver, radsAfterDist, saveVisitedTiles);
 
             if (ray.ReachedDestination)
                 rads += ray.Rads;
 
-            if (saveVisitedTiles && debugRays is not null)
+            if (debugRays is not null)
             {
                 debugRays.Add(new DebugRadiationRay(
                     ray.MapId,
@@ -126,29 +152,29 @@ public partial class RadiationSystem
 
     private int GetNearbySources(Vector2 position, int[] nearbySources)
     {
-        var count = _sourceSnapshots.Length;
-        if (count <= SourceTreeThreshold)
-        {
-            for (var i = 0; i < count; i++)
-                nearbySources[i] = i;
-
-            return count;
-        }
-
-        var state = (nearbySources, 0, _sourceTree);
+        var state = (Sources: nearbySources, Count: 0, Tree: _sourceTree);
 
         _sourceTree.Query(ref state,
             static (ref (int[] Sources, int Count, B2DynamicTree<int> Tree) state, DynamicTree.Proxy proxy) =>
             {
+                if (state.Count >= state.Sources.Length)
+                {
+                    DebugTools.Assert(false, "Radiation source tree returned more proxies than snapshots.");
+                    return false;
+                }
+
                 state.Sources[state.Count++] = state.Tree.GetUserData(proxy);
                 return true;
             },
             position);
 
-        return state.Item2;
+        return state.Count;
     }
 
-    private RadiationRay? Irradiate(
+    /// <summary>
+    /// Casts a radiation ray. The caller must have already validated the map, distance and minimum intensity.
+    /// </summary>
+    private RadiationRay Irradiate(
         in SourceSnapshot source,
         in ReceiverSnapshot receiver,
         float rads,
@@ -172,8 +198,9 @@ public partial class RadiationSystem
 
         var box = Box2.FromTwoPoints(source.WorldPosition, receiver.WorldPosition);
 
-        foreach (var grid in _gridSnapshots)
+        for (var i = 0; i < _gridCount; i++)
         {
+            ref readonly var grid = ref _gridSnapshots[i];
             if (grid.MapId != receiver.MapId || !grid.WorldAABB.Intersects(box))
                 continue;
 
@@ -198,13 +225,14 @@ public partial class RadiationSystem
 
         var blockers = saveVisitedTiles ? new List<(Vector2i, float)>() : null;
 
+        // TODO: Assumes grids are parented directly to the map (local matrix == world matrix).
         var srcLocal = source.ParentUid == grid.Uid
             ? source.LocalPosition
-            : Vector2.Transform(ray.Source, grid.InvWorldMatrix);
+            : Vector2.Transform(ray.Source, grid.InvLocalMatrix);
 
         var dstLocal = receiver.ParentUid == grid.Uid
             ? receiver.LocalPosition
-            : Vector2.Transform(ray.Destination, grid.InvWorldMatrix);
+            : Vector2.Transform(ray.Destination, grid.InvLocalMatrix);
 
         Vector2i sourceGrid = new(
             (int)Math.Floor(srcLocal.X / grid.TileSize),
@@ -223,7 +251,7 @@ public partial class RadiationSystem
 
             ray.Rads -= resData;
 
-            if (saveVisitedTiles && blockers is not null)
+            if (blockers is not null)
                 blockers.Add((point, ray.Rads));
 
             if (ray.Rads <= MinIntensity)
@@ -241,12 +269,13 @@ public partial class RadiationSystem
         return ray;
     }
 
-    private float GetRadiationResistance(EntityUid uid)
+    // TODO: Nested containers are handled incorrectly: the nearest container is counted repeatedly
+    // and outer containers are ignored. Fixing this changes gameplay and is tracked separately.
+    private float GetAdjustedRadiationIntensity(EntityUid uid, float rads)
     {
         var child = uid;
         var xform = Transform(uid);
         var parent = xform.ParentUid;
-        var resistance = 0f;
 
         while (parent.IsValid())
         {
@@ -260,18 +289,17 @@ public partial class RadiationSystem
                 continue;
             }
 
-            if (_blockerQuery.TryComp(parent, out var blocker))
-                resistance += blocker.RadResistance;
+            if (_blockerQuery.TryComp(xform.ParentUid, out var blocker))
+            {
+                rads -= blocker.RadResistance;
+                if (rads < 0)
+                    return 0;
+            }
 
             child = parent;
             parent = parentXform.ParentUid;
         }
 
-        return resistance;
-    }
-
-    private float GetAdjustedRadiationIntensity(EntityUid uid, float rads)
-    {
-        return MathF.Max(0f, rads - GetRadiationResistance(uid));
+        return rads;
     }
 }

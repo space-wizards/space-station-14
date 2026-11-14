@@ -28,14 +28,15 @@ public partial class RadiationSystem
         EntityUid? GridUid,
         EntityUid ParentUid,
         Vector2 LocalPosition,
-        Vector2 WorldPosition,
-        float Resistance);
+        Vector2 WorldPosition);
 
+    // Resistance references the live component dictionary. This is safe because the parallel job
+    // runs only while the main thread is blocked in ProcessNow.
     private readonly record struct GridSnapshot(
         EntityUid Uid,
         NetEntity NetUid,
         MapId MapId,
-        Matrix3x2 InvWorldMatrix,
+        Matrix3x2 InvLocalMatrix,
         ushort TileSize,
         Dictionary<Vector2i, float> Resistance,
         Box2 WorldAABB);
@@ -44,26 +45,28 @@ public partial class RadiationSystem
     private ReceiverSnapshot[] _receiverSnapshots = Array.Empty<ReceiverSnapshot>();
     private GridSnapshot[] _gridSnapshots = Array.Empty<GridSnapshot>();
 
-    private const int SourceTreeThreshold = 16;
+    private int _sourceCount;
+    private int _receiverCount;
+    private int _gridCount;
 
     private readonly Dictionary<EntityUid, int> _gridSnapshotIndex = new();
     private readonly B2DynamicTree<int> _sourceTree = new();
 
-    private void BuildSnapshots()
+    private void BuildSnapshots(bool saveDebugInfo)
     {
-        BuildSourceSnapshots();
-        BuildReceiverSnapshots();
-        BuildGridSnapshots();
+        BuildSourceSnapshots(saveDebugInfo);
+        BuildReceiverSnapshots(saveDebugInfo);
+        BuildGridSnapshots(saveDebugInfo);
         BuildSourceTree();
     }
 
-    private void BuildSourceSnapshots()
+    private void BuildSourceSnapshots(bool saveDebugInfo)
     {
         var capacity = Count<RadiationSourceComponent>();
-        if (_sourceSnapshots.Length != capacity)
+        if (_sourceSnapshots.Length < capacity)
             _sourceSnapshots = new SourceSnapshot[capacity];
 
-        var count = 0;
+        _sourceCount = 0;
         var query = EntityQueryEnumerator<RadiationSourceComponent, TransformComponent>();
 
         while (query.MoveNext(out var uid, out var source, out var xform))
@@ -82,9 +85,9 @@ public partial class RadiationSystem
             var maxRange = slope > float.Epsilon ? intensity / slope : GridcastMaxDistance;
             maxRange = Math.Min(maxRange, GridcastMaxDistance);
 
-            _sourceSnapshots[count++] = new SourceSnapshot(
+            _sourceSnapshots[_sourceCount++] = new SourceSnapshot(
                 uid,
-                GetNetEntity(uid),
+                saveDebugInfo ? GetNetEntity(uid) : default,
                 xform.MapID,
                 xform.GridUid,
                 xform.ParentUid,
@@ -94,70 +97,59 @@ public partial class RadiationSystem
                 slope,
                 maxRange);
         }
-
-        if (count != _sourceSnapshots.Length)
-            Array.Resize(ref _sourceSnapshots, count);
     }
 
-    private void BuildReceiverSnapshots()
+    private void BuildReceiverSnapshots(bool saveDebugInfo)
     {
         var capacity = Count<RadiationReceiverComponent>();
-        if (_receiverSnapshots.Length != capacity)
+        if (_receiverSnapshots.Length < capacity)
             _receiverSnapshots = new ReceiverSnapshot[capacity];
 
-        var count = 0;
+        _receiverCount = 0;
         var query = EntityQueryEnumerator<RadiationReceiverComponent, TransformComponent>();
 
         while (query.MoveNext(out var uid, out _, out var xform))
         {
             var worldPosition = _transform.GetWorldPosition(xform);
-            var resistance = GetRadiationResistance(uid);
 
-            _receiverSnapshots[count++] = new ReceiverSnapshot(
+            _receiverSnapshots[_receiverCount++] = new ReceiverSnapshot(
                 uid,
-                GetNetEntity(uid),
+                saveDebugInfo ? GetNetEntity(uid) : default,
                 xform.MapID,
                 xform.GridUid,
                 xform.ParentUid,
                 xform.LocalPosition,
-                worldPosition,
-                resistance);
+                worldPosition);
         }
-
-        if (count != _receiverSnapshots.Length)
-            Array.Resize(ref _receiverSnapshots, count);
     }
 
-    private void BuildGridSnapshots()
+    private void BuildGridSnapshots(bool saveDebugInfo)
     {
         _gridSnapshotIndex.Clear();
 
         var capacity = Count<RadiationGridResistanceComponent>();
-        if (_gridSnapshots.Length != capacity)
+        if (_gridSnapshots.Length < capacity)
             _gridSnapshots = new GridSnapshot[capacity];
 
-        var count = 0;
+        _gridCount = 0;
         var query = EntityQueryEnumerator<RadiationGridResistanceComponent, MapGridComponent, TransformComponent>();
 
         while (query.MoveNext(out var uid, out var resistance, out var grid, out var xform))
         {
             var worldAABB = TransformBox(grid.LocalAABB, _transform.GetWorldMatrix(xform));
 
-            _gridSnapshots[count] = new GridSnapshot(
+            _gridSnapshots[_gridCount] = new GridSnapshot(
                 uid,
-                GetNetEntity(uid),
+                saveDebugInfo ? GetNetEntity(uid) : default,
                 xform.MapID,
-                _transform.GetInvWorldMatrix(xform),
+                xform.InvLocalMatrix,
                 grid.TileSize,
                 resistance.ResistancePerTile,
                 worldAABB);
 
-            _gridSnapshotIndex[uid] = count;
-            count++;
+            _gridSnapshotIndex[uid] = _gridCount;
+            _gridCount++;
         }
-
-        if (count != _gridSnapshots.Length)
-            Array.Resize(ref _gridSnapshots, count);
     }
 
     private void BuildSourceTree()
@@ -165,12 +157,9 @@ public partial class RadiationSystem
         var state = false;
         _sourceTree.Clear(ref state, static (ref bool clearState, in int sourceIndex) => { });
 
-        if (_sourceSnapshots.Length <= SourceTreeThreshold)
-            return;
-
-        for (var i = 0; i < _sourceSnapshots.Length; i++)
+        for (var i = 0; i < _sourceCount; i++)
         {
-            var source = _sourceSnapshots[i];
+            ref readonly var source = ref _sourceSnapshots[i];
             var size = new Vector2(source.MaxRange * 2f, source.MaxRange * 2f);
             var aabb = Box2.CenteredAround(source.WorldPosition, size);
             _sourceTree.CreateProxy(in aabb, uint.MaxValue, i);

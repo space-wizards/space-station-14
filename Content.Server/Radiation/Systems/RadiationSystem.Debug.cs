@@ -21,16 +21,9 @@ public partial class RadiationSystem
     /// </summary>
     public void ToggleDebugView(ICommonSession session)
     {
-        bool isEnabled;
-        if (_debugSessions.Add(session))
-        {
-            isEnabled = true;
-        }
-        else
-        {
+        var isEnabled = _debugSessions.Add(session);
+        if (!isEnabled)
             _debugSessions.Remove(session);
-            isEnabled = false;
-        }
 
         var ev = new OnRadiationOverlayToggledEvent(isEnabled);
         RaiseNetworkEvent(ev, session.Channel);
