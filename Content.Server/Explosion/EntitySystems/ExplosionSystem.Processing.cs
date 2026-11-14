@@ -327,7 +327,8 @@ public sealed partial class ExplosionSystem
 
         foreach (var (uid, xform) in state.Item1)
         {
-            processed.Add(uid);
+            if (!processed.Add(uid))
+                continue;
             ProcessEntity(uid, epicenter, damage, throwForce, id, xform, fireStacks, cause);
         }
 
