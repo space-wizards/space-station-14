@@ -161,5 +161,11 @@ namespace Content.Shared.Cargo.Prototypes
         /// </summary>
         [DataField]
         public int Cost;
+
+        // <summary>
+        ///     Texture path used in the CargoConsole GUI.
+        /// </summary>
+        [DataField]
+        public SpriteSpecifier Icon { get; private set; } = SpriteSpecifier.Invalid;
     }
 }

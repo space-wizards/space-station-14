@@ -4,6 +4,10 @@
   containerId: entity_storage
   maxItems: 30
   cost: 50
+  icon:
+    sprite: Structures/Storage/Crates/generic.rsi
+    state: icon
+
 
 - type: cargoCrate
   id: CratePlastic
@@ -11,6 +15,10 @@
   containerId: entity_storage
   maxItems: 30
   cost: 50
+  icon:
+    sprite: Structures/Storage/Crates/plastic.rsi
+    state: icon
+
 
 - type: cargoCrate
   id: WrappedParcel
@@ -18,6 +26,9 @@
   containerId: contents
   maxItems: 1
   cost: 20
+  icon:
+    sprite: Objects/Misc/ParcelWrap/wrapped_parcel.rsi
+    state: parcel-small
 
 - type: cargoCrate
   id: CratePlasma
@@ -26,6 +37,9 @@
   required: true
   maxItems: 30
   cost: 100
+  icon:
+    sprite: Structures/Storage/Crates/plasma.rsi
+    state: icon
 
 - type: cargoCrate
   id: CrateSecgear
@@ -34,6 +48,9 @@
   required: true
   maxItems: 30
   cost: 100
+  icon:
+    sprite: Structures/Storage/Crates/sec_gear.rsi
+    state: icon
 
 - type: cargoCrate
   id: CrateSecureScience
@@ -42,6 +59,9 @@
   required: true
   maxItems: 30
   cost: 100
+  icon:
+    sprite: Structures/Storage/Crates/scicrate_secure.rsi
+    state: icon
 
 - type: cargoCrate
   id: CrateFreezer
@@ -50,6 +70,9 @@
   required: true
   maxItems: 30
   cost: 80
+  icon:
+    sprite: Structures/Storage/Crates/freezer.rsi
+    state: icon
 
 - type: cargoCrate
   id: CrateHydroponics
@@ -57,6 +80,9 @@
   containerId: entity_storage
   maxItems: 30
   cost: 50
+  icon:
+    sprite: Structures/Storage/Crates/hydroponics.rsi
+    state: icon
 
 - type: cargoCrate
   id: CrateMedical
@@ -64,6 +90,9 @@
   containerId: entity_storage
   maxItems: 30
   cost: 50
+  icon:
+    sprite: Structures/Storage/Crates/medical.rsi
+    state: icon
 
 - type: cargoCrate
   id: CrateRadiation
@@ -71,6 +100,9 @@
   containerId: entity_storage
   maxItems: 30
   cost: 80
+  icon:
+    sprite: Structures/Storage/Crates/radiation.rsi
+    state: icon
 
 - type: cargoCrate
   id: CrateInternals
@@ -78,6 +110,9 @@
   containerId: entity_storage
   maxItems: 30
   cost: 50
+  icon:
+    sprite: Structures/Storage/Crates/o2.rsi
+    state: icon
 
 - type: cargoCrate
   id: CrateElectrical
@@ -85,6 +120,9 @@
   containerId: entity_storage
   maxItems: 30
   cost: 50
+  icon:
+    sprite: Structures/Storage/Crates/electrical.rsi
+    state: icon
 
 - type: cargoCrate
   id: CrateEngineering
@@ -92,6 +130,9 @@
   containerId: entity_storage
   maxItems: 30
   cost: 60
+  icon:
+    sprite: Structures/Storage/Crates/engineering.rsi
+    state: icon
 
 - type: cargoCrate
   id: CrateScience
@@ -99,6 +140,9 @@
   containerId: entity_storage
   maxItems: 30
   cost: 60
+  icon:
+    sprite: Structures/Storage/Crates/science.rsi
+    state: icon
 
 - type: cargoCrate
   id: CrateEngineeringSecure
@@ -107,6 +151,9 @@
   required: true
   maxItems: 30
   cost: 100
+  icon:
+    sprite: Structures/Storage/Crates/engicrate_secure.rsi
+    state: icon
 
 - type: cargoCrate
   id: CrateMedicalSecure
@@ -115,6 +162,9 @@
   required: true
   maxItems: 30
   cost: 100
+  icon:
+    sprite: Structures/Storage/Crates/medicalcrate_secure.rsi
+    state: icon
 
 - type: cargoCrate
   id: CrateChemistrySecure
@@ -123,14 +173,9 @@
   required: true
   maxItems: 30
   cost: 100
-
-- type: cargoCrate
-  id: CrateScienceSecure
-  entity: CrateScienceSecure
-  containerId: entity_storage
-  required: true
-  maxItems: 30
-  cost: 100
+  icon:
+    sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    state: icon
 
 - type: cargoCrate
   id: CrateHydroSecure
@@ -139,6 +184,9 @@
   required: true
   maxItems: 30
   cost: 100
+  icon:
+    sprite: Structures/Storage/Crates/hydro_secure.rsi
+    state: icon
 
 - type: cargoCrate
   id: CrateWeaponSecure
@@ -147,6 +195,9 @@
   required: true
   maxItems: 30
   cost: 100
+  icon:
+    sprite: Structures/Storage/Crates/weapon.rsi
+    state: icon
 
 - type: cargoCrate
   id: CrateCommandSecure
@@ -155,6 +206,9 @@
   required: true
   maxItems: 30
   cost: 100
+  icon:
+    sprite: Structures/Storage/Crates/command.rsi
+    state: icon
 
 - type: cargoCrate
   id: CrateLivestock
@@ -163,6 +217,9 @@
   required: true
   maxItems: 30
   cost: 100
+  icon:
+    sprite: Structures/Storage/Crates/livestock.rsi
+    state: base
 
 - type: cargoCrate
   id: CratePirate
@@ -171,3 +228,6 @@
   required: true
   maxItems: 30
   cost: 500
+  icon:
+    sprite: Structures/Storage/Crates/piratechest.rsi
+    state: crate_icon
