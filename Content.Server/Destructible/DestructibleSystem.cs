@@ -8,6 +8,7 @@ using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Stack;
+using Content.Shared.Changeling.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
@@ -92,7 +93,7 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
                         logImpact = behavior.Impact;
                     if (behavior is DoActsBehavior doActsBehavior)
                     {
-                        return $"{behavior.GetType().Name}:{doActsBehavior.Acts.ToString()}";
+                        return $"{behavior.GetType().Name}:{doActsBehavior.Acts}";
                     }
                     return behavior.GetType().Name;
                 }));
@@ -100,18 +101,20 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
                 // If it doesn't have a humanoid component, it's probably not particularly notable?
                 if (logImpact > LogImpact.Medium && !HasComp<HumanoidProfileComponent>(uid))
                     logImpact = LogImpact.Medium;
-
-                if (args.Origin != null)
+                if (!(TryComp<DestructionResistanceComponent>(uid, out var compResist) && compResist.Enabled == true))
                 {
-                    AdminLogger.Add(LogType.Damaged,
-                        logImpact,
-                        $"{ToPrettyString(args.Origin.Value):actor} caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
-                }
-                else
-                {
-                    AdminLogger.Add(LogType.Damaged,
-                        logImpact,
-                        $"Unknown damage source caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
+                    if (args.Origin != null)
+                    {
+                        AdminLogger.Add(LogType.Damaged,
+                            logImpact,
+                            $"{ToPrettyString(args.Origin.Value):actor} caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
+                    }
+                    else
+                    {
+                        AdminLogger.Add(LogType.Damaged,
+                            logImpact,
+                            $"Unknown damage source caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
+                    }
                 }
 
                 Execute(threshold, uid, args.Origin);
