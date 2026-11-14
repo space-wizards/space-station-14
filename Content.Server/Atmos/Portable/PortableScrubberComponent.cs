@@ -30,7 +30,7 @@ namespace Content.Server.Atmos.Portable
             Gas.Ammonia,
             Gas.NitrousOxide,
             Gas.Frezon,
-            Gas.Fungalin
+            Gas.Fungalin,
         };
 
         [ViewVariables(VVAccess.ReadWrite)]

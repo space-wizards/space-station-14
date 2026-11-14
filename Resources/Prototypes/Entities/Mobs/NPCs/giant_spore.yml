@@ -48,14 +48,12 @@
         Blunt: 0.25
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 10
       behaviors:
       - !type:SpawnEntitiesBehavior

@@ -388,6 +388,6 @@ namespace Content.Shared.Atmos
         Ammonia = 6,
         NitrousOxide = 7,
         Frezon = 8,
-        Fungalin = 9
+        Fungalin = 9,
     }
 }
