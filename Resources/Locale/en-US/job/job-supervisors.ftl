@@ -1,3 +1,4 @@
+job-supervisors-nanotrasen = Nanotrasen corporate
 job-supervisors-centcom = Central Command
 job-supervisors-captain = the Captain
 job-supervisors-hop = the Head of Personnel
