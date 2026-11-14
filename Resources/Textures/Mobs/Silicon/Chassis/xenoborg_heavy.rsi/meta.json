@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Xenoborg sprites, created and modified by Samuka-C (github)",
+    "copyright": "Xenoborg sprites, created and modified by Samuka-C (github), xenoborg_heavy_rad by august-sun (Github)",
     "states": [
         {
             "name": "xenoborg_heavy",
@@ -63,6 +63,14 @@
         },
         {
             "name": "xenoborg_heavy_l",
+            "directions": 4
+        },
+        {
+            "name": "xenoborg_heavy_rad",
+            "directions": 4
+        },
+        {
+            "name": "xenoborg_heavy_missile_launcher",
             "directions": 4
         }
     ]

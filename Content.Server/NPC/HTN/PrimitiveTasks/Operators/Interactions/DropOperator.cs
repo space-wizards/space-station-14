@@ -1,5 +1,4 @@
-using Content.Server.Hands.Systems;
-using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
 
@@ -9,19 +8,19 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
 public sealed partial class DropOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
-        if (!blackboard.TryGetValue(NPCBlackboard.ActiveHand, out string? activeHand, _entManager))
+        if (!blackboard.TryGetValue(NPCBlackboard.ActiveHand, out string? _, _entManager))
         {
             return HTNOperatorStatus.Finished;
         }
 
         var owner = blackboard.GetValueOrDefault<EntityUid>(NPCBlackboard.Owner, _entManager);
         // TODO: Need some sort of interaction cooldown probably.
-        var handsSystem = _entManager.System<HandsSystem>();
 
-        if (handsSystem.TryDrop(owner))
+        if (_handsSystem.TryDrop(owner))
         {
             return HTNOperatorStatus.Finished;
         }

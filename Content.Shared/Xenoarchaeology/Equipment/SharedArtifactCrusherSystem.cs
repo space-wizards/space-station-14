@@ -116,7 +116,7 @@ public abstract partial class SharedArtifactCrusherSystem : EntitySystem
             return;
 
         if (crusher.AutoLock)
-            _popup.PopupPredicted(Loc.GetString("artifact-crusher-autolocks-enable"), uid, user);
+            _popup.PopupEntity(Loc.GetString("artifact-crusher-autolocks-enable"), uid);
 
         crusher.Crushing = true;
         crusher.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);

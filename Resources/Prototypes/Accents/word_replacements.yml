@@ -306,7 +306,6 @@
     chatsan-word-66: chatsan-replacement-66
     chatsan-word-67: chatsan-replacement-67
     chatsan-word-68: chatsan-replacement-68
-    chatsan-word-69: chatsan-replacement-69 # :godo:
 
 - type: accent
   id: liar
@@ -408,3 +407,7 @@
     accent-skeleton-words-7: accent-skeleton-words-replace-7
     accent-skeleton-words-8: accent-skeleton-words-replace-8
     accent-skeleton-words-9: accent-skeleton-words-replace-9
+
+# used to give speech back to caks
+- type: accent
+  id: noreplacement

@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Client.UserInterface.Controls;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Guidebook.Richtext;
 
@@ -15,7 +15,7 @@ public sealed class Table : TableContainer, IDocumentTag
 
         if (!args.TryGetValue("Columns", out var columns) || !int.TryParse(columns, out var columnsCount))
         {
-            Logger.Error("Guidebook tag \"Table\" does not specify required property \"Columns.\"");
+            Log.Error("Guidebook tag \"Table\" does not specify required property \"Columns.\"");
             control = null;
             return false;
         }

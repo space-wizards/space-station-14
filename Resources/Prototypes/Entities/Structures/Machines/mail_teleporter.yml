@@ -1,6 +1,6 @@
 - type: entity
   id: CargoMailTeleporter
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, StructureHealthMachineStrong ]
   name: mail teleporter
   description: Periodically teleports in mail to deliver across the station.
   components:
@@ -28,9 +28,17 @@
       visible: false
       map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: PlasteelMod
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 275
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: ApcPowerReceiver
     powerLoad: 1000
   - type: Appearance

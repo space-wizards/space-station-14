@@ -12,7 +12,7 @@ namespace Content.Server.GameTicking.Commands
     {
         [Dependency] private IPlayerManager _player = default!;
         [Dependency] private IPlayerLocator _locator = default!;
-        [Dependency] private GameTicker _gameTicker = default!;
+        [Dependency] private ServerGameTicker _gameTicker = default!;
         [Dependency] private MindSystem _mind = default!;
 
         public override string Command => "respawn";

@@ -5,6 +5,7 @@ using Content.Shared.Audio;
 using Content.Shared.Audio.Events;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
+using Content.Shared.GameTicking.Events;
 using Robust.Server.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -18,7 +19,6 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
 {
     [Dependency] private AudioSystem _serverAudio = default!;
     [Dependency] private IRobustRandom _robustRandom = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
 
     private SoundCollectionPrototype? _lobbyMusicCollection = default!;
@@ -36,7 +36,7 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
             {
                 //Checks to see if the sound collection exists. If it does change it if not defaults to null
                 // as the new _lobbyMusicCollection meaning it wont play anything in the lobby.
-                if(_prototypeManager.TryIndex<SoundCollectionPrototype>(x, out var outputSoundCollection))
+                if(ProtoMan.TryIndex<SoundCollectionPrototype>(x, out var outputSoundCollection))
                 {
                     _lobbyMusicCollection = outputSoundCollection;
                 }

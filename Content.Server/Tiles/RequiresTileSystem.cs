@@ -1,6 +1,5 @@
 using Content.Shared.Tiles;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Map.Enumerators;
 
 namespace Content.Server.Tiles;
 
@@ -11,13 +10,11 @@ public sealed partial class RequiresTileSystem : EntitySystem
      */
 
     [Dependency] private SharedMapSystem _maps = default!;
-
-    private EntityQuery<RequiresTileComponent> _tilesQuery;
+    [Dependency] private EntityQuery<RequiresTileComponent> _tilesQuery = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        _tilesQuery = GetEntityQuery<RequiresTileComponent>();
         SubscribeLocalEvent<TileChangedEvent>(OnTileChange);
     }
 
@@ -28,7 +25,7 @@ public sealed partial class RequiresTileSystem : EntitySystem
 
         foreach (var change in ev.Changes)
         {
-            var anchored = _maps.GetAnchoredEntitiesEnumerator(ev.Entity, grid, change.GridIndices);
+            var anchored = _maps.GetAnchoredEntities(ev.Entity, grid, change.GridIndices);
 
             while (anchored.MoveNext(out var ent))
             {

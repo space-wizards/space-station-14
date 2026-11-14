@@ -250,6 +250,7 @@ public abstract partial class GameTest
         catch (Exception)
         {
             _pairDestroyed = true;
+            Assert.Fail();
             throw;
         }
         finally

@@ -29,4 +29,10 @@ public sealed partial class ContrabandSeverityPrototype : IPrototype
     /// </summary>
     [DataField]
     public bool ShowDepartmentsAndJobs;
+
+    /// <summary>
+    /// Whether this contraband warning should be shown above others, higher number is higher priority.
+    /// </summary>
+    [DataField]
+    public int Priority = 1;
 }

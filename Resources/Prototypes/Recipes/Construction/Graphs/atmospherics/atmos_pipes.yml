@@ -1,0 +1,121 @@
+- type: constructionGraph
+  id: !type:CreateVariants
+    values: [ GasPipe, GasPipeAlt1, GasPipeAlt2 ]
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: half
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 1
+
+    - to: straight
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 1
+
+    - to: bend
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 1
+
+    - to: tjunction
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 1
+
+    - to: fourway
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 1
+
+  - node: half
+    entity: !type:CreateVariants
+      values: [ GasPipeHalf, GasPipeHalfAlt1, GasPipeHalfAlt2 ]
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: straight
+    entity: !type:CreateVariants
+      values: [ GasPipeStraight, GasPipeStraightAlt1, GasPipeStraightAlt2 ]
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: bend
+    entity: !type:CreateVariants
+      values: [ GasPipeBend, GasPipeBendAlt1, GasPipeBendAlt2 ]
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: tjunction
+    entity: !type:CreateVariants
+      values: [ GasPipeTJunction, GasPipeTJunctionAlt1, GasPipeTJunctionAlt2 ]
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: fourway
+    entity: !type:CreateVariants
+      values: [ GasPipeFourway, GasPipeFourwayAlt1, GasPipeFourwayAlt2 ]
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1

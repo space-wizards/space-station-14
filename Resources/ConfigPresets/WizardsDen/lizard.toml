@@ -3,7 +3,7 @@
 # Nothing specific yet
 
 [game]
-hostname = "[EN] Wizard's Den Lizard [US West]"
+hostname = "[EN] Wizard's Den Lizard [NA West]"
 panic_bunker.enabled = false
 panic_bunker.disable_with_admins = false
 panic_bunker.enable_without_admins = false

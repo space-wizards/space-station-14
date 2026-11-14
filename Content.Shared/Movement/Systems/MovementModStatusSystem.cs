@@ -30,16 +30,28 @@ public sealed partial class MovementModStatusSystem : EntitySystem
 
     public override void Initialize()
     {
+        SubscribeLocalEvent<MovementModStatusEffectComponent, StatusEffectAppliedEvent>(OnMovementModApplied);
         SubscribeLocalEvent<MovementModStatusEffectComponent, StatusEffectRemovedEvent>(OnMovementModRemoved);
         SubscribeLocalEvent<MovementModStatusEffectComponent, StatusEffectRelayedEvent<RefreshMovementSpeedModifiersEvent>>(OnRefreshRelay);
+        SubscribeLocalEvent<FrictionStatusEffectComponent, StatusEffectAppliedEvent>(OnFrictionStatusEffectApplied);
         SubscribeLocalEvent<FrictionStatusEffectComponent, StatusEffectRemovedEvent>(OnFrictionStatusEffectRemoved);
         SubscribeLocalEvent<FrictionStatusEffectComponent, StatusEffectRelayedEvent<RefreshFrictionModifiersEvent>>(OnRefreshFrictionStatus);
         SubscribeLocalEvent<FrictionStatusEffectComponent, StatusEffectRelayedEvent<TileFrictionEvent>>(OnRefreshTileFrictionStatus);
     }
 
+    private void OnMovementModApplied(Entity<MovementModStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
+    {
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(args.Target);
+    }
+
     private void OnMovementModRemoved(Entity<MovementModStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
     {
         TryUpdateMovementStatus(args.Target, (ent, ent), 1f);
+    }
+
+    private void OnFrictionStatusEffectApplied(Entity<FrictionStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
+    {
+        _movementSpeedModifier.RefreshFrictionModifiers(args.Target);
     }
 
     private void OnFrictionStatusEffectRemoved(Entity<FrictionStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
@@ -96,16 +108,17 @@ public sealed partial class MovementModStatusSystem : EntitySystem
     /// <param name="duration">Duration of speed modifying effect.</param>
     /// <param name="walkSpeedModifier">Multiplier by which walking speed should be modified.</param>
     /// <param name="sprintSpeedModifier">Multiplier by which sprinting speed should be modified.</param>
+    /// <param name="delay">How long should this effect be delayed?</param>
     /// <returns>True if entity have slowdown effect applied now or previously and duration was modified.</returns>
     public bool TryAddMovementSpeedModDuration(
         EntityUid uid,
         EntProtoId effectProtoId,
         TimeSpan duration,
         float walkSpeedModifier,
-        float sprintSpeedModifier
-    )
+        float sprintSpeedModifier,
+        TimeSpan? delay = null)
     {
-        return _status.TryAddStatusEffectDuration(uid, effectProtoId, out var status, duration)
+        return _status.TryAddStatusEffectDuration(uid, effectProtoId, out var status, duration, delay)
                && TryUpdateMovementStatus(uid, status!.Value, walkSpeedModifier, sprintSpeedModifier);
     }
 
@@ -117,13 +130,14 @@ public sealed partial class MovementModStatusSystem : EntitySystem
     /// <param name="effectProtoId">Slowdown effect to be used.</param>
     /// <param name="duration">Duration of speed modifying effect.</param>
     /// <param name="speedModifier">Multiplier by which walking/sprinting speed should be modified.</param>
+    /// <param name="delay">How long should this effect be delayed?</param>
     /// <returns>True if entity have slowdown effect applied now or previously and duration was modified.</returns>
     public bool TryUpdateMovementSpeedModDuration(
         EntityUid uid,
         EntProtoId effectProtoId,
         TimeSpan duration,
-        float speedModifier
-    )
+        float speedModifier,
+        TimeSpan? delay = null)
     {
         return TryUpdateMovementSpeedModDuration(uid, effectProtoId, duration, speedModifier, speedModifier);
     }
@@ -137,14 +151,15 @@ public sealed partial class MovementModStatusSystem : EntitySystem
     /// <param name="duration">Duration of speed modifying effect.</param>
     /// <param name="walkSpeedModifier">Multiplier by which walking speed should be modified.</param>
     /// <param name="sprintSpeedModifier">Multiplier by which sprinting speed should be modified.</param>
+    /// <param name="delay">How long should this effect be delayed?</param>
     /// <returns>True if entity have slowdown effect applied now or previously and duration was modified.</returns>
     public bool TryUpdateMovementSpeedModDuration(
         EntityUid uid,
         EntProtoId effectProtoId,
         TimeSpan? duration,
         float walkSpeedModifier,
-        float sprintSpeedModifier
-    )
+        float sprintSpeedModifier,
+        TimeSpan? delay = null)
     {
         return _status.TryUpdateStatusEffectDuration(uid, effectProtoId, out var status, duration)
                && TryUpdateMovementStatus(uid, status!.Value, walkSpeedModifier, sprintSpeedModifier);
@@ -158,11 +173,12 @@ public sealed partial class MovementModStatusSystem : EntitySystem
     /// <param name="status">Status effect entity whose modifiers we are updating</param>
     /// <param name="walkSpeedModifier">New walkSpeedModifer we're applying</param>
     /// <param name="sprintSpeedModifier">New sprintSpeedModifier we're applying</param>
+    /// <param name="delay">How long should this effect be delayed?</param>
     public bool TryUpdateMovementStatus(EntityUid uid,
         Entity<MovementModStatusEffectComponent?> status,
         float walkSpeedModifier,
-        float sprintSpeedModifier
-    )
+        float sprintSpeedModifier,
+        TimeSpan? delay = null)
     {
         if (!Resolve(status, ref status.Comp))
             return false;

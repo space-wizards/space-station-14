@@ -1,6 +1,6 @@
+#nullable enable
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
-using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.PDA.Ringer;
 using Content.Server.Traitor.Uplink;
 using Content.Shared.FixedPoint;
@@ -14,7 +14,6 @@ using Robust.Shared.Random;
 
 namespace Content.IntegrationTests.Tests;
 
-[TestFixture]
 public sealed class StoreTests : GameTest
 {
 
@@ -33,59 +32,40 @@ public sealed class StoreTests : GameTest
 ";
 
     [Test]
-    [Ignore("""
-        This currently causes the client to crash, failing the test.
-        When this is fixed, this test should be removed and StoreDiscountAndRefund
-        should just use the default pair config.
-    """)]
-    public async Task StoreDiscountAndRefundWithClient()
-    {
-        await StoreDiscountAndRefund();
-    }
-
-    [Test]
-    [PairConfig(nameof(PsDisconnected))]
+    [Description("Tests that a traitor PDA works as a store, that it can purchase, discount and refund items.")]
     public async Task StoreDiscountAndRefund()
     {
-        var pair = Pair;
-        var server = pair.Server;
+        await CreateTestMap();
 
-        var testMap = await pair.CreateTestMap();
-        await server.WaitIdleAsync();
-
-        var serverRandom = server.ResolveDependency<IRobustRandom>();
+        var serverRandom = Server.ResolveDependency<IRobustRandom>();
         serverRandom.SetSeed(534);
 
-        var entManager = server.ResolveDependency<IEntityManager>();
+        var mapSystem = Server.System<SharedMapSystem>();
 
-        var mapSystem = server.System<SharedMapSystem>();
-        var prototypeManager = server.ProtoMan;
-
-        Assert.That(mapSystem.IsInitialized(testMap.MapId));
-
+        Assume.That(mapSystem.IsInitialized(TestMap.MapId));
 
         EntityUid human = default;
         EntityUid uniform = default;
         EntityUid pda = default;
 
-        var uplinkSystem = entManager.System<UplinkSystem>();
-        var ringerSystem = entManager.System<RingerSystem>();
+        var uplinkSystem = Server.System<UplinkSystem>();
+        var ringerSystem = Server.System<RingerSystem>();
 
-        var listingPrototypes = prototypeManager.EnumeratePrototypes<ListingPrototype>()
-                                                .ToArray();
+        var listingPrototypes = SProtoMan.EnumeratePrototypes<ListingPrototype>()
+                                         .ToArray();
 
-        var coordinates = testMap.GridCoords;
-        await server.WaitAssertion(() =>
+        var coordinates = TestMap.GridCoords;
+        await Server.WaitAssertion(() =>
         {
-            var invSystem = entManager.System<InventorySystem>();
-            var mindSystem = entManager.System<SharedMindSystem>();
+            var invSystem = Server.System<InventorySystem>();
+            var mindSystem = Server.System<SharedMindSystem>();
 
-            human = entManager.SpawnEntity("HumanUniformDummy", coordinates);
-            uniform = entManager.SpawnEntity("UniformDummy", coordinates);
-            pda = entManager.SpawnEntity("InventoryPdaDummy", coordinates);
+            human = SSpawnAtPosition("MobHuman", coordinates);
+            uniform = SSpawnAtPosition("UniformDummy", coordinates);
+            pda = SSpawnAtPosition("InventoryPdaDummy", coordinates);
 
-            Assert.That(invSystem.TryEquip(human, uniform, "jumpsuit"));
-            Assert.That(invSystem.TryEquip(human, pda, "id"));
+            Assume.That(invSystem.TryEquip(human, uniform, "jumpsuit"));
+            Assume.That(invSystem.TryEquip(human, pda, "id"));
 
             var mind = mindSystem.CreateMind(null);
             mindSystem.TransferTo(mind, human, mind: mind);
@@ -94,10 +74,10 @@ public sealed class StoreTests : GameTest
             uplinkSystem.AddUplink(human, originalBalance, out var notes, pda, true);
 
             Assert.That(notes != null);
-            ringerSystem.TryMatchRingtoneToStore(notes, out var storeEnt);
+            ringerSystem.TryMatchRingtoneToStore(notes!, out var storeEnt);
             Assert.That(storeEnt.HasValue);
-            var storeComponent = entManager.GetComponent<StoreComponent>(storeEnt.Value);
-            var discountComponent = entManager.GetComponent<StoreDiscountComponent>(storeEnt.Value);
+            var storeComponent = SEntMan.GetComponent<StoreComponent>(storeEnt.Value);
+            var discountComponent = SEntMan.GetComponent<StoreDiscountComponent>(storeEnt.Value);
             Assert.That(
                 discountComponent.Discounts,
                 Has.Exactly(6).Items,
@@ -108,8 +88,7 @@ public sealed class StoreTests : GameTest
             );
             var discountedListingItems = storeComponent.FullListingsCatalog
                                                        .Where(x => x.IsCostModified)
-                                                       .OrderBy(x => x.ID)
-                                                       .ToArray();
+                                                       .OrderBy(x => x.ID);
             Assert.That(discountComponent.Discounts
                                          .Select(x => x.ListingId.Id),
                 Is.EquivalentTo(discountedListingItems.Select(x => x.ID)),
@@ -120,9 +99,7 @@ public sealed class StoreTests : GameTest
 
             // The storeComponent returns discounted items with conditions randomly, so we remove these to sanitize the data.
             foreach (var discountedItem in discountedListingItems)
-            {
                 discountedItem.Conditions = null;
-            }
 
             // Refund action requests re-generation of listing items so we will be re-acquiring items from component a lot of times.
             var itemIds = discountedListingItems.Select(x => x.ID);
@@ -143,8 +120,8 @@ public sealed class StoreTests : GameTest
                     Assert.That(plainDiscountedCost.Value, Is.LessThan(prototypeCost.Value), "Expected discounted cost to be lower then prototype cost.");
 
 
-                    var buyMsg = new StoreBuyListingMessage(discountedListingItem.ID, null){Actor = human};
-                    server.EntMan.EventBus.RaiseLocalEvent(storeEnt.Value, buyMsg);
+                    var buyMsg = new StoreBuyListingMessage(discountedListingItem.ID, null) { Actor = human };
+                    SEntMan.EventBus.RaiseLocalEvent(storeEnt.Value, buyMsg);
 
                     var newBalance = storeComponent.Balance[UplinkSystem.TelecrystalCurrencyPrototype];
                     Assert.That(newBalance.Value, Is.EqualTo((originalBalance - plainDiscountedCost).Value), "Expected to have balance reduced by discounted cost");
@@ -157,7 +134,7 @@ public sealed class StoreTests : GameTest
                     Assert.That(costAfterBuy.Value, Is.EqualTo(prototypeCost.Value), "Expected cost after discount refund to be equal to prototype cost.");
 
                     var refundMsg = new StoreRequestRefundMessage { Actor = human };
-                    server.EntMan.EventBus.RaiseLocalEvent(storeEnt.Value, refundMsg);
+                    SEntMan.EventBus.RaiseLocalEvent(storeEnt.Value, refundMsg);
 
                     // get refreshed item after refund re-generated items
                     discountedListingItem = storeComponent.FullListingsCatalog.First(x => x.ID == itemId);

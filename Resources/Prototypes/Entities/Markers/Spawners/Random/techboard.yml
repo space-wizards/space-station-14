@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: RandomBoard
   name: random board spawner
   parent: MarkerBase

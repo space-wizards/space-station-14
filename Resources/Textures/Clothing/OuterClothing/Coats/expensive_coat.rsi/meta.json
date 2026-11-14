@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/cae6017c486dbadef2b2d86ddc58d7226c17597c/icons/mob/clothing/suit.dmi, https://github.com/ParadiseSS13/Paradise/blob/cab0fa52972c777ec3929cc2e03a74088349486f/icons/obj/clothing/suits.dmi, closed states by SonicHDC",
+  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/cae6017c486dbadef2b2d86ddc58d7226c17597c/icons/mob/clothing/suit.dmi, https://github.com/ParadiseSS13/Paradise/blob/cab0fa52972c777ec3929cc2e03a74088349486f/icons/obj/clothing/suits.dmi, closed states by SonicHDC, Inhands by Prole0 (GitHub)",
   "size": {
     "x": 32,
     "y": 32
@@ -28,6 +28,22 @@
     },
     {
       "name": "icon-open"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "open-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "open-inhand-right",
+      "directions": 4
     }
   ]
 }

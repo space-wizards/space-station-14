@@ -1,13 +1,14 @@
 using System.Linq;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
+using Content.Shared.Research.Components;
 using Content.Shared.Stacks;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Shared.Research.Components;
 
 namespace Content.Shared.Materials;
 
@@ -19,7 +20,6 @@ public abstract partial class SharedMaterialStorageSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
     /// <summary>
@@ -371,7 +371,7 @@ public abstract partial class SharedMaterialStorageSystem : EntitySystem
         insertingComp.EndTime = _timing.CurTime + storage.InsertionTime;
         if (!storage.IgnoreColor)
         {
-            _prototype.TryIndex<MaterialPrototype>(composition.MaterialComposition.Keys.First(), out var lastMat);
+            ProtoMan.TryIndex<MaterialPrototype>(composition.MaterialComposition.Keys.First(), out var lastMat);
             insertingComp.MaterialColor = lastMat?.Color;
         }
         _appearance.SetData(receiver, MaterialStorageVisuals.Inserting, true);
@@ -380,6 +380,55 @@ public abstract partial class SharedMaterialStorageSystem : EntitySystem
         var ev = new MaterialEntityInsertedEvent(material);
         RaiseLocalEvent(receiver, ref ev);
         return true;
+    }
+
+    /// <inheritdoc cref="SpawnMultipleFromMaterial(int, MaterialPrototype, EntityCoordinates, out int)"/>
+    [PublicAPI]
+    public List<EntityUid> SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates)
+    {
+        return SpawnMultipleFromMaterial(amount, material, coordinates, out _);
+    }
+
+    /// <inheritdoc cref="SpawnMultipleFromMaterial(int, MaterialPrototype, EntityCoordinates, out int)"/>
+    [PublicAPI]
+    public List<EntityUid> SpawnMultipleFromMaterial(int amount,
+        string material,
+        EntityCoordinates coordinates,
+        out int overflowMaterial)
+    {
+        overflowMaterial = 0;
+        if (!ProtoMan.TryIndex<MaterialPrototype>(material, out var stackType))
+        {
+            Log.Error("Failed to index material prototype " + material);
+            return [];
+        }
+
+        return SpawnMultipleFromMaterial(amount, stackType, coordinates, out overflowMaterial);
+    }
+
+    /// <inheritdoc cref="SpawnMultipleFromMaterial(int, MaterialPrototype, EntityCoordinates, out int)"/>
+    [PublicAPI]
+    public List<EntityUid> SpawnMultipleFromMaterial(int amount,
+        MaterialPrototype materialProto,
+        EntityCoordinates coordinates)
+    {
+        return SpawnMultipleFromMaterial(amount, materialProto, coordinates, out _);
+    }
+
+    /// <summary>
+    /// Spawn an amount of a material in stack entities.
+    /// Note the 'amount' is material dependent.
+    /// 1 biomass = 1 biomass in its stack,
+    /// but 100 plasma = 1 sheet of plasma, etc.
+    /// </summary>
+    [PublicAPI]
+    public virtual List<EntityUid> SpawnMultipleFromMaterial(int amount,
+        MaterialPrototype materialProto,
+        EntityCoordinates coordinates,
+        out int overflowMaterial)
+    {
+        overflowMaterial = 0;
+        return [];
     }
 
     /// <summary>
@@ -415,9 +464,9 @@ public abstract partial class SharedMaterialStorageSystem : EntitySystem
         if (material.StackEntity == null)
             return DefaultSheetVolume;
 
-        var proto = _prototype.Index<EntityPrototype>(material.StackEntity);
+        var proto = ProtoMan.Index<EntityPrototype>(material.StackEntity);
 
-        if (!proto.TryGetComponent<PhysicalCompositionComponent>(out var composition, EntityManager.ComponentFactory))
+        if (!proto.TryComp<PhysicalCompositionComponent>(out var composition, EntityManager.ComponentFactory))
             return DefaultSheetVolume;
 
         return composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == material.ID).Value;

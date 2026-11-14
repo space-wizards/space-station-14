@@ -93,6 +93,7 @@ guide-entry-defusal = Large Bomb Defusal
 guide-entry-criminal-records = Criminal Records
 guide-entry-command = Command
 guide-entry-service = Service
+guide-entry-civilian = Civilian
 
 guide-entry-newplayer = New? Start here!
 guide-entry-charactercreation = Creating Characters
@@ -144,6 +145,7 @@ guide-entry-space-ninja = Space Ninja
 guide-entry-thieves = Thieves
 guide-entry-wizard = Wizard
 guide-entry-xenoborgs = Xenoborgs
+guide-entry-changelings = Changelings
 
 guide-entry-rules = Server Rules
 guide-entry-rules-core-only = Core Only Ruleset

@@ -41,7 +41,7 @@ public sealed partial class HandheldGrinderComponent : Component
     /// The solution into which the output reagents will go.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string SolutionName = "grinderOutput";
+    public string SolutionName = "solution";
 
     /// <summary>
     /// Cached solution from the grinder.

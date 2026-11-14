@@ -5,9 +5,9 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Nutrition.Components;
 
 /// <summary>
-/// Indicates that the entity can be butchered.
+/// Indicates that the entity can be butchered through use of butcher hook.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedKitchenSpikeSystem))]
 public sealed partial class ButcherableComponent : Component
 {
     /// <summary>
@@ -24,28 +24,4 @@ public sealed partial class ButcherableComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float ButcherDelay = 8.0f;
-
-    /// <summary>
-    /// Tool type used to butcher that entity.
-    /// </summary>
-    [DataField("butcheringType"), AutoNetworkedField]
-    public ButcheringType Type = ButcheringType.Knife;
-}
-
-public enum ButcheringType : byte
-{
-    /// <summary>
-    /// E.g. goliaths.
-    /// </summary>
-    Knife,
-
-    /// <summary>
-    /// E.g. monkeys.
-    /// </summary>
-    Spike,
-
-    /// <summary>
-    /// E.g. humans.
-    /// </summary>
-    Gibber // TODO
 }
