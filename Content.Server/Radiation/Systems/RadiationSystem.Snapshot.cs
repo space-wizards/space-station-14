@@ -143,6 +143,7 @@ public partial class RadiationSystem
         if (_gridSnapshots.Length < capacity)
             _gridSnapshots = new GridSnapshot[capacity];
 
+        var previousCount = _gridCount;
         _gridCount = 0;
         var query = EntityQueryEnumerator<RadiationGridResistanceComponent, MapGridComponent, TransformComponent>();
 
@@ -169,6 +170,9 @@ public partial class RadiationSystem
             _gridSnapshotIndex[uid] = _gridCount;
             _gridCount++;
         }
+
+        if (previousCount > _gridCount)
+            Array.Clear(_gridSnapshots, _gridCount, previousCount - _gridCount);
     }
 
     private void BuildSourceTree()
