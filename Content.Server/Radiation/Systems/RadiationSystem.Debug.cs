@@ -21,16 +21,9 @@ public partial class RadiationSystem
     /// </summary>
     public void ToggleDebugView(ICommonSession session)
     {
-        bool isEnabled;
-        if (_debugSessions.Add(session))
-        {
-            isEnabled = true;
-        }
-        else
-        {
+        var isEnabled = _debugSessions.Add(session);
+        if (!isEnabled)
             _debugSessions.Remove(session);
-            isEnabled = false;
-        }
 
         var ev = new OnRadiationOverlayToggledEvent(isEnabled);
         RaiseNetworkEvent(ev, session.Channel);
@@ -43,11 +36,11 @@ public partial class RadiationSystem
     {
         foreach (var session in _debugSessions)
         {
-            if (session.Status != SessionStatus.InGame)
-                _debugSessions.Remove(session);
-            else
+            if (session.Status == SessionStatus.InGame)
                 RaiseNetworkEvent(ev, session);
         }
+
+        _debugSessions.RemoveWhere(static session => session.Status != SessionStatus.InGame);
     }
 
     private void UpdateResistanceDebugOverlay()

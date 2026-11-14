@@ -4,7 +4,7 @@ using Content.Shared.Radiation.Events;
 using Content.Shared.Radiation.Systems;
 using Content.Shared.Stacks;
 using Robust.Shared.Configuration;
-using Robust.Shared.Map.Components;
+using Robust.Shared.Threading;
 
 namespace Content.Server.Radiation.Systems;
 
@@ -14,13 +14,11 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedStackSystem _stack = default!;
     [Dependency] private SharedMapSystem _maps = default!;
+    [Dependency] private IParallelManager _parallel = default!;
 
     [Dependency] private EntityQuery<RadiationBlockingContainerComponent> _blockerQuery = default!;
-    [Dependency] private EntityQuery<RadiationGridResistanceComponent> _resistanceQuery = default!;
-    [Dependency] private EntityQuery<MapGridComponent> _gridQuery = default!;
 
     private float _accumulator;
-    private List<SourceData> _sources = new();
 
     public override void Initialize()
     {
@@ -37,9 +35,9 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
         if (_accumulator < GridcastUpdateRate)
             return;
 
+        _accumulator = 0f;
         UpdateGridcast();
         UpdateResistanceDebugOverlay();
-        _accumulator = 0f;
     }
 
     public void IrradiateEntity(EntityUid uid, float radsPerSecond, float time, EntityUid? origin = null)
@@ -51,6 +49,8 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
     public void SetSourceEnabled(Entity<RadiationSourceComponent?> entity, bool val)
     {
         if (!Resolve(entity, ref entity.Comp, false))
+            return;
+        if (entity.Comp.Enabled == val)
             return;
 
         entity.Comp.Enabled = val;

@@ -28,8 +28,6 @@ public partial class RadiationSystem
 
     private void OnShutdown(EntityUid uid, RadiationBlockerComponent component, ComponentShutdown args)
     {
-        if (component.Enabled)
-            return;
         RemoveTile(uid, component);
     }
 
@@ -88,8 +86,12 @@ public partial class RadiationSystem
         }
 
         // check if entity even provide some rad protection
-        if (!component.Enabled || component.RadResistance <= 0)
+        if (!component.Enabled ||
+            !float.IsFinite(component.RadResistance) ||
+            component.RadResistance <= 0f)
+        {
             return;
+        }
 
         // check if it's on a grid
         var trs = Transform(uid);
@@ -129,6 +131,10 @@ public partial class RadiationSystem
         {
             newResistance += existingResistance;
         }
+
+        if (!float.IsFinite(newResistance))
+            return;
+
         grid[tilePos] = newResistance;
     }
 
