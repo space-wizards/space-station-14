@@ -73,8 +73,8 @@
   - type: StationEvent
     endAnnouncement: station-event-harmony-extended-announcement
     maxOccurrences: 1
-    endAudio:
-      path: /Audio/_Harmony/Announcements/attention_alt.ogg
+  #  endAudio: Commented out due to causing test fails, needs RT update
+  #    path: /Audio/_Harmony/Announcements/attention_alt.ogg
     duration: 1500 # 25 mins
   - type: EmptyRule
 
