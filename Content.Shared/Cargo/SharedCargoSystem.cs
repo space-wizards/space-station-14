@@ -245,7 +245,7 @@ public abstract partial class SharedCargoSystem : EntitySystem
     public int GetBasketTotalCost(List<CargoOrderItemData> basket)
     {
         var cost = GetBasketCost(basket);
-        var containers = PackBasketIntoContainers(ref basket);
+        var containers = PackBasketIntoContainers(ref basket, true);
         cost += GetContainersCost(containers);
         return cost;
     }
