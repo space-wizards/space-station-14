@@ -131,6 +131,35 @@ namespace Content.Shared.Cargo.Prototypes
         [IdDataField]
         public string ID { get; private set; } = default!;
 
+        [DataField("name")]
+        private LocId? _nameLoc;
+
+        private string _name = string.Empty;
+
+        /// <summary>
+        ///     Product name.
+        /// </summary>
+        [ViewVariables]
+        public string Name
+        {
+            get
+            {
+                if (_name.Trim().Length != 0)
+                    return _name;
+
+                if (_nameLoc is { } nameLoc)
+                {
+                    _name = Loc.GetString(nameLoc);
+                }
+                else if (IoCManager.Resolve<IPrototypeManager>().Resolve(Entity, out var prototype))
+                {
+                    _name = prototype.Name;
+                }
+
+                return _name;
+            }
+        }
+
         /// <summary>
         /// What entity to spawn as the container.
         /// </summary>

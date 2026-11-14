@@ -552,8 +552,10 @@ public sealed partial class CargoSystem
             _transform.Unanchor(containerEntity, Transform(containerEntity));
             return true;
         }
+        if (!ProtoMan.Resolve(container.Container, out var cratePrototype))
+            return false;
 
-        containerEntity = Spawn(container.Container, spawn);
+        containerEntity = Spawn(cratePrototype.Entity, spawn);
         if (!containerEntity.IsValid())
             return false;
 
@@ -564,7 +566,7 @@ public sealed partial class CargoSystem
             if (!ProtoMan.Resolve(item.Source.Product, out var productProto))
                 continue;
 
-            if (container.Container == null || !_container.TryGetContainer(containerEntity, container.ContainerID!, out var slot))
+            if (container.Container == null || !_container.TryGetContainer(containerEntity, cratePrototype.ContainerId!, out var slot))
             {
                 DebugTools.Assert(
                     false,

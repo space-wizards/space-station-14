@@ -509,6 +509,20 @@ namespace Content.Client.Cargo.UI
                     control.AddChild(subRow);
                     continue;
                 }
+                if (!_protoManager.Resolve(container.Container, out var cratePrototype))
+                    continue;
+
+                var quantity = 1;
+                var crateSubRow = new CargoOrderSubRow
+                {
+                    Separator = { MinWidth = 0 },
+                    Icon = { Texture = _spriteSystem.Frame0(cratePrototype.Icon) },
+                    ProductName = { Text = cratePrototype.Name },
+                    Amount = { Text = $"x{quantity}" },
+                    PointCost = { Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", (cratePrototype.Cost * quantity).ToString())) },
+                };
+                control.AddChild(crateSubRow);
+
                 foreach (var item in container.Products)
                 {
                     if (!_protoManager.Resolve(item.Source.Product, out var prototype))

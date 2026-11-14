@@ -233,7 +233,14 @@ public abstract partial class SharedCargoSystem : EntitySystem
 
     public int GetContainersCost(List<CargoOrderContainerData> containers)
     {
-        return containers.Sum(container => container.Cost);
+        var total = 0;
+        foreach (var container in containers)
+        {
+            if (!ProtoMan.Resolve(container.Container, out var prototype))
+                continue;
+            total += prototype.Cost;
+        }
+        return total;
     }
     public int GetBasketTotalCost(List<CargoOrderItemData> basket)
     {
@@ -259,7 +266,7 @@ public abstract partial class SharedCargoSystem : EntitySystem
             {
                 for (int i = 0; i < item.Quantity - item.NumOrdered; i++)
                 {
-                    containers.Add(new CargoOrderContainerData(null, null, item));
+                    containers.Add(new CargoOrderContainerData(null, item));
                 }
                 continue;
             }
@@ -274,16 +281,14 @@ public abstract partial class SharedCargoSystem : EntitySystem
         var parcel = (ProtoId<CargoCratePrototype>)"WrappedParcel";
         foreach (var container in containers)
         {
+            if (!ProtoMan.Resolve(container.Container, out var prototype))
+                continue;
             if (
                 !container.IsSingleProduct
                 && GetContainerItemCount(container) == 1
-                && !container.CrateRequired
-                && ProtoMan.Resolve<CargoCratePrototype>(parcel, out var parcelProto))
+                && !prototype.Required)
             {
-                container.Container = parcelProto.Entity;
-                container.ContainerID = parcelProto.ContainerId;
-                container.Cost = parcelProto.Cost;
-                container.MaxItems = parcelProto.MaxItems;
+                container.Container = parcel;
             }
         }
 
@@ -309,11 +314,14 @@ public abstract partial class SharedCargoSystem : EntitySystem
             if (remaining <= 0)
                 break;
 
+            if (!ProtoMan.Resolve(container.Container, out var prototype))
+                continue;
+
             if (!CanFitInContainer(container, item, crate))
                 continue;
 
             var fitting =
-                Math.Min(remaining, container.MaxItems - GetContainerItemCount(container)) / GetItemEntityCount(item);
+                Math.Min(remaining, prototype.MaxItems - GetContainerItemCount(container)) / GetItemEntityCount(item);
             container.Products.Add(new CargoOrderContainerSlot(item, fitting));
             remaining -= fitting * GetItemEntityCount(item);
         }
@@ -322,13 +330,7 @@ public abstract partial class SharedCargoSystem : EntitySystem
         while (remaining > 0)
         {
             var batch = Math.Min(remaining, crate.MaxItems) / GetItemEntityCount(item);
-            var container = new CargoOrderContainerData(
-                crate.Entity,
-                crate.ContainerId,
-                crateRequired: crate.Required,
-                maxItems: crate.MaxItems,
-                cost: crate.Cost
-            );
+            var container = new CargoOrderContainerData(crate.ID);
             container.Products.Add(new CargoOrderContainerSlot(item, batch));
             containers.Add(container);
             remaining -= batch * GetItemEntityCount(item);
@@ -341,12 +343,13 @@ public abstract partial class SharedCargoSystem : EntitySystem
         CargoCratePrototype crate
     )
     {
-        if (!ProtoMan.TryIndex<CargoProductPrototype>(item.Product, out var proto))
+        if (!ProtoMan.Resolve(container.Container, out var prototype))
             return false;
+
         return container.Container != null
             && container.Container == crate.Entity
-            && GetContainerItemCount(container) <= container.MaxItems - item.Quantity * GetItemEntityCount(item)
-            && container.CrateRequired == crate.Required;
+            && GetContainerItemCount(container) <= prototype.MaxItems - item.Quantity * GetItemEntityCount(item)
+            && prototype.Required == crate.Required;
     }
 
     public int GetContainerItemCount(CargoOrderContainerData container)

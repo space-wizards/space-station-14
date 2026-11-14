@@ -11,18 +11,7 @@ public sealed partial class CargoOrderContainerData
     /// The ID of the cargo crate of the container.
     /// </summary>
     [DataField]
-    public EntProtoId? Container;
-
-    /// <summary>
-    /// The ID of the component which entities are inserted
-    /// </summary>
-    public string? ContainerID;
-
-    /// <summary>
-    /// The max amount of items which can be spawned inside this container
-    /// </summary>
-    [DataField]
-    public int MaxItems;
+    public ProtoId<CargoCratePrototype>? Container;
 
     /// <summary>
     /// The list of items which will be spawn in this container
@@ -47,26 +36,12 @@ public sealed partial class CargoOrderContainerData
     /// </summary>
     public bool IsSingleProduct = false;
 
-    /// <summary>
-    /// Wheter or not the items must spawn in a crate an will not spawn in a parcel
-    /// </summary>
-    public bool CrateRequired = false;
-    public int Cost;
-
     public CargoOrderContainerData(
-        EntProtoId? container,
-        string? containerID,
-        CargoOrderItemData? item = null,
-        bool crateRequired = false,
-        int maxItems = 30,
-        int cost = 0
+        ProtoId<CargoCratePrototype>? container,
+        CargoOrderItemData? item = null
     )
     {
         Container = container;
-        ContainerID = containerID;
-        CrateRequired = crateRequired;
-        MaxItems = maxItems;
-        Cost = cost;
         // Item should only be null if only item in container and will not be spawned in a container
         if (item != null)
         {
