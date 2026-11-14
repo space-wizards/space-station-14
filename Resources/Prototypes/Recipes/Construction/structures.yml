@@ -184,6 +184,12 @@
 
 - type: construction
   parent: BaseWindowDiagonal
+  id: ShuttleWindowDiagonal
+  name: construction-recipe-shuttle-window-diagonal
+  targetNode: shuttleWindowDiagonal
+
+- type: construction
+  parent: BaseWindowDiagonal
   id: PlasmaWindowDiagonal
   name: construction-recipe-plasma-window-diagonal
   targetNode: plasmaWindowDiagonal
@@ -215,6 +221,42 @@
   id: ReinforcedUraniumWindowDiagonal
   name: construction-recipe-reinforced-uranium-window-diagonal
   targetNode: reinforcedUraniumWindowDiagonal
+
+- type: construction
+  parent: WindowDirectional
+  id: UraniumWindowDirectional
+  targetNode: uraniumWindowDirectional
+
+- type: construction
+  parent: WindowDirectional
+  id: UraniumReinforcedWindowDirectional
+  targetNode: uraniumReinforcedWindowDirectional
+
+- type: construction
+  id: UraniumWindowDirectionalCorner
+  graph: WindowDirectionalCorner
+  startNode: start
+  targetNode: uraniumWindowDirectionalCorner
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  id: UraniumReinforcedWindowDirectionalCorner
+  graph: WindowDirectionalCorner
+  startNode: start
+  targetNode: uraniumReinforcedWindowDirectionalCorner
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
 
 - type: construction
   parent: BaseWindow
