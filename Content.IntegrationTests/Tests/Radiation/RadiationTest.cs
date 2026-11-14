@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.IntegrationTests.Fixtures;
 using Content.Server.Radiation.Components;
 using Content.Server.Radiation.Systems;
+using Content.Shared.Radiation.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -87,6 +88,59 @@ public sealed class RadiationTest : GameTest
 
             server.EntMan.System<RadiationSystem>().SetSourceEnabled(source, false);
             server.EntMan.System<RadiationSystem>().Update(2f);
+        });
+
+        await server.WaitAssertion(() =>
+        {
+            var receiverComp = server.EntMan.GetComponent<RadiationReceiverComponent>(receiver);
+            Assert.That(receiverComp.CurrentRadiation, Is.Zero);
+        });
+    }
+
+    [Test]
+    public async Task InvalidSourceValuesDoNotCrash()
+    {
+        var pair = Pair;
+        var server = pair.Server;
+        var testMap = await pair.CreateTestMap();
+
+        EntityUid source = default;
+        EntityUid receiver = default;
+
+        await server.WaitAssertion(() =>
+        {
+            var entMan = server.EntMan;
+
+            source = entMan.SpawnAtPosition("RadiationTestSource", new EntityCoordinates(testMap.Grid, 0.5f, 0.5f));
+            receiver = entMan.SpawnAtPosition("RadiationTestReceiver", new EntityCoordinates(testMap.Grid, 2.5f, 0.5f));
+
+            var radiation = entMan.System<RadiationSystem>();
+            radiation.SetIntensity(source, float.NaN);
+            radiation.Update(2f);
+        });
+
+        await server.WaitAssertion(() =>
+        {
+            var receiverComp = server.EntMan.GetComponent<RadiationReceiverComponent>(receiver);
+            Assert.That(receiverComp.CurrentRadiation, Is.Zero);
+
+            var radiation = server.EntMan.System<RadiationSystem>();
+            radiation.SetIntensity(source, float.PositiveInfinity);
+            radiation.Update(2f);
+        });
+
+        await server.WaitAssertion(() =>
+        {
+            var receiverComp = server.EntMan.GetComponent<RadiationReceiverComponent>(receiver);
+            Assert.That(receiverComp.CurrentRadiation, Is.Zero);
+
+            var sourceComp = server.EntMan.GetComponent<RadiationSourceComponent>(source);
+            typeof(RadiationSourceComponent).GetField(nameof(RadiationSourceComponent.Slope))!
+                .SetValue(sourceComp, float.NaN);
+
+            var radiation = server.EntMan.System<RadiationSystem>();
+            radiation.SetIntensity(source, 10f);
+            radiation.Update(2f);
         });
 
         await server.WaitAssertion(() =>

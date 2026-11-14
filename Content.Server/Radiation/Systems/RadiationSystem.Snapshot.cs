@@ -30,8 +30,7 @@ public partial class RadiationSystem
         Vector2 LocalPosition,
         Vector2 WorldPosition);
 
-    // Resistance references the live component dictionary. This is safe because the parallel job
-    // runs only while the main thread is blocked in ProcessNow.
+    // Live dictionary; safe only because ProcessNow blocks the main thread for the job.
     private readonly record struct GridSnapshot(
         EntityUid Uid,
         NetEntity NetUid,
@@ -52,14 +51,6 @@ public partial class RadiationSystem
     private readonly Dictionary<EntityUid, int> _gridSnapshotIndex = new();
     private readonly B2DynamicTree<int> _sourceTree = new();
 
-    private void BuildSnapshots(bool saveDebugInfo)
-    {
-        BuildSourceSnapshots(saveDebugInfo);
-        BuildReceiverSnapshots(saveDebugInfo);
-        BuildGridSnapshots(saveDebugInfo);
-        BuildSourceTree();
-    }
-
     private void BuildSourceSnapshots(bool saveDebugInfo)
     {
         var capacity = Count<RadiationSourceComponent>();
@@ -71,18 +62,33 @@ public partial class RadiationSystem
 
         while (query.MoveNext(out var uid, out var source, out var xform))
         {
-            if (!source.Enabled)
+            if (!source.Enabled ||
+                !float.IsFinite(source.Intensity) ||
+                source.Intensity <= 0f ||
+                !float.IsFinite(source.Slope) ||
+                source.Slope < 0f)
+            {
                 continue;
+            }
 
             var worldPosition = _transform.GetWorldPosition(xform);
-            var intensity = source.Intensity * _stack.GetCount(uid);
-            intensity = GetAdjustedRadiationIntensity(uid, intensity);
+            if (!IsSanePosition(worldPosition))
+                continue;
 
-            if (intensity <= 0f)
+            var intensity = source.Intensity * _stack.GetCount(uid);
+            if (!float.IsFinite(intensity) || intensity <= 0f)
+                continue;
+
+            intensity = GetAdjustedRadiationIntensity(uid, intensity);
+            if (!float.IsFinite(intensity) || intensity <= 0f)
                 continue;
 
             var slope = source.Slope;
-            var maxRange = slope > float.Epsilon ? intensity / slope : GridcastMaxDistance;
+            var maxRange = slope > 0f ? intensity / slope : GridcastMaxDistance;
+
+            if (!float.IsFinite(maxRange))
+                maxRange = GridcastMaxDistance;
+
             maxRange = Math.Min(maxRange, GridcastMaxDistance);
 
             _sourceSnapshots[_sourceCount++] = new SourceSnapshot(
@@ -108,9 +114,14 @@ public partial class RadiationSystem
         _receiverCount = 0;
         var query = EntityQueryEnumerator<RadiationReceiverComponent, TransformComponent>();
 
-        while (query.MoveNext(out var uid, out _, out var xform))
+        while (query.MoveNext(out var uid, out var receiver, out var xform))
         {
             var worldPosition = _transform.GetWorldPosition(xform);
+            if (!IsSanePosition(worldPosition))
+            {
+                receiver.CurrentRadiation = 0f;
+                continue;
+            }
 
             _receiverSnapshots[_receiverCount++] = new ReceiverSnapshot(
                 uid,
@@ -131,18 +142,26 @@ public partial class RadiationSystem
         if (_gridSnapshots.Length < capacity)
             _gridSnapshots = new GridSnapshot[capacity];
 
+        var previousCount = _gridCount;
         _gridCount = 0;
         var query = EntityQueryEnumerator<RadiationGridResistanceComponent, MapGridComponent, TransformComponent>();
 
         while (query.MoveNext(out var uid, out var resistance, out var grid, out var xform))
         {
+            if (grid.TileSize == 0)
+                continue;
+
             var worldAABB = TransformBox(grid.LocalAABB, _transform.GetWorldMatrix(xform));
+            var invLocalMatrix = xform.InvLocalMatrix;
+
+            if (!IsSaneBox(worldAABB) || !IsFinite(invLocalMatrix))
+                continue;
 
             _gridSnapshots[_gridCount] = new GridSnapshot(
                 uid,
                 saveDebugInfo ? GetNetEntity(uid) : default,
                 xform.MapID,
-                xform.InvLocalMatrix,
+                invLocalMatrix,
                 grid.TileSize,
                 resistance.ResistancePerTile,
                 worldAABB);
@@ -150,6 +169,9 @@ public partial class RadiationSystem
             _gridSnapshotIndex[uid] = _gridCount;
             _gridCount++;
         }
+
+        if (previousCount > _gridCount)
+            Array.Clear(_gridSnapshots, _gridCount, previousCount - _gridCount);
     }
 
     private void BuildSourceTree()
@@ -164,6 +186,32 @@ public partial class RadiationSystem
             var aabb = Box2.CenteredAround(source.WorldPosition, size);
             _sourceTree.CreateProxy(in aabb, uint.MaxValue, i);
         }
+    }
+
+    private const float MaxSanePosition = PhysicsConstants.Huge - 100f;
+
+    private static bool IsSanePosition(Vector2 value)
+    {
+        return MathF.Abs(value.X) < MaxSanePosition &&
+               MathF.Abs(value.Y) < MaxSanePosition;
+    }
+
+    private static bool IsFinite(Matrix3x2 matrix)
+    {
+        return float.IsFinite(matrix.M11) &&
+               float.IsFinite(matrix.M12) &&
+               float.IsFinite(matrix.M21) &&
+               float.IsFinite(matrix.M22) &&
+               float.IsFinite(matrix.M31) &&
+               float.IsFinite(matrix.M32);
+    }
+
+    private static bool IsSaneBox(Box2 box)
+    {
+        return MathF.Abs(box.Left) < PhysicsConstants.Huge &&
+               MathF.Abs(box.Bottom) < PhysicsConstants.Huge &&
+               MathF.Abs(box.Right) < PhysicsConstants.Huge &&
+               MathF.Abs(box.Top) < PhysicsConstants.Huge;
     }
 
     private static Box2 TransformBox(Box2 box, Matrix3x2 matrix)

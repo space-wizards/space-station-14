@@ -8,22 +8,35 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Radiation.Systems;
 
-// Main algorithm that fires radiation rays at targets.
 public partial class RadiationSystem
 {
     private float[] _results = Array.Empty<float>();
 
     private void UpdateGridcast()
     {
-        // Should we save debug information into rays?
-        // If no debug sessions are connected, ignore it.
         var saveDebugInfo = _debugSessions.Count > 0;
 
         var stopwatch = RStopwatch.StartNew();
 
-        BuildSnapshots(saveDebugInfo);
+        BuildSourceSnapshots(saveDebugInfo);
 
         var sourcesCount = _sourceCount;
+        if (sourcesCount == 0)
+        {
+            var clearedReceivers = ClearRadiation();
+
+            UpdateGridcastDebugOverlay(
+                stopwatch.Elapsed.TotalMilliseconds,
+                sourcesCount,
+                clearedReceivers,
+                null);
+
+            RaiseLocalEvent(new RadiationSystemUpdatedEvent());
+            return;
+        }
+
+        BuildReceiverSnapshots(saveDebugInfo);
+
         var receiversCount = _receiverCount;
         if (receiversCount == 0)
         {
@@ -37,23 +50,13 @@ public partial class RadiationSystem
             return;
         }
 
+        BuildGridSnapshots(saveDebugInfo);
+        BuildSourceTree();
+
         if (_results.Length < receiversCount)
             _results = new float[receiversCount];
 
         Array.Clear(_results, 0, receiversCount);
-
-        if (sourcesCount == 0)
-        {
-            UpdateGridcastDebugOverlay(
-                stopwatch.Elapsed.TotalMilliseconds,
-                sourcesCount,
-                receiversCount,
-                null);
-
-            ApplyRadiation(_results);
-            RaiseLocalEvent(new RadiationSystemUpdatedEvent());
-            return;
-        }
 
         List<DebugRadiationRay>[]? debugRays = null;
         if (saveDebugInfo)
@@ -88,12 +91,32 @@ public partial class RadiationSystem
         return rays;
     }
 
+    private int ClearRadiation()
+    {
+        var count = 0;
+        var query = EntityQueryEnumerator<RadiationReceiverComponent, TransformComponent>();
+
+        while (query.MoveNext(out _, out var receiver, out _))
+        {
+            receiver.CurrentRadiation = 0;
+            count++;
+        }
+
+        return count;
+    }
+
     private void ApplyRadiation(float[] results)
     {
         for (var i = 0; i < _receiverCount; i++)
         {
             ref readonly var receiver = ref _receiverSnapshots[i];
-            var rads = GetAdjustedRadiationIntensity(receiver.Uid, results[i]);
+            results[i] = GetAdjustedRadiationIntensity(receiver.Uid, results[i]);
+        }
+
+        for (var i = 0; i < _receiverCount; i++)
+        {
+            ref readonly var receiver = ref _receiverSnapshots[i];
+            var rads = results[i];
 
             if (!TryComp<RadiationReceiverComponent>(receiver.Uid, out var receiverComp))
                 continue;
@@ -126,7 +149,7 @@ public partial class RadiationSystem
 
             var dist = delta.Length();
             var radsAfterDist = source.Intensity - source.Slope * dist;
-            if (radsAfterDist < MinIntensity)
+            if (!float.IsFinite(radsAfterDist) || radsAfterDist < MinIntensity)
                 continue;
 
             var ray = Irradiate(source, receiver, radsAfterDist, saveVisitedTiles);
@@ -225,7 +248,8 @@ public partial class RadiationSystem
 
         var blockers = saveVisitedTiles ? new List<(Vector2i, float)>() : null;
 
-        // TODO: Assumes grids are parented directly to the map (local matrix == world matrix).
+        // TODO: support grids that are not parented directly to the map;
+        // currently local matrix is assumed to equal world matrix.
         var srcLocal = source.ParentUid == grid.Uid
             ? source.LocalPosition
             : Vector2.Transform(ray.Source, grid.InvLocalMatrix);
@@ -234,13 +258,11 @@ public partial class RadiationSystem
             ? receiver.LocalPosition
             : Vector2.Transform(ray.Destination, grid.InvLocalMatrix);
 
-        Vector2i sourceGrid = new(
-            (int)Math.Floor(srcLocal.X / grid.TileSize),
-            (int)Math.Floor(srcLocal.Y / grid.TileSize));
-
-        Vector2i destGrid = new(
-            (int)Math.Floor(dstLocal.X / grid.TileSize),
-            (int)Math.Floor(dstLocal.Y / grid.TileSize));
+        if (!TryGetTileIndices(srcLocal, grid.TileSize, out var sourceGrid) ||
+            !TryGetTileIndices(dstLocal, grid.TileSize, out var destGrid))
+        {
+            return ray;
+        }
 
         var line = new GridLineEnumerator(sourceGrid, destGrid);
         while (line.MoveNext())
@@ -269,8 +291,30 @@ public partial class RadiationSystem
         return ray;
     }
 
-    // TODO: Nested containers are handled incorrectly: the nearest container is counted repeatedly
-    // and outer containers are ignored. Fixing this changes gameplay and is tracked separately.
+    private static bool TryGetTileIndices(Vector2 local, ushort tileSize, out Vector2i indices)
+    {
+        indices = default;
+
+        if (tileSize == 0)
+            return false;
+
+        var x = local.X / tileSize;
+        var y = local.Y / tileSize;
+
+        if (!float.IsFinite(x) ||
+            !float.IsFinite(y) ||
+            MathF.Abs(x) > PhysicsConstants.Huge ||
+            MathF.Abs(y) > PhysicsConstants.Huge)
+        {
+            return false;
+        }
+
+        indices = new Vector2i((int)MathF.Floor(x), (int)MathF.Floor(y));
+        return true;
+    }
+
+    // TODO: handle nested containers correctly; the nearest container is counted multiple
+    // times and outer containers are ignored.
     private float GetAdjustedRadiationIntensity(EntityUid uid, float rads)
     {
         var child = uid;
@@ -289,7 +333,9 @@ public partial class RadiationSystem
                 continue;
             }
 
-            if (_blockerQuery.TryComp(xform.ParentUid, out var blocker))
+            if (_blockerQuery.TryComp(xform.ParentUid, out var blocker) &&
+                float.IsFinite(blocker.RadResistance) &&
+                blocker.RadResistance > 0f)
             {
                 rads -= blocker.RadResistance;
                 if (rads < 0)
