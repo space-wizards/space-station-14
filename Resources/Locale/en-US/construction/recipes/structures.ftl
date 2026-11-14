@@ -6,6 +6,7 @@ construction-recipe-plasma-window-diagonal = plasma window (diagonal)
 construction-recipe-reinforced-plasma-window-diagonal = reinforced plasma window (diagonal)
 construction-recipe-uranium-window-diagonal = uranium window (diagonal)
 construction-recipe-reinforced-uranium-window-diagonal = reinforced uranium window (diagonal)
+construction-recipe-shuttle-window-diagonal = shuttle window (diagonal)
 construction-recipe-firelock-edge = directional firelock
 construction-recipe-fence-metal-corner = chain link fence corner
 construction-recipe-fence-metal-end = chain link fence end
