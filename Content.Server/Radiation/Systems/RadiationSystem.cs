@@ -35,9 +35,9 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
         if (_accumulator < GridcastUpdateRate)
             return;
 
+        _accumulator = 0f;
         UpdateGridcast();
         UpdateResistanceDebugOverlay();
-        _accumulator = 0f;
     }
 
     public void IrradiateEntity(EntityUid uid, float radsPerSecond, float time, EntityUid? origin = null)
