@@ -54,8 +54,6 @@ public sealed partial class CargoSystem : SharedCargoSystem
     [Dependency] private EntityQuery<StationDataComponent> _stationQuery;
     [Dependency] private EntityQuery<TradeStationComponent> _tradeStationQuery;
 
-    private List<EntityUid> _listEnts = new();
-
     public override void Initialize()
     {
         base.Initialize();
