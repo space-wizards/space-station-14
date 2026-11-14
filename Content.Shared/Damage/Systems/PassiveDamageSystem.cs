@@ -52,7 +52,7 @@ public sealed partial class PassiveDamageSystem : EntitySystem
                 continue;
             
             // Prevents damage if PauseWhenContained bool is true and entity is inside a container
-            if (comp.PauseWhenStored && _container.TryGetContainingContainer(uid, out _)) 
+            if (comp.PauseWhenStored && _container.IsEntityOrParentInContainer(uid))
                 continue;
 
             // Set the next time they can take damage
