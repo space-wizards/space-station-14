@@ -28,8 +28,6 @@ public partial class RadiationSystem
 
     private void OnShutdown(EntityUid uid, RadiationBlockerComponent component, ComponentShutdown args)
     {
-        if (component.Enabled)
-            return;
         RemoveTile(uid, component);
     }
 

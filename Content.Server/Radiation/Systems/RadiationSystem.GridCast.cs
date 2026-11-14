@@ -1,10 +1,8 @@
 using System.Numerics;
 using Content.Server.Radiation.Components;
 using Content.Server.Radiation.Events;
-using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
-using Robust.Shared.Collections;
-using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -13,18 +11,6 @@ namespace Content.Server.Radiation.Systems;
 // main algorithm that fire radiation rays to target
 public partial class RadiationSystem
 {
-    private List<Entity<MapGridComponent>> _grids = new();
-
-    private readonly record struct SourceData(
-        float Intensity,
-        Entity<RadiationSourceComponent, TransformComponent> Entity,
-        Vector2 WorldPosition)
-    {
-        public EntityUid? GridUid => Entity.Comp2.GridUid;
-        public float Slope => Entity.Comp1.Slope;
-        public TransformComponent Transform => Entity.Comp2;
-    }
-
     private void UpdateGridcast()
     {
         // should we save debug information into rays?
@@ -34,215 +20,212 @@ public partial class RadiationSystem
         var stopwatch = new Stopwatch();
         stopwatch.Start();
 
-        _sources.Clear();
-        _sources.EnsureCapacity(Count<RadiationSourceComponent>());
+        BuildSnapshots();
 
-        var sources = EntityQueryEnumerator<RadiationSourceComponent, TransformComponent>();
-        var destinations = EntityQueryEnumerator<RadiationReceiverComponent, TransformComponent>();
-
-        while (sources.MoveNext(out var uid, out var source, out var xform))
+        var sourcesCount = _sourceSnapshots.Length;
+        var receiversCount = _receiverSnapshots.Length;
+        if (sourcesCount == 0 || receiversCount == 0)
         {
-            if (!source.Enabled)
-                continue;
+            UpdateGridcastDebugOverlay(
+                stopwatch.Elapsed.TotalMilliseconds,
+                sourcesCount,
+                receiversCount,
+                debug ? new List<DebugRadiationRay>() : null);
 
-            var worldPos = _transform.GetWorldPosition(xform);
-
-            // Intensity is scaled by stack size.
-            var intensity = source.Intensity * _stack.GetCount(uid);
-
-            // Apply rad modifier if the source is enclosed within a radiation blocking container
-            // Note that this also applies to receivers, and it doesn't bother to check if the container sits between them.
-            // I.e., a source & receiver in the same blocking container will get double-blocked, when no blocking should be applied.
-            intensity = GetAdjustedRadiationIntensity(uid, intensity);
-
-            _sources.Add(new(intensity, (uid, source, xform), worldPos));
+            RaiseLocalEvent(new RadiationSystemUpdatedEvent());
+            return;
         }
 
-        var debugRays = debug ? new List<DebugRadiationRay>() : null;
-        var receiversTotalRads = new ValueList<(Entity<RadiationReceiverComponent>, float)>();
+        var results = new float[receiversCount];
 
-        // TODO RADIATION Parallelize
-        // Would need to give receiversTotalRads a fixed size.
-        // Also the _grids list needs to be local to a job. (or better yet cached in SourceData)
-        // And I guess disable parallelization when debugging to make populating the debug List<RadiationRay> easier.
-        // Or just make it threadsafe?
-        while (destinations.MoveNext(out var destUid, out var dest, out var destTrs))
+        if (debug)
         {
-            var destWorld = _transform.GetWorldPosition(destTrs);
+            var debugRays = new List<DebugRadiationRay>();
+            var nearbySources = new int[sourcesCount];
 
-            var rads = 0f;
-            foreach (var source in _sources)
-            {
-                // send ray towards destination entity
-                if (Irradiate(source, destUid, destTrs, destWorld, debug) is not { } ray)
-                    continue;
+            for (var i = 0; i < receiversCount; i++)
+                results[i] = CalculateRadiation(_receiverSnapshots[i], nearbySources, true, debugRays);
 
-                // add rads to total rad exposure
-                if (ray.ReachedDestination)
-                    rads += ray.Rads;
+            UpdateGridcastDebugOverlay(stopwatch.Elapsed.TotalMilliseconds, sourcesCount, receiversCount, debugRays);
+            ApplyRadiation(results);
+        }
+        else
+        {
+            var job = new RadiationJob(this, _receiverSnapshots, results);
+            _parallel.ProcessNow(job, receiversCount);
 
-                if (!debug)
-                    continue;
-
-                debugRays!.Add(new DebugRadiationRay(
-                    ray.MapId,
-                    GetNetEntity(ray.SourceUid),
-                    ray.Source,
-                    GetNetEntity(ray.DestinationUid),
-                    ray.Destination,
-                    ray.Rads,
-                    ray.Blockers ?? new())
-                );
-            }
-
-            // Apply modifier if the destination entity is hidden within a radiation blocking container
-            rads = GetAdjustedRadiationIntensity(destUid, rads);
-
-            receiversTotalRads.Add(((destUid, dest), rads));
+            UpdateGridcastDebugOverlay(stopwatch.Elapsed.TotalMilliseconds, sourcesCount, receiversCount, null);
+            ApplyRadiation(results);
         }
 
-        // update information for debug overlay
-        var elapsedTime = stopwatch.Elapsed.TotalMilliseconds;
-        var totalSources = _sources.Count;
-        var totalReceivers = receiversTotalRads.Count;
-        UpdateGridcastDebugOverlay(elapsedTime, totalSources, totalReceivers, debugRays);
-
-        // send rads to each entity
-        foreach (var (receiver, rads) in receiversTotalRads)
-        {
-            // update radiation value of receiver
-            // if no radiation rays reached target, that will set it to 0
-            receiver.Comp.CurrentRadiation = rads;
-
-            // also send an event with combination of total rad
-            if (rads > 0)
-                IrradiateEntity(receiver, rads, GridcastUpdateRate);
-        }
-
-        // raise broadcast event that radiation system has updated
         RaiseLocalEvent(new RadiationSystemUpdatedEvent());
     }
 
-    private RadiationRay? Irradiate(SourceData source,
-        EntityUid destUid,
-        TransformComponent destTrs,
-        Vector2 destWorld,
-        bool saveVisitedTiles)
+    private void ApplyRadiation(float[] results)
     {
-        // lets first check that source and destination on the same map
-        if (source.Transform.MapID != destTrs.MapID)
-            return null;
-
-        var mapId = destTrs.MapID;
-
-        // get direction from rad source to destination and its distance
-        var dir = destWorld - source.WorldPosition;
-        var dist = dir.Length();
-
-        // check if receiver is too far away
-        if (dist > GridcastMaxDistance)
-            return null;
-
-        // will it even reach destination considering distance penalty
-        var rads = source.Intensity - source.Slope * dist;
-        if (rads < MinIntensity)
-            return null;
-
-        // create a new radiation ray from source to destination
-        // at first we assume that it doesn't hit any radiation blockers
-        // and has only distance penalty
-        var ray = new RadiationRay(mapId, source.Entity, source.WorldPosition, destUid, destWorld, rads);
-
-        // if source and destination on the same grid it's possible that
-        // between them can be another grid (ie. shuttle in center of donut station)
-        // however we can do simplification and ignore that case
-        if (GridcastSimplifiedSameGrid && destTrs.GridUid is { } gridUid && source.GridUid == gridUid)
+        for (var i = 0; i < _receiverSnapshots.Length; i++)
         {
-            if (!_gridQuery.TryGetComponent(gridUid, out var gridComponent))
-                return ray;
-            return Gridcast((gridUid, gridComponent, Transform(gridUid)), ref ray, saveVisitedTiles, source.Transform, destTrs);
+            var receiver = _receiverSnapshots[i];
+            var rads = MathF.Max(0f, results[i] - receiver.Resistance);
+
+            if (!TryComp<RadiationReceiverComponent>(receiver.Uid, out var receiverComp))
+                continue;
+
+            receiverComp.CurrentRadiation = rads;
+
+            if (rads > 0)
+                IrradiateEntity(receiver.Uid, rads, GridcastUpdateRate);
+        }
+    }
+
+    private float CalculateRadiation(
+        in ReceiverSnapshot receiver,
+        int[] nearbySources,
+        bool saveVisitedTiles,
+        List<DebugRadiationRay>? debugRays)
+    {
+        var rads = 0f;
+        var nearbyCount = GetNearbySources(receiver.WorldPosition, nearbySources);
+
+        for (var i = 0; i < nearbyCount; i++)
+        {
+            var source = _sourceSnapshots[nearbySources[i]];
+            if (source.MapId != receiver.MapId)
+                continue;
+
+            var delta = source.WorldPosition - receiver.WorldPosition;
+            if (delta.LengthSquared() > source.MaxRange * source.MaxRange)
+                continue;
+
+            var dist = delta.Length();
+            var radsAfterDist = source.Intensity - source.Slope * dist;
+            if (radsAfterDist < MinIntensity)
+                continue;
+
+            if (Irradiate(source, receiver, radsAfterDist, saveVisitedTiles) is not { } ray)
+                continue;
+
+            if (ray.ReachedDestination)
+                rads += ray.Rads;
+
+            if (saveVisitedTiles && debugRays is not null)
+            {
+                debugRays.Add(new DebugRadiationRay(
+                    ray.MapId,
+                    source.NetUid,
+                    ray.Source,
+                    receiver.NetUid,
+                    ray.Destination,
+                    ray.Rads,
+                    ray.Blockers ?? new()));
+            }
         }
 
-        // lets check how many grids are between source and destination
-        // do a box intersection test between target and destination
-        // it's not very precise, but really cheap
+        return rads;
+    }
 
-        // TODO RADIATION
-        // Consider caching this in SourceData?
-        // I.e., make the lookup for grids as large as the sources's max distance and store the result in SourceData.
-        // Avoids having to do a lookup per source*receiver.
-        var box = Box2.FromTwoPoints(source.WorldPosition, destWorld);
-        _grids.Clear();
-        _maps.FindGridsIntersecting(mapId, box, ref _grids, true);
-
-        // gridcast through each grid and try to hit some radiation blockers
-        // the ray will be updated with each grid that has some blockers
-        foreach (var grid in _grids)
+    private int GetNearbySources(Vector2 position, int[] nearbySources)
+    {
+        var count = _sourceSnapshots.Length;
+        if (count <= SourceTreeThreshold)
         {
-            ray = Gridcast((grid.Owner, grid.Comp, Transform(grid)), ref ray, saveVisitedTiles, source.Transform, destTrs);
+            for (var i = 0; i < count; i++)
+                nearbySources[i] = i;
 
-            // looks like last grid blocked all radiation
-            // we can return right now
+            return count;
+        }
+
+        var state = (nearbySources, 0, _sourceTree);
+
+        _sourceTree.Query(ref state,
+            static (ref (int[] Sources, int Count, B2DynamicTree<int> Tree) state, DynamicTree.Proxy proxy) =>
+            {
+                state.Sources[state.Count++] = state.Tree.GetUserData(proxy);
+                return true;
+            },
+            position);
+
+        return state.Item2;
+    }
+
+    private RadiationRay? Irradiate(
+        in SourceSnapshot source,
+        in ReceiverSnapshot receiver,
+        float rads,
+        bool saveVisitedTiles)
+    {
+        var ray = new RadiationRay(
+            receiver.MapId,
+            source.Uid,
+            source.WorldPosition,
+            receiver.Uid,
+            receiver.WorldPosition,
+            rads);
+
+        if (GridcastSimplifiedSameGrid && receiver.GridUid is { } gridUid && source.GridUid == gridUid)
+        {
+            if (_gridSnapshotIndex.TryGetValue(gridUid, out var index))
+                return Gridcast(_gridSnapshots[index], ref ray, saveVisitedTiles, source, receiver);
+
+            return ray;
+        }
+
+        var box = Box2.FromTwoPoints(source.WorldPosition, receiver.WorldPosition);
+
+        foreach (var grid in _gridSnapshots)
+        {
+            if (grid.MapId != receiver.MapId || !grid.WorldAABB.Intersects(box))
+                continue;
+
+            ray = Gridcast(grid, ref ray, saveVisitedTiles, source, receiver);
             if (ray.Rads <= 0)
                 return ray;
         }
-
-        _grids.Clear();
 
         return ray;
     }
 
     private RadiationRay Gridcast(
-        Entity<MapGridComponent, TransformComponent> grid,
+        in GridSnapshot grid,
         ref RadiationRay ray,
         bool saveVisitedTiles,
-        TransformComponent sourceTrs,
-        TransformComponent destTrs)
+        in SourceSnapshot source,
+        in ReceiverSnapshot receiver)
     {
+        var resistanceMap = grid.Resistance;
+        if (resistanceMap.Count == 0)
+            return ray;
+
         var blockers = saveVisitedTiles ? new List<(Vector2i, float)>() : null;
 
-        // if grid doesn't have resistance map just apply distance penalty
-        var gridUid = grid.Owner;
-        if (!_resistanceQuery.TryGetComponent(gridUid, out var resistance))
-            return ray;
-        var resistanceMap = resistance.ResistancePerTile;
+        var srcLocal = source.ParentUid == grid.Uid
+            ? source.LocalPosition
+            : Vector2.Transform(ray.Source, grid.InvWorldMatrix);
 
-        // get coordinate of source and destination in grid coordinates
-
-        // TODO Grid overlap. This currently assumes the grid is always parented directly to the map (local matrix == world matrix).
-        // If ever grids are allowed to overlap, this might no longer be true. In that case, this should precompute and cache
-        // inverse world matrices.
-
-        Vector2 srcLocal = sourceTrs.ParentUid == grid.Owner
-            ? sourceTrs.LocalPosition
-            : Vector2.Transform(ray.Source, grid.Comp2.InvLocalMatrix);
-
-        Vector2 dstLocal = destTrs.ParentUid == grid.Owner
-            ? destTrs.LocalPosition
-            : Vector2.Transform(ray.Destination, grid.Comp2.InvLocalMatrix);
+        var dstLocal = receiver.ParentUid == grid.Uid
+            ? receiver.LocalPosition
+            : Vector2.Transform(ray.Destination, grid.InvWorldMatrix);
 
         Vector2i sourceGrid = new(
-            (int)Math.Floor(srcLocal.X / grid.Comp1.TileSize),
-            (int)Math.Floor(srcLocal.Y / grid.Comp1.TileSize));
+            (int)Math.Floor(srcLocal.X / grid.TileSize),
+            (int)Math.Floor(srcLocal.Y / grid.TileSize));
 
         Vector2i destGrid = new(
-            (int)Math.Floor(dstLocal.X / grid.Comp1.TileSize),
-            (int)Math.Floor(dstLocal.Y / grid.Comp1.TileSize));
+            (int)Math.Floor(dstLocal.X / grid.TileSize),
+            (int)Math.Floor(dstLocal.Y / grid.TileSize));
 
-        // iterate tiles in grid line from source to destination
         var line = new GridLineEnumerator(sourceGrid, destGrid);
         while (line.MoveNext())
         {
             var point = line.Current;
             if (!resistanceMap.TryGetValue(point, out var resData))
                 continue;
+
             ray.Rads -= resData;
 
-            // save data for debug
-            if (saveVisitedTiles)
-                blockers!.Add((point, ray.Rads));
+            if (saveVisitedTiles && blockers is not null)
+                blockers.Add((point, ray.Rads));
 
-            // no intensity left after blocker
             if (ray.Rads <= MinIntensity)
             {
                 ray.Rads = 0;
@@ -250,21 +233,20 @@ public partial class RadiationSystem
             }
         }
 
-        if (!saveVisitedTiles || blockers!.Count <= 0)
+        if (blockers is null || blockers.Count == 0)
             return ray;
 
-        // save data for debug if needed
         ray.Blockers ??= new();
-        ray.Blockers.Add(GetNetEntity(gridUid), blockers);
-
+        ray.Blockers.Add(grid.NetUid, blockers);
         return ray;
     }
 
-    private float GetAdjustedRadiationIntensity(EntityUid uid, float rads)
+    private float GetRadiationResistance(EntityUid uid)
     {
         var child = uid;
         var xform = Transform(uid);
         var parent = xform.ParentUid;
+        var resistance = 0f;
 
         while (parent.IsValid())
         {
@@ -278,17 +260,18 @@ public partial class RadiationSystem
                 continue;
             }
 
-            if (_blockerQuery.TryComp(xform.ParentUid, out var blocker))
-            {
-                rads -= blocker.RadResistance;
-                if (rads < 0)
-                    return 0;
-            }
+            if (_blockerQuery.TryComp(parent, out var blocker))
+                resistance += blocker.RadResistance;
 
             child = parent;
             parent = parentXform.ParentUid;
         }
 
-        return rads;
+        return resistance;
+    }
+
+    private float GetAdjustedRadiationIntensity(EntityUid uid, float rads)
+    {
+        return MathF.Max(0f, rads - GetRadiationResistance(uid));
     }
 }

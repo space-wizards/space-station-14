@@ -43,11 +43,11 @@ public partial class RadiationSystem
     {
         foreach (var session in _debugSessions)
         {
-            if (session.Status != SessionStatus.InGame)
-                _debugSessions.Remove(session);
-            else
+            if (session.Status == SessionStatus.InGame)
                 RaiseNetworkEvent(ev, session);
         }
+
+        _debugSessions.RemoveWhere(static session => session.Status != SessionStatus.InGame);
     }
 
     private void UpdateResistanceDebugOverlay()
