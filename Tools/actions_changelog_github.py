@@ -38,10 +38,13 @@ def get_required_github_env() -> tuple[str, str, str]:
 
 
 def get_most_recent_workflow(
-    sess: requests.Session, github_repository: str, github_run: str
+    sess: requests.Session,
+    github_repository: str,
+    github_run: str,
+    workflow: str | None = None,
 ) -> Any:
     workflow_run = get_current_run(sess, github_repository, github_run)
-    past_runs = get_past_runs(sess, workflow_run)
+    past_runs = get_past_runs(sess, workflow_run, github_repository, workflow)
     for run in past_runs:
         return run
 
@@ -65,16 +68,27 @@ def get_current_run(
     return run
 
 
-def get_past_runs(sess: requests.Session, current_run: Any) -> Iterable[Any]:
+def get_past_runs(
+    sess: requests.Session,
+    current_run: Any,
+    github_repository: str,
+    workflow: str | None = None,
+) -> Iterable[Any]:
     """
     Get all successful workflow runs before our current one.
+
+    If workflow (a workflow file name such as publish.yml) is given, runs of that
+    workflow are returned instead of runs of the current run's own workflow.
     """
     params = {
         "status": "success",
         "created": f"<={current_run['created_at']}",
         "per_page": 100,
     }
-    url = f"{current_run['workflow_url']}/runs"
+    if workflow:
+        url = f"{GITHUB_API_URL}/repos/{github_repository}/actions/workflows/{workflow}/runs"
+    else:
+        url = f"{current_run['workflow_url']}/runs"
 
     while url:
         resp = sess.get(url, params=params)
@@ -102,7 +116,10 @@ def get_past_runs(sess: requests.Session, current_run: Any) -> Iterable[Any]:
 
 
 def get_last_publish_sha(
-    sess: requests.Session, github_repository: str, github_run: str
+    sess: requests.Session,
+    github_repository: str,
+    github_run: str,
+    workflow: str | None = None,
 ) -> str:
     """
     Get the head commit SHA of the most recent successful workflow run.
@@ -110,7 +127,9 @@ def get_last_publish_sha(
     Validates that the found run actually has a head commit id and that the
     value looks like a commit SHA before returning it.
     """
-    most_recent = get_most_recent_workflow(sess, github_repository, github_run)
+    most_recent = get_most_recent_workflow(
+        sess, github_repository, github_run, workflow
+    )
 
     head_commit = most_recent.get("head_commit")
     last_sha = head_commit.get("id") if head_commit else None
