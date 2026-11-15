@@ -43,17 +43,17 @@ public sealed partial class ProfilePreviewSpriteView
         if (previewEntity != null)
         {
             // Special type like borg or AI, do not spawn a human just spawn the entity.
-            PreviewDummy = EntMan.SpawnEntity(previewEntity, MapCoordinates.Nullspace);
+            PreviewDummy = EntMan.Spawn(previewEntity, MapCoordinates.Nullspace);
         }
         else if (humanoid is not null)
         {
             var dummy = _prototypeManager.Index(humanoid.Species).DollPrototype;
-            PreviewDummy = EntMan.SpawnEntity(dummy, MapCoordinates.Nullspace);
+            PreviewDummy = EntMan.Spawn(dummy, MapCoordinates.Nullspace);
             EntMan.System<SharedVisualBodySystem>().ApplyProfileTo(PreviewDummy, humanoid);
         }
         else
         {
-            PreviewDummy = EntMan.SpawnEntity(_prototypeManager.Index(HumanoidCharacterProfile.DefaultSpecies).DollPrototype, MapCoordinates.Nullspace);
+            PreviewDummy = EntMan.Spawn(_prototypeManager.Index(HumanoidCharacterProfile.DefaultSpecies).DollPrototype, MapCoordinates.Nullspace);
         }
 
         if (humanoid != null && jobClothes)
@@ -133,7 +133,7 @@ public sealed partial class ProfilePreviewSpriteView
 
                             if (itemType != string.Empty)
                             {
-                                var item = EntMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
+                                var item = EntMan.Spawn(itemType, MapCoordinates.Nullspace);
                                 inventorySys.TryEquip(PreviewDummy, item, slot.Name, true, true);
                             }
                         }
@@ -148,7 +148,7 @@ public sealed partial class ProfilePreviewSpriteView
 
                             if (itemType != string.Empty)
                             {
-                                var item = EntMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
+                                var item = EntMan.Spawn(itemType, MapCoordinates.Nullspace);
                                 inventorySys.TryEquip(PreviewDummy, item, slot.Name, true, true);
                             }
                         }
@@ -171,7 +171,7 @@ public sealed partial class ProfilePreviewSpriteView
 
             if (itemType != string.Empty)
             {
-                var item = EntMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
+                var item = EntMan.Spawn(itemType, MapCoordinates.Nullspace);
                 inventorySys.TryEquip(PreviewDummy, item, slot.Name, true, true);
             }
         }

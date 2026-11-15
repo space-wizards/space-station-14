@@ -83,10 +83,10 @@ namespace Content.IntegrationTests.Tests.Utility
                 var invalidComponentProto = prototypeManager.Index(InvalidComponentProtoId);
                 var whitelistTestInvalidTagProto = prototypeManager.Index(WhitelistTestInvalidTagProtoId);
 
-                var validComponentUid = sEntities.SpawnEntity(ValidComponentProtoId, mapCoordinates);
-                var whitelistTestValidTagUid = sEntities.SpawnEntity(WhitelistTestValidTagProtoId, mapCoordinates);
-                var invalidComponentUid = sEntities.SpawnEntity(InvalidComponentProtoId, mapCoordinates);
-                var whitelistTestInvalidTagUid = sEntities.SpawnEntity(WhitelistTestInvalidTagProtoId, mapCoordinates);
+                var validComponentUid = sEntities.Spawn(ValidComponentProtoId, mapCoordinates);
+                var whitelistTestValidTagUid = sEntities.Spawn(WhitelistTestValidTagProtoId, mapCoordinates);
+                var invalidComponentUid = sEntities.Spawn(InvalidComponentProtoId, mapCoordinates);
+                var whitelistTestInvalidTagUid = sEntities.Spawn(WhitelistTestInvalidTagProtoId, mapCoordinates);
 
                 // Test instantiated on its own
                 var whitelistInst = new EntityWhitelist
@@ -115,7 +115,7 @@ namespace Content.IntegrationTests.Tests.Utility
                 });
 
                 // Test from serialized
-                var dummy = sEntities.SpawnEntity(WhitelistProtoId, mapCoordinates);
+                var dummy = sEntities.Spawn(WhitelistProtoId, mapCoordinates);
                 var whitelistSer = sEntities.GetComponent<ItemSlotsComponent>(dummy).Slots.Values.First().Whitelist;
                 Assert.That(whitelistSer, Is.Not.Null);
 

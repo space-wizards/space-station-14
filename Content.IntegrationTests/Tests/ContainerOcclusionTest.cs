@@ -49,8 +49,8 @@ namespace Content.IntegrationTests.Tests
             {
                 var pos = new MapCoordinates(Vector2.Zero, map.MapId);
                 var entStorage = serverEntManager.EntitySysManager.GetEntitySystem<EntityStorageSystem>();
-                var container = serverEntManager.SpawnEntity("ContainerOcclusionA", pos);
-                dummy = serverEntManager.SpawnEntity("ContainerOcclusionDummy", pos);
+                var container = serverEntManager.Spawn("ContainerOcclusionA", pos);
+                dummy = serverEntManager.Spawn("ContainerOcclusionDummy", pos);
 
                 entStorage.Insert(dummy, container);
             });
@@ -89,8 +89,8 @@ namespace Content.IntegrationTests.Tests
             {
                 var pos = new MapCoordinates(Vector2.Zero, map.MapId);
                 var entStorage = serverEntManager.EntitySysManager.GetEntitySystem<EntityStorageSystem>();
-                var container = serverEntManager.SpawnEntity("ContainerOcclusionB", pos);
-                dummy = serverEntManager.SpawnEntity("ContainerOcclusionDummy", pos);
+                var container = serverEntManager.Spawn("ContainerOcclusionB", pos);
+                dummy = serverEntManager.Spawn("ContainerOcclusionDummy", pos);
 
                 entStorage.Insert(dummy, container);
             });
@@ -129,9 +129,9 @@ namespace Content.IntegrationTests.Tests
             {
                 var pos = new MapCoordinates(Vector2.Zero, map.MapId);
                 var entStorage = serverEntManager.EntitySysManager.GetEntitySystem<EntityStorageSystem>();
-                var containerA = serverEntManager.SpawnEntity("ContainerOcclusionA", pos);
-                var containerB = serverEntManager.SpawnEntity("ContainerOcclusionB", pos);
-                dummy = serverEntManager.SpawnEntity("ContainerOcclusionDummy", pos);
+                var containerA = serverEntManager.Spawn("ContainerOcclusionA", pos);
+                var containerB = serverEntManager.Spawn("ContainerOcclusionB", pos);
+                dummy = serverEntManager.Spawn("ContainerOcclusionDummy", pos);
 
                 entStorage.Insert(containerB, containerA);
                 entStorage.Insert(dummy, containerB);

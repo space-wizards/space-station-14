@@ -57,7 +57,7 @@ namespace Content.IntegrationTests.Tests.Networking
             {
                 // Spawn dummy component entity.
                 sMapSys.CreateMap(out var map);
-                serverEnt = sEntityManager.SpawnEntity(null, new MapCoordinates(new Vector2(0, 0), map));
+                serverEnt = sEntityManager.Spawn(null, new MapCoordinates(new Vector2(0, 0), map));
                 serverComponent = sEntityManager.AddComponent<PredictionTestComponent>(serverEnt);
             });
 

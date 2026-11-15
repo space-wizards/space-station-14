@@ -48,7 +48,7 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitAssertion(() =>
             {
-                var human = sEntities.SpawnEntity("InventoryStunnableDummy", MapCoordinates.Nullspace);
+                var human = sEntities.Spawn("InventoryStunnableDummy", MapCoordinates.Nullspace);
                 var invSystem = systemMan.GetEntitySystem<InventorySystem>();
 
                 Assert.Multiple(() =>

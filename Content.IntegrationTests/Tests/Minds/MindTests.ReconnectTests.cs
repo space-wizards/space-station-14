@@ -128,7 +128,7 @@ public sealed partial class MindTests
         EntityUid visiting = default;
         await pair.Server.WaitAssertion(() =>
         {
-            visiting = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
+            visiting = entMan.Spawn(null, MapCoordinates.Nullspace);
             mindSys.Visit(mind.Id, visiting);
         });
         await pair.RunTicksSync(5);
