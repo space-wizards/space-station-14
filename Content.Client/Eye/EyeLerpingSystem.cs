@@ -183,13 +183,13 @@ public sealed partial class EyeLerpingSystem : EntitySystem
             : xform.GridUid ?? xform.MapUid;
 
         var rotation = Angle.Zero;
-        if (relative is { } parent && TryComp<TransformComponent>(parent, out var parentXform))
+        if (relative is { } parent && TryComp(parent, out TransformComponent? parentXform))
             rotation = _transform.GetRenderWorldRotation((parent, parentXform));
 
         if (lerpInfo.RotationReference != relative)
         {
             var previousRotation = Angle.Zero;
-            if (lerpInfo.RotationReference is { } previous && TryComp<TransformComponent>(previous, out var previousXform))
+            if (lerpInfo.RotationReference is { } previous && TryComp(previous, out TransformComponent? previousXform))
                 previousRotation = _transform.GetRenderWorldRotation((previous, previousXform));
 
             // InputMover rebases its angles when the movement reference changes.
