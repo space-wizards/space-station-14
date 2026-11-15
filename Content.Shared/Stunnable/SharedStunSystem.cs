@@ -106,7 +106,7 @@ public abstract partial class SharedStunSystem : EntitySystem
     private void OnStunShutdown(Entity<StunnedComponent> ent, ref ComponentShutdown args)
     {
         // This exists so the client can end their funny animation if they're playing one.
-        UpdateCanMove(ent, ent.Comp, args);
+        Blocker.UpdateCanMove(ent);
         Appearance.RemoveData(ent, StunVisuals.SeeingStars);
     }
 

@@ -65,7 +65,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     /// <summary>
     /// Takeths away the action to preform sericulture from the entity.
     /// </summary>
-    private void OnCompRemove(EntityUid uid, SericultureComponent comp, ComponentShutdown args)
+    private void OnCompRemove(EntityUid uid, SericultureComponent comp, ref ComponentShutdown args)
     {
         _actionsSystem.RemoveAction(uid, comp.ActionEntity);
     }

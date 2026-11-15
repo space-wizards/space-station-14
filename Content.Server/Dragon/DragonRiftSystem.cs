@@ -123,7 +123,7 @@ public sealed partial class DragonRiftSystem : EntitySystem
         }
     }
 
-    private void OnShutdown(EntityUid uid, DragonRiftComponent comp, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, DragonRiftComponent comp, ref ComponentShutdown args)
     {
         if (!TryComp<DragonComponent>(comp.Dragon, out var dragon) || dragon.Weakened)
             return;

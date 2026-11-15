@@ -21,7 +21,7 @@ public sealed partial class CuffableSystem : SharedCuffableSystem
         SubscribeLocalEvent<CuffableComponent, ComponentHandleState>(OnCuffableHandleState);
     }
 
-    private void OnCuffableShutdown(EntityUid uid, CuffableComponent component, ComponentShutdown args)
+    private void OnCuffableShutdown(EntityUid uid, CuffableComponent component, ref ComponentShutdown args)
     {
         if (TryComp<SpriteComponent>(uid, out var sprite))
             _sprite.LayerSetVisible((uid, sprite), HumanoidVisualLayers.Handcuffs, false);
