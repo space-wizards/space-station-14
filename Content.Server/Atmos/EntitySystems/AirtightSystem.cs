@@ -158,7 +158,7 @@ namespace Content.Server.Atmos.EntitySystems
         private void OnPowerChanged(Entity<AirtightOnPoweredComponent> ent, ref PowerChangedEvent args)
         {
             if (_airtightQuery.TryComp(ent, out var airtight))
-                _airtightSystem.SetAirblocked((ent.Owner, airtight), args.Powered);
+                SetAirblocked((ent.Owner, airtight), args.Powered);
         }
     }
     /// <summary>
