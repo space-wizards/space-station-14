@@ -1,7 +1,6 @@
 - type: entity
-  abstract: true
   parent: BaseStructure
-  id: BaseGateway
+  id: Gateway
   name: gateway
   description: A mysterious gateway built by unknown hands, it allows for faster than light travel to far-flung locations.
   components:
@@ -10,20 +9,22 @@
     noRot: true
     layers:
     - state: frame
-    - state: portal
-      shader: unshaded
-      map: ["enum.GatewayVisualLayers.Portal"]
     - state: on
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
+      visible: false
+    - state: portal
+      shader: unshaded
+      map: ["portal"]
+      visible: false
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
-      enum.GatewayVisuals.Active:
-        enum.GatewayVisualLayers.Portal:
+      enum.LinkedEntityVisuals.HasAnyLinks:
+        portal:
           True: { visible: true }
           False: { visible: false }
   - type: InteractionOutline
@@ -43,15 +44,19 @@
         - WallLayer
         hard: false
   - type: Appearance
-
-- type: entity
-  parent: BaseGateway
-  id: Gateway
-  components:
-  - type: ActivatableUI
-    key: enum.GatewayUiKey.Key
-  - type: UserInterface
-    interfaces:
-      enum.GatewayUiKey.Key:
-        type: GatewayBoundUserInterface
-  - type: Gateway
+  - type: StationTeleporter
+    portalLayerMap: "portal"
+    autoLinkKey: Nanotrasen
+  - type: Portal
+    randomTeleport: false
+    canTeleportToOtherMaps: true
+  - type: PointLight
+    enabled: true
+    radius: 3
+    energy: 1
+  - type: AmbientSound
+    enabled: true
+    sound:
+      path: /Audio/Ambience/ambi_gateway.ogg
+    range: 5
+    volume: 8

@@ -1,6 +1,5 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
-using Content.Shared.Prototypes;
 using Content.Shared.Weather;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
@@ -12,12 +11,12 @@ namespace Content.Server.Weather.Commands;
 /// Removes all weather except the specified one. If the specified weather does not exist on the map, it adds it.
 /// </summary>
 [AdminCommand(AdminFlags.Fun)]
-public sealed class WeatherSetCommand : LocalizedEntityCommands
+public sealed partial class WeatherSetCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly WeatherSystem _weather = default!;
-    [Dependency] private readonly IComponentFactory _compFactory = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private WeatherSystem _weather = default!;
+    [Dependency] private IComponentFactory _compFactory = default!;
 
     public override string Command => "weatherset";
 
@@ -75,7 +74,7 @@ public sealed class WeatherSetCommand : LocalizedEntityCommands
             var opts = new List<CompletionOption>();
             foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
             {
-                if (!proto.HasComponent<WeatherStatusEffectComponent>(_compFactory))
+                if (!proto.HasComp<WeatherStatusEffectComponent>(_compFactory))
                     continue;
 
                 opts.Add(new CompletionOption(proto.ID, proto.Name));

@@ -36,9 +36,11 @@
     - id: PlushieXeno
     - id: PlushieHampter
     - id: PlushieMoth
-    - id: PlushieArachind
+    - id: PlushieArachnid
     - id: PlushiePenguin
     - id: PlushieVulp
+    - id: PlushieSheep
+    - id: PlushieSpaceSheep
     - !type:GroupSelector
       children:
       - id: PlushieBee

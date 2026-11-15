@@ -27,3 +27,9 @@
   - "/Audio/Weapons/Guns/Hits/energy_metal1.ogg"
   - "/Audio/Weapons/Guns/Hits/energy_metal2.ogg"
 
+- type: soundCollection
+  id: NaniteBulletImpact
+  files:
+  - "/Audio/Weapons/Guns/Hits/nanite_hit1.ogg"
+  - "/Audio/Weapons/Guns/Hits/nanite_hit2.ogg"
+  - "/Audio/Weapons/Guns/Hits/nanite_hit3.ogg"

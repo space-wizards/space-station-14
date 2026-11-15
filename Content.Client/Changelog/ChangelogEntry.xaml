@@ -1,0 +1,8 @@
+<controls:ChangelogEntry
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.Changelog">
+    <BoxContainer Margin="14 1 10 2">
+        <TextureRect Margin="2 4 0 2" Name="Icon" VerticalAlignment="Top" TextureScale="0.5 0.5"></TextureRect>
+        <RichTextLabel Margin="6 0 0 0" Name="Text"></RichTextLabel>
+    </BoxContainer>
+</controls:ChangelogEntry>

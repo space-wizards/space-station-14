@@ -3,19 +3,11 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Sticky.Visualizers;
 
-public sealed class StickyVisualizerSystem : VisualizerSystem<StickyVisualizerComponent>
+public sealed partial class StickyVisualizerSystem : VisualizerSystem<StickyVisualizerComponent>
 {
-    private EntityQuery<SpriteComponent> _spriteQuery;
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _spriteQuery = GetEntityQuery<SpriteComponent>();
-
-        SubscribeLocalEvent<StickyVisualizerComponent, ComponentInit>(OnInit);
-    }
-
+    [SubscribeLocalEvent]
     private void OnInit(Entity<StickyVisualizerComponent> ent, ref ComponentInit args)
     {
         if (!_spriteQuery.TryComp(ent, out var sprite))
@@ -29,7 +21,7 @@ public sealed class StickyVisualizerSystem : VisualizerSystem<StickyVisualizerCo
         if (args.Sprite == null)
             return;
 
-        if (!AppearanceSystem.TryGetData<bool>(uid, StickyVisuals.IsStuck, out var isStuck, args.Component))
+        if (!args.TryGetData<bool>(StickyVisuals.IsStuck, out var isStuck))
             return;
 
         var drawDepth = isStuck ? comp.StuckDrawDepth : comp.OriginalDrawDepth;

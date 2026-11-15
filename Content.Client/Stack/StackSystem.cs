@@ -8,21 +8,19 @@ namespace Content.Client.Stack
 {
     /// <inheritdoc />
     [UsedImplicitly]
-    public sealed class StackSystem : SharedStackSystem
+    public sealed partial class StackSystem : SharedStackSystem
     {
-        [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
-        [Dependency] private readonly ItemCounterSystem _counterSystem = default!;
+        [Dependency] private ItemCounterSystem _counterSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<StackComponent, AppearanceChangeEvent>(OnAppearanceChange);
             Subs.ItemStatus<StackComponent>(ent => new StackStatusControl(ent));
         }
 
         #region Appearance
-
+        [SubscribeLocalEvent]
         private void OnAppearanceChange(Entity<StackComponent> ent, ref AppearanceChangeEvent args)
         {
             var (uid, comp) = ent;
@@ -31,13 +29,13 @@ namespace Content.Client.Stack
                 return;
 
             // Skip processing if no elements in the stack
-            if (!_appearanceSystem.TryGetData<int>(uid, StackVisuals.Actual, out var actual, args.Component))
+            if (!args.TryGetData<int>(StackVisuals.Actual, out var actual))
                 return;
 
-            if (!_appearanceSystem.TryGetData<int>(uid, StackVisuals.MaxCount, out var maxCount, args.Component))
+            if (!args.TryGetData<int>(StackVisuals.MaxCount, out var maxCount))
                 maxCount = comp.LayerStates.Count;
 
-            if (!_appearanceSystem.TryGetData<bool>(uid, StackVisuals.Hide, out var hidden, args.Component))
+            if (!args.TryGetData<bool>(StackVisuals.Hide, out var hidden))
                 hidden = false;
 
             if (comp.LayerFunction != StackLayerFunction.None)
@@ -71,7 +69,7 @@ namespace Content.Client.Stack
         /// <param name="actual">The actual number of items in the stack. Altered depending on the function to run.</param>
         /// <param name="maxCount">The maximum number of items in the stack. Altered depending on the function to run.</param>
         /// <returns>True if a function was applied.</returns>
-        private bool ApplyLayerFunction(Entity<StackComponent> ent, ref int actual, ref int maxCount)
+        public bool ApplyLayerFunction(Entity<StackComponent> ent, ref int actual, ref int maxCount)
         {
             switch (ent.Comp.LayerFunction)
             {

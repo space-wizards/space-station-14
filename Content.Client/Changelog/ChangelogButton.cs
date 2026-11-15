@@ -1,11 +1,11 @@
-﻿using Content.Client.Stylesheets;
+using Content.Client.Stylesheets;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Changelog
 {
-    public sealed class ChangelogButton : Button
+    public sealed partial class ChangelogButton : Button
     {
-        [Dependency] private readonly ChangelogManager _changelogManager = default!;
+        [Dependency] private ChangelogManager _changelogManager = default!;
 
         public ChangelogButton()
         {
@@ -36,12 +36,12 @@ namespace Content.Client.Changelog
             if (_changelogManager.NewChangelogEntries)
             {
                 Text = Loc.GetString("changelog-button-new-entries");
-                StyleClasses.Add(StyleClass.Negative);
+                StyleClasses.Add(StyleClass.Positive);
             }
             else
             {
                 Text = Loc.GetString("changelog-button");
-                StyleClasses.Remove(StyleClass.Negative);
+                StyleClasses.Remove(StyleClass.Positive);
             }
         }
     }

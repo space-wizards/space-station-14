@@ -17,7 +17,7 @@ public sealed partial class PowerGridCheckRuleComponent : Component
     /// Sound to play when power is restored.
     /// </summary>
     [DataField]
-    public SoundSpecifier PowerOnSound = new SoundCollectionSpecifier(DefaultPowerOn, AudioParams.Default.WithVolume(-4f));
+    public SoundSpecifier PowerOnSound = new SoundCollectionSpecifier(DefaultPowerOn, AudioParams.Default.AddVolume(-4f));
 
     /// <summary>
     /// Token source for cancelling the power restoration announcement.
@@ -64,4 +64,13 @@ public sealed partial class PowerGridCheckRuleComponent : Component
     /// </summary>
     [DataField]
     public float FrameTimeAccumulator = 0.0f;
+}
+
+/// <summary>
+/// This component is used to detect when APCs are constructed
+/// while the PowerGridCheckRule is active.
+/// </summary>
+[RegisterComponent]
+public sealed partial class PowerGridCheckNotifyComponent : Component
+{
 }

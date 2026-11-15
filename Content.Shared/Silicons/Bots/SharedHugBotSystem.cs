@@ -1,4 +1,4 @@
-﻿using Content.Shared.Emag.Systems;
+using Content.Shared.Emag.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Silicons.Bots;
@@ -6,9 +6,9 @@ namespace Content.Shared.Silicons.Bots;
 /// <summary>
 /// This system handles HugBots.
 /// </summary>
-public abstract class SharedHugBotSystem : EntitySystem
+public abstract partial class SharedHugBotSystem : EntitySystem
 {
-    [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private EmagSystem _emag = default!;
 
     public override void Initialize()
     {

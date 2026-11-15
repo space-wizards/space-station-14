@@ -5,7 +5,7 @@ namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
 
         public bool SpaceWind { get; private set; }
         public float SpaceWindPressureForceDivisorThrow { get; private set; }

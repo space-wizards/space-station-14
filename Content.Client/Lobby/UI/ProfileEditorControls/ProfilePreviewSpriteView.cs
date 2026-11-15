@@ -8,8 +8,8 @@ namespace Content.Client.Lobby.UI.ProfileEditorControls;
 
 public sealed partial class ProfilePreviewSpriteView : SpriteView
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private ISharedPlayerManager _playerManager = default!;
 
     /// <summary>
     /// Entity used for the profile editor preview

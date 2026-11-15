@@ -90,9 +90,7 @@
         shader: unshaded
       - state: equipped-OUTERCLOTHING-unshaded
         shader: shaded
-      outerClothing-vox:
-      - state: equipped-OUTERCLOTHING-vox
-      - state: equipped-OUTERCLOTHING-unshaded-vox
-        shader: unshaded
-      - state: equipped-OUTERCLOTHING-unshaded-vox
-        shader: shaded
+  - type: Armor
+    modifiers:
+      coefficients:
+        Piercing: 0.99 #1% pierce resist (funni)

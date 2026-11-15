@@ -20,14 +20,15 @@ namespace Content.Client.Guidebook;
 /// <summary>
 ///     This system handles the help-verb and interactions with various client-side entities that are embedded into guidebooks.
 /// </summary>
-public sealed class GuidebookSystem : EntitySystem
+public sealed partial class GuidebookSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly VerbSystem _verbSystem = default!;
-    [Dependency] private readonly RgbLightControllerSystem _rgbLightControllerSystem = default!;
-    [Dependency] private readonly SharedPointLightSystem _pointLightSystem = default!;
-    [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private VerbSystem _verbSystem = default!;
+    [Dependency] private RgbLightControllerSystem _rgbLightControllerSystem = default!;
+    [Dependency] private SharedPointLightSystem _pointLightSystem = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private TagSystem _tags = default!;
 
     public event Action<List<ProtoId<GuideEntryPrototype>>,
         List<ProtoId<GuideEntryPrototype>>?,
@@ -76,7 +77,7 @@ public sealed class GuidebookSystem : EntitySystem
         args.Verbs.Add(new()
         {
             Text = Loc.GetString("guide-help-verb"),
-            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
             Act = () => OnGuidebookOpen?.Invoke(component.Guides, null, null, component.IncludeChildren, component.Guides[0]),
             ClientExclusive = true,
             CloseMenu = true
@@ -106,8 +107,9 @@ public sealed class GuidebookSystem : EntitySystem
         {
             Act = () =>
             {
-                if (Transform(uid).LocalRotation != Angle.Zero)
-                    Transform(uid).LocalRotation -= Angle.FromDegrees(90);
+                var xform = Transform(uid);
+                if (xform.LocalRotation != Angle.Zero)
+                    _xform.SetLocalRotationNoLerp(uid, xform.LocalRotation - Angle.FromDegrees(90), xform);
             },
             Text = Loc.GetString("guidebook-monkey-unspin"),
             Priority = -9999,
@@ -138,7 +140,8 @@ public sealed class GuidebookSystem : EntitySystem
 
     private void OnGuidebookControlsTestActivateInWorld(EntityUid uid, GuidebookControlsTestComponent component, ActivateInWorldEvent args)
     {
-        Transform(uid).LocalRotation += Angle.FromDegrees(90);
+        var xform = Transform(uid);
+        _xform.SetLocalRotationNoLerp(uid, xform.LocalRotation + Angle.FromDegrees(90), xform);
     }
 
     private void OnGuidebookControlsTestInteractHand(EntityUid uid, GuidebookControlsTestComponent component, InteractHandEvent args)

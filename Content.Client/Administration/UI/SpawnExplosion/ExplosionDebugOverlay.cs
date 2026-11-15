@@ -11,10 +11,10 @@ using Robust.Shared.Map.Components;
 namespace Content.Client.Administration.UI.SpawnExplosion;
 
 [UsedImplicitly]
-public sealed class ExplosionDebugOverlay : Overlay
+public sealed partial class ExplosionDebugOverlay : Overlay
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IEyeManager _eyeManager = default!;
 
     public Dictionary<int, List<Vector2i>>? SpaceTiles;
     public Dictionary<EntityUid, Dictionary<int, List<Vector2i>>> Tiles = new();
@@ -113,7 +113,7 @@ public sealed class ExplosionDebugOverlay : Overlay
                 else
                     screenCenter += new Vector2(-8, -8);
 
-                handle.DrawString(_font, screenCenter, Intensity[i].ToString("F2"));
+                handle.DrawString(_font, screenCenter, Intensity[i].ToString("F2"), 1, Color.White, TextOutline.Default);
             }
         }
 
@@ -123,7 +123,7 @@ public sealed class ExplosionDebugOverlay : Overlay
             var worldCenter = Vector2.Transform((epicenter + Vector2Helpers.Half) * tileSize, transform);
             var screenCenter = _eyeManager.WorldToScreen(worldCenter) + new Vector2(-24, -24);
             var text = $"{Intensity[0]:F2}\nΣ={TotalIntensity:F1}\nΔ={Slope:F1}";
-            handle.DrawString(_font, screenCenter, text);
+            handle.DrawString(_font, screenCenter, text, 1, Color.White, TextOutline.Default);
         }
     }
 
@@ -154,7 +154,6 @@ public sealed class ExplosionDebugOverlay : Overlay
         handle.SetTransform(SpaceMatrix);
 
         DrawTiles(handle, gridBounds, SpaceTiles, SpaceTileSize);
-        handle.SetTransform(Matrix3x2.Identity);
     }
 
     private void DrawTiles(

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Revenant.Components;
+using Content.Shared.Revenant.Components;
 
 namespace Content.Shared.Revenant.EntitySystems;
 

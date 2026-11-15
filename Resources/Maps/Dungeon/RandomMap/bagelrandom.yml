@@ -1138,25 +1138,21 @@ entities:
   - uid: 158
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 11.5,5.5
       parent: 1
   - uid: 159
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 11.5,4.5
       parent: 1
   - uid: 160
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 11.5,3.5
       parent: 1
   - uid: 161
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 11.5,2.5
       parent: 1
   - uid: 172
@@ -1182,13 +1178,11 @@ entities:
   - uid: 207
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -0.5,11.5
       parent: 1
   - uid: 208
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -0.5,14.5
       parent: 1
 - proto: HolopadGeneralTheater

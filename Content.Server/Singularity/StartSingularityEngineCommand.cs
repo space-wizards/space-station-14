@@ -4,20 +4,22 @@ using Content.Server.ParticleAccelerator.Components;
 using Content.Server.ParticleAccelerator.EntitySystems;
 using Content.Server.Singularity.Components;
 using Content.Server.Singularity.EntitySystems;
+using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Machines.Components;
 using Content.Shared.Singularity.Components;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Console;
 
 namespace Content.Server.Singularity
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class StartSingularityEngineCommand : LocalizedEntityCommands
+    public sealed partial class StartSingularityEngineCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly EmitterSystem _emitterSystem = default!;
-        [Dependency] private readonly MultipartMachineSystem _multipartSystem = default!;
-        [Dependency] private readonly ParticleAcceleratorSystem  _paSystem = default!;
-        [Dependency] private readonly RadiationCollectorSystem _radCollectorSystem = default!;
+        [Dependency] private ServerNetworkPoweredAmmoProviderSystem _ammoProvider = default!;
+        [Dependency] private MultipartMachineSystem _multipartSystem = default!;
+        [Dependency] private ParticleAcceleratorSystem  _paSystem = default!;
+        [Dependency] private RadiationCollectorSystem _radCollectorSystem = default!;
 
         public override string Command => "startsingularityengine";
 
@@ -31,10 +33,10 @@ namespace Content.Server.Singularity
 
             // Turn on emitters
             var emitterQuery = EntityManager.EntityQueryEnumerator<EmitterComponent>();
-            while (emitterQuery.MoveNext(out var uid, out var emitterComponent))
+            while (emitterQuery.MoveNext(out var uid, out _))
             {
                 //FIXME: This turns on ALL emitters, including APEs. It should only turn on the containment field emitters.
-                _emitterSystem.SwitchOn(uid, emitterComponent);
+                _ammoProvider.SwitchOn(uid);
             }
 
             // Turn on radiation collectors

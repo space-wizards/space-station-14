@@ -144,8 +144,7 @@ namespace Content.Client.Lobby.UI
 
             NameEdit.OnTextChanged += args => { SetName(args.Text); };
             NameEdit.IsValid = args => args.Length <= _maxNameLength;
-            NameRandomize.OnPressed += args => RandomizeName();
-            RandomizeEverythingButton.OnPressed += args => { RandomizeEverything(); };
+            RandomizeUnlockedButton.OnPressed += args => { RandomizeProfile(); };
             WarningLabel.SetMarkup($"[color=red]{Loc.GetString("humanoid-profile-editor-naming-rules-warning")}[/color]");
 
             #endregion Name
@@ -163,6 +162,16 @@ namespace Content.Client.Lobby.UI
             };
 
             #endregion Sex
+
+            #region Voice
+
+            VoiceButton.OnItemSelected += args =>
+            {
+                VoiceButton.SelectId(args.Id);
+                SetVoice(_voices[args.Id]);
+            };
+
+            #endregion
 
             #region Age
 
@@ -256,7 +265,7 @@ namespace Content.Client.Lobby.UI
                 (int)PreferenceUnavailableMode.StayInLobby);
             PreferenceUnavailableButton.AddItem(
                 Loc.GetString("humanoid-profile-editor-preference-unavailable-spawn-as-overflow-button",
-                              ("overflowJob", Loc.GetString(SharedGameTicker.FallbackOverflowJobName))),
+                              ("overflowJob", Loc.GetString(GameTicker.FallbackOverflowJobName))),
                 (int)PreferenceUnavailableMode.SpawnAsOverflow);
 
             PreferenceUnavailableButton.OnItemSelected += args =>
@@ -369,6 +378,7 @@ namespace Content.Client.Lobby.UI
             UpdateNameEdit();
             UpdateFlavorTextEdit();
             UpdateSexControls();
+            UpdateVoiceControls();
             UpdateGenderControls();
             UpdateSkinColor();
             UpdateSpawnPriorityControls();

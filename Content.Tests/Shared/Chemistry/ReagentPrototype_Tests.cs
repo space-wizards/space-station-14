@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using Content.Shared.Chemistry.Reagent;
 using NUnit.Framework;
 using Robust.Shared.IoC;

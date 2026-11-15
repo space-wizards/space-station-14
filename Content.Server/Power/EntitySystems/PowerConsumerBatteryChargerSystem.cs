@@ -1,22 +1,23 @@
-﻿using Content.Server.Power.Components;
+using Content.Server.Power.Components;
 using Content.Shared.Power.Components;
 
 namespace Content.Server.Power.EntitySystems;
 
-public sealed class PowerConsumerBatteryChargerSystem : EntitySystem
+public sealed partial class PowerConsumerBatteryChargerSystem : EntitySystem
 {
-    [Dependency] private readonly BatterySystem _battery = default!;
+    [Dependency] private BatterySystem _battery = null!;
 
     public override void Update(float frameTime)
     {
-        var query = EntityQueryEnumerator<PowerConsumerBatteryChargerComponent, PowerConsumerComponent, BatteryComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<PowerConsumerComponent, PowerConsumerBatteryChargerComponent, BatteryComponent, TransformComponent>();
 
-        while (query.MoveNext(out var entity, out _, out var powerConsumerComp, out var battery, out var transform))
+        while (query.MoveNext(out var uid, out var powerConsumer, out var batteryCharger, out _, out var transformComp))
         {
-            if (!transform.Anchored)
+            if (!transformComp.Anchored)
                 continue;
 
-            _battery.ChangeCharge((entity, battery), powerConsumerComp.NetworkLoad.ReceivingPower * frameTime);
+            var powerConsumed = powerConsumer.ReceivedPower * frameTime;
+            _battery.ChangeCharge(uid, powerConsumed * batteryCharger.Efficiency);
         }
     }
 }

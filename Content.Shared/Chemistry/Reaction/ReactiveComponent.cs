@@ -1,7 +1,6 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.Reaction;
 
@@ -11,32 +10,29 @@ public sealed partial class ReactiveComponent : Component
     /// <summary>
     ///     A dictionary of reactive groups -> methods that work on them.
     /// </summary>
-    [DataField("groups", readOnly: true, serverOnly: true,
-        customTypeSerializer:
-        typeof(PrototypeIdDictionarySerializer<HashSet<ReactionMethod>, ReactiveGroupPrototype>))]
-    public Dictionary<string, HashSet<ReactionMethod>>? ReactiveGroups;
+    [DataField("groups")]
+    public Dictionary<ProtoId<ReactiveGroupPrototype>, HashSet<ReactionMethod>>? ReactiveGroups;
 
     /// <summary>
     ///     Special reactions that this prototype can specify, outside of any that reagents already apply.
     ///     Useful for things like monkey cubes, which have a really prototype-specific effect.
     /// </summary>
-    [DataField("reactions", true, serverOnly: true)]
+    [DataField]
     public List<ReactiveReagentEffectEntry>? Reactions;
 }
 
 [DataDefinition]
 public sealed partial class ReactiveReagentEffectEntry
 {
-    [DataField("methods")]
+    [DataField]
     public HashSet<ReactionMethod> Methods = default!;
 
-    [DataField("reagents", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<ReagentPrototype>))]
-    public HashSet<string>? Reagents = null;
+    [DataField]
+    public HashSet<ProtoId<ReagentPrototype>>? Reagents;
 
-    [DataField("effects", required: true)]
+    [DataField(required: true)]
     public EntityEffect[] Effects = default!;
 
-    [DataField("groups", readOnly: true, serverOnly: true,
-        customTypeSerializer:typeof(PrototypeIdDictionarySerializer<HashSet<ReactionMethod>, ReactiveGroupPrototype>))]
-    public Dictionary<string, HashSet<ReactionMethod>>? ReactiveGroups { get; private set; }
+    [DataField("groups")]
+    public Dictionary<ProtoId<ReactiveGroupPrototype>, HashSet<ReactionMethod>>? ReactiveGroups { get; private set; }
 }

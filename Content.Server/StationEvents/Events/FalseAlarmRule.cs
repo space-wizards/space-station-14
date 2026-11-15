@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using JetBrains.Annotations;
@@ -6,14 +6,18 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
+/// <summary>
+/// Handler for events that mimic another event with a false announcement.
+/// </summary>
+/// <seealso cref="FalseAlarmRuleComponent"/>
 [UsedImplicitly]
-public sealed class FalseAlarmRule : StationEventSystem<FalseAlarmRuleComponent>
+public sealed partial class FalseAlarmRule : StationEventSystem<FalseAlarmRuleComponent>
 {
-    [Dependency] private readonly EventManagerSystem _event = default!;
+    [Dependency] private EventManagerSystem _event = default!;
 
-    protected override void Started(EntityUid uid, FalseAlarmRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    protected override void Started(Entity<FalseAlarmRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
-        if (!TryComp<StationEventComponent>(uid, out var stationEvent))
+        if (!TryComp<StationEventComponent>(ent, out var stationEvent))
             return;
 
         var allEv = _event.AllEvents().Select(p => p.Value).ToList();
@@ -23,6 +27,6 @@ public sealed class FalseAlarmRule : StationEventSystem<FalseAlarmRuleComponent>
         stationEvent.StartAudio = picked.StartAudio;
         stationEvent.StartAnnouncementColor = picked.StartAnnouncementColor;
 
-        base.Started(uid, component, gameRule, args);
+        base.Started(ent, ref args);
     }
 }

@@ -8,11 +8,11 @@ namespace Content.Server.Tesla.EntitySystems;
 /// <summary>
 /// Fires electric arcs at surrounding objects.
 /// </summary>
-public sealed class LightningArcShooterSystem : EntitySystem
+public sealed partial class LightningArcShooterSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly LightningSystem _lightning = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private LightningSystem _lightning = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -22,7 +22,10 @@ public sealed class LightningArcShooterSystem : EntitySystem
 
     private void OnShooterMapInit(EntityUid uid, LightningArcShooterComponent component, ref MapInitEvent args)
     {
-        component.NextShootTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.ShootMaxInterval);
+        if (component.Instant)
+            component.NextShootTime = _gameTiming.CurTime;
+        else
+            component.NextShootTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.ShootMaxInterval);
     }
 
     public override void Update(float frameTime)

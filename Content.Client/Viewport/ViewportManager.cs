@@ -8,9 +8,9 @@ namespace Content.Client.Viewport
     ///     Event proxy for <see cref="MainViewport"/> to listen to config events.
     /// </summary>
     // ReSharper disable once ClassNeverInstantiated.Global
-    public sealed class ViewportManager
+    public sealed partial class ViewportManager
     {
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
 
         private readonly List<MainViewport> _viewports = new();
 

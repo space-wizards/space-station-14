@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: BaseObjective
   id: BaseParadoxCloneObjective
@@ -6,7 +6,7 @@
   - type: Objective
     # required but not used
     difficulty: 1
-    issuer: objective-issuer-paradox
+    issuer: Paradox
   - type: RoleRequirement
     roles:
     - ParadoxCloneRole

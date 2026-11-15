@@ -16,8 +16,8 @@ namespace Content.Client.Construction.UI;
 [GenerateTypedNameReferences]
 public sealed partial class FlatpackCreatorMenu : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     private readonly ItemSlotsSystem _itemSlots;
     private readonly FlatpackSystem _flatpack;

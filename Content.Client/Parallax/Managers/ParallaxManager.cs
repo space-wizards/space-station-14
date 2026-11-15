@@ -8,11 +8,11 @@ using Robust.Shared.Configuration;
 
 namespace Content.Client.Parallax.Managers;
 
-public sealed class ParallaxManager : IParallaxManager
+public sealed partial class ParallaxManager : IParallaxManager
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-    [Dependency] private readonly IDependencyCollection _deps = null!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IConfigurationManager _configurationManager = default!;
+    [Dependency] private IDependencyCollection _deps = null!;
 
     private ISawmill _sawmill = Logger.GetSawmill("parallax");
 

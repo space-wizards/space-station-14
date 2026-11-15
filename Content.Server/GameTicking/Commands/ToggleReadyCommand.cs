@@ -1,12 +1,13 @@
 using Content.Shared.Administration;
+using Content.Shared.GameTicking;
 using Robust.Shared.Console;
 
 namespace Content.Server.GameTicking.Commands;
 
 [AnyCommand]
-public sealed class ToggleReadyCommand : LocalizedEntityCommands
+public sealed partial class ToggleReadyCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private ServerGameTicker _gameTicker = default!;
 
     public override string Command => "toggleready";
 

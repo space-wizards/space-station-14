@@ -8,11 +8,11 @@ namespace Content.Server.Administration.Systems;
 /// <summary>
 /// This handles the administrative test arena maps, and loading them.
 /// </summary>
-public sealed class AdminTestArenaSystem : EntitySystem
+public sealed partial class AdminTestArenaSystem : EntitySystem
 {
-    [Dependency] private readonly MapLoaderSystem _loader = default!;
-    [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
-    [Dependency] private readonly SharedMapSystem _maps = default!;
+    [Dependency] private MapLoaderSystem _loader = default!;
+    [Dependency] private MetaDataSystem _metaDataSystem = default!;
+    [Dependency] private SharedMapSystem _maps = default!;
 
     public const string ArenaMapPath = "/Maps/Test/admin_test_arena.yml";
 

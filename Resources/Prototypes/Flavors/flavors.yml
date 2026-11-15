@@ -20,6 +20,11 @@
   description: flavor-base-sour
 
 - type: flavor
+  id: earthy
+  flavorType: Base
+  description: flavor-base-earthy
+
+- type: flavor
   id: bitter
   flavorType: Base
   description: flavor-base-bitter
@@ -1115,11 +1120,6 @@
   description: flavor-complex-monkey-business
 
 - type: flavor
-  id: neurotoxin
-  flavorType: Complex
-  description: flavor-complex-neurotoxin
-
-- type: flavor
   id: patron
   flavorType: Complex
   description: flavor-complex-patron
@@ -1408,6 +1408,11 @@
   id: paper
   flavorType: Complex
   description: flavor-complex-paper
+
+- type: flavor
+  id: cotton
+  flavorType: Complex
+  description: flavor-complex-cotton
 
 - type: flavor
   id: compressed-meat

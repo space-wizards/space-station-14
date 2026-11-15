@@ -30,7 +30,7 @@
 
   ### Adding crew to your ranks:
   <Box>
-    <GuideEntityEmbed Entity="MachineArtifactCrusher" Caption="body crusher"/>
+    <GuideEntityEmbed Entity="MachineArtifactCrusherXenoborg" Caption="body crusher"/>
   </Box>
   As the mothership, you must grow your army of borgs. To do so, you must convert all the sentient beings you can find. This can be achieved in the following manner:
   - 1. Have your Xenoborgs bring dead crew to your shop, placing them in the body crusher
@@ -63,17 +63,12 @@
   [bold]Starting exclusive modules:[/bold]
   <Box>
     <GuideEntityEmbed Entity="XenoborgModuleAccessBreaker" Caption="access breaker xenoborg module"/>
-    <GuideEntityEmbed Entity="XenoborgModuleFireExtinguisher" Caption="fire extinguisher xenoborg module"/>
   </Box>
 
   [bold]The Engineer Xenoborg also starts with some engineering modules, such as:[/bold]
   <Box>
-    <GuideEntityEmbed Entity="BorgModuleAdvancedTool" Caption="advanced tool cyborg module"/>
-    <GuideEntityEmbed Entity="BorgModuleConstruction" Caption="construction cyborg module"/>
-  </Box>
-  <Box>
-    <GuideEntityEmbed Entity="BorgModuleRCD" Caption="engineering cyborg module"/>
-    <GuideEntityEmbed Entity="BorgModuleCable" Caption="cable cyborg module"/>
+    <GuideEntityEmbed Entity="XenoborgModuleAdvancedTool" Caption="advanced tool cyborg module"/>
+    <GuideEntityEmbed Entity="XenoborgModuleConstruction" Caption="construction cyborg module"/>
   </Box>
 
   [bold]Upgrade exclusive modules:[/bold]
@@ -140,20 +135,17 @@
     <GuideEntityEmbed Entity="XenoborgExtractor" Caption="xenoborg extractor"/>
     <GuideEntityEmbed Entity="MaterialXenoborgCrystal" Caption="xenoborg crystal"/>
   </Box>
-  Its a machine necessary for the xenoborgs to grow their army. It can steal power from cables connected to it and then produce xenoborg crystals.
+  The extractor is a machine necessary for the xenoborgs to grow their army. It steals power from cables connected to it in order to produce xenoborg crystals.
 
   The mothership core can produce a xenoborg extractor flatpack for 10 steel.
 
-  Once its anchored on top of a cable it needs to be set to that cable voltage to start draining power.
+  When anchored it will start draining power from the high voltage cable under it.
 
-  Once it's battery is full it will produce one xenoborg crystal.
+  It will produce a xenoborg crystal everytime its internal battery fills up.
 
-  It drains different amounts of power depending on the voltage.
-  - low voltage - 16kW - 2 minutes and 5 seconds to produce one xenoborg circuit.
-  - medium voltage - 50kW - 40 seconds to produce one xenoborg circuit.
-  - high voltage - 200kW - 10 seconds to produce one xenoborg circuit.
+  It consumes 240kW and it takes 15 seconds to produce one xenoborg crystal.
 
-  Attention! at the highest voltage it will trigger the rogue power consuming device alert! and anyone using the power monitor device will know something is wrong.
+  [bold]Attention![/bold] It will trigger the rogue power consuming device alert! Anyone using the power monitor device will know something is wrong.
 
   ## Preparation and Tactics
   Before FTLing near the station, make sure the IFF is off.
@@ -166,7 +158,7 @@
   The Mothership and Xenoborgs have unique laws that define their purpose to self replicate and protect the Mothership.
 
   <Box>
-    <GuideEntityEmbed Entity="XenoborgLawsetCircuitBoard" Caption=""/>
+    <GuideEntityEmbed Entity="XenoborgCircuitBoard" Caption=""/>
   </Box>
 
   The Mothership Core's laws are as follows::

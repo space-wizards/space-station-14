@@ -362,25 +362,21 @@ entities:
   - uid: 51
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: 6.5,19.5
       parent: 1
   - uid: 52
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: 7.5,19.5
       parent: 1
   - uid: 53
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: 2.5,21.5
       parent: 1
   - uid: 54
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: 3.5,21.5
       parent: 1
   - uid: 470
@@ -391,19 +387,16 @@ entities:
   - uid: 475
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 22.5,19.5
       parent: 1
   - uid: 476
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 22.5,20.5
       parent: 1
   - uid: 477
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 22.5,21.5
       parent: 1
 - proto: GrilleBroken

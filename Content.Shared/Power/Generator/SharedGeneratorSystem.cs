@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Power.Generator;
+namespace Content.Shared.Power.Generator;
 
 /// <summary>
 /// This handles small, portable generators that run off a material fuel.

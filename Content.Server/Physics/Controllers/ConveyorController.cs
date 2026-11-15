@@ -1,8 +1,8 @@
-using Content.Server.DeviceLinking.Systems;
 using Content.Server.Materials;
 using Content.Shared.Conveyor;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Destructible;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Controllers;
@@ -13,13 +13,13 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Physics.Controllers;
 
-public sealed class ConveyorController : SharedConveyorController
+public sealed partial class ConveyorController : SharedConveyorController
 {
-    [Dependency] private readonly FixtureSystem _fixtures = default!;
-    [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
-    [Dependency] private readonly MaterialReclaimerSystem _materialReclaimer = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private FixtureSystem _fixtures = default!;
+    [Dependency] private DeviceLinkSystem _signalSystem = default!;
+    [Dependency] private MaterialReclaimerSystem _materialReclaimer = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private TurfSystem _turf = default!;
 
     public override void Initialize()
     {

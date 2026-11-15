@@ -1,0 +1,34 @@
+- type: entity
+  abstract: true
+  parent: StatusEffectBase
+  id: TraitStatusEffectBase
+  components:
+  - type: CloneableStatusEffect
+
+- type: entity
+  abstract: true
+  id: ChangelingStatusEffectBase # Used to whitelist specific status effects to be cloneable by the changeling. Primarily some traits.
+  components:
+  - type: ChangelingCloneableStatusEffect
+
+- type: entity
+  parent: [ BloodstreamStatusEffectBase, TraitStatusEffectBase, ChangelingStatusEffectBase ]
+  id: TraitStatusEffectHemophilia
+  components:
+  - type: HemophiliaStatusEffect
+
+- type: entity
+  parent: [ PainNumbnessStatusEffectBase, TraitStatusEffectBase ]
+  id: TraitStatusEffectPainNumbness
+  name: pain numbness
+
+- type: entity
+  parent: [MobStatusEffectBase, TraitStatusEffectBase, ChangelingStatusEffectBase] # TODO: Here we need to add a check to see if the entity has eyes that have a blinking component, or entity has blinking component.
+  id: TraitStatusEffectBlinkDyspraxia
+  name: blink dyspraxia
+  components:
+  - type: BlinkDyspraxiaStatusEffect
+
+- type: entity
+  parent: [ MutedStatusEffectBase, TraitStatusEffectBase, ChangelingStatusEffectBase ]
+  id: TraitStatusEffectMuted

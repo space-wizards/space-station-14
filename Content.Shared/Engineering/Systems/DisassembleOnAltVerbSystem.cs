@@ -8,9 +8,9 @@ namespace Content.Shared.Engineering.Systems;
 
 public sealed partial class DisassembleOnAltVerbSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
+    [Dependency] private INetManager _net = default!;
 
     public override void Initialize()
     {
@@ -20,6 +20,9 @@ public sealed partial class DisassembleOnAltVerbSystem : EntitySystem
         SubscribeLocalEvent<DisassembleOnAltVerbComponent, DisassembleDoAfterEvent>(OnDisassembleDoAfter);
     }
 
+    /// <summary>
+    /// Begins disassembly of an entity.
+    /// </summary>
     public void StartDisassembly(Entity<DisassembleOnAltVerbComponent> entity, EntityUid user)
     {
         // Doafter setup

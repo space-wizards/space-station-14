@@ -1,0 +1,19 @@
+# Plastic tiles
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStackPlastic
+  name: stack-plastic-tile
+  spawn: FloorTileItemPlastic
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStackDarkPlastic
+  name: stack-plastic-dark-tile
+  spawn: FloorTileItemDarkPlastic
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStackWhitePlastic
+  name: stack-plastic-white-tile
+  spawn: FloorTileItemWhitePlastic

@@ -36,21 +36,48 @@
           - MidImpassable
     - type: Damageable
       damageModifierSet: Wood
+    - type: Injurable
     - type: Destructible
+      generateOverkillThreshold: false
       thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 50
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTypeTrigger
+          damageType: Heat
+          damage: 5
+        behaviors:
+        - !type:SpillBehavior
+          solution: ice
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 10
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+    - type: AtmosExposed
     - type: Temperature
+      temperature: 250
+      heatCapacity: 13440.002
     - type: TemperatureDamage
       heatDamage:
         types:
           Heat: 5
       coldDamage: {}
+      heatDamageThreshold: 273.15
       coldDamageThreshold: 0
     - type: FrictionContacts
     - type: TileFrictionModifier
       modifier: 0.05
+    - type: Solution
+      id: ice
+      solution:
+        reagents:
+        - ReagentId: Water
+          Quantity: 10

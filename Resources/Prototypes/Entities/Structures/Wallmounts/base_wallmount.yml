@@ -22,28 +22,40 @@
     - Structure
   - type: Sprite
     drawdepth: WallMountedItems
+  - type: Pullable
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 5
+        mask:
+        - FullTileMask
 
 - type: entity
+  abstract: true
   parent: BaseWallmount
   id: BaseWallmountGlass
-  abstract: true
   components:
   - type: MeleeSound
     soundGroups:
       Brute:
         collection: GlassSmash
   - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Glass
+    damageModifierSet: GlassMod
 
 - type: entity
+  abstract: true
   parent: BaseWallmount
   id: BaseWallmountMetallic
-  abstract: true
   components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: MetalThud
   - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallic
+    damageModifierSet: SteelMod
 
 - type: entity
   parent: BaseWallmountMetallic

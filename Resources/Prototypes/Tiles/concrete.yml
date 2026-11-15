@@ -1,0 +1,28 @@
+- type: tile
+  id: FloorConcrete
+  parent: BaseStationTile
+  name: tiles-concrete-tile
+  sprite: /Textures/Tiles/Concrete/concrete.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemConcrete
+
+- type: tile
+  id: FloorConcreteMono
+  parent: BaseStationTile
+  name: tiles-concrete-slab
+  sprite: /Textures/Tiles/Concrete/concrete-mono.png
+  variants: 2
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemConcreteMono
+
+- type: tile
+  id: FloorConcreteSmooth
+  parent: BaseStationTile
+  name: tiles-concrete-smooth
+  sprite: /Textures/Tiles/Concrete/concrete-smooth.png
+  variants: 2
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemConcreteSmooth

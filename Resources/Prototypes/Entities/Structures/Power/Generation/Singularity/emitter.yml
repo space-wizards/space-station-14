@@ -1,7 +1,7 @@
 - type: entity
+  parent: [ SmallConstructibleMachine, StructureHealthMachineStrong ]
   id: Emitter
   name: emitter
-  parent: SmallConstructibleMachine
   description: A heavy duty industrial laser. Shoots non-stop when turned on.
   placement:
     mode: SnapgridCenter
@@ -30,57 +30,71 @@
     - state: beam
       shader: unshaded
       visible: false
-      map: ["enum.EmitterVisualLayers.Lights"]
+      map: ["enum.PowerStateDeviceVisualLayers.Lights"]
     - state: locked
       shader: unshaded
       visible: false
       map: ["enum.LockVisualLayers.Lock"]
   - type: Emitter
-    alertRadio: true
+  - type: PowerState
+    idlePowerDraw: 5
+    workingPowerDraw: 600
+    ensureApc: false
+  - type: NotifyOnNonFunctioning
+    locDestroyed: emitter-destroyed-broadcast
+    locUnlocked: emitter-unlocked-broadcast
+    locUnpowered: emitter-unpowered-broadcast
+    locUnanchored: emitter-unpowered-broadcast
+    locTurnedOff: emitter-turn-off-broadcast
+    radioChannel: Engineering
+    requirePowered: true
   - type: Gun
     showExamineText: false
-    fireRate: 10 #just has to be fast enough to keep up with upgrades
-    selectedMode: SemiAuto
+    burstCooldown: 1.4
+    burstFireRate: 0.5
+    selectedMode: Burst
     availableModes:
-      - SemiAuto
+      - Burst
     soundGunshot:
       path: /Audio/Weapons/emitter.ogg
+  - type: NetworkPoweredAmmoProvider
+    adminLogToggleLevel: FieldGeneration
+    prototype: EmitterBolt
+  - type: AutoShootGun
   - type: PowerConsumer
     voltage: Medium
+    drawRate: 5
   - type: NodeContainer
     examinable: true
     nodes:
       input:
         !type:CableDeviceNode
         nodeGroupID: MVPower
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    usesApcPower: false
+    mediumVoltageNode: input
   - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallicStrong
+    damageModifierSet: PlasteelStaticMod
   - type: ActiveRadio
     channels:
     - Engineering
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 400
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 200
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalBreak
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            SheetSteel1:
-              min: 5
-              max: 5
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 275
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 5
+            max: 5
   - type: Anchorable
   - type: Pullable
   - type: Rotatable
@@ -100,7 +114,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 200
   - type: DeviceLinkSink
     ports:

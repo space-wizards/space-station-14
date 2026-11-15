@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration.Logs;
+using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Robust.Shared.Map;
 using Robust.Shared.Placement;
@@ -6,11 +6,11 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Placement;
 
-public sealed class PlacementLoggerSystem : EntitySystem
+public sealed partial class PlacementLoggerSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-    [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
+    [Dependency] private ISharedPlayerManager _player = default!;
 
     public override void Initialize()
     {

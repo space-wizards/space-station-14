@@ -1,20 +1,25 @@
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Body;
 using Content.Shared.Hands.Components;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Body;
 
-[TestFixture]
 [TestOf(typeof(HandOrganSystem))]
-public sealed class HandOrganTest
+public sealed class HandOrganTest : GameTest
 {
+    private const string TheBody = "TheBody";
+    private const string LeftHand = "LeftHand";
+    private const string RightHand = "RightHand";
+
     [TestPrototypes]
-    private const string Prototypes = @"
+    private const string Prototypes = $@"
 - type: entity
-  id: TheBody
+  id: {TheBody}
   components:
   - type: Body
   - type: Hands
@@ -22,11 +27,11 @@ public sealed class HandOrganTest
     containers:
       body_organs: !type:AllSelector
         children:
-        - id: LeftHand
-        - id: RightHand
+        - id: {LeftHand}
+        - id: {RightHand}
 
 - type: entity
-  id: LeftHand
+  id: {LeftHand}
   components:
   - type: Organ
   - type: HandOrgan
@@ -35,7 +40,7 @@ public sealed class HandOrganTest
       location: Left
 
 - type: entity
-  id: RightHand
+  id: {RightHand}
   components:
   - type: Organ
   - type: HandOrgan
@@ -43,45 +48,39 @@ public sealed class HandOrganTest
     data:
       location: Right
 ";
+
+    [SidedDependency(Side.Server)] private SharedContainerSystem _sContainerSystem = null!;
+
     [Test]
     public async Task HandInsertionAndRemovalTest()
     {
-        await using var pair = await PoolManager.GetServerClient();
-        var server = pair.Server;
+        await CreateTestMap();
 
-        await server.WaitIdleAsync();
-
-        var entityManager = server.ResolveDependency<IEntityManager>();
-        var mapData = await pair.CreateTestMap();
-
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
-            var container = entityManager.System<SharedContainerSystem>();
-            var body = entityManager.SpawnEntity("TheBody", mapData.GridCoords);
-            var hands = entityManager.GetComponent<HandsComponent>(body);
+            var body = SSpawnAtPosition(TheBody, TestMap.GridCoords);
+            var hands = SComp<HandsComponent>(body);
 
-            Assert.That(hands.Count, Is.EqualTo(2));
+            Assert.That(hands, Has.Count.EqualTo(2));
 
-            var handsContainer = container.GetContainer(body, BodyComponent.ContainerID);
+            var handsContainer = _sContainerSystem.GetContainer(body, BodyComponent.ContainerID);
 
             var expectedCount = 2;
             var contained = handsContainer.ContainedEntities.ToList();
             foreach (var hand in contained)
             {
                 expectedCount--;
-                container.Remove(hand, handsContainer);
-                Assert.That(hands.Count, Is.EqualTo(expectedCount));
+                _sContainerSystem.Remove(hand, handsContainer);
+                Assert.That(hands, Has.Count.EqualTo(expectedCount));
             }
 
-            var protos = new List<string>() { "LeftHand", "RightHand" };
+            List<string> protos = [LeftHand, RightHand];
             foreach (var proto in protos)
             {
                 expectedCount++;
-                entityManager.SpawnInContainerOrDrop(proto, body, BodyComponent.ContainerID);
-                Assert.That(hands.Count, Is.EqualTo(expectedCount));
+                SEntMan.SpawnInContainerOrDrop(proto, body, BodyComponent.ContainerID);
+                Assert.That(hands, Has.Count.EqualTo(expectedCount));
             }
         });
-
-        await pair.CleanReturnAsync();
     }
 }

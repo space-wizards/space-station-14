@@ -37,6 +37,7 @@ public static class StyleClass
 
     public const string LabelHeading = "LabelHeading";
     public const string LabelHeadingBigger = "LabelHeadingBigger";
+    public const string LabelSubHeading = "LabelSubHeading";
     public const string LabelSubText = "LabelSubText";
     public const string LabelKeyText = "LabelKeyText";
     public const string LabelWeak = "LabelWeak"; // replaces `LabelSecondaryColor`
@@ -49,9 +50,13 @@ public static class StyleClass
     public const string BackgroundPanelOpenLeft = "BackgroundPanelOpenLeft"; // replaces `BackgroundOpenLeft`
     public const string BackgroundPanelOpenRight = "BackgroundPanelOpenRight"; // replaces `BackgroundOpenRight`
 
+    public const string Panel = "Panel";
     public const string PanelDark = "PanelDark";
+    public const string PanelDeep = "PanelDeep";
     public const string PanelLight = "PanelLight";
     public const string PanelDropTarget = "PanelDropTarget";
+    public const string PanelInsetDark = "PanelInsetDark";
+    public const string PanelInsetDeep = "PanelInsetDeep";
 
     public const string ButtonOpenRight = "OpenRight";
     public const string ButtonOpenLeft = "OpenLeft";

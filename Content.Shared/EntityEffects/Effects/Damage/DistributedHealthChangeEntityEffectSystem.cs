@@ -1,4 +1,4 @@
-﻿using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
@@ -15,7 +15,7 @@ namespace Content.Shared.EntityEffects.Effects.Damage;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class DistributedHealthChangeEntityEffectSystem : EntityEffectSystem<DamageableComponent, DistributedHealthChange>
 {
-    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
 
     protected override void Effect(Entity<DamageableComponent> entity, ref EntityEffectEvent<DistributedHealthChange> args)
     {

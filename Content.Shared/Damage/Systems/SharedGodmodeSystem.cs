@@ -1,28 +1,25 @@
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Destructible;
+using Content.Shared.Glue;
+using Content.Shared.Lube;
 using Content.Shared.Nutrition;
-using Content.Shared.Prototypes;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Slippery;
 using Content.Shared.StatusEffect;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.StatusEffectNew.Components;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Damage.Systems;
 
-public abstract class SharedGodmodeSystem : EntitySystem
+public abstract partial class SharedGodmodeSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<GodmodeComponent, BeforeDamageChangedEvent>(OnBeforeDamageChanged);
         SubscribeLocalEvent<GodmodeComponent, BeforeStatusEffectAddedEvent>(OnBeforeStatusEffect);
-        SubscribeLocalEvent<GodmodeComponent, BeforeOldStatusEffectAddedEvent>(OnBeforeOldStatusEffect);
         SubscribeLocalEvent<GodmodeComponent, BeforeStaminaDamageEvent>(OnBeforeStaminaDamage);
         SubscribeLocalEvent<GodmodeComponent, IngestibleEvent>(BeforeEdible);
         SubscribeLocalEvent<GodmodeComponent, SlipAttemptEvent>(OnSlipAttempt);
@@ -41,10 +38,12 @@ public abstract class SharedGodmodeSystem : EntitySystem
 
     private void OnBeforeStatusEffect(EntityUid uid, GodmodeComponent component, ref BeforeStatusEffectAddedEvent args)
     {
-        if (_protoMan.Index(args.Effect).HasComponent<RejuvenateRemovedStatusEffectComponent>(Factory))
+        if (ProtoMan.Index(args.Effect).HasComp<RejuvenateRemovedStatusEffectComponent>(Factory))
             args.Cancelled = true;
     }
 
+    [SubscribeLocalEvent]
+    [Obsolete("BeforeOldStatusEffectAddedEvent is obsolete.")]
     private void OnBeforeOldStatusEffect(Entity<GodmodeComponent> ent, ref BeforeOldStatusEffectAddedEvent args)
     {
         // Old status effect system doesn't distinguish between good and bad status effects
@@ -62,6 +61,18 @@ public abstract class SharedGodmodeSystem : EntitySystem
     }
 
     private void BeforeEdible(Entity<GodmodeComponent> ent, ref IngestibleEvent args)
+    {
+        args.Cancelled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGluedEffectAttemptEvent(Entity<GodmodeComponent> entity, ref GluedEffectAttemptEvent args)
+    {
+        args.Cancelled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGluedEffectAttemptEvent(Entity<GodmodeComponent> entity, ref LubedEffectAttemptEvent args)
     {
         args.Cancelled = true;
     }

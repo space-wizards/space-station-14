@@ -7,11 +7,11 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Content.Server.Cloning.Components;
-using Content.Server.DeviceLinking.Systems;
 using Content.Shared.DeviceLinking.Events;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Body;
 using Content.Shared.Climbing.Systems;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Containers;
@@ -19,15 +19,15 @@ using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent; // Hmm
 
 namespace Content.Server.Medical
 {
-    public sealed class MedicalScannerSystem : EntitySystem
+    public sealed partial class MedicalScannerSystem : EntitySystem
     {
-        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
-        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-        [Dependency] private readonly ClimbSystem _climbSystem = default!;
-        [Dependency] private readonly CloningConsoleSystem _cloningConsoleSystem = default!;
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-        [Dependency] private readonly ContainerSystem _containerSystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private DeviceLinkSystem _signalSystem = default!;
+        [Dependency] private ActionBlockerSystem _blocker = default!;
+        [Dependency] private ClimbSystem _climbSystem = default!;
+        [Dependency] private CloningConsoleSystem _cloningConsoleSystem = default!;
+        [Dependency] private MobStateSystem _mobStateSystem = default!;
+        [Dependency] private ContainerSystem _containerSystem = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
 
         private const float UpdateRate = 1f;
         private float _updateDif;
@@ -42,7 +42,7 @@ namespace Content.Server.Medical
             SubscribeLocalEvent<MedicalScannerComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
             SubscribeLocalEvent<MedicalScannerComponent, DestructionEventArgs>(OnDestroyed);
             SubscribeLocalEvent<MedicalScannerComponent, DragDropTargetEvent>(OnDragDropOn);
-            SubscribeLocalEvent<MedicalScannerComponent, PortDisconnectedEvent>(OnPortDisconnected);
+            SubscribeLocalEvent<MedicalScannerComponent, SinkPortDisconnectedEvent>(OnPortDisconnected);
             SubscribeLocalEvent<MedicalScannerComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             SubscribeLocalEvent<MedicalScannerComponent, CanDropTargetEvent>(OnCanDragDropOn);
         }
@@ -140,9 +140,10 @@ namespace Content.Server.Medical
             InsertBody(uid, args.Dragged, scannerComponent);
         }
 
-        private void OnPortDisconnected(EntityUid uid, MedicalScannerComponent component, PortDisconnectedEvent args)
+        private void OnPortDisconnected(EntityUid uid, MedicalScannerComponent component, ref SinkPortDisconnectedEvent args)
         {
-            component.ConnectedConsole = null;
+            if (args.Port == MedicalScannerComponent.ScannerPort)
+                component.ConnectedConsole = null;
         }
 
         private void OnAnchorChanged(EntityUid uid, MedicalScannerComponent component, ref AnchorStateChangedEvent args)

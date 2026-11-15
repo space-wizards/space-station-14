@@ -1,5 +1,5 @@
-﻿- type: localizedDataset
+- type: localizedDataset
   id: Adjectives
   values:
     prefix: adjectives-dataset-
-    count: 396
+    count: 422

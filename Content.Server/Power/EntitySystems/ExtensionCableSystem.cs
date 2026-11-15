@@ -6,9 +6,10 @@ using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Power.EntitySystems
 {
-    public sealed class ExtensionCableSystem : EntitySystem
+    public sealed partial class ExtensionCableSystem : EntitySystem
     {
-        [Dependency] private readonly SharedMapSystem _map = default!;
+        [Dependency] private SharedMapSystem _map = default!;
+        [Dependency] private EntityQuery<ExtensionCableProviderComponent> _cableProviderQuery = default!;
 
         public override void Initialize()
         {
@@ -22,10 +23,8 @@ namespace Content.Server.Power.EntitySystems
 
             //Anchoring
             SubscribeLocalEvent<ExtensionCableReceiverComponent, AnchorStateChangedEvent>(OnReceiverAnchorStateChanged);
-            SubscribeLocalEvent<ExtensionCableReceiverComponent, ReAnchorEvent>(OnReceiverReAnchor);
 
             SubscribeLocalEvent<ExtensionCableProviderComponent, AnchorStateChangedEvent>(OnProviderAnchorStateChanged);
-            SubscribeLocalEvent<ExtensionCableProviderComponent, ReAnchorEvent>(OnProviderReAnchor);
         }
 
         #region Provider
@@ -85,12 +84,6 @@ namespace Content.Server.Power.EntitySystems
             // same as OnProviderShutdown
             provider.Comp.Connectable = false;
             ResetReceivers(provider);
-        }
-
-        private void OnProviderReAnchor(Entity<ExtensionCableProviderComponent> provider, ref ReAnchorEvent args)
-        {
-            Disconnect(provider);
-            Connect(provider);
         }
 
         private void ResetReceivers(Entity<ExtensionCableProviderComponent> provider)
@@ -202,12 +195,6 @@ namespace Content.Server.Power.EntitySystems
             }
         }
 
-        private void OnReceiverReAnchor(Entity<ExtensionCableReceiverComponent> receiver, ref ReAnchorEvent args)
-        {
-            Disconnect(receiver);
-            Connect(receiver);
-        }
-
         private void Connect(Entity<ExtensionCableReceiverComponent> receiver)
         {
             receiver.Comp.Connectable = true;
@@ -255,25 +242,22 @@ namespace Content.Server.Power.EntitySystems
 
             var coordinates = xform.Coordinates;
             var nearbyEntities = _map.GetCellsInSquareArea(xform.GridUid.Value, grid, coordinates, (int)Math.Ceiling(range / grid.TileSize));
-            var cableQuery = GetEntityQuery<ExtensionCableProviderComponent>();
-            var metaQuery = GetEntityQuery<MetaDataComponent>();
-            var xformQuery = GetEntityQuery<TransformComponent>();
 
             Entity<ExtensionCableProviderComponent>? closestCandidate = null;
             var closestDistanceFound = float.MaxValue;
             foreach (var entity in nearbyEntities)
             {
-                if (entity == owner || !cableQuery.TryGetComponent(entity, out var provider) || !provider.Connectable)
+                if (entity == owner || !_cableProviderQuery.TryGetComponent(entity, out var provider) || !provider.Connectable)
                     continue;
 
                 if (EntityManager.IsQueuedForDeletion(entity))
                     continue;
 
-                if (!metaQuery.TryGetComponent(entity, out var meta) || meta.EntityLifeStage > EntityLifeStage.MapInitialized)
+                if (!TryComp(entity, out MetaDataComponent? meta) || meta.EntityLifeStage > EntityLifeStage.MapInitialized)
                     continue;
 
                 // Find the closest provider
-                if (!xformQuery.TryGetComponent(entity, out var entityXform))
+                if (!TryComp(entity, out TransformComponent? entityXform))
                     continue;
                 var distance = (entityXform.LocalPosition - xform.LocalPosition).Length();
                 if (distance >= closestDistanceFound)

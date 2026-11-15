@@ -10,10 +10,10 @@ namespace Content.Client.Humanoid;
 /// <summary>
 /// View model for UIs manipulating a set of markings, responsible for applying markings logic and keeping state synchronized.
 /// </summary>
-public sealed class MarkingsViewModel
+public sealed partial class MarkingsViewModel
 {
-    [Dependency] private readonly MarkingManager _marking = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private MarkingManager _marking = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     private bool _enforceLimits = true;
 
@@ -384,7 +384,12 @@ public sealed class MarkingsViewModel
         if (markingIdx == -1)
             return;
 
-        markings[markingIdx] = markings[markingIdx].WithColorAt(colorIndex, color);
+        var markingProto = _prototype.Index(markingId);
+        var newColor = color;
+        if (markingProto.Strategy != null)
+            newColor = markingProto.Strategy.ClosestSkinColor(color);
+
+        markings[markingIdx] = markings[markingIdx].WithColorAt(colorIndex, newColor);
         MarkingsChanged?.Invoke(organ, layer);
     }
 

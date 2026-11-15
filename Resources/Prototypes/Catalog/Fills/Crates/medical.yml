@@ -22,30 +22,20 @@
   parent: CrateMedical
   id: CrateChemistrySupplies
   name: chemistry supplies crate
-  description: Basic chemistry supplies.
+  description: A crate containing assorted laboratory glassware, droppers, syringes, and pill canisters. Chemicals sold separately.
   components:
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:AllSelector
         children:
-        - id: BoxSyringe
         - id: BoxBeaker
-        - id: BoxPillCanister
-        - id: Dropper
-          amount: 2
         - id: BoxBottle
           amount: 2
-
-- type: entity
-  parent: CrateMedical
-  id: CrateChemistryVials
-  name: vial supply crate
-  description: Crate filled with a box of vials.
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage:
-        id: BoxVial
+        - id: BoxPillCanister
+        - id: BoxSyringe
+        - id: BoxVial
+        - id: Dropper
+          amount: 2
 
 - type: entity
   parent: CrateMedical

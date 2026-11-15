@@ -1,8 +1,8 @@
-﻿using Content.Client.Stylesheets.Palette;
+using Content.Client.Stylesheets.Palette;
 
 namespace Content.Client.Stylesheets.Stylesheets;
 
-public sealed partial class NanotrasenStylesheet
+public partial class NanotrasenStylesheet
 {
     public override ColorPalette PrimaryPalette => Palettes.Navy;
     public override ColorPalette SecondaryPalette => Palettes.Slate;

@@ -10,10 +10,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Audio.Jukebox;
 
-public sealed class JukeboxSystem : SharedJukeboxSystem
+public sealed partial class JukeboxSystem : SharedJukeboxSystem
 {
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
+    [Dependency] private AppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -156,7 +155,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         else
         {
             if (string.IsNullOrEmpty(ent.Comp.SelectedSongId) ||
-                !_protoManager.Resolve(ent.Comp.SelectedSongId, out var jukeboxProto))
+                !ProtoMan.Resolve(ent.Comp.SelectedSongId, out var jukeboxProto))
             {
                 return false;
             }

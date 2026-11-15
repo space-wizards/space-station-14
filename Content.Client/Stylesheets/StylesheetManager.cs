@@ -2,30 +2,19 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Stylesheets.Stylesheets;
-using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Shared.Reflection;
 
 namespace Content.Client.Stylesheets
 {
-    public sealed class StylesheetManager : IStylesheetManager
+    public sealed partial class StylesheetManager : IStylesheetManager
     {
-        [Dependency] private readonly ILogManager _logManager = default!;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-        [Dependency] private readonly IReflectionManager _reflection = default!;
-
-        [Dependency]
-        private readonly IResourceCache
-            _resCache = default!; // TODO: REMOVE (obsolete; used to construct StyleNano/StyleSpace)
+        [Dependency] private ILogManager _logManager = default!;
+        [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private IReflectionManager _reflection = default!;
 
         public Stylesheet SheetNanotrasen { get; private set; } = default!;
         public Stylesheet SheetSystem { get; private set; } = default!;
-
-        [Obsolete("Update to use SheetNanotrasen instead")]
-        public Stylesheet SheetNano { get; private set; } = default!;
-
-        [Obsolete("Update to use SheetSystem instead")]
-        public Stylesheet SheetSpace { get; private set; } = default!;
 
         private Dictionary<string, Stylesheet> Stylesheets { get; set; } = default!;
 
@@ -49,8 +38,6 @@ namespace Content.Client.Stylesheets
             Stylesheets = new Dictionary<string, Stylesheet>();
             SheetNanotrasen = Init(new NanotrasenStylesheet(new BaseStylesheet.NoConfig(), this));
             SheetSystem = Init(new SystemStylesheet(new BaseStylesheet.NoConfig(), this));
-            SheetNano = new StyleNano(_resCache).Stylesheet; // TODO: REMOVE (obsolete)
-            SheetSpace = new StyleSpace(_resCache).Stylesheet; // TODO: REMOVE (obsolete)
 
             _userInterfaceManager.Stylesheet = SheetNanotrasen;
 

@@ -37,4 +37,4 @@ arcade-villain-names-enemy-last-11 = Sorcerer
 arcade-villain-names-enemy-last-12 = Uhangoid
 arcade-villain-names-enemy-last-13 = Unicorn
 arcade-villain-names-enemy-last-14 = Vhakoid
-arcade-villain-names-enemy-last-15 = slime
+arcade-villain-names-enemy-last-15 = Slime

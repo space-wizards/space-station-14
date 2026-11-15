@@ -13,8 +13,8 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
     [UsedImplicitly]
     public sealed partial class AddAtmosWindow : DefaultWindow
     {
-        [Dependency] private readonly IPlayerManager _players = default!;
-        [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private IPlayerManager _players = default!;
+        [Dependency] private IEntityManager _entities = default!;
 
         private readonly List<Entity<MapGridComponent>> _data = new();
 
@@ -26,6 +26,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
 
         protected override void EnteredTree()
         {
+            base.EnteredTree();
             _data.Clear();
 
             var player = _players.LocalEntity;
