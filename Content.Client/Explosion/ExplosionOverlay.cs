@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Explosion.Components;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
@@ -18,7 +19,7 @@ public sealed partial class ExplosionOverlay : Overlay
     [Dependency] private IRobustRandom _robustRandom = default!;
     [Dependency] private IEntityManager _entMan = default!;
     [Dependency] private IPrototypeManager _proto = default!;
-    private readonly SharedTransformSystem _transformSystem;
+    private readonly TransformSystem _transformSystem;
     private SharedAppearanceSystem _appearance;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
@@ -29,7 +30,7 @@ public sealed partial class ExplosionOverlay : Overlay
     {
         IoCManager.InjectDependencies(this);
         _shader = _proto.Index(UnshadedShader).Instance();
-        _transformSystem = _entMan.System<SharedTransformSystem>();
+        _transformSystem = _entMan.System<TransformSystem>();
         _appearance = appearanceSystem;
     }
 
@@ -69,7 +70,7 @@ public sealed partial class ExplosionOverlay : Overlay
                 continue;
 
             var xform = xforms.GetComponent(gridId);
-            var (_, _, worldMatrix, invWorldMatrix) = _transformSystem.GetWorldPositionRotationMatrixWithInv(xform, xforms);
+            var (_, _, worldMatrix, invWorldMatrix) = _transformSystem.GetRenderWorldPositionRotationMatrixWithInv((xform.Owner, xform));
 
             gridBounds = invWorldMatrix.TransformBox(worldBounds).Enlarged(grid.TileSize * 2);
             drawHandle.SetTransform(worldMatrix);

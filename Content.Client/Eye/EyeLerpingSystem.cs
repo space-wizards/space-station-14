@@ -1,9 +1,7 @@
 using System.Numerics;
 using Content.Shared.Movement.Components;
-using Content.Shared.Movement.Systems;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Physics;
 using Robust.Client.Player;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -15,8 +13,7 @@ public sealed partial class EyeLerpingSystem : EntitySystem
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private SharedEyeSystem _eye = default!;
-    [Dependency] private SharedMoverController _mover = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private TransformSystem _transform = default!;
 
     // Convenience variable for for VV.
     [ViewVariables, UsedImplicitly]
@@ -57,6 +54,7 @@ public sealed partial class EyeLerpingSystem : EntitySystem
             return;
 
         var lerpInfo = EnsureComp<LerpingEyeComponent>(uid);
+        var referenceRotation = GetReferenceRotation(uid, lerpInfo);
         lerpInfo.TargetRotation = GetRotation(uid);
         lerpInfo.LastRotation = lerpInfo.TargetRotation;
         lerpInfo.ManuallyAdded |= !automatic;
@@ -66,7 +64,7 @@ public sealed partial class EyeLerpingSystem : EntitySystem
 
         if (component.Eye != null)
         {
-            _eye.SetRotation(uid, lerpInfo.TargetRotation, component);
+            _eye.SetRotation(uid, lerpInfo.TargetRotation - referenceRotation, component);
             _eye.SetZoom(uid, lerpInfo.TargetZoom, component);
         }
     }
@@ -87,7 +85,10 @@ public sealed partial class EyeLerpingSystem : EntitySystem
     {
         // Is this actually a map change? If yes, stop any lerps
         if (args.OldMapId != args.Transform.MapUid)
-            component.LastRotation = GetRotation(uid, args.Transform);
+        {
+            GetReferenceRotation(uid, component, args.Transform);
+            component.LastRotation = component.TargetRotation = GetRotation(uid, args.Transform);
+        }
     }
 
     private void OnAttached(ref EyeAttachedEvent ev)
@@ -113,6 +114,7 @@ public sealed partial class EyeLerpingSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var lerpInfo, out var xform))
         {
+            GetReferenceRotation(uid, lerpInfo, xform);
             lerpInfo.LastRotation = lerpInfo.TargetRotation;
             lerpInfo.TargetRotation = GetRotation(uid, xform);
 
@@ -157,18 +159,48 @@ public sealed partial class EyeLerpingSystem : EntitySystem
         if (!Resolve(uid, ref xform))
             return Angle.Zero;
 
-        // If we can move then tie our eye to our inputs (these also get lerped so it should be fine).
+        // Only interpolate the input-relative angle here. The reference entity's
+        // rotation is already interpolated by TransformSystem when rendering.
         if (Resolve(uid, ref mover, false))
         {
-            return -_mover.GetParentGridAngle(mover);
+            return -mover.RelativeRotation;
         }
 
-        // if not tied to a mover then lock it to map / grid
-        var relative = xform.GridUid ?? xform.MapUid;
-        if (relative != null)
-            return -_transform.GetWorldRotation(relative.Value);
-
         return Angle.Zero;
+    }
+
+    private Angle GetReferenceRotation(
+        EntityUid uid,
+        LerpingEyeComponent lerpInfo,
+        TransformComponent? xform = null,
+        InputMoverComponent? mover = null)
+    {
+        if (!Resolve(uid, ref xform))
+            return Angle.Zero;
+
+        var relative = Resolve(uid, ref mover, false)
+            ? mover.RelativeEntity
+            : xform.GridUid ?? xform.MapUid;
+
+        var rotation = Angle.Zero;
+        if (relative is { } parent && TryComp<TransformComponent>(parent, out var parentXform))
+            rotation = _transform.GetRenderWorldRotation((parent, parentXform));
+
+        if (lerpInfo.RotationReference != relative)
+        {
+            var previousRotation = Angle.Zero;
+            if (lerpInfo.RotationReference is { } previous && TryComp<TransformComponent>(previous, out var previousXform))
+                previousRotation = _transform.GetRenderWorldRotation((previous, previousXform));
+
+            // InputMover rebases its angles when the movement reference changes.
+            // Convert the saved eye angles to that reference as well.
+            var change = Angle.ShortestDistance(previousRotation, rotation);
+            lerpInfo.LastRotation += change;
+            lerpInfo.TargetRotation += change;
+            lerpInfo.RotationReference = relative;
+        }
+
+        return rotation;
     }
 
     public override void FrameUpdate(float frameTime)
@@ -194,12 +226,15 @@ public sealed partial class EyeLerpingSystem : EntitySystem
             // Handle Rotation
             TryComp<InputMoverComponent>(entity, out var mover);
 
-            // This needs to be recomputed every frame, as if this is simply the grid rotation, then we need to account for grid angle lerping.
+            // Sample the same reference rotation as the grid and sprites every frame.
+            // Including it in LastRotation/TargetRotation would interpolate it twice
+            // while the mover is also turning relative to its reference entity.
+            var referenceRotation = GetReferenceRotation(entity, lerpInfo, xform, mover);
             lerpInfo.TargetRotation = GetRotation(entity, xform, mover);
 
             if (!NeedsLerp(mover))
             {
-                _eye.SetRotation(entity, lerpInfo.TargetRotation, eye);
+                _eye.SetRotation(entity, lerpInfo.TargetRotation - referenceRotation, eye);
                 continue;
             }
 
@@ -207,11 +242,11 @@ public sealed partial class EyeLerpingSystem : EntitySystem
 
             if (Math.Abs(shortest.Theta) < lerpMinimum)
             {
-                _eye.SetRotation(entity, lerpInfo.TargetRotation, eye);
+                _eye.SetRotation(entity, lerpInfo.TargetRotation - referenceRotation, eye);
                 continue;
             }
 
-            _eye.SetRotation(entity, shortest * tickFraction + lerpInfo.LastRotation, eye);
+            _eye.SetRotation(entity, shortest * tickFraction + lerpInfo.LastRotation - referenceRotation, eye);
         }
     }
 }

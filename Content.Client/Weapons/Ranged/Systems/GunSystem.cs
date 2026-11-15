@@ -49,7 +49,7 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedCameraRecoilSystem _recoil = default!;
     [Dependency] private SharedMapSystem _maps = default!;
-    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private TransformSystem _xform = default!;
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private SpriteTreeSystem _spriteTree = default!;
 
@@ -75,7 +75,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     _inputManager,
                     _player,
                     this,
-                    TransformSystem));
+                    _xform));
             }
             else
             {

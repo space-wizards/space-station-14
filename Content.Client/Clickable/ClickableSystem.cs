@@ -13,7 +13,7 @@ namespace Content.Client.Clickable;
 public sealed partial class ClickableSystem : EntitySystem
 {
     [Dependency] private IClickMapManager _clickMapManager = default!;
-    [Dependency] private SharedTransformSystem _transforms = default!;
+    [Dependency] private TransformSystem _transforms = default!;
     [Dependency] private SpriteSystem _sprites = default!;
 
     [Dependency] private EntityQuery<ClickableComponent> _clickableQuery = default!;
@@ -68,7 +68,7 @@ public sealed partial class ClickableSystem : EntitySystem
 
         drawDepth = sprite.DrawDepth;
         renderOrder = sprite.RenderOrder;
-        var (spritePos, spriteRot) = _transforms.GetWorldPositionRotation(transform);
+        var (spritePos, spriteRot) = _transforms.GetRenderWorldPositionRotation((transform.Owner, transform));
         var spriteBB = _sprites.CalculateBounds((entity.Owner, sprite), spritePos, spriteRot, eye.Rotation);
         bottom = Matrix3Helpers.CreateRotation(eye.Rotation).TransformBox(spriteBB).Bottom;
 

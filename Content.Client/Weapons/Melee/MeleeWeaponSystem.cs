@@ -30,6 +30,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private SharedColorFlashEffectSystem _color = default!;
     [Dependency] private MapSystem _map = default!;
     [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private TransformSystem _renderTransforms = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
 
     private const string MeleeLungeKey = "melee-lunge";
@@ -37,6 +38,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     public override void Initialize()
     {
         base.Initialize();
+        UpdatesAfter.Add(typeof(TransformSystem));
 
         SubscribeNetworkEvent<MeleeLungeEvent>(OnMeleeLunge);
         UpdatesOutsidePrediction = true;

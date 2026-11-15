@@ -46,7 +46,7 @@ public sealed partial class DragDropSystem : SharedDragDropSystem
     [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private TransformSystem _transformSystem = default!;
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
 
@@ -257,7 +257,7 @@ public sealed partial class DragDropSystem : SharedDragDropSystem
             _sprite.SetDrawDepth((_dragShadow.Value, dragSprite), (int)DrawDepth.Overlays);
             if (!dragSprite.NoRotation)
             {
-                _transformSystem.SetWorldRotationNoLerp(_dragShadow.Value, _transformSystem.GetWorldRotation(_draggedEntity.Value));
+                _transformSystem.SetWorldRotationNoLerp(_dragShadow.Value, _transformSystem.GetRenderWorldRotation(_draggedEntity.Value));
             }
 
             // drag initiated

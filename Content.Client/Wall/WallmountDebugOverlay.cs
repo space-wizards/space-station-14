@@ -1,6 +1,7 @@
 using Content.Shared.Interaction;
 using Content.Shared.Wall;
 using Robust.Client.Graphics;
+using Robust.Client.GameObjects;
 using Robust.Shared.Enums;
 using System.Numerics;
 
@@ -12,7 +13,7 @@ namespace Content.Client.Wall;
 public sealed partial class WallmountDebugOverlay : Overlay
 {
     [Dependency] private IEntityManager _entManager = default!;
-    private readonly SharedTransformSystem _transform;
+    private readonly TransformSystem _transform;
     private readonly EntityLookupSystem _lookup;
     private readonly HashSet<Entity<WallMountComponent>> _intersecting = [];
 
@@ -22,17 +23,17 @@ public sealed partial class WallmountDebugOverlay : Overlay
     {
         IoCManager.InjectDependencies(this);
 
-        _transform = _entManager.System<SharedTransformSystem>();
+        _transform = _entManager.System<TransformSystem>();
         _lookup = _entManager.System<EntityLookupSystem>();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
         _intersecting.Clear();
-        _lookup.GetEntitiesIntersecting(args.MapId, args.WorldBounds, _intersecting);
+        _lookup.GetEntitiesIntersecting(args.MapId, args.WorldCullingAABB, _intersecting);
         foreach (var ent in _intersecting)
         {
-            var (worldPos, worldRot) = _transform.GetWorldPositionRotation(ent.Owner);
+            var (worldPos, worldRot) = _transform.GetRenderWorldPositionRotation(ent.Owner);
             DrawArc(args.WorldHandle, worldPos, SharedInteractionSystem.InteractionRange, worldRot + ent.Comp.Direction, ent.Comp.Arc);
         }
     }

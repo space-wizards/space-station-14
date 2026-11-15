@@ -84,10 +84,12 @@ public sealed partial class MeleeWeaponSystem
                     _animation.Play(animationUid, GetFadeAnimation(sprite, length * 0.5f, length + 0.15f), FadeAnimationKey);
                 break;
             case WeaponArcAnimation.None:
-                var (mapPos, mapRot) = TransformSystem.GetWorldPositionRotation(userXform);
-                var worldPos = mapPos + (mapRot - userXform.LocalRotation).RotateVec(localPos);
-                var newLocalPos = Vector2.Transform(worldPos, TransformSystem.GetInvWorldMatrix(xform.ParentUid));
+                var mapPos = _renderTransforms.GetRenderWorldPosition((user, userXform));
+                var parentRotation = _renderTransforms.GetRenderWorldRotation(userXform.ParentUid);
+                var worldPos = mapPos + parentRotation.RotateVec(localPos);
+                var newLocalPos = Vector2.Transform(worldPos, _renderTransforms.GetInvRenderWorldMatrix(xform.ParentUid));
                 TransformSystem.SetLocalPositionNoLerp(animationUid, newLocalPos, xform);
+                _renderTransforms.SnapRenderTransform(animationUid);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0f, 0.15f), FadeAnimationKey);
                 break;
@@ -242,15 +244,17 @@ public sealed partial class MeleeWeaponSystem
             if (arcComponent.User == null || EntityManager.Deleted(arcComponent.User))
                 continue;
 
-            var targetPos = TransformSystem.GetWorldPosition(arcComponent.User.Value);
+            var targetPos = _renderTransforms.GetRenderWorldPosition(arcComponent.User.Value);
 
             if (arcComponent.Offset != Vector2.Zero)
             {
-                var entRotation = TransformSystem.GetWorldRotation(xform);
+                var entRotation = _renderTransforms.GetRenderWorldRotation((uid, xform));
                 targetPos += entRotation.RotateVec(arcComponent.Offset);
             }
 
-            TransformSystem.SetWorldPosition(uid, targetPos);
+            var localPos = Vector2.Transform(targetPos, _renderTransforms.GetInvRenderWorldMatrix(xform.ParentUid));
+            TransformSystem.SetLocalPosition(uid, localPos, xform);
+            _renderTransforms.SnapRenderTransform(uid);
         }
     }
 }

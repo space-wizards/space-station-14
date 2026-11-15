@@ -27,7 +27,7 @@ public sealed partial class GasTileFireOverlay : Overlay
     public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities | OverlaySpace.WorldSpaceBelowWorld;
     private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
 
-    private readonly SharedTransformSystem _xformSys;
+    private readonly TransformSystem _xformSys;
     private readonly SharedMapSystem _mapSystem = default!;
     private readonly ShaderInstance _shader;
 
@@ -46,7 +46,7 @@ public sealed partial class GasTileFireOverlay : Overlay
     public GasTileFireOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _xformSys = _entManager.System<SharedTransformSystem>();
+        _xformSys = _entManager.System<TransformSystem>();
         _mapSystem = _entManager.System<SharedMapSystem>();
         _shader = _protoMan.Index(UnshadedShader).Instance();
         ZIndex = GasOverlayZIndex;
@@ -112,7 +112,7 @@ public sealed partial class GasTileFireOverlay : Overlay
             return;
 
         // TODO: WorldBounds callback.
-        _mapSystem.FindGridsIntersecting(args.MapId, args.WorldAABB, ref gridState,
+        _mapSystem.FindGridsIntersecting(args.MapId, args.WorldCullingAABB, ref gridState,
             static (EntityUid uid, MapGridComponent grid,
                 ref (Box2Rotated WorldBounds,
                     DrawingHandleWorld drawHandle,
@@ -121,7 +121,7 @@ public sealed partial class GasTileFireOverlay : Overlay
                     ShaderInstance shader,
                     EntityQuery<GasTileOverlayComponent> overlayQuery,
                     EntityQuery<TransformComponent> xformQuery,
-                    SharedTransformSystem xformSys) state) =>
+                    TransformSystem xformSys) state) =>
             {
                 if (!state.overlayQuery.TryGetComponent(uid, out var comp) ||
                     !state.xformQuery.TryGetComponent(uid, out var gridXform))
@@ -129,7 +129,7 @@ public sealed partial class GasTileFireOverlay : Overlay
                     return true;
                 }
 
-                var (_, _, worldMatrix, invMatrix) = state.xformSys.GetWorldPositionRotationMatrixWithInv(gridXform);
+                var (_, _, worldMatrix, invMatrix) = state.xformSys.GetRenderWorldPositionRotationMatrixWithInv((gridXform.Owner, gridXform));
                 state.drawHandle.SetTransform(worldMatrix);
                 var floatBounds = invMatrix.TransformBox(state.WorldBounds).Enlarged(grid.TileSize);
                 var localBounds = new Box2i(

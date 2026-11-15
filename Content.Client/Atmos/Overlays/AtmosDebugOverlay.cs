@@ -4,6 +4,7 @@ using System.Numerics;
 using Content.Client.Atmos.EntitySystems;
 using Content.Client.Resources;
 using Content.Shared.Atmos;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
@@ -24,7 +25,7 @@ public sealed partial class AtmosDebugOverlay : Overlay
     [Dependency] private IInputManager _input = default!;
     [Dependency] private IUserInterfaceManager _ui = default!;
     [Dependency] private IResourceCache _cache = default!;
-    private readonly SharedTransformSystem _transform;
+    private readonly TransformSystem _transform;
     private readonly AtmosDebugOverlaySystem _system;
     private readonly SharedMapSystem _map;
     private readonly Font _font;
@@ -37,7 +38,7 @@ public sealed partial class AtmosDebugOverlay : Overlay
         IoCManager.InjectDependencies(this);
 
         _system = system;
-        _transform = _entManager.System<SharedTransformSystem>();
+        _transform = _entManager.System<TransformSystem>();
         _map = _entManager.System<SharedMapSystem>();
         _font = _cache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 12);
     }
@@ -51,7 +52,7 @@ public sealed partial class AtmosDebugOverlay : Overlay
         }
 
         var handle = args.WorldHandle;
-        GetGrids(args.MapId, args.WorldBounds);
+        GetGrids(args.MapId, new Box2Rotated(args.WorldCullingAABB));
 
         // IF YOU ARE ABOUT TO INTRODUCE CHUNKING OR SOME OTHER OPTIMIZATION INTO THIS CODE:
         //  -- THINK! --
@@ -62,7 +63,7 @@ public sealed partial class AtmosDebugOverlay : Overlay
 
         foreach (var (grid, msg) in _grids)
         {
-            handle.SetTransform(_transform.GetWorldMatrix(grid));
+            handle.SetTransform(_transform.GetRenderWorldMatrix(grid.Owner));
             DrawData(msg, handle);
         }
     }
@@ -216,7 +217,7 @@ public sealed partial class AtmosDebugOverlay : Overlay
 
         var coords= viewport.PixelToMap(mousePos.Position);
         var box = Box2.CenteredAround(coords.Position, 3 * Vector2.One);
-        GetGrids(coords.MapId, new Box2Rotated(box));
+        GetGrids(coords.MapId, new Box2Rotated(_transform.GetRenderCullingBounds(coords.MapId, box)));
 
         foreach (var (grid, msg) in _grids)
         {

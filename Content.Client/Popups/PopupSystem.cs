@@ -3,6 +3,7 @@ using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -24,7 +25,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
     [Dependency] private IUserInterfaceManager _uiManager = default!;
     [Dependency] private IReplayRecordingManager _replayRecording = default!;
     [Dependency] private ExamineSystemShared _examine = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private TransformSystem _transform = default!;
 
     public IReadOnlyCollection<WorldPopupLabel> WorldLabels => _aliveWorldLabels.Values;
     public IReadOnlyCollection<CursorPopupLabel> CursorLabels => _aliveCursorLabels.Values;
