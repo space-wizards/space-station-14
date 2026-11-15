@@ -28,7 +28,7 @@
     - Security
     - Antagonists
   - type: UseDelay
-    delay: 60
+    delay: 40
 
 - type: entity
   name: makeshift handcuffs
