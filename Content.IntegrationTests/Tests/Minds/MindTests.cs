@@ -67,7 +67,7 @@ public sealed partial class MindTests : GameTest
         {
             var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
 
-            var entity = entMan.Spawn(null, new MapCoordinates());
+            var entity = entMan.Spawn();
             var mindComp = entMan.EnsureComponent<MindContainerComponent>(entity);
 
             var mind = mindSystem.CreateMind(null);
@@ -91,7 +91,7 @@ public sealed partial class MindTests : GameTest
         {
             var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
 
-            var entity = entMan.Spawn(null, new MapCoordinates());
+            var entity = entMan.Spawn();
             var mindComp = entMan.EnsureComponent<MindContainerComponent>(entity);
 
             var mindId = mindSystem.CreateMind(null).Owner;
@@ -126,7 +126,7 @@ public sealed partial class MindTests : GameTest
 
         await server.WaitAssertion(() =>
         {
-            entity = entMan.Spawn("MindTestEntityDamageable", new MapCoordinates());
+            entity = entMan.Spawn("MindTestEntityDamageable");
             mindContainerComp = entMan.EnsureComponent<MindContainerComponent>(entity);
 
             mindId = mindSystem.CreateMind(null);
@@ -172,8 +172,8 @@ public sealed partial class MindTests : GameTest
         {
             var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
 
-            var entity = entMan.Spawn(null, new MapCoordinates());
-            var targetEntity = entMan.Spawn(null, new MapCoordinates());
+            var entity = entMan.Spawn();
+            var targetEntity = entMan.Spawn();
             var mindComp = entMan.EnsureComponent<MindContainerComponent>(entity);
             entMan.EnsureComponent<MindContainerComponent>(targetEntity);
 
@@ -209,7 +209,7 @@ public sealed partial class MindTests : GameTest
         MindComponent mind = default!;
         await server.WaitAssertion(() =>
         {
-            var entity = entMan.Spawn(null, new MapCoordinates());
+            var entity = entMan.Spawn();
             var mindComp = entMan.EnsureComponent<MindContainerComponent>(entity);
             entMan.DirtyEntity(entity);
 
@@ -258,7 +258,7 @@ public sealed partial class MindTests : GameTest
             var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
             var roleSystem = entMan.EntitySysManager.GetEntitySystem<SharedRoleSystem>();
 
-            var entity = entMan.Spawn(null, new MapCoordinates());
+            var entity = entMan.Spawn();
             var mindComp = entMan.EnsureComponent<MindContainerComponent>(entity);
 
             var mindId = mindSystem.CreateMind(null).Owner;
@@ -332,7 +332,7 @@ public sealed partial class MindTests : GameTest
 
         await server.WaitAssertion(() =>
         {
-            entity = entMan.Spawn(null, new MapCoordinates());
+            entity = entMan.Spawn();
             var mindComp = entMan.EnsureComponent<MindContainerComponent>(entity);
 
             mindId = mindSystem.CreateMind(player.UserId, "Mindy McThinker");
@@ -361,7 +361,7 @@ public sealed partial class MindTests : GameTest
         {
             Assert.That(mind.OwnedEntity, Is.Not.Null);
 
-            mob = entMan.Spawn(null, new MapCoordinates());
+            mob = entMan.Spawn();
 
             mindSystem.MakeSentient(mob);
             mobMindId = mindSystem.CreateMind(player.UserId, "Mindy McThinker the Second");
@@ -406,7 +406,7 @@ public sealed partial class MindTests : GameTest
 
         await server.WaitAssertion(() =>
         {
-            // entity = entMan.Spawn(null, new MapCoordinates());
+            // entity = entMan.Spawn();
             // var mindComp = entMan.EnsureComponent<MindContainerComponent>(entity);
 
             // mind = mindSystem.CreateMind(player.UserId, "Mindy McThinker");
@@ -424,7 +424,7 @@ public sealed partial class MindTests : GameTest
 
             Assert.That(mind.OwnedEntity, Is.Not.Null);
 
-            ghostRole = entMan.Spawn("GhostRoleTestEntity", MapCoordinates.Nullspace);
+            ghostRole = entMan.Spawn("GhostRoleTestEntity");
         });
 
         await pair.RunTicksSync(20);

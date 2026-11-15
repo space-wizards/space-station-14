@@ -307,7 +307,7 @@ namespace Content.Client.Construction
             }
             else if (targetProto.Components.TryGetValue("Sprite", out _))
             {
-                var dummy = Spawn(targetProtoId, MapCoordinates.Nullspace);
+                var dummy = Spawn(targetProtoId);
                 var targetSprite = EnsureComp<SpriteComponent>(dummy);
                 EntityManager.System<AppearanceSystem>().OnChangeData(dummy, targetSprite);
                 var ghostDrawDepth = sprite.DrawDepth;

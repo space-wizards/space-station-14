@@ -195,7 +195,7 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
         Content.Shared.Maps.GameMapPrototype? gameMap = null)
     {
         // Use overrides for setup.
-        var station = Spawn(stationConfig.StationPrototype, MapCoordinates.Nullspace, stationConfig.StationComponentOverrides);
+        var station = Spawn(stationConfig.StationPrototype, stationConfig.StationComponentOverrides);
 
         if (name is not null)
             RenameStation(station, name, false);

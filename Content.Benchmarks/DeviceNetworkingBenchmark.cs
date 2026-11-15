@@ -66,13 +66,13 @@ public class DeviceNetworkingBenchmark
             _deviceNetworkSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkSystem>();
             _deviceNetTestSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkTestSystem>();
 
-            _sourceEntity = entityManager.Spawn("DummyNetworkDevicePrivate", MapCoordinates.Nullspace);
-            _sourceWirelessEntity = entityManager.Spawn("DummyWirelessNetworkDevice", MapCoordinates.Nullspace);
+            _sourceEntity = entityManager.Spawn("DummyNetworkDevicePrivate");
+            _sourceWirelessEntity = entityManager.Spawn("DummyWirelessNetworkDevice");
 
             for (var i = 0; i < EntityCount; i++)
             {
-                _targetEntities.Add(entityManager.Spawn("DummyNetworkDevicePrivate", MapCoordinates.Nullspace));
-                _targetWirelessEntities.Add(entityManager.Spawn("DummyWirelessNetworkDevice", MapCoordinates.Nullspace));
+                _targetEntities.Add(entityManager.Spawn("DummyNetworkDevicePrivate"));
+                _targetWirelessEntities.Add(entityManager.Spawn("DummyWirelessNetworkDevice"));
             }
         });
     }

@@ -47,7 +47,7 @@ public sealed partial class LoadoutContainer : BoxContainer
             if (ent == null)
                 return;
 
-            _entity = _entManager.Spawn(ent, MapCoordinates.Nullspace);
+            _entity = _entManager.Spawn(ent);
             Sprite.SetEntity(_entity);
 
             var spriteTooltip = new Tooltip();

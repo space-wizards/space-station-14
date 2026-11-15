@@ -39,8 +39,8 @@ public sealed partial class MindTests
         {
             var player = playerMan.Sessions.Single();
 
-            playerEnt = entMan.Spawn(null, MapCoordinates.Nullspace);
-            visitEnt = entMan.Spawn(null, MapCoordinates.Nullspace);
+            playerEnt = entMan.Spawn();
+            visitEnt = entMan.Spawn();
 
             mindId = mindSystem.CreateMind(player.UserId);
             mind = entMan.GetComponent<MindComponent>(mindId);
@@ -174,7 +174,7 @@ public sealed partial class MindTests
         EntityUid ghost = default!;
         await server.WaitAssertion(() =>
         {
-            ghost = entMan.Spawn(ServerGameTicker.ObserverPrototypeName, MapCoordinates.Nullspace);
+            ghost = entMan.Spawn(ServerGameTicker.ObserverPrototypeName);
             mindSystem.Visit(mind.Id, ghost);
         });
 

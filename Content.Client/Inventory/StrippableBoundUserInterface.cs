@@ -107,7 +107,7 @@ namespace Content.Client.Inventory
             _contraband = EntMan.System<ContrabandSystem>();
             _snare = EntMan.System<SharedEnsnareableSystem>();
 
-            _virtualHiddenEntity = EntMan.Spawn(HiddenPocketEntityId, MapCoordinates.Nullspace);
+            _virtualHiddenEntity = EntMan.Spawn(HiddenPocketEntityId);
 
             _isAdminView = _cvar.GetCVar(CCVars.AdminStripMenuOverlayDefault);
         }
