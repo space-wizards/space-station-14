@@ -3,7 +3,6 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Botany;
 using Content.Client.Guidebook.Richtext;
-using Content.Client.Message;
 using Content.Client.UserInterface.ControlExtensions;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Botany.Components;
@@ -21,6 +20,8 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Client.Stylesheets.Colorspace;
+
 namespace Content.Client.Guidebook.Controls;
 
 /// <summary>
@@ -223,10 +224,7 @@ public sealed partial class GuidePlantEmbed : PanelContainer, IDocumentTag, ISea
         foreach (var reagent in reagents.Distinct().Select(id => _prototype.Index(id)).OrderBy(r => r.LocalizedName))
         {
             var color = reagent.SubstanceColor;
-            // Yoinked from the reagent code
-            var textColor = 0.2126f * color.R + 0.7152f * color.G + 0.0722f * color.B > 0.5
-                ? Color.Black
-                : Color.White;
+            var textColor = color.GetContrastingTextColor();
             var label = new RichTextLabel
             {
                 Margin = new Thickness(4, 2),
