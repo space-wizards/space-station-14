@@ -201,7 +201,6 @@ public sealed partial class StationRecordsSystem : EntitySystem
         Dirty(station);
     }
 
-
     /// <summary>
     /// Set the station record for an id/pda.
     /// </summary>
