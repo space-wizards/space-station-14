@@ -462,6 +462,16 @@
   - type: Construction
     graph: Pizza
     node: start
+    # Chef reworkie shitte :3
+  - type: Temperature
+  - type: Cooking
+    minimumTemperature: 50
+    appliance: Oven
+    timeCookedThreshold: 10
+    #recipes:
+    #  oven:
+    #    foodBreadBanana:
+    #      foodBanana: 1
 
 - type: entity
   parent: FoodDoughSliceBase

@@ -9,6 +9,12 @@ using Robust.Shared.Audio.Systems;
 namespace Content.Shared.Temperature.Systems;
 
 /// <summary>
+/// Raised on an entity after it's heating setting is changed
+/// </summary>
+[ByRefEvent]
+public record struct HeatingSettingChangedEvent;
+
+/// <summary>
 /// Handles <see cref="EntityHeaterComponent"/> events.
 /// </summary>
 public abstract partial class SharedEntityHeaterSystem : EntitySystem
@@ -75,6 +81,10 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
         // Only show the glowing heating element layer if there's power
         if (_receiver.IsPowered(ent.Owner))
             _appearance.SetData(ent, EntityHeaterVisuals.Setting, setting);
+        
+        //New event to notify the entity of the changed setting
+        var attemptEv = new HeatingSettingChangedEvent();
+        RaiseLocalEvent(ent, ref attemptEv);
     }
 
     protected float SettingPower(EntityHeaterSetting setting, float max)
@@ -95,3 +105,4 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
         };
     }
 }
+
