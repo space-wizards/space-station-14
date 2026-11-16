@@ -19,6 +19,7 @@ public sealed partial class StationRecordInfoStorageSystem : EntitySystem
     {
         if (args.Current is not StationRecordInfoStorageComponentState state)
             return;
+
         ent.Comp.Key = _records.Convert(state.Key);
         ent.Comp.Record = state.Record;
     }
@@ -52,8 +53,7 @@ public sealed partial class StationRecordInfoStorageSystem : EntitySystem
     /// </summary>
     public StationRecordKey? RemoveKey(Entity<StationRecordInfoStorageComponent?> ent)
     {
-        if (!_storageQuery.Resolve(ent, ref ent.Comp)
-            || ent.Comp.Key == null)
+        if (!_storageQuery.Resolve(ent, ref ent.Comp) || ent.Comp.Key == null)
             return null;
 
         var key = ent.Comp.Key;
