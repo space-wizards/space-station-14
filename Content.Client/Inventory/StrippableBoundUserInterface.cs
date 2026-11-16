@@ -351,7 +351,7 @@ namespace Content.Client.Inventory
 
                 // if the item has contraband, add a blue dotted outline (under the main contraband overlay if there is one)
                 _id.TryFindIdCard(Owner, out var ownerId);
-                if (_contraband.ContainerHasContraband(entity.Value, Owner, ownerId, out var contraList))
+                if (_contraband.ContainerHasContraband(entity.Value, ownerId, out var contraList))
                 {
                     // Get the color of the "most important" contraband using O(n) shenanigans
                     var hasContraColor = contraList

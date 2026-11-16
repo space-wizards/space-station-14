@@ -33,8 +33,6 @@ public sealed partial class ContrabandSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<ContrabandComponent, GetVerbsEvent<ExamineVerb>>(OnDetailedExamine);
-
         Subs.CVar(_configuration, CCVars.ContrabandExamine, SetContrabandExamine, true);
         Subs.CVar(_configuration, CCVars.ContrabandExamineOnlyInHUD, SetContrabandExamineOnlyInHUD, true);
     }
@@ -50,6 +48,7 @@ public sealed partial class ContrabandSystem : EntitySystem
         Dirty(uid, contraband);
     }
 
+    [SubscribeLocalEvent]
     private void OnDetailedExamine(EntityUid ent, ContrabandComponent component, ref GetVerbsEvent<ExamineVerb> args)
     {
 
@@ -94,7 +93,8 @@ public sealed partial class ContrabandSystem : EntitySystem
             component,
             Loc.GetString("contraband-examinable-verb-text"),
             examineMarkup.ToMarkup(),
-            iconTexture);
+            iconTexture
+        );
     }
 
     private (string, string) GetLegalityContent(Entity<ContrabandComponent> item, EntityUid idOwner, string severity)
@@ -107,26 +107,23 @@ public sealed partial class ContrabandSystem : EntitySystem
         {
             return (ResolveAllowedText(illegal, idOwner, true), ResolveIconPath(illegal, severity));
         }
-        else
+        // if you are examining your own item, do you.
+        if (idOwner == ctnr.Owner)
         {
-            // if you are examining your own item, do you.
-            if (idOwner == ctnr.Owner)
-            {
-                return (ResolveAllowedText(illegal, idOwner, true), ResolveIconPath(illegal, severity));
-            }
-
-            // holder has neither pronouns nor id, do you.
-            if (!HasComp<GrammarComponent>(ctnr.Owner) && !_id.TryFindIdCard(ctnr.Owner, out var _))
-            {
-                return (ResolveAllowedText(illegal, idOwner, true), ResolveIconPath(illegal, severity));
-            }
-
-            // if they (have pronouns or id) and are not you, do them.
-            _id.TryFindIdCard(ctnr.Owner, out var theirId);
-            illegal = IsContraband((item.Owner, item.Comp), theirId, out _);
-
-            return (ResolveAllowedText(illegal, ctnr.Owner, false), ResolveIconPath(illegal, severity));
+            return (ResolveAllowedText(illegal, idOwner, true), ResolveIconPath(illegal, severity));
         }
+
+        // holder has neither pronouns nor id, do you.
+        if (!HasComp<GrammarComponent>(ctnr.Owner) && !_id.TryFindIdCard(ctnr.Owner, out var _))
+        {
+            return (ResolveAllowedText(illegal, idOwner, true), ResolveIconPath(illegal, severity));
+        }
+
+        // if they (have pronouns or id) and are not you, do them.
+        _id.TryFindIdCard(ctnr.Owner, out var theirId);
+        illegal = IsContraband((item.Owner, item.Comp), theirId, out _);
+
+        return (ResolveAllowedText(illegal, ctnr.Owner, false), ResolveIconPath(illegal, severity));
     }
 
     private string ResolveAllowedText(bool illegal, EntityUid idOwner, bool youText)
@@ -184,7 +181,7 @@ public sealed partial class ContrabandSystem : EntitySystem
     /// is contraband in general.
     /// </summary>
     /// <param name="contraband">The entity that we are checking for contraband.</param>
-    /// <param name="player">The player that we are checking if they are allowed to have this contraband.</param>
+    /// <param name="id">The id that we are checking to see if it allows someone to have certain contraband.</param>
     /// <param name="contraProtoId">The contraband ProtoId if the item is contraband.</param>
     /// <returns></returns>
     public bool IsContraband(Entity<ContrabandComponent?> contraband, Entity<IdCardComponent> id, [NotNullWhen(true)] out ProtoId<ContrabandSeverityPrototype>? contraProtoId)
@@ -203,7 +200,7 @@ public sealed partial class ContrabandSystem : EntitySystem
             if (id.Comp.LocalizedJobTitle is not null)
             {
                 var jobId = id.Comp.LocalizedJobTitle;
-                var jobs = contraband.Comp.AllowedJobs.Select(p => ProtoMan.Index(p).LocalizedName).ToArray();
+                var jobs = contraband.Comp.AllowedJobs.Select(p => ProtoMan.Index(p).LocalizedName).ToArray(); //although having to pass it through loc is INSANE, id cards literally NEVER. store the JobId, JobTitle or JobPrototype properly
 
                 if (jobs.Contains(jobId))
                     return false;
@@ -221,9 +218,9 @@ public sealed partial class ContrabandSystem : EntitySystem
     /// Checks if a storage has contraband.
     /// </summary>
     /// <param name="contraband">The entity that we are checking for contraband.</param>
-    /// <param name="player">The player that we are checking if they are allowed to have certain contraband.</param>
+    /// <param name="id">The id that we are checking to see if it allows someone to have certain contraband.</param>
     /// <param name="contrabandList">All contraband prototypes present in storage.</param>
-    public bool ContainerHasContraband(Entity<ContainerManagerComponent?> contraband, EntityUid? player, Entity<IdCardComponent> id, out List<ProtoId<ContrabandSeverityPrototype>> contrabandList)
+    public bool ContainerHasContraband(Entity<ContainerManagerComponent?> contraband, Entity<IdCardComponent> id, out List<ProtoId<ContrabandSeverityPrototype>> contrabandList)
     {
         contrabandList = [];
 
@@ -237,7 +234,7 @@ public sealed partial class ContrabandSystem : EntitySystem
                 if (IsContraband(ent, id, out var itemContraId))
                     contrabandList.Add((ProtoId<ContrabandSeverityPrototype>)itemContraId);
 
-                ContainerHasContraband(ent, player, id, out var itemContraList);
+                ContainerHasContraband(ent, id, out var itemContraList);
 
                 contrabandList = contrabandList.Concat(itemContraList).ToList();
             }
