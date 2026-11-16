@@ -37,7 +37,7 @@ public sealed partial class StationRecordsSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private InventorySystem _inventory = default!;
-    [Dependency] private StationRecordKeyStorageSystem _keyStorage = default!;
+    [Dependency] private StationRecordInfoStorageSystem _keyStorage = default!;
     [Dependency] private SharedIdCardSystem _idCard = default!;
 
     [Dependency] private EntityQuery<IdCardComponent> _idCardQuery = default!;

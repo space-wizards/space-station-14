@@ -2,9 +2,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.StationRecords.Systems;
 
-public sealed partial class StationRecordKeyStorageSystem : EntitySystem
+public sealed partial class StationRecordInfoStorageSystem : EntitySystem
 {
-    [Dependency] private StationRecordsSystem _records = default!;
+    [Dependency] private readonly StationRecordsSystem _records = default!;
 
     [Dependency] private EntityQuery<StationRecordInfoStorageComponent> _storageQuery = default!;
 
@@ -19,8 +19,8 @@ public sealed partial class StationRecordKeyStorageSystem : EntitySystem
     {
         if (args.Current is not StationRecordInfoStorageComponentState state)
             return;
-
         ent.Comp.Key = _records.Convert(state.Key);
+        ent.Comp.Record = state.Record;
     }
 
     /// <summary>
@@ -32,6 +32,18 @@ public sealed partial class StationRecordKeyStorageSystem : EntitySystem
             return;
 
         ent.Comp.Key = key;
+        Dirty(ent);
+    }
+
+    /// <summary>
+    ///     Assigns a station record key to an entity.
+    /// </summary>
+    public void AssignRecord(Entity<StationRecordInfoStorageComponent?> ent, GeneralStationRecord record)
+    {
+        if (!_storageQuery.Resolve(ent, ref ent.Comp))
+            return;
+
+        ent.Comp.Record = record;
         Dirty(ent);
     }
 
