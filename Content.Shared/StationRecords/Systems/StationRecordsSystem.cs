@@ -37,7 +37,7 @@ public sealed partial class StationRecordsSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private InventorySystem _inventory = default!;
-    [Dependency] private StationRecordInfoStorageSystem _keyStorage = default!;
+    [Dependency] private StationRecordInfoStorageSystem _infoStorage = default!;
     [Dependency] private SharedIdCardSystem _idCard = default!;
 
     [Dependency] private EntityQuery<IdCardComponent> _idCardQuery = default!;
@@ -156,7 +156,11 @@ public sealed partial class StationRecordsSystem : EntitySystem
         // this happens when respawning as the same character
         if (GetRecordByName(station.AsNullable(), name) is {} id)
         {
-            SetIdKey(idUid, new StationRecordKey(id, station));
+            var stationRecordKey = new StationRecordKey(id, station);
+            SetIdKey(idUid, stationRecordKey);
+            if(TryGetRecord<GeneralStationRecord>(stationRecordKey, out var existingRecord))
+                SetIdRecord(idUid, existingRecord);
+
             return;
         }
 
@@ -189,11 +193,28 @@ public sealed partial class StationRecordsSystem : EntitySystem
         }
 
         SetIdKey(idUid, key);
+        SetIdRecord(idUid, record);
 
         var ev = new GeneralRecordCreatedEvent(key, record, profile);
         RaiseLocalEvent(ref ev);
 
         Dirty(station);
+    }
+
+
+    /// <summary>
+    /// Set the station record for an id/pda.
+    /// </summary>
+    public void SetIdRecord(EntityUid? uid, GeneralStationRecord record)
+    {
+        if (uid is not { } idUid)
+            return;
+
+        var keyStorageEntity = idUid;
+        if (TryComp<PdaComponent>(idUid, out var pda) && pda.ContainedId is { } id)
+            keyStorageEntity = id;
+
+        _infoStorage.AssignRecord(keyStorageEntity, record);
     }
 
     public StationRecordKey? Convert((NetEntity, uint)? input)
