@@ -136,13 +136,11 @@ public sealed partial class GuidePlantEmbed : PanelContainer, IDocumentTag, ISea
 
     private GuideEntityEmbed CreatePlantSprite(EntityPrototype plant, string state = "harvest")
     {
-        var embed = new GuideEntityEmbed(plant.ID, false, false) { Scale = new Vector2(2) };
-        if (embed.Sprite is { } sprite)
+        var embed = new GuideEntityEmbed(plant.ID, false, false)
         {
-            var sprites = _systems.GetEntitySystem<SpriteSystem>();
-            sprites.LayerSetRsiState(sprite.AsNullable(), PlantLayers.Plant, state);
-            sprites.LayerSetVisible(sprite.AsNullable(), PlantLayers.Plant, true);
-        }
+            Scale = new Vector2(2),
+            SpriteRSIState = (PlantLayers.Plant, state)
+        };
         return embed;
     }
 
