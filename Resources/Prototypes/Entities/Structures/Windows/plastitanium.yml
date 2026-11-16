@@ -110,7 +110,6 @@
     messages: null
   - type: Tag
     tags:
-    - Window
     - SmeltingImmune
 
 - type: entity
