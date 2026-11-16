@@ -1,4 +1,5 @@
 <BoxContainer xmlns="https://spacestation14.io" HorizontalExpand="True">
+    <PanelContainer MinWidth="0" VerticalExpand="True" Name="Separator" Access="Public" />
     <PanelContainer HorizontalExpand="True">
 
         <!--  Icon & Name  -->
