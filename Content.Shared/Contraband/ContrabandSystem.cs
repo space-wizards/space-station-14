@@ -114,13 +114,12 @@ public sealed partial class ContrabandSystem : EntitySystem
         }
 
         // holder has neither pronouns nor id, do you.
-        if (!HasComp<GrammarComponent>(ctnr.Owner) && !_id.TryFindIdCard(ctnr.Owner, out var _))
+        if (!HasComp<GrammarComponent>(ctnr.Owner) && !_id.TryFindIdCard(ctnr.Owner, out var theirId))
         {
             return (ResolveAllowedText(illegal, idOwner, true), ResolveIconPath(illegal, severity));
         }
 
         // if they (have pronouns or id) and are not you, do them.
-        _id.TryFindIdCard(ctnr.Owner, out var theirId);
         illegal = IsContraband((item.Owner, item.Comp), theirId, out _);
 
         return (ResolveAllowedText(illegal, ctnr.Owner, false), ResolveIconPath(illegal, severity));
