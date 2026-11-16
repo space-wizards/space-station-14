@@ -175,7 +175,7 @@ public sealed partial class IdCardConsoleSystem : SharedIdCardConsoleSystem
         if ((!TryComp<StationRecordInfoStorageComponent>(targetId, out var keyStorage)
              || keyStorage.Key is not { }
              || keyStorage.Record is not { })
-            && newJobProto != string.Empty)
+            && newJobProto != null)
         {
             Comp<IdCardComponent>(targetId).JobPrototype = newJobProto;
         }
