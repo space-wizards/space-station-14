@@ -19,5 +19,5 @@ public sealed partial class VisionCorrectionComponent : Component
     /// Controls the exponent of the blur effect when worn
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("correctionPower"), AutoNetworkedField]
-    public float CorrectionPower = 2f;
+    public float CorrectionPower = 7f;
 }

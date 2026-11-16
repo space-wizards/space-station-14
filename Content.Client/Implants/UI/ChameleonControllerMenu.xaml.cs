@@ -17,8 +17,8 @@ namespace Content.Client.Implants.UI;
 [GenerateTypedNameReferences]
 public sealed partial class ChameleonControllerMenu : FancyWindow
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
     private readonly SpriteSystem _sprite;
     private readonly JobSystem _job;
 
@@ -116,7 +116,7 @@ public sealed partial class ChameleonControllerMenu : FancyWindow
         var button = new Button
         {
             HorizontalExpand = true,
-            StyleClasses = {StyleBase.ButtonSquare},
+            StyleClasses = {StyleClass.ButtonSquare},
             ToolTip = Loc.GetString(name),
             Text = Loc.GetString(name),
             Margin = new Thickness(0, 0, 15, 0),

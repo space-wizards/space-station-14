@@ -11,11 +11,11 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Standing;
 
-public sealed class StandingStateSystem : EntitySystem
+public sealed partial class StandingStateSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
 
     // If StandingCollisionLayer value is ever changed to more than one layer, the logic needs to be edited.
     public const int StandingCollisionLayer = (int) CollisionGroup.MidImpassable;
@@ -100,16 +100,6 @@ public sealed class StandingStateSystem : EntitySystem
 
         if (!standingState.Standing)
             return true;
-
-        // This is just to avoid most callers doing this manually saving boilerplate
-        // 99% of the time you'll want to drop items but in some scenarios (e.g. buckling) you don't want to.
-        // We do this BEFORE downing because something like buckle may be blocking downing but we want to drop hand items anyway
-        // and ultimately this is just to avoid boilerplate in Down callers + keep their behavior consistent.
-        if (dropHeldItems && hands != null)
-        {
-            var ev = new DropHandItemsEvent();
-            RaiseLocalEvent(uid, ref ev, false);
-        }
 
         if (!force)
         {

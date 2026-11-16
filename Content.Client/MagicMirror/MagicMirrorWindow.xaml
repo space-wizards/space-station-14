@@ -1,9 +1,5 @@
 <DefaultWindow xmlns="https://spacestation14.io"
                xmlns:humanoid="clr-namespace:Content.Client.Humanoid"
-               Title="{Loc 'magic-mirror-window-title'}"
-               MinSize="600 400">
-    <BoxContainer>
-        <humanoid:SingleMarkingPicker Name="HairPicker" Category="Hair" />
-        <humanoid:SingleMarkingPicker Name="FacialHairPicker" Category="FacialHair" />
-    </BoxContainer>
+               MinSize="700 500">
+   <humanoid:MarkingPicker Name="MarkingsPicker" Access="Public" HorizontalExpand="True" VerticalExpand="True" />
 </DefaultWindow>

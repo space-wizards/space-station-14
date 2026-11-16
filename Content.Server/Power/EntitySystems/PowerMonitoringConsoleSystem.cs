@@ -1,7 +1,6 @@
-using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
+using Content.Server.Power.Events;
 using Content.Server.Power.Nodes;
 using Content.Server.Power.NodeGroups;
 using Content.Server.StationEvents.Components;
@@ -9,6 +8,8 @@ using Content.Shared.GameTicking.Components;
 using Content.Shared.Pinpointer;
 using Content.Shared.Station.Components;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
@@ -21,8 +22,9 @@ namespace Content.Server.Power.EntitySystems;
 [UsedImplicitly]
 internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitoringConsoleSystem
 {
-    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
-    [Dependency] private readonly SharedMapSystem _sharedMapSystem = default!;
+    [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private SharedMapSystem _sharedMapSystem = default!;
+    [Dependency] private SharedBatterySystem _battery = default!;
 
     // Note: this data does not need to be saved
     private Dictionary<EntityUid, Dictionary<Vector2i, PowerCableChunk>> _gridPowerCableChunks = new();
@@ -151,7 +153,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
     public void OnCableAnchorStateChanged(EntityUid uid, CableComponent component, CableAnchorStateChangedEvent args)
     {
-        var xform = args.Transform;
+        var xform = args.Cable.Comp;
 
         if (xform.GridUid == null || !TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return;
@@ -238,7 +240,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
     private void OnPowerGridCheckStarted(ref GameRuleStartedEvent ev)
     {
-        if (!TryComp<PowerGridCheckRuleComponent>(ev.RuleEntity, out var rule))
+        if (!TryComp<PowerGridCheckRuleComponent>(ev.Rule, out var rule))
             return;
 
         var query = AllEntityQuery<PowerMonitoringConsoleComponent, TransformComponent>();
@@ -254,7 +256,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
     private void OnPowerGridCheckEnded(ref GameRuleEndedEvent ev)
     {
-        if (!TryComp<PowerGridCheckRuleComponent>(ev.RuleEntity, out var rule))
+        if (!TryComp<PowerGridCheckRuleComponent>(ev.Rule, out var rule))
             return;
 
         var query = AllEntityQuery<PowerMonitoringConsoleComponent, TransformComponent>();
@@ -511,7 +513,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         if (effectiveMax == 0)
             effectiveMax = 1;
 
-        return battery.CurrentCharge / effectiveMax;
+        return _battery.GetCharge((uid, battery)) / effectiveMax;
     }
 
     private void GetSourcesForNode(EntityUid uid, Node node, out List<PowerMonitoringConsoleEntry> sources)

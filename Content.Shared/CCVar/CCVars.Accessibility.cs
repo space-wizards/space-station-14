@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Configuration;
+using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
 
@@ -10,14 +10,6 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<float> ChatWindowOpacity =
         CVarDef.Create("accessibility.chat_window_transparency", 0.85f, CVar.CLIENTONLY | CVar.ARCHIVE);
-
-    /// <summary>
-    ///     Toggle for visual effects that may potentially cause motion sickness.
-    ///     Where reasonable, effects affected by this CVar should use an alternate effect.
-    ///     Please do not use this CVar as a bandaid for effects that could otherwise be made accessible without issue.
-    /// </summary>
-    public static readonly CVarDef<bool> ReducedMotion =
-        CVarDef.Create("accessibility.reduced_motion", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     public static readonly CVarDef<bool> ChatEnableColorName =
         CVarDef.Create("accessibility.enable_color_name",
@@ -59,6 +51,13 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<float> SpeechBubbleBackgroundOpacity =
         CVarDef.Create("accessibility.speech_bubble_background_opacity", 0.75f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    ///     Preview bubble background opacity slider, controlling the alpha of the preview bubble's background.
+    ///     Goes from to 0 (completely transparent) to 1 (completely opaque)
+    /// </summary>
+    public static readonly CVarDef<float> PreviewBubbleBackgroundOpacity =
+        CVarDef.Create("accessibility.preview_bubble_background_opacity", 0.5f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
     /// If enabled, censors character nudity by forcing clothes markings on characters, selected by the client.

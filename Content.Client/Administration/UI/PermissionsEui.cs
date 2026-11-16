@@ -20,14 +20,14 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Administration.UI
 {
     [UsedImplicitly]
-    public sealed class PermissionsEui : BaseEui
+    public sealed partial class PermissionsEui : BaseEui
     {
         private const int NoRank = -1;
 
-        [Dependency] private readonly IClientAdminManager _adminManager = default!;
+        [Dependency] private IClientAdminManager _adminManager = default!;
 
         private readonly Menu _menu;
-        private readonly List<DefaultWindow> _subWindows = new();
+        private readonly List<BaseWindow> _subWindows = new();
 
         private Dictionary<int, PermissionsEuiState.AdminRankData> _ranks =
             new();
@@ -211,16 +211,7 @@ namespace Content.Client.Administration.UI
                 var al = _menu.AdminsList;
                 var name = admin.UserName ?? admin.UserId.ToString();
 
-                al.AddChild(new Label { Text = name });
-
-                var titleControl = new Label { Text = admin.Title ?? Loc.GetString("permissions-eui-edit-admin-title-control-text").ToLowerInvariant() };
-                if (admin.Title == null) // none
-                {
-                    titleControl.StyleClasses.Add(StyleBase.StyleClassItalic);
-                }
-
-                al.AddChild(titleControl);
-
+                // Compute rank and combined flags first so we can create the edit button before other columns.
                 bool italic;
                 string rank;
                 var combinedFlags = admin.PosFlags;
@@ -237,14 +228,34 @@ namespace Content.Client.Administration.UI
                     rank = Loc.GetString("permissions-eui-edit-no-rank-text").ToLowerInvariant();
                 }
 
+                var editButton = new Button { Text = Loc.GetString("permissions-eui-edit-title-button") };
+                editButton.OnPressed += _ => OnEditPressed(admin);
+
+                // Add the edit button as the first column
+                al.AddChild(editButton);
+
+                // Name (C-key)
+                al.AddChild(new Label { Text = name });
+
+                // Prefix / Title
+                var titleControl = new Label { Text = admin.Title ?? Loc.GetString("permissions-eui-edit-admin-title-control-text").ToLowerInvariant() };
+                if (admin.Title == null) // none
+                {
+                    titleControl.StyleClasses.Add(StyleClass.Italic);
+                }
+
+                al.AddChild(titleControl);
+
+                // Rank
                 var rankControl = new Label { Text = rank };
                 if (italic)
                 {
-                    rankControl.StyleClasses.Add(StyleBase.StyleClassItalic);
+                    rankControl.StyleClasses.Add(StyleClass.Italic);
                 }
 
                 al.AddChild(rankControl);
 
+                // Flags / Additional rights
                 var flagsText = AdminFlagsHelper.PosNegFlagsText(admin.PosFlags, admin.NegFlags);
 
                 al.AddChild(new Label
@@ -253,10 +264,6 @@ namespace Content.Client.Administration.UI
                     HorizontalExpand = true,
                     HorizontalAlignment = Control.HAlignment.Center,
                 });
-
-                var editButton = new Button { Text = Loc.GetString("permissions-eui-edit-title-button") };
-                editButton.OnPressed += _ => OnEditPressed(admin);
-                al.AddChild(editButton);
 
                 if (!_adminManager.HasFlag(combinedFlags))
                 {
@@ -340,10 +347,9 @@ namespace Content.Client.Administration.UI
                 tab.AddChild(adminVBox);
                 tab.AddChild(rankVBox);
 
-                Contents.AddChild(tab);
+                ContentsContainer.AddChild(tab);
+                ContentsContainer.MinSize = new(600, 400);
             }
-
-            protected override Vector2 ContentsMinimumSize => new Vector2(600, 400);
         }
 
         private sealed class EditAdminWindow : DefaultWindow
@@ -419,21 +425,21 @@ namespace Content.Client.Administration.UI
                     var inherit = new Button
                     {
                         Text = "I",
-                        StyleClasses = { StyleBase.ButtonOpenRight },
+                        StyleClasses = { StyleClass.ButtonOpenRight },
                         Disabled = disable,
                         Group = group,
                     };
                     var sub = new Button
                     {
                         Text = "-",
-                        StyleClasses = { StyleBase.ButtonOpenBoth },
+                        StyleClasses = { StyleClass.ButtonOpenBoth },
                         Disabled = disable,
                         Group = group
                     };
                     var plus = new Button
                     {
                         Text = "+",
-                        StyleClasses = { StyleBase.ButtonOpenLeft },
+                        StyleClasses = { StyleClass.ButtonOpenLeft },
                         Disabled = disable,
                         Group = group
                     };
@@ -479,7 +485,7 @@ namespace Content.Client.Administration.UI
 
                 bottomButtons.AddChild(SaveButton);
 
-                Contents.AddChild(new BoxContainer
+                ContentsContainer.AddChild(new BoxContainer
                 {
                     Orientation = LayoutOrientation.Vertical,
                     Children =
@@ -605,7 +611,7 @@ namespace Content.Client.Administration.UI
 
                 bottomButtons.AddChild(SaveButton);
 
-                Contents.AddChild(new BoxContainer
+                ContentsContainer.AddChild(new BoxContainer
                 {
                     Orientation = LayoutOrientation.Vertical,
                     Children =

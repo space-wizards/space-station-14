@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using Content.Server.Administration;
 using Content.Server.Chat.V2.Repository;
 using Content.Shared.Administration;
@@ -9,9 +9,9 @@ using Robust.Shared.Utility;
 namespace Content.Server.Chat.V2.Commands;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Admin)]
-public sealed class NukeChatMessagesCommand : ToolshedCommand
+public sealed partial class NukeChatMessagesCommand : ToolshedCommand
 {
-    [Dependency] private readonly IEntitySystemManager _manager = default!;
+    [Dependency] private IEntitySystemManager _manager = default!;
 
     [CommandImplementation("usernames")]
     public void Command(IInvocationContext ctx, string usernamesCsv)

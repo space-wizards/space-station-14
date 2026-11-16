@@ -47,6 +47,7 @@
     - FakeMindShieldImplant
     - RadioImplant
     - ChameleonControllerImplant
+    - VoiceMaskImplant
     deimplantFailureDamage:
       types:
         Cellular: 50
@@ -80,19 +81,23 @@
     interfaces:
       enum.DeimplantUiKey.Key:
         type: DeimplantBoundUserInterface
+  - type: Tag
+    tags:
+    - SmeltingImmune
 
 - type: entity
   id: Implanter
   parent: BaseImplanter
-  description: A disposable syringe exclusively designed for the injection and extraction of subdermal implants.
+  name: implant extractor
+  description: "A dual-purpose syringe designed for the removal of specific subdermal implants. Once an implant is extracted, it is stored within and can be re-administered.\nWARNING: Operator error, such as selecting a non-present implant type, causes severe genetic trauma to the operator."
   components:
   - type: Tag
     tags:
     - Trash
 
 - type: entity
-  parent: Implanter
   id: ImplanterAdmeme
+  parent: Implanter
   suffix: Admeme
   components:
   - type: Implanter
@@ -125,7 +130,7 @@
   id: BaseImplantOnlyImplanterSyndi
   parent: [BaseImplantOnlyImplanter, BaseSyndicateContraband]
   name: syndicate implanter
-  description: A compact disposable syringe exclusively designed for the injection of subdermal implants. Make sure to scrub it with soap or a rag to remove residual DNA after use!
+  description: A compact disposable syringe exclusively designed for the injection of subdermal implants. Make sure to scrub it with soap to remove residual DNA after use!
   abstract: true
   components:
   - type: Item
@@ -151,7 +156,8 @@
           True: {state: broken}
           False: {state: implanter1}
   - type: Tag
-    tags: []
+    tags:
+    - SmeltingImmune
 
 #Fun implanters
 
@@ -254,6 +260,14 @@
   components:
   - type: Implanter
     implant: ChameleonControllerImplant
+
+- type: entity
+  id: VoiceMaskImplanter
+  name: identity mask implanter
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: VoiceMaskImplant
 
 #Nuclear Operative/Special implanters
 

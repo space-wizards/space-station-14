@@ -48,6 +48,10 @@ namespace Content.Client.Chemistry.UI
                     (uint) _window.BottleDosage.Value, _window.LabelLine));
             _window.BufferSortButton.OnPressed += _ => SendMessage(
                     new ChemMasterSortingTypeCycleMessage());
+            _window.OutputBufferDraw.OnPressed += _ => SendMessage(
+                new ChemMasterOutputDrawSourceMessage(ChemMasterDrawSource.Internal));
+            _window.OutputBeakerDraw.OnPressed += _ => SendMessage(
+                new ChemMasterOutputDrawSourceMessage(ChemMasterDrawSource.External));
 
             for (uint i = 0; i < _window.PillTypeButtons.Length; i++)
             {

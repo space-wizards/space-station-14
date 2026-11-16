@@ -53,3 +53,18 @@
   license: "CC0-1.0"
   copyright: "Original sound by https://freesound.org/people/lordomega/sounds/514959/ - cut out four clips, cleaned up, converted to ogg"
   source: "https://freesound.org/people/lordomega/sounds/514959/"
+
+- files: ["vulp_yawn1.ogg"]
+  license: "CC0-1.0"
+  copyright: "Original sound by https://freesound.org/people/jinxycat49/sounds/490164/, cleaned up, cut, converted to ogg"
+  source: "https://freesound.org/people/jinxycat49/sounds/490164/"
+
+- files: ["vulp_yawn2.ogg"]
+  license: "CC0-1.0"
+  copyright: "Original sound by https://freesound.org/people/qubodup/sounds/827660/, cleaned up, cut, converted to ogg"
+  source: "https://freesound.org/people/qubodup/sounds/827660/"
+
+- files: ["vulp_sneeze.ogg"]
+  license: "CC0-1.0"
+  copyright: "Original sound by blukotek on freesound.org, Modified by Minemoder5000 on github by cleaning the audio, cropping, and re-encoding to Ogg Vorbis"
+  source: "https://freesound.org/people/blukotek/sounds/424949/"

@@ -1,26 +1,23 @@
-using System.Linq;
 using Content.Shared.EntityTable;
 using Content.Shared.NameIdentifier;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
-using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Linq;
+using Content.Shared.EntityTable.EntitySelectors;
 
 namespace Content.Shared.Xenoarchaeology.Artifact;
 
 public abstract partial class SharedXenoArtifactSystem
 {
-    [Dependency] private readonly EntityTableSystem _entityTable =  default!;
+    [Dependency] private EntityTableSystem _entityTable =  default!;
 
-    private EntityQuery<XenoArtifactComponent> _xenoArtifactQuery;
-    private EntityQuery<XenoArtifactNodeComponent> _nodeQuery;
+    [Dependency] private EntityQuery<XenoArtifactComponent> _xenoArtifactQuery = default!;
+    [Dependency] private EntityQuery<XenoArtifactNodeComponent> _nodeQuery = default!;
 
     private void InitializeNode()
     {
         SubscribeLocalEvent<XenoArtifactNodeComponent, MapInitEvent>(OnNodeMapInit);
-
-        _xenoArtifactQuery = GetEntityQuery<XenoArtifactComponent>();
-        _nodeQuery = GetEntityQuery<XenoArtifactNodeComponent>();
     }
 
     /// <summary>
@@ -33,21 +30,14 @@ public abstract partial class SharedXenoArtifactSystem
         SetNodeDurability((ent, ent), nodeComponent.MaxDurability);
     }
 
-    /// <summary> Gets node component by node entity uid. </summary>
-    public XenoArtifactNodeComponent XenoArtifactNode(EntityUid uid)
-    {
-        return _nodeQuery.Get(uid);
-    }
-
     public void SetNodeUnlocked(Entity<XenoArtifactNodeComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (ent.Comp.Attached is not { } netArtifact)
+        if (ent.Comp.Attached is not { } artifact)
             return;
 
-        var artifact = GetEntity(netArtifact);
         if (!TryComp<XenoArtifactComponent>(artifact, out var artifactComponent))
             return;
 
@@ -91,26 +81,33 @@ public abstract partial class SharedXenoArtifactSystem
     /// <summary>
     /// Creates artifact node entity, attaching trigger and marking depth level for future use.
     /// </summary>
-    public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, ProtoId<XenoArchTriggerPrototype> trigger, int depth = 0)
+    public Entity<XenoArtifactNodeComponent>? CreateNode(
+        Entity<XenoArtifactComponent> ent,
+        EntProtoId triggerProtoId,
+        EntityTableSelector effects,
+        int depth = 0
+    )
     {
-        var triggerProto = PrototypeManager.Index(trigger);
-        return CreateNode(ent, triggerProto, depth);
+        var effect = _entityTable.GetFirstOrNull(effects);
+        if (effect == null)
+            return null;
+
+        var trigger = ProtoMan.Index(triggerProtoId);
+        return CreateNode(ent, effect.Value, trigger, depth);
     }
 
     /// <summary>
     /// Creates artifact node entity, attaching trigger and marking depth level for future use.
     /// </summary>
-    public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, XenoArchTriggerPrototype trigger, int depth = 0)
+    public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, EntProtoId effect, EntityPrototype trigger, int depth = 0)
     {
-        var entProtoId = _entityTable.GetSpawns(ent.Comp.EffectsTable)
-                                     .First();
-
-        AddNode((ent, ent), entProtoId, out var nodeEnt, dirty: false);
+        AddNode((ent, ent), effect, out var nodeEnt, dirty: false);
         DebugTools.Assert(nodeEnt.HasValue, "Failed to create node on artifact.");
 
         var nodeComponent = nodeEnt.Value.Comp;
         nodeComponent.Depth = depth;
-        nodeComponent.TriggerTip = trigger.Tip;
+        nodeComponent.TriggerTip = trigger.Name;
+
         EntityManager.AddComponents(nodeEnt.Value, trigger.Components);
 
         Dirty(nodeEnt.Value);
@@ -197,7 +194,10 @@ public abstract partial class SharedXenoArtifactSystem
             foreach (var netNode in segment)
             {
                 var node = GetEntity(netNode);
-                outSegment.Add((node, XenoArtifactNode(node)));
+                if (!_nodeQuery.TryComp(node, out var comp))
+                    continue;
+
+                outSegment.Add((node, comp));
             }
 
             output.Add(outSegment);
@@ -324,7 +324,7 @@ public abstract partial class SharedXenoArtifactSystem
     /// <summary>
     /// Gets two-dimensional array (as lists inside enumeration) that contains artifact nodes, grouped by segment.
     /// </summary>
-    public IEnumerable<List<Entity<XenoArtifactNodeComponent>>> GetSegmentsFromNodes(Entity<XenoArtifactComponent> ent, List<Entity<XenoArtifactNodeComponent>> nodes)
+    public List<List<Entity<XenoArtifactNodeComponent>>> GetSegmentsFromNodes(Entity<XenoArtifactComponent> ent, IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> nodes)
     {
         var outSegments = new List<List<Entity<XenoArtifactNodeComponent>>>();
         foreach (var node in nodes)
@@ -332,10 +332,8 @@ public abstract partial class SharedXenoArtifactSystem
             var segment = new List<Entity<XenoArtifactNodeComponent>>();
             GetSegmentNodesRecursive(ent, node, segment, outSegments);
 
-            if (segment.Count == 0)
-                continue;
-
-            outSegments.Add(segment);
+            if (segment.Count != 0)
+                outSegments.Add(segment);
         }
 
         return outSegments;
@@ -385,7 +383,7 @@ public abstract partial class SharedXenoArtifactSystem
             return;
         }
 
-        var artifact = _xenoArtifactQuery.Get(GetEntity(nodeComponent.Attached.Value));
+        var artifact = _xenoArtifactQuery.Get(nodeComponent.Attached.Value);
 
         var nonactiveNodes = GetActiveNodes(artifact);
         var durabilityEffect = MathF.Pow((float)nodeComponent.Durability / nodeComponent.MaxDurability, 2);

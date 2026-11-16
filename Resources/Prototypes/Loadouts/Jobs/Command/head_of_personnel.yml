@@ -6,7 +6,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobHeadOfPersonnel
-      time: 72000 #20 hrs
+      time: 20h
 
 # Professional HoP Time
 - type: loadoutEffectGroup
@@ -16,7 +16,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobHeadOfPersonnel
-      time: 54000 #15 hrs, special reward for HoP mains
+      time: 15h # special reward for HoP mains
 
 # Jumpsuit
 - type: loadout

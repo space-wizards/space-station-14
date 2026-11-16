@@ -1,0 +1,71 @@
+# unrefined ore
+
+- type: stack
+  parent: BaseMediumStack
+  id: GoldOre
+  name: stack-gold-ore
+  icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: gold }
+  spawn: GoldOre1
+
+- type: stack
+  parent: BaseMediumStack
+  id: DiamondOre
+  name: stack-rough-diamond
+  icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: diamond }
+  spawn: DiamondOre1
+
+- type: stack
+  parent: BaseMediumStack
+  id: SteelOre
+  name: stack-iron-ore
+  icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: iron }
+  spawn: SteelOre1
+
+- type: stack
+  parent: BaseMediumStack
+  id: PlasmaOre
+  name: stack-plasma-ore
+  icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: plasma }
+  spawn: PlasmaOre1
+
+- type: stack
+  parent: BaseMediumStack
+  id: SilverOre
+  name: stack-silver-ore
+  icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: silver }
+  spawn: SilverOre1
+
+- type: stack
+  parent: BaseMediumStack
+  id: SpaceQuartz
+  name: stack-space-quartz
+  icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: spacequartz }
+  spawn: SpaceQuartz1
+
+- type: stack
+  parent: BaseMediumStack
+  id: UraniumOre
+  name: stack-uranium-ore
+  icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: uranium }
+  spawn: UraniumOre1
+
+- type: stack
+  parent: BaseMediumStack
+  id: BananiumOre
+  name: stack-bananium-ore
+  icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: bananium }
+  spawn: BananiumOre1
+
+- type: stack
+  parent: BaseMediumStack
+  id: Coal
+  name: stack-coal
+  icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: coal }
+  spawn: Coal1
+
+- type: stack
+  parent: BaseMediumStack
+  id: SaltOre
+  name: stack-salt
+  icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: salt }
+  spawn: Salt1

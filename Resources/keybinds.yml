@@ -1,4 +1,4 @@
-﻿version: 1 # Not used right now, whatever.
+version: 1 # Not used right now, whatever.
 binds:
 - function: UIClick
   type: State
@@ -255,6 +255,18 @@ binds:
   type: State
   key: E
   mod1: Shift
+- function: SmartEquipPocket1
+  type: State
+  key: F
+  mod1: Shift
+- function: SmartEquipPocket2
+  type: State
+  key: G
+  mod1: Shift
+- function: SmartEquipSuitStorage
+  type: State
+  key: H
+  mod1: Shift
 - function: OpenBackpack
   type: State
   key: V
@@ -269,10 +281,14 @@ binds:
   type: State
   key: v
   mod1: Alt
-- function: MouseMiddle
+- function: InspectServerComponent
   type: State
-  key: MouseMiddle
-  canFocus: true
+  key: b
+  mod1: Alt
+- function: InspectClientComponent
+  type: State
+  key: c
+  mod1: Alt
 - function: RotateObjectClockwise
   type: State
   key: R
@@ -470,7 +486,7 @@ binds:
   type: State
   key: F8
 - function: ToggleRoundEndSummaryWindow
-  type: Toggle
+  type: State
   key: F9
 - function: OpenSandboxWindow
   type: State

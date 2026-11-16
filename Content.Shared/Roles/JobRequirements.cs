@@ -8,6 +8,13 @@ namespace Content.Shared.Roles;
 
 public static class JobRequirements
 {
+    /// <summary>
+    /// Checks if the requirements of the job are met by the provided play-times.
+    /// </summary>
+    /// <param name="job"> The job to test. </param>
+    /// <param name="playTimes"> The playtimes used for the check. </param>
+    /// <param name="reason"> If the requirements were not met, details are provided here. </param>
+    /// <returns>Returns true if all requirements were met or there were no requirements.</returns>
     public static bool TryRequirementsMet(
         JobPrototype job,
         IReadOnlyDictionary<string, TimeSpan> playTimes,
@@ -17,7 +24,25 @@ public static class JobRequirements
         HumanoidCharacterProfile? profile)
     {
         var sys = entManager.System<SharedRoleSystem>();
-        var requirements = sys.GetJobRequirement(job);
+        var requirements = sys.GetRoleRequirements(job);
+        return TryRequirementsMet(requirements, playTimes, out reason, entManager, protoManager, profile);
+    }
+
+    /// <summary>
+    /// Checks if the list of requirements are met by the provided play-times.
+    /// </summary>
+    /// <param name="requirements"> The requirements to test. </param>
+    /// <param name="playTimes"> The playtimes used for the check. </param>
+    /// <param name="reason"> If the requirements were not met, details are provided here. </param>
+    /// <returns>Returns true if all requirements were met or there were no requirements.</returns>
+    public static bool TryRequirementsMet(
+        HashSet<JobRequirement>? requirements,
+        IReadOnlyDictionary<string, TimeSpan> playTimes,
+        [NotNullWhen(false)] out FormattedMessage? reason,
+        IEntityManager entManager,
+        IPrototypeManager protoManager,
+        HumanoidCharacterProfile? profile)
+    {
         reason = null;
         if (requirements == null)
             return true;

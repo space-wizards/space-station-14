@@ -9,7 +9,7 @@
                   Access="Public" />
         <Button Name="WarButton"
                 Text="{Loc 'war-declarator-ui-try-war-button'}"
-                StyleClasses="Caution"
+                StyleClasses="negative"
                 Access="Public"/>
         <BoxContainer Orientation="Vertical" HorizontalExpand="True">
             <Label Name="StatusLabel"

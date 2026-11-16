@@ -7,7 +7,7 @@ namespace Content.Server.Arcade;
 
 public sealed partial class ArcadeOverflowWireAction : BaseToggleWireAction
 {
-    public override Color Color { get; set; } = Color.Red;
+    public override Color Color { get; set; } = Color.OrangeRed;
     public override string Name { get; set; } = "wire-name-arcade-overflow";
 
     public override object? StatusKey { get; } = SharedSpaceVillainArcadeComponent.Indicators.HealthLimiter;
@@ -16,14 +16,19 @@ public sealed partial class ArcadeOverflowWireAction : BaseToggleWireAction
     {
         if (EntityManager.TryGetComponent<SpaceVillainArcadeComponent>(owner, out var arcade))
         {
-            arcade.OverflowFlag = !setting;
+            arcade.UncappedFlag = !setting;
+            if (arcade.Game != null)
+            {
+                arcade.Game.PlayerChar.Uncapped = !setting;
+                arcade.Game.VillainChar.Uncapped = !setting;
+            }
         }
     }
 
     public override bool GetValue(EntityUid owner)
     {
         return EntityManager.TryGetComponent<SpaceVillainArcadeComponent>(owner, out var arcade)
-            && !arcade.OverflowFlag;
+            && !arcade.UncappedFlag;
     }
 
     public override StatusLightState? GetLightState(Wire wire)
@@ -31,7 +36,7 @@ public sealed partial class ArcadeOverflowWireAction : BaseToggleWireAction
         if (EntityManager.HasComponent<SpaceVillainArcadeComponent>(wire.Owner))
         {
             return !GetValue(wire.Owner)
-                ? StatusLightState.BlinkingSlow
+                ? StatusLightState.Off
                 : StatusLightState.On;
         }
 

@@ -7,19 +7,19 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
 /// <summary>
 /// System for xeno artifact effect that make artifact pass through other objects.
 /// </summary>
-public sealed class XAERemoveCollisionSystem : BaseXAESystem<XAERemoveCollisionComponent>
+public sealed partial class XAERemoveCollisionSystem : BaseXAESystem<XAERemoveCollisionComponent>
 {
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
 
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAERemoveCollisionComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
-        if (!TryComp<FixturesComponent>(ent.Owner, out var fixtures))
+        if (!TryComp<FixturesComponent>(args.Artifact, out var fixtures))
             return;
 
         foreach (var fixture in fixtures.Fixtures.Values)
         {
-            _physics.SetHard(ent.Owner, fixture, false, fixtures);
+            _physics.SetHard(args.Artifact, fixture, false, fixtures);
         }
     }
 }

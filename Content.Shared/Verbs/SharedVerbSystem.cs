@@ -7,11 +7,11 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.Verbs
 {
-    public abstract class SharedVerbSystem : EntitySystem
+    public abstract partial class SharedVerbSystem : EntitySystem
     {
-        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
+        [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] protected SharedContainerSystem ContainerSystem = default!;
 
         public override void Initialize()
         {
@@ -139,7 +139,7 @@ namespace Content.Shared.Verbs
             if (types.Contains(typeof(EquipmentVerb)))
             {
                 var access = canAccess || _interactionSystem.CanAccessEquipment(user, target);
-                var verbEvent = new GetVerbsEvent<EquipmentVerb>(user, target, @using, hands, canInteract: canInteract, canComplexInteract: canComplexInteract, canAccess: canAccess, extraCategories);
+                var verbEvent = new GetVerbsEvent<EquipmentVerb>(user, target, @using, hands, canInteract: canInteract, canComplexInteract: canComplexInteract, canAccess: access, extraCategories);
                 RaiseLocalEvent(target, verbEvent);
                 verbs.UnionWith(verbEvent.Verbs);
             }

@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Timing;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Timing;
 

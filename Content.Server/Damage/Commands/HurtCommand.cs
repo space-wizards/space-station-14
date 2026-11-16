@@ -4,17 +4,17 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.FixedPoint;
+using Content.Shared.Damage.Systems;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Damage.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    sealed class DamageCommand : IConsoleCommand
+    sealed partial class DamageCommand : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IEntityManager _entManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
 
         public string Command => "damage";
         public string Description => Loc.GetString("damage-command-description");

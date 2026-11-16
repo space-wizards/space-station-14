@@ -1,0 +1,53 @@
+## Abstract
+
+- type: entity
+  abstract: true
+  parent: StatusEffectBase
+  id: StatusEffectDamageModifierBase
+  description: Status effect for modifying incoming sources of damage. You shouldn't be seeing this.
+  components:
+  - type: DamageModifierStatusEffect
+  - type: StatusEffect
+    whitelist:
+      components:
+      - Damageable
+
+- type: entity
+  abstract: true
+  parent: StatusEffectDamageModifierBase
+  id: StatusEffectDamageModifierDebuffBase
+  components:
+  - type: RejuvenateRemovedStatusEffect
+
+## Buff
+
+- type: entity
+  parent: StatusEffectDamageModifierBase
+  id: StatusEffectRadiationProtection
+  name: radiation protection
+  components:
+  - type: DamageModifierStatusEffect
+    modifiers:
+      coefficients:
+        Radiation: 0.1
+
+## Debuff
+
+- type: entity
+  parent: StatusEffectDamageModifierDebuffBase
+  id: StatusEffectFrail
+  name: frailty
+  components:
+  - type: StatusEffectAlert
+    alert: FrailStatusAlert
+    showDuration: false
+  - type: DamageModifierStatusEffect
+    modifiers:
+      coefficients:
+        Blunt: 1.2
+        Slash: 1.2
+        Piercing: 1.2
+        Heat: 1.2
+        Cold: 1.2
+        Shock: 1.2
+        Caustic: 1.2

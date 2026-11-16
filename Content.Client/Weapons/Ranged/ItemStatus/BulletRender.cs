@@ -41,7 +41,7 @@ public abstract class BaseBulletRenderer : Control
     {
         var countPerRow = Math.Min(Capacity, CountPerRow(availableSize.X));
 
-        var rows = Math.Min((int) MathF.Ceiling(Capacity / (float) countPerRow), Rows);
+        var rows = Math.Min((int)MathF.Ceiling(Capacity / (float)countPerRow), Rows);
 
         var height = _params.ItemHeight * rows + (_params.VerticalSeparation * rows - 1);
         var width = RowWidth(countPerRow);
@@ -110,7 +110,7 @@ public abstract class BaseBulletRenderer : Control
 
     private int CountPerRow(float width)
     {
-        return (int) ((width - _params.ItemWidth + _params.ItemSeparation) / _params.ItemSeparation);
+        return (int)((width - _params.ItemWidth + _params.ItemSeparation) / _params.ItemSeparation);
     }
 
     private int RowWidth(int count)
@@ -149,6 +149,15 @@ public sealed class BulletRender : BaseBulletRenderer
     public const int BulletHeight = 12;
     public const int VerticalSeparation = 2;
 
+    private static readonly LayoutParameters LayoutLarge = new LayoutParameters
+    {
+        ItemHeight = BulletHeight,
+        ItemSeparation = 6,
+        ItemWidth = 5,
+        VerticalSeparation = VerticalSeparation,
+        MinCountPerRow = MinCountPerRow
+    };
+
     private static readonly LayoutParameters LayoutNormal = new LayoutParameters
     {
         ItemHeight = BulletHeight,
@@ -185,8 +194,9 @@ public sealed class BulletRender : BaseBulletRenderer
             if (_type == value)
                 return;
 
-            Parameters = _type switch
+            Parameters = value switch
             {
+                BulletType.Large => LayoutLarge,
                 BulletType.Normal => LayoutNormal,
                 BulletType.Tiny => LayoutTiny,
                 _ => throw new ArgumentOutOfRangeException()
@@ -218,6 +228,7 @@ public sealed class BulletRender : BaseBulletRenderer
 
     public enum BulletType
     {
+        Large,
         Normal,
         Tiny
     }
@@ -248,5 +259,75 @@ public sealed class BatteryBulletRenderer : BaseBulletRenderer
     {
         var color = spent ? ItemColorGone : ItemColor;
         handle.DrawRect(UIBox2.FromDimensions(renderPos, new Vector2(SizeH, SizeV)), color);
+    }
+}
+
+public sealed class CustomBulletRenderer : BaseBulletRenderer
+{
+    private readonly Texture _loadedSprite;
+    private readonly Texture _spentSprite;
+
+    private const int Separation = 2;
+
+    public CustomBulletRenderer(Texture loadedSprite, Texture spentSprite, int numberOfRows)
+    {
+        _loadedSprite = loadedSprite;
+        _spentSprite = spentSprite;
+        Rows = numberOfRows;
+
+        Parameters = new LayoutParameters
+        {
+            ItemWidth = _loadedSprite.Width,
+            ItemHeight = _loadedSprite.Height,
+            ItemSeparation = _loadedSprite.Width + Separation,
+            MinCountPerRow = 3,
+            VerticalSeparation = Separation,
+        };
+    }
+
+    protected override void Draw(DrawingHandleScreen handle)
+    {
+        var itemSeparation = _loadedSprite.Width + Separation;
+        var numberItemsPerRow = (int)Math.Ceiling((double)Capacity / Rows);
+
+        // if there is more than one item per row, then we need to recalculate the separation between them.
+        if (numberItemsPerRow > 1)
+        {
+            // the item separation is the distance from the start of a item to the start of the next item,
+            // so the total horizontal size will be the item separation times the number of items - 1 + item width.
+            // the reason for the -1 and the + + item width. is that the last item doesn't have a item after it,
+            // so instead of adding the last item separation we add the item width.
+
+            // converting into a equation:
+            // total horizontal size = item separation * (number of items - 1) + width of the item
+
+            // converting to the variables:
+            // Size.X = itemSeparation * (numberItemsPerRow - 1) + _loadedSprite.Width
+            // Size.X - _loadedSprite.Width = itemSeparation * (numberItemsPerRow - 1)
+            // (Size.X - _loadedSprite.Width) / (numberItemsPerRow - 1) = itemSeparation
+            itemSeparation = (int)(Size.X - _loadedSprite.Width) / (numberItemsPerRow - 1);
+
+            // make sure the itemSeparation is less or equal to the standard item separation
+            itemSeparation = int.Min(_loadedSprite.Width + Separation, itemSeparation);
+
+            // make sure the itemSeparation is greater or equal to 1
+            itemSeparation = int.Max(1, itemSeparation);
+        }
+
+        Parameters = new LayoutParameters()
+        {
+            ItemWidth = _loadedSprite.Width,
+            ItemHeight = _loadedSprite.Height,
+            ItemSeparation = itemSeparation,
+            MinCountPerRow = 3,
+            VerticalSeparation = Separation,
+        };
+
+        base.Draw(handle);
+    }
+
+    protected override void DrawItem(DrawingHandleScreen handle, Vector2 renderPos, bool spent, bool altColor)
+    {
+        handle.DrawTexture(spent ? _spentSprite : _loadedSprite, renderPos);
     }
 }

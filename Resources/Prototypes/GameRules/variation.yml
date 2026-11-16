@@ -1,9 +1,9 @@
-﻿# Base
+# Base
 
 - type: entity
-  id: BaseVariationPass
-  parent: BaseGameRule
   abstract: true
+  parent: BaseSilentGameRule
+  id: BaseVariationPass
   components:
   - type: StationVariationPassRule
 
@@ -68,7 +68,7 @@
     - id: DecalSpawnerGraffiti
 
 - type: entity
-  id: BasicDecalBrunsVariationPass
+  id: BasicDecalBurnsVariationPass
   parent: BaseVariationPass
   components:
   - type: EntitySpawnVariationPass

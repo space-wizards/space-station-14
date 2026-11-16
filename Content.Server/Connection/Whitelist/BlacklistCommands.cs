@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Server.Database;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -6,10 +6,10 @@ using Robust.Shared.Console;
 namespace Content.Server.Connection.Whitelist;
 
 [AdminCommand(AdminFlags.Ban)]
-public sealed class AddBlacklistCommand : LocalizedCommands
+public sealed partial class AddBlacklistCommand : LocalizedCommands
 {
-    [Dependency] private readonly IPlayerLocator _playerLocator = default!;
-    [Dependency] private readonly IServerDbManager _db = default!;
+    [Dependency] private IPlayerLocator _playerLocator = default!;
+    [Dependency] private IServerDbManager _db = default!;
 
     public override string Command => "blacklistadd";
 
@@ -61,10 +61,10 @@ public sealed class AddBlacklistCommand : LocalizedCommands
 }
 
 [AdminCommand(AdminFlags.Ban)]
-public sealed class RemoveBlacklistCommand : LocalizedCommands
+public sealed partial class RemoveBlacklistCommand : LocalizedCommands
 {
-    [Dependency] private readonly IPlayerLocator _playerLocator = default!;
-    [Dependency] private readonly IServerDbManager _db = default!;
+    [Dependency] private IPlayerLocator _playerLocator = default!;
+    [Dependency] private IServerDbManager _db = default!;
 
     public override string Command => "blacklistremove";
 

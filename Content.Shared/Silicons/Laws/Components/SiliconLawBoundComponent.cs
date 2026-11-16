@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Radio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -16,6 +17,12 @@ public sealed partial class SiliconLawBoundComponent : Component
     /// </summary>
     [DataField]
     public EntityUid? LastLawProvider;
+
+    /// <summary>
+    /// Version to display on the law panel. Increments whenever the laws are changed
+    /// </summary>
+    [DataField]
+    public int Version = 1;
 }
 
 /// <summary>
@@ -51,11 +58,13 @@ public enum SiliconLawsUiKey : byte
 public sealed class SiliconLawBuiState : BoundUserInterfaceState
 {
     public List<SiliconLaw> Laws;
-    public HashSet<string>? RadioChannels;
+    public HashSet<ProtoId<RadioChannelPrototype>>? RadioChannels;
+    public int Version;
 
-    public SiliconLawBuiState(List<SiliconLaw> laws, HashSet<string>? radioChannels)
+    public SiliconLawBuiState(List<SiliconLaw> laws, HashSet<ProtoId<RadioChannelPrototype>>? radioChannels, int version)
     {
         Laws = laws;
         RadioChannels = radioChannels;
+        Version = version;
     }
 }

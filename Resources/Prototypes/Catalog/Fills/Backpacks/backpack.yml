@@ -4,7 +4,8 @@
   abstract: true
   components:
   - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
+    tags:
+    - Backpack # ignore "WhitelistChameleon" tag
 
 - type: entity
   parent: ClothingBackpackSyndicateBundle
@@ -12,9 +13,11 @@
   name: syndicate raid suit bundle
   description: "Contains the Syndicate's durable raid armor suit."
   components:
-  - type: StorageFill
-    contents:
-    - id: ClothingOuterArmorRaid
-    - id: ClothingHeadHelmetRaid
-    - id: ClothingMaskGasSyndicate
-    - id: ClothingHandsGlovesCombat
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingOuterArmorRaid
+        - id: ClothingHeadHelmetRaid
+        - id: ClothingMaskGasSyndicate
+        - id: ClothingHandsGlovesCombat

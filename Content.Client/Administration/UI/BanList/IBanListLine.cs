@@ -1,9 +1,9 @@
-﻿using Content.Shared.Administration.BanList;
+using Content.Shared.Administration.BanList;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Administration.UI.BanList;
 
-public interface IBanListLine<T> where T : SharedServerBan
+public interface IBanListLine<T> where T : SharedBan
 {
     T Ban { get; }
     Label Reason { get; }

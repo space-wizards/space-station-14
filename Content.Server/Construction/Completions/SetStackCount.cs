@@ -1,4 +1,4 @@
-﻿using Content.Server.Stack;
+using Content.Server.Stack;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 
@@ -12,7 +12,7 @@ namespace Content.Server.Construction.Completions
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            entityManager.EntitySysManager.GetEntitySystem<StackSystem>().SetCount(uid, Amount);
+            entityManager.EntitySysManager.GetEntitySystem<StackSystem>().SetCount((uid, null), Amount);
         }
     }
 }

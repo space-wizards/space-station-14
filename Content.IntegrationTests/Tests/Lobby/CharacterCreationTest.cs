@@ -1,114 +1,122 @@
+#nullable enable
 using Content.Client.Lobby;
+using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Preferences.Managers;
+using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
 using Robust.Client.State;
-using Robust.Shared.Network;
 
-namespace Content.IntegrationTests.Tests.Lobby
+namespace Content.IntegrationTests.Tests.Lobby;
+
+[TestOf(typeof(ClientPreferencesManager))]
+[TestOf(typeof(ServerPreferencesManager))]
+public sealed class CharacterCreationTest : GameTest
 {
-    [TestFixture]
-    [TestOf(typeof(ClientPreferencesManager))]
-    [TestOf(typeof(ServerPreferencesManager))]
-    public sealed class CharacterCreationTest
+    public override PoolSettings PoolSettings => new()
     {
-        [Test]
-        public async Task CreateDeleteCreateTest()
+        InLobby = true,
+    };
+
+    [SidedDependency(Side.Client)] private IClientPreferencesManager _cPrefManager = null!;
+    [SidedDependency(Side.Client)] private IStateManager _cStateManager = null!;
+    [SidedDependency(Side.Server)] private IServerPreferencesManager _sPrefManager = null!;
+
+    [Test]
+    public async Task CreateDeleteCreateTest()
+    {
+        Assume.That(Client.User, Is.Not.Null);
+        var user = Client.User.Value;
+
+        Assume.That(_cStateManager.CurrentState, Is.TypeOf<LobbyState>());
+        await Client.WaitPost(() => _cPrefManager.SelectCharacter(0));
+
+        await RunTicksSync(5);
+
+        var clientCharacters = _cPrefManager.Preferences?.Characters;
+        Assert.That(clientCharacters, Is.Not.Null);
+        Assert.That(clientCharacters, Has.Count.EqualTo(1));
+
+        HumanoidCharacterProfile profile = null!;
+        await Client.WaitPost(() =>
         {
-            await using var pair = await PoolManager.GetServerClient(new PoolSettings { InLobby = true });
-            var server = pair.Server;
-            var client = pair.Client;
+            profile = HumanoidCharacterProfile.Random();
+            _cPrefManager.CreateCharacter(profile);
+        });
+        await RunTicksSync(5);
 
-            var clientNetManager = client.ResolveDependency<IClientNetManager>();
-            var clientStateManager = client.ResolveDependency<IStateManager>();
-            var clientPrefManager = client.ResolveDependency<IClientPreferencesManager>();
+        clientCharacters = _cPrefManager.Preferences?.Characters;
+        Assert.That(clientCharacters, Is.Not.Null);
+        Assert.That(clientCharacters, Has.Count.EqualTo(2));
+        AssertEqual(clientCharacters[1], profile);
 
-            var serverPrefManager = server.ResolveDependency<IServerPreferencesManager>();
+        await PoolManager.WaitUntil(Server, () => _sPrefManager.GetPreferences(user).Characters.Count == 2, maxTicks: 60);
 
+        var serverCharacters = _sPrefManager.GetPreferences(user).Characters;
+        Assert.That(serverCharacters, Has.Count.EqualTo(2));
+        AssertEqual(serverCharacters[1], profile);
 
-            // Need to run them in sync to receive the messages.
-            await pair.RunTicksSync(1);
+        await Client.WaitAssertion(() => _cPrefManager.DeleteCharacter(1));
+        await RunTicksSync(5);
+        Assert.That(_cPrefManager.Preferences?.Characters, Has.Count.EqualTo(1));
+        await PoolManager.WaitUntil(Server, () => _sPrefManager.GetPreferences(user).Characters.Count == 1, maxTicks: 60);
+        Assert.That(_sPrefManager.GetPreferences(user).Characters, Has.Count.EqualTo(1));
 
-            await PoolManager.WaitUntil(client, () => clientStateManager.CurrentState is LobbyState, 600);
+        await Client.WaitIdleAsync();
 
-            Assert.That(clientNetManager.ServerChannel, Is.Not.Null);
+        await Client.WaitAssertion(() =>
+        {
+            profile = HumanoidCharacterProfile.Random();
+            _cPrefManager.CreateCharacter(profile);
+        });
+        await RunTicksSync(5);
 
-            var clientNetId = clientNetManager.ServerChannel.UserId;
-            HumanoidCharacterProfile profile = null;
+        clientCharacters = _cPrefManager.Preferences?.Characters;
+        Assert.That(clientCharacters, Is.Not.Null);
+        Assert.That(clientCharacters, Has.Count.EqualTo(2));
+        AssertEqual(clientCharacters[1], profile);
 
-            await client.WaitAssertion(() =>
-            {
-                clientPrefManager.SelectCharacter(0);
+        await PoolManager.WaitUntil(Server, () => _sPrefManager.GetPreferences(user).Characters.Count == 2, maxTicks: 60);
+        serverCharacters = _sPrefManager.GetPreferences(user).Characters;
+        Assert.That(serverCharacters, Has.Count.EqualTo(2));
+        AssertEqual(serverCharacters[1], profile);
+    }
 
-                var clientCharacters = clientPrefManager.Preferences?.Characters;
-                Assert.That(clientCharacters, Is.Not.Null);
-                Assert.Multiple(() =>
-                {
-                    Assert.That(clientCharacters, Has.Count.EqualTo(1));
+    private static void AssertEqual(HumanoidCharacterProfile a, HumanoidCharacterProfile b)
+    {
+        if (a.MemberwiseEquals(b))
+            return;
 
-                    Assert.That(clientStateManager.CurrentState, Is.TypeOf<LobbyState>());
-                });
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(a.Name, Is.EqualTo(b.Name));
+            Assert.That(a.Age, Is.EqualTo(b.Age));
+            Assert.That(a.Sex, Is.EqualTo(b.Sex));
+            Assert.That(a.Gender, Is.EqualTo(b.Gender));
+            Assert.That(a.Species, Is.EqualTo(b.Species));
+            Assert.That(a.PreferenceUnavailable, Is.EqualTo(b.PreferenceUnavailable));
+            Assert.That(a.SpawnPriority, Is.EqualTo(b.SpawnPriority));
+            Assert.That(a.FlavorText, Is.EqualTo(b.FlavorText));
+            Assert.That(a.JobPriorities, Is.EquivalentTo(b.JobPriorities));
+            Assert.That(a.AntagPreferences, Is.EquivalentTo(b.AntagPreferences));
+            Assert.That(a.TraitPreferences, Is.EquivalentTo(b.TraitPreferences));
+            Assert.That(a.Loadouts, Is.EquivalentTo(b.Loadouts));
+            AssertEqual(a.Appearance, b.Appearance);
+            Assert.Fail("Profile not equal");
+        }
+    }
 
-                profile = HumanoidCharacterProfile.Random();
-                clientPrefManager.CreateCharacter(profile);
+    private static void AssertEqual(HumanoidCharacterAppearance a, HumanoidCharacterAppearance b)
+    {
+        if (a.Equals(b))
+            return;
 
-                clientCharacters = clientPrefManager.Preferences?.Characters;
-
-                Assert.That(clientCharacters, Is.Not.Null);
-                Assert.That(clientCharacters, Has.Count.EqualTo(2));
-                Assert.That(clientCharacters[1].MemberwiseEquals(profile));
-            });
-
-            await PoolManager.WaitUntil(server, () => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 2, maxTicks: 60);
-
-            await server.WaitAssertion(() =>
-            {
-                var serverCharacters = serverPrefManager.GetPreferences(clientNetId).Characters;
-
-                Assert.That(serverCharacters, Has.Count.EqualTo(2));
-                Assert.That(serverCharacters[1].MemberwiseEquals(profile));
-            });
-
-            await client.WaitAssertion(() =>
-            {
-                clientPrefManager.DeleteCharacter(1);
-
-                var clientCharacters = clientPrefManager.Preferences?.Characters.Count;
-                Assert.That(clientCharacters, Is.EqualTo(1));
-            });
-
-            await PoolManager.WaitUntil(server, () => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 1, maxTicks: 60);
-
-            await server.WaitAssertion(() =>
-            {
-                var serverCharacters = serverPrefManager.GetPreferences(clientNetId).Characters.Count;
-                Assert.That(serverCharacters, Is.EqualTo(1));
-            });
-
-            await client.WaitIdleAsync();
-
-            await client.WaitAssertion(() =>
-            {
-                profile = HumanoidCharacterProfile.Random();
-
-                clientPrefManager.CreateCharacter(profile);
-
-                var clientCharacters = clientPrefManager.Preferences?.Characters;
-
-                Assert.That(clientCharacters, Is.Not.Null);
-                Assert.That(clientCharacters, Has.Count.EqualTo(2));
-                Assert.That(clientCharacters[1].MemberwiseEquals(profile));
-            });
-
-            await PoolManager.WaitUntil(server, () => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 2, maxTicks: 60);
-
-            await server.WaitAssertion(() =>
-            {
-                var serverCharacters = serverPrefManager.GetPreferences(clientNetId).Characters;
-
-                Assert.That(serverCharacters, Has.Count.EqualTo(2));
-                Assert.That(serverCharacters[1].MemberwiseEquals(profile));
-            });
-            await pair.CleanReturnAsync();
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(a.EyeColor, Is.EqualTo(b.EyeColor));
+            Assert.That(a.SkinColor, Is.EqualTo(b.SkinColor));
+            Assert.That(a.Markings, Is.EquivalentTo(b.Markings));
+            Assert.Fail("Appearance not equal");
         }
     }
 }

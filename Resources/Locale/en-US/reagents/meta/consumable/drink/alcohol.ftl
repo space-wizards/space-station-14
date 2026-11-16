@@ -193,9 +193,6 @@ reagent-desc-jungle-bird = Despite the name, it’s not exceptionally popular am
 reagent-name-kalimotxo = kalimotxo
 reagent-desc-kalimotxo = A high-class Cuba Libre, for the discerning alcoholic.
 
-reagent-name-kira-special = Kira special
-reagent-desc-kira-special = Long live the guy who everyone had mistaken for a girl. Baka!
-
 reagent-name-tortuga = Tortuga
 reagent-desc-tortuga = Perfect for pirates who’ve been selected as the designated driver. Yarr!
 
@@ -231,9 +228,6 @@ reagent-desc-monkey-business = You’ve got to wonder how the monkeys feel about
 
 reagent-name-moonshine = moonshine
 reagent-desc-moonshine = Artisanal homemade liquor. What could go wrong?
-
-reagent-name-neurotoxin = neurotoxin
-reagent-desc-neurotoxin = A strong neurotoxin that puts the subject into a death-like state.
 
 reagent-name-painkiller = painkiller
 reagent-desc-painkiller = A cure for what ails you.

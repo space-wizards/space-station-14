@@ -7,10 +7,10 @@ using Robust.Shared.Player;
 namespace Content.Server.Traitor.Uplink.Commands;
 
 [AdminCommand(AdminFlags.Admin)]
-public sealed class AddUplinkCommand : LocalizedEntityCommands
+public sealed partial class AddUplinkCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly UplinkSystem _uplinkSystem = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private UplinkSystem _uplinkSystem = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
 
     public override string Command => "adduplink";
 
@@ -73,7 +73,13 @@ public sealed class AddUplinkCommand : LocalizedEntityCommands
         }
 
         // Finally add uplink
-        if (!_uplinkSystem.AddUplink(user, 20, uplinkEntity: uplinkEntity, giveDiscounts: isDiscounted))
+        var result = _uplinkSystem.AddUplink(user, 20, out var code, uplinkEntity: uplinkEntity, giveDiscounts: isDiscounted);
+
+        if (code != null && result == AddUplinkResult.Pda)
+            shell.WriteLine(Loc.GetString("add-uplink-command-success-pda", ("code", string.Join("-", code).Replace("sharp", "#"))));
+        else if (result == AddUplinkResult.Implant)
+            shell.WriteLine(Loc.GetString("add-uplink-command-success-implant"));
+        else if (result == AddUplinkResult.Failure)
             shell.WriteLine(Loc.GetString("add-uplink-command-error-2"));
     }
 

@@ -1,10 +1,18 @@
-﻿- type: polymorph
+- type: polymorph
   id: AdminLizardSmite
   configuration:
     entity: MobReptilian
     forced: true
     transferName: true
-    transferHumanoidAppearance: true
+    inventory: Transfer
+    ignoreAllowRepeatedMorphs: true
+
+- type: polymorph
+  id: AdminVulpSmite
+  configuration:
+    entity: MobVulpkanin
+    forced: true
+    transferName: true
     inventory: Transfer
     ignoreAllowRepeatedMorphs: true
 

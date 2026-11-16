@@ -1,0 +1,72 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Drawn by Ubaser, taken inspiration by /tg/'s vials. Edited and shrunk by iaada(GitHub)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-fill-1",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-fill-2",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-fill-3",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-fill-4",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-fill-1",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-fill-2",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-fill-3",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-fill-4",
+             "directions": 4
+        },
+        {
+            "name": "icon_empty"
+        },
+        {
+            "name": "icon_open"
+        },
+        {
+            "name": "fill-1"
+        },
+        {
+            "name": "fill-2"
+        },
+        {
+            "name": "fill-3"
+        },
+        {
+            "name": "fill-4"
+        },
+        {
+            "name": "fill-5"
+        }
+    ]
+}

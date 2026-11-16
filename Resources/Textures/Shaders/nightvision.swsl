@@ -1,0 +1,19 @@
+// Night vision fullscreen shader.
+light_mode unshaded;
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp float noise_amount; // How much animated noise/static to add (0..1).
+uniform highp float noise_multiplier; // Scales the intensity of the added noise.
+
+void fragment()
+{
+    highp vec4 color = zTextureSpec(SCREEN_TEXTURE, UV);
+
+    // Add some noise for realism.
+    lowp float noise = zRandom(UV + sin(TIME / 10.0)).x * noise_amount;
+
+    // Blend the generated noise into the image.
+    color.rgb += mix(color.rgb, color.rgb * noise, noise) * noise_multiplier;
+
+    COLOR = color;
+}

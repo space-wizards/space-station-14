@@ -37,3 +37,13 @@
   cost: 2500
   category: cargoproduct-category-name-cargo
   group: market
+
+- type: cargoProduct
+  id: CargoMailCart
+  icon:
+      sprite: Objects/Specific/Cargo/mailcart.rsi
+      state: icon
+  product: MailCart
+  cost: 300
+  category: cargoproduct-category-name-cargo
+  group: market

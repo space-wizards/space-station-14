@@ -9,11 +9,11 @@ namespace Content.Server.Ninja.Systems;
 /// <summary>
 /// Handles the toggle gloves action.
 /// </summary>
-public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
+public sealed partial class NinjaGlovesSystem : SharedNinjaGlovesSystem
 {
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
-    [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private SharedObjectivesSystem _objectives = default!;
+    [Dependency] private SpaceNinjaSystem _ninja = default!;
 
     protected override void EnableGloves(Entity<NinjaGlovesComponent> ent, Entity<SpaceNinjaComponent> user)
     {

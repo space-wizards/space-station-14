@@ -1,7 +1,7 @@
 using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
-using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Tools;
@@ -9,12 +9,12 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
-using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Fax;
 using Content.Shared.Fax.Components;
 using Content.Shared.Fax.Systems;
+using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Labels.Components;
 using Content.Shared.Labels.EntitySystems;
@@ -33,24 +33,25 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Fax;
 
-public sealed class FaxSystem : EntitySystem
+public sealed partial class FaxSystem : EntitySystem
 {
-    [Dependency] private readonly IChatManager _chat = default!;
-    [Dependency] private readonly IAdminManager _adminManager = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
-    [Dependency] private readonly PaperSystem _paperSystem = default!;
-    [Dependency] private readonly LabelSystem _labelSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly ToolSystem _toolSystem = default!;
-    [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly FaxecuteSystem _faxecute = default!;
-    [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private IChatManager _chat = default!;
+    [Dependency] private IAdminManager _adminManager = default!;
+    [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private PaperSystem _paperSystem = default!;
+    [Dependency] private LabelSystem _labelSystem = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private ToolSystem _toolSystem = default!;
+    [Dependency] private QuickDialogSystem _quickDialog = default!;
+    [Dependency] private UserInterfaceSystem _userInterface = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private FaxecuteSystem _faxecute = default!;
+    [Dependency] private EmagSystem _emag = default!;
 
     private static readonly ProtoId<ToolQualityPrototype> ScrewingQuality = "Screwing";
 
@@ -68,7 +69,6 @@ public sealed class FaxSystem : EntitySystem
         SubscribeLocalEvent<FaxMachineComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<FaxMachineComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<FaxMachineComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<FaxMachineComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
 
         // Interaction
         SubscribeLocalEvent<FaxMachineComponent, InteractUsingEvent>(OnInteractUsing);
@@ -258,55 +258,32 @@ public sealed class FaxSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnPacketReceived(EntityUid uid, FaxMachineComponent component, DeviceNetworkPacketEvent args)
+    [SubscribeLocalEvent]
+    private void OnPingPayload(Entity<FaxMachineComponent> ent, ref DeviceNetworkPacketEvent<FaxPingPayload> args)
     {
-        if (!HasComp<DeviceNetworkComponent>(uid) || string.IsNullOrEmpty(args.SenderAddress))
+        var isForSyndie = _emag.CheckFlag(ent.Owner, EmagType.Interaction) && args.Data.IsSyndicate;
+        if (!isForSyndie && !ent.Comp.ResponsePings)
             return;
 
-        if (args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command))
+        var pong = new FaxPongPayload
         {
-            switch (command)
-            {
-                case FaxConstants.FaxPingCommand:
-                    var isForSyndie = _emag.CheckFlag(uid, EmagType.Interaction) &&
-                                      args.Data.ContainsKey(FaxConstants.FaxSyndicateData);
-                    if (!isForSyndie && !component.ResponsePings)
-                        return;
+            FaxName = ent.Comp.FaxName,
+        };
 
-                    var payload = new NetworkPayload()
-                    {
-                        { DeviceNetworkConstants.Command, FaxConstants.FaxPongCommand },
-                        { FaxConstants.FaxNameData, component.FaxName }
-                    };
-                    _deviceNetworkSystem.QueuePacket(uid, args.SenderAddress, payload);
+        _deviceNetworkSystem.SendPacket(ent.Owner, args.SenderAddress, ref pong);
+    }
 
-                    break;
-                case FaxConstants.FaxPongCommand:
-                    if (!args.Data.TryGetValue(FaxConstants.FaxNameData, out string? faxName))
-                        return;
+    [SubscribeLocalEvent]
+    private void OnPongPayload(Entity<FaxMachineComponent> ent, ref DeviceNetworkPacketEvent<FaxPongPayload> args)
+    {
+        ent.Comp.KnownFaxes[args.SenderAddress] = args.Data.FaxName;
+        UpdateUserInterface(ent.Owner, ent.Comp);
+    }
 
-                    component.KnownFaxes[args.SenderAddress] = faxName;
-
-                    UpdateUserInterface(uid, component);
-
-                    break;
-                case FaxConstants.FaxPrintCommand:
-                    if (!args.Data.TryGetValue(FaxConstants.FaxPaperNameData, out string? name) ||
-                        !args.Data.TryGetValue(FaxConstants.FaxPaperContentData, out string? content))
-                        return;
-
-                    args.Data.TryGetValue(FaxConstants.FaxPaperLabelData, out string? label);
-                    args.Data.TryGetValue(FaxConstants.FaxPaperStampStateData, out string? stampState);
-                    args.Data.TryGetValue(FaxConstants.FaxPaperStampedByData, out List<StampDisplayInfo>? stampedBy);
-                    args.Data.TryGetValue(FaxConstants.FaxPaperPrototypeData, out string? prototypeId);
-                    args.Data.TryGetValue(FaxConstants.FaxPaperLockedData, out bool? locked);
-
-                    var printout = new FaxPrintout(content, name, label, prototypeId, stampState, stampedBy, locked ?? false);
-                    Receive(uid, printout, args.SenderAddress);
-
-                    break;
-            }
-        }
+    [SubscribeLocalEvent]
+    private void OnPrintPayload(Entity<FaxMachineComponent> ent, ref DeviceNetworkPacketEvent<FaxPrintPayload> args)
+    {
+        Receive(ent, args.Data.Data, args.SenderAddress);
     }
 
     private void OnToggleInterface(EntityUid uid, FaxMachineComponent component, AfterActivatableUIOpenEvent args)
@@ -386,12 +363,13 @@ public sealed class FaxSystem : EntitySystem
     /// <summary>
     ///     Set fax destination address not checking if he knows it exists
     /// </summary>
-    public void SetDestination(EntityUid uid, string destAddress, FaxMachineComponent? component = null)
+    public void SetDestination(EntityUid uid, DeviceAddress destAddress, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
         component.DestinationFaxAddress = destAddress;
+        component.DestinationFaxName = component.KnownFaxes[destAddress];
 
         UpdateUserInterface(uid, component);
     }
@@ -408,15 +386,12 @@ public sealed class FaxSystem : EntitySystem
         component.DestinationFaxAddress = null;
         component.KnownFaxes.Clear();
 
-        var payload = new NetworkPayload()
+        var payload = new FaxPingPayload
         {
-            { DeviceNetworkConstants.Command, FaxConstants.FaxPingCommand }
+            IsSyndicate = _emag.CheckFlag(uid, EmagType.Interaction),
         };
 
-        if (_emag.CheckFlag(uid, EmagType.Interaction))
-            payload.Add(FaxConstants.FaxSyndicateData, true);
-
-        _deviceNetworkSystem.QueuePacket(uid, null, payload);
+        _deviceNetworkSystem.SendPacket(uid, null, ref payload);
     }
 
     /// <summary>
@@ -510,42 +485,55 @@ public sealed class FaxSystem : EntitySystem
         if (component.DestinationFaxAddress == null)
             return;
 
-        if (!component.KnownFaxes.TryGetValue(component.DestinationFaxAddress, out var faxName))
+        if (!component.KnownFaxes.TryGetValue(component.DestinationFaxAddress.Value, out var faxName))
             return;
 
         if (!TryComp(sendEntity, out MetaDataComponent? metadata) ||
            !TryComp<PaperComponent>(sendEntity, out var paper))
             return;
 
+        if (metadata.EntityPrototype == null)
+            return;
+
         TryComp<NameModifierComponent>(sendEntity, out var nameMod);
 
         TryComp<LabelComponent>(sendEntity, out var labelComponent);
 
-        var payload = new NetworkPayload()
+        var content = paper.Content;
+
+        if (component.AddSenderInfo)
         {
-            { DeviceNetworkConstants.Command, FaxConstants.FaxPrintCommand },
-            { FaxConstants.FaxPaperNameData, nameMod?.BaseName ?? metadata.EntityName },
-            { FaxConstants.FaxPaperLabelData, labelComponent?.CurrentLabel },
-            { FaxConstants.FaxPaperContentData, paper.Content },
-            { FaxConstants.FaxPaperLockedData, paper.EditingDisabled },
+            var faxMachineAddress = _deviceNetworkSystem.GetAddress(uid);
+            if (string.IsNullOrEmpty(faxMachineAddress))
+                faxMachineAddress = Loc.GetString("device-address-unknown");
+
+            var time = _gameTicker.RoundDuration();
+            var timeString = TimeSpan.FromSeconds(Math.Truncate(time.TotalSeconds)).ToString();
+
+            content += "\n";
+            content += Loc.GetString(component.SenderInfo,
+                ("sender_name", component.FaxName),
+                ("sender_addr", faxMachineAddress),
+                ("recipient_name", component.DestinationFaxName ?? Loc.GetString("fax-machine-popup-source-unknown")),
+                ("recipient_addr", component.DestinationFaxAddress),
+                ("time", timeString)
+            );
+        }
+
+        var payload = new FaxPrintPayload
+        {
+            Data = new FaxPrintout(
+                    content,
+                    nameMod?.BaseName ?? metadata.EntityName,
+                    labelComponent?.CurrentLabel,
+                    metadata.EntityPrototype.ID,
+                    paper.StampState,
+                    paper.StampedBy,
+                    paper.EditingDisabled,
+                    component.FaxName),
         };
 
-        if (metadata.EntityPrototype != null)
-        {
-            // TODO: Ideally, we could just make a copy of the whole entity when it's
-            // faxed, in order to preserve visuals, etc.. This functionality isn't
-            // available yet, so we'll pass along the originating prototypeId and fall
-            // back to component.PrintPaperId in SpawnPaperFromQueue if we can't find one here.
-            payload[FaxConstants.FaxPaperPrototypeData] = metadata.EntityPrototype.ID;
-        }
-
-        if (paper.StampState != null)
-        {
-            payload[FaxConstants.FaxPaperStampStateData] = paper.StampState;
-            payload[FaxConstants.FaxPaperStampedByData] = paper.StampedBy;
-        }
-
-        _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
+        _deviceNetworkSystem.SendPacket(uid, component.DestinationFaxAddress, ref payload);
 
         _adminLogger.Add(LogType.Action,
             LogImpact.Low,
@@ -565,14 +553,12 @@ public sealed class FaxSystem : EntitySystem
     ///     Accepts a new message and adds it to the queue to print
     ///     If has parameter "notifyAdmins" also output a special message to admin chat.
     /// </summary>
-    public void Receive(EntityUid uid, FaxPrintout printout, string? fromAddress = null, FaxMachineComponent? component = null)
+    public void Receive(EntityUid uid, FaxPrintout printout, DeviceAddress? fromAddress = null, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
-        var faxName = Loc.GetString("fax-machine-popup-source-unknown");
-        if (fromAddress != null && component.KnownFaxes.TryGetValue(fromAddress, out var fax)) // If message received from unknown fax address
-            faxName = fax;
+        var faxName = printout.SenderFaxName ?? Loc.GetString("fax-machine-popup-source-unknown");
 
         _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-received", ("from", faxName)), uid);
         _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Printing);
@@ -590,7 +576,7 @@ public sealed class FaxSystem : EntitySystem
 
         var printout = component.PrintingQueue.Dequeue();
 
-        var entityToSpawn = printout.PrototypeId.Length == 0 ? component.PrintPaperId.ToString() : printout.PrototypeId;
+        var entityToSpawn = ProtoMan.HasIndex(printout.PrototypeId) ? printout.PrototypeId : component.PrintPaperId;
         var printed = Spawn(entityToSpawn, Transform(uid).Coordinates);
 
         if (TryComp<PaperComponent>(printed, out var paper))
@@ -622,6 +608,6 @@ public sealed class FaxSystem : EntitySystem
     private void NotifyAdmins(string faxName)
     {
         _chat.SendAdminAnnouncement(Loc.GetString("fax-machine-chat-notify", ("fax", faxName)));
-        _audioSystem.PlayGlobal("/Audio/Machines/high_tech_confirm.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(-8f));
+        _audioSystem.PlayGlobal("/Audio/Machines/high_tech_confirm.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.AddVolume(-8f));
     }
 }

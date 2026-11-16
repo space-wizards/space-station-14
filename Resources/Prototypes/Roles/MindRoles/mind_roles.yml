@@ -205,6 +205,16 @@
   - type: MindRole
     roleType: SoloAntagonist
 
+# Not a MindRoleNukeops child on purpose, NukeopsRole is what counts towards the war declaration minimum
+- type: entity
+  parent: MindRoleGhostRoleTeamAntagonist
+  id: MindRoleNukeopsReinforcement
+  name: Nukeops Reinforcement Role
+  components:
+  - type: MindRole
+    antagPrototype: Nukeops
+    subtype: role-subtype-nukie
+
 # Revolutionaries
 - type: entity
   parent: BaseMindRoleAntag
@@ -291,6 +301,31 @@
     exclusiveAntag: true
     subtype: role-subtype-wizard
   - type: WizardRole
+
+# Xenoborgs
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleMothershipCore
+  name: Mothership Core Role
+  components:
+  - type: MindRole
+    antagPrototype: MothershipCore
+    exclusiveAntag: true
+    roleType: Silicon
+    subtype: role-subtype-xenoborg-core
+  - type: XenoborgRole
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleXenoborg
+  name: Xenoborg Role
+  components:
+  - type: MindRole
+    antagPrototype: Xenoborg
+    exclusiveAntag: true
+    roleType: Silicon
+    subtype: role-subtype-xenoborg
+  - type: XenoborgRole
 
 # Zombie Squad
 - type: entity

@@ -1,7 +1,7 @@
 - type: entity
+  abstract: true
   parent: BaseItem
   id: BaseAmmoProvider
-  abstract: true
   components:
   - type: ContainerContainer
     containers:
@@ -12,9 +12,9 @@
     sprite: Objects/Storage/boxes.rsi
 
 - type: entity
+  abstract: true
   parent: BaseAmmoProvider
   id: AmmoProviderShotgunShell
-  abstract: true
   components:
     - type: Sprite
       sprite: Objects/Weapons/Guns/Ammunition/Boxes/shotgun.rsi
@@ -35,6 +35,7 @@
   parent: AmmoProviderShotgunShell
   id: BoxBeanbag
   name: ammunition box (.50 beanbag)
+  description: A cardboard box of .50 shotgun shells. Intended to hold less-than-lethal beanbag ammunition.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunBeanbag
@@ -51,9 +52,10 @@
       - state: beanbag
 
 - type: entity
-  name: ammunition box (.50 pellet)
   parent: AmmoProviderShotgunShell
   id: BoxLethalshot
+  name: ammunition box (.50 pellet)
+  description: A cardboard box of .50 shotgun shells. Intended to hold general-purpose kinetic ammunition.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgun
@@ -66,9 +68,10 @@
       - state: lethal
 
 - type: entity
-  name: ammunition box (.50 slug)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunSlug
+  name: ammunition box (.50 slug)
+  description: A cardboard box of .50 shotgun shells. Intended to hold long-ranged slug ammunition.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunSlug
@@ -85,9 +88,10 @@
       - state: slug
 
 - type: entity
-  name: ammunition box (.50 flare)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunFlare
+  name: ammunition box (.50 flare)
+  description: A cardboard box of .50 shotgun shells. Intended to hold illuminating flare ammunition.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunFlare
@@ -104,9 +108,10 @@
       - state: flare
 
 - type: entity
-  name: ammunition box (.50 incendiary)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunIncendiary
+  name: ammunition box (.50 incendiary)
+  description: A cardboard box of .50 shotgun shells. Intended to hold self-igniting incendiary ammunition.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunIncendiary
@@ -123,9 +128,10 @@
       - state: incendiary
 
 - type: entity
-  name: ammunition box (.50 uranium)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunUranium
+  name: ammunition box (.50 uranium)
+  description: A cardboard box of .50 shotgun shells. Intended to hold exotic uranium-core ammunition.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunUranium
@@ -142,9 +148,10 @@
       - state: uranium
 
 - type: entity
-  name: ammunition box (.50 practice)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunPractice
+  name: ammunition box (.50 practice)
+  description: A cardboard box of .50 shotgun shells. Intended to hold harmless practice ammunition.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunPractice
@@ -161,9 +168,10 @@
       - state: practice
 
 - type: entity
-  name: ammunition box (.50 tranquilizer)
   parent: AmmoProviderShotgunShell
   id: BoxShellTranquilizer
+  name: ammunition box (.50 tranquilizer)
+  description: A cardboard box of .50 shotgun shells. Intended to hold nonlethal tranquilizer ammunition.
   components:
     - type: BallisticAmmoProvider
       proto: ShellTranquilizer

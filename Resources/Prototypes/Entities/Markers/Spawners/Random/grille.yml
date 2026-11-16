@@ -3,14 +3,14 @@
   id: GrilleSpawner
   parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - sprite: Structures/Walls/random.rsi
-          state: randomgrille
-    - type: RandomSpawner
-      prototypes:
-        - Grille
-        - GrilleBroken
-      chance: 1.0
+  - type: Sprite
+    layers:
+      - sprite: Structures/Walls/random.rsi
+        state: randomgrille
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: Grille
+      - id: GrilleBroken
   placement:
     mode: AlignTileAny

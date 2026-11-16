@@ -44,7 +44,7 @@ public sealed partial class ReflectComponent : Component
     public float ReflectProb = 0.25f;
 
     /// <summary>
-    /// Probability for a projectile to be reflected.
+    /// Projectile spread. The projectile will be randomly rotated within this angle upon being reflected.
     /// </summary>
     [DataField, AutoNetworkedField]
     public Angle Spread = Angle.FromDegrees(45);
@@ -56,6 +56,10 @@ public sealed partial class ReflectComponent : Component
     public SoundSpecifier? SoundOnReflect = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg", AudioParams.Default.WithVariation(0.05f));
 }
 
+/// <summary>
+/// Used for both the projectiles being reflected and the entities reflecting. If there is ever overlap between the
+/// reflection types, the projectile will be reflected.
+/// </summary>
 [Flags, Serializable, NetSerializable]
 public enum ReflectType : byte
 {

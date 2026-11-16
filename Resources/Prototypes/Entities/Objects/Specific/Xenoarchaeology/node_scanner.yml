@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseItem
   id: NodeScanner
   name: node scanner
@@ -14,7 +14,7 @@
       delay: 1
     - type: GuideHelp
       guides:
-      - ArtifactReports
+      - Xenoarchaeology
     - type: ActivatableUI
       key: enum.NodeScannerUiKey.Key
       singleUser: true

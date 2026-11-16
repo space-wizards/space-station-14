@@ -1,0 +1,76 @@
+- type: htnCompound
+  id: GrenadePenguinCompound
+  branches:
+  - tasks:
+    - !type:HTNCompoundTask
+      task: GrenadePenguinMeleeCombatPrecondition
+  - tasks:
+    - !type:HTNCompoundTask
+      task: IdleCompound
+
+- type: htnCompound
+  id: GrenadePenguinMeleeCombatPrecondition
+  branches:
+  - preconditions:
+    - !type:BuckledPrecondition
+      isBuckled: true
+    tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:UnbuckleOperator
+        shutdownState: TaskFinished
+
+  - preconditions:
+    - !type:InFriendlyContainerPrecondition
+      isInFriendlyContainer: true
+    tasks:
+    - !type:HTNCompoundTask
+      task: DoNotEscapeCompound
+
+  - preconditions:
+    - !type:InContainerPrecondition
+      isInContainer: true
+    tasks:
+    - !type:HTNCompoundTask
+      task: EscapeCompound
+
+  - preconditions:
+    - !type:PulledPrecondition
+      isPulled: true
+    tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:UnPullOperator
+        shutdownState: TaskFinished
+
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:UtilityOperator
+        proto: NearbyMeleeTargets
+    - !type:HTNCompoundTask
+      task: GrenadePenguinMeleeCombatCompound
+
+- type: htnCompound
+  id: GrenadePenguinMeleeCombatCompound
+  branches:
+  - preconditions:
+    - !type:KeyExistsPrecondition
+      key: Target
+    tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:MoveToOperator
+        shutdownState: PlanFinished
+        pathfindInPlanning: true
+        removeKeyOnFinish: false
+        targetKey: TargetCoordinates
+        pathfindKey: TargetPathfind
+        rangeKey: MeleeRange
+    # too angry to juke
+    - !type:HTNPrimitiveTask
+      operator: !type:MeleeOperator
+        targetKey: Target
+      preconditions:
+      - !type:KeyExistsPrecondition
+        key: Target
+      - !type:TargetInRangePrecondition
+        targetKey: Target
+        rangeKey: MeleeRange
+    # no service, no changing target

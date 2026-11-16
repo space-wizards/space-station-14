@@ -16,7 +16,6 @@ namespace Content.Client.ContextMenu.UI
     {
         public const string StyleClassContextMenuButton = "contextMenuButton";
         public const string StyleClassContextMenuExpansionTexture = "contextMenuExpansionTexture";
-        public const string StyleClassEntityMenuIconLabel = "contextMenuIconLabel";
 
         public const float ElementMargin = 2;
         public const float ElementHeight = 32;
@@ -56,10 +55,10 @@ namespace Content.Client.ContextMenu.UI
                 Text = text;
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void ExitedTree()
         {
-            base.Dispose(disposing);
-            _subMenu?.Dispose();
+            base.ExitedTree();
+            _subMenu?.Orphan();
             _subMenu = null;
             ParentMenu = null;
         }

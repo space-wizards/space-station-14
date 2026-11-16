@@ -5,7 +5,6 @@ using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Thief;
 using Robust.Server.GameObjects;
 using Robust.Server.Audio;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Thief.Systems;
 
@@ -13,14 +12,13 @@ namespace Content.Server.Thief.Systems;
 /// <see cref="ThiefUndeterminedBackpackComponent"/>
 /// this system links the interface to the logic, and will output to the player a set of items selected by him in the interface
 /// </summary>
-public sealed class ThiefUndeterminedBackpackSystem : EntitySystem
+public sealed partial class ThiefUndeterminedBackpackSystem : EntitySystem
 {
-    [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly SharedStorageSystem _storage = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private AudioSystem _audio = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private SharedStorageSystem _storage = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
 
     public override void Initialize()
     {
@@ -47,7 +45,7 @@ public sealed class ThiefUndeterminedBackpackSystem : EntitySystem
 
         foreach (var i in backpack.Comp.SelectedSets)
         {
-            var set = _proto.Index(backpack.Comp.PossibleSets[i]);
+            var set = ProtoMan.Index(backpack.Comp.PossibleSets[i]);
             foreach (var item in set.Content)
             {
                 var ent = Spawn(item, _transform.GetMapCoordinates(backpack.Owner));
@@ -86,7 +84,7 @@ public sealed class ThiefUndeterminedBackpackSystem : EntitySystem
 
         for (int i = 0; i < component.PossibleSets.Count; i++)
         {
-            var set = _proto.Index(component.PossibleSets[i]);
+            var set = ProtoMan.Index(component.PossibleSets[i]);
             var selected = component.SelectedSets.Contains(i);
             var info = new ThiefBackpackSetInfo(
                 set.Name,
@@ -96,6 +94,6 @@ public sealed class ThiefUndeterminedBackpackSystem : EntitySystem
             data.Add(i, info);
         }
 
-        _ui.SetUiState(uid, ThiefBackpackUIKey.Key, new ThiefBackpackBoundUserInterfaceState(data, component.MaxSelectedSets));
+        _ui.SetUiState(uid, ThiefBackpackUIKey.Key, new ThiefBackpackBoundUserInterfaceState(data, component.MaxSelectedSets, component.ToolName, component.ToolDesc));
     }
 }

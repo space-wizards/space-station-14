@@ -1,4 +1,4 @@
-﻿# generic "highly illegal" contraband; Syndicate/magical contraband are already considered highly illegal under Space Law,
+# generic "highly illegal" contraband; Syndicate/magical contraband are already considered highly illegal under Space Law,
 # so this is mostly for stuff that should be equally illegal but doesn't need its own unique contraband tier added
 - type: entity
   id: BaseHighlyIllegalContraband
@@ -13,7 +13,7 @@
   abstract: true
   components:
   - type: Contraband
-    severity: Major # placeholder until they make a better severity
+    severity: HighlyIllegal
 
 # any type of magical items used by wizards and similiar
 - type: entity
@@ -30,6 +30,8 @@
   components:
   - type: Contraband
     severity: Syndicate
+    allowedDepartments: [  ]
+    allowedJobs: [  ]
 
 # minor contraband not departmentally restricted -- improvised weapons etc
 - type: entity
@@ -65,6 +67,14 @@
   components:
   - type: Contraband
     allowedDepartments: [ CentralCommand ]
+
+- type: entity
+  id: BaseTaskForceContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ TaskForce ]
 
 - type: entity
   id: BaseCommandContraband
@@ -121,6 +131,14 @@
   components:
   - type: Contraband
     allowedDepartments: [ Cargo ]
+
+- type: entity
+  id: BaseServiceContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Service ]
 
 # multiple departments restricted contraband
 - type: entity
@@ -180,6 +198,23 @@
     allowedDepartments: [ Medical, Science ]
 
 # contraband restricted by job by some degree
+
+- type: entity
+  id: BaseCBURNContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedJobs: [ CBURN ]
+
+- type: entity
+  id: BaseDeathSquadContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedJobs: [ DeathSquad ]
+
 - type: entity
   id: BaseSecurityBartenderContraband
   parent: BaseRestrictedContraband
@@ -188,15 +223,6 @@
   - type: Contraband
     allowedDepartments: [ Security ]
     allowedJobs: [ Bartender ]
-
-- type: entity
-  id: BaseSecurityBartenderZookeeperContraband
-  parent: BaseRestrictedContraband
-  abstract: true
-  components:
-  - type: Contraband
-    allowedDepartments: [ Security ]
-    allowedJobs: [ Bartender, Zookeeper ]
 
 - type: entity
   id: BaseSecurityLawyerContraband

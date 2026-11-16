@@ -1,0 +1,19 @@
+# Tiles that come straight from the eighties
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileLino
+  name: stack-linoleum-floor
+  spawn: FloorTileItemLino
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStackArcadeBlue
+  name: stack-blue-arcade-tile
+  spawn: FloorTileItemArcadeBlue
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStackArcadeRed
+  name: stack-red-arcade-tile
+  spawn: FloorTileItemArcadeRed

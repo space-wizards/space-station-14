@@ -1,4 +1,4 @@
-﻿using Lidgren.Network;
+using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
@@ -16,6 +16,7 @@ public sealed class MsgPlayTime : NetMessage
     public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
     {
         var count = buffer.ReadVariableInt32();
+        buffer.AssertAtLeastSize(count * (NetMessageExt.MinSizeOfString + NetMessageExt.SizeOfTimeSpan));
         Trackers.EnsureCapacity(count);
 
         for (var i = 0; i < count; i++)

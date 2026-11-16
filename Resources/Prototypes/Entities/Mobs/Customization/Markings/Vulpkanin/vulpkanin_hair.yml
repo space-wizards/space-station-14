@@ -1,260 +1,262 @@
 # Hairs
+
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpHairAdhara
   bodyPart: Hair
-  speciesRestriction: [ Vulpkanin ]
-  markingCategory: Hair
+  groupWhitelist: [ Vulpkanin ]
   canBeDisplaced: false
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/hair.rsi
       state: adhara
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpHairAnita
   bodyPart: Hair
-  speciesRestriction: [ Vulpkanin ]
-  markingCategory: Hair
+  groupWhitelist: [ Vulpkanin ]
   canBeDisplaced: false
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/hair.rsi
       state: anita
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpHairApollo
   bodyPart: Hair
-  speciesRestriction: [ Vulpkanin ]
-  markingCategory: Hair
+  groupWhitelist: [ Vulpkanin ]
   canBeDisplaced: false
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/hair.rsi
       state: apollo
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpHairBelle
   bodyPart: Hair
-  speciesRestriction: [ Vulpkanin ]
-  markingCategory: Hair
+  groupWhitelist: [ Vulpkanin ]
   canBeDisplaced: false
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/hair.rsi
       state: belle
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpHairBraided
   bodyPart: Hair
-  markingCategory: Hair
   canBeDisplaced: false
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/hair.rsi
       state: braided
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpHairBun
   bodyPart: Hair
-  markingCategory: Hair
   canBeDisplaced: false
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/hair.rsi
       state: bun
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpHairCleanCut
   bodyPart: Hair
-  markingCategory: Hair
   canBeDisplaced: false
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/hair.rsi
       state: clean_cut
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpHairCurl
   bodyPart: Hair
-  markingCategory: Hair
   canBeDisplaced: false
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/hair.rsi
       state: curl
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpHairHawk
   bodyPart: Hair
-  markingCategory: Hair
   canBeDisplaced: false
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/hair.rsi
       state: hawk
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpHairJagged
   bodyPart: Hair
-  markingCategory: Hair
   canBeDisplaced: false
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/hair.rsi
       state: jagged
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpHairJeremy
   bodyPart: Hair
-  markingCategory: Hair
   canBeDisplaced: false
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/hair.rsi
       state: jeremy
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpHairKajam
   bodyPart: Hair
-  markingCategory: Hair
   canBeDisplaced: false
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/hair.rsi
       state: kajam
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpHairKeid
   bodyPart: Hair
-  markingCategory: Hair
   canBeDisplaced: false
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/hair.rsi
       state: keid
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpHairKleeia
   bodyPart: Hair
-  markingCategory: Hair
   canBeDisplaced: false
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/hair.rsi
       state: kleeia
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpHairMizar
   bodyPart: Hair
-  markingCategory: Hair
   canBeDisplaced: false
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/hair.rsi
       state: mizar
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpHairPunkBraided
   bodyPart: Hair
-  markingCategory: Hair
   canBeDisplaced: false
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/hair.rsi
       state: punkbraided
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpHairRaine
   bodyPart: Hair
-  markingCategory: Hair
   canBeDisplaced: false
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/hair.rsi
       state: raine
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpHairRough
   bodyPart: Hair
-  markingCategory: Hair
   canBeDisplaced: false
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/hair.rsi
       state: rough
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpHairShort
   bodyPart: Hair
-  markingCategory: Hair
   canBeDisplaced: false
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/hair.rsi
       state: short
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpHairShort2
   bodyPart: Hair
-  markingCategory: Hair
   canBeDisplaced: false
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/hair.rsi
       state: short2
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpHairSpike
   bodyPart: Hair
-  markingCategory: Hair
   canBeDisplaced: false
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/hair.rsi
       state: spike
 
 # Facial Hairs
+
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpFacialHairRuff
   bodyPart: FacialHair
-  markingCategory: FacialHair
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   canBeDisplaced: false
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
       state: ruff
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpFacialHairElder
   bodyPart: FacialHair
-  markingCategory: FacialHair
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   canBeDisplaced: false
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
       state: elder
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpFacialHairElderChin
   bodyPart: FacialHair
-  markingCategory: FacialHair
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   canBeDisplaced: false
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
       state: elder_chin
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpFacialHairKita
   bodyPart: FacialHair
-  markingCategory: FacialHair
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   canBeDisplaced: false
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
       state: kita
 
 - type: marking
+  parent: [ VulpBaseMarking ]
   id: VulpFacialHairGoatee
   bodyPart: FacialHair
-  markingCategory: FacialHair
-  speciesRestriction: [ Vulpkanin ]
+  groupWhitelist: [ Vulpkanin ]
   canBeDisplaced: false
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi

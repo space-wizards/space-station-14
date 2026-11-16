@@ -1,8 +1,8 @@
 - type: entity
+  abstract: true
+  parent: [ BaseItem, BaseSecurityContraband ]
   id: BaseSpeedLoaderMagnum
   name: "speed loader (.45 magnum)"
-  parent: [ BaseItem, BaseSecurityContraband ]
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -20,10 +20,10 @@
         ents: []
 
 - type: entity
+  parent: BaseSpeedLoaderMagnum
   id: SpeedLoaderMagnum
   name: "speed loader (.45 magnum)"
-  parent: BaseSpeedLoaderMagnum
-  description: Designed to quickly refill an empty revolver, it fits up to six rounds. Intended to hold general-purpose kinetic ammunition.
+  description: Designed to quickly load up to six rounds of .45 magnum into an empty revolver. Intended to hold general-purpose kinetic ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnum
@@ -49,10 +49,11 @@
       - state: inhand-right-ammo
 
 - type: entity
+  parent: SpeedLoaderMagnum
   id: SpeedLoaderMagnumEmpty
   name: "speed loader (.45 magnum any)"
-  parent: SpeedLoaderMagnum
-  description: Designed to quickly refill an empty revolver, it fits up to six rounds for the big iron on your hip. #Big Iron reference (duh)
+  suffix: empty
+  description: Designed to quickly load up to six rounds of .45 magnum into an empty revolver.
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -74,19 +75,19 @@
       - state: inhand-right-mag
 
 - type: entity
+  parent: SpeedLoaderMagnum
   id: SpeedLoaderMagnumIncendiary
   name: "speed loader (.45 magnum incendiary)"
-  parent: SpeedLoaderMagnum
-  description: Designed to quickly refill an empty revolver, it fits up to six rounds. Intended to hold self-igniting incendiary ammunition.
+  description: Designed to quickly load up to six rounds of .45 magnum into an empty revolver. Intended to hold self-igniting incendiary ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumIncendiary
 
 - type: entity
+  parent: BaseSpeedLoaderMagnum
   id: SpeedLoaderMagnumPractice
   name: "speed loader (.45 magnum practice)"
-  parent: BaseSpeedLoaderMagnum
-  description: Designed to quickly refill an empty revolver, it fits up to six rounds. Intended to hold non-harmful chalk ammunition, perfect for practicing your quick draw.
+  description: Designed to quickly load up to six rounds of .45 magnum into an empty revolver. Intended to hold harmless practice ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumPractice
@@ -116,10 +117,10 @@
         color: "#ea5800"
 
 - type: entity
+  parent: BaseSpeedLoaderMagnum
   id: SpeedLoaderMagnumAP
   name: "speed loader (.45 magnum armor-piercing)"
-  parent: BaseSpeedLoaderMagnum
-  description: Designed to quickly refill an empty revolver, it fits up to six rounds. Intended to hold rare armor-piercing ammunition.
+  description: Designed to quickly load up to six rounds of .45 magnum into an empty revolver. Intended to hold specialized armor-piercing ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumAP
@@ -149,10 +150,10 @@
         color: "#540000"
 
 - type: entity
+  parent: BaseSpeedLoaderMagnum
   id: SpeedLoaderMagnumUranium
   name: "speed loader (.45 magnum uranium)"
-  parent: BaseSpeedLoaderMagnum
-  description: Designed to quickly refill an empty revolver, it fits up to six rounds. Intended to hold exotic uranium-core ammunition.
+  description: Designed to quickly load up to six rounds of .45 magnum into an empty revolver. Intended to hold exotic uranium-core ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumUranium

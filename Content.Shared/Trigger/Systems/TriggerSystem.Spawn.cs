@@ -1,4 +1,5 @@
-﻿using Content.Shared.Trigger.Components.Effects;
+using Content.Shared.GameTicking;
+using Content.Shared.Trigger.Components.Effects;
 using Content.Shared.Trigger.Components.Triggers;
 using Robust.Shared.Prototypes;
 
@@ -9,6 +10,7 @@ public sealed partial class TriggerSystem
     private void InitializeSpawn()
     {
         SubscribeLocalEvent<TriggerOnSpawnComponent, MapInitEvent>(OnSpawnInit);
+        SubscribeLocalEvent<TriggerOnPlayerSpawnCompleteComponent, PlayerSpawnCompleteEvent>(OnPlayerSpawn);
 
         SubscribeLocalEvent<SpawnOnTriggerComponent, TriggerEvent>(HandleSpawnOnTrigger);
         SubscribeLocalEvent<SpawnEntityTableOnTriggerComponent, TriggerEvent>(HandleSpawnTableOnTrigger);
@@ -16,6 +18,11 @@ public sealed partial class TriggerSystem
     }
 
     private void OnSpawnInit(Entity<TriggerOnSpawnComponent> ent, ref MapInitEvent args)
+    {
+        Trigger(ent.Owner, null, ent.Comp.KeyOut);
+    }
+
+    private void OnPlayerSpawn(Entity<TriggerOnPlayerSpawnCompleteComponent> ent, ref PlayerSpawnCompleteEvent args)
     {
         Trigger(ent.Owner, null, ent.Comp.KeyOut);
     }
@@ -65,7 +72,7 @@ public sealed partial class TriggerSystem
         {
             var mapCoords = _transform.GetMapCoordinates(target);
             if (predicted)
-                EntityManager.PredictedSpawn(proto, mapCoords);
+                PredictedSpawn(proto, mapCoords);
             else if (_net.IsServer)
                 Spawn(proto, mapCoords);
         }
@@ -93,7 +100,7 @@ public sealed partial class TriggerSystem
         if (target == null)
             return;
 
-        PredictedQueueDel(target);
+        QueueDel(target);
         args.Handled = true;
     }
 }

@@ -11,18 +11,16 @@
     - FloorAstroGrass
     - FloorMowedAstroGrass
     - FloorJungleAstroGrass
+    - FloorDarkAstroGrass
+    - FloorDesertAstroSand
     - FloorAstroIce
     - FloorAstroSnow
     - FloorAstroAsteroidSand
-    - FloorAsteroidSandUnvariantized
-    - FloorAsteroidIronsandUnvariantized
     - FloorCave
     - FloorAsteroidIronsand
     - FloorAsteroidTile
-    - FloorAsteroidSandDug
     - FloorAsteroidSand
     - FloorDirt
-    - FloorGrassLight
     - FloorGrassDark
     - FloorGrassJungle
     - FloorGrass

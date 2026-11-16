@@ -1,8 +1,7 @@
 - type: marking
   id: SlimeGradientLeftArm
   bodyPart: LArm
-  markingCategory: Arms
-  speciesRestriction: [SlimePerson]
+  groupWhitelist: [Slime]
   sprites:
   - sprite: Mobs/Customization/slime_parts.rsi
     state: gradient_l_arm
@@ -10,8 +9,7 @@
 - type: marking
   id: SlimeGradientRightArm
   bodyPart: RArm
-  markingCategory: Arms
-  speciesRestriction: [SlimePerson]
+  groupWhitelist: [Slime]
   sprites:
   - sprite: Mobs/Customization/slime_parts.rsi
     state: gradient_r_arm
@@ -19,8 +17,7 @@
 - type: marking
   id: SlimeGradientLeftLeg
   bodyPart: LLeg
-  markingCategory: Legs
-  speciesRestriction: [SlimePerson]
+  groupWhitelist: [Slime]
   sprites:
   - sprite: Mobs/Customization/slime_parts.rsi
     state: gradient_l_leg
@@ -28,8 +25,7 @@
 - type: marking
   id: SlimeGradientRightLeg
   bodyPart: RLeg
-  markingCategory: Legs
-  speciesRestriction: [SlimePerson]
+  groupWhitelist: [Slime]
   sprites:
   - sprite: Mobs/Customization/slime_parts.rsi
     state: gradient_r_leg
@@ -37,8 +33,7 @@
 - type: marking
   id: SlimeGradientLeftFoot
   bodyPart: LFoot
-  markingCategory: Legs
-  speciesRestriction: [SlimePerson]
+  groupWhitelist: [Slime]
   sprites:
   - sprite: Mobs/Customization/slime_parts.rsi
     state: gradient_l_foot
@@ -46,8 +41,7 @@
 - type: marking
   id: SlimeGradientRightFoot
   bodyPart: RFoot
-  markingCategory: Legs
-  speciesRestriction: [SlimePerson]
+  groupWhitelist: [Slime]
   sprites:
   - sprite: Mobs/Customization/slime_parts.rsi
     state: gradient_r_foot
@@ -55,8 +49,7 @@
 - type: marking
   id: SlimeGradientLeftHand
   bodyPart: LHand
-  markingCategory: Arms
-  speciesRestriction: [SlimePerson]
+  groupWhitelist: [Slime]
   sprites:
   - sprite: Mobs/Customization/slime_parts.rsi
     state: gradient_l_hand
@@ -64,8 +57,7 @@
 - type: marking
   id: SlimeGradientRightHand
   bodyPart: RHand
-  markingCategory: Arms
-  speciesRestriction: [SlimePerson]
+  groupWhitelist: [Slime]
   sprites:
   - sprite: Mobs/Customization/slime_parts.rsi
     state: gradient_r_hand

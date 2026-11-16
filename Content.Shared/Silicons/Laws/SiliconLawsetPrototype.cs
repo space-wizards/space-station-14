@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Silicons.Laws;
@@ -65,6 +65,12 @@ public sealed partial class SiliconLawsetPrototype : IPrototype
     /// <inheritdoc/>
     [IdDataField]
     public string ID { get; private set; } = default!;
+
+    /// <summary>
+    /// The locstring of the lawset for the guidebook entry, if no name is provided, defaults to the ID
+    /// </summary>    
+    [DataField]
+    public LocId? Name = null;
 
     /// <summary>
     /// List of law prototype ids in this lawset.

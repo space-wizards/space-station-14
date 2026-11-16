@@ -1,13 +1,15 @@
-<DefaultWindow xmlns="https://spacestation14.io"
+<controls:FancyWindow xmlns="https://spacestation14.io"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-               MinSize="280 160" Title="{Loc comp-space-heater-ui-title}">
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+               MinSize="50 50" Resizable="False" Title="{Loc comp-space-heater-ui-title}">
 
-    <BoxContainer Name="VboxContainer" Orientation="Vertical" Margin="5 5 5 5" SeparationOverride="10">
+    <BoxContainer Name="VboxContainer" Orientation="Vertical" Margin="10" SeparationOverride="10">
 
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-                <Button Text="{Loc comp-space-heater-ui-status-disabled}" Access="Public" Name="ToggleStatusButton"/>
-            </BoxContainer>
+            <controls:SwitchButton
+                Name="ToggleStatusButton"
+                HorizontalExpand="True"
+                Access="Public" />
             <BoxContainer Orientation="Horizontal" SeparationOverride="5">
                 <Label Text="{Loc comp-space-heater-ui-mode}"/>
                 <OptionButton Access="Public" Name="ModeSelector"/>
@@ -20,7 +22,7 @@
             </BoxContainer>
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Right">
                 <Button Text="{Loc comp-space-heater-ui-decrease-temperature-range}" Access="Public" Name="DecreaseTempRange" StyleClasses="OpenRight"/>
-                <LineEdit Name ="Thermostat" MinSize="55 0"></LineEdit>
+                <LineEdit Name ="Thermostat" MinSize="55 0" CanKeyboardFocus="False"></LineEdit>
                 <Button Text="{Loc comp-space-heater-ui-increase-temperature-range}" Access="Public" Name="IncreaseTempRange" StyleClasses="OpenLeft"/>
             </BoxContainer>
         </BoxContainer>
@@ -31,4 +33,4 @@
         </BoxContainer>
 
     </BoxContainer>
-</DefaultWindow>
+</controls:FancyWindow>

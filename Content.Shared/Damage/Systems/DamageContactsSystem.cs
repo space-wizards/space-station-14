@@ -7,12 +7,14 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Damage.Systems;
 
-public sealed class DamageContactsSystem : EntitySystem
+public sealed partial class DamageContactsSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+
+    [Dependency] private EntityQuery<DamageContactsComponent> _damageQuery = default!;
 
     public override void Initialize()
     {
@@ -45,13 +47,12 @@ public sealed class DamageContactsSystem : EntitySystem
         if (!TryComp<PhysicsComponent>(otherUid, out var body))
             return;
 
-        var damageQuery = GetEntityQuery<DamageContactsComponent>();
         foreach (var ent in _physics.GetContactingEntities(otherUid, body))
         {
             if (ent == uid)
                 continue;
 
-            if (damageQuery.HasComponent(ent))
+            if (_damageQuery.HasComponent(ent))
                 return;
         }
 

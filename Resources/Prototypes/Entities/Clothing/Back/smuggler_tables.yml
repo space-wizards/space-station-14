@@ -167,7 +167,7 @@
     children:
     - id: SpaceCash100
       weight: 2
-    - id: GlowstickBase
+    - id: GlowstickGreen
       amount: !type:RangeNumberSelector
         range: 1, 5
     - id: GlowstickRed
@@ -242,13 +242,13 @@
   table: !type:AllSelector
     children:
     - !type:NestedSelector
+      tableId: RandomSatchelBurgerTable #2x medium
+    - !type:NestedSelector
       tableId: RandomSatchelPresentsOrToysTable #3x small
     - !type:NestedSelector
       tableId: RandomSatchelCashTable #1x small
     - !type:NestedSelector
       tableId: RandomSatchelWeaponTable #5x small
-    - !type:NestedSelector
-      tableId: RandomSatchelBurgerTable #5x small
     - !type:NestedSelector
       tableId: RandomSatchelGenericTableSmall #1x small
     - !type:NestedSelector
@@ -309,24 +309,18 @@
       amount: !type:RangeNumberSelector
         range: 1, 5
 
-- type: entityTable #5x small
+- type: entityTable #2x medium
   id: RandomSatchelBurgerTable
   table: !type:GroupSelector
+    rolls: !type:RangeNumberSelector
+      range: 1, 2
     children:
     - id: SpaceCash100
       weight: 10
     - id: FoodBurgerAppendix
-      amount: !type:RangeNumberSelector
-        range: 1, 5
     - id: FoodBurgerEmpowered
-      amount: !type:RangeNumberSelector
-        range: 1, 5
     - id: FoodBurgerClown
-      amount: !type:RangeNumberSelector
-        range: 1, 5
     - id: FoodBurgerGhost
-      amount: !type:RangeNumberSelector
-        range: 1, 5
 
 - type: entityTable #1x small
   id: RandomSatchelGenericTableSmall

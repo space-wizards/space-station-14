@@ -7,16 +7,17 @@
   - type: Sprite
     noRot: true
     drawdepth: SmallObjects
-    layers:
-    - map: ["computerLayerBody"]
-      state: television
-    - map: ["computerLayerScreen"]
-      state: detective_television
+  - type: ComputerVisuals
+    stateFrame: television
+    stateKeyboard: null
+    stateScreen: detective_television
+    stateKeys: null
+    statePanel: television_panel
   - type: Computer
     board: ComputerTelevisionCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 3.0
     color: "#b89f25"
   - type: Fixtures
     fixtures:

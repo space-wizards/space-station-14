@@ -12,13 +12,13 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
 
-public sealed class BluespaceAnomalySystem : EntitySystem
+public sealed partial class BluespaceAnomalySystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -30,8 +30,7 @@ public sealed class BluespaceAnomalySystem : EntitySystem
 
     private void OnPulse(EntityUid uid, BluespaceAnomalyComponent component, ref AnomalyPulseEvent args)
     {
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        var xform = xformQuery.GetComponent(uid);
+        var xform = Transform(uid);
         var range = component.MaxShuffleRadius * args.Severity * args.PowerModifier;
         // get a list of all entities in range with the MobStateComponent
         // we filter out those inside a container
@@ -42,7 +41,7 @@ public sealed class BluespaceAnomalySystem : EntitySystem
         var coords = new ValueList<Vector2>();
         foreach (var ent in allEnts)
         {
-            if (xformQuery.TryGetComponent(ent, out var allXform))
+            if (TryComp(ent, out TransformComponent? allXform))
                 coords.Add(_xform.GetWorldPosition(allXform));
         }
 

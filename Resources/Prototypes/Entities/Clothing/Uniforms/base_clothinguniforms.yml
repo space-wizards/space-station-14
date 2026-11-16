@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: Clothing
+  parent: [SolutionFood, SolutionToolNormal, Clothing, BaseSlicingRefinable]
   id: UnsensoredClothingUniformBase
   components:
   - type: Sprite
@@ -9,23 +9,20 @@
     slots: [innerclothing]
     equipSound:
       path: /Audio/Items/jumpsuit_equip.ogg
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: MaterialCloth1
       amount: 3
   - type: PhysicalComposition # 50% of the amount of cloth you'd obtain upon butchering
     materialComposition:
       Cloth: 150
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 30
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 30
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 30
   - type: Tag
     tags:
     - ClothMade
@@ -41,7 +38,6 @@
     slots: [innerclothing]
     femaleMask: UniformTop
 
-
 - type: entity
   abstract: true
   parent: UnsensoredClothingUniformBase
@@ -52,9 +48,10 @@
     deviceNetId: Wireless
     transmitFrequencyId: SuitSensor
     savableAddress: false
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 1200
   - type: StationLimitedNetwork
+  - type: StationTracker
 
 - type: entity
   abstract: true
@@ -71,7 +68,7 @@
   components:
   - type: Foldable
     canFoldInsideContainer: true
-    unfoldVerbText: unfold-verb-clothing-jacket
-    foldVerbText: fold-verb-clothing-jacket
+    unfoldVerbText: fold-zip-verb
+    foldVerbText: fold-unzip-verb
   - type: FoldableClothing
     foldedEquippedPrefix: folded

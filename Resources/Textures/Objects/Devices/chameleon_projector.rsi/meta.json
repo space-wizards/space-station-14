@@ -1,18 +1,32 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/71a1fee2f13730adee5302d34bfa0f0262314d63,  Inhands by TiniestShark (github)",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/71a1fee2f13730adee5302d34bfa0f0262314d63,  Inhands by TiniestShark (github), decharging, icon and powered seperated by ScarKy0(Github)",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "icon",
+      "name": "icon"
+    },
+    {
+      "name": "powered",
       "delays": [
         [
           0.2,
           0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "decharging",
+      "delays": [
+        [
           0.2,
           0.2,
           0.2,

@@ -1,4 +1,4 @@
-﻿using Content.Client.Chemistry.EntitySystems;
+using Content.Client.Chemistry.EntitySystems;
 using Content.Client.Chemistry.UI;
 
 namespace Content.Client.Chemistry.Components;

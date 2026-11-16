@@ -5,31 +5,35 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Wallmounts/paintings.rsi
-        state: painting8
-  - type: RandomSpawner
+    - state: red
+    - sprite: Structures/Wallmounts/paintings.rsi
+      state: painting8
+  - type: EntityTableSpawner
     offset: 0
-    prototypes:
-      - PaintingPersistenceOfMemory
-      - PaintingTheSonOfMan
-      - PaintingTheKiss
-      - PaintingTheScream
-      - PaintingTheGreatWave
-      - PaintingCafeTerraceAtNight
-      - PaintingNightHawks
-      - PaintingSkeletonCigarette
-      - PaintingPrayerHands
-      - PaintingOldGuitarist
-      - PaintingOlympia
-      - PaintingSaturn
-      - PaintingSleepingGypsy
-      - PaintingRedBlueYellow
-      - PaintingHelloWorld
-    chance: 1
-    rarePrototypes:
-      - PaintingSkeletonBoof
-      - PaintingEmpty
-      - PaintingMoony
-      - PaintingAmogusTriptych
-    rareChance: 0.01
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 99
+        children:
+        - id: PaintingPersistenceOfMemory
+        - id: PaintingTheSonOfMan
+        - id: PaintingTheKiss
+        - id: PaintingTheScream
+        - id: PaintingTheGreatWave
+        - id: PaintingCafeTerraceAtNight
+        - id: PaintingNightHawks
+        - id: PaintingSkeletonCigarette
+        - id: PaintingPrayerHands
+        - id: PaintingOldGuitarist
+        - id: PaintingOlympia
+        - id: PaintingSaturn
+        - id: PaintingSleepingGypsy
+        - id: PaintingRedBlueYellow
+        - id: PaintingHelloWorld
+      - !type:GroupSelector
+        weight: 1
+        children:
+        - id: PaintingSkeletonBoof
+        - id: PaintingEmpty
+        - id: PaintingMoony
+        - id: PaintingAmogusTriptych

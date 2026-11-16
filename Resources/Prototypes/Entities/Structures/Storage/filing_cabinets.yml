@@ -39,7 +39,7 @@
       - id: NanoTaskCartridge
 
 - type: entity
-  parent: [ BaseStructureDynamic, BaseBagOpenClose ]
+  parent: [ BaseStructureDynamic, BaseBagOpenClose, StructureHealthContainerWeak ]
   id: BaseFilingCabinet
   description: A cabinet for all your filing needs.
   suffix: Empty
@@ -75,25 +75,13 @@
     containers:
       storagebase: !type:Container
   - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Metallic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 60
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -110,7 +98,7 @@
 - type: entity
   name: filing cabinet
   parent: BaseFilingCabinet
-  id: filingCabinet
+  id: FilingCabinet
   components:
   - type: Sprite
     state: filingcabinet
@@ -119,12 +107,12 @@
     - state: filingcabinet-open
       map: ["openLayer"]
   - type: Construction
-    node: filingCabinet
+    node: FilingCabinet
 
 - type: entity
   name: tall cabinet
   parent: BaseFilingCabinet
-  id: filingCabinetTall
+  id: FilingCabinetTall
   components:
   - type: Sprite
     state: tallcabinet
@@ -138,7 +126,7 @@
 - type: entity
   name: chest drawer
   parent: BaseFilingCabinet
-  id: filingCabinetDrawer
+  id: FilingCabinetDrawer
   description: A small drawer for all your filing needs, Now with wheels!
   components:
   - type: Sprite
@@ -173,13 +161,13 @@
         tableId: FilingCabinetFillTable
 
 - type: entity
-  parent: [BaseBureaucraticStorageFill, filingCabinet]
-  id: filingCabinetRandom
+  parent: [BaseBureaucraticStorageFill, FilingCabinet]
+  id: FilingCabinetRandom
 
 - type: entity
-  parent: [BaseBureaucraticStorageFill, filingCabinetTall]
-  id: filingCabinetTallRandom
+  parent: [BaseBureaucraticStorageFill, FilingCabinetTall]
+  id: FilingCabinetTallRandom
 
 - type: entity
-  parent: [BaseBureaucraticStorageFill, filingCabinetDrawer]
-  id: filingCabinetDrawerRandom
+  parent: [BaseBureaucraticStorageFill, FilingCabinetDrawer]
+  id: FilingCabinetDrawerRandom

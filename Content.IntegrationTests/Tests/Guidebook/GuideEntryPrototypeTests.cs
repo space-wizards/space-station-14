@@ -1,42 +1,34 @@
+#nullable enable
 using Content.Client.Guidebook;
 using Content.Client.Guidebook.Richtext;
+using Content.IntegrationTests.Fixtures;
 using Robust.Shared.ContentPack;
-using Robust.Shared.Prototypes;
-using System.Linq;
+using Content.IntegrationTests.Utility;
 using Content.Shared.Guidebook;
+using Content.IntegrationTests.Fixtures.Attributes;
 
 namespace Content.IntegrationTests.Tests.Guidebook;
 
-[TestFixture]
 [TestOf(typeof(GuidebookSystem))]
 [TestOf(typeof(GuideEntryPrototype))]
 [TestOf(typeof(DocumentParsingManager))]
-public sealed class GuideEntryPrototypeTests
+public sealed class GuideEntryPrototypeTests : GameTest
 {
+    private static string[] _guideEntries = GameDataScrounger.PrototypesOfKind<GuideEntryPrototype>();
+
+    [SidedDependency(Side.Client)] private IResourceManager _cResMan = null!;
+    [SidedDependency(Side.Client)] private DocumentParsingManager _cParser = null!;
+
     [Test]
-    public async Task ValidatePrototypeContents()
+    [TestCaseSource(nameof(_guideEntries))]
+    [Description("Ensures a given guidebook entry is valid, checking the document/etc.")]
+    [RunOnSide(Side.Client)]
+    public async Task Validate(string protoKey)
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
-        var client = pair.Client;
-        await client.WaitIdleAsync();
-        var protoMan = client.ResolveDependency<IPrototypeManager>();
-        var resMan = client.ResolveDependency<IResourceManager>();
-        var parser = client.ResolveDependency<DocumentParsingManager>();
-        var prototypes = protoMan.EnumeratePrototypes<GuideEntryPrototype>().ToList();
+        var proto = CProtoMan.Index<GuideEntryPrototype>(protoKey);
+        using var reader = _cResMan.ContentFileReadText(proto.Text);
+        var text = reader.ReadToEnd();
 
-        foreach (var proto in prototypes)
-        {
-            await client.WaitAssertion(() =>
-            {
-                using var reader = resMan.ContentFileReadText(proto.Text);
-                var text = reader.ReadToEnd();
-                Assert.That(parser.TryAddMarkup(new Document(), text), $"Failed to parse guidebook: {proto.Id}");
-            });
-
-            // Avoid styleguide update limit
-            await client.WaitRunTicks(1);
-        }
-
-        await pair.CleanReturnAsync();
+        Assert.That(_cParser.TryAddMarkup(new Document(), text), $"Failed to parse the guide entry's document.");
     }
 }

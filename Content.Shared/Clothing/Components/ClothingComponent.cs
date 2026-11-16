@@ -10,12 +10,19 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Clothing.Components;
 
 /// <summary>
-///     This handles entities which can be equipped.
+/// This handles entities that can be equipped.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(ClothingSystem), typeof(InventorySystem))]
 public sealed partial class ClothingComponent : Component
 {
+    /// <summary>
+    /// A set of clothing visuals per layer by the name of the inventory slot (e.g. "head").
+    /// Species-specific layers are expected at the name of the layer suffixed with the species (e.g. "head-vox")
+    /// NOTE: if your species-specific layers consist entirely of default layers or layers
+    ///       suffixed with your species (e.g. "helmet-unshaded" to "helmet-unshaded-vox")
+    ///       this can be omitted entirely!
+    /// </summary>
     [DataField]
     public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
 
@@ -39,9 +46,15 @@ public sealed partial class ClothingComponent : Component
     [Access(typeof(ClothingSystem), typeof(InventorySystem), Other = AccessPermissions.ReadExecute)]
     public SlotFlags Slots = SlotFlags.NONE;
 
+    /// <summary>
+    /// The sound that plays when this entity is equipped.
+    /// </summary>
     [DataField]
     public SoundSpecifier? EquipSound;
 
+    /// <summary>
+    /// The sound that plays when this entity is unequipped.
+    /// </summary>
     [DataField]
     public SoundSpecifier? UnequipSound;
 
@@ -88,6 +101,15 @@ public sealed partial class ClothingComponent : Component
     public TimeSpan UnequipDelay = TimeSpan.Zero;
 
     /// <summary>
+    /// Only works when EquipDelay or UnequipDelay > 0.
+    /// Prevents clothing from being put on or taken off while moving.
+    /// Some clothing can logically be put on while running (hats),
+    /// while other types of clothing may require stopping (shoes, hard suits).
+    /// </summary>
+    [DataField]
+    public bool EquipWhileMoving = false;
+
+    /// <summary>
     /// Offset for the strip time for an entity with this component.
     /// Only applied when it is being equipped or removed by another player.
     /// </summary>
@@ -97,7 +119,6 @@ public sealed partial class ClothingComponent : Component
     /// <summary>
     ///     A scale applied to all layers.
     /// </summary>
-    /// 
     [DataField]
     public Vector2 Scale = Vector2.One;
 }

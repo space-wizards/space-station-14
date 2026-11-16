@@ -1,11 +1,13 @@
 using Content.Shared.Inventory;
 using Content.Shared.StatusEffect;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Electrocution
 {
-    public abstract class SharedElectrocutionSystem : EntitySystem
+    public abstract partial class SharedElectrocutionSystem : EntitySystem
     {
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private IGameTiming _timing = default!;
 
         public override void Initialize()
         {
@@ -14,8 +16,13 @@ namespace Content.Shared.Electrocution
             SubscribeLocalEvent<InsulatedComponent, ElectrocutionAttemptEvent>(OnInsulatedElectrocutionAttempt);
             // as long as legally distinct electric-mice are never added, this should be fine (otherwise a mouse-hat will transfer it's power to the wearer).
             SubscribeLocalEvent<InsulatedComponent, InventoryRelayedEvent<ElectrocutionAttemptEvent>>((e, c, ev) => OnInsulatedElectrocutionAttempt(e, c, ev.Args));
+
+            SubscribeLocalEvent<ElectrifiedComponent, MapInitEvent>(OnInit);
         }
 
+        /// <summary>
+        /// Tries to set Siemens Coefficient on an entity's insulated component.
+        /// </summary>
         public void SetInsulatedSiemensCoefficient(EntityUid uid, float siemensCoefficient, InsulatedComponent? insulated = null)
         {
             if (!Resolve(uid, ref insulated))
@@ -41,6 +48,9 @@ namespace Content.Shared.Electrocution
             _appearance.SetData(ent.Owner, ElectrifiedVisuals.IsElectrified, value);
         }
 
+        /// <summary>
+        /// Set a wire's cut state.
+        /// </summary>
         public void SetElectrifiedWireCut(Entity<ElectrifiedComponent> ent, bool value)
         {
             if (ent.Comp.IsWireCut == value)
@@ -52,11 +62,15 @@ namespace Content.Shared.Electrocution
             Dirty(ent);
         }
 
+        /// <summary>
+        /// Attempts to electrocute an entity interacting with electrified components.
+        /// Only call server side.
+        /// </summary>
         /// <param name="uid">Entity being electrocuted.</param>
         /// <param name="sourceUid">Source entity of the electrocution.</param>
         /// <param name="shockDamage">How much shock damage the entity takes.</param>
         /// <param name="time">How long the entity will be stunned.</param>
-        /// <param name="refresh">Should <paramref>time</paramref> be refreshed (instead of accumilated) if the entity is already electrocuted?</param>
+        /// <param name="refresh">Should <paramref>time</paramref> be refreshed (instead of accumulated) if the entity is already electrocuted?</param>
         /// <param name="siemensCoefficient">How insulated the entity is from the shock. 0 means completely insulated, and 1 means no insulation.</param>
         /// <param name="statusEffects">Status effects to apply to the entity.</param>
         /// <param name="ignoreInsulation">Should the electrocution bypass the Insulated component?</param>
@@ -72,6 +86,12 @@ namespace Content.Shared.Electrocution
         private void OnInsulatedElectrocutionAttempt(EntityUid uid, InsulatedComponent insulated, ElectrocutionAttemptEvent args)
         {
             args.SiemensCoefficient *= insulated.Coefficient;
+        }
+
+        private void OnInit(Entity<ElectrifiedComponent> entity, ref MapInitEvent args)
+        {
+            entity.Comp.NextShock = _timing.CurTime;
+            Dirty(entity);
         }
     }
 }

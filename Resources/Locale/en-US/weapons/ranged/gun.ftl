@@ -4,7 +4,8 @@ gun-fire-rate-examine = Fire rate is [color={$color}]{$fireRate}[/color] per sec
 gun-selector-verb = Change to {$mode}
 gun-selected-mode = Selected {$mode}
 gun-disabled = You can't use guns!
-gun-set-fire-mode = Set to {$mode}
+gun-set-fire-mode-examine = Set to [color=yellow]{$mode}[/color].
+gun-set-fire-mode-popup = Changed to {$mode}
 gun-magazine-whitelist-fail = That won't fit into the gun!
 gun-magazine-fired-empty = No ammo left!
 
@@ -53,3 +54,9 @@ gun-speedloader-empty = Speedloader empty
 # GunSpreadModifier
 examine-gun-spread-modifier-reduction = The spread has been reduced by [color=yellow]{$percentage}%[/color].
 examine-gun-spread-modifier-increase = The spread has been increased by [color=yellow]{$percentage}%[/color].
+
+gun-access-locked = The {$target} is access locked!
+gun-toggle-on = The {$target} turns on.
+gun-toggle-off = The {$target} turns off.
+gun-not-anchored = The {$target} isn't anchored to the ground!
+gun-network-ammo-examine = Current projectile type is [color=yellow]{$ammo}[/color].

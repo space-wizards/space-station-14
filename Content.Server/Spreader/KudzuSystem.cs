@@ -1,4 +1,5 @@
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Spreader;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -7,13 +8,17 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Spreader;
 
-public sealed class KudzuSystem : EntitySystem
+public sealed partial class KudzuSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _robustRandom = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+
+    [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery = default!;
+    [Dependency] private EntityQuery<KudzuComponent> _kudzuQuery = default!;
+    [Dependency] private EntityQuery<DamageableComponent> _damageableQuery = default!;
 
     private static readonly ProtoId<EdgeSpreaderPrototype> KudzuGroup = "Kudzu";
 
@@ -29,7 +34,7 @@ public sealed class KudzuSystem : EntitySystem
     {
         // Every time we take any damage, we reduce growth depending on all damage over the growth impact
         //   So the kudzu gets slower growing the more it is hurt.
-        var growthDamage = (int) (args.Damageable.TotalDamage / component.GrowthHealth);
+        var growthDamage = (int) (_damageable.GetTotalDamage((uid, args.Damageable)) / component.GrowthHealth);
         if (growthDamage > 0)
         {
             if (!EnsureComp<GrowingKudzuComponent>(uid, out _))
@@ -91,20 +96,17 @@ public sealed class KudzuSystem : EntitySystem
     /// <inheritdoc/>
     public override void Update(float frameTime)
     {
-        var appearanceQuery = GetEntityQuery<AppearanceComponent>();
-        var query = EntityQueryEnumerator<GrowingKudzuComponent>();
-        var kudzuQuery = GetEntityQuery<KudzuComponent>();
-        var damageableQuery = GetEntityQuery<DamageableComponent>();
+        var kudzuEnumerator = EntityQueryEnumerator<GrowingKudzuComponent>();
         var curTime = _timing.CurTime;
 
-        while (query.MoveNext(out var uid, out var grow))
+        while (kudzuEnumerator.MoveNext(out var uid, out var grow))
         {
             if (grow.NextTick > curTime)
                 continue;
 
             grow.NextTick = curTime + TimeSpan.FromSeconds(0.5);
 
-            if (!kudzuQuery.TryGetComponent(uid, out var kudzu))
+            if (!_kudzuQuery.TryGetComponent(uid, out var kudzu))
             {
                 RemCompDeferred(uid, grow);
                 continue;
@@ -115,16 +117,17 @@ public sealed class KudzuSystem : EntitySystem
                 continue;
             }
 
-            if (damageableQuery.TryGetComponent(uid, out var damage))
+            if (_damageableQuery.TryGetComponent(uid, out var damage))
             {
-                if (damage.TotalDamage > 1.0)
+                var totalDamage = _damageable.GetTotalDamage((uid, damage));
+                if (totalDamage > 1.0)
                 {
                     if (kudzu.DamageRecovery != null)
                     {
                         // This kudzu features healing, so Gradually heal
                         _damageable.TryChangeDamage(uid, kudzu.DamageRecovery, true);
                     }
-                    if (damage.TotalDamage >= kudzu.GrowthBlock)
+                    if (totalDamage >= kudzu.GrowthBlock)
                     {
                         // Don't grow when quite damaged
                         if (_robustRandom.Prob(0.95f))
@@ -143,7 +146,7 @@ public sealed class KudzuSystem : EntitySystem
                 RemCompDeferred(uid, grow);
             }
 
-            if (appearanceQuery.TryGetComponent(uid, out var appearance))
+            if (_appearanceQuery.TryGetComponent(uid, out var appearance))
             {
                 _appearance.SetData(uid, KudzuVisuals.GrowthLevel, kudzu.GrowthLevel, appearance);
             }

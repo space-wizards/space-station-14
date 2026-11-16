@@ -8,6 +8,7 @@ construction-graph-tag-clown-bike-horn = bike horn
 construction-graph-tag-clowne-horn = broken bike horn
 construction-graph-tag-happy-honk-meal = happy honk meal
 construction-graph-tag-woeful-cluwne-meal = woeful cluwne meal
+construction-graph-tag-boxhug = a box of hugs
 
 # mime
 construction-graph-tag-suspenders = suspenders
@@ -47,10 +48,10 @@ construction-graph-tag-payload = payload
 construction-graph-tag-empty-can = an empty can
 construction-graph-tag-igniter = an igniter
 construction-graph-tag-modular-receiver = modular receiver
-construction-graph-tag-power-cell-small = power cell small
+construction-graph-tag-power-cell-small = small power cell
 construction-graph-tag-power-cell = power cell
 construction-graph-tag-potato-battery = a potato battery
-construction-graph-tag-super-compact-ai-chip = a super-compact AI chip
+construction-graph-tag-super-compact-ai-chip = a makeshift microcontroller
 
 # other
 construction-graph-tag-light-bulb = light bulb
@@ -72,6 +73,9 @@ construction-graph-tag-apron = an apron
 construction-graph-tag-utility-belt = a utility belt
 soil-construction-graph-any-mushroom = any mushroom
 construction-graph-tag-mop-basic = mop
+construction-graph-tag-paper = office paper
+construction-graph-tag-core-pinpointer-piece = piece of core pinpointer
+construction-graph-tag-glass-lens = glass lens
 
 # toys
 construction-graph-tag-rubber-ducky = a rubber ducky
@@ -103,6 +107,7 @@ construction-graph-tag-ripley-peripherals-control-module = ripley peripherals co
 construction-graph-tag-door-electronics-circuit-board = door electronics circuit board
 construction-graph-tag-firelock-electronics-circuit-board = firelock electronics circuit board
 construction-graph-tag-conveyor-belt-assembly = conveyor belt assembly
+construction-graph-tag-station-ai-core-electronics = station AI core electronics
 
 # tools
 construction-graph-tag-multitool = a multitool
@@ -150,3 +155,6 @@ construction-graph-tag-spationaut-hardsuit = spationaut hardsuit
 
 # clothing
 construction-graph-tag-backpack = backpack
+
+# chemistry
+construction-graph-tag-centrifuge-compatible = centrifugable container

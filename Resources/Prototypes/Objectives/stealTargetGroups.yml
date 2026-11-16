@@ -12,7 +12,7 @@
   name: steal-target-groups-handheld-crew-monitor
   sprite:
     sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi
-    state: scanner
+    state: icon
 
 - type: stealTargetGroup
   id: ClothingOuterHardsuitRd
@@ -55,13 +55,13 @@
   sprite:
     sprite: Objects/Consumable/Food/meat.rsi
     state: corgi
-    #
+
 - type: stealTargetGroup
   id: CaptainIDCard
   name: steal-target-groups-captain-id-card
   sprite:
     sprite: Objects/Misc/id_cards.rsi
-    state: ert_commander #no one will know the difference.
+    state: icon-captain
 
 - type: stealTargetGroup
   id: JetpackCaptainFilled
@@ -85,11 +85,11 @@
     state: icon
 
 - type: stealTargetGroup
-  id: WeaponEnergyShotgun
-  name: steal-target-groups-weapon-energy-shot-gun
+  id: WeaponEnergyMagnum
+  name: steal-target-groups-weapon-energy-magnum
   sprite:
-    sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Battery/energy_magnum.rsi
+    state: icon
 
 # Thief Collection
 
@@ -108,6 +108,13 @@
     state: sheetNT
 
 - type: stealTargetGroup
+  id: HeadHardsuit
+  name: steal-target-groups-heads-hardsuits
+  sprite:
+    sprite: Clothing/OuterClothing/Hardsuits/security-red.rsi
+    state: icon
+
+- type: stealTargetGroup
   id: Stamp
   name: steal-target-groups-stamps
   sprite:
@@ -120,6 +127,13 @@
   sprite:
     sprite: Objects/Devices/door_remote.rsi
     state: door_remotebase
+
+- type: stealTargetGroup
+  id: OfficerHandgun
+  name: steal-target-groups-officer-handguns
+  sprite:
+    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+    state: base
 
 - type: stealTargetGroup
   id: EncryptionKey
@@ -155,6 +169,13 @@
   sprite:
     sprite: Objects/Tools/lantern.rsi
     state: lantern
+
+- type: stealTargetGroup
+  id: ClothingEyesHuds
+  name: steal-target-groups-huds
+  sprite:
+    sprite: Clothing/Eyes/Hud/sec.rsi
+    state: icon
 
 # Thief single item
 
@@ -229,6 +250,13 @@
     state: ame-part
 
 - type: stealTargetGroup
+  id: ChiefEngineerToolBelt
+  name: steal-target-groups-belt-ce
+  sprite:
+    sprite: Clothing/Belt/ce.rsi
+    state: icon
+
+- type: stealTargetGroup
   id: SalvageExpeditionsComputerCircuitboard
   name: steal-target-groups-salvage-expeditions-computer-circuitboard
   sprite:
@@ -241,13 +269,6 @@
   sprite:
     sprite: Objects/Misc/module.rsi
     state: cpuboard
-
-- type: stealTargetGroup
-  id: ClothingEyesHudBeer
-  name: steal-target-groups-clothing-eyes-hud-beer
-  sprite:
-    sprite: Clothing/Eyes/Hud/beergoggles.rsi
-    state: icon
 
 - type: stealTargetGroup
   id: Bible
@@ -276,6 +297,13 @@
   sprite:
     sprite: Objects/Devices/cartridge.rsi
     state: cart-sec
+
+- type: stealTargetGroup
+  id: CaptainSword
+  name: steal-target-groups-captain-sword
+  sprite:
+    sprite: Objects/Weapons/Melee/captain_sabre.rsi
+    state: icon
 
 #Thief structures
 

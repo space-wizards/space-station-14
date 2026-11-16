@@ -1,11 +1,11 @@
-﻿using Content.Client.Atmos.Components;
+using Content.Client.Atmos.Components;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Robust.Shared.GameStates;
 
 namespace Content.Client.Atmos.EntitySystems;
 
-public sealed class AtmosphereSystem : SharedAtmosphereSystem
+public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
 {
     public override void Initialize()
     {

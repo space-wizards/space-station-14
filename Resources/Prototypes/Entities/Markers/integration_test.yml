@@ -1,0 +1,8 @@
+- type: entity
+  parent: MarkerBase
+  id: IntegrationTestMarker
+  name: Integration Test Marker
+  components:
+  - type: TestMarker
+  - type: Sprite
+    state: pink

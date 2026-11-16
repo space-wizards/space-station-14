@@ -1,0 +1,64 @@
+- type: entity
+  abstract: true
+  parent: [ BaseWeaponBatterySmallNoAmmoCounter ]
+  id: WeaponEnergyCrossbowBase
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/energy_crossbow.rsi
+  - type: Item
+    sprite: Objects/Weapons/Guns/Basic/energy_crossbow.rsi
+    size: Normal
+    shape:
+  - type: Gun
+    fireRate: 5 #high firerate innately bottlenecked by ammo regeneration speed.
+    selectedMode: SemiAuto
+    minAngle: 0
+    maxAngle: 5
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/energycrossbow_shoot.ogg
+  - type: Appearance
+  - type: Battery
+    maxCharge: 960
+    startingCharge: 960
+  - type: BatterySelfRecharger
+    autoRechargeRate: 5
+    autoRechargePauseTime: 5 # Same time it takes to make a new bullet
+  - type: GenericVisualizer
+    visuals:
+      enum.AmmoVisuals.HasAmmo:
+        empty-icon:
+          True: { visible: False }
+          False: { visible: True }
+  - type: EmpResistance
+    strengthMultiplier: 0
+    durationMultiplier: 0
+  - type: BallisticAmmoSelfRefiller
+    firingPausesAutoRefill: true
+    autoRefillPauseDuration: 5 #2 seconds of KD, should always have CD > KD
+    autoRefillRate: 0
+    powerConsumption: 320
+    rechargeSound:
+      path: /Audio/Weapons/Guns/MagIn/energycrossbow_reload.ogg
+  - type: BallisticAmmoProvider
+    proto: EnergyCrossbowBolt
+    capacity: 1
+    cycleable: false
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+
+- type: entity
+  parent: [WeaponEnergyCrossbowBase, BaseSyndicateContraband]
+  id: WeaponEnergyCrossbow
+  name: mini energy crossbow
+  description: Launches renewable toxic arrows capable of flooring targets instantly.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/energy_crossbow.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Weapons/Guns/Basic/energy_crossbow.rsi
+  - type: StaticPrice
+    price: 2500

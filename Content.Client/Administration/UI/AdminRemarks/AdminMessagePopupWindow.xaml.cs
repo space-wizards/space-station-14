@@ -12,17 +12,19 @@ namespace Content.Client.Administration.UI.AdminRemarks;
 [GenerateTypedNameReferences]
 public sealed partial class AdminMessagePopupWindow : Control
 {
+    [Dependency] private IStylesheetManager _styleMan = default!;
+
     private float _timer = float.MaxValue;
 
     public event Action? OnDismissPressed;
-
     public event Action? OnAcceptPressed;
 
     public AdminMessagePopupWindow()
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
-        Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
+        Stylesheet = _styleMan.SheetSystem;
 
         AcceptButton.OnPressed += OnAcceptButtonPressed;
         DismissButton.OnPressed += OnDismissButtonPressed;
@@ -40,7 +42,7 @@ public sealed partial class AdminMessagePopupWindow : Control
 
     public void SetState(AdminMessageEuiState state)
     {
-        Timer = (float) state.Time.TotalSeconds;
+        Timer = (float)state.Time.TotalSeconds;
 
         MessageContainer.RemoveAllChildren();
 
@@ -49,7 +51,8 @@ public sealed partial class AdminMessagePopupWindow : Control
             MessageContainer.AddChild(new AdminMessagePopupMessage(message));
         }
 
-        Description.SetMessage(FormattedMessage.FromMarkupOrThrow(Loc.GetString("admin-notes-message-desc", ("count", state.Messages.Length))));
+        Description.SetMessage(
+            FormattedMessage.FromMarkupOrThrow(Loc.GetString("admin-notes-message-desc", ("count", state.Messages.Length))));
     }
 
     private void OnDismissButtonPressed(BaseButton.ButtonEventArgs obj)

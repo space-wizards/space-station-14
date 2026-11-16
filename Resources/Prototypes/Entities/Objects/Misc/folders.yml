@@ -11,12 +11,23 @@
     - state: folder-base
     - state: folder-stamp-inverse
       color: "#1dff00"
+  - type: PhysicalComposition
+    materialComposition:
+      Paper: 50
   - type: SpawnItemsOnUse
     items:
     - id: NukeCodePaper
     sound:
       path: /Audio/Effects/packetrip.ogg
   - type: Appearance
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#cc2323"
+      right:
+      - state: inhand-right
+        color: "#cc2323"
 
 - type: entity
   parent: BoxBase
@@ -45,6 +56,11 @@
     sprite: Objects/Misc/folders.rsi
     size: Small
     shape: null
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
   - type: Storage
     maxItemSize: Small
     grid:
@@ -58,6 +74,11 @@
         whitelist:
           tags:
           - Document
+  - type: PhysicalComposition
+    materialComposition:
+      Paper: 50
+  - type: StaticPrice
+    price: 15 # Weirdly this is more expensive than cardboard boxes. But if I have this any lower then I get an arbitrage testfail because the raw materials are worth ~$14.
   - type: Appearance
   - type: Tag
     tags:
@@ -68,32 +89,39 @@
   id: BoxFolderFill # Include this as a parent prototype to add 0-5 random papers to a folder's inventory when spawned.
   suffix: Filled
   components:
-  - type: StorageFill
-    contents:
-    - id: Paper
-      prob: 0.5
-    - id: PaperOffice
-      prob: 0.4
-    - id: Paper
-      prob: 0.3
-    - id: PaperOffice
-      prob: 0.2
-    - id: Paper
-      prob: 0.2
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: Paper
+          prob: 0.5
+        - id: PaperOffice
+          prob: 0.4
+        - id: Paper
+          prob: 0.3
+        - id: PaperOffice
+          prob: 0.2
+        - id: Paper
+          prob: 0.2
 
 - type: entity
   abstract: true
-  id: BoxFolderFillThreePapers # Like BoxFolderFill, but always has exactly three sheets of standard paper; use for roles' startingGear
+  id: BoxFolderFillThreePapers # Like BoxFolderFill, but always has exactly three sheets of standard paper; use for things that should always be consistent, e.g roundstart items
   suffix: 3 papers
   components:
-  - type: StorageFill
-    contents:
-    - id: Paper
-      amount: 3
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: Paper
+        amount: 3
 
 - type: entity
   parent: [BoxFolderBaseEmpty, BoxFolderFill]
   id: BoxFolderBase
+
+- type: entity
+  parent: [BoxFolderBaseEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderBaseThreePapers
 
 - type: entity
   parent: BoxFolderBaseEmpty
@@ -105,11 +133,24 @@
     - state: folder-colormap
       color: "#cc2323"
     - state: folder-base
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#cc2323"
+      right:
+      - state: inhand-right
+        color: "#cc2323"
 
 - type: entity
   parent: [BoxFolderRedEmpty, BoxFolderFill]
   id: BoxFolderRed
   suffix: Red, Filled
+
+- type: entity
+  parent: [BoxFolderRedEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderRedThreePapers
+  suffix: Red, 3 papers
 
 - type: entity
   parent: BoxFolderBaseEmpty
@@ -121,11 +162,24 @@
     - state: folder-colormap
       color: "#355d99"
     - state: folder-base
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#355d99"
+      right:
+      - state: inhand-right
+        color: "#355d99"
 
 - type: entity
   parent: [BoxFolderBlueEmpty, BoxFolderFill]
   id: BoxFolderBlue
   suffix: Blue, Filled
+
+- type: entity
+  parent: [BoxFolderBlueEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderBlueThreePapers
+  suffix: Blue, 3 papers
 
 - type: entity
   parent: BoxFolderBaseEmpty
@@ -137,11 +191,24 @@
     - state: folder-colormap
       color: "#b38e3c"
     - state: folder-base
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#b38e3c"
+      right:
+      - state: inhand-right
+        color: "#b38e3c"
 
 - type: entity
   parent: [BoxFolderYellowEmpty, BoxFolderFill]
   id: BoxFolderYellow
   suffix: Yellow, Filled
+
+- type: entity
+  parent: [BoxFolderYellowEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderYellowThreePapers
+  suffix: Yellow, 3 papers
 
 - type: entity
   parent: BoxFolderBaseEmpty
@@ -153,11 +220,24 @@
     - state: folder-colormap
       color: "#999999"
     - state: folder-base
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#999999"
+      right:
+      - state: inhand-right
+        color: "#999999"
 
 - type: entity
   parent: [BoxFolderGreyEmpty, BoxFolderFill]
   id: BoxFolderGrey
   suffix: Grey, Filled
+
+- type: entity
+  parent: [BoxFolderGreyEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderGreyThreePapers
+  suffix: Grey, 3 papers
 
 - type: entity
   parent: BoxFolderBaseEmpty
@@ -169,11 +249,24 @@
     - state: folder-colormap
       color: "#3f3f3f"
     - state: folder-base
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#3f3f3f"
+      right:
+      - state: inhand-right
+        color: "#3f3f3f"
 
 - type: entity
   parent: [BoxFolderBlackEmpty, BoxFolderFill]
   id: BoxFolderBlack
   suffix: Black, Filled
+
+- type: entity
+  parent: [BoxFolderBlackEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderBlackThreePapers
+  suffix: Black, 3 papers
 
 - type: entity
   parent: BoxFolderBaseEmpty
@@ -185,11 +278,24 @@
     - state: folder-colormap
       color: "#43bc38"
     - state: folder-base
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#43bc38"
+      right:
+      - state: inhand-right
+        color: "#43bc38"
 
 - type: entity
   parent: [BoxFolderGreenEmpty, BoxFolderFill]
   id: BoxFolderGreen
   suffix: Green, Filled
+
+- type: entity
+  parent: [BoxFolderGreenEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderGreenThreePapers
+  suffix: Green, 3 papers
 
 - type: entity
   parent: BoxFolderBaseEmpty
@@ -207,6 +313,11 @@
   suffix: White, Filled
 
 - type: entity
+  parent: [BoxFolderWhiteEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderWhiteThreePapers
+  suffix: White, 3 papers
+
+- type: entity
   parent: BoxFolderBaseEmpty
   id: BoxFolderCentComEmpty
   categories: [ DoNotMap ]
@@ -217,11 +328,24 @@
     layers:
     - state: folder-centcom
     - state: folder-base
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#48b448"
+      right:
+      - state: inhand-right
+        color: "#48b448"
 
 - type: entity
   parent: [BoxFolderCentComEmpty, BoxFolderFill]
   id: BoxFolderCentCom
-  suffix: DO NOT MAP, Filled
+  suffix: DO NOT MAP; Filled
+
+- type: entity
+  parent: [BoxFolderCentComEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderCentComThreePapers
+  suffix: DO NOT MAP; 3 papers
 
 - type: entity
   parent: BoxFolderBaseEmpty
@@ -260,12 +384,13 @@
     slots: [belt]
     quickEquip: false
     sprite: Objects/Misc/clipboard.rsi
+  - type: PhysicalComposition
+    materialComposition: # half of autolathe printing cost
+      Wood: 50
+      Steel: 25
   - type: Storage
     grid:
     - 0,0,5,3
-    whitelist:
-      tags:
-      - Document
   - type: ItemMapper
     mapLayers:
       clipboard_paper:
@@ -311,10 +436,18 @@
     sprite: Objects/Misc/plastic_clipboard.rsi
   - type: Clothing
     sprite: Objects/Misc/plastic_clipboard.rsi
+  - type: PhysicalComposition
+    materialComposition: # half of autolathe printing cost
+      Plastic: 50
+      Steel: 25
 
 - type: entity
   parent: [BoxFolderPlasticClipboardEmpty, BoxFolderFill]
   id: BoxFolderPlasticClipboard
+
+- type: entity
+  parent: [BoxFolderPlasticClipboardEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderPlasticClipboardThreePapers
 
 - type: entity
   parent: BoxFolderClipboardEmpty
@@ -337,6 +470,11 @@
     sprite: Objects/Misc/cc-clipboard.rsi
   - type: Clothing
     sprite: Objects/Misc/cc-clipboard.rsi
+  - type: PhysicalComposition
+    materialComposition: # same composition as regular clipboard + bit of cloth because it's "upholstered with green velvet"
+      Wood: 50
+      Steel: 25
+      Cloth: 25
 
 - type: entity
   parent: [BoxFolderCentComClipboardEmpty, BoxFolderFill]
@@ -392,6 +530,10 @@
           - Write
   - type: CargoOrderConsole
     removeLimitAccess: [ "Quartermaster" ]
+  - type: DeviceLinkSource
+    range: 200
+    ports:
+    - OrderSender
   - type: ActivatableUI
     verbText: qm-clipboard-computer-verb-text
     key: enum.CargoConsoleUiKey.Orders
@@ -410,4 +552,5 @@
     - Folder
     - HighRiskItem
   - type: StealTarget
-    stealGroup: BoxFolderQmClipboard
+    stealGroup:
+    - BoxFolderQmClipboard

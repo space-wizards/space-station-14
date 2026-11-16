@@ -1,14 +1,14 @@
-﻿using Content.Shared.Popups;
+using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.PneumaticCannon;
 
-public abstract class SharedPneumaticCannonSystem : EntitySystem
+public abstract partial class SharedPneumaticCannonSystem : EntitySystem
 {
-    [Dependency] protected readonly SharedContainerSystem Container = default!;
-    [Dependency] protected readonly SharedPopupSystem Popup = default!;
+    [Dependency] protected SharedContainerSystem Container = default!;
+    [Dependency] protected SharedPopupSystem Popup = default!;
 
 
     public override void Initialize()

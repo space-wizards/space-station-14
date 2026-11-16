@@ -1,44 +1,34 @@
-using Robust.Shared.GameObjects;
+#nullable enable
+using System.Linq;
+using Content.IntegrationTests.Fixtures;
 
-namespace Content.IntegrationTests.Tests.Networking
+namespace Content.IntegrationTests.Tests.Networking;
+
+public sealed class NetworkIdsMatchTest : GameTest
 {
-    [TestFixture]
-    public sealed class NetworkIdsMatchTest
+    [Test]
+    [Description("Checks that Server and Client have the same networked components registered.")]
+    public async Task TestConnect()
     {
-        [Test]
-        public async Task TestConnect()
+        var clientNetComps = CEntMan.ComponentFactory.NetworkedComponents;
+        var serverNetComps = SEntMan.ComponentFactory.NetworkedComponents;
+
+        using (Assert.EnterMultipleScope())
         {
-            await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
-            var server = pair.Server;
-            var client = pair.Client;
-
-            var clientCompFactory = client.ResolveDependency<IComponentFactory>();
-            var serverCompFactory = server.ResolveDependency<IComponentFactory>();
-
-            var clientNetComps = clientCompFactory.NetworkedComponents;
-            var serverNetComps = serverCompFactory.NetworkedComponents;
-
-            Assert.Multiple(() =>
-            {
-                Assert.That(clientNetComps, Is.Not.Null);
-                Assert.That(serverNetComps, Is.Not.Null);
-            });
-            Assert.Multiple(() =>
-            {
-                Assert.That(clientNetComps, Has.Count.EqualTo(serverNetComps.Count));
-
-                // Checks that at least Metadata and Transform are registered.
-                Assert.That(clientNetComps, Has.Count.GreaterThanOrEqualTo(2));
-            });
-
-            Assert.Multiple(() =>
-            {
-                for (var netId = 0; netId < clientNetComps.Count; netId++)
-                {
-                    Assert.That(clientNetComps[netId].Name, Is.EqualTo(serverNetComps[netId].Name));
-                }
-            });
-            await pair.CleanReturnAsync();
+            Assert.That(clientNetComps, Is.Not.Null);
+            Assert.That(serverNetComps, Is.Not.Null);
         }
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(clientNetComps, Has.Count.EqualTo(serverNetComps.Count));
+
+            // Checks that at least Metadata and Transform are registered.
+            Assert.That(clientNetComps, Has.Count.GreaterThanOrEqualTo(2));
+        }
+
+        var clientNames = clientNetComps.Select(reg => reg.Name);
+        var serverNames = serverNetComps.Select(reg => reg.Name);
+        Assert.That(clientNames, Is.EqualTo(serverNames));
     }
 }

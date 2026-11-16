@@ -46,7 +46,7 @@
     description: ghost-role-information-nukeop-reinforcement-description
     rules: ghost-role-information-nukeop-reinforcement-rules
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleNukeopsReinforcement
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -115,5 +115,6 @@
       - MindRoleGhostRoleSilicon
       raffle:
         settings: default
+      job: Borg
     - type: GhostRoleMobSpawner
       prototype: PlayerBorgSyndicateAssaultBattery

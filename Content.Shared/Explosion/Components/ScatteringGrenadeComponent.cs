@@ -1,4 +1,4 @@
-﻿using Content.Shared.Explosion.EntitySystems;
+using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -15,6 +15,9 @@ public sealed partial class ScatteringGrenadeComponent : Component
 {
     public Container Container = default!;
 
+    /// <summary>
+    /// Whitelist what can be inserted into the cluster.
+    /// </summary>
     [DataField]
     public EntityWhitelist? Whitelist;
 

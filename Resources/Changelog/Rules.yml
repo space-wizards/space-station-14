@@ -1,0 +1,41 @@
+AdminOnly: false
+Entries:
+- author: Errant
+  changes:
+  - message: Tab created.
+    type: Add
+  id: 1
+  time: '2025-10-30'
+- author: Errant
+  changes:
+  - message: Changes to Rules can now be tracked here.
+    type: Add
+  - message: Rule changes are now tracked, on a new tab in the changelog window.
+    type: Add
+  - message: Automation test. You like reading rules, don't you, you are a Rulesreader.
+    type: Tweak
+  id: 2
+  time: '2025-10-30T21:42:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40257
+- author: PicklOH
+  changes:
+  - message: Clarified the usage of the word "clanker"
+    type: Add
+  id: 3
+  time: '2026-01-06T04:38:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42264
+- author: SlamBamActionMan
+  changes:
+  - message: Silicon Rule 8 update - For crewsimov silicon (but not for any other lawsets), crew membership can and must be determined by the new crew indicators. A pulsing green border around the job icon means crew. (Entry added to changelog on 2026-10-24)
+    type: Tweak
+  id: 4
+  time: '2026-01-29T08:13:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37038
+- author: crazybrain23
+  changes:
+  - message: Core Rule 13 update - Any jobs with custom name support are now included in the loosened name restrictions, not just clowns and mimes. (Entry added to changelog on 2026-10-24 )
+    type: Tweak
+  id: 5
+  time: '2026-03-30T01:37:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43217
+Order: 1

@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Placeable;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
@@ -12,9 +13,10 @@ namespace Content.Shared.Xenoarchaeology.Equipment;
 /// This system is used for managing the artifact analyzer as well as the analysis console.
 /// It also handles scanning and ui updates for both systems.
 /// </summary>
-public abstract class SharedArtifactAnalyzerSystem : EntitySystem
+public abstract partial class SharedArtifactAnalyzerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -23,10 +25,14 @@ public abstract class SharedArtifactAnalyzerSystem : EntitySystem
 
         SubscribeLocalEvent<ArtifactAnalyzerComponent, ItemPlacedEvent>(OnItemPlaced);
         SubscribeLocalEvent<ArtifactAnalyzerComponent, ItemRemovedEvent>(OnItemRemoved);
-        SubscribeLocalEvent<ArtifactAnalyzerComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<ArtifactAnalyzerComponent, NewLinkEvent>(OnNewLinkAnalyzer);
+        SubscribeLocalEvent<ArtifactAnalyzerComponent, LinkAttemptEvent>(OnLinkAttemptAnalyzer);
+        SubscribeLocalEvent<ArtifactAnalyzerComponent, SinkPortDisconnectedEvent>(OnPortDisconnectedAnalyzer);
 
-        SubscribeLocalEvent<AnalysisConsoleComponent, NewLinkEvent>(OnNewLink);
-        SubscribeLocalEvent<AnalysisConsoleComponent, PortDisconnectedEvent>(OnPortDisconnected);
+        SubscribeLocalEvent<AnalysisConsoleComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<AnalysisConsoleComponent, NewLinkEvent>(OnNewLinkConsole);
+        SubscribeLocalEvent<AnalysisConsoleComponent, LinkAttemptEvent>(OnLinkAttemptConsole);
+        SubscribeLocalEvent<AnalysisConsoleComponent, SourcePortDisconnectedEvent>(OnPortDisconnectedConsole);
     }
 
     private void OnItemPlaced(Entity<ArtifactAnalyzerComponent> ent, ref ItemPlacedEvent args)
@@ -44,49 +50,71 @@ public abstract class SharedArtifactAnalyzerSystem : EntitySystem
         Dirty(ent);
     }
 
-    private void OnMapInit(Entity<ArtifactAnalyzerComponent> ent, ref MapInitEvent args)
+    private void OnMapInit(Entity<AnalysisConsoleComponent> ent, ref MapInitEvent args)
     {
-        if (!TryComp<DeviceLinkSinkComponent>(ent, out var sink))
+        if (!TryComp<DeviceLinkSourceComponent>(ent, out var source))
             return;
 
-        foreach (var source in sink.LinkedSources)
+        var linkedEntities = _deviceLink.GetLinkedSinks((ent.Owner, source), ent.Comp.LinkingPort);
+
+        foreach (var sink in linkedEntities)
         {
-            if (!TryComp<AnalysisConsoleComponent>(source, out var analysis))
+            if (!TryComp<ArtifactAnalyzerComponent>(sink, out var analyzer))
                 continue;
 
-            analysis.AnalyzerEntity = GetNetEntity(ent);
-            ent.Comp.Console = source;
-            Dirty(source, analysis);
+            ent.Comp.AnalyzerEntity = sink;
+            analyzer.Console = ent.Owner;
             Dirty(ent);
+            Dirty(sink, analyzer);
             break;
         }
     }
 
-    private void OnNewLink(Entity<AnalysisConsoleComponent> ent, ref NewLinkEvent args)
+    private void OnNewLinkConsole(Entity<AnalysisConsoleComponent> ent, ref NewLinkEvent args)
     {
-        if (!TryComp<ArtifactAnalyzerComponent>(args.Sink, out var analyzer))
+        if (args.SourcePort != ent.Comp.LinkingPort || !HasComp<ArtifactAnalyzerComponent>(args.Sink))
             return;
 
-        ent.Comp.AnalyzerEntity = GetNetEntity(args.Sink);
-        analyzer.Console = ent;
-        Dirty(args.Sink, analyzer);
+        ent.Comp.AnalyzerEntity = args.Sink;
         Dirty(ent);
     }
 
-    private void OnPortDisconnected(Entity<AnalysisConsoleComponent> ent, ref PortDisconnectedEvent args)
+    private void OnNewLinkAnalyzer(Entity<ArtifactAnalyzerComponent> ent, ref NewLinkEvent args)
     {
-        var analyzerNetEntity = ent.Comp.AnalyzerEntity;
-        if (args.Port != ent.Comp.LinkingPort || analyzerNetEntity == null)
+        if (args.SinkPort != ent.Comp.LinkingPort || !HasComp<AnalysisConsoleComponent>(args.Source))
             return;
 
-        var analyzerEntityUid = GetEntity(analyzerNetEntity);
-        if (TryComp<ArtifactAnalyzerComponent>(analyzerEntityUid, out var analyzer))
-        {
-            analyzer.Console = null;
-            Dirty(analyzerEntityUid.Value, analyzer);
-        }
+        ent.Comp.Console = args.Source;
+        Dirty(ent);
+    }
+
+    private void OnLinkAttemptConsole(Entity<AnalysisConsoleComponent> ent, ref LinkAttemptEvent args)
+    {
+        if (ent.Comp.AnalyzerEntity != null)
+            args.Cancelled = true; // can only link to one device at a time
+    }
+
+    private void OnLinkAttemptAnalyzer(Entity<ArtifactAnalyzerComponent> ent, ref LinkAttemptEvent args)
+    {
+        if (ent.Comp.Console != null)
+            args.Cancelled = true; // can only link to one device at a time
+    }
+
+    private void OnPortDisconnectedConsole(Entity<AnalysisConsoleComponent> ent, ref SourcePortDisconnectedEvent args)
+    {
+        if (args.Port != ent.Comp.LinkingPort || ent.Comp.AnalyzerEntity == null)
+            return;
 
         ent.Comp.AnalyzerEntity = null;
+        Dirty(ent);
+    }
+
+    private void OnPortDisconnectedAnalyzer(Entity<ArtifactAnalyzerComponent> ent, ref SinkPortDisconnectedEvent args)
+    {
+        if (args.Port != ent.Comp.LinkingPort || ent.Comp.Console == null)
+            return;
+
+        ent.Comp.Console = null;
         Dirty(ent);
     }
 
@@ -98,14 +126,13 @@ public abstract class SharedArtifactAnalyzerSystem : EntitySystem
         if (!_powerReceiver.IsPowered(consoleEnt))
             return false;
 
-        var analyzerUid = GetEntity(ent.Comp.AnalyzerEntity);
-        if (!TryComp<ArtifactAnalyzerComponent>(analyzerUid, out var analyzerComp))
+        if (!TryComp<ArtifactAnalyzerComponent>(ent.Comp.AnalyzerEntity, out var analyzerComp))
             return false;
 
-        if (!_powerReceiver.IsPowered(analyzerUid.Value))
+        if (!_powerReceiver.IsPowered(ent.Comp.AnalyzerEntity.Value))
             return false;
 
-        analyzer = (analyzerUid.Value, analyzerComp);
+        analyzer = (ent.Comp.AnalyzerEntity.Value, analyzerComp);
         return true;
     }
 
