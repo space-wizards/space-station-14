@@ -7,6 +7,33 @@ namespace Content.Shared.Kitchen.EntitySystems;
 public abstract partial class MicrowaveSystem
 {
     /// <summary>
+    /// Set the microwave's cooking time.
+    /// </summary>
+    /// <param name="ent">The microwave.</param>
+    /// <param name="newCookTime">The time to set. <b>Must be divisible by 5.</b></param>
+    /// <param name="buttonIndex">The UI button to highlight.</param> TODO systems shouldn't be setting UI state like this
+    /// <param name="user">Who changed the time.</param>
+    public void SetCookTime(Entity<MicrowaveComponent?> ent, uint newCookTime, int buttonIndex = 0, EntityUid? user = null)
+    {
+        if (!MicrowaveQuery.Resolve(ent, ref ent.Comp)
+            || IsActiveMicrowave(ent)
+            || !_power.IsPowered(ent.Owner))
+            return;
+
+        // some validation to prevent trollage
+        if (newCookTime % 5 != 0 || newCookTime > ent.Comp.MaxCookTime)
+            return;
+
+        ent.Comp.CurrentCookTimeButtonIndex = buttonIndex;
+        ent.Comp.CurrentCookTimerTime = newCookTime;
+        Dirty(ent);
+
+        var audioParams = ent.Comp.ClickSound.Params;
+        Audio.PlayPredicted(ent.Comp.ClickSound, ent, user, audioParams);
+        UpdateUI(ent);
+    }
+
+    /// <summary>
     /// Adds temperature to every item in the microwave based on the time it took to microwave.
     /// </summary>
     /// <param name="ent">The microwave entity.</param>

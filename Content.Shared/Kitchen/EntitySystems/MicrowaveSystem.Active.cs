@@ -66,7 +66,7 @@ public abstract partial class MicrowaveSystem
     /// "spent" when the microwave is finished cooking.
     /// </remarks>
     [SubscribeLocalEvent]
-    private void OnReactionAttempt(Entity<ActivelyMicrowavedComponent> ent, ref SolutionRelayEvent<ReactionAttemptEvent> args)
+    private void OnReactionAttempt(Entity<ActivelyMicrowavedComponent> ent, ref ReactionAttemptEvent args)
     {
         if (!ActiveMicrowaveQuery.TryComp(ent.Comp.Microwave, out var activeMicrowaveComp))
             return;
@@ -80,12 +80,18 @@ public abstract partial class MicrowaveSystem
 
         foreach (var reagent in recipeReagents)
         {
-            if (args.Event.Reaction.Reactants.ContainsKey(reagent))
+            if (args.Reaction.Reactants.ContainsKey(reagent))
             {
-                args.Event.Cancelled = true;
+                args.Cancelled = true;
                 return;
             }
         }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnReactionAttemptRelay(Entity<ActivelyMicrowavedComponent> ent, ref SolutionRelayEvent<ReactionAttemptEvent> args)
+    {
+        OnReactionAttempt(ent, ref args.Event);
     }
 
     /// <summary>

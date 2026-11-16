@@ -65,7 +65,7 @@ public sealed partial class ToolRefinableSystem : EntitySystem
     }
 
     /// <summary> Normal interactions. </summary>
-    [SubscribeLocalEvent]
+    [SubscribeLocalEvent(after: [typeof(ItemSlotsSystem)])]
     private void OnInteractUsing(Entity<ToolRefinableComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled || !_toolSystem.HasQuality(args.Used, ent.Comp.QualityNeeded))
@@ -85,7 +85,7 @@ public sealed partial class ToolRefinableSystem : EntitySystem
     }
 
     /// <summary> Verb interactions. </summary>
-    [SubscribeLocalEvent(after: [typeof(ItemSlotsSystem)])]
+    [SubscribeLocalEvent]
     private void AddVerb(Entity<ToolRefinableComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
     {
         var used = args.Using;
