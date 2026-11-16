@@ -13,7 +13,7 @@
         </PanelContainer>
         <BoxContainer Name="GrowthStagesContainer" Margin="10 10 10 0"
                       HorizontalAlignment="Center" SeparationOverride="10"/>
-        <BoxContainer Name="ProductsContainer" Orientation="Vertical" Margin="10"
+        <BoxContainer Name="ProductsContainer" Orientation="Vertical" Margin="10 10 10 0"
                       SeparationOverride="8"/>
         <BoxContainer Name="MutationsContainer" Margin="10 0 10 0" SeparationOverride="0">
             <BoxContainer Orientation="Vertical" HorizontalExpand="True">
