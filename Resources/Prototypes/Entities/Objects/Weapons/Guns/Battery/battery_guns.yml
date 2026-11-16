@@ -900,17 +900,17 @@
       path: /Audio/Effects/gateway_off.ogg
   - type: BatteryAmmoProvider
     proto: AnomalousParticleDelta
-    fireCost: 210
+    fireCost: 180
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: AnomalousParticleDelta
-      fireCost: 210
+      fireCost: 180
     - proto: AnomalousParticleEpsilon
-      fireCost: 210
+      fireCost: 180
     - proto: AnomalousParticleZeta
-      fireCost: 210
+      fireCost: 180
     - proto: AnomalousParticleSigma
-      fireCost: 210
+      fireCost: 180
   - type: BatterySelfRecharger
     autoRechargeRate: 15
   - type: Construction
@@ -925,15 +925,15 @@
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: AnomalousParticleDeltaStrong
-      fireCost: 210
+      fireCost: 180
     - proto: AnomalousParticleEpsilonStrong
-      fireCost: 210
+      fireCost: 190
     - proto: AnomalousParticleOmegaStrong
-      fireCost: 210
+      fireCost: 180
     - proto: AnomalousParticleZetaStrong
-      fireCost: 210
+      fireCost: 180
     - proto: AnomalousParticleSigmaStrong
-      fireCost: 210
+      fireCost: 180
 
 - type: entity
   name: eye of a behonker
