@@ -4,7 +4,7 @@ namespace Content.Shared.StationRecords.Systems;
 
 public sealed partial class StationRecordInfoStorageSystem : EntitySystem
 {
-    [Dependency] private readonly StationRecordsSystem _records = default!;
+    [Dependency] private StationRecordsSystem _records = default!;
 
     [Dependency] private EntityQuery<StationRecordInfoStorageComponent> _storageQuery = default!;
 
