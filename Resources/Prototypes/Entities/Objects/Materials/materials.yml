@@ -459,7 +459,7 @@
     count: 1
 
 - type: entity
-  parent: [ MaterialBase, FoodBase ]
+  parent: [ MaterialBase, SolutionFood ]
   id: MaterialBananium
   name: bananium
   suffix: Full

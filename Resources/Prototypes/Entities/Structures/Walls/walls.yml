@@ -173,7 +173,7 @@
       base: brass
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWallWeak ]
+  parent: [ BaseWall, StructureHealthWallWeak, SolutionFood ]
   id: WallMeat
   name: meat wall
   description: Sticky.
@@ -203,12 +203,27 @@
       - !type:PlaySoundBehavior
         sound:
           collection: gib
+      - !type:SpillBehavior
+        solution: wallmeat
   - type: IconSmooth
     key: walls
     states:
     - !type:CornerSpriteSmoothing
       mask: [ walls, windows, grilles, marble, doors ]
       base: meat
+  - type: Edible
+    trash:
+      - Girder
+  - type: Solution
+    id: wallmeat
+    solution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 100
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 60
+      - ReagentId: Fat
+        Quantity: 40
 
 - type: entity
   parent: [ BaseWall, BaseStructureHealth ]
