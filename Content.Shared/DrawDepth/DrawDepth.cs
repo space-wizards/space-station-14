@@ -13,7 +13,7 @@ namespace Content.Shared.DrawDepth
 
         // various entity types that require different
         // draw depths, as to avoid hiding
-        // If updating this set, update the gaps above Puddles and Overdoors.
+        // If updating this set, update the gaps above Walls and Overdoors.
         #region SubfloorEntities
         ThickPipe = DrawDepthTag.Default - 21,
         ThickWire = DrawDepthTag.Default - 20,
@@ -44,21 +44,21 @@ namespace Content.Shared.DrawDepth
         /// </summary>
         Puddles = DrawDepthTag.Default - 12,
 
-        // NOTE: There's a gap for subfloor entities to retain relative draw depth when revealed by a t-ray scanner (need 6 layers in between).
-
         /// <summary>
         //     Objects that are on the floor, but should render above puddles. This includes kudzu, holopads, telepads and levers.
         /// </summary>
-        HighFloorObjects = DrawDepthTag.Default - 5,
+        HighFloorObjects = DrawDepthTag.Default - 11,
 
-        DeadMobs = DrawDepthTag.Default - 4,
+        DeadMobs = DrawDepthTag.Default - 10,
 
         /// <summary>
         ///     Allows small mobs like mice and drones to render under tables and chairs but above puddles and vents
         /// </summary>
-        SmallMobs = DrawDepthTag.Default - 3,
+        SmallMobs = DrawDepthTag.Default - 9,
 
-        Walls = DrawDepthTag.Default - 2,
+        Walls = DrawDepthTag.Default - 8,
+
+        // NOTE: There's a gap for subfloor entities to retain relative draw depth when revealed by a t-ray scanner (need 6 layers in between).
 
         /// <summary>
         ///     Used for windows (grilles use walls) and misc signage. Useful if you want to have an APC in the middle

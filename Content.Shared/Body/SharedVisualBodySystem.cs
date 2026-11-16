@@ -111,8 +111,14 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
 
     protected virtual void SetOrganMarkings(Entity<VisualOrganMarkingsComponent> ent, Dictionary<HumanoidVisualLayers, List<Marking>> markings, Dictionary<HumanoidVisualLayers, DisplacementData> displacement)
     {
+        SetOrganMarkings(ent, markings, displacement, ent.Comp.HideableLayers);
+    }
+
+    protected virtual void SetOrganMarkings(Entity<VisualOrganMarkingsComponent> ent, Dictionary<HumanoidVisualLayers, List<Marking>> markings, Dictionary<HumanoidVisualLayers, DisplacementData> displacement, HashSet<Enum> hideability)
+    {
         ent.Comp.Markings = markings;
         ent.Comp.MarkingsDisplacement = displacement.ShallowClone();
+        ent.Comp.HideableLayers = hideability;
         Dirty(ent);
     }
 
@@ -135,7 +141,7 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
         if (!other.MarkingData.Layers.SetEquals(ent.Comp.MarkingData.Layers))
             return;
 
-        SetOrganMarkings(ent, other.Markings, other.MarkingsDisplacement);
+        SetOrganMarkings(ent, other.Markings, other.MarkingsDisplacement, other.HideableLayers);
     }
 
     private void OnVisualOrganApplyProfile(Entity<VisualOrganComponent> ent, ref BodyRelayedEvent<ApplyOrganProfileDataEvent> args)

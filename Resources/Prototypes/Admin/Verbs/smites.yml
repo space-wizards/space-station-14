@@ -601,7 +601,7 @@
   name: admin-smite-monkeyify-name
   description: admin-smite-monkeyify-description
   icon:
-    sprite: Mobs/Animals/monkey.rsi
+    sprite: Mobs/Animals/Ancestors/monkey.rsi
     state: monkey
   effects:
   - !type:Polymorph
@@ -640,7 +640,7 @@
   name: admin-smite-become-mouse-name
   description: admin-smite-become-mouse-description
   icon:
-    sprite: Mobs/Animals/mouse.rsi
+    sprite: Mobs/Animals/Rodents/mouse.rsi
     state: icon-0
   effects:
   - !type:Polymorph

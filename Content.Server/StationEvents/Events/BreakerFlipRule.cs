@@ -34,7 +34,7 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
 
         var stationApcs = Station.GetEntitiesWithComponentOnStation<ApcComponent>(true).ToList();
 
-        var toDisable = Math.Min(RobustRandom.Next(3, 7), stationApcs.Count);
+        var toDisable = Math.Min(ent.Comp1.AffectedQuantity.Next(RobustRandom), stationApcs.Count);
         if (toDisable == 0)
             return;
 

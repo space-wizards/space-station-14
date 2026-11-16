@@ -243,3 +243,14 @@
     sprite: Clothing/Uniforms/Jumpskirts/Service/virtual_foreigner.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirts/Service/virtual_foreigner.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtTramDriver
+  name: tram driver's jumpskirt
+  description: Perfectly ironed, for well-prepared professionals.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirts/Service/tramdriver.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirts/Service/tramdriver.rsi

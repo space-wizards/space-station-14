@@ -4,8 +4,10 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.SurveillanceCamera;
 
-// Camera monitor state. If the camera is null, there should be a blank
-// space where the camera is.
+/// <summary>
+/// Camera monitor state. If the camera is null, there should be a blank
+/// space where the camera is.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class SurveillanceCameraMonitorUiState(
     NetEntity? activeCamera,
@@ -15,21 +17,49 @@ public sealed class SurveillanceCameraMonitorUiState(
     Dictionary<DeviceAddress, string> cameras
 ) : BoundUserInterfaceState
 {
-    // The active camera on the monitor. If this is null, the part of the UI
-    // that contains the monitor should clear.
+    /// <summary>
+    /// The active camera on the monitor. If this is null, the part of the UI
+    /// that contains the monitor should clear.
+    /// </summary>
     public NetEntity? ActiveCamera { get; } = activeCamera;
 
-    // Currently available subnets. Does not send the entirety of the possible
-    // cameras to view because that could be really, really large
+    /// <summary>
+    /// Currently available subnets. Does not send the entirety of the possible
+    /// cameras to view because that could be really, really large.
+    /// </summary>
     public HashSet<ProtoId<DeviceFrequencyPrototype>> Subnets { get; } = subnets;
 
+    /// <summary>
+    /// Currently active address.
+    /// </summary>
     public DeviceAddress ActiveAddress = activeAddress;
 
-    // Currently active subnet.
+    /// <summary>
+    /// Currently active subnet.
+    /// </summary>
     public ProtoId<DeviceFrequencyPrototype>? ActiveSubnet { get; } = activeSubnet;
 
-    // Known cameras, by address and name.
+    /// <summary>
+    /// Known cameras, by address and name.
+    /// </summary>
     public Dictionary<DeviceAddress, string> Cameras { get; } = cameras;
+}
+
+/// <summary>
+/// Provides the camera map and camera markers for a grid.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class SurveillanceCameraMonitorMapUpdateMessage(NetEntity map, Dictionary<NetEntity, CameraMarker> cameraMarkers) : BoundUserInterfaceMessage
+{
+    /// <summary>
+    /// The grid entity the camera markers belong to, or invalid when the monitor is off-grid.
+    /// </summary>
+    public NetEntity Map { get; } = map;
+
+    /// <summary>
+    /// Camera markers on the grid.
+    /// </summary>
+    public Dictionary<NetEntity, CameraMarker> CameraMarkers { get; } = cameraMarkers;
 }
 
 [Serializable, NetSerializable]
@@ -50,15 +80,21 @@ public sealed class SurveillanceCameraMonitorSubnetRequestMessage(
     public ProtoId<DeviceFrequencyPrototype> Subnet { get; } = subnet;
 }
 
-// Sent when the user requests that the cameras on the current subnet be refreshed.
+/// <summary>
+/// Sent when the user requests that the cameras on the current subnet be refreshed.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class SurveillanceCameraRefreshCamerasMessage : BoundUserInterfaceMessage;
 
-// Sent when the user requests that the subnets known by the monitor be refreshed.
+/// <summary>
+/// Sent when the user requests that the subnets known by the monitor be refreshed.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class SurveillanceCameraRefreshSubnetsMessage : BoundUserInterfaceMessage;
 
-// Sent when the user wants to disconnect the monitor from the camera.
+/// <summary>
+/// Sent when the user wants to disconnect the monitor from the camera.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class SurveillanceCameraDisconnectMessage : BoundUserInterfaceMessage;
 
@@ -68,7 +104,7 @@ public enum SurveillanceCameraMonitorUiKey : byte
     Key
 }
 
-// SETUP
+#region SETUP
 
 [Serializable, NetSerializable]
 public sealed class SurveillanceCameraSetupBoundUiState(
@@ -104,3 +140,5 @@ public enum SurveillanceCameraSetupUiKey : byte
     Camera,
     Router
 }
+
+#endregion

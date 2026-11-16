@@ -172,7 +172,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitTramDriver
-  name: tram driver jumpsuit
+  name: tram driver's jumpsuit
   description: Perfectly ironed, for well-prepared professionals.
   components:
   - type: Sprite

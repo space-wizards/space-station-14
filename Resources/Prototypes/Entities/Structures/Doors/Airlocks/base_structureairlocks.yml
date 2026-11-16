@@ -161,7 +161,6 @@
 - type: entity
   parent: [ BaseAirlockIndestructible, StructureHealthDoor ]
   id: Airlock
-  name: airlock
   description: It opens, it closes, and maybe crushes you.
   components:
   - type: LayerChangeOnWeld

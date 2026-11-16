@@ -40,7 +40,7 @@
       - Welder
       - PowerCell
       - Geiger
-      - TrayScanner
+      - TRayScanner
       - GasAnalyzer
       - HandLabeler
   - type: ItemMapper
@@ -141,11 +141,7 @@
       - WireBrush
       - LightReplacer
       - CleanerGrenade
-      - Screwdriver
-      - Crowbar
-      - Powerdrill
       components:
-      - TrayScanner
       - SprayPainter
       - SprayPainterAmmo
   - type: ItemMapper
@@ -318,6 +314,7 @@
       - CigPack
       - Dropper
       components:
+      - PlantAnalyzer
       - BotanySampleTaker
       - BotanyHoe
       - Seed

@@ -39,6 +39,7 @@ public sealed partial class FaxSystem : EntitySystem
     [Dependency] private IAdminManager _adminManager = default!;
     [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private GameTicker _gameTicker = default!;
     [Dependency] private PopupSystem _popupSystem = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private PaperSystem _paperSystem = default!;
@@ -498,16 +499,38 @@ public sealed partial class FaxSystem : EntitySystem
 
         TryComp<LabelComponent>(sendEntity, out var labelComponent);
 
+        var content = paper.Content;
+
+        if (component.AddSenderInfo)
+        {
+            var faxMachineAddress = _deviceNetworkSystem.GetAddress(uid);
+            if (string.IsNullOrEmpty(faxMachineAddress))
+                faxMachineAddress = Loc.GetString("device-address-unknown");
+
+            var time = _gameTicker.RoundDuration();
+            var timeString = TimeSpan.FromSeconds(Math.Truncate(time.TotalSeconds)).ToString();
+
+            content += "\n";
+            content += Loc.GetString(component.SenderInfo,
+                ("sender_name", component.FaxName),
+                ("sender_addr", faxMachineAddress),
+                ("recipient_name", component.DestinationFaxName ?? Loc.GetString("fax-machine-popup-source-unknown")),
+                ("recipient_addr", component.DestinationFaxAddress),
+                ("time", timeString)
+            );
+        }
+
         var payload = new FaxPrintPayload
         {
             Data = new FaxPrintout(
-                    paper.Content,
+                    content,
                     nameMod?.BaseName ?? metadata.EntityName,
                     labelComponent?.CurrentLabel,
                     metadata.EntityPrototype.ID,
                     paper.StampState,
                     paper.StampedBy,
-                    paper.EditingDisabled),
+                    paper.EditingDisabled,
+                    component.FaxName),
         };
 
         _deviceNetworkSystem.SendPacket(uid, component.DestinationFaxAddress, ref payload);

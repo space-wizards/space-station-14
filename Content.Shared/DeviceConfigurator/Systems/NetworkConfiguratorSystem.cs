@@ -2,6 +2,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DeviceConfigurator.Components;
+using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.DeviceNetwork;
@@ -42,6 +43,9 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
     [Dependency] private EntityQuery<DeviceListComponent> _deviceListQuery;
     [Dependency] private EntityQuery<NetworkConfiguratorComponent> _networkConfigQuery;
     [Dependency] private EntityQuery<LinkedDeviceNetworkComponent> _linkedDeviceQuery;
+
+    private EntityUid[] _uidCache = [];
+    private List<OptionDeviceAddress> _deviceCache = new();
 
     [SubscribeLocalEvent]
     private void OnMapSave(BeforeSerializationEvent ev)
