@@ -39,12 +39,6 @@ public sealed partial record GeneralStationRecord : StationRecord
     public string JobPrototype = string.Empty;
     
     /// <summary>
-    ///     Character Profile tied to this station record.
-    /// </summary>
-    [DataField]
-    public HumanoidCharacterProfile? Profile;
-
-    /// <summary>
     ///     Species tied to this station record.
     /// </summary>
     [DataField]
