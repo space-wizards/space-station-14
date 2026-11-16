@@ -1,4 +1,4 @@
-# TODO: over-ear headsets should protect from deafening when implemented
+# Over-ear headsets should have loudspeaker functionality and protect from deafening when implemented
 - type: entity
   abstract: true
   parent: ClothingHeadset
