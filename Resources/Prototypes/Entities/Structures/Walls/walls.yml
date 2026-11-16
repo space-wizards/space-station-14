@@ -217,7 +217,7 @@
       base: brass
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWallWeak, SolutionFood ]
+  parent: [ BaseWall, StructureHealthWallWeak, EdibleBase ]
   id: WallMeat
   name: meat wall
   description: Sticky.
@@ -278,6 +278,7 @@
     solution: wallmeat
     trash:
       - Girder
+  - type: BadFood # mice no eat
   - type: Solution
     id: wallmeat
     solution:

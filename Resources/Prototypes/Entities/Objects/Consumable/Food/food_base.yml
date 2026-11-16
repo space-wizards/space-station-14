@@ -1,4 +1,17 @@
 #
+# Base component for edible things that are not meant to be held, different from FoodBase
+#
+- type: entity
+  abstract: true
+  parent: [SolutionFood, SolutionLarge]
+  id: EdibleBase
+  components:
+  - type: Edible
+  - type: Sprite
+  - type: StaticPrice
+    price: 0
+
+#
 # Base component for edible food-like items, different from BaseDrink
 #
 - type: entity

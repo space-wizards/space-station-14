@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseStructure, StructureHealthFurniture, SolutionFood ]
+  parent: [ BaseStructure, StructureHealthFurniture, EdibleBase ]
   id: FleshBlocker
   name: flesh clump
   description: An annoying clump of flesh.
