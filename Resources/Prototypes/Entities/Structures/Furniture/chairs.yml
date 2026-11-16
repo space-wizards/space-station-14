@@ -309,6 +309,7 @@
         spawn:
           MaterialSheetMeat1: *Min0Max1
   - type: Edible
+    solution: meatseat
   - type: Solution
     id: meatseat
     solution:

@@ -275,6 +275,7 @@
       - doors
       base: meat
   - type: Edible
+    solution: wallmeat
     trash:
       - Girder
   - type: Solution
