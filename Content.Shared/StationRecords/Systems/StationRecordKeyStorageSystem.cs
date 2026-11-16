@@ -1,4 +1,3 @@
-using Content.Shared.StationRecords.Components;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.StationRecords.Systems;
@@ -7,18 +6,18 @@ public sealed partial class StationRecordKeyStorageSystem : EntitySystem
 {
     [Dependency] private StationRecordsSystem _records = default!;
 
-    [Dependency] private EntityQuery<StationRecordKeyStorageComponent> _storageQuery = default!;
+    [Dependency] private EntityQuery<StationRecordInfoStorageComponent> _storageQuery = default!;
 
     [SubscribeLocalEvent]
-    private void OnGetState(Entity<StationRecordKeyStorageComponent> ent, ref ComponentGetState args)
+    private void OnGetState(Entity<StationRecordInfoStorageComponent> ent, ref ComponentGetState args)
     {
-        args.State = new StationRecordKeyStorageComponentState(_records.Convert(ent.Comp.Key));
+        args.State = new StationRecordInfoStorageComponentState(_records.Convert(ent.Comp.Key), ent.Comp.Record);
     }
 
     [SubscribeLocalEvent]
-    private void OnHandleState(Entity<StationRecordKeyStorageComponent> ent, ref ComponentHandleState args)
+    private void OnHandleState(Entity<StationRecordInfoStorageComponent> ent, ref ComponentHandleState args)
     {
-        if (args.Current is not StationRecordKeyStorageComponentState state)
+        if (args.Current is not StationRecordInfoStorageComponentState state)
             return;
 
         ent.Comp.Key = _records.Convert(state.Key);
@@ -27,7 +26,7 @@ public sealed partial class StationRecordKeyStorageSystem : EntitySystem
     /// <summary>
     ///     Assigns a station record key to an entity.
     /// </summary>
-    public void AssignKey(Entity<StationRecordKeyStorageComponent?> ent, StationRecordKey key)
+    public void AssignKey(Entity<StationRecordInfoStorageComponent?> ent, StationRecordKey key)
     {
         if (!_storageQuery.Resolve(ent, ref ent.Comp))
             return;
@@ -39,7 +38,7 @@ public sealed partial class StationRecordKeyStorageSystem : EntitySystem
     /// <summary>
     ///     Removes a station record key from an entity.
     /// </summary>
-    public StationRecordKey? RemoveKey(Entity<StationRecordKeyStorageComponent?> ent)
+    public StationRecordKey? RemoveKey(Entity<StationRecordInfoStorageComponent?> ent)
     {
         if (!_storageQuery.Resolve(ent, ref ent.Comp)
             || ent.Comp.Key == null)
@@ -55,7 +54,7 @@ public sealed partial class StationRecordKeyStorageSystem : EntitySystem
     /// <summary>
     ///     Checks if an entity currently contains a station record key.
     /// </summary>
-    public bool CheckKey(Entity<StationRecordKeyStorageComponent?> ent)
+    public bool CheckKey(Entity<StationRecordInfoStorageComponent?> ent)
     {
         if (!_storageQuery.Resolve(ent, ref ent.Comp))
             return false;

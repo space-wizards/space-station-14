@@ -43,7 +43,7 @@ public sealed partial class StationRecordsSystem : EntitySystem
     [Dependency] private EntityQuery<IdCardComponent> _idCardQuery = default!;
     [Dependency] private EntityQuery<PdaComponent> _pdaQuery = default!;
     [Dependency] private EntityQuery<StationRecordsComponent> _recordsQuery = default!;
-    [Dependency] private EntityQuery<StationRecordKeyStorageComponent> _keyStorageQuery = default!;
+    [Dependency] private EntityQuery<StationRecordInfoStorageComponent> _keyStorageQuery = default!;
     [Dependency] private EntityQuery<FingerprintComponent> _fingerprintQuery = default!;
     [Dependency] private EntityQuery<DnaComponent> _dnaQuery = default!;
 
