@@ -336,7 +336,6 @@
 - type: entity
   parent: RandomHumanoidSpawnerERTSecurity
   id: RandomHumanoidSpawnerERTSecurityEVA
-  name: ERT security
   suffix: Task Force, EVA
   components:
   - type: Sprite
