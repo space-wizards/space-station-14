@@ -310,6 +310,9 @@
           MaterialSheetMeat1: *Min0Max1
   - type: Edible
     solution: meatseat
+  - type: FlavorProfile
+    flavors:
+    - chewy
   - type: Solution
     id: meatseat
     solution:

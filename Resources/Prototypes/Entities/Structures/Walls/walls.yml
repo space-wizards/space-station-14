@@ -279,6 +279,9 @@
     trash:
       - Girder
   - type: BadFood # mice no eat
+  - type: FlavorProfile
+    flavors:
+    - chewy
   - type: Solution
     id: wallmeat
     solution:

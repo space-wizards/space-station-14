@@ -48,6 +48,9 @@
             max: 1
   - type: Edible
     solution: clump
+  - type: FlavorProfile
+    flavors:
+    - chewy
   - type: Solution
     id: clump
     solution:

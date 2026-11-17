@@ -6,6 +6,9 @@
   parent: [SolutionFood, SolutionLarge]
   id: EdibleBase
   components:
+  - type: FlavorProfile
+    flavors:
+    - food
   - type: Edible
   - type: Sprite
   - type: StaticPrice
@@ -16,7 +19,7 @@
 #
 - type: entity
   abstract: true
-  parent: [BaseItem, SolutionFood, SolutionSmall]
+  parent: [SolutionSmall, BaseItem, EdibleBase]
   id: FoodBase
   components:
   - type: FlavorProfile
