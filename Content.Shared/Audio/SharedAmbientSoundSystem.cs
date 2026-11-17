@@ -89,7 +89,7 @@ public abstract partial class SharedAmbientSoundSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var growingComp, out var ambientSound))
         {
-            if (growingComp.NextGrowth < _timing.CurTime)
+            if (_timing.CurTime < growingComp.NextGrowth)
                 continue;
 
             growingComp.NextGrowth += growingComp.GrowthDelay;
