@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
 using Content.Shared.Ghost;
+using Content.Shared.Maps;
 using Content.Shared.Throwing;
 using Robust.Shared.Map;
 using Content.Shared.Physics;
@@ -16,6 +17,7 @@ public abstract partial class SharedGravityAnomalySystem : EntitySystem
     [Dependency] private ThrowingSystem _throwing = default!;
     [Dependency] private SharedTransformSystem _xform = default!;
     [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private ITileDefinitionManager _tileDefManager = default!;
 
     [Dependency] private EntityQuery<PhysicsComponent> _physQuery = default!;
 
@@ -58,7 +60,13 @@ public abstract partial class SharedGravityAnomalySystem : EntitySystem
                 new Circle(worldPos, component.SpaceRange))
             .ToArray();
 
-        var tiles = tileref.Select(t => (t.GridIndices, Tile.Empty)).ToList();
+        var tiles = tileref.Where(t =>
+            {
+            var tileDef = (ContentTileDefinition)_tileDefManager[t.Tile.TypeId];
+            return !tileDef.Indestructible;
+        })
+            .Select(t => (t.GridIndices, Tile.Empty))
+            .ToList();
         _mapSystem.SetTiles(xform.GridUid.Value, grid, tiles);
 
         var range = component.MaxThrowRange * 2 * args.PowerModifier;
