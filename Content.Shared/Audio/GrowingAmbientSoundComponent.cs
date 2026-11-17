@@ -12,7 +12,7 @@ public sealed partial class GrowingAmbientSoundComponent : Component
     /// Minimum range to which the sound range can decrease.
     /// </summary>
     [DataField]
-    public float MinRange;
+    public float MinRange = float.MinValue;
 
     /// <summary>
     /// Maximum range to which the sound range can increase.
@@ -30,7 +30,7 @@ public sealed partial class GrowingAmbientSoundComponent : Component
     /// Minimum volume to which the sound volume can decrease.
     /// </summary>
     [DataField]
-    public float MinVolume;
+    public float MinVolume = float.MinValue;
 
     /// <summary>
     /// Maximum volume to which the sound volume can increase.
