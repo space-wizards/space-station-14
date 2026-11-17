@@ -101,3 +101,10 @@
   components:
     - type: NightVision
       relayOverlay: True
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectHumanoidTransform
+  name: humanoid transformation
+  components:
+  - type: HumanoidTransformStatusEffect
