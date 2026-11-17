@@ -1,3 +1,4 @@
+using Content.Shared.EntityConditions;
 using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
 
@@ -23,6 +24,12 @@ public sealed partial class RandomPlantMutationPrototype : IPrototype
     /// </summary>
     [DataField]
     public LocId? Description;
+
+    /// <summary>
+    /// Conditions to apply the mutation.
+    /// </summary>
+    [DataField]
+    public EntityCondition[]? Conditions;
 
     /// <summary>
     /// The effect to apply to the plant when this mutation triggers.

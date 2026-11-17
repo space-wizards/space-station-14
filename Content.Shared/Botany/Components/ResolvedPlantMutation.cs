@@ -1,3 +1,4 @@
+using Content.Shared.EntityConditions;
 using Content.Shared.EntityEffects;
 
 namespace Content.Shared.Botany.Components;
@@ -10,4 +11,5 @@ namespace Content.Shared.Botany.Components;
 public readonly partial record struct ResolvedPlantMutation(
     string Name,
     LocId? Description,
-    EntityEffect Effect);
+    EntityEffect Effect,
+    EntityCondition[]? Conditions);

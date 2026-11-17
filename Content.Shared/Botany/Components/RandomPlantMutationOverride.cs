@@ -1,3 +1,4 @@
+using Content.Shared.EntityConditions;
 using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -28,6 +29,12 @@ public sealed partial class RandomPlantMutationOverride
     /// </summary>
     [DataField]
     public LocId? Description;
+
+    /// <summary>
+    /// Overrides the prototype's default value for Conditions.
+    /// </summary>
+    [DataField]
+    public EntityCondition[]? Conditions;
 
     /// <summary>
     /// Overrides the prototype's default value for Effect.

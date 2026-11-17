@@ -3,6 +3,7 @@ using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
 using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.EntityConditions;
 using Content.Shared.EntityEffects;
 using JetBrains.Annotations;
 using Robust.Shared.Network;
@@ -25,6 +26,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
     [Dependency] private PlantSystem _plant = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
+    [Dependency] private SharedEntityConditionsSystem _conditions = default!;
 
     [Dependency] private EntityQuery<PlantChemicalsComponent> _chemicalsQuery;
     [Dependency] private EntityQuery<PlantComponent> _plantQuery;
@@ -44,7 +46,8 @@ public sealed partial class PlantMutationSystem : EntitySystem
         return new ResolvedPlantMutation(
             plantOverride?.Name ?? mutation.Name ?? prototype.Name,
             plantOverride?.Description ?? mutation.Description ?? prototype.Description,
-            plantOverride?.Effect ?? mutation.Effect ?? prototype.Effect);
+            plantOverride?.Effect ?? mutation.Effect ?? prototype.Effect,
+            plantOverride?.Conditions ?? mutation.Conditions ?? prototype.Conditions);
     }
 
     /// <summary>
@@ -69,6 +72,9 @@ public sealed partial class PlantMutationSystem : EntitySystem
                 if (Random(Math.Min(odds, 1.0f)))
                 {
                     mutation ??= ResolveMutation(entry.Mutation, ent.Comp, ProtoMan);
+                    if (!_conditions.TryConditions(ent.Owner, mutation.Value.Conditions))
+                        continue;
+
                     _entityEffects.TryApplyEffect(ent, mutation.Value.Effect);
                 }
             }
