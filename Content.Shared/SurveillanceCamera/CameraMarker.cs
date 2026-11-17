@@ -1,24 +1,9 @@
 using System.Numerics;
 using Content.Shared.DeviceNetwork;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.SurveillanceCamera.Components;
-
-/// <summary>
-/// Stores surveillance camera data for the camera map.
-/// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class SurveillanceCameraMapComponent : Component
-{
-    /// <summary>
-    /// Dictionary of cameras on on the current grid.
-    /// </summary>
-    [ViewVariables]
-    [AutoNetworkedField]
-    public Dictionary<NetEntity, CameraMarker> Cameras = new();
-}
+namespace Content.Shared.SurveillanceCamera;
 
 /// <summary>
 /// Represents a camera marker on the camera map.
@@ -55,13 +40,4 @@ public partial struct CameraMarker
     /// </summary>
     [DataField]
     public bool Visible = true;
-}
-
-/// <summary>
-/// Network event for requesting camera marker updates.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class RequestCameraMarkerUpdateMessage(NetEntity cameraEntity) : EntityEventArgs
-{
-    public NetEntity CameraEntity { get; } = cameraEntity;
 }
