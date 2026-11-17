@@ -36,7 +36,7 @@
   parent: BaseHandcuffs
   components:
   - type: UseDelay
-    delay: 20
+    delay: 15
 
 - type: entity
   name: makeshift handcuffs
