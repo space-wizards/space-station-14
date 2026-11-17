@@ -24,6 +24,7 @@ namespace Content.Client.Administration.UI.CustomControls
 
         protected override void EnteredTree()
         {
+            base.EnteredTree();
             if (!CanPress())
             {
                 Visible = false;
