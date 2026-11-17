@@ -5,13 +5,14 @@
 
   ## Examples
   Acceptable:
-  - After reaching Central Command, Security makes an effort to arrest and detain any known criminals who had escaped their custody aboard the emergency shuttle.
-  - After reaching Central Command, an antagonist with an objective to steal the Chief Medical Officer's hypospray attacks the Chief Medical Officer in order to rob them.
+  - After the end-of-round popup appears, an antagonist with an objective to steal the Chief Medical Officer's hypospray attacks the Chief Medical Officer in order to rob them.
+  - After the end-of-round popup appears, Security continues to makes an effort to enforce Space Law and detain known criminals.
+  - After the end-of-round popup appears, crew marooned on the station continue to defend themselves against any remaining threats.
 
   Prohibited:
-  - After reaching Central Command, Security arrests an antagonist who they had no prior suspicion of because they're listed as an antagonist in the end-of-round popup.
-  - After reaching Central Command, a syndicate agent kills the Chief Medical Officer despite having no objectives related to doing so.
-  - After reaching Central Command, a non-antagonist passenger beats an engineer to death with a toolbox for having annoyed them earlier in the shift.
-  - After reaching Central Command, a silicon decides to start ignoring their lawset entirely.
-  - After missing the emergency shuttle and being marooned on the station, a non-antagonist security officer begins shooting everyone else who was marooned out of boredom.
+  - After the end-of-round popup appears, an antagonist kills the Chief Medical Officer despite having no objectives related to doing so.
+  - After the end-of-round popup appears, Security arrests an antagonist who they had no prior suspicion of just because said popup lists them as an antagonist.
+  - After the end-of-round popup appears, crew marooned on the station start killing people indiscriminately.
+  - After the end-of-round popup appears, a non-antagonist passenger beats an engineer to death with a toolbox for having annoyed them earlier in the shift.
+  - After the end-of-round popup appears, a silicon starts entirely ignoring their lawset.
 </Document>
