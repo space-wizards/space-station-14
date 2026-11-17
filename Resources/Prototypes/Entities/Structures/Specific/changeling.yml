@@ -73,8 +73,10 @@
       path: /Audio/Ambience/bubbling.ogg
   - type: GrowingAmbientSound # Purely to prevent holding those in 1x1 rooms, very difficult to hear anyway.
     maxRange: 6
+    minVolume: -12
     rangeGrowth: 1
-    growthDelay: 120
+    volumeGrowth: -0.33 # -12 volume after 12min. By default ambient sound is -10, this prevents the bubbling from being hella annoying but still noticable.
+    growthDelay: 120 # 12 min to reach max range of 6. In that time it has produced enough DNA to warrant being noticable. For reference, previously it was always 3 tiles.
   - type: ContainerContainer
     containers:
       storage: !type:Container
