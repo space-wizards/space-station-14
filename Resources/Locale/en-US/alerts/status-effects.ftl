@@ -18,3 +18,6 @@ alerts-blind-desc = You can't quite make out what's happening around you.
 
 alerts-frail-name = [color=yellow]Frailty[/color]
 alerts-mild-frail-desc = You're [color=yellow]frail[/color]! You take more damage from [color=white]{ damage-group-brute }[/color] and [color=white]{ damage-group-burn }[/color]
+
+alerts-rushed-metabolism-name = Rushed Metabolism
+alerts-rushed-metabolism-desc = Your metabolism is sped up. Reagents will act faster within your body.

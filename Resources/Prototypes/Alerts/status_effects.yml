@@ -48,3 +48,11 @@
     state: frail
   name: alerts-frail-name
   description: alerts-mild-frail-desc
+
+- type: alert
+  id: RushedMetabolismAlert
+  icons:
+  - sprite: /Textures/Interface/Alerts/status_effects.rsi
+    state: rushed
+  name: alerts-rushed-metabolism-name
+  description: alerts-rushed-metabolism-desc

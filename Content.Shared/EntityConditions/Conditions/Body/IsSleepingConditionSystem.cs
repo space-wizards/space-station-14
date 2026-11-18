@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Bed.Sleep;
+using Content.Shared.Mobs.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Body;
@@ -6,11 +7,12 @@ namespace Content.Shared.EntityConditions.Conditions.Body;
 /// <summary>
 /// Returns true if the entity is sleeping.
 /// </summary>
-public sealed partial class IsSleepingConditionSystem : EntityConditionSystem<TransformComponent, IsSleepingCondition>
+public sealed partial class IsSleepingConditionSystem : EntityConditionSystem<MobStateComponent, IsSleepingCondition>
 {
-    protected override void Condition(Entity<TransformComponent> entity, ref EntityConditionEvent<IsSleepingCondition> args)
+    [Dependency] private SleepingSystem _sleeping = default!;
+    protected override void Condition(Entity<MobStateComponent> entity, ref EntityConditionEvent<IsSleepingCondition> args)
     {
-        args.Result = HasComp<SleepingComponent>(entity);
+        args.Result = _sleeping.IsSleeping(entity);
     }
 }
 

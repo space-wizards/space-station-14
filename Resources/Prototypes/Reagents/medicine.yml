@@ -1667,5 +1667,5 @@
         conditions:
         - !type:IsSleepingCondition
         effectProto: StatusEffectFastMetabolism
-        time: 5
-        type: Update
+        time: 4
+        type: Add
