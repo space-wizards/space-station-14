@@ -6,6 +6,7 @@
   Entering the dead state causes your character to forget all events related to their death (if you can tie it to how you died, do not remember it). If revived, placed in a MMI, or in the case of Diona, splitting, the character is aware of the fact that they have died but not how/why.
 
   ## Examples
+
   Acceptable:
   - The Captain is ambushed by an antagonist who beats them unconscious, steals their sword, and flees into Engineering. After being revived by Medical staff, the Captain can recall who they saw ambush them. Though they can't directly remember their sword being stolen, they notice it's missing now and can reasonably assume the ambusher is the one responsible. They can't remember the antagonist fleeing into Engineering, because that happened when they were unconscious.
   - A passenger is walking to Cargo, and an antagonist ambushes them in the hallway and shoots them to death. After being revived by Medical staff, the passenger remembers that they were walking to Cargo when they died, but remembers nothing about how they died or who was responsible.
