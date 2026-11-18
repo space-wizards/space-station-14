@@ -1669,3 +1669,8 @@
         effectProto: StatusEffectFastMetabolism
         time: 4
         type: Add
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Hypersomnolene
+          min: 5
