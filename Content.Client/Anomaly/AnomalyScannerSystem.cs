@@ -34,7 +34,7 @@ public sealed partial class AnomalyScannerSystem : SharedAnomalyScannerSystem
 
     private void OnComponentInit(Entity<AnomalyScannerScreenComponent> ent, ref ComponentInit args)
     {
-        if(!_sprite.TryGetLayer(ent.Owner, AnomalyScannerVisualLayers.Base, out var layer, true))
+        if (!_sprite.TryGetLayer(ent.Owner, AnomalyScannerVisualLayers.Base, out var layer, true))
             return;
 
         // Allocate the OwnedTexture
@@ -70,9 +70,8 @@ public sealed partial class AnomalyScannerSystem : SharedAnomalyScannerSystem
         if (args.Sprite is null || ent.Comp.ScreenTexture is null || ent.Comp.BarBuf is null)
             return;
 
-        args.AppearanceData.TryGetValue(AnomalyScannerVisuals.AnomalySeverity, out var severityObj);
-        if (severityObj is not float severity)
-            severity = 0;
+        if (!args.TryGetData<float>(AnomalyScannerVisuals.AnomalySeverity, out var severity))
+            severity = 0.0f;
 
         // Get the bar length
         var barLength = (int)(severity * ent.Comp.Size.X);
@@ -80,16 +79,16 @@ public sealed partial class AnomalyScannerSystem : SharedAnomalyScannerSystem
         // Calculate the bar color
         // Hue "angle" of two colors to interpolate between depending on severity
         // Just a lerp from Green hue at severity = 0.5 to Red hue at 1.0
-        var hue = Math.Clamp(2*GreenHue * (1 - severity), RedHue, GreenHue);
+        var hue = Math.Clamp(2 * GreenHue * (1 - severity), RedHue, GreenHue);
         var color = new Rgba32(Color.FromHsv(new Vector4(hue, 1f, 1f, 1f)).RGBA);
 
         var transparent = new Rgba32(0, 0, 0, 255);
 
-        for(var y = 0; y < ent.Comp.Size.Y; y++)
+        for (var y = 0; y < ent.Comp.Size.Y; y++)
         {
             for (var x = 0; x < ent.Comp.Size.X; x++)
             {
-                ent.Comp.BarBuf[y*ent.Comp.Size.X + x]  = x < barLength ? color : transparent;
+                ent.Comp.BarBuf[y * ent.Comp.Size.X + x] = x < barLength ? color : transparent;
             }
         }
 

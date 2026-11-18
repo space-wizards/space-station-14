@@ -90,6 +90,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
             BreakOnMove = true,
             CancelDuplicate = true,
             DuplicateCondition = DuplicateConditions.None,
+            ExamineText = ent.Comp.WindupExamine == null ? null : Loc.GetString(ent.Comp.WindupExamine, ("user", Identity.Entity(ent, EntityManager)), ("target", Identity.Entity(target, EntityManager)))
         });
 
         var selfMessage = Loc.GetString("changeling-devour-begin-windup-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
@@ -142,6 +143,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
             BreakOnMove = true,
             CancelDuplicate = true,
             DuplicateCondition = DuplicateConditions.None,
+            ExamineText = ent.Comp.DevourExamine == null ? null : Loc.GetString(ent.Comp.DevourExamine, ("user", Identity.Entity(ent, EntityManager)), ("target", Identity.Entity(target, EntityManager)))
         });
     }
 
@@ -216,7 +218,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
         if (changeling.Owner == victim)
             return false; // Can't devour yourself.
 
-        if (!HasComp<HumanoidProfileComponent>(victim))
+        if (!HasComp<HumanoidProfileComponent>(victim) || HasComp<ChangelingHorrorComponent>(victim))
         {
             if (showPopup)
                 _popupSystem.PopupEntity(Loc.GetString("changeling-devour-attempt-failed-cannot-devour"), changeling.Owner, changeling.Owner, PopupType.Medium);

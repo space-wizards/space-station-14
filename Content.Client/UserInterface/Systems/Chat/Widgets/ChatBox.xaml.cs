@@ -1,3 +1,4 @@
+using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.RichText;
 using Content.Client.UserInterface.Systems.Chat.Controls;
 using Content.Shared.Chat;
@@ -88,6 +89,20 @@ public partial class ChatBox : UIWidget, IEntityLinkClickHandler
         foreach (var message in _controller.History)
         {
             OnMessageAdded(message.Item2);
+        }
+    }
+
+    /// <summary>
+    /// Calls update function on every child <see cref="TextLinkLabel"/> in the ChatBox's OutputPanel "Contents"
+    /// </summary>
+    public void UpdateTextLinkLabelProperties(SharedChatSystem _sharedChatSys)
+    {
+        foreach (var contentsChild in Contents.Children)
+        {
+            if (contentsChild is TextLinkLabel textLinkLabel)
+            {
+                textLinkLabel.UpdateLabelProperties(_sharedChatSys);
+            }
         }
     }
 
@@ -197,18 +212,27 @@ public partial class ChatBox : UIWidget, IEntityLinkClickHandler
 
         // Warn typing indicator about change
         _controller.NotifyChatTextChange();
+
+        // Update the typing preview speech bubble above character's head.
+        _controller.UpdateTypingPreview(this);
     }
 
     private void OnFocusEnter(LineEditEventArgs args)
     {
         // Warn typing indicator about focus
         _controller.NotifyChatFocus(true);
+
+        // Update the typing preview speech bubble above character's head.
+        _controller.UpdateTypingPreview(this);
     }
 
     private void OnFocusExit(LineEditEventArgs args)
     {
         // Warn typing indicator about focus
         _controller.NotifyChatFocus(false);
+
+        // Remove the typing preview when the chat box loses focus
+        _controller.ClearTypingPreview();
     }
 
     protected override void Dispose(bool disposing)

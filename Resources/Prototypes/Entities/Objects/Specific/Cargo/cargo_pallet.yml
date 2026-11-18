@@ -65,7 +65,10 @@
     state: cargo_pallet_sell
   - type: IconSmooth
     key: cargo_pallet_sell
-    base: cargo_pallet_sell_
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ cargo_pallet_sell ]
+      base: cargo_pallet_sell_
 
 - type: entity
   id: CargoPalletBuy
@@ -82,4 +85,7 @@
     state: cargo_pallet_buy
   - type: IconSmooth
     key: cargo_pallet_buy
-    base: cargo_pallet_buy_
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ cargo_pallet_buy ]
+      base: cargo_pallet_buy_

@@ -3,7 +3,11 @@
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
         <BoxContainer Orientation="Vertical" MinWidth="243" Margin="0 0 5 0">
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-                <LineEdit Name="SearchBar" PlaceHolder="{Loc 'construction-menu-search'}" HorizontalExpand="True"/>
+                <LineEdit
+                    Name="SearchBar"
+                    PlaceHolder="{Loc 'construction-menu-search'}"
+                    HorizontalExpand="True"
+                    SelectAllOnFocus="True"/>
                 <OptionButton Name="OptionCategories" Access="Public" MinSize="130 0"/>
             </BoxContainer>
             <BoxContainer SizeFlagsStretchRatio="0.5" Margin="0 3 0 5" SeparationOverride="3">

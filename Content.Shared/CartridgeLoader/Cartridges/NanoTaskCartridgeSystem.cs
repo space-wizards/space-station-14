@@ -34,7 +34,7 @@ public sealed partial class NanoTaskCartridgeSystem : EntitySystem
         {
             ent.Comp.Tasks.Add(new(ent.Comp.Counter++, printed.Task));
             args.Args.Handled = true;
-            PredictedQueueDel(args.Args.Used);
+            QueueDel(args.Args.Used);
             Dirty(ent);
             UpdateUiState(ent, args.Loader);
         }

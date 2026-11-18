@@ -1,3 +1,4 @@
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.Serialization;
 using ConsoleUIState = Content.Shared.SensorMonitoring.SensorMonitoringConsoleBoundInterfaceState;
 
@@ -14,7 +15,7 @@ public sealed class SensorMonitoringConsoleBoundInterfaceState : BoundUserInterf
     {
         public int NetId;
         public string Name = "";
-        public string Address = "";
+        public LocDeviceAddress Address ;
         public SensorDeviceType DeviceType;
 
         public SensorStream[] Streams = Array.Empty<SensorStream>();

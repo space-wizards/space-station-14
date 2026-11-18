@@ -89,4 +89,12 @@ public sealed partial class ToolRefinableComponent : Component
     /// </summary>
     [DataField]
     public PopupType PopupType = PopupType.Small;
+
+    /// <summary>
+    /// Text to display on the examine tooltip for a refinable entity.
+    /// This has a `$target` parameter, representing the refinable entity,
+    /// and a `$quality` parameter, representing the name of the tool quality to use.
+    /// </summary>
+    [DataField]
+    public LocId? TooltipQualityHint = "tool-refinable-component-hint";
 }

@@ -26,6 +26,8 @@
     solution: tank
   - type: ExaminableSolution
     solution: tank
+  - type: DrawableSolution
+    solution: tank
   - type: ItemMapper
     mapLayers:
       mopbucket_shark_blue:
@@ -242,6 +244,13 @@
           - TrashBag
           - TrashBagHolding
         priority: 3 # Higher than drinking priority
+  - type: ActivatableUI
+    key: enum.ItemSlotRadialUiKey.Key
+    requireEmptyHand: true
+    requireActiveHand: true
+    verbText: open-radial-menu-text
+  - type: ActivatableUIRequiresFilledItemSlot
+    compactSimilarItemsInRadialMenu: false
   - type: Fixtures
     fixtures:
       fix1:
@@ -267,6 +276,8 @@
   - type: RefillableSolution
     solution: tank
   - type: ExaminableSolution
+    solution: tank
+  - type: DrawableSolution
     solution: tank
   - type: Damageable
     damageModifierSet: PlasticMod
@@ -354,6 +365,8 @@
     interfaces:
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
+      enum.ItemSlotRadialUiKey.Key:
+        type: RadialItemSlotMenuBoundUserInterface
   - type: Edible
     edible: Drink
     solution: tank

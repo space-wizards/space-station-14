@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Modified version of clown mask by GoldenCan(github) (Copyright for clown mask: Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e. Reptilian edit by Nairod(Github). equipped-MASK-vox state taken from /vg/station at commit https://github.com/vgstation-coders/vgstation13/commit/4638130fab5ff0e9faa220688811349d3297a33e and slightly modified by Flareguy)",
+  "copyright": "Modified version of clown mask by GoldenCan(github) (Copyright for clown mask: Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e. Reptilian edit by Nairod(Github). equipped-MASK-vox state taken from /vg/station at commit https://github.com/vgstation-coders/vgstation13/commit/4638130fab5ff0e9faa220688811349d3297a33e and slightly modified by Flareguy), vulpkanin edit and wigless edits by jckspjf (Github)",
   "size": {
     "x": 32,
     "y": 32
@@ -32,6 +32,33 @@
     },
     {
       "name": "equipped-MASK-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-vulpkanin",
+      "directions": 4
+    },
+    {
+      "name": "icon-opened"
+    },
+    {
+      "name": "opened-equipped-MASK",
+      "directions": 4
+    },
+    {
+      "name": "opened-equipped-MASK-hamster",
+      "directions": 4
+    },
+    {
+      "name": "opened-equipped-MASK-vulpkanin",
+      "directions": 4
+    },
+    {
+      "name": "opened-equipped-MASK-reptilian",
+      "directions": 4
+    },
+    {
+      "name": "opened-equipped-MASK-vox",
       "directions": 4
     }
   ]

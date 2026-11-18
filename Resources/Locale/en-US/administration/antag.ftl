@@ -22,6 +22,6 @@ admin-verb-text-make-thief = Make Thief
 admin-verb-text-make-paradox-clone = Create Paradox Clone
 admin-verb-text-make-wizard = Make Wizard
 admin-verb-text-make-space-ninja = Make Ninja
-admin-verb-text-make-changeling = Make Changeling (WIP)
+admin-verb-text-make-changeling = Make Changeling
 
 admin-overlay-antag-classic = ANTAG

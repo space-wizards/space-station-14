@@ -47,7 +47,7 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     }
 
     /// <summary>
-    /// Called when the gamerule is added
+    /// Called when the gamerule is added.
     /// </summary>
     [Obsolete("Use Entity<T,GameRuleComponent> version instead")]
     protected virtual void Added(EntityUid uid, T component, GameRuleComponent gameRule, GameRuleAddedEvent args)
@@ -56,15 +56,17 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     }
 
     /// <summary>
-    /// Called when the gamerule is added
+    /// Called when the gamerule is added.
     /// </summary>
-    protected virtual void Added(Entity<T,GameRuleComponent> rule, ref GameRuleAddedEvent args)
+    protected virtual void Added(Entity<T, GameRuleComponent> rule, ref GameRuleAddedEvent args)
     {
+#pragma warning disable CS0618 // maintaining compatibility behaviour, remove with obsolete Added above
         Added(rule.Owner, rule.Comp1, rule.Comp2, args);
+#pragma warning restore CS0618
     }
 
     /// <summary>
-    /// Called when the gamerule begins
+    /// Called when the gamerule begins.
     /// </summary>
     [Obsolete("Use Entity<T,GameRuleComponent> version instead")]
     protected virtual void Started(EntityUid uid, T component, GameRuleComponent gameRule, GameRuleStartedEvent args)
@@ -73,11 +75,13 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     }
 
     /// <summary>
-    /// Called when the gamerule is added
+    /// Called when the gamerule begins.
     /// </summary>
-    protected virtual void Started(Entity<T,GameRuleComponent> rule, ref GameRuleStartedEvent args)
+    protected virtual void Started(Entity<T, GameRuleComponent> rule, ref GameRuleStartedEvent args)
     {
+#pragma warning disable CS0618 // maintaining compatibility behaviour, remove with obsolete Started above
         Started(rule.Owner, rule.Comp1, rule.Comp2, args);
+#pragma warning restore CS0618
     }
 
     /// <summary>

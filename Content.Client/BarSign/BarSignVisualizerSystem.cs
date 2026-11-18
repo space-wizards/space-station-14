@@ -8,8 +8,8 @@ public sealed partial class BarSignVisualizerSystem : VisualizerSystem<BarSignCo
 {
     protected override void OnAppearanceChange(EntityUid uid, BarSignComponent component, ref AppearanceChangeEvent args)
     {
-        AppearanceSystem.TryGetData<bool>(uid, PowerDeviceVisuals.Powered, out var powered, args.Component);
-        AppearanceSystem.TryGetData<string>(uid, BarSignVisuals.BarSignPrototype, out var currentSign, args.Component);
+        args.TryGetData<bool>(PowerDeviceVisuals.Powered, out var powered);
+        args.TryGetData<string>(BarSignVisuals.BarSignPrototype, out var currentSign);
 
         if (powered
             && currentSign != null

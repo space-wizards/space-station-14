@@ -21,7 +21,7 @@ public abstract partial class EntityTableSelector
     /// <summary>
     /// Key for <see cref="EntityTableContext"/>, under which additional scoped conditions should be stored.
     /// </summary>
-    public const string AdditionalConditionsKey = "AdditionalConditions";
+    public static readonly EntityTableContextKey<List<EntityTableCondition>> AdditionalConditionsKey = new("AdditionalConditions");
 
     /// <summary>
     /// The number of times this selector is run
@@ -152,7 +152,7 @@ public abstract partial class EntityTableSelector
     /// </summary>
     private bool TryGetConditions(EntityTableContext ctx, [NotNullWhen(true)] out List<EntityTableCondition>? conditions)
     {
-        var hasAdditionalConditions = ctx.TryGetData<List<EntityTableCondition>>(AdditionalConditionsKey, out var additionalConditions);
+        var hasAdditionalConditions = ctx.TryGetData(AdditionalConditionsKey, out var additionalConditions);
 
         if (Conditions.Count == 0 && !hasAdditionalConditions)
         {

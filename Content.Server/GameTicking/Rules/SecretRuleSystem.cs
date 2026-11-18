@@ -16,29 +16,30 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules;
 
+/// <summary>
+/// The handler for secret rules, rules that randomly pick from a set of subrules in secret.
+/// </summary>
+/// <seealso cref="SecretRuleComponent"/>
 public sealed partial class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
 {
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private IConfigurationManager _configurationManager = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
 
-    private string _ruleCompName = default!;
-
     public override void Initialize()
     {
         base.Initialize();
-        _ruleCompName = Factory.GetComponentName<GameRuleComponent>();
     }
 
-    protected override void Added(EntityUid uid, SecretRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    protected override void Added(Entity<SecretRuleComponent, GameRuleComponent> ent, ref GameRuleAddedEvent args)
     {
-        base.Added(uid, component, gameRule, args);
+        base.Added(ent, ref args);
         var weights = _configurationManager.GetCVar(CCVars.SecretWeightPrototype);
 
         if (!TryPickPreset(weights, out var preset))
         {
-            Log.Error($"{ToPrettyString(uid)} failed to pick any preset. Removing rule.");
-            Del(uid);
+            Log.Error($"{ToPrettyString(ent.Owner)} failed to pick any preset. Removing rule.");
+            Del(ent);
             return;
         }
 
@@ -63,7 +64,7 @@ public sealed partial class SecretRuleSystem : GameRuleSystem<SecretRuleComponen
             if (ruleEnt == null)
                 continue;
 
-            component.AdditionalGameRules.Add(ruleEnt.Value);
+            ent.Comp1.AdditionalGameRules.Add(ruleEnt.Value);
         }
     }
 
