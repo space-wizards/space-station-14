@@ -243,7 +243,7 @@ public abstract partial class SatiationSystem : EntitySystem
         DirtyField(entity.AsNullable(), SatiationComponent.SatiationFieldName);
     }
 
-    public int? GetThresholdValueOrNull(Satiation satiation, SatiationValue satiationValue)
+    private int? GetThresholdValueOrNull(Satiation satiation, SatiationValue satiationValue)
     {
         if (!ProtoMan.Resolve(satiation.Prototype, out var proto))
             return null;

@@ -355,4 +355,12 @@ public abstract partial class SatiationSystem
             SetOverrideThreshold(entity, satiation, proto, key, currentValue + amount);
         }
     }
+
+    public int? GetThresholdValueOrNull(Entity<SatiationComponent> ent, [ForbidLiteral] ProtoId<SatiationTypePrototype> type, SatiationValue satiationValue)
+    {
+        if (GetAndResolveSatiationOfType(ent, type) is not var (satiation, _))
+            return null;
+
+        return GetThresholdValueOrNull(satiation, satiationValue);
+    }
 }
