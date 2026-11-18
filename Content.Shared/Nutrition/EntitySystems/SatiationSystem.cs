@@ -272,6 +272,23 @@ public abstract partial class SatiationSystem : EntitySystem
 
         SetAuthoritativeValue(entity, satiation, proto, CalculateCurrentValue(satiation, proto));
     }
+
+    private void ClearOverrideThreshold(
+        Entity<SatiationComponent> entity,
+        Satiation satiation,
+        string key
+    )
+    {
+        satiation.OverrideThresholds.Remove(key);
+    }
+
+    private void ClearAllOverrideThreshold(
+        Entity<SatiationComponent> entity,
+        Satiation satiation
+    )
+    {
+        satiation.OverrideThresholds.Clear();
+    }
 }
 
 /// <summary>
