@@ -440,9 +440,9 @@
     Chime:
       path: /Audio/Machines/chime.ogg
     Buzz:
-      path: /Audio/Machines/buzz-sigh.ogg
+      path: /Audio/Machines/buzz_sigh.ogg
     Buzz-Two:
-      path: /Audio/Machines/buzz-two.ogg
+      path: /Audio/Machines/buzz_two.ogg
     Honk:
       path: /Audio/Items/bikehorn.ogg
     Ping:
@@ -462,9 +462,9 @@
     Chime:
       path: /Audio/Machines/chime.ogg
     Buzz:
-      path: /Audio/Machines/buzz-sigh.ogg
+      path: /Audio/Machines/buzz_sigh.ogg
     Buzz-Two:
-      path: /Audio/Machines/buzz-two.ogg
+      path: /Audio/Machines/buzz_two.ogg
     Honk:
       path: /Audio/Items/bikehorn.ogg
     Ping:
