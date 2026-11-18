@@ -27,7 +27,7 @@ public sealed partial class MultipleAntagsRequirementSystem : EntitySystem
                 count += _antagSelection.GetAssignedAntagCount((gamerule, antagSelectionComp), antagProto);
             }
         }
-        if (count < comp.Traitors) // not having a "or equals" automatically accounts for not including yourself if you are asking. for antags checking for a count of a different antag, this will not work as expected.
+        if (count <= comp.Count) // having a "or equals" accounts for not including yourself if you are asking. for antags checking for a count of a different antag, this will not work as expected.
             args.Cancelled = true;
     }
 }
