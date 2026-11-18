@@ -356,6 +356,32 @@ public abstract partial class SatiationSystem
         }
     }
 
+    public void ClearOverrideThreshold(
+        Entity<SatiationComponent> entity,
+        [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
+        string key
+    )
+    {
+        if (GetAndResolveSatiationOfType(entity, type) is not var (satiation, proto))
+            return;
+
+        if (GetThresholdValueOrNull(satiation, key) is { } currentValue)
+        {
+            ClearOverrideThreshold(entity, satiation, key);
+        }
+    }
+
+    public void ClearAllOverrideThreshold(
+        Entity<SatiationComponent> entity,
+        [ForbidLiteral] ProtoId<SatiationTypePrototype> type
+    )
+    {
+        if (GetAndResolveSatiationOfType(entity, type) is not var (satiation, proto))
+            return;
+
+        ClearAllOverrideThreshold(entity, satiation);
+    }
+
     public int? GetThresholdValueOrNull(Entity<SatiationComponent> ent, [ForbidLiteral] ProtoId<SatiationTypePrototype> type, SatiationValue satiationValue)
     {
         if (GetAndResolveSatiationOfType(ent, type) is not var (satiation, _))
