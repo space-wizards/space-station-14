@@ -21,14 +21,6 @@
   abstract: true
   parent: [SolutionSmall, BaseItem, EdibleBase]
   id: FoodBase
-  components:
-  - type: FlavorProfile
-    flavors:
-      - food
-  - type: Edible
-  - type: Sprite
-  - type: StaticPrice
-    price: 0
 
 #
 # Base component for consumable food
