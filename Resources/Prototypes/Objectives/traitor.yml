@@ -19,7 +19,6 @@
       sprite: Objects/Misc/folders.rsi
       state: folder-colormap
   - type: MultipleAntagsRequirement
-    count: 1
     antags:
     - Traitor
     - TraitorSleeper

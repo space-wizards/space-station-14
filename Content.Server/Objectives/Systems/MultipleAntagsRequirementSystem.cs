@@ -1,9 +1,8 @@
-using Content.Server.Objectives.Components;
 using Content.Shared.Antag;
 using Content.Shared.Antag.Components;
 using Content.Shared.Objectives.Components;
 
-namespace Content.Server.Objectives.Systems;
+namespace Content.Shared.Objectives.Systems;
 
 /// <summary>
 /// Handles requiring multiple traitors being alive for the objective to be given.
@@ -27,7 +26,7 @@ public sealed partial class MultipleAntagsRequirementSystem : EntitySystem
                 count += _antagSelection.GetAssignedAntagCount((gamerule, antagSelectionComp), antagProto);
             }
         }
-        if (count <= comp.Count) // having a "or equals" accounts for not including yourself if you are asking. for antags checking for a count of a different antag, this will not work as expected.
+        if (count < comp.Count) // does not exclude the person asking.
             args.Cancelled = true;
     }
 }
