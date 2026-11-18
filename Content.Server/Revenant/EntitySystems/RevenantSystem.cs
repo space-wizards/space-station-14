@@ -100,7 +100,7 @@ public sealed partial class RevenantSystem : EntitySystem
                 return;
 
             var essence = _satiation.GetValueOrNull((uid, satiationComp), component.EssenceSatiationPrototype);
-            var regenCap = _satiation.GetThresholdValueOrNull((uid, satiationComp), component.EssenceSatiationPrototype, "MaxRegen");
+            var regenCap = _satiation.GetThresholdValueOrNull((uid, satiationComp), component.EssenceSatiationPrototype, component.MaxRegenThreshold);
 
             if (essence == null || regenCap == null)
                 return;
