@@ -1,4 +1,4 @@
-using Content.Server.Objectives.Systems;
+using Content.Shared.Objectives.Systems;
 using Content.Shared.Antag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
