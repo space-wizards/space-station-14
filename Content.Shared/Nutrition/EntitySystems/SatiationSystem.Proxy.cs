@@ -38,7 +38,7 @@ public abstract partial class SatiationSystem
     )
     {
         if (GetAndResolveSatiationOfType(entity, type) is not var (satiation, proto) ||
-            proto.GetValueOrNull(satiationValue) is not { } value)
+            GetThresholdValueOrNull(satiation, satiationValue) is not { } value)
             return;
 
         SetAuthoritativeValue(entity, satiation, proto, value);
@@ -104,11 +104,11 @@ public abstract partial class SatiationSystem
 
         // Resolve the bounds to integers we can actually compare against.
         int? valueAbove = null;
-        if (above is { } a && (valueAbove = proto.GetValueOrNull(a)) is null)
+        if (above is { } a && (valueAbove = GetThresholdValueOrNull(satiation, a)) is null)
             return false; // `above` is not null, but we failed to resolve its value.
 
         int? valueAtOrBelow = null;
-        if (below is { } b && (valueAtOrBelow = proto.GetValueOrNull(b)) is null)
+        if (below is { } b && (valueAtOrBelow = GetThresholdValueOrNull(satiation, b)) is null)
             return false; // `atOrBelow` is not null, but we failed to resolve its value.
 
         if (valueAbove > valueAtOrBelow)
@@ -160,7 +160,7 @@ public abstract partial class SatiationSystem
     )
     {
         if (GetValueOrNull(entity, type) is not { } currentValue ||
-            GetAndResolveSatiationOfType(entity, type) is not var (_, proto))
+            GetAndResolveSatiationOfType(entity, type) is not var (satiation, proto))
         {
             result = default;
             nextHigherThreshold = null;
@@ -170,7 +170,7 @@ public abstract partial class SatiationSystem
 
         using var valuesByDescendingThreshold = valuesByThreshold
             // Resolve keys to threshold integers, discarding any keys which cannot be resolved.
-            .Select(it => proto.GetValueOrNull(it.Key) is { } value ? ((int, T)?)(value, it.Value) : null)
+            .Select(it => GetThresholdValueOrNull(satiation, it.Key) is { } value ? ((int, T)?)(value, it.Value) : null)
             .OfType<(int, T)>()
             // Order by descending threshold.
             .OrderByDescending(it => it.Item1)
@@ -299,7 +299,7 @@ public abstract partial class SatiationSystem
         satiation.SatiationType = type;
 
         entity.Comp.Satiations.TryAdd(type, satiation);
-        
+
         var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(entity));
         var value = rand.NextFloat(proto.StartingValueMinimum, proto.StartingValueMaximum);
 
@@ -325,5 +325,34 @@ public abstract partial class SatiationSystem
         }
 
         DirtyField(entity, SatiationComponent.SatiationFieldName);
+    }
+
+    public void SetOverrideThreshold(
+        Entity<SatiationComponent> entity,
+        [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
+        string key,
+        int value
+    )
+    {
+        if (GetAndResolveSatiationOfType(entity, type) is not var (satiation, proto))
+            return;
+
+        SetOverrideThreshold(entity, satiation, proto, key, value);
+    }
+
+    public void ModifyOverrideThreshold(
+        Entity<SatiationComponent> entity,
+        [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
+        string key,
+        int amount
+    )
+    {
+        if (GetAndResolveSatiationOfType(entity, type) is not var (satiation, proto))
+            return;
+
+        if (GetThresholdValueOrNull(satiation, key) is { } currentValue)
+        {
+            SetOverrideThreshold(entity, satiation, proto, key, currentValue + amount);
+        }
     }
 }

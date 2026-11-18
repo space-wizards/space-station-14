@@ -9,6 +9,7 @@ using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 
 namespace Content.Shared.Nutrition.EntitySystems;
@@ -71,6 +72,9 @@ public sealed partial class Satiation : IRobustCloneable<Satiation>
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan? NextAlertUpdateTime;
+
+    [DataField(customTypeSerializer: typeof(DictionarySerializer<string, int>))]
+    public Dictionary<string, int> OverrideThresholds = [];
 
     /// <inheritdoc/>
     [Access(typeof(SatiationDictionary))]
