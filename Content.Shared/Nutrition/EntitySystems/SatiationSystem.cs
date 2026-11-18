@@ -272,7 +272,7 @@ public abstract partial class SatiationSystem : EntitySystem
 
         SetAuthoritativeValue(entity, satiation, proto, CalculateCurrentValue(satiation, proto));
     }
-
+}
 
 /// <summary>
 /// This event is raised on entities with <see cref="SatiationComponent"/> when their satiation of <paramref name="Type"/>

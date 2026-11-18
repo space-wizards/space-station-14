@@ -37,8 +37,13 @@ public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototyp
     /// <summary>
     /// The highest value this satiation can have. Increases beyond this value are clamped to this value.
     /// </summary>
-    [DataField(required: true)]
-    public SatiationValue MaximumValue;
+    [DataField("maximumValue", required: true)]
+    private SatiationValue _maximumValue;
+
+    /// <summary>
+    /// The highest value this satiation can have. Increases beyond this value are clamped to this value.
+    /// </summary>
+    public int MaximumValue => GetValueOrNull(_maximumValue) ?? 0;
 
     /// <summary>
     /// The definition of key strings referentiable by <see cref="SatiationValue"/>s. Any reference to a key in this map
@@ -68,7 +73,7 @@ public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototyp
     private SatiationValue _startingValueMaximum = default!;
 
     /// <inheritdoc cref="_startingValueMaximum" />
-    public int StartingValueMaximum => GetValueOrNull(_startingValueMaximum) ?? GetValueOrNull(MaximumValue) ?? 0;
+    public int StartingValueMaximum => GetValueOrNull(_startingValueMaximum) ?? MaximumValue;
 
     /// <summary>
     /// Modifiers to <see cref="BaseChangeRate"/> based on the current threshold.
@@ -103,7 +108,7 @@ public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototyp
     /// <summary>
     /// Clamps <paramref name="value"/> between this prototype's highest and lowest values.
     /// </summary>
-    public float ClampSatiationWithinThresholds(float value) => Math.Clamp(value, 0, GetValueOrNull(MaximumValue) ?? 0);
+    public float ClampSatiationWithinThresholds(float value) => Math.Clamp(value, 0, MaximumValue);
 
     /// <summary>
     /// Attempts to get an integer value from the given <paramref name="satiationValue"/>. If
