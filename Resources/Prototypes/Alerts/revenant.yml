@@ -21,6 +21,8 @@
   - type: GenericCounterAlert
     centerGlyph: false
     hideLeadingZeroes: false
+  - type: SatiationCounterAlert
+    satiationType: Essence
   - type: Sprite
     sprite: /Textures/Interface/Alerts/essence_counter.rsi
     layers:

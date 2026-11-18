@@ -12,12 +12,32 @@
   components:
   - type: Action
     useDelay: 15
+    raiseOnAction: true
     itemIconStyle: BigAction
   - type: Sprite
     layers:
     - texture: Interface/Actions/defile.png
+  - type: ActionRequirements
+    failPopup: revenant-not-enough-essence
+    failPopupType: SmallCaution
+    conditions:
+      Performer:
+      - !type:SatiationCondition
+        satiationType: Essence
+        min: 30
+    effects:
+      Performer:
+      - !type:Satiate
+        satiationType: Essence
+        factor: -30
   - type: InstantAction
     event: !type:RevenantDefileActionEvent
+  - type: RevenantDefileAction
+    stunDuration: 1
+    corporealDuration: 4
+    defileRadius: 3.5
+    defileTilePryAmount: 15
+    defileEffectChance: 0.5
 
 - type: entity
   parent: BaseAction
@@ -27,24 +47,31 @@
   components:
   - type: Action
     useDelay: 20
+    raiseOnAction: true
     itemIconStyle: BigAction
   - type: Sprite
     layers:
     - texture: Interface/Actions/overloadlight.png
+  - type: ActionRequirements
+    failPopup: revenant-not-enough-essence
+    failPopupType: SmallCaution
+    conditions:
+      Performer:
+      - !type:SatiationCondition
+        satiationType: Essence
+        min: 40
+    effects:
+      Performer:
+      - !type:Satiate
+        satiationType: Essence
+        factor: -40
   - type: InstantAction
     event: !type:RevenantOverloadLightsActionEvent
-
-#- type: entity
-#  parent: BaseAction
-#  id: ActionRevenantBlight
-#  name: Blight
-#  description: Costs 50 Essence.
-#  components:
-#  - type: Action
-#    icon: Interface/Actions/blight.png
-#    useDelay: 20
-#  - type: InstantAction
-#    event: !type:RevenantBlightActionEvent
+  - type: RevenantOverloadLightsAction
+    stunDuration: 2
+    corporealDuration: 8
+    overloadRadius: 5
+    overloadZapRadius: 2
 
 - type: entity
   parent: BaseAction
@@ -54,9 +81,38 @@
   components:
   - type: Action
     useDelay: 20
+    raiseOnAction: true
     itemIconStyle: BigAction
   - type: Sprite
     layers:
     - texture: Interface/Actions/malfunction.png
+  - type: ActionRequirements
+    failPopup: revenant-not-enough-essence
+    failPopupType: SmallCaution
+    conditions:
+      Performer:
+      - !type:SatiationCondition
+        satiationType: Essence
+        min: 60
+    effects:
+      Performer:
+      - !type:Satiate
+        satiationType: Essence
+        factor: -60
   - type: InstantAction
     event: !type:RevenantMalfunctionActionEvent
+  - type: RevenantMalfunctionAction
+    stunDuration: 2
+    corporealDuration: 8
+    malfunctionRadius: 3.5
+    malfunctionWhitelist:
+      components:
+      # emag lockers open
+      - EntityStorage
+      # emag doors open
+      - Airlock
+      # troll medical to help get kills
+      - StasisBed
+      - EmaggableMedibot
+      # borg become killer
+      - EmagSiliconLaw
