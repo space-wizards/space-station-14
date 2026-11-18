@@ -22,4 +22,3 @@ revenant-user-interface-essence-amount = [color=plum]{$amount}[/color] Stolen Es
 
 revenant-user-interface-cost = {$price} Essence
 
-satiation-type-essence = Essence
