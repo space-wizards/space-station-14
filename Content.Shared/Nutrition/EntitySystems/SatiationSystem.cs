@@ -242,7 +242,37 @@ public abstract partial class SatiationSystem : EntitySystem
         );
         DirtyField(entity.AsNullable(), SatiationComponent.SatiationFieldName);
     }
-}
+
+    public int? GetThresholdValueOrNull(Satiation satiation, SatiationValue satiationValue)
+    {
+        if (!ProtoMan.Resolve(satiation.Prototype, out var proto))
+            return null;
+
+        if (proto.GetValueOrNull(satiationValue) is not { } value)
+            return null;
+
+        if (satiationValue.Key == null)
+            return value;
+
+        if (satiation.OverrideThresholds.TryGetValue(satiationValue.Key, out var overrideValue))
+            value = overrideValue;
+
+        return value;
+    }
+
+    private void SetOverrideThreshold(
+        Entity<SatiationComponent> entity,
+        Satiation satiation,
+        SatiationPrototype proto,
+        string key,
+        int value
+    )
+    {
+        satiation.OverrideThresholds[key] = value;
+
+        SetAuthoritativeValue(entity, satiation, proto, CalculateCurrentValue(satiation, proto));
+    }
+
 
 /// <summary>
 /// This event is raised on entities with <see cref="SatiationComponent"/> when their satiation of <paramref name="Type"/>
