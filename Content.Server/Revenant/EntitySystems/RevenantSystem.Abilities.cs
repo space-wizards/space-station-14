@@ -17,6 +17,8 @@ using Content.Shared.Maps;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Revenant;
@@ -45,6 +47,7 @@ public sealed partial class RevenantSystem
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private SharedTransformSystem _transformSystem = default!;
     [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private SatiationSystem _satiation = default!;
 
     [Dependency] private EntityQuery<ItemComponent> _itemQuery;
     [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery;
@@ -58,10 +61,6 @@ public sealed partial class RevenantSystem
         SubscribeLocalEvent<RevenantComponent, SoulEvent>(OnSoulSearch);
         SubscribeLocalEvent<RevenantComponent, HarvestEvent>(OnHarvest);
 
-        SubscribeLocalEvent<RevenantComponent, RevenantDefileActionEvent>(OnDefileAction);
-        SubscribeLocalEvent<RevenantComponent, RevenantOverloadLightsActionEvent>(OnOverloadLightsAction);
-        SubscribeLocalEvent<RevenantComponent, RevenantBlightActionEvent>(OnBlightAction);
-        SubscribeLocalEvent<RevenantComponent, RevenantMalfunctionActionEvent>(OnMalfunctionAction);
     }
 
     private void OnInteract(EntityUid uid, RevenantComponent component, UserActivateInWorldEvent args)
@@ -167,7 +166,7 @@ public sealed partial class RevenantSystem
             return;
         }
 
-        var doAfter = new DoAfterArgs(EntityManager, uid, revenant.HarvestDebuffs.X, new HarvestEvent(), uid, target: target)
+        var doAfter = new DoAfterArgs(EntityManager, uid, revenant.HarvestStunDuration, new HarvestEvent(), uid, target: target)
         {
             DistanceThreshold = 2,
             BreakOnMove = true,
@@ -185,7 +184,8 @@ public sealed partial class RevenantSystem
             target,
             PopupType.Large);
 
-        TryUseAbility(uid, revenant, 0, revenant.HarvestDebuffs);
+        _statusEffects.TryAddStatusEffect<CorporealComponent>(uid, "Corporeal", TimeSpan.FromSeconds(revenant.HarvestCorporalDuration), false);
+        _stun.TryAddStunDuration(uid, TimeSpan.FromSeconds(revenant.HarvestStunDuration));
     }
 
     private void OnHarvest(EntityUid uid, RevenantComponent component, HarvestEvent args)
@@ -220,13 +220,17 @@ public sealed partial class RevenantSystem
         if (_mobState.IsAlive(args.Args.Target.Value) || _mobState.IsCritical(args.Args.Target.Value))
         {
             _popup.PopupEntity(Loc.GetString("revenant-max-essence-increased"), uid, uid);
-            component.EssenceRegenCap += component.MaxEssenceUpgradeAmount;
+            if (!TryComp<SatiationComponent>(uid, out var satiationComp))
+                return;
+
+            _satiation.ModifyOverrideThreshold((uid, satiationComp), component.EssenceSatiationPrototype, "MaxRegen", component.MaxEssenceUpgradeAmount);
         }
 
         //KILL THEMMMM
 
         if (!_mobThresholdSystem.TryGetThresholdForState(args.Args.Target.Value, MobState.Dead, out var damage))
             return;
+
         DamageSpecifier dspec = new();
         dspec.DamageDict.Add("Cold", damage.Value);
         _damage.ChangeDamage(args.Args.Target.Value, dspec, true, origin: uid);
@@ -234,37 +238,39 @@ public sealed partial class RevenantSystem
         args.Handled = true;
     }
 
-    private void OnDefileAction(EntityUid uid, RevenantComponent component, RevenantDefileActionEvent args)
+    [SubscribeLocalEvent]
+    private void OnDefileAction(Entity<RevenantDefileActionComponent> ent, ref RevenantDefileActionEvent args)
     {
         if (args.Handled)
             return;
 
-        if (!TryUseAbility(uid, component, component.DefileCost, component.DefileDebuffs))
-            return;
-
         args.Handled = true;
 
-        var xform = Transform(uid);
+        _statusEffects.TryAddStatusEffect<CorporealComponent>(args.Performer, "Corporeal", TimeSpan.FromSeconds(ent.Comp.CorporealDuration), false);
+        _stun.TryAddStunDuration(args.Performer, TimeSpan.FromSeconds(ent.Comp.StunDuration));
+
+        var xform = Transform(args.Performer);
         if (!TryComp<MapGridComponent>(xform.GridUid, out var map))
             return;
+
         var tiles = _mapSystem.GetTilesIntersecting(
             xform.GridUid.Value,
             map,
             Box2.CenteredAround(_transformSystem.GetWorldPosition(xform),
-            new Vector2(component.DefileRadius * 2, component.DefileRadius)))
+            new Vector2(ent.Comp.DefileRadius * 2, ent.Comp.DefileRadius)))
             .ToArray();
 
         _random.Shuffle(tiles);
 
-        for (var i = 0; i < component.DefileTilePryAmount; i++)
+        for (var i = 0; i < ent.Comp.DefileTilePryAmount; i++)
         {
             if (!tiles.TryGetValue(i, out var value))
                 continue;
             _tile.PryTile(value);
         }
 
-        var lookup = _lookup.GetEntitiesInRange(uid, component.DefileRadius, LookupFlags.Approximate | LookupFlags.Static);
-        foreach (var ent in lookup)
+        var lookup = _lookup.GetEntitiesInRange(args.Performer, ent.Comp.DefileRadius, LookupFlags.Approximate | LookupFlags.Static);
+        foreach (var entity in lookup)
         {
             //break windows
             if (_tag.HasTag(ent, WindowTag))
@@ -272,87 +278,77 @@ public sealed partial class RevenantSystem
                 //hardcoded damage specifiers til i die.
                 var dspec = new DamageSpecifier();
                 dspec.DamageDict.Add("Structural", 60);
-                _damage.TryChangeDamage(ent, dspec, origin: uid);
+                _damage.TryChangeDamage(entity, dspec, origin: args.Performer);
             }
 
-            if (!_random.Prob(component.DefileEffectChance))
+            if (!_random.Prob(ent.Comp.DefileEffectChance))
                 continue;
 
             //randomly opens some lockers and such.
-            _entityStorage.OpenStorage(ent, args.Performer);
+            _entityStorage.OpenStorage(entity, args.Performer);
 
             //chucks shit
-            if (_itemQuery.HasComp(ent) &&
-                TryComp<PhysicsComponent>(ent, out var phys) && phys.BodyType != BodyType.Static)
-                _throwing.TryThrow(ent, _random.NextAngle().ToWorldVec());
+            if (_itemQuery.HasComp(entity) &&
+                TryComp<PhysicsComponent>(entity, out var phys) && phys.BodyType != BodyType.Static)
+                _throwing.TryThrow(entity, _random.NextAngle().ToWorldVec());
 
             //spooky stuff
-            _ghost.DoGhostBooEvent(ent);
+            _ghost.DoGhostBooEvent(entity);
         }
     }
 
-    private void OnOverloadLightsAction(EntityUid uid, RevenantComponent component, RevenantOverloadLightsActionEvent args)
+    [SubscribeLocalEvent]
+    private void OnOverloadLightsAction(Entity<RevenantOverloadLightsActionComponent> ent, ref RevenantOverloadLightsActionEvent args)
     {
         if (args.Handled)
             return;
 
-        if (!TryUseAbility(uid, component, component.OverloadCost, component.OverloadDebuffs))
-            return;
-
         args.Handled = true;
 
-        var xform = Transform(uid);
-        var lookup = _lookup.GetEntitiesInRange(uid, component.OverloadRadius);
+        _statusEffects.TryAddStatusEffect<CorporealComponent>(args.Performer, "Corporeal", TimeSpan.FromSeconds(ent.Comp.CorporealDuration), false);
+        _stun.TryAddStunDuration(args.Performer, TimeSpan.FromSeconds(ent.Comp.StunDuration));
+
+        var xform = Transform(args.Performer);
+        var lookup = _lookup.GetEntitiesInRange(args.Performer, ent.Comp.OverloadRadius);
         //TODO: feels like this might be a sin and a half
-        foreach (var ent in lookup)
+        foreach (var entity in lookup)
         {
-            if (!_mobStateQuery.HasComp(ent) || !_mobState.IsAlive(ent))
+            if (!_mobStateQuery.HasComp(entity) || !_mobState.IsAlive(entity))
                 continue;
 
-            var nearbyLights = _lookup.GetEntitiesInRange(ent, component.OverloadZapRadius)
+            var nearbyLights = _lookup.GetEntitiesInRange(entity, ent.Comp.OverloadZapRadius)
                 .Where(e => _poweredLightQuery.HasComp(e) && !HasComp<RevenantOverloadedLightsComponent>(e) &&
-                            _interact.InRangeUnobstructed(e, uid, -1)).ToArray();
+                            _interact.InRangeUnobstructed(e, ent.Owner, -1)).ToArray();
 
             if (!nearbyLights.Any())
                 continue;
 
             //get the closest light
             var allLight = nearbyLights.OrderBy(e =>
-                Transform(e).Coordinates.TryDistance(EntityManager, xform.Coordinates, out var dist) ? component.OverloadZapRadius : dist);
+                Transform(e).Coordinates.TryDistance(EntityManager, xform.Coordinates, out var dist) ? ent.Comp.OverloadZapRadius : dist);
             var comp = EnsureComp<RevenantOverloadedLightsComponent>(allLight.First());
-            comp.Target = ent; //who they gon fire at?
+            comp.Target = entity; //who they gon fire at?
         }
     }
 
-    private void OnBlightAction(EntityUid uid, RevenantComponent component, RevenantBlightActionEvent args)
+    [SubscribeLocalEvent]
+    private void OnMalfunctionAction(Entity<RevenantMalfunctionActionComponent> ent, ref RevenantMalfunctionActionEvent args)
     {
         if (args.Handled)
             return;
 
-        if (!TryUseAbility(uid, component, component.BlightCost, component.BlightDebuffs))
-            return;
-
-        args.Handled = true;
-        // TODO: When disease refactor is in.
-    }
-
-    private void OnMalfunctionAction(EntityUid uid, RevenantComponent component, RevenantMalfunctionActionEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!TryUseAbility(uid, component, component.MalfunctionCost, component.MalfunctionDebuffs))
-            return;
-
         args.Handled = true;
 
-        foreach (var ent in _lookup.GetEntitiesInRange(uid, component.MalfunctionRadius))
+        _statusEffects.TryAddStatusEffect<CorporealComponent>(args.Performer, "Corporeal", TimeSpan.FromSeconds(ent.Comp.CorporealDuration), false);
+        _stun.TryAddStunDuration(args.Performer, TimeSpan.FromSeconds(ent.Comp.StunDuration));
+
+        foreach (var entity in _lookup.GetEntitiesInRange(args.Performer, ent.Comp.MalfunctionRadius))
         {
-            if (_whitelistSystem.IsWhitelistFail(component.MalfunctionWhitelist, ent) ||
-                _whitelistSystem.IsWhitelistPass(component.MalfunctionBlacklist, ent))
+            if (_whitelistSystem.IsWhitelistFail(ent.Comp.MalfunctionWhitelist, entity) ||
+                _whitelistSystem.IsWhitelistPass(ent.Comp.MalfunctionBlacklist, entity))
                 continue;
 
-            _emagSystem.TryEmagEffect(uid, uid, ent);
+            _emagSystem.TryEmagEffect(args.Performer, args.Performer, entity);
         }
     }
 }

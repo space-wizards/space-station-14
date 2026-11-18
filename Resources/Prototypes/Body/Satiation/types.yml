@@ -9,3 +9,7 @@
 - type: satiationType
   id: Chemicals
   name: satiation-type-chemicals
+
+- type: satiationType
+  id: Essence
+  name: satiation-type-essence

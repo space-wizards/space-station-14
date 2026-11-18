@@ -50,10 +50,6 @@ public sealed partial class RevenantOverloadLightsActionEvent : InstantActionEve
 {
 }
 
-public sealed partial class RevenantBlightActionEvent : InstantActionEvent
-{
-}
-
 public sealed partial class RevenantMalfunctionActionEvent : InstantActionEvent
 {
 }

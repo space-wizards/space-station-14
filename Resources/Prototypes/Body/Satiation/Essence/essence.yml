@@ -1,0 +1,17 @@
+- type: satiation
+  id: RevenantEssence
+  baseChangeRate: 0.5 # actually slowly goes up
+  maximumValue: 200
+  thresholds:
+    Full: 200
+    MaxRegen: 75
+    Empty: 0
+  startingValueMinimum: MaxRegen
+  startingValueMaximum: MaxRegen
+  changeModifiers:
+    Full: 0
+    MaxRegen: 1
+  alertCategory: Health
+  alerts:
+    Full: Essence
+    Empty: Essence

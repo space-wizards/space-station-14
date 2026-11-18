@@ -28,16 +28,4 @@ public sealed partial class RevenantSystem : VisualizerSystem<RevenantComponent>
                 SpriteSystem.LayerSetRsiState((uid, args.Sprite), 0, component.State);
         }
     }
-
-    [SubscribeLocalEvent]
-    private void OnGetCounterAmount(Entity<RevenantComponent> ent, ref GetGenericAlertCounterAmountEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (ent.Comp.EssenceAlert != args.Alert)
-            return;
-
-        args.Amount = ent.Comp.Essence.Int();
-    }
 }
