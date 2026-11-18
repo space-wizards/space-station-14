@@ -1,5 +1,6 @@
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
+using Content.IntegrationTests.Tests.Interaction;
 using Content.IntegrationTests.Utility;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Kitchen.EntitySystems;
@@ -16,7 +17,7 @@ namespace Content.IntegrationTests.Tests.Kitchen;
 /// <summary>
 /// Integration tests related to microwaves and microwave recipes.
 /// </summary>
-public sealed class MicrowaveRecipeTest : GameTest
+public sealed class MicrowaveRecipeTest : InteractionTest
 {
     [SidedDependency(Side.Server)] private readonly ServerMicrowaveSystem _microwave = null!;
     [SidedDependency(Side.Server)] private readonly SharedContainerSystem _container = null!;
@@ -24,7 +25,6 @@ public sealed class MicrowaveRecipeTest : GameTest
 
     private static readonly string[] Recipes = GameDataScrounger.PrototypesOfKind<MicrowaveMealRecipePrototype>();
     private static readonly EntProtoId MicrowavePrototype = "KitchenMicrowave";
-    private static readonly EntProtoId PowerProvider = "APCBasic";
     private const uint MaxSeconds = 30;
 
     private const string TestReagent = "TestReagent";
@@ -93,7 +93,7 @@ public sealed class MicrowaveRecipeTest : GameTest
         var server = Pair.Server;
 
         // Spawn the microwave we will use for our recipes.
-        var microwave = await Spawn(MicrowavePrototype);
+        var microwave = ToServer(await Spawn(MicrowavePrototype));
         var microwaveString = SEntMan.ToPrettyString(microwave);
 
         await server.WaitAssertion(() =>
@@ -148,23 +148,17 @@ public sealed class MicrowaveRecipeTest : GameTest
         }
     }
 
-    [Test]
-    [TestOf(typeof(ServerMicrowaveSystem))]
+    [Test, TestOf(typeof(ServerMicrowaveSystem))]
     [Description("Tests that a recipe with a reagent ingredient doesn't change mid-cook.")]
     public async Task ReagentDupeTest()
     {
-        // Needs a map for power and to be anchored
-        var map = await Pair.CreateTestMap();
-
-        var m = await SpawnAtPosition(MicrowavePrototype, map.GridCoords);
+        var m = ToServer(await Spawn(MicrowavePrototype));
         var microwave = (Owner: m, Comp: SComp<MicrowaveComponent>(m));
 
-        await SpawnAtPosition(PowerProvider, map.GridCoords);
-        await Server.WaitRunTicks(1);
-        Assume.That(_microwave.IsPowered(microwave.Owner, SEntMan), "Microwave is not powered.");
+        ToggleNeedPower(FromServer(m));
 
-        var solid = await Spawn(TestSolid);
-        var reagent = await Spawn(TestReagentContainer);
+        var solid = ToServer(await Spawn(TestSolid));
+        var reagent = ToServer(await Spawn(TestReagentContainer));
 
         await Server.WaitPost(() =>
         {
@@ -179,7 +173,6 @@ public sealed class MicrowaveRecipeTest : GameTest
         });
 
         await Pair.RunSeconds(5.1f); // Run for the recipe's cook duration, plus some grace for post-cook
-        Assume.That(_microwave.IsPowered(microwave.Owner, SEntMan), "Microwave became unpowered while cooking.");
         Assume.That(_microwave.IsActiveMicrowave(microwave.Owner), Is.False, "Microwave has not finished cooking.");
 
         Assume.That(_solution.TryGetSolution(reagent, SolutionName, out _, out var sol), Is.True, "Failed to get solution.");
