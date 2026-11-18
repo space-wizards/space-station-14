@@ -1,3 +1,4 @@
+using Robust.Client.GameObjects;
 using Content.Client.Weapons.Ranged.Systems;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -18,9 +19,15 @@ public sealed class GunSpreadOverlay : Overlay
     private readonly IInputManager _input;
     private readonly IPlayerManager _player;
     private readonly GunSystem _guns;
-    private readonly SharedTransformSystem _transform;
+    private readonly TransformSystem _transform;
 
-    public GunSpreadOverlay(IEntityManager entManager, IEyeManager eyeManager, IGameTiming timing, IInputManager input, IPlayerManager player, GunSystem system, SharedTransformSystem transform)
+    public GunSpreadOverlay(IEntityManager entManager,
+        IEyeManager eyeManager,
+        IGameTiming timing,
+        IInputManager input,
+        IPlayerManager player,
+        GunSystem system,
+        TransformSystem transform)
     {
         _entManager = entManager;
         _eye = eyeManager;
@@ -43,7 +50,7 @@ public sealed class GunSpreadOverlay : Overlay
             return;
         }
 
-        var mapPos = _transform.GetMapCoordinates(player.Value, xform: xform);
+        var mapPos = _transform.GetRenderMapCoordinates((player.Value, xform));
 
         if (mapPos.MapId == MapId.Nullspace)
             return;

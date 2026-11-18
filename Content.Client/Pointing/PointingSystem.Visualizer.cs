@@ -33,7 +33,7 @@ public sealed partial class PointingSystem : SharedPointingSystem
         if (_animationPlayer.HasRunningAnimation(uid, PointingAnimationKey))
             return;
 
-        startPosition = new Angle(_eyeManager.CurrentEye.Rotation + _transformSystem.GetWorldRotation(uid)).RotateVec(startPosition);
+        startPosition = new Angle(_eyeManager.CurrentEye.Rotation + _transformSystem.GetRenderWorldRotation(uid)).RotateVec(startPosition);
 
         var animation = new Animation
         {

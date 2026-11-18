@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Client.Graphics;
 using Content.Shared.CCVar;
 using Content.Shared.Silicons.StationAi;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Configuration;
@@ -79,7 +80,7 @@ public sealed partial class StationAiOverlay : Overlay
         if (grid != null && broadphase != null)
         {
             var lookups = _entManager.System<EntityLookupSystem>();
-            var xforms = _entManager.System<SharedTransformSystem>();
+            var xforms = _entManager.System<TransformSystem>();
 
             if (_accumulator <= 0f)
             {
@@ -88,7 +89,7 @@ public sealed partial class StationAiOverlay : Overlay
                 _entManager.System<StationAiVisionSystem>().GetView((gridUid, broadphase, grid), worldBounds, _visibleTiles);
             }
 
-            var gridMatrix = xforms.GetWorldMatrix(gridUid);
+            var gridMatrix = xforms.GetRenderWorldMatrix(gridUid);
             var matty =  Matrix3x2.Multiply(gridMatrix, invMatrix);
 
             // Draw visible tiles to stencil

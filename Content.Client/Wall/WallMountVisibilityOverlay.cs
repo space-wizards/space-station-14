@@ -116,7 +116,7 @@ public sealed partial class WallMountVisibilityOverlay : Overlay
         }
 
         // Restore alpha modified by other viewports.
-        foreach (var entity in _tree.QueryAabb(args.MapId, args.WorldBounds))
+        foreach (var entity in _tree.QueryAabb(args.MapId, args.WorldCullingAABB))
         {
             var uid = entity.Uid;
             if (!_spriteQuery.TryGetComponent(uid, out var sprite))
@@ -134,7 +134,7 @@ public sealed partial class WallMountVisibilityOverlay : Overlay
     /// </summary>
     private void ProcessVisibleEntities(in OverlayDrawArgs args, IEye eye, Matrix3x2 matrix, float fadeStep, ViewportFadeState viewportState)
     {
-        foreach (var entity in _tree.QueryAabb(args.MapId, args.WorldBounds))
+        foreach (var entity in _tree.QueryAabb(args.MapId, args.WorldCullingAABB))
         {
             var (wallmount, xform) = entity;
             var uid = entity.Uid;
@@ -168,7 +168,7 @@ public sealed partial class WallMountVisibilityOverlay : Overlay
         if (!_visibility.IsTileBlocked((gridUid, grid), tile))
             return 1f;
 
-        var (pos, rot) = _xform.GetWorldPositionRotation(xform);
+        var (pos, rot) = _xform.GetRenderWorldPositionRotation((xform.Owner, xform));
         var facingAngle = rot + eye.Rotation + wallmount.Direction;
 
         var entityScreenPos = Vector2.Transform(pos, matrix);

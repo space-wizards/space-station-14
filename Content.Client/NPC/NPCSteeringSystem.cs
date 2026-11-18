@@ -4,6 +4,7 @@ using Content.Client.PhysicsSystem.Controllers;
 using Content.Shared.Movement.Components;
 using Content.Shared.NPC;
 using Content.Shared.NPC.Events;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 
@@ -82,12 +83,12 @@ public sealed class NPCSteeringOverlay : Overlay
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
     private readonly IEntityManager _entManager;
-    private readonly SharedTransformSystem _transformSystem;
+    private readonly TransformSystem _transformSystem;
 
     public NPCSteeringOverlay(IEntityManager entManager)
     {
         _entManager = entManager;
-        _transformSystem = _entManager.System<SharedTransformSystem>();
+        _transformSystem = _entManager.System<TransformSystem>();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -99,7 +100,7 @@ public sealed class NPCSteeringOverlay : Overlay
                 continue;
             }
 
-            var (worldPos, worldRot) = _transformSystem.GetWorldPositionRotation(xform);
+            var (worldPos, worldRot) = _transformSystem.GetRenderWorldPositionRotation((xform.Owner, xform));
 
             if (!args.WorldAABB.Contains(worldPos))
                 continue;

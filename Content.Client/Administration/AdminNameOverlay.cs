@@ -8,6 +8,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Ghost.Components;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -99,6 +100,7 @@ internal sealed class AdminNameOverlay : Overlay
     protected override void Draw(in OverlayDrawArgs args)
     {
         var viewport = args.WorldAABB;
+        var transforms = _entityManager.System<TransformSystem>();
         var colorDisconnected = Color.White;
         var uiScale = _userInterfaceManager.RootControl.UIScale;
         var lineoffset = new Vector2(0f, 14f) * uiScale;
@@ -116,7 +118,9 @@ internal sealed class AdminNameOverlay : Overlay
                 || _entityManager.GetComponent<TransformComponent>(entity.Value).MapID != args.MapId)
                 continue;
 
-            var aabb = _entityLookup.GetWorldAABB(entity.Value);
+            var (position, rotation) = transforms.GetRenderWorldPositionRotation(entity.Value);
+            var aabb = _entityLookup.GetAABB(entity.Value, position, rotation,
+                _entityManager.GetComponent<TransformComponent>(entity.Value), _entityManager.GetEntityQuery<TransformComponent>());
             // if not on screen, skip
             if (!aabb.Intersects(in viewport))
                 continue;

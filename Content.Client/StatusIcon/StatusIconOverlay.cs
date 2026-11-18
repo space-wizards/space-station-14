@@ -53,7 +53,7 @@ public sealed partial class StatusIconOverlay : Overlay
 
             var bounds = comp.Bounds ?? _sprite.GetLocalBounds((uid, sprite));
 
-            var worldPos = _transform.GetWorldPosition(xform, xformQuery);
+            var worldPos = _transform.GetRenderWorldPosition((xform.Owner, xform));
 
             if (!bounds.Translated(worldPos).Intersects(args.WorldAABB))
                 continue;

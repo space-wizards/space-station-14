@@ -12,7 +12,7 @@ public sealed partial class StealthSystem : SharedStealthSystem
 {
     private static readonly ProtoId<ShaderPrototype> Shader = "Stealth";
 
-    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private TransformSystem _transformSystem = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
     private ShaderInstance _shader = default!;
@@ -94,7 +94,7 @@ public sealed partial class StealthSystem : SharedStealthSystem
         if (!parent.IsValid())
             return; // should never happen, but lets not kill the client.
         var parentXform = Transform(parent);
-        var reference = args.Viewport.WorldToLocal(_transformSystem.GetWorldPosition(parentXform));
+        var reference = args.Viewport.WorldToLocal(_transformSystem.GetRenderWorldPosition((parentXform.Owner, parentXform)));
         reference.X = -reference.X;
         var visibility = GetVisibility(uid, component);
 

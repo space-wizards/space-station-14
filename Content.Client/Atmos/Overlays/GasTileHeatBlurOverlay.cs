@@ -1,3 +1,4 @@
+using Robust.Client.GameObjects;
 using Content.Client.Atmos.EntitySystems;
 using Content.Client.Graphics;
 using Content.Client.Resources;
@@ -36,7 +37,7 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
     [Dependency] private IResourceCache _resourceCache = default!;
 
     private readonly SharedMapSystem _maps;
-    private readonly SharedTransformSystem _xformSys;
+    private readonly TransformSystem _xformSys;
     private readonly ShaderInstance _shader;
 
     private readonly Texture _noiseTexture;
@@ -66,7 +67,7 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
     {
         IoCManager.InjectDependencies(this);
         _maps = _entManager.System<SharedMapSystem>();
-        _xformSys = _entManager.System<SharedTransformSystem>();
+        _xformSys = _entManager.System<TransformSystem>();
 
         _noiseTexture = _resourceCache.GetTexture("/Textures/Effects/HeatBlur/perlin_noise.png");
         _heatGradientTexture = _resourceCache.GetTexture("/Textures/Effects/HeatBlur/soft_circle.png");
@@ -106,7 +107,7 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
         args.WorldHandle.UseShader(_proto.Index(UnshadedShader).Instance());
 
         var mapId = args.MapId;
-        var worldAABB = args.WorldAABB;
+        var worldAABB = args.WorldCullingAABB;
         var worldBounds = args.WorldBounds;
         var worldHandle = args.WorldHandle;
         var worldToViewportLocal = args.Viewport.GetWorldToLocalMatrix();
@@ -126,7 +127,7 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
                     if (!overlayQuery.TryGetComponent(grid.Owner, out var comp))
                         continue;
 
-                    var (_, _, gridEntToWorld, worldToGridLocal) = _xformSys.GetWorldPositionRotationMatrixWithInv(grid.Owner);
+                    var (_, _, gridEntToWorld, worldToGridLocal) = _xformSys.GetRenderWorldPositionRotationMatrixWithInv(grid.Owner);
                     var gridEntToViewportLocal = gridEntToWorld * worldToViewportLocal;
 
                     // Draw commands (like DrawRect) will be using grid coordinates from here

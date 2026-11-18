@@ -25,7 +25,7 @@ public sealed class JointVisualsOverlay : Overlay
         var worldHandle = args.WorldHandle;
 
         var spriteSystem = _entManager.System<SpriteSystem>();
-        var xformSystem = _entManager.System<SharedTransformSystem>();
+        var xformSystem = _entManager.System<TransformSystem>();
         var joints = _entManager.EntityQueryEnumerator<JointVisualsComponent, TransformComponent>();
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
@@ -45,17 +45,8 @@ public sealed class JointVisualsOverlay : Overlay
             var texture = spriteSystem.Frame0(visuals.Sprite);
             var width = texture.Width / (float)EyeManager.PixelsPerMeter;
 
-            var coordsA = xform.Coordinates;
-            var coordsB = otherXform.Coordinates;
-
-            var rotA = xform.LocalRotation;
-            var rotB = otherXform.LocalRotation;
-
-            coordsA = coordsA.Offset(rotA.RotateVec(visuals.OffsetA));
-            coordsB = coordsB.Offset(rotB.RotateVec(visuals.OffsetB));
-
-            var posA = xformSystem.ToMapCoordinates(coordsA).Position;
-            var posB = xformSystem.ToMapCoordinates(coordsB).Position;
+            var posA = Vector2.Transform(visuals.OffsetA, xformSystem.GetRenderWorldMatrix((xform.Owner, xform)));
+            var posB = Vector2.Transform(visuals.OffsetB, xformSystem.GetRenderWorldMatrix((otherXform.Owner, otherXform)));
             var diff = posB - posA;
             var length = diff.Length();
 

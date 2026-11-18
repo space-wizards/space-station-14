@@ -12,12 +12,15 @@ public sealed partial class DecalPlacementOverlay : Overlay
     [Dependency] private IInputManager _inputManager = default!;
     private readonly DecalPlacementSystem _placement;
     private readonly SharedMapSystem _maps;
-    private readonly SharedTransformSystem _transform;
+    private readonly TransformSystem _transform;
     private readonly SpriteSystem _sprite;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
 
-    public DecalPlacementOverlay(DecalPlacementSystem placement, SharedMapSystem maps, SharedTransformSystem transform, SpriteSystem sprite)
+    public DecalPlacementOverlay(DecalPlacementSystem placement,
+        SharedMapSystem maps,
+        TransformSystem transform,
+        SpriteSystem sprite)
     {
         IoCManager.InjectDependencies(this);
         _placement = placement;
@@ -46,7 +49,7 @@ public sealed partial class DecalPlacementOverlay : Overlay
             return;
         }
 
-        var worldMatrix = _transform.GetWorldMatrix(gridUid);
+        var worldMatrix = _transform.GetRenderWorldMatrix(gridUid);
         var invMatrix = _transform.GetInvWorldMatrix(gridUid);
 
         var handle = args.WorldHandle;

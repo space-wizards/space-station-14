@@ -156,7 +156,10 @@ namespace Content.Client.Gameplay
 
             // Find all the entities intersecting our click
             var spriteTree = _entityManager.EntitySysManager.GetEntitySystem<SpriteTreeSystem>();
-            var entities = spriteTree.QueryAabb(coordinates.MapId, Box2.CenteredAround(coordinates.Position, new Vector2(1, 1)));
+            var transforms = _entityManager.System<TransformSystem>();
+            var bounds = transforms.GetRenderCullingBounds(coordinates.MapId,
+                Box2.CenteredAround(coordinates.Position, new Vector2(1, 1)));
+            var entities = spriteTree.QueryAabb(coordinates.MapId, bounds);
 
             // Check the entities against whether or not we can click them
             var foundEntities = new List<(EntityUid, int, uint, float)>(entities.Count);
