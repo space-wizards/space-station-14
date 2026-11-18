@@ -18,18 +18,18 @@ namespace Content.Shared.Lighter.Systems;
 
 public sealed partial class LighterSystem : EntitySystem
 {
-    [Dependency] protected SharedSolutionContainerSystem SolutionContainerSystem = default!;
-    [Dependency] protected ItemToggleSystem ItemToggle = default!;
-    [Dependency] protected IGameTiming Timing = default!;
-    [Dependency] protected SharedPopupSystem Popup = default!;
-    [Dependency] protected SharedAudioSystem Audio = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private ItemToggleSystem _itemToggle = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     public void TurnOn(Entity<LighterComponent> entity)
     {
-        if (!SolutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.FuelSolutionName, out var solutionComp, out _))
+        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.FuelSolutionName, out var solutionComp, out _))
             return;
 
-        SolutionContainerSystem.RemoveReagent(solutionComp.Value, entity.Comp.FuelReagent, entity.Comp.FuelLitCost);
+        _solutionContainer.RemoveReagent(solutionComp.Value, entity.Comp.FuelReagent, entity.Comp.FuelLitCost);
 
         entity.Comp.Enabled = true;
         Dirty(entity, entity.Comp);
@@ -45,7 +45,7 @@ public sealed partial class LighterSystem : EntitySystem
     {
         var lighter = entity.Comp;
 
-        if (!SolutionContainerSystem.TryGetSolution(
+        if (!_solutionContainer.TryGetSolution(
             (entity.Owner, solutionManager),
             lighter.FuelSolutionName,
             out _,
@@ -62,7 +62,7 @@ public sealed partial class LighterSystem : EntitySystem
     {
         using (args.PushGroup(nameof(LighterComponent)))
         {
-            if (ItemToggle.IsActivated(entity.Owner))
+            if (_itemToggle.IsActivated(entity.Owner))
             {
                 args.PushMarkup(Loc.GetString("lighter-component-on-examine-lighter-lit-message"));
             }
@@ -108,7 +108,7 @@ public sealed partial class LighterSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnActivateAttempt(Entity<LighterComponent> entity, ref ItemToggleActivateAttemptEvent args)
     {
-        if (!SolutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.FuelSolutionName, out _, out var solution))
+        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.FuelSolutionName, out _, out var solution))
         {
             args.Cancelled = true;
             args.Popup = Loc.GetString("lighter-component-no-fuel-message", ("owner", entity.Owner));
@@ -126,7 +126,7 @@ public sealed partial class LighterSystem : EntitySystem
     private void UpdateLighters()
     {
         var query = EntityQueryEnumerator<LighterComponent>();
-        var curTime = Timing.CurTime;
+        var curTime = _timing.CurTime;
 
         while (query.MoveNext(out var uid, out var lighter))
         {
@@ -138,13 +138,13 @@ public sealed partial class LighterSystem : EntitySystem
 
             if (!lighter.Enabled)
                 continue;
-            if (!SolutionContainerSystem.TryGetSolution(uid, lighter.FuelSolutionName, out var solutionComp, out var solution))
+            if (!_solutionContainer.TryGetSolution(uid, lighter.FuelSolutionName, out var solutionComp, out var solution))
                 continue;
 
-            SolutionContainerSystem.RemoveReagent(solutionComp.Value, lighter.FuelReagent, lighter.FuelConsumption * lighter.LighterUpdateTimer.TotalSeconds);
+            _solutionContainer.RemoveReagent(solutionComp.Value, lighter.FuelReagent, lighter.FuelConsumption * lighter.LighterUpdateTimer.TotalSeconds);
 
             if (solution.GetTotalPrototypeQuantity(lighter.FuelReagent) <= FixedPoint2.Zero)
-                ItemToggle.Toggle(uid);
+                _itemToggle.Toggle(uid);
         }
     }
 
@@ -164,12 +164,12 @@ public sealed partial class LighterSystem : EntitySystem
         if (args.Target is not { Valid: true } target || !args.CanReach)
             return;
 
-        if (SolutionContainerSystem.TryGetDrainableSolution(
+        if (_solutionContainer.TryGetDrainableSolution(
             target,
             out var targetSoln,
             out var targetSolution)
             &&
-            SolutionContainerSystem.TryGetSolution(
+            _solutionContainer.TryGetSolution(
             entity.Owner,
             entity.Comp.FuelSolutionName,
             out var solution,
@@ -181,18 +181,18 @@ public sealed partial class LighterSystem : EntitySystem
             var trans = FixedPoint2.Min(lighterSolution.AvailableVolume, targetSolution.Volume);
             if (trans > 0)
             {
-                var drained = SolutionContainerSystem.Drain(target, targetSoln.Value, trans);
-                SolutionContainerSystem.TryAddSolution(solution.Value, drained);
-                Audio.PlayPredicted(entity.Comp.LighterRefill, entity, user: args.User);
-                Popup.PopupEntity(Loc.GetString("lighter-component-after-interact-refueled-message"), entity, args.User);
+                var drained = _solutionContainer.Drain(target, targetSoln.Value, trans);
+                _solutionContainer.TryAddSolution(solution.Value, drained);
+                _audio.PlayPredicted(entity.Comp.LighterRefill, entity, user: args.User);
+                _popup.PopupEntity(Loc.GetString("lighter-component-after-interact-refueled-message"), entity, args.User);
             }
             else if (lighterSolution.AvailableVolume <= 0)
             {
-                Popup.PopupEntity(Loc.GetString("lighter-component-already-full", ("owner", entity.Owner)), entity, args.User);
+                _popup.PopupEntity(Loc.GetString("lighter-component-already-full", ("owner", entity.Owner)), entity, args.User);
             }
             else
             {
-                Popup.PopupEntity(Loc.GetString("lighter-component-no-fuel-in-tank", ("target", args.Target)), entity, args.User);
+                _popup.PopupEntity(Loc.GetString("lighter-component-no-fuel-in-tank", ("target", args.Target)), entity, args.User);
             }
             args.Handled = true;
         }
