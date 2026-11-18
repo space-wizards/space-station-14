@@ -14,7 +14,7 @@ namespace Content.Shared.Objectives.Components;
 public sealed partial class MultipleAntagsRequirementComponent : Component
 {
     /// <summary>
-    /// Number of antagonists, possibly including yourself, that have to exist.
+    /// Number of antagonists, including yourself, that have to exist.
     /// </summary>
     [DataField, AutoNetworkedField]
     public int Count = 2;
