@@ -787,7 +787,9 @@
         - hemorrhinol-effect-3
         - hemorrhinol-effect-4
         probability: 0.1
-      - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectJitter
+        type: Add
         probability: 0.25
 
 - type: reagent
