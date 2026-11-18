@@ -7,7 +7,6 @@ using Content.Shared.Bed.Sleep;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Emag.Systems;
-using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -204,15 +203,21 @@ public sealed partial class RevenantSystem
         if (!TryComp<EssenceComponent>(args.Args.Target, out var essence))
             return;
 
+        if (!TryComp<SatiationComponent>(uid, out var satiationComp))
+            return;
+
         _popup.PopupEntity(
             Loc.GetString("revenant-soul-finish-harvest", ("target", Identity.Entity(args.Args.Target.Value, EntityManager))),
             args.Args.Target.Value,
             PopupType.LargeCaution);
 
         essence.Harvested = true;
-        ChangeEssenceAmount(uid, essence.EssenceAmount, component);
+
+        _satiation.ModifyValue((uid, satiationComp), component.EssenceSatiationPrototype, essence.EssenceAmount);
+
         _store.TryAddCurrency(new()
             { {component.StolenEssenceCurrencyPrototype, essence.EssenceAmount} }, uid);
+        _store.UpdateUserInterface(uid, uid);
 
         if (!_mobStateQuery.HasComp(args.Args.Target))
             return;
@@ -220,8 +225,6 @@ public sealed partial class RevenantSystem
         if (_mobState.IsAlive(args.Args.Target.Value) || _mobState.IsCritical(args.Args.Target.Value))
         {
             _popup.PopupEntity(Loc.GetString("revenant-max-essence-increased"), uid, uid);
-            if (!TryComp<SatiationComponent>(uid, out var satiationComp))
-                return;
 
             _satiation.ModifyOverrideThreshold((uid, satiationComp), component.EssenceSatiationPrototype, component.MaxRegenThreshold, component.MaxEssenceUpgradeAmount);
         }
