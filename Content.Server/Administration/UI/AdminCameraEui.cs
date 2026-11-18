@@ -1,14 +1,13 @@
 using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Shared.Administration;
+using Content.Shared.Coordinates;
 using Content.Shared.Eui;
 using Content.Shared.Follower;
-using Content.Shared.Coordinates;
-using Robust.Server.GameStates;
+using JetBrains.Annotations;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using JetBrains.Annotations;
 
 namespace Content.Server.Administration.UI;
 
@@ -24,7 +23,6 @@ public sealed partial class AdminCameraEui : BaseEui
     [Dependency] private IGameTiming _timing = default!;
 
     private readonly FollowerSystem _follower = default!;
-    private readonly PvsOverrideSystem _pvs = default!;
     private readonly SharedViewSubscriberSystem _viewSubscriber = default!;
 
     private static readonly EntProtoId CameraProtoId = "AdminCamera";
@@ -37,7 +35,6 @@ public sealed partial class AdminCameraEui : BaseEui
     {
         IoCManager.InjectDependencies(this);
         _follower = _entityManager.System<FollowerSystem>();
-        _pvs = _entityManager.System<PvsOverrideSystem>();
         _viewSubscriber = _entityManager.System<SharedViewSubscriberSystem>();
 
         _target = target;
@@ -84,8 +81,8 @@ public sealed partial class AdminCameraEui : BaseEui
     private EntityUid CreateCamera(EntityUid target, ICommonSession observer)
     {
         // Spawn a camera entity attached to the target.
-        var coords = target.ToCoordinates();
-        var camera = _entityManager.SpawnAttachedTo(CameraProtoId, coords);
+        var camera = _entityManager.SpawnAtPosition(CameraProtoId, target.ToCoordinates()); // it doesn't need to be spawned on the target it just makes sense to
+        _follower.StartFollowingEntity(camera, target);
 
         // Allow the user to see the entities near the camera.
         // This also force sends the camera entity to the user, overriding the visibility flags.
