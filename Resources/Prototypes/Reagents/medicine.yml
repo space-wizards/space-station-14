@@ -1652,3 +1652,20 @@
       - !type:Flammable
         multiplier: 0.1
       - !type:Ignite
+
+- type: reagent
+  id: Hypersomnolene
+  name: reagent-name-hypersomnolene
+  group: Medicine
+  desc: reagent-desc-hypersomnolene
+  physicalDesc: reagent-physical-desc-opaque
+  color: "#068a01"
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:ModifyStatusEffect
+        conditions:
+        - !type:IsSleepingCondition
+        effectProto: StatusEffectFastMetabolism
+        time: 5
+        type: Update

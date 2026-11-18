@@ -1,0 +1,5 @@
+﻿<controls:IsSleepConditionSystem
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Shared.EntityConditions.Conditions.Body">
+    
+</controls:IsSleepConditionSystem>
