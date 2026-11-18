@@ -154,3 +154,7 @@ tips-dataset-153 = Centrifuging changeling blood does nothing. Stop asking.
 tips-dataset-154 = It is pitch black. You are likely to be eaten by a changeling.
 tips-dataset-155 = As a Changeling, your night vision can be a strong advantage agains't the crew.
 tips-dataset-156 = The head of security is a changeling.
+tips-dataset-157 = Changelings have the ability to stealthily inject chemicals into unsuspecting crewmembers.
+tips-dataset-158 = When injected with hivarol, changelings will scream and shake!
+tips-dataset-159 = When devouring someone, changelings drop living tissue on the floor, a chemical that can be used to make hivarol.
+tips-dataset-160 = A thing from space! The primary trait of changelings is their ability to shapeshift and look like exact copies of their victims.
