@@ -21,3 +21,5 @@ revenant-user-interface-title = Ability Shop
 revenant-user-interface-essence-amount = [color=plum]{$amount}[/color] Stolen Essence
 
 revenant-user-interface-cost = {$price} Essence
+
+satiation-type-essence = Essence
