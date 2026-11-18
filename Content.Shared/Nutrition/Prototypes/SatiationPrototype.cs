@@ -34,9 +34,6 @@ public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototyp
     [DataField(required: true)]
     public float BaseChangeRate;
 
-    /// <summary>
-    /// The highest value this satiation can have. Increases beyond this value are clamped to this value.
-    /// </summary>
     [DataField("maximumValue", required: true)]
     private SatiationValue _maximumValue;
 
