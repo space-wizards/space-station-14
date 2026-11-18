@@ -1,123 +1,96 @@
-using System.Text;
+#nullable enable
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Construction.Completions;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Robust.Shared.Prototypes;
 
-namespace Content.IntegrationTests.Tests.Construction
+namespace Content.IntegrationTests.Tests.Construction;
+
+public sealed class ConstructionActionValid : GameTest
 {
-    [TestFixture]
-    public sealed class ConstructionActionValid : GameTest
+    private static bool IsValid(IGraphAction action, IPrototypeManager protoMan, out string prototype)
     {
-        private bool IsValid(IGraphAction action, IPrototypeManager protoMan, out string prototype)
+        switch (action)
         {
-            switch (action)
+            case SpawnPrototype spawn:
+                prototype = spawn.Prototype;
+                return protoMan.TryIndex<EntityPrototype>(spawn.Prototype, out _);
+            case SpawnPrototypeAtContainer spawn:
+                prototype = spawn.Prototype;
+                return protoMan.TryIndex<EntityPrototype>(spawn.Prototype, out _);
+            case ConditionalAction conditional:
+                var valid = IsValid(conditional.Action!, protoMan, out var protoA) & IsValid(conditional.Else!, protoMan, out var protoB);
+
+                if (!string.IsNullOrEmpty(protoA) && string.IsNullOrEmpty(protoB))
+                {
+                    prototype = protoA;
+                }
+
+                else if (string.IsNullOrEmpty(protoA) && !string.IsNullOrEmpty(protoB))
+                {
+                    prototype = protoB;
+                }
+
+                else
+                {
+                    prototype = $"{protoA}, {protoB}";
+                }
+
+                return valid;
+            default:
+                prototype = string.Empty;
+                return true;
+        }
+    }
+
+    [Test]
+    [RunOnSide(Side.Server)]
+    public async Task ConstructionGraphSpawnPrototypeValid()
+    {
+        using (Assert.EnterMultipleScope())
+        {
+            foreach (var graph in SProtoMan.EnumeratePrototypes<ConstructionGraphPrototype>())
             {
-                case SpawnPrototype spawn:
-                    prototype = spawn.Prototype;
-                    return protoMan.TryIndex<EntityPrototype>(spawn.Prototype, out _);
-                case SpawnPrototypeAtContainer spawn:
-                    prototype = spawn.Prototype;
-                    return protoMan.TryIndex<EntityPrototype>(spawn.Prototype, out _);
-                case ConditionalAction conditional:
-                    var valid = IsValid(conditional.Action, protoMan, out var protoA) & IsValid(conditional.Else, protoMan, out var protoB);
-
-                    if (!string.IsNullOrEmpty(protoA) && string.IsNullOrEmpty(protoB))
+                foreach (var node in graph.Nodes.Values)
+                {
+                    foreach (var action in node.Actions)
                     {
-                        prototype = protoA;
+                        Assert.That(IsValid(action, SProtoMan, out var prototype),
+                            $"Invalid entity prototype \"{prototype}\" on graph action in node \"{node.Name}\" of graph \"{graph.ID}\"\n");
                     }
 
-                    else if (string.IsNullOrEmpty(protoA) && !string.IsNullOrEmpty(protoB))
+                    foreach (var edge in node.Edges)
                     {
-                        prototype = protoB;
+                        foreach (var action in edge.Completed)
+                        {
+                            Assert.That(IsValid(action, SProtoMan, out var prototype),
+                                $"Invalid entity prototype \"{prototype}\" on graph action in edge \"{edge.Target}\" of node \"{node.Name}\" of graph \"{graph.ID}\"\n");
+                        }
                     }
-
-                    else
-                    {
-                        prototype = $"{protoA}, {protoB}";
-                    }
-
-                    return valid;
-                default:
-                    prototype = string.Empty;
-                    return true;
+                }
             }
         }
+    }
 
-        [Test]
-        public async Task ConstructionGraphSpawnPrototypeValid()
+    [Test]
+    [RunOnSide(Side.Server)]
+    public async Task ConstructionGraphEdgeValid()
+    {
+        using (Assert.EnterMultipleScope())
         {
-            var pair = Pair;
-            var server = pair.Server;
-
-            var protoMan = server.ResolveDependency<IPrototypeManager>();
-
-            var valid = true;
-            var message = new StringBuilder();
-
-            await server.WaitPost(() =>
+            foreach (var graph in SProtoMan.EnumeratePrototypes<ConstructionGraphPrototype>())
             {
-                foreach (var graph in protoMan.EnumeratePrototypes<ConstructionGraphPrototype>())
+                foreach (var node in graph.Nodes.Values)
                 {
-                    foreach (var node in graph.Nodes.Values)
+                    foreach (var edge in node.Edges)
                     {
-                        foreach (var action in node.Actions)
-                        {
-                            if (IsValid(action, protoMan, out var prototype)) continue;
-
-                            valid = false;
-                            message.Append($"Invalid entity prototype \"{prototype}\" on graph action in node \"{node.Name}\" of graph \"{graph.ID}\"\n");
-                        }
-
-                        foreach (var edge in node.Edges)
-                        {
-                            foreach (var action in edge.Completed)
-                            {
-                                if (IsValid(action, protoMan, out var prototype)) continue;
-
-                                valid = false;
-                                message.Append($"Invalid entity prototype \"{prototype}\" on graph action in edge \"{edge.Target}\" of node \"{node.Name}\" of graph \"{graph.ID}\"\n");
-                            }
-                        }
+                        Assert.That(graph.Nodes.ContainsKey(edge.Target),
+                            $"Invalid target \"{edge.Target}\" in edge on node \"{node.Name}\" of graph \"{graph.ID}\"\n");
                     }
                 }
-            });
-
-            Assert.That(valid, Is.True, $"One or more SpawnPrototype actions specified invalid entity prototypes!\n{message}");
-        }
-
-        [Test]
-        public async Task ConstructionGraphEdgeValid()
-        {
-            var pair = Pair;
-            var server = pair.Server;
-
-            var protoMan = server.ResolveDependency<IPrototypeManager>();
-
-            var valid = true;
-            var message = new StringBuilder();
-
-            await server.WaitPost(() =>
-            {
-                foreach (var graph in protoMan.EnumeratePrototypes<ConstructionGraphPrototype>())
-                {
-                    foreach (var node in graph.Nodes.Values)
-                    {
-                        foreach (var edge in node.Edges)
-                        {
-                            if (graph.Nodes.ContainsKey(edge.Target))
-                                continue;
-
-                            valid = false;
-                            message.Append(
-                                $"Invalid target \"{edge.Target}\" in edge on node \"{node.Name}\" of graph \"{graph.ID}\"\n");
-                        }
-                    }
-                }
-            });
-
-            Assert.That(valid, Is.True, $"One or more edges specified invalid node targets!\n{message}");
+            }
         }
     }
 }

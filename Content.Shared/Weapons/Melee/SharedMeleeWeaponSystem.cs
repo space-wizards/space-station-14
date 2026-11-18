@@ -627,7 +627,6 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
 
         var userPos = TransformSystem.GetWorldPosition(userXform);
         var direction = targetMap.Position - userPos;
-        var distance = Math.Min(component.Range, direction.Length());
 
         var damage = GetDamage(meleeUid, user, component);
         var resistanceBypass = GetResistanceBypass(meleeUid, user, component);
@@ -668,7 +667,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
                                         userPos,
                                         direction.ToWorldAngle(),
                                         component.Angle,
-                                        distance,
+                                        component.Range,
                                         userXform.MapID,
                                         user,
                                         session));

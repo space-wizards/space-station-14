@@ -545,12 +545,32 @@
     event: !type:EntityEffectActionEvent
   - type: EntityEffectAction
     effects:
+    # Anyone who has been fleshtombed before just goes in the normal one.
     - !type:TrapInContainer
       conditions:
       - !type:MobStateCondition
         mobstate: Dead
+      - !type:WhitelistCondition
+        whitelist:
+          components:
+          - RecentlyFleshtombed
       entity: ChangelingFleshCocoon
       container: storage
+      # First time an entity is fleshtombed, we spawn it in a "headstart" fleshtomb that starts with some DNA already.
+      # This is not per-ling and is meant primarly to encourage usage of fleshtomb via giving a small DNA bonus.
+    - !type:TrapInContainer
+      conditions:
+      - !type:MobStateCondition
+        mobstate: Dead
+      - !type:WhitelistCondition
+        blacklist:
+          components:
+          - RecentlyFleshtombed
+      entity: ChangelingFleshCocoonHeadstart
+      container: storage
+    - !type:AddComponents # We mark the target as fleshtombed before.
+      components:
+      - type: RecentlyFleshtombed
     - !type:PlaySound
       conditions:
       - !type:MobStateCondition
