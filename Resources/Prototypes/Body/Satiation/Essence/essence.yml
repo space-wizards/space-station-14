@@ -1,7 +1,7 @@
 - type: satiation
   id: RevenantEssence
-  baseChangeRate: 0.5 # actually slowly goes up
-  maximumValue: 200
+  baseChangeRate: 0.5
+  maximumValue: Full
   thresholds:
     Full: 200
     MaxRegen: 75

@@ -223,7 +223,7 @@ public sealed partial class RevenantSystem
             if (!TryComp<SatiationComponent>(uid, out var satiationComp))
                 return;
 
-            _satiation.ModifyOverrideThreshold((uid, satiationComp), component.EssenceSatiationPrototype, "MaxRegen", component.MaxEssenceUpgradeAmount);
+            _satiation.ModifyOverrideThreshold((uid, satiationComp), component.EssenceSatiationPrototype, component.MaxRegenThreshold, component.MaxEssenceUpgradeAmount);
         }
 
         //KILL THEMMMM
