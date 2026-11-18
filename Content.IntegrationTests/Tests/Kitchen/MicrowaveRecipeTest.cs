@@ -1,10 +1,8 @@
-using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.IntegrationTests.Utility;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Kitchen.EntitySystems;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
