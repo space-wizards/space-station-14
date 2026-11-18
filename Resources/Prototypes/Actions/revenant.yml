@@ -25,6 +25,7 @@
       - !type:SatiationCondition
         satiationType: Essence
         min: 30
+      - !type:NotInsideWallCondition
     effects:
       Performer:
       - !type:Satiate
@@ -60,6 +61,7 @@
       - !type:SatiationCondition
         satiationType: Essence
         min: 40
+      - !type:NotInsideWallCondition
     effects:
       Performer:
       - !type:Satiate
@@ -94,6 +96,7 @@
       - !type:SatiationCondition
         satiationType: Essence
         min: 60
+      - !type:NotInsideWallCondition
     effects:
       Performer:
       - !type:Satiate
