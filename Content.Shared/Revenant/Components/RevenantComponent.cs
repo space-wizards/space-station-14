@@ -62,6 +62,13 @@ public sealed partial class RevenantComponent : Component
 
     [DataField]
     public SatiationValue MinEssenceThreshold = "Empty";
+
+    [DataField]
+    public SatiationValue MaxRegenThreshold = "MaxRegen";
+
+    [DataField]
+    public string CorporealStatus = "Corporeal";
+
     #endregion
 
     #region Visualizer
