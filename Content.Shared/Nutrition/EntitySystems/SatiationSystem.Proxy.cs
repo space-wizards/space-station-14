@@ -330,44 +330,53 @@ public abstract partial class SatiationSystem
     public void SetOverrideThreshold(
         Entity<SatiationComponent> entity,
         [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
-        string key,
+        SatiationValue key,
         int value
     )
     {
+        if (key.Key == null)
+            return;
+
         if (GetAndResolveSatiationOfType(entity, type) is not var (satiation, proto))
             return;
 
-        SetOverrideThreshold(entity, satiation, proto, key, value);
+        SetOverrideThreshold(entity, satiation, proto, key.Key, value);
     }
 
     public void ModifyOverrideThreshold(
         Entity<SatiationComponent> entity,
         [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
-        string key,
+        SatiationValue key,
         int amount
     )
     {
+        if (key.Key == null)
+            return;
+
         if (GetAndResolveSatiationOfType(entity, type) is not var (satiation, proto))
             return;
 
-        if (GetThresholdValueOrNull(satiation, key) is { } currentValue)
+        if (GetThresholdValueOrNull(satiation, key.Key) is { } currentValue)
         {
-            SetOverrideThreshold(entity, satiation, proto, key, currentValue + amount);
+            SetOverrideThreshold(entity, satiation, proto, key.Key, currentValue + amount);
         }
     }
 
     public void ClearOverrideThreshold(
         Entity<SatiationComponent> entity,
         [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
-        string key
+        SatiationValue key
     )
     {
+        if (key.Key == null)
+            return;
+
         if (GetAndResolveSatiationOfType(entity, type) is not var (satiation, proto))
             return;
 
         if (GetThresholdValueOrNull(satiation, key) is { } currentValue)
         {
-            ClearOverrideThreshold(entity, satiation, key);
+            ClearOverrideThreshold(entity, satiation, key.Key);
         }
     }
 
