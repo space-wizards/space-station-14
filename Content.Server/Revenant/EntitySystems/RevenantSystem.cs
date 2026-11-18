@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.GameTicking;
 using Content.Server.Store.Systems;
@@ -7,18 +6,15 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Eye;
-using Content.Shared.FixedPoint;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
-using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Revenant;
 using Content.Shared.Revenant.Components;
 using Content.Shared.StatusEffect;
-using Content.Shared.Store.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
@@ -70,9 +66,6 @@ public sealed partial class RevenantSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, RevenantComponent component, ComponentStartup args)
     {
-        //update the icon
-        ChangeEssenceAmount(uid, 0, component);
-
         //default the visuals
         _appearance.SetData(uid, RevenantVisuals.Corporeal, false);
         _appearance.SetData(uid, RevenantVisuals.Harvesting, false);
@@ -125,28 +118,16 @@ public sealed partial class RevenantSystem : EntitySystem
             return;
 
         var essenceDamage = args.DamageDelta.GetTotal().Float() * component.DamageToEssenceCoefficient * -1;
-        ChangeEssenceAmount(uid, essenceDamage, component);
-    }
-
-    public bool ChangeEssenceAmount(EntityUid uid, FixedPoint2 amount, RevenantComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return false;
-
         if (!TryComp<SatiationComponent>(uid, out var satiationComp))
-            return false;
+            return;
 
-        _satiation.ModifyValue((uid, satiationComp), component.EssenceSatiationPrototype, (float)amount);
-
-        if (TryComp<StoreComponent>(uid, out var store))
-            _store.UpdateUserInterface(uid, uid, store);
+        _satiation.ModifyValue((uid, satiationComp), component.EssenceSatiationPrototype, (float)essenceDamage);
 
         if (_satiation.IsValueInRange((uid, satiationComp), component.EssenceSatiationPrototype, below: component.MinEssenceThreshold))
         {
             Spawn(component.SpawnOnDeathPrototype, Transform(uid).Coordinates);
             QueueDel(uid);
         }
-        return true;
     }
 
     public void MakeVisible(bool visible)
