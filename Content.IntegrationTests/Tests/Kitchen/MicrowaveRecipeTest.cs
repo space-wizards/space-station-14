@@ -17,9 +17,9 @@ namespace Content.IntegrationTests.Tests.Kitchen;
 /// </summary>
 public sealed class MicrowaveRecipeTest : InteractionTest
 {
-    [SidedDependency(Side.Server)] private readonly ServerMicrowaveSystem _microwave = null!;
-    [SidedDependency(Side.Server)] private readonly SharedContainerSystem _container = null!;
-    [SidedDependency(Side.Server)] private readonly SolutionContainerSystem _solution = null!;
+    [SidedDependency(Side.Server)] private readonly ServerMicrowaveSystem _sMicrowave = null!;
+    [SidedDependency(Side.Server)] private readonly SharedContainerSystem _sContainer = null!;
+    [SidedDependency(Side.Server)] private readonly SolutionContainerSystem _sSolution = null!;
 
     private static readonly string[] Recipes = GameDataScrounger.PrototypesOfKind<MicrowaveMealRecipePrototype>();
     private static readonly EntProtoId MicrowavePrototype = "KitchenMicrowave";
@@ -123,7 +123,7 @@ public sealed class MicrowaveRecipeTest : InteractionTest
     {
         var ingredients = prototype.Ingredients * portions;
         var cookTime = prototype.Time * portions;
-        var portionedRecipe = _microwave.GetRecipe(microwave, ingredients, cookTime);
+        var portionedRecipe = _sMicrowave.GetRecipe(microwave, ingredients, cookTime);
         var microwaveString = SEntMan.ToPrettyString(microwave);
         var recipeDebugString = $"Ingredients for {nameof(MicrowaveMealRecipePrototype)} {prototype.ID}";
 
@@ -160,20 +160,20 @@ public sealed class MicrowaveRecipeTest : InteractionTest
 
         await Server.WaitPost(() =>
         {
-            _microwave.SetCookTime(microwave, 5);
+            _sMicrowave.SetCookTime(microwave, 5);
 
-            var container = _container.GetContainer(microwave.Owner, microwave.Comp.ContainerId);
-            _container.Insert(reagent, container);
-            _container.Insert(solid, container);
+            var container = _sContainer.GetContainer(microwave.Owner, microwave.Comp.ContainerId);
+            _sContainer.Insert(reagent, container);
+            _sContainer.Insert(solid, container);
 
-            _microwave.StartCooking(microwave, null);
+            _sMicrowave.StartCooking(microwave, null);
             Assume.That(SComp<ActiveMicrowaveComponent>(microwave.Owner).PortionedRecipe, Is.Not.Null, "Microwave failed to select a recipe.");
         });
 
         await Pair.RunSeconds(5.1f); // Run for the recipe's cook duration, plus some grace for post-cook
-        Assume.That(_microwave.IsActiveMicrowave(microwave.Owner), Is.False, "Microwave has not finished cooking.");
+        Assume.That(_sMicrowave.IsActiveMicrowave(microwave.Owner), Is.False, "Microwave has not finished cooking.");
 
-        Assume.That(_solution.TryGetSolution(reagent, SolutionName, out _, out var sol), Is.True, "Failed to get solution.");
+        Assume.That(_sSolution.TryGetSolution(reagent, SolutionName, out _, out var sol), Is.True, "Failed to get solution.");
         using (Assert.EnterMultipleScope())
         {
             Assert.That(SEntMan.EntityExists(solid), Is.False, "Recipe solid was not consumed.");
