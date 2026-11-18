@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Text;
 using Content.Shared.Antag;
 using Content.Shared.Codewords;
@@ -145,34 +145,4 @@ public abstract partial class TraitorRuleSystem : GameRuleSystem<TraitorRuleComp
         return sb.ToString();
     }
 
-    public List<(EntityUid Id, MindComponent Mind)> GetOtherTraitorMindsAliveAndConnected(MindComponent ourMind)
-    {
-        List<(EntityUid Id, MindComponent Mind)> allTraitors = new();
-
-        var query = EntityQueryEnumerator<TraitorRuleComponent>();
-        while (query.MoveNext(out var uid, out var traitor))
-        {
-            foreach (var role in GetOtherTraitorMindsAliveAndConnected(ourMind, (uid, traitor)))
-            {
-                if (!allTraitors.Contains(role))
-                    allTraitors.Add(role);
-            }
-        }
-
-        return allTraitors;
-    }
-
-    private List<(EntityUid Id, MindComponent Mind)> GetOtherTraitorMindsAliveAndConnected(MindComponent ourMind, Entity<TraitorRuleComponent> rule)
-    {
-        var traitors = new List<(EntityUid Id, MindComponent Mind)>();
-        foreach (var mind in _antag.GetAntagMinds(rule.Owner))
-        {
-            if (mind.Comp == ourMind)
-                continue;
-
-            traitors.Add((mind, mind));
-        }
-
-        return traitors;
-    }
 }
