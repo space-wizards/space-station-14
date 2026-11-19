@@ -159,7 +159,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         _physics.SetFixedRotation(uid, true, manager: manager, body: component);
     }
 
-    private void OnShuttleShutdown(EntityUid uid, ShuttleComponent component, ComponentShutdown args)
+    private void OnShuttleShutdown(EntityUid uid, ShuttleComponent component, ref ComponentShutdown args)
     {
         // None of the below is necessary for any cleanup if we're just deleting.
         if (Comp<MetaDataComponent>(uid).EntityLifeStage >= EntityLifeStage.Terminating)
