@@ -204,7 +204,9 @@ public sealed partial class InnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
 
     private void RemoveAnomalyFromBody(Entity<InnerBodyAnomalyComponent> ent)
     {
-        if (!ent.Comp.Injected)
+        // AnomalyShutdownEvent also reaches this and it's causing test implosion
+        // There's probably a better way to do this.
+        if (TerminatingOrDeleted(ent) || !ent.Comp.Injected)
             return;
 
         if (ProtoMan.Resolve(ent.Comp.InjectionProto, out var injectedAnom))
