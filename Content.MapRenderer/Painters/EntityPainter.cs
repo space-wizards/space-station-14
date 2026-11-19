@@ -85,14 +85,12 @@ public sealed class EntityPainter
 
                 if (!_images.TryGetValue(key, out image!))
                 {
-                    var stream = _resManager.ContentFileRead($"{rsi.Path}/{state.StateId}.png");
+                    using var stream = _resManager.ContentFileRead($"{rsi.Path}/{state.StateId}.png");
                     image = Image.Load<Rgba32>(stream);
 
                     _images[key] = image;
                 }
             }
-
-            image = image.CloneAs<Rgba32>();
 
             (int, int, int, int) GetRsiFrame(RSI? rsi, Image image, EntityData entity, ISpriteLayer layer, int direction)
             {
@@ -124,7 +122,7 @@ public sealed class EntityPainter
                 return;
             }
 
-            image.Mutate(o => o.Crop(rect));
+            using var frame = image.Clone(o => o.Crop(rect));
 
             var spriteRotation = 0f;
             if (!entity.Sprite.NoRotation && !entity.Sprite.SnapCardinals && _sprite.LayerGetDirectionCount((SpriteComponent.Layer)layer) == 1)
@@ -134,7 +132,7 @@ public sealed class EntityPainter
 
             var colorMix = entity.Sprite.Color * layer.Color;
             var imageColor = Color.FromRgba(colorMix.RByte, colorMix.GByte, colorMix.BByte, colorMix.AByte);
-            var coloredImage = new Image<Rgba32>(image.Width, image.Height);
+            using var coloredImage = new Image<Rgba32>(frame.Width, frame.Height);
             coloredImage.Mutate(o => o.BackgroundColor(imageColor));
 
             var (imgX, imgY) = rsi?.Size ?? (EyeManager.PixelsPerMeter, EyeManager.PixelsPerMeter);
@@ -151,16 +149,16 @@ public sealed class EntityPainter
             var offsetX = (int)MathF.Round(spriteOffset.X * EyeManager.PixelsPerMeter);
             var offsetY = (int)MathF.Round(spriteOffset.Y * EyeManager.PixelsPerMeter);
 
-            image.Mutate(o => o
+            frame.Mutate(o => o
                 .DrawImage(coloredImage, PixelColorBlendingMode.Multiply, PixelAlphaCompositionMode.SrcAtop, 1)
                 .Resize(imgX, imgY)
                 .Flip(FlipMode.Vertical)
                 .Rotate(spriteRotation));
 
-            var pointX = (int)entity.X + offsetX - image.Width / 2;
-            var pointY = (int)entity.Y + offsetY - image.Height / 2;
+            var pointX = (int)entity.X + offsetX - frame.Width / 2;
+            var pointY = (int)entity.Y + offsetY - frame.Height / 2;
 
-            canvas.Mutate(o => o.DrawImage(image, new Point(pointX, pointY), 1));
+            canvas.Mutate(o => o.DrawImage(frame, new Point(pointX, pointY), 1));
         }
     }
 }
