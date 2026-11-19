@@ -405,6 +405,9 @@
     - Maintenance
     - Salvage
   - type: Dumpable
+  - type: ActionGrant
+    actions:
+    - ActionDumpStorage
   - type: Storage
     maxItemSize: Huge
     grid:
