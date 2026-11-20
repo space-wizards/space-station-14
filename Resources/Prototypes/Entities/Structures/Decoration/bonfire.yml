@@ -74,7 +74,7 @@
   - type: IgniteOnBuckle
     Firestacks: .3
     igniteTime: 2
-   maxFireStacks: 3.2
+    maxFireStacks: 3.2
   - type: Construction
     graph: Bonfire
     node: bonfireStake
