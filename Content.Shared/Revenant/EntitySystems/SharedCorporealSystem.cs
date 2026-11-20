@@ -46,7 +46,7 @@ public abstract partial class SharedCorporealSystem : EntitySystem
         _movement.RefreshMovementSpeedModifiers(uid);
     }
 
-    public virtual void OnShutdown(EntityUid uid, CorporealComponent component, ComponentShutdown args)
+    public virtual void OnShutdown(EntityUid uid, CorporealComponent component, ref ComponentShutdown args)
     {
         _appearance.SetData(uid, RevenantVisuals.Corporeal, false);
 

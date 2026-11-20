@@ -66,7 +66,7 @@ public sealed partial class FrictionContactsSystem : EntitySystem
         _toUpdate.UnionWith(_physics.GetContactingEntities(uid));
     }
 
-    private void OnShutdown(EntityUid uid, FrictionContactsComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, FrictionContactsComponent component, ref ComponentShutdown args)
     {
         if (!TryComp(uid, out PhysicsComponent? phys))
             return;

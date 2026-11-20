@@ -46,7 +46,7 @@ public sealed partial class NPCCombatSystem
         }
     }
 
-    private void OnRangedShutdown(EntityUid uid, NPCRangedCombatComponent component, ComponentShutdown args)
+    private void OnRangedShutdown(EntityUid uid, NPCRangedCombatComponent component, ref ComponentShutdown args)
     {
         if (TryComp<CombatModeComponent>(uid, out var combat))
         {

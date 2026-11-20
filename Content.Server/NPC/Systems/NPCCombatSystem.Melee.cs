@@ -17,7 +17,7 @@ public sealed partial class NPCCombatSystem
         SubscribeLocalEvent<NPCMeleeCombatComponent, ComponentShutdown>(OnMeleeShutdown);
     }
 
-    private void OnMeleeShutdown(EntityUid uid, NPCMeleeCombatComponent component, ComponentShutdown args)
+    private void OnMeleeShutdown(EntityUid uid, NPCMeleeCombatComponent component, ref ComponentShutdown args)
     {
         if (TryComp<CombatModeComponent>(uid, out var combatMode))
         {

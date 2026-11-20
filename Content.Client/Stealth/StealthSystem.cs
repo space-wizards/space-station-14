@@ -76,9 +76,9 @@ public sealed partial class StealthSystem : SharedStealthSystem
         SetShader(uid, component.Enabled, component);
     }
 
-    private void OnShutdown(EntityUid uid, StealthComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, StealthComponent component, ref ComponentShutdown args)
     {
-        if (!Terminating(uid))
+        if (args.LifeStage != EntityLifeStage.Terminating)
             SetShader(uid, false, component);
     }
 

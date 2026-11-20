@@ -24,9 +24,9 @@ public sealed partial class CorporealSystem : SharedCorporealSystem
         }
     }
 
-    public override void OnShutdown(EntityUid uid, CorporealComponent component, ComponentShutdown args)
+    public override void OnShutdown(EntityUid uid, CorporealComponent component, ref ComponentShutdown args)
     {
-        base.OnShutdown(uid, component, args);
+        base.OnShutdown(uid, component, ref args);
 
         if (TryComp<VisibilityComponent>(uid, out var visibility) && _ticker.RunLevel != GameRunLevel.PostRound)
         {
