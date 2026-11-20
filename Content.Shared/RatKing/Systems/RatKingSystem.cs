@@ -46,7 +46,9 @@ public abstract partial class RatKingSystem : EntitySystem
     {
         if (ent.Comp.King is not { } king ||
             !TryComp<RatKingComponent>(king, out var ratKing))
+        {
             return;
+        }
 
         ratKing.Servants.Remove(ent.Owner);
     }

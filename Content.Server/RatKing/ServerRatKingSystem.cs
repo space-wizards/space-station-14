@@ -92,7 +92,9 @@ public sealed partial class ServerRatKingSystem : RatKingSystem
     {
         if (!ent.Comp.OrderCallouts.TryGetValue(ent.Comp.CurrentOrder, out var datasetId) ||
             !ProtoMan.TryIndex(datasetId, out var datasetPrototype))
+        {
             return;
+        }
 
         var msg = _random.Pick(datasetPrototype);
         _chat.TrySendInGameICMessage(ent.Owner, msg, InGameICChatType.Speak, true);
