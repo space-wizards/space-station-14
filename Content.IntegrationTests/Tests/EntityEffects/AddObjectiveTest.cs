@@ -3,7 +3,6 @@ using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects;
 using Content.Shared.Mind;
-using Content.Shared.Objectives.Components;
 using Content.Shared.Roles;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
