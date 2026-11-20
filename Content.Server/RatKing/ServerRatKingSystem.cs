@@ -31,7 +31,7 @@ public sealed partial class ServerRatKingSystem : RatKingSystem
     [Dependency] private EntityQuery<HTNComponent> _htnQuery;
 
     /// <summary>
-    /// Summons an allied rat servant at the King, costing a small amount of hunger.
+    /// Summons an allied rat servant at the King's position.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnRaiseArmy(Entity<RatKingComponent> ent, ref RatKingRaiseArmyActionEvent args)
@@ -51,8 +51,7 @@ public sealed partial class ServerRatKingSystem : RatKingSystem
     }
 
     /// <summary>
-    /// Uses hunger to release a specific amount of ammonia into the air.
-    /// This heals the Rat King and his servants through a specific metabolism.
+    /// Releases ammonia into the air, healing the Rat King and his servants.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnDomain(Entity<RatKingComponent> ent, ref RatKingDomainActionEvent args)
@@ -67,6 +66,9 @@ public sealed partial class ServerRatKingSystem : RatKingSystem
         tileMix?.AdjustMoles(Gas.Ammonia, ent.Comp.MolesAmmoniaPerDomain);
     }
 
+    /// <summary>
+    /// Commands the Rat King's servants to move to the pointed location.
+    /// </summary>
     [SubscribeLocalEvent]
     private void OnPointedAt(Entity<RatKingComponent> ent, ref AfterPointedAtEvent args)
     {
