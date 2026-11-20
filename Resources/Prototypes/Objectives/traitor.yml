@@ -18,7 +18,10 @@
     icon:
       sprite: Objects/Misc/folders.rsi
       state: folder-colormap
-  - type: MultipleTraitorsRequirement
+  - type: MultipleAntagsRequirement
+    antags:
+    - Traitor
+    - TraitorSleeper
 
 - type: entity
   abstract: true

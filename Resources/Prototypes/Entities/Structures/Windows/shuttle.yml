@@ -31,10 +31,30 @@
             min: 1
             max: 2
   - type: IconSmooth
+    key: windows-shuttle
     states:
-    - !type:CornerSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
-      base: swindow
+    - !type:CardinalCornerSpriteSmoothing
+      mask: [ windows-shuttle ]
+      altMask:
+      - windows
+      - windows-reinf
+      - windows-tinted
+      - windows-plasma
+      - windows-plasma-reinf
+      - windows-uranium
+      - windows-uranium-reinf
+      - windows-exo
+      - windows-plastitanium
+      - windows-regal
+      - walls-exo
+      - walls-shuttle
+      - walls-plastitanium
+      - walls-material
+      - walls-marble
+      - walls
+      - grilles
+      - doors
+      base: window
   - type: Construction
     graph: Window
     node: shuttleWindow
@@ -67,7 +87,12 @@
   - type: IconSmooth
     states:
     - !type:DiagonalSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
+      mask:
+      - walls
+      - windows
+      - grilles
+      - marble
+      - doors
       base: state
   - type: Icon
     sprite: Structures/Windows/window-diagonal-shuttle.rsi

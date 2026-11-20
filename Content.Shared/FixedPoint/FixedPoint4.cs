@@ -10,7 +10,7 @@ namespace Content.Shared.FixedPoint
     ///     To enforce this level of precision, floats are shifted by 2 decimal points, rounded, and converted to an int.
     /// </summary>
     [Serializable, CopyByRef]
-    public struct FixedPoint4 : ISelfSerialize, IComparable<FixedPoint4>, IEquatable<FixedPoint4>, IFormattable
+    public struct FixedPoint4 : ISelfSerialize, IComparable<FixedPoint4>, IEquatable<FixedPoint4>, IFormattable, IApproxEquatable<FixedPoint4>
     {
         public long Value { get; private set; }
         private const long Shift = 4;
@@ -320,6 +320,15 @@ namespace Content.Shared.FixedPoint
             return 0;
         }
 
+        public bool EqualsApprox(FixedPoint4 other)
+        {
+            return Value == other.Value; // These don't have fp errors
+        }
+
+        public bool EqualsApprox(FixedPoint4 other, double tolerance)
+        {
+            return MathHelper.CloseToPercent(Double(), other.Double(), tolerance);
+        }
     }
 
     public static class FixedPoint4EnumerableExt

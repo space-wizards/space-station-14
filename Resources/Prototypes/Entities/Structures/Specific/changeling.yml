@@ -81,3 +81,11 @@
     currency: ChangelingDNA
   - type: StaticPrice
     price: 75
+
+- type: entity
+  parent: ChangelingFleshCocoon
+  id: ChangelingFleshCocoonHeadstart
+  suffix: Headstart
+  components:
+  - type: StoreCurrencyGenerator
+    amount: 2 # Start with 2 DNA by default to reward using fleshtomb on corpses for the first time.

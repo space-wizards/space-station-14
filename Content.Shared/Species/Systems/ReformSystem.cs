@@ -52,7 +52,7 @@ public sealed partial class ReformSystem : EntitySystem
         }
     }
 
-    private void OnCompRemove(EntityUid uid, ReformComponent comp, ComponentShutdown args)
+    private void OnCompRemove(EntityUid uid, ReformComponent comp, ref ComponentShutdown args)
     {
         _actionsSystem.RemoveAction(uid, comp.ActionEntity);
     }

@@ -79,7 +79,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         RefreshShuttleConsoles();
     }
 
-    private void OnFtlDestShutdown(EntityUid uid, FTLDestinationComponent component, ComponentShutdown args)
+    private void OnFtlDestShutdown(EntityUid uid, FTLDestinationComponent component, ref ComponentShutdown args)
     {
         RefreshShuttleConsoles();
     }
@@ -301,13 +301,13 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         }
     }
 
-    protected override void HandlePilotShutdown(EntityUid uid, PilotComponent component, ComponentShutdown args)
+    protected override void HandlePilotShutdown(EntityUid uid, PilotComponent component, ref ComponentShutdown args)
     {
-        base.HandlePilotShutdown(uid, component, args);
+        base.HandlePilotShutdown(uid, component, ref args);
         RemovePilot(uid, component);
     }
 
-    private void OnConsoleShutdown(EntityUid uid, ShuttleConsoleComponent component, ComponentShutdown args)
+    private void OnConsoleShutdown(EntityUid uid, ShuttleConsoleComponent component, ref ComponentShutdown args)
     {
         ClearPilots(component);
     }

@@ -95,7 +95,7 @@ namespace Content.Server.Light.EntitySystems
             _actions.AddAction(ent, ref component.SelfToggleActionEntity, component.ToggleAction);
         }
 
-        private void OnShutdown(EntityUid uid, HandheldLightComponent component, ComponentShutdown args)
+        private void OnShutdown(EntityUid uid, HandheldLightComponent component, ref ComponentShutdown args)
         {
             _actions.RemoveAction(uid, component.ToggleActionEntity);
             _actions.RemoveAction(uid, component.SelfToggleActionEntity);

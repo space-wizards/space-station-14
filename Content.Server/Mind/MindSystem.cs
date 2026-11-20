@@ -26,7 +26,7 @@ public sealed partial class MindSystem : SharedMindSystem
     [Dependency] private PvsOverrideSystem _pvsOverride = default!;
 
     [SubscribeLocalEvent]
-    private void OnMindShutdown(EntityUid uid, MindComponent mind, ComponentShutdown args)
+    private void OnMindShutdown(EntityUid uid, MindComponent mind, ref ComponentShutdown args)
     {
         if (mind.UserId is {} user)
         {
