@@ -46,6 +46,10 @@ public sealed partial class MindSystem : SharedMindSystem
     [SubscribeLocalEvent]
     private void OnMindContainerTerminating(EntityUid uid, MindContainerComponent component, ref EntityTerminatingEvent args)
     {
+        // TODO: This sucks but I want tests working; we don't want to start spawning on test teardown.
+        if (EntityManager.ShuttingDown)
+            return;
+
         if (!TryGetMind(uid, out var mindId, out var mind, component))
             return;
 
