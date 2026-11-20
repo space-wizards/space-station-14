@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseHandheldInstrument
   id: BaseBrassInstrument
   abstract: true
@@ -17,8 +17,8 @@
     program: 56
   - type: SwappableInstrument
     instrumentList:
-      "Standard": {56: 0}
-      "Muted": {59: 0}
+      swappable-instrument-style-standard: {56: 0}
+      swappable-instrument-style-muted: {59: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/trumpet.rsi
 

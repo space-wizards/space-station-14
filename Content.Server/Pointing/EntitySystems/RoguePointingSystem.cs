@@ -7,7 +7,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Pointing.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed partial class RoguePointingSystem : EntitySystem
+    public sealed partial class RoguePointingSystem : EntitySystem
     {
         [Dependency] private IRobustRandom _random = default!;
         [Dependency] private ExplosionSystem _explosion = default!;

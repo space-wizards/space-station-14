@@ -1,4 +1,4 @@
-﻿using Content.Server.Explosion.EntitySystems;
+using Content.Server.Explosion.EntitySystems;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects;
 using Content.Shared.Explosion.Components;
@@ -15,6 +15,6 @@ public sealed partial class ExplodeEntityEffectSystem : EntityEffectSystem<Explo
 
     protected override void Effect(Entity<ExplosiveComponent> entity, ref EntityEffectEvent<Explode> args)
     {
-        _explosion.TriggerExplosive(entity, entity, args.Effect.Delete, args.Effect.Intensity, args.Effect.Radius, args.User);
+        _explosion.TriggerExplosive(entity, entity, args.Effect.Delete, args.Effect.Intensity, radius: args.Effect.Radius, user: args.User);
     }
 }

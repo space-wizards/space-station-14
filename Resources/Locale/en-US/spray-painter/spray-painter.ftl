@@ -77,6 +77,7 @@ spray-painter-style-airlockstandard-medical = Medical
 spray-painter-style-airlockstandard-salvage = Salvage
 spray-painter-style-airlockstandard-science = Science
 spray-painter-style-airlockstandard-security = Security
+spray-painter-style-airlockstandard-service = Service
 spray-painter-style-airlockstandard-virology = Virology
 
 spray-painter-style-airlockglass-atmospherics = Atmospherics

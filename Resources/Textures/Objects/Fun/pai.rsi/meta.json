@@ -8,9 +8,6 @@
     },
     "states": [
         {
-            "name": "icon-pai-off"
-        },
-        {
             "name": "pai-base"
         },
         {
@@ -62,9 +59,6 @@
             ]
         },
         {
-            "name": "icon-potato-off"
-        },
-        {
             "name": "potato-off-overlay"
         },
         {
@@ -72,9 +66,6 @@
         },
         {
             "name": "potato-searching-overlay"
-        },
-        {
-            "name": "golden-icon-pai-off"
         },
         {
             "name": "golden-pai-base"

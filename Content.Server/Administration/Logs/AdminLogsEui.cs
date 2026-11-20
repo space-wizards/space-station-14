@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
@@ -52,7 +52,7 @@ public sealed partial class AdminLogsEui : BaseEui
         };
     }
 
-    private int CurrentRoundId => _e.System<GameTicker>().RoundId;
+    private int CurrentRoundId => _e.System<ServerGameTicker>().RoundId;
 
     public override async void Opened()
     {

@@ -66,7 +66,7 @@ public sealed partial class SalvageSystem
         component.SelectedSong = _audio.ResolveSound(component.Sound);
     }
 
-    private void OnExpeditionShutdown(EntityUid uid, SalvageExpeditionComponent component, ComponentShutdown args)
+    private void OnExpeditionShutdown(EntityUid uid, SalvageExpeditionComponent component, ref ComponentShutdown args)
     {
         _audio.Stop(component.Stream);
 

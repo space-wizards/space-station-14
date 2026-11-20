@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using System.Text.RegularExpressions;
 using Content.Shared.Speech.Components;
 using Content.Shared.StatusEffectNew;

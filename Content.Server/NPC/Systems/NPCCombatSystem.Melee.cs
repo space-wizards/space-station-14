@@ -17,7 +17,7 @@ public sealed partial class NPCCombatSystem
         SubscribeLocalEvent<NPCMeleeCombatComponent, ComponentShutdown>(OnMeleeShutdown);
     }
 
-    private void OnMeleeShutdown(EntityUid uid, NPCMeleeCombatComponent component, ComponentShutdown args)
+    private void OnMeleeShutdown(EntityUid uid, NPCMeleeCombatComponent component, ref ComponentShutdown args)
     {
         if (TryComp<CombatModeComponent>(uid, out var combatMode))
         {
@@ -94,6 +94,12 @@ public sealed partial class NPCCombatSystem
         if (distance > weapon.Range)
         {
             component.Status = CombatStatus.TargetOutOfRange;
+            return;
+        }
+
+        if (!_interaction.InRangeUnobstructed(uid, component.Target, distance + 0.1f))
+        {
+            component.Status = CombatStatus.TargetUnreachable;
             return;
         }
 

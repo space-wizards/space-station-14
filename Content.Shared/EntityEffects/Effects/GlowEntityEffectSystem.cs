@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Network;
+using Robust.Shared.Network;
 using Robust.Shared.Random;
 
 namespace Content.Shared.EntityEffects.Effects;

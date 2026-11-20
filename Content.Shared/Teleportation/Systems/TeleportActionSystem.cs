@@ -1,5 +1,3 @@
-using Content.Shared.Examine;
-using Content.Shared.Interaction;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
@@ -11,14 +9,13 @@ using Robust.Shared.Physics.Systems;
 namespace Content.Shared.Teleportation.Systems;
 
 /// <summary>
-/// Handles <see cref="TeleportActionEvent"/> by checking line of sight and whether the performer
-/// would collide with anything at the destination before moving them.
+/// Handles <see cref="TeleportActionEvent"/> by checking whether the performer would collide with
+/// anything at the destination before moving them.
 /// </summary>
 public sealed partial class TeleportActionSystem : EntitySystem
 {
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
-    [Dependency] private ExamineSystemShared _examine = default!;
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private PullingSystem _pulling = default!;
@@ -57,18 +54,12 @@ public sealed partial class TeleportActionSystem : EntitySystem
             return false;
 
         var xform = Transform(user);
-        var mapId = _transform.GetMapId(target);
-        if (xform.MapID != mapId ||
-            !_examine.InRangeUnOccluded(user, target, SharedInteractionSystem.MaxRaycastRange))
-        {
-            _popup.PopupEntity(Loc.GetString("teleport-action-popup-cant-see"), user, user);
-            return false;
-        }
+        var targetXform = Transform(target.EntityId);
+        var targetEntPosRot = _transform.GetWorldPositionRotation(targetXform);
+        var targetRotated = targetEntPosRot.WorldRotation.RotateVec(target.Position);
+        var targetMapCoordinates = new MapCoordinates(targetEntPosRot.WorldPosition + targetRotated, targetXform.MapID);
 
-        var mapTarget = _transform.GetWorldPositionRotation(target.EntityId);
-        var targetMapCoordinates = new MapCoordinates(mapTarget.WorldPosition + target.Position, mapId);
-
-        if (IsDestinationBlocked(user, targetMapCoordinates, mapTarget.WorldRotation))
+        if (IsDestinationBlocked(user, targetMapCoordinates, targetEntPosRot.WorldRotation))
         {
             _popup.PopupEntity(Loc.GetString("teleport-action-popup-blocked"), user, user);
             return false;

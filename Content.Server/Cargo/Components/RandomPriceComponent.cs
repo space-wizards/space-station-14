@@ -1,4 +1,4 @@
-﻿using Content.Server.Cargo.Systems;
+using Content.Server.Cargo.Systems;
 
 namespace Content.Server.Cargo.Components;
 

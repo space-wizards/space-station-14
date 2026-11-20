@@ -7,8 +7,6 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind;
 using Content.Server.Power.Components;
 using Content.Server.Roles;
-using Content.Server.Spawners.Components;
-using Content.Server.Spawners.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Chat.Prototypes;
@@ -16,6 +14,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Destructible;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Mobs;
@@ -27,6 +26,8 @@ using Content.Shared.Power.Components;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.StationAi;
+using Content.Shared.Spawners.Components;
+using Content.Shared.Spawners.EntitySystems;
 using Content.Shared.Speech.Components;
 using Content.Shared.StationAi;
 using Content.Shared.Turrets;
@@ -55,8 +56,8 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
     [Dependency] private SharedBatterySystem _battery = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private SharedPopupSystem _popups = default!;
-    [Dependency] private StationSystem _station = default!;
-    [Dependency] private StationJobsSystem _stationJobs = default!;
+    [Dependency] private ServerStationSystem _station = default!;
+    [Dependency] private ServerStationJobsSystem _stationJobs = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
 
@@ -403,7 +404,7 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
             var ev = new ChatNotificationEvent(_turretIsAttackingChatNotificationPrototype, ent);
 
             if (TryComp<DeviceNetworkComponent>(ent, out var deviceNetwork))
-                ev.SourceNameOverride = Loc.GetString("station-ai-turret-component-name", ("name", Name(ent)), ("address", deviceNetwork.Address));
+                ev.SourceNameOverride = Loc.GetString("station-ai-turret-component-name", ("name", Name(ent)), ("address", DeviceLocalizationHelpers.GetAddressFromId(deviceNetwork)));
 
             RaiseLocalEvent(ai, ref ev);
         }

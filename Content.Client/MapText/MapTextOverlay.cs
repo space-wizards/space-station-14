@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Shared.MapText;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -41,16 +41,12 @@ public sealed class MapTextOverlay : Overlay
         if (args.ViewportControl == null)
             return;
 
-        args.DrawingHandle.SetTransform(Matrix3x2.Identity);
-
         var scale = _configManager.GetCVar(CVars.DisplayUIScale);
 
         if (scale == 0f)
             scale = _uiManager.DefaultUIScale;
 
         DrawWorld(args.ScreenHandle, args, scale);
-
-        args.DrawingHandle.UseShader(null);
     }
 
     private void DrawWorld(DrawingHandleScreen handle, OverlayDrawArgs args, float scale)
@@ -79,7 +75,8 @@ public sealed class MapTextOverlay : Overlay
 
             var pos = Vector2.Transform(mapPos.Position, matrix) + mapText.Offset;
             var dimensions = handle.GetDimensions(mapText.CachedFont, mapText.CachedText, scale);
-            handle.DrawString(mapText.CachedFont, pos - dimensions / 2f, mapText.CachedText, scale, mapText.Color);
+            var drawPosition = (pos - dimensions / 2f).Rounded();
+            handle.DrawString(mapText.CachedFont, drawPosition, mapText.CachedText, scale, mapText.Color, TextOutline.Default);
         }
     }
 }

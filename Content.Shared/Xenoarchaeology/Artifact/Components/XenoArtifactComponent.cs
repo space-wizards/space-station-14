@@ -2,7 +2,6 @@ using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Destructible.Thresholds;
 using Content.Shared.EntityTable.EntitySelectors;
-using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -15,7 +14,8 @@ namespace Content.Shared.Xenoarchaeology.Artifact.Components;
 /// This is used for handling interactions with artifacts as well as
 /// storing data about artifact node graphs.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedXenoArtifactSystem)), AutoGenerateComponentState, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[Access(typeof(SharedXenoArtifactSystem))]
 public sealed partial class XenoArtifactComponent : Component
 {
     public static string NodeContainerId = "node-container";
@@ -146,7 +146,10 @@ public sealed partial class XenoArtifactComponent : Component
     /// Triggers that can be used during this artefact generation.
     /// </summary>
     [DataField]
-    public ProtoId<WeightedRandomXenoArchTriggerPrototype> TriggerWeights = "DefaultTriggers";
+    public EntityTableSelector TriggersTable = new NestedSelector
+    {
+        TableId = "XenoArtifactTriggerDefaultTable"
+    };
     #endregion
 
     /// <summary>
@@ -190,6 +193,15 @@ public sealed partial class XenoArtifactComponent : Component
     /// </summary>
     [DataField]
     public LocId? UnlockFailureMsg = "artifact-unlock-state-end-failure";
+
+    /// <summary>
+    /// List of currently attached entities - node scanners, etc.
+    /// </summary>
+    /// <remarks>
+    /// TODO: replace with relationship system.
+    /// </remarks>
+    [DataField, AutoNetworkedField]
+    public HashSet<EntityUid> AttachedEntities = new();
 }
 
 /// <summary>

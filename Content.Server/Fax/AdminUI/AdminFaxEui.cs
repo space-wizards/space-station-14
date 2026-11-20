@@ -1,6 +1,5 @@
-using Content.Server.Construction.Conditions;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.EUI;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Eui;
 using Content.Shared.Fax.Components;
 using Content.Shared.Fax;
@@ -35,7 +34,7 @@ public sealed partial class AdminFaxEui : BaseEui
         var entries = new List<AdminFaxEntry>();
         while (faxes.MoveNext(out var uid, out var fax, out var device))
         {
-            entries.Add(new AdminFaxEntry(_entityManager.GetNetEntity(uid), fax.FaxName, device.Address));
+            entries.Add(new AdminFaxEntry(_entityManager.GetNetEntity(uid), fax.FaxName, DeviceLocalizationHelpers.GetAddressFromId(device)));
         }
         return new AdminFaxEuiState(entries);
     }

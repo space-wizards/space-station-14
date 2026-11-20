@@ -37,7 +37,7 @@ alerts-handcuffed-name = [color=yellow]Handcuffed[/color]
 alerts-handcuffed-desc = You're [color=yellow]handcuffed[/color] and can't use your hands. If anyone drags you, you won't be able to resist.
 
 alerts-ensnared-name = [color=yellow]Ensnared[/color]
-alerts-ensnared-desc = You're [color=yellow]ensnared[/color] and is impairing your ability to move.
+alerts-ensnared-desc = You're [color=yellow]ensnared[/color] and is impairing your ability to move. Click with a free hand to remove.
 
 alerts-buckled-name = [color=yellow]Buckled[/color]
 alerts-buckled-desc = You've been [color=yellow]buckled[/color] to something. Click the alert to unbuckle unless you're [color=yellow]handcuffed.[/color]
@@ -113,3 +113,6 @@ alerts-stealthy-desc = Whether you are currently pickpocketing. Click to toggle.
 
 alerts-prying-name = Prying
 alerts-prying-desc = You can innately pry doors open using alternative interaction.
+
+alerts-changeling-chemicals-name = Chemicals
+alerts-changeling-chemicals-desc = The chemicals stored within our glands. We use them for many of our abilities to function. They regenerate over time.

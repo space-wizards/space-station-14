@@ -23,7 +23,10 @@ public sealed class EntityCoordinatesConverter : AdminLogConverter<EntityCoordin
         WriteEntityInfo(writer, value.EntityId, entities, "parent");
         writer.WriteNumber("x", value.X);
         writer.WriteNumber("y", value.Y);
-        var mapUid = value.GetMapUid(entities);
+        EntityUid? mapUid = null;
+        if (_entityManager.TryGetTarget(out var entMan))
+            mapUid = entMan.GetComponent<TransformComponent>(value.EntityId).MapUid;
+
         if (mapUid.HasValue)
         {
             WriteEntityInfo(writer, mapUid.Value, entities, "map");

@@ -1,4 +1,4 @@
-﻿### Loc for the pneumatic cannon.
+### Loc for the pneumatic cannon.
 
 pneumatic-cannon-component-itemslot-name = Gas Tank
 
