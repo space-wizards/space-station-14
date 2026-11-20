@@ -204,15 +204,16 @@ public sealed partial class InnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
 
     private void RemoveAnomalyFromBody(Entity<InnerBodyAnomalyComponent> ent)
     {
-        // AnomalyShutdownEvent also reaches this and it's causing test implosion
-        // There's probably a better way to do this.
-        if (TerminatingOrDeleted(ent) || !ent.Comp.Injected)
+        if (!ent.Comp.Injected)
             return;
 
         if (ProtoMan.Resolve(ent.Comp.InjectionProto, out var injectedAnom))
             EntityManager.RemoveComponents(ent, injectedAnom.Components);
 
-        _stun.TryUpdateParalyzeDuration(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration));
+        // AnomalyShutdownEvent also reaches this and it's causing test implosion
+        // There's probably a better way to do this.
+        if (!TerminatingOrDeleted(ent))
+            _stun.TryUpdateParalyzeDuration(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration));
 
         if (ent.Comp.EndMessage is not null &&
             _mind.TryGetMind(ent, out _, out var mindComponent) &&
