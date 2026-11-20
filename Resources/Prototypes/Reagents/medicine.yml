@@ -1665,7 +1665,11 @@
       effects:
       - !type:ModifyStatusEffect
         conditions:
-        - !type:IsSleepingCondition
+        - !type:WhitelistCondition
+          whitelist:
+            components:
+            - Sleeping
+          guidebookDescription: entity-condition-guidebook-is-sleeping-condition
         effectProto: StatusEffectFastMetabolism
         time: 4
         type: Add

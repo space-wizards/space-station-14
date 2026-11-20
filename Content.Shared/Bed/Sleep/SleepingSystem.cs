@@ -375,14 +375,6 @@ public sealed partial class SleepingSystem : EntitySystem
         args.Prefix = ent.Comp.ForceSaySleepDataset;
     }
 
-    /// <summary>
-    /// Checks whether the entity is sleeping
-    /// </summary>
-    public bool IsSleeping(Entity<MobStateComponent> ent)
-    {
-        return HasComp<SleepingComponent>(ent);
-    }
-
 }
 
 
