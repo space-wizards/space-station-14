@@ -93,3 +93,14 @@
   - type: MobPrice
     price: 150
   - type: FloatingVisuals
+
+- type: entity
+  abstract: true
+  parent: [ SolutionFood, SolutionTiny ]
+  id: SolutionVermin
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 15

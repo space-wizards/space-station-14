@@ -15,5 +15,5 @@ public sealed partial class CommunicationsConsoleComponent : SharedCommunication
     /// If this isn't true, create a dummy entity or adjust the margins/scale in MessagingControls.xaml.
     /// </remarks>
     [DataField]
-    public EntProtoId ScreenDisplayId = "ScreenDummy";
+    public EntProtoId ScreenDisplayId = "Screen";
 }

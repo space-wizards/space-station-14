@@ -71,7 +71,26 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
     }
 
     /// <summary>
-    /// Applies a list of entity effects to a target entity.
+    /// Applies a list of entity effects to a target entity. Returns true if at least one succeeded.
+    /// </summary>
+    /// <param name="target">Entity being targeted by the effects</param>
+    /// <param name="effects">Effects we're applying to the entity</param>
+    /// <param name="scale">Optional scale multiplier for the effects</param>
+    /// <param name="user">The entity causing the effect.</param>
+    public bool TryApplyEffects(EntityUid target, EntityEffect[] effects, float scale = 1f, EntityUid? user = null)
+    {
+        var success = false;
+        // do all effects, if conditions apply
+        foreach (var effect in effects)
+        {
+            success |= TryApplyEffect(target, effect, scale, user);
+        }
+
+        return success;
+    }  
+
+    /// <summary>
+    /// Applies a list of entity effects to a target entity. Works using <see cref="TryApplyEffects"/>
     /// </summary>
     /// <param name="target">Entity being targeted by the effects</param>
     /// <param name="effects">Effects we're applying to the entity</param>
@@ -79,11 +98,8 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
     /// <param name="user">The entity causing the effect.</param>
     public void ApplyEffects(EntityUid target, EntityEffect[] effects, float scale = 1f, EntityUid? user = null)
     {
-        // do all effects, if conditions apply
-        foreach (var effect in effects)
-        {
-            TryApplyEffect(target, effect, scale, user);
-        }
+
+        TryApplyEffects(target, effects, scale, user);
     }
 
     /// <summary>

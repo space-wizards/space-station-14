@@ -7,9 +7,11 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Whitelist;
+using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 
@@ -175,6 +177,28 @@ public sealed partial class ItemSlotsSystem : EntitySystem
     }
 
     /// <summary>
+    /// Checks whether an entity has an item in any of their item slots.
+    /// </summary>
+    /// <param name="container">Container entity, which item slots should be checked.</param>
+    /// <returns>True if there wer item slots and at least one of them had an item in it, false otherwise.</returns>
+    [PublicAPI]
+    private bool HasItemInAnySlot(Entity<ItemSlotsComponent?> container)
+    {
+        if (!Resolve(container, ref container.Comp))
+            return false;
+
+        foreach (var slot in container.Comp.Slots.Values)
+        {
+            if (!slot.HasItem)
+                continue;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// Reconciles local slot registrations and their serialized configuration with received component state.
     /// </summary>
     /// <remarks>
@@ -213,11 +237,19 @@ public sealed partial class ItemSlotsSystem : EntitySystem
                 AddItemSlot((ent.Owner, ent.Comp), serverKey, slot);
             }
         }
+
+        ent.Comp.AllowSmartEquip = state.AllowSmartEquip;
     }
 
     [SubscribeLocalEvent]
     private void GetItemSlotsState(Entity<ItemSlotsComponent> ent, ref ComponentGetState args)
     {
-        args.State = new ItemSlotsComponentState(ent.Comp.Slots);
+        args.State = new ItemSlotsComponentState(ent.Comp.Slots, ent.Comp.AllowSmartEquip);
     }
+}
+
+[Serializable, NetSerializable]
+public enum ItemSlotRadialUiKey : byte
+{
+    Key,
 }

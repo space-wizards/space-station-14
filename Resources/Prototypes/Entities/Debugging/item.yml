@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseItem
   id: DebugItemShapeWeird
   name: weirdly shaped item

@@ -39,13 +39,15 @@
   parent: BasePaper
   id: BasePhotograph
   name: photograph
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/photograph.rsi
 
 - type: entity
   parent: BasePhotograph
   id: PhotographBlack
   components:
   - type: Sprite
-    sprite: Objects/Misc/photograph.rsi
     layers:
     - state: black
 
@@ -54,7 +56,6 @@
   id: PhotographRed
   components:
   - type: Sprite
-    sprite: Objects/Misc/photograph.rsi
     layers:
     - state: red
 
@@ -63,7 +64,6 @@
   id: PhotographBlue
   components:
   - type: Sprite
-    sprite: Objects/Misc/photograph.rsi
     layers:
     - state: blue
 
@@ -72,7 +72,6 @@
   id: PhotographGreen
   components:
   - type: Sprite
-    sprite: Objects/Misc/photograph.rsi
     layers:
     - state: green
 
@@ -81,7 +80,6 @@
   id: PhotographYellow
   components:
   - type: Sprite
-    sprite: Objects/Misc/photograph.rsi
     layers:
     - state: yellow
 
@@ -90,7 +88,6 @@
   id: PhotographPurple
   components:
   - type: Sprite
-    sprite: Objects/Misc/photograph.rsi
     layers:
     - state: purple
 
@@ -99,7 +96,6 @@
   id: PhotographRainbow
   components:
   - type: Sprite
-    sprite: Objects/Misc/photograph.rsi
     layers:
     - state: rainbow
 

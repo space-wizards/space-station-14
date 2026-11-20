@@ -9,6 +9,11 @@
   description: signal-port-description-toggle
 
 - type: sinkPort
+  id: DockToggle
+  name: signal-port-name-dock-toggle
+  description: signal-port-description-dock-toggle
+
+- type: sinkPort
   id: On
   name: signal-port-name-on-receiver
   description: signal-port-description-on-receiver
@@ -117,7 +122,7 @@
   id: RandomGateInput
   name: signal-port-name-logic-random-input
   description: signal-port-description-logic-random-input
-  
+
 - type: sinkPort
   id: SetParticleDelta
   name: signal-port-name-set-particle-delta

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration.Components;
+using Content.Shared.Administration.Components;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Administration.Systems;
@@ -22,7 +22,7 @@ public sealed partial class HeadstandSystem : EntitySystem
         }
     }
 
-    private void OnHeadstandRemoved(EntityUid uid, HeadstandComponent component, ComponentShutdown args)
+    private void OnHeadstandRemoved(EntityUid uid, HeadstandComponent component, ref ComponentShutdown args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;

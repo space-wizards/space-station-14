@@ -20,7 +20,7 @@ public sealed partial class FultonSystem : SharedFultonSystem
         SubscribeLocalEvent<FultonedComponent, ComponentShutdown>(OnFultonedShutdown);
     }
 
-    private void OnFultonedShutdown(EntityUid uid, FultonedComponent component, ComponentShutdown args)
+    private void OnFultonedShutdown(EntityUid uid, FultonedComponent component, ref ComponentShutdown args)
     {
         Del(component.Effect);
         component.Effect = EntityUid.Invalid;

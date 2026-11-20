@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;

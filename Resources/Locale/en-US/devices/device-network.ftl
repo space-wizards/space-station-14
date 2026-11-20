@@ -1,4 +1,4 @@
-# named frequencies
+# Named frequencies
 device-frequency-prototype-name-atmos = Atmospheric Devices
 device-frequency-prototype-name-suit-sensors = Suit Sensors
 device-frequency-prototype-name-crew-monitor = Crew Monitor
@@ -13,8 +13,11 @@ device-frequency-prototype-name-turret = Sentry Turret
 device-frequency-prototype-name-turret-control = Sentry Turret Control
 device-frequency-prototype-name-xenoborg = Xenoborg
 device-frequency-prototype-name-mothership = Mothership
+device-frequency-prototype-name-arrivals-shuttle-timer = Arrivals Timer
+device-frequency-prototype-name-shuttle-timer = Evac Shuttle Timer
 
-## camera frequencies
+## Camera frequencies
+device-frequency-prototype-name-surveillance-camera = Cameras
 device-frequency-prototype-name-surveillance-camera-test = Subnet Test
 device-frequency-prototype-name-surveillance-camera-engineering = Engineering Cameras
 device-frequency-prototype-name-surveillance-camera-security = Security Cameras
@@ -26,7 +29,7 @@ device-frequency-prototype-name-surveillance-camera-medical = Medical Cameras
 device-frequency-prototype-name-surveillance-camera-general = General Cameras
 device-frequency-prototype-name-surveillance-camera-entertainment = Entertainment Cameras
 
-# prefixes for randomly generated device addresses
+# Prefixes for randomly generated device addresses
 device-address-prefix-vent = VNT-
 device-address-prefix-scrubber = SCR-
 device-address-prefix-sensor = SNS-
@@ -43,7 +46,16 @@ device-address-prefix-console = CLS-
 device-address-prefix-fire-alarm = FIR-
 device-address-prefix-air-alarm = AIR-
 
-device-address-prefix-sensor-monitor = MON-
+# Consoles
+device-address-prefix-sensor-monitor = SEM-
+device-address-prefix-camera-monitor = SCM-
+device-address-prefix-crew-monitor = MCM-
+
+# Servers and routers
+device-address-prefix-camera-router = CMR-
+device-address-prefix-camera-router-wireless = CMW-
+device-address-prefix-camera = CAM-
+device-address-prefix-crew-monitoring-server = CMS-
 
 device-address-examine-message = The device's address is {$address}.
 

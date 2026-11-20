@@ -12,95 +12,63 @@
             "name": "full"
         },
         {
-            "name": "solid0",
+            "name": "wall0",
             "directions": 4
         },
         {
-            "name": "solid1",
+            "name": "wall1",
             "directions": 4
         },
         {
-            "name": "solid2",
+            "name": "wall2",
             "directions": 4
         },
         {
-            "name": "solid3",
+            "name": "wall3",
             "directions": 4
         },
         {
-            "name": "solid4",
+            "name": "wall4",
             "directions": 4
         },
         {
-            "name": "solid5",
+            "name": "wall5",
             "directions": 4
         },
         {
-            "name": "solid6",
+            "name": "wall6",
             "directions": 4
         },
         {
-            "name": "solid7",
+            "name": "wall7",
             "directions": 4
         },
         {
-            "name": "reinf_construct-0"
-        },
-        {
-            "name": "reinf_construct-1"
-        },
-        {
-            "name": "reinf_construct-2"
-        },
-        {
-            "name": "reinf_construct-3"
-        },
-        {
-            "name": "reinf_construct-4"
-        },
-        {
-            "name": "reinf_construct-5"
-        },
-        {
-            "name": "reinf_over0",
+            "name": "wall8",
             "directions": 4
         },
         {
-            "name": "reinf_over1",
+            "name": "wall9",
             "directions": 4
         },
         {
-            "name": "reinf_over2",
+            "name": "wall10",
             "directions": 4
         },
         {
-            "name": "reinf_over3",
+            "name": "wall11",
             "directions": 4
         },
         {
-            "name": "reinf_over4",
+            "name": "wall12",
             "directions": 4
         },
         {
-            "name": "reinf_over5",
+            "name": "wall13",
             "directions": 4
-        },
-        {
-            "name": "reinf_over6",
-            "directions": 4
-        },
-        {
-            "name": "reinf_over7",
-            "directions": 4
-        },
-        {
-            "name": "rgeneric"
         },
         {
             "name": "wall_girder"
-        },
-        {
-            "name": "reinforced_wall_girder"
         }
     ]
 }

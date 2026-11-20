@@ -1,10 +1,10 @@
 using System.Linq;
 using System.Numerics;
 using Content.Client.Gameplay;
+using Content.Client.Lobby;
 using Content.Client.Stylesheets;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
-using Content.Shared.Ghost;
 using Content.Shared.Ghost.Systems;
 using Content.Shared.Voting;
 using JetBrains.Annotations;
@@ -173,6 +173,13 @@ namespace Content.Client.Voting.UI
         {
             var typeKey = (StandardVoteType)VoteTypeButton.SelectedId;
             var isAvailable = _voteManager.CanCallStandardVote(typeKey, out var timeout);
+
+            if (typeKey == StandardVoteType.Restart && _state.CurrentState is LobbyState)
+            {
+                isAvailable = false;
+                timeout = TimeSpan.Zero;
+            }
+
             if (typeKey == StandardVoteType.Votekick && !IsAllowedVotekick)
             {
                 CreateButton.Disabled = true;

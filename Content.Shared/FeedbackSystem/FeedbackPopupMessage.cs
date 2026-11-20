@@ -1,4 +1,4 @@
-﻿using Lidgren.Network;
+using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -25,6 +25,7 @@ public sealed class FeedbackPopupMessage : NetMessage
         buffer.ReadPadBits();
 
         var count = buffer.ReadVariableInt32();
+        buffer.AssertAtLeastSize(count * NetMessageExt.MinSizeOfString);
         FeedbackPrototypes = [];
 
         for (var i = 0; i < count; i++)

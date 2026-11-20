@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Chemistry.EntitySystems;
@@ -12,11 +12,8 @@ namespace Content.Shared.Chemistry.EntitySystems;
 /// </summary>
 public abstract partial class SharedSolutionContainerSystem
 {
-    public void InitializeContainerManager()
-    {
-        SubscribeLocalEvent<SolutionContainerManagerComponent, MapInitEvent>(OnSolutionContainerInit);
-    }
-
+    [SubscribeLocalEvent]
+    [Obsolete("Uses obsolete SolutionContainerManagerComponent.")]
     private void OnSolutionContainerInit(Entity<SolutionContainerManagerComponent> container, ref MapInitEvent args)
     {
         // Create the manager, this should also create a container, so we ensure it exists.

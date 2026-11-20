@@ -1,4 +1,4 @@
-﻿using Content.Server.Anomaly.Components;
+using Content.Server.Anomaly.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
@@ -35,7 +35,7 @@ public sealed partial class AnomalySystem
             : Loc.GetString("anomaly-vessel-component-assigned"));
     }
 
-    private void OnVesselShutdown(EntityUid uid, AnomalyVesselComponent component, ComponentShutdown args)
+    private void OnVesselShutdown(EntityUid uid, AnomalyVesselComponent component, ref ComponentShutdown args)
     {
         if (component.Anomaly is not { } anomaly)
             return;

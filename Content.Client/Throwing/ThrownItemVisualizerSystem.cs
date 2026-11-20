@@ -1,4 +1,4 @@
-﻿using Content.Shared.Throwing;
+using Content.Shared.Throwing;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
@@ -41,7 +41,7 @@ public sealed partial class ThrownItemVisualizerSystem : EntitySystem
         _anim.Play((uid, animationPlayer), anim, AnimationKey);
     }
 
-    private void OnShutdown(EntityUid uid, ThrownItemComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, ThrownItemComponent component, ref ComponentShutdown args)
     {
         if (!_anim.HasRunningAnimation(uid, AnimationKey))
             return;

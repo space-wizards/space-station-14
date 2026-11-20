@@ -30,6 +30,21 @@
 
 - type: entity
   parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  id: CrateArmoryMosin
+  name: mosin crate
+  description: Reliable, dirt cheap, and loud as hell. Contains three mosin rifles and 12 speedloaders of .30 rifle ammunition. Requires Armory access to open.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: WeaponSniperMosin
+          amount: 3
+        - id: SpeedLoaderLightRifle
+          amount: 12
+
+- type: entity
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   id: CrateTrackingImplants
   name: tracking implants
   description: Contains a handful of tracking implanters. Good for prisoners you'd like to release but still keep track of.

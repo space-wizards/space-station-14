@@ -27,6 +27,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -65,8 +66,10 @@ public abstract partial class SharedMagicSystem : EntitySystem
     [Dependency] private SharedStunSystem _stun = default!;
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private SharedChargesSystem _charges = default!;
-    [Dependency] private ExamineSystemShared _examine= default!;
+    [Dependency] private ExamineSystemShared _examine = default!;
     [Dependency] private AliveHumanoidTargetSystem _target = default!;
+
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery;
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
 
@@ -131,8 +134,8 @@ public abstract partial class SharedMagicSystem : EntitySystem
         args.Handled = true;
     }
 
-        /// <summary>
-    ///     Gets spawn positions listed on <see cref="InstantSpawnSpellEvent"/>
+    /// <summary>
+    /// Gets spawn positions listed on <see cref="InstantSpawnSpellEvent"/>
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     private List<EntityCoordinates> GetInstantSpawnPositions(TransformComponent casterXform, MagicInstantSpawnData data)
@@ -140,7 +143,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
         switch (data)
         {
             case TargetCasterPos:
-                return new List<EntityCoordinates>(1) {casterXform.Coordinates};
+                return new List<EntityCoordinates>(1) { casterXform.Coordinates };
             case TargetInFrontSingle:
             {
                 var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized());
@@ -265,14 +268,32 @@ public abstract partial class SharedMagicSystem : EntitySystem
         var xform = Transform(ev.Performer);
         var fromCoords = xform.Coordinates;
         var toCoords = ev.Target;
-        var userVelocity = _physics.GetMapLinearVelocity(ev.Performer);
+        _physicsQuery.TryComp(ev.Performer, out var userPhysics);
+        var userVelocity = _physics.GetMapLinearVelocity(ev.Performer, userPhysics, xform);
+
+        var userLocalVelocity = userPhysics?.LinearVelocity ?? Vector2.Zero;
 
         // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
         var fromMap = _transform.ToMapCoordinates(fromCoords);
         var ent = Spawn(ev.Prototype, fromMap);
         var direction = _transform.ToMapCoordinates(toCoords).Position -
                          fromMap.Position;
-        _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer, ev.Performer, ev.ProjectileSpeed);
+
+        // Check for backwards velocity compensation.
+        var compensation = 0.0f;
+        if (ev.RearVelocityCompensation > 0.0f
+            && !MathHelper.CloseToPercent(userLocalVelocity.LengthSquared(), 0.0f)
+            && !MathHelper.CloseToPercent(direction.LengthSquared(), 0.0f))
+        {
+            var dotProduct = Vector2.Dot(direction, userLocalVelocity);
+            if (dotProduct < 0.0f)
+            {
+                // Get rearward component of user's local velocity, multiply it by our coefficient.
+                compensation += ev.RearVelocityCompensation * -dotProduct / direction.Length();
+            }
+        }
+
+        _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer, ev.Performer, ev.ProjectileSpeed + compensation);
     }
     // End Projectile Spells
     #endregion

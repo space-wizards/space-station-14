@@ -1,4 +1,4 @@
-﻿using Content.Shared.EntityConditions;
+using Content.Shared.EntityConditions;
 
 namespace Content.Shared.Objectives.Systems;
 

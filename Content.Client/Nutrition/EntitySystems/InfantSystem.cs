@@ -1,4 +1,4 @@
-﻿using Content.Shared.Nutrition.AnimalHusbandry;
+using Content.Shared.Nutrition.AnimalHusbandry;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Nutrition.EntitySystems;
@@ -26,7 +26,7 @@ public sealed partial class InfantSystem : EntitySystem
         _sprite.SetScale((uid, sprite), component.VisualScale);
     }
 
-    private void OnShutdown(EntityUid uid, InfantComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, InfantComponent component, ref ComponentShutdown args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;

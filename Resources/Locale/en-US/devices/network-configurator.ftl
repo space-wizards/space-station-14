@@ -1,4 +1,4 @@
-﻿# Popups
+# Popups
 
 network-configurator-device-saved = Successfully saved network device {$device} with address {$address}!
 network-configurator-device-failed = Failed to save network device {$device}! No address assigned!
