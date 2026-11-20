@@ -43,6 +43,7 @@ public sealed class VendingInteractionTest : InteractionTest
       {VendedItemProtoId}: 5
 
 - type: vendingMachineInventory
+  id: {Pack2}
   categories:
   - name: vending-machine-category-food
     icon: {{ entity: {VendedItemProtoId} }}
