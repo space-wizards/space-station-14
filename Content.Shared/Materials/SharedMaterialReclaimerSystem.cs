@@ -45,7 +45,7 @@ public abstract partial class SharedMaterialReclaimerSystem : EntitySystem
     [SubscribeLocalEvent(before: [typeof(SolutionTransferSystem), typeof(AnchorableSystem)])]
     private void OnInteractUsing(Entity<MaterialReclaimerComponent> entity, ref InteractUsingEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !entity.Comp.ReclaimOnInteract)
             return;
 
         // if we're trying to get a solution out of the reclaimer, don't destroy it
@@ -116,6 +116,9 @@ public abstract partial class SharedMaterialReclaimerSystem : EntitySystem
     /// </summary>
     public bool TryStartProcessItem(EntityUid uid, EntityUid item, MaterialReclaimerComponent? component = null, EntityUid? user = null)
     {
+        if (EntityManager.IsQueuedForDeletion(item))
+            return false;
+
         if (!Resolve(uid, ref component))
             return false;
 

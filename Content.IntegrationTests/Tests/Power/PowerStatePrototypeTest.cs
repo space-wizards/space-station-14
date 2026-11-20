@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Power;
 
-[TestFixture, TestOf(typeof(SharedPowerStateSystem))]
+[TestFixture, TestOf(typeof(PowerStateSystem))]
 public sealed class PowerStatePrototypeTest : GameTest
 {
     /// <summary>
@@ -39,7 +39,7 @@ public sealed class PowerStatePrototypeTest : GameTest
                         $"Entity prototype '{prototype.ID}' has a PowerStateComponent but is missing the required ApcPowerReceiverComponent.");
                 }
                 
-                var expectedLoad = powerStateComp.IsWorking
+                var expectedLoad = powerStateComp.IsTurnedOn
                     ? powerStateComp.WorkingPowerDraw
                     : powerStateComp.IdlePowerDraw;
 

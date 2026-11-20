@@ -237,7 +237,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
         _deviceLink.SendSignal(uid, GetPort(comp), true);
     }
 
-    private void OnShutdown(EntityUid uid, AirAlarmComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, AirAlarmComponent component, ref ComponentShutdown args)
     {
         _activeUserInterfaces.Remove(uid);
     }
@@ -285,6 +285,12 @@ public sealed partial class AirAlarmSystem : EntitySystem
 
     private void OnUpdateAutoMode(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAutoModeMessage args)
     {
+        if (!AccessCheck(uid, args.Actor, component))
+        {
+            UpdateUI(uid, component);
+            return;
+        }
+
         component.AutoMode = args.Enabled;
 
         _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(args.Actor)} changed {ToPrettyString(uid)} auto mode to {args.Enabled}");

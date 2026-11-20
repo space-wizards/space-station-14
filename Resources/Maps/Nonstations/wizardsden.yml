@@ -1,21 +1,21 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 289.0.0
+  engineVersion: 291.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/23/2026 18:01:29
-  entityCount: 629
+  time: 10/08/2026 02:50:25
+  entityCount: 630
 maps:
 - 411
 grids:
 - 1
 orphans: []
 nullspace:
-- 536
 - 537
 - 538
 - 539
+- 540
 tilemap:
   3: Space
   2: FloorBasalt
@@ -184,10 +184,10 @@ entities:
     - type: GridSplitNode
     - type: ChunkContainer
       chunkEntities:
-      - 536
       - 537
       - 538
       - 539
+      - 540
     - type: TileHistory
       chunkHistory: {}
     - type: ExplosionAirtightGrid
@@ -309,7 +309,7 @@ entities:
     components:
     - type: Transform
       parent: 1
-      pos: -1.9141665,4.7120576
+      pos: -1.9669323,4.6285667
 - proto: BookRandomStory
   entities:
   - uid: 466
@@ -323,7 +323,7 @@ entities:
     components:
     - type: Transform
       parent: 1
-      pos: -1.5,4.5
+      pos: -1.3826103,4.509627
 - proto: Bookshelf
   entities:
   - uid: 471
@@ -880,7 +880,7 @@ entities:
       pos: -7.5,6.5
 - proto: ChunkEntity
   entities:
-  - uid: 536
+  - uid: 537
     components:
     - type: ChunkEntity
       root: 1
@@ -938,7 +938,7 @@ entities:
             cleanable: True
           decals:
             185: 0,-13
-  - uid: 537
+  - uid: 538
     components:
     - type: ChunkEntity
       root: 1
@@ -1001,7 +1001,7 @@ entities:
           decals:
             21: -2.8668027,-4.2268343
             24: -5.185261,-1.8468163
-  - uid: 538
+  - uid: 539
     components:
     - type: ChunkEntity
       root: 1
@@ -1105,7 +1105,7 @@ entities:
             79: -7,8
             80: -6,8
             149: -3,11
-  - uid: 539
+  - uid: 540
     components:
     - type: ChunkEntity
       root: 1
@@ -1258,7 +1258,7 @@ entities:
     - type: Transform
       parent: 1
       pos: -0.8681086,13.66298
-- proto: ClothingShoesWizard
+- proto: ClothingShoesSandalsBrown
   entities:
   - uid: 95
     components:
@@ -1718,13 +1718,6 @@ entities:
     - type: Transform
       parent: 1
       pos: 0.5,-8.5
-- proto: LuxuryPen
-  entities:
-  - uid: 478
-    components:
-    - type: Transform
-      parent: 1
-      pos: 4.5,5.5
 - proto: MechFigurineSpawner50
   entities:
   - uid: 470
@@ -1780,6 +1773,13 @@ entities:
     - type: Transform
       parent: 1
       pos: -2.5,4.5
+- proto: PenWiz
+  entities:
+  - uid: 536
+    components:
+    - type: Transform
+      parent: 1
+      pos: 4.428638,5.577876
 - proto: PersonalAI
   entities:
   - uid: 94
@@ -2069,6 +2069,13 @@ entities:
     - type: Transform
       parent: 1
       pos: -2.5,13.5
+- proto: RubberStampWizard
+  entities:
+  - uid: 478
+    components:
+    - type: Transform
+      parent: 1
+      pos: 4.3623304,6.097006
 - proto: SinkWide
   entities:
   - uid: 624
@@ -2129,6 +2136,7 @@ entities:
       parent: 1
       pos: 6.5,9.5
     - type: Stealth
+      lastVisibility: 1.5
       enabled: False
     - type: EntityStorage
       open: True

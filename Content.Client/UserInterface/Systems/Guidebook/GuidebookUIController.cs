@@ -140,11 +140,6 @@ public sealed partial class GuidebookUIController : UIController, IOnStateEntere
     {
         if (GuidebookButton != null)
             GuidebookButton.Pressed = false;
-
-        if (_guideWindow != null)
-        {
-            _guideWindow.ReturnContainer.Visible = false;
-        }
     }
 
     private void OnWindowOpen()

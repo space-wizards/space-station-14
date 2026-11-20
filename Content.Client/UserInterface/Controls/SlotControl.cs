@@ -38,7 +38,7 @@ namespace Content.Client.UserInterface.Controls
                 //this auto registers the button with it's parent container when it's set
                 if (_slotNameSet)
                 {
-                    Logger.Warning("Tried to set slotName after init for:" + Name);
+                    Log.Warning("Tried to set slotName after init for:" + Name);
                     return;
                 }
                 _slotNameSet = true;

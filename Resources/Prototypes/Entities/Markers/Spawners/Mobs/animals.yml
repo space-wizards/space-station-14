@@ -210,7 +210,7 @@
   - type: Sprite
     layers:
     - state: green
-    - sprite: Mobs/Animals/mouse.rsi
+    - sprite: Mobs/Animals/Rodents/mouse.rsi
       state: icon-2
     - state: ai
   - type: ConditionalSpawner

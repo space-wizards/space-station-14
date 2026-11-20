@@ -104,9 +104,9 @@ public sealed partial class ClientAlertsSystem : AlertsSystem
         SyncAlerts?.Invoke(this, component.Alerts);
     }
 
-    protected override void HandleComponentShutdown(EntityUid uid, AlertsComponent component, ComponentShutdown args)
+    protected override void HandleComponentShutdown(EntityUid uid, AlertsComponent component, ref ComponentShutdown args)
     {
-        base.HandleComponentShutdown(uid, component, args);
+        base.HandleComponentShutdown(uid, component, ref args);
 
         if (_playerManager.LocalEntity != uid)
             return;

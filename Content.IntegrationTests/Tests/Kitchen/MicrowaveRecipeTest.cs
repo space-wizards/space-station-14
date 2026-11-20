@@ -1,9 +1,13 @@
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Utility;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Kitchen.EntitySystems;
+using Content.Server.Power.EntitySystems;
+using Content.Shared.FixedPoint;
 using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -15,10 +19,70 @@ namespace Content.IntegrationTests.Tests.Kitchen;
 public sealed class MicrowaveRecipeTest : GameTest
 {
     [SidedDependency(Side.Server)] private readonly ServerMicrowaveSystem _microwave = null!;
+    [SidedDependency(Side.Server)] private readonly SharedContainerSystem _container = null!;
+    [SidedDependency(Side.Server)] private readonly SolutionContainerSystem _solution = null!;
 
     private static readonly string[] Recipes = GameDataScrounger.PrototypesOfKind<MicrowaveMealRecipePrototype>();
     private static readonly EntProtoId MicrowavePrototype = "KitchenMicrowave";
+    private static readonly EntProtoId PowerProvider = "APCBasic";
     private const uint MaxSeconds = 30;
+
+    private const string TestReagent = "TestReagent";
+    private const string TestReagentContainer = "TestContainer";
+    private const string SolutionName = "SolutionName";
+    private const string TestSolid = "TestSolid";
+
+    [TestPrototypes]
+    private const string Prototypes = $@"
+    - type: microwaveMealRecipe
+      id: ReagentTestRecipe
+      result: {TestSolid}
+      reagents:
+        {TestReagent}: 6
+      solids:
+        {TestSolid}: 1
+
+    - type: reagent
+      id: {TestReagent}
+      name: reagent-name-raw-egg
+      desc: reagent-desc-raw-egg
+      physicalDesc: reagent-physical-desc-mucus-like
+
+    - type: reagent
+      id: TestFailReagent
+      name: reagent-name-raw-egg
+      desc: reagent-desc-raw-egg
+      physicalDesc: reagent-physical-desc-mucus-like
+
+    - type: reaction
+      id: TestEggCooking
+      minTemp: 301
+      reactants:
+        {TestReagent}:
+          amount: 1
+      products:
+        TestFailReagent: 0.5
+
+    - type: entity
+      id: {TestReagentContainer}
+      components:
+      - type: Item
+      - type: DrainableSolution
+        solution: {SolutionName}
+      - type: SolutionManager
+      - type: Solution
+        id: {SolutionName}
+        solution:
+          maxVol: 6
+          reagents:
+          - ReagentId: {TestReagent}
+            Quantity: 6
+
+    - type: entity
+      id: {TestSolid}
+      components:
+      - type: Item
+    ";
 
     [Test]
     [TestOf(typeof(ServerMicrowaveSystem))]
@@ -81,6 +145,48 @@ public sealed class MicrowaveRecipeTest : GameTest
             // Recipe portion count does not match the amount we're trying to make.
             Assert.That(count, Is.EqualTo(portions),
                 $"{recipeDebugString} resulted in {count} recipe portions for {microwaveString}! Expected: {portions}");
+        }
+    }
+
+    [Test]
+    [TestOf(typeof(ServerMicrowaveSystem))]
+    [Description("Tests that a recipe with a reagent ingredient doesn't change mid-cook.")]
+    public async Task ReagentDupeTest()
+    {
+        // Needs a map for power and to be anchored
+        var map = await Pair.CreateTestMap();
+
+        var m = await SpawnAtPosition(MicrowavePrototype, map.GridCoords);
+        var microwave = (Owner: m, Comp: SComp<MicrowaveComponent>(m));
+
+        await SpawnAtPosition(PowerProvider, map.GridCoords);
+        await Server.WaitRunTicks(1);
+        Assume.That(_microwave.IsPowered(microwave.Owner, SEntMan), "Microwave is not powered.");
+
+        var solid = await Spawn(TestSolid);
+        var reagent = await Spawn(TestReagentContainer);
+
+        await Server.WaitPost(() =>
+        {
+            _microwave.SetCookTime(microwave, 5);
+
+            var container = _container.GetContainer(microwave.Owner, microwave.Comp.ContainerId);
+            _container.Insert(reagent, container);
+            _container.Insert(solid, container);
+
+            _microwave.StartCooking(microwave, null);
+            Assume.That(SComp<ActiveMicrowaveComponent>(microwave.Owner).PortionedRecipe, Is.Not.Null, "Microwave failed to select a recipe.");
+        });
+
+        await Pair.RunSeconds(5.1f); // Run for the recipe's cook duration, plus some grace for post-cook
+        Assume.That(_microwave.IsPowered(microwave.Owner, SEntMan), "Microwave became unpowered while cooking.");
+        Assume.That(_microwave.IsActiveMicrowave(microwave.Owner), Is.False, "Microwave has not finished cooking.");
+
+        Assume.That(_solution.TryGetSolution(reagent, SolutionName, out _, out var sol), Is.True, "Failed to get solution.");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(SEntMan.EntityExists(solid), Is.False, "Recipe solid was not consumed.");
+            Assert.That(sol!.Volume, Is.EqualTo(FixedPoint2.Zero), "Reagent changed mid-cook or was not consumed.");
         }
     }
 }
