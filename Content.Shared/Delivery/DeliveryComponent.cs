@@ -1,5 +1,4 @@
 using Content.Shared.Cargo.Prototypes;
-using Content.Shared.EntityEffects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -24,12 +23,6 @@ public sealed partial class DeliveryComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool IsLocked = true;
-
-    /// <summary>
-    /// Entity effects applied when cutting open mail
-    /// </summary>
-    [DataField]
-    public EntityEffect[] AntiTamperCutEffects = [];
 
     /// <summary>
     /// The base amount of spesos that gets added to the station bank account on unlock.

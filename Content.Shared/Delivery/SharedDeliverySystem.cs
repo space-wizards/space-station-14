@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Shared.EntityEffects;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Examine;
 using Content.Shared.FingerprintReader;
@@ -32,7 +31,6 @@ public abstract partial class SharedDeliverySystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private NameModifierSystem _nameModifier = default!;
-    [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
 
     private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
     private static readonly ProtoId<TagPrototype> RecyclableTag = "Recyclable";
@@ -125,16 +123,10 @@ public abstract partial class SharedDeliverySystem : EntitySystem
 
     private void OnSimpleToolUse(Entity<DeliveryComponent> ent, ref SimpleToolDoAfterEvent args)
     {
-        if (ent.Comp.IsOpened || !ent.Comp.IsLocked || args.Cancelled)
+        if (ent.Comp.IsOpened || args.Cancelled)
             return;
 
         HandlePenalty(ent);
-
-        if (ent.Comp.AntiTamperCutEffects.Length > 0)
-        {
-            _entityEffects.ApplyEffects(ent.Owner, ent.Comp.AntiTamperCutEffects, user: args.User);
-            return;
-        }
 
         TryUnlockDelivery(ent, args.User, false, true);
         OpenDelivery(ent, args.User, false, true);
