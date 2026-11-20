@@ -41,7 +41,7 @@
       visible: false
   - type: PowerCellDraw
   - type: ToggleCellDraw
-  - type: TetherGun
+  - type: BaseForceGun
     frequency: 5
     dampingRatio: 4
 
@@ -71,11 +71,13 @@
       visible: false
   - type: PowerCellDraw
   - type: ToggleCellDraw
-  - type: ForceGun
-    frequency: 15
-    dampingRatio: 4
+  - type: BaseForceGun
+    frequency: 5
+    dampingRatio: 2
     massLimit: 50
+    maxDistance: 1
     lineColor: "#18a2d5"
+  - type: ForceGun
     soundLaunch:
       path: /Audio/Weapons/soup.ogg
       params:
@@ -99,13 +101,15 @@
   description: Manipulates gravity around objects to fling them at high velocities.
   suffix: Admeme
   components:
-  - type: TetherGun
+  - type: BaseForceGun
     canTetherAlive: true
     canUnanchor: true
-    maxForce: 10000
+    maxForce: 50000
     massLimit: 10000
-    dampingRatio: 4
-    frequency: 20
+    dampingRatio: 1
+    frequency: 25
+    reverseForce: false
+    maxBeamLength: 100
 
 - type: entity
   parent: WeaponForceGun
@@ -114,13 +118,20 @@
   description: Manipulates gravity around objects to fling them at high velocities.
   suffix: Admeme
   components:
-  - type: ForceGun
+  - type: BaseForceGun
     canTetherAlive: true
     canUnanchor: true
-    maxForce: 10000
+    maxForce: 50000
     massLimit: 10000
-    frequency: 15
-    dampingRatio: 4
-    throwForce: 50
-    throwDistance: 100
+    frequency: 50
+    maxDistance: 1.5
+    dampingRatio: 1
     lineColor: "#18a2d5"
+    reverseForce: false
+    maxBeamLength: 100
+  - type: ForceGun
+    throwSpeed: 100
+    soundLaunch:
+      path: /Audio/Weapons/soup.ogg
+      params:
+        volume: 2
