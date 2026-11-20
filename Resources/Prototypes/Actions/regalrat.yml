@@ -10,6 +10,18 @@
     - state: ratKingArmy
   - type: Action
     useDelay: 4
+  - type: ActionRequirements
+    conditions:
+      Performer:
+      - !type:SatiationCondition
+        satiationType: Hunger
+        min: 25
+        minInclusive: true
+    effects:
+      Performer:
+      - !type:Satiate
+        satiationType: Hunger
+        factor: -25
   - type: InstantAction
     event: !type:RatKingRaiseArmyActionEvent
 
@@ -25,6 +37,18 @@
     - state: ratKingDomain
   - type: Action
     useDelay: 6
+  - type: ActionRequirements
+    conditions:
+      Performer:
+      - !type:SatiationCondition
+        satiationType: Hunger
+        min: 50
+        minInclusive: true
+    effects:
+      Performer:
+      - !type:Satiate
+        satiationType: Hunger
+        factor: -50
   - type: InstantAction
     event: !type:RatKingDomainActionEvent
 

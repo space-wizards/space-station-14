@@ -7,8 +7,6 @@ using Content.Server.NPC.Systems;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
 using Content.Shared.Chat;
-using Content.Shared.Nutrition.Components;
-using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Pointing;
 using Content.Shared.Random.Helpers;
 using Content.Shared.RatKing.Components;
@@ -25,7 +23,6 @@ public sealed partial class ServerRatKingSystem : RatKingSystem
     [Dependency] private AtmosphereSystem _atmos = default!;
     [Dependency] private ChatSystem _chat = default!;
     [Dependency] private HTNSystem _htn = default!;
-    [Dependency] private SatiationSystem _satiation = default!;
     [Dependency] private NPCSystem _npc = default!;
     [Dependency] private NPCPointCommandSystem _pointCommands = default!;
     [Dependency] private PopupSystem _popup = default!;
@@ -42,17 +39,7 @@ public sealed partial class ServerRatKingSystem : RatKingSystem
         if (args.Handled)
             return;
 
-        if (!TryComp<SatiationComponent>(ent.Owner, out var satiation))
-            return;
-
-        if (_satiation.GetValueOrNull((ent.Owner, satiation), SatiationSystem.Hunger) < ent.Comp.HungerPerArmyUse)
-        {
-            _popup.PopupEntity(Loc.GetString("rat-king-too-hungry"), ent.Owner, ent.Owner);
-            return;
-        }
-
         args.Handled = true;
-        _satiation.ModifyValue((ent.Owner, satiation), SatiationSystem.Hunger, -ent.Comp.HungerPerArmyUse);
         var servant = SpawnAtPosition(ent.Comp.ArmyMobSpawnId, Transform(ent.Owner).Coordinates);
         var servantComp = EnsureComp<RatKingServantComponent>(servant);
         servantComp.King = ent.Owner;
@@ -73,18 +60,7 @@ public sealed partial class ServerRatKingSystem : RatKingSystem
         if (args.Handled)
             return;
 
-        if (!TryComp<SatiationComponent>(ent.Owner, out var satiation))
-            return;
-
-        if (_satiation.GetValueOrNull((ent.Owner, satiation), SatiationSystem.Hunger) < ent.Comp.HungerPerDomainUse)
-        {
-            _popup.PopupEntity(Loc.GetString("rat-king-too-hungry"), ent.Owner, ent.Owner);
-            return;
-        }
-
         args.Handled = true;
-        _satiation.ModifyValue((ent.Owner, satiation), SatiationSystem.Hunger, -ent.Comp.HungerPerDomainUse);
-
         _popup.PopupEntity(Loc.GetString("rat-king-domain-popup"), ent.Owner);
 
         var tileMix = _atmos.GetTileMixture(ent.Owner, excite: true);

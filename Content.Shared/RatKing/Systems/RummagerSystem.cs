@@ -65,7 +65,7 @@ public sealed partial class RummagerSystem : EntitySystem
 
         foreach (var spawn in spawns)
         {
-            Spawn(spawn, coordinates);
+            SpawnAtPosition(spawn, coordinates);
         }
     }
 }
