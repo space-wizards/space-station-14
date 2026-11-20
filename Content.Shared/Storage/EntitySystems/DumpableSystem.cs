@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Actions;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
@@ -96,7 +97,7 @@ public sealed partial class DumpableSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private void StartDoAfter(EntityUid storageUid, EntityUid targetUid, EntityUid userUid, DumpableComponent dumpable)
+    private void StartDoAfter(EntityUid storageUid, EntityUid targetUid, EntityUid userUid, DumpableComponent dumpable, bool needHand = true)
     {
         if (!TryComp<StorageComponent>(storageUid, out var storage))
             return;
@@ -119,7 +120,7 @@ public sealed partial class DumpableSystem : EntitySystem
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, userUid, delay, new DumpableDoAfterEvent(), storageUid, target: targetUid, used: storageUid)
         {
             BreakOnMove = true,
-            NeedHand = true,
+            NeedHand = needHand,
         });
     }
 
@@ -153,4 +154,12 @@ public sealed partial class DumpableSystem : EntitySystem
             _audio.PlayPredicted(component.DumpSound, uid, args.User);
         }
     }
+
+    [SubscribeLocalEvent]
+    private void OnDumpStorageAction(Entity<DumpableComponent> ent, ref DumpStorageActionEvent args)
+    {
+        StartDoAfter(ent, ent, ent, ent, false);
+    }
 }
+
+public sealed partial class DumpStorageActionEvent : InstantActionEvent;
