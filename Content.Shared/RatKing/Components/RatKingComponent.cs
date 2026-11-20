@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.RatKing.Components;
 
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedRatKingSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(RatKingSystem))]
 [AutoGenerateComponentState]
 public sealed partial class RatKingComponent : Component
 {

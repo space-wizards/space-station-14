@@ -20,7 +20,7 @@ using Robust.Shared.Random;
 namespace Content.Server.RatKing;
 
 /// <inheritdoc/>
-public sealed partial class RatKingSystem : SharedRatKingSystem
+public sealed partial class ServerRatKingSystem : RatKingSystem
 {
     [Dependency] private AtmosphereSystem _atmos = default!;
     [Dependency] private ChatSystem _chat = default!;
@@ -53,7 +53,7 @@ public sealed partial class RatKingSystem : SharedRatKingSystem
 
         args.Handled = true;
         _satiation.ModifyValue((ent.Owner, satiation), SatiationSystem.Hunger, -ent.Comp.HungerPerArmyUse);
-        var servant = Spawn(ent.Comp.ArmyMobSpawnId, Transform(ent.Owner).Coordinates);
+        var servant = SpawnAtPosition(ent.Comp.ArmyMobSpawnId, Transform(ent.Owner).Coordinates);
         var servantComp = EnsureComp<RatKingServantComponent>(servant);
         servantComp.King = ent.Owner;
         Dirty(servant, servantComp);

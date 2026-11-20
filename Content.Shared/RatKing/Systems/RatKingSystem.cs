@@ -5,7 +5,7 @@ using Content.Shared.RatKing.Events;
 
 namespace Content.Shared.RatKing.Systems;
 
-public abstract partial class SharedRatKingSystem : EntitySystem
+public abstract partial class RatKingSystem : EntitySystem
 {
     [Dependency] private SharedActionsSystem _action = default!;
 
