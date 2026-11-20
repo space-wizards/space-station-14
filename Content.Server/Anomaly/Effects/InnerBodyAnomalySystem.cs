@@ -198,6 +198,9 @@ public sealed partial class InnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
 
     private void OnCompShutdown(Entity<InnerBodyAnomalyComponent> ent, ref ComponentShutdown args)
     {
+        if (args.LifeStage >= EntityLifeStage.Terminating)
+            return;
+
         RemoveAnomalyFromBody(ent);
     }
 
