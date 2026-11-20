@@ -20,7 +20,7 @@ public sealed partial class DoorBoltWireAction : ComponentWireAction<DoorBoltCom
     {
         EntityManager.System<DoorSystem>().SetBoltWireCut((wire.Owner, airlock), true);
         if (!airlock.BoltsDown && IsPowered(wire.Owner))
-            EntityManager.System<DoorSystem>().SetBoltsDown((wire.Owner, airlock), true, user);
+            EntityManager.System<DoorSystem>().TrySetBoltDown((wire.Owner, airlock), true, user);
 
         return true;
     }
@@ -34,8 +34,8 @@ public sealed partial class DoorBoltWireAction : ComponentWireAction<DoorBoltCom
     public override void Pulse(EntityUid user, Wire wire, DoorBoltComponent door)
     {
         if (IsPowered(wire.Owner))
-            EntityManager.System<DoorSystem>().SetBoltsDown((wire.Owner, door), !door.BoltsDown);
+            EntityManager.System<DoorSystem>().TrySetBoltDown((wire.Owner, door), !door.BoltsDown);
         else if (!door.BoltsDown)
-            EntityManager.System<DoorSystem>().SetBoltsDown((wire.Owner, door), true);
+            EntityManager.System<DoorSystem>().TrySetBoltDown((wire.Owner, door), true);
     }
 }

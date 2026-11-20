@@ -1,4 +1,4 @@
-﻿using Content.Shared.Random;
+using Content.Shared.Random;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;

@@ -30,7 +30,7 @@ public sealed partial class CrematoriumSystem : SharedCrematoriumSystem
 
             if (mind.OwnedEntity is { Valid: true } entity)
             {
-                Popup.PopupEntity(Loc.GetString("crematorium-entity-storage-component-suicide-message"), entity);
+                Popup.PopupEntity(Loc.GetString("crematorium-entity-storage-component-suicide-message"), entity, entity);
             }
         }
 

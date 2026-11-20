@@ -156,11 +156,10 @@ namespace Content.Client.Administration.UI.Bwoink
                 return bch.LastMessage.CompareTo(ach.LastMessage);
             };
 
-
-            Bans.OnPressed += _ =>
+            PlayerLogs.OnPressed += _ =>
             {
                 if (_currentPlayer is not null)
-                    _console.ExecuteCommand($"banlist \"{_currentPlayer.SessionId}\"");
+                    _console.ExecuteCommand($"adminlogs \"{_currentPlayer.SessionId}\"");
             };
 
             Notes.OnPressed += _ =>
@@ -228,8 +227,8 @@ namespace Content.Client.Administration.UI.Bwoink
         {
             var disabled = _currentPlayer == null;
 
-            Bans.Visible = _adminManager.HasFlag(AdminFlags.Ban);
-            Bans.Disabled = !Bans.Visible || disabled;
+            PlayerLogs.Visible = _adminManager.HasFlag(AdminFlags.Logs);
+            PlayerLogs.Disabled = !PlayerLogs.Visible || disabled;
 
             Notes.Visible = _adminManager.HasFlag(AdminFlags.ViewNotes);
             Notes.Disabled = !Notes.Visible || disabled;

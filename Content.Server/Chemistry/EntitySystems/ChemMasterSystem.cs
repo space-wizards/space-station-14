@@ -153,7 +153,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void TransferReagents(Entity<ChemMasterComponent> chemMaster, ReagentId id, FixedPoint2 amount, bool fromBuffer)
         {
-            var container = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.InputSlotName);
+            var container = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.InputSlotName);
             if (container is null ||
                 !_solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSoln, out var containerSolution) ||
                 !_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out _, out var bufferSolution))
@@ -188,7 +188,7 @@ namespace Content.Server.Chemistry.EntitySystems
             }
             else
             {
-                var container = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.InputSlotName);
+                var container = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.InputSlotName);
                 if (container is not null &&
                     _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution, out _))
                 {
@@ -204,7 +204,7 @@ namespace Content.Server.Chemistry.EntitySystems
         private void OnCreatePillsMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterCreatePillsMessage message)
         {
             var user = message.Actor;
-            var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.OutputSlotName);
+            var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.OutputSlotName);
             if (maybeContainer is not { Valid: true } container
                 || !TryComp(container, out StorageComponent? storage))
             {
@@ -212,8 +212,13 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             // Ensure the number is valid.
-            if (message.Number == 0 || !_storageSystem.HasSpace((container, storage)))
+            if (message.Number == 0
+                || (storage.Grid.GetArea()
+                    - _storageSystem.GetCumulativeItemAreas((container, storage))
+                    < message.Number))
+            {
                 return;
+            }
 
             // Ensure the amount is valid.
             if (message.Dosage == 0 || message.Dosage > chemMaster.Comp.PillDosageLimit)
@@ -255,7 +260,7 @@ namespace Content.Server.Chemistry.EntitySystems
         private void OnOutputToBottleMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterOutputToBottleMessage message)
         {
             var user = message.Actor;
-            var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.OutputSlotName);
+            var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.OutputSlotName);
             if (maybeContainer is not { Valid: true } container
                 || !_solutionContainerSystem.TryGetSolution(container, SharedChemMaster.BottleSolutionName, out var soln, out var solution))
             {
@@ -319,7 +324,7 @@ namespace Content.Server.Chemistry.EntitySystems
                     break;
 
                 case ChemMasterDrawSource.External:
-                    if (_itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.InputSlotName) is not {} container)
+                    if (_itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.InputSlotName) is not {} container)
                     {
                         if (user.HasValue)
                             _popupSystem.PopupCursor(Loc.GetString("chem-master-window-no-beaker-text"), user.Value);
@@ -360,7 +365,9 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void ClickSound(Entity<ChemMasterComponent> chemMaster)
         {
-            _audioSystem.PlayPvs(chemMaster.Comp.ClickSound, chemMaster, AudioParams.Default.WithVolume(-2f));
+            var audioParams = chemMaster.Comp.ClickSound?.Params ?? AudioParams.Default;
+            audioParams = audioParams.AddVolume(-2f);
+            _audioSystem.PlayPvs(chemMaster.Comp.ClickSound, chemMaster, audioParams);
         }
 
         private ContainerInfo? BuildInputContainerInfo(EntityUid? container)

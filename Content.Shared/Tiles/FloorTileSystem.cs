@@ -25,7 +25,6 @@ namespace Content.Shared.Tiles;
 public sealed partial class FloorTileSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private INetManager _netManager = default!;
     [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
@@ -80,7 +79,7 @@ public sealed partial class FloorTileSystem : EntitySystem
         // so we're just gon with this for now.
         const bool inRange = true;
         var state = (inRange, location.EntityId);
-        _mapManager.FindGridsIntersecting(map.MapId, new Box2(map.Position - CheckRange, map.Position + CheckRange), ref state,
+        _map.FindGridsIntersecting(map.MapId, new Box2(map.Position - CheckRange, map.Position + CheckRange), ref state,
             static (EntityUid entityUid, MapGridComponent grid, ref (bool weh, EntityUid EntityId) tuple) =>
             {
                 if (tuple.EntityId == entityUid)
@@ -138,7 +137,7 @@ public sealed partial class FloorTileSystem : EntitySystem
 
                 if (!CanPlaceTile(gridUid, mapGrid, tile.GridIndices, out var reason))
                 {
-                    _popup.PopupClient(reason, args.User, args.User);
+                    _popup.PopupEntity(reason, args.User, args.User);
                     return;
                 }
 
@@ -163,7 +162,7 @@ public sealed partial class FloorTileSystem : EntitySystem
                 if (_netManager.IsClient)
                     return;
 
-                var grid = _mapManager.CreateGridEntity(locationMap.MapId);
+                var grid = _map.CreateGridEntity(locationMap.MapId);
                 var gridXform = Transform(grid);
                 _transform.SetWorldPosition((grid, gridXform), locationMap.Position);
                 location = new EntityCoordinates(grid, Vector2.Zero);

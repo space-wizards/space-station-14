@@ -1,0 +1,70 @@
+- type: entity
+  parent: [ SimpleMobBase, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible ]
+  id: MobPig
+  name: pig
+  description: Oink.
+  components:
+  - type: Sprite
+    sprite: Mobs/Animals/Farm/pig.rsi
+    drawdepth: Mobs
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.35
+        density: 250
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Inventory
+    speciesId: pig
+    templateId: pet
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - Pig
+    - VimPilot
+  - type: Reproductive
+    minHungerThreshold: Peckish
+    partnerWhitelist:
+      tags:
+      - Pig
+    offspring:
+    - id: MobPig
+  - type: ReproductivePartner
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatBacon
+      amount: 6
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: InteractionPopup
+    successChance: 0.7
+    interactSuccessString: petting-success-pig
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/pig_oink.ogg
+  - type: ReplacementAccent
+    accent: pig
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-organic
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: HTN
+    rootTask:
+      task: RuminantCompound

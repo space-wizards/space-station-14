@@ -91,8 +91,7 @@ public sealed partial class GasCanisterSystem : SharedGasCanisterSystem
     {
         _atmos.React(entity.Comp.Air, entity.Comp);
 
-        if (!TryComp<NodeContainerComponent>(entity, out var nodeContainer)
-            || !TryComp<AppearanceComponent>(entity, out var appearance))
+        if (!TryComp<NodeContainerComponent>(entity, out var nodeContainer))
             return;
 
         if (!_nodeContainer.TryGetNode(nodeContainer, entity.Comp.PortName, out PortablePipeNode? portNode))
@@ -125,26 +124,10 @@ public sealed partial class GasCanisterSystem : SharedGasCanisterSystem
         if (MathHelper.CloseToPercent(entity.Comp.Air.Pressure, entity.Comp.LastPressure))
             return;
 
-        DirtyUI(entity, entity.Comp, nodeContainer);
-
         entity.Comp.LastPressure = entity.Comp.Air.Pressure;
 
-        if (entity.Comp.Air.Pressure < 10)
-        {
-            _appearance.SetData(entity, GasCanisterVisuals.PressureState, 0, appearance);
-        }
-        else if (entity.Comp.Air.Pressure < Atmospherics.OneAtmosphere)
-        {
-            _appearance.SetData(entity, GasCanisterVisuals.PressureState, 1, appearance);
-        }
-        else if (entity.Comp.Air.Pressure < (15 * Atmospherics.OneAtmosphere))
-        {
-            _appearance.SetData(entity, GasCanisterVisuals.PressureState, 2, appearance);
-        }
-        else
-        {
-            _appearance.SetData(entity, GasCanisterVisuals.PressureState, 3, appearance);
-        }
+        DirtyUI(entity, entity.Comp, nodeContainer);
+        UpdateAppearance(entity);
     }
 
     /// <summary>

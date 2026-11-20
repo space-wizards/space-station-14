@@ -1,4 +1,4 @@
-﻿using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Melee;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Administration.Components;

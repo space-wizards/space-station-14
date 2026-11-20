@@ -62,7 +62,7 @@ public sealed partial class ReformSystem : EntitySystem
         // Stun them when they use the action for the amount of reform time.
         if (comp.ShouldStun)
             _stunSystem.TryUpdateStunDuration(uid, TimeSpan.FromSeconds(comp.ReformTime));
-        _popupSystem.PopupClient(Loc.GetString(comp.PopupText, ("name", uid)), uid, uid);
+        _popupSystem.PopupEntity(Loc.GetString(comp.PopupText, ("name", uid)), uid, uid);
 
         // Create a doafter & start it
         var doAfter = new DoAfterArgs(EntityManager, uid, comp.ReformTime, new ReformDoAfterEvent(), uid)

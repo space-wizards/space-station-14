@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
@@ -25,7 +25,7 @@ public sealed class AddTests : GameTest
 
     [SidedDependency(Side.Server)] private readonly IAdminLogManager _sAdminLogManager = null!;
     [SidedDependency(Side.Server)] private readonly IServerDbManager _sDbManager = null!;
-    [SidedDependency(Side.Server)] private readonly GameTicker _sGameTicker = null!;
+    [SidedDependency(Side.Server)] private readonly ServerGameTicker _sGameTicker = null!;
     [SidedDependency(Side.Server)] private readonly IPlayerManager _sPlayerManager = null!;
 
     [Test]
@@ -238,7 +238,7 @@ public sealed class PreRoundAddTests : GameTest
 
     [SidedDependency(Side.Server)] private readonly IAdminLogManager _sAdminLogManager = null!;
     [SidedDependency(Side.Server)] private readonly IServerDbManager _sDbManager = null!;
-    [SidedDependency(Side.Server)] private readonly GameTicker _sGameTicker = null!;
+    [SidedDependency(Side.Server)] private readonly ServerGameTicker _sGameTicker = null!;
 
     [Test]
     public async Task PreRoundAddAndGetSingle()

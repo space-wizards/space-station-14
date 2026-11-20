@@ -11,8 +11,9 @@ namespace Content.Shared.Cloning;
 
 public abstract partial class SharedCloningSystem : EntitySystem
 {
-    [Dependency] private Shared.StatusEffectNew.StatusEffectsSystem _statusEffects = default!; //TODO: This system has to support both the old and new status effect systems, until the old is able to be fully removed.
+    [Dependency] private StatusEffectNew.StatusEffectsSystem _statusEffects = default!; //TODO: This system has to support both the old and new status effect systems, until the old is able to be fully removed.
     [Dependency] private EntityQuery<CloneableStatusEffectComponent> _cloneableEffectQuery = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     /// <summary>
     /// Spawns a clone of the given humanoid mob at the specified location or in nullspace.
@@ -118,12 +119,47 @@ public abstract partial class SharedCloningSystem : EntitySystem
     /// <summary>
     /// Scans all permanent status effects applied to the original entity and transfers them to the clone.
     /// </summary>
-    public void CopyStatusEffects(Entity<StatusEffectContainerComponent?> original, Entity<StatusEffectContainerComponent?> target)
+    /// <param name="original">The entity to take status effects from</param>
+    /// <param name="target">The entity to copy the status effects to.</param>
+    /// <param name="whitelist">The whitelist the status effects need to be in to get copied.</param>
+    /// <param name="blacklist">The blacklist the status effects cannot be in to get copied.</param>
+    /// <param name="removeMissing">Whether to remove clonable status effects from the target before applying new ones.</param>
+    public void CopyStatusEffects(
+        Entity<StatusEffectContainerComponent?> original,
+        Entity<StatusEffectContainerComponent?> target,
+        EntityWhitelist? whitelist = null,
+        EntityWhitelist? blacklist = null,
+        bool removeMissing = true)
     {
+        if (removeMissing)
+        {
+            foreach (var effect in _statusEffects.EnumerateStatusEffects(target, _cloneableEffectQuery))
+            {
+                if (effect.Comp1.EndEffectTime is not null)
+                    continue;
+
+                // Don't delete status effects that were never in the whitelist.
+                if (!_whitelist.CheckBoth(effect.Owner, blacklist, whitelist))
+                    continue;
+
+                var effectProto = Prototype(effect);
+
+                if (effectProto is null)
+                    continue;
+
+                // Remove all status effects we do not need anymore.
+                // We clone permanent ones, so we assume we replace them with a new set of permanent ones.
+                _statusEffects.TryRemoveStatusEffect(target, effectProto);
+            }
+        }
+
         foreach (var effect in _statusEffects.EnumerateStatusEffects(original, _cloneableEffectQuery))
         {
             // We are not interested in temporary effects, only permanent ones.
             if (effect.Comp1.EndEffectTime is not null)
+                continue;
+
+            if (!_whitelist.CheckBoth(effect.Owner, blacklist, whitelist))
                 continue;
 
             var effectProto = Prototype(effect);

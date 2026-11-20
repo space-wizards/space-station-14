@@ -24,17 +24,16 @@
 
 - type: entity
   parent: CrateGenericSteel
-  id: CrateMaterialTextiles
-  name: textiles crate
-  description: 60 pieces of cloth and 30 pieces of durathread.
+  id: CrateMaterialCloth
+  name: cloth crate
+  description: 90 pieces of cloth.
   components:
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:AllSelector
         children:
         - id: MaterialCloth
-          amount: 2
-        - id: MaterialDurathread
+          amount: 3
 
 - type: entity
   parent: CrateGenericSteel

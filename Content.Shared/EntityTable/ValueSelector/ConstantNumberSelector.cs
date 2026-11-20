@@ -7,6 +7,9 @@ namespace Content.Shared.EntityTable.ValueSelector;
 /// </summary>
 public sealed partial class ConstantNumberSelector : NumberSelector
 {
+    /// <summary>
+    /// The constant value of this selector.
+    /// </summary>
     [DataField]
     public int Value = 1;
 

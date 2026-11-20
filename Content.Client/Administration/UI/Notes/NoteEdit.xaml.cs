@@ -106,11 +106,33 @@ public sealed partial class NoteEdit : FancyWindow
             {
                 PermanentCheckBox.Pressed = false;
                 UpdatePermanentCheckboxFields();
-                ExpiryLineEdit.Text = ExpiryTime.Value.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss");
+
+                var timeLeft = ConvertDateToTimeFromNow(ExpiryTime.Value.ToLocalTime());
+
+                ExpiryLineEdit.Text = Math.Round(timeLeft.Item2, 2).ToString();
+                ExpiryLengthDropdown.SelectId((int)timeLeft.Item1);
             }
         }
 
         UpdateSubmitButton();
+    }
+
+    // Convert the given date time into a multiplier and value.
+    // This is for having a simple format like 2 weeks instead of everything being in hours.
+    // For example, a 2 weeks old date would return (Multipliers.Days, 14)
+    private (Multipliers, double) ConvertDateToTimeFromNow(DateTime expirationDate)
+    {
+        var deltaTime = expirationDate - DateTime.Now;
+
+        if (deltaTime.TotalMinutes <= 0)
+            return (Multipliers.Minutes, 0.0);
+
+        return deltaTime.TotalDays switch
+        {
+            < 1 => (Multipliers.Minutes, deltaTime.TotalMinutes), // Less than a day
+            < 365 => (Multipliers.Days, deltaTime.TotalDays),     // Less than a year
+            _ => (Multipliers.Months, deltaTime.TotalDays / 30)   // More than a year
+        };
     }
 
     private void OnSubmitButtonMouseEntered(GUIMouseHoverEventArgs args)
@@ -300,7 +322,7 @@ public sealed partial class NoteEdit : FancyWindow
             return true;
         }
 
-        if (string.IsNullOrWhiteSpace(ExpiryLineEdit.Text) || !uint.TryParse(ExpiryLineEdit.Text, out var inputInt))
+        if (string.IsNullOrWhiteSpace(ExpiryLineEdit.Text) || !double.TryParse(ExpiryLineEdit.Text, out var inputDouble) || inputDouble < 0)
         {
             ExpiryLineEdit.ModulateSelfOverride = Color.Red;
             return false;
@@ -317,7 +339,8 @@ public sealed partial class NoteEdit : FancyWindow
             (int) Multipliers.Centuries => TimeSpan.FromDays(36525).TotalMinutes,
             _ => throw new ArgumentOutOfRangeException(nameof(ExpiryLengthDropdown.SelectedId), "Multiplier out of range :(")
         };
-        ExpiryTime = DateTime.UtcNow.AddMinutes(inputInt * mult);
+
+        ExpiryTime = DateTime.UtcNow.AddMinutes(inputDouble * mult);
         ExpiryLineEdit.ModulateSelfOverride = null;
         return true;
     }

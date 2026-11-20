@@ -1,0 +1,45 @@
+using System.Numerics;
+using Content.Server.Physics.Components;
+using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects.Smite;
+using Content.Shared.Movement.Components;
+using Robust.Shared.Random;
+using Robust.Shared.Spawners;
+
+namespace Content.Server.EntityEffects.Effects.Smite;
+
+/// <summary>
+/// Spawns a rod at a distance and makes it chase this entity.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
+public sealed partial class HomingRodEntityEffectSystem : EntityEffectSystem<MetaDataComponent, HomingRod>
+{
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+
+    protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<HomingRod> args)
+    {
+        var speed = args.Effect.Speed;
+        if (args.Effect.MatchTargetSprintSpeed &&
+            TryComp<MovementSpeedModifierComponent>(entity, out var movement))
+            speed = movement.CurrentSprintSpeed + 0.001f;
+
+        if (speed <= 0)
+            return;
+
+        var offset = _random.NextAngle().RotateVec(new Vector2(args.Effect.Distance, 0));
+        var spawnCoords = _transform.GetMapCoordinates(entity).Offset(offset);
+        var rod = Spawn(args.Effect.Prototype, spawnCoords);
+
+        EnsureComp<ChasingWalkComponent>(rod, out var chasing);
+        chasing.NextChangeVectorTime = TimeSpan.MaxValue;
+        chasing.ChasingEntity = entity.Owner;
+        chasing.ImpulseInterval = 0.1f;
+        chasing.RotateWithImpulse = true;
+        chasing.MaxSpeed = speed;
+        chasing.Speed = speed;
+
+        if (TryComp<TimedDespawnComponent>(rod, out var despawn))
+            despawn.Lifetime = offset.Length() / speed * 3;
+    }
+}

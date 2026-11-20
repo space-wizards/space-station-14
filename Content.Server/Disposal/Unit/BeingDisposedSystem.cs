@@ -5,7 +5,7 @@ using Content.Shared.Disposal.Unit;
 namespace Content.Server.Disposal.Unit;
 
 /// <inheritdoc/>
-public sealed class BeingDisposedSystem : SharedBeingDisposedSystem
+public sealed partial class BeingDisposedSystem : SharedBeingDisposedSystem
 {
     public override void Initialize()
     {

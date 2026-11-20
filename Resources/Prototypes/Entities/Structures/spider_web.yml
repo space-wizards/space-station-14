@@ -24,13 +24,6 @@
   - type: Damageable
     damageModifierSet: Wood
   - type: Injurable
-  - type: Temperature
-  - type: TemperatureDamage
-    heatDamage:
-      types:
-        Heat: 5
-    coldDamage: {}
-    coldDamageThreshold: 0
   - type: Flammable
     fireSpread: true
     damage:
@@ -43,9 +36,10 @@
   - type: SpiderWebObject
   - type: IconSmooth
     key: web
-    additionalKeys:
-    - walls
-    base: web_
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ web, walls ]
+      base: web_
   - type: Construction
     graph: CobwebsGraph
     node: start

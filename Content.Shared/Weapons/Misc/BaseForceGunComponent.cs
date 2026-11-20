@@ -90,7 +90,7 @@ public sealed partial class BaseForceGunComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("sound")]
     public SoundSpecifier? Sound = new SoundPathSpecifier("/Audio/Weapons/weoweo.ogg")
     {
-        Params = AudioParams.Default.WithLoop(true).WithVolume(-8f),
+        Params = AudioParams.Default.WithLoop(true).AddVolume(-8f),
     };
 
     public EntityUid? Stream;

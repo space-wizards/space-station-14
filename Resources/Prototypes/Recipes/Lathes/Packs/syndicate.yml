@@ -4,8 +4,12 @@
 - type: latheRecipePack
   id: SyndicateAmmoStatic
   recipes:
-  - MagazineShotgun
-  - MagazineShotgunEmpty
-  - MagazineShotgunSlug
-  - MagazinePistolCaselessRifle
   - MagazineBoxAntiMateriel
+  - MagazinePistolCaselessRifle
+  - MagazineShotgun
+  - MagazineShotgunBeanbag
+  - MagazineShotgunEmpty
+  - MagazineShotgunIncendiary
+  - MagazineShotgunSlug
+  - MagazineShotgunUranium
+  - MagazineShotgunTranquilizer

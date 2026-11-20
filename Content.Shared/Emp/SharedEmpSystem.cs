@@ -40,7 +40,7 @@ public abstract partial class SharedEmpSystem : EntitySystem
     /// <summary>
     /// Triggers an EMP pulse at the given location, by first raising an <see cref="EmpAttemptEvent"/>, then by raising <see cref="EmpPulseEvent"/> on all entities in range.
     /// </summary>
-    /// <param name="coordinates">The location to trigger the EMP pulse at.</param>
+    /// <param name="mapCoordinates">The location to trigger the EMP pulse at.</param>
     /// <param name="range">The range of the EMP pulse.</param>
     /// <param name="energyConsumption">The amount of energy consumed by the EMP pulse. In Joule.</param>
     /// <param name="duration">The duration of the EMP effects.</param>

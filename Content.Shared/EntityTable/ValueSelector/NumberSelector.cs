@@ -10,6 +10,9 @@ namespace Content.Shared.EntityTable.ValueSelector;
 [ImplicitDataDefinitionForInheritors, UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
 public abstract partial class NumberSelector
 {
+    /// <summary>
+    /// Returns a value for this selector given a randomizer.
+    /// </summary>
     public abstract int Get(IRobustRandom rand);
 
     /// <summary>

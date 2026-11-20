@@ -1,10 +1,10 @@
-using Content.Server.Administration.Logs;
 using Content.Server.Electrocution;
-using Content.Server.Power.Components;
+using Content.Server.Power.Events;
 using Content.Server.Stack;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Power.Components;
 using Robust.Shared.Map;
 using CableCuttingFinishedEvent = Content.Shared.Tools.Systems.CableCuttingFinishedEvent;
 using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
@@ -35,9 +35,9 @@ public sealed partial class CableSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (cable.CuttingQuality != null)
+        if (cable.CuttingQuality is { } tool)
         {
-            args.Handled = _toolSystem.UseTool(args.Used, args.User, uid, cable.CuttingDelay, cable.CuttingQuality, new CableCuttingFinishedEvent());
+            args.Handled = _toolSystem.UseTool(args.Used, args.User, uid, cable.CuttingDelay, [tool], new CableCuttingFinishedEvent(), out _);
         }
     }
 
@@ -47,7 +47,7 @@ public sealed partial class CableSystem : EntitySystem
             return;
 
         var xform = Transform(uid);
-        var ev = new CableAnchorStateChangedEvent(xform);
+        var ev = new CableAnchorStateChangedEvent((uid, xform));
         RaiseLocalEvent(uid, ref ev);
 
         if (_electrocutionSystem.TryDoElectrifiedAct(uid, args.User))
@@ -55,13 +55,13 @@ public sealed partial class CableSystem : EntitySystem
 
         _adminLogger.Add(LogType.CableCut, LogImpact.High, $"The {ToPrettyString(uid)} at {xform.Coordinates} was cut by {ToPrettyString(args.User)}.");
 
-        Spawn(cable.CableDroppedOnCutPrototype, xform.Coordinates);
+        SpawnAtPosition(cable.CableDroppedOnCutPrototype, xform.Coordinates);
         QueueDel(uid);
     }
 
     private void OnAnchorChanged(EntityUid uid, CableComponent cable, ref AnchorStateChangedEvent args)
     {
-        var ev = new CableAnchorStateChangedEvent(args.Transform, args.Detaching);
+        var ev = new CableAnchorStateChangedEvent((uid, args.Transform), args.Detaching);
         RaiseLocalEvent(uid, ref ev);
 
         if (args.Anchored)
@@ -74,7 +74,7 @@ public sealed partial class CableSystem : EntitySystem
 
         // This entity should not be un-anchorable. But this can happen if the grid-tile is deleted (RCD, explosion,
         // etc). In that case: behave as if the cable had been cut.
-        Spawn(cable.CableDroppedOnCutPrototype, Transform(uid).Coordinates);
+        SpawnAtPosition(cable.CableDroppedOnCutPrototype, Transform(uid).Coordinates);
         QueueDel(uid);
     }
 }

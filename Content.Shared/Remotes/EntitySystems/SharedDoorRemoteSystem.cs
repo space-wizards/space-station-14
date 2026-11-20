@@ -67,7 +67,7 @@ public abstract partial class SharedDoorRemoteSystem : EntitySystem
 
         if (!_powerReceiver.IsPowered(args.Target.Value))
         {
-            _popup.PopupClient(Loc.GetString("door-remote-no-power"), args.User, args.User);
+            _popup.PopupEntity(Loc.GetString("door-remote-no-power"), args.User, args.User);
             return;
         }
 
@@ -88,7 +88,7 @@ public abstract partial class SharedDoorRemoteSystem : EntitySystem
                 if (isAirlock)
                     _doorSystem.Deny(args.Target.Value, doorComp, user: args.User, predicted: true);
 
-                _popup.PopupClient(Loc.GetString("door-remote-denied"), args.User, args.User);
+                _popup.PopupEntity(Loc.GetString("door-remote-denied"), args.User, args.User);
                 return;
             }
         }
@@ -109,7 +109,7 @@ public abstract partial class SharedDoorRemoteSystem : EntitySystem
                 {
                     if (!boltsComp.BoltWireCut)
                     {
-                        _doorSystem.SetBoltsDown((args.Target.Value, boltsComp), !boltsComp.BoltsDown, user: args.User, predicted: true);
+                        _doorSystem.TrySetBoltDown((args.Target.Value, boltsComp), !boltsComp.BoltsDown, user: args.User, predicted: true);
                         _adminLogger.Add(LogType.Action,
                             LogImpact.Medium,
                             $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to {(boltsComp.BoltsDown ? "" : "un")}bolt it");

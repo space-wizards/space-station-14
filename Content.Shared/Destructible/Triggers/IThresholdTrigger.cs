@@ -13,7 +13,7 @@ namespace Content.Shared.Destructible.Thresholds.Triggers;
 /// IThresholdTriggers on the other hand are directly checked in a foreach loop without raising events.
 /// And there are only few of these conditions, so there is only a minor amount of code duplication.
 /// </remarks>
-public interface IThresholdTrigger
+public interface IThresholdTrigger : IComparable<IThresholdTrigger>, IEquatable<IThresholdTrigger>
 {
     /// <summary>
     /// Checks if this trigger has been reached.

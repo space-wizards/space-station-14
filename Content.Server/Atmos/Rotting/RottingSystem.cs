@@ -44,7 +44,7 @@ public sealed partial class RottingSystem : SharedRottingSystem
     {
         if (args.Handled)
             return;
-        args.Handled = component.CurrentTemperature < Atmospherics.T0C + 0.85f;
+        args.Handled = component.Temperature < Atmospherics.T0C + 0.85f;
     }
 
     /// <summary>

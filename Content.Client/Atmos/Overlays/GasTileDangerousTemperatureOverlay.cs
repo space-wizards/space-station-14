@@ -19,10 +19,10 @@ public sealed partial class GasTileDangerousTemperatureOverlay : Overlay
     public override bool RequestScreenTexture { get; set; } = false;
 
     [Dependency] private IEntityManager _entManager = default!;
-    [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private IClyde _clyde = default!;
 
     private GasTileOverlaySystem? _gasTileOverlay;
+    private readonly SharedMapSystem _mapSys;
     private readonly SharedTransformSystem _xformSys;
     private EntityQuery<GasTileOverlayComponent> _overlayQuery;
 
@@ -37,6 +37,7 @@ public sealed partial class GasTileDangerousTemperatureOverlay : Overlay
     public GasTileDangerousTemperatureOverlay()
     {
         IoCManager.InjectDependencies(this);
+        _mapSys = _entManager.System<SharedMapSystem>();
         _xformSys = _entManager.System<SharedTransformSystem>();
 
         _overlayQuery = _entManager.GetEntityQuery<GasTileOverlayComponent>();
@@ -174,7 +175,7 @@ public sealed partial class GasTileDangerousTemperatureOverlay : Overlay
             () =>
             {
                 _grids.Clear();
-                _mapManager.FindGridsIntersecting(mapId, worldAABB, ref _grids);
+                _mapSys.FindGridsIntersecting(mapId, worldAABB, ref _grids);
 
                 foreach (var grid in _grids)
                 {
@@ -221,8 +222,6 @@ public sealed partial class GasTileDangerousTemperatureOverlay : Overlay
             },
             new Color(0, 0, 0, 0));
 
-        drawHandle.SetTransform(Matrix3x2.Identity);
-
         return true;
     }
 
@@ -232,7 +231,6 @@ public sealed partial class GasTileDangerousTemperatureOverlay : Overlay
 
         if (res.TemperatureTarget != null)
             args.WorldHandle.DrawTextureRect(res.TemperatureTarget.Texture, args.WorldBounds);
-        args.WorldHandle.SetTransform(Matrix3x2.Identity);
     }
 
     protected override void DisposeBehavior()

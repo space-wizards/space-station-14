@@ -6,7 +6,6 @@ using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Tools.Components;
@@ -108,7 +107,7 @@ public sealed class CargoTest : GameTest
                 foreach (var (proto, staticPriceComp) in protoIds)
                 {
                     if (
-                        proto.TryGetComponent<StackPriceComponent>(out var stackPriceComp, _sCompFact)
+                        proto.TryComp<StackPriceComponent>(out var stackPriceComp, _sCompFact)
                         && stackPriceComp.Price > 0
                     )
                     {
@@ -119,7 +118,7 @@ public sealed class CargoTest : GameTest
                         );
                     }
 
-                    if (proto.HasComponent<StackComponent>(_sCompFact))
+                    if (proto.HasComp<StackComponent>(_sCompFact))
                     {
                         Assert.That(
                             staticPriceComp.Price,
@@ -243,7 +242,7 @@ public sealed class CargoTest : GameTest
                 foreach (var (proto, comp) in Pair.GetPrototypesWithComponent<MobPriceComponent>())
                 {
                     Assert.That(
-                        proto.TryGetComponent<MobStateComponent>(out _, _sCompFact),
+                        proto.TryComp<MobStateComponent>(out _, _sCompFact),
                         $"Found {nameof(MobPriceComponent)} on {proto.ID}, but no {nameof(MobStateComponent)}!"
                     );
                 }

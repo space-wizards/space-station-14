@@ -221,32 +221,82 @@ marking-VulpPointsSharpFootRight-points_sharp-foot-r = Sharp
 # Hair
 
 marking-VulpHairAdhara = Adhara
+marking-VulpHairAdhara-adhara = Adhara
+
 marking-VulpHairAnita = Anita
+marking-VulpHairAnita-anita = Anita
+
 marking-VulpHairApollo = Apollo
+marking-VulpHairApollo-apollo = Apollo
+
 marking-VulpHairBelle = Belle
+marking-VulpHairBelle-belle = Belle
+
 marking-VulpHairBraided = Braided Hair
+marking-VulpHairBraided-braided = Braided Hair
+
 marking-VulpHairBun = Bun
+marking-VulpHairBun-bun = Bun
+
 marking-VulpHairCleanCut = Clean Cut
+marking-VulpHairCleanCut-clean_cut = Clean Cut
+
 marking-VulpHairCurl = Curl
+marking-VulpHairCurl-curl = Curl
+
 marking-VulpHairHawk = Hawk
+marking-VulpHairHawk-hawk = Hawk
+
 marking-VulpHairJagged = Jagged
+marking-VulpHairJagged-jagged = Jagged
+
 marking-VulpHairJeremy = Jeremy
+marking-VulpHairJeremy-jeremy = Jeremy
+
 marking-VulpHairKajam = Kajam
+marking-VulpHairKajam-kajam = Kajam
+
 marking-VulpHairKeid = Keid
+marking-VulpHairKeid-keid = Keid
+
 marking-VulpHairKleeia = Kleeia
+marking-VulpHairKleeia-kleeia = Kleeia
+
 marking-VulpHairMizar = Mizar
+marking-VulpHairMizar-mizar = Mizar
+
 marking-VulpHairPunkBraided = Punk Braided
+marking-VulpHairPunkBraided-punkbraided = Punk Braided
+
 marking-VulpHairRaine = Raine
+marking-VulpHairRaine-raine = Raine
+
 marking-VulpHairRough = Rough
+marking-VulpHairRough-rough = Rough
+
 marking-VulpHairShort = Short Hair
+marking-VulpHairShort-short = Short Hair
+
 marking-VulpHairShort2 = Short Hair 2
+marking-VulpHairShort2-short2 = Short Hair 2
+
 marking-VulpHairSpike = Spike
+marking-VulpHairSpike-spike = Spike
 
 
 # Facial Hair
 
 marking-VulpFacialHairRuff = Ruff
+marking-VulpFacialHairRuff-ruff = Ruff
+
 marking-VulpFacialHairElder = Elder
+marking-VulpFacialHairElder-elder = Elder
+
 marking-VulpFacialHairElderChin = Elder Chin
+marking-VulpFacialHairElderChin-elder_chin = Elder Chin
+
 marking-VulpFacialHairKita = Kita
+marking-VulpFacialHairKita-kita = Kita
+
 marking-VulpFacialHairGoatee = Beard (Snout Goatee)
+marking-VulpFacialHairGoatee-goatee = Beard (Snout Goatee)

@@ -13,7 +13,6 @@ public sealed partial class TetherGunSystem : SharedTetherGunSystem
     [Dependency] private IEyeManager _eyeManager = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IInputManager _input = default!;
-    [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private IOverlayManager _overlay = default!;
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private MapSystem _mapSystem = default!;

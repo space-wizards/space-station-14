@@ -63,7 +63,7 @@ public sealed partial class StepTriggerSystem : EntitySystem
         if (component.Blacklist != null && TryComp<MapGridComponent>(transform.GridUid, out var grid))
         {
             var positon = _map.LocalToTile(transform.GridUid.Value, grid, transform.Coordinates);
-            var anch = _map.GetAnchoredEntitiesEnumerator(uid, grid, positon);
+            var anch = _map.GetAnchoredEntities(uid, grid, positon);
 
             while (anch.MoveNext(out var ent))
             {

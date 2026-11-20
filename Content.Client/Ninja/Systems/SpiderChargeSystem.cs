@@ -2,4 +2,4 @@ using Content.Shared.Ninja.Systems;
 
 namespace Content.Client.Ninja.Systems;
 
-public sealed class SpiderChargeSystem : SharedSpiderChargeSystem;
+public sealed partial class SpiderChargeSystem : SharedSpiderChargeSystem;

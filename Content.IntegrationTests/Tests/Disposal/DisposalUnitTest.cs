@@ -16,10 +16,10 @@ namespace Content.IntegrationTests.Tests.Disposal
     [TestOf(typeof(DisposalHolderComponent))]
     [TestOf(typeof(DisposalEntryComponent))]
     [TestOf(typeof(DisposalUnitComponent))]
-    public sealed class DisposalUnitTest : GameTest
+    public sealed partial class DisposalUnitTest : GameTest
     {
         [Reflect(false)]
-        private sealed class DisposalUnitTestSystem : EntitySystem
+        private sealed partial class DisposalUnitTestSystem : EntitySystem
         {
 
         }
