@@ -125,7 +125,7 @@ public abstract partial class SharedDeliverySystem : EntitySystem
 
     private void OnSimpleToolUse(Entity<DeliveryComponent> ent, ref SimpleToolDoAfterEvent args)
     {
-        if (ent.Comp.IsOpened || args.Cancelled)
+        if (ent.Comp.IsOpened || !ent.Comp.IsLocked || args.Cancelled)
             return;
 
         HandlePenalty(ent);
