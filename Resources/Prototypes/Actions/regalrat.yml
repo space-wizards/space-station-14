@@ -11,6 +11,7 @@
   - type: Action
     useDelay: 4
   - type: ActionRequirements
+    failPopup: rat-king-too-hungry
     conditions:
       Performer:
       - !type:SatiationCondition
@@ -38,6 +39,7 @@
   - type: Action
     useDelay: 6
   - type: ActionRequirements
+    failPopup: rat-king-too-hungry
     conditions:
       Performer:
       - !type:SatiationCondition
