@@ -3,6 +3,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Gravity;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -16,6 +17,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -36,9 +38,9 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
     [Dependency] protected SharedTransformSystem TransformSystem = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
     [Dependency] private ThrownItemSystem _thrown = default!;
-    [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private SharedMapSystem _mapSystem = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedGravitySystem _gravity = default!;
     private const string TetherJoint = "tether";
     private const string TetherJointMirror = "tetherMirror";
 
@@ -110,8 +112,8 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
     {
         // Moves mirror so the force applied to the gun equals the force on the object.
         // Also stops the tether if over max beam length.
-        var gunQuery = EntityQueryEnumerator<BaseForceGunComponent>();
-        while (gunQuery.MoveNext(out var uid, out var comp))
+        var gunQuery = EntityQueryEnumerator<BaseForceGunComponent, JointComponent>();
+        while (gunQuery.MoveNext(out var uid, out var comp, out var jointComp))
         {
             if (comp.Tethered == null || comp.TetherEntity == null || comp.TetherMirrorEntity == null)
                 continue;
@@ -135,13 +137,22 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
                 continue;
             }
 
+            var inHand = false;
+
+            if (TryGetGun(Transform(uid).ParentUid, out var gun, out _) || gun == uid)
+                inHand = true;
+
             // When the gun isn't in hand, clamp the tether entity within range of the gun
-            if (!TryGetGun(Transform(uid).ParentUid, out var gun, out _) || gun != uid)
+            if (!inHand)
             {
                 var coords = GetAllowedTetherEntityCoords(gunCoords, tetheredCoords, comp);
                 if (coords != tetheredCoords)
                     TransformSystem.SetCoordinates(comp.TetherEntity.Value, coords);
-                    Dirty(comp.TetherEntity.Value, Transform(comp.TetherEntity.Value));
+                Dirty(comp.TetherEntity.Value, Transform(comp.TetherEntity.Value));
+            }
+            if (jointComp.GetJoints.TryGetValue(TetherJointMirror, out var joint) && joint is MouseJoint mouseJoint)
+            {
+                mouseJoint.MaxForce = inHand && !_gravity.IsWeightless(Transform(uid).ParentUid) ? 0 : comp.MaxForce;
             }
 
             MoveMirrorEntity(uid, comp.Tethered, comp.TetherEntity, comp.TetherMirrorEntity);
@@ -193,7 +204,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
     public bool TryGetCoords(MapCoordinates mapCoords, out EntityCoordinates coords)
     {
-        if (_mapManager.TryFindGridAt(mapCoords, out var gridUid, out _))
+        if (_mapSystem.TryFindGridAt(mapCoords, out var gridUid, out _))
         {
             coords = TransformSystem.ToCoordinates(gridUid, mapCoords);
             return true;
@@ -440,7 +451,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
             var jointMirror = _joints.CreateMouseJoint(mirrorTether, gunUid, id: TetherJointMirror);
             jointMirror.Stiffness = stiffness;
             jointMirror.Damping = damping;
-            jointMirror.MaxForce = component.MaxForce;
+            jointMirror.MaxForce = user != null && !_gravity.IsWeightless(user.Value) ? 0 : component.MaxForce;
         }
 
         // Sad...
