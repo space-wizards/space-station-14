@@ -3,9 +3,11 @@ using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.MedicalScanner;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
@@ -26,6 +28,7 @@ public abstract partial class HealthAnalyzerSystem : EntitySystem
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private InventorySystem _inventory = default!;
 
     [Dependency] private EntityQuery<BloodstreamComponent> _bloodstreamQuery;
     [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery;
@@ -72,9 +75,16 @@ public abstract partial class HealthAnalyzerSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
-        // to not stop when swapping hands/putting into personal slots such as id for doctor id. as far as i can tell, these need to still be on your person. inserts into others' slots also count as dropping, so they cancel.
-        if (args.Container.GetType() == typeof(Robust.Shared.Containers.ContainerSlot))
-            return;
+        // to not interrupt when putting into personal slots such as id for doctor id. as far as i can tell, these need to still be on your person. inserts into others' slots also count as dropping, so they cancel.
+        if (_inventory.TryGetSlot(args.Container.Owner, args.Container.ID, out var noClueTwo))
+            if (noClueTwo.SlotFlags > SlotFlags.NONE) //this allows all slots. insert your favorite slot picking logic here.
+                return;
+
+        // no slotflag exists for hands.
+        if (TryComp<HandsComponent>(args.Container.Owner, out var testHands))
+            foreach (var hand in testHands.SortedHands) //me when .Contains is illegal
+                if (hand == args.Container.ID)
+                    return;
 
         StopAnalyzingEntity(analyzer);
     }
