@@ -1,8 +1,10 @@
 using Content.Shared.EntityTable;
 using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.Localizations;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.EntityEffects.Effects.EntitySpawning;
 
@@ -13,6 +15,7 @@ namespace Content.Shared.EntityEffects.Effects.EntitySpawning;
 public sealed partial class SpawnEntityTableEntityEffectSystem : EntityEffectSystem<TransformComponent, SpawnEntityTable>
 {
     [Dependency] private INetManager _net = default!;
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private EntityTableSystem _entityTable = default!;
 
     protected override void Effect(Entity<TransformComponent> entity, ref EntityEffectEvent<SpawnEntityTable> args)
@@ -21,10 +24,11 @@ public sealed partial class SpawnEntityTableEntityEffectSystem : EntityEffectSys
         if (amount <= 0)
             return;
 
+        var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(entity));
         var spawns = new List<EntProtoId>(amount); // Assumption that every table has at least one thing to select
         for (var i = 0; i < amount; i++)
         {
-            spawns.AddRange(_entityTable.GetSpawns(args.Effect.Table));
+            spawns.AddRange(_entityTable.GetSpawns(args.Effect.Table, rand));
         }
 
         if (args.Effect.Predicted)
@@ -61,9 +65,8 @@ public sealed partial class SpawnEntityTable : EntityEffectBase<SpawnEntityTable
     /// <summary>
     /// Whether this spawning is predicted.
     /// </summary>
-    /// <remarks>Entity table selection is not currently predicted! Only set this to true with a deterministic table.</remarks>
     [DataField]
-    public bool Predicted;
+    public bool Predicted = true;
 
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
@@ -73,7 +76,7 @@ public sealed partial class SpawnEntityTable : EntityEffectBase<SpawnEntityTable
         var spawnNames = new List<string>();
         foreach (var (entity, _) in _entityTable.ListSpawns(Table))
         {
-            spawnNames.Add(prototype.Index<EntityPrototype>(entity).Name);
+            spawnNames.Add(prototype.Index(entity).Name);
         }
 
         return Loc.GetString("entity-effect-guidebook-spawn-entity-table",
