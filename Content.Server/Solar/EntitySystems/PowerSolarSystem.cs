@@ -107,10 +107,11 @@ namespace Content.Server.Solar.EntitySystems
             }
             else
             {
-                if (ent.Comp.Coverage > 0.5)
+                // Consider aligned within 30⁰
+                if (ent.Comp.Coverage > Math.Cos(Angle.FromDegrees(30)))
                     args.PushMarkup(Loc.GetString("solarpanel-examine-aligned"));
                 else
-                    args.PushMarkup(Loc.GetString("solarpanel-examine-poorly-aligned"));
+                    args.PushMarkup(Loc.GetString("solarpanel-examine-misaligned"));
             }
         }
 
