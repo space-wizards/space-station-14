@@ -40,6 +40,6 @@
   - type: Sprite
     sprite: Interface/Actions/actions_borg.rsi
     layers:
-    - state: select-type
+    - state: dump-storage
   - type: InstantAction
     event: !type:DumpStorageActionEvent

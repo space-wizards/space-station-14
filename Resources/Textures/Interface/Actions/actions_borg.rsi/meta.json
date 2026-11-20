@@ -107,6 +107,9 @@
             "name":"cooking-module"
         },
         {
+            "name":"dump-storage"
+        },
+        {
             "name":"syndicate-weapon-module"
         },
         {
