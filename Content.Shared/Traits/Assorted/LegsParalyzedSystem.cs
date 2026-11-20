@@ -1,4 +1,4 @@
-﻿using Content.Shared.Buckle.Components;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
@@ -27,7 +27,7 @@ public sealed partial class LegsParalyzedSystem : EntitySystem
         _movementSpeedModifierSystem.ChangeBaseSpeed(uid, 0, 0, 20);
     }
 
-    private void OnShutdown(EntityUid uid, LegsParalyzedComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, LegsParalyzedComponent component, ref ComponentShutdown args)
     {
         _standingSystem.Stand(uid);
     }

@@ -15,7 +15,7 @@ guardian-injector-empty-examine = [color=#ba1919]The injector is spent.[/color]
 ## Guardian deck specific
 
 guardian-deck-invalid-creation = The deck can only provide one guardian at a time!
-guardian-deck-used-examine = [color=#ba1919]The deck's seal has been broken.[/color]
+guardian-deck-used-examine = [color=#ba1919]The deck's magic has been used up.[/color]
 
 ## Guardian entity specific
 

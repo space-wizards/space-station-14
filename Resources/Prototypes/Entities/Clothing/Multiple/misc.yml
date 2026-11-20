@@ -38,3 +38,4 @@
       path: /Audio/Items/flashlight_on.ogg
     soundDeactivate:
       path: /Audio/Items/flashlight_off.ogg
+  - type: NoiseProtection

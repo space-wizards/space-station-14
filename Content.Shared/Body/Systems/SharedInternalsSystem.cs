@@ -85,7 +85,7 @@ public abstract partial class SharedInternalsSystem : EntitySystem
         if (internals.BreathTools.Count == 0)
         {
             var message = user == target ? Loc.GetString("internals-self-no-breath-tool") : Loc.GetString("internals-other-no-breath-tool", ("ent", Identity.Name(target, EntityManager, user)));
-            _popupSystem.PopupClient(message, target, user);
+            _popupSystem.PopupEntity(message, target, user);
             return false;
         }
 
@@ -96,7 +96,7 @@ public abstract partial class SharedInternalsSystem : EntitySystem
         if (tank == null)
         {
             var message = user == target ? Loc.GetString("internals-self-no-tank") : Loc.GetString("internals-other-no-tank", ("ent", Identity.Name(target, EntityManager, user)));
-            _popupSystem.PopupClient(message, target, user);
+            _popupSystem.PopupEntity(message, target, user);
             return false;
         }
 

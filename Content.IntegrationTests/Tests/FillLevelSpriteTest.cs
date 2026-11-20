@@ -2,7 +2,6 @@ using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
@@ -15,6 +14,8 @@ namespace Content.IntegrationTests.Tests;
 [TestFixture]
 public sealed class FillLevelSpriteTest : GameTest
 {
+    public override PoolSettings PoolSettings => new() { Connected = true, PreloadClientResources = true };
+
     private static readonly string[] HandStateNames = ["left", "right"];
     private static readonly string[] EquipStateNames = ["back", "suitstorage"];
 
@@ -43,7 +44,7 @@ public sealed class FillLevelSpriteTest : GameTest
                 {
                     Assert.That(proto.TryComp<SolutionContainerVisualsComponent>(out var visuals, componentFactory));
                     Assert.That(proto.TryComp<SpriteComponent>(out var sprite, componentFactory));
-                    if (!proto.HasComponent<AppearanceComponent>(componentFactory))
+                    if (!proto.HasComp<AppearanceComponent>(componentFactory))
                     {
                         Assert.Fail(@$"{proto.ID} has SolutionContainerVisualsComponent but no AppearanceComponent.");
                     }

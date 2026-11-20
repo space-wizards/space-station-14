@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseStructure
+  parent: [ BaseStructure, StructureHealthFurniture ]
   id: BaseBonfire
   components:
   - type: Fixtures
@@ -22,20 +22,16 @@
     energy: 3
     color: "#FFC90C"
   - type: Damageable
-    damageModifierSet: Wood
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 40
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: AmbientSound
     volume: -5
     range: 5

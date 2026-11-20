@@ -210,13 +210,13 @@ public abstract partial class SharedBorgSystem
 
         if (chassis.Comp.ModuleContainer.ContainedEntities.Count >= chassis.Comp.MaxModules)
         {
-            _popup.PopupClient(Loc.GetString("borg-module-too-many"), chassis.Owner, user);
+            _popup.PopupEntity(Loc.GetString("borg-module-too-many"), chassis.Owner, user);
             return false;
         }
 
         if (_whitelist.IsWhitelistFail(chassis.Comp.ModuleWhitelist, module))
         {
-            _popup.PopupClient(Loc.GetString("borg-module-whitelist-deny"), chassis.Owner, user);
+            _popup.PopupEntity(Loc.GetString("borg-module-whitelist-deny"), chassis.Owner, user);
             return false;
         }
 
@@ -230,7 +230,7 @@ public abstract partial class SharedBorgSystem
                 if (containedItemModuleComp.Hands.Count == itemModuleComp.Hands.Count &&
                     containedItemModuleComp.Hands.All(itemModuleComp.Hands.Contains))
                 {
-                    _popup.PopupClient(Loc.GetString("borg-module-duplicate"), chassis.Owner, user);
+                    _popup.PopupEntity(Loc.GetString("borg-module-duplicate"), chassis.Owner, user);
                     return false;
                 }
             }
@@ -242,7 +242,7 @@ public abstract partial class SharedBorgSystem
 
         if (attemptEv.Cancelled)
         {
-            _popup.PopupClient(attemptEv.Reason, chassis.Owner, user);
+            _popup.PopupEntity(attemptEv.Reason, chassis.Owner, user);
             return false;
         }
 

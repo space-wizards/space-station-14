@@ -3,7 +3,7 @@ using System.Numerics;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Database;
 using Content.Shared.Follower.Components;
-using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
 using Content.Shared.Hands;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Events;
@@ -17,6 +17,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Events;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -37,7 +38,7 @@ public sealed partial class FollowerSystem : EntitySystem
     [Dependency] private IRobustRandom _random = default!;
 
     private static readonly ProtoId<TagPrototype> ForceableFollowTag = "ForceableFollow";
-    private static readonly ProtoId<TagPrototype> PreventGhostnadoWarpTag = "NotGhostnadoWarpable";
+    public static readonly ProtoId<TagPrototype> PreventGhostnadoWarpTag = "NotGhostnadoWarpable";
 
     public override void Initialize()
     {
@@ -227,7 +228,8 @@ public sealed partial class FollowerSystem : EntitySystem
             _transform.SetCoordinates(follower, xform, new EntityCoordinates(entity, Vector2.Zero), rotation: Angle.Zero);
         }
 
-        _physicsSystem.SetLinearVelocity(follower, Vector2.Zero);
+        if (HasComp<PhysicsComponent>(follower))
+            _physicsSystem.SetLinearVelocity(follower, Vector2.Zero);
 
         EnsureComp<OrbitVisualsComponent>(follower);
 

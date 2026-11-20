@@ -29,7 +29,6 @@ namespace Content.Server.Construction
         [Dependency] private ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private SharedHandsSystem _handsSystem = default!;
         [Dependency] private EntityLookupSystem _lookupSystem = default!;
-        [Dependency] private SharedTransformSystem _transformSystem = default!;
         [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
@@ -81,7 +80,7 @@ namespace Content.Server.Construction
                 }
             }
 
-            var pos = _transformSystem.GetMapCoordinates(user);
+            var pos = TransformSystem.GetMapCoordinates(user);
 
             foreach (var near in _lookupSystem.GetEntitiesInRange(pos, 2f, LookupFlags.Contained | LookupFlags.Dynamic | LookupFlags.Sundries | LookupFlags.Approximate))
             {
@@ -207,6 +206,7 @@ namespace Content.Server.Construction
                         break;
 
                     case ArbitraryInsertConstructionGraphStep arbitraryStep:
+                        var toFind = arbitraryStep.Amount;
                         foreach (var entity in new HashSet<EntityUid>(EnumerateNearby(user)))
                         {
                             if (!arbitraryStep.EntityValid(entity, EntityManager, Factory))
@@ -229,8 +229,12 @@ namespace Content.Server.Construction
                             else if (!_container.Insert(entity, GetContainer(arbitraryStep.Store)))
                                 continue;
 
-                            handled = true;
                             used.Add(entity);
+                            toFind--;
+                            if (toFind > 0)
+                                continue;
+
+                            handled = true;
                             break;
                         }
 
@@ -477,7 +481,7 @@ namespace Content.Server.Construction
                 return;
             }
 
-            var mapPos = _transformSystem.ToMapCoordinates(location);
+            var mapPos = TransformSystem.ToMapCoordinates(location);
             var predicate = GetPredicate(constructionPrototype.CanBuildInImpassable, mapPos);
 
             if (!_interactionSystem.InRangeUnobstructed(user, mapPos, predicate: predicate))

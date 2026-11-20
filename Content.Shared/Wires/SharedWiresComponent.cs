@@ -6,13 +6,17 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Wires
 {
     [Serializable, NetSerializable]
-    public sealed partial class WirePanelDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
+    public sealed partial class WirePanelDoAfterEvent : SimpleDoAfterEvent;
 
+    /// <summary>
+    /// AppearanceData keys for maintenance panel.
+    /// </summary>
     [Serializable, NetSerializable]
     public enum WiresVisuals : byte
     {
+        /// <summary>
+        /// bool: true when the panel is open (accessible), false when it is closed (inaccessible)
+        /// </summary>
         MaintenancePanelState
     }
 

@@ -1,4 +1,5 @@
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
@@ -28,24 +29,34 @@ public abstract partial class SharedGunSystem
 
     private void OnCartridgeDamageExamine(Entity<CartridgeAmmoComponent> ent, ref DamageExamineEvent args)
     {
-        var damageSpec = GetProjectileDamage(ent.Comp.Prototype);
+        if (!ProtoMan.TryIndex(ent.Comp.Prototype, out var entityProto))
+            return;
+
+        var damageSpec = GetProjectileDamage(entityProto);
+        var stamina = GetProjectileStamina(entityProto);
 
         if (damageSpec == null)
             return;
 
-        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), Loc.GetString("damage-projectile"));
+        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), Loc.GetString("damage-projectile"), stamina);
     }
 
-    private DamageSpecifier? GetProjectileDamage(EntProtoId proto)
+    private DamageSpecifier? GetProjectileDamage(EntityPrototype proto)
     {
-        if (!ProtoMan.TryIndex(proto, out var entityProto))
-            return null;
-
-        if (!entityProto.TryComp<ProjectileComponent>(out var projectile, Factory))
+        if (!proto.TryComp<ProjectileComponent>(out var projectile, Factory))
             return null;
 
         if (!projectile.Damage.Empty)
             return projectile.Damage * Damageable.UniversalProjectileDamageModifier;
+
+        return null;
+    }
+
+    private float? GetProjectileStamina(EntityPrototype proto)
+    {
+        if (proto.TryComp<StaminaDamageOnCollideComponent>(out var comp, Factory)
+            && comp.Damage != 0)
+            return comp.Damage;
 
         return null;
     }

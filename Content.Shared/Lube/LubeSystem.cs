@@ -70,7 +70,7 @@ public sealed partial class LubeSystem : EntitySystem
     {
         if (HasComp<LubedComponent>(target) || !HasComp<ItemComponent>(target))
         {
-            _popup.PopupClient(Loc.GetString("lube-failure", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("lube-failure", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
             return false;
         }
 
@@ -80,7 +80,7 @@ public sealed partial class LubeSystem : EntitySystem
             if (quantity > 0)
             {
                 _audio.PlayPredicted(entity.Comp.Squeeze, entity.Owner, actor);
-                _popup.PopupClient(Loc.GetString("lube-success", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
+                _popup.PopupEntity(Loc.GetString("lube-success", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
                 _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} lubed {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
                 var lubed = EnsureComp<LubedComponent>(target);
                 var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(entity));
@@ -93,7 +93,7 @@ public sealed partial class LubeSystem : EntitySystem
                 return true;
             }
         }
-        _popup.PopupClient(Loc.GetString("lube-failure", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
+        _popup.PopupEntity(Loc.GetString("lube-failure", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
         return false;
     }
 }

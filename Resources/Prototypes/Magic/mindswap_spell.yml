@@ -8,9 +8,10 @@
     useDelay: 180
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/staff_animation.ogg
-    icon:
-      sprite: Mobs/Species/Human/organs.rsi
-      state: brain
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    layers:
+    - state: brain
   - type: EntityTargetAction
     whitelist:
       components:

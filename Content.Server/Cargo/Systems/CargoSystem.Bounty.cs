@@ -428,7 +428,7 @@ public sealed partial class CargoSystem
         if (component.Bounties.Count >= component.MaxBounties)
             return false;
 
-        _nameIdentifier.GenerateUniqueName(uid, BountyNameIdentifierGroup, out var randomVal);
+        _nameIdentifier.GenerateUniqueNameModifier(BountyNameIdentifierGroup, out var randomVal);
         var newBounty = new CargoBountyData(bounty, randomVal);
         // This bounty id already exists! Probably because NameIdentifierSystem ran out of ids.
         if (component.Bounties.Any(b => b.Id == newBounty.Id))

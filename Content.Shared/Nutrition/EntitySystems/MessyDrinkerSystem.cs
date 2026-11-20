@@ -41,7 +41,7 @@ public sealed partial class MessyDrinkerSystem : EntitySystem
             return;
 
         if (ent.Comp.SpillMessagePopup != null)
-            _popup.PopupPredicted(Loc.GetString(ent.Comp.SpillMessagePopup), null, ent, ent, PopupType.MediumCaution);
+            _popup.PopupEntity(Loc.GetString(ent.Comp.SpillMessagePopup), ent, ent, PopupType.MediumCaution);
 
         var split = ev.Split.SplitSolution(ent.Comp.SpillAmount);
 

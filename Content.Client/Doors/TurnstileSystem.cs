@@ -1,19 +1,15 @@
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
-using Content.Shared.Examine;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
-using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Doors;
 
 /// <inheritdoc/>
 public sealed partial class TurnstileSystem : SharedTurnstileSystem
 {
-    [Dependency] private AnimationPlayerSystem _animationPlayer = default!;
-    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private AppearanceSystem _appearance = default!;
+    [Dependency] private AnimationPlayerSystem _animation = default!;
 
     private const string AnimationKey = "Turnstile";
 
@@ -29,40 +25,23 @@ public sealed partial class TurnstileSystem : SharedTurnstileSystem
         if (args.Key != AnimationKey)
             return;
 
-        if (!TryComp<SpriteComponent>(ent, out var sprite))
-            return;
-        _sprite.LayerSetRsiState((ent.Owner, sprite), TurnstileVisualLayers.Base, new RSI.StateId(ent.Comp.DefaultState));
+        _appearance.SetData(ent, TurnstileVisualLayers.Base, TurnstileStates.Idle);
     }
 
-    protected override void PlayAnimation(EntityUid uid, string stateId)
+    protected override void PlayAnimation(EntityUid uid, TurnstileStates state)
     {
-        if (!TryComp<AnimationPlayerComponent>(uid, out var animation) || !TryComp<SpriteComponent>(uid, out var sprite))
+        if (!TryComp<AnimationPlayerComponent>(uid, out var animation))
             return;
-        var ent = (uid, animation);
 
-        if (_animationPlayer.HasRunningAnimation(animation, AnimationKey))
-            _animationPlayer.Stop(ent, AnimationKey);
-
-        if (sprite.BaseRSI == null || !sprite.BaseRSI.TryGetState(stateId, out var state))
+        if (_animation.HasRunningAnimation(uid, AnimationKey) || !TryComp<TurnstileComponent>(uid, out var turnComp))
             return;
-        var animLength = state.AnimationLength;
 
         var anim = new Animation
         {
-            AnimationTracks =
-            {
-                new AnimationTrackSpriteFlick
-                {
-                    LayerKey = TurnstileVisualLayers.Base,
-                    KeyFrames =
-                    {
-                        new AnimationTrackSpriteFlick.KeyFrame(state.StateId, 0f),
-                    },
-                },
-            },
-            Length = TimeSpan.FromSeconds(animLength),
+            Length = turnComp.AnimationCooldown,
         };
 
-        _animationPlayer.Play(ent, anim, AnimationKey);
+        _animation.Play((uid, animation), anim, AnimationKey);
+        _appearance.SetData(uid, TurnstileVisualLayers.Base, state);
     }
 }

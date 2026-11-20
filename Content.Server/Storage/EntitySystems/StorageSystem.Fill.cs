@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Spawners.Components;
 using Content.Shared.Item;
-using Content.Shared.Prototypes;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Robust.Shared.Prototypes;
@@ -11,25 +10,27 @@ namespace Content.Server.Storage.EntitySystems;
 
 public sealed partial class StorageSystem
 {
-    private void OnStorageFillMapInit(EntityUid uid, StorageFillComponent component, MapInitEvent args)
+    [Obsolete("StorageFillComponent is obsolete.")]
+    private void OnStorageFillMapInit(Entity<StorageFillComponent> ent, ref MapInitEvent args)
     {
-        if (component.Contents.Count == 0)
+        if (ent.Comp.Contents.Count == 0)
             return;
 
-        if (TryComp<StorageComponent>(uid, out var storageComp))
+        if (TryComp<StorageComponent>(ent, out var storageComp))
         {
-            FillStorage((uid, component, storageComp));
+            FillStorage((ent, ent.Comp, storageComp));
         }
-        else if (TryComp<EntityStorageComponent>(uid, out var entityStorageComp))
+        else if (TryComp<EntityStorageComponent>(ent, out var entityStorageComp))
         {
-            FillEntityStorage((uid, component, entityStorageComp));
+            FillEntityStorage((ent, ent.Comp, entityStorageComp));
         }
         else
         {
-            Log.Error($"StorageFillComponent couldn't find any StorageComponent ({uid})");
+            Log.Error($"StorageFillComponent couldn't find any StorageComponent ({ent})");
         }
     }
 
+    [Obsolete("StorageFillComponent is obsolete.")]
     private void FillStorage(Entity<StorageFillComponent?, StorageComponent?> entity)
     {
         var (uid, component, storage) = entity;
@@ -48,7 +49,7 @@ public sealed partial class StorageSystem
 
             // No, you are not allowed to fill a container with entity spawners.
             DebugTools.Assert(!ProtoMan.Index<EntityPrototype>(spawnPrototype)
-                .HasComponent(typeof(RandomSpawnerComponent)));
+                .HasComp<RandomSpawnerComponent>(Factory));
 
             if (!TryComp<ItemComponent>(ent, out var itemComp))
             {
@@ -85,6 +86,7 @@ public sealed partial class StorageSystem
         }
     }
 
+    [Obsolete("StorageFillComponent is obsolete.")]
     private void FillEntityStorage(Entity<StorageFillComponent?, EntityStorageComponent?> entity)
     {
         var (uid, component, entityStorageComp) = entity;
@@ -99,7 +101,7 @@ public sealed partial class StorageSystem
         {
             // No, you are not allowed to fill a container with entity spawners.
             DebugTools.Assert(!ProtoMan.Index<EntityPrototype>(item)
-                .HasComponent(typeof(RandomSpawnerComponent)));
+                .HasComp<RandomSpawnerComponent>(Factory));
             var ent = Spawn(item, coordinates);
 
             // handle depending on storage component, again this should be unified after ECS

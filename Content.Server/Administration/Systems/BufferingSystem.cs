@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Components;
 using Content.Shared.Administration.Systems;

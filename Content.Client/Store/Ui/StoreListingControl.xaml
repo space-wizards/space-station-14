@@ -1,9 +1,10 @@
-<Control xmlns="https://spacestation14.io">
+<Control xmlns="https://spacestation14.io"
+         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
     <BoxContainer Margin="8,0,8,8" Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
             <Label Name="StoreItemName" HorizontalExpand="True" />
         </BoxContainer>
-        <PanelContainer StyleClasses="HighDivider" Margin="0,1,0,2"/>
+        <controls:Separator StyleClasses="HighDivider" Margin="0,1,0,2"/>
         <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
             <BoxContainer Orientation="Vertical" VerticalAlignment="Center" Margin="0,0,4,0">
                 <TextureRect

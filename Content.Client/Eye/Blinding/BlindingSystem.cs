@@ -47,7 +47,7 @@ public sealed partial class BlindingSystem : EntitySystem
             _overlayMan.AddOverlay(_overlay);
     }
 
-    private void OnBlindShutdown(EntityUid uid, BlindableComponent component, ComponentShutdown args)
+    private void OnBlindShutdown(EntityUid uid, BlindableComponent component, ref ComponentShutdown args)
     {
         if (_player.LocalEntity == uid)
         {

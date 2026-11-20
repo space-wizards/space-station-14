@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Map;
+using Robust.Shared.Map;
 
 namespace Content.Shared.Construction.Conditions
 {

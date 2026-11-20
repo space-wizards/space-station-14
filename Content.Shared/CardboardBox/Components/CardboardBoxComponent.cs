@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Audio;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -13,12 +13,6 @@ namespace Content.Shared.CardboardBox.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class CardboardBoxComponent : Component
 {
-    /// <summary>
-    /// The person in control of this box
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntityUid? Mover;
-
     /// <summary>
     /// The entity used for the box opening effect
     /// </summary>

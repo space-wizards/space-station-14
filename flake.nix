@@ -1,7 +1,7 @@
 {
   description = "Development environment for Space Station 14";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/release-26.05";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
   outputs =
     {

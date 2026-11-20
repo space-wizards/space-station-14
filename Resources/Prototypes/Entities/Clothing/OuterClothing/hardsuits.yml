@@ -15,9 +15,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    heatingCoefficient: 0.001
-    coolingCoefficient: 0.001
   - type: FireProtection
     reduction: 0.8
   - type: ExplosionResistance
@@ -213,9 +210,6 @@
         Radiation: 0.1
   - type: ExplosionResistance
     damageCoefficient: 0.2
-  - type: TemperatureProtection
-    heatingCoefficient: 0.001
-    coolingCoefficient: 0.001
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitMaxim
 
@@ -347,10 +341,13 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #Chief Engineer's Hardsuit
 - type: entity
-  parent: [ClothingOuterHardsuitBase, BaseCommandContraband]
+  parent: [ TemperatureProtectionGreat, ClothingOuterHardsuitBase, BaseCommandContraband]
   id: ClothingOuterHardsuitEngineeringWhite
   name: chief engineer's hardsuit
   description: A special hardsuit that protects against hazardous, low pressure environments, made for the chief engineer of the station.
@@ -385,6 +382,9 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #Chief Medical Officer's Hardsuit
 - type: entity
@@ -416,6 +416,9 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #Research Director's Hardsuit
 - type: entity
@@ -460,7 +463,9 @@
   - type: StaticPrice
     price: 750
   - type: StealTarget
-    stealGroup: ClothingOuterHardsuitRd
+    stealGroup:
+    - ClothingOuterHardsuitRd
+    - HeadHardsuit
 
 #Head of Security's Hardsuit
 - type: entity
@@ -493,6 +498,9 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurityRed
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #Luxury Mining Hardsuit
 - type: entity
@@ -539,6 +547,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
   - type: Item
     size: Huge
+    shape:
+    - 0,0,3,3
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
   - type: PressureProtection
@@ -592,7 +602,7 @@
 
 #Syndicate Elite Hardsuit
 - type: entity
-  parent: [ClothingOuterHardsuitBase, BaseSyndicateContraband]
+  parent: [ TemperatureProtectionGreat, ClothingOuterHardsuitBase, BaseSyndicateContraband ]
   id: ClothingOuterHardsuitSyndieElite
   name: syndicate elite hardsuit
   description: An elite version of the blood-red hardsuit, with improved radiation resistance and fireproofing. Property of Gorlex Marauders.
@@ -604,9 +614,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    heatingCoefficient: 0.001
-    coolingCoefficient: 0.001
   - type: ExplosionResistance
     damageCoefficient: 0.3
   - type: FireProtection
@@ -624,6 +631,8 @@
         Caustic: 0.5
   - type: Item
     size: Huge
+    shape:
+    - 0,0,3,3
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
@@ -789,6 +798,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
   - type: Item
     size: Huge
+    shape:
+    - 0,0,3,3
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
   - type: ExplosionResistance
@@ -821,6 +832,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/piratecaptain.rsi
   - type: Item
     size: Huge
+    shape:
+    - 0,0,3,3
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/piratecaptain.rsi
   - type: PressureProtection
@@ -848,7 +861,7 @@
 #CENTCOMM / ERT HARDSUITS
 #ERT Leader Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieCommander ]
+  parent: [ BaseTaskForceContraband, ClothingOuterHardsuitSyndieCommander ]
   id: ClothingOuterHardsuitERTLeader
   name: ERT leader's hardsuit
   description: A protective hardsuit worn by the leader of an emergency response team.
@@ -857,12 +870,19 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,3,3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTLeader
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #ERT Chaplain Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndie ]
+  parent: [ BaseTaskForceContraband, ClothingOuterHardsuitSyndie ]
   id: ClothingOuterHardsuitERTChaplain
   name: ERT chaplain's hardsuit
   description: A protective hardsuit worn by the chaplains of an Emergency Response Team.
@@ -871,12 +891,19 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertchaplain.rsi #if you change this, please update the humanoid.yml with a better markers sprite.
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertchaplain.rsi
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,3,3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTChaplain
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #ERT Engineer Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieElite ]
+  parent: [ BaseTaskForceContraband, ClothingOuterHardsuitSyndieElite ]
   id: ClothingOuterHardsuitERTEngineer
   name: ERT engineer's hardsuit
   description: A protective hardsuit worn by the engineers of an emergency response team.
@@ -885,14 +912,21 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,3,3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTEngineer
   - type: FireProtection
     reduction: 0.8
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #ERT Medic Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieMedic ]
+  parent: [ BaseTaskForceContraband, ClothingOuterHardsuitSyndieMedic ]
   id: ClothingOuterHardsuitERTMedical
   name: ERT medic's hardsuit
   description: A protective hardsuit worn by the medics of an emergency response team.
@@ -901,12 +935,19 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,3,3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTMedical
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #ERT Security Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndie ]
+  parent: [ BaseTaskForceContraband, ClothingOuterHardsuitSyndie ]
   id: ClothingOuterHardsuitERTSecurity
   name: ERT security's hardsuit
   description: A protective hardsuit worn by the security officers of an emergency response team.
@@ -915,16 +956,23 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,3,3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTSecurity
   - type: Tag
     tags:
     - Hardsuit
     - WhitelistChameleon
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #ERT Janitor Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieElite ]
+  parent: [ BaseTaskForceContraband, ClothingOuterHardsuitSyndieElite ]
   id: ClothingOuterHardsuitERTJanitor
   name: ERT janitor's hardsuit
   description: A protective hardsuit worn by the janitors of an emergency response team.
@@ -933,12 +981,19 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,3,3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTJanitor
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #Deathsquad
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitBase ]
+  parent: [ BaseDeathSquadContraband, ClothingOuterHardsuitBase ]
   id: ClothingOuterHardsuitDeathsquad
   name: death squad hardsuit
   description: An advanced hardsuit favored by commandos for use in special operations.
@@ -947,12 +1002,14 @@
     sprite: Clothing/OuterClothing/Hardsuits/deathsquad.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/deathsquad.rsi
+  - type: Item
+    shape:
+    - 0,0,7,7
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
-    heatingCoefficient: 0.001
-    coolingCoefficient: 0.001
+    coefficient: 0.001
   - type: ExplosionResistance
     damageCoefficient: 0.2
   - type: FireProtection
@@ -974,10 +1031,13 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitDeathsquad
+  - type: StealTarget
+    stealGroup:
+    - HeadHardsuit
 
 #CBURN Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitBase ]
+  parent: [ BaseCBURNContraband, ClothingOuterHardsuitBase ]
   id: ClothingOuterHardsuitCBURN
   name: CBURN exosuit
   description: A lightweight yet strong exosuit used for special cleanup operations.
@@ -989,9 +1049,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    heatingCoefficient: 0.001
-    coolingCoefficient: 0.001
   - type: ExplosionResistance
     damageCoefficient: 0.7
   - type: Armor

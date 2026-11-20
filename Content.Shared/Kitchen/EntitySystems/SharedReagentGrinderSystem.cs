@@ -39,7 +39,7 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
     [Dependency] private SharedDestructibleSystem _destructible = default!;
     [Dependency] private SharedJitteringSystem _jitter = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
-    [Dependency] private SharedPowerStateSystem _powerState = default!;
+    [Dependency] private PowerStateSystem _powerState = default!;
 
     public override void Initialize()
     {
@@ -159,7 +159,7 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
             if (!HasComp<FitsInDispenserComponent>(heldEnt))
             {
                 // This is ugly but we can't use whitelistFailPopup because there are 2 containers with different whitelists.
-                _popupSystem.PopupClient(Loc.GetString("reagent-grinder-component-cannot-put-entity-message"), ent.Owner, args.User);
+                _popupSystem.PopupEntity(Loc.GetString("reagent-grinder-component-cannot-put-entity-message"), ent.Owner, args.User);
             }
 
             // Entity did NOT pass the whitelist for grind/juice.
@@ -237,7 +237,7 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
         if (!_power.IsPowered(ent.Owner))
             return;
 
-        var beaker = _itemSlotsSystem.GetItemOrNull(ent, ReagentGrinderComponent.BeakerSlotId);
+        var beaker = _itemSlotsSystem.GetItemOrNull(ent.Owner, ReagentGrinderComponent.BeakerSlotId);
 
         // Do we have anything to grind/juice and a container to put the reagents in?
         if (ent.Comp.InputContainer.ContainedEntities.Count <= 0 || !HasComp<FitsInDispenserComponent>(beaker))
@@ -284,7 +284,7 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
 
         ent.Comp.Program = null;
         ent.Comp.AudioStream = _audioSystem.Stop(ent.Comp.AudioStream);
-        ent.Comp.EndTime = null; // It's important that we do this first or PredictedQueueDelete will fail to remove the entity from the container because the grinder is still active.
+        ent.Comp.EndTime = null; // It's important that we do this first or QueueDelete will fail to remove the entity from the container because the grinder is still active.
         Dirty(ent);
         // Remove deferred to avoid modifying the component we are currently enumerating over in the update loop.
         RemCompDeferred<ActiveReagentGrinderComponent>(ent);

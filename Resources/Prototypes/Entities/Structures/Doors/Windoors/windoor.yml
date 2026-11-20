@@ -5,28 +5,10 @@
   description: It's a window and a sliding door. Wow!
 
 - type: entity
-  id: WindoorSecure
-  parent: BaseSecureWindoor
-  name: secure windoor
-  description: It's a sturdy window and a sliding door. Wow!
-
-- type: entity
-  id: WindoorClockwork
-  parent: BaseClockworkWindoor
-  name: clockwork windoor
-  description: It's a sturdy window and a sliding door. Wow!
-
-- type: entity
   id: WindoorPlasma
   parent: BasePlasmaWindoor
   name: plasma windoor
   description: It's a pink window *and* a sliding door. Amazing!
-
-- type: entity
-  id: WindoorSecurePlasma
-  parent: BaseSecurePlasmaWindoor
-  name: secure plasma windoor
-  description: It's a sturdy purple window *and* a sliding door. Spectacular!
 
 - type: entity
   id: WindoorUranium
@@ -34,14 +16,187 @@
   name: uranium windoor
   description: It's a window and a sliding door. Huh? Oh, and it's green!
 
-- type: entity
-  id: WindoorSecureUranium
-  parent: BaseSecureUraniumWindoor
-  name: secure uranium windoor
-  description: It's a sturdy window and a sliding door. It's so neon green, it might even taste like limes!
-
 # TODO remove these with parameterized prototypes/whatever we end up doing
-# Windoors (alphabetical)
+# Please sort these into categories and alphabetically, parents should be on top tho
+
+## Suffix formatting ##
+# [ 1, 2-3 , 4 5 ]
+# 1. Custom - maps specific or special information - ex. ( 3x4, Exo )
+# 2. Group - what group of doors does it fall in to - not always laybaled to not clutter - ex. ( Medical )
+# 3. What the door is for, what department is it for, if specified in name, leave blank - ex. ( Mourge )
+# 4. Is it locked or not - ex. ( Locked )
+# 5. If it is locked, what access can unlock it, if it is the same as the 3, leave blank - ex. ( Medical-Detective-Chaplin )
+
+  ### Windoor (Normal) ###
+
+# Cargo
+- type: entity
+  parent: Windoor
+  id: WindoorCargoLocked # parent
+  suffix: Cargo, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCargo ]
+  - type: Wires
+    layoutId: AirlockCargo
+
+- type: entity
+  parent: WindoorCargoLocked
+  id: WindoorSalvageLocked
+  suffix: Salvage, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSalvage ]
+
+# Command
+- type: entity
+  parent: Windoor
+  id: WindoorCommandLocked # parent
+  suffix: Command, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCommand ]
+  - type: WiresPanelSecurity
+    securityLevel: medSecurity
+  - type: Wires
+    layoutId: AirlockCommand
+
+- type: entity
+  parent: WindoorCommandLocked
+  id: WindoorHeadOfPersonnelLocked
+  suffix: Command, Locked HeadOfPersonnel
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsHeadOfPersonnel ]
+
+- type: entity
+  parent: WindoorCommandLocked
+  id: WindoorResearchDirectorLocked
+  suffix: Command, Locked ResearchDirector
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsResearchDirector ]
+
+# Engineering
+- type: entity
+  parent: Windoor
+  id: WindoorEngineeringLocked # parent
+  suffix: Engineering, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsEngineering ]
+  - type: Wires
+    layoutId: AirlockEngineering
+
+- type: entity
+  parent: WindoorEngineeringLocked
+  id: WindoorAtmosphericsLocked
+  suffix: Atmospherics, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsAtmospherics ]
+
+# Medical
+- type: entity
+  parent: Windoor
+  id: WindoorMedicalLocked # parent
+  suffix: Medical, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMedical ]
+  - type: Wires
+    layoutId: AirlockMedical
+
+- type: entity
+  parent: WindoorMedicalLocked
+  id: WindoorChemistryLocked
+  suffix: Chemistry, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsChemistry ]
+
+# Science / Research
+- type: entity
+  parent: Windoor
+  id: WindoorScienceLocked
+  suffix: Science, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsResearch ]
+  - type: Wires
+    layoutId: AirlockScience
+
+# Security
+- type: entity
+  parent: Windoor
+  id: WindoorSecurityLocked # parent
+  suffix: Security, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSecurity ]
+  - type: Wires
+    layoutId: AirlockSecurity
+
+- type: entity
+  parent: Windoor
+  id: WindoorArmoryLocked
+  suffix: Security-Armory, Locked Armory
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsArmory ]
+  - type: Wires
+    layoutId: AirlockArmory
+
+- type: entity
+  parent: WindoorSecurityLocked
+  id: WindoorBrigLocked
+  suffix: Security-Brig, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsBrig ]
+
+- type: entity
+  parent: WindoorSecurityLocked
+  id: WindoorDetectiveLocked
+  suffix: Detective, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsDetective ]
+
+- type: entity
+  parent: WindoorSecurityLocked
+  id: WindoorSecurityLawyerLocked
+  suffix: Security-Lawyer, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSecurityLawyer ]
+
+# Service
+- type: entity
+  parent: Windoor
+  id: WindoorServiceLocked # parent
+  suffix: Service, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsService ]
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: WindoorServiceLocked
@@ -55,22 +210,11 @@
 - type: entity
   parent: WindoorServiceLocked
   id: WindoorBarKitchenLocked
-  suffix: Bar&Kitchen, Locked
+  suffix: Bar-Kitchen, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsBarKitchen ]
-
-- type: entity
-  parent: Windoor
-  id: WindoorCargoLocked
-  suffix: Cargo, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsCargo ]
-  - type: Wires
-    layoutId: AirlockCargo
 
 - type: entity
   parent: Windoor
@@ -100,17 +244,6 @@
       board: [ DoorElectronicsJanitor ]
 
 - type: entity
-  parent: WindoorPlasma
-  id: PlasmaWindoorJanitorLocked
-  suffix: Janitor, Locked, Plasma
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsJanitor ]
-  - type: Wires
-    layoutId: AirlockService
-
-- type: entity
   parent: WindoorServiceLocked
   id: WindoorKitchenLocked
   suffix: Kitchen, Locked
@@ -122,22 +255,11 @@
 - type: entity
   parent: WindoorServiceLocked
   id: WindoorKitchenHydroponicsLocked
-  suffix: Kitchen&Hydroponics, Locked
+  suffix: Kitchen-Hydroponics, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsKitchenHydroponics ]
-
-- type: entity
-  parent: Windoor
-  id: WindoorServiceLocked
-  suffix: Service, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsService ]
-  - type: Wires
-    layoutId: AirlockService
 
 - type: entity
   parent: WindoorServiceLocked
@@ -148,208 +270,19 @@
     containers:
       board: [ DoorElectronicsTheatre ]
 
-# Secure
-
+# Other
 - type: entity
-  parent: WindoorSecure
-  id: WindoorSecureArmoryLocked
-  suffix: Armory, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsArmory ]
-  - type: Wires
-    layoutId: AirlockArmory
-
-- type: entity
-  parent: WindoorSecurePlasma
-  id: PlasmaWindoorSecureArmoryLocked
-  suffix: Armory, Locked, Plasma
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsArmory ]
-  - type: Wires
-    layoutId: AirlockArmory
-
-- type: entity
-  parent: WindoorSecureEngineeringLocked
-  id: WindoorSecureAtmosphericsLocked
-  suffix: Atmospherics, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsAtmospherics ]
-
-- type: entity
-  parent: PlasmaWindoorSecureEngineeringLocked
-  id: PlasmaWindoorSecureAtmosphericsLocked
-  suffix: Atmospherics, Locked, Plasma
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsAtmospherics ]
-
-- type: entity
-  parent: WindoorSecureServiceLocked
-  id: WindoorSecureBarLocked
-  suffix: Bar, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsBar ]
-
-- type: entity
-  parent: WindoorSecureSecurityLocked
-  id: WindoorSecureBrigLocked
-  suffix: Brig, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsBrig ]
-
-- type: entity
-  parent: WindoorSecure
-  id: WindoorSecureCargoLocked
-  suffix: Cargo, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsCargo ]
-  - type: Wires
-    layoutId: AirlockCargo
-
-- type: entity
-  parent: WindoorSecure
-  id: WindoorSecureChapelLocked
-  suffix: Chapel, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsChapel ]
-
-- type: entity
-  parent: WindoorSecureMedicalLocked
-  id: WindoorSecureChemistryLocked
-  suffix: Chemistry, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsChemistry ]
-
-- type: entity
-  parent: WindoorSecurePlasma
-  id: PlasmaWindoorSecureChemistryLocked
-  suffix: Chemistry, Locked, Plasma
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsChemistry ]
-  - type: Wires
-    layoutId: AirlockMedical
-
-- type: entity
-  parent: WindoorSecureCommandLocked
-  id: WindoorSecureCentralCommandLocked
-  suffix: Central Command, Locked
+  parent: WindoorCommandLocked
+  id: WindoorCentralCommandLocked
+  suffix: CentralCommand, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsCentralCommand ]
 
 - type: entity
-  parent: PlasmaWindoorSecureCommandLocked
-  id: PlasmaWindoorSecureCentralCommandLocked
-  suffix: Central Command, Locked, Plasma
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsCentralCommand ]
-
-- type: entity
-  parent: WindoorSecureUranium
-  id: UraniumWindoorSecureCentralCommandLocked
-  suffix: Central Command, Locked, Uranium
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsCentralCommand ]
-  - type: WiresPanelSecurity
-    securityLevel: medSecurity
-  - type: Wires
-    layoutId: AirlockCommand
-
-- type: entity
-  parent: WindoorSecure
-  id: WindoorSecureCommandLocked
-  suffix: Command, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsCommand ]
-  - type: WiresPanelSecurity
-    securityLevel: medSecurity
-  - type: Wires
-    layoutId: AirlockCommand
-
-- type: entity
-  parent: WindoorSecurePlasma
-  id: PlasmaWindoorSecureCommandLocked
-  suffix: Command, Locked, Plasma
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsCommand ]
-  - type: WiresPanelSecurity
-    securityLevel: medSecurity
-  - type: Wires
-    layoutId: AirlockCommand
-
-- type: entity
-  parent: WindoorSecureSecurityLocked
-  id: WindoorSecureDetectiveLocked
-  suffix: Detective, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsDetective ]
-
-- type: entity
-  parent: WindoorSecure
-  id: WindoorSecureEngineeringLocked
-  suffix: Engineering, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsEngineering ]
-  - type: Wires
-    layoutId: AirlockEngineering
-
-- type: entity
-  parent: WindoorSecurePlasma
-  id: PlasmaWindoorSecureEngineeringLocked
-  suffix: Engineering, Locked, Plasma
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsEngineering ]
-  - type: Wires
-    layoutId: AirlockEngineering
-
-- type: entity
-  parent: WindoorSecureUranium
-  id: UraniumWindoorSecureEngineeringLocked
-  suffix: Engineering, Locked, Uranium
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsEngineering ]
-  - type: Wires
-    layoutId: AirlockEngineering
-
-- type: entity
-  parent: WindoorSecure
-  id: WindoorSecureExternalLocked
+  parent: Windoor
+  id: WindoorExternalLocked
   suffix: External, Locked
   components:
   - type: ContainerFill
@@ -359,191 +292,13 @@
     layoutId: AirlockExternal
 
 - type: entity
-  parent: WindoorSecureServiceLocked
-  id: WindoorSecureJanitorLocked
-  suffix: Janitor, Locked
+  parent: WindoorCommandLocked
+  id: WindoorEVALocked
+  suffix: EVA, Locked External-Command
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsJanitor ]
-
-- type: entity
-  parent: WindoorSecurePlasma
-  id: PlasmaWindoorSecureJanitorLocked
-  suffix: Janitor, Locked, Plasma
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsJanitor ]
-  - type: Wires
-    layoutId: AirlockService
-
-- type: entity
-  parent: WindoorSecureServiceLocked
-  id: WindoorSecureKitchenLocked
-  suffix: Kitchen, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsKitchen ]
-
-- type: entity
-  parent: WindoorSecureSecurityLocked
-  id: WindoorSecureSecurityLawyerLocked
-  suffix: Security/Lawyer, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsSecurityLawyer ]
-
-- type: entity
-  parent: WindoorSecure
-  id: WindoorSecureMedicalLocked
-  suffix: Medical, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsMedical ]
-  - type: Wires
-    layoutId: AirlockMedical
-
-- type: entity
-  parent: WindoorSecureCommandLocked
-  id: WindoorSecureResearchDirectorLocked
-  suffix: ResearchDirector, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsResearchDirector ]
-
-- type: entity
-  parent: WindoorSecureCargoLocked
-  id: WindoorSecureSalvageLocked
-  suffix: Salvage, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsSalvage ]
-
-- type: entity
-  parent: WindoorSecure
-  id: WindoorSecureSecurityLocked
-  suffix: Security, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsSecurity ]
-  - type: Wires
-    layoutId: AirlockSecurity
-
-- type: entity
-  parent: WindoorSecurePlasma
-  id: PlasmaWindoorSecureSecurityLocked
-  suffix: Security, Locked, Plasma
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsSecurity ]
-  - type: Wires
-    layoutId: AirlockSecurity
-
-- type: entity
-  parent: WindoorSecure
-  id: WindoorSecureScienceLocked
-  suffix: Science, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsResearch ]
-  - type: Wires
-    layoutId: AirlockScience
-
-- type: entity
-  parent: WindoorSecurePlasma
-  id: PlasmaWindoorSecureScienceLocked
-  suffix: Science, Locked, Plasma
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsResearch ]
-  - type: Wires
-    layoutId: AirlockScience
-
-- type: entity
-  parent: WindoorSecure
-  id: WindoorSecureServiceLocked
-  suffix: Service, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsService ]
-  - type: Wires
-    layoutId: AirlockService
-
-- type: entity
-  parent: WindoorSecureCommandLocked
-  id: WindoorSecureHeadOfPersonnelLocked
-  suffix: HeadOfPersonnel, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsHeadOfPersonnel ]
-
-# Syndicate
-
-- type: entity
-  parent: Windoor
-  id: WindoorSyndicateLocked
-  suffix: Syndicate, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsSyndicateAgent ]
-
-- type: entity
-  parent: WindoorSecure
-  id: WindoorSecureSyndicateLocked
-  suffix: Syndicate, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsSyndicateAgent ]
-
-- type: entity
-  parent: WindoorPlasma
-  id: PlasmaWindoorSyndicateLocked
-  suffix: Syndicate, Locked, Plasma
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsSyndicateAgent ]
-
-- type: entity
-  parent: WindoorSecurePlasma
-  id: PlasmaWindoorSecureSyndicateLocked
-  suffix: Syndicate, Locked, Plasma
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsSyndicateAgent ]
-
-- type: entity
-  parent: WindoorUranium
-  id: UraniumWindoorSyndicateLocked
-  suffix: Syndicate, Locked, Uranium
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsSyndicateAgent ]
-
-- type: entity
-  parent: WindoorSecureUranium
-  id: UraniumWindoorSecureSyndicateLocked
-  suffix: Syndicate, Locked, Uranium
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsSyndicateAgent ]
+      board: [ DoorElectronicsEVA ]
 
 - type: entity
   parent: Windoor
@@ -555,8 +310,125 @@
       board: [ DoorElectronicsNukeop ]
 
 - type: entity
-  parent: WindoorSecure
-  id: WindoorSecureNukeopLocked
+  parent: Windoor
+  id: WindoorSyndicateLocked
+  suffix: Syndicate, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSyndicateAgent ]
+
+  ### Windoor (Plasma) ###
+
+# Cargo
+
+# Command
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorCommandLocked
+  suffix: Command, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCommand ]
+  - type: WiresPanelSecurity
+    securityLevel: medSecurity
+  - type: Wires
+    layoutId: AirlockCommand
+
+# Engineering
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorEngineeringLocked # parent
+  suffix: Engineering, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsEngineering ]
+  - type: Wires
+    layoutId: AirlockEngineering
+
+- type: entity
+  parent: PlasmaWindoorEngineeringLocked
+  id: PlasmaWindoorAtmosphericsLocked
+  suffix: Atmospherics, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsAtmospherics ]
+
+# Medical
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorChemistryLocked
+  suffix: Chemistry, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsChemistry ]
+  - type: Wires
+    layoutId: AirlockMedical
+
+# Science / Research
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorScienceLocked
+  suffix: Science, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsResearch ]
+  - type: Wires
+    layoutId: AirlockScience
+
+# Security
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorSecurityLocked
+  suffix: Security, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSecurity ]
+  - type: Wires
+    layoutId: AirlockSecurity
+
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorArmoryLocked
+  suffix: Security-Armory, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsArmory ]
+  - type: Wires
+    layoutId: AirlockArmory
+
+# Service
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorJanitorLocked
+  suffix: Janitor, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsJanitor ]
+  - type: Wires
+    layoutId: AirlockService
+
+# Other
+- type: entity
+  parent: PlasmaWindoorCommandLocked
+  id: PlasmaWindoorCentralCommandLocked
+  suffix: CentralCommand, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCentralCommand ]
+
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorNukeopLocked
   suffix: Nukeop, Locked
   components:
   - type: ContainerFill
@@ -565,17 +437,57 @@
 
 - type: entity
   parent: WindoorPlasma
-  id: PlasmaWindoorNukeopLocked
-  suffix: Nukeop, Locked, Plasma
+  id: PlasmaWindoorSyndicateLocked
+  suffix: Syndicate, Locked
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsNukeop ]
+      board: [ DoorElectronicsSyndicateAgent ]
+
+  ### Windoor (Uranium) ###
+
+# Cargo
+
+# Command
+
+# Engineering
+- type: entity
+  parent: WindoorUranium
+  id: UraniumWindoorEngineeringLocked
+  suffix: Engineering, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsEngineering ]
+  - type: Wires
+    layoutId: AirlockEngineering
+
+# Medical
+
+# Research
+
+# Security
+
+# Service
+
+# Other
+- type: entity
+  parent: WindoorUranium
+  id: UraniumWindoorCentralCommandLocked
+  suffix: CentralCommand, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCentralCommand ]
+  - type: WiresPanelSecurity
+    securityLevel: medSecurity
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
-  parent: WindoorSecurePlasma
-  id: PlasmaWindoorSecureNukeopLocked
-  suffix: Nukeop, Locked, Plasma
+  parent: WindoorUranium
+  id: UraniumWindoorNukeopLocked
+  suffix: Nukeop, Locked
   components:
   - type: ContainerFill
     containers:
@@ -583,18 +495,9 @@
 
 - type: entity
   parent: WindoorUranium
-  id: UraniumWindoorNukeopLocked
-  suffix: Nukeop, Locked, Uranium
+  id: UraniumWindoorSyndicateLocked
+  suffix: Syndicate, Locked
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsNukeop ]
-
-- type: entity
-  parent: WindoorSecureUranium
-  id: UraniumWindoorSecureNukeopLocked
-  suffix: Nukeop, Locked, Uranium
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsNukeop ]
+      board: [ DoorElectronicsSyndicateAgent ]

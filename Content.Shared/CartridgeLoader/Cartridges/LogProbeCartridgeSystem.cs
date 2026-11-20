@@ -9,6 +9,7 @@ using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 using System.Text;
+using Robust.Shared.Audio;
 
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
@@ -46,7 +47,7 @@ public sealed partial class LogProbeCartridgeSystem : EntitySystem
 
         //Play scanning sound with slightly randomized pitch
         _audio.PlayPredicted(ent.Comp.SoundScan, target, args.Args.User);
-        _popup.PopupPredictedCursor(Loc.GetString("log-probe-scan", ("device", target)), args.Args.User);
+        _popup.PopupCursor(Loc.GetString("log-probe-scan", ("device", target)), args.Args.User);
 
         ent.Comp.EntityName = Name(target);
         ent.Comp.PulledAccessLogs.Clear();
@@ -92,7 +93,7 @@ public sealed partial class LogProbeCartridgeSystem : EntitySystem
 
         ent.Comp.NextPrintAllowed = _timing.CurTime + ent.Comp.PrintCooldown;
 
-        var paper = EntityManager.PredictedSpawn(ent.Comp.PaperPrototype, _transform.GetMapCoordinates(user));
+        var paper = PredictedSpawn(ent.Comp.PaperPrototype, _transform.GetMapCoordinates(user));
         _label.Label(paper, ent.Comp.EntityName); // label it for easy identification
 
         _audio.PlayEntity(ent.Comp.PrintSound, user, paper);

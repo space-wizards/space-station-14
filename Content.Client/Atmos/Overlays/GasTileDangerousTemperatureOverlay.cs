@@ -222,8 +222,6 @@ public sealed partial class GasTileDangerousTemperatureOverlay : Overlay
             },
             new Color(0, 0, 0, 0));
 
-        drawHandle.SetTransform(Matrix3x2.Identity);
-
         return true;
     }
 
@@ -233,7 +231,6 @@ public sealed partial class GasTileDangerousTemperatureOverlay : Overlay
 
         if (res.TemperatureTarget != null)
             args.WorldHandle.DrawTextureRect(res.TemperatureTarget.Texture, args.WorldBounds);
-        args.WorldHandle.SetTransform(Matrix3x2.Identity);
     }
 
     protected override void DisposeBehavior()

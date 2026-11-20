@@ -204,6 +204,9 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.EventTarget is { Valid: true } eventTarget && !Exists(eventTarget))
             return true;
 
+        if (args.Target is { Valid: true } doAfterTarget && !Exists(doAfterTarget))
+            return true;
+
         // TODO: Re-use existing xform query for these calculations.
         if (args.BreakOnMove && !(!args.BreakOnWeightlessMove && _gravity.IsWeightless(args.User)))
         {
@@ -262,6 +265,13 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
             // If the user changes which hand is active at all, interrupt the do-after
             if (args.BreakOnHandChange && hands.ActiveHandId != doAfter.InitialHand)
+                return true;
+
+            //If the user's hand is no longer empty, interrupt the do-after.
+            if (args.NeedFreeHand & !_hands.ActiveHandIsEmpty(args.User))
+                return true;
+
+            if (args.NeedAnyFreeHand && _hands.GetEmptyHandCount((args.User, hands)) == 0)
                 return true;
         }
 

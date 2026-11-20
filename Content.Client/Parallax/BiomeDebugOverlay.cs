@@ -82,6 +82,6 @@ public sealed partial class BiomeDebugOverlay : Overlay
             sb.AppendLine(tileText);
         }
 
-        args.ScreenHandle.DrawString(_font, mouseScreenPos.Position + new Vector2(0f, 32f), sb.ToString());
+        args.ScreenHandle.DrawString(_font, mouseScreenPos.Position + new Vector2(0f, 32f), sb.ToString(), 1, Color.White, TextOutline.Default);
     }
 }

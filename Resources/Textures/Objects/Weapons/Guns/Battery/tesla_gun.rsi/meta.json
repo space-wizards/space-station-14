@@ -19,13 +19,13 @@
             "directions": 4
         },
         {
-          "name": "mag-unshaded-0",
-          "delays": [
-            [
-              0.3,
-              0.3
+            "name": "mag-unshaded-0",
+            "delays": [
+                [
+                    0.3,
+                    0.3
+                ]
             ]
-          ]
         },
         {
             "name": "mag-unshaded-1"

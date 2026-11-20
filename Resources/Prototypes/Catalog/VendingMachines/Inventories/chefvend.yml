@@ -5,7 +5,6 @@
     ReagentContainerCornmeal: 2
     ReagentContainerSugar: 2
     ReagentContainerRice: 2
-    FoodCondimentPacketSalt: 4
     FoodCondimentBottleEnzyme: 2
     FoodCondimentBottleHotsauce: 1
     FoodCondimentBottleKetchup: 1
@@ -13,6 +12,8 @@
     FoodCondimentBottleVinegar: 2
     ReagentContainerOliveoil: 2
     ReagentContainerMayo: 1
+    ReagentContainerSalt: 1
+    ReagentContainerPepper: 1
     VariantCubeBox: 1
     FoodContainerEgg: 1
     DrinkMilkCarton: 2
@@ -25,4 +26,3 @@
     FoodBoxDonkpocket: 1
     FoodFrozenSandwich: 2
     FoodFrozenSandwichStrawberry: 2
-    

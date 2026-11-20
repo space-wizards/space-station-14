@@ -116,7 +116,7 @@ public sealed partial class ThrusterSystem : EntitySystem
                         continue;
 
                     var checkPos = tilePos + new Vector2i(x, y);
-                    var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(uid, grid, checkPos);
+                    var enumerator = _mapSystem.GetAnchoredEntities(uid, grid, checkPos);
 
                     while (enumerator.MoveNext(out var ent))
                     {
@@ -286,7 +286,7 @@ public sealed partial class ThrusterSystem : EntitySystem
         ent.Comp.NextFire = _timing.CurTime + ent.Comp.FireCooldown;
     }
 
-    private void OnThrusterShutdown(EntityUid uid, ThrusterComponent component, ComponentShutdown args)
+    private void OnThrusterShutdown(EntityUid uid, ThrusterComponent component, ref ComponentShutdown args)
     {
         DisableThruster(uid, component);
     }

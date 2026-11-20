@@ -31,7 +31,7 @@ public abstract partial class SharedCombatModeSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    private void OnShutdown(EntityUid uid, CombatModeComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, CombatModeComponent component, ref ComponentShutdown args)
     {
         _actionsSystem.RemoveAction(uid, component.CombatToggleActionEntity);
 
@@ -47,7 +47,7 @@ public abstract partial class SharedCombatModeSystem : EntitySystem
         SetInCombatMode(uid, !component.IsInCombatMode, component);
 
         var msg = component.IsInCombatMode ? "action-popup-combat-enabled" : "action-popup-combat-disabled";
-        _popup.PopupClient(Loc.GetString(msg), args.Performer, args.Performer);
+        _popup.PopupEntity(Loc.GetString(msg), args.Performer, args.Performer);
     }
 
     public void SetCanDisarm(EntityUid entity, bool canDisarm, CombatModeComponent? component = null)

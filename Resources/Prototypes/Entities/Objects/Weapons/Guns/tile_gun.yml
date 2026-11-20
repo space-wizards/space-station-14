@@ -44,7 +44,7 @@
       components:
       - FloorTile
     capacity: 27
-    proto: FloorTileItemXenoborg
+    proto: FloorTileItemExoBorg
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/tile_load.ogg
   - type: ContainerContainer

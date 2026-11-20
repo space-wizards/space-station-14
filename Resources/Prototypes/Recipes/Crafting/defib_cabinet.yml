@@ -1,5 +1,0 @@
-- type: construction
-  parent: BaseShelf
-  id: DefibrillatorCabinet
-  graph: DefibrillatorCabinet
-  targetNode: done

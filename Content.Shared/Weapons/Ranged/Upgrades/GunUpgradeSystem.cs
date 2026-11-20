@@ -71,7 +71,7 @@ public sealed partial class GunUpgradeSystem : EntitySystem
 
         if (GetCurrentUpgrades(ent).Count >= ent.Comp.MaxUpgradeCount)
         {
-            _popup.PopupPredicted(Loc.GetString("upgradeable-gun-popup-upgrade-limit"), ent, args.User);
+            _popup.PopupEntity(Loc.GetString("upgradeable-gun-popup-upgrade-limit"), ent, args.User);
             return;
         }
 
@@ -80,13 +80,13 @@ public sealed partial class GunUpgradeSystem : EntitySystem
 
         if (GetCurrentUpgradeTags(ent).ToHashSet().IsSupersetOf(upgradeComponent.Tags))
         {
-            _popup.PopupPredicted(Loc.GetString("upgradeable-gun-popup-already-present"), ent, args.User);
+            _popup.PopupEntity(Loc.GetString("upgradeable-gun-popup-already-present"), ent, args.User);
             return;
         }
 
         args.Handled = _container.Insert(args.Used, _container.GetContainer(ent, ent.Comp.UpgradesContainerId));
         _audio.PlayPredicted(ent.Comp.InsertSound, ent, args.User);
-        _popup.PopupClient(Loc.GetString("gun-upgrade-popup-insert", ("upgrade", args.Used),("gun", ent.Owner)), args.User);
+        _popup.PopupEntity(Loc.GetString("gun-upgrade-popup-insert", ("upgrade", args.Used),("gun", ent.Owner)), args.User, args.User);
         _gun.RefreshModifiers(ent.Owner);
 
         _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):player} inserted gun upgrade {ToPrettyString(args.Used)} into {ToPrettyString(ent.Owner)}.");

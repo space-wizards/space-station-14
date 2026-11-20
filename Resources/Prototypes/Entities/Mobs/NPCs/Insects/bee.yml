@@ -1,0 +1,111 @@
+- type: entity
+  parent: [ SolutionFood, SolutionTiny, SimpleMobBase, FlyingMobBase, BaseSlicingRefinableButchering ]
+  id: MobBee
+  name: bee
+  description: Nice to have, but you can't build a civilization on a foundation of honey alone.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: 0
+      sprite: Mobs/Animals/Insects/bee.rsi
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: 0
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 7
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.1
+        density: 30
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      10: Dead
+  - type: Stamina
+    baseCritThreshold: 10
+    animationThreshold: 1
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 20
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+  - type: Item
+    size: Tiny
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: InsectBlood
+        Quantity: 0.1
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: GroundBee
+        Quantity: 1
+  - type: Extractable
+    grindableSolutionName: food
+  - type: ToolRefinable
+    refineResult: [] # Should give nothing when you butcher it so we set the item id it needs to spawn to null
+  - type: CombatMode
+  - type: Tag
+    tags:
+    - Bee
+    - Trash
+  - type: MobPrice
+    price: 50
+  - type: ZombieImmune
+  - type: FactionException
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: NPCRetaliation
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+
+- type: entity
+  parent: [ MobBee, MobCombat ]
+  id: MobAngryBee
+  name: bee
+  suffix: Angry
+  description: How nice a bee. Oh no, it looks angry and wants my pizza.
+  components:
+  - type: InputMover
+  - type: MobMover
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 0.1
+  - type: CombatMode
+  - type: MeleeWeapon
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Poison: 2
+        Piercing: 1
+  - type: ZombieImmune
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound

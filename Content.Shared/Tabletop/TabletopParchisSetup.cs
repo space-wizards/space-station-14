@@ -1,23 +1,22 @@
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Tabletop;
 
 [UsedImplicitly]
 public sealed partial class TabletopParchisSetup : TabletopSetup
 {
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string RedPiecePrototype = "RedTabletopPiece";
+    [DataField]
+    public EntProtoId RedPiecePrototype = "RedTabletopPiece";
 
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string GreenPiecePrototype = "GreenTabletopPiece";
+    [DataField]
+    public EntProtoId GreenPiecePrototype = "GreenTabletopPiece";
 
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string YellowPiecePrototype = "YellowTabletopPiece";
+    [DataField]
+    public EntProtoId YellowPiecePrototype = "YellowTabletopPiece";
 
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string BluePiecePrototype = "BlueTabletopPiece";
+    [DataField]
+    public EntProtoId BluePiecePrototype = "BlueTabletopPiece";
 
     public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
     {

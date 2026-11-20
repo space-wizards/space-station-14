@@ -7,7 +7,7 @@ namespace Content.Client.Chemistry.Visualizers;
 /// <summary>
 /// Handles vapor playing the 'being sprayed' animation if necessary.
 /// </summary>
-public sealed class VaporVisualizerSystem : VisualizerSystem<VaporVisualsComponent>
+public sealed partial class VaporVisualizerSystem : VisualizerSystem<VaporVisualsComponent>
 {
     public override void Initialize()
     {
@@ -50,10 +50,8 @@ public sealed class VaporVisualizerSystem : VisualizerSystem<VaporVisualsCompone
     /// </summary>
     protected override void OnAppearanceChange(EntityUid uid, VaporVisualsComponent comp, ref AppearanceChangeEvent args)
     {
-        if (AppearanceSystem.TryGetData<Color>(uid, VaporVisuals.Color, out var color, args.Component) && args.Sprite != null)
-        {
+        if (args.Sprite != null && args.TryGetData<Color>(VaporVisuals.Color, out var color))
             SpriteSystem.SetColor((uid, args.Sprite), color);
-        }
     }
 }
 

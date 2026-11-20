@@ -1,5 +1,4 @@
 using Content.Server.Administration.Managers;
-using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.EUI;
@@ -46,7 +45,7 @@ namespace Content.Server.Administration.UI
                     switch (doAnnounce.AnnounceType)
                     {
                         case AdminAnnounceType.Server:
-                            _chatManager.DispatchServerAnnouncement(doAnnounce.Announcement);
+                            _chatManager.DispatchServerAnnouncement(doAnnounce.Announcement, sender: Player);
                             break;
                         // TODO: Per-station announcement support
                         case AdminAnnounceType.Station:

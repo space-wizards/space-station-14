@@ -1,10 +1,9 @@
-﻿- type: entity
+- type: entity
   parent: [BaseItem, BaseXenoArtifact]
   id: BaseXenoArtifactItem
   name: artifact
   description: A strange artifact from time unknown. Looks like a good time. Fits in hand perfectly.
   abstract: true
-  noSpawn: true
   components:
   # Visual
   - type: Sprite
@@ -53,6 +52,8 @@
     graph: Artifact
     node: done
   - type: XenoArtifact
+    triggersTable: !type:NestedSelector
+      tableId: XenoArtifactHandheldOnlyTriggerTable
     effectsTable: !type:GroupSelector
       children:
       - !type:NestedSelector
@@ -61,6 +62,15 @@
       - !type:NestedSelector
         tableId: XenoArtifactEffectsHandheldOnlyTable
         weight: 2
+
+- type: entity
+  id: DummyArtifactItem
+  parent: BaseXenoArtifactItem
+  name: artifact
+  suffix: Debug
+  components:
+  - type: XenoArtifact
+    isGenerationRequired: false
 
 - type: entity
   parent: BaseXenoArtifactItem

@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by TheShuEd (Github) , from https://github.com/crystallpunk-14/crystall-punk-14/pull/290",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "full"
+    },
+    {
+      "name": "chasm_0",
+      "directions": 4
+    },
+    {
+      "name": "chasm_1",
+      "directions": 4
+    },
+    {
+      "name": "chasm_2",
+      "directions": 4
+    },
+    {
+      "name": "chasm_3",
+      "directions": 4
+    },
+    {
+      "name": "chasm_4",
+      "directions": 4
+    },
+    {
+      "name": "chasm_5",
+      "directions": 4
+    },
+    {
+      "name": "chasm_6",
+      "directions": 4
+    },
+    {
+      "name": "chasm_7",
+      "directions": 4
+    }
+  ]
+}

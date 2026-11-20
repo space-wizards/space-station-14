@@ -40,12 +40,6 @@
               amount: 1
               doAfter: 3
 
-        - to: windowClockworkDirectional
-          steps:
-            - material: ClockworkGlass
-              amount: 1
-              doAfter: 3
-
     - node: windowDirectional
       entity: WindowDirectional
       edges:
@@ -87,25 +81,6 @@
           completed:
             - !type:GivePrototype
               prototype: SheetPGlass1
-              amount: 1
-            - !type:DeleteEntity {}
-          steps:
-            - tool: Screwing
-              doAfter: 2
-            - tool: Prying
-              doAfter: 3
-            - tool: Screwing
-              doAfter: 2
-            - tool: Anchoring
-              doAfter: 3
-
-    - node: windowClockworkDirectional
-      entity: WindowClockworkDirectional
-      edges:
-        - to: start
-          completed:
-            - !type:GivePrototype
-              prototype: SheetClockworkGlass1
               amount: 1
             - !type:DeleteEntity {}
           steps:

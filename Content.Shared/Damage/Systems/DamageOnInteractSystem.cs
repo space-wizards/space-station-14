@@ -88,7 +88,7 @@ public sealed partial class DamageOnInteractSystem : EntitySystem
             _audioSystem.PlayPredicted(entity.Comp.InteractSound, args.Target, args.User);
 
             if (entity.Comp.PopupText != null)
-                _popupSystem.PopupClient(Loc.GetString(entity.Comp.PopupText), args.User, args.User);
+                _popupSystem.PopupEntity(Loc.GetString(entity.Comp.PopupText), args.User, args.User);
 
             // Attempt to paralyze the user after they have taken damage
             if (_random.Prob(entity.Comp.StunChance))

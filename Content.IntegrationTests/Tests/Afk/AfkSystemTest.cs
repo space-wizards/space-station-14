@@ -1,11 +1,9 @@
 #nullable enable
-using System.Reflection;
 using System.Linq;
+using System.Reflection;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Afk;
-using Content.Server.GameTicking;
-using Content.Shared.Afk;
 using Content.Shared.CCVar;
 using Content.Shared.Input;
 using Robust.Server.Player;
@@ -19,19 +17,19 @@ using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.Afk;
 
-[TestOf(typeof(AFKSystem))]
+[TestOf(typeof(AfkSystem))]
 [TestOf(typeof(AfkConfirmSystem))]
 public sealed class AfkSystemTest : GameTest
 {
     // Saves having to go through the input API on client and dealing with shenanigans.
     private static readonly MethodInfo HandleInputCmd =
-        typeof(AFKSystem).GetMethod("HandleInputCmd", BindingFlags.Instance | BindingFlags.NonPublic)!;
+        typeof(AfkSystem).GetMethod("HandleInputCmd", BindingFlags.Instance | BindingFlags.NonPublic)!;
 
     private static readonly MethodInfo OnBoundUiMessageReceived =
-        typeof(AFKSystem).GetMethod("OnBoundUiMessageReceived", BindingFlags.Instance | BindingFlags.NonPublic)!;
+        typeof(AfkSystem).GetMethod("OnBoundUiMessageReceived", BindingFlags.Instance | BindingFlags.NonPublic)!;
 
     [SidedDependency(Side.Server)] private readonly IAfkManager _afkManager = default!;
-    [SidedDependency(Side.Server)] private readonly AFKSystem _afkSystem = default!;
+    [SidedDependency(Side.Server)] private readonly AfkSystem _afkSystem = default!;
     [SidedDependency(Side.Server)] private readonly AfkConfirmSystem _afkConfirm = default!;
     [SidedDependency(Side.Server)] private readonly IPlayerManager _playerManager = default!;
     [SidedDependency(Side.Server)] private readonly IConfigurationManager _cfg = default!;
@@ -130,7 +128,7 @@ public sealed class AfkSystemTest : GameTest
 
             HandleInputCmd.Invoke(_afkSystem, [message, new EntitySessionEventArgs(session)]);
 
-            Assert.That(_afkManager.IsAfk(session), Is.False, inputType);
+            Assert.That(_afkManager.IsAfk(session), Is.False, $"Input of type '{inputType}' did not reset AFK status");
         });
     }
 
@@ -152,11 +150,11 @@ public sealed class AfkSystemTest : GameTest
             var session = GetSession();
             _afkSystem.Update(0);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(_afkManager.IsAfk(session), Is.True);
                 Assert.That(_afkConfirm.HasConfirmation(session), Is.False);
-            });
+            }
         });
     }
 
@@ -200,11 +198,11 @@ public sealed class AfkSystemTest : GameTest
     {
         var session = _playerManager.Sessions.Single();
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(session.Status, Is.EqualTo(SessionStatus.InGame));
             Assert.That(session.AttachedEntity, Is.Not.Null);
-        });
+        }
 
         return session;
     }
@@ -215,7 +213,7 @@ public sealed class AfkSystemTest : GameTest
             ?? typeof(ContentKeyFunctions).GetField(fieldName, BindingFlags.Public | BindingFlags.Static);
 
         Assert.That(field, Is.Not.Null);
-        return (BoundKeyFunction) field!.GetValue(null)!;
+        return (BoundKeyFunction)field!.GetValue(null)!;
     }
 
     private enum TestUiKey : byte

@@ -43,7 +43,7 @@ namespace Content.Client.Light
             _itemSystem.VisualsChanged(uid);
         }
 
-        private void OnComponentShutdown(EntityUid uid, RgbLightControllerComponent rgb, ComponentShutdown args)
+        private void OnComponentShutdown(EntityUid uid, RgbLightControllerComponent rgb, ref ComponentShutdown args)
         {
             if (LifeStage(uid) >= EntityLifeStage.Terminating)
                 return;

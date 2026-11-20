@@ -15,6 +15,7 @@ using Content.Shared.EntityEffects.Effects.Solution;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Random.Helpers;
+using Content.Shared.StatusEffectNew;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -23,6 +24,7 @@ namespace Content.Shared.Metabolism;
 /// <inheritdoc/>
 public sealed partial class MetabolizerSystem : EntitySystem
 {
+    [Dependency] private BodySystem _body = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private MobStateSystem _mobStateSystem = default!;
     [Dependency] private SharedEntityConditionsSystem _entityConditions = default!;
@@ -32,25 +34,53 @@ public sealed partial class MetabolizerSystem : EntitySystem
     [Dependency] private EntityQuery<OrganComponent> _organQuery = default!;
     [Dependency] private EntityQuery<SolutionManagerComponent> _solutionQuery = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
+    #region Subscriptions
 
-        SubscribeLocalEvent<MetabolizerComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<MetabolizerComponent, BodyRelayedEvent<ApplyMetabolicMultiplierEvent>>(OnApplyMetabolicMultiplier);
+    [SubscribeLocalEvent]
+    private void OnAddMetabolismInit(Entity<AddMetabolismComponent> ent, ref MapInitEvent args)
+    {
+        if (ent.Comp.AddedMetabolizer == null)
+            return;
+
+        AddMetabolizerToBody(ent, ent.Comp.AddedMetabolizer.Value);
     }
 
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<MetabolizerComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
         Dirty(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnApplyMetabolicMultiplier(Entity<MetabolizerComponent> ent, ref BodyRelayedEvent<ApplyMetabolicMultiplierEvent> args)
     {
         ent.Comp.UpdateIntervalMultiplier = args.Args.Multiplier;
         Dirty(ent);
     }
+
+    [SubscribeLocalEvent]
+    private void OnStatusGetMetabolicMultiplier(Entity<RushedMetabolismStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
+    {
+        UpdateMetabolicMultiplier(args.Target);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnStatusGetMetabolicMultiplier(Entity<RushedMetabolismStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
+    {
+        UpdateMetabolicMultiplier(args.Target);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnStatusGetMetabolicMultiplier(Entity<RushedMetabolismStatusEffectComponent> ent,
+        ref StatusEffectRelayedEvent<GetMetabolicMultiplierEvent> args)
+    {
+        var arg = args.Args;
+        arg.Multiply(ent.Comp.Multiplier);
+        args.Args = arg;
+    }
+
+    #endregion
 
     public override void Update(float frameTime)
     {
@@ -301,6 +331,77 @@ public sealed partial class MetabolizerSystem : EntitySystem
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Adds a metabolizer type to all organs with <see cref="MetabolizerComponent"/> owned by an entity.
+    /// </summary>
+    /// <param name="entity">The entity whose organs to affect.</param>
+    /// <param name="metabolizer">The metabolizer type to add to the organs.</param>
+    public void AddMetabolizerToBody(EntityUid entity, ProtoId<MetabolizerTypePrototype> metabolizer)
+    {
+        var organs = _body.EnumerateOrgans<MetabolizerComponent>(entity);
+
+        foreach (var organ in organs)
+        {
+            TryAddMetabolizerType((organ.Owner, organ.Comp2), metabolizer);
+        }
+    }
+
+    /// <summary>
+    /// Tries to add a new metabolizer type to an entity with <see cref="MetabolizerComponent"/>
+    /// </summary>
+    /// <param name="ent">The metabolizer to add to.</param>
+    /// <param name="metabolizer">The prototype to add.</param>
+    /// <returns>True if the type was added, otherwise False.</returns>
+    public bool TryAddMetabolizerType(Entity<MetabolizerComponent?> ent, ProtoId<MetabolizerTypePrototype> metabolizer)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        // If there is no metabolizer types, we still want to add one.
+        if (ent.Comp.MetabolizerTypes == null)
+            ent.Comp.MetabolizerTypes = new HashSet<ProtoId<MetabolizerTypePrototype>>();
+
+        return ent.Comp.MetabolizerTypes.Add(metabolizer);
+    }
+
+    /// <summary>
+    /// Checks if the given organ has the given metabolizer.
+    /// </summary>
+    /// <param name="targetOrgan">The organ we are checking.</param>
+    /// <param name="targetMetabolizer">The metabolizer we are checking for.</param>
+    /// <returns>Returns true if the organ has the given metabolizer, false if the organ doesn't (this includes it not being a metabolizer at all)</returns>
+    public bool HasMetabolizer(Entity<MetabolizerComponent?> targetOrgan, ProtoId<MetabolizerTypePrototype> targetMetabolizer)
+    {
+        if (!Resolve(targetOrgan.Owner, ref targetOrgan.Comp, false))
+            return false;
+
+        if (targetOrgan.Comp.MetabolizerTypes is null)
+            return false;
+
+        if (!targetOrgan.Comp.MetabolizerTypes.Contains(targetMetabolizer))
+            return false;
+
+        return true;
+    }
+
+    /// <summary>
+    /// Checks if a given body has a metabolizer of the target type.
+    /// </summary>
+    /// <param name="targetBody">The body we are checking for the metabolizer.</param>
+    /// <param name="targetMetabolizer">The metabolizer we are checking for.</param>
+    /// <returns></returns>
+    public bool BodyHasMetabolizer(EntityUid targetBody, ProtoId<MetabolizerTypePrototype> targetMetabolizer)
+    {
+        var metabolisms = _body.EnumerateOrgans<MetabolizerComponent>(targetBody);
+        foreach (var organ in metabolisms)
+        {
+            if (HasMetabolizer((organ, organ.Comp2), targetMetabolizer))
+                return true;
+        }
+
+        return false;
     }
 }
 

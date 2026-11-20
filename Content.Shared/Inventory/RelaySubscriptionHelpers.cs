@@ -1,4 +1,4 @@
-﻿using Content.Shared.Hands;
+using Content.Shared.Hands;
 
 namespace Content.Shared.Inventory;
 

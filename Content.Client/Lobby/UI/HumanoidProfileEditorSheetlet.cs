@@ -17,12 +17,6 @@ public sealed class HumanoidProfileEditorSheetlet : Sheetlet<PalettedStylesheet>
                 .Identifier("SpeciesInfoDefault")
                 .Prop(TextureButton.StylePropertyTexture,
                     ResCache.GetTexture("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
-            // copied from `StyleNano`, but this is unused
-            // E<TextureButton>()
-            //     .Identifier("SpeciesInfoWarning")
-            //     .Prop(TextureButton.StylePropertyTexture,
-            //         ResCache.GetTexture("/Textures/Interface/info.svg.192dpi.png"))
-            //     .Prop(Control.StylePropertyModulateSelf, sheet.HighlightPalette[0]),
         ];
     }
 }

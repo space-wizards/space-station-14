@@ -4,7 +4,7 @@ using Content.Shared.Wall;
 
 namespace Content.Server.Security;
 
-public sealed class GenpopSystem : SharedGenpopSystem
+public sealed partial class GenpopSystem : SharedGenpopSystem
 {
     private const float GenpopIDEjectDistanceFromWall = 1f;
     protected override void CreateId(Entity<GenpopLockerComponent> ent, string name, float sentence, string crime)
@@ -28,9 +28,8 @@ public sealed class GenpopSystem : SharedGenpopSystem
             id.SentenceDuration = TimeSpan.FromMinutes(sentence);
             Dirty(uid, id);
         }
-        if (sentence <= 0)
-            IdCard.SetPermanent(uid, true);
-        IdCard.SetExpireTime(uid, TimeSpan.FromMinutes(sentence) + Timing.CurTime);
+        if (sentence > 0)
+            IdCard.SetExpireTime(uid, TimeSpan.FromMinutes(sentence) + Timing.CurTime);
 
         var metaData = MetaData(ent);
         MetaDataSystem.SetEntityName(ent, Loc.GetString("genpop-locker-name-used", ("name", name)), metaData);
