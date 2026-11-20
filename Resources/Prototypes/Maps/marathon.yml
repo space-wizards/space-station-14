@@ -33,6 +33,7 @@
             Chaplain: [ 0, 1 ]
             Librarian: [ 0, 1 ]
             ServiceWorker: [ 0, 2 ]
+            Reporter: [ 0, 1 ]
             # Engineering (8)
             AtmosphericTechnician: [ 1, 2 ]
             StationEngineer: [ 2, 4 ]
