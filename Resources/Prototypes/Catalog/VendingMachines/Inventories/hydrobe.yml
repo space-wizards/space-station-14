@@ -13,14 +13,17 @@
       ClothingUniformOveralls: 3
       ClothingUniformJumpsuitHydroponics: 3
       ClothingUniformJumpskirtHydroponics: 3
-  - name: vending-machine-category-equipment
+  - name: vending-machine-category-outerwear
     icon: { entity: ClothingOuterApronBotanist }
     startingInventory:
       ClothingOuterApronBotanist: 2
+      ClothingOuterWinterHydro: 2
+  - name: vending-machine-category-equipment
+    icon: { entity: ClothingOuterApronBotanist }
+    startingInventory:
       ClothingNeckScarfStripedGreen: 3
       ClothingHeadBandBotany: 3
       ClothingHeadsetService: 2
-      ClothingOuterWinterHydro: 2
     contrabandInventory:
       ToyFigurineBotanist: 1
 

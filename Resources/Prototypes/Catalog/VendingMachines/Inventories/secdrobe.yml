@@ -21,22 +21,31 @@
       ClothingOuterWinterSec: 2
       ClothingOuterArmorBasic: 2
       ClothingOuterArmorBasicSlim: 2
-  - name: vending-machine-category-equipment
+  - name: vending-machine-category-headwear
     icon: { entity: ClothingHeadHatBeretSecurity }
     startingInventory:
-      ClothingShoesBootsJack: 3
       ClothingHeadHatBeretSecurity: 3
       ClothingHeadHatSecsoft: 3
       ClothingHeadBandRed: 3
-      ClothingMaskNeckGaiterRed: 3
+      ClothingHeadHelmetJustice: 1
+  - name: vending-machine-category-gloves
+    icon: { entity: ClothingHandsGlovesColorBlack }
+    startingInventory:
       ClothingHandsGlovesColorBlack: 3
       ClothingHandsGlovesFingerless: 3
+  - name: vending-machine-category-footwear
+    icon: { entity: ClothingShoesBootsJack }
+    startingInventory:
+      ClothingShoesBootsJack: 3
+      ClothingShoesBootsCombat: 1
+      ClothingShoesBootsWinterSec: 2
+  - name: vending-machine-category-equipment
+    icon: { entity: ClothingHeadHatBeretSecurity }
+    startingInventory:
+      ClothingMaskNeckGaiterRed: 3
       ClothingHeadsetSecurity: 3
       ClothingNeckScarfStripedRed: 3
       ClothingEyesBlindfold: 1
-      ClothingShoesBootsCombat: 1
-      ClothingShoesBootsWinterSec: 2
-      ClothingHeadHelmetJustice: 1
     contrabandInventory:
       ClothingMaskClownSecurity: 1
       ClothingMaskMimeSecurity: 1

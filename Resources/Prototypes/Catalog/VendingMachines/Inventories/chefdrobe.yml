@@ -12,14 +12,17 @@
       ClothingOuterApronChef: 3
       ClothingOuterWinterChef: 2
       ClothingOuterJacketChef: 1
+  - name: vending-machine-category-footwear
+    icon: { entity: ClothingShoesChef }
+    startingInventory:
+      ClothingShoesColorBlack: 2
+      ClothingShoesChef: 2
   - name: vending-machine-category-equipment
     icon: { entity: ClothingHeadHatChef }
     startingInventory:
       ClothingHeadsetService: 2
       ClothingMaskItalianMoustache: 2
       ClothingHeadHatChef: 2
-      ClothingShoesColorBlack: 2
-      ClothingShoesChef: 2
       ClothingBeltChef: 2
     contrabandInventory:
       ToyFigurineChef: 1

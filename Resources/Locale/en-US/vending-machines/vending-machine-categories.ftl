@@ -2,12 +2,14 @@
 vending-machine-category-all = All
 
 # Clothing
-vending-machine-category-clothing = Clothing
 vending-machine-category-uniforms = Uniforms
+vending-machine-category-jumpsuits = Jumpsuits
+vending-machine-category-jumpskirts = Jumpskirts
 vending-machine-category-outerwear = Outerwear
 vending-machine-category-headwear = Headwear
 vending-machine-category-footwear = Footwear
 vending-machine-category-eyewear = Eyewear
+vending-machine-category-gloves = Gloves
 vending-machine-category-scarves = Scarves
 vending-machine-category-accessories = Accessories
 vending-machine-category-bags = Bags

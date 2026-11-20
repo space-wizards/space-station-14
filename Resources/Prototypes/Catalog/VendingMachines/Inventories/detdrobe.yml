@@ -14,6 +14,16 @@
       ClothingOuterCoatDetectiveLoadout: 1
       ClothingOuterCoatDetectiveLoadoutGrey: 1
       ClothingOuterVestDetective: 2
+  - name: vending-machine-category-headwear
+    icon: { entity: ClothingHeadHatFedoraBrown }
+    startingInventory:
+      ClothingHeadHatFedoraBrown: 2
+      ClothingHeadHatFedoraGrey: 2
+  - name: vending-machine-category-gloves
+    icon: { entity: ClothingHandsGlovesColorBlack }
+    startingInventory:
+      ClothingHandsGlovesColorBlack: 2
+      ClothingHandsGlovesLatex: 2
   - name: vending-machine-category-accessories
     icon: { entity: ClothingHeadHatFedoraBrown }
     startingInventory:
@@ -21,8 +31,6 @@
       ClothingHeadHatFedoraBrown: 2
       ClothingNeckTieDet: 2
       ClothingHeadHatFedoraGrey: 2
-      ClothingHandsGlovesColorBlack: 2
-      ClothingHandsGlovesLatex: 2
       ClothingHeadsetSecurity: 2
     contrabandInventory:
       ToyFigurineDetective: 1

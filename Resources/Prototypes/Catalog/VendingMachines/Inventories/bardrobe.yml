@@ -15,16 +15,19 @@
       ClothingOuterWinterBar: 2
       ClothingOuterArmorBasicSlim: 2
       ClothingOuterVest: 2
+  - name: vending-machine-category-eyewear
+    icon: { entity: ClothingEyesGlassesSunglasses }
+    startingInventory:
+      ClothingEyesHudBeer: 2
+      ClothingEyesEyepatchHudBeer: 2
+      ClothingEyesGlassesSunglasses: 2
   - name: vending-machine-category-accessories
     icon: { entity: ClothingEyesHudBeer }
     startingInventory:
       ClothingHeadHatBowlerHat: 2
       ClothingHeadHatTophat: 2
-      ClothingEyesHudBeer: 2
-      ClothingEyesEyepatchHudBeer: 2
       ClothingHeadsetService: 2
       ClothingShoesColorBlack: 2
       ClothingBeltBandolier: 2
-      ClothingEyesGlassesSunglasses: 2
     contrabandInventory:
       ToyFigurineBartender: 1

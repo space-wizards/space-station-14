@@ -21,9 +21,6 @@
       Flash: 5
       Tourniquet: 5
       FlashlightSeclite: 5
-      ClothingEyesGlassesSunglasses: 2
-      ClothingEyesHudSecurity: 2
-      ClothingEyesEyepatchHudSecurity: 2
       ClothingBeltSecurityWebbing: 5
       CombatKnife: 3
       RadioHandheldSecurity: 5
@@ -33,6 +30,12 @@
       FoodDonutHomer: 12
       FoodBoxDonut: 2
       # Box evidence.
+  - name: vending-machine-category-eyewear
+    icon: { entity: ClothingEyesGlassesSunglasses }
+    startingInventory:
+      ClothingEyesGlassesSunglasses: 2
+      ClothingEyesHudSecurity: 2
+      ClothingEyesEyepatchHudSecurity: 2
   - name: vending-machine-category-shields
     icon: { entity: RiotShield }
     startingInventory:

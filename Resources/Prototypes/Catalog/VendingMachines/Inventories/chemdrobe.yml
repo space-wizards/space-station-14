@@ -13,6 +13,11 @@
     startingInventory:
       ClothingUniformJumpsuitChemistry: 1
       ClothingUniformJumpskirtChemistry: 1
+  - name: vending-machine-category-outerwear
+    icon: { entity: ClothingOuterCoatLabChem }
+    startingInventory:
+      ClothingOuterCoatLabChem: 1
+      ClothingOuterWinterChem: 1
   - name: vending-machine-category-equipment
     icon: { entity: ClothingEyesGlassesChemical }
     startingInventory:
@@ -20,8 +25,6 @@
       ClothingEyesGlassesChemical: 1
       # Optional
       ClothingHeadsetMedical: 1
-      ClothingOuterCoatLabChem: 1
-      ClothingOuterWinterChem: 1
       ClothingHandsGlovesLatex: 1
       ClothingShoesColorWhite: 1
     contrabandInventory:

@@ -1,31 +1,6 @@
 - type: vendingMachineInventory
   id: MediDrobeInventory
   categories:
-  - name: vending-machine-category-equipment
-    icon: { entity: ClothingEyesHudMedical }
-    startingInventory:
-      ClothingEyesHudMedical: 2
-      ClothingEyesEyepatchHudMedical: 2
-      ClothingMaskSterile: 2
-      ClothingHeadsetMedical: 2
-      ClothingHandsGlovesLatex: 2
-      ClothingHandsGlovesNitrile: 2
-      ClothingShoesColorBlue: 2
-      ClothingShoesColorWhite: 2
-      ClothingShoesBootsWinterMed: 2
-    contrabandInventory:
-      ToyFigurineMedicalDoctor: 1
-      ToyFigurineParamedic: 1
-      ToyFigurineChiefMedicalOfficer: 1
-  - name: vending-machine-category-headwear
-    icon: { entity: ClothingHeadHatBeretMedic }
-    startingInventory:
-      ClothingHeadHatBeretMedic: 2
-      ClothingHeadNurseHat: 2
-      ClothingHeadHatParamedicsoft: 1
-      ClothingHeadHatSurgcapGreen: 2
-      ClothingHeadHatSurgcapBlue: 2
-      ClothingHeadHatSurgcapPurple: 2
   - name: vending-machine-category-bags
     icon: { entity: ClothingBackpackMedical }
     startingInventory:
@@ -51,3 +26,37 @@
       ClothingOuterWinterMed: 2
       ClothingOuterCoatParamedicWB: 1
       ClothingOuterWinterPara: 1
+  - name: vending-machine-category-footwear
+    icon: { entity: ClothingShoesColorWhite }
+    startingInventory:
+      ClothingShoesColorBlue: 2
+      ClothingShoesColorWhite: 2
+      ClothingShoesBootsWinterMed: 2
+  - name: vending-machine-category-headwear
+    icon: { entity: ClothingHeadHatBeretMedic }
+    startingInventory:
+      ClothingHeadHatBeretMedic: 2
+      ClothingHeadNurseHat: 2
+      ClothingHeadHatParamedicsoft: 1
+      ClothingHeadHatSurgcapGreen: 2
+      ClothingHeadHatSurgcapBlue: 2
+      ClothingHeadHatSurgcapPurple: 2
+  - name: vending-machine-category-gloves
+    icon: { entity: ClothingHandsGlovesLatex }
+    startingInventory:
+      ClothingHandsGlovesLatex: 2
+      ClothingHandsGlovesNitrile: 2
+  - name: vending-machine-category-eyewear
+    icon: { entity: ClothingEyesHudMedical }
+    startingInventory:
+      ClothingEyesHudMedical: 2
+      ClothingEyesEyepatchHudMedical: 2
+  - name: vending-machine-category-equipment
+    icon: { entity: ClothingEyesHudMedical }
+    startingInventory:
+      ClothingMaskSterile: 2
+      ClothingHeadsetMedical: 2
+    contrabandInventory:
+      ToyFigurineMedicalDoctor: 1
+      ToyFigurineParamedic: 1
+      ToyFigurineChiefMedicalOfficer: 1

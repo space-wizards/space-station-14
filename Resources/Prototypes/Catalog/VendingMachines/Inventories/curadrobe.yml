@@ -8,6 +8,11 @@
       ClothingUniformJumpskirtCurator: 3
       ClothingUniformJumpsuitLibrarian: 3
       ClothingUniformJumpskirtLibrarian: 3
+  - name: vending-machine-category-eyewear
+    icon: { entity: ClothingEyesGlasses }
+    startingInventory:
+      ClothingEyesGlasses: 2
+      ClothingEyesGlassesJamjar: 2
   - name: vending-machine-category-equipment
     icon: { entity: BooksBag }
     startingInventory:
@@ -15,11 +20,8 @@
       BriefcaseBrown: 2
       HandLabeler: 2
       Cane: 3
-      ClothingEyesGlasses: 2
-      ClothingEyesGlassesJamjar: 2
       ClothingNeckScarfStripedGreen: 2
       ClothingShoesBootsLaceup: 2
       ClothingHeadsetService: 2
     contrabandInventory:
       ToyFigurineLibrarian: 1
-

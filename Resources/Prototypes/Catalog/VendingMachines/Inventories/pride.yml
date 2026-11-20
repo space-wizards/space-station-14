@@ -44,7 +44,7 @@
       ClothingNeckScarfStripedTrans: 2
     contrabandInventory:
       ClothingNeckScarfStripedLesbianLong: 2
-  - name: vending-machine-category-clothing
+  - name: vending-machine-category-accessories
     icon: { entity: ClothingUniformColorRainbow }
     startingInventory:
       ClothingHeadHatXmasCrown: 2
