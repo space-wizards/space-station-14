@@ -1,6 +1,6 @@
 # antag selection
 roles-antag-changeling-name = Changeling
-roles-antag-changeling-objective = A intelligent predator that assumes the identities of its victims.
+roles-antag-changeling-objective = Use shapeshifting and mutations to hide among the crew and devour them unnoticed.
 
 # devour
 changeling-devour-attempt-failed-cannot-devour = We cannot devour this!

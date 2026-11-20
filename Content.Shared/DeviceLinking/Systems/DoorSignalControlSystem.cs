@@ -57,7 +57,7 @@ public sealed partial class DoorSignalControlSystem : EntitySystem
                 return;
 
             // If it's a pulse toggle, otherwise set bolts to high/low.
-            _door.SetBoltsDown((ent.Owner, bolts), !bolts.BoltsDown);
+            _door.TrySetBoltDown((ent.Owner, bolts), !bolts.BoltsDown);
         }
     }
 
@@ -101,7 +101,7 @@ public sealed partial class DoorSignalControlSystem : EntitySystem
             else
                 bolt = state == SignalState.High;
 
-            _door.SetBoltsDown((ent.Owner, bolts), bolt);
+            _door.TrySetBoltDown((ent.Owner, bolts), bolt);
         }
     }
 

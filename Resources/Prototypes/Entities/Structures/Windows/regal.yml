@@ -34,3 +34,28 @@
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
+  - type: IconSmooth
+    key: windows-regal
+    states:
+    - !type:CardinalCornerSpriteSmoothing
+      mask: [ windows-regal ]
+      altMask:
+      - windows
+      - windows-reinf
+      - windows-tinted
+      - windows-plasma
+      - windows-plasma-reinf
+      - windows-uranium
+      - windows-uranium-reinf
+      - windows-exo
+      - windows-shuttle
+      - windows-plastitanium
+      - walls-exo
+      - walls-shuttle
+      - walls-plastitanium
+      - walls-material
+      - walls-marble
+      - walls
+      - grilles
+      - doors
+      base: window

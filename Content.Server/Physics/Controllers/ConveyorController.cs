@@ -50,7 +50,7 @@ public sealed partial class ConveyorController : SharedConveyorController
         }
     }
 
-    private void OnConveyorShutdown(EntityUid uid, ConveyorComponent component, ComponentShutdown args)
+    private void OnConveyorShutdown(EntityUid uid, ConveyorComponent component, ref ComponentShutdown args)
     {
         if (MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
             return;

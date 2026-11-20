@@ -461,13 +461,6 @@
     weight: 5
     duration: 1
   - type: VendorMalfunctionRule
-    affectedMachines:
-      min: 5
-      max: 15
-    contrabandChance: 0.5
-    itemsToEject:
-      min: 1
-      max: 6
   - type: DynamicRuleCost
     cost: 5
 

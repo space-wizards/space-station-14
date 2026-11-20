@@ -15,6 +15,7 @@ using Content.Shared.EntityEffects.Effects.Solution;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Random.Helpers;
+using Content.Shared.StatusEffectNew;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -33,6 +34,7 @@ public sealed partial class MetabolizerSystem : EntitySystem
     [Dependency] private EntityQuery<OrganComponent> _organQuery = default!;
     [Dependency] private EntityQuery<SolutionManagerComponent> _solutionQuery = default!;
 
+    #region Subscriptions
 
     [SubscribeLocalEvent]
     private void OnAddMetabolismInit(Entity<AddMetabolismComponent> ent, ref MapInitEvent args)
@@ -56,6 +58,29 @@ public sealed partial class MetabolizerSystem : EntitySystem
         ent.Comp.UpdateIntervalMultiplier = args.Args.Multiplier;
         Dirty(ent);
     }
+
+    [SubscribeLocalEvent]
+    private void OnStatusGetMetabolicMultiplier(Entity<RushedMetabolismStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
+    {
+        UpdateMetabolicMultiplier(args.Target);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnStatusGetMetabolicMultiplier(Entity<RushedMetabolismStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
+    {
+        UpdateMetabolicMultiplier(args.Target);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnStatusGetMetabolicMultiplier(Entity<RushedMetabolismStatusEffectComponent> ent,
+        ref StatusEffectRelayedEvent<GetMetabolicMultiplierEvent> args)
+    {
+        var arg = args.Args;
+        arg.Multiply(ent.Comp.Multiplier);
+        args.Args = arg;
+    }
+
+    #endregion
 
     public override void Update(float frameTime)
     {

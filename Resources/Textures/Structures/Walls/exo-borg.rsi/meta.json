@@ -11,35 +11,59 @@
             "name": "full"
         },
         {
-            "name": "xenoborg0",
+            "name": "wall0",
             "directions": 4
         },
         {
-            "name": "xenoborg1",
+            "name": "wall1",
             "directions": 4
         },
         {
-            "name": "xenoborg2",
+            "name": "wall2",
             "directions": 4
         },
         {
-            "name": "xenoborg3",
+            "name": "wall3",
             "directions": 4
         },
         {
-            "name": "xenoborg4",
+            "name": "wall4",
             "directions": 4
         },
         {
-            "name": "xenoborg5",
+            "name": "wall5",
             "directions": 4
         },
         {
-            "name": "xenoborg6",
+            "name": "wall6",
             "directions": 4
         },
         {
-            "name": "xenoborg7",
+            "name": "wall7",
+            "directions": 4
+        },
+        {
+            "name": "wall8",
+            "directions": 4
+        },
+        {
+            "name": "wall9",
+            "directions": 4
+        },
+        {
+            "name": "wall10",
+            "directions": 4
+        },
+        {
+            "name": "wall11",
+            "directions": 4
+        },
+        {
+            "name": "wall12",
+            "directions": 4
+        },
+        {
+            "name": "wall13",
             "directions": 4
         }
     ]

@@ -456,6 +456,12 @@
   - deathgasp
 
 - type: emote
+  id: KoboldDeathgasp
+  name: chat-emote-name-deathgasp
+  icon: Interface/Emotes/deathgasp.png
+  chatMessages: ["chat-emote-msg-deathgasp-kobold"]
+
+- type: emote
   id: MonkeyDeathgasp
   name: chat-emote-name-deathgasp
   icon: Interface/Emotes/deathgasp.png

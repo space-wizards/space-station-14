@@ -8,7 +8,21 @@
     <SplitContainer Orientation="Horizontal" HorizontalExpand="True" Name="Split">
         <!-- Guide select -->
         <BoxContainer Orientation="Horizontal" Name="TreeBox">
-            <fancyTree:FancyTree Name="Tree" VerticalExpand="True" HorizontalExpand="True" Access="Public"/>
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <BoxContainer Orientation="Horizontal" Margin="2 2 0 4">
+                    <Button Name="BackButton"
+                            Text="{Loc 'guidebook-history-back'}"
+                            ToolTip="{Loc 'guidebook-history-back-tooltip'}"
+                            StyleClasses="OpenRight"
+                            Disabled="True"/>
+                    <Button Name="ForwardButton"
+                            Text="{Loc 'guidebook-history-forward'}"
+                            ToolTip="{Loc 'guidebook-history-forward-tooltip'}"
+                            StyleClasses="OpenLeft"
+                            Disabled="True"/>
+                </BoxContainer>
+                <fancyTree:FancyTree Name="Tree" VerticalExpand="True" HorizontalExpand="True" Access="Public"/>
+            </BoxContainer>
             <controls:Separator StyleClasses="LowDivider" Margin="0 -2" Orientation="Vertical" MinHeight="5"/>
         </BoxContainer>
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
@@ -21,7 +35,7 @@
                     Margin="0 5 10 5">
                 </LineEdit>
             </BoxContainer>
-            <BoxContainer Access="Internal" Name="ReturnContainer" Orientation="Horizontal" HorizontalAlignment="Right" Visible="False">
+            <BoxContainer Name="ReturnContainer" Orientation="Horizontal" HorizontalAlignment="Right" Visible="False">
                 <Button Name="HomeButton" Text="{Loc 'ui-rules-button-home'}" Margin="0 0 10 0"/>
             </BoxContainer>
             <ScrollContainer Name="Scroll" HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">

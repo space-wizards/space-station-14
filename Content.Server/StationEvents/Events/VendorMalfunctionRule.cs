@@ -21,21 +21,21 @@ public sealed partial class VendorMalfunctionRule : StationEventSystem<VendorMal
     {
         base.Started(ent, ref args);
 
-        var toDispense = ent.Comp1.AffectedMachines.Next(RobustRandom);
-        if (toDispense <= 0)
-        {
-            Log.Error($"Gamerule {ToPrettyString(ent)} selected an invalid number of machines to affect: {toDispense}");
-            return;
-        }
-
         // get list of all vending machines on the target station, and then shuffle it so we get a random sample later on
         var vendingMachines = Station.GetEntitiesWithComponentOnStation<VendingMachineComponent>(true).ToList();
         RobustRandom.Shuffle(vendingMachines);
 
+        var toDispense = Math.Max(ent.Comp1.MinimumToAffect, (int)(ent.Comp1.AffectedMachines.NextFloat(RobustRandom) * vendingMachines.Count));
+        if (toDispense <= 0)
+        {
+            Log.Error($"Gamerule {ToPrettyString(ent)} selected an invalid quantity of machines to affect: {toDispense} (AffectedMachines [{ent.Comp1.AffectedMachines.Min},{ent.Comp1.AffectedMachines.Max}], minToAffect {ent.Comp1.MinimumToAffect})");
+            return;
+        }
+
         // finds valid vending machines (powered + not broken), maybe toggles contra inventory, ejects some contents
         foreach (var vendor in vendingMachines)
         {
-            if (toDispense == 0)
+            if (toDispense <= 0)
                 break;
 
             if (vendor.Comp.Broken || !_vendingSystem.IsPowered(vendor, EntityManager))
