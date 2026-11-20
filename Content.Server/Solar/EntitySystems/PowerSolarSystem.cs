@@ -105,6 +105,13 @@ namespace Content.Server.Solar.EntitySystems
                 else
                     args.PushMarkup(Loc.GetString("solarpanel-examine-unaligned"));
             }
+            else
+            {
+                if (ent.Comp.Coverage > 0.5)
+                    args.PushMarkup(Loc.GetString("solarpanel-examine-aligned"));
+                else
+                    args.PushMarkup(Loc.GetString("solarpanel-examine-poorly-aligned"));
+            }
         }
 
         public override void Update(float frameTime)
