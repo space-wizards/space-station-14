@@ -180,7 +180,9 @@ public sealed partial class AdminLogsEui : BaseEui
         ClydeWindow.DisposeOnClose = true;
 
         Root = _uiManager.CreateWindowRoot(ClydeWindow);
+        Root.CreateRootControls();
         Root.AddChild(LogsControl);
+        LogsControl.SetPositionFirst();
 
         LogsControl.PopOutButton.Disabled = true;
         LogsControl.PopOutButton.Visible = false;
