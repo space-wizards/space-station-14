@@ -245,7 +245,7 @@ public sealed partial class ShuttleSystem
                 if (config != null)
                 {
                     var shuttleXform = Transform(grid.Value);
-                    FTLDock((grid.Value, shuttleXform), config);
+                    FTLDock((grid.Value, shuttleXform), config, xform.GridUid.Value);
 
                     if (TryComp<StationMemberComponent>(xform.GridUid, out var stationMember))
                     {
