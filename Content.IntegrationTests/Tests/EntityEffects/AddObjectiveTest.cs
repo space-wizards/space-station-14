@@ -11,17 +11,15 @@ namespace Content.IntegrationTests.Tests.EntityEffects;
 [TestOf(typeof(AddObjectiveEntityEffectSystem))]
 public sealed class AddObjectiveTest : GameTest
 {
-    private const string EffectProtoId = "AddObjectiveTestEffect";
-    private const string ObjectiveProtoId = "AddObjectiveTestObjective";
-
-
     [SidedDependency(Side.Server)] private SharedMindSystem _sMind = default!;
     [SidedDependency(Side.Server)] private SharedEntityEffectsSystem _sEffects = default!;
 
+    private const string EffectProtoId = "AddObjectiveTestEffect";
+    private const string ObjectiveProtoId = "AddObjectiveTestObjective";
+
     [TestPrototypes]
-    private const string Prototypes = $@"
+    private static readonly string Prototypes = $@"
 - type: entity
-  parent: [BaseSurviveObjective]
   id: {ObjectiveProtoId}
   name: Get Funky
   description: The Space Wizards Federation want you to get funky!
@@ -32,6 +30,7 @@ public sealed class AddObjectiveTest : GameTest
     icon:
         sprite: Clothing/Head/Hats/wizard_blue.rsi
         state: icon
+  - type: SurviveCondition
 
 - type: entityEffect
   id: {EffectProtoId}
@@ -39,8 +38,6 @@ public sealed class AddObjectiveTest : GameTest
   - !type:AddObjective
     objective: {ObjectiveProtoId}
 ";
-
-    public override PoolSettings PoolSettings => new() { Connected = false };
 
     [Test]
     [RunOnSide(Side.Server)]
