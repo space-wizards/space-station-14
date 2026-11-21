@@ -174,3 +174,20 @@
         sprite: Objects/Devices/gps.rsi
         state: icon
     - type: AstroNavCartridge
+
+- type: entity
+  parent: BasePDACartridge
+  id: CargoAppCartridge
+  name: cargo app cartridge
+  description: orders go brrrrt.
+  components:
+    - type: Sprite
+      state: cart-y
+    - type: UIFragment
+      ui: !type:CargoAppUi
+    - type: Cartridge
+      programName: cargo-app-program-name
+      icon:
+        sprite: Interface/Misc/program_icons.rsi
+        state: crew_manifest
+    - type: CargoAppCartridge

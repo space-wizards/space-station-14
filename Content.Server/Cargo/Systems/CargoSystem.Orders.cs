@@ -1,12 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Cargo.Components;
+using Content.Server.CartridgeLoader.Cartridges;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
-using Content.Shared.Coordinates;
+using Content.Shared.CartridgeLoader;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
@@ -25,6 +26,8 @@ public sealed partial class CargoSystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private EmagSystem _emag = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private CargoAppCartridgeSystem _cargoAppCartridge = default!;
+    [Dependency] private CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
 
     [SubscribeLocalEvent]
     private void OnInit(Entity<CargoOrderConsoleComponent> ent, ref ComponentInit args)
@@ -119,6 +122,14 @@ public sealed partial class CargoSystem
             return;
         }
 
+        var pdaEvent = new NewOrderAddedEvent(Loc.GetString("cargo-pda-notification-message", ("requester", args.Requester), ("product", "stuff"), ("reason", args.Reason)));
+        var query = EntityQueryEnumerator<CargoAppCartridgeComponent>();
+
+        while (query.MoveNext(out var readerUid, out _))
+        {
+            RaiseLocalEvent(readerUid, ref pdaEvent);
+        }
+
         var targetAccount =
             ent.Comp.Mode == CargoOrderConsoleMode.SendToPrimary ? bank.PrimaryAccount : ent.Comp.Account;
         var data = GetOrderData(args, product, GenerateOrderId(orderDatabase), ent.Comp.Account);
@@ -134,6 +145,20 @@ public sealed partial class CargoSystem
             LogImpact.Low,
             $"{ToPrettyString(player):user} added order [orderId:{data.OrderId}, quantity:{data.OrderQuantity}, product:{data.Product}, requester:{data.Requester}, reason:{data.Reason}]"
         );
+    }
+
+    [SubscribeLocalEvent]
+    private void OnNewOrderAdded(Entity<CargoAppCartridgeComponent> ent, ref NewOrderAddedEvent args)
+    {
+        if (Comp<CartridgeComponent>(ent).LoaderUid is not { } loaderUid)
+            return;
+
+        _cargoAppCartridge.UpdateUiState(ent, loaderUid, ent.Comp);
+
+        _cartridgeLoaderSystem.SendNotification(
+            loaderUid,
+            Loc.GetString("cargo-pda-notification-header"),
+            args.Message);
     }
 
     [SubscribeLocalEvent]
@@ -750,7 +775,7 @@ public sealed partial class CargoSystem
     /// <summary>
     /// Gets orders relevant to this account, i.e. orders on the account directly or orders on behalf of the account in the primary account.
     /// </summary>
-    private List<CargoOrderData> RelevantOrders(
+    public List<CargoOrderData> RelevantOrders(
         Entity<StationCargoOrderDatabaseComponent> station,
         Entity<CargoOrderConsoleComponent> console
     )

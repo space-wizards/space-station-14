@@ -1,0 +1,30 @@
+<BoxContainer xmlns="https://spacestation14.io" HorizontalExpand="True">
+    <PanelContainer MinWidth="0" VerticalExpand="True" Name="Separator" Access="Public" />
+    <PanelContainer HorizontalExpand="True">
+        <!--  Icon & Name  -->
+        <BoxContainer Margin="4,0"
+                      HorizontalExpand="True"
+                      Orientation="Horizontal">
+            <Label Name="Time"
+                   MinWidth="35"
+                   Access="Public" />
+            <Control MinWidth="5" />
+            <Label Name="Requester"
+                   Access="Public"
+                   ClipText="True"
+                   HorizontalExpand="True" />
+            <Control MinWidth="10" />
+        </BoxContainer>
+    </PanelContainer>
+    <BoxContainer MinWidth="60"
+                  HorizontalAlignment="Right"
+                  Orientation="Horizontal">
+        <Control HorizontalExpand="True" />
+        <Label Name="PointCost"
+               HorizontalAlignment="Right"
+               Access="Public"
+               Align="Right" />
+        <Control MinWidth="15" />
+    </BoxContainer>
+</BoxContainer>
+
