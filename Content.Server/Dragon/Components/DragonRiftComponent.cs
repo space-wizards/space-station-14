@@ -4,7 +4,7 @@ using Content.Shared.EntityTable.EntitySelectors;
 namespace Content.Server.Dragon;
 
 // TODO: replace accumulators with timespan logic
-[RegisterComponent, AutoGenerateEntityRelations(shutdownEvent: false)]
+[RegisterComponent, AutoGenerateEntityRelations]
 public sealed partial class DragonRiftComponent : SharedDragonRiftComponent
 {
     /// <summary>

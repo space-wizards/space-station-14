@@ -103,7 +103,7 @@ public sealed partial class DragonRiftSystem : EntitySystem
                         Dirty(ent, spawnedSprite);
                     }
 
-                    if (comp.Dragon != null)
+                    if (comp.Dragon.Entity != null)
                         _npc.SetBlackboard(ent, NPCBlackboard.FollowTarget, new EntityCoordinates(comp.Dragon.Entity.Value, Vector2.Zero));
                 }
             }
@@ -129,6 +129,5 @@ public sealed partial class DragonRiftSystem : EntitySystem
             return;
 
         _dragon.RiftDestroyed(comp.Dragon.Entity.Value, dragon);
-        DragonRiftComponent.ClearComponentRelations((uid, comp), EntityManager);
     }
 }

@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Dragon
 {
     // TODO: use timespans for logic
-    [RegisterComponent, AutoGenerateEntityRelations(shutdownEvent: false)]
+    [RegisterComponent, AutoGenerateEntityRelations]
     public sealed partial class DragonComponent : Component
     {
         /// <summary>

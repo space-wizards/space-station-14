@@ -65,7 +65,7 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
             return;
 
         ClearRelation(component.Station.Entity.Value, stationData.Grids, uid);
-        Dirty(component.Station, stationData);
+        Dirty(component.Station.Entity.Value, stationData);
     }
 
     public override void Shutdown()

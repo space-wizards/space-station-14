@@ -8,7 +8,7 @@ namespace Content.Server.Salvage.Expeditions;
 /// <summary>
 /// Designates this entity as holding a salvage expedition.
 /// </summary>
-[RegisterComponent, AutoGenerateComponentPause, AutoGenerateEntityRelations(shutdownEvent: false)]
+[RegisterComponent, AutoGenerateComponentPause, AutoGenerateEntityRelations]
 public sealed partial class SalvageExpeditionComponent : SharedSalvageExpeditionComponent
 {
     public SalvageMissionParams MissionParams = default!;

@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Audio.Jukebox;
 
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState(true), AutoGenerateEntityRelations(shutdownEvent: false)]
+[AutoGenerateComponentState(true), AutoGenerateEntityRelations]
 [Access(typeof(SharedJukeboxSystem))]
 public sealed partial class JukeboxComponent : Component
 {

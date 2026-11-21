@@ -16,7 +16,7 @@ namespace Content.Shared.Anomaly.Components;
 /// Anomalies and their related components were designed here: https://hackmd.io/@ss14-design/r1sQbkJOs
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState, AutoGenerateComponentPause, AutoGenerateEntityRelations(shutdownEvent: false)]
+[AutoGenerateComponentState, AutoGenerateComponentPause, AutoGenerateEntityRelations]
 [Access(typeof(SharedAnomalySystem), typeof(SharedInnerBodyAnomalySystem))]
 public sealed partial class AnomalyComponent : Component
 {

@@ -6,7 +6,7 @@ namespace Content.Shared.Station.Components;
 /// Indicates that a grid is a member of the given station.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState, AutoGenerateEntityRelations(shutdownEvent: false)]
+[AutoGenerateComponentState, AutoGenerateEntityRelations]
 public sealed partial class StationMemberComponent : Component
 {
     /// <summary>

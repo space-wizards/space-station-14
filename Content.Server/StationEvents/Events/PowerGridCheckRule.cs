@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -30,7 +31,7 @@ public sealed partial class PowerGridCheckRule : StationEventSystem<PowerGridChe
 
         var powerGridCheck = ent.Comp1;
 
-        powerGridCheck.AffectedStation = chosenStation.Value;
+        SetRelation(ent.Owner, ref powerGridCheck.AffectedStation, chosenStation.Value.Owner);
         var largestGrid = Station.GetLargestGrid(chosenStation.Value.AsNullable());
         if (largestGrid is null)
             return;
@@ -44,7 +45,7 @@ public sealed partial class PowerGridCheckRule : StationEventSystem<PowerGridChe
             if (apcTransform.GridUid != largestGrid)
                 continue;
 
-            powerGridCheck.Powered.Add(apcUid);
+            AddRelation(ent.Owner, powerGridCheck.Powered, apcUid.Owner);
         }
 
         RobustRandom.Shuffle(powerGridCheck.Powered);
@@ -62,39 +63,42 @@ public sealed partial class PowerGridCheckRule : StationEventSystem<PowerGridChe
         if (!TryComp<ApcComponent>(apcUid, out var apcComp))
             return;
 
-        var rule = GetRuleAffectingEntity(apcUid);
-        if (rule == null || !apcComp.MainBreakerEnabled)
+        if (!TryGetRuleAffectingEntity(apcUid, out var rule)
+            || !apcComp.MainBreakerEnabled)
             return;
 
         _apc.ApcToggleBreaker(apcUid, apcComp);
-        rule.Unpowered.Add(apcUid);
+        AddRelation(rule.Value.Owner, rule.Value.Comp.Unpowered, apcUid);
     }
 
     [SubscribeLocalEvent]
     private void OnApcToggleMainBreaker(EntityUid uid, PowerGridCheckNotifyComponent component, ref ApcToggleMainBreakerAttemptEvent args)
     {
-        args.Cancelled |= GetRuleAffectingEntity(uid) != null;
+        args.Cancelled |= TryGetRuleAffectingEntity(uid, out _);
     }
 
     /// <summary>
     /// Returns the PowerGridCheckRuleComponent affecting the uid, or null if none
     /// </summary>
-    private PowerGridCheckRuleComponent? GetRuleAffectingEntity(EntityUid uid)
+    private bool TryGetRuleAffectingEntity(EntityUid uid, [NotNullWhen(true)] out Entity<PowerGridCheckRuleComponent>? rule)
     {
+        rule = null;
         if (!TryComp(uid, out TransformComponent? xform))
-            return null;
+            return false;
 
         if (!TryComp<StationMemberComponent>(xform.GridUid, out var stationMemberComp))
-            return null;
+            return false;
 
         var activeRules = AllEntityQuery<PowerGridCheckRuleComponent, ActiveGameRuleComponent>();
-        while (activeRules.MoveNext(out _, out var powerGridRule, out _))
+        while (activeRules.MoveNext(out var ruleUid, out var powerGridRule, out _))
         {
+            if (powerGridRule.AffectedStation.Entity == null)
+                continue;
+
             if (stationMemberComp.Station != powerGridRule.AffectedStation)
                 continue;
 
-            SetRelation(uid, ref component.AffectedStation, chosenStation);
-            var largestGrid = Station.GetLargestGrid(powerGridRule.AffectedStation);
+            var largestGrid = Station.GetLargestGrid(powerGridRule.AffectedStation.Entity.Value);
 
             if (largestGrid == null)
                 continue;
@@ -102,10 +106,11 @@ public sealed partial class PowerGridCheckRule : StationEventSystem<PowerGridChe
             if (xform.GridUid != largestGrid.Value)
                 continue;
 
-            return powerGridRule;
+            rule = (ruleUid, powerGridRule);
+            return true;
         }
 
-        return null;
+        return false;
     }
 
     protected override void Ended(Entity<PowerGridCheckRuleComponent> rule, ref GameRuleEndedEvent args)
@@ -114,14 +119,14 @@ public sealed partial class PowerGridCheckRule : StationEventSystem<PowerGridChe
 
         foreach (var entity in rule.Comp.Unpowered)
         {
-            if (Deleted(entity))
+            if (entity.Entity == null)
                 continue;
 
-            if (!TryComp<ApcComponent>(entity, out var apcComponent))
+            if (!TryComp<ApcComponent>(entity.Entity.Value, out var apcComponent))
                 continue;
 
             if (!apcComponent.MainBreakerEnabled)
-                _apc.ApcToggleBreaker(entity, apcComponent);
+                _apc.ApcToggleBreaker(entity.Entity.Value, apcComponent);
         }
 
         // Can't use the default EndAudio
@@ -133,7 +138,7 @@ public sealed partial class PowerGridCheckRule : StationEventSystem<PowerGridChe
             Audio.PlayGlobal(rule.Comp.PowerOnSound, Filter.Broadcast(), true);
         },
             rule.Comp.AnnounceCancelToken.Token);
-        rule.Comp.Unpowered.Clear();
+        ClearRelations(rule.Owner, rule.Comp.Unpowered);
     }
 
     protected override void ActiveTick(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, float frameTime)
@@ -154,16 +159,19 @@ public sealed partial class PowerGridCheckRule : StationEventSystem<PowerGridChe
                 break;
 
             var selected = component.Powered.Pop();
-            if (Deleted(selected))
+            if (selected.Entity == null)
                 continue;
+
+            var selectedEnt = selected.Entity.Value;
+            ClearRelation(uid, ref selected); // Will be reassigned to another field
 
             if (TryComp<ApcComponent>(selected, out var apcComponent))
             {
                 if (apcComponent.MainBreakerEnabled)
-                    _apc.ApcToggleBreaker(selected, apcComponent);
+                    _apc.ApcToggleBreaker(selectedEnt, apcComponent);
             }
 
-            component.Unpowered.Add(selected);
+            AddRelation(uid, component.Unpowered, selectedEnt);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Content.Shared.Materials;
 /// into the raw materials and chemicals that make them up.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState, AutoGenerateComponentPause, AutoGenerateEntityRelations(shutdownEvent: false)]
+[AutoGenerateComponentState, AutoGenerateComponentPause, AutoGenerateEntityRelations]
 [Access(typeof(SharedMaterialReclaimerSystem))]
 public sealed partial class MaterialReclaimerComponent : Component
 {
