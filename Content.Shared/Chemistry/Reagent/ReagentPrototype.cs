@@ -109,6 +109,12 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public float? BoilingPoint { get; private set; }
 
+        /// <summary>
+        ///     How much energy it takes to vaporize one unit of this reagent.
+        /// </summary>
+        [DataField]
+        public float? VaporizationEnergy { get; private set; }
+
         [DataField]
         public float? MeltingPoint { get; private set; }
 

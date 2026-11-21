@@ -10,6 +10,7 @@
   color: "#c4f5ff"
   boilingPoint: -183.0
   meltingPoint: -218.4
+  vaporizationEnergy: 6820
   metabolisms:
     Bloodstream:
       effects:
@@ -84,6 +85,7 @@
   recognizable: true
   boilingPoint: -127.3 # Random values picked between the actual values for CO2 and O2
   meltingPoint: -186.4
+  vaporizationEnergy: 9522
   tileReactions:
   - !type:FlammableTileReaction
     temperatureMultiplier: 1.5
@@ -126,6 +128,9 @@
   - Engineering
   flavor: bitter
   color: "#66ff33"
+  boilingPoint: -252.9
+  meltingPoint: -259.2
+  vaporizationEnergy: 900
   tileReactions:
   - !type:FlammableTileReaction
     temperatureMultiplier: 2.0
@@ -164,6 +169,9 @@
   physicalDesc: reagent-physical-desc-odorless
   flavor: bitter
   color: "#66ff33"
+  boilingPoint: -78.5
+  meltingPoint: -78.5
+  vaporizationEnergy: 15326
   metabolisms:
     Bloodstream:
       effects:
@@ -225,6 +233,7 @@
   color: "#a1e1ff"
   boilingPoint: -195.8
   meltingPoint: -210.0
+  vaporizationEnergy: 5570
   metabolisms:
     Bloodstream:
       effects:
@@ -263,6 +272,7 @@
   color: "#5d88c9"
   boilingPoint: -88
   meltingPoint: -90
+  vaporizationEnergy: 16500
   metabolisms:
     Bloodstream:
       effects:
@@ -340,6 +350,7 @@
   color: "#3a758c"
   boilingPoint: -195.8
   meltingPoint: -210.0
+  vaporizationEnergy: 10 # transitions from gas to liquid very easily
   metabolisms:
     Bloodstream:
       effects:

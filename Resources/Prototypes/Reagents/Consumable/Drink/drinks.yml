@@ -447,6 +447,7 @@
   recognizable: true
   boilingPoint: 100.0
   meltingPoint: 0.0
+  vaporizationEnergy: 40660
   friction: 0.4
   metabolisms:
     Digestion:
