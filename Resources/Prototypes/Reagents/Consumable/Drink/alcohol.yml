@@ -167,15 +167,18 @@
         damage:
           types:
             Poison: 0.02
-      - !type:EvenHealthChange
+      - !type:EvenHeal
         conditions:
         - !type:ReagentCondition
           reagent: Ethanol
           min: 15
         - !type:MetabolizerTypeCondition
           type: [ Dwarf ]
-        damage:
-          Brute: -0.1
+        heal: 0.1
+        types:
+        - Blunt
+        - Slash
+        - Piercing
       - !type:Vomit
         probability: 0.04
         conditions:
@@ -880,12 +883,8 @@
       - !type:Satiate
         satiationType: Hunger
         factor: -2
-      - !type:EvenHealthChange
-        damage:
-          Burn: -1
-          Brute: -1
-          Airloss: -1
-          Toxin: -1
+      - !type:DistributedHeal
+        heal: 1
 
 - type: reagent
   id: DriestMartini
