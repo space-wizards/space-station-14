@@ -1,16 +1,24 @@
 # Configuration preset used on Wizard's Den Salamander
 
 [game]
-desc = "Official English Space Station 14 servers. Medium roleplay ruleset. Open to anyone with at least 20 hours of playtime on any Wizard's Den server. Freely joinable when the player count is less than 15 players."
 hostname = "[EN][MRP] Wizard's Den Salamander [NA West]"
+desc = "Official English server for Space Station 14. Medium roleplay ruleset. This server uses an automatic whitelisting system; in order to join, you must have at least 20 hours of playtime on Wizard's Den servers, or the player count must be under 15 players."
 round_restart_time = 300
 
 [server]
+# This needs to be specified even though it's identical to the hostname, because fallback lobby name is "Lobby: <hostname>" which would be too long and go out of bounds
+lobby_name = "[EN][MRP] Wizard's Den Salamander [NA West]"
 rules_file = "MRPRuleset"
 
 [whitelist]
 enabled = true
 prototype_list = "salamanderMrpWhitelist"
+
+[chat]
+motd = "Wizard's Den Salamander is a medium roleplay (MRP) server. Please read and abide by the MRP rules and MRP amendments."
+
+[hub]
+tags = "lang:en,region:am_n_w,rp:med"
 
 [shuttle]
 emergency_early_launch_allowed = true
@@ -23,7 +31,3 @@ enable_during_round = false
 
 [ic]
 flavor_text = true
-
-[hub]
-tags = "lang:en,region:am_n_w,rp:med"
-
