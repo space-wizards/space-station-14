@@ -73,6 +73,9 @@ public sealed partial class DiscordLink : IPostInjectInit
     /// <summary>
     ///     Event that is raised when a message is received from Discord. This is raised for every message, including commands.
     /// </summary>
+    /// <remarks>
+    ///     Message contents are empty unless <see cref="CCVars.DiscordMessageContentIntent"/> is enabled.
+    /// </remarks>
     public event Action<Message>? OnMessageReceived;
 
     // TODO: consider implementing this in a way where we can unregister it in a similar way
@@ -108,17 +111,22 @@ public sealed partial class DiscordLink : IPostInjectInit
             return;
         }
 
+        var intents = GatewayIntents.Guilds
+                      | GatewayIntents.GuildMessages
+                      | GatewayIntents.DirectMessages;
+
+        // Message Content is a privileged intent, Discord refuses the connection if the bot isn't allowed to use it.
+        if (_configuration.GetCVar(CCVars.DiscordMessageContentIntent))
+            intents |= GatewayIntents.MessageContent;
+
         _client = new GatewayClient(new BotToken(token), new GatewayClientConfiguration()
         {
-            Intents = GatewayIntents.Guilds
-                             | GatewayIntents.GuildUsers
-                             | GatewayIntents.GuildMessages
-                             | GatewayIntents.MessageContent
-                             | GatewayIntents.DirectMessages,
+            Intents = intents,
             Logger = new DiscordSawmillLogger(_sawmillLog),
         });
         _client.MessageCreate += OnCommandReceivedInternal;
         _client.MessageCreate += OnMessageReceivedInternal;
+        InitializeSlashCommands();
 
         _botToken = token;
         // Since you cannot change the token while the server is running / the DiscordLink is initialized,
@@ -153,6 +161,7 @@ public sealed partial class DiscordLink : IPostInjectInit
             // Unsubscribe from the events.
             _client.MessageCreate -= OnCommandReceivedInternal;
             _client.MessageCreate -= OnMessageReceivedInternal;
+            ShutdownSlashCommands();
 
             await _client.CloseAsync();
             _client.Dispose();
