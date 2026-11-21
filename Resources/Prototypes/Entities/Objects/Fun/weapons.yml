@@ -184,15 +184,33 @@
     sprite: Objects/Fun/Foam/foam_blade.rsi
     state: icon
   - type: MeleeWeapon
-    attackRate: 1.5
-    angle: 0
-    animation: WeaponArcThrust
-    wideAnimationRotation: 90
     soundHit:
       collection: AlienClaw
+    wideAnimationRotation: -90
+    attackRate: 1
+    wideAnimation: WeaponArcSlashFoamblade
+    animation: WeaponArcThrustFoamblade
+    forceAnimationSprite: true
+    swingFlipY: true
   - type: Item
     size: Small
-    sprite: Objects/Fun/Foam/foam_blade.rsi
+    sprite: Objects/Fun/Foam/foam_blade-inhand.rsi
+
+- type: entity
+  id: WeaponArcSlashFoamblade
+  parent: WeaponArcSlashArmblade
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: Objects/Fun/Foam/foam_blade.rsi
+
+- type: entity
+  id: WeaponArcThrustFoamblade
+  parent: WeaponArcThrustArmblade
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: Objects/Fun/Foam/foam_blade.rsi
 
 - type: entity
   parent: [ BaseItem, BaseToySword ]
