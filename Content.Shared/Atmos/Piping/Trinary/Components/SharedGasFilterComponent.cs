@@ -35,3 +35,9 @@ public sealed class GasFilterSelectGasMessage(Gas? gas) : BoundUserInterfaceMess
 {
     public readonly Gas? Gas = gas;
 }
+
+[Serializable, NetSerializable]
+public sealed class GasFilterToggleOutputMessage(bool filteredGasOnFilterOutlet) : BoundUserInterfaceMessage
+{
+    public readonly bool FilteredGasOnFilterOutlet = filteredGasOnFilterOutlet;
+}
