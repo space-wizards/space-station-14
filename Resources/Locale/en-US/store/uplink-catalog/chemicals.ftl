@@ -10,7 +10,7 @@ uplink-chemistry-kit-name = Chemical Synthesis Kit
 uplink-chemistry-kit-desc = A starter kit for the aspiring chemist, includes two vials of vestine for all your criminal needs!
 
 uplink-zombie-bundle-name = Syndicate Zombie Bundle
-uplink-zombie-bundle-desc = An all-in-one kit for unleashing the undead upon a station. Take the Ambuzol+ pill for the cure!
+uplink-zombie-bundle-desc = An all-in-one kit for unleashing the undead upon a station. Ambuzol+ not included!
 
 uplink-nocturine-chemistry-bottle-name = Nocturine Bottle
 uplink-nocturine-chemistry-bottle-desc = A chemical that puts your target straight to sleep. Frequently bought with the Hypodarts or Hypopen.
