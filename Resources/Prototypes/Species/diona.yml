@@ -18,3 +18,6 @@
   - UnisexDiona
   voices:
   - UnisexDiona
+  youngAge: 300
+  oldAge: 600
+  maxAge: 1200
