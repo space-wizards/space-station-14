@@ -641,6 +641,16 @@ public sealed partial class CargoSystem
 
             UpdateOrderState(uid, station);
         }
+
+        var query = EntityQueryEnumerator<OrderLogCartridgeComponent>();
+
+        while (query.MoveNext(out var readerUid, out var comp))
+        {
+            if (Comp<CartridgeComponent>(readerUid).LoaderUid is not { } loaderUid)
+                return;
+
+            _orderLogCartridge.UpdateUiState(readerUid, loaderUid, comp);
+        }
     }
 
     private void UpdateOrderState(EntityUid consoleUid, EntityUid? station)
