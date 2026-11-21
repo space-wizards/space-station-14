@@ -34,10 +34,10 @@
   - type: FoodSequenceStartPoint
     key: Burger
     maxLayers: 10
-    startPosition: 0, 0
-    offset: 0, 0.07
-    minLayerOffset: -0.05, 0
-    maxLayerOffset: 0.05, 0
+    startPosition: 0, 0.0625 # 2 pixels above
+    offset: 0, 0.046875 # 1.5 pixels above
+    minLayerOffset: -0.0625, -0.015625 # 2px left, 0.5px down
+    maxLayerOffset: 0.0625, 0.015625 # 2px right, 0.5px up
     nameGeneration: food-sequence-burger-gen
   - type: Appearance
   - type: FoodMetamorphableByAdding
