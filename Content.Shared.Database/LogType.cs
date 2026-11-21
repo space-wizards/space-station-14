@@ -488,4 +488,9 @@ public enum LogType
     /// Silicon law changes.
     /// </summary>
     SiliconLaw = 105,
+
+    /// <summary>
+    /// A player has withdrawn from a store
+    /// </summary>
+    StoreWithdrawal = 106,
 }
