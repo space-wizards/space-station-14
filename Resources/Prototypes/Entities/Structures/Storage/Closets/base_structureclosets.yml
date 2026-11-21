@@ -227,9 +227,8 @@
     noRot: true
     sprite: Structures/Storage/SuitStorage/generic.rsi
     layers:
-    - state: base
-    - state: door
-      map: ["enum.StorageVisualLayers.Door"]
+    - state: closed
+      map: [ "enum.StorageVisualLayers.Door" ]
     - state: welded
       visible: false
       sprite: Structures/Storage/SuitStorage/effects.rsi
@@ -293,6 +292,6 @@
   - type: Appearance
   - type: EntityStorageVisuals
     # stateBase: base  // This field does not exist. this is probably a bug. TODO
-    stateDoorOpen: base
-    stateDoorClosed: door
+    stateDoorOpen: open
+    stateDoorClosed: closed
   - type: LockVisuals
