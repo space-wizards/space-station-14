@@ -86,7 +86,7 @@
 # kill
 
 - type: entity
-  parent: [BaseTraitorObjective, BaseKillRandomTargetObjective]
+  parent: [BaseTraitorObjective, BaseKillRandomObjective]
   id: KillRandomPersonObjective
   description: Do it however you like, just make sure they don't get off the station.
   components:
@@ -99,7 +99,7 @@
     requireMaroon: true
 
 - type: entity
-  parent: [BaseTraitorObjective, BaseKillRandomTargetObjective]
+  parent: [BaseTraitorObjective, BaseKillRandomObjective]
   id: KillRandomHeadObjective
   description: We need this head gone and you probably know why. Make sure they don't make it to CentComm, even if they're dead. Good luck, agent.
   components:
@@ -123,7 +123,7 @@
     requireMaroon: true
 
 - type: entity
-  parent: [BaseTraitorObjective, BaseKillRandomObjective]
+  parent: [BaseTraitorObjective, BaseKillObjective]
   id: KillStationAiObjective
   description: Nanotrasen proudly boasts about their state of the art artificial intelligence. Remind them it's just another toy that can be broken.
   components:
@@ -138,6 +138,7 @@
     title: objective-condition-kill-station-ai
   - type: PickRandomPerson
     pool: !type:AliveAiPool
+    conditions: []
   - type: KillPersonCondition
     requireDead: true
 

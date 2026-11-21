@@ -60,21 +60,6 @@
   components:
   - type: PickRandomPerson
     conditions:
-    # Can't have multiple objectives to kill the same person.
-    - !type:ObjectiveTargetCondition
-      inverted: true
-      whitelist:
-        components:
-        - KillPersonCondition
-
-- type: entity
-  abstract: true
-  parent: BaseKillRandomObjective
-  id: BaseKillRandomTargetObjective
-  components:
-  - type: PickRandomPerson
-    pool: !type:AliveHumansPool
-    conditions:
     - !type:AntagonistTagCondition # Only roll on-station targets.
       tags:
       - OnStation
@@ -82,6 +67,12 @@
       inverted: true
       tags:
       - Unkillable
+    # Can't have multiple objectives to kill the same person.
+    - !type:ObjectiveTargetCondition
+      inverted: true
+      whitelist:
+        components:
+        - KillPersonCondition
 
 # requires that the player interact socially with someone
 # disables kill objectives and is disabled by kill objectives
