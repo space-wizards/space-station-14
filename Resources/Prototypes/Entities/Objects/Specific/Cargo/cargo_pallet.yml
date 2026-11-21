@@ -33,44 +33,6 @@
     - Cargo
 
 - type: entity
-  id: [ BaseSimpleMob, BaseMobAnimal, MobCombat, BaseMobDestructible ]
-  parent: BaseMob
-  name: длинноногий
-  description: чёрт беги чёрт
-  components:
-  - type: MeleeWeapon
-    angle: 0
-    animation: WeaponArcBite
-    damage:
-      types:
-        Slash: 25
-  - type: Sprite
-    sprite: Mobs/Aliens/длинногоний
-  - type: Insulated
-  - type: Flammable
-    fireSpread: true
-    canResistFire: true
-    damage:
-      types:
-        Heat: 1
-  - type: FireVisuals
-    sprite: Mobs/Effects/onfire.rsi
-    normalState: Generic_mob_burning
-  - type: Climbing
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      999: Dead
-  - type: MovementSpeedModifier
-    baseSprintSpeed: 3
-    baseWalkSpeed: 3
-  - type: GhostKickOnTrigger
-    targetUser: true
-  - type: StepTrigger
-    requiredTriggeredSpeed: 0
-    stepOn: true
-
-- type: entity
   id: CargoPalletSell
   name: cargo selling pallet
   description: Designates valid items to sell. Made of plastitanium to discourage pesky vandals.
