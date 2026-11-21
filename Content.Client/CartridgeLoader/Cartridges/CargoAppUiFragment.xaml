@@ -1,15 +1,30 @@
 ﻿<cartridges:CargoAppUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
-                                   xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                                   xmlns:ui="clr-namespace:Content.Client.Cargo.UI"
-                                   xmlns="https://spacestation14.io" Margin="1 0 2 0">
-    <PanelContainer StyleClasses="BackgroundDark"></PanelContainer>
-    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
-        <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
-            <ui:CargoAppListing
-                Name="CargoAppListing"
-                Orientation="Vertical"
-                HorizontalExpand="True"
-                Margin="8,0,0,0"/>
-        </ScrollContainer>
-    </BoxContainer>
+                               xmlns:ui="clr-namespace:Content.Client.Cargo.UI"
+                               xmlns="https://spacestation14.io"
+                               Orientation="Vertical"
+                               HorizontalExpand="True"
+                               VerticalExpand="True"
+                               Margin="1 0 2 0">
+    <PanelContainer StyleClasses="BackgroundDark" HorizontalExpand="True" VerticalExpand="True">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+            <!-- Header -->
+            <BoxContainer Orientation="Horizontal" Margin="6 4">
+                <Label Text="{Loc 'cargo-app-header-order'}" HorizontalExpand="True" StyleClasses="LabelSubText" />
+                <Label Text="{Loc 'cargo-app-header-cost'}" Align="Right" MinWidth="64" StyleClasses="LabelSubText" />
+            </BoxContainer>
+
+            <Label Name="EmptyLabel"
+                   Text="{Loc 'cargo-app-no-orders'}"
+                   Visible="False"
+                   HorizontalAlignment="Center"
+                   Margin="0 12"
+                   StyleClasses="LabelSubText" />
+
+            <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="False">
+                <ui:CargoAppListing Name="CargoAppListing"
+                                    Orientation="Vertical"
+                                    HorizontalExpand="True" />
+            </ScrollContainer>
+        </BoxContainer>
+    </PanelContainer>
 </cartridges:CargoAppUiFragment>

@@ -9,5 +9,8 @@ cargo-console-order-menu-reason-label = Reason:
 cargo-console-order-menu-amount-label = Amount:
 cargo-console-order-menu-submit-button = OK
 
-cargo-pda-notification-header = New Order Requested
-cargo-pda-notification-message = {$requester} ordered {$product}. {$reason}
+cargo-app-notification-header = New Order Requested
+cargo-app-notification-message = {$requester} ordered {$product}. {$reason}
+cargo-app-header-order = Order
+cargo-app-header-cost = Cost
+cargo-app-no-orders = No orders.

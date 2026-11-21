@@ -1,34 +1,25 @@
-<BoxContainer xmlns="https://spacestation14.io" HorizontalExpand="True">
-    <PanelContainer MinWidth="0" VerticalExpand="True" Name="Separator" Access="Public" />
-    <PanelContainer HorizontalExpand="True">
-        <!--  Icon & Name  -->
-        <BoxContainer Margin="4,0"
-                      HorizontalExpand="True"
-                      Orientation="Horizontal">
+<BoxContainer xmlns="https://spacestation14.io" HorizontalExpand="True" MinHeight="36">
+    <PanelContainer Name="Background" HorizontalExpand="True">
+        <BoxContainer Margin="6 2" Orientation="Horizontal" HorizontalExpand="True" SeparationOverride="6">
             <TextureRect Name="Icon"
-                         Access="Public"
                          MinSize="32 32"
+                         Stretch="KeepAspectCentered"
+                         VerticalAlignment="Center"
                          RectClipContent="True" />
-            <Label Name="Time"
-                   MinWidth="35"
-                   Access="Public" />
-            <Control MinWidth="5" />
-            <Label Name="Requester"
-                   Access="Public"
-                   ClipText="True"
-                   HorizontalExpand="True" />
-            <Control MinWidth="10" />
+
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
+                <Label Name="ProductName" ClipText="True" />
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Label Name="Requester" ClipText="True" StyleClasses="LabelSubText" />
+                    <Label Name="Reason" StyleClasses="LabelSubText" Align="Right" />
+                </BoxContainer>
+
+            </BoxContainer>
+
+            <Label Name="PointCost"
+                   MinWidth="64"
+                   Align="Right"
+                   VerticalAlignment="Center" />
         </BoxContainer>
     </PanelContainer>
-    <BoxContainer MinWidth="60"
-                  HorizontalAlignment="Right"
-                  Orientation="Horizontal">
-        <Control HorizontalExpand="True" />
-        <Label Name="PointCost"
-               HorizontalAlignment="Right"
-               Access="Public"
-               Align="Right" />
-        <Control MinWidth="15" />
-    </BoxContainer>
 </BoxContainer>
-
