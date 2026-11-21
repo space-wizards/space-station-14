@@ -19,9 +19,9 @@
           radius: 0.30
         density: 80
         mask:
-        - MobMask
+        - SmallMobMask
         layer:
-        - MobLayer
+        - SmallMobLayer
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -35,11 +35,16 @@
   - type: Tag
     tags:
     - FootstepSound
-    - DoorBumpOpener
+    - StunImmune  #don't truncheon the goop ¯\_(ツ)_/¯
   - type: ToolRefinable
     refineResult:
     - id: FoodMeatSlime
       amount: 2
+  - type: NoSlip #got no feet
+  - type: Insulated
+    coefficient: 3.0
+    #i don't know the math, but 3.0 is equal to 50% more damage from doors (15, normally 10)
+    #insulated loses stun immunity if you go over 100%, so they now have blanket stun immunity
   - type: Respirator
     damage:
       types:
