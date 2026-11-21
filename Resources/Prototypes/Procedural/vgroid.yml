@@ -183,7 +183,8 @@
   - !type:MobsDunGen
     minCount: 8
     maxCount: 15
-    contents: VGRoidExteriorDungeonsMobs
+    contents: !type:NestedSelector
+      tableId: VGRoidExteriorDungeonsMobs
 
 - type: entityTable
   id: VGRoidExteriorDungeonsMobs
@@ -218,7 +219,8 @@
   - !type:MobsDunGen
     minCount: 25
     maxCount: 35
-    contents: VGRoidSmallPathsMobs
+    contents: !type:NestedSelector
+      tableId: VGRoidSmallPathsMobs
 
 - type: entityTable
   id: VGRoidSmallPathsMobs
