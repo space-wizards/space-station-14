@@ -5,14 +5,14 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Cargo.UI;
 
-public sealed partial class CargoAppListing : BoxContainer
+public sealed partial class OrderLogListing : BoxContainer
 {
     [Dependency] private IEntityManager _entityManager = default!;
     [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     private readonly SpriteSystem _sprite;
 
-    public CargoAppListing()
+    public OrderLogListing()
     {
         IoCManager.InjectDependencies(this);
         _sprite = _entityManager.System<SpriteSystem>();
@@ -30,11 +30,11 @@ public sealed partial class CargoAppListing : BoxContainer
 
             var reason = string.IsNullOrWhiteSpace(order.Reason)
                 ? string.Empty
-                : Loc.GetString("cargo-app-reason",
+                : Loc.GetString("order-log-reason",
                     ("hasReason", true),
                     ("reason", order.Reason));
 
-            var entry = new CargoAppEntry();
+            var entry = new OrderLogEntry();
             entry.AddOrder(
                 _sprite.Frame0(product.Icon),
                 $"{product.Name} x{order.OrderQuantity}",

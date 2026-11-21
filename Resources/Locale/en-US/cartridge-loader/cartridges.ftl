@@ -102,14 +102,14 @@ wanted-list-history-table-time-col = Time
 wanted-list-history-table-reason-col = Crime
 wanted-list-history-table-initiator-col = Initiator
 
-cargo-app-notification-header = New Order Requested
-cargo-app-notification-message = {$requester} ordered {$product}. {$reason}
-cargo-app-header-order = Order
-cargo-app-header-cost = Cost
-cargo-app-no-orders = No orders.
-cargo-app-reason =
+order-log-notification-header = New Order Requested
+order-log-notification-message = {$requester} ordered {$product}. {$reason}
+order-log-header-order = Order
+order-log-header-cost = Cost
+order-log-no-orders = No orders.
+order-log-reason =
     { $hasReason ->
         [true] Reason: { $reason }
        *[false] { "" }
     }
-cargo-app-program-name = Order Log
+order-log-program-name = Order Log

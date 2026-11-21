@@ -9,7 +9,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
-public sealed partial class CargoAppCartridgeSystem : EntitySystem
+public sealed partial class OrderLogCartridgeSystem : EntitySystem
 {
     [Dependency] private CartridgeLoaderSystem _cartridgeLoader = default!;
     [Dependency] private IConfigurationManager _configManager = default!;
@@ -21,8 +21,8 @@ public sealed partial class CargoAppCartridgeSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<CargoAppCartridgeComponent, CartridgeMessageEvent>(OnUiMessage);
-        SubscribeLocalEvent<CargoAppCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
+        SubscribeLocalEvent<OrderLogCartridgeComponent, CartridgeMessageEvent>(OnUiMessage);
+        SubscribeLocalEvent<OrderLogCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
         SubscribeLocalEvent<ProgramInstallationAttempt>(OnInstallationAttempt);
     }
 
@@ -32,7 +32,7 @@ public sealed partial class CargoAppCartridgeSystem : EntitySystem
     /// <remarks>
     /// The cartridge specific ui message event needs to inherit from the CartridgeMessageEvent
     /// </remarks>
-    private void OnUiMessage(EntityUid uid, CargoAppCartridgeComponent component, CartridgeMessageEvent args)
+    private void OnUiMessage(EntityUid uid, OrderLogCartridgeComponent component, CartridgeMessageEvent args)
     {
         UpdateUiState(uid, GetEntity(args.LoaderUid), component);
     }
@@ -40,12 +40,12 @@ public sealed partial class CargoAppCartridgeSystem : EntitySystem
     /// <summary>
     /// This gets called when the ui fragment needs to be updated for the first time after activating
     /// </summary>
-    private void OnUiReady(EntityUid uid, CargoAppCartridgeComponent component, CartridgeUiReadyEvent args)
+    private void OnUiReady(EntityUid uid, OrderLogCartridgeComponent component, CartridgeUiReadyEvent args)
     {
         UpdateUiState(uid, args.Loader, component);
     }
 
-    public void UpdateUiState(EntityUid uid, EntityUid loaderUid, CargoAppCartridgeComponent? component)
+    public void UpdateUiState(EntityUid uid, EntityUid loaderUid, OrderLogCartridgeComponent? component)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -56,7 +56,7 @@ public sealed partial class CargoAppCartridgeSystem : EntitySystem
         {
             // Display "loading failed" message
             var failureMessage = Loc.GetString("crew-manifest-cartridge-loading-failed");
-            var failureState = new CargoAppUiState([]);
+            var failureState = new OrderLogUiState([]);
             _cartridgeLoader.UpdateCartridgeUiState(loaderUid, failureState);
             return;
         }
@@ -67,7 +67,7 @@ public sealed partial class CargoAppCartridgeSystem : EntitySystem
         if (!TryComp<StationBankAccountComponent>(station, out var bank))
             return;
 
-        var state = new CargoAppUiState(
+        var state = new OrderLogUiState(
             _cargoSystem.RelevantOrders((station.Value, orderDatabase), bank.PrimaryAccount, approved: false).ToArray()
             );
         _cartridgeLoader.UpdateCartridgeUiState(loaderUid, state);

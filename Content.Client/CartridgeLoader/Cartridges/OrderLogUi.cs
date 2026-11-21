@@ -4,9 +4,9 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
-public sealed partial class CargoAppUi : UIFragment
+public sealed partial class OrderLogUi : UIFragment
 {
-    private CargoAppUiFragment? _fragment;
+    private OrderLogUiFragment? _fragment;
 
     public override Control GetUIFragmentRoot()
     {
@@ -15,14 +15,14 @@ public sealed partial class CargoAppUi : UIFragment
 
     public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
-        _fragment = new CargoAppUiFragment();
+        _fragment = new OrderLogUiFragment();
     }
 
     public override void UpdateState(BoundUserInterfaceState state)
     {
-        if (state is not CargoAppUiState cargoAppState)
+        if (state is not OrderLogUiState OrderLogState)
             return;
 
-        _fragment?.UpdateState(cargoAppState.Orders);
+        _fragment?.UpdateState(OrderLogState.Orders);
     }
 }

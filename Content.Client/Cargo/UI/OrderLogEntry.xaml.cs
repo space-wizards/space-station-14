@@ -6,11 +6,11 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Cargo.UI;
 
 [GenerateTypedNameReferences]
-public sealed partial class CargoAppEntry : BoxContainer
+public sealed partial class OrderLogEntry : BoxContainer
 {
     private static readonly StyleBoxFlat StripeStyle = new() { BackgroundColor = Color.FromHex("#040404") };
 
-    public CargoAppEntry()
+    public OrderLogEntry()
     {
         RobustXamlLoader.Load(this);
     }

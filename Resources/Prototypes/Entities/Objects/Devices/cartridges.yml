@@ -184,10 +184,10 @@
     - type: Sprite
       state: cart-sup
     - type: UIFragment
-      ui: !type:CargoAppUi
+      ui: !type:OrderLogUi
     - type: Cartridge
-      programName: cargo-app-program-name
+      programName: order-log-program-name
       icon:
         sprite: Interface/Misc/job_icons.rsi
         state: CargoTechnician
-    - type: CargoAppCartridge
+    - type: OrderLogCartridge

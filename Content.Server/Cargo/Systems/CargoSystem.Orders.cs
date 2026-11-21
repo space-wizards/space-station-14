@@ -25,7 +25,7 @@ public sealed partial class CargoSystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private EmagSystem _emag = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private CargoAppCartridgeSystem _cargoAppCartridge = default!;
+    [Dependency] private OrderLogCartridgeSystem _OrderLogCartridge = default!;
     [Dependency] private CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
 
     [SubscribeLocalEvent]
@@ -114,12 +114,12 @@ public sealed partial class CargoSystem
         {
             var reasonString = string.IsNullOrWhiteSpace(order.Reason)
                 ? string.Empty
-                : Loc.GetString("cargo-app-reason",
+                : Loc.GetString("order-log-reason",
                     ("hasReason", true),
                     ("reason", order.Reason));
 
-            var pdaEvent = new NewOrderAddedEvent(Loc.GetString("cargo-app-notification-message", ("requester", args.Requester), ("product", $"{args.Amount}x {product.Name}"), ("reason", reasonString)));
-            var query = EntityQueryEnumerator<CargoAppCartridgeComponent>();
+            var pdaEvent = new NewOrderAddedEvent(Loc.GetString("order-log-notification-message", ("requester", args.Requester), ("product", $"{args.Amount}x {product.Name}"), ("reason", reasonString)));
+            var query = EntityQueryEnumerator<OrderLogCartridgeComponent>();
 
             while (query.MoveNext(out var readerUid, out _))
             {
@@ -136,16 +136,16 @@ public sealed partial class CargoSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnNewOrderAdded(Entity<CargoAppCartridgeComponent> ent, ref NewOrderAddedEvent args)
+    private void OnNewOrderAdded(Entity<OrderLogCartridgeComponent> ent, ref NewOrderAddedEvent args)
     {
         if (Comp<CartridgeComponent>(ent).LoaderUid is not { } loaderUid)
             return;
 
-        _cargoAppCartridge.UpdateUiState(ent, loaderUid, ent.Comp);
+        _OrderLogCartridge.UpdateUiState(ent, loaderUid, ent.Comp);
 
         _cartridgeLoaderSystem.SendNotification(
             loaderUid,
-            Loc.GetString("cargo-app-notification-header"),
+            Loc.GetString("order-log-notification-header"),
             args.Message);
     }
 

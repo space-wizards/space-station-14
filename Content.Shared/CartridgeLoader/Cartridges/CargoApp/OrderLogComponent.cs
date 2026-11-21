@@ -3,4 +3,4 @@ using Robust.Shared.GameStates;
 namespace Content.Server.CartridgeLoader.Cartridges;
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class CargoAppCartridgeComponent : Component;
+public sealed partial class OrderLogCartridgeComponent : Component;

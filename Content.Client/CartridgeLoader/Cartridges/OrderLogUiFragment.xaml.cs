@@ -6,9 +6,9 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.CartridgeLoader.Cartridges;
 
 [GenerateTypedNameReferences]
-public sealed partial class CargoAppUiFragment : BoxContainer
+public sealed partial class OrderLogUiFragment : BoxContainer
 {
-    public CargoAppUiFragment()
+    public OrderLogUiFragment()
     {
         RobustXamlLoader.Load(this);
     }
@@ -16,6 +16,6 @@ public sealed partial class CargoAppUiFragment : BoxContainer
     public void UpdateState(CargoOrderData[] orders)
     {
         EmptyLabel.Visible = orders.Length == 0;
-        CargoAppListing.SetOrders(orders);
+        OrderLogListing.SetOrders(orders);
     }
 }
