@@ -52,7 +52,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
     {
         PopulateDataFields(state.TargetEntity, state.ScanMode, state.BloodLevel, state.Unrevivable, state.Bleeding);
         if (!float.IsNaN(state.Temperature))
-            PopulateTemperature(state.Temperature);
+            PopulateTemperature(state.TargetEntity, state.Temperature);
     }
 
     /// <summary>
@@ -173,8 +173,14 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
     /// <remarks>
     /// This has been isolated in a method due to temperature not being predicted, while the rest is.
     /// </remarks>
-    private void PopulateTemperature(float temperature)
+    private void PopulateTemperature(NetEntity? targetEntity, float temperature)
     {
+        var target = _entityManager.GetEntity(targetEntity);
+
+        // If the entity has been deleted,
+        if (_entityManager.Deleted(target))
+            return;
+
         TemperatureLabel.Text = !float.IsNaN(temperature)
             ? $"{temperature - Atmospherics.T0C:F1} °C ({temperature:F1} K)"
             : Loc.GetString("health-analyzer-window-entity-unknown-temperature-text");
