@@ -1,4 +1,6 @@
 using Content.Shared.CCVar;
+using Content.Shared.NPC;
+using Content.Shared.NPC.Systems;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
@@ -17,6 +19,7 @@ public sealed partial class SSDIndicatorSystem : EntitySystem
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private SharedNPCSystem _npc = default!;
 
     private bool _icSsdSleep;
     private float _icSsdSleepTime;
@@ -25,7 +28,8 @@ public sealed partial class SSDIndicatorSystem : EntitySystem
     {
         SubscribeLocalEvent<SSDIndicatorComponent, PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<SSDIndicatorComponent, PlayerDetachedEvent>(OnPlayerDetached);
-        SubscribeLocalEvent<SSDIndicatorComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<SSDIndicatorComponent, MapInitEvent>(OnPlayerMapInit);
+        SubscribeLocalEvent<ActiveNPCComponent, MapInitEvent>(OnNpcMapInit);
 
         _cfg.OnValueChanged(CCVars.ICSSDSleep, obj => _icSsdSleep = obj, true);
         _cfg.OnValueChanged(CCVars.ICSSDSleepTime, obj => _icSsdSleepTime = obj, true);
@@ -47,6 +51,9 @@ public sealed partial class SSDIndicatorSystem : EntitySystem
 
     private void OnPlayerDetached(EntityUid uid, SSDIndicatorComponent component, PlayerDetachedEvent args)
     {
+        if (HandleNpc(uid, component))
+            return;
+
         component.IsSSD = true;
 
         // Sets the time when the entity should fall asleep
@@ -59,14 +66,32 @@ public sealed partial class SSDIndicatorSystem : EntitySystem
     }
 
     // Prevents mapped mobs to go to sleep immediately
-    private void OnMapInit(EntityUid uid, SSDIndicatorComponent component, MapInitEvent args)
+    private void OnPlayerMapInit(EntityUid uid, SSDIndicatorComponent component, MapInitEvent args)
     {
-        if (!_icSsdSleep || !component.IsSSD)
+        if (!_icSsdSleep || !component.IsSSD || HandleNpc(uid, component))
             return;
 
         component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_icSsdSleepTime);
         component.NextUpdate = _timing.CurTime + component.UpdateInterval;
         Dirty(uid, component);
+    }
+
+    private void OnNpcMapInit(EntityUid uid, ActiveNPCComponent component, MapInitEvent args)
+    {
+        if (!TryComp<SSDIndicatorComponent>(uid, out var ssdComp))
+            return;
+
+        HandleNpc(uid, ssdComp);
+    }
+
+    private bool HandleNpc(EntityUid uid, SSDIndicatorComponent component)
+    {
+        if (!_npc.IsNpc(uid))
+            return false;
+
+        component.IsSSD = false;
+        Dirty(uid, component);
+        return true;
     }
 
     public override void Update(float frameTime)
