@@ -566,29 +566,34 @@
 ## Central Command
 
 - type: entity
-  name: CentComm official
   id: RandomHumanoidSpawnerCentcomOfficial
+  name: CentComm official spawner
+  suffix: Ghost role
   components:
-    - type: Sprite
-      sprite: Markers/jobs.rsi
-      state: centcom
-    - type: RandomHumanoidSpawner
-      settings: CentcomOfficial
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    state: centcom
+  - type: RandomHumanoidSpawner
+    settings: CentcomOfficial
 
 - type: randomHumanoidSettings
-  id: CentcomOfficial
   parent: EventHumanoidCentcomm
+  id: CentcomOfficial
   components:
-    - type: GhostRole
-      name: ghost-role-information-centcom-official-name
-      description: ghost-role-information-centcom-official-description
-      rules: ghost-role-information-nonantagonist-rules
-      raffle:
-        settings: default
-      job: CentralCommandOfficial
-    - type: Loadout
-      prototypes: [ CentcommGear ]
-      roleLoadout: [ RoleSurvivalStandard ]
+  - type: GhostRole
+    name: ghost-role-information-centcom-official-name
+    description: ghost-role-information-centcom-official-description
+    rules: ghost-role-information-nonantagonist-rules
+    raffle:
+      settings: default
+    job: CentralCommandOfficial
+  - type: RandomMetadata
+    nameSegments:
+    - NamesOfficial
+    nameFormat: name-format-official
+  - type: Loadout
+    prototypes: [ CentcommGear ]
+    roleLoadout: [ RoleSurvivalStandard ]
 
 ## Syndicate
 
