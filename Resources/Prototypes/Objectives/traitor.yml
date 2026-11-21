@@ -123,7 +123,7 @@
     requireMaroon: true
 
 - type: entity
-  parent: [BaseTraitorObjective, BaseKillRandomObjective]
+  parent: [BaseTraitorObjective, BaseKillObjective]
   id: KillStationAiObjective
   description: Nanotrasen proudly boasts about their state of the art artificial intelligence. Remind them it's just another toy that can be broken.
   components:
