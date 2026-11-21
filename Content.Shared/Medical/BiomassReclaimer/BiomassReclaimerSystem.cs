@@ -11,7 +11,6 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
-using Content.Shared.Jittering;
 using Content.Shared.Materials;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -19,6 +18,7 @@ using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Random.Helpers;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Throwing;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Audio.Systems;
@@ -38,7 +38,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
     [Dependency] private SharedAmbientSoundSystem _ambientSound = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private SharedJitteringSystem _jittering = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
     [Dependency] private SharedMaterialStorageSystem _material = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
@@ -122,7 +122,7 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
             return;
 
         if (_reclaimerQuery.TryComp(ent, out var reclaimer))
-            StartRunningEffects((ent.Owner, reclaimer));
+            StartRunningEffects((ent.Owner, reclaimer, ent.Comp));
     }
 
     [SubscribeLocalEvent]
@@ -168,13 +168,14 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
         active.NextMessTime += pauseDuration;
         active.PowerLossTime = null;
         Dirty(uid, active);
-        StartRunningEffects((uid, reclaimer));
+        StartRunningEffects(ent);
         PlayStartupSound((uid, reclaimer));
     }
 
-    private void StartRunningEffects(Entity<BiomassReclaimerComponent> ent)
+    private void StartRunningEffects(Entity<BiomassReclaimerComponent, ActiveBiomassReclaimerComponent> ent)
     {
-        _jittering.AddJitter(ent, ent.Comp.JitterAmplitude, ent.Comp.JitterFrequency);
+        if (ent.Comp1.ActiveStatus is {} status)
+            _statusEffects.TrySetStatusEffectDuration(ent, status, out ent.Comp2.ActiveStatus);
         _ambientSound.SetAmbience(ent, true);
     }
 
@@ -184,10 +185,10 @@ public abstract partial class BiomassReclaimerSystem : EntitySystem
             _audio.PlayPvs(ent.Comp.StartupSound, ent);
     }
 
-    private void StopRunningEffects(EntityUid uid)
+    private void StopRunningEffects(Entity<ActiveBiomassReclaimerComponent> ent)
     {
-        RemComp<JitteringComponent>(uid);
-        _ambientSound.SetAmbience(uid, false);
+        QueueDel(ent.Comp.ActiveStatus);
+        _ambientSound.SetAmbience(ent, false);
     }
 
     protected void StartProcessing(Entity<PhysicsComponent> toProcess, Entity<BiomassReclaimerComponent> ent)

@@ -41,6 +41,12 @@ public sealed partial class ActiveBiomassReclaimerComponent : Component
     public TimeSpan ProcessingEndTime;
 
     /// <summary>
+    /// A status effect entity applied to the reclaimer while it's active.
+    /// </summary>
+    [DataField]
+    public EntityUid? ActiveStatus;
+
+    /// <summary>
     /// Entities that can be randomly spawned while processing.
     /// </summary>
     [ViewVariables, AutoNetworkedField]

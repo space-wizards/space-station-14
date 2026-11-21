@@ -1,5 +1,6 @@
 using Content.Shared.FixedPoint;
 using Content.Shared.Materials;
+using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -53,16 +54,10 @@ public sealed partial class BiomassReclaimerComponent : Component
     public float ItemThrowMaxSpeed = 10f;
 
     /// <summary>
-    /// The jitter amplitude while processing.
+    /// Status effect that's applied to the reclaimer while active.
     /// </summary>
     [DataField]
-    public float JitterAmplitude = -10f;
-
-    /// <summary>
-    /// The jitter frequency while processing.
-    /// </summary>
-    [DataField]
-    public float JitterFrequency = 100f;
+    public EntProtoId<StatusEffectComponent>? ActiveStatus = "StatusEffectActiveBiomassReclaimer";
 
     /// <summary>
     /// How much blood can be spilled while processing a mob.
