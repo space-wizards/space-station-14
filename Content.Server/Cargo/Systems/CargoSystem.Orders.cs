@@ -25,7 +25,7 @@ public sealed partial class CargoSystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private EmagSystem _emag = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private OrderLogCartridgeSystem _OrderLogCartridge = default!;
+    [Dependency] private OrderLogCartridgeSystem _orderLogCartridge = default!;
     [Dependency] private CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
 
     [SubscribeLocalEvent]
@@ -141,7 +141,7 @@ public sealed partial class CargoSystem
         if (Comp<CartridgeComponent>(ent).LoaderUid is not { } loaderUid)
             return;
 
-        _OrderLogCartridge.UpdateUiState(ent, loaderUid, ent.Comp);
+        _orderLogCartridge.UpdateUiState(ent, loaderUid, ent.Comp);
 
         _cartridgeLoaderSystem.SendNotification(
             loaderUid,
