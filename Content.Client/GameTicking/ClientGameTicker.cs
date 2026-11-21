@@ -48,7 +48,7 @@ public sealed partial class ClientGameTicker : GameTicker
     public event Action? InfoBlobUpdated;
     public event Action? LobbyStatusUpdated;
     public event Action? LobbyLateJoinStatusUpdated;
-    public event Action<IReadOnlyDictionary<NetEntity, Dictionary<ProtoId<JobPrototype>, int?>>>? LobbyJobsAvailableUpdated;
+    public event Action? LobbyJobsAvailableUpdated;
 
     public override void Initialize()
     {
@@ -130,7 +130,7 @@ public sealed partial class ClientGameTicker : GameTicker
             _jobWeightsByStation[station] = jobWeights;
         }
 
-        LobbyJobsAvailableUpdated?.Invoke(JobsAvailable);
+        LobbyJobsAvailableUpdated?.Invoke();
     }
 
     [SubscribeNetworkEvent]
