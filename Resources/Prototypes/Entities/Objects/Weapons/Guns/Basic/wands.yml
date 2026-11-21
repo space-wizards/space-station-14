@@ -10,7 +10,7 @@
       map: ["effect"]
   - type: Gun
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg
+      path: /Audio/Magic/staff_animation.ogg
     projectileSpeed: 25
   - type: BasicEntityAmmoProvider
     proto: ProjectilePolyboltCarp
@@ -73,7 +73,7 @@
       map: ["effect"]
   - type: Gun
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg
+      path: /Audio/Magic/staff_animation.ogg
     projectileSpeed: 25
   - type: BasicEntityAmmoProvider
     proto: ProjectileLocker
@@ -129,7 +129,7 @@
       map: ["effect"]
   - type: Gun
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/Magic/staff_door.ogg
+      path: /Audio/Magic/staff_door.ogg
     projectileSpeed: 25
   - type: BasicEntityAmmoProvider
     proto: ProjectilePolyboltDoor
