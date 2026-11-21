@@ -3,6 +3,7 @@ using Content.Client.Items;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
 using Content.Shared.Decals;
+using Content.Shared.Item;
 using Content.Shared.SprayPainter;
 using Content.Shared.SprayPainter.Components;
 using Content.Shared.SprayPainter.Prototypes;
@@ -22,6 +23,8 @@ public sealed partial class SprayPainterSystem : SharedSprayPainterSystem
 {
     [Dependency] private UserInterfaceSystem _ui = default!;
 
+    public static readonly ProtoId<ItemStatusPrototype> SprayPainterItemStatus = "SprayPainter";
+
     public List<SprayPainterDecalEntry> Decals = [];
     public Dictionary<string, List<string>> PaintableGroupsByCategory = new();
     public Dictionary<string, Dictionary<string, EntProtoId>> PaintableStylesByGroup = new();
@@ -30,7 +33,7 @@ public sealed partial class SprayPainterSystem : SharedSprayPainterSystem
     {
         base.Initialize();
 
-        Subs.ItemStatus<SprayPainterComponent>(ent => new StatusControl(ent));
+        Subs.ItemStatus<SprayPainterComponent>(ent => new StatusControl(ent), SprayPainterItemStatus);
         SubscribeLocalEvent<SprayPainterComponent, AfterAutoHandleStateEvent>(OnStateUpdate);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
 
