@@ -212,10 +212,7 @@ public abstract partial class ClothingSystem : EntitySystem
     {
         foreach (var layer in clothing.ClothingVisuals[slot])
         {
-            if (layer.MapKeys == null)
-                return;
-
-            if (!layer.MapKeys.Contains(mapKey))
+            if (layer.MapKeys == null || !layer.MapKeys.Contains(mapKey))
                 continue;
 
             layer.Color = color;
@@ -226,10 +223,7 @@ public abstract partial class ClothingSystem : EntitySystem
     {
         foreach (var layer in clothing.ClothingVisuals[slot])
         {
-            if (layer.MapKeys == null)
-                return;
-
-            if (!layer.MapKeys.Contains(mapKey))
+            if (layer.MapKeys == null || !layer.MapKeys.Contains(mapKey))
                 continue;
 
             layer.State = state;
