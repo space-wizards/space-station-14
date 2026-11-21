@@ -110,8 +110,6 @@
     messages: null
   - type: Tag
     tags:
-    - ForceFixRotations
-    - Window
     - SmeltingImmune
 
 - type: entity
@@ -161,7 +159,6 @@
   - type: Tag
     tags:
     - Diagonal
-    - Window
   - type: Icon
     sprite: Structures/Windows/window-diagonal-plastitanium.rsi
     state: state0
@@ -205,8 +202,6 @@
     messages: null
   - type: Tag
     tags:
-    - ForceFixRotations
-    - Window
     - SmeltingImmune
 
 - type: entity

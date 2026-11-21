@@ -274,7 +274,6 @@
   components:
   - type: Tag
     tags:
-    - ForceFixRotations
     - MothershipCoreGhostrole
   - type: GhostRole
     name: ghost-role-information-mothership-core-name
@@ -296,7 +295,6 @@
   components:
   - type: Tag
     tags:
-    - ForceFixRotations
     - XenoborgGhostrole
   - type: GhostRole
     name: ghost-role-information-xenoborg-name
