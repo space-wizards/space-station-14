@@ -23,7 +23,7 @@ public sealed partial class TriggerOnVerbSystem : TriggerOnXSystem
         {
             Text = Loc.GetString(ent.Comp.Text),
             Act = () => Trigger.Trigger(ent.Owner, user, ent.Comp.KeyOut),
-            Priority = 2 // should be above any timer settings
+            Priority = ent.Comp.Priority,
         });
     }
 }

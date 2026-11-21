@@ -1,5 +1,7 @@
 using Content.Shared.Botany.Systems;
+using Content.Shared.Botany.Traits;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Botany.Components;
 
@@ -11,11 +13,11 @@ namespace Content.Shared.Botany.Components;
 public sealed partial class PlantComponent : Component
 {
     /// <summary>
-    /// The mutation effects that have been applied to this plant.
-    /// Server-only: mutations are applied as effects which are synced separately.
+    /// The heritable traits of this plant.
+    /// The traits set on a plant prototype are the species' default traits.
     /// </summary>
-    [DataField]
-    public List<RandomPlantMutation> Mutations = [];
+    [DataField, AutoNetworkedField]
+    public List<ProtoId<PlantTraitPrototype>> Traits = [];
 
     /// <summary>
     /// The plant's max health.

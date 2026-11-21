@@ -1,0 +1,90 @@
+# Heritable plant traits. Plants list them in PlantComponent.traits;
+# mutations add them with the PlantAddTrait effect, and swabs cross them between plants.
+
+- type: plantTrait
+  id: Slippery
+  name: plant-trait-name-slippery
+  description: mutation-plant-slippery
+  produceEffects:
+  - !type:Slipify
+
+- type: plantTrait
+  id: Squash
+  name: plant-trait-name-squash
+  description: plant-trait-description-squash
+  produceEffects:
+  - !type:AddComponents
+    components:
+    - type: Damageable
+    - type: Injurable
+      damageContainer: Biological
+    - type: DamageOnLand # Bursts when thrown onto the floor, not only when it hits something.
+      damage:
+        types:
+          Blunt: 1
+    - type: DamageOtherOnHit
+      damage:
+        types:
+          Blunt: 1
+    # Squashing it by hand, or slipping on it if it is also slippery, bursts it all over that person.
+    - type: TriggerOnVerb
+      text: plant-trait-verb-squash
+      priority: 3 # Above eating, so alt-click squashes it. Using it in hand still eats it.
+      keyOut: squash
+    - type: TriggerOnSlip
+      keyOut: squash
+    - type: SplashOnTrigger
+      keysIn: [ squash ]
+      targetUser: true
+      solution: food
+      sound:
+        collection: desecration
+      deleteAfterSplash: true
+  - !type:AddComponents
+    replaceExisting: true # Items already break on impact, but only at high speed.
+    components:
+    - type: DamageOnHighSpeedImpact
+      minimumSpeed: 0.1
+      damage:
+        types:
+          Blunt: 1
+      soundHit:
+        collection: MetalThud
+  - !type:Squashify
+    sound:
+      collection: desecration
+
+- type: plantTrait
+  id: NettleSting
+  name: plant-trait-name-nettle-sting
+  description: plant-trait-description-nettle-sting
+  pollinationProtected: true
+  produceEffects:
+  - !type:AddComponents
+    components:
+    - type: MeleeWeapon
+      damage:
+        types:
+          Heat: 10
+    - type: MeleeChemicalInjector
+      transferAmount: 3 #TODO someone you would need 2 nettles and about 6-7 hits, the DOT is likely to crit them if they are running away with almost no health
+      solution: food
+      pierceArmor: false
+
+- type: plantTrait
+  id: DeathNettleSting
+  name: plant-trait-name-death-nettle-sting
+  description: plant-trait-description-death-nettle-sting
+  pollinationProtected: true
+  produceEffects:
+  - !type:AddComponents
+    components:
+    - type: MeleeWeapon
+      damage:
+        types:
+          Heat: 8
+          Caustic: 8
+    - type: MeleeChemicalInjector
+      transferAmount: 5
+      solution: food
+      pierceArmor: true

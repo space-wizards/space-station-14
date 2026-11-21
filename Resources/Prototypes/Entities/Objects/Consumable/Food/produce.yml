@@ -242,10 +242,6 @@
     size: Small
     sprite: Objects/Specific/Hydroponics/nettle.rsi
     heldPrefix: produce
-  - type: MeleeWeapon
-    damage:
-      types:
-        Heat: 10
   - type: Solution
     solution:
       maxVol: 6
@@ -254,10 +250,6 @@
         Quantity: 3
   - type: Produce
     plantId: NettlePlants
-  - type: MeleeChemicalInjector
-    transferAmount: 3 #TODO someone you would need 2 nettles and about 6-7 hits, the DOT is likely to crit them if they are running away with almost no health
-    solution: food
-    pierceArmor: false
   - type: Extractable
     grindableSolutionName: food
 
@@ -273,11 +265,6 @@
     size: Small
     sprite: Objects/Specific/Hydroponics/death_nettle.rsi
     heldPrefix: produce
-  - type: MeleeWeapon
-    damage:
-      types:
-        Heat: 8
-        Caustic: 8
   - type: Solution
     solution:
       reagents:
@@ -287,10 +274,6 @@
         Quantity: 7.5
   - type: Produce
     plantId: DeathNettlePlants
-  - type: MeleeChemicalInjector
-    transferAmount: 5
-    solution: food
-    pierceArmor: true
   - type: Extractable
     grindableSolutionName: food
   - type: DamageOnInteract
@@ -889,7 +872,7 @@
 
 - type: entity
   name: tomato
-  parent: [FoodProduceBase, ItemHeftyBase]
+  parent: FoodProduceBase
   id: FoodTomato
   description: I say to-mah-to, you say tom-mae-to.
   components:
@@ -917,27 +900,6 @@
       reagents:
       - ReagentId: JuiceTomato
         Quantity: 10
-  - type: Damageable
-  - type: Injurable
-    damageContainer: Biological
-  - type: DamageOnHighSpeedImpact
-    minimumSpeed: 0.1
-    damage:
-      types:
-        Blunt: 1
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 1
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: desecration
-      - !type:SpillBehavior
-        solution: food
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Tag
     tags:
     - Fruit
@@ -975,19 +937,6 @@
       reagents:
       - ReagentId: SpaceLube
         Quantity: 10
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 1
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: desecration
-      - !type:SpillBehavior
-        solution: food
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Tag
     tags:
     - Fruit
@@ -1022,19 +971,6 @@
       reagents:
       - ReagentId: Blood
         Quantity: 10
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 1
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: desecration
-      - !type:SpillBehavior
-        solution: food
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Tag
     tags:
     - Fruit # Fuck you they're a fruit
@@ -2115,7 +2051,7 @@
 
 - type: entity
   name: watermelon
-  parent: [FoodProduceBase, ItemHeftyBase, BaseSlicingRefinableFood]
+  parent: [FoodProduceBase, BaseSlicingRefinableFood]
   id: FoodWatermelon
   description: Round green object that you can slice and eat.
   components:
@@ -2147,27 +2083,6 @@
       reagents:
       - ReagentId: JuiceWatermelon
         Quantity: 40
-  - type: Damageable
-  - type: Injurable
-    damageContainer: Biological
-  - type: DamageOnHighSpeedImpact
-    minimumSpeed: 0.1
-    damage:
-      types:
-        Blunt: 1
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 1
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: desecration
-      - !type:SpillBehavior
-        solution: food
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: ToolRefinable
     refineResult:
     - id: FoodWatermelonSlice
@@ -2221,7 +2136,7 @@
 
 - type: entity
   name: holymelon
-  parent: [FoodProduceBase, ItemHeftyBase, BaseSlicingRefinableFood]
+  parent: [FoodProduceBase, BaseSlicingRefinableFood]
   id: FoodHolymelon
   description: The water within this melon has been blessed by some deity that's particularly fond of watermelon.
   components:
@@ -2252,27 +2167,6 @@
       reagents:
       - ReagentId: Wine
         Quantity: 20
-  - type: Damageable
-  - type: Injurable
-    damageContainer: Biological
-  - type: DamageOnHighSpeedImpact
-    minimumSpeed: 0.1
-    damage:
-      types:
-        Blunt: 1
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 1
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: desecration
-      - !type:SpillBehavior
-        solution: food
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: ToolRefinable
     refineResult:
     - id: FoodHolymelonSlice
