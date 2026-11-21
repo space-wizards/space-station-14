@@ -28,6 +28,10 @@ public sealed partial class StationRecordsSystem
                 !someRecord.JobTitle.Contains(filterLowerCaseValue, StringComparison.OrdinalIgnoreCase),
             StationRecordFilterType.Species =>
                 !someRecord.Species.Contains(filterLowerCaseValue, StringComparison.OrdinalIgnoreCase),
+            StationRecordFilterType.Gender =>
+                !someRecord.Gender.ToString().Contains(filterLowerCaseValue, StringComparison.OrdinalIgnoreCase),
+            StationRecordFilterType.Sex =>
+                !someRecord.Sex.ToString().Contains(filterLowerCaseValue, StringComparison.OrdinalIgnoreCase),
             StationRecordFilterType.Prints => someRecord.Fingerprint != null
                 && IsFilterWithSomeCodeValue(someRecord.Fingerprint, filterLowerCaseValue),
             StationRecordFilterType.DNA => someRecord.DNA != null
