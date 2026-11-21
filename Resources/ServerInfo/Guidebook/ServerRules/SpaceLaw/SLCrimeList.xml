@@ -1,6 +1,6 @@
 <Document>
   # Space Law: Crime Listing
-  Crime codes are colored by linked crime groups, which are classifications of crimes that are similar in nature. These classifications are useful for differentiating violent criminals from anti-authoritarian ones, for example.
+  Crime codes are colored by linked crime groups, which are classifications of crimes that are similar in nature. These classifications are useful for differentiating violent criminals from general nuisances, for example.
 
   ## Quick Crime Guide
   <Table Columns="6">
@@ -159,17 +159,17 @@
     </ColorBox>
     <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Kidnapping (V)
-      </Box>
-    </ColorBox>
-    <ColorBox Color="#4d2e2e">
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Attempted Murder (V)
       </Box>
     </ColorBox>
     <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Murder (V)
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#4d2e2e">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        Prevention of Revival (V)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -187,8 +187,9 @@
         Gross Negligence (V)
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        Kidnapping (V)
       </Box>
     </ColorBox>
     <ColorBox Color="#4d2e2e">
@@ -273,9 +274,9 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Petty theft covers the possession of items that were not lawfully or consensually given to the holder.
+        Petty Theft covers the possession of items that were not lawfully or consensually given to the holder.
         This may include departmental contraband if the contraband was not approved for the holder.
-        Items covered by petty theft are usually easily replaceable, low-value, or low-danger.
+        Items covered by Petty Theft are usually easily replaceable, low-value, or low-danger.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -295,7 +296,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Painting obscene graffiti, smashing bar glasses, breaking lights, and eating a crewmember's plushie is vandalism, breaking a window into
+        Painting obscene graffiti, smashing bar glasses, breaking lights, and eating a crewmember's plushie is Vandalism, breaking a window into
         space or secure areas is not.
       </Box>
     </ColorBox>
@@ -331,7 +332,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To inflict unnecessary suffering or harm on a non-sapient being with malicious intent.
+        To inflict unnecessary suffering or harm on an animal with malicious intent.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -352,12 +353,12 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To recklessly put yourself or others in danger, either through direct action or failure to act.
+        To recklessly put oneself or others in danger, either through direct action or failure to act.
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Covers industrial accidents, industrial negligence, self-experimentation, or even medical malpractice.
+        Covers industrial accidents and negligence, self-experimentation, or even medical malpractice.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -445,9 +446,9 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        The difference between theft and grand theft is based on how crucial the stolen item is; this is mostly
+        The difference between Theft and Grand Theft is based on how crucial the stolen item is; this is mostly
         used for the theft of command staff items, things like door remotes, hardsuits, jetpacks, and irreplaceable
-        machine parts. Additionally, stealing anything from the armory is grand theft, including seized contraband.
+        machine parts. Additionally, stealing anything from the armory is Grand Theft, including seized contraband.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -468,7 +469,7 @@
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Includes destruction of job equipment, such as hydro trays, booze dispensers, and chemical dispensers. It is a step up from
-        vandalism but a step down from critical property destruction.
+        Vandalism but a step down from critical property destruction.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -503,13 +504,13 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To threaten to or to use physical force against a member of the crew without the intent to kill.
+        To threaten to use or to actually use physical force against a member of the crew without the intent to kill.
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Attempted murder and assault are different; a fist fight is most likely assault. A shooting may be an
-        attempted murder. Ensure you have context before making the call.
+        Attempted Murder and Assault are different; a fist fight is most likely Assault. A shooting may be an
+        Attempted Murder. Ensure you have context before making the call.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -530,8 +531,7 @@
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         To cause an unreasonable amount of damage to a part of the station as a result of negligence. This
-        could be purposefully allowing anomalies to go critical, or causing an accidental but not permanent
-        death.
+        could be purposefully allowing anomalies to go critical, or causing accidental bodily harm to a crewmember.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -608,12 +608,32 @@
     </ColorBox>
     <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        Attempted Murder (V)
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        To try to use force against a member of the crew with the clear intent to kill.
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        This covers any intentional but unsuccessful attempt to kill another crewmember.
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        3-04
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#4d2e2e">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Kidnapping (V)
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To unlawfully restrain, transport, control, or confine a sapient being against that individual’s will.
+        To unlawfully restrain, transport, control, or confine a member of the crew against that individual’s will.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -623,7 +643,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        3-04
+        3-05
       </Box>
     </ColorBox>
     <ColorBox Color="#3b4354">
@@ -678,12 +698,13 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To break out of a cell or custody with the intention of escaping.
+        To break someone out of a cell or custody with the intention of escaping.
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Includes breaking out other people.
+        Includes uncuffing restrained suspects or damaging the brig to the extent that inmates can escape.
+        If the escapee was sentenced to permanent confinement, then the correct charge is Breach of Permanent Confinement.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -714,17 +735,17 @@
     </ColorBox>
     <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Attempted Murder (V)
+        Murder (V)
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To try to use force against a crewmember with the clear intent to kill.
+        To kill a member of the crew.
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        This covers any intentional but unsuccessful attempt to kill another member of the crew.
+        This covers any successful attempt to kill a member of the crew.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -739,13 +760,13 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To incidentally kill a crewmember without intent.
+        To incidentally kill a member of the crew without intent.
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Includes manslaughter in self-defense and negligent manslaughter.
-        If there is provable intent, then the subject should instead be charged with attempted murder.
+        If there is provable intent, then the subject should instead be charged with Murder.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -756,7 +777,7 @@
   </Table>
 
   ## Capital Crimes
-  - Capital crimes should usually lead to a death sentence or shift-lasting detainment.
+  - Capital crimes should usually lead to shift-lasting detainment or the death sentence.
   <Table Columns="4">
     <ColorBox>
       <Box>
@@ -790,7 +811,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Includes breaking out other people sentenced to permanent confinement.
+        Similar to Breach of Custody but more severe. If multiple attempts to escape are made, execution is recommended.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -805,7 +826,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To engage in maliciously destructive actions which threaten to destroy, or successfully destroy a vessel or habitat.
+        To engage in maliciously destructive actions which threaten to destroy or successfully destroy a vessel or habitat.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -821,7 +842,7 @@
     </ColorBox>
     <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Murder (V)
+        Prevention of Revival (V)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -831,8 +852,8 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        This covers any successful attempt to kill a member of the crew and prevent resuscitation.
-        If the victim was declared legally dead, but was able to be resuscitated, then it is only Attempted Murder.
+        This covers any successful attempt to kill a member of the crew and prevent resuscitation. If the victim was declared legally dead but could still be resuscitated,
+        then the correct charge is Murder. You cannot charge a perpetrator with "attempted" Prevention of Revival.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -847,13 +868,12 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To attempt to kill three or more sapient beings with malicious intent.
+        To kill three or more members of the crew in quick succession.
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Applies when there have been three or more Attempted Murders with the intention to kill,
-        or if the perpetrator has committed three or more acts of Manslaughter.
+        Applies when the perpetrator commits three or more acts of Murder or Manslaughter.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -868,7 +888,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To refuse to comply with a reasonable Mind Shielding procedure.
+        To refuse to comply with a reasonable mind shielding procedure.
       </Box>
     </ColorBox>
     <ColorBox>
