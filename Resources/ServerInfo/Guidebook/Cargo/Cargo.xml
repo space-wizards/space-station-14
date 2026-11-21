@@ -23,13 +23,13 @@
 
   <Box>
     <GuideEntityEmbed Entity="AppraisalTool"/>
-    <GuideEntityEmbed Entity="CargoPallet"/>
+    <GuideEntityEmbed Entity="Catwalk"/>
     <GuideEntityEmbed Entity="CrateGenericSteel"/>
   </Box>
 
   Upon finding something valuable, bring it to the [color=cyan]Cargo Bay[/color]. If it fits inside a [color=cyan]Crate[/color], find an empty crate and put the items in it.
 
-  If the [color=cyan]Cargo Shuttle[/color] is away, you can put all the items you want to sell onto the [color=cyan]Cargo Pallets[/color]. Once the shuttle has docked at the station, you load the crates and everything else to be sold onto it.
+  Once the shuttle has docked at the station, you load the crates and everything else to be sold onto it.
 
   <Box>
     <GuideEntityEmbed Entity="ComputerPalletConsole"/>
