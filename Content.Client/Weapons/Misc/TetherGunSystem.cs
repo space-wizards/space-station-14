@@ -23,8 +23,7 @@ public sealed partial class TetherGunSystem : SharedTetherGunSystem
         base.Initialize();
         SubscribeLocalEvent<TetheredComponent, ComponentStartup>(OnTetheredStartup);
         SubscribeLocalEvent<TetheredComponent, ComponentShutdown>(OnTetheredShutdown);
-        SubscribeLocalEvent<TetherGunComponent, AfterAutoHandleStateEvent>(OnAfterState);
-        SubscribeLocalEvent<ForceGunComponent, AfterAutoHandleStateEvent>(OnAfterState);
+        SubscribeLocalEvent<BaseForceGunComponent, AfterAutoHandleStateEvent>(OnAfterState);
         _overlay.AddOverlay(new TetherGunOverlay(EntityManager));
     }
 
@@ -58,8 +57,8 @@ public sealed partial class TetherGunSystem : SharedTetherGunSystem
         var player = _player.LocalEntity;
 
         if (player == null ||
-            !TryGetTetherGun(player.Value, out _, out var gun) ||
-            gun.TetherEntity == null)
+            !TryGetGun(player.Value, out _, out var gun) ||
+            !Exists(gun.TetherEntity))
         {
             return;
         }
@@ -70,16 +69,8 @@ public sealed partial class TetherGunSystem : SharedTetherGunSystem
         if (mouseWorldPos.MapId == MapId.Nullspace)
             return;
 
-        EntityCoordinates coords;
-
-        if (_mapSystem.TryFindGridAt(mouseWorldPos, out var gridUid, out _))
-        {
-            coords = TransformSystem.ToCoordinates(gridUid, mouseWorldPos);
-        }
-        else
-        {
-            coords = TransformSystem.ToCoordinates(_mapSystem.GetMap(mouseWorldPos.MapId), mouseWorldPos);
-        }
+        if (!TryGetCoords(mouseWorldPos, out var coords))
+            return;
 
         const float bufferDistance = 0.1f;
 
@@ -103,13 +94,9 @@ public sealed partial class TetherGunSystem : SharedTetherGunSystem
             return;
         }
 
-        if (TryComp<ForceGunComponent>(component.Tetherer, out var force))
+        if (TryComp<BaseForceGunComponent>(component.Tetherer, out var force))
         {
             _sprite.SetColor((uid, sprite), force.LineColor);
-        }
-        else if (TryComp<TetherGunComponent>(component.Tetherer, out var tether))
-        {
-            _sprite.SetColor((uid, sprite), tether.LineColor);
         }
     }
 
