@@ -25,7 +25,7 @@ public sealed partial class RandomArtifactSpriteSystem : VisualizerSystem<Random
         // layered artifact sprite
         if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), ArtifactsVisualLayers.UnlockingEffect, out var layer, false))
         {
-            var spriteState = "ano" + spriteIndexStr;
+            var spriteState = component.Prefix + spriteIndexStr;
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), ArtifactsVisualLayers.Base, spriteState);
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), layer, spriteState + "_on");
             SpriteSystem.LayerSetVisible((uid, args.Sprite), layer, isUnlocking);
@@ -39,7 +39,7 @@ public sealed partial class RandomArtifactSpriteSystem : VisualizerSystem<Random
         // non-layered
         else
         {
-            var spriteState = "ano" + spriteIndexStr + spritePrefix;
+            var spriteState = component.Prefix + spriteIndexStr + spritePrefix;
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), ArtifactsVisualLayers.Base, spriteState);
         }
     }
