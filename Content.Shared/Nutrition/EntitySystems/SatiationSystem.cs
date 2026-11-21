@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Alert;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.Prototypes;
@@ -288,6 +289,50 @@ public abstract partial class SatiationSystem : EntitySystem
     )
     {
         satiation.OverrideThresholds.Clear();
+    }
+
+    private bool TryGetNearestThresholds(Entity<SatiationComponent> ent,
+        [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
+        float value,
+        out int? nextHigherThreshold,
+        out int? nextLowerThreshold
+    )
+    {
+        nextHigherThreshold = null;
+        nextLowerThreshold = null;
+        if (!TryGetThresholds(ent, type, out var thresholds))
+            return false;
+
+        var valuesByDescendingThreshold = thresholds
+            .OrderByDescending(it => it.Value)
+            .GetEnumerator();
+        if (!valuesByDescendingThreshold.MoveNext())
+            return false;
+
+        if (value > valuesByDescendingThreshold.Current.Value)
+        {
+            nextHigherThreshold = null;
+            nextLowerThreshold = valuesByDescendingThreshold.Current.Value;
+            return true;
+        }
+
+        var nextHigher = valuesByDescendingThreshold.Current;
+        while (valuesByDescendingThreshold.MoveNext())
+        {
+            var nextLower = valuesByDescendingThreshold.Current;
+            if (value > nextLower.Value)
+            {
+                nextHigherThreshold = nextHigher.Value;
+                nextLowerThreshold = nextLower.Value;
+                return true;
+            }
+
+            nextHigher = nextLower;
+        }
+
+        nextHigherThreshold = nextHigher.Value;
+        nextLowerThreshold = null;
+        return true;
     }
 }
 

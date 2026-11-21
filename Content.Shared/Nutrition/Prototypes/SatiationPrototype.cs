@@ -34,9 +34,6 @@ public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototyp
     [DataField(required: true)]
     public float BaseChangeRate;
 
-    /// <summary>
-    /// The highest value this satiation can have. Increases beyond this value are clamped to this value.
-    /// </summary>
     [DataField("maximumValue", required: true)]
     private SatiationValue _maximumValue;
 
@@ -115,6 +112,8 @@ public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototyp
     /// <paramref name="satiationValue"/> is an immediate value, use its contained integer value. If it is a key,
     /// attempts to look up the integer value of that key in <see cref="Thresholds"/>; in the case that a key not
     /// present in this proto type is requested, returns null.
+    /// If the thresholds should be overridden by <see cref="Satiation.OverrideThresholds">
+    /// use <see cref="SatiationSystem.GetThresholdValueOrNull"> instead.
     /// </summary>
     public int? GetValueOrNull(SatiationValue satiationValue)
     {

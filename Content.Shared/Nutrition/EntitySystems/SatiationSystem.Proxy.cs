@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.Prototypes;
@@ -327,11 +328,21 @@ public abstract partial class SatiationSystem
         DirtyField(entity, SatiationComponent.SatiationFieldName);
     }
 
+    /// <summary>
+    /// Sets the <see cref="Satiation.OverrideThresholds"> which will override the prototype thresholds.
+    /// </summary>
+    /// <param name="entity">The entity to change the override for.</param>
+    /// <param name="type">The type of satiation to change.</param>
+    /// <param name="key">The threshold to change, <see cref="SatiationValue.Key"> must not be null.</param>
+    /// <param name="value">The value to change the threshold to.</param>
+    /// <param name="preventReordering">If true will prevent the order of thresholds from changing by
+    /// capping the current change at 1 below or above the next threshold.</param>
     public void SetOverrideThreshold(
         Entity<SatiationComponent> entity,
         [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
         SatiationValue key,
-        int value
+        int value,
+        bool preventReordering = false
     )
     {
         if (key.Key == null)
@@ -339,15 +350,37 @@ public abstract partial class SatiationSystem
 
         if (GetAndResolveSatiationOfType(entity, type) is not var (satiation, proto))
             return;
+
+        if (preventReordering && TryGetNearestThresholds(entity, type, value, out var nextHigherThreshold, out var nextLowerThreshold))
+        {
+            if (nextHigherThreshold != null && value > satiation.LastAuthoritativeValue  && value > nextHigherThreshold)
+            {
+                value = nextHigherThreshold.Value - 1;
+            }
+            else if (nextLowerThreshold != null && value < satiation.LastAuthoritativeValue && value > nextLowerThreshold)
+            {
+                value = nextLowerThreshold.Value + 1;
+            }
+        }
 
         SetOverrideThreshold(entity, satiation, proto, key.Key, value);
     }
 
+    /// <summary>
+    /// Changes the <see cref="Satiation.OverrideThresholds"> by an offset which will override the prototype thresholds.
+    /// </summary>
+    /// <param name="entity">The entity to change the override for.</param>
+    /// <param name="type">The type of satiation to change.</param>
+    /// <param name="key">The threshold to change, <see cref="SatiationValue.Key"> must not be null.</param>
+    /// <param name="amount">The amount to offset the threshold by.</param>
+    /// <param name="preventReordering">If true will prevent the order of thresholds from changing by
+    /// capping the current change at 1 below or above the next threshold.</param>
     public void ModifyOverrideThreshold(
         Entity<SatiationComponent> entity,
         [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
         SatiationValue key,
-        int amount
+        int amount,
+        bool preventReordering = false
     )
     {
         if (key.Key == null)
@@ -356,12 +389,33 @@ public abstract partial class SatiationSystem
         if (GetAndResolveSatiationOfType(entity, type) is not var (satiation, proto))
             return;
 
-        if (GetThresholdValueOrNull(satiation, key.Key) is { } currentValue)
+        if (GetThresholdValueOrNull(satiation, key.Key) is not { } currentValue)
+            return;
+
+        var value = currentValue + amount;
+
+        if (preventReordering && TryGetNearestThresholds(entity, type, value, out var nextHigherThreshold, out var nextLowerThreshold))
         {
-            SetOverrideThreshold(entity, satiation, proto, key.Key, currentValue + amount);
+            if (value > satiation.LastAuthoritativeValue && nextHigherThreshold != null && value > nextHigherThreshold)
+            {
+                value = nextHigherThreshold.Value - 1;
+            }
+            else if (value < satiation.LastAuthoritativeValue && nextLowerThreshold != null && value > nextLowerThreshold)
+            {
+                value = nextLowerThreshold.Value + 1;
+            }
         }
+
+        SetOverrideThreshold(entity, satiation, proto, key.Key, value);
+
     }
 
+    /// <summary>
+    /// Clears the <see cref="Satiation.OverrideThresholds"> for a specific key.
+    /// </summary>
+    /// <param name="entity">The entity to clear the override for.</param>
+    /// <param name="type">The type of satiation.</param>
+    /// <param name="key">The threshold to clear, <see cref="SatiationValue.Key"> must not be null.</param>
     public void ClearOverrideThreshold(
         Entity<SatiationComponent> entity,
         [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
@@ -380,6 +434,11 @@ public abstract partial class SatiationSystem
         }
     }
 
+    /// <summary>
+    /// Clears all of the <see cref="Satiation.OverrideThresholds">.
+    /// </summary>
+    /// <param name="entity">The entity to clear the overrides for.</param>
+    /// <param name="type">The type of satiation.</param>
     public void ClearAllOverrideThreshold(
         Entity<SatiationComponent> entity,
         [ForbidLiteral] ProtoId<SatiationTypePrototype> type
@@ -391,11 +450,49 @@ public abstract partial class SatiationSystem
         ClearAllOverrideThreshold(entity, satiation);
     }
 
+    /// <summary>
+    /// Attempts to get an integer value from the given <paramref name="satiationValue"/>. If
+    /// <paramref name="satiationValue"/> is an immediate value, use its contained integer value. If it is a key,
+    /// attempts to look up the integer value of that key in <see cref="SatiationPrototype.Thresholds"/>; in the case that a key not
+    /// present in this proto type is requested, returns null.
+    /// The function differs from <see cref="SatiationPrototype.GetValueOrNull"/> in that
+    /// <see cref="Satiation.OverrideThresholds"> will overwrite the threshold values.
+    /// </summary>
     public int? GetThresholdValueOrNull(Entity<SatiationComponent> ent, [ForbidLiteral] ProtoId<SatiationTypePrototype> type, SatiationValue satiationValue)
     {
         if (GetAndResolveSatiationOfType(ent, type) is not var (satiation, _))
             return null;
 
         return GetThresholdValueOrNull(satiation, satiationValue);
+    }
+
+    /// <summary>
+    /// Gets the threshold values and their keys of a given satiation. These thresholds are from the prototype and
+    /// overwritten by <see cref="Satiation.OverrideThresholds">.
+    /// </summary>
+    public bool TryGetThresholds(Entity<SatiationComponent> ent, [ForbidLiteral] ProtoId<SatiationTypePrototype> type, [NotNullWhen(true)] out Dictionary<SatiationValue, int>? thresholds)
+    {
+        thresholds = null;
+
+        if (GetAndResolveSatiationOfType(ent, type) is not var (satiation, _))
+            return false;
+
+        if (!ProtoMan.Resolve(satiation.Prototype, out var proto))
+            return false;
+
+        thresholds = new();
+
+        foreach (var threshold in proto.Thresholds)
+        {
+            if (proto.GetValueOrNull(threshold.Key) is not { } value)
+                continue;
+
+            if (satiation.OverrideThresholds.TryGetValue(threshold.Key, out var overrideValue))
+                value = overrideValue;
+
+            thresholds[threshold.Key] = value;
+        }
+
+        return true;
     }
 }

@@ -73,6 +73,9 @@ public sealed partial class Satiation : IRobustCloneable<Satiation>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan? NextAlertUpdateTime;
 
+    /// <summary>
+    /// Overrides the values for <see cref="SatiationPrototype.Thresholds"/>
+    /// </summary>
     [DataField(customTypeSerializer: typeof(DictionarySerializer<string, int>))]
     public Dictionary<string, int> OverrideThresholds = [];
 
