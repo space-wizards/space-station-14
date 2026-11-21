@@ -1,5 +1,8 @@
+using Content.Shared.Lock;
+using Content.Shared.Popups;
 using Content.Shared.Power.Components;
 using JetBrains.Annotations;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power.EntitySystems;
 
@@ -11,19 +14,35 @@ public abstract partial class PowerStateSystem : EntitySystem
 {
     [Dependency] private SharedPowerReceiverSystem _powerReceiverSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     [Dependency] private EntityQuery<PowerStateComponent> _powerStateQuery;
+
+    /// <summary> Toggles <see cref="PowerStateComponent.IsTurnedOn"/> if lock does not prevent it. </summary>
+    [SubscribeLocalEvent]
+    private void OnToggleActive(Entity<PowerStateComponent> ent, ref PowerStateSetIsTurnedOnMessage message)
+    {
+        SetWorkingState(ent.AsNullable(), message.IsTurnedOn, message.Actor);
+    }
 
     /// <summary>
     /// Sets the working state of the entity, adjusting its power draw accordingly.
     /// </summary>
-    /// <param name="ent">The entity to set the working state for.</param>
-    /// <param name="isWorking">Whether the entity should be in the working state.</param>
+    /// <param name="ent"> The entity to set the working state for. </param>
+    /// <param name="isWorking"> Whether the entity should be in the working state. </param>
+    /// <param name="user"> User, who attempted to change <see cref="PowerStateComponent.IsTurnedOn"/> state. </param>
     [PublicAPI]
-    public virtual void SetWorkingState(Entity<PowerStateComponent?> ent, bool isWorking)
+    public virtual void SetWorkingState(Entity<PowerStateComponent?> ent, bool isWorking, EntityUid? user = null)
     {
         if (!_powerStateQuery.Resolve(ent, ref ent.Comp))
             return;
+
+        if (user.HasValue && TryComp(ent, out LockComponent? lockComp) && lockComp.Locked)
+        {
+            var msg = Loc.GetString("power-state-access-locked", ("target", ent.Owner));
+            _popup.PopupEntity(msg, ent, user);
+            return;
+        }
 
         if (ent.Comp.IsTurnedOn == isWorking)
             return;
@@ -43,10 +62,11 @@ public abstract partial class PowerStateSystem : EntitySystem
     /// Tries to set the working state of the entity, adjusting its power draw accordingly.
     /// Use this for if you're not sure if the entity has a <see cref="PowerStateComponent"/>.
     /// </summary>
-    /// <param name="ent">The entity to set the working state for.</param>
-    /// <param name="isWorking">Whether the entity should be in the working state.</param>
+    /// <param name="ent"> The entity to set the working state for. </param>
+    /// <param name="isWorking"> Whether the entity should be in the working state. </param>
+    /// <param name="user"> User, who attempted to change <see cref="PowerStateComponent.IsTurnedOn"/> state. </param>
     [PublicAPI]
-    public void TrySetWorkingState(Entity<PowerStateComponent?> ent, bool isWorking)
+    public void TrySetWorkingState(Entity<PowerStateComponent?> ent, bool isWorking, EntityUid? user = null)
     {
         // Sometimes systems calling this API handle generic objects that can or can't consume power,
         // so to reduce boilerplate we don't log an error. Any entity that *should* have an ApcPowerRecieverComponent
@@ -54,7 +74,7 @@ public abstract partial class PowerStateSystem : EntitySystem
         if (!_powerStateQuery.Resolve(ent, ref ent.Comp, false))
             return;
 
-        SetWorkingState(ent, isWorking);
+        SetWorkingState(ent, isWorking, user);
     }
 
     /// <summary>
@@ -68,6 +88,21 @@ public abstract partial class PowerStateSystem : EntitySystem
             return false;
 
         return ent.Comp.IsTurnedOn;
+    }
+
+    /// <summary>
+    /// Sets power drain for 'working' state.
+    /// </summary>
+    public void SetWorkingPowerDraw(Entity<PowerStateComponent> ent, float workingPowerDrain)
+    {
+        ent.Comp.WorkingPowerDraw = workingPowerDrain;
+        Dirty(ent);
+
+        if (!ent.Comp.IsTurnedOn)
+            return;
+
+        var hasPower = SetPowerLoadGetHasPower(ent, true);
+        SetIsPoweredState(ent, hasPower);
     }
 
     /// <summary>
@@ -105,8 +140,8 @@ public abstract partial class PowerStateSystem : EntitySystem
     /// <summary>
     /// Set `powered` flag, update appearance and send event if needed.
     /// </summary>
-    /// <param name="ent">Entity to update.</param>
-    /// <param name="hasPower">Is entity getting enough power to operate properly?</param>
+    /// <param name="ent"> Entity to update. </param>
+    /// <param name="hasPower"> Is entity getting enough power to operate properly? </param>
     protected void SetIsPoweredState(Entity<PowerStateComponent> ent, bool hasPower)
     {
         UpdateAppearance(ent, hasPower);
@@ -127,8 +162,8 @@ public abstract partial class PowerStateSystem : EntitySystem
     /// and <see cref="hasPower"/> flags (making 3 states of <see cref="PowerStateDeviceVisualState"/>
     /// as a result).
     /// </summary>
-    /// <param name="ent">Entity that requires visual state update.</param>
-    /// <param name="hasPower">Is device sufficiently powered?</param>
+    /// <param name="ent"> Entity that requires visual state update. </param>
+    /// <param name="hasPower"> Is device sufficiently powered? </param>
     protected void UpdateAppearance(Entity<PowerStateComponent> ent, bool hasPower)
     {
         PowerStateDeviceVisualState state;
@@ -154,3 +189,18 @@ public record struct TurnedOnStateChanged(bool IsTurnedOn);
 /// </summary>
 [ByRefEvent]
 public record struct OperatingStateChanged(bool IsOperating);
+
+/// <summary>
+/// Signal from user UI to toggle device ON/OFF from.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class PowerStateSetIsTurnedOnMessage(bool isTurnedOn) : BoundUserInterfaceMessage
+{
+    public readonly bool IsTurnedOn = isTurnedOn;
+}
+
+[Serializable, NetSerializable]
+public enum PowerToggleAndModesUiKey
+{
+    Key
+}
