@@ -109,18 +109,22 @@ public sealed partial class CargoSystem
             return;
         }
 
-        var reasonString = string.IsNullOrWhiteSpace(order.Reason)
-            ? string.Empty
-            : Loc.GetString("cargo-app-reason",
-                ("hasReason", true),
-                ("reason", order.Reason));
-
-        var pdaEvent = new NewOrderAddedEvent(Loc.GetString("cargo-app-notification-message", ("requester", args.Requester), ("product", $"{args.Amount}x {product.Name}"), ("reason", reasonString)));
-        var query = EntityQueryEnumerator<CargoAppCartridgeComponent>();
-
-        while (query.MoveNext(out var readerUid, out _))
+        var emagged = _emag.CheckFlag(ent.Owner, EmagType.Interaction);
+        if (!emagged)
         {
-            RaiseLocalEvent(readerUid, ref pdaEvent);
+            var reasonString = string.IsNullOrWhiteSpace(order.Reason)
+                ? string.Empty
+                : Loc.GetString("cargo-app-reason",
+                    ("hasReason", true),
+                    ("reason", order.Reason));
+
+            var pdaEvent = new NewOrderAddedEvent(Loc.GetString("cargo-app-notification-message", ("requester", args.Requester), ("product", $"{args.Amount}x {product.Name}"), ("reason", reasonString)));
+            var query = EntityQueryEnumerator<CargoAppCartridgeComponent>();
+
+            while (query.MoveNext(out var readerUid, out _))
+            {
+                RaiseLocalEvent(readerUid, ref pdaEvent);
+            }
         }
 
         // Log order addition
