@@ -206,8 +206,7 @@ namespace Content.Server.Solar.EntitySystems
                 xform.MapID,
                 ray,
                 SunOcclusionCheckDistance,
-                e => !xform.Anchored || e == entity,
-                returnOnFirstHit: true);
+                e => !xform.Anchored || e == entity);
             return rayCastResults.Any();
         }
 
