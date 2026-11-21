@@ -14,19 +14,19 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
 [CommonSheetlet]
-public sealed class ContextMenuSheetlet<T> : Sheetlet<T>
+public sealed class ContextMenuSheetlet<T> : Sheetlet<NanotrasenStylesheet>
     where T : PalettedStylesheet, IWindowConfig, IButtonConfig, IIconConfig
 {
-    // TODO: make this not hardcoded (I am too scared to change the context menu colors)
-    private static readonly ColorPalette ContextButtonPalette = ColorPalette.FromHexBase("#000000") with
+    public override StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)
     {
-        HoveredElement = Color.DarkSlateGray,
-        Element = Color.FromHex("#1119"),
-        PressedElement = Color.LightSlateGray,
-    };
+        var contextButtonPalette = sheet.SecondaryPalette with
+        {
+            Element = sheet.SecondaryPalette.BackgroundDark,
+            HoveredElement = Palettes.Emerald.Element,
+            PressedElement = Palettes.Emerald.HoveredElement,
+            DisabledElement = Palettes.Dark.Background,
+        };
 
-    public override StyleRule[] GetRules(T sheet, object config)
-    {
         IWindowConfig windowCfg = sheet;
 
         var borderedWindowBackground = new StyleBoxTexture
@@ -77,7 +77,7 @@ public sealed class ContextMenuSheetlet<T> : Sheetlet<T>
         };
 
         ButtonSheetlet<T>.MakeButtonRules<ContextMenuElement>(rules,
-            ContextButtonPalette,
+            contextButtonPalette,
             ContextMenuElement.StyleClassContextMenuButton);
         ButtonSheetlet<T>.MakeButtonRules<ContextMenuElement>(rules,
             sheet.NegativePalette,
