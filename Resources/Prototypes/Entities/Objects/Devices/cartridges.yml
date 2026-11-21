@@ -177,17 +177,17 @@
 
 - type: entity
   parent: BasePDACartridge
-  id: CargoAppCartridge
-  name: cargo app cartridge
-  description: orders go brrrrt.
+  id: OrderLogCartridge
+  name: order log cartridge
+  description: A log of unapproved orders
   components:
     - type: Sprite
-      state: cart-y
+      state: cart-sup
     - type: UIFragment
       ui: !type:CargoAppUi
     - type: Cartridge
       programName: cargo-app-program-name
       icon:
-        sprite: Interface/Misc/program_icons.rsi
-        state: crew_manifest
+        sprite: Interface/Misc/job_icons.rsi
+        state: CargoTechnician
     - type: CargoAppCartridge

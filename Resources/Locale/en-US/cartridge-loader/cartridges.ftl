@@ -101,3 +101,15 @@ wanted-list-status-label = [color=darkgray]status:[/color] {$status ->
 wanted-list-history-table-time-col = Time
 wanted-list-history-table-reason-col = Crime
 wanted-list-history-table-initiator-col = Initiator
+
+cargo-app-notification-header = New Order Requested
+cargo-app-notification-message = {$requester} ordered {$product}. {$reason}
+cargo-app-header-order = Order
+cargo-app-header-cost = Cost
+cargo-app-no-orders = No orders.
+cargo-app-reason =
+    { $hasReason ->
+        [true] Reason: { $reason }
+       *[false] { "" }
+    }
+cargo-app-program-name = Order Log
