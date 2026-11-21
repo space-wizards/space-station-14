@@ -5,6 +5,9 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
+/// <summary>
+/// A UI fragment for the Notekeeper PDA app.
+/// </summary>
 public sealed partial class NotekeeperUi : UIFragment
 {
     private NotekeeperUiFragment? _fragment;
@@ -16,7 +19,7 @@ public sealed partial class NotekeeperUi : UIFragment
 
     public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
-        _fragment = new NotekeeperUiFragment();
+        _fragment = userInterface.CreateDisposableControl<NotekeeperUiFragment>();
         _fragment.OnNoteRemoved += note => SendNotekeeperMessage(NotekeeperUiAction.Remove, note, userInterface);
         _fragment.OnNoteAdded += note => SendNotekeeperMessage(NotekeeperUiAction.Add, note, userInterface);
     }

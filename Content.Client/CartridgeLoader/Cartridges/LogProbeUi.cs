@@ -5,6 +5,9 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
+/// <summary>
+/// A UI fragment for the LogProbe PDA app.
+/// </summary>
 public sealed partial class LogProbeUi : UIFragment
 {
     private LogProbeUiFragment? _fragment;
@@ -16,7 +19,7 @@ public sealed partial class LogProbeUi : UIFragment
 
     public override void Setup(BoundUserInterface ui, EntityUid? fragmentOwner)
     {
-        _fragment = new LogProbeUiFragment();
+        _fragment = ui.CreateDisposableControl<LogProbeUiFragment>();
 
         _fragment.OnPrintPressed += () =>
         {
