@@ -7,7 +7,6 @@ using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
-using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.StationEvents.Events;
@@ -158,20 +157,19 @@ public sealed partial class PowerGridCheckRule : StationEventSystem<PowerGridChe
             if (component.Powered.Count == 0)
                 break;
 
-            var selected = component.Powered.Pop();
+            var selected = component.Powered[^1];
             if (selected.Entity == null)
                 continue;
 
-            var selectedEnt = selected.Entity.Value;
-            ClearRelation(uid, ref selected); // Will be reassigned to another field
-
-            if (TryComp<ApcComponent>(selectedEnt, out var apcComponent))
+            if (TryComp<ApcComponent>(selected.Entity.Value, out var apcComponent))
             {
                 if (apcComponent.MainBreakerEnabled)
-                    _apc.ApcToggleBreaker(selectedEnt, apcComponent);
+                    _apc.ApcToggleBreaker(selected.Entity.Value, apcComponent);
             }
 
-            AddRelation(uid, component.Unpowered, selectedEnt);
+            AddRelation(uid, component.Unpowered, selected.Entity.Value);
+            ClearRelation(uid, ref selected);
+            component.Powered.Remove(selected);
         }
     }
 }

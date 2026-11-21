@@ -292,7 +292,7 @@ public readonly record struct AnomalyPulseEvent(EntityUid Anomaly, float Stabili
 public readonly record struct AnomalySupercriticalEvent(EntityUid Anomaly, float PowerModifier);
 
 /// <summary>
-/// Event broadcast after an anomaly goes supercritical
+/// Event broadcast and raised on every connected vessel after an anomaly goes supercritical
 /// </summary>
 /// <param name="Anomaly">The anomaly being shut down.</param>
 /// <param name="Supercritical">Whether or not the anomaly shut down passively or via a supercritical event.</param>
@@ -307,7 +307,7 @@ public readonly record struct AnomalyShutdownEvent(EntityUid Anomaly, bool Super
 public readonly record struct AnomalySeverityChangedEvent(EntityUid Anomaly, float Stability, float Severity);
 
 /// <summary>
-/// Event broadcast when an anomaly's stability is changed.
+/// Event broadcast and raised on every connected vessel when an anomaly's stability is changed.
 /// </summary>
 [ByRefEvent]
 public readonly record struct AnomalyStabilityChangedEvent(EntityUid Anomaly, float Stability, float Severity);

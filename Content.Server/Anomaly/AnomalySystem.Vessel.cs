@@ -21,7 +21,6 @@ public sealed partial class AnomalySystem
         SubscribeLocalEvent<AnomalyVesselComponent, InteractUsingEvent>(OnVesselInteractUsing);
         SubscribeLocalEvent<AnomalyVesselComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<AnomalyVesselComponent, ResearchServerGetPointsPerSecondEvent>(OnVesselGetPointsPerSecond);
-        SubscribeLocalEvent<AnomalyShutdownEvent>(OnVesselAnomalyShutdown);
     }
 
     private void OnExamined(EntityUid uid, AnomalyVesselComponent component, ExaminedEvent args)
@@ -66,34 +65,23 @@ public sealed partial class AnomalySystem
         args.Points += (int) (GetAnomalyPointValue(anomaly) * component.PointMultiplier);
     }
 
-    private void OnVesselAnomalyShutdown(ref AnomalyShutdownEvent args)
+    [SubscribeLocalEvent]
+    private void OnVesselAnomalyShutdown(Entity<AnomalyVesselComponent> ent, ref AnomalyShutdownEvent args)
     {
-        var query = EntityQueryEnumerator<AnomalyVesselComponent>();
-        while (query.MoveNext(out var ent, out var component))
-        {
-            if (args.Anomaly != component.Anomaly)
-                continue;
+        ClearRelation(ent.Owner, ref ent.Comp.Anomaly);
+        UpdateVesselAppearance(ent.Owner, ent.Comp);
+        _radiation.SetSourceEnabled(ent.Owner, false);
 
-            ClearRelation(ent, ref component.Anomaly);
-            UpdateVesselAppearance(ent,  component);
-            _radiation.SetSourceEnabled(ent, false);
+        if (!args.Supercritical)
+            return;
 
-            if (!args.Supercritical)
-                continue;
-            _explosion.TriggerExplosive(ent);
-        }
+        _explosion.TriggerExplosive(ent);
     }
 
-    private void OnVesselAnomalyStabilityChanged(ref AnomalyStabilityChangedEvent args)
+    [SubscribeLocalEvent]
+    private void OnVesselAnomalyStabilityChanged(Entity<AnomalyVesselComponent> ent, ref AnomalyStabilityChangedEvent args)
     {
-        var query = EntityQueryEnumerator<AnomalyVesselComponent>();
-        while (query.MoveNext(out var ent, out var component))
-        {
-            if (args.Anomaly != component.Anomaly)
-                continue;
-
-            UpdateVesselAppearance(ent,  component);
-        }
+        UpdateVesselAppearance(ent.Owner, ent.Comp);
     }
 
     /// <summary>
