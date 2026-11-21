@@ -11,6 +11,7 @@
     DrinkIceBucket: 2
     BarSpoon: 3
     CustomDrinkJug: 2 #to allow for custom drinks in the soda/booze dispensers
+    DrinkWaterBottleFull: 4
     DrinkAbsintheBottleFull: 2
     DrinkAleBottleFull: 5
     DrinkBeerBottleFull: 5
