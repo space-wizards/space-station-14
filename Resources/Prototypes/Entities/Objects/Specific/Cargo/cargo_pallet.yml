@@ -33,24 +33,6 @@
     - Cargo
 
 - type: entity
-  parent: [ BaseCargoPallet, StructureHealthMachineWeak ]
-  id: CargoPallet
-  components:
-  - type: Damageable
-    damageModifierSet: RodMetalMod
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PartRodMetal: # takes two to construct, so drop less than that
-            min: 0
-            max: 1
-
-- type: entity
   id: CargoPalletSell
   name: cargo selling pallet
   description: Designates valid items to sell. Made of plastitanium to discourage pesky vandals.
