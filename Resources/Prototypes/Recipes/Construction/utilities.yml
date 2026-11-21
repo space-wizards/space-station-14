@@ -191,3 +191,15 @@
   graph: WeaponEnergyTurretControlPanel
   targetNode: finish
 # endregion Defenses
+
+# region Shuttlecraft
+- type: construction
+  parent: BaseUtilityWallmount
+  id: WallmountThrusterRecipe
+  graph: WallmountThrusterGraph
+  targetNode: WallmountThrusterNode
+  category: construction-category-machines
+  conditions:
+  - !type:WallmountCondition
+    reversed: true
+# endregion Shuttlecraft
