@@ -38,3 +38,5 @@
           Low: { visible: true, state: low }
           Medium: { visible: true, state: medium }
           High: { visible: true, state: high }
+  - type: CookingAppliance
+    applianceType: Oven #change this to grill later
