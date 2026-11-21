@@ -1,0 +1,28 @@
+{
+    "version": 1,
+    "license": "CC-BY-NC-SA-3.0",
+    "copyright": "Sprites by Penguincoder4",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "fan-off"
+        },
+        {
+            "name": "fan-on",
+            "delays": [
+                [
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05
+                ]
+            ]
+        },
+        {
+            "name": "light"
+        }
+    ]
+}

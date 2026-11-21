@@ -3,6 +3,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Shared.Map.Components;
+using Content.Shared.Power;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -13,6 +14,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private ExplosionSystem _explosionSystem = default!;
         [Dependency] private SharedMapSystem _mapSystem = default!;
+        [Dependency] private EntityQuery<AirtightComponent> _airtightQuery;
 
         public override void Initialize()
         {
@@ -32,7 +34,6 @@ namespace Content.Server.Atmos.EntitySystems
                 UpdatePosition(airtight);
                 return;
             }
-
             // Otherwise we need to determine its current blocked air directions based on rotation
             // and check if it's still airtight.
             var xform = Transform(airtight);
@@ -144,8 +145,14 @@ namespace Content.Server.Atmos.EntitySystems
 
             return newAirBlockedDirs;
         }
-    }
 
+        [SubscribeLocalEvent]
+        private void OnPowerChanged(Entity<AirtightOnPoweredComponent> ent, ref PowerChangedEvent args)
+        {
+            if (_airtightQuery.TryComp(ent, out var airtight))
+                SetAirblocked((ent.Owner, airtight), args.Powered);
+        }
+    }
     /// <summary>
     /// Raised upon the airtight status being changed via anchoring, movement, etc.
     /// </summary>
