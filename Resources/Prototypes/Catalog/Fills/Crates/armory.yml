@@ -29,7 +29,7 @@
           amount: 4
 
 - type: entity
-  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  parent: [ CrateSurplusSecure, BaseSecurityContraband ]
   id: CrateArmoryMosin
   name: mosin crate
   description: Reliable, dirt cheap, and loud as hell. Contains three mosin rifles and 12 speedloaders of .30 rifle ammunition. Requires Armory access to open.
@@ -44,7 +44,7 @@
           amount: 12
 
 - type: entity
-  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  parent: [ CrateSecgear, BaseSecurityContraband ]
   id: CrateTrackingImplants
   name: tracking implants
   description: Contains a handful of tracking implanters. Good for prisoners you'd like to release but still keep track of.
@@ -56,7 +56,7 @@
         amount: 5
 
 - type: entity
-  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  parent: [ CrateSecgear, BaseSecurityContraband ]
   id: CrateTrainingBombs
   name: training bombs
   description: Contains three low-yield training bombs for security to learn defusal and safe ordnance disposal, EOD suit not included. Requires Armory access to open.
@@ -68,7 +68,7 @@
         amount: 3
 
 - type: entity
-  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  parent: [ CrateSurplusSecure, BaseSecurityContraband ]
   id: CrateArmoryLaser
   name: lasers crate
   description: Contains three standard-issue laser rifles. Requires Armory access to open.
@@ -80,7 +80,7 @@
         amount: 3
 
 - type: entity
-  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  parent: [ CrateSurplusSecure, BaseSecurityContraband ]
   id: CrateArmoryPistols
   name: pistols crate
   description: Contains two standard NT pistols with four mags. Requires Armory access to open.
