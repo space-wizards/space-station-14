@@ -165,7 +165,7 @@ public sealed partial class PowerGridCheckRule : StationEventSystem<PowerGridChe
             var selectedEnt = selected.Entity.Value;
             ClearRelation(uid, ref selected); // Will be reassigned to another field
 
-            if (TryComp<ApcComponent>(selected, out var apcComponent))
+            if (TryComp<ApcComponent>(selectedEnt, out var apcComponent))
             {
                 if (apcComponent.MainBreakerEnabled)
                     _apc.ApcToggleBreaker(selectedEnt, apcComponent);
