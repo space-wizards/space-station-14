@@ -72,7 +72,7 @@ public sealed partial class CargoAppCartridgeSystem : EntitySystem
             return;
 
         var state = new CargoAppUiState(
-            _cargoSystem.RelevantOrders((station.Value, orderDatabase), orderDatabase.Orders, bank.PrimaryAccount, approved: false).ToArray()
+            _cargoSystem.RelevantOrders((station.Value, orderDatabase), bank.PrimaryAccount, approved: false).ToArray()
             );
         _cartridgeLoader.UpdateCartridgeUiState(loaderUid, state);
     }
