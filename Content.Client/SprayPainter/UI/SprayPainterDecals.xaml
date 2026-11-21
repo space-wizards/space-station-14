@@ -1,16 +1,15 @@
-<ui:SprayPainterDecals
+<spraypainter:SprayPainterDecals
     xmlns="https://spacestation14.io"
-    xmlns:ui="clr-namespace:Content.Client.SprayPainter.UI"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:spraypainter="clr-namespace:Content.Client.SprayPainter.UI">
     <BoxContainer Orientation="Vertical">
         <BoxContainer>
             <Label Text="{Loc 'spray-painter-selected-decals'}" />
             <Label Name="SelectedDecalName" StyleClasses="Italic" Margin="4 0" />
         </BoxContainer>
         <ScrollContainer VerticalExpand="True">
-            <GridContainer Columns="7" Name="DecalsGrid">
-                <!-- populated by code -->
-            </GridContainer>
+            <controls:ListContainer Name="DecalsGrid" RectClipContent="True"
+                HorizontalExpand="True" VerticalExpand="True"/>
         </ScrollContainer>
 
         <controls:Separator StyleClasses="LowDivider"/>
@@ -39,4 +38,4 @@
             </Button>
         </BoxContainer>
     </BoxContainer>
-</ui:SprayPainterDecals>
+</spraypainter:SprayPainterDecals>
