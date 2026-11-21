@@ -41,6 +41,8 @@
     damage: 45
   - type: StaminaDamageOnEmbed
     damage: 10
+  - type: ThrowVelocityModifier
+    velocityMultiplier: 2.0
 
 - type: entity
   parent: ThrowingStar
