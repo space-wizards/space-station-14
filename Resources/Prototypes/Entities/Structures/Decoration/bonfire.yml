@@ -72,7 +72,7 @@
     buckleOffset: "0, 0.4"
     buckleDoafterTime: 5
   - type: IgniteOnBuckle
-    Firestacks: 0.3
+    firestacks: 0.3
     igniteTime: 2
     maxFireStacks: 3.2
   - type: Construction
