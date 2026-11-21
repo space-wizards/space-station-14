@@ -48,7 +48,7 @@ namespace Content.Shared.Spawning
                 return null;
             }
 
-            return entityManager.SpawnEntity(prototypeName, coordinates);
+            return entityManager.Spawn(prototypeName, coordinates);
         }
 
         public static bool TrySpawnIfUnobstructed(

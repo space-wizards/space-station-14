@@ -22,7 +22,7 @@ public sealed partial class TabletopCheckerSetup : TabletopSetup
     public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
     {
         session.Entities.Add(
-            entityManager.SpawnEntity(BoardPrototype, session.Position.Offset(-1, 0))
+            entityManager.Spawn(BoardPrototype, session.Position.Offset(-1, 0))
         );
 
         SpawnPieces(session, entityManager, session.Position.Offset(-4.5f, 3.5f));
@@ -45,11 +45,11 @@ public sealed partial class TabletopCheckerSetup : TabletopSetup
                 // Prevents an extra piece on the middle row.
                 if (checker + offsetX > 8) continue;
 
-                pieces[pieceIndex] = entityManager.SpawnEntity(
+                pieces[pieceIndex] = entityManager.Spawn(
                     PrototypePieceBlack,
                     left.Offset(GetOffset(offsetX + (1 - checker)), GetOffset(offsetY * -1))
                 );
-                pieces[pieceIndex] = entityManager.SpawnEntity(
+                pieces[pieceIndex] = entityManager.Spawn(
                     PrototypePieceWhite,
                     left.Offset(GetOffset(offsetX + checker), GetOffset(offsetY - 7))
                 );
@@ -67,11 +67,11 @@ public sealed partial class TabletopCheckerSetup : TabletopSetup
         for (var i = 0; i < numCrowns; i++)
         {
             var step = -(overlap * i);
-            pieces[pieceIndex] = entityManager.SpawnEntity(
+            pieces[pieceIndex] = entityManager.Spawn(
                 PrototypeCrownBlack,
                 left.Offset(GetOffset(xOffsetBlack), GetOffset(step))
             );
-            pieces[pieceIndex + 1] = entityManager.SpawnEntity(
+            pieces[pieceIndex + 1] = entityManager.Spawn(
                 PrototypeCrownWhite,
                 left.Offset(GetOffset(xOffsetWhite), GetOffset(step))
             );
@@ -82,11 +82,11 @@ public sealed partial class TabletopCheckerSetup : TabletopSetup
         for (var i = 0; i < 6; i++)
         {
             var step = -(overlap * (numCrowns + 2) + overlap * i);
-            pieces[pieceIndex] = entityManager.SpawnEntity(
+            pieces[pieceIndex] = entityManager.Spawn(
                 PrototypePieceBlack,
                 left.Offset(GetOffset(xOffsetBlack), GetOffset(step))
             );
-            pieces[pieceIndex] = entityManager.SpawnEntity(
+            pieces[pieceIndex] = entityManager.Spawn(
                 PrototypePieceWhite,
                 left.Offset(GetOffset(xOffsetWhite), GetOffset(step))
             );

@@ -127,7 +127,7 @@ namespace Content.IntegrationTests.Tests.Damageable
             {
                 var coordinates = map.MapCoords;
 
-                sDamageableEntity = sEntityManager.SpawnEntity(TestDamageableEntityId, coordinates);
+                sDamageableEntity = sEntityManager.Spawn(TestDamageableEntityId, coordinates);
                 sDamageableComponent = sEntityManager.GetComponent<DamageableComponent>(sDamageableEntity);
                 sDamageableSystem = sEntitySystemManager.GetEntitySystem<DamageableSystem>();
 

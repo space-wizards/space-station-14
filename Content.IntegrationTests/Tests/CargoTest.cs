@@ -55,7 +55,7 @@ public sealed class CargoTest : GameTest
                     if (Ignored.Contains(proto.ID))
                         continue;
 
-                    var ent = entManager.SpawnEntity(proto.Product, testMap.MapCoords);
+                    var ent = entManager.Spawn(proto.Product, testMap.MapCoords);
                     var price = pricing.GetPrice(ent);
 
                     Assert.That(price, Is.AtMost(proto.Cost), $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!");

@@ -55,7 +55,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                     {
                         var spawned = SpawnInContainer
                             ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
-                            : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
+                            : system.EntityManager.Spawn(entityId, position.Offset(getRandomVector()));
                         system.StackSystem.SetCount((spawned, null), (int) count);
 
                         TransferForensics(spawned, system, owner);
@@ -66,7 +66,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                         {
                             var spawned = SpawnInContainer
                                 ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
-                                : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
+                                : system.EntityManager.Spawn(entityId, position.Offset(getRandomVector()));
 
                             TransferForensics(spawned, system, owner);
                         }
