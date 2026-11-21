@@ -374,9 +374,7 @@ public sealed partial class SleepingSystem : EntitySystem
     {
         args.Prefix = ent.Comp.ForceSaySleepDataset;
     }
-
 }
-
 
 
 public sealed partial class SleepActionEvent : InstantActionEvent;
