@@ -351,15 +351,20 @@ public abstract partial class SatiationSystem
         if (GetAndResolveSatiationOfType(entity, type) is not var (satiation, proto))
             return;
 
-        if (preventReordering && TryGetNearestThresholds(entity, type, value, out var nextHigherThreshold, out var nextLowerThreshold))
+        if (preventReordering
+            && TryGetThresholds(entity, type, out var thresholds))
         {
-            if (nextHigherThreshold != null && value > satiation.LastAuthoritativeValue  && value > nextHigherThreshold)
+            thresholds.Remove(key);
+            if (TryGetNearestThresholds(entity, type, value, out var nextHigherThreshold, out var nextLowerThreshold, thresholds))
             {
-                value = nextHigherThreshold.Value - 1;
-            }
-            else if (nextLowerThreshold != null && value < satiation.LastAuthoritativeValue && value > nextLowerThreshold)
-            {
-                value = nextLowerThreshold.Value + 1;
+                if (nextHigherThreshold != null && value > satiation.LastAuthoritativeValue && value > nextHigherThreshold)
+                {
+                    value = nextHigherThreshold.Value - 1;
+                }
+                else if (nextLowerThreshold != null && value < satiation.LastAuthoritativeValue && value > nextLowerThreshold)
+                {
+                    value = nextLowerThreshold.Value + 1;
+                }
             }
         }
 
@@ -394,15 +399,20 @@ public abstract partial class SatiationSystem
 
         var value = currentValue + amount;
 
-        if (preventReordering && TryGetNearestThresholds(entity, type, value, out var nextHigherThreshold, out var nextLowerThreshold))
+        if (preventReordering
+            && TryGetThresholds(entity, type, out var thresholds))
         {
-            if (value > satiation.LastAuthoritativeValue && nextHigherThreshold != null && value > nextHigherThreshold)
+            thresholds.Remove(key);
+            if (TryGetNearestThresholds(entity, type, value, out var nextHigherThreshold, out var nextLowerThreshold, thresholds))
             {
-                value = nextHigherThreshold.Value - 1;
-            }
-            else if (value < satiation.LastAuthoritativeValue && nextLowerThreshold != null && value > nextLowerThreshold)
-            {
-                value = nextLowerThreshold.Value + 1;
+                if (nextHigherThreshold != null && value > satiation.LastAuthoritativeValue && value > nextHigherThreshold)
+                {
+                    value = nextHigherThreshold.Value - 1;
+                }
+                else if (nextLowerThreshold != null && value < satiation.LastAuthoritativeValue && value > nextLowerThreshold)
+                {
+                    value = nextLowerThreshold.Value + 1;
+                }
             }
         }
 

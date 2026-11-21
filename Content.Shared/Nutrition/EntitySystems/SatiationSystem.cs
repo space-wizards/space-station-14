@@ -295,12 +295,13 @@ public abstract partial class SatiationSystem : EntitySystem
         [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
         float value,
         out int? nextHigherThreshold,
-        out int? nextLowerThreshold
+        out int? nextLowerThreshold,
+        Dictionary<SatiationValue, int>? thresholds = null
     )
     {
         nextHigherThreshold = null;
         nextLowerThreshold = null;
-        if (!TryGetThresholds(ent, type, out var thresholds))
+        if (thresholds == null && !TryGetThresholds(ent, type, out thresholds))
             return false;
 
         var valuesByDescendingThreshold = thresholds
