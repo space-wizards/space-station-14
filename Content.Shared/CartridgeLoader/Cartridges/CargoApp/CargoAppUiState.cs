@@ -7,7 +7,6 @@ namespace Content.Shared.CartridgeLoader.Cartridges;
 public sealed class CargoAppUiState : BoundUserInterfaceState
 {
     public CargoOrderData[] Orders;
-    public CargoOrderData[] DeliveredOrders;
 
     public CargoAppUiState(CargoOrderData[] orders)
     {
