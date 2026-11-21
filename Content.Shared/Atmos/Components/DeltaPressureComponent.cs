@@ -58,6 +58,13 @@ public sealed partial class DeltaPressureComponent : Component
     public float RandomDamageChance = 1f;
 
     /// <summary>
+    /// If true and the entity has an <see cref="AirtightComponent"/>, it only takes damage while it is
+    /// actually blocking air. Used for things like windoors, which stop being a barrier when open.
+    /// </summary>
+    [DataField]
+    public bool RequireAirBlocked;
+
+    /// <summary>
     /// The base damage applied to the entity per atmos tick when it is above the damage threshold.
     /// This damage will be scaled as defined by the <see cref="DeltaPressureDamageScalingType"/> enum
     /// depending on the current effective pressure this entity is experiencing.
