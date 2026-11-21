@@ -118,3 +118,6 @@
   - type: DamageVisuals
     damageOverlay:
       sprite: Structures/Windows/cracks-diagonal.rsi
+  - type: Construction
+    graph: WindowDiagonal
+    node: shuttleWindowDiagonal
