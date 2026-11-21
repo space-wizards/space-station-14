@@ -50,6 +50,9 @@ public sealed partial class ItemSlotsSystem
                 $"{ToPrettyString(user.Value)} ejected {ToPrettyString(item)} from {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
         }
 
+        if (TryComp(uid, out ItemSlotsComponent? itemSlots))
+            UpdateAppearance((uid, itemSlots));
+
         _audioSystem.PlayPredicted(slot.EjectSound, uid, excludeUserAudio ? user : null);
         return true;
     }
