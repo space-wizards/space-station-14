@@ -1,4 +1,4 @@
-﻿# Light packages that contain multiple lights of a kind.
+# Light packages that contain multiple lights of a kind.
 - type: entity
   abstract: true
   parent: BaseItem

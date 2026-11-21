@@ -1,4 +1,4 @@
-﻿using Content.Shared.DeviceConfigurator;
+using Content.Shared.DeviceConfigurator;
 using Content.Shared.DeviceConfigurator.Components;
 using Content.Shared.DeviceNetwork;
 using Robust.Client.UserInterface;

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Conveyor;
+using Content.Shared.Conveyor;
 using Content.Shared.Maps;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;

@@ -1,4 +1,4 @@
-﻿using Robust.Client.GameObjects;
+using Robust.Client.GameObjects;
 using Robust.Shared.Utility;
 
 namespace Content.Client.IconSmoothing.Smoothings;
