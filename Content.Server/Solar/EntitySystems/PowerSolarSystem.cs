@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Power.Components;
 using Content.Server.Solar.Components;
+using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
@@ -66,11 +67,10 @@ namespace Content.Server.Solar.EntitySystems
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<SolarPanelComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             RandomizeSun();
         }
 
+        [SubscribeLocalEvent]
         public void Reset(RoundRestartCleanupEvent ev)
         {
             RandomizeSun();
@@ -86,9 +86,33 @@ namespace Content.Server.Solar.EntitySystems
             SunAngularVelocity = Angle.FromDegrees(0.1 + ((_robustRandom.NextDouble() - 0.5) * 0.05));
         }
 
+        [SubscribeLocalEvent]
         private void OnMapInit(EntityUid uid, SolarPanelComponent component, MapInitEvent args)
         {
             UpdateSupply(uid, component);
+        }
+
+        [SubscribeLocalEvent]
+        private void OnExamined(Entity<SolarPanelComponent> ent, ref ExaminedEvent args)
+        {
+            if (!TryComp(ent, out TransformComponent? xform) || !xform.Anchored)
+                return;
+
+            if (ent.Comp.Coverage is 0)
+            {
+                if (IsPanelOccluded(ent.Owner, xform))
+                    args.PushMarkup(Loc.GetString("solarpanel-examine-occluded"));
+                else
+                    args.PushMarkup(Loc.GetString("solarpanel-examine-unaligned"));
+            }
+            else
+            {
+                // Consider aligned within 30⁰
+                if (ent.Comp.Coverage > Math.Cos(Angle.FromDegrees(30)))
+                    args.PushMarkup(Loc.GetString("solarpanel-examine-aligned"));
+                else
+                    args.PushMarkup(Loc.GetString("solarpanel-examine-misaligned"));
+            }
         }
 
         public override void Update(float frameTime)
@@ -124,6 +148,25 @@ namespace Content.Server.Solar.EntitySystems
             var entity = panel.Owner;
             var xform = Comp<TransformComponent>(entity);
 
+            var coverage = GetSolarCoverage(xform);
+
+            if (coverage > 0)
+            {
+                var isOccluded = IsPanelOccluded(entity, xform);
+                if (isOccluded)
+                    coverage = 0;
+            }
+
+            // Total coverage calculated; apply it to the panel.
+            panel.Comp.Coverage = coverage;
+            UpdateSupply(panel, panel);
+        }
+
+        /// <summary>
+        /// Gets the coverage of the solar panel.
+        /// </summary>
+        private float GetSolarCoverage(TransformComponent xform)
+        {
             // So apparently, and yes, I *did* only find this out later,
             // this is just a really fancy way of saying "Lambert's law of cosines".
             // ...I still think this explaination makes more sense.
@@ -149,24 +192,22 @@ namespace Content.Server.Solar.EntitySystems
             //
             // as for when it goes negative, it only does that when (abs(theta) > pi)
             // and that's expected behavior.
-            float coverage = (float)Math.Max(0, Math.Cos(panelRelativeToSun));
+            var coverage = (float)Math.Max(0, Math.Cos(panelRelativeToSun));
+            return coverage;
+        }
 
-            if (coverage > 0)
-            {
-                // Determine if the solar panel is occluded, and zero out coverage if so.
-                var ray = new CollisionRay(_transformSystem.GetWorldPosition(xform), TowardsSun.ToWorldVec(), (int) CollisionGroup.Opaque);
-                var rayCastResults = _physicsSystem.IntersectRayWithPredicate(
-                    xform.MapID,
-                    ray,
-                    SunOcclusionCheckDistance,
-                    e => !xform.Anchored || e == entity);
-                if (rayCastResults.Any())
-                    coverage = 0;
-            }
-
-            // Total coverage calculated; apply it to the panel.
-            panel.Comp.Coverage = coverage;
-            UpdateSupply(panel, panel);
+        /// <summary>
+        /// Determine if the solar panel is occluded.
+        /// </summary>
+        private bool IsPanelOccluded(EntityUid entity, TransformComponent xform)
+        {
+            var ray = new CollisionRay(_transformSystem.GetWorldPosition(xform), TowardsSun.ToWorldVec(), (int)CollisionGroup.Opaque);
+            var rayCastResults = _physicsSystem.IntersectRayWithPredicate(
+                xform.MapID,
+                ray,
+                SunOcclusionCheckDistance,
+                e => !xform.Anchored || e == entity);
+            return rayCastResults.Any();
         }
 
         public void UpdateSupply(
