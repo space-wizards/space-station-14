@@ -41,7 +41,14 @@ public sealed partial class AccessibilityTab : Control
         Control.AddOptionPercentSlider(CCVars.VacuumOverlayIntensity, VacuumOverlayIntensityOpacitySlider);
         Control.AddOptionCheckBox(CCVars.ChatAutoFillHighlights, AutoFillHighlightsCheckBox);
         Control.AddOptionColorSlider(CCVars.ChatHighlightsColor, HighlightsColorSlider);
-
+        var symbolOptions = new List<OptionDropDownCVar<string>.ValueOption>
+            {
+                new("*", "* (Asterisk)"),
+                new("#", "# (Hash)"),
+                new("?", "? (Question)"),
+                new("-", "- (Dash)"),
+            };
+        Control.AddOptionDropDown(CCVars.ChatWordFiltersSymbol, WordFilterSymbolDropDown, symbolOptions);
         Control.AddOptionCheckBox(CCVars.AccessibilityClientCensorNudity, CensorNudityCheckBox);
 
         VacuumOverlayIntensityOpacitySlider.Visible = _cfgManager.GetCVar(CCVars.VacuumOverlay);
