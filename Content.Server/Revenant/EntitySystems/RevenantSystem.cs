@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.GameTicking;
 using Content.Server.Store.Systems;
@@ -7,17 +6,15 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Eye;
-using Content.Shared.FixedPoint;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Physics;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Revenant;
 using Content.Shared.Revenant.Components;
 using Content.Shared.StatusEffect;
-using Content.Shared.Store.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
@@ -28,7 +25,6 @@ namespace Content.Server.Revenant.EntitySystems;
 public sealed partial class RevenantSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private AlertsSystem _alerts = default!;
     [Dependency] private AtmosphereSystem _atmosphere = default!;
     [Dependency] private DamageableSystem _damage = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
@@ -44,7 +40,6 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private StoreSystem _store = default!;
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private VisibilitySystem _visibility = default!;
-    [Dependency] private TurfSystem _turf = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -69,9 +64,6 @@ public sealed partial class RevenantSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, RevenantComponent component, ComponentStartup args)
     {
-        //update the icon
-        ChangeEssenceAmount(uid, 0, component);
-
         //default the visuals
         _appearance.SetData(uid, RevenantVisuals.Corporeal, false);
         _appearance.SetData(uid, RevenantVisuals.Harvesting, false);
@@ -104,8 +96,17 @@ public sealed partial class RevenantSystem : EntitySystem
     {
         if (args.Examiner == args.Examined)
         {
+            if (!TryComp<SatiationComponent>(uid, out var satiationComp))
+                return;
+
+            var essence = _satiation.GetValueOrNull((uid, satiationComp), component.EssenceSatiationPrototype);
+            var regenCap = _satiation.GetThresholdValueOrNull((uid, satiationComp), component.EssenceSatiationPrototype, component.MaxRegenThreshold);
+
+            if (essence == null || regenCap == null)
+                return;
+
             args.PushMarkup(Loc.GetString("revenant-essence-amount",
-                ("current", component.Essence.Int()), ("max", component.EssenceRegenCap.Int())));
+                ("current", (int)essence!), ("max", (int)regenCap!)));
         }
     }
 
@@ -115,60 +116,16 @@ public sealed partial class RevenantSystem : EntitySystem
             return;
 
         var essenceDamage = args.DamageDelta.GetTotal().Float() * component.DamageToEssenceCoefficient * -1;
-        ChangeEssenceAmount(uid, essenceDamage, component);
-    }
+        if (!TryComp<SatiationComponent>(uid, out var satiationComp))
+            return;
 
-    public bool ChangeEssenceAmount(EntityUid uid, FixedPoint2 amount, RevenantComponent? component = null, bool allowDeath = true, bool regenCap = false)
-    {
-        if (!Resolve(uid, ref component))
-            return false;
+        _satiation.ModifyValue((uid, satiationComp), component.EssenceSatiationPrototype, (float)essenceDamage);
 
-        if (!allowDeath && component.Essence + amount <= 0)
-            return false;
-
-        component.Essence += amount;
-        Dirty(uid, component);
-
-        if (regenCap)
-            FixedPoint2.Min(component.Essence, component.EssenceRegenCap);
-
-        if (TryComp<StoreComponent>(uid, out var store))
-            _store.UpdateUserInterface(uid, uid, store);
-
-        _alerts.ShowAlert(uid, component.EssenceAlert);
-
-        if (component.Essence <= 0)
+        if (_satiation.IsValueInRange((uid, satiationComp), component.EssenceSatiationPrototype, below: component.MinEssenceThreshold))
         {
             Spawn(component.SpawnOnDeathPrototype, Transform(uid).Coordinates);
             QueueDel(uid);
         }
-        return true;
-    }
-
-    private bool TryUseAbility(EntityUid uid, RevenantComponent component, FixedPoint2 abilityCost, Vector2 debuffs)
-    {
-        if (component.Essence <= abilityCost)
-        {
-            _popup.PopupEntity(Loc.GetString("revenant-not-enough-essence"), uid, uid);
-            return false;
-        }
-
-        var tileref = _turf.GetTileRef(Transform(uid).Coordinates);
-        if (tileref != null)
-        {
-            if(_physics.GetEntitiesIntersectingBody(uid, (int) CollisionGroup.Impassable).Count > 0)
-            {
-                _popup.PopupEntity(Loc.GetString("revenant-in-solid"), uid, uid);
-                return false;
-            }
-        }
-
-        ChangeEssenceAmount(uid, -abilityCost, component, false);
-
-        _statusEffects.TryAddStatusEffect<CorporealComponent>(uid, "Corporeal", TimeSpan.FromSeconds(debuffs.Y), false);
-        _stun.TryAddStunDuration(uid, TimeSpan.FromSeconds(debuffs.X));
-
-        return true;
     }
 
     public void MakeVisible(bool visible)
@@ -197,7 +154,13 @@ public sealed partial class RevenantSystem : EntitySystem
     /// <param name="ent">The revenant entity.</param>
     private void ChillArea(Entity<RevenantComponent> ent)
     {
-        var effectiveEssence = Math.Clamp(ent.Comp.Essence.Int(), 0, ent.Comp.ChillUpperBound.Float());
+        if (!TryComp<SatiationComponent>(ent, out var satiationComp))
+            return;
+        var essence = _satiation.GetValueOrNull((ent, satiationComp), ent.Comp.EssenceSatiationPrototype);
+        if (essence == null)
+            return;
+
+        var effectiveEssence = Math.Clamp((int)essence, 0, ent.Comp.ChillUpperBound.Float());
         // Parabolic curve based on essence, more essence = more delta q, flattening as upper bound is reached
         var dQ =
             200 / ent.Comp.ChillScaling.Float() * MathF.Pow(effectiveEssence - ent.Comp.ChillUpperBound.Float(), 2) -
@@ -214,17 +177,6 @@ public sealed partial class RevenantSystem : EntitySystem
         var query = EntityQueryEnumerator<RevenantComponent>();
         while (query.MoveNext(out var uid, out var rev))
         {
-            rev.Accumulator += frameTime;
-
-            if (rev.Accumulator <= 1)
-                continue;
-            rev.Accumulator -= 1;
-
-            if (rev.Essence < rev.EssenceRegenCap)
-            {
-                ChangeEssenceAmount(uid, rev.EssencePerSecond, rev, regenCap: true);
-            }
-
             ChillArea((uid, rev));
         }
     }

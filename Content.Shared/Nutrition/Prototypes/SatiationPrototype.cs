@@ -34,11 +34,13 @@ public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototyp
     [DataField(required: true)]
     public float BaseChangeRate;
 
+    [DataField("maximumValue", required: true)]
+    private SatiationValue _maximumValue;
+
     /// <summary>
     /// The highest value this satiation can have. Increases beyond this value are clamped to this value.
     /// </summary>
-    [DataField(required: true)]
-    public int MaximumValue;
+    public int MaximumValue => GetValueOrNull(_maximumValue) ?? 0;
 
     /// <summary>
     /// The definition of key strings referentiable by <see cref="SatiationValue"/>s. Any reference to a key in this map
@@ -110,6 +112,8 @@ public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototyp
     /// <paramref name="satiationValue"/> is an immediate value, use its contained integer value. If it is a key,
     /// attempts to look up the integer value of that key in <see cref="Thresholds"/>; in the case that a key not
     /// present in this proto type is requested, returns null.
+    /// If the thresholds should be overridden by <see cref="Satiation.OverrideThresholds">
+    /// use <see cref="SatiationSystem.GetThresholdValueOrNull"> instead.
     /// </summary>
     public int? GetValueOrNull(SatiationValue satiationValue)
     {
