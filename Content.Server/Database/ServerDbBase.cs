@@ -751,19 +751,35 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
+            if (playerIds.Length == 0)
+                return;
+
+            var distinctPlayerIds = playerIds.Distinct().ToArray();
+
             // ReSharper disable once SuggestVarOrType_Elsewhere
             Dictionary<Guid, int> players = await db.DbContext.Player
-                .Where(player => playerIds.Contains(player.UserId))
+                .Where(player => distinctPlayerIds.Contains(player.UserId))
                 .ToDictionaryAsync(player => player.UserId, player => player.Id);
 
-            foreach (var player in playerIds)
+            var playerDbIds = distinctPlayerIds
+                .Select(player => players[player])
+                .Distinct()
+                .ToArray();
+
+            var values = new string[playerDbIds.Length];
+            var args = new object[playerDbIds.Length * 2];
+
+            for (var i = 0; i < playerDbIds.Length; i++)
             {
-                await db.DbContext.Database.ExecuteSqlAsync($"""
-INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}) ON CONFLICT DO NOTHING
-""");
+                values[i] = $"({{{i * 2}}}, {{{i * 2 + 1}}})";
+                args[i * 2] = playerDbIds[i];
+                args[i * 2 + 1] = id;
             }
 
-            await db.DbContext.SaveChangesAsync();
+            // No injection here just guids.
+            await db.DbContext.Database.ExecuteSqlAsync(FormattableStringFactory.Create($"""
+INSERT INTO player_round (players_id, rounds_id) VALUES {string.Join(", ", values)} ON CONFLICT DO NOTHING
+""", args));
         }
 
         [return: NotNullIfNotNull(nameof(round))]
@@ -1229,7 +1245,8 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             if (ban is null)
                 return null;
 
-            return await MakeBanNoteRecord(db.DbContext, ban);
+            var players = await GetBanNotePlayers(db.DbContext, [ban]);
+            return MakeBanNoteRecord(ban, players);
         }
 
         public async Task<List<IAdminRemarksRecord>> GetAllAdminRemarks(Guid player)
@@ -1442,6 +1459,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         private static IQueryable<Ban> BanRecordQuery(ServerDbContext dbContext)
         {
             return dbContext.Ban
+                .AsNoTracking()
                 .Include(ban => ban.Unban)
                 .Include(ban => ban.Rounds!)
                 .ThenInclude(r => r.Round)
@@ -1451,15 +1469,16 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 .Include(ban => ban.Roles)
                 .Include(ban => ban.Hwids)
                 .Include(ban => ban.CreatedBy)
-                .Include(ban => ban.LastEditedBy)
-                .Include(ban => ban.Unban);
+                .Include(ban => ban.LastEditedBy);
         }
 
-        private async Task<BanNoteRecord> MakeBanNoteRecord(ServerDbContext dbContext, Ban ban)
+        private BanNoteRecord MakeBanNoteRecord(Ban ban, IReadOnlyDictionary<Guid, Player> players)
         {
-            var playerRecords = await AsyncSelect(ban.Players,
-                async bp => MakePlayerRecord(bp.UserId,
-                    await dbContext.Player.SingleOrDefaultAsync(p => p.UserId == bp.UserId)));
+            var playerRecords = ban.Players?
+                .Select(bp => MakePlayerRecord(
+                    bp.UserId,
+                    players.GetValueOrDefault(bp.UserId)))
+                .ToArray() ?? [];
 
             return new BanNoteRecord(
                 ban.Id,
@@ -1479,9 +1498,28 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                     ? null
                     : MakePlayerRecord(
                         ban.Unban.UnbanningAdmin.Value,
-                        await dbContext.Player.SingleOrDefaultAsync(p => p.UserId == ban.Unban.UnbanningAdmin.Value)),
+                        players.GetValueOrDefault(ban.Unban.UnbanningAdmin.Value)),
                 NormalizeDatabaseTime(ban.Unban?.UnbanTime),
                 [..ban.Roles!.Select(br => new BanRoleDef(br.RoleType, br.RoleId))]);
+        }
+
+        private async Task<IReadOnlyDictionary<Guid, Player>> GetBanNotePlayers(ServerDbContext dbContext, IEnumerable<Ban> bans)
+        {
+            var userIds = bans
+                .SelectMany(b => b.Players?.Select(p => p.UserId) ?? [])
+                .Concat(bans
+                    .Select(b => b.Unban?.UnbanningAdmin)
+                    .OfType<Guid>())
+                .Distinct()
+                .ToArray();
+
+            if (userIds.Length == 0)
+                return new Dictionary<Guid, Player>();
+
+            return await dbContext.Player
+                .AsNoTracking()
+                .Where(p => userIds.Contains(p.UserId))
+                .ToDictionaryAsync(p => p.UserId);
         }
 
         // These two are here because they get converted into notes later
@@ -1494,10 +1532,11 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 .Where(ban => ban.Players!.Any(bp => bp.UserId == user) && !ban.Hidden)
                 .ToArrayAsync();
 
-            var banNotes = new List<BanNoteRecord>();
+            var players = await GetBanNotePlayers(db.DbContext, bans);
+            var banNotes = new List<BanNoteRecord>(bans.Length);
             foreach (var ban in bans)
             {
-                var banNote = await MakeBanNoteRecord(db.DbContext, ban);
+                var banNote = MakeBanNoteRecord(ban, players);
 
                 banNotes.Add(banNote);
             }
@@ -1737,20 +1776,6 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         public virtual void Shutdown()
         {
 
-        }
-
-        private static async Task<IEnumerable<TResult>> AsyncSelect<T, TResult>(
-            IEnumerable<T>? enumerable,
-            Func<T, Task<TResult>> selector)
-        {
-            var results = new List<TResult>();
-
-            foreach (var item in enumerable ?? [])
-            {
-                results.Add(await selector(item));
-            }
-
-            return [..results];
         }
 
         private static async Task<List<T>> ParallelCollect<T>(params IEnumerable<Func<Task<IEnumerable<T>>>> tasks)
