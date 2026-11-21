@@ -1,3 +1,4 @@
+using Content.Shared.Atmos.Components;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Power;
@@ -20,15 +21,7 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
 
     private readonly int _settingCount = Enum.GetValues<EntityHeaterSetting>().Length;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<EntityHeaterComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<EntityHeaterComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
-        SubscribeLocalEvent<EntityHeaterComponent, PowerChangedEvent>(OnPowerChanged);
-    }
-
+    [SubscribeLocalEvent]
     private void OnExamined(Entity<EntityHeaterComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
@@ -37,6 +30,7 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
         args.PushMarkup(Loc.GetString("entity-heater-examined", ("setting", ent.Comp.Setting)));
     }
 
+    [SubscribeLocalEvent]
     private void OnGetVerbs(Entity<EntityHeaterComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract)
@@ -56,12 +50,14 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
         });
     }
 
+    [SubscribeLocalEvent]
     private void OnPowerChanged(Entity<EntityHeaterComponent> ent, ref PowerChangedEvent args)
     {
         // disable heating element glowing layer if theres no power
         // doesn't actually change the setting since that would be annoying
         var setting = args.Powered ? ent.Comp.Setting : EntityHeaterSetting.Off;
         _appearance.SetData(ent, EntityHeaterVisuals.Setting, setting);
+        UpdateHeatBlurSetting(ent);
     }
 
     protected virtual void ChangeSetting(Entity<EntityHeaterComponent> ent, EntityHeaterSetting setting, EntityUid? user = null)
@@ -75,6 +71,7 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
         // Only show the glowing heating element layer if there's power
         if (_receiver.IsPowered(ent.Owner))
             _appearance.SetData(ent, EntityHeaterVisuals.Setting, setting);
+        UpdateHeatBlurSetting(ent);
     }
 
     protected float SettingPower(EntityHeaterSetting setting, float max)
@@ -93,5 +90,29 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
             EntityHeaterSetting.High => max,
             _ => 0.01f,
         };
+    }
+
+    protected void UpdateHeatBlurSetting(Entity<EntityHeaterComponent> ent)
+    {
+        if (!TryComp<AnchoredBlurComponent>(ent, out var blur))
+            return;
+
+        var settingStep = blur.TargetStrength / 3;
+
+        if (!_receiver.IsPowered(ent.Owner) || ent.Comp.Setting == EntityHeaterSetting.Off)
+        {
+            blur.Strength = 0f;
+        }
+        else
+        {
+            blur.Strength = ent.Comp.Setting switch
+            {
+                EntityHeaterSetting.Low => settingStep,
+                EntityHeaterSetting.Medium => settingStep * 2,
+                EntityHeaterSetting.High => settingStep * 3,
+                _ => 0f,
+            };
+        }
+        Dirty(ent, blur);
     }
 }
