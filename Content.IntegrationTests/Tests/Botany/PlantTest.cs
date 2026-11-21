@@ -62,6 +62,8 @@ public sealed class PlantTest : GameTest
     }
 
     [Test, RunOnSide(Side.Server)]
+    [Description("Checks that all plants can be harvested when using the proper equipment.")]
+
     public void AllPlantsCanBeHarvestedWithBotanistEquipment()
     {
         Assume.That(TestMap != null);
@@ -109,6 +111,7 @@ public sealed class PlantTest : GameTest
     }
 
     [Test, RunOnSide(Side.Server)]
+    [Description("Checks that woody plants can't be harvested without tools.")]
     public void AllLigneousPlantsRequireHatchetToHarvest()
     {
         var map = TestMap!;
