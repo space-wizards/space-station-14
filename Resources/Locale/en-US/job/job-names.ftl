@@ -45,6 +45,7 @@ job-name-scientist = Scientist
 job-name-security = Security Officer
 job-name-serviceworker = Service Worker
 job-name-station-ai = Station AI
+job-name-supply-assistant = Supply Assistant
 job-name-technical-assistant = Technical Assistant
 job-name-tram-driver = Tram Driver
 job-name-visitor = Visitor

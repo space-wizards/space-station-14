@@ -28,6 +28,7 @@
   - JobIconQuarterMaster
   - JobIconCargoTechnician
   - JobIconShaftMiner
+  - JobIconSupplyAssistant
 
 - type: jobIconGroup
   id: EngineeringIconGroup

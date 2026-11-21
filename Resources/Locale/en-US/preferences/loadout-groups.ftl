@@ -111,6 +111,8 @@ loadout-group-salvage-specialist-backpack = Salvage Specialist backpack
 loadout-group-salvage-specialist-outerclothing = Salvage Specialist outer clothing
 loadout-group-salvage-specialist-shoes = Salvage Specialist shoes
 
+loadout-group-supply-assistant-jumpsuit = Supply Assistant jumpsuit
+
 # Engineering
 loadout-group-chief-engineer-head = Chief Engineer head
 loadout-group-chief-engineer-jumpsuit = Chief Engineer jumpsuit
