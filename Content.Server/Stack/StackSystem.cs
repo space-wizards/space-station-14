@@ -1,6 +1,7 @@
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
+using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -19,6 +20,18 @@ namespace Content.Server.Stack
         [Dependency] private SharedTransformSystem _transform = default!;
 
         [Dependency] private EntityQuery<StackComponent> _stackQuery;
+
+        [SubscribeLocalEvent]
+        private void OnPrepareThrow(Entity<StackComponent> ent, ref PrepareThrowEvent args)
+        {
+            if (args.Handled || ent.Comp.Count <= 1 || !ent.Comp.ThrowIndividually)
+                return;
+
+            if (Split((ent.Owner, ent.Comp), 1, args.SpawnCoordinates, args.User) is { Valid: true } split)
+                args.ItemUid = split;
+
+            args.Handled = true;
+        }
 
         #region Spawning
 
