@@ -7,12 +7,7 @@ namespace Content.Client.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
-    private void InitializeMagazineVisuals()
-    {
-        SubscribeLocalEvent<MagazineVisualsComponent, ComponentInit>(OnMagazineVisualsInit);
-        SubscribeLocalEvent<MagazineVisualsComponent, AppearanceChangeEvent>(OnMagazineVisualsChange);
-    }
-
+    [SubscribeLocalEvent]
     private void OnMagazineVisualsInit(Entity<MagazineVisualsComponent> ent, ref ComponentInit args)
     {
         if (!TryComp<SpriteComponent>(ent, out var sprite)) return;
@@ -30,6 +25,7 @@ public sealed partial class GunSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnMagazineVisualsChange(Entity<MagazineVisualsComponent> ent, ref AppearanceChangeEvent args)
     {
         // tl;dr
