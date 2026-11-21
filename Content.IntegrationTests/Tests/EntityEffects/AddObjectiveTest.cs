@@ -39,6 +39,9 @@ public sealed class AddObjectiveTest : GameTest
     objective: {ObjectiveProtoId}
 ";
 
+    public override PoolSettings PoolSettings => new() { Connected = false };
+
+
     [Test]
     [RunOnSide(Side.Server)]
     [Description("Checks that AddObjective properly results in an objective being added.")]
