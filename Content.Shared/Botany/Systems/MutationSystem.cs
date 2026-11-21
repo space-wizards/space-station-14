@@ -49,19 +49,46 @@ public sealed partial class PlantMutationSystem : EntitySystem
                 var odds = mutation.BaseOdds * severity - triggers;
                 triggers++;
                 if (Random(Math.Min(odds, 1.0f)))
-                {
-                    if (mutation.AppliesToPlant)
-                        _entityEffects.TryApplyEffect(ent, mutation.Effect);
-
-                    // Stat adjustments do not persist by being an attached effect, they just change the stat.
-                    if (mutation.Persists && ent.Comp.Mutations.All(m => m.Name != mutation.Name))
-                        ent.Comp.Mutations.Add(mutation);
-                }
+                    TryAddMutation(ent, mutation);
             }
         }
 
         var ev = new PlantMutationsChangedEvent(ent.Owner);
         RaiseLocalEvent(ref ev);
+    }
+
+    /// <summary>
+    /// Adds a specific mutation to a plant, applying its immediate plant effect and preventing duplicates.
+    /// </summary>
+    /// <returns>True if the mutation was applied.</returns>
+    [PublicAPI]
+    public bool TryAddMutation(Entity<PlantComponent?> ent, RandomPlantMutation mutation)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        // If we already have the mutation don't apply it twice
+        if (mutation.Persists)
+        {
+            foreach (var existingMutation in ent.Comp.Mutations)
+            {
+                if (existingMutation.Name == mutation.Name)
+                    return false;
+            }
+        }
+
+        ApplyMutation((ent, ent.Comp), mutation);
+        return true;
+    }
+
+    private void ApplyMutation(Entity<PlantComponent> ent, RandomPlantMutation mutation)
+    {
+        if (mutation.AppliesToPlant)
+            _entityEffects.TryApplyEffect(ent, mutation.Effect);
+
+        // Stat adjustments do not persist by being an attached effect, they just change the stat.
+        if (mutation.Persists)
+            ent.Comp.Mutations.Add(mutation);
     }
 
     /// <summary>
