@@ -26,7 +26,6 @@ public sealed partial class CableSystem : EntitySystem
 
         SubscribeLocalEvent<CableComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<CableComponent, CableCuttingFinishedEvent>(OnCableCut);
-        // Shouldn't need re-anchoring.
         SubscribeLocalEvent<CableComponent, AnchorStateChangedEvent>(OnAnchorChanged);
     }
 
@@ -64,8 +63,8 @@ public sealed partial class CableSystem : EntitySystem
         var ev = new CableAnchorStateChangedEvent((uid, args.Transform), args.Detaching);
         RaiseLocalEvent(uid, ref ev);
 
-        if (args.Anchored)
-            return; // huh? it wasn't anchored?
+        if (args.Anchored || args.Reanchoring)
+            return;
 
         // anchor state can change as a result of deletion (detach to null).
         // We don't want to spawn an entity when deleted.
