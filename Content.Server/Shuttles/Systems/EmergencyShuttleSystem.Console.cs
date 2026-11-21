@@ -250,13 +250,13 @@ public sealed partial class EmergencyShuttleSystem
     {
         var player = args.Actor;
 
-        if (!_idSystem.TryFindIdCard(player, out var idCard) || !_reader.IsAllowed(idCard, uid))
+        if (!_idSystem.TryFindIdCard(player, out var idCard) || !_reader.IsAllowed(idCard.Value, uid))
         {
             Popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), player, PopupType.Medium);
             return;
         }
 
-        if (!component.AuthorizedEntities.Remove(idCard.Owner))
+        if (!component.AuthorizedEntities.Remove(idCard.Value.Owner))
             return;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch REPEAL by {args.Actor:user}");
@@ -270,18 +270,18 @@ public sealed partial class EmergencyShuttleSystem
     {
         var player = args.Actor;
 
-        if (!_idSystem.TryFindIdCard(player, out var idCard) || !_reader.IsAllowed(idCard, uid))
+        if (!_idSystem.TryFindIdCard(player, out var idCard) || !_reader.IsAllowed(idCard.Value, uid))
         {
             Popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), args.Actor, PopupType.Medium);
             return;
         }
 
-        var idCardUid = idCard.Owner;
+        var idCardUid = idCard.Value.Owner;
 
         if (component.AuthorizedEntities.ContainsKey(idCardUid))
             return;
 
-        component.AuthorizedEntities[idCardUid] = MetaData(idCard).EntityName;
+        component.AuthorizedEntities[idCardUid] = MetaData(idCard.Value).EntityName;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch AUTH by {args.Actor:user}");
         var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;

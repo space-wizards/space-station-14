@@ -160,9 +160,9 @@ public sealed partial class ContrabandSystem : EntitySystem
         var jobId = "";
         if (_id.TryFindIdCard(player.Value, out var id))
         {
-            departments = id.Comp.JobDepartments;
-            if (id.Comp.LocalizedJobTitle is not null)
-                jobId = id.Comp.LocalizedJobTitle;
+            departments = id.Value.Comp.JobDepartments;
+            if (id.Value.Comp.LocalizedJobTitle is not null)
+                jobId = id.Value.Comp.LocalizedJobTitle;
         }
 
         var jobs = contraband.Comp.AllowedJobs.Select(p => ProtoMan.Index(p).LocalizedName).ToArray();

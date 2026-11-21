@@ -457,8 +457,8 @@ public sealed partial class TelephoneSystem : SharedTelephoneSystem
         }
         else if (_idCardSystem.TryFindIdCard(uid, out var idCard))
         {
-            record.CallerId = string.IsNullOrWhiteSpace(idCard.Comp.FullName) ? null : idCard.Comp.FullName;
-            record.CallerJob = idCard.Comp.LocalizedJobTitle;
+            record.CallerId = string.IsNullOrWhiteSpace(idCard.Value.Comp.FullName) ? null : idCard.Value.Comp.FullName;
+            record.CallerJob = idCard.Value.Comp.LocalizedJobTitle;
         }
 
         return record;
