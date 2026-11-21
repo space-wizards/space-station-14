@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Destructible;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Payloads;
 using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Item;
@@ -158,6 +159,13 @@ public abstract partial class MicrowaveSystem : EntitySystem
 
         if (args.Port == ent.Comp.OnPort)
             StartCooking(ent, null);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnLogicSignalReceived(Entity<MicrowaveComponent> ent, ref SignalReceivedEvent<LogicStatePayload> args)
+    {
+        SignalReceivedEvent ev = args;
+        OnSignalReceived(ent, ref ev);
     }
 
     /// <summary>
