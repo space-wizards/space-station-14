@@ -17,9 +17,10 @@
       collection: AlienClaw
     wideAnimationRotation: -90
     attackRate: 1
-    wideAnimation: WeaponArcSlash
-    animation: WeaponArcSlash
-    swingBeverage: false
+    wideAnimation: WeaponArcSlashArmblade
+    animation: WeaponArcThrustArmblade
+    forceAnimationSprite: true
+    swingFlipY: true
     damage:
       types:
         Slash: 10
@@ -71,3 +72,21 @@
       - state: null
       right:
       - state: null
+
+- type: entity
+  id: WeaponArcSlashArmblade
+  parent: WeaponArcSlash
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/armblade.rsi
+      state: melee
+
+- type: entity
+  id: WeaponArcThrustArmblade
+  parent: WeaponArcThrust
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/armblade.rsi
+      state: melee

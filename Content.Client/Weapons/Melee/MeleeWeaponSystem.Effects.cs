@@ -42,7 +42,6 @@ public sealed partial class MeleeWeaponSystem
         {
             return;
         }
-
         var length = 1f;
         var offset = 1f;
 
@@ -51,14 +50,17 @@ public sealed partial class MeleeWeaponSystem
             && TryComp(weapon, out MeleeWeaponComponent? meleeWeaponComponent))
         {
             if (user != weapon
-                && TryComp(weapon, out SpriteComponent? weaponSpriteComponent))
+                && TryComp(weapon, out SpriteComponent? weaponSpriteComponent) && !meleeWeaponComponent.ForceAnimationSprite)
                 _sprite.CopySprite((weapon, weaponSpriteComponent), (animationUid, sprite));
 
             spriteRotation = meleeWeaponComponent.WideAnimationRotation;
 
             if (meleeWeaponComponent.SwingLeft)
+            {
                 angle *= -1;
+                _sprite.SetScale((animationUid, sprite), sprite.Scale * new Vector2(meleeWeaponComponent.SwingFlipX ? -1f : 1f, meleeWeaponComponent.SwingFlipY ? -1f : 1f));
 
+            }
             length = (1 / meleeWeaponComponent.AttackRate) * 0.6f;
             offset = meleeWeaponComponent.AnimationOffset;
         }
