@@ -663,6 +663,12 @@
       - !type:Electrocute
         electrocuteTime: 1
         probability: 0.5
+    Digestion:
+      metabolismRate: 2.0
+      effects:
+      - !type:Electrocute
+        electrocuteTime: 1
+        probability: 0.5
 
 - type: reagent
   id: Lipolicide
