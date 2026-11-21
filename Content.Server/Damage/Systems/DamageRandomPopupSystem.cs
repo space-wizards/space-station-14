@@ -1,8 +1,6 @@
 using Content.Server.Damage.Components;
 using Content.Server.Popups;
-using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.Damage.Systems;
@@ -15,14 +13,10 @@ public sealed partial class DamageRandomPopupSystem : EntitySystem
     [Dependency] private PopupSystem _popupSystem = default!;
     [Dependency] private IRobustRandom _random = default!;
 
-    public override void Initialize()
+    [SubscribeLocalEvent]
+    private void OnDamageChange(Entity<DamageRandomPopupComponent> ent, ref DamageDealtEvent args)
     {
-        base.Initialize();
-        SubscribeLocalEvent<DamageRandomPopupComponent, DamageChangedEvent>(OnDamageChange);
-    }
-
-    private void OnDamageChange(EntityUid uid, DamageRandomPopupComponent component, DamageChangedEvent args)
-    {
-        _popupSystem.PopupEntity(Loc.GetString(_random.Pick(component.Popups)), uid);
+        if (args.AnyPositive)
+            _popupSystem.PopupEntity(Loc.GetString(_random.Pick(ent.Comp.Popups)), ent);
     }
 }
