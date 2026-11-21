@@ -1,0 +1,53 @@
+{
+    "version": 1,
+    "size": {
+        "x": 16,
+        "y": 16
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by Joe-Derp",
+    "states": [
+        {
+            "name": "uncleared"
+        },
+        {
+            "name": "flagged"
+        },
+        {
+            "name": "mine"
+        },
+        {
+            "name": "falseflagged"
+        },
+        {
+            "name": "minedetonated"
+        },
+        {
+            "name": "clearedempty"
+        },
+        {
+            "name": "clearedone"
+        },
+        {
+            "name": "clearedtwo"
+        },
+        {
+            "name": "clearedthree"
+        },
+        {
+            "name": "clearedfour"
+        },
+        {
+            "name": "clearedfive"
+        },
+        {
+            "name": "clearedsix"
+        },
+        {
+            "name": "clearedseven"
+        },
+        {
+            "name": "clearedeight"
+        }
+    ]
+}
