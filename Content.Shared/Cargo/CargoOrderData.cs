@@ -64,6 +64,18 @@ namespace Content.Shared.Cargo
         public string? Approver;
 
         /// <summary>
+        /// If this order has been assigned to be delivered differently from the
+        /// </summary>
+        [ViewVariables]
+        public bool Assigned { get; set; }
+
+        /// <summary>
+        /// The entity assigned to deliver, only not null if not the ATS
+        /// </summary>
+        [ViewVariables]
+        public NetEntity? AssignedEntity { get; set; }
+
+        /// <summary>
         /// Which account to deduct funds from when ordering.
         /// </summary>
         [DataField]
