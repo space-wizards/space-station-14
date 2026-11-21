@@ -109,7 +109,7 @@ public sealed partial class CargoSystem
             return;
         }
 
-        var pdaEvent = new NewOrderAddedEvent(Loc.GetString("cargo-pda-notification-message", ("requester", args.Requester), ("product", "stuff"), ("reason", args.Reason)));
+        var pdaEvent = new NewOrderAddedEvent(Loc.GetString("cargo-pda-notification-message", ("requester", args.Requester), ("product", $"{args.Amount}x{product.Name}"), ("reason", args.Reason)));
         var query = EntityQueryEnumerator<CargoAppCartridgeComponent>();
 
         while (query.MoveNext(out var readerUid, out _))
