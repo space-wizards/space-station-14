@@ -24,6 +24,6 @@ public sealed partial class CargoAppUi : UIFragment
         if (state is not CargoAppUiState cargoAppState)
             return;
 
-        _fragment?.UpdateState(cargoAppState.Orders, cargoAppState.DeliveredOrders);
+        _fragment?.UpdateState(cargoAppState.Orders);
     }
 }

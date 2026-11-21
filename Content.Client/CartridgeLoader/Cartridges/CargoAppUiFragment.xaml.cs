@@ -18,17 +18,9 @@ public sealed partial class CargoAppUiFragment : BoxContainer
         VerticalExpand = true;
     }
 
-    public void UpdateState(CargoOrderData[] orders, CargoOrderData[] deliveredOrders)
+    public void UpdateState(CargoOrderData[] orders)
     {
         CargoAppListing.RemoveAllChildren();
         CargoAppListing.AddCargoAppEntries(orders);
-        var panel = new PanelContainer
-        {
-            PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#040404") }
-        };
-
-        CargoAppListing.AddChild(panel);
-
-        CargoAppListing.AddCargoAppEntries(deliveredOrders);
     }
 }

@@ -9,9 +9,8 @@ public sealed class CargoAppUiState : BoundUserInterfaceState
     public CargoOrderData[] Orders;
     public CargoOrderData[] DeliveredOrders;
 
-    public CargoAppUiState(CargoOrderData[] orders, CargoOrderData[] deliveredOrders)
+    public CargoAppUiState(CargoOrderData[] orders)
     {
         Orders = orders;
-        DeliveredOrders = deliveredOrders;
     }
 }

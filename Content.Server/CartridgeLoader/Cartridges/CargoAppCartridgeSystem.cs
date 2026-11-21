@@ -60,10 +60,7 @@ public sealed partial class CargoAppCartridgeSystem : EntitySystem
         {
             // Display "loading failed" message
             var failureMessage = Loc.GetString("crew-manifest-cartridge-loading-failed");
-            var failureState = new CargoAppUiState(
-                [],
-                []
-                );
+            var failureState = new CargoAppUiState([]);
             _cartridgeLoader.UpdateCartridgeUiState(loaderUid, failureState);
             return;
         }
@@ -74,15 +71,8 @@ public sealed partial class CargoAppCartridgeSystem : EntitySystem
         if (!TryComp<StationBankAccountComponent>(station, out var bank))
             return;
 
-        var orderHistory = orderDatabase
-            .DeliveredOrders.Concat(orderDatabase.Orders)
-            .OrderBy(order => order.OrderId)
-            .ToList();
-
-
         var state = new CargoAppUiState(
-            _cargoSystem.RelevantOrders((station.Value, orderDatabase), orderDatabase.Orders, bank.PrimaryAccount, approved: false).ToArray(),
-            _cargoSystem.RelevantOrders((station.Value, orderDatabase), orderHistory, bank.PrimaryAccount, approved: true).ToArray()
+            _cargoSystem.RelevantOrders((station.Value, orderDatabase), orderDatabase.Orders, bank.PrimaryAccount, approved: false).ToArray()
             );
         _cartridgeLoader.UpdateCartridgeUiState(loaderUid, state);
     }
