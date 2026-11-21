@@ -121,8 +121,8 @@ appeal = ""
 telegram = ""
 
 [discord]
-# Discord webhook to send ahelp messages to.
-ahelp_webhook = ""
+# Discord forum channel ID to relay ahelp messages to. Requires the Discord bot to be configured.
+ahelp_forum_channel_id = ""
 # Discord webhook to send round restart messages to.
 round_update_webhook = ""
 # Role ID to ping when the round ends.
