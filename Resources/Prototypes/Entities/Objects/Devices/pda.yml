@@ -96,6 +96,7 @@
         - id: NotekeeperCartridge
         - id: NanoTaskCartridge
         - id: NewsReaderCartridge
+        - id: PdaMessengerCartridge
   - type: ActivatableUI
     key: enum.PdaUiKey.Key
     singleUser: true
@@ -161,6 +162,7 @@
         - id: NotekeeperCartridge
         - id: NanoTaskCartridge
         - id: NewsReaderCartridge
+        - id: PdaMessengerCartridge
         - id: WantedListCartridge
 
 - type: entity
@@ -176,6 +178,7 @@
         - id: NotekeeperCartridge
         - id: NanoTaskCartridge
         - id: NewsReaderCartridge
+        - id: PdaMessengerCartridge
         - id: MedTekCartridge
 
 - type: entity
@@ -438,6 +441,7 @@
         children:
         - id: CrewManifestCartridge
         - id: NewsReaderCartridge
+        - id: PdaMessengerCartridge
   - type: PermanentStatusEffects # for random sentience event
     statusEffects:
     - TraitStatusEffectMuted
@@ -497,6 +501,7 @@
         - id: NotekeeperCartridge
         - id: NanoTaskCartridge
         - id: NewsReaderCartridge
+        - id: PdaMessengerCartridge
         - id: AstroNavCartridge
 
 - type: entity
@@ -543,6 +548,7 @@
         - id: NotekeeperCartridge
         - id: NanoTaskCartridge
         - id: NewsReaderCartridge
+        - id: PdaMessengerCartridge
         - id: AstroNavCartridge
 
 - type: entity
@@ -894,6 +900,7 @@
         - id: NotekeeperCartridge
         - id: NanoTaskCartridge
         - id: NewsReaderCartridge
+        - id: PdaMessengerCartridge
         - id: WantedListCartridge
         - id: LogProbeCartridge
 
@@ -965,6 +972,7 @@
         - id: NotekeeperCartridge
         - id: NanoTaskCartridge
         - id: NewsReaderCartridge
+        - id: PdaMessengerCartridge
         - id: MedTekCartridge
         - id: WantedListCartridge
         - id: LogProbeCartridge
@@ -993,6 +1001,7 @@
         - id: NotekeeperCartridge
         - id: NanoTaskCartridge
         - id: NewsReaderCartridge
+        - id: PdaMessengerCartridge
         - id: LogProbeCartridge
         - id: WantedListCartridge
         - id: MedTekCartridge
@@ -1209,6 +1218,7 @@
         - id: NotekeeperCartridge
         - id: NanoTaskCartridge
         - id: NewsReaderCartridge
+        - id: PdaMessengerCartridge
         - id: MedTekCartridge
         - id: WantedListCartridge
         - id: LogProbeCartridge
@@ -1401,6 +1411,7 @@
         - id: NotekeeperCartridge
         - id: NanoTaskCartridge
         - id: NewsReaderCartridge
+        - id: PdaMessengerCartridge
         - id: WantedListCartridge
         - id: LogProbeCartridge
 
@@ -1431,6 +1442,7 @@
         - id: NotekeeperCartridge
         - id: NanoTaskCartridge
         - id: NewsReaderCartridge
+        - id: PdaMessengerCartridge
         - id: WantedListCartridge
         - id: MedTekCartridge
 
