@@ -77,12 +77,18 @@ public abstract partial class SharedGasTileOverlaySystem : EntitySystem
         [ViewVariables]
         public readonly ThermalByte ByteGasTemperature;
 
+        /// <summary>
+        /// Network-synced tile pressure clamped to max byte value and compressed to a byte.
+        /// </summary>
+        [ViewVariables]
+        public readonly byte Pressure;
 
-        public GasOverlayData(byte fireState, byte[] opacity, ThermalByte byteTemp)
+        public GasOverlayData(byte fireState, byte[] opacity, ThermalByte byteTemp, byte pressure)
         {
             FireState = fireState;
             Opacity = opacity;
             ByteGasTemperature = byteTemp;
+            Pressure = pressure;
         }
 
         public bool Equals(GasOverlayData other)
@@ -103,6 +109,9 @@ public abstract partial class SharedGasTileOverlaySystem : EntitySystem
             }
 
             if (ByteGasTemperature != other.ByteGasTemperature)
+                return false;
+
+            if (Pressure != other.Pressure)
                 return false;
 
             return true;
