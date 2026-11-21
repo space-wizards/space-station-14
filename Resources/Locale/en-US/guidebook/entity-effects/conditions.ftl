@@ -104,3 +104,5 @@ entity-condition-guidebook-bloodlevel =
                     *[other] the target has between {NATURALFIXED($min, 2)}% and {NATURALFIXED($max, 2)}% total blood
                  }
     }
+
+entity-condition-guidebook-is-sleeping-condition = sleeping
