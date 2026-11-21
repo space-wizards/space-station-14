@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Robust.Shared.ContentPack;
@@ -24,7 +25,7 @@ public sealed partial class MidiFileCollectionManager : IPostInjectInit
 
     private ISawmill _sawmill = default!;
 
-    private readonly List<ResPath> _filePaths = [];
+    private readonly HashSet<ResPath> _filePaths = [];
 
     /// <summary>
     /// Raised after a MIDI file has been added to the library. Contains added file path as argument.
@@ -175,14 +176,9 @@ public sealed partial class MidiFileCollectionManager : IPostInjectInit
         if (!_resManager.UserData.IsDir(UserMidiDirectory))
             return;
 
-        foreach (var path in _resManager.UserData.DirectoryEntries(UserMidiDirectory))
-        {
-            var filePath = new ResPath(UserMidiDirectory + path);
-            if (!filePath.Extension.Equals("midi") && !filePath.Extension.Equals("mid"))
-                continue;
-
-            _filePaths.Add(new ResPath(path));
-        }
+        _filePaths.UnionWith(from pathf in _resManager.UserData.DirectoryEntries(UserMidiDirectory) // the query is nearly instant; but this operation is always really slow, no matter if it is with a hashset or with a list via AddRange. i honestly don't think you can do this faster without not making it readonly.
+                             where pathf.EndsWith(".midi") || pathf.EndsWith(".mid")
+                             select new ResPath(UserMidiDirectory + pathf));
 
         MidiFilesReset?.Invoke();
     }
