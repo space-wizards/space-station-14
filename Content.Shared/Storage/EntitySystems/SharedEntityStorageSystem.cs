@@ -1,6 +1,8 @@
 using System.Linq;
 using System.Numerics;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Destructible;
 using Content.Shared.Explosion;
 using Content.Shared.Foldable;
@@ -30,6 +32,7 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private INetManager _net = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private RequireProjectileTargetSystem _requireProjectileTarget = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedContainerSystem _container = default!;
@@ -494,6 +497,12 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
                     manager: fixtures);
                 component.RemovedMasks = 0;
             }
+        }
+
+        if (component.ToggleRequireProjectileTargetWhenOpen)
+        {
+            var requireTargetComp = EnsureComp<RequireProjectileTargetComponent>(uid);
+            _requireProjectileTarget.SetActive((uid, requireTargetComp), component.Open);
         }
 
         _appearance.SetData(uid, StorageVisuals.Open, component.Open);
