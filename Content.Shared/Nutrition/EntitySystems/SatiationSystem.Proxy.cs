@@ -401,8 +401,7 @@ public abstract partial class SatiationSystem
         var value = currentValue + amount;
 
         if (preventReordering
-            && TryGetThresholds(entity, type, out var thresholds)
-            && GetThresholdValueOrNull(satiation, key.Key) is { } currentValue)
+            && TryGetThresholds(entity, type, out var thresholds))
         {
             thresholds.Remove(key);
             if (TryGetNearestThresholds(entity, type, currentValue, out var nextHigherThreshold, out var nextLowerThreshold, thresholds))
