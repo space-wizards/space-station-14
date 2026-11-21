@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: NamesSyndieborgAssault
+  values:
+    prefix: names-syndieborg-assault-dataset-
+    count: 52
