@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstations at https://github.com/tgstation/tgstation/blob/19da0cee1869bad0186d54d6bcd8a55ed30b9db6/icons/obj/carp_rift.dmi. icon_blue recolored by deltanedas (github)",
+  "copyright": "Taken from tgstations at https://github.com/tgstation/tgstation/blob/19da0cee1869bad0186d54d6bcd8a55ed30b9db6/icons/obj/carp_rift.dmi. icon_blue recolored by deltanedas (github). icon_orange and icon_red recolored by themias (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -19,6 +19,26 @@
     },
     {
       "name": "icon_blue",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "icon_orange",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "icon_red",
       "delays": [
         [
           0.2,
