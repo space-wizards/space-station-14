@@ -12,6 +12,7 @@
     ERTSecurity: 0
     ERTMedical: 0
     ERTJanitor: 0
+    CentralCommandLawyer: 0
     CentralCommandOfficial: 0
     Passenger: 0
     Bartender: 0

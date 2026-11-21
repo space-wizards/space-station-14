@@ -1,0 +1,44 @@
+- type: job
+  id: CentralCommandLawyer
+  name: job-name-centcommlawyer
+  description: job-description-centcommlawyer
+  playTimeTracker: JobCentralCommandLawyer
+  setPreference: false
+  startingGear: CentcommLawyerGear
+  icon: "JobIconCentcommLawyer"
+  supervisors: job-supervisors-centcom
+  access: # same accesses as a normal Lawyer (rather than AA and CentralCommand), since they're not supposed to have direct authority over the station the way CC officials do
+  - Service
+  - Lawyer
+  - Brig
+  - Maintenance
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
+
+- type: startingGear
+  id: CentcommLawyerGear
+  equipment:
+    eyes: ClothingEyesGlassesSunglasses
+    ears: ClothingHeadsetCentComLawyer
+    back: ClothingBackpackSatchelLeather
+    jumpsuit: ClothingUniformJumpsuitCentcommLawyer
+    neck: ClothingNeckLawyerbadge
+    shoes: ClothingShoesLeather
+    id: CentcomLawyerPDA
+  inhand:
+  - BriefcaseBrownFilled
+  storage:
+    back:
+    - RubberStampLawyer # might benefit from a unique stamp, but that also might be too granular for an admeme-only role
+    - BookSpaceLaw
+
+- type: chameleonOutfit
+  id: CentralCommandLawyerOutfit
+  job: CentralCommandLawyer
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatBrownFlatcap
+    mask: ClothingMaskBreath
+    outerClothing: ClothingOuterWinterCentcom
+    gloves: ClothingHandsGlovesColorBrown
