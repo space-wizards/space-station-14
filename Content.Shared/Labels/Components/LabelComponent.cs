@@ -1,5 +1,6 @@
 using Content.Shared.Labels.EntitySystems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Labels.Components;
 
@@ -29,4 +30,11 @@ public sealed partial class LabelComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Examinable = true;
+
+    /// <summary>
+    /// The session, if any, that applied the label.
+    /// </summary>
+    /// <remarks>Tracking used for administrative actions.</remarks>
+    [DataField(serverOnly: true)]
+    public ICommonSession? LabelApplier { get; set; }
 }
