@@ -11,7 +11,7 @@ namespace Content.Shared.Weather;
 /// Used only in conjure with <see cref="StatusEffectComponent"/> for status effects applied to map entities.
 /// Contains basic information about all types of weather effects.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedWeatherSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateEntityRelations, Access(typeof(SharedWeatherSystem))]
 public sealed partial class WeatherStatusEffectComponent : Component
 {
     /// <summary>
@@ -42,6 +42,6 @@ public sealed partial class WeatherStatusEffectComponent : Component
     /// Client audio stream.
     /// Not used on the server.
     /// </summary>
-    [ViewVariables]
-    public EntityUid? Stream;
+    [DataField, AutoRelationField]
+    public EntityRelation Stream;
 }

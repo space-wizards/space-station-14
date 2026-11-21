@@ -1,25 +1,26 @@
 using Content.Shared.Shuttles.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Shuttles.Components;
 
-[RegisterComponent, Access(typeof(ArrivalsSystem)), AutoGenerateComponentPause]
+[Access(typeof(ArrivalsSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause, AutoGenerateEntityRelations]
 public sealed partial class ArrivalsShuttleComponent : Component
 {
-    [DataField("station")]
-    public EntityUid Station;
+    [DataField, AutoRelationField]
+    public EntityRelation Station;
 
-    [DataField("nextTransfer", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
     public TimeSpan NextTransfer;
 
-    [DataField("nextArrivalsTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextArrivalsTime;
 
     /// <summary>
-    ///     the first arrivals FTL originates from nullspace instead of the station
+    /// The first arrivals FTL originates from nullspace instead of the station
     /// </summary>
-    [DataField("firstRun")]
+    [DataField]
     public bool FirstRun = true;
-
 }

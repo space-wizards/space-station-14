@@ -6,11 +6,12 @@ namespace Content.Shared.Shuttles.Components;
 /// <summary>
 /// Added to a station that is available for arrivals shuttles.
 /// </summary>
-[RegisterComponent, Access(typeof(ArrivalsSystem))]
+[RegisterComponent, Access(typeof(ArrivalsSystem)), AutoGenerateEntityRelations]
 public sealed partial class StationArrivalsComponent : Component
 {
-    [DataField("shuttle")]
-    public EntityUid Shuttle;
+    [DataField, AutoRelationField]
+    public EntityRelation Shuttle;
 
-    [DataField("shuttlePath")] public ResPath ShuttlePath = new("/Maps/Shuttles/arrivals.yml");
+    [DataField]
+    public ResPath ShuttlePath = new("/Maps/Shuttles/arrivals.yml");
 }

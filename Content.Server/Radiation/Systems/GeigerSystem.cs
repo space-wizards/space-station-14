@@ -151,7 +151,7 @@ public sealed partial class GeigerSystem : SharedGeigerSystem
         if (!Resolve(uid, ref component, false))
             return;
 
-        component.Stream = _audio.Stop(component.Stream);
+        _audio.Stop(component.Stream);
 
         if (!component.Sounds.TryGetValue(component.DangerLevel, out var sounds))
             return;
@@ -163,10 +163,10 @@ public sealed partial class GeigerSystem : SharedGeigerSystem
         {
             // For some reason PlayPvs sounds quieter even at distance 0, so we need to boost the volume a bit for consistency
             param = sounds.Params.WithLoop(true).AddVolume(component.Volume + 1.5f).WithMaxDistance(component.BroadcastRange);
-            component.Stream = _audio.PlayPvs(sound, uid, param)?.Entity;
+            SetRelation(uid, ref component.Stream, _audio.PlayPvs(sound, uid, param)?.Entity);
         }
         else if (component.User is not null && _player.TryGetSessionByEntity(component.User.Value, out var session))
-            component.Stream = _audio.PlayGlobal(sound, session, param)?.Entity;
+            SetRelation(uid, ref component.Stream, _audio.PlayGlobal(sound, session, param)?.Entity);
     }
 
     public static GeigerDangerLevel RadsToLevel(float rads)

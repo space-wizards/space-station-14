@@ -6,7 +6,6 @@ using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
-using Content.Shared.Coordinates;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
@@ -782,10 +781,13 @@ public sealed partial class CargoSystem
     {
         foreach (var gridUid in data.Grids)
         {
+            if (gridUid.Entity == null)
+                continue;
+
             if (!_tradeStationQuery.HasComponent(gridUid))
                 continue;
 
-            ents.Add(gridUid);
+            ents.Add(gridUid.Entity.Value);
         }
     }
 

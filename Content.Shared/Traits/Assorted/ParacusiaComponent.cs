@@ -8,7 +8,7 @@ namespace Content.Shared.Traits.Assorted;
 /// This component is used for paracusia, which causes auditory hallucinations.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState]
+[AutoGenerateComponentState, AutoGenerateEntityRelations]
 [Access(typeof(SharedParacusiaSystem))]
 public sealed partial class ParacusiaComponent : Component
 {
@@ -43,5 +43,6 @@ public sealed partial class ParacusiaComponent : Component
     [DataField("timeBetweenIncidents", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextIncidentTime;
 
-    public EntityUid? Stream;
+    [DataField, AutoRelationField]
+    public EntityRelation Stream;
 }

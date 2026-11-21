@@ -205,6 +205,8 @@ public abstract partial class SharedAnomalySystem : EntitySystem
 
         var ev = new AnomalyShutdownEvent(uid, supercritical);
         RaiseLocalEvent(uid, ref ev, true);
+        if (component.ConnectedVessel.Entity != null)
+            RaiseLocalEvent(component.ConnectedVessel.Entity.Value, ref ev);
 
         if (Terminating(uid) || _net.IsClient)
             return;
@@ -239,6 +241,8 @@ public abstract partial class SharedAnomalySystem : EntitySystem
 
         var ev = new AnomalyStabilityChangedEvent(uid, component.Stability, component.Severity);
         RaiseLocalEvent(uid, ref ev, true);
+        if (component.ConnectedVessel.Entity != null)
+            RaiseLocalEvent(component.ConnectedVessel.Entity.Value, ref ev);
     }
 
     /// <summary>
