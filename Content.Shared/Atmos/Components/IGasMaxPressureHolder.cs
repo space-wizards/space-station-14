@@ -41,4 +41,11 @@ public interface IGasMaxPressureHolder : IGasMixtureHolder
     ///     This determines the current value
     /// </summary>
     float Integrity { get; set; }
+
+    /// <summary>
+    ///     if present, is used to scale the magnitude of the explosion. This
+    ///     allows tanks and canisters to use the same equation, but have
+    ///     magnitudes in desired ranges.
+    /// </summary>
+    float? RelativeExplosiveIntensity { get; set; }
 }

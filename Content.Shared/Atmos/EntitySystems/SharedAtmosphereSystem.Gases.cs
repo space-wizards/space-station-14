@@ -223,9 +223,10 @@ public abstract partial class SharedAtmosphereSystem
     /// <param name="mixture">The <see cref="GasMixture"/> to perform reactions on.</param>
     /// <param name="holder"><see cref="IGasMixtureHolder"/> that holds the <see cref="GasMixture"/>.
     /// used by Atmospherics to determine locality for certain reaction effects.</param>
+    /// <param name="deltaTime">Length of time to react.</param>
     /// <returns>The <see cref="ReactionResult"/> of the reactions performed.</returns>
     [PublicAPI]
-    public abstract ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder);
+    public abstract ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, float deltaTime);
 
     /// <summary>
     /// Gets the heat capacity for a <see cref="GasMixture"/>.
