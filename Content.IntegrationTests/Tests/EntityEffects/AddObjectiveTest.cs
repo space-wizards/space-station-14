@@ -3,9 +3,7 @@ using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects;
 using Content.Shared.Mind;
-using Content.Shared.Roles;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.EntityEffects;
 
@@ -13,37 +11,52 @@ namespace Content.IntegrationTests.Tests.EntityEffects;
 [TestOf(typeof(AddObjectiveEntityEffectSystem))]
 public sealed class AddObjectiveTest : GameTest
 {
-    private static readonly ProtoId<EntityEffectPrototype> EffectProtoId = "AddObjectiveTestEffect";
+    private const string EffectProtoId = "AddObjectiveTestEffect";
+    private const string ObjectiveProtoId = "AddObjectiveTestObjective";
 
-    [SidedDependency(Side.Server)] private SharedMindSystem _mind = default!;
-    [SidedDependency(Side.Server)] private SharedEntityEffectsSystem _effects = default!;
-    [SidedDependency(Side.Server)] private SharedRoleSystem _roles = default!;
+
+    [SidedDependency(Side.Server)] private SharedMindSystem _sMind = default!;
+    [SidedDependency(Side.Server)] private SharedEntityEffectsSystem _sEffects = default!;
 
     [TestPrototypes]
-    private const string Prototypes = """
+    private const string Prototypes = $@"
+- type: entity
+  parent: [BaseSurviveObjective]
+  id: {ObjectiveProtoId}
+  name: Get Funky
+  description: The Space Wizards Federation want you to get funky!
+  components:
+  - type: Objective
+    difficulty: 1
+    issuer: SpaceWizardsFederation
+    icon:
+        sprite: Clothing/Head/Hats/wizard_blue.rsi
+        state: icon
+
 - type: entityEffect
-  id: AddObjectiveTestEffect
+  id: {EffectProtoId}
   effects:
   - !type:AddObjective
-    objective: "WizardSurviveObjective"
-""";
+    objective: {ObjectiveProtoId}
+";
 
     public override PoolSettings PoolSettings => new() { Connected = false };
 
     [Test]
     [RunOnSide(Side.Server)]
+    [Description("Checks that AddObjective properly results in an objective being added.")]
     public void AddObjectiveToMindTest()
     {
         var entity = SSpawn("MobHuman");
-        var mind = _mind.CreateMind(null);
-        _mind.TransferTo(mind, entity);
-        _roles.MindAddRole(mind, "MindRoleWizard", mind.Comp, silent: true);
+        var mind = _sMind.CreateMind(null);
+        _sMind.TransferTo(mind, entity);
+        Assume.That(mind.Comp.Objectives, Is.Empty);
 
-        Assert.That(mind.Comp.Objectives, Is.Empty);
-
-        _effects.TryApplyEffect(entity, EffectProtoId);
-
-        Assert.That(mind.Comp.Objectives, Has.Count.EqualTo(1));
-        Assert.That(SComp<MetaDataComponent>(mind.Comp.Objectives[0]).EntityPrototype?.ID, Is.EqualTo("WizardSurviveObjective"));
+        _sEffects.TryApplyEffect(entity, EffectProtoId);
+        Assert.Multiple(() =>
+        {
+            Assert.That(mind.Comp.Objectives, Has.Count.EqualTo(1));
+            Assert.That(SComp<MetaDataComponent>(mind.Comp.Objectives[0]).EntityPrototype?.ID, Is.EqualTo(ObjectiveProtoId));
+        });
     }
 }
