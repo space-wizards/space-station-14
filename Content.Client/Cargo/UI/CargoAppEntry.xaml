@@ -9,11 +9,10 @@
 
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
                 <Label Name="ProductName" ClipText="True" />
-                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-                    <Label Name="Requester" ClipText="True" StyleClasses="LabelSubText" />
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" SeparationOverride="6">
+                    <Label Name="Requester" ClipText="True" HorizontalExpand="True" StyleClasses="LabelSubText" />
                     <Label Name="Reason" StyleClasses="LabelSubText" Align="Right" />
                 </BoxContainer>
-
             </BoxContainer>
 
             <Label Name="PointCost"

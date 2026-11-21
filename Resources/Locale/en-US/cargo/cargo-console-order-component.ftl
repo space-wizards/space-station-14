@@ -14,3 +14,8 @@ cargo-app-notification-message = {$requester} ordered {$product}. {$reason}
 cargo-app-header-order = Order
 cargo-app-header-cost = Cost
 cargo-app-no-orders = No orders.
+cargo-app-reason =
+    { $hasReason ->
+        [true] Reason: { $reason }
+       *[false] { "" }
+    }

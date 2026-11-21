@@ -28,12 +28,18 @@ public sealed partial class CargoAppListing : BoxContainer
             if (!_prototypeManager.TryIndex(order.Product, out var product))
                 continue;
 
+            var reason = string.IsNullOrWhiteSpace(order.Reason)
+                ? string.Empty
+                : Loc.GetString("cargo-app-reason",
+                    ("hasReason", true),
+                    ("reason", order.Reason));
+
             var entry = new CargoAppEntry();
             entry.AddOrder(
                 _sprite.Frame0(product.Icon),
                 $"{product.Name} x{order.OrderQuantity}",
                 order.Requester,
-                order.Reason,
+                reason,
                 Loc.GetString("cargo-console-menu-points-amount",
                     ("amount", (order.OrderQuantity * product.Cost).ToString())),
                 striped: i % 2 == 1);
