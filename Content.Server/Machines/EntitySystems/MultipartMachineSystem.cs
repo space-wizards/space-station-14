@@ -3,7 +3,6 @@ using Content.Server.Construction.Components;
 using Content.Shared.Machines.Components;
 using Content.Shared.Machines.EntitySystems;
 using Content.Shared.Machines.Events;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Machines.EntitySystems;
@@ -15,25 +14,13 @@ namespace Content.Server.Machines.EntitySystems;
 /// </summary>
 public sealed partial class MultipartMachineSystem : SharedMultipartMachineSystem
 {
-    [Dependency] private MapSystem _mapSystem = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
     [Dependency] private EntityLookupSystem _lookupSystem = default!;
 
     // The largest size ANY machine can theoretically have.
     // Used to aid search for machines in range of parts that have been anchored/constructed.
     private const float MaximumRange = 30;
     private readonly HashSet<Entity<MultipartMachineComponent>> _entitiesInRange = [];
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<MultipartMachineComponent, ComponentStartup>(OnComponentStartup);
-
-        SubscribeLocalEvent<MultipartMachineComponent, AnchorStateChangedEvent>(OnMachineAnchorChanged);
-
-        SubscribeLocalEvent<MultipartMachinePartComponent, AfterConstructionChangeEntityEvent>(OnPartConstructionNodeChanged);
-        SubscribeLocalEvent<MultipartMachinePartComponent, AnchorStateChangedEvent>(OnPartAnchorChanged);
-    }
 
     /// <summary>
     /// Clears the matched entity from the specified part
@@ -203,8 +190,7 @@ public sealed partial class MultipartMachineSystem : SharedMultipartMachineSyste
     /// <summary>
     /// Handles any additional setup of the MultipartMachine component.
     /// </summary>
-    /// <param name="ent">Entity/Component that just started.</param>
-    /// <param name="args">Args for the startup.</param>
+    [SubscribeLocalEvent]
     private void OnComponentStartup(Entity<MultipartMachineComponent> ent, ref ComponentStartup args)
     {
         // If anchored, perform a rescan of this machine when the component starts so we can immediately
@@ -213,13 +199,19 @@ public sealed partial class MultipartMachineSystem : SharedMultipartMachineSyste
             Rescan(ent);
     }
 
+    [SubscribeLocalEvent]
+    private void OnPartShutdown(Entity<MultipartMachinePartComponent> ent, ref ComponentShutdown args)
+    {
+        if (TryComp(ent.Comp.Master, out MultipartMachineComponent? comp))
+            Rescan((ent.Comp.Master.Value, comp));
+    }
+
     /// <summary>
     /// Handles when a main machine entity has been anchored or unanchored by a user.
     /// Rescanning is then required in order to check whether parts are still in the right places,
     /// and raise a AfterConstructionChangeEntityEvent.
     /// </summary>
-    /// <param name="ent">Machine entity that has been anchored or unanchored.</param>
-    /// <param name="args">Args for this event.</param>
+    [SubscribeLocalEvent]
     private void OnMachineAnchorChanged(Entity<MultipartMachineComponent> ent,
         ref AnchorStateChangedEvent args)
     {
@@ -234,8 +226,7 @@ public sealed partial class MultipartMachineSystem : SharedMultipartMachineSyste
     /// Rescans all known multipart machines within range that have a part which matches that specific graph
     /// and node IDs.
     /// </summary>
-    /// <param name="ent">Machine part entity that has moved in a graph.</param>
-    /// <param name="args">Args for this event.</param>
+    [SubscribeLocalEvent]
     private void OnPartConstructionNodeChanged(Entity<MultipartMachinePartComponent> ent,
         ref AfterConstructionChangeEntityEvent args)
     {
@@ -263,8 +254,7 @@ public sealed partial class MultipartMachineSystem : SharedMultipartMachineSyste
     /// which machine parts are, will require a rescan of all machines within range as we have no idea
     /// what machine it might be a part of.
     /// </summary>
-    /// <param name="ent">Machine part entity that has been anchored or unanchored.</param>
-    /// <param name="args">Args for this event, notably the anchor status.</param>
+    [SubscribeLocalEvent]
     private void OnPartAnchorChanged(Entity<MultipartMachinePartComponent> ent, ref AnchorStateChangedEvent args)
     {
         if (!args.Anchored)
@@ -333,9 +323,10 @@ public sealed partial class MultipartMachineSystem : SharedMultipartMachineSyste
                 continue;
             }
 
-            if (!TryComp<ConstructionComponent>(entity, out var construction) ||
-                construction.Graph != part.Graph ||
-                construction.Node != part.ExpectedNode)
+            if (part is { Graph: not null, ExpectedNode: not null } &&
+                (!TryComp<ConstructionComponent>(entity, out var construction) ||
+                 construction.Graph != part.Graph.Value ||
+                 construction.Node != part.ExpectedNode))
             {
                 // This constructable doesn't match the right graph we expect
                 continue;
