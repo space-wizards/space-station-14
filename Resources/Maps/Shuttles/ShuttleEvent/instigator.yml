@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 289.0.0
+  engineVersion: 293.0.1
   forkId: ""
   forkVersion: ""
-  time: 08/22/2026 17:21:17
-  entityCount: 545
+  time: 10/22/2026 01:40:44
+  entityCount: 567
 maps: []
 grids:
 - 1
@@ -158,6 +158,13 @@ entities:
     - type: TileHistory
       chunkHistory: {}
     - type: ExplosionAirtightGrid
+- proto: AccessBreaker
+  entities:
+  - uid: 550
+    components:
+    - type: Transform
+      parent: 1
+      pos: 8.2579365,7.6746473
 - proto: ActionToggleInternals
   entities:
   - uid: 495
@@ -188,7 +195,7 @@ entities:
       anchored: True
     - type: Physics
       bodyType: Static
-- proto: AirlockExternalGlass
+- proto: AirlockExternalGlassSyndicateLocked
   entities:
   - uid: 125
     components:
@@ -196,68 +203,24 @@ entities:
       parent: 1
       rot: 1.5707963267948966 rad
       pos: 3.5,1.5
-    - type: DeviceLinkSink
-      ports:
-      - DoorBolt
-      - Open
-      - Close
-      - Toggle
-    - type: DeviceLinkSource
-      linkedPorts:
-        127:
-        - - DoorStatus
-          - DoorBolt
   - uid: 126
-    components:
-    - type: Transform
-      parent: 1
-      rot: 1.5707963267948966 rad
-      pos: -2.5,1.5
-    - type: DeviceLinkSink
-      ports:
-      - DoorBolt
-      - Open
-      - Close
-      - Toggle
-    - type: DeviceLinkSource
-      linkedPorts:
-        128:
-        - - DoorStatus
-          - DoorBolt
-  - uid: 127
     components:
     - type: Transform
       parent: 1
       rot: 3.141592653589793 rad
       pos: 4.5,2.5
-    - type: DeviceLinkSink
-      ports:
-      - DoorBolt
-      - Open
-      - Close
-      - Toggle
-    - type: DeviceLinkSource
-      linkedPorts:
-        125:
-        - - DoorStatus
-          - DoorBolt
+  - uid: 127
+    components:
+    - type: Transform
+      parent: 1
+      rot: 1.5707963267948966 rad
+      pos: -2.5,1.5
   - uid: 128
     components:
     - type: Transform
       parent: 1
       rot: 3.141592653589793 rad
       pos: -3.5,2.5
-    - type: DeviceLinkSink
-      ports:
-      - DoorBolt
-      - Open
-      - Close
-      - Toggle
-    - type: DeviceLinkSource
-      linkedPorts:
-        126:
-        - - DoorStatus
-          - DoorBolt
 - proto: AirlockMaint
   entities:
   - uid: 43
@@ -280,6 +243,13 @@ entities:
       parent: 1
       rot: 1.5707963267948966 rad
       pos: 11.5,2.5
+    - type: Door
+      state: Opening
+      secondsUntilStateChange: -106.7974
+    - type: DeviceLinkSource
+      lastSignals:
+        DoorStatus: True
+        DoorBoltStatus: False
   - uid: 46
     components:
     - type: Transform
@@ -349,6 +319,18 @@ entities:
       parent: 1
       rot: 1.5707963267948966 rad
       pos: 11.5,4.5
+  - uid: 548
+    components:
+    - type: Transform
+      parent: 1
+      rot: 3.141592653589793 rad
+      pos: -3.5,3.5
+  - uid: 549
+    components:
+    - type: Transform
+      parent: 1
+      rot: 3.141592653589793 rad
+      pos: 4.5,3.5
 - proto: Bed
   entities:
   - uid: 446
@@ -402,72 +384,6 @@ entities:
       parent: 1
       rot: 4.71238898038469 rad
       pos: 10.5,4.5
-- proto: BoxCardboard
-  entities:
-  - uid: 531
-    components:
-    - type: MetaData
-      name: frag grenade box
-      desc: a box full of frag grenade cartridges
-    - type: Transform
-      parent: 1
-      pos: -0.7699833,1.7199572
-    - type: Storage
-      storedItems:
-        523:
-          position: 0,0
-          _rotation: South
-        522:
-          position: 1,0
-          _rotation: South
-        525:
-          position: 2,0
-          _rotation: South
-        524:
-          position: 0,2
-          _rotation: East
-    - type: ContainerContainer
-      containers:
-        storagebase: !type:Container
-          ents:
-          - 523
-          - 522
-          - 525
-          - 524
-          showEnts: False
-          occludes: True
-  - uid: 532
-    components:
-    - type: MetaData
-      name: EMP grenade box
-      desc: a box full of EMP cartridges
-    - type: Transform
-      parent: 1
-      pos: -0.23873329,1.699124
-    - type: Storage
-      storedItems:
-        159:
-          position: 0,0
-          _rotation: South
-        131:
-          position: 1,0
-          _rotation: South
-        130:
-          position: 2,0
-          _rotation: South
-        158:
-          position: 0,2
-          _rotation: East
-    - type: ContainerContainer
-      containers:
-        storagebase: !type:Container
-          ents:
-          - 159
-          - 131
-          - 130
-          - 158
-          showEnts: False
-          occludes: True
 - proto: BoxFolderBlack
   entities:
   - uid: 514
@@ -492,7 +408,7 @@ entities:
     components:
     - type: Transform
       parent: 1
-      pos: 1.5254097,1.4605976
+      pos: 1.2545862,1.4654809
 - proto: BoxFolderRed
   entities:
   - uid: 327
@@ -1004,6 +920,96 @@ entities:
     - type: Transform
       parent: 1
       pos: 8.5,14.5
+  - uid: 547
+    components:
+    - type: Transform
+      parent: 1
+      pos: -7.5,12.5
+  - uid: 551
+    components:
+    - type: Transform
+      parent: 1
+      pos: -6.5,12.5
+  - uid: 552
+    components:
+    - type: Transform
+      parent: 1
+      pos: -5.5,6.5
+  - uid: 553
+    components:
+    - type: Transform
+      parent: 1
+      pos: -6.5,6.5
+  - uid: 554
+    components:
+    - type: Transform
+      parent: 1
+      pos: -7.5,6.5
+  - uid: 555
+    components:
+    - type: Transform
+      parent: 1
+      pos: -1.5,-2.5
+  - uid: 556
+    components:
+    - type: Transform
+      parent: 1
+      pos: -1.5,-3.5
+  - uid: 557
+    components:
+    - type: Transform
+      parent: 1
+      pos: -2.5,-3.5
+  - uid: 558
+    components:
+    - type: Transform
+      parent: 1
+      pos: 2.5,-2.5
+  - uid: 559
+    components:
+    - type: Transform
+      parent: 1
+      pos: 2.5,-3.5
+  - uid: 560
+    components:
+    - type: Transform
+      parent: 1
+      pos: 3.5,-3.5
+  - uid: 561
+    components:
+    - type: Transform
+      parent: 1
+      pos: 8.5,6.5
+  - uid: 562
+    components:
+    - type: Transform
+      parent: 1
+      pos: 7.5,6.5
+  - uid: 563
+    components:
+    - type: Transform
+      parent: 1
+      pos: 6.5,6.5
+  - uid: 564
+    components:
+    - type: Transform
+      parent: 1
+      pos: 8.5,12.5
+  - uid: 565
+    components:
+    - type: Transform
+      parent: 1
+      pos: 7.5,12.5
+  - uid: 566
+    components:
+    - type: Transform
+      parent: 1
+      pos: -9.5,3.5
+  - uid: 567
+    components:
+    - type: Transform
+      parent: 1
+      pos: 10.5,3.5
 - proto: CableHV
   entities:
   - uid: 214
@@ -2763,58 +2769,68 @@ entities:
     - type: Transform
       parent: 1
       pos: 0.5,4.5
-- proto: GrenadeEMP
+- proto: GrenadeBlast
   entities:
-  - uid: 130
+  - uid: 530
+    mapInit: true
+    paused: true
     components:
     - type: Transform
-      parent: 532
+      parent: 129
+    - type: EmitSoundOnCollide
+      nextSound: -2672.9086437
     - type: Physics
       canCollide: False
-  - uid: 131
+    - type: Forensics
+      residues: []
+      fingerprints: []
+      fibers: []
+      dNAs: []
+  - uid: 531
+    mapInit: true
+    paused: true
     components:
     - type: Transform
-      parent: 532
+      parent: 129
+    - type: EmitSoundOnCollide
+      nextSound: -2672.9086437
     - type: Physics
       canCollide: False
-  - uid: 158
+    - type: Forensics
+      residues: []
+      fingerprints: []
+      fibers: []
+      dNAs: []
+  - uid: 532
+    mapInit: true
+    paused: true
     components:
     - type: Transform
-      parent: 532
+      parent: 132
+    - type: EmitSoundOnCollide
+      nextSound: -2672.9086437
     - type: Physics
       canCollide: False
-  - uid: 159
+    - type: Forensics
+      residues: []
+      fingerprints: []
+      fibers: []
+      dNAs: []
+  - uid: 546
+    mapInit: true
+    paused: true
     components:
     - type: Transform
-      parent: 532
+      parent: 132
+    - type: EmitSoundOnCollide
+      nextSound: -2672.9086437
     - type: Physics
       canCollide: False
-- proto: GrenadeFrag
-  entities:
-  - uid: 522
-    components:
-    - type: Transform
-      parent: 531
-    - type: Physics
-      canCollide: False
-  - uid: 523
-    components:
-    - type: Transform
-      parent: 531
-    - type: Physics
-      canCollide: False
-  - uid: 524
-    components:
-    - type: Transform
-      parent: 531
-    - type: Physics
-      canCollide: False
-  - uid: 525
-    components:
-    - type: Transform
-      parent: 531
-    - type: Physics
-      canCollide: False
+    - type: Forensics
+      residues: []
+      fingerprints: []
+      fibers: []
+      dNAs: []
 - proto: Grille
   entities:
   - uid: 108
@@ -2969,6 +2985,18 @@ entities:
           ent: null
           showEnts: False
           occludes: True
+- proto: MagazineGrenadeBlast
+  entities:
+  - uid: 131
+    components:
+    - type: Transform
+      parent: 1
+      pos: -0.47675055,1.6558654
+  - uid: 522
+    components:
+    - type: Transform
+      parent: 1
+      pos: -0.76538634,1.7582016
 - proto: MedkitAdvancedFilled
   entities:
   - uid: 538
@@ -3004,6 +3032,13 @@ entities:
     - type: Transform
       parent: 1
       pos: 8.52604,8.64132
+- proto: PinpointerNuclear
+  entities:
+  - uid: 525
+    components:
+    - type: Transform
+      parent: 1
+      pos: 1.7261403,1.4160831
 - proto: PlastitaniumWindow
   entities:
   - uid: 3
@@ -3189,12 +3224,52 @@ entities:
       parent: 1
       rot: 3.141592653589793 rad
       pos: -3.5,3.5
+    - type: ContainerContainer
+      containers:
+        machine_board: !type:Container
+          ents: []
+          showEnts: False
+          occludes: True
+        machine_parts: !type:Container
+          ents: []
+          showEnts: False
+          occludes: True
+        ballistic-ammo: !type:Container
+          ents:
+          - 530
+          - 531
+          showEnts: False
+          occludes: True
+    - type: BallisticAmmoProvider
+      entities:
+      - 530
+      - 531
   - uid: 132
     components:
     - type: Transform
       parent: 1
       rot: 3.141592653589793 rad
       pos: 4.5,3.5
+    - type: ContainerContainer
+      containers:
+        machine_board: !type:Container
+          ents: []
+          showEnts: False
+          occludes: True
+        machine_parts: !type:Container
+          ents: []
+          showEnts: False
+          occludes: True
+        ballistic-ammo: !type:Container
+          ents:
+          - 532
+          - 546
+          showEnts: False
+          occludes: True
+    - type: BallisticAmmoProvider
+      entities:
+      - 532
+      - 546
 - proto: SignalButtonDirectional
   entities:
   - uid: 329
@@ -3208,14 +3283,14 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         208:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
         209:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
         210:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
   - uid: 330
     components:
     - type: MetaData
@@ -3227,14 +3302,14 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         211:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
         212:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
         213:
-        - - Pressed
-          - Toggle
+        - source: Pressed
+          sink: Toggle
 - proto: SMESBasic
   entities:
   - uid: 198
@@ -3247,6 +3322,23 @@ entities:
     - type: Transform
       parent: 1
       pos: 9.5,0.5
+- proto: SpawnPointNukies
+  entities:
+  - uid: 524
+    components:
+    - type: Transform
+      parent: 1
+      pos: 0.5,2.5
+  - uid: 528
+    components:
+    - type: Transform
+      parent: 1
+      pos: -0.5,3.5
+  - uid: 529
+    components:
+    - type: Transform
+      parent: 1
+      pos: 1.5,3.5
 - proto: StairStageDark
   entities:
   - uid: 527
@@ -3292,6 +3384,22 @@ entities:
       pos: 9.5,11.5
 - proto: SurveillanceCameraSecurity
   entities:
+  - uid: 130
+    components:
+    - type: Transform
+      parent: 1
+      pos: 8.5,15.5
+  - uid: 158
+    components:
+    - type: Transform
+      parent: 1
+      pos: 5.5,-1.5
+  - uid: 159
+    components:
+    - type: Transform
+      parent: 1
+      rot: 1.5707963267948966 rad
+      pos: -7.5,10.5
   - uid: 333
     components:
     - type: Transform
@@ -3306,12 +3414,8 @@ entities:
     components:
     - type: Transform
       parent: 1
-      pos: 8.5,15.5
-    - type: SurveillanceCamera
-      nameSet: True
-      id: Fore-Starboard
-      setupAvailableNetworks:
-      - SurveillanceCameraSecurity
+      rot: -1.5707963267948966 rad
+      pos: 8.5,10.5
   - uid: 432
     components:
     - type: Transform
@@ -3334,6 +3438,11 @@ entities:
       id: Aft-Port
       setupAvailableNetworks:
       - SurveillanceCameraSecurity
+  - uid: 523
+    components:
+    - type: Transform
+      parent: 1
+      pos: -4.5,-1.5
 - proto: SyndicateComputerComms
   entities:
   - uid: 142
@@ -3372,26 +3481,7 @@ entities:
     components:
     - type: Transform
       parent: 1
-      pos: 8.421873,7.766321
-- proto: SyndieSoldierSpawner
-  entities:
-  - uid: 528
-    components:
-    - type: Transform
-      parent: 1
-      pos: -0.5,3.5
-  - uid: 529
-    components:
-    - type: Transform
-      parent: 1
-      pos: 1.5,3.5
-- proto: SyndieSoldierTeamLeaderSpawner
-  entities:
-  - uid: 530
-    components:
-    - type: Transform
-      parent: 1
-      pos: 0.5,0.5
+      pos: 8.360843,7.9906096
 - proto: TableFancyBlack
   entities:
   - uid: 489
@@ -3499,27 +3589,27 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         129:
-        - - Left
-          - On
-        - - Left
-          - Trigger
-        - - Right
-          - On
-        - - Right
-          - Trigger
-        - - Middle
-          - Off
+        - source: Left
+          sink: On
+        - source: Left
+          sink: Trigger
+        - source: Right
+          sink: On
+        - source: Right
+          sink: Trigger
+        - source: Middle
+          sink: Off
         132:
-        - - Left
-          - On
-        - - Left
-          - Trigger
-        - - Right
-          - On
-        - - Right
-          - Trigger
-        - - Middle
-          - Off
+        - source: Left
+          sink: On
+        - source: Left
+          sink: Trigger
+        - source: Right
+          sink: On
+        - source: Right
+          sink: Trigger
+        - source: Middle
+          sink: Off
 - proto: VendingMachineClothing
   entities:
   - uid: 465
