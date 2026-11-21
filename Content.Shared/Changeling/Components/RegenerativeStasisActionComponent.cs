@@ -6,6 +6,17 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Changeling.Components;
 
 /// <summary>
+/// An entity that regenerates will be removed from this container.
+/// </summary>
+[RegisterComponent]
+[Access(typeof(RegenerativeStasisSystem))]
+public sealed partial class ContainerExpelRegeneratorsComponent : Component
+{
+    [DataField(required: true)]
+    public string Container;
+}
+
+/// <summary>
 /// Component responsible for Changelings Regenerative Stasis.
 /// Allows the user to fake "death" and heal afterwards.
 /// </summary>
