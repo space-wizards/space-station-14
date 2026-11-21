@@ -138,6 +138,7 @@
     title: objective-condition-kill-station-ai
   - type: PickRandomPerson
     pool: !type:AliveAiPool
+    conditions: []
   - type: KillPersonCondition
     requireDead: true
 
