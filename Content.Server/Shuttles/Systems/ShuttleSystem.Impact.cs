@@ -103,6 +103,14 @@ public sealed partial class ShuttleSystem
         var worldPoints = args.WorldPoints;
         var worldNormal = args.WorldNormal;
 
+        var meImmune = component.Invulnerable;
+        var otherImmune = component.Harmless;
+        if (TryComp<ShuttleComponent>(args.OtherEntity, out var comp))
+        {
+            meImmune |= comp.Harmless;
+            otherImmune |= comp.Invulnerable;
+        }
+
         for (var i = 0; i < worldPoints.Length; i++)
         {
             var worldPoint = worldPoints[i];
@@ -141,7 +149,7 @@ public sealed partial class ShuttleSystem
             _audio.PlayPvs(_shuttleImpactSound, coordinates, audioParams);
 
             // if we're not enabled, stop after playing sound
-            if (!_enabled)
+            if (!_enabled || (meImmune && otherImmune))
                 continue;
 
             // Convert the collision point directly to tile indices
@@ -182,8 +190,8 @@ public sealed partial class ShuttleSystem
             var totalInertia = ourVelocity * ourMass + otherVelocity * otherMass;
             var inelasticVel = totalInertia / (ourMass + otherMass);
 
-            DoGridImpact((args.OurEntity, ourGrid, ourXform, ourBody), args.OurFixture, inelasticVel, ourVelocity, ourTile, ourTiles, toUsEnergy);
-            DoGridImpact((args.OtherEntity, otherGrid, otherXform, otherBody), args.OtherFixture, inelasticVel, otherVelocity, otherTile, otherTiles, toOtherEnergy);
+            DoGridImpact((args.OurEntity, ourGrid, ourXform, ourBody), args.OurFixture, inelasticVel, ourVelocity, ourTile, ourTiles, toUsEnergy, !meImmune);
+            DoGridImpact((args.OtherEntity, otherGrid, otherXform, otherBody), args.OtherFixture, inelasticVel, otherVelocity, otherTile, otherTiles, toOtherEnergy, !otherImmune);
         }
     }
 
@@ -193,7 +201,8 @@ public sealed partial class ShuttleSystem
                               Vector2 velocity,
                               Vector2i tile,
                               int tiles,
-                              float energy)
+                              float energy,
+                              bool destructive)
     {
         // for readability to not have .Comp1 .Comp2 for everything
         var (_, grid, xform, body) = ent;
@@ -208,7 +217,8 @@ public sealed partial class ShuttleSystem
         _physics.ApplyLinearImpulse(ent, deltaV * body.FixturesMass, body: body);
 
         // process tile and entity damage
-        ProcessImpactZone(ent, grid, tile, energy, deltaV.Normalized(), radius);
+        if (destructive)
+            ProcessImpactZone(ent, grid, tile, energy, deltaV.Normalized(), radius);
 
         // throw every entity on grid if the impulse is not negligible
         if (deltaV.Length() > _minImpulseVelocity)
