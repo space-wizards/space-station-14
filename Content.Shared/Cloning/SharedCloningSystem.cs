@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Hands.Components;
 using Content.Shared.Implants.Components;
 using Content.Shared.Inventory;
 using Content.Shared.StatusEffectNew.Components;
@@ -18,7 +19,7 @@ public abstract partial class SharedCloningSystem : EntitySystem
     /// <summary>
     /// Spawns a clone of the given humanoid mob at the specified location or in nullspace.
     /// </summary>
-    public virtual bool TryCloning(
+    public virtual bool TryCloneHumanoid(
         EntityUid original,
         MapCoordinates? coords,
         ProtoId<CloningSettingsPrototype> settingsId,
@@ -26,6 +27,41 @@ public abstract partial class SharedCloningSystem : EntitySystem
     {
         clone = null;
         return false;
+    }
+
+    /// <summary>
+    /// Spawns a clone of a given entity at the specified location, or in nullspace.
+    /// </summary>
+    /// <param name="original">Entity we are cloning</param>
+    /// <param name="coords">Optional coords we are spawning at</param>
+    /// <param name="settingsId">Cloning settings prototype</param>
+    /// <param name="clone">Cloned entity that was created</param>
+    /// <returns>True if clone was successfully spawned</returns>
+    public virtual bool TryClone(
+        EntityUid original,
+        MapCoordinates? coords,
+        ProtoId<CloningSettingsPrototype> settingsId,
+        [NotNullWhen(true)] out EntityUid? clone)
+    {
+        clone = null;
+        return false;
+    }
+
+    /// <summary>
+    /// Clones data from one entity onto another
+    /// </summary>
+    /// <param name="original">Entity we are cloning</param>
+    /// <param name="clone">Entity we are copying data onto</param>
+    /// <param name="settings">Cloning settings</param>
+    public virtual void Clone(EntityUid original, EntityUid clone, ProtoId<CloningSettingsPrototype> settings)
+    {
+
+    }
+
+    /// <inheritdoc cref="Clone(EntityUid,EntityUid,ProtoId{CloningSettingsPrototype})"/>
+    public virtual void Clone(EntityUid original, EntityUid clone, CloningSettingsPrototype settings)
+    {
+
     }
 
     /// <summary>
@@ -65,6 +101,17 @@ public abstract partial class SharedCloningSystem : EntitySystem
         EntityWhitelist? whitelist = null,
         EntityWhitelist? blacklist = null)
     {
+    }
+
+    /// <summary>
+    /// Copies any items held by an entity with hands from the original to the clone.
+    /// </summary>
+    public virtual void CopyHands(Entity<HandsComponent?> original,
+        Entity<HandsComponent?> clone,
+        EntityWhitelist? whitelist = null,
+        EntityWhitelist? blacklist = null)
+    {
+
     }
 
     /// <summary>
