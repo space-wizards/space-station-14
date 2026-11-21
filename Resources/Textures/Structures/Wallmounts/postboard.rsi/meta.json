@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Sprites kitbashed from paper, clipboard, noticeboard by Dogbone10.",
+    "copyright": "Sprites kitbashed from paper, clipboard, noticeboard by Dogbone10, business-card/photograph/printout edited by whatston3.",
     "size": {
         "x": 32,
         "y": 32
@@ -14,16 +14,16 @@
             "name": "postboard_over"
         },
         {
-            "name": "bounty"
-        },
-        {
-            "name": "captains_paper"
-        },
-        {
-            "name": "invoice"
+            "name": "business-card"
         },
         {
             "name": "paper"
+        },
+        {
+            "name": "photograph"
+        },
+        {
+            "name": "printout"
         }
     ]
 }
