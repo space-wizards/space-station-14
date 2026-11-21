@@ -34,12 +34,6 @@ public sealed partial class DocumentParsingManager
     private static readonly Parser<char, char> TrySingleNewlineToSpace =
         Try(SkipNewline).Then(SkipWhitespaces).ThenReturn(' ');
 
-    private static readonly Parser<char, char> TextChar = OneOf(
-        TryEscapedChar, // consume any backslashed being used to escape text
-        TrySingleNewlineToSpace, // turn single newlines into spaces
-        Any // just return the character.
-    );
-
     private static readonly Parser<char, char> QuotedTextChar = OneOf(TryEscapedChar, Any);
 
     private static readonly Parser<char, string> QuotedText =
@@ -55,6 +49,18 @@ public sealed partial class DocumentParsingManager
 
     private static readonly Parser<char, Unit> TryLookTextEnd =
         Lookahead(OneOf(TryStartTag, TryStartList, TryStartParagraph, Try(Whitespace.SkipUntil(End))));
+
+    // An escaped newline at the end of a line also eats the real newline after it,
+    // otherwise that newline would become a space at the start of the next line.
+    private static readonly Parser<char, char> TryEscapedNewline =
+        Try(String("\\n").Then(Not(TryLookTextEnd)).Then(TrySingleNewlineToSpace)).ThenReturn('\n');
+
+    private static readonly Parser<char, char> TextChar = OneOf(
+        TryEscapedNewline,
+        TryEscapedChar, // consume any backslashed being used to escape text
+        TrySingleNewlineToSpace, // turn single newlines into spaces
+        Any // just return the character.
+    );
 
     private static readonly Parser<char, string> TextParser =
         TextChar.AtLeastOnceUntil(TryLookTextEnd).Select(string.Concat);
