@@ -28,7 +28,6 @@
     - type: WeaponArcVisuals
       fadeOut: false
 
-
 # Uses TimedDespawn instead of EffectVisuals because auto animation is easier but doesn't raise an animation complete event.
 
 - type: entity
@@ -46,8 +45,6 @@
   components:
     - type: WeaponArcVisuals
       animation: Slash
-
-
 
 - type: entity
   id: WeaponArcBite
