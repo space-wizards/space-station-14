@@ -146,7 +146,7 @@ public sealed partial class BedSystem : EntitySystem
 
                 var damage = bedComponent.Damage;
 
-                if (_sleepingQuery.HasComp(healedEntity))
+                if (_sleepingQuery.HasComp(healedEntity) || _mobStateSystem.IsCritical(healedEntity))
                     damage *= bedComponent.SleepMultiplier;
 
                 _damageableSystem.TryChangeDamage(healedEntity, damage, true, origin: uid);
