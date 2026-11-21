@@ -45,6 +45,9 @@
     proto: EnergyCrossbowBolt
     capacity: 1
     cycleable: false
+  - type: Tag
+    tags:
+    - Sidearm
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
