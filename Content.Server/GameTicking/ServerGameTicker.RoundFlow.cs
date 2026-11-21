@@ -531,6 +531,8 @@ public sealed partial class ServerGameTicker
             }
 
             var roles = Role.MindGetAllRoleInfo(mindId);
+            var familiar = mind.MindRoleContainer.ContainedEntities.Any(role =>
+                TryComp<MindRoleComponent>(role, out var mindRole) && mindRole.RoleType == "Familiar");
 
             var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
             {
@@ -548,6 +550,7 @@ public sealed partial class ServerGameTicker
                 JobPrototypes = roles.Where(role => !role.Antagonist).Select(role => role.Prototype).ToArray(),
                 AntagPrototypes = roles.Where(role => role.Antagonist).Select(role => role.Prototype).ToArray(),
                 Observer = observer,
+                Familiar = familiar,
                 Connected = connected
             };
             listOfPlayerInfo.Add(playerEndRoundInfo);

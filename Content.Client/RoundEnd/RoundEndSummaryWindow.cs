@@ -350,6 +350,8 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
             return Loc.GetString("round-end-summary-window-player-manifest-tab-sort-player-type-observer");
         if (playerInfo.Antag)
             return Loc.GetString("round-end-summary-window-player-manifest-tab-sort-player-type-antag");
+        if (playerInfo.Familiar)
+            return Loc.GetString("round-end-summary-window-player-manifest-tab-sort-player-type-familiar");
 
         return Loc.GetString("round-end-summary-window-player-manifest-tab-sort-player-type-crew");
     }
