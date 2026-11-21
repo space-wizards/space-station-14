@@ -1,0 +1,29 @@
+# Base entities for reusable trigger configurations
+
+- type: entity
+  abstract: true
+  id: BaseSoundTrigger
+  description: Produces sound in response to various common events.
+  components:
+  - type: EmitSoundOnTrigger # Override on children with the proper sound.
+    keysIn: &keyIn [ BaseSoundTrigger ]
+    predicted: true
+  - type: TriggerOnActivate
+    keyOut: &keyOut BaseSoundTrigger
+  - type: TriggerOnUse
+    keyOut: *keyOut
+  - type: TriggerOnCollide # Override on children with the used fixture.
+    keyOut: *keyOut
+#  - type: TriggerOnLand # Doesn't work with predicted sound trigger
+#    keyOut: *keyOut
+
+- type: entity
+  abstract: true
+  parent: BaseSoundTrigger
+  id: BaseSoundTriggerDelay
+  components:
+  - type: UseDelay
+  - type: UseDelayTriggerCondition
+    keys: *keyIn
+  - type: UseDelayOnTrigger
+    keysIn: *keyIn
