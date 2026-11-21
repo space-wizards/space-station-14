@@ -806,6 +806,8 @@ public sealed partial class GhostRoleSystem : EntitySystem
             QueueDel(uid);
 
         args.TookRole = true;
+
+        _followerSystem.TransferFollowers(uid, mob);
     }
 
     private bool CanTakeGhost(EntityUid uid, GhostRoleComponent? component = null)
