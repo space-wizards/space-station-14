@@ -1,5 +1,6 @@
 using Content.Shared.Alert;
 using Content.Shared.EntityEffects;
+using Content.Shared.Inventory;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -86,4 +87,10 @@ public sealed partial class ChangelingHorrorComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public List<EntityUid> StoredActions = new();
+
+    /// <summary>
+    /// Lower = faster.
+    /// </summary>
+    [DataField]
+    public float DevourSpeedMultiplier = 0.25f;
 }

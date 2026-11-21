@@ -20,3 +20,53 @@ public sealed partial class ChangelingDevourWindupDoAfterEvent : SimpleDoAfterEv
 /// </summary>
 [Serializable, NetSerializable]
 public sealed partial class ChangelingDevourConsumeDoAfterEvent : SimpleDoAfterEvent;
+
+/// <summary>
+/// Used to skip doafters by horror forms
+/// </summary>
+[ByRefEvent]
+public sealed partial class ChangelingDevourTryWindupEvent : EntityEventArgs
+{
+    /// <summary>
+    /// Multiplies the windup's time. If 0, that doafter is skipped and the devour goes straight to the consume
+    /// </summary>
+    public float Multiplier = 1f;
+
+    /// <summary>
+    /// The target entity
+    /// </summary>
+    public EntityUid Target;
+}
+
+/// <summary>
+/// Used to make devours faster for horror forms
+/// </summary>
+[ByRefEvent]
+public sealed partial class ChangelingTryDevourEvent : EntityEventArgs
+{
+    /// <summary>
+    /// Multiplies the doafter's time. If 0, that doafter is skipped and the devour is instantaneous
+    /// </summary>
+    public float Multiplier = 1f;
+
+    /// <summary>
+    /// The target entity
+    /// </summary>
+    public EntityUid Target;
+
+    /// <summary>
+    /// Wether the devour will break on damage
+    /// </summary>
+    public bool BreakOnDamage = true;
+}
+
+/// <summary>
+/// Raised when a devour is finished
+/// </summary>
+public sealed partial class ChangelingEntityDevouredEvent : EntityEventArgs
+{
+    /// <summary>
+    /// The entity that was just devoured
+    /// </summary>
+    public EntityUid Entity;
+}
