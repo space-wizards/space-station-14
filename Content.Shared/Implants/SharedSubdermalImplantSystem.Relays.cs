@@ -4,6 +4,7 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mindshield;
 using Content.Shared.Mobs;
+using Content.Shared.Paper;
 using Content.Shared.Store;
 using Content.Shared.VoiceMask;
 
@@ -26,6 +27,7 @@ public abstract partial class SharedSubdermalImplantSystem
         SubscribeLocalEvent<ImplantedComponent, GetStoreEvent>(RefRelayToImplantEvent);
         SubscribeLocalEvent<ImplantedComponent, GetMindShieldStatusEvent>(RefRelayToImplantEvent, after: [typeof(MindShieldSystem)]);
         SubscribeLocalEvent<ImplantedComponent, ChameleonControllerOutfitSelectedEvent>(RefRelayToImplantEvent);
+        SubscribeLocalEvent<ImplantedComponent, GetSignatureEvent>(RefRelayToImplantEvent);
     }
 
     /// <summary>

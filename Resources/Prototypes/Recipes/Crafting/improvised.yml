@@ -166,6 +166,12 @@
 
 - type: construction
   parent: BaseItemMisc
+  id: ForgerPen
+  graph: ForgerPen
+  targetNode: forgerpen
+
+- type: construction
+  parent: BaseItemMisc
   id: RepairMothershipPinpointer
   graph: RepairMothershipPinpointer
   targetNode: repairedPinpointer

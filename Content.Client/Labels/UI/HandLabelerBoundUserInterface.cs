@@ -1,3 +1,4 @@
+using Content.Client.UserInterface.Systems.TextPrompt;
 using Content.Shared.Labels;
 using Content.Shared.Labels.Components;
 using Robust.Client.GameObjects;
@@ -13,7 +14,7 @@ namespace Content.Client.Labels.UI
         [Dependency] private IEntityManager _entManager = default!;
 
         [ViewVariables]
-        private HandLabelerWindow? _window;
+        private TextPromptWindow? _window;
 
         public HandLabelerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
@@ -24,7 +25,9 @@ namespace Content.Client.Labels.UI
         {
             base.Open();
 
-            _window = this.CreateWindow<HandLabelerWindow>();
+            _window = this.CreateWindow<TextPromptWindow>();
+
+            _window.UpdateLabels("hand-labeler-ui-header", "hand-labeler-ui-reset-label-text", "hand-labeler-ui-clear-label-text", "hand-labeler-current-text-label");
 
             if (_entManager.TryGetComponent(Owner, out HandLabelerComponent? labeler))
             {
