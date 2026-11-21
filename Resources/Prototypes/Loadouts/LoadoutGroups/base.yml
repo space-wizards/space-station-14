@@ -1,0 +1,77 @@
+# These base prototypes exist so that other loadout groups can parent from them.
+# That way if we want to change the name of one of the locale strings used, we just change it here (and in loadout-groups.ftl),
+# instead of needing to change literally every prototype that uses that string. Ditto for stuff like item limits.
+# Child prototypes can override these values as needed.
+
+- type: loadoutGroup
+  id: BaseHead
+  name: loadout-group-head
+  minLimit: 0
+
+- type: loadoutGroup
+  id: BaseEyewear
+  name: loadout-group-eyes
+  minLimit: 0
+
+- type: loadoutGroup
+  id: BaseMask
+  name: loadout-group-mask
+  minLimit: 0
+
+- type: loadoutGroup
+  id: BaseBackpack
+  name: loadout-group-back
+
+- type: loadoutGroup
+  id: BaseBelt
+  name: loadout-group-belt
+
+- type: loadoutGroup
+  id: BaseJumpsuit
+  name: loadout-group-jumpsuit
+
+- type: loadoutGroup
+  id: BaseOuterClothing
+  name: loadout-group-outerclothing
+  minLimit: 0
+
+- type: loadoutGroup
+  id: BaseNeck
+  name: loadout-group-neck
+  minLimit: 0
+
+- type: loadoutGroup
+  id: BaseGloves
+  name: loadout-group-gloves
+  minLimit: 0
+
+- type: loadoutGroup
+  id: BaseShoes
+  name: loadout-group-shoes
+
+- type: loadoutGroup
+  id: BasePDA
+  name: loadout-group-pda
+
+- type: loadoutGroup
+  id: BaseAssistiveItems
+  name: loadout-group-assistive-items
+  minLimit: 0
+  maxLimit: 1 # Increase this limit in the future once there's more assistive items than just canes!
+
+- type: loadoutGroup
+  id: BaseTrinkets
+  name: loadout-group-trinkets
+  minLimit: 0
+  maxLimit: 3
+
+- type: loadoutGroup
+  id: BaseJobTrinkets
+  name: loadout-group-jobtrinkets
+  minLimit: 0
+
+- type: loadoutGroup
+  id: SurvivalBase
+  name: loadout-group-survival
+  minLimit: 2
+  hidden: true
