@@ -194,7 +194,7 @@
     swingFlipY: true
   - type: Item
     size: Small
-    sprite: Objects/Fun/Foam/foam_blade.rsi
+    sprite: Objects/Fun/Foam/foam_blade-inhand.rsi
 
 - type: entity
   id: WeaponArcSlashFoamblade

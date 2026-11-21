@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "license": "CC-BY-3.0",
+    "copyright": "by ketufaispikinut",
+    "size": {
+        "x": 40,
+        "y": 40
+    },
+    "states": [
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
+}

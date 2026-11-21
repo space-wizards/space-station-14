@@ -29,7 +29,7 @@
         Structural: 12
   - type: Item
     size: Normal
-    sprite: Objects/Weapons/Melee/armblade.rsi
+    sprite: Objects/Weapons/Melee/armblade-inhands.rsi
   - type: Prying
     speedModifier: 1.5 # Jaws of life speed
     pryPowered: true
