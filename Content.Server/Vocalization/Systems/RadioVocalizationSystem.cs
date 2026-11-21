@@ -52,7 +52,14 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
             if (!TryComp<ActiveRadioComponent>(item, out var radio))
                 continue;
 
-            potentialChannels.UnionWith(radio.Channels);
+            foreach (var channelProtoId in radio.Channels)
+            {
+                var channelProto = ProtoMan.Index(channelProtoId);
+                if (channelProto.AllowHeadsetSend)
+                {
+                    potentialChannels.Add(channelProtoId);
+                }
+            }
         }
 
         if (potentialChannels.Count == 0)
