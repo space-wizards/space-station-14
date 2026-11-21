@@ -1179,3 +1179,9 @@ AirlockStandardGlass: AirlockGlass
 
 # 2026-10-30
 PlushieArachind: PlushieArachnid
+
+# 2026-11-13
+ClothingHeadsetQM: ClothingHeadsetAltCargo
+ClothingHeadsetCE: ClothingHeadsetAltEngineering
+ClothingHeadsetCMO: ClothingHeadsetAltMedical
+ClothingHeadsetRD: ClothingHeadsetAltScience
