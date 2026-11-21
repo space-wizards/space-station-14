@@ -31,3 +31,23 @@
     - state: state_laws
   - type: InstantAction
     event: !type:ToggleLawsScreenEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionOpenDoorRadialMenu
+  name: Set door action
+  description: Set the action that will happen when you interact with doors.
+  components:
+  - type: Action
+    priority: -8
+    itemIconStyle: NoItem
+  - type: Sprite
+    sprite: Objects/Devices/door_remote.rsi
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#5ed7aa"
+    - state: door_remotescreencolour
+      color: "#5ed7aa"
+  - type: InstantAction
+    event: !type:OpenDoorRadialMenuEvent

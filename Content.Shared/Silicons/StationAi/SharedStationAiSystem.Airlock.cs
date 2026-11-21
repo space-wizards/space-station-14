@@ -1,8 +1,10 @@
+using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Robust.Shared.Serialization;
 using Content.Shared.Electrocution;
+using Content.Shared.Remotes.EntitySystems;
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -16,6 +18,13 @@ public abstract partial class SharedStationAiSystem
         SubscribeLocalEvent<DoorBoltComponent, StationAiBoltEvent>(OnAirlockBolt);
         SubscribeLocalEvent<AirlockComponent, StationAiEmergencyAccessEvent>(OnAirlockEmergencyAccess);
         SubscribeLocalEvent<ElectrifiedComponent, StationAiElectrifiedEvent>(OnElectrified);
+        SubscribeLocalEvent<StationAiHeldComponent, OpenDoorRadialMenuEvent>(OnOpenDoorRadialMenu);
+    }
+
+    private void OnOpenDoorRadialMenu(Entity<StationAiHeldComponent> ent, ref OpenDoorRadialMenuEvent args)
+    {
+        _uiSystem.OpenUi(ent.Owner, DoorRemoteUiKey.Key, args.Performer);
+        args.Handled = true;
     }
 
     /// <summary>
@@ -130,3 +139,5 @@ public sealed class StationAiElectrifiedEvent : BaseStationAiAction
     /// <summary> Marker, should door be electrified or no. </summary>
     public bool Electrified;
 }
+
+public sealed partial class OpenDoorRadialMenuEvent : InstantActionEvent;
