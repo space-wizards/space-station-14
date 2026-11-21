@@ -1,197 +1,50 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Popups;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos.Components;
-using Content.Shared.Atmos.Piping.Portable.Components;
+using Content.Shared.Atmos.Portable.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
-using Content.Shared.Atmos.Visuals;
-using Content.Shared.Power;
-using Content.Shared.UserInterface;
-using Robust.Server.GameObjects;
+using Content.Shared.Atmos.Portable;
 
 namespace Content.Server.Atmos.Portable;
 
-public sealed partial class SpaceHeaterSystem : EntitySystem
+/// <summary>
+/// Server side implementation of space heater.
+/// When space heater is auto mode it uses atmos data to flip it between cooling and heating mode.
+/// If you are searching for actual atmos logic it's handled by <seealso cref="GasThermoMachineSystem"/>
+/// </summary>
+public sealed partial class SpaceHeaterSystem : SharedSpaceHeaterSystem
 {
     [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
-    [Dependency] private PopupSystem _popup = default!;
-    [Dependency] private PowerReceiverSystem _power = default!;
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private PowerReceiverSystem _receiver = default!;
 
-    public override void Initialize()
+    [Dependency] private EntityQuery<GasThermoMachineComponent> _thermoQuery = default!;
+
+    [SubscribeLocalEvent]
+    private void OnDeviceUpdated(Entity<SpaceHeaterComponent> ent, ref AtmosDeviceUpdateEvent args)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<SpaceHeaterComponent, ActivatableUIOpenAttemptEvent>(OnUIActivationAttempt);
-        SubscribeLocalEvent<SpaceHeaterComponent, BeforeActivatableUIOpenEvent>(OnBeforeOpened);
-
-        SubscribeLocalEvent<SpaceHeaterComponent, AtmosDeviceUpdateEvent>(OnDeviceUpdated);
-        SubscribeLocalEvent<SpaceHeaterComponent, MapInitEvent>(OnInit);
-        SubscribeLocalEvent<SpaceHeaterComponent, PowerChangedEvent>(OnPowerChanged);
-
-        SubscribeLocalEvent<SpaceHeaterComponent, SpaceHeaterChangeModeMessage>(OnModeChanged);
-        SubscribeLocalEvent<SpaceHeaterComponent, SpaceHeaterChangePowerLevelMessage>(OnPowerLevelChanged);
-        SubscribeLocalEvent<SpaceHeaterComponent, SpaceHeaterChangeTemperatureMessage>(OnTemperatureChanged);
-        SubscribeLocalEvent<SpaceHeaterComponent, SpaceHeaterToggleMessage>(OnToggle);
-    }
-
-    private void OnInit(EntityUid uid, SpaceHeaterComponent spaceHeater, MapInitEvent args)
-    {
-        if (!TryComp<GasThermoMachineComponent>(uid, out var thermoMachine))
+        if (!_thermoQuery.TryComp(ent, out var thermoMachine))
             return;
 
-        thermoMachine.Cp = spaceHeater.HeatingCp;
-        thermoMachine.HeatCapacity = spaceHeater.PowerConsumption;
-    }
-
-    private void OnBeforeOpened(EntityUid uid, SpaceHeaterComponent spaceHeater, BeforeActivatableUIOpenEvent args)
-    {
-        DirtyUI(uid, spaceHeater);
-    }
-
-    private void OnUIActivationAttempt(EntityUid uid, SpaceHeaterComponent spaceHeater, ActivatableUIOpenAttemptEvent args)
-    {
-        if (Comp<TransformComponent>(uid).Anchored)
-            return;
-
-        if (!args.Silent)
-            _popup.PopupEntity(Loc.GetString("comp-space-heater-unanchored", ("device", Loc.GetString("comp-space-heater-device-name"))), uid, args.User);
-
-        args.Cancel();
-    }
-
-    private void OnDeviceUpdated(EntityUid uid, SpaceHeaterComponent spaceHeater, ref AtmosDeviceUpdateEvent args)
-    {
-        if (!_power.IsPowered(uid)
-            || !TryComp<GasThermoMachineComponent>(uid, out var thermoMachine))
-        {
-            return;
-        }
-
-        UpdateAppearance(uid);
-
+        UpdateAppearance((ent, thermoMachine));
         // If in automatic temperature mode, check if we need to adjust the heat exchange direction
-        if (spaceHeater.Mode == SpaceHeaterMode.Auto)
-        {
-            var environment = _atmosphereSystem.GetContainingMixture(uid, args.Grid, args.Map);
-            if (environment == null)
-                return;
-
-            if (environment.Temperature <= thermoMachine.TargetTemperature - (thermoMachine.TemperatureTolerance + spaceHeater.AutoModeSwitchThreshold))
-            {
-                thermoMachine.Cp = spaceHeater.HeatingCp;
-            }
-            else if (environment.Temperature >= thermoMachine.TargetTemperature + (thermoMachine.TemperatureTolerance + spaceHeater.AutoModeSwitchThreshold))
-            {
-                thermoMachine.Cp = spaceHeater.CoolingCp;
-            }
-        }
-    }
-
-    private void OnPowerChanged(EntityUid uid, SpaceHeaterComponent spaceHeater, ref PowerChangedEvent args)
-    {
-        UpdateAppearance(uid);
-        DirtyUI(uid, spaceHeater);
-    }
-
-    private void OnToggle(EntityUid uid, SpaceHeaterComponent spaceHeater, SpaceHeaterToggleMessage args)
-    {
-        ApcPowerReceiverComponent? powerReceiver = null;
-        if (!Resolve(uid, ref powerReceiver))
+        if (ent.Comp.Mode != SpaceHeaterMode.Auto || !_receiver.IsPowered(ent))
             return;
 
-        _power.TogglePower(uid);
-
-        UpdateAppearance(uid);
-        DirtyUI(uid, spaceHeater);
-    }
-
-    private void OnTemperatureChanged(EntityUid uid, SpaceHeaterComponent spaceHeater, SpaceHeaterChangeTemperatureMessage args)
-    {
-        if (!TryComp<GasThermoMachineComponent>(uid, out var thermoMachine))
+        var environment = _atmosphereSystem.GetContainingMixture(ent.Owner, args.Grid, args.Map);
+        if (environment == null)
             return;
 
-        thermoMachine.TargetTemperature = float.Clamp(thermoMachine.TargetTemperature + args.Temperature,
-                                                      spaceHeater.MinTemperature,
-                                                      spaceHeater.MaxTemperature);
+        float tolerance = thermoMachine.TemperatureTolerance + ent.Comp.AutoModeSwitchThreshold;
 
-        UpdateAppearance(uid);
-        DirtyUI(uid, spaceHeater);
-    }
-
-    private void OnModeChanged(EntityUid uid, SpaceHeaterComponent spaceHeater, SpaceHeaterChangeModeMessage args)
-    {
-        if (!TryComp<GasThermoMachineComponent>(uid, out var thermoMachine))
-            return;
-
-        spaceHeater.Mode = args.Mode;
-
-        if (spaceHeater.Mode == SpaceHeaterMode.Heat)
-            thermoMachine.Cp = spaceHeater.HeatingCp;
-        else if (spaceHeater.Mode == SpaceHeaterMode.Cool)
-            thermoMachine.Cp = spaceHeater.CoolingCp;
-
-        DirtyUI(uid, spaceHeater);
-    }
-
-    private void OnPowerLevelChanged(EntityUid uid, SpaceHeaterComponent spaceHeater, SpaceHeaterChangePowerLevelMessage args)
-    {
-        if (!TryComp<GasThermoMachineComponent>(uid, out var thermoMachine))
-            return;
-
-        spaceHeater.PowerLevel = args.PowerLevel;
-
-        switch (spaceHeater.PowerLevel)
+        if (environment.Temperature <= thermoMachine.TargetTemperature - tolerance)
         {
-            case SpaceHeaterPowerLevel.Low:
-                thermoMachine.HeatCapacity = spaceHeater.PowerConsumption / 2;
-                break;
-
-            case SpaceHeaterPowerLevel.Medium:
-                thermoMachine.HeatCapacity = spaceHeater.PowerConsumption;
-                break;
-
-            case SpaceHeaterPowerLevel.High:
-                thermoMachine.HeatCapacity = spaceHeater.PowerConsumption * 2;
-                break;
+            thermoMachine.Cp = ent.Comp.HeatingCp;
+            Dirty(ent.Owner, thermoMachine);
         }
-
-        DirtyUI(uid, spaceHeater);
-    }
-
-    private void DirtyUI(EntityUid uid, SpaceHeaterComponent? spaceHeater)
-    {
-        if (!Resolve(uid, ref spaceHeater)
-            || !TryComp<GasThermoMachineComponent>(uid, out var thermoMachine)
-            || !TryComp<ApcPowerReceiverComponent>(uid, out var powerReceiver))
+        else if (environment.Temperature >= thermoMachine.TargetTemperature + tolerance)
         {
-            return;
-        }
-        _userInterfaceSystem.SetUiState(uid, SpaceHeaterUiKey.Key,
-            new SpaceHeaterBoundUserInterfaceState(spaceHeater.MinTemperature, spaceHeater.MaxTemperature, thermoMachine.TargetTemperature, !powerReceiver.PowerDisabled, spaceHeater.Mode, spaceHeater.PowerLevel));
-    }
-
-    private void UpdateAppearance(EntityUid uid)
-    {
-        if (!_power.IsPowered(uid) || !TryComp<GasThermoMachineComponent>(uid, out var thermoMachine))
-        {
-            _appearance.SetData(uid, SpaceHeaterVisuals.State, SpaceHeaterState.Off);
-            return;
-        }
-
-        if (thermoMachine.LastEnergyDelta > 0)
-        {
-            _appearance.SetData(uid, SpaceHeaterVisuals.State, SpaceHeaterState.Heating);
-        }
-        else if (thermoMachine.LastEnergyDelta < 0)
-        {
-            _appearance.SetData(uid, SpaceHeaterVisuals.State, SpaceHeaterState.Cooling);
-        }
-        else
-        {
-            _appearance.SetData(uid, SpaceHeaterVisuals.State, SpaceHeaterState.StandBy);
+            thermoMachine.Cp = ent.Comp.CoolingCp;
+            Dirty(ent.Owner, thermoMachine);
         }
     }
 }

@@ -1,16 +1,18 @@
-using Content.Shared.Atmos.Piping.Portable.Components;
+using Content.Client.Power.Components;
+using Content.Shared.Atmos.Portable.Components;
+using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Atmos.UI;
 
 /// <summary>
-///     Initializes a <see cref="SpaceHeaterWindow"/> and updates it when new server messages are received.
+/// Initializes a <see cref="SpaceHeaterWindow"/> and updates it when new server messages are received.
 /// </summary>
 [UsedImplicitly]
 public sealed class SpaceHeaterBoundUserInterface : BoundUserInterface
 {
+
     [ViewVariables]
     private SpaceHeaterWindow? _window;
 
@@ -24,60 +26,34 @@ public sealed class SpaceHeaterBoundUserInterface : BoundUserInterface
 
         _window = this.CreateWindow<SpaceHeaterWindow>();
 
-        _window.ToggleStatusButton.OnToggled += _ => OnToggleStatusButtonPressed();
-        _window.IncreaseTempRange.OnPressed += _ => OnTemperatureRangeChanged(_window.TemperatureChangeDelta);
-        _window.DecreaseTempRange.OnPressed += _ => OnTemperatureRangeChanged(-_window.TemperatureChangeDelta);
-        _window.ModeSelector.OnItemSelected += OnModeChanged;
+        _window.ToggleStatusButton.OnToggled += _ => ToggleStatus();
+        _window.IncreaseTempRange.OnPressed += _ => SendPredictedMessage(new SpaceHeaterChangeTemperatureMessage(_window.TemperatureChangeDelta));
+        _window.DecreaseTempRange.OnPressed += _ => SendPredictedMessage(new SpaceHeaterChangeTemperatureMessage(-_window.TemperatureChangeDelta));
+        _window.ModeSelector.OnItemSelected += args => SendPredictedMessage(new SpaceHeaterChangeModeMessage((SpaceHeaterMode)args.Id));
+        _window.PowerLevelSelector.OnItemSelected += args => SendPredictedMessage(new SpaceHeaterChangePowerLevelMessage((SpaceHeaterPowerLevel)args.Id));
 
-        _window.PowerLevelSelector.OnItemSelected += OnPowerLevelChange;
+        Update();
+    }
+    private void ToggleStatus()
+    {
+        var isPowerDisabled = EntMan.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var apcComp) && apcComp.PowerDisabled;
+        SendPredictedMessage(new SpaceHeaterToggleMessage(isPowerDisabled));
     }
 
-    private void OnToggleStatusButtonPressed()
+    public override void Update()
     {
-        SendMessage(new SpaceHeaterToggleMessage());
-    }
+        base.Update();
 
-    private void OnTemperatureRangeChanged(float changeAmount)
-    {
-        SendMessage(new SpaceHeaterChangeTemperatureMessage(changeAmount));
-    }
-
-    private void OnModeChanged(OptionButton.ItemSelectedEventArgs args)
-    {
-        _window?.ModeSelector.SelectId(args.Id);
-        SendMessage(new SpaceHeaterChangeModeMessage((SpaceHeaterMode)args.Id));
-    }
-
-    private void OnPowerLevelChange(RadioOptionItemSelectedEventArgs<int> args)
-    {
-        _window?.PowerLevelSelector.Select(args.Id);
-        SendMessage(new SpaceHeaterChangePowerLevelMessage((SpaceHeaterPowerLevel)args.Id));
-    }
-
-    /// <summary>
-    ///     Update the UI state based on server-sent info
-    /// </summary>
-    /// <param name="state"></param>
-    protected override void UpdateState(BoundUserInterfaceState state)
-    {
-        base.UpdateState(state);
-        if (_window == null || state is not SpaceHeaterBoundUserInterfaceState cast)
+        if (_window == null
+            || !EntMan.TryGetComponent(Owner, out GasThermoMachineComponent? gasThermoMachine)
+            || !EntMan.TryGetComponent(Owner, out SpaceHeaterComponent? spaceHeaterComp))
             return;
 
-        _window.SetActive(cast.Enabled);
-        _window.ModeSelector.SelectId((int)cast.Mode);
-        _window.PowerLevelSelector.Select((int)cast.PowerLevel);
+        var isPowerDisabled = EntMan.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var apcComp) && apcComp.PowerDisabled;
+        _window.ToggleStatusButton.Pressed = !isPowerDisabled;
+        _window.ModeSelector.SelectId((int)spaceHeaterComp.Mode);
+        _window.PowerLevelSelector.Select((int)spaceHeaterComp.PowerLevel);
 
-        _window.MinTemp = cast.MinTemperature;
-        _window.MaxTemp = cast.MaxTemperature;
-        _window.SetTemperature(cast.TargetTemperature);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-        _window?.Dispose();
+        _window.SetTemperature(gasThermoMachine.TargetTemperature, spaceHeaterComp.MinTemperature, spaceHeaterComp.MaxTemperature);
     }
 }
