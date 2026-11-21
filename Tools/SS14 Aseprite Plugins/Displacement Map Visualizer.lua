@@ -450,6 +450,8 @@ local function openShiftDialog()
         -- show offset from main window
         bounds = Rectangle(shiftDlg.bounds.x + 175, shiftDlg.bounds.y, shiftDlg.bounds.width, shiftDlg.bounds.height)
     }
+
+    return shiftDlg
 end
 
 
