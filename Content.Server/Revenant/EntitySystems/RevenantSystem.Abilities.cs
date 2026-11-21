@@ -226,7 +226,7 @@ public sealed partial class RevenantSystem
         {
             _popup.PopupEntity(Loc.GetString("revenant-max-essence-increased"), uid, uid);
 
-            _satiation.ModifyOverrideThreshold((uid, satiationComp), component.EssenceSatiationPrototype, component.MaxRegenThreshold, component.MaxEssenceUpgradeAmount);
+            _satiation.ModifyOverrideThreshold((uid, satiationComp), component.EssenceSatiationPrototype, component.MaxRegenThreshold, component.MaxEssenceUpgradeAmount, preventReordering:true);
         }
 
         //KILL THEMMMM
