@@ -2,413 +2,182 @@
   id: RandomPlantMutations
   ignoreMutationMod: false
   mutations:
-    - name: Sentient
-      description: mutation-plant-sentient
-      baseOdds: 0.0072
-      appliesToProduce: false
-      persists: false
-      effect: !type:MakeSentient # existing effect.
-    - name: Slippery
-      description: mutation-plant-slippery
-      baseOdds: 0.036
-      appliesToPlant: false
-      effect: !type:Slipify
-    - name: ChangeSpecies
-      baseOdds: 0.036
-      appliesToProduce: false
-      effect: !type:PlantMutateSpeciesChange
-      persists: false
-    - name: Unviable
-      baseOdds: 0.109
-      persists: false
-      effect: !type:PlantChangeTraits
-        trait: PlantTraitUnviable
-    - name: ChangeWaterConsumption
-      baseOdds: 0.018
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: PlantGrowth
-        targetDataField: WaterConsumption
-        applyRange:
-          min: 0.3
-          max: 0.9
-        up: !type:PlantAdjustWaterConsumption
-          amount: 0.1
-        down: !type:PlantAdjustWaterConsumption
-          amount: -0.1
-    - name: ChangeNutrientConsumption
-      baseOdds: 0.018
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: PlantGrowth
-        targetDataField: NutrientConsumption
-        applyRange:
-          min: 0.05
-          max: 1.2
-        up: !type:PlantAdjustNutrientConsumption
-          amount: 0.25
-        down: !type:PlantAdjustNutrientConsumption
-          amount: -0.25
-    - name: ChangeToxinsTolerance
-      baseOdds: 0.018
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: PlantToxins
-        targetDataField: ToxinsTolerance
-        applyRange:
-          min: 1
-          max: 10
-        up: !type:PlantAdjustToxinsTolerance
-          amount: 2
-        down: !type:PlantAdjustToxinsTolerance
-          amount: -2
-    - name: ChangeLowPressureTolerance
-      baseOdds: 0.018
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: PlantAtmospheric
-        targetDataField: LowPressureTolerance
-        applyRange:
-          min: 60
-          max: 100
-        up: !type:PlantAdjustLowPressureTolerance
-          amount: 10
-        down: !type:PlantAdjustLowPressureTolerance
-          amount: -10
-    - name: ChangeHighPressureTolerance
-      baseOdds: 0.018
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: PlantAtmospheric
-        targetDataField: HighPressureTolerance
-        applyRange:
-          min: 100
-          max: 140
-        up: !type:PlantAdjustHighPressureTolerance
-          amount: 10
-        down: !type:PlantAdjustHighPressureTolerance
-          amount: -10
-    - name: ChangeLowHeatTolerance
-      baseOdds: 0.018
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: PlantAtmospheric
-        targetDataField: LowHeatTolerance
-        applyRange:
-          min: 213
-          max: 313 # statistical "neutral" point at 263K (about -10C), -20C difference from default plants.
-        up: !type:PlantAdjustLowHeatTolerance
-          amount: 5
-        down: !type:PlantAdjustLowHeatTolerance
-          amount: -5
-    - name: ChangeHighHeatTolerance
-      baseOdds: 0.018
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: PlantAtmospheric
-        targetDataField: HighHeatTolerance
-        applyRange:
-          min: 273
-          max: 373 # statistical "neutral" point at 323K (about 50C), +20C differencefrom default plants.
-        up: !type:PlantAdjustHighHeatTolerance
-          amount: 5
-        down: !type:PlantAdjustHighHeatTolerance
-          amount: -5
-    - name: ChangePestTolerance
-      baseOdds: 0.018
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: PlantWeedPest
-        targetDataField: PestTolerance
-        applyRange:
-          min: 0
-          max: 15
-        up: !type:PlantAdjustPestTolerance
-          amount: 3
-        down: !type:PlantAdjustPestTolerance
-          amount: -3
-    - name: ChangeWeedTolerance
-      baseOdds: 0.018
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: PlantWeedPest
-        targetDataField: WeedTolerance
-        applyRange:
-          min: 0
-          max: 15
-        up: !type:PlantAdjustWeedTolerance
-          amount: 3
-        down: !type:PlantAdjustWeedTolerance
-          amount: -3
-    - name: ChangeEndurance
-      baseOdds: 0.036
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: Plant
-        targetDataField: Endurance
-        applyRange:
-          min: 50
-          max: 150
-        up: !type:PlantAdjustEndurance
-          amount: 20
-        down: !type:PlantAdjustEndurance
-          amount: -20
-    - name: ChangeYield
-      baseOdds: 0.036
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: Plant
-        targetDataField: Yield
-        applyRange:
-          min: 4
-          max: 10
-        up: !type:PlantAdjustYield
-          amount: 1
-        down: !type:PlantAdjustYield
-          amount: -1
-    - name: ChangeLifespan
-      baseOdds: 0.036
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: Plant
-        targetDataField: Lifespan
-        applyRange:
-          min: 10
-          max: 80
-        up: !type:PlantAdjustLifespan
-          amount: 15
-        down: !type:PlantAdjustLifespan
-          amount: -15
-    - name: ChangeMaturation
-      baseOdds: 0.036
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: Plant
-        targetDataField: Maturation
-        applyRange:
-          min: 3
-          max: 8
-        up: !type:PlantAdjustMaturation
-          amount: 1
-        down: !type:PlantAdjustMaturation
-          amount: -1
-    - name: ChangeProduction
-      baseOdds: 0.036
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: Plant
-        targetDataField: Production
-        applyRange:
-          min: 1
-          max: 10
-        up: !type:PlantAdjustProduction
-          amount: 2
-        down: !type:PlantAdjustProduction
-          amount: -2
-    - name: ChangePotency
-      baseOdds: 0.036
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: Plant
-        targetDataField: Potency
-        applyRange:
-          min: 30
-          max: 100
-        up: !type:PlantAdjustPotency
-          amount: 15
-        down: !type:PlantAdjustPotency
-          amount: -15
-    - name: ChangeSeedless
-      baseOdds: 0.036
-      persists: false
-      effect: !type:PlantChangeTraits
-        trait: PlantTraitSeedless
-    - name: Lignification
-      baseOdds: 0.036
-      persists: false
-      effect: !type:PlantChangeTraits
-        trait: PlantTraitLigneous
-    - name: Kudzufication
-      baseOdds: 0.036
-      persists: false
-      effect: !type:PlantChangeTraits
-        trait: PlantTraitKudzu
-    - name: ChangeScreaming
-      baseOdds: 0.036
-      persists: false
-      effect: !type:PlantChangeTraits
-        trait: PlantTraitScream
-    - name: ChangeChemicals
-      baseOdds: 0.072
-      persists: false
-      effect: !type:PlantMutateChemicals
-        randomChemTables:
-        - RandomPickBotanyGeneralReagent
-        - RandomPickBotanyFarmingReagent
-    - name: ChangeExudeGasses
-      baseOdds: 0.0145
-      persists: false
-      effect: !type:PlantMutateExudeGases
-    - name: ChangeConsumeGasses
-      baseOdds: 0.0036
-      persists: false
-      effect: !type:PlantMutateConsumeGases
-    - name: ChangeHarvest
-      baseOdds: 0.036
-      persists: false
-      effect: !type:PlantMutateHarvest
+    - baseOdds: 0.0072
+      mutation:
+        prototype: Sentient
+    - baseOdds: 0.036
+      mutation:
+        prototype: Slippery
+    - baseOdds: 0.036
+      mutation:
+        prototype: ChangeSpecies
+    - baseOdds: 0.109
+      mutation:
+        prototype: Unviable
+    - baseOdds: 0.018
+      mutation:
+        prototype: ChangeWaterConsumption
+    - baseOdds: 0.018
+      mutation:
+        prototype: ChangeNutrientConsumption
+    - baseOdds: 0.018
+      mutation:
+        prototype: ChangeToxinsTolerance
+    - baseOdds: 0.018
+      mutation:
+        prototype: ChangeLowPressureTolerance
+    - baseOdds: 0.018
+      mutation:
+        prototype: ChangeHighPressureTolerance
+    - baseOdds: 0.018
+      mutation:
+        prototype: ChangeLowHeatTolerance
+    - baseOdds: 0.018
+      mutation:
+        prototype: ChangeHighHeatTolerance
+    - baseOdds: 0.018
+      mutation:
+        prototype: ChangePestTolerance
+    - baseOdds: 0.018
+      mutation:
+        prototype: ChangeWeedTolerance
+    - baseOdds: 0.036
+      mutation:
+        prototype: ChangeEndurance
+    - baseOdds: 0.036
+      mutation:
+        prototype: ChangeYield
+    - baseOdds: 0.036
+      mutation:
+        prototype: ChangeLifespan
+    - baseOdds: 0.036
+      mutation:
+        prototype: ChangeMaturation
+    - baseOdds: 0.036
+      mutation:
+        prototype: ChangeProduction
+    - baseOdds: 0.036
+      mutation:
+        prototype: ChangePotency
+    - baseOdds: 0.036
+      mutation:
+        prototype: ChangeSeedless
+    - baseOdds: 0.036
+      mutation:
+        prototype: Lignification
+    - baseOdds: 0.036
+      mutation:
+        prototype: Kudzufication
+    - baseOdds: 0.036
+      mutation:
+        prototype: ChangeScreaming
+    - baseOdds: 0.072
+      mutation:
+        prototype: ChangeChemicals
+    - baseOdds: 0.0145
+      mutation:
+        prototype: ChangeExudeGasses
+    - baseOdds: 0.0036
+      mutation:
+        prototype: ChangeConsumeGasses
+    - baseOdds: 0.036
+      mutation:
+        prototype: ChangeHarvest
 
 - type: randomPlantMutationList
   id: FarmingPlantMutations
   ignoreMutationMod: true
   mutations:
-    - name: MutateFarmingChemicals
-      baseOdds: 0.15
-      persists: false
-      effect: !type:PlantMutateChemicals
-        randomChemTables:
-        - RandomPickBotanyFarmingReagent
-    - name: ChangeHarvest
-      baseOdds: 0.01
-      persists: false
-      effect: !type:PlantMutateHarvest
-    - name: ChangeSeedless
-      baseOdds: 0.01
-      persists: false
-      effect: !type:PlantChangeTraits
-        trait: PlantTraitSeedless
-    - name: ChangePotency
-      baseOdds: 0.15 # higher chance relatively, but lower adjustment amount
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: Plant
-        targetDataField: Potency
-        applyRange:
-          min: 15
-          max: 65
-        up: !type:PlantAdjustPotency
-          amount: 5
-        down: !type:PlantAdjustPotency
-          amount: -5
-    - name: ChangeYield
-      baseOdds: 0.02
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: Plant
-        targetDataField: Yield
-        applyRange:
-          min: 3
-          max: 7
-        up: !type:PlantAdjustYield
-          amount: 1
-        down: !type:PlantAdjustYield
-          amount: -1
-    - name: ChangeWaterConsumption
-      baseOdds: 0.01
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: PlantGrowth
-        targetDataField: WaterConsumption
-        applyRange:
-          min: 0.3
-          max: 0.9
-        up: !type:PlantAdjustWaterConsumption
-          amount: 0.1
-        down: !type:PlantAdjustWaterConsumption
-          amount: -0.1
-    - name: ChangeNutrientConsumption
-      baseOdds: 0.01
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: PlantGrowth
-        targetDataField: NutrientConsumption
-        applyRange:
-          min: 0.05
-          max: 1.2
-        up: !type:PlantAdjustNutrientConsumption
-          amount: 0.25
-        down: !type:PlantAdjustNutrientConsumption
-          amount: -0.25
-    - name: ChangeLifespan
-      baseOdds: 0.03
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: Plant
-        targetDataField: Lifespan
-        applyRange:
-          min: 10
-          max: 80
-        up: !type:PlantAdjustLifespan
-          amount: 15
-        down: !type:PlantAdjustLifespan
-          amount: -15
-    - name: ChangeMaturation
-      baseOdds: 0.03
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: Plant
-        targetDataField: Maturation
-        applyRange:
-          min: 3
-          max: 8
-        up: !type:PlantAdjustMaturation
-          amount: 1
-        down: !type:PlantAdjustMaturation
-          amount: -1
-    - name: ChangeProduction
-      baseOdds: 0.03
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: Plant
-        targetDataField: Production
-        applyRange:
-          min: 1
-          max: 10
-        up: !type:PlantAdjustProduction
-          amount: 1
-        down: !type:PlantAdjustProduction
-          amount: -1
-    - name: ChangeEndurance
-      baseOdds: 0.05
-      persists: false
-      effect: !type:PlantChangeStat
-        targetComponent: Plant
-        targetDataField: Endurance
-        applyRange:
-          min: 80
-          max: 120
-        up: !type:PlantAdjustEndurance
-          amount: 5
-        down: !type:PlantAdjustEndurance
-          amount: -5
-    - name: Lignification
-      baseOdds: 0.05
-      persists: false
-      effect: !type:PlantChangeTraits
-        trait: PlantTraitLigneous
-    - name: Kudzufication
-      baseOdds: 0.03
-      persists: false
-      effect: !type:PlantChangeTraits
-        trait: PlantTraitKudzu
-    - name: ChangeScreaming
-      baseOdds: 0.1
-      persists: false
-      effect: !type:PlantChangeTraits
-        trait: PlantTraitScream
-    - name: Slippery
-      description: mutation-plant-slippery
-      baseOdds: 0.01
-      appliesToPlant: false
-      effect: !type:Slipify
+    - baseOdds: 0.15
+      mutation:
+        prototype: MutateFarmingChemicals
+    - baseOdds: 0.01
+      mutation:
+        prototype: ChangeHarvest
+    - baseOdds: 0.01
+      mutation:
+        prototype: ChangeSeedless
+    - baseOdds: 0.15 # higher chance relatively, but lower adjustment amount
+      mutation:
+        prototype: ChangePotency
+        effect: !type:PlantChangeStat
+          targetComponent: Plant
+          targetDataField: Potency
+          applyRange:
+            min: 15
+            max: 65
+          up: !type:PlantAdjustPotency
+            amount: 5
+          down: !type:PlantAdjustPotency
+            amount: -5
+    - baseOdds: 0.02
+      mutation:
+        prototype: ChangeYield
+        effect: !type:PlantChangeStat
+          targetComponent: Plant
+          targetDataField: Yield
+          applyRange:
+            min: 3
+            max: 7
+          up: !type:PlantAdjustYield
+            amount: 1
+          down: !type:PlantAdjustYield
+            amount: -1
+    - baseOdds: 0.01
+      mutation:
+        prototype: ChangeWaterConsumption
+    - baseOdds: 0.01
+      mutation:
+        prototype: ChangeNutrientConsumption
+    - baseOdds: 0.03
+      mutation:
+        prototype: ChangeLifespan
+    - baseOdds: 0.03
+      mutation:
+        prototype: ChangeMaturation
+    - baseOdds: 0.03
+      mutation:
+        prototype: ChangeProduction
+        effect: !type:PlantChangeStat
+          targetComponent: Plant
+          targetDataField: Production
+          applyRange:
+            min: 1
+            max: 10
+          up: !type:PlantAdjustProduction
+            amount: 1
+          down: !type:PlantAdjustProduction
+            amount: -1
+    - baseOdds: 0.05
+      mutation:
+        prototype: ChangeEndurance
+        effect: !type:PlantChangeStat
+          targetComponent: Plant
+          targetDataField: Endurance
+          applyRange:
+            min: 80
+            max: 120
+          up: !type:PlantAdjustEndurance
+            amount: 5
+          down: !type:PlantAdjustEndurance
+            amount: -5
+    - baseOdds: 0.05
+      mutation:
+        prototype: Lignification
+    - baseOdds: 0.03
+      mutation:
+        prototype: Kudzufication
+    - baseOdds: 0.1
+      mutation:
+        prototype: ChangeScreaming
+    - baseOdds: 0.01
+      mutation:
+        prototype: Slippery
 
 - type: randomPlantMutationList
   id: EvilPlantMutations
   ignoreMutationMod: true
   mutations:
-  - name: MutateEvilChemicals
-    baseOdds: 1
-    persists: false
-    effect: !type:PlantMutateChemicals
-      randomChemTables:
-      - EvilRandomFillSolution
+  - baseOdds: 1
+    mutation:
+      prototype: MutateEvilChemicals
