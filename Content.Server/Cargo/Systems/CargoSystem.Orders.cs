@@ -257,7 +257,7 @@ public sealed partial class CargoSystem
             if (account.RadioChannel != null && order.RadioChannel != account.RadioChannel)
                 _radio.SendRadioMessage(ent.Owner, message, account.RadioChannel.Value, ent.Owner, escapeMarkup: false);
 
-            if (CargoOrderConsoleComponent.BaseAnnouncementChannel != order.RadioChannel && CargoOrderConsoleComponent.BaseAnnouncementChannel != account.RadioChannel)
+            if (CargoOrderConsoleComponent.BaseAnnouncementChannel != order.RadioChannel && CargoOrderConsoleComponent.BaseAnnouncementChannel != account.RadioChannel && !account.IsHidden)
             {
                 _radio.SendRadioMessage(
                     ent.Owner,
