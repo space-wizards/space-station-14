@@ -1672,7 +1672,7 @@
           guidebookDescription: entity-condition-guidebook-is-sleeping-condition
         effectProto: StatusEffectFastMetabolism
         time: 4
-        type: Add
+        type: Update
       - !type:Jitter
         conditions:
         - !type:ReagentCondition
