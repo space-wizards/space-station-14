@@ -1,4 +1,6 @@
 using Content.Client.UserInterface.Fragments;
+using Content.Server.CartridgeLoader.Cartridges;
+using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Robust.Client.UserInterface;
 
@@ -16,6 +18,11 @@ public sealed partial class OrderLogUi : UIFragment
     public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
         _fragment = new OrderLogUiFragment();
+
+        _fragment.OnNotificationSwitchPressed += () =>
+        {
+            SendOrderLogMessage(OrderLogUiAction.NotificationSwitch, userInterface);
+        };
     }
 
     public override void UpdateState(BoundUserInterfaceState state)
@@ -23,6 +30,13 @@ public sealed partial class OrderLogUi : UIFragment
         if (state is not OrderLogUiState orderLogState)
             return;
 
-        _fragment?.UpdateState(orderLogState.Orders);
+        _fragment?.UpdateState(orderLogState.Orders, orderLogState.NotificationOn);
+    }
+
+    private static void SendOrderLogMessage(OrderLogUiAction action, BoundUserInterface userInterface)
+    {
+        var orderLogMessage = new OrderLogUiMessageEvent(action);
+        var message = new CartridgeUiMessage(orderLogMessage);
+        userInterface.SendMessage(message);
     }
 }

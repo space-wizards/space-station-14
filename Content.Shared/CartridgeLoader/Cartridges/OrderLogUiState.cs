@@ -7,9 +7,11 @@ namespace Content.Shared.CartridgeLoader.Cartridges;
 public sealed class OrderLogUiState : BoundUserInterfaceState
 {
     public CargoOrderData[] Orders;
+    public bool NotificationOn;
 
-    public OrderLogUiState(CargoOrderData[] orders)
+    public OrderLogUiState(CargoOrderData[] orders, bool notificationOn)
     {
         Orders = orders;
+        NotificationOn = notificationOn;
     }
 }

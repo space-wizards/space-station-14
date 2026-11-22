@@ -113,3 +113,7 @@ order-log-reason =
        *[false] { "" }
     }
 order-log-program-name = Order Log
+
+order-log-notification-off =  ̶♫̶
+order-log-notification-on = ♫
+order-log-notification-tooltip = Mute notifications

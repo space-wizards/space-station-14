@@ -8,14 +8,22 @@ namespace Content.Client.CartridgeLoader.Cartridges;
 [GenerateTypedNameReferences]
 public sealed partial class OrderLogUiFragment : BoxContainer
 {
+    public event Action? OnNotificationSwitchPressed;
+
     public OrderLogUiFragment()
     {
         RobustXamlLoader.Load(this);
+
+        NotificationSwitch.OnPressed += _ => OnNotificationSwitchPressed?.Invoke();
     }
 
-    public void UpdateState(CargoOrderData[] orders)
+    public void UpdateState(CargoOrderData[] orders, bool notificationOn)
     {
         EmptyLabel.Visible = orders.Length == 0;
         OrderLogListing.SetOrders(orders);
+
+        NotificationSwitch.Text = Loc.GetString(notificationOn
+            ? "order-log-notification-on"
+            : "order-log-notification-off");
     }
 }

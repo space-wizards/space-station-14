@@ -25,6 +25,13 @@
                                     Orientation="Vertical"
                                     HorizontalExpand="True" />
             </ScrollContainer>
+
+            <!-- Footer -->
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="5">
+                <Button Name="NotificationSwitch"
+                        MinWidth="20"
+                        ToolTip="{Loc 'order-log-notification-tooltip'}" />
+            </BoxContainer>
         </BoxContainer>
     </PanelContainer>
 </cartridges:OrderLogUiFragment>

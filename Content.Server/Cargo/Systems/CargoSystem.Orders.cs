@@ -26,7 +26,6 @@ public sealed partial class CargoSystem
     [Dependency] private EmagSystem _emag = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private OrderLogCartridgeSystem _orderLogCartridge = default!;
-    [Dependency] private CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
 
     [SubscribeLocalEvent]
     private void OnInit(Entity<CargoOrderConsoleComponent> ent, ref ComponentInit args)
@@ -127,20 +126,6 @@ public sealed partial class CargoSystem
             LogImpact.Low,
             $"{ToPrettyString(player):user} added order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.Product}, requester:{order.Requester}, reason:{order.Reason}]"
         );
-    }
-
-    [SubscribeLocalEvent]
-    private void OnNewOrderAdded(Entity<OrderLogCartridgeComponent> ent, ref NewOrderAddedEvent args)
-    {
-        if (Comp<CartridgeComponent>(ent).LoaderUid is not { } loaderUid)
-            return;
-
-        _orderLogCartridge.UpdateUiState(ent, loaderUid, ent.Comp);
-
-        _cartridgeLoaderSystem.SendNotification(
-            loaderUid,
-            Loc.GetString("order-log-notification-header"),
-            args.Message);
     }
 
     [SubscribeLocalEvent]
@@ -636,12 +621,13 @@ public sealed partial class CargoSystem
             UpdateOrderState(uid, station);
         }
 
+        // Update cartridges
         var query = EntityQueryEnumerator<OrderLogCartridgeComponent>();
 
         while (query.MoveNext(out var readerUid, out var comp))
         {
             if (Comp<CartridgeComponent>(readerUid).LoaderUid is not { } loaderUid)
-                return;
+                continue;
 
             _orderLogCartridge.UpdateUiState(readerUid, loaderUid, comp);
         }

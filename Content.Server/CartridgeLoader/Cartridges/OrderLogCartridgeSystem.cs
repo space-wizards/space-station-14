@@ -2,6 +2,7 @@ using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared.Cargo.Components;
+using Content.Shared.Cargo.Events;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Robust.Shared.Configuration;
@@ -34,6 +35,16 @@ public sealed partial class OrderLogCartridgeSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnUiMessage(EntityUid uid, OrderLogCartridgeComponent component, CartridgeMessageEvent args)
     {
+        if (args is not OrderLogUiMessageEvent message)
+            return;
+
+        switch (message.Action)
+        {
+            case OrderLogUiAction.NotificationSwitch:
+                component.NotificationOn = !component.NotificationOn;
+                break;
+        }
+
         UpdateUiState(uid, GetEntity(args.LoaderUid), component);
     }
 
@@ -46,6 +57,23 @@ public sealed partial class OrderLogCartridgeSystem : EntitySystem
         UpdateUiState(uid, args.Loader, component);
     }
 
+    [SubscribeLocalEvent]
+    private void OnNewOrderAdded(Entity<OrderLogCartridgeComponent> ent, ref NewOrderAddedEvent args)
+    {
+        if (Comp<CartridgeComponent>(ent).LoaderUid is not { } loaderUid)
+            return;
+
+        UpdateUiState(ent, loaderUid, ent.Comp);
+
+        if (!ent.Comp.NotificationOn)
+            return;
+
+        _cartridgeLoader.SendNotification(
+            loaderUid,
+            Loc.GetString("order-log-notification-header"),
+            args.Message);
+    }
+
     public void UpdateUiState(EntityUid uid, EntityUid loaderUid, OrderLogCartridgeComponent? component)
     {
         if (!Resolve(uid, ref component))
@@ -55,7 +83,7 @@ public sealed partial class OrderLogCartridgeSystem : EntitySystem
 
         if (station is null)
         {
-            _cartridgeLoader.UpdateCartridgeUiState(loaderUid, new OrderLogUiState([]));
+            _cartridgeLoader.UpdateCartridgeUiState(loaderUid, new OrderLogUiState([], component.NotificationOn));
             return;
         }
 
@@ -64,7 +92,8 @@ public sealed partial class OrderLogCartridgeSystem : EntitySystem
             return;
 
         var state = new OrderLogUiState(
-            _cargoSystem.RelevantOrders((station.Value, orderDatabase), bank.PrimaryAccount, approved: false).ToArray()
+            _cargoSystem.RelevantOrders((station.Value, orderDatabase), bank.PrimaryAccount, approved: false).ToArray(),
+            component.NotificationOn
             );
         _cartridgeLoader.UpdateCartridgeUiState(loaderUid, state);
     }
