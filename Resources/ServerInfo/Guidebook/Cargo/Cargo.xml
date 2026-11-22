@@ -23,7 +23,6 @@
 
   <Box>
     <GuideEntityEmbed Entity="AppraisalTool"/>
-    <GuideEntityEmbed Entity="Catwalk"/>
     <GuideEntityEmbed Entity="CrateGenericSteel"/>
   </Box>
 
