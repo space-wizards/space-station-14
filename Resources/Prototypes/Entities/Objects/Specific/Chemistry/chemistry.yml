@@ -332,10 +332,10 @@
     size: Normal
 
 - type: entity
-  name: redspace beaker
   parent: [SolutionLarge, BluespaceBeaker] # Redspace items hold 4x the solution of regular items due to lore reasons (120u per tile) as opposed to 8x of bluespace (240u per tile)
-  description: Powered by acquired redspace technology.
   id: RedspaceBeaker
+  name: redspace beaker
+  description: Powered by acquired redspace technology.
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beaker_redspace.rsi
