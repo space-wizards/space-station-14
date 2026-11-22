@@ -63,8 +63,6 @@ public sealed partial class OrderLogCartridgeSystem : EntitySystem
         if (Comp<CartridgeComponent>(ent).LoaderUid is not { } loaderUid)
             return;
 
-        UpdateUiState(ent, loaderUid, ent.Comp);
-
         if (!ent.Comp.NotificationOn)
             return;
 
