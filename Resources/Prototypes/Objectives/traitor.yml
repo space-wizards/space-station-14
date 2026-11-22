@@ -123,7 +123,7 @@
     requireMaroon: true
 
 - type: entity
-  parent: [BaseTraitorObjective, BaseKillObjective]
+  parent: [BaseTraitorObjective, BaseKillRandomObjective]
   id: KillStationAiObjective
   description: Nanotrasen proudly boasts about their state of the art artificial intelligence. Remind them it's just another toy that can be broken.
   components:
@@ -138,7 +138,6 @@
     title: objective-condition-kill-station-ai
   - type: PickRandomPerson
     pool: !type:AliveAiPool
-    conditions: []
   - type: KillPersonCondition
     requireDead: true
 
