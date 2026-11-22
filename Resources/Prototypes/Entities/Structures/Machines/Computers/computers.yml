@@ -767,6 +767,7 @@
     stateScreen: request
   - type: CargoOrderConsole
     removeLimitAccess: [ "Quartermaster" ]
+    acquisitionSlip: PaperAcquisitionSlipCargo
   - type: ActiveRadio
     channels:
     - Supply
@@ -813,6 +814,7 @@
     announcementChannel: Engineering
     removeLimitAccess: [ "ChiefEngineer" ]
     mode: SendToPrimary
+    acquisitionSlip: PaperAcquisitionSlipEngineering
   - type: ActiveRadio
     channels:
     - Engineering
@@ -837,6 +839,7 @@
     announcementChannel: Medical
     removeLimitAccess: [ "ChiefMedicalOfficer" ]
     mode: SendToPrimary
+    acquisitionSlip: PaperAcquisitionSlipMedical
   - type: ActiveRadio
     channels:
     - Medical
@@ -861,6 +864,7 @@
     announcementChannel: Science
     removeLimitAccess: [ "ResearchDirector" ]
     mode: SendToPrimary
+    acquisitionSlip: PaperAcquisitionSlipScience
   - type: ActiveRadio
     channels:
     - Science
@@ -884,6 +888,7 @@
     announcementChannel: Security
     removeLimitAccess: [ "HeadOfSecurity" ]
     mode: SendToPrimary
+    acquisitionSlip: PaperAcquisitionSlipSecurity
   - type: ActiveRadio
     channels:
     - Security
@@ -907,6 +912,7 @@
     announcementChannel: Service
     removeLimitAccess: [ "HeadOfPersonnel" ]
     mode: SendToPrimary
+    acquisitionSlip: PaperAcquisitionSlipService
   - type: ActiveRadio
     channels:
     - Service

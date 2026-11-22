@@ -116,7 +116,10 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
             { ent.Comp.PenaltyBankAccount, 1.0 }
         };
 
-        var penaltyAccountBalance = stationAccount.Accounts[ent.Comp.PenaltyBankAccount];
+        if (!_cargo.TryGetAccount((ent.Comp.RecipientStation.Value, stationAccount), ent.Comp.PenaltyBankAccount, out var penaltyAccountBalance)
+            && !_cargo.TryGetAccount((ent.Comp.RecipientStation.Value, stationAccount), stationAccount.PrimaryAccount, out penaltyAccountBalance))
+            return;
+
         var calculatedPenalty = (int)(ent.Comp.BaseSpesoPenalty * multiplier);
 
         // Prevents cargo from going into negatives

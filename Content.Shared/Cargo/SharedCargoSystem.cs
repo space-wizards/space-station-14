@@ -29,19 +29,22 @@ public abstract partial class SharedCargoSystem : EntitySystem
 
     private void OnHijackSuccess(ref HijackBeaconSuccessEvent args)
     {
-        var stationQuery = EntityQueryEnumerator<StationBankAccountComponent>();
-        while (stationQuery.MoveNext(out var uid, out var comp))
-        {
-            foreach (var (account, cash) in comp.Accounts)
-            {
-                comp.Accounts[account] = cash - args.Fine;
-                args.Total += args.Fine;
-            }
+        var station = GetEntity(args.Station);
+        if (!TryComp<StationBankAccountComponent>(station, out var comp))
+            return;
 
-            var ev = new BankBalanceUpdatedEvent(uid, comp.Accounts);
-            RaiseLocalEvent(uid, ref ev, true);
-            Dirty(uid, comp);
+        foreach (var (account, cash) in comp.Accounts)
+        {
+            if (!ProtoMan.Resolve(account, out var prototype) || prototype.IsHidden)
+                continue;
+
+            comp.Accounts[account] = cash - args.Fine;
+            args.Total += args.Fine;
         }
+
+        var ev = new BankBalanceUpdatedEvent(station.Value, comp.Accounts);
+        RaiseLocalEvent(station.Value, ref ev, true);
+        Dirty(station.Value, comp);
     }
 
     /// <summary>
@@ -111,7 +114,7 @@ public abstract partial class SharedCargoSystem : EntitySystem
     /// </summary>
     /// <param name="station">Station where the bank account is from</param>
     /// <param name="accountPrototypeId">the id of the bank account</param>
-    /// <param name="money">how much money to set the account to</param>
+    /// <param name="money">how much money to change the account by</param>
     /// <param name="createAccount">Whether or not it should create the account if it doesn't exist.</param>
     /// <param name="dirty">Whether to mark the bank account component as dirty.</param>
     /// <returns>Whether or not setting the value succeeded.</returns>
@@ -130,7 +133,7 @@ public abstract partial class SharedCargoSystem : EntitySystem
         if (!accounts.ContainsKey(accountPrototypeId) && !createAccount)
             return false;
 
-        accounts[accountPrototypeId] += money;
+        accounts[accountPrototypeId] = GetBalanceFromAccount(station, accountPrototypeId) + money;
         var ev = new BankBalanceUpdatedEvent(station, station.Comp.Accounts);
         RaiseLocalEvent(station, ref ev, true);
 
@@ -185,7 +188,7 @@ public abstract partial class SharedCargoSystem : EntitySystem
         UpdateBankAccount(
             ent,
             balanceAdded,
-            new Dictionary<ProtoId<CargoAccountPrototype>, double> { {account, 1} },
+            new Dictionary<ProtoId<CargoAccountPrototype>, double> { { account, 1 } },
             dirty: dirty);
     }
 
@@ -208,8 +211,8 @@ public abstract partial class SharedCargoSystem : EntitySystem
 
         foreach (var (account, percent) in accountDistribution)
         {
-            var accountBalancedAdded = (int) Math.Round(percent * balanceAdded);
-            ent.Comp.Accounts[account] += accountBalancedAdded;
+            var accountBalancedAdded = (int)Math.Round(percent * balanceAdded);
+            ent.Comp.Accounts[account] = GetBalanceFromAccount(ent, account) + accountBalancedAdded;
         }
 
         var ev = new BankBalanceUpdatedEvent(ent, ent.Comp.Accounts);

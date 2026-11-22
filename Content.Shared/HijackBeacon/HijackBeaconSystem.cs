@@ -6,6 +6,7 @@ using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
+using Content.Shared.Station.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization;
@@ -21,6 +22,7 @@ public sealed partial class HijackBeaconSystem : EntitySystem
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private StationSystem _station = default!;
 
     public readonly SoundSpecifier AnnounceSound = new SoundPathSpecifier("/Audio/Misc/notice1.ogg");
     public readonly SoundSpecifier DeactivateSound = new SoundPathSpecifier("/Audio/Misc/notice2.ogg");
@@ -247,7 +249,7 @@ public sealed partial class HijackBeaconSystem : EntitySystem
         Dirty(beaconXForm.GridUid.Value, station);
 
         // Broadcast that the ATS has been hacked.
-        var ev = new HijackBeaconSuccessEvent(ent.Comp.Fine);
+        var ev = new HijackBeaconSuccessEvent(ent.Comp.Fine, GetNetEntity(beaconXForm.GridUid));
         RaiseLocalEvent(ref ev);
 
         //global announcement
@@ -347,7 +349,7 @@ public sealed partial class HijackBeaconDeactivateDoAfterEvent : SimpleDoAfterEv
 ///     Event raised when the hijack beacon succeeds in hijacking the ATS.
 /// </summary>
 [ByRefEvent]
-public record struct HijackBeaconSuccessEvent(int Fine)
+public record struct HijackBeaconSuccessEvent(int Fine, NetEntity? Station)
 {
     public int Total = 0;
 };

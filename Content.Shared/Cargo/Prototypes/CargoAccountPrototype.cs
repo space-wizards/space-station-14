@@ -35,11 +35,11 @@ public sealed partial class CargoAccountPrototype : IPrototype
     /// Channel used for announcing transactions.
     /// </summary>
     [DataField]
-    public ProtoId<RadioChannelPrototype> RadioChannel;
+    public ProtoId<RadioChannelPrototype>? RadioChannel = null;
 
     /// <summary>
-    /// Paper prototype used for acquisition slips.
+    /// If true will hide transactions and orders from other accounts.
     /// </summary>
     [DataField]
-    public EntProtoId AcquisitionSlip;
+    public bool IsHidden;
 }

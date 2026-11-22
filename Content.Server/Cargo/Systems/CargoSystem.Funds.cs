@@ -9,7 +9,6 @@ namespace Content.Server.Cargo.Systems;
 
 public sealed partial class CargoSystem
 {
-    private bool _allowPrimaryAccountAllocation;
     private bool _allowPrimaryCutAdjustment;
 
     public void InitializeFunds()
@@ -19,7 +18,6 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<FundingAllocationConsoleComponent, SetFundingAllocationBuiMessage>(OnSetFundingAllocation);
         SubscribeLocalEvent<FundingAllocationConsoleComponent, BeforeActivatableUIOpenEvent>(OnFundAllocationBuiOpen);
 
-        _cfg.OnValueChanged(CCVars.AllowPrimaryAccountAllocation, enabled => { _allowPrimaryAccountAllocation = enabled; }, true);
         _cfg.OnValueChanged(CCVars.AllowPrimaryCutAdjustment, enabled => { _allowPrimaryCutAdjustment = enabled; }, true);
     }
 
@@ -63,7 +61,8 @@ public sealed partial class CargoSystem
                     ("amount", args.Amount),
                     ("name1", Loc.GetString(ourAccount.Name)),
                     ("code1", Loc.GetString(ourAccount.Code)));
-                _radio.SendRadioMessage(ent, msg, ourAccount.RadioChannel, ent, escapeMarkup: false);
+                if (ourAccount.RadioChannel != null)
+                    _radio.SendRadioMessage(ent, msg, ourAccount.RadioChannel.Value, ent, escapeMarkup: false);
             }
         }
         else
@@ -80,8 +79,10 @@ public sealed partial class CargoSystem
                     ("code1", Loc.GetString(ourAccount.Code)),
                     ("name2", Loc.GetString(otherAccount.Name)),
                     ("code2", Loc.GetString(otherAccount.Code)));
-                _radio.SendRadioMessage(ent, msg, ourAccount.RadioChannel, ent, escapeMarkup: false);
-                _radio.SendRadioMessage(ent, msg, otherAccount.RadioChannel, ent, escapeMarkup: false);
+                if (ourAccount.RadioChannel != null)
+                    _radio.SendRadioMessage(ent, msg, ourAccount.RadioChannel.Value, ent, escapeMarkup: false);
+                if (otherAccount.RadioChannel != null)
+                    _radio.SendRadioMessage(ent, msg, otherAccount.RadioChannel.Value, ent, escapeMarkup: false);
             }
         }
     }
@@ -107,14 +108,13 @@ public sealed partial class CargoSystem
             !_bankQuery.TryComp(station, out var bank))
             return;
 
-        var expectedCount = _allowPrimaryAccountAllocation ? bank.RevenueDistribution.Count : bank.RevenueDistribution.Count - 1;
-        if (args.Percents.Count != expectedCount)
+        if (args.Percents.Count != bank.RevenueDistribution.Count)
             return;
 
         var differs = false;
         foreach (var (account, percent) in args.Percents)
         {
-            if (percent != (int) Math.Round(bank.RevenueDistribution[account] * 100))
+            if (percent != (int)Math.Round(bank.RevenueDistribution.GetValueOrDefault(account) * 100))
             {
                 differs = true;
                 break;
@@ -128,15 +128,10 @@ public sealed partial class CargoSystem
         if (args.Percents.Values.Sum() != 100)
             return;
 
-        var primaryCut = bank.RevenueDistribution[bank.PrimaryAccount];
         bank.RevenueDistribution.Clear();
-        foreach (var (account, percent )in args.Percents)
+        foreach (var (account, percent) in args.Percents)
         {
             bank.RevenueDistribution.Add(account, percent / 100.0);
-        }
-        if (!_allowPrimaryAccountAllocation)
-        {
-            bank.RevenueDistribution.Add(bank.PrimaryAccount, 0);
         }
 
         if (_allowPrimaryCutAdjustment && args.PrimaryCut is >= 0.0 and <= 1.0)
