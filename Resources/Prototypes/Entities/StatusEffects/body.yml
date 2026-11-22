@@ -108,6 +108,6 @@
   name: rushed metabolism
   components:
   - type: RushedMetabolismStatusEffect
-    multiplier: 0.5
+    multiplier: 0.66666
   - type: StatusEffectAlert
     alert: RushedMetabolismAlert

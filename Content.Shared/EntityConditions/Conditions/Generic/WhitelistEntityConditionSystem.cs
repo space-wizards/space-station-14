@@ -30,6 +30,9 @@ public sealed partial class WhitelistCondition : EntityConditionBase<WhitelistCo
     [DataField]
     public EntityWhitelist? Blacklist;
 
+    /// <summary>
+    /// This holds the LocId for the guidebook description.
+    /// </summary>
     [DataField]
     public LocId? GuidebookDescription;
 
