@@ -21,6 +21,7 @@ using Robust.Shared.EntitySerialization;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -495,6 +496,7 @@ public sealed partial class ServerGameTicker
         // Grab the great big book of all the Minds, we'll need them for this.
         var allMinds = EntityQueryEnumerator<MindComponent>();
         var pvsOverride = Cfg.GetCVar(CCVars.RoundEndPVSOverrides);
+        var familiarRoleType = new ProtoId<RoleTypePrototype>("Familiar");
         while (allMinds.MoveNext(out var mindId, out var mind))
         {
             // TODO don't list redundant observer roles?
@@ -532,7 +534,7 @@ public sealed partial class ServerGameTicker
 
             var roles = Role.MindGetAllRoleInfo(mindId);
             var familiar = mind.MindRoleContainer.ContainedEntities.Any(role =>
-                TryComp<MindRoleComponent>(role, out var mindRole) && mindRole.RoleType == "Familiar");
+                TryComp<MindRoleComponent>(role, out var mindRole) && mindRole.RoleType == familiarRoleType);
 
             var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
             {
