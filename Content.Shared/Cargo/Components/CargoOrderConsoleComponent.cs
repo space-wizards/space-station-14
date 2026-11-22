@@ -149,7 +149,7 @@ public sealed partial class CargoOrderConsoleComponent : Component
     /// Paper prototype used for acquisition slips.
     /// </summary>
     [DataField]
-    public EntProtoId AcquisitionSlip;
+    public EntProtoId AcquisitionSlip = "PaperAcquisitionSlipCargo";
 }
 
 /// <summary>
