@@ -30,7 +30,7 @@ public abstract partial class MindTargetSystem<T> : MindTargetSystem where T : I
         var query = EntityQueryEnumerator<T>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (!ValidEntity(uid, exclude, conditions) || !ValidateEntity((uid, comp), out var mind))
+            if (!ValidateEntity((uid, comp), out var mind) || !ValidEntity(mind.Value.Owner, exclude, conditions))
                 continue;
 
             minds.Add(mind.Value);
@@ -71,7 +71,7 @@ public abstract partial class MindTargetSystem<T1, T2, T3> : MindTargetSystem
         var query = EntityQueryEnumerator<T1, T2, T3>();
         while (query.MoveNext(out var uid, out var comp1, out var comp2, out var comp3))
         {
-            if (!ValidEntity(uid, exclude, conditions) || !ValidateEntity((uid, comp1, comp2, comp3), out var mind))
+            if (!ValidateEntity((uid, comp1, comp2, comp3), out var mind) || !ValidEntity(mind.Value.Owner, exclude, conditions))
                 continue;
 
             minds.Add(mind.Value);
@@ -93,7 +93,7 @@ public abstract partial class MindTargetSystem<T1, T2, T3, T4> : MindTargetSyste
         var query = EntityQueryEnumerator<T1, T2, T3, T4>();
         while (query.MoveNext(out var uid, out var comp1, out var comp2, out var comp3, out var comp4))
         {
-            if (!ValidEntity(uid, exclude, conditions) || !ValidateEntity((uid, comp1, comp2, comp3, comp4), out var mind))
+            if (!ValidateEntity((uid, comp1, comp2, comp3, comp4), out var mind) || !ValidEntity(mind.Value.Owner, exclude, conditions))
                 continue;
 
             minds.Add(mind.Value);
