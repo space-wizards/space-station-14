@@ -92,7 +92,7 @@ namespace Content.Client.Inventory
             OnSpriteUpdate?.Invoke(update);
         }
 
-        private void OnShutdown(EntityUid uid, InventoryComponent component, ComponentShutdown args)
+        private void OnShutdown(EntityUid uid, InventoryComponent component, ref ComponentShutdown args)
         {
             if (TryComp(uid, out InventorySlotsComponent? inventorySlots))
             {

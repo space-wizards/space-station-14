@@ -108,6 +108,9 @@ public abstract partial class SharedStunSystem
     [SubscribeLocalEvent]
     private void OnCrawlerShutdown(Entity<CrawlerComponent> entity, ref ComponentShutdown args)
     {
+        if (args.LifeStage >= EntityLifeStage.Terminating)
+            return;
+
         // hate. let me tell you how much i hate...
         // this may have unforseen consequences. blame scar
         ForceStandUp((entity.Owner, null), true);

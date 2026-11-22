@@ -41,7 +41,7 @@ jobs:
       #  uses: stefanzweifel/git-auto-commit-action@v4
       #  with:
       #    commit_message: Update Credits
-      #    commit_author: PJBot <pieterjan.briers+bot@gmail.com>
+      #    commit_author: Space-Wizards-Bot <bot@spacestation14.com>
 
       # This will make a PR
       - name: Set current date as env variable
@@ -53,6 +53,6 @@ jobs:
           commit-message: Update Credits
           title: Update Credits
           body: This is an automated Pull Request. This PR updates the github contributors in the credits section.
-          author: PJBot <pieterjan.briers+bot@gmail.com>
+          author: Space-Wizards-Bot <bot@spacestation14.com>
           add-paths: Resources/Credits/GitHub.txt
           branch: automated/credits-${{env.NOW}}

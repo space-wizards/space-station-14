@@ -1,18 +1,26 @@
 #
-# Base component for edible food-like items, different from BaseDrink
+# Base component for edible things that are not meant to be held, different from FoodBase
 #
 - type: entity
   abstract: true
-  parent: [BaseItem, SolutionFood, SolutionSmall]
-  id: FoodBase
+  parent: [SolutionFood, SolutionLarge]
+  id: EdibleBase
   components:
   - type: FlavorProfile
     flavors:
-      - food
+    - food
   - type: Edible
   - type: Sprite
   - type: StaticPrice
     price: 0
+
+#
+# Base component for edible food-like items, different from BaseDrink
+#
+- type: entity
+  abstract: true
+  parent: [SolutionSmall, BaseItem, EdibleBase]
+  id: FoodBase
 
 #
 # Base component for consumable food

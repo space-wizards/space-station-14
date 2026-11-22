@@ -1,10 +1,8 @@
 using Content.Shared.Alert;
-using Content.Shared.Damage;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Cuffs.Components;
 
@@ -15,7 +13,7 @@ public sealed partial class CuffableComponent : Component
     /// <summary>
     /// The current RSI for the handcuff layer
     /// </summary>
-    [DataField("currentRSI"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string? CurrentRSI;
 
     /// <summary>
@@ -33,7 +31,7 @@ public sealed partial class CuffableComponent : Component
     /// <summary>
     /// Whether or not the entity can still interact (is not cuffed)
     /// </summary>
-    [DataField("canStillInteract"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool CanStillInteract = true;
 
     [DataField]

@@ -171,7 +171,7 @@ public sealed partial class SingularitySystem : SharedSingularitySystem
     /// <param name="uid">The entity UID of the singularity that is dissipating.</param>
     /// <param name="comp">The component of the singularity that is dissipating.</param>
     /// <param name="args">The event arguments.</param>
-    public void OnSingularityShutdown(EntityUid uid, SingularityComponent comp, ComponentShutdown args)
+    public void OnSingularityShutdown(EntityUid uid, SingularityComponent comp, ref ComponentShutdown args)
     {
         comp.AmbientSoundStream = _audio.Stop(comp.AmbientSoundStream);
 

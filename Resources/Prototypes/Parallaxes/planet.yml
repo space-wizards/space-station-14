@@ -42,3 +42,24 @@
       slowness: 0
       scale: "1, 1"
       shader: ""
+
+- type: parallax
+  id: Hike
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/ParallaxHikeGround.png"
+      slowness: 0.98
+      scale: 1,1
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/ParallaxHikeCloudsLow.png"
+      scrolling: "0, -0.2"
+      slowness: 0.965
+      scale: 1,1
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/ParallaxHikeCloudsHigh.png"
+      scrolling: "0, -0.4"
+      slowness: 0.94
+      scale: 1, 1

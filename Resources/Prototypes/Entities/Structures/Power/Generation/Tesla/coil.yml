@@ -8,9 +8,9 @@
     fixtures:
       fix1:
         shape:
-          !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
-        density: 190
+          !type:PhysShapeCircle
+            radius: 0.45
+        density: 235
         mask:
         - MachineMask
         layer:
@@ -116,9 +116,9 @@
     fixtures:
       fix1:
         shape:
-          !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
-        density: 110
+          !type:PhysShapeCircle
+            radius: 0.45
+        density: 135
         mask:
         - MachineMask
         layer:
