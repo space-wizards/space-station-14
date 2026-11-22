@@ -19,9 +19,9 @@
         - id: ClothingEyesHudSyndicate
 
 - type: entity
+  parent: LockerSyndicatePersonalAgent
   id: LockerSyndicatePersonalAgentFilled
   suffix: Nukie, Filled
-  parent: LockerSyndicatePersonalAgent
   description: It's a personal storage unit for nuclear corpsman gear.
   components:
   - type: AccessReader
