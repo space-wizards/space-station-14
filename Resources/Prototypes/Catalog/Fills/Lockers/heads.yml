@@ -11,6 +11,7 @@
     - id: ClothingHeadsetAltCargo
     - id: DoorRemoteCargo
     - id: AstroNavCartridge
+    - id: OrderLogCartridge
     - id: ClothingHandsKnuckleDustersQM
     - id: PlushieLizardJobQuartermaster
       prob: 0.02

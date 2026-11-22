@@ -498,6 +498,7 @@
         - id: NanoTaskCartridge
         - id: NewsReaderCartridge
         - id: AstroNavCartridge
+        - id: OrderLogCartridge
 
 - type: entity
   parent: BasePDA
@@ -516,6 +517,16 @@
     borderColor: "#e39751"
   - type: Icon
     state: pda-cargo
+  - type: EntityTableContainerFill
+    containers:
+      preinstalled-program-container: !type:AllSelector
+        children:
+        - id: CrewManifestCartridge
+        - id: NotekeeperCartridge
+        - id: NanoTaskCartridge
+        - id: NewsReaderCartridge
+        - id: OrderLogCartridge
+
 
 - type: entity
   parent: BasePDA
@@ -1557,6 +1568,15 @@
     accentVColor: "#DFDFDF"
   - type: Icon
     state: pda-seniorcourier
+  - type: EntityTableContainerFill
+    containers:
+      preinstalled-program-container: !type:AllSelector
+        children:
+        - id: CrewManifestCartridge
+        - id: NotekeeperCartridge
+        - id: NanoTaskCartridge
+        - id: NewsReaderCartridge
+        - id: OrderLogCartridge
 
 - type: entity
   parent: [ BaseHighlyIllegalContraband, BasePDA ]
