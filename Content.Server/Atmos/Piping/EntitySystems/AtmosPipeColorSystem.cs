@@ -24,7 +24,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             _appearance.SetData(uid, PipeColorVisuals.Color, component.Color, appearance);
         }
 
-        private void OnShutdown(EntityUid uid, AtmosPipeColorComponent component, ComponentShutdown args)
+        private void OnShutdown(EntityUid uid, AtmosPipeColorComponent component, ref ComponentShutdown args)
         {
             if (!TryComp(uid, out AppearanceComponent? appearance))
                 return;

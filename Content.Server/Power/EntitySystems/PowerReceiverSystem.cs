@@ -46,7 +46,7 @@ namespace Content.Server.Power.EntitySystems
         }
 
         [SubscribeLocalEvent]
-        private void OnProviderShutdown(EntityUid uid, ApcPowerProviderComponent component, ComponentShutdown args)
+        private void OnProviderShutdown(EntityUid uid, ApcPowerProviderComponent component, ref ComponentShutdown args)
         {
             foreach (var receiver in component.LinkedReceivers)
             {
