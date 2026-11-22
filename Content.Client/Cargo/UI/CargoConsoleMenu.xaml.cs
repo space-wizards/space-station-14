@@ -280,7 +280,7 @@ namespace Content.Client.Cargo.UI
             ActionOptions.Clear();
             ActionOptions.AddItem(Loc.GetString("cargo-console-menu-account-action-option-withdraw"), i);
             i++;
-            foreach (var (account, _) in _cargoSystem.GetAccounts((_station.Value, bank)))
+            foreach (var (account, _) in bank.Accounts)
             {
                 if (account == console.Account)
                     continue;
