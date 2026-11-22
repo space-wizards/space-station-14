@@ -50,7 +50,7 @@ public abstract partial class MindTargetSystem<T1, T2> : MindTargetSystem
         var query = EntityQueryEnumerator<T1, T2>();
         while (query.MoveNext(out var uid, out var comp1, out var comp2))
         {
-            if (!ValidEntity(uid, exclude, conditions) || !ValidateEntity((uid, comp1, comp2), out var mind))
+            if (!ValidateEntity((uid, comp1, comp2), out var mind) || !ValidEntity(mind.Value.Owner, exclude, conditions))
                 continue;
 
             minds.Add(mind.Value);
