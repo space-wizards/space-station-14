@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Numerics;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
@@ -73,7 +72,7 @@ public sealed class EntityPainter
             }
 
             var rsi = layer.ActualRsi;
-            Image image;
+            Image? image;
 
             if (rsi == null || !rsi.TryGetState(layer.RsiState, out var state))
             {
@@ -81,30 +80,15 @@ public sealed class EntityPainter
             }
             else
             {
-                var key = (rsi.Path!.ToString(), state.StateId.Name!);
+                var key = (rsi.Path.ToString(), state.StateId.Name!);
 
-                if (!_images.TryGetValue(key, out image!))
+                if (!_images.TryGetValue(key, out image))
                 {
                     using var stream = _resManager.ContentFileRead($"{rsi.Path}/{state.StateId}.png");
                     image = Image.Load<Rgba32>(stream);
 
                     _images[key] = image;
                 }
-            }
-
-            (int, int, int, int) GetRsiFrame(RSI? rsi, Image image, EntityData entity, ISpriteLayer layer, int direction)
-            {
-                if (rsi is null)
-                    return (0, 0, EyeManager.PixelsPerMeter, EyeManager.PixelsPerMeter);
-
-                var statesX = image.Width / rsi.Size.X;
-                var statesY = image.Height / rsi.Size.Y;
-                var stateCount = statesX * statesY;
-                var frames = stateCount / _sprite.LayerGetDirectionCount((SpriteComponent.Layer)layer);
-                var target = direction * frames;
-                var targetY = target / statesX;
-                var targetX = target % statesX;
-                return (targetX * rsi.Size.X, targetY * rsi.Size.Y, rsi.Size.X, rsi.Size.Y);
             }
 
             var dir = _sprite.LayerGetDirectionCount((SpriteComponent.Layer)layer) switch
@@ -160,5 +144,20 @@ public sealed class EntityPainter
 
             canvas.Mutate(o => o.DrawImage(frame, new Point(pointX, pointY), 1));
         }
+    }
+
+    private (int, int, int, int) GetRsiFrame(RSI? rsi, Image image, EntityData entity, ISpriteLayer layer, int direction)
+    {
+        if (rsi is null)
+            return (0, 0, EyeManager.PixelsPerMeter, EyeManager.PixelsPerMeter);
+
+        var statesX = image.Width / rsi.Size.X;
+        var statesY = image.Height / rsi.Size.Y;
+        var stateCount = statesX * statesY;
+        var frames = stateCount / _sprite.LayerGetDirectionCount((SpriteComponent.Layer)layer);
+        var target = direction * frames;
+        var targetY = target / statesX;
+        var targetX = target % statesX;
+        return (targetX * rsi.Size.X, targetY * rsi.Size.Y, rsi.Size.X, rsi.Size.Y);
     }
 }
