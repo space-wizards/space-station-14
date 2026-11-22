@@ -113,7 +113,7 @@ public sealed partial class TetherGunSystem : SharedTetherGunSystem
         }
     }
 
-    private void OnTetheredShutdown(EntityUid uid, TetheredComponent component, ComponentShutdown args)
+    private void OnTetheredShutdown(EntityUid uid, TetheredComponent component, ref ComponentShutdown args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;

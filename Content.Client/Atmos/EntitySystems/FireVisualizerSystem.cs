@@ -24,7 +24,7 @@ public sealed partial class FireVisualizerSystem : VisualizerSystem<FireVisualsC
         SubscribeLocalEvent<FireVisualsComponent, ComponentShutdown>(OnShutdown);
     }
 
-    private void OnShutdown(EntityUid uid, FireVisualsComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, FireVisualsComponent component, ref ComponentShutdown args)
     {
         if (component.LightEntity != null)
         {

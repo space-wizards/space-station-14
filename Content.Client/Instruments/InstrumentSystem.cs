@@ -88,7 +88,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             EndRenderer(uid, true, component);
     }
 
-    private void OnShutdown(EntityUid uid, InstrumentComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, InstrumentComponent component, ref ComponentShutdown args)
     {
         EndRenderer(uid, false, component);
     }

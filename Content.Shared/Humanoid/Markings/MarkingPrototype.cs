@@ -1,5 +1,6 @@
 using System.Linq;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Humanoid.Markings;
@@ -9,10 +10,16 @@ namespace Content.Shared.Humanoid.Markings;
 ///     These are selectable in the character editor.
 /// </summary>
 [Prototype]
-public sealed partial class MarkingPrototype : IPrototype
+public sealed partial class MarkingPrototype : IPrototype, IInheritingPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = "uwu";
+
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<MarkingPrototype>))]
+    public string[]? Parents { get; private set; }
+
+    [AbstractDataField, NeverPushInheritance]
+    public bool Abstract { get; private set; }
 
     public string Name { get; private set; } = default!;
 
@@ -34,6 +41,12 @@ public sealed partial class MarkingPrototype : IPrototype
     /// </summary>
     [DataField("sexRestriction")]
     public Sex? SexRestriction { get; private set; }
+
+    /// <summary>
+    /// Color clamping for this marking. Only allows colors that fit this band.
+    /// </summary>
+    [DataField]
+    public ISkinColorationStrategy? Strategy;
 
     /// <summary>
     ///     Whether or not this marking's colors can be manually changed by the player.
