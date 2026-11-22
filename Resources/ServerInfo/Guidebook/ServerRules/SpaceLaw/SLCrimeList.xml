@@ -1,6 +1,6 @@
 <Document>
   # Space Law: Crime Listing
-  Crime codes are colored by linked crime groups, which are classifications of crimes that are similar in nature. These classifications are useful for differentiating violent criminals from anti-authoritarian ones, for example.
+  Crime codes are colored by crime category, which are classifications of crimes that are similar in nature. These classifications are useful for differentiating violent criminals from anti-authoritarian ones, for example.
 
   ## Quick Crime Guide
   <Table Columns="6">
@@ -34,8 +34,9 @@
         Code
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#593a4e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        Failure to Comply (E)
       </Box>
     </ColorBox>
     <ColorBox Color="#593a4e">
@@ -237,8 +238,8 @@
   </Table>
 
   ## Minor Crimes
-  - Warnings should be issued for a first offense.
-  - If multiple minor crimes have been committed or it is a repeat offense, then 5 minutes is the maximum sentence for a minor crime.
+  - Warnings should be issued for a first offense of a Minor crime.
+  - If multiple minor crimes have been committed or the crime constitutes a repeat offense, then 5 minutes is the maximum sentence for a Minor crime.
   <Table Columns="4">
     <ColorBox>
       <Box>
@@ -260,6 +261,26 @@
         Code
       </Box>
     </ColorBox>
+    <ColorBox Color="#593a4e">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        Failure to Comply (E)
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        To fail to comply with a lawful order from a commanding authority.
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        A person may only be charged with this crime if the relevant authority has made a complaint. Minor failures to follow Space Law by Command or Security are also included in this crime. A person may not be sentenced with Confinement for this crime, only Warning or Demotion.
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        2-00
+      </Box>
+    </ColorBox>
     <ColorBox Color="#2e422e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Petty Theft (H)
@@ -274,7 +295,7 @@
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Petty theft covers the possession of items that were not lawfully or consensually given to the holder.
-        This may include departmental contraband if the contraband was not approved for the holder.
+        This includes departmentally restricted items, if the item was not approved for the holder.
         Items covered by petty theft are usually easily replaceable, low-value, or low-danger.
       </Box>
     </ColorBox>
@@ -295,7 +316,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Painting obscene graffiti, smashing bar glasses, breaking lights, and eating a crewmember's plushie is vandalism, breaking a window into
+        Painting inappropriate graffiti, smashing bar glasses, breaking lights, or eating a crewmember's plushie is vandalism, breaking a window into
         space or secure areas is not.
       </Box>
     </ColorBox>
@@ -311,12 +332,12 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To enter a non-secured area without permission.
+        To enter a non-secure area without permission.
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        It's best to just remove them from the area unless this is a repeated crime.
+        It is best to just remove them from the area unless this is a repeat offense.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -336,8 +357,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        This doesn't include legitimate and authorized animal testing and usually doesn't extend to vermin such as mice, animals normally used in the process of food production, or creatures
-        that could pose a threat to the station.
+        This doesn't include legitimate and authorized animal testing and usually doesn't extend to vermin such as mice, animals normally used in the process of food production, or creatures that could pose a threat to the station.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -389,8 +409,7 @@
   </Table>
 
   ## Moderate Crimes
-  - The maximum sentence for a moderate crime is 5 minutes.
-  - Depending on the situation, you may want to issue a warning instead of detaining.
+  - The maximum sentence for a Moderate crime is 5 minutes.
   <Table Columns="4">
     <ColorBox>
       <Box>
@@ -412,7 +431,7 @@
         Code
       </Box>
     </ColorBox>
-  <ColorBox Color="#593a4e">
+    <ColorBox Color="#593a4e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Resisting a Lawful Search (E)
       </Box>
@@ -424,8 +443,8 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        The search or seizure must be legal, either through a valid warrant, evidence, or alert level.
-        The perpetrator must have made an active attempt to flee, resist restraint, or, if applicable, refuse to hand over contraband.
+        The search or seizure must be legal per Space Law.
+        The perpetrator must have made an active attempt to flee, resist restraint or search, or, if applicable, refuse to hand over contraband.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -446,8 +465,8 @@
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         The difference between theft and grand theft is based on how crucial the stolen item is; this is mostly
-        used for the theft of command staff items, things like door remotes, hardsuits, jetpacks, and irreplaceable
-        machine parts. Additionally, stealing anything from the armory is grand theft, including seized contraband.
+        used for the theft of command staff items – items such as door remotes, hardsuits, jetpacks, and irreplaceable
+        machine parts. Additionally, theft of anything from the armory is grand theft.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -467,7 +486,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Includes destruction of job equipment, such as hydro trays, booze dispensers, and chemical dispensers. It is a step up from
+        This includes destruction of job equipment, such as hydro trays, booze dispensers, and chemical dispensers. It is a step up from
         vandalism but a step down from critical property destruction.
       </Box>
     </ColorBox>
@@ -488,7 +507,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        This covers places like telecommunications, head offices, security zones, command areas, the vault, and the armory.
+        This covers areas such as telecommunications, Security, and Command-restricted areas.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -508,8 +527,8 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Attempted murder and assault are different; a fist fight is most likely assault. A shooting may be an
-        attempted murder. Ensure you have context before making the call.
+        Attempted murder and assault are different. A fist fight is most likely assault; A shooting may be an
+        attempted murder. Ensure that all required context is obtained before discerning the difference.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -529,9 +548,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To cause an unreasonable amount of damage to a part of the station as a result of negligence. This
-        could be purposefully allowing anomalies to go critical, or causing an accidental but not permanent
-        death.
+        This entails causing an unreasonable amount of damage to a part of the station as a result of negligence, such as purposefully allowing anomalies to go critical, or causing an accidental but not permanent death.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -542,8 +559,7 @@
   </Table>
 
   ## Major Crimes
-  - The maximum sentence for a major crime is 10 minutes.
-  - It is recommended not to use maximum sentences for those who are compliant.
+  - The maximum sentence for a Major crime is 10 minutes.
   <Table Columns="4">
     <ColorBox>
       <Box>
@@ -577,7 +593,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        This applies to attempting to prevent an officer from making a lawful arrest, detainment, or execution.
+        This applies to attempting to prevent an officer from making a lawful arrest, detention, or execution, among other instances.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -597,7 +613,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Includes destruction of station machinery such as ID card computers or telecommunications servers,
+        This includes the destruction of station machinery such as ID card computers, telecommunications servers,
         power devices such as substations, and non-hostile silicon units.
       </Box>
     </ColorBox>
@@ -618,7 +634,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        A large range of things, used mostly as a catch-all when dealing with unlawful control of another being.
+        This covers a large range of offenses, used mostly as a catch-all when dealing with unlawful control of another being.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -638,7 +654,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Leaders of a riot can be charged with all crimes that happen under their leadership.
+        Leaders of a riot may be charged with all crimes that happen under their leadership.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -683,7 +699,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Includes breaking out other people.
+        This does not include breaking out due to threat of life or limb against the person.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -704,7 +720,7 @@
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         This is mostly used for deadly departmental bombings or sabotage of major station systems
-        such as the TEG or hacking the ATS.
+        such as the TEG or the ATS.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -724,7 +740,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        This covers any intentional but unsuccessful attempt to kill another member of the crew.
+        This covers Attempt to and Intention to Commit Murder.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -744,8 +760,8 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Includes manslaughter in self-defense and negligent manslaughter.
-        If there is provable intent, then the subject should instead be charged with attempted murder.
+        This includes manslaughter in both self-defense and negligent manslaughter.
+        If there is provable intent, then the subject should instead be charged with (attempted) murder.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -756,7 +772,7 @@
   </Table>
 
   ## Capital Crimes
-  - Capital crimes should usually lead to a death sentence or shift-lasting detainment.
+  - Capital crimes carry Capital sentences: permanent confinement, execution, or DNR.
   <Table Columns="4">
     <ColorBox>
       <Box>
@@ -790,7 +806,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Includes breaking out other people sentenced to permanent confinement.
+        If the person convicted of this crime was previously sentenced to permanent confinement, Execution or DNR must instead be carried out.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -810,8 +826,8 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Summed up, extreme sabotage of station systems or setting off self-destruction systems. This includes any means that cause the 
-        entire station to become uninhabitable, releasing an active singularity, station-wide atmospherics sabotage, and destruction of the station AI all fall into this category.
+        Summed up, this is extreme sabotage of station systems or setting off self-destruction systems. This includes any method that causes the
+        entire station to become uninhabitable, releasing an active singularity, station-wide atmospherics sabotage, and destruction of the station AI, among other offenses.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -832,7 +848,7 @@
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         This covers any successful attempt to kill a member of the crew and prevent resuscitation.
-        If the victim was declared legally dead, but was able to be resuscitated, then it is only Attempted Murder.
+        If the victim was declared legally dead, but was able to be resuscitated, then it is only Attempted Murder. Eggshell skull doctrine applies here.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -847,12 +863,12 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To attempt to kill three or more sapient beings with malicious intent.
+        To attempt to kill three or more sapient beings.
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Applies when there have been three or more Attempted Murders with the intention to kill,
+        Applies when there have been three or more (Attempted) Murders with the intention to kill,
         or if the perpetrator has committed three or more acts of Manslaughter.
       </Box>
     </ColorBox>
@@ -873,8 +889,8 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Applies if the suspect is excessively uncooperative or the implant fails to function due to the mental state of the prisoner already being too far gone.
-        If the implant fails, execution is heavily recommended.
+        This applies if the suspect is excessively uncooperative or the implant fails to function due to the mental state of the prisoner already being too far gone.
+        If the implant fails, they must be sentenced with Execution or DNR.
       </Box>
     </ColorBox>
     <ColorBox>
