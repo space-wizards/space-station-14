@@ -238,8 +238,8 @@
   </Table>
 
   ## Minor Crimes
-  - Warnings should be issued for a first offense of a Minor crime.
-  - If multiple minor crimes have been committed or the crime constitutes a repeat offense, then 5 minutes is the maximum sentence for a Minor crime.
+  - Warnings must be issued for a first offense of a Minor crime.
+  - If multiple minor crimes have been committed or the crime constitutes a repeat offense, then 5 minutes is the maximum sentence for a Minor crime (with the exception of Failure to Comply).
   <Table Columns="4">
     <ColorBox>
       <Box>
