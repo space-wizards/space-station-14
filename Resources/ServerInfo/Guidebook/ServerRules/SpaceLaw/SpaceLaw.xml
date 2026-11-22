@@ -137,9 +137,9 @@
   These are the sentences that may be applied to any Capital crime. If the crime committed was Accessory, Attempt, or Intention to Commit, a Standard sentence may be applied instead.
   - [color=#a4885c]Permanent Confinement:[/color] Being permanently confined in the brig for the remaining duration of the shift. A prisoner is additionally eligible for permanent confinement if their confinement sentence would exceed 15 minutes.
   - [color=#a4885c]Execution:[/color] Within reason, a prisoner who has been sentenced to execution may pick how they wish to be executed. Common, reasonable, methods include death by firing line, lethal injection, exile, and high voltage electrocution. Alternatively or including, the convict's brain may be placed inside a cyborg – but this option is not permitted without the convict's consent. Execution may only be issued with the Captain's written approval.
-  - [color=#a4885c]DNR:[/color] A DNR (do not resuscitate) order is an alternative to execution.  If a convict is dead, the Captain may issue a written, indefinite, DNR order.
+  - [color=#a4885c]DNR:[/color] A DNR (do not resuscitate) order is an alternative to execution.  If a convict is dead, the Captain may issue a written, indefinite, DNR order. Once a DNR has been placed, it is illegal to defibrillate a person (carrying a crime of Obstruction of Justice).
 
-  The sole e, the Captain, Head of Security, or Warden may issue a verbal "delay resuscitation" (DR). While a DR or DNR has been placed on a person, it is illegal to defibrillate them (carrying a crime of Obstruction of Justice). A person must be kept in a rot-preventing state while a DR is issued, and a DR expires after 10 minutes (another may not be placed on the same criminal).
+  In order to facilitate DNRs, and other situations in which the revival of a person would be inappropriate, the Captain, Head of Security, or Warden may issue a verbal "delay resuscitation" (DR). While a DR or DNR has been placed on a person, it is illegal to defibrillate a person (in the same manner as a DNR). A person must be kept in a rot-preventing state while a DR is issued, and a DR expires after 10 minutes (another may not be placed during the same period of death).
 
   ## Crime Listing
   - [textlink="Crime Listing" link="SpaceLawCrimeList"]
