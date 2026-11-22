@@ -112,13 +112,7 @@ public sealed partial class CargoSystem
         var emagged = _emag.CheckFlag(ent.Owner, EmagType.Interaction);
         if (!emagged)
         {
-            var reasonString = string.IsNullOrWhiteSpace(order.Reason)
-                ? string.Empty
-                : Loc.GetString("order-log-reason",
-                    ("hasReason", true),
-                    ("reason", order.Reason));
-
-            var pdaEvent = new NewOrderAddedEvent(Loc.GetString("order-log-notification-message", ("requester", args.Requester), ("product", $"{args.Amount}x {product.Name}"), ("reason", reasonString)));
+            var pdaEvent = new NewOrderAddedEvent(Loc.GetString("order-log-notification-message", ("requester", args.Requester), ("product", $"{args.Amount}x {product.Name}")));
             var query = EntityQueryEnumerator<OrderLogCartridgeComponent>();
 
             while (query.MoveNext(out var readerUid, out _))

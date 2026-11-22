@@ -103,7 +103,7 @@ wanted-list-history-table-reason-col = Crime
 wanted-list-history-table-initiator-col = Initiator
 
 order-log-notification-header = New Order Requested
-order-log-notification-message = {$requester} ordered {$product}. {$reason}
+order-log-notification-message = {$requester} ordered {$product}.
 order-log-header-order = Order
 order-log-header-cost = Cost
 order-log-no-orders = No orders.

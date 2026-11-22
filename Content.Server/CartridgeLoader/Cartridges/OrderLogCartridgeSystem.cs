@@ -54,10 +54,7 @@ public sealed partial class OrderLogCartridgeSystem : EntitySystem
 
         if (station is null)
         {
-            // Display "loading failed" message
-            var failureMessage = Loc.GetString("crew-manifest-cartridge-loading-failed");
-            var failureState = new OrderLogUiState([]);
-            _cartridgeLoader.UpdateCartridgeUiState(loaderUid, failureState);
+            _cartridgeLoader.UpdateCartridgeUiState(loaderUid, new OrderLogUiState([]));
             return;
         }
 
