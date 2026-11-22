@@ -46,9 +46,9 @@ public sealed class TabBar : BoxContainer
     {
         var button = new TabBarButton
         {
-            Group = group,
-            ToolTip = tab.Icon == null ? null : tab.Name
+            Group = group
         };
+        button.SetTabInfo(tab);
         button.OnPressed += _ => tab.OnSelected();
 
         if (ButtonSize is { } size)
@@ -60,26 +60,6 @@ public sealed class TabBar : BoxContainer
         if (ButtonStyleClass is { } styleClass)
             button.AddStyleClass(styleClass);
 
-        if (tab.Icon is not { } icon)
-        {
-            button.Text = tab.Name;
-            return button;
-        }
-
-        var textureRect = new TextureRect
-        {
-            Texture = icon.Texture,
-            Stretch = TextureRect.StretchMode.KeepAspectCentered,
-            SetSize = icon.Size ?? new Vector2(32),
-            HorizontalAlignment = HAlignment.Center,
-            VerticalAlignment = VAlignment.Center
-        };
-
-        if (icon.StyleClass != null)
-            textureRect.AddStyleClass(icon.StyleClass);
-
-        button.AddChild(textureRect);
-
         return button;
     }
 }
@@ -87,7 +67,37 @@ public sealed class TabBar : BoxContainer
 /// <summary>
 /// Button used by <see cref="TabBar"/> so stylesheets can target its tabs.
 /// </summary>
-public sealed class TabBarButton : Button;
+public sealed class TabBarButton : Button
+{
+    private TextureRect? _iconRect;
+
+    /// <summary> Actual button c-tor. </summary>
+    public void SetTabInfo(TabBarEntry tab)
+    {
+        ToolTip = tab.Icon == null ? null : tab.Name;
+        var icon = tab.Icon;
+        if (icon == null)
+            return;
+
+        if (_iconRect == null)
+        {
+            _iconRect = new TextureRect();
+
+            AddChild(_iconRect);
+        }
+
+        _iconRect.Texture = icon.Texture;
+        _iconRect.Stretch = TextureRect.StretchMode.KeepAspectCentered;
+        _iconRect.SetSize = icon.Size ?? new Vector2(32);
+        _iconRect.HorizontalAlignment = HAlignment.Center;
+        _iconRect.VerticalAlignment = VAlignment.Center;
+
+        if (icon.StyleClass != null)
+            _iconRect.AddStyleClass(icon.StyleClass);
+
+
+    }
+}
 
 /// <summary>
 /// Content and selection action for one tab.
