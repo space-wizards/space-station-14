@@ -18,12 +18,11 @@ public sealed partial class OrderLogCartridgeSystem : EntitySystem
 
     private static readonly EntProtoId CartridgePrototypeName = "CrewManifestCartridge";
 
-    public override void Initialize()
+    [SubscribeLocalEvent]
+    private void OnInstallationAttempt(ref ProgramInstallationAttempt args)
     {
-        base.Initialize();
-        SubscribeLocalEvent<OrderLogCartridgeComponent, CartridgeMessageEvent>(OnUiMessage);
-        SubscribeLocalEvent<OrderLogCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
-        SubscribeLocalEvent<ProgramInstallationAttempt>(OnInstallationAttempt);
+        if (args.Prototype == CartridgePrototypeName)
+            args.Cancelled = true;
     }
 
     /// <summary>
@@ -32,6 +31,7 @@ public sealed partial class OrderLogCartridgeSystem : EntitySystem
     /// <remarks>
     /// The cartridge specific ui message event needs to inherit from the CartridgeMessageEvent
     /// </remarks>
+    [SubscribeLocalEvent]
     private void OnUiMessage(EntityUid uid, OrderLogCartridgeComponent component, CartridgeMessageEvent args)
     {
         UpdateUiState(uid, GetEntity(args.LoaderUid), component);
@@ -40,6 +40,7 @@ public sealed partial class OrderLogCartridgeSystem : EntitySystem
     /// <summary>
     /// This gets called when the ui fragment needs to be updated for the first time after activating
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnUiReady(EntityUid uid, OrderLogCartridgeComponent component, CartridgeUiReadyEvent args)
     {
         UpdateUiState(uid, args.Loader, component);
@@ -58,21 +59,13 @@ public sealed partial class OrderLogCartridgeSystem : EntitySystem
             return;
         }
 
-        if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase))
-            return;
-
-        if (!TryComp<StationBankAccountComponent>(station, out var bank))
+        if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase)
+            || !TryComp<StationBankAccountComponent>(station, out var bank))
             return;
 
         var state = new OrderLogUiState(
             _cargoSystem.RelevantOrders((station.Value, orderDatabase), bank.PrimaryAccount, approved: false).ToArray()
             );
         _cartridgeLoader.UpdateCartridgeUiState(loaderUid, state);
-    }
-
-    private void OnInstallationAttempt(ref ProgramInstallationAttempt args)
-    {
-        if (args.Prototype == CartridgePrototypeName)
-            args.Cancelled = true;
     }
 }

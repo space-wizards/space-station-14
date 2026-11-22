@@ -20,9 +20,9 @@ public sealed partial class OrderLogUi : UIFragment
 
     public override void UpdateState(BoundUserInterfaceState state)
     {
-        if (state is not OrderLogUiState OrderLogState)
+        if (state is not OrderLogUiState orderLogState)
             return;
 
-        _fragment?.UpdateState(OrderLogState.Orders);
+        _fragment?.UpdateState(orderLogState.Orders);
     }
 }

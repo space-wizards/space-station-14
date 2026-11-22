@@ -25,14 +25,9 @@ public sealed partial class OrderLogListing : BoxContainer
         for (var i = 0; i < orders.Length; i++)
         {
             var order = orders[i];
-            if (!_prototypeManager.TryIndex(order.Product, out var product))
+            if (!_prototypeManager.TryIndex(order.Product, out var product)
+                || !_prototypeManager.TryIndex(order.Account, out var account))
                 continue;
-
-            if (!_prototypeManager.TryIndex(order.Account, out var account))
-                continue;
-
-            var accountCode = Loc.GetString(account.Code);
-            var accountColor = account.Color;
 
             var reason = string.IsNullOrWhiteSpace(order.Reason)
                 ? string.Empty
@@ -44,8 +39,8 @@ public sealed partial class OrderLogListing : BoxContainer
             entry.AddOrder(
                 _sprite.Frame0(product.Icon),
                 $"{product.Name} x{order.OrderQuantity}",
-                accountCode,
-                accountColor,
+                Loc.GetString(account.Code),
+                account.Color,
                 order.Requester,
                 reason,
                 Loc.GetString("cargo-console-menu-points-amount",
